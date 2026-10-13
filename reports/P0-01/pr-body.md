@@ -10,3 +10,5 @@ Migration: [reports/P0-01/migration.md](reports/P0-01/migration.md)
 Setup: [docs/SETUP.md](docs/SETUP.md)
 
 Remote CI is being checked; final run links and any blockers will be appended to the report. No architecture deviation or contract change is proposed.
+
+Final implementation validation: [CI 38440863374](https://github.com/nanake-lab/nemu/actions/runs/38440863374) passed both Ubuntu and Windows jobs on `f0e3442`, including native-alpha Electron smoke, named pipes, Low IL and exact visual comparison. The initial Windows SDK permission failure was fixed; cancelled runs are not counted as passes. No implementation blockers remain. Final evidence is appended to REPORT.md; documentation HEAD CI is checked before any repository-authorized merge.

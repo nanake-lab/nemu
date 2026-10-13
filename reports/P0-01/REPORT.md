@@ -72,3 +72,24 @@ Vite 7.3.7 / TypeScript 6.0.3 按 electron-vite / typescript-eslint 的兼容范
 - 修复后本机 lint、typecheck、Electron 冒烟和 SwiftShader 白黑背景视觉回归再次通过。
 - 全量本机验证的 34 项命令及退出码见 `final-validation/validation.json`；本次只复跑受影响的检查。
 - 初次 CI 的 Windows SDK 安装权限失败已在 `23148c1` 修复；随后运行由用户暂停而取消，不计为通过。最终远程结果待下面追加。
+
+## 最终验收记录（2026-10-14）
+
+结果：P0-01 实现及验收完成，PR [#1](https://github.com/nanake-lab/nemu/pull/1) 已提交评审；此记录提交后再次验证最终 HEAD，再按 AGENTS.md 合并条件处理。
+
+| 任务卡验收项 | 结果与证据 |
+| --- | --- |
+| pnpm i / lint / typecheck / test / build | 全部通过；`final-validation/validation.json`、对应日志及远程 Ubuntu job |
+| Cargo workspace tests | 通过；`final-validation/` 与远程 Ubuntu job；空骨架不代表核心业务验收 |
+| 四个 Python 工程 pytest | 每个 1 项通过；严格类型、lint、构建也通过；同上 |
+| Electron 两窗口、透明舞台 | 通过；`e2e-results.json`、`visual/electron-*.png` 与远程 Windows job；原生截图 alpha 断言保持有效 |
+| Ubuntu + Windows CI | [运行 38440863374](https://github.com/nanake-lab/nemu/actions/runs/38440863374) 两组 job 均 SUCCESS，验证实现提交 `f0e3442` |
+| Windows runner 安装说明 | `docs/SETUP.md`；本次 ephemeral runner 实际完成命名管道、Low IL、Electron 与视觉检查 |
+| 旧原型迁移 | `migration.md` 记录来源、哈希、取舍；仅 Composer UI，测试通过，无私人内容或旧状态逻辑 |
+| 其他交付物 | 本报告交付物清单与 `docs/traceability/P0-01.md`；锁文件、模板、依赖方向和 schema 有结构测试 |
+
+历史限制：任务卡“首次运行全绿”没有在第一次尝试达成；首次 Windows SDK 安装权限失败已修复，以上为修复后的完整绿灯运行，不隐去失败或取消记录。
+
+无尚未解决的实现/迁移/凭据阻塞，无新增 ADR、阈值放宽或已有视觉基准更新。只验收脚手架，不声称实现聊天、核心状态、真实角色渲染或生产隔离。初始占位视觉不是角色美术定稿；长期 runner 管理由 P0-05 第二部分承担。技能约束保持了 Echo Core 权威边界和固定白黑背景视觉证据。
+
+下一步：最终文档提交的 CI 全绿且 main 未变更时，按 AGENTS.md squash 合并 PR #1；本次不开始其他任务卡。
