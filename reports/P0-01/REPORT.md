@@ -64,3 +64,11 @@ Vite 7.3.7 / TypeScript 6.0.3 按 electron-vite / typescript-eslint 的兼容范
 ## 下一步
 
 等待远程 CI 结果及最终验收记录。本轮只完成 P0-01；不提前启动依赖它的任务。
+
+## 恢复执行记录（2026-10-14）
+
+- 用户恢复执行；暂停检查点保留为历史记录。
+- 修复 Electron 冒烟测试在 launch 失败或 close 抛错时遗漏临时目录清理的问题；未降低断言或修改视觉基准。
+- 修复后本机 lint、typecheck、Electron 冒烟和 SwiftShader 白黑背景视觉回归再次通过。
+- 全量本机验证的 34 项命令及退出码见 `final-validation/validation.json`；本次只复跑受影响的检查。
+- 初次 CI 的 Windows SDK 安装权限失败已在 `23148c1` 修复；随后运行由用户暂停而取消，不计为通过。最终远程结果待下面追加。

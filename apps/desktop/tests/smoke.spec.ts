@@ -3,19 +3,22 @@ import { resolve, join } from 'node:path';
 import { mkdir, mkdtemp, rm, access } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { PNG } from 'pngjs';
+import type { ElectronApplication } from '@playwright/test';
 test('two visible isolated windows; transparent stage; no core storage', async () => {
   const scratch = await mkdtemp(join(tmpdir(), 'nemu-scaffold-'));
-  const application = await electron.launch({
-    args: [
-      resolve('apps/desktop'),
-      '--use-gl=angle',
-      '--use-angle=swiftshader',
-      '--enable-unsafe-swiftshader',
-    ],
-    env: { ...process.env, NEMU_SCAFFOLD_USER_DATA: scratch },
-  });
+  let application: ElectronApplication | undefined;
   try {
-    await expect.poll(() => application.windows().length).toBe(2);
+    application = await electron.launch({
+      args: [
+        resolve('apps/desktop'),
+        '--use-gl=angle',
+        '--use-angle=swiftshader',
+        '--enable-unsafe-swiftshader',
+      ],
+      env: { ...process.env, NEMU_SCAFFOLD_USER_DATA: scratch },
+    });
+    const launched = application;
+    await expect.poll(() => launched.windows().length).toBe(2);
     const stage = application.windows().find((page) => page.url().includes('/stage/'));
     const panel = application.windows().find((page) => page.url().includes('/panel/'));
     expect(stage).toBeDefined();
@@ -64,8 +67,11 @@ test('two visible isolated windows; transparent stage; no core storage', async (
     });
     await panel.screenshot({ path: 'reports/P0-01/visual/electron-panel.png' });
   } finally {
-    await application.close();
-    await rm(scratch, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
-    await expect(access(scratch)).rejects.toThrow();
+    try {
+      await application?.close();
+    } finally {
+      await rm(scratch, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
+      await expect(access(scratch)).rejects.toThrow();
+    }
   }
 });
