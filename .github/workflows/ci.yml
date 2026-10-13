@@ -1,7 +1,7 @@
 name: CI
 on:
   push:
-    branches: [main, 'task/**']
+    branches: [main]
   pull_request:
   workflow_dispatch:
 permissions:
@@ -87,7 +87,17 @@ jobs:
           node-version-file: .nvmrc
       - run: npm install --global pnpm@12.11.2
       - run: pnpm install --frozen-lockfile
+      - name: Detect installed .NET SDK
+        id: dotnet
+        working-directory: executors/office-connector
+        run: |
+          $required = (Get-Content global.json | ConvertFrom-Json).sdk.version
+          $available = (dotnet --list-sdks) -match ("^" + [regex]::Escape($required) + " ")
+          "available=$([bool]$available)".ToLowerInvariant() >> $env:GITHUB_OUTPUT
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        if: steps.dotnet.outputs.available != 'true'
+        env:
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/dotnet
         with:
           global-json-file: executors/office-connector/global.json
       - run: pnpm exec playwright install chromium
