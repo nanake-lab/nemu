@@ -1,0 +1,50 @@
+{
+  "name": "nemu",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @nemu/desktop dev",
+    "dev:stage": "pnpm --filter @nemu/stage dev",
+    "dev:panel": "pnpm --filter @nemu/panel dev",
+    "dev:review": "node tools/scaffold/pending.mjs P2-06",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build": "pnpm -r build",
+    "test:e2e": "pnpm build && playwright test --config apps/desktop/playwright.config.ts",
+    "test:visual": "node tools/scaffold/visual.mjs",
+    "bench": "node tools/scaffold/pending.mjs P7-01",
+    "asset:build": "node tools/scaffold/pending.mjs P2-03",
+    "asset:lint": "node tools/scaffold/pending.mjs P2-04",
+    "accept:core": "node tools/scaffold/pending.mjs P5-18",
+    "eval:helpers": "node tools/scaffold/pending.mjs P6-06",
+    "eval:speech": "node tools/scaffold/pending.mjs P4-06",
+    "eval:memory": "node tools/scaffold/pending.mjs P6-03",
+    "format:check": "prettier --check .",
+    "test:transport": "node --test tools/scaffold/transport.test.mjs",
+    "ci:budget": "node tools/scaffold/ci-budget.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.0",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/pngjs": "6.0.5",
+    "ajv": "8.20.0",
+    "electron": "44.7.0",
+    "electron-vite": "5.0.0",
+    "eslint": "10.12.0",
+    "pngjs": "7.0.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vite": "7.3.7",
+    "vitest": "5.0.4"
+  }
+}

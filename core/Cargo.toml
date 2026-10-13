@@ -1,0 +1,22 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[workspace.dependencies]
+core-types = { path = "crates/core-types" }
+core-policy = { path = "crates/core-policy" }
+core-kernel = { path = "crates/core-kernel" }
+core-store = { path = "crates/core-store" }
+core-runtime = { path = "crates/core-runtime" }
+core-replay = { path = "crates/core-replay" }
+fact-view = { path = "crates/fact-view" }
+semantic-core = { path = "crates/semantic-core" }
+gateway = { path = "crates/gateway" }
+action-gate = { path = "crates/action-gate" }
+task-layer = { path = "crates/task-layer" }
+echoctl = { path = "crates/echoctl" }

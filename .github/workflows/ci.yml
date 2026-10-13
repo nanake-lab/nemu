@@ -1,0 +1,104 @@
+name: CI
+on:
+  push:
+    branches: [main, 'task/**']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+  UV_LINK_MODE: copy
+jobs:
+  hosted:
+    name: Ubuntu static checks and unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          lfs: true
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm install --global pnpm@12.11.2
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint && pnpm typecheck && pnpm test && pnpm build
+      - run: pnpm test:transport
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          version: '0.12.15'
+          python-version: '3.12'
+      - name: Python checks (all four projects)
+        shell: pwsh
+        run: |
+          foreach ($project in @('workers/irl', 'workers/drive', 'workers/model-adapter', 'services/voice-sidecar')) {
+            Push-Location $project
+            try {
+              uv sync --locked
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+              uv run ruff check .
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+              uv run mypy --strict src tests
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+              uv run pytest
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+              uv build
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            } finally { Pop-Location }
+          }
+      - name: Rust checks
+        working-directory: core
+        run: |
+          rustup show
+          cargo fmt --all -- --check
+          cargo clippy --workspace --all-targets -- -D warnings
+          cargo test --workspace --locked
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          global-json-file: executors/office-connector/global.json
+      - run: dotnet build executors/office-connector/OfficeConnector.csproj --configuration Release
+      - name: Hosted minutes estimate
+        env:
+          CI_FREE_MINUTES: ${{ vars.CI_FREE_MINUTES || '2000' }}
+          CI_MONTHLY_RUNS: ${{ vars.CI_MONTHLY_RUNS || '60' }}
+          CI_HOSTED_MINUTES_PER_RUN: ${{ vars.CI_HOSTED_MINUTES_PER_RUN || '12' }}
+        run: pnpm ci:budget
+  windows:
+    name: Windows desktop and isolation
+    # Only owner-triggered, same-repository code may run on the user's machine.
+    if: github.actor == github.repository_owner && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: [self-hosted, Windows, X64, nemu]
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          lfs: true
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm install --global pnpm@12.11.2
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          global-json-file: executors/office-connector/global.json
+      - run: pnpm exec playwright install chromium
+      - run: pnpm test:transport
+      - run: ./tools/scaffold/test-windows-isolation.ps1
+      - run: pnpm test:e2e
+      - run: pnpm test:visual
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: windows-P0-01-evidence
+          path: |
+            reports/P0-01/
+            apps/desktop/test-results/

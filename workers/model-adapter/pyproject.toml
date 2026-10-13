@@ -1,0 +1,24 @@
+[project]
+name = "nemu-model-adapter"
+version = "0.0.0"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[build-system]
+requires = ["hatchling==1.29.0"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "mypy==1.20.2", "ruff==0.15.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nemu_model_adapter"]
+
+[tool.mypy]
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
