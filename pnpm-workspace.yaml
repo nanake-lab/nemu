@@ -1,0 +1,13 @@
+packages:
+  - apps/*
+  - packages/*
+  - executors/codex-bridge
+  - tools/*
+  - spikes/*
+allowBuilds:
+  electron: true
+  esbuild: true
+
+minimumReleaseAgeExclude:
+  - '@typescript-eslint/parser@8.71.2'
+  - '@typescript-eslint/visitor-keys@8.71.2'
