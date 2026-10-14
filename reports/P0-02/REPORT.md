@@ -66,3 +66,7 @@ Context7 技能用于核对 Zod 4 的 strictObject、枚举完整 record 与 par
 ## 下一步
 
 当前分支 `task/P0-02-contracts`；完整 CI 通过、最新 main 已包含、无阻塞项时 squash 合并。之后按 tasks/README.md 取下一张满足依赖和目录互斥的卡，预期为 P0-06；不得提前开展其实现。
+
+## 最终实现验收（2026-10-14）
+
+完成：实现提交 `37c1700` 的 [CI 38503353482](https://github.com/nanake-lab/nemu/actions/runs/38503353482) 中 Ubuntu 与 Windows 两组均 SUCCESS，包括契约覆盖率、Rust/Python/TypeScript/.NET 验证、命名管道/Low IL、Electron 冒烟和原有视觉基准比较。没有取消或跳过必需 job。评审为 [PR #2](https://github.com/nanake-lab/nemu/pull/2)。最终文档头验证及 squash 合并记录附于该 PR；无阻塞项。下一张可取卡仍为 P0-06。
