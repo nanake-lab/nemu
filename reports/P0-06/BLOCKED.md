@@ -27,3 +27,14 @@ Five source hashes, E1–E14 register, toolchain and SQLite probe, scope/accepta
 - **P5-01 direction:** Define qualification branches and single-root ledger fields only when grounded in the supplied specifications; types only, no runtime connection. A specification extension requires a separate ADR before implementation.
 
 The two P0-06 user-decision gates are now addressed. This addendum supersedes the pending-decision status above for P0-06; W00-C01 remains a future growth blocker.
+
+## Windows CI availability blocker — 2026-10-14
+
+- PR #3 head `64c067f` has a passing Ubuntu job, but the Windows desktop/isolation job remains queued. The repository Actions API reports zero registered runners; the workflow requires a repository runner labeled `self-hosted`, `Windows`, `X64`, and `nemu`.
+- The ignored local `.runner/runner.zip` matches the official `actions/runner` Windows x64 v2.338.0 release SHA-256 (`F48E0750A21812BCA5F82DE5F7F5AEAE71ABEE647FAB5A582F1742D07EBA455F`), but `.runner` has no configured `config.cmd`/`run.cmd` or active runner process. An attempt to provision an ephemeral runner was rejected by command execution policy with `Blocked by policy` before setup; no registration token was obtained and no runner was started.
+- Do not merge or skip the Windows job. P5-01 has not started because its task-book dependency P0-06 is not yet merged.
+
+Options to resume:
+1. Recommended: run the repository-scoped ephemeral Windows runner setup in `docs/SETUP.md` on this interactive Windows session; the queued Windows job can then execute.
+2. Bring an existing repository-scoped Windows runner online with the required `nemu` label.
+3. Keep PR #3 open until such a runner is available; do not weaken or bypass CI.

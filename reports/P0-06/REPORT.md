@@ -71,3 +71,7 @@ For the next task, P5-01 may define qualification-branch types and single-root l
 ## Post-decision local verification — 2026-10-14
 
 After merging the latest `origin/main` (`e9d4972`) into the task branch, `pwsh -File reports/P0-06/verify-baseline.ps1` passed. This rechecked all five original DOCX hashes and routing IDs, formatted and linted the isolated SQLite probe, ran it successfully (SQLite 3.53.2; WAL/FULL; rollback count 0; integrity `ok`; temporary storage removed), and passed `git diff --check`. Evidence: `reports/P0-06/verification-20261014T093842932Z/`. CI for the updated PR head remains to be observed before merge.
+
+## Merge gate update — 2026-10-14
+
+The user-decision gate is satisfied for the bounded P0-06 baseline. The Ubuntu CI job passed on head `64c067f`; the Windows desktop/isolation job is queued because no repository runner with the required `nemu` label is registered. Per `BLOCKED.md`, the attempt to provision an ephemeral runner was rejected by command execution policy before setup. P0-06 remains unmerged pending the Windows job; P5-01 remains unstarted until this dependency is merged.
