@@ -1,0 +1,20 @@
+{
+  "name": "stage-overlay-spike",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite build && electron out/main/index.js",
+    "benchmark": "electron-vite build && electron out/main/index.js --benchmark"
+  },
+  "dependencies": {
+    "@pixiv/three-vrm": "3.5.5",
+    "three": "0.174.0"
+  },
+  "devDependencies": {
+    "@types/three": "0.174.0"
+  }
+}
