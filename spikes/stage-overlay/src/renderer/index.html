@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nemu Stage Overlay Spike</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: transparent;
+        user-select: none;
+        -webkit-user-select: none;
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      }
+
+      #wallpaper-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 1;
+        display: none;
+      }
+      #wallpaper-bg.white {
+        display: block;
+        background: #ffffff;
+      }
+      #wallpaper-bg.black {
+        display: block;
+        background: #000000;
+      }
+      #wallpaper-bg.colorful {
+        display: block;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+      }
+
+      #character-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 600px;
+        height: 800px;
+        z-index: 10;
+        will-change: transform;
+        cursor: grab;
+      }
+      #character-container.dragging {
+        cursor: grabbing;
+      }
+
+      #stage-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      #hud {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 1000;
+        background: rgba(18, 20, 24, 0.88);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        padding: 12px 16px;
+        color: #f0f2f5;
+        font-size: 13px;
+        line-height: 1.5;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+        pointer-events: auto;
+        max-width: 420px;
+        transition: opacity 0.2s;
+      }
+      #hud.collapsed {
+        max-width: 160px;
+        padding: 6px 12px;
+      }
+      #hud.hidden {
+        opacity: 0;
+        pointer-events: none;
+        display: none !important;
+      }
+
+      .hud-title {
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 6px;
+      }
+      .hud-badge {
+        font-size: 11px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .badge-b {
+        background: #2563eb;
+        color: #fff;
+      }
+      .badge-a {
+        background: #d97706;
+        color: #fff;
+      }
+
+      .hud-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 3px 0;
+      }
+      .hud-label {
+        color: #9ca3af;
+      }
+      .hud-value {
+        font-weight: 600;
+        font-family: monospace;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 6px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+      button {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+      }
+      button:hover {
+        background: rgba(255, 255, 255, 0.22);
+        border-color: rgba(255, 255, 255, 0.35);
+      }
+      button.active {
+        background: #2563eb;
+        border-color: #3b82f6;
+      }
+      button.bench-btn {
+        background: #059669;
+        border-color: #10b981;
+        font-weight: 600;
+      }
+      button.bench-btn:hover {
+        background: #10b981;
+      }
+
+      #bench-progress {
+        margin-top: 10px;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+        font-size: 12px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wallpaper-bg"></div>
+
+    <div id="character-container">
+      <canvas id="stage-canvas"></canvas>
+    </div>
+
+    <div id="hud">
+      <div class="hud-title">
+        <span>Nemu Stage Spike (P0-03)</span>
+        <span id="badge-strategy" class="hud-badge badge-b">Strategy B</span>
+      </div>
+
+      <div class="hud-row">
+        <span class="hud-label">FPS / Target:</span>
+        <span id="stat-fps" class="hud-value">-- / 30 fps</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">Frame Time:</span>
+        <span id="stat-frametime" class="hud-value">-- ms</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">CPU Total (Main/Rend/GPU):</span>
+        <span id="stat-cpu" class="hud-value">-- %</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">NVIDIA GPU Util / VRAM:</span>
+        <span id="stat-gpu" class="hud-value">-- % / -- MB</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">Cursor Alpha / Hit:</span>
+        <span id="stat-alpha" class="hud-value">0 (Click-Through)</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">Readback Mode:</span>
+        <span id="stat-readback" class="hud-value">Async PBO (30Hz)</span>
+      </div>
+
+      <div class="btn-group">
+        <button id="btn-toggle-strategy">Strategy A / B</button>
+        <button id="btn-toggle-fps">FPS 30 / 60</button>
+        <button id="btn-toggle-readback">Async / Sync Read</button>
+      </div>
+
+      <div class="btn-group">
+        <button id="btn-bg-trans" class="active">Trans BG</button>
+        <button id="btn-bg-white">White BG</button>
+        <button id="btn-bg-black">Black BG</button>
+        <button id="btn-bg-color">Color BG</button>
+      </div>
+
+      <div class="btn-group">
+        <button id="btn-capture">Screenshot</button>
+        <button id="btn-run-smoke" class="bench-btn">Quick Test (10s)</button>
+        <button id="btn-run-full-bench" class="bench-btn">Run 5-Min Bench</button>
+      </div>
+
+      <div id="bench-progress">
+        <div id="bench-status-text">Benchmarking in progress...</div>
+        <div id="bench-timer-text">0 / 300s</div>
+      </div>
+    </div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
