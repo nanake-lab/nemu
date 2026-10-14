@@ -1,0 +1,5384 @@
+{
+  "messages": {
+    "ObjectRef": {
+      "tag": "echo.object-ref",
+      "source": "S 5,6,7; D I 7.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "digest",
+          "type": "bytes",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "object_type",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "resource_version",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "byte_length",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "ConceptRef": {
+      "tag": "echo.concept-ref",
+      "source": "F 3.4; D I 4.4",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "concept_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "registry_version",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "VersionedEnvironment": {
+      "tag": "echo.environment",
+      "source": "O 2.1,16.1; S 5",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "registry",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "irl",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope_interpreter",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "model",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tokenizer",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "config",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "implementations",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "FailureReason": {
+      "tag": "echo.failure-reason",
+      "source": "D I 6.2; S 21",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "code",
+          "type": "FailureCode",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "detail_ref",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "DegradedStatus": {
+      "tag": "echo.degraded-status",
+      "source": "D I 4.5,5.4; S 21; E13",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "states",
+          "type": "RunStatus",
+          "number": 2,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "reasons",
+          "type": "FailureReason",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "LineageHeader": {
+      "tag": "echo.lineage",
+      "source": "ADR 0005",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "lineage",
+          "type": "Lineage",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "created_at_ns",
+          "type": "sint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "genesis_manifest_digest",
+          "type": "bytes",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "size": 32
+        }
+      ],
+      "file": "base.proto",
+      "rules": {
+        "discriminator": "lineage",
+        "common": [
+          "created_at_ns"
+        ],
+        "cases": {
+          "1": {},
+          "2": {
+            "required": [
+              "genesis_manifest_digest"
+            ]
+          }
+        }
+      }
+    },
+    "AuditExtension": {
+      "tag": "echo.audit-extension",
+      "source": "S 6; D I 7.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "audit_schema_tag",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "audit_schema_version",
+          "type": "uint32",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "payload",
+          "type": "bytes",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "EffectContract": {
+      "tag": "echo.effect-contract",
+      "source": "O 3.1; S 5",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "responsibility_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "causal_revision",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "owner",
+          "type": "EffectOwner",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "endpoint",
+          "type": "EffectEndpoint",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parameters",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "amplitude_bound",
+          "type": "double",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "qualifications",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ancestors",
+          "type": "string",
+          "number": 11,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "dependencies",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "QualificationCertificate": {
+      "tag": "echo.qualification",
+      "source": "S 5; O 6,8,9",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "test_domain",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "root_blocks",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ancestry",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "exposure",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "assumptions",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "opportunity_id",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "criteria",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "raw_results",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "dependencies",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        },
+        {
+          "name": "outcome",
+          "type": "TrialOutcome",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "ConsolidationSlice": {
+      "tag": "echo.consolidation-slice",
+      "source": "D II 5.2; O 9",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_trace_revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "source_coupling_revision",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "responsibility",
+          "type": "EffectContract",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "functional_contract",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "current_q",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "candidate_envelope",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "supporting_roots",
+          "type": "string",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "qualifications",
+          "type": "QualificationCertificate",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ancestry",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "dependencies",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        },
+        {
+          "name": "budget_claim",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "promote_interval_ns",
+          "type": "uint64",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "validity_contract",
+          "type": "ObjectRef",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "ThetaModule": {
+      "tag": "echo.theta-module",
+      "source": "D II 5.2; O 9,10",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "module_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "source_slice_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parameters",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "composition_order",
+          "type": "uint64",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "enabled",
+          "type": "bool",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "mechanism_effect",
+          "type": "EffectContract",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "validity_contract",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "ResponsibilityBinding": {
+      "tag": "echo.responsibility-binding",
+      "source": "D II 5.3; O 3,10.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "responsibility_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "causal_revision",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "owner",
+          "type": "EffectOwner",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "endpoint",
+          "type": "EffectEndpoint",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_slice_id",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "module_id",
+          "type": "string",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "disposition",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "TrialResult": {
+      "tag": "echo.trial-result",
+      "source": "O 6,8; S 15",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "trial_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "settlement_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "plan",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "candidate_revision",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "baseline",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "outcome",
+          "type": "TrialOutcome",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "actual_results",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "root_blocks",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "dependencies",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "DistinctionRevision": {
+      "tag": "echo.distinction",
+      "source": "D II 1.3,1.4",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "distinction_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "form",
+          "type": "DistinctionForm",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "status",
+          "type": "DistinctionStatus",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "anchor_roots",
+          "type": "string",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "scope",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "representation",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "CouplingRevision": {
+      "tag": "echo.coupling",
+      "source": "D II 1.5; O 7",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "coupling_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "phase",
+          "type": "CouplingPhase",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "condition_scope",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "target",
+          "type": "EffectEndpoint",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parameters",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "uncertainty",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "qualification_scope",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "effect_bounds",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "evidence_refs",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "trial_refs",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "conflict_set",
+          "type": "string",
+          "number": 14,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "metaplastic_flag",
+          "type": "bool",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "PlasticEvidenceLink": {
+      "tag": "echo.plastic-evidence",
+      "source": "D II 1.8,2.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "root_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "distinction_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "coupling_revision",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "relation",
+          "type": "EvidenceRelation",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "MechanismContext": {
+      "tag": "echo.mechanism-context",
+      "source": "D 0.4; D II 1.8; O 7.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "theta_modules",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        },
+        {
+          "name": "metaplastic_couplings",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        },
+        {
+          "name": "previous_commit",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "DescendantReviewMarker": {
+      "tag": "echo.descendant-review",
+      "source": "D 0.4; D II 5.6; O 8",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ancestor",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "affected_responsibilities",
+          "type": "string",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "dependency_snapshot",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "needs_review",
+          "type": "bool",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "PlasticTraceRevision": {
+      "tag": "echo.plastic-trace",
+      "source": "D 0.4; D II 1.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "trace_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "budget_lineage_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "source_ids",
+          "type": "string",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "root_ids",
+          "type": "string",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "time_range",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "evidence_links",
+          "type": "PlasticEvidenceLink",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "distinction",
+          "type": "DistinctionRevision",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "coupling_hypotheses",
+          "type": "CouplingRevision",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "validation_state",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "effect_control",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "consolidation_bindings",
+          "type": "ResponsibilityBinding",
+          "number": 13,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "mechanism_context",
+          "type": "MechanismContext",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "lifecycle",
+          "type": "TraceLifecycle",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "TraceHead": {
+      "tag": "echo.trace-head",
+      "source": "D 0.4; D II 1.8",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "trace_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "RepresentationInadequacyWitness": {
+      "tag": "echo.inadequacy-witness",
+      "source": "D II 2.3; O 6.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "equivalence_class",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "controlled_variables",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "observed_difference",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "alternative_checks",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "statistical_evidence",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "non_identifiable",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "reference_contract",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "FrozenPrediction": {
+      "tag": "echo.frozen-prediction",
+      "source": "D II 3.4; O 6,8",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "candidate_revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "baseline",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "allowed_information",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "forbidden_information",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "target",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "time_window",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scorer",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "criteria",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "validator_version",
+          "type": "string",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "ShadowTrial": {
+      "tag": "echo.shadow-trial",
+      "source": "D 0.4; D II 1.8,3.4",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "trial_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "frozen_prediction",
+          "type": "FrozenPrediction",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "actual_results",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "settlement",
+          "type": "TrialResult",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "EffectBudgetLedger": {
+      "tag": "echo.effect-budget-ledger",
+      "source": "D II 4.4; O 11",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "root_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "budget_lineage_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "endpoint",
+          "type": "EffectEndpoint",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "window",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "total_allocation",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "r_allocation",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "theta_allocation",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "consumed",
+          "type": "double",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "remaining",
+          "type": "double",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "SingleRootLedger": {
+      "tag": "echo.single-root-ledger",
+      "source": "F 7.1,8; user C01",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "root_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "branch",
+          "type": "QualificationBranch",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "content_version",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "support_version",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "dwell_start_ns",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revalidation_records",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "impact_metrics",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "cumulative_single_root_path",
+          "type": "double",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "total_root_ledger",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "EffectiveCausalProjection": {
+      "tag": "echo.effective-causal-projection",
+      "source": "D II 1.2; O 3.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "projected_at_ns",
+          "type": "uint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "effects",
+          "type": "EffectContract",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "ConsolidationBinding": {
+      "tag": "echo.consolidation-binding",
+      "source": "D 0.4; D II 5.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_slice_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "theta_module_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "responsibility",
+          "type": "ResponsibilityBinding",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "ThetaModuleSourceBinding": {
+      "tag": "echo.theta-source-binding",
+      "source": "D 0.4; D II 5.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "module_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "source_slice_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "source_trace_revision",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "source_coupling_revision",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "growth.proto",
+      "rules": {}
+    },
+    "EventEnvelope": {
+      "tag": "echo.event",
+      "source": "F 4; S 9",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "EventKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_time_ns",
+          "type": "sint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ingest_time_ns",
+          "type": "sint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "raw_log_position",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parents",
+          "type": "string",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "payload_ref",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "provenance",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "device",
+          "type": "string",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "session",
+          "type": "string",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "stable_source_key",
+          "type": "string",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "payload_digest",
+          "type": "bytes",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 14,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "trial_id",
+          "type": "string",
+          "number": 15,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "correction_of",
+          "type": "string",
+          "number": 16,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "derivation",
+          "type": "Derivation",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "FactItem": {
+      "tag": "echo.fact-item",
+      "source": "F 3; S 11",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "content",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "availability",
+          "type": "QueryStatus",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "correction_chain",
+          "type": "string",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "FactProjection": {
+      "tag": "echo.fact-projection",
+      "source": "F 3; S 11",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "history_prefix",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "query_version",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "status",
+          "type": "QueryStatus",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "items",
+          "type": "FactItem",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "index_version",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "truncated",
+          "type": "bool",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "SourceMetadata": {
+      "tag": "echo.source-metadata",
+      "source": "F 3.2; S 10",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_refs",
+          "type": "string",
+          "number": 2,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "source_span",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "derivation",
+          "type": "Derivation",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "epistemic_type",
+          "type": "EpistemicType",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "resolution_state",
+          "type": "ResolutionState",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "representation_version",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "Ref": {
+      "tag": "echo.semantic-ref",
+      "source": "F 3.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "metadata",
+          "type": "SourceMetadata",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "referent",
+          "type": "ConceptRef",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "RoleBinding": {
+      "tag": "echo.role-binding",
+      "source": "F 3.2,3.4",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "node_ref",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "Claim": {
+      "tag": "echo.semantic-claim",
+      "source": "F 3.2,3.4",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "metadata",
+          "type": "SourceMetadata",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "predicate",
+          "type": "ConceptRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "roles",
+          "type": "RoleBinding",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "role"
+        },
+        {
+          "name": "value",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "polarity",
+          "type": "bool",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "modality",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "time",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "Act": {
+      "tag": "echo.semantic-act",
+      "source": "F 3.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "metadata",
+          "type": "SourceMetadata",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "interaction_kind",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "Edge": {
+      "tag": "echo.semantic-edge",
+      "source": "F 3.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "relation",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "from_node",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "to_node",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "SemanticGraph": {
+      "tag": "echo.semantic-graph",
+      "source": "F 3.2; D I 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "refs",
+          "type": "Ref",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "id"
+        },
+        {
+          "name": "claims",
+          "type": "Claim",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "id"
+        },
+        {
+          "name": "acts",
+          "type": "Act",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "id"
+        },
+        {
+          "name": "edges",
+          "type": "Edge",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "ProposalBinding": {
+      "tag": "echo.proposal-binding",
+      "source": "D I 3; O 16.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "branch_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "raw_log_position",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "base_commit",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "process_time_ns",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "anchor_time_ns",
+          "type": "uint64",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "projected_state_digest",
+          "type": "bytes",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "accepted_z_digest",
+          "type": "bytes",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "c_core_digest",
+          "type": "bytes",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "x_revision",
+          "type": "string",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "r_revision",
+          "type": "string",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "theta_revision",
+          "type": "string",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "validation_snapshot",
+          "type": "ObjectRef",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_validity_version",
+          "type": "string",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "environment",
+          "type": "VersionedEnvironment",
+          "number": 16,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "relevant_effect_set_digest",
+          "type": "bytes",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "proposal_payload_digest",
+          "type": "bytes",
+          "number": 18,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "read_set",
+          "type": "ObjectRef",
+          "number": 19,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "SemanticCandidate": {
+      "tag": "echo.semantic-candidate",
+      "source": "D I 4.2,7.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBinding",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "candidate_graph",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "actual_output",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "ConceptProposal": {
+      "tag": "echo.concept-proposal",
+      "source": "F 3.4; D I 4.4",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBinding",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "mention",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "signature",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "grounding",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "relations",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_refs",
+          "type": "string",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "FastStateSnapshot": {
+      "tag": "echo.fast-state",
+      "source": "D I 5.1; O 5.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "representation_version",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "dimension",
+          "type": "uint32",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "coordinates",
+          "type": "double",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "anchor_time_ns",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {
+        "lengths": {
+          "coordinates": "dimension"
+        }
+      }
+    },
+    "FastDriveProposal": {
+      "tag": "echo.fast-drive",
+      "source": "D I 5.3; O 5.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBinding",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "semantic_graph_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "state_space_version",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "drive",
+          "type": "double",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "source_node_refs",
+          "type": "string",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "proposal_hash",
+          "type": "bytes",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "CoreTransaction": {
+      "tag": "echo.transaction",
+      "source": "D I 3,7; O 16.2; S 8",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBinding",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_h",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_x",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_r",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_theta",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_l",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_q",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_u",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "processed_position",
+          "type": "uint64",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "anchor_time_ns",
+          "type": "uint64",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_concepts",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "accepted_results",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "audit_refs",
+          "type": "ObjectRef",
+          "number": 14,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "CoreCommitResult": {
+      "tag": "echo.commit-result",
+      "source": "D I 6.2; O 16.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "branch_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "commit_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "committed",
+          "type": "bool",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "status",
+          "type": "DegradedStatus",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {}
+    },
+    "UserUtterance": {
+      "tag": "echo.user-utterance",
+      "source": "CONTRACTS 4.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "lang",
+          "type": "Lang",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "asr_confidence",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "duration_ms",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "audio_ref",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "UserText": {
+      "tag": "echo.user-text",
+      "source": "CONTRACTS 4.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "UserRetraction": {
+      "tag": "echo.user-retraction",
+      "source": "CONTRACTS 4.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "target_refs",
+          "type": "string",
+          "number": 2,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "TouchObservation": {
+      "tag": "echo.touch",
+      "source": "CONTRACTS 4.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "region",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "TouchKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "speed",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "DesktopObservation": {
+      "tag": "echo.desktop-observation",
+      "source": "CONTRACTS 4.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "DesktopKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "process_name",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "dnd",
+          "type": "DndState",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "idle_ms",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "CodexSessionObservation": {
+      "tag": "echo.codex-session",
+      "source": "CONTRACTS 4.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event",
+          "type": "SessionEvent",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "cwd_label",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "SpeechDelivery": {
+      "tag": "echo.speech-delivery",
+      "source": "CONTRACTS 4.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "output_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "delivered_chunks",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "played_chars",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "status",
+          "type": "DeliveryStatus",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "BodyActionResult": {
+      "tag": "echo.body-action-result",
+      "source": "CONTRACTS 4.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "status",
+          "type": "ActionStatus",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "TerminalMaintenance": {
+      "tag": "echo.terminal-maintenance",
+      "source": "CONTRACTS 4.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "MaintenanceKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "Receipt": {
+      "tag": "echo.receipt",
+      "source": "CONTRACTS 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "stable_source_key",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "stage",
+          "type": "ReceiptStage",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "OutputChunk": {
+      "tag": "echo.output-chunk",
+      "source": "CONTRACTS 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "output_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "chunk_index",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "lang",
+          "type": "Lang",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "speech_mode",
+          "type": "SpeechMode",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "strict",
+          "type": "bool",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "OutputEnd": {
+      "tag": "echo.output-end",
+      "source": "CONTRACTS 4.3; ADR 0007 hand example",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "output_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "reason",
+          "type": "OutputEndReason",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "Anchor": {
+      "tag": "echo.anchor",
+      "source": "CONTRACTS 2.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "AnchorKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "hwnd",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "offset_x",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "side",
+          "type": "Side",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "along",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {
+        "cases": {
+          "1": {
+            "required": [
+              "x",
+              "y"
+            ]
+          },
+          "2": {
+            "required": [
+              "hwnd",
+              "offset_x"
+            ]
+          },
+          "3": {
+            "required": [
+              "side",
+              "along"
+            ]
+          },
+          "4": {
+            "required": [
+              "along"
+            ]
+          }
+        }
+      }
+    },
+    "GazeTarget": {
+      "tag": "echo.gaze-target",
+      "source": "CONTRACTS 2.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "GazeKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {
+        "cases": {
+          "1": {},
+          "2": {},
+          "3": {},
+          "4": {},
+          "5": {
+            "required": [
+              "x",
+              "y"
+            ]
+          }
+        }
+      }
+    },
+    "BodyAction": {
+      "tag": "echo.body-action",
+      "source": "CONTRACTS 2.1,4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "BodyActionKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "motion_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "anchor",
+          "type": "Anchor",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "platform_id",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "side",
+          "type": "Side",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "target",
+          "type": "GazeTarget",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "hold_ms",
+          "type": "uint64",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {
+        "cases": {
+          "1": {
+            "required": [
+              "motion_id"
+            ]
+          },
+          "2": {
+            "required": [
+              "anchor"
+            ]
+          },
+          "3": {
+            "required": [
+              "platform_id"
+            ]
+          },
+          "4": {},
+          "5": {},
+          "6": {
+            "required": [
+              "side"
+            ],
+            "values": {
+              "side": [
+                1,
+                2
+              ]
+            }
+          },
+          "7": {
+            "required": [
+              "target"
+            ],
+            "optional": [
+              "hold_ms"
+            ]
+          }
+        }
+      }
+    },
+    "ActionRequest": {
+      "tag": "echo.action-request",
+      "source": "CONTRACTS 4.3; O 16.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "credential",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action",
+          "type": "BodyAction",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "expires_at_ns",
+          "type": "sint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ApprovalRequest": {
+      "tag": "echo.approval-request",
+      "source": "CONTRACTS 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "approval_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "tier",
+          "type": "ToolTier",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "expires_at_ns",
+          "type": "sint64",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "RunState": {
+      "tag": "echo.run-state",
+      "source": "CONTRACTS 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "states",
+          "type": "RunStatus",
+          "number": 2,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "speech_mode",
+          "type": "SpeechMode",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "strict",
+          "type": "bool",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "lineage",
+          "type": "Lineage",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "born_at",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "autonomy",
+          "type": "Autonomy",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "reasons",
+          "type": "string",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ExpressionWeight": {
+      "tag": "echo.expression-weight",
+      "source": "CONTRACTS 7",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "emotion",
+          "type": "Emotion",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "weight",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 0.4
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "BodyReadout": {
+      "tag": "echo.body-readout",
+      "source": "CONTRACTS 7",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "expression_baseline",
+          "type": "ExpressionWeight",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "emotion"
+        },
+        {
+          "name": "idle_tempo",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.5,
+          "max": 1.5
+        },
+        {
+          "name": "ear_pose",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "tail_amplitude",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "gaze_sociability",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "posture",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "Readout": {
+      "tag": "echo.readout",
+      "source": "CONTRACTS 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "readout",
+          "type": "BodyReadout",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "projected_at_ns",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "QueryFilter": {
+      "tag": "echo.query-filter",
+      "source": "CONTRACTS 4.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "from",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "kinds",
+          "type": "string",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "include_retracted",
+          "type": "bool",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "QueryItem": {
+      "tag": "echo.query-item",
+      "source": "CONTRACTS 4.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ref",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "at",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "retracted",
+          "type": "bool",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "Query": {
+      "tag": "echo.query",
+      "source": "CONTRACTS 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "query_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "QueryKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "filter",
+          "type": "QueryFilter",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "limit",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "QueryResult": {
+      "tag": "echo.query-result",
+      "source": "CONTRACTS 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "query_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "status",
+          "type": "QueryStatus",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "items",
+          "type": "QueryItem",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ApprovalDecision": {
+      "tag": "echo.approval-decision",
+      "source": "CONTRACTS 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "approval_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "decision",
+          "type": "ApprovalChoice",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "OutputCancel": {
+      "tag": "echo.output-cancel",
+      "source": "CONTRACTS 4.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "output_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "HookCoefficients": {
+      "tag": "echo.hook-coefficients",
+      "source": "O 13.1,13.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "hook",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "coefficients",
+          "type": "double",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "shape",
+          "type": "uint32",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "dtype",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "conversion_tolerance",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ModulationEnvelope": {
+      "tag": "echo.modulation",
+      "source": "O 13.2; S 19",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "projected_at_ns",
+          "type": "uint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "x_digest",
+          "type": "bytes",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "r_digest",
+          "type": "bytes",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "theta_digest",
+          "type": "bytes",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "model",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tokenizer",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "hooks",
+          "type": "HookCoefficients",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "total_bound",
+          "type": "double",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "effect_receipt_digest",
+          "type": "bytes",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "TaskInput": {
+      "tag": "echo.task-input",
+      "source": "CONTRACTS 5.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "current_input",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "protocol_version",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "protocol_content",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "c_task",
+          "type": "FactProjection",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "max_tokens",
+          "type": "uint64",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "max_duration_ns",
+          "type": "uint64",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ActionPlan": {
+      "tag": "echo.action-plan",
+      "source": "S 11,20",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "plan_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "task_version",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "protocol_version",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "output_or_tool_parameters",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "expected_scope",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "dependencies",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "deadline_ns",
+          "type": "sint64",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ActionLifecycle": {
+      "tag": "echo.action-lifecycle",
+      "source": "S 20; O 16.3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "status",
+          "type": "ActionStatus",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "plan",
+          "type": "ActionPlan",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "actual_result",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "PlanAndCarrierReceipt": {
+      "tag": "echo.plan-carrier-receipt",
+      "source": "CONTRACTS 5.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "output_chunks",
+          "type": "OutputChunk",
+          "number": 2,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_plan",
+          "type": "ActionPlan",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "speech_mode",
+          "type": "SpeechMode",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "strict",
+          "type": "bool",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "model_hash",
+          "type": "bytes",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "tokenizer_hash",
+          "type": "bytes",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "carrier_receipt",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "projection_version",
+          "type": "string",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "intermediate_results",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "usage",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    }
+  },
+  "enums": {
+    "Lineage": {
+      "LINEAGE_UNSPECIFIED": 0,
+      "REHEARSAL": 1,
+      "LIFE": 2
+    },
+    "RunStatus": {
+      "RUN_UNSPECIFIED": 0,
+      "NORMAL": 1,
+      "NO_GROWTH": 2,
+      "CORE_UNMODULATED": 3,
+      "CORE_QUARANTINED": 4,
+      "AX_DEGRADED": 5,
+      "IRL_DEGRADED": 6,
+      "TEXT_PROJECTED": 7,
+      "MODULATION_NOT_ENABLED": 8,
+      "STORAGE_RECOVERY_FAULT": 9
+    },
+    "FailureCode": {
+      "FAILURE_UNSPECIFIED": 0,
+      "GROWTH_NOT_ENABLED_V1": 1,
+      "AX_UNAVAILABLE": 2,
+      "IRL_FAILED": 3,
+      "CARRIER_UNAVAILABLE": 4,
+      "EVIDENCE_INCOMPLETE": 5,
+      "UNSUPPORTED_SLICE": 6,
+      "UNKNOWN_OVERLAP": 7,
+      "DEPENDENCY_FAULT": 8,
+      "STRUCTURAL_FAULT": 9,
+      "VERSION_MISMATCH": 10,
+      "NUMERIC_INVALID": 11,
+      "RESOURCE_LIMIT": 12,
+      "MODULATION_DISABLED": 13
+    },
+    "EventKind": {
+      "EVENT_UNSPECIFIED": 0,
+      "STARTUP": 1,
+      "OBSERVATION": 2,
+      "ACTION_REQUEST": 3,
+      "EXECUTION_RESULT": 4,
+      "CONSEQUENCE": 5,
+      "CANCEL": 6,
+      "CORRECTION": 7,
+      "MAINTENANCE": 8
+    },
+    "Derivation": {
+      "DERIVATION_UNSPECIFIED": 0,
+      "VERBATIM": 1,
+      "NORMALIZED": 2,
+      "RESOLVED": 3,
+      "INFERRED": 4
+    },
+    "EpistemicType": {
+      "EPISTEMIC_UNSPECIFIED": 0,
+      "USER_ASSERTION": 1,
+      "USER_SELF_REPORT": 2,
+      "QUOTATION": 3,
+      "TOOL_OUTPUT": 4,
+      "SYSTEM_RECORD": 5,
+      "MODEL_INFERENCE": 6,
+      "EPISTEMIC_UNKNOWN": 7
+    },
+    "ResolutionState": {
+      "RESOLUTION_UNSPECIFIED": 0,
+      "UNRESOLVED": 1,
+      "EXISTING": 2,
+      "PROVISIONAL": 3
+    },
+    "QueryStatus": {
+      "QUERY_UNSPECIFIED": 0,
+      "OK": 1,
+      "NO_MATCH": 2,
+      "INDEX_LAGGING": 3,
+      "DENIED": 4,
+      "OBJECT_MISSING": 5,
+      "BUDGET_EXHAUSTED": 6
+    },
+    "SpeechMode": {
+      "SPEECH_UNSPECIFIED": 0,
+      "A_LOCAL_STRICT": 1,
+      "B_REMOTE_PROJECTED": 2,
+      "C_DRAFT_REWRITE": 3
+    },
+    "QualificationBranch": {
+      "BRANCH_UNSPECIFIED": 0,
+      "MULTI_ROOT": 1,
+      "SINGLE_ROOT": 2
+    },
+    "ActionStatus": {
+      "ACTION_UNSPECIFIED": 0,
+      "PLANNED": 1,
+      "REQUESTED": 2,
+      "AUTHORIZED": 3,
+      "DISPATCHING": 4,
+      "SUCCEEDED": 5,
+      "FAILED": 6,
+      "CANCELLED_ACTION": 7,
+      "UNKNOWN_ACTION": 8
+    },
+    "EffectEndpoint": {
+      "ENDPOINT_UNSPECIFIED": 0,
+      "F_EVENT": 1,
+      "F_TIME": 2,
+      "J_DIRECT": 3,
+      "G_META": 4
+    },
+    "EffectOwner": {
+      "OWNER_UNSPECIFIED": 0,
+      "R_OWNER": 1,
+      "THETA_OWNER": 2
+    },
+    "CouplingPhase": {
+      "PHASE_UNSPECIFIED": 0,
+      "ZERO": 1,
+      "SHADOW": 2,
+      "QUALIFIED_SHADOW": 3,
+      "ACTIVE": 4,
+      "SUSPENDED": 5,
+      "SUPERSEDED": 6
+    },
+    "TrialOutcome": {
+      "TRIAL_UNSPECIFIED": 0,
+      "QUALIFIED": 1,
+      "REJECTED_TRIAL": 2,
+      "NON_IDENTIFIABLE": 3,
+      "CONTINUE_SHADOW": 4
+    },
+    "DistinctionForm": {
+      "FORM_UNSPECIFIED": 0,
+      "EXEMPLAR": 1,
+      "PATTERN": 2
+    },
+    "DistinctionStatus": {
+      "DISTINCTION_UNSPECIFIED": 0,
+      "DISTINCTION_PROVISIONAL": 1,
+      "DISTINCTION_QUALIFIED": 2,
+      "DISTINCTION_SUPERSEDED": 3
+    },
+    "TraceLifecycle": {
+      "LIFECYCLE_UNSPECIFIED": 0,
+      "LIVE": 1,
+      "RETIRED": 2
+    },
+    "EvidenceRelation": {
+      "EVIDENCE_UNSPECIFIED": 0,
+      "SUPPORT": 1,
+      "COUNTEREVIDENCE": 2,
+      "RESOLVES_TRIAL": 3,
+      "EVIDENCE_UNKNOWN": 4
+    },
+    "Lang": {
+      "LANG_UNSPECIFIED": 0,
+      "ZH": 1,
+      "EN": 2,
+      "JA": 3
+    },
+    "TouchKind": {
+      "TOUCH_UNSPECIFIED": 0,
+      "CLICK": 1,
+      "DOUBLE_CLICK": 2,
+      "PAT": 3,
+      "DRAG_START": 4,
+      "DRAG_END": 5,
+      "FLING": 6
+    },
+    "DesktopKind": {
+      "DESKTOP_UNSPECIFIED": 0,
+      "FOREGROUND_CHANGED": 1,
+      "IDLE_STARTED": 2,
+      "IDLE_ENDED": 3,
+      "DND_CHANGED": 4,
+      "SESSION_LOCKED": 5,
+      "SESSION_UNLOCKED": 6,
+      "MEETING_STARTED": 7,
+      "MEETING_ENDED": 8
+    },
+    "DndState": {
+      "DND_UNSPECIFIED": 0,
+      "NONE": 1,
+      "FULLSCREEN": 2,
+      "PRESENTATION": 3,
+      "BUSY": 4,
+      "MEETING": 5,
+      "QUIET_HOURS": 6
+    },
+    "SessionEvent": {
+      "SESSION_UNSPECIFIED": 0,
+      "SESSION_START": 1,
+      "PERMISSION_REQUEST": 2,
+      "STOP": 3
+    },
+    "DeliveryStatus": {
+      "DELIVERY_UNSPECIFIED": 0,
+      "DELIVERED": 1,
+      "PARTIAL": 2,
+      "CANCELLED_DELIVERY": 3,
+      "UNKNOWN_DELIVERY": 4
+    },
+    "MaintenanceKind": {
+      "MAINTENANCE_UNSPECIFIED": 0,
+      "STARTED": 1,
+      "STOPPING": 2,
+      "MODE_SWITCHED": 3,
+      "CLOCK_EPOCH": 4
+    },
+    "ReceiptStage": {
+      "RECEIPT_UNSPECIFIED": 0,
+      "RECEIVED_DURABLE": 1,
+      "CORE_COMMITTED": 2,
+      "FILTERED": 3,
+      "REJECTED": 4
+    },
+    "OutputEndReason": {
+      "OUTPUT_END_UNSPECIFIED": 0,
+      "DONE": 1,
+      "CANCELLED": 2,
+      "ERROR": 3
+    },
+    "AnchorKind": {
+      "ANCHOR_UNSPECIFIED": 0,
+      "FREE": 1,
+      "WINDOW_EDGE": 2,
+      "SCREEN_EDGE": 3,
+      "TASKBAR": 4
+    },
+    "Side": {
+      "SIDE_UNSPECIFIED": 0,
+      "LEFT": 1,
+      "RIGHT": 2,
+      "BOTTOM": 3
+    },
+    "GazeKind": {
+      "GAZE_UNSPECIFIED": 0,
+      "USER": 1,
+      "CURSOR": 2,
+      "AWAY": 3,
+      "WINDOW": 4,
+      "POINT": 5
+    },
+    "BodyActionKind": {
+      "BODY_UNSPECIFIED": 0,
+      "MOTION": 1,
+      "GO_TO": 2,
+      "SIT": 3,
+      "SLEEP": 4,
+      "WAKE": 5,
+      "PEEK": 6,
+      "GAZE": 7
+    },
+    "ToolTier": {
+      "TIER_UNSPECIFIED": 0,
+      "T0": 1,
+      "T1": 2,
+      "T2": 3,
+      "T3": 4
+    },
+    "Autonomy": {
+      "AUTONOMY_UNSPECIFIED": 0,
+      "ACTIVE_AUTONOMY": 1,
+      "PAUSED": 2
+    },
+    "Emotion": {
+      "EMOTION_UNSPECIFIED": 0,
+      "NEUTRAL": 1,
+      "HAPPY": 2,
+      "ANGRY": 3,
+      "SAD": 4,
+      "RELAXED": 5,
+      "SURPRISED": 6,
+      "SMUG": 7,
+      "SHY": 8,
+      "SLEEPY": 9,
+      "POUT": 10,
+      "EXCITED": 11,
+      "WORRIED": 12
+    },
+    "QueryKind": {
+      "QUERY_KIND_UNSPECIFIED": 0,
+      "MEMORY": 1,
+      "ACTIONS": 2,
+      "RUN_HISTORY": 3
+    },
+    "ApprovalChoice": {
+      "APPROVAL_UNSPECIFIED": 0,
+      "ALLOW_ONCE": 1,
+      "ALLOW_ALWAYS": 2,
+      "DENY": 3
+    }
+  }
+}

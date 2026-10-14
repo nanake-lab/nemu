@@ -51,3 +51,18 @@ These decisions clear the user-decision gate for the bounded P0-06 baseline. W00
 
 This is a new encoding-contract review, not a reopening of W00-C01 or W00-C02.
 No missing Review_and_Remediation text is reconstructed. ADR 0006 remains proposed.
+
+### W01-D01 approval — 2026-10-14
+
+The user approved ADR 0007 with amendments: independent frozen string type
+tags (tag changes require a new encoding version), a hand-calculated hex
+example defining complete-header hashing and repeated nested headers, and an
+explicit N3/genesis freeze point with backup/migration before birth and new
+encoding versions/migrations after genesis signing. S §6's separately
+versioned extensible audit-field rule is included. W01-D01's approval gate is
+cleared. All golden-vector and acceptance obligations remain; P5-01's PR must
+remain unmerged until all pass. C01/C02 decisions are unchanged.
+
+## P5-01 approved implementation record — 2026-10-14
+
+ADR 0007 amendments have been implemented and cross-language checked. 78 source-mapped messages, independently frozen tags, separately versioned AuditExtension and source-backed R/G type-only definitions are in core/contracts/. Full mapping: reports/P5-01/IMPLEMENTED-MAP.md. D10.8/SYS21 evidence: reports/P5-01/acceptance/. No original specification has changed, and no growth runtime path has been connected. W01-D01 approval gate is closed; the existing W00-C01/W00-C02 dispositions are unchanged.

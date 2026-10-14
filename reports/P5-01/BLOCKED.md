@@ -28,3 +28,15 @@ records the pending contract review. C01/C02 are not reopened.
 Approval alone does not complete P5-01 or authorize its PR to merge before all
 acceptance criteria and CI pass. The missing upstream growth specifications and
 W09/W10 conflict remain separate. The next task in this chat remains P5-01.
+
+## Approval update — 2026-10-14
+
+The user approved ADR 0007 with amendments now recorded in that ADR and the
+diff register. The initial encoding approval blocker above is cleared.
+Implementation and all acceptance obligations remain open; the PR stays
+unmerged until every requirement passes. No new approval is requested for
+the already-authorized implementation.
+
+## 2026-10-14 implementation gate update
+
+ADR 0007 approval and all amendments are implemented. The earlier ADR approval blocker is closed. The 78-message IDL, generated DTOs/codecs and golden corpus are implemented; local D10.8/SYS21 and 27 checks pass (REPORT.md continuation and acceptance/). No remaining user-decision blocker in P5-01. Updating to latest main and final CI remain merge gates. C01 remains unresolved only for W09/W10.
