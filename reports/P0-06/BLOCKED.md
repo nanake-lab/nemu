@@ -19,3 +19,11 @@ Original System Plan §29 enumerates SYS01–SYS25; §32 says 24 system tests. A
 ## Independent work completed
 
 Five source hashes, E1–E14 register, toolchain and SQLite probe, scope/acceptance routing, specification mapping and report are complete. Source documents unchanged. Missing Review_and_Remediation remains the existing E12 item and is not newly treated as a v1.0 dependency. These decisions block P0-06 acceptance/merge, not the independent evidence already gathered.
+
+## User decision update — 2026-10-14
+
+- **W00-C01:** Option 2 selected. The bounded v1.0 baseline is accepted; the growth conflict remains unresolved, ADR 0006 remains **PROPOSED**, and v1.0 remains **NO-GROWTH**. This conflict blocks W09/W10 pending the user's later ruling, not P0-06 baseline acceptance.
+- **W00-C02:** S §32's “24” is confirmed as a count typo. Preserve all SYS01–SYS25 acceptance items.
+- **P5-01 direction:** Define qualification branches and single-root ledger fields only when grounded in the supplied specifications; types only, no runtime connection. A specification extension requires a separate ADR before implementation.
+
+The two P0-06 user-decision gates are now addressed. This addendum supersedes the pending-decision status above for P0-06; W00-C01 remains a future growth blocker.

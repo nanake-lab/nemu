@@ -61,3 +61,13 @@ All transitive names/versions/licenses are recorded in `verification-20261014T03
 ## 下一步
 
 PR must carry `needs-user` and remain unmerged. Await the two decisions above; record approval append-only, update branch against latest main, rerun relevant checks and CI, then merge only if all AGENTS conditions hold. Next queue card after P0-06 merge is P5-01 (also depends on already merged P0-02). Do not bypass this approval by starting its dependent work.
+
+## User decision addendum — 2026-10-14
+
+The user selected option 2 for W00-C01: accept this bounded v1.0 baseline while leaving the single-root versus multi-root growth conflict unresolved for later adjudication. ADR 0006 remains **PROPOSED** and is not adopted. v1.0 remains **NO-GROWTH**. The conflict blocks W09/W10 until the user rules on it; it does not block this bounded baseline. The user also confirmed W00-C02 as a count typo and directed that SYS01–SYS25 all remain in scope. The decision record is appended to `docs/traceability/diff-register.md`.
+
+For the next task, P5-01 may define qualification-branch types and single-root ledger fields only where the supplied specifications support them. Those types are not to be connected to the runtime path. Any specification extension requires a separate ADR before implementation. This is a scope direction for P5-01, not work performed by P0-06.
+
+## Post-decision local verification — 2026-10-14
+
+After merging the latest `origin/main` (`e9d4972`) into the task branch, `pwsh -File reports/P0-06/verify-baseline.ps1` passed. This rechecked all five original DOCX hashes and routing IDs, formatted and linted the isolated SQLite probe, ran it successfully (SQLite 3.53.2; WAL/FULL; rollback count 0; integrity `ok`; temporary storage removed), and passed `git diff --check`. Evidence: `reports/P0-06/verification-20261014T093842932Z/`. CI for the updated PR head remains to be observed before merge.
