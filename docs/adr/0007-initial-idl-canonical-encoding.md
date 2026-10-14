@@ -10,11 +10,11 @@ CanonicalV1 authority encoding. Delivery (D) Part I §6 requires one versioned
 IDL, explicit compatibility rules and generated/validated language types.
 These sources specify encoding properties, but do not assign wire field
 numbers, a fixed endian, type tags, presence bytes or a hash-domain prefix.
-The repository currently contains only an IDL placeholder.
+At proposal time the repository contained only an IDL placeholder.
 
 AGENTS §2 restricts `core/contracts/` changes to contract-change work with an
 ADR; §7 and CONTRACTS' modification rules require user approval. This ADR
-proposes the initial encoding choices before publishing authoritative schemas.
+records the approved initial encoding choices for authoritative schemas.
 It does not change the original specifications or their precedence.
 
 ## Approved decision (including the user's amendments)
@@ -142,7 +142,7 @@ missing Review_and_Remediation content. Such additions need their own review.
 
 ## Alternatives
 
-1. **Recommended:** approve this explicit encoding contract, then finish all
+1. **Selected:** approve this explicit encoding contract, then finish all
    schemas and cross-language golden vectors under P5-01.
 2. Provide a different exact encoding policy before publishing the schemas.
 3. Defer the wire contract; keep the independent validated numeric types,
@@ -155,8 +155,8 @@ compliant alternatives under S §6 and D Part I §6.4.
 
 This makes implementation choices reviewable and gives all three languages one
 byte contract. It creates no authority store or runtime route. The decoder and
-golden corpus still need implementation after approval; this proposal is not
-evidence of cross-language correctness.
+golden corpus are implemented in P5-01. Approval itself is not evidence of
+cross-language correctness; the measured results are in reports/P5-01/acceptance/.
 
 Acceptance remains D Part I §10.8 and SYS21, with at least three legal and three
 illegal vectors for **every** message, plus malformed UTF-8, duplicate fields,
