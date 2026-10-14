@@ -42,3 +42,12 @@ Both discrepancies were also checked against `word/document.xml` in the hashed o
 - **W00-C02:** The user confirmed that S §32's “24” is a count typo. Use the complete SYS01–SYS25 list in S §29 and retain all 25 acceptance items, including SYS25. No test ID or threshold is removed or changed.
 
 These decisions clear the user-decision gate for the bounded P0-06 baseline. W00-C01 remains an unresolved growth blocker for W09/W10.
+
+## P5-01 initial contract proposal — 2026-10-14
+
+| ID | Source | Proposed engineering choice | Status |
+| --- | --- | --- | --- |
+| W01-D01 | S §6; D Part I §§6,10.8; AGENTS §§2,7; CONTRACTS modification rules | ADR 0007 makes the initial Protobuf/CanonicalV1 presence, field order, endian, type tag, hash domain and strict-decoding rules explicit before publishing IDL. Source semantics remain unchanged. | Proposed contract; awaiting user approval. Blocks initial authoritative wire publication, not the independent numeric helpers. |
+
+This is a new encoding-contract review, not a reopening of W00-C01 or W00-C02.
+No missing Review_and_Remediation text is reconstructed. ADR 0006 remains proposed.

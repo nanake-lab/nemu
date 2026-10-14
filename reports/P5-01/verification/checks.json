@@ -1,0 +1,22 @@
+[
+  {
+    "exitCode": 0,
+    "check": "cargo fmt --all -- --check"
+  },
+  {
+    "exitCode": 0,
+    "check": "cargo clippy --workspace --all-targets --locked -- -D warnings"
+  },
+  {
+    "exitCode": 0,
+    "check": "cargo test --workspace --locked"
+  },
+  {
+    "exitCode": 0,
+    "check": "git diff --check"
+  },
+  {
+    "exitCode": 0,
+    "check": "frozen specifications and ADR 0006 unchanged"
+  }
+]
