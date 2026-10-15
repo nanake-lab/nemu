@@ -1,0 +1,20 @@
+C:\Users\nanake\AppData\Local\Temp\nemu-evidence-tests-503568e9-f39a-4c0d-a686-7d0abb193b85\nemu-evidence\fixture\1\windows
+Exception: D:\Dev\nemu\tools\scaffold\windows-evidence.ps1:14
+Line |
+  14 |  … teralPath $root) { throw "Evidence directory already exists: $root" }
+     |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Evidence directory already exists:
+     | C:\Users\nanake\AppData\Local\Temp\nemu-evidence-tests-503568e9-f39a-4c0d-a686-7d0abb193b85\nemu-evidence\fixture\1\windows
+Verified 2 current-attempt evidence files
+Exception: D:\Dev\nemu\tools\scaffold\windows-evidence.ps1:112
+Line |
+ 112 |  $manifest = @(Get-ChildItem -LiteralPath $root -Recurse -File | Where …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Not generated in this attempt: fixture.txt
+Exception: D:\Dev\nemu\tools\scaffold\windows-evidence.ps1:108
+Line |
+ 108 |  … .sha -ne (git rev-parse HEAD)) { throw 'Evidence identity mismatch' }
+     |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Evidence identity mismatch
+Verified 2 current-attempt evidence files
+PASS: fresh evidence accepted; duplicate directory, stale timestamp and wrong attempt rejected.
