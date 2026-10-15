@@ -1,6 +1,7 @@
 import { app, BrowserWindow, session } from 'electron';
 import { join, resolve, relative, isAbsolute, basename } from 'node:path';
 import { tmpdir } from 'node:os';
+import { installDiagnostics } from './diagnostics.js';
 
 // The scaffold never opens Nemu's rehearsal or life storage.
 const scratch = process.env.NEMU_SCAFFOLD_USER_DATA;
@@ -13,6 +14,7 @@ if (
   throw new Error('Start through pnpm dev or the smoke test with an isolated temporary directory.');
 }
 app.setPath('userData', scratch);
+installDiagnostics();
 
 async function openWindow(kind: 'stage' | 'panel'): Promise<void> {
   const stage = kind === 'stage';
@@ -47,7 +49,9 @@ app
     );
     await Promise.all([openWindow('stage'), openWindow('panel')]);
   })
-  .catch(() => {
+  .catch((error: unknown) => {
+    if (process.env.NEMU_EVIDENCE_DIR)
+      process.stderr.write(`Scaffold startup failed: ${String(error)}\n`);
     app.exit(1);
   });
 app.on('window-all-closed', () => app.quit());

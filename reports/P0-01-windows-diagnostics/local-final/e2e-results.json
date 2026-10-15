@@ -1,0 +1,204 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\nanake\\AppData\\Local\\fnm_multishells\\21272_1792043617386\\node.exe",
+      "D:\\Dev\\nemu\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "apps/desktop/playwright.config.ts"
+    ],
+    "configFile": "D:\\Dev\\nemu\\apps\\desktop\\playwright.config.ts",
+    "rootDir": "D:/Dev/nemu/apps/desktop/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/nanake/AppData/Local/Temp/nemu-evidence/local-diagnostics-20261015-final/1/windows/test-results/electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/Dev/nemu/apps/desktop/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-evidence\\local-diagnostics-20261015-final\\1\\windows\\test-results\\electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "D:\\Dev\\nemu\\apps\\desktop\\tests",
+        "snapshotDir": "D:\\Dev\\nemu\\apps\\desktop\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {},
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-evidence\\local-diagnostics-20261015-final\\1\\windows\\e2e-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "two visible isolated windows; transparent stage; no core storage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1449,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launching> \"D:\\Dev\\nemu\\node_modules\\.pnpm\\electron@44.7.0\\node_modules\\electron\\dist\\electron.exe\" \"-r\" \"D:\\Dev\\nemu\\node_modules\\.pnpm\\playwright-core@1.64.0\\node_modules\\playwright-core\\lib\\server\\electron\\loader.js\" \"--inspect=0\" \"--remote-debugging-port=0\" \"D:\\Dev\\nemu\\apps\\desktop\" \"--use-gl=angle\" \"--use-angle=swiftshader\" \"--enable-unsafe-swiftshader\"  \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launched> pid=23920 \u001b[30m+10ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920][out]  \u001b[30m+23ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920][err] Debugger listening on ws://127.0.0.1:64820/ce06fa6c-7807-461c-9e9f-6232bce0d058 \u001b[30m+14ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:64820/ce06fa6c-7807-461c-9e9f-6232bce0d058 \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:64820/ce06fa6c-7807-461c-9e9f-6232bce0d058 \u001b[30m+6ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920][err] Debugger attached. \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920][err]  \u001b[30m+42ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920][err] DevTools listening on ws://127.0.0.1:64822/devtools/browser/d537afcc-4da7-4751-a6aa-d716a3226219 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:64822/devtools/browser/d537afcc-4da7-4751-a6aa-d716a3226219 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:64822/devtools/browser/d537afcc-4da7-4751-a6aa-d716a3226219 \u001b[30m+5ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnecting> ws://127.0.0.1:64820/ce06fa6c-7807-461c-9e9f-6232bce0d058 \u001b[30m+569ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920][err] Debugger ending on ws://127.0.0.1:64820/ce06fa6c-7807-461c-9e9f-6232bce0d058 \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:64820/ce06fa6c-7807-461c-9e9f-6232bce0d058 code=1005 reason= \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:64822/devtools/browser/d537afcc-4da7-4751-a6aa-d716a3226219 code=1006 reason= \u001b[30m+77ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920] <process did exit: exitCode=0, signal=null> \u001b[30m+9ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920] starting temporary directories cleanup \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=23920] finished temporary directories cleanup \u001b[30m+1ms\u001b[0m\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-15T11:37:13.124Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-29212982cc077c56ffc7",
+          "file": "smoke.spec.ts",
+          "line": 9,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T11:37:12.583Z",
+    "duration": 2036.783,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

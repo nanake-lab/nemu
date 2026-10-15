@@ -1,0 +1,32 @@
+{
+  "identical": true,
+  "count": 26,
+  "assertions": [
+    "expect.poll(()=>launched.windows().length).toBe(2)",
+    "expect.poll(()=>launched.windows().length)",
+    "expect(stage).toBeDefined()",
+    "expect(stage)",
+    "expect(panel).toBeDefined()",
+    "expect(panel)",
+    "expect(stage.getByRole('img',{name:'Stageplaceholder'})).toBeVisible()",
+    "expect(stage.getByRole('img',{name:'Stageplaceholder'}))",
+    "expect(panel.getByRole('heading',{name:'Nemu'})).toBeVisible()",
+    "expect(panel.getByRole('heading',{name:'Nemu'}))",
+    "expect(panel.getByLabel('Message')).toHaveValue('Draftonly')",
+    "expect(panel.getByLabel('Message'))",
+    "expect(panel.getByRole('button',{name:'Send'})).toBeDisabled()",
+    "expect(panel.getByRole('button',{name:'Send'}))",
+    "expect(windows.dataPath).toContain('nemu-scaffold-')",
+    "expect(windows.dataPath)",
+    "expect(window.visible).toBe(true)",
+    "expect(window.visible)",
+    "expect(nativePixels.data[3]).toBe(0)",
+    "expect(nativePixels.data[3])",
+    "expect(awaitstage.evaluate(()=>getComputedStyle(document.body).backgroundColor)).toBe('rgba(0,0,0,0)',)",
+    "expect(awaitstage.evaluate(()=>getComputedStyle(document.body).backgroundColor))",
+    "expect(awaitstage.evaluate(()=>typeofReflect.get(window,'require'))).toBe('undefined')",
+    "expect(awaitstage.evaluate(()=>typeofReflect.get(window,'require')))",
+    "expect(access(scratch)).rejects.toThrow()",
+    "expect(access(scratch))"
+  ]
+}

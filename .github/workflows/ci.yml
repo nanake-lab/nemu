@@ -107,14 +107,23 @@ jobs:
         with:
           global-json-file: executors/office-connector/global.json
       - run: pnpm exec playwright install chromium
-      - run: pnpm test:transport
-      - run: ./tools/scaffold/test-windows-isolation.ps1
-      - run: pnpm test:e2e
-      - run: pnpm test:visual
+      - name: Initialize current-run Windows evidence
+        run: ./tools/scaffold/windows-evidence.ps1 -Mode Init
+      - name: Evidence provenance regression tests
+        run: pwsh -NoProfile -File tools/scaffold/windows-evidence.tests.ps1
+      - name: Snapshot timing and repository filtering checks
+        run: node --test tools/scaffold/window-wait-diagnostics.test.mjs
+      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport
+      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation
+      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e
+      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual
+      - name: Verify Windows evidence provenance
+        id: evidence
+        if: always() && env.NEMU_EVIDENCE_DIR != ''
+        run: ./tools/scaffold/windows-evidence.ps1 -Mode Verify
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: always()
+        if: always() && steps.evidence.outcome == 'success'
         with:
-          name: windows-P0-01-evidence
-          path: |
-            reports/P0-01/
-            apps/desktop/test-results/
+          name: windows-P0-01-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.NEMU_EVIDENCE_DIR }}/
+          if-no-files-found: error
