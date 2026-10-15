@@ -1,0 +1,137 @@
+[
+  {
+    "name": "D10.8-SYS21",
+    "command": "python core/contracts/verify.py",
+    "exit_code": 0
+  },
+  {
+    "name": "rust-fmt",
+    "command": "cargo fmt --all -- --check",
+    "exit_code": 0
+  },
+  {
+    "name": "rust-clippy",
+    "command": "cargo clippy --workspace --all-targets --locked -- -D warnings",
+    "exit_code": 0
+  },
+  {
+    "name": "rust-test",
+    "command": "cargo test --workspace --locked",
+    "exit_code": 0
+  },
+  {
+    "name": "pnpm-lint",
+    "command": "pnpm lint",
+    "exit_code": 0
+  },
+  {
+    "name": "pnpm-typecheck",
+    "command": "pnpm typecheck",
+    "exit_code": 0
+  },
+  {
+    "name": "pnpm-test",
+    "command": "pnpm test",
+    "exit_code": 0
+  },
+  {
+    "name": "pnpm-build",
+    "command": "pnpm build",
+    "exit_code": 0
+  },
+  {
+    "name": "pnpm-test-contracts",
+    "command": "pnpm test:contracts",
+    "exit_code": 0
+  },
+  {
+    "name": "contract-ruff",
+    "command": "uv run --project core/contracts --locked ruff check core/contracts workers/irl/generated/echo",
+    "exit_code": 0
+  },
+  {
+    "name": "contract-mypy",
+    "command": "uv run --project core/contracts --locked mypy --strict core/contracts/generate.py core/contracts/fixture_inputs.py core/contracts/adversarial.py core/contracts/verify.py workers/irl/generated/echo",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-irl-ruff",
+    "command": "uv run --locked ruff check .",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-irl-mypy",
+    "command": "uv run --locked mypy --strict src tests",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-irl-test",
+    "command": "uv run --locked pytest",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-irl-generated-mypy",
+    "command": "uv run --locked mypy --strict generated/echo",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-drive-ruff",
+    "command": "uv run --locked ruff check .",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-drive-mypy",
+    "command": "uv run --locked mypy --strict src tests",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-drive-test",
+    "command": "uv run --locked pytest",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-drive-generated-mypy",
+    "command": "uv run --locked mypy --strict generated/echo",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-model-adapter-ruff",
+    "command": "uv run --locked ruff check .",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-model-adapter-mypy",
+    "command": "uv run --locked mypy --strict src tests",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-model-adapter-test",
+    "command": "uv run --locked pytest",
+    "exit_code": 0
+  },
+  {
+    "name": "workers-model-adapter-generated-mypy",
+    "command": "uv run --locked mypy --strict generated/echo",
+    "exit_code": 0
+  },
+  {
+    "name": "services-voice-sidecar-ruff",
+    "command": "uv run --locked ruff check .",
+    "exit_code": 0
+  },
+  {
+    "name": "services-voice-sidecar-mypy",
+    "command": "uv run --locked mypy --strict src tests",
+    "exit_code": 0
+  },
+  {
+    "name": "services-voice-sidecar-test",
+    "command": "uv run --locked pytest",
+    "exit_code": 0
+  },
+  {
+    "name": "frozen-specs",
+    "command": "git diff --exit-code origin/main -- docs/echo-core/original docs/ARCHITECTURE.md docs/CONTRACTS.md docs/adr/0006-single-root-spec-conflict.md",
+    "exit_code": 0
+  }
+]

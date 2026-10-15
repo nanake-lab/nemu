@@ -29,7 +29,8 @@
     "format:check": "prettier --check .",
     "test:transport": "node --test tools/scaffold/transport.test.mjs",
     "ci:budget": "node tools/scaffold/ci-budget.mjs",
-    "test:contracts": "vitest run --config packages/contracts/vitest.config.ts --coverage"
+    "test:contracts": "vitest run --config packages/contracts/vitest.config.ts --coverage",
+    "test:core-contracts": "python core/contracts/verify.py"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

@@ -1,0 +1,86 @@
+$ pnpm -r build
+executors/codex-bridge build$ tsc -p tsconfig.json
+apps/desktop build$ electron-vite build
+apps/stage build$ vite build
+apps/panel build$ vite build
+apps/stage build: vite v7.3.7 building client environment for production...
+apps/panel build: vite v7.3.7 building client environment for production...
+apps/stage build: transforming...
+apps/panel build: transforming...
+apps/stage build: ✓ 4 modules transformed.
+apps/stage build: rendering chunks...
+apps/stage build: computing gzip size...
+apps/stage build: dist/index.html                 0.64 kB │ gzip: 0.38 kB
+apps/stage build: dist/assets/index-UihYSZp0.css  0.23 kB │ gzip: 0.19 kB
+apps/stage build: dist/assets/index-CLNTcQeL.js   1.02 kB │ gzip: 0.56 kB
+apps/stage build: ✓ built in 103ms
+apps/stage build: Done
+packages/avatar-runtime build$ tsc -p tsconfig.json
+apps/desktop build: vite v7.3.7 building ssr environment for production...
+apps/desktop build: transforming...
+apps/desktop build: ✓ 1 modules transformed.
+apps/desktop build: rendering chunks...
+executors/codex-bridge build: Done
+packages/body build$ tsc -p tsconfig.json
+apps/desktop build: out/main/index.js  1.70 kB
+apps/desktop build: ✓ built in 112ms
+apps/desktop build: vite v7.3.7 building ssr environment for production...
+apps/desktop build: transforming...
+apps/desktop build: ✓ 1 modules transformed.
+apps/desktop build: Generated an empty chunk: "index".
+apps/desktop build: rendering chunks...
+apps/desktop build: out/preload/index.cjs  0.01 kB
+apps/desktop build: ✓ built in 15ms
+apps/desktop build: vite v7.3.7 building client environment for production...
+apps/desktop build: transforming...
+apps/panel build: ✓ 29 modules transformed.
+apps/panel build: rendering chunks...
+apps/panel build: computing gzip size...
+apps/panel build: dist/index.html                   0.64 kB │ gzip:  0.38 kB
+apps/panel build: dist/assets/index-CC1gZTDU.css    0.26 kB │ gzip:  0.20 kB
+apps/panel build: dist/assets/index-Bdkm1e0w.js   223.36 kB │ gzip: 69.70 kB
+apps/panel build: ✓ built in 1.11s
+apps/panel build: Done
+packages/contracts build$ tsc -p tsconfig.json
+packages/avatar-runtime build: Done
+packages/desktop-sense build$ tsc -p tsconfig.json
+apps/desktop build: ✓ 31 modules transformed.
+apps/desktop build: rendering chunks...
+packages/body build: Done
+packages/log build$ tsc -p tsconfig.json
+apps/desktop build: desktop/out/renderer/stage/index.html             0.64 kB
+apps/desktop build: desktop/out/renderer/panel/index.html             0.64 kB
+apps/desktop build: desktop/out/renderer/assets/stage-BlehUrWY.css    0.29 kB
+apps/desktop build: desktop/out/renderer/assets/panel-DTdR6wTX.css    0.34 kB
+apps/desktop build: desktop/out/renderer/assets/stage-BUW59zfN.js     0.37 kB
+apps/desktop build: desktop/out/renderer/assets/panel-CCRrQb_K.js   642.98 kB
+apps/desktop build: ✓ built in 1.10s
+apps/desktop build: Done
+packages/terminal build$ tsc -p tsconfig.json
+packages/desktop-sense build: Done
+packages/voice build$ tsc -p tsconfig.json
+packages/log build: Done
+spikes/stage-overlay build$ electron-vite build
+packages/terminal build: Done
+packages/voice build: Done
+spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+spikes/stage-overlay build: transforming...
+spikes/stage-overlay build: ✓ 1 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: out/main/index.js  8.46 kB
+spikes/stage-overlay build: ✓ built in 111ms
+packages/contracts build: Done
+spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+spikes/stage-overlay build: transforming...
+spikes/stage-overlay build: ✓ 1 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: out/preload/index.cjs  1.33 kB
+spikes/stage-overlay build: ✓ built in 13ms
+spikes/stage-overlay build: vite v7.3.7 building client environment for production...
+spikes/stage-overlay build: transforming...
+spikes/stage-overlay build: ✓ 8 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: ../../out/renderer/index.html                    6.52 kB
+spikes/stage-overlay build: ../../out/renderer/assets/index-P4FdMocT.js  1,448.72 kB
+spikes/stage-overlay build: ✓ built in 1.80s
+spikes/stage-overlay build: Done

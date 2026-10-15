@@ -1,0 +1,47 @@
+// REVIEW CANDIDATE ONLY. Not built, generated, imported, or authoritative.
+// ADR 0007 is PROPOSED. Existing semantic requirements only; no runtime route.
+syntax = "proto3";
+package nemu.echo.v1;
+
+// ADR 0005: lineage type, creation time, genesis manifest digest.
+// Timestamp representation must be finalized explicitly before publication.
+message LineageHeader {
+  optional uint32 schema_version = 1; // required; equals 1
+  optional Lineage lineage = 2;      // required
+  optional sint64 created_at_ns = 3; // required; proposed Unix epoch nanoseconds
+  optional bytes genesis_manifest_digest = 4; // required; SHA-256, 32 bytes
+}
+enum Lineage {
+  LINEAGE_UNSPECIFIED = 0; // invalid at the validated boundary
+  REHEARSAL = 1;
+  LIFE = 2;
+}
+
+// CONTRACTS §4.3; presence is distinct from a protobuf default value.
+message Receipt {
+  optional uint32 schema_version = 1; // required; equals 1
+  optional string stable_source_key = 2; // required
+  optional ReceiptStage stage = 3;       // required
+  optional string event_id = 4;
+  optional string reason = 5;
+}
+enum ReceiptStage {
+  RECEIPT_STAGE_UNSPECIFIED = 0; // invalid at the validated boundary
+  RECEIVED_DURABLE = 1;
+  CORE_COMMITTED = 2;
+  FILTERED = 3;
+  REJECTED = 4;
+}
+
+// CONTRACTS §4.3. Unknown values must be rejected before exposing the message.
+message OutputEnd {
+  optional uint32 schema_version = 1; // required; equals 1
+  optional string output_id = 2;      // required
+  optional OutputEndReason reason = 3; // required
+}
+enum OutputEndReason {
+  OUTPUT_END_UNSPECIFIED = 0; // invalid at the validated boundary
+  DONE = 1;
+  CANCELLED = 2;
+  ERROR = 3;
+}

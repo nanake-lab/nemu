@@ -42,3 +42,27 @@ Both discrepancies were also checked against `word/document.xml` in the hashed o
 - **W00-C02:** The user confirmed that S §32's “24” is a count typo. Use the complete SYS01–SYS25 list in S §29 and retain all 25 acceptance items, including SYS25. No test ID or threshold is removed or changed.
 
 These decisions clear the user-decision gate for the bounded P0-06 baseline. W00-C01 remains an unresolved growth blocker for W09/W10.
+
+## P5-01 initial contract proposal — 2026-10-14
+
+| ID | Source | Proposed engineering choice | Status |
+| --- | --- | --- | --- |
+| W01-D01 | S §6; D Part I §§6,10.8; AGENTS §§2,7; CONTRACTS modification rules | ADR 0007 makes the initial Protobuf/CanonicalV1 presence, field order, endian, type tag, hash domain and strict-decoding rules explicit before publishing IDL. Source semantics remain unchanged. | Proposed contract; awaiting user approval. Blocks initial authoritative wire publication, not the independent numeric helpers. |
+
+This is a new encoding-contract review, not a reopening of W00-C01 or W00-C02.
+No missing Review_and_Remediation text is reconstructed. ADR 0006 remains proposed.
+
+### W01-D01 approval — 2026-10-14
+
+The user approved ADR 0007 with amendments: independent frozen string type
+tags (tag changes require a new encoding version), a hand-calculated hex
+example defining complete-header hashing and repeated nested headers, and an
+explicit N3/genesis freeze point with backup/migration before birth and new
+encoding versions/migrations after genesis signing. S §6's separately
+versioned extensible audit-field rule is included. W01-D01's approval gate is
+cleared. All golden-vector and acceptance obligations remain; P5-01's PR must
+remain unmerged until all pass. C01/C02 decisions are unchanged.
+
+## P5-01 approved implementation record — 2026-10-14
+
+ADR 0007 amendments have been implemented and cross-language checked. 78 source-mapped messages, independently frozen tags, separately versioned AuditExtension and source-backed R/G type-only definitions are in core/contracts/. Full mapping: reports/P5-01/IMPLEMENTED-MAP.md. D10.8/SYS21 evidence: reports/P5-01/acceptance/. No original specification has changed, and no growth runtime path has been connected. W01-D01 approval gate is closed; the existing W00-C01/W00-C02 dispositions are unchanged.

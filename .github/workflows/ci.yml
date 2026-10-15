@@ -74,6 +74,11 @@ jobs:
           CI_MONTHLY_RUNS: ${{ vars.CI_MONTHLY_RUNS || '60' }}
           CI_HOSTED_MINUTES_PER_RUN: ${{ vars.CI_HOSTED_MINUTES_PER_RUN || '12' }}
         run: pnpm ci:budget
+      - name: P5-01 IDL and three-language conformance (D10.8 / SYS21)
+        run: |
+          pnpm test:core-contracts
+          uv run --project core/contracts --locked ruff check core/contracts workers/irl/generated/echo
+          uv run --project core/contracts --locked mypy --strict core/contracts/generate.py core/contracts/fixture_inputs.py core/contracts/adversarial.py core/contracts/verify.py workers/irl/generated/echo
   windows:
     name: Windows desktop and isolation
     # Only owner-triggered, same-repository code may run on the user's machine.
