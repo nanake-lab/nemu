@@ -5,8 +5,12 @@
 **/fixtures/**/*.png filter=lfs diff=lfs merge=lfs -text
 **/fixtures/**/*.vrm filter=lfs diff=lfs merge=lfs -text
 spikes/**/*.vrm filter=lfs diff=lfs merge=lfs -text
+apps/**/*.vrm filter=lfs diff=lfs merge=lfs -text
 content/**/*.vrm filter=lfs diff=lfs merge=lfs -text
 **/fixtures/**/*.wav filter=lfs diff=lfs merge=lfs -text
 **/__golden__/** filter=lfs diff=lfs merge=lfs -text
 reports/**/*.png filter=lfs diff=lfs merge=lfs -text
 reports/**/*.log -whitespace
+# Preserve diagnostic evidence bytes so manifest hashes survive checkout.
+reports/P0-01-windows-diagnostics/local-*/** -text
+reports/P0-01-windows-diagnostics/local-*/**/*.json whitespace=cr-at-eol

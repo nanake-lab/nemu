@@ -6,7 +6,16 @@ export default defineConfig({
   workers: 1,
   reporter: [
     ['list'],
-    ['json', { outputFile: resolve(import.meta.dirname, '../../reports/P0-01/e2e-results.json') }],
+    [
+      'json',
+      {
+        outputFile: process.env.NEMU_EVIDENCE_DIR
+          ? resolve(process.env.NEMU_EVIDENCE_DIR, 'e2e-results.json')
+          : resolve(import.meta.dirname, '../../reports/P0-01/e2e-results.json'),
+      },
+    ],
   ],
-  outputDir: 'test-results/electron',
+  outputDir: process.env.NEMU_EVIDENCE_DIR
+    ? resolve(process.env.NEMU_EVIDENCE_DIR, 'test-results/electron')
+    : 'test-results/electron',
 });

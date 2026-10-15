@@ -4,10 +4,21 @@ import { mkdir, mkdtemp, rm, access } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { PNG } from 'pngjs';
 import type { ElectronApplication } from '@playwright/test';
+import { spawn } from 'node:child_process';
+import { appendFileSync } from 'node:fs';
 test('two visible isolated windows; transparent stage; no core storage', async () => {
   const scratch = await mkdtemp(join(tmpdir(), 'nemu-scaffold-'));
   let application: ElectronApplication | undefined;
+  const diagnostic = (event: string, detail: Record<string, unknown> = {}) => {
+    if (process.env.NEMU_EVIDENCE_DIR) {
+      appendFileSync(
+        join(process.env.NEMU_EVIDENCE_DIR, 'playwright-events.jsonl'),
+        JSON.stringify({ at: new Date().toISOString(), event, ...detail }) + '\n',
+      );
+    }
+  };
   try {
+    diagnostic('launch-begin');
     application = await electron.launch({
       args: [
         resolve('apps/desktop'),
@@ -18,7 +29,45 @@ test('two visible isolated windows; transparent stage; no core storage', async (
       env: { ...process.env, NEMU_SCAFFOLD_USER_DATA: scratch },
     });
     const launched = application;
-    await expect.poll(() => launched.windows().length).toBe(2);
+    diagnostic('launch-resolved', {
+      pid: launched.process().pid,
+      observedWindows: launched.windows().length,
+    });
+    launched.on('window', () =>
+      diagnostic('window-observed', { observedWindows: launched.windows().length }),
+    );
+    launched.on('close', () => diagnostic('application-closed'));
+    try {
+      await expect.poll(() => launched.windows().length).toBe(2);
+    } finally {
+      diagnostic('window-wait-ended');
+      if (process.env.NEMU_EVIDENCE_DIR && process.platform === 'win32') {
+        // OS collection starts only after the original assertion settles, including failure.
+        const child = spawn(
+          'pwsh',
+          [
+            '-NoProfile',
+            '-File',
+            resolve('tools/scaffold/windows-evidence.ps1'),
+            '-Mode',
+            'Snapshot',
+            '-Label',
+            'electron-after-window-wait',
+          ],
+          { stdio: 'inherit', windowsHide: true, timeout: 10_000 },
+        );
+        await new Promise<void>((done) => {
+          child.on('exit', (code, signal) => {
+            diagnostic('snapshot-exit', { code, signal });
+            done();
+          });
+          child.on('error', (error) => {
+            diagnostic('snapshot-error', { message: error.message });
+            done();
+          });
+        });
+      }
+    }
     const stage = application.windows().find((page) => page.url().includes('/stage/'));
     const panel = application.windows().find((page) => page.url().includes('/panel/'));
     expect(stage).toBeDefined();
@@ -60,12 +109,13 @@ test('two visible isolated windows; transparent stage; no core storage', async (
       'rgba(0, 0, 0, 0)',
     );
     expect(await stage.evaluate(() => typeof Reflect.get(window, 'require'))).toBe('undefined');
-    await mkdir('reports/P0-01/visual', { recursive: true });
+    const visualDirectory = join(process.env.NEMU_EVIDENCE_DIR ?? 'reports/P0-01', 'visual');
+    await mkdir(visualDirectory, { recursive: true });
     await stage.screenshot({
-      path: 'reports/P0-01/visual/electron-stage.png',
+      path: join(visualDirectory, 'electron-stage.png'),
       omitBackground: true,
     });
-    await panel.screenshot({ path: 'reports/P0-01/visual/electron-panel.png' });
+    await panel.screenshot({ path: join(visualDirectory, 'electron-panel.png') });
   } finally {
     try {
       await application?.close();
