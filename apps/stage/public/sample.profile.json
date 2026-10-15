@@ -1,0 +1,94 @@
+{
+  "version": 2,
+  "model": "sample.vrm",
+  "heightM": 1.45,
+  "headTopOffsetM": 0.12,
+  "hitRegions": [
+    {
+      "id": "head",
+      "bone": "head",
+      "shape": "sphere",
+      "radiusM": 0.15,
+      "offsetM": [0, 0.05, 0]
+    },
+    {
+      "id": "body",
+      "bone": "spine",
+      "shape": "capsule",
+      "radiusM": 0.18,
+      "lengthM": 0.35,
+      "offsetM": [0, 0.1, 0]
+    },
+    {
+      "id": "handL",
+      "bone": "leftHand",
+      "shape": "sphere",
+      "radiusM": 0.08
+    },
+    {
+      "id": "handR",
+      "bone": "rightHand",
+      "shape": "sphere",
+      "radiusM": 0.08
+    }
+  ],
+  "gazeLimits": {
+    "yawDeg": 45,
+    "pitchUpDeg": 25,
+    "pitchDownDeg": 30
+  },
+  "framing": {
+    "fullBody": {
+      "fovDeg": 20,
+      "distanceM": 3.8,
+      "targetBone": "hips",
+      "offsetM": [0, 0.1, 0]
+    },
+    "upperBody": {
+      "fovDeg": 20,
+      "distanceM": 1.6,
+      "targetBone": "chest",
+      "offsetM": [0, 0.1, 0]
+    }
+  },
+  "rig": {
+    "earBonesL": [],
+    "earBonesR": [],
+    "tailBones": [],
+    "earBackMaxDeg": 30,
+    "tailSwingDeg": [-20, 20]
+  },
+  "emotionMap": {
+    "neutral": [{ "expression": "neutral", "weight": 1.0 }],
+    "happy": [{ "expression": "happy", "weight": 1.0 }],
+    "sad": [{ "expression": "sad", "weight": 1.0 }],
+    "angry": [{ "expression": "angry", "weight": 1.0 }],
+    "surprised": [{ "expression": "surprised", "weight": 1.0 }],
+    "relaxed": [{ "expression": "relaxed", "weight": 0.8 }],
+    "shy": [{ "expression": "surprised", "weight": 0.5 }],
+    "sleepy": [{ "expression": "neutral", "weight": 0.5 }],
+    "smug": [{ "expression": "happy", "weight": 0.7 }],
+    "pout": [{ "expression": "angry", "weight": 0.5 }],
+    "excited": [{ "expression": "happy", "weight": 0.9 }],
+    "worried": [{ "expression": "sad", "weight": 0.6 }]
+  },
+  "visemeMap": {
+    "A": "aa",
+    "I": "ih",
+    "U": "ou",
+    "E": "ee",
+    "O": "oh"
+  },
+  "lipSyncProfiles": {
+    "zh": "lipsync/zh.json",
+    "en": "lipsync/en.json",
+    "ja": "lipsync/ja.json"
+  },
+  "idleSet": [
+    {
+      "motionId": "idle_stand",
+      "weight": 1.0,
+      "cooldownS": 5.0
+    }
+  ]
+}
