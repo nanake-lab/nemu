@@ -111,3 +111,9 @@ ADR 0007 已按用户批准修改：独立冻结标签、36 字节手算示例�
 ADR 0007 不再阻塞；C01 保持未决且只阻塞 W09/W10，ADR 0006 保持 PROPOSED，v1.0 NO-GROWTH；C02 保持 SYS01–SYS25。冻结规格不变。当前无待用户裁决的 P5-01 阻塞项。
 
 合并后按 tasks/README.md §2 检查下一张 P0-07：依赖 P0-01 须已合并，workers/model-adapter/probe/ 不得被其他线程占用。满足条件后在任务分支领取；否则追加具体等待原因。runner 在线期间不在本机并行运行 Electron、Playwright 或视觉测试。
+
+### 2026-10-16 合并结果（追加）
+
+最终头 cc70c4c87ef5f564190cd19d82a736ab3b81ca78 的 run 38768859506 在 Ubuntu 和 Windows 均成功；合并前重新 fetch，main 仍为 d523e0b，分支包含它，PR 为 ready 且无 needs-user/待裁决阻塞。PR #4 已 squash 合并为 d93f97ce1945b800a5e5c3d5a00713fa298e5ef2（本地日期 2026-10-16）。P5-01 完成，不代表后续存储、运行时或行为验收已完成。
+
+合并后已检查取卡条件：P0-01（PR #1）已合并；当前无其他打开的 PR；已知 Codex 线程、工作树没有占用 workers/model-adapter/probe/。已在 task/P0-07-carrier-probe 领取 P0-07，准备状态见 reports/P0-07/REPORT.md。main 的合并后 CI 为 run 38769306994，结果应以该 run 的实时状态为准。
