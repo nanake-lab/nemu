@@ -1,18 +1,42 @@
 html,
 body {
   margin: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  user-select: none;
   background: transparent;
 }
-.placeholder {
+
+#root {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.stage-canvas-container {
   position: absolute;
-  bottom: 24px;
-  left: 24px;
-  padding: 20px;
-  border: 2px solid #718096;
-  border-radius: 12px;
-  background: #edf2f7;
-  color: #283141;
-  font: 16px sans-serif;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  pointer-events: auto;
+}
+
+.stage-canvas {
+  display: block;
+}
+
+/* Background styles for visual regression and review */
+body.bg-white {
+  background-color: #ffffff !important;
+}
+
+body.bg-black {
+  background-color: #000000 !important;
+}
+
+body.bg-gradient {
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d) !important;
 }
