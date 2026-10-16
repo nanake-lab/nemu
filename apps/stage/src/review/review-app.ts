@@ -12,6 +12,7 @@ import type { NemuProfile, Emotion } from '@nemu/contracts';
 import { TurntableController, type TurntablePreset } from './turntable.js';
 import { LightingAndBackgroundManager, type LightingPreset, type BackgroundPreset } from './lighting-bg.js';
 import { SpringBoneInspector } from './spring-bones.js';
+import { ReadoutApplicator, IdleScheduler } from '@nemu/body';
 
 export class ReviewApp {
   readonly canvas: HTMLCanvasElement;
@@ -26,6 +27,8 @@ export class ReviewApp {
   readonly turntable: TurntableController;
   readonly springInspector: SpringBoneInspector;
   readonly compositor: AnimationCompositor;
+  readonly readoutApplicator: ReadoutApplicator;
+  readonly idleScheduler: IdleScheduler;
 
   private currentVrm: VRM | null = null;
   private currentProfile: NemuProfile | null = null;
@@ -75,7 +78,24 @@ export class ReviewApp {
     this.springInspector = new SpringBoneInspector();
     this.compositor = new AnimationCompositor();
 
-    // 5. Window resize handling
+    // 5. Readout Applicator & Idle Scheduler
+    this.readoutApplicator = new ReadoutApplicator({
+      smoothingDurationSec: 2.0,
+      onReadoutUpdated: (readout) => {
+        this.compositor.applyReadout(readout);
+      },
+      onIdleTempoUpdated: (tempo) => {
+        this.idleScheduler.setIdleTempo(tempo);
+      },
+    });
+
+    this.idleScheduler = new IdleScheduler({
+      onTriggerMotion: (motionId) => {
+        this.selectMotion(motionId);
+      },
+    });
+
+    // 6. Window resize handling
     window.addEventListener('resize', () => this.onResize());
   }
 
@@ -94,6 +114,9 @@ export class ReviewApp {
       // Bind subsystems
       this.compositor.bindAvatar(vrm, profile);
       this.springInspector.bindVRM(vrm);
+      if (profile.idleSet) {
+        this.idleScheduler.setIdleSet(profile.idleSet);
+      }
 
       // Frame camera to avatar
       const targetPos = new THREE.Vector3(0, profile.heightM * 0.55, 0);
@@ -145,12 +168,20 @@ export class ReviewApp {
     // 1. Update turntable
     this.turntable.update(deltaSec);
 
-    // 2. Update compositor with speed multiplier
+    // 2. Update readout smoothing (2.0s animation curve)
+    this.readoutApplicator.update(deltaSec);
+
+    // 3. Update idle scheduler
+    if (this.isMotionPlaying) {
+      this.idleScheduler.update(deltaSec);
+    }
+
+    // 4. Update compositor with speed multiplier
     if (this.isMotionPlaying) {
       this.compositor.update(deltaSec * this.motionSpeed);
     }
 
-    // 3. Fallback spring bones update if L4 is off
+    // 5. Fallback spring bones update if L4 is off
     if (!this.compositor.isLayerEnabled('L4')) {
       this.currentVrm?.springBoneManager?.update(deltaSec);
     }
@@ -293,16 +324,18 @@ export class ReviewApp {
     gazeSociability?: number;
     expressionBaseline?: number;
   }): void {
-    this.compositor.applyReadout({
+    const currentTarget = this.readoutApplicator.getTargetReadout();
+    this.readoutApplicator.applyReadout({
       version: '1.0',
-      posture: params.posture ?? 0,
-      idleTempo: params.idleTempo ?? 1.0,
-      earPose: params.earPose ?? 0,
-      tailAmplitude: params.tailAmplitude ?? 0.5,
-      gazeSociability: params.gazeSociability ?? 0.5,
-      expressionBaseline: {
-        relaxed: params.expressionBaseline ?? 0,
-      },
+      posture: params.posture ?? currentTarget.posture,
+      idleTempo: params.idleTempo ?? currentTarget.idleTempo,
+      earPose: params.earPose ?? currentTarget.earPose,
+      tailAmplitude: params.tailAmplitude ?? currentTarget.tailAmplitude,
+      gazeSociability: params.gazeSociability ?? currentTarget.gazeSociability,
+      expressionBaseline:
+        params.expressionBaseline !== undefined
+          ? { relaxed: params.expressionBaseline }
+          : currentTarget.expressionBaseline,
     });
   }
 
