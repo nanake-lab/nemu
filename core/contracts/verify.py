@@ -172,6 +172,10 @@ def main() -> None:
                 bq = copy.deepcopy(q)
                 bq["value"][key] = ""
                 bad(bq)
+    # Additional frozen ADR 0007 Unicode oracles; never regenerate in CI.
+    for vector in json.loads((HERE / "golden/unicode.json").read_text(encoding="utf-8")):
+        queries.append(vector["request"])
+        expected.append(vector["expected"])
     for request, expectation in cases(legal):
         queries.append(request)
         expected.append(expectation)
