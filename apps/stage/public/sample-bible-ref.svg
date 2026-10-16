@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#161822"/>
+      <stop offset="100%" stop-color="#0f1118"/>
+    </linearGradient>
+    <linearGradient id="nemuHair" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb6c1"/>
+      <stop offset="100%" stop-color="#f8a5c2"/>
+    </linearGradient>
+    <linearGradient id="nemuClothes" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#546de5"/>
+      <stop offset="100%" stop-color="#3dc1d3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="900" fill="url(#bg)"/>
+
+  <!-- Grid lines -->
+  <g stroke="#ffffff" stroke-opacity="0.05" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="900"/>
+    <line x1="200" y1="0" x2="200" y2="900"/>
+    <line x1="300" y1="0" x2="300" y2="900"/>
+    <line x1="400" y1="0" x2="400" y2="900"/>
+    <line x1="500" y1="0" x2="500" y2="900"/>
+    <line x1="0" y1="150" x2="600" y2="150"/>
+    <line x1="0" y1="300" x2="600" y2="300"/>
+    <line x1="0" y1="450" x2="600" y2="450"/>
+    <line x1="0" y1="600" x2="600" y2="600"/>
+    <line x1="0" y1="750" x2="600" y2="750"/>
+  </g>
+
+  <!-- Title Badge -->
+  <rect x="40" y="40" width="260" height="40" rx="8" fill="#30364d" stroke="#4f597d" stroke-width="1"/>
+  <text x="55" y="65" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#70a1ff">NEMU BIBLE SPEC - REF 01</text>
+
+  <!-- Stylized Anime Silhouette Reference -->
+  <!-- Cat Ears -->
+  <polygon points="230,230 260,160 280,230" fill="url(#nemuHair)"/>
+  <polygon points="320,230 340,160 370,230" fill="url(#nemuHair)"/>
+  <polygon points="245,220 262,175 275,220" fill="#f78fb3"/>
+  <polygon points="325,220 338,175 355,220" fill="#f78fb3"/>
+
+  <!-- Head Base -->
+  <circle cx="300" cy="270" r="70" fill="#fde2e2"/>
+  <!-- Hair Base -->
+  <path d="M 230,270 Q 230,200 300,195 Q 370,200 370,270 Q 380,340 370,360 Q 360,330 350,300 Q 320,250 300,280 Q 280,250 250,300 Q 240,330 230,360 Z" fill="url(#nemuHair)"/>
+
+  <!-- Eyes & Face -->
+  <ellipse cx="275" cy="275" rx="8" ry="12" fill="#546de5"/>
+  <ellipse cx="325" cy="275" rx="8" ry="12" fill="#546de5"/>
+  <circle cx="273" cy="272" r="3" fill="#ffffff"/>
+  <circle cx="323" cy="272" r="3" fill="#ffffff"/>
+  <ellipse cx="260" cy="290" rx="8" ry="4" fill="#f8a5c2" opacity="0.6"/>
+  <ellipse cx="340" cy="290" rx="8" ry="4" fill="#f8a5c2" opacity="0.6"/>
+  <path d="M 295,295 Q 300,300 305,295" stroke="#e66767" stroke-width="2" fill="none"/>
+
+  <!-- Neck & Body -->
+  <rect x="290" y="335" width="20" height="25" fill="#fde2e2"/>
+  <path d="M 260,360 L 340,360 L 360,530 L 240,530 Z" fill="url(#nemuClothes)"/>
+  <!-- Collar -->
+  <polygon points="300,380 275,360 325,360" fill="#ffffff"/>
+  <circle cx="300" cy="385" r="5" fill="#f5cd79"/>
+
+  <!-- Skirt -->
+  <polygon points="240,530 360,530 380,620 220,620" fill="#303952"/>
+
+  <!-- Legs -->
+  <rect x="265" y="620" width="25" height="180" rx="10" fill="#fde2e2"/>
+  <rect x="310" y="620" width="25" height="180" rx="10" fill="#fde2e2"/>
+  <!-- Socks -->
+  <rect x="265" y="680" width="25" height="120" rx="8" fill="#303952"/>
+  <rect x="310" y="680" width="25" height="120" rx="8" fill="#303952"/>
+  <!-- Shoes -->
+  <ellipse cx="277" cy="800" rx="16" ry="8" fill="#574b90"/>
+  <ellipse cx="323" cy="800" rx="16" ry="8" fill="#574b90"/>
+
+  <!-- Reference Annotations -->
+  <g fill="#9aa2ba" font-family="system-ui, sans-serif" font-size="12">
+    <text x="40" y="270">◀ 头顶基准高: 1.28m</text>
+    <text x="40" y="360">◀ 颈部肩宽基准: 0.28m</text>
+    <text x="40" y="530">◀ 躯干腰线比: 0.42</text>
+    <text x="40" y="800">◀ 站立基底地平面 (0, 0, 0)</text>
+  </g>
+
+  <!-- Color Palette Swatches -->
+  <g transform="translate(420, 60)">
+    <rect x="0" y="0" width="24" height="24" rx="4" fill="#ffb6c1"/>
+    <text x="32" y="16" fill="#9aa2ba" font-family="monospace" font-size="11">#ffb6c1 (Hair)</text>
+    <rect x="0" y="32" width="24" height="24" rx="4" fill="#546de5"/>
+    <text x="32" y="48" fill="#9aa2ba" font-family="monospace" font-size="11">#546de5 (Eye/Acc)</text>
+    <rect x="0" y="64" width="24" height="24" rx="4" fill="#fde2e2"/>
+    <text x="32" y="80" fill="#9aa2ba" font-family="monospace" font-size="11">#fde2e2 (Skin)</text>
+    <rect x="0" y="96" width="24" height="24" rx="4" fill="#303952"/>
+    <text x="32" y="112" fill="#9aa2ba" font-family="monospace" font-size="11">#303952 (Costume)</text>
+  </g>
+</svg>
