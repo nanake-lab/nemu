@@ -79,3 +79,13 @@ CPU 机制测试 3 项通过；完整小型 Qwen3 随机夹具的零调制 prefi
 Hugging Face Python 客户端下载权重时发生 SSL unexpected EOF。系统 curl 的固定修订 Range 请求成功；已实现四路并发、8 MiB 分段续传，逐段校验 Content-Range 和长度，最后校验仓库 LFS SHA-256 与大小。当前下载仍在进行，未获得完整模型验收结果。完整权重未就绪前不运行真实模型测试，不把网络失败认作模型失败。
 
 benchmark.md 和 decision.md 明确保留全部未执行项。下一步是在首个候选权重完整且哈希通过后执行真实 GPU 通路，继而完成其余候选、TTS/渲染并载和三语检查。尚未选型，config/models.lock.json 不变。暂不需要 Windows runner；未来若创建 PR 会明确通知其 Windows CI 需要 runner，并停止本机 GPU/渲染工作。
+
+## 2026-10-16 用户补充约束与资产登记追加
+
+按用户明确要求，config/models.lock.json 新增 p0_07_probe 候选登记，覆盖两款 4B、8B 对照与 TTS 0.6B 的仓库、固定修订、角色、许可证、来源和可分发标记；status 为 candidates-only，不表示已选定正式载体。同步扩展 models.lock.schema.json，使现有 additionalProperties=false 校验仍有效；AJV 校验通过，四条登记与探针 manifest 完全一致。此前“暂不修改 models.lock.json”的说明为历史状态，由本次用户指令取代。
+
+Git 核查：probe/.cache/ 和 probe/.venv/ 被忽略，git ls-files 在两目录下均无条目；权重和下载缓存不提交。2026-10-16 本次检查 D 盘可用 146161319936 字节，C 盘可用 26023874560 字节。权重保存在 D 盘，不迁入仓库跟踪路径。
+
+正式延迟/显存测量前先通知用户进入安静窗口。用户注销 runner 且不运行其他 GPU 任务；代理只运行测量所必需的载体、TTS 和渲染占位，不同时启动 Electron 或其他测试。当前尚未开始该测量窗口。下载不足、CPU 夹具和渲染负载就绪均不构成延迟/显存验收。
+
+磁盘空间不足时先追加 reports/P0-07/BLOCKED.md，记录可用空间、需求与处理选项，不删除用户其他文件。当前没有进行任何磁盘清理。

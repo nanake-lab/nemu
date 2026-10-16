@@ -2,5 +2,43 @@
   "$schema": "./models.lock.schema.json",
   "codex": {
     "version": "0.162.1"
+  },
+  "p0_07_probe": {
+    "version": 1,
+    "status": "candidates-only",
+    "models": [
+      {
+        "id": "Qwen/Qwen3-4B",
+        "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+        "role": "4B candidate",
+        "license": "Apache-2.0",
+        "redistributable": true,
+        "source": "https://huggingface.co/Qwen/Qwen3-4B"
+      },
+      {
+        "id": "Qwen/Qwen3-4B-Instruct-2507",
+        "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+        "role": "4B candidate",
+        "license": "Apache-2.0",
+        "redistributable": true,
+        "source": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507"
+      },
+      {
+        "id": "Qwen/Qwen3-8B",
+        "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+        "role": "8B comparison",
+        "license": "Apache-2.0",
+        "redistributable": true,
+        "source": "https://huggingface.co/Qwen/Qwen3-8B"
+      },
+      {
+        "id": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+        "revision": "5d83992436eae1d760afd27aff78a71d676296fc",
+        "role": "concurrent TTS",
+        "license": "Apache-2.0",
+        "redistributable": true,
+        "source": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base"
+      }
+    ]
   }
 }
