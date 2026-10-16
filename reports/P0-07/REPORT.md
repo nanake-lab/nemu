@@ -50,3 +50,32 @@ Windows runner 已由用户重新上线并执行 PR #8，随后承担合并后�
 配置准备完成追加：四个固定修订的配置、tokenizer、许可文件下载均成功，逐文件 SHA-256 清单已保存于 preparation/。尚未下载权重，未加载模型；模型通路、显存和延迟仍为 not_run。
 
 main CI 完成追加：run 38836093496（ab282dc）Ubuntu、Windows 均成功。已通知用户本轮 runner 作业结束，可以关闭并注销；本机渲染与 GPU 并载测量仍等待 runner 注销。
+
+## 2026-10-16 通路实现与负载准备追加
+
+用户已确认注销 runner；随后检查未发现 Runner.Listener / Runner.Worker，才进行本机硬件渲染。当前仅恢复 P0-07，不创建或触发新的 PR/Windows 作业。
+
+新增显式 forward 包装、固定请求调制、包含模型/tokenizer/prompt/carrier/m/mask/数值配置的缓存键，以及实际 logits/激活观测脚本。默认不跨请求复用缓存；更换 m 时先清空缓存再前向。使用 torch inference_mode、冻结模型参数，不接入任何权威存储或生产运行路径。
+
+CPU 机制测试 3 项通过；完整小型 Qwen3 随机夹具的零调制 prefill/decode logits 最大差均为 0，m 改变后的新计算与 fresh prefill 差为 0。非零注入保存 before/after/delta，误差见 benchmark.md。这是结构/实现验证，不是真实 4B/8B 载体验收；生产容差仍未冻结。
+
+渲染负载复用现有 sample.vrm。硬件渲染证据确认 RTX 3080 / D3D11，帧计数在观察窗口从 1 增至 13；浏览器和 Vite 服务在 stop-file 后正常退出。未修改舞台代码、视觉基准或角色资产。此结果不代表并载显存、帧率、首句延迟或语言方向验收。
+
+### 依赖登记补充（仅隔离探针环境）
+
+| 名称 | 版本 | 许可证 | 用途 |
+| --- | --- | --- | --- |
+| torch | 2.10.0+cu128 | BSD-3-Clause（包元数据） | 显式模型前向与张量测量 |
+| torchaudio | 2.10.0+cu128 | BSD-2-Clause（随包 LICENSE） | TTS 音频工具 |
+| transformers | 4.57.3 | Apache-2.0 | 固定 Qwen3 实现 |
+| accelerate | 1.12.0 | Apache-2.0 | 模型加载 |
+| bitsandbytes | 0.50.2 | MIT | 8/4 bit 候选量化 |
+| qwen-tts | 0.1.1 | Apache-2.0 | 0.6B TTS 并载准备 |
+
+这些版本未进入生产 worker 依赖或应用分发。完整 uv.lock 保存传递依赖；不据此声称所有随包二进制或 CUDA 组件可重新分发。包装中借鉴的 Transformers forward 顺序保留来源版权及完整 Apache-2.0 许可。
+
+### 下载状态与下一步
+
+Hugging Face Python 客户端下载权重时发生 SSL unexpected EOF。系统 curl 的固定修订 Range 请求成功；已实现四路并发、8 MiB 分段续传，逐段校验 Content-Range 和长度，最后校验仓库 LFS SHA-256 与大小。当前下载仍在进行，未获得完整模型验收结果。完整权重未就绪前不运行真实模型测试，不把网络失败认作模型失败。
+
+benchmark.md 和 decision.md 明确保留全部未执行项。下一步是在首个候选权重完整且哈希通过后执行真实 GPU 通路，继而完成其余候选、TTS/渲染并载和三语检查。尚未选型，config/models.lock.json 不变。暂不需要 Windows runner；未来若创建 PR 会明确通知其 Windows CI 需要 runner，并停止本机 GPU/渲染工作。
