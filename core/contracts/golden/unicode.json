@@ -1,0 +1,354 @@
+[
+  {
+    "label": "nfc-encode",
+    "request": {
+      "name": "OutputEnd",
+      "op": "encode",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "value": {
+        "schema_version": 1,
+        "output_id": "\u00e9",
+        "reason": 1
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "schema_version": 1,
+        "output_id": "\u00e9",
+        "reason": 1
+      },
+      "canonical": "4e435631010000000f0000006563686f2e6f75747075742d656e6402000000c3a901000000",
+      "protobuf": "08011202c3a91801",
+      "digest": "aed6c6b3f0c6ab9e2e69726cf6d7db236db3606942cf8bbb870964153ce3ed90"
+    }
+  },
+  {
+    "label": "nfc-canonical",
+    "request": {
+      "name": "OutputEnd",
+      "op": "canonical",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "4e435631010000000f0000006563686f2e6f75747075742d656e6402000000c3a901000000"
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "schema_version": 1,
+        "output_id": "\u00e9",
+        "reason": 1
+      },
+      "canonical": "4e435631010000000f0000006563686f2e6f75747075742d656e6402000000c3a901000000",
+      "protobuf": "08011202c3a91801",
+      "digest": "aed6c6b3f0c6ab9e2e69726cf6d7db236db3606942cf8bbb870964153ce3ed90"
+    }
+  },
+  {
+    "label": "nfc-protobuf",
+    "request": {
+      "name": "OutputEnd",
+      "op": "protobuf",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "08011202c3a91801"
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "schema_version": 1,
+        "output_id": "\u00e9",
+        "reason": 1
+      },
+      "canonical": "4e435631010000000f0000006563686f2e6f75747075742d656e6402000000c3a901000000",
+      "protobuf": "08011202c3a91801",
+      "digest": "aed6c6b3f0c6ab9e2e69726cf6d7db236db3606942cf8bbb870964153ce3ed90"
+    }
+  },
+  {
+    "label": "nfd-encode",
+    "request": {
+      "name": "OutputEnd",
+      "op": "encode",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "value": {
+        "schema_version": 1,
+        "output_id": "e\u0301",
+        "reason": 1
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "schema_version": 1,
+        "output_id": "e\u0301",
+        "reason": 1
+      },
+      "canonical": "4e435631010000000f0000006563686f2e6f75747075742d656e640300000065cc8101000000",
+      "protobuf": "0801120365cc811801",
+      "digest": "1dfde7052e8289f9ad9c10b66b5dd6973f818b2b88763cbe40d916832cbb332f"
+    }
+  },
+  {
+    "label": "nfd-canonical",
+    "request": {
+      "name": "OutputEnd",
+      "op": "canonical",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "4e435631010000000f0000006563686f2e6f75747075742d656e640300000065cc8101000000"
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "schema_version": 1,
+        "output_id": "e\u0301",
+        "reason": 1
+      },
+      "canonical": "4e435631010000000f0000006563686f2e6f75747075742d656e640300000065cc8101000000",
+      "protobuf": "0801120365cc811801",
+      "digest": "1dfde7052e8289f9ad9c10b66b5dd6973f818b2b88763cbe40d916832cbb332f"
+    }
+  },
+  {
+    "label": "nfd-protobuf",
+    "request": {
+      "name": "OutputEnd",
+      "op": "protobuf",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "0801120365cc811801"
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "schema_version": 1,
+        "output_id": "e\u0301",
+        "reason": 1
+      },
+      "canonical": "4e435631010000000f0000006563686f2e6f75747075742d656e640300000065cc8101000000",
+      "protobuf": "0801120365cc811801",
+      "digest": "1dfde7052e8289f9ad9c10b66b5dd6973f818b2b88763cbe40d916832cbb332f"
+    }
+  },
+  {
+    "label": "lone-high-surrogate",
+    "request": {
+      "name": "OutputEnd",
+      "op": "encode",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "value": {
+        "schema_version": 1,
+        "output_id": "\ud800",
+        "reason": 1
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "lone-low-surrogate",
+    "request": {
+      "name": "OutputEnd",
+      "op": "encode",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "value": {
+        "schema_version": 1,
+        "output_id": "\udfff",
+        "reason": 1
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "surrogate-high-canonical",
+    "request": {
+      "name": "OutputEnd",
+      "op": "canonical",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "4e435631010000000f0000006563686f2e6f75747075742d656e6403000000eda08001000000"
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "surrogate-high-protobuf",
+    "request": {
+      "name": "OutputEnd",
+      "op": "protobuf",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "08011203eda0801801"
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "surrogate-low-canonical",
+    "request": {
+      "name": "OutputEnd",
+      "op": "canonical",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "4e435631010000000f0000006563686f2e6f75747075742d656e6403000000edbfbf01000000"
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "surrogate-low-protobuf",
+    "request": {
+      "name": "OutputEnd",
+      "op": "protobuf",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "08011203edbfbf1801"
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "overlong-2-canonical",
+    "request": {
+      "name": "OutputEnd",
+      "op": "canonical",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "4e435631010000000f0000006563686f2e6f75747075742d656e6402000000c0af01000000"
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "overlong-2-protobuf",
+    "request": {
+      "name": "OutputEnd",
+      "op": "protobuf",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "08011202c0af1801"
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "overlong-3-canonical",
+    "request": {
+      "name": "OutputEnd",
+      "op": "canonical",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "4e435631010000000f0000006563686f2e6f75747075742d656e6403000000e080af01000000"
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "overlong-3-protobuf",
+    "request": {
+      "name": "OutputEnd",
+      "op": "protobuf",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "08011203e080af1801"
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "overlong-4-canonical",
+    "request": {
+      "name": "OutputEnd",
+      "op": "canonical",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "4e435631010000000f0000006563686f2e6f75747075742d656e6404000000f08080af01000000"
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "overlong-4-protobuf",
+    "request": {
+      "name": "OutputEnd",
+      "op": "protobuf",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "hex": "08011204f08080af1801"
+    },
+    "expected": {
+      "ok": false
+    }
+  }
+]

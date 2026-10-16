@@ -36,6 +36,8 @@ This does not silently settle disagreements between a frozen clause and a newer 
 
 S §1 and O's upstream references rely on `Review_and_Remediation`: F §§20–27 and D Appendix B. The supplied F ends at §19; supplied D has Appendix A, not B. E12 remains **待用户提供** for those missing sections. Do not reconstruct their θ design. W09/W10 and growth are v1.x; Nemu v1.0 uses genesis b/Λ/B₀, empty R and audited identity G/C. Missing additions do not alone block v1.0 IDL/transaction work. Future growth must re-baseline newly supplied originals and resolve W00-C01 before activation.
 
+**追加状态说明（2026-10-14 决定）：用户确认不可得（2026-10-14 决定）**。此状态取代上述“待用户提供”的当前含义；原文保留作历史说明。范围为 Review_and_Remediation 增补 F 第 20–27 节、D 附录 B。不重建缺失内容；C01 保持未决、仅阻塞 W09/W10，ADR 0006 保持 PROPOSED，v1.0 保持 NO-GROWTH。
+
 Review scope: all five documents' headings and §1; S §§1,2,26,31; targeted original clauses for E1–E14, conflict verification, acceptance and work-package mapping. This is not a claim that all future implementation details have already been audited.
 
 Reproduce: `pwsh -File reports/P0-06/verify-baseline.ps1` from the repository root. Evidence is written to a new timestamped directory, never over prior evidence.
