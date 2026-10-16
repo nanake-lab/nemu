@@ -3,6 +3,7 @@ export default defineConfig({
   test: {
     include: [
       'apps/panel/src/legacy/**/*.test.tsx',
+      'apps/stage/src/**/*.test.ts',
       'packages/*/src/**/*.test.ts',
       'executors/codex-bridge/src/**/*.test.ts',
       'tools/scaffold/*.test.ts',

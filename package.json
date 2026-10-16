@@ -11,7 +11,7 @@
     "dev": "pnpm --filter @nemu/desktop dev",
     "dev:stage": "pnpm --filter @nemu/stage dev",
     "dev:panel": "pnpm --filter @nemu/panel dev",
-    "dev:review": "node tools/scaffold/pending.mjs P2-06",
+    "dev:review": "pnpm --filter @nemu/stage dev:review",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
