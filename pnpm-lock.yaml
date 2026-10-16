@@ -240,6 +240,9 @@ importers:
       '@nemu/avatar-runtime':
         specifier: workspace:*
         version: link:../../packages/avatar-runtime
+      '@nemu/body':
+        specifier: workspace:*
+        version: link:../../packages/body
       '@nemu/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
@@ -275,7 +278,11 @@ importers:
         specifier: 0.174.0
         version: 0.174.0
 
-  packages/body: {}
+  packages/body:
+    dependencies:
+      '@nemu/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/contracts:
     dependencies:
