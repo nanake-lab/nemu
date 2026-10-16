@@ -89,3 +89,21 @@ Git 核查：probe/.cache/ 和 probe/.venv/ 被忽略，git ls-files 在两目�
 正式延迟/显存测量前先通知用户进入安静窗口。用户注销 runner 且不运行其他 GPU 任务；代理只运行测量所必需的载体、TTS 和渲染占位，不同时启动 Electron 或其他测试。当前尚未开始该测量窗口。下载不足、CPU 夹具和渲染负载就绪均不构成延迟/显存验收。
 
 磁盘空间不足时先追加 reports/P0-07/BLOCKED.md，记录可用空间、需求与处理选项，不删除用户其他文件。当前没有进行任何磁盘清理。
+
+## 2026-10-16 候选架构扩展与 TTS 使用边界
+
+按用户要求重新核查 Hugging Face 官方仓库的当前元数据、固定修订配置与许可。核查日期为 2026-10-16（Australia/Perth）；这是本轮同级候选调查，不声称穷尽所有模型。原始元数据摘要见 preparation/candidate-survey-2026-10-16.json。
+
+| 模型 | 核查结果 | 本轮处理 |
+| --- | --- | --- |
+| [microsoft/Phi-4-mini-instruct](https://huggingface.co/microsoft/Phi-4-mini-instruct) | 3.8B；MIT；官方支持语言含 zh/en/ja；model_type=phi3，Phi3ForCausalLM；修订 cfbefacb99257ffa30c83adab238a50856ac3083 | 新增为第三个 4B 级候选，提供不同于 Qwen3 的实现架构；全部精度、真实通路、三语与并载检查待执行 |
+| [Qwen/Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B) | 确有更新的 4B 权重；Apache-2.0；官方 4B 配置说明为 Gated DeltaNet 与 Gated Attention 交替的混合结构，不能当作原 Qwen3；修订 851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a | 调查记录保留；本轮三款候选采用两个已准备的 Qwen3 与 Phi。当前为 TTS 固定的 Transformers 4.57.3 不含 qwen3_5 配置映射，支持需独立新版环境/进程及混合状态缓存适配；这是工程范围选择，不是性能淘汰结论 |
+| [google/gemma-3-4b-it](https://huggingface.co/google/gemma-3-4b-it) | 官方标注 Gemma 专用许可，下载需接受条款；未经认证读取配置返回 401 | 不满足本轮要求的 MIT/Apache 等宽松许可筛选；未尝试绕过门控，不纳入 |
+
+Phi 的官方模型卡明确列出 Chinese、English、Japanese；该声明仅满足候选筛选，不代替三语实测。其固定修订 LICENSE 已读取并以 SHA-256 登记，原许可文本保留在 probe/licenses/Phi-4-mini-instruct-MIT.txt。这里的 Phi-4-mini 不是新于 Qwen3.5 的模型；新增依据是不同架构、同量级、宽松许可和三语支持。当前环境 CONFIG_MAPPING 实查 phi3=True、qwen3_5=False。现有 path_probe.py 仍仅支持 Qwen3，Phi 需要另行核对 forward 和缓存后适配，不会直接套用 Qwen3 包装或声称已测。
+
+manifest.json 与 config/models.lock.json 已同步为三款 4B 级候选、一个 8B 对照和一个 TTS 负载，共五条，schema 校验与两份清单一致性检查通过。当前没有最终载体选型。
+
+**TTS 边界：Qwen3-TTS 0.6B Base 仅用于 P0-07 并载显存测量；正式音色和变体由 P4-03 决定，不构成选型结论。** 此说明已写入两份登记的 TTS role，先前“concurrent TTS”是历史简写，不授予正式音色选择权限。
+
+已有权重分段下载继续。Phi 配置准备已启动，Phi 权重安排在当前下载进程结束后顺序执行，避免叠加下载并发；缓存保持 Git 忽略。开始真实模型/性能测量前另行通知用户，本轮清单更新没有启动测量窗口。
