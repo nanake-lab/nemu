@@ -4,9 +4,18 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./readout": "./src/readout/index.ts",
+    "./idle": "./src/idle/index.ts",
+    "./fsm": "./src/fsm/index.ts",
+    "./reflex": "./src/reflex/index.ts",
+    "./actions": "./src/actions/index.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@nemu/contracts": "workspace:*",
+    "xstate": "^5.33.2"
   }
 }

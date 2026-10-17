@@ -5,3 +5,5 @@ export * from './camera.js';
 export * from './outline.js';
 export * from './scheduler.js';
 export * from './hittest.js';
+export * from './animation/index.js';
+export * from './lipsync/index.js';

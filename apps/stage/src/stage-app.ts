@@ -9,6 +9,8 @@ import {
   FrameScheduler,
   HitTestManager,
   type FramingMode,
+  AnimationCompositor,
+  type AnimationLayerId,
 } from '@nemu/avatar-runtime';
 import type {
   NemuProfile,
@@ -17,6 +19,8 @@ import type {
   Anchor,
   GazeTarget,
   StagePayloads,
+  BodyReadout,
+  Emotion,
 } from '@nemu/contracts';
 
 export type StageEventHandler = <T extends keyof StagePayloads>(
@@ -40,6 +44,7 @@ export class StageApp {
   readonly lighting: ThreePointLighting;
   readonly cameraManager: AvatarCamera;
   readonly scheduler: FrameScheduler;
+  readonly compositor: AnimationCompositor;
   private hitTestManager: HitTestManager | null = null;
 
   private currentVrm: VRM | null = null;
@@ -101,6 +106,7 @@ export class StageApp {
     this.scene.add(this.lighting.group);
 
     this.cameraManager = new AvatarCamera(20.0, this.canvasWidth / this.canvasHeight);
+    this.compositor = new AnimationCompositor({ deterministic: this.isDeterministic });
 
     // 3. WebGL2 Async PBO Hit Test
     this.hitTestManager = new HitTestManager(this.renderer.renderer, {
@@ -175,6 +181,9 @@ export class StageApp {
       this.currentVrm = vrm;
       this.currentProfile = profile;
       this.scene.add(vrm.scene);
+
+      // Bind avatar to animation compositor
+      this.compositor.bindAvatar(vrm, profile);
 
       // Apply default framing
       this.cameraManager.applyFraming(vrm, profile, 'fullBody');
@@ -256,6 +265,7 @@ export class StageApp {
 
   setExpression(expressionName: string, weight = 1.0): void {
     if (!this.currentVrm) return;
+    this.compositor.setPerformanceEmotion({ emotion: expressionName as Emotion, weight });
     const manager = this.currentVrm.expressionManager;
     if (!manager) return;
 
@@ -270,6 +280,7 @@ export class StageApp {
   }
 
   gaze(target: GazeTarget): void {
+    this.compositor.setGaze(target);
     if (!this.currentVrm || !this.currentProfile) return;
 
     let targetWorldPos: THREE.Vector3;
@@ -293,6 +304,18 @@ export class StageApp {
     this.cameraManager.applyHeadGaze(this.currentVrm, this.currentProfile, targetWorldPos);
   }
 
+  applyReadout(readout: BodyReadout): void {
+    this.compositor.applyReadout(readout);
+  }
+
+  setLayerEnabled(layer: AnimationLayerId, enabled: boolean): void {
+    this.compositor.setLayerEnabled(layer, enabled);
+  }
+
+  isLayerEnabled(layer: AnimationLayerId): boolean {
+    return this.compositor.isLayerEnabled(layer);
+  }
+
   setPhysicalState(state: PhysicalState): void {
     this.physicalState = state;
     const targetFps =
@@ -312,7 +335,14 @@ export class StageApp {
     if (this.currentVrm) {
       // In deterministic mode, freeze time step
       const stepDelta = this.isDeterministic ? 0.01667 : deltaSec;
-      this.currentVrm.update(stepDelta);
+      this.compositor.update(stepDelta);
+      if (!this.compositor.isLayerEnabled('L3')) {
+        this.currentVrm.expressionManager?.update();
+      }
+      if (!this.compositor.isLayerEnabled('L4')) {
+        this.currentVrm.springBoneManager?.update(stepDelta);
+      }
+      this.currentVrm.nodeConstraintManager?.update();
     }
 
     // Render 3D Scene
@@ -371,6 +401,7 @@ export class StageApp {
 
   dispose(): void {
     this.stop();
+    this.compositor.dispose();
     this.hitTestManager?.dispose();
     this.renderer.dispose();
     this.lighting.dispose();

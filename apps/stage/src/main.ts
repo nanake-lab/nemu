@@ -77,6 +77,16 @@ window.addEventListener('message', (event) => {
         stageApp.setPhysicalState(data.payload.state);
       }
       break;
+    case 'stage.readout':
+      if (data.payload?.readout) {
+        stageApp.applyReadout(data.payload.readout);
+      }
+      break;
+    case 'stage.setLayerEnabled':
+      if (data.payload?.layer && typeof data.payload.enabled === 'boolean') {
+        stageApp.setLayerEnabled(data.payload.layer, data.payload.enabled);
+      }
+      break;
   }
 });
 
@@ -85,6 +95,23 @@ const modelUrl = params.get('model') || '/sample.vrm';
 const profileUrl = params.get('profile') || '/sample.profile.json';
 const framingParam = (params.get('framing') as FramingMode) || 'fullBody';
 const exprParam = params.get('expr');
+const layersParam = params.get('layers');
+
+// Configure layer enablement before avatar loading
+if (layersParam) {
+  const activeLayers = new Set(layersParam.split(',').map((s) => s.trim().toUpperCase()));
+  const allLayers = ['L0', 'L1', 'L2', 'L3', 'L4'] as const;
+  for (const layer of allLayers) {
+    stageApp.setLayerEnabled(layer, activeLayers.has(layer));
+  }
+} else if (isDeterministic && !params.get('motion')) {
+  // In deterministic golden visual tests, keep L0..L4 idle so avatar remains in deterministic rest pose for golden match
+  stageApp.setLayerEnabled('L0', false);
+  stageApp.setLayerEnabled('L1', false);
+  stageApp.setLayerEnabled('L2', false);
+  stageApp.setLayerEnabled('L3', false);
+  stageApp.setLayerEnabled('L4', false);
+}
 
 async function initializeStage(): Promise<void> {
   try {

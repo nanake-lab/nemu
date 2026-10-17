@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nemu 角色评审台 (Review Bench)</title>
+    <link rel="stylesheet" href="./src/review/style.css" />
+  </head>
+  <body>
+    <!-- Top Header -->
+    <header class="review-header">
+      <div class="brand">
+        <h1>Nemu Review Bench</h1>
+        <span class="model-badge" id="model-badge">Loading model...</span>
+      </div>
+      <div class="header-actions">
+        <button class="tool-btn" id="btn-toggle-comparison">🌓 对照模式</button>
+        <button class="tool-btn" id="btn-screenshot">📷 截图导出</button>
+        <button class="tool-btn active" id="btn-save-review-top">💾 保存评审记录</button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="review-workspace">
+      <!-- Viewport area (3D canvas + optional comparison side) -->
+      <section class="viewport-container" id="viewport-container">
+        <div class="comparison-panel" id="comparison-panel">
+          <span class="comparison-label">设定集对照参考</span>
+          <img
+            id="comparison-image"
+            class="comparison-img"
+            src="/sample-bible-ref.svg"
+            alt="Bible Reference"
+          />
+        </div>
+
+        <div class="canvas-wrapper">
+          <canvas id="review-canvas" class="viewport-canvas"></canvas>
+
+          <!-- Floating Toolbar -->
+          <div class="floating-toolbar">
+            <div class="btn-group">
+              <button class="tool-btn active" data-preset="front">正 (0°)</button>
+              <button class="tool-btn" data-preset="threeQuarter">3/4 (45°)</button>
+              <button class="tool-btn" data-preset="side">侧 (90°)</button>
+              <button class="tool-btn" data-preset="back">背 (180°)</button>
+            </div>
+
+            <button class="tool-btn" id="btn-auto-rotate">🔄 自动旋转</button>
+
+            <div class="btn-group">
+              <button class="tool-btn active" data-light="threePoint">标准三点</button>
+              <button class="tool-btn" data-light="studio">棚拍明亮</button>
+              <button class="tool-btn" data-light="dramatic">戏剧轮廓</button>
+              <button class="tool-btn" data-light="dim">夜晚微光</button>
+            </div>
+
+            <div class="btn-group">
+              <button class="tool-btn" data-bg="white">白</button>
+              <button class="tool-btn" data-bg="black">黑</button>
+              <button class="tool-btn active" data-bg="gradient">渐变</button>
+              <button class="tool-btn" data-bg="checker">网格</button>
+              <button class="tool-btn" data-bg="wallpaper">壁纸</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sidebar Controls -->
+      <aside class="control-sidebar">
+        <nav class="tab-nav">
+          <button class="tab-btn active" data-tab="tab-expressions">表情网格</button>
+          <button class="tab-btn" data-tab="tab-readout">身体读出</button>
+          <button class="tab-btn" data-tab="tab-motions">动作播放</button>
+          <button class="tab-btn" data-tab="tab-springs">弹簧骨</button>
+          <button class="tab-btn" data-tab="tab-notes">评审记录</button>
+        </nav>
+
+        <!-- Tab 1: Expressions -->
+        <div class="tab-content active" id="tab-expressions">
+          <div class="panel-section">
+            <div class="btn-group" style="width: 100%; margin-bottom: 12px">
+              <button class="tool-btn active" id="btn-expr-mode-single" style="flex: 1">
+                单个表情
+              </button>
+              <button class="tool-btn" id="btn-expr-mode-emo" style="flex: 1">12 种表演提示</button>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>表情权重 (Weight)</span>
+                <span class="slider-value" id="val-expr-weight">1.0</span>
+              </div>
+              <input type="range" id="slider-expr-weight" min="0" max="1" step="0.05" value="1.0" />
+            </div>
+
+            <div class="expr-grid" id="expr-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Body Readout -->
+        <div class="tab-content" id="tab-readout">
+          <div class="panel-section">
+            <h3>身体读出参数 (BodyReadout)</h3>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>姿态 posture (-1 收拢 ~ +1 舒展)</span>
+                <span class="slider-value" id="val-posture">0.0</span>
+              </div>
+              <input type="range" id="slider-posture" min="-1" max="1" step="0.05" value="0.0" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>待机呼吸节奏 idleTempo (0.5 ~ 1.5)</span>
+                <span class="slider-value" id="val-idleTempo">1.0</span>
+              </div>
+              <input type="range" id="slider-idleTempo" min="0.5" max="1.5" step="0.05" value="1.0" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>耳朵朝向 earPose (-1 贴脑 ~ +1 竖起)</span>
+                <span class="slider-value" id="val-earPose">0.0</span>
+              </div>
+              <input type="range" id="slider-earPose" min="-1" max="1" step="0.05" value="0.0" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>尾巴摆幅 tailAmplitude (0 ~ 1)</span>
+                <span class="slider-value" id="val-tailAmp">0.5</span>
+              </div>
+              <input type="range" id="slider-tailAmp" min="0" max="1" step="0.05" value="0.5" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>视线社交倾向 gazeSociability (0 ~ 1)</span>
+                <span class="slider-value" id="val-gazeSoc">0.5</span>
+              </div>
+              <input type="range" id="slider-gazeSoc" min="0" max="1" step="0.05" value="0.5" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>表情基线 expressionBaseline (0 ~ 0.4)</span>
+                <span class="slider-value" id="val-exprBase">0.0</span>
+              </div>
+              <input type="range" id="slider-exprBase" min="0" max="0.4" step="0.02" value="0.0" />
+            </div>
+
+            <button class="action-btn secondary" id="btn-reset-readout">重置为中性读出</button>
+          </div>
+        </div>
+
+        <!-- Tab 3: Motions -->
+        <div class="tab-content" id="tab-motions">
+          <div class="panel-section">
+            <h3>动作库播放 (Motion Player)</h3>
+            <select
+              id="select-motion"
+              style="
+                width: 100%;
+                padding: 8px;
+                background: var(--bg-dark);
+                color: var(--text-primary);
+                border: 1px solid var(--border);
+                border-radius: 4px;
+                margin-bottom: 12px;
+              "
+            >
+              <option value="idle_stand">idle_stand (待机基础姿态)</option>
+              <option value="idle_relaxed">idle_relaxed (放松待机)</option>
+              <option value="wave">wave (打招呼挥手)</option>
+              <option value="nod">nod (点头响应)</option>
+              <option value="fidget_stretch">fidget_stretch (伸懒腰)</option>
+            </select>
+
+            <div class="btn-group" style="width: 100%; margin-bottom: 12px">
+              <button class="tool-btn active" id="btn-motion-play" style="flex: 1">▶ 播放</button>
+              <button class="tool-btn" id="btn-motion-pause" style="flex: 1">⏸ 暂停</button>
+              <button class="tool-btn" id="btn-motion-loop" style="flex: 1">🔁 循环: 开</button>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>播放速率</span>
+                <span class="slider-value" id="val-motion-speed">1.0x</span>
+              </div>
+              <div class="btn-group" style="width: 100%">
+                <button class="tool-btn" data-speed="0.25" style="flex: 1">0.25x 慢放</button>
+                <button class="tool-btn" data-speed="0.5" style="flex: 1">0.5x</button>
+                <button class="tool-btn active" data-speed="1.0" style="flex: 1">1.0x 正常</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Spring Bones -->
+        <div class="tab-content" id="tab-springs">
+          <div class="panel-section">
+            <h3>弹簧骨实时调参</h3>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>刚度乘数 (Stiffness Multiplier)</span>
+                <span class="slider-value" id="val-spring-stiff">1.00</span>
+              </div>
+              <input
+                type="range"
+                id="slider-spring-stiff"
+                min="0.1"
+                max="3.0"
+                step="0.05"
+                value="1.0"
+              />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>阻力衰减 (Drag Force)</span>
+                <span class="slider-value" id="val-spring-drag">0.40</span>
+              </div>
+              <input
+                type="range"
+                id="slider-spring-drag"
+                min="0.0"
+                max="1.0"
+                step="0.05"
+                value="0.4"
+              />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>重力强度 (Gravity Power)</span>
+                <span class="slider-value" id="val-spring-grav">1.00</span>
+              </div>
+              <input
+                type="range"
+                id="slider-spring-grav"
+                min="0.0"
+                max="3.0"
+                step="0.05"
+                value="1.0"
+              />
+            </div>
+
+            <button class="action-btn secondary" id="btn-spring-reset">重置物理扰动测试</button>
+
+            <h3 style="margin-top: 16px">导出的 build.yaml 配置片段</h3>
+            <textarea
+              id="yaml-export-area"
+              readonly
+              style="font-family: monospace; height: 110px"
+            ></textarea>
+            <button class="action-btn" id="btn-copy-yaml">复制配置代码</button>
+          </div>
+        </div>
+
+        <!-- Tab 5: Review Notes -->
+        <div class="tab-content" id="tab-notes">
+          <div class="panel-section">
+            <h3>审美与资产评审打分</h3>
+
+            <div class="review-item" data-category="mesh">
+              <div class="review-item-header">
+                <span>外观与整体比例</span>
+                <div class="radio-group">
+                  <label class="radio-label"
+                    ><input type="radio" name="status-mesh" value="pass" checked /> 通过</label
+                  >
+                  <label class="radio-label"
+                    ><input type="radio" name="status-mesh" value="issue" /> 有问题</label
+                  >
+                </div>
+              </div>
+              <textarea placeholder="备注意见（如体型、三角面、边缘）..."></textarea>
+            </div>
+
+            <div class="review-item" data-category="face">
+              <div class="review-item-header">
+                <span>面部与表情表达</span>
+                <div class="radio-group">
+                  <label class="radio-label"
+                    ><input type="radio" name="status-face" value="pass" checked /> 通过</label
+                  >
+                  <label class="radio-label"
+                    ><input type="radio" name="status-face" value="issue" /> 有问题</label
+                  >
+                </div>
+              </div>
+              <textarea placeholder="备注意见（如眨眼、自定义表情）..."></textarea>
+            </div>
+
+            <div class="review-item" data-category="springs">
+              <div class="review-item-header">
+                <span>弹簧骨与物理动态</span>
+                <div class="radio-group">
+                  <label class="radio-label"
+                    ><input type="radio" name="status-springs" value="pass" checked /> 通过</label
+                  >
+                  <label class="radio-label"
+                    ><input type="radio" name="status-springs" value="issue" /> 有问题</label
+                  >
+                </div>
+              </div>
+              <textarea placeholder="备注意见（如头发飘动、耳朵阻尼、裙摆穿模）..."></textarea>
+            </div>
+
+            <div class="review-item" data-category="posture">
+              <div class="review-item-header">
+                <span>身体读出与待机姿态</span>
+                <div class="radio-group">
+                  <label class="radio-label"
+                    ><input type="radio" name="status-posture" value="pass" checked /> 通过</label
+                  >
+                  <label class="radio-label"
+                    ><input type="radio" name="status-posture" value="issue" /> 有问题</label
+                  >
+                </div>
+              </div>
+              <textarea placeholder="备注意见（如呼吸节奏、姿态舒展幅度）..."></textarea>
+            </div>
+
+            <div class="review-item" data-category="materials">
+              <div class="review-item-header">
+                <span>材质与 MToon 效果</span>
+                <div class="radio-group">
+                  <label class="radio-label"
+                    ><input type="radio" name="status-materials" value="pass" checked /> 通过</label
+                  >
+                  <label class="radio-label"
+                    ><input type="radio" name="status-materials" value="issue" /> 有问题</label
+                  >
+                </div>
+              </div>
+              <textarea placeholder="备注意见（如描边宽度、阴影过渡）..."></textarea>
+            </div>
+
+            <button class="action-btn" id="btn-save-review-log">保存评审记录 (Markdown)</button>
+            <div
+              id="save-status-msg"
+              style="font-size: 12px; color: var(--success); margin-top: 8px; text-align: center"
+            ></div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <script type="module" src="./src/review/main.ts"></script>
+  </body>
+</html>
