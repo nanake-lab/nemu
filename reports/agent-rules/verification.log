@@ -1,0 +1,99 @@
+# Agent rules PR read-only verification
+
+## Python stdlib verification
+Command: D:\Dev\nemu\workers\model-adapter\probe\.venv\Scripts\python.exe -
+Working directory: C:\Users\nanake\.codex\worktrees\docs-test-e12-unicode\nemu
+Start UTC: 2026-10-17T15:26:43.2701302+00:00
+End UTC: 2026-10-17T15:26:43.7889895+00:00
+Exit code: 0
+Raw stdout:
+```
+origin_main_agents_full_prefix_of_current=True
+toml_name='routine_reporter'; matches=True
+toml_model='gpt-6-luna'; matches=True
+toml_model_reasoning_effort='max'; matches=True
+config_sha256=fe68a73c2ed296d4844fc35248e0036179199d0dbba699603937b284ce0a824f
+git diff --name-only raw stdout:
+AGENTS.md
+git ls-files --others --exclude-standard raw stdout:
+.codex/agents/routine-reporter.toml
+reports/agent-rules/REPORT.md
+changed_paths_within_AGENTS_codex_agents_reports_agent_rules=True
+unexpected_paths=[]
+
+```
+Raw stderr:
+```
+warning: in the working copy of 'AGENTS.md', CRLF will be replaced by LF the next time Git touches it
+
+```
+Actual Python script supplied on stdin:
+```python
+from pathlib import Path
+import hashlib
+import subprocess
+import sys
+import tomllib
+
+
+def normalize_newlines(text: str) -> str:
+    return text.replace("\r\n", "\n")
+
+
+origin = subprocess.check_output(['git', 'show', 'origin/main:AGENTS.md']).decode('utf8')
+current = Path('AGENTS.md').read_bytes().decode('utf8')
+prefix_ok = normalize_newlines(current).startswith(normalize_newlines(origin))
+
+config_path = Path('.codex/agents/routine-reporter.toml')
+config_bytes = config_path.read_bytes()
+with config_path.open('rb') as config_file:
+    config = tomllib.load(config_file)
+name_ok = config.get('name') == 'routine_reporter'
+model_ok = config.get('model') == 'gpt-6-luna'
+effort_ok = config.get('model_reasoning_effort') == 'max'
+config_sha256 = hashlib.sha256(config_bytes).hexdigest()
+
+diff_stdout = subprocess.check_output(['git', 'diff', '--name-only']).decode('utf8')
+untracked_stdout = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard']).decode('utf8')
+diff_paths = [line for line in diff_stdout.splitlines() if line]
+untracked_paths = [line for line in untracked_stdout.splitlines() if line]
+all_paths = sorted(set(diff_paths + untracked_paths))
+
+def in_scope(path: str) -> bool:
+    return path == 'AGENTS.md' or path.startswith('.codex/agents/') or path.startswith('reports/agent-rules/')
+
+unexpected_paths = [path for path in all_paths if not in_scope(path)]
+paths_ok = not unexpected_paths
+
+print(f'origin_main_agents_full_prefix_of_current={prefix_ok}')
+print(f'toml_name={config.get("name")!r}; matches={name_ok}')
+print(f'toml_model={config.get("model")!r}; matches={model_ok}')
+print(f'toml_model_reasoning_effort={config.get("model_reasoning_effort")!r}; matches={effort_ok}')
+print(f'config_sha256={config_sha256}')
+print('git diff --name-only raw stdout:')
+sys.stdout.write(diff_stdout)
+if diff_stdout and not diff_stdout.endswith('\n'):
+    sys.stdout.write('\n')
+print('git ls-files --others --exclude-standard raw stdout:')
+sys.stdout.write(untracked_stdout)
+if untracked_stdout and not untracked_stdout.endswith('\n'):
+    sys.stdout.write('\n')
+print(f'changed_paths_within_AGENTS_codex_agents_reports_agent_rules={paths_ok}')
+print('unexpected_paths=' + repr(unexpected_paths))
+if not (prefix_ok and name_ok and model_ok and effort_ok and paths_ok):
+    sys.exit(1)
+```
+
+## GitHub Actions runner query
+Command: gh api repos/nanake-lab/nemu/actions/runners --jq '.runners[] | {name,status,busy}'
+Working directory: C:\Users\nanake\.codex\worktrees\docs-test-e12-unicode\nemu
+Start UTC: 2026-10-17T15:26:19.5578626+00:00
+End UTC: 2026-10-17T15:26:21.4377191+00:00
+Exit code: 0
+Raw stdout:
+```
+{"busy":false,"name":"DESKTOP-8LBF84O","status":"offline"}
+```
+Raw stderr:
+```
+```
