@@ -128,3 +128,61 @@ manifest.json 与 config/models.lock.json 已同步为三款 4B 级候选、一�
 - `uv run --project workers/model-adapter/probe --locked mypy workers/model-adapter/probe/injection.py workers/model-adapter/probe/path_probe.py workers/model-adapter/probe/latency_probe.py workers/model-adapter/probe/run_matrix.py workers/model-adapter/probe/test_injection.py`：5 个源文件通过。
 - 新增固定二十字夹具（`--fixed-twenty`）：今天的努力值得肯定请带着信心继续向前走吧。只用于受控生成性能观察，不替代自由回答/方向流畅度检查；逐条记录是否准确输出，不能强制截断输出以伪造合格。
 - 矩阵入口：`uv run --project workers/model-adapter/probe --locked python workers/model-adapter/probe/run_matrix.py --output reports/P0-07/matrix-<新编号>`。每个配置分别启动进程，保留失败退出码和日志，渲染在 finally 中关闭。该入口目前只覆盖通路/并载性能矩阵，尚未实现方向研究的一条命令全量复现，因此任务未完成。
+
+## 2026-10-17 Phi 权重续传完成
+
+用户确认此前尚未下载完整，授权继续续传。后台下载现已成功结束：两片权重大小与固定修订元数据一致，下载器的整片 SHA-256 校验均通过；证据见 `preparation/phi-weights-verified-20261017.json`。至此五个模型都有完整权重校验清单。此次仅核查下载，不启动 GPU 测量；下一测量窗口前另行通知。
+
+## 2026-10-17 完整矩阵与脚本检查（追加）
+
+十项并载矩阵均执行结束，各项 path/concurrent/render 退出码均为 0；原始证据见 matrix-v1/，汇总见 matrix-v1-summary.json 和 benchmark.md。三款 4B 级候选各测 bf16/int8/int4，8B 对照测 int4。每项 20 个非预热样本，Qwen3-4B bf16 与 Instruct-2507 bf16 各有一次未完成二十字，其余八项完成 20/20；失败样本保留在统计内。
+
+主代理判定：本轮没有可选定载体。三款 4B 级 int4 的 p50 分别为 Qwen3-4B 662.2309000013047 ms、Instruct-2507 666.2554500071565 ms、Phi-4-mini 673.1948500018916 ms；8B int4 为 658.8728499918943 ms。十项均超过 600 ms，退出码 0 不表示验收通过。
+
+十项零调制 prefill/decode 与改变调制后 fresh 对照最大 logits 差均为 0，缓存失效均成立。8B int4 注入最大绝对误差 0.001953125，其余九项为 0。生产容差未自行冻结，保持 measured-not-accepted。
+
+显存边界：PyTorch 峰值仅覆盖本进程分配器；全 GPU 离散采样包括桌面，不能作为精确 Nemu 峰值归因。Qwen bf16 的 WDDM 现场读数显示共享内存使用，转录与限制见 matrix-v1/wddm-live-observation.json。int8 时间包含高频 dtype 转换日志开销，不全部归因于模型计算。渲染启动时检查硬件和帧推进，未记录结束帧计数，不能证明全时段帧率。
+
+Luna/max 子代理按固定命令执行：Ruff 通过，Mypy 8 个文件通过，pytest 4 passed，汇总脚本退出码 0。原始命令、时间和 stdout/stderr 见 preparation/checks-v2-{ruff,mypy,pytest,summary}.log。主代理读取汇总并核对任务阈值，未委派验收判断。
+
+run_all.py 已串接全矩阵和三款方向检查，命令见 probe README；尚未从头执行该全量入口，不宣称整条命令已验证。方向研究在通知后的独占 GPU 窗口进行，结果随后追加。没有创建 PR 或触发 CI。
+
+上述 WDDM 证据的完整相对路径为 matrix-v1/Qwen--Qwen3-4B-bf16/wddm-live-observation.json。
+
+## 2026-10-17 方向研究前两项的主代理阅读记录
+
+已逐条阅读两款 Qwen 的各 60 条输出（每语言 10 个匹配 seed × 零/正调制），原始文本、token、U 与合成校准提示位于 direction-v1/。两款均有三语文本变化，但这不等于稳定的预期语义方向：Qwen3-4B 中文有语气词/标点变化、英文局部扩句、日文祝贺扩句；Instruct-2507 也多为祝贺措辞或表情变化。基线提示本身就是庆祝场景，零调制已偏兴奋，存在天花板效应。部分中文/日文输出夹入英文。主代理不据此认证稳定的兴奋方向或无流畅度损失，也不签发 M7 结论。
+
+第二项模型已生成完整 JSON，但外层 PowerShell 写 meta 尾部发生 AppendAllLines overload 错误；模型生成和日志封装失败分开记录。保留原产物，不重跑覆盖。Phi 结果随后追加。
+
+## 2026-10-17 Phi 方向停止标记缺陷（追加诊断）
+
+主代理逐条阅读 Phi v1 的 60 条输出，发现回答后继续生成无关提示。固定修订 generation_config.json 的 eos_token_id=[200020,199999]，tokenizer.eos_token_id 仅为199999；手写循环遗漏200020。按角色名启动的 Luna 子代理只读统计证实：三语言各20/20在首个EOS后仍有token（原始核查见 ../agent-delegation/2026-10-17/native-role-trial.log）。因此 v1 的后续跑题不能直接归因于模型或注入；不据此作负面选型。
+
+主代理新增 stop_tokens.py，在方向和延迟探针中读取完整 model.generation_config.eos_token_id，记录实际停止集合；不改阈值、注入、seed、采样或预算。v1 原始数据不覆盖，CPU检查后另存 Phi 复测。现有延迟矩阵是否遇到该token另核对，不因修复而冒称旧数据在新版脚本上生成。
+
+### EOS 修复后的静态检查
+
+初次 Mypy 检查失败（checks-v3-mypy.log）：nn.Module 的动态 generation_config 属性被类型系统视为 Tensor | Module。主代理改为读取固定修订目录中的 generation_config.json，同一来源的完整 EOS 列表，避免不安全的动态属性推断。修复后 checks-v4-ruff.log 全通过，checks-v4-mypy.log 为9个文件通过，checks-v4-pytest.log 为4 passed，checks-v4-eos.log 验证单EOS/多EOS及无效输入拒绝，全部退出0。v3失败保留，未跳过或改测试。
+
+### 方向 v1 计数和延迟数据影响范围
+
+| 模型 | zh / en / ja 有 token 变化的配对数（每语言10对） | U 算子范数 |
+| --- | --- | --- |
+| Qwen3-4B | 5 / 4 / 4 | 0.99899999960289 |
+| Qwen3-4B-Instruct-2507 | 5 / 3 / 1 | 0.998999995734334 |
+| Phi-4-mini v1（停止条件缺陷，非有效流畅度结论） | 8 / 6 / 5 | 0.99899999904788 |
+
+Luna只读计数来自各JSON的token_ids和u_operator_norm；主代理已读全部180条文本。Qwen各语言均20条eos；Phi v1的token_limit计数zh16/en7/ja8。第二款Qwen模型子进程退出码因包装写meta失败未保留，记为未知，不能从JSON完整推断为0；第一/第三项模型退出码0。
+
+对十项 concurrent.json 的全部21条样本（含预热）检查，200020出现次数全部为0。旧延迟矩阵未遇到此漏判EOS，数值仍按原数据记录；不把它说成修复后的重新测量。原始文件共约32MB，其中Instruct-2507 int8/concurrent.log约18MB，主要为重复告警，保留完整日志。只读文本扫描未发现签名URL/凭据赋值样式；权重仍在忽略路径。
+
+## 2026-10-17 Phi 方向 v2 与本轮结论
+
+修复EOS后单独复测Phi，证据 direction-v2/microsoft--Phi-4-mini-instruct.json 及同名前缀日志。Python退出0，60条输出均以eos结束，主代理逐条读完：此前回答结束后的无关指令续写已消失。中文仍有“迫不及忙”等不自然词语、日文仍有“増強”等不合场景用语，而且零/正调制双方都有；不能把这些基线质量问题归因于注入。观察到部分扩句/措辞变化，尚不证明稳定朝“兴奋”移动，更不代表跨场景或M7结论。
+
+本轮新增的规则配置与真实子代理试用已完成；P0-07仍为部分完成。十项矩阵和三款三语方向观察已有原始数据，但没有满足全部选择条件的候选。保持600ms与9GB条件、冻结规格及已裁决事项不变，不把候选写成正式选型。全量入口尚未从头端到端执行，生产容差/精确峰值归因仍待闭合；不宣称任务验收完成。
+
+下一步：按任务书“都不满足”分支等待用户选择BLOCKED.md中的后续路线。建议先评估现有实现优化并保持验收线；不擅自更换架构、增加硬件或将模式B当作严格载体通过。当前仅推送任务分支供审阅，不开PR、不触发CI、不启动下一张卡。需要Windows CI时提前明确通知runner任务与提交。
+
+Phi v2 机械核对补充：zh/en/ja各20条、各10对，无缺对/重复；token不同对数为7/5/5，首个EOS均为200020，60条均无EOS后token。统计见 direction-v2/microsoft--Phi-4-mini-instruct.analysis-meta.json。子进程已退出，测量窗口结束。

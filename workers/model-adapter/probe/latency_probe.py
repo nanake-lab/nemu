@@ -22,6 +22,7 @@ from torch import nn
 from injection import InjectedDecoder
 from path_probe import forward
 from runtime_guard import require_runner_offline
+from stop_tokens import eos_ids
 
 HERE = Path(__file__).resolve().parent
 PROMPT = "请用一句恰好二十个汉字的话鼓励刚完成学习的人，句末加句号，不要解释。"
@@ -94,6 +95,11 @@ def main() -> None:
             attn_implementation="eager",
         )).eval().requires_grad_(False)
         tokenizer = api.AutoTokenizer.from_pretrained(str(local(args.model)), local_files_only=True)
+        generation = json.loads(
+            (local(args.model) / "generation_config.json").read_text(encoding="utf-8")
+        )
+        stopping = eos_ids(generation["eos_token_id"])
+        result["eos_token_ids"] = sorted(stopping)
         config = json.loads((local(args.model) / "config.json").read_text(encoding="utf-8"))
         layers = cast(nn.ModuleList, cast(nn.Module, model.model).layers)
         index = int(config["num_hidden_layers"]) // 2 - 1
@@ -138,7 +144,7 @@ def main() -> None:
                     if any(c in output_text for c in "。！？!?\n"):
                         stop_reason = "sentence_boundary"
                         break
-                    if token == tokenizer.eos_token_id:
+                    if token in stopping:
                         stop_reason = "eos"
                         break
                     if elapsed > 30:

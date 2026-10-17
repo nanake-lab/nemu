@@ -43,3 +43,11 @@
 ## 后续
 
 继续 P0-07。后续机械性测试/日志收集使用此子代理；主代理先提供确切命令与输出路径，授予独占重负载窗口后才可跑 GPU/编译/Electron。需要 Windows CI 时另行提前通知用户，不在本次触发。
+
+## 2026-10-17 客户端角色发现后的补充试用
+
+客户端本轮更新的 spawn_agent 已列出 routine_reporter，声明固定 model=gpt-6-luna、reasoning=max。主代理随后实际调用 agent_type=routine_reporter、fork_turns=none，返回 /root/native_role_check。由此补充验证“按角色名发现并启动”；上文未验证的说明保留为当时状态。
+
+真实小任务是读取 Phi 方向原始 token 和固定 generation_config，核查两个 EOS 标记后的继续生成。日志 native-role-trial.log：Python exit=0，三语言各 20/20 样本在首个 EOS 后仍有 token。主代理核对 generation_config 确有 [200020,199999]，与脚本只检查 tokenizer 单 EOS 的缺陷吻合。日志中的 SHA-256 是 generation_config 文件的哈希，不是角色文件哈希。
+
+限制和失败如实保留：目标样本筛选误用 modulation 字段（实际是 coefficient）而得到空数组，不能解释为样本缺失；全部样本列表仍有效。外层 New-Item -LiteralPath 不被支持，导致首次日志保存失败、外层 exit=1；原 stdout/stderr 在明确授权后写入新日志，没有重跑模型或覆盖证据。主代理承担诊断与代码修正，子代理未修复或作验收决定。

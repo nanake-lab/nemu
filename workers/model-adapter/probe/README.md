@@ -66,3 +66,43 @@ The probe does not modify the stage, visual goldens or appearance.
 The forward ordering in injection.py is adapted from Transformers 4.57.3 under
 Apache-2.0; copyright attribution is in that file and the license is retained in
 licenses/transformers-Apache-2.0.txt.
+
+## Full probe entry point (2026-10-17)
+
+Once weights have verified successfully and the runner is offline, reserve a quiet
+GPU window. The following command implements the matrix followed by the separate
+informational direction study; use a fresh output directory:
+
+```powershell
+$env:HF_HUB_OFFLINE = '1'
+$env:TRANSFORMERS_OFFLINE = '1'
+uv run --project workers/model-adapter/probe --locked python workers/model-adapter/probe/run_all.py --output reports/P0-07/run-<new-id>
+```
+
+`run_matrix.py` measures three 4B-class candidates in bf16/int8/int4 and the 8B
+comparison in int4, sequentially. Actual TTS Base weights stay resident while the
+existing stage renders. No audio voice is chosen. Each configuration has a separate
+process and evidence directory, including failures. Latency uses one excluded
+warmup and twenty fresh-KV requests. `--fixed-twenty` asks the model to reproduce a
+specified twenty-Han-character sentence; token generation is still autoregressive,
+not teacher-forced. Every actual output and count is retained. This controlled
+copying fixture does not establish free-form response quality. Time limits are
+checked between forwards, so a single slow forward can overshoot the limit.
+
+`direction_probe.py` uses int4 and three synthetic calm/excited calibration pairs.
+Their mean residual difference becomes a fixed direction of norm at most one;
+only the first of eight coefficient slots is active, with a predeclared amplitude
+of one. Ten matched seeds, each with zero and positive modulation, produce twenty
+outputs per language. Generation prompts stay identical between conditions. This
+small exploratory study is not a functional certificate or a claim that the
+synthetic contrast is a true Echo Core state coordinate. No online optimizer runs.
+
+The path probe's identity U and this exploratory U are distinct recorded fixtures,
+not a selected production carrier. Production tolerance, carrier freeze and full
+acceptance require the report's remaining checks. See REPORT.md for what actually
+ran; availability of this entry point alone is not an acceptance result.
+
+EOS stopping follows the full list in each pinned generation_config.json. Phi v1
+omitted one EOS and is retained as defective-stop evidence; v2 reruns only that
+direction case. Matrix v1 contains no occurrences of the omitted token, but remains
+historical evidence from the earlier script, not a claimed rerun of this version.
