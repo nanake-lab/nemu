@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-17",
+  "official_source": "https://learn.chatgpt.com/docs/agent-configuration/subagents",
+  "official_redirect_from": "https://developers.openai.com/codex/subagents",
+  "local_cli_version": "codex-cli 0.162.1",
+  "physical_memory_bytes": 34282377216,
+  "project_agent_file": ".codex/agents/routine-reporter.toml",
+  "model": "gpt-6-luna",
+  "reasoning_effort": "max",
+  "reasoning_basis": "Current collaboration tool exposes low/medium/high/xhigh/max for GPT-6 Luna; max is the highest available level.",
+  "concurrency": "No project-imposed total agent count; platform session slots remain enforced. Heavy jobs are serialized by the primary agent.",
+  "trial_launch": {
+    "tool": "collaboration.spawn_agent",
+    "task_name": "routine_reporter_trial",
+    "fork_turns": "none",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "max",
+    "returned_task_name": "/root/routine_reporter_trial",
+    "instructions": "Read AGENTS.md and the standalone TOML. Report only. Parse config, check append-only prefix, recompute completed matrix statistics and return raw command/output. No files edited."
+  },
+  "role_loading_scope": "This session's spawn tool has no custom-agent-name selector. Trial explicitly selects the configured model/effort and instructs the child to read the role file. Automatic selection by role name is not claimed as tested.",
+  "permission_scope": "Official custom agents inherit parent permissions. No unsupported per-role sandbox override was added."
+}
