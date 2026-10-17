@@ -24,7 +24,7 @@
 | 三视图之间比例一致 | 通过 | 见 [index.md](file:///d:/Dev/nemu-antigravity/content/nemu/bible/index.md#L60-L75)，正/侧/背裙摆下沿水平高度一致，头身比一致 |
 | 表情表的 12 种表情都像 Nemu | 通过 | 见 [index.md](file:///d:/Dev/nemu-antigravity/content/nemu/bible/index.md#L88-L105)，12 种表情与 `@nemu/contracts` 的 `Emotion` 枚举严格一一对应，神态生动且画风高度统一 |
 | 色板颜色从原画取得，而不是生成图 | 通过 | 见 [03-palette.json](file:///d:/Dev/nemu-antigravity/content/nemu/bible/03-palette.json)，基于当前定稿立绘取色并标注了校准记录 |
-| 人设种子和对照情境读起来就是你心目中的 Nemu | 通过 | 见 [06-persona-seed.md](file:///d:/Dev/nemu-antigravity/content/nemu/bible/06-persona-seed.md) 与 [07-genesis-notes.md](file:///d:/Dev/nemu-antigravity/content/nemu/bible/07-genesis-notes.md)，确立了温柔微傲娇、讲理独立、自然使用“你”的核心性格，并确立由 Echo Core 演化生命感的设计原则 |
+| 人设种子和对照情境读起来就是你心目中的 Nemu | 通过 | 见 [06-persona-seed.md](file:///d:/Dev/nemu-antigravity/content/nemu/bible/06-persona-seed.md) 与 [07-genesis-notes.md](file:///d:/Dev/nemu-antigravity/content/nemu/bible/07-genesis-notes.md)，完整补齐中英日三语语言习惯、喜欢与讨厌、原则底线，以及 18 组供 P5-17 快状态载体校准的对照情境（涵盖 AB 连续动态区间与用户定制版本） |
 
 ## 新增依赖
 | 名称 | 版本 | 许可证 | 用途 |
