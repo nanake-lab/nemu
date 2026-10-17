@@ -1,7 +1,8 @@
-"""Explicit Qwen3 residual wrapper for P0-07; not a production carrier.
+"""Explicit Qwen3/Phi3 residual wrapper for P0-07; not a production carrier.
 
 Forward order adapted from Transformers 4.57.3 Qwen3DecoderLayer:
 Copyright 2025 The Qwen team, Alibaba Group and the HuggingFace Inc. team.
+Phi3 forward order: Copyright 2024 Microsoft and the HuggingFace Inc. team.
 Licensed under Apache-2.0: https://www.apache.org/licenses/LICENSE-2.0
 Modification: explicit low-rank addition after attention residual, before MLP norm.
 """
@@ -65,7 +66,9 @@ class InjectedDecoder(nn.Module):
     The recorded error is raw evidence, not an assigned acceptance tolerance.
     """
 
-    def __init__(self, original: nn.Module, u: torch.Tensor, beta: float) -> None:
+    def __init__(
+        self, original: nn.Module, u: torch.Tensor, beta: float, family: str = "qwen3"
+    ) -> None:
         super().__init__()
         if u.ndim != 2 or not torch.isfinite(u).all() or not math.isfinite(beta) or beta <= 0:
             raise ValueError("finite matrix U and positive finite beta required")
@@ -73,7 +76,11 @@ class InjectedDecoder(nn.Module):
         if norm > 1.0:
             raise ValueError("U operator norm exceeds 1")
         self.original = original
-        self.attention_type = cast(str, original.attention_type)
+        if family not in {"qwen3", "phi3"}:
+            raise ValueError("unsupported decoder family")
+        self.family = family
+        if family == "qwen3":
+            self.attention_type = cast(str, original.attention_type)
         self.register_buffer("u", u.detach().clone())
         self.beta = beta
         self.coefficients: tuple[float, ...] | None = None
@@ -105,6 +112,8 @@ class InjectedDecoder(nn.Module):
         residual = hidden_states
         normed = cast(nn.Module, layer.input_layernorm)(hidden_states)
         attention, _ = cast(nn.Module, layer.self_attn)(hidden_states=normed, **kwargs)
+        if self.family == "phi3":
+            attention = cast(nn.Module, layer.resid_attn_dropout)(attention)
         hidden_states = residual + attention
         u = cast(torch.Tensor, self.u)
         a = torch.tensor(self.coefficients, dtype=u.dtype, device=u.device)
@@ -132,4 +141,6 @@ class InjectedDecoder(nn.Module):
         residual = hidden_states
         hidden_states = cast(nn.Module, layer.post_attention_layernorm)(hidden_states)
         hidden_states = cast(nn.Module, layer.mlp)(hidden_states)
+        if self.family == "phi3":
+            hidden_states = cast(nn.Module, layer.resid_mlp_dropout)(hidden_states)
         return residual + hidden_states

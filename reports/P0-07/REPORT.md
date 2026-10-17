@@ -107,3 +107,24 @@ manifest.json 与 config/models.lock.json 已同步为三款 4B 级候选、一�
 **TTS 边界：Qwen3-TTS 0.6B Base 仅用于 P0-07 并载显存测量；正式音色和变体由 P4-03 决定，不构成选型结论。** 此说明已写入两份登记的 TTS role，先前“concurrent TTS”是历史简写，不授予正式音色选择权限。
 
 已有权重分段下载继续。Phi 配置准备已启动，Phi 权重安排在当前下载进程结束后顺序执行，避免叠加下载并发；缓存保持 Git 忽略。开始真实模型/性能测量前另行通知用户，本轮清单更新没有启动测量窗口。
+
+## 2026-10-17 真实权重通路与并载探针推进
+
+- 新增 Phi3 decoder 显式 forward 分支，保留 attention/MLP 两处原始 dropout 运算；注入位置仍为 attention 残差相加之后、下一归一化之前。来源 Transformers 4.57.3，Apache-2.0；没有新增依赖。
+- `preparation/tiny-phi-cpu-path-v1.json`：Phi CPU 结构夹具的零调制 prefill/decode logits 最大差均为 0，改变调制后 KV 被丢弃，与重新计算 logits 最大差为 0。这不替代 Phi 真实权重验收。
+- `preparation/qwen4b-int4-path-v1.json`：RTX 3080 上 Qwen3-4B int4 实测的上述三个 logits 最大差均为 0，KV 失效成立。注入原始向量和浮点误差保存于该 JSON；生产容差仍未据此宣告冻结。
+- 新增 `latency_probe.py`：本地离线加载真实 TTS Base 全部参数到 GPU；greedy、eager、独立 KV、一次预热后 20 次测量，最多 96 token / 30 秒。首句测到句末标点，TTFT 单列，逐条保留实际汉字数，不筛除不合二十字的输出。全 GPU 显存采样包含其他桌面分配，不等同于精确 Nemu 归因，也不声称采样是全 GPU 峰值。
+- 当前缓存核查仅找到四个 Qwen 模型的完整权重校验清单；Phi 原下载最后记录为 TLS 失败，未找到两片完整权重，已询问是否有其他下载位置。未改候选登记、未以缺失权重判定模型性能失败。
+- 本轮未打开 PR、未触发 CI；冻结规格和已有裁决不变。
+
+### 第一组并载数据（2026-10-17，非完成验收）
+
+`preparation/qwen4b-int4-concurrent-v1.json` 包含一次预热和 20 次正式样本；真实 TTS 参数全部位于 cuda:0，舞台硬件渲染证据为 `preparation/hardware-render-v3.json`。Qwen3-4B int4 首句 p50=800.344800001767 ms。每条实际输出均为 14 个汉字，故不能作为二十字回答验收，也不能据此签发载体选择。全 GPU 离散显存样本 6432–6452 MiB，不是精确 Nemu 峰值。该组已结束，渲染进程退出码 0。后续需固定二十字文本夹具并继续所有配置、方向检查和最终归因。
+
+### 本轮脚本验证与复现入口
+
+- `uv run --project workers/model-adapter/probe --locked pytest workers/model-adapter/probe/test_injection.py -q`：4 passed（包含 Qwen3 / Phi3 两分支）。
+- `uv run --project workers/model-adapter/probe --locked ruff check workers/model-adapter/probe`：通过。
+- `uv run --project workers/model-adapter/probe --locked mypy workers/model-adapter/probe/injection.py workers/model-adapter/probe/path_probe.py workers/model-adapter/probe/latency_probe.py workers/model-adapter/probe/run_matrix.py workers/model-adapter/probe/test_injection.py`：5 个源文件通过。
+- 新增固定二十字夹具（`--fixed-twenty`）：今天的努力值得肯定请带着信心继续向前走吧。只用于受控生成性能观察，不替代自由回答/方向流畅度检查；逐条记录是否准确输出，不能强制截断输出以伪造合格。
+- 矩阵入口：`uv run --project workers/model-adapter/probe --locked python workers/model-adapter/probe/run_matrix.py --output reports/P0-07/matrix-<新编号>`。每个配置分别启动进程，保留失败退出码和日志，渲染在 finally 中关闭。该入口目前只覆盖通路/并载性能矩阵，尚未实现方向研究的一条命令全量复现，因此任务未完成。

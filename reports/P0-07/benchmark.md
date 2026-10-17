@@ -35,3 +35,11 @@
 ## 2026-10-16 候选范围追加
 
 新增 microsoft/Phi-4-mini-instruct（3.8B，Phi3ForCausalLM，MIT）为第三个 4B 级候选。bf16、8 bit、4 bit、通路、TTS/渲染并载和三语方向检查全部为 not_run；当前 Qwen3 包装尚不能直接用于 Phi。核查来源、修订和其他候选筛选依据见 REPORT 的“候选架构扩展”。TTS Base 仅用于并载显存测量，正式音色和变体由 P4-03 决定。
+
+## 2026-10-17 首组真实并载观察
+
+| 配置 | 原始样本 | 首句 p50 | 实际字数 | 结论 |
+| --- | --- | --- | --- | --- |
+| Qwen3-4B int4 + TTS Base GPU 常驻 + 舞台硬件渲染 | preparation/qwen4b-int4-concurrent-v1.json | 800.3448 ms | 每条 14 汉字 | 非二十字验收；未选定 |
+
+一次预热后 20 次 greedy 重复。原始文件另含 TTFT、token/s、CUDA allocator 峰值与全 GPU 离散样本；全 GPU 样本不是 Nemu 归因峰值。

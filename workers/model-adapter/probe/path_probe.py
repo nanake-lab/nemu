@@ -36,6 +36,7 @@ def forward(model: nn.Module, ids: torch.Tensor, kv: object = None) -> Output:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tiny-cpu", action="store_true")
+    parser.add_argument("--fixture-family", choices=["qwen3", "phi3"], default="qwen3")
     parser.add_argument("--model", default="Qwen/Qwen3-4B")
     parser.add_argument("--precision", choices=["bf16", "int8", "int4"], default="bf16")
     parser.add_argument("--output", type=Path, required=True)
@@ -48,7 +49,10 @@ def main() -> None:
     torch.backends.cudnn.allow_tf32 = False
     api = importlib.import_module("transformers")
     if args.tiny_cpu:
-        config = api.Qwen3Config(
+        family = args.fixture_family
+        config_class = api.Qwen3Config if family == "qwen3" else api.Phi3Config
+        model_class = api.Qwen3ForCausalLM if family == "qwen3" else api.Phi3ForCausalLM
+        config = config_class(
             vocab_size=64,
             hidden_size=32,
             intermediate_size=64,
@@ -56,8 +60,11 @@ def main() -> None:
             num_attention_heads=4,
             num_key_value_heads=2,
             head_dim=8,
+            pad_token_id=0,
+            bos_token_id=1,
+            eos_token_id=2,
         )
-        model = cast(nn.Module, api.Qwen3ForCausalLM(config)).eval()
+        model = cast(nn.Module, model_class(config)).eval()
         model_id, revision = "random-cpu-fixture", "seed-731"
         width, layer_index, device = 32, 0, "cpu"
     else:
@@ -67,8 +74,9 @@ def main() -> None:
         model_id, revision = entry["id"], entry["revision"]
         local = HERE / ".cache/models" / model_id.replace("/", "--") / revision
         config_data = json.loads((local / "config.json").read_text(encoding="utf-8"))
-        if config_data["model_type"] != "qwen3":
-            raise ValueError("only pinned Qwen3 decoder candidates are supported")
+        family = config_data["model_type"]
+        if family not in {"qwen3", "phi3"}:
+            raise ValueError("only pinned Qwen3/Phi3 decoder candidates are supported")
         width = int(config_data["hidden_size"])
         layer_index = int(config_data["num_hidden_layers"]) // 2 - 1
         device = "cuda:0"
@@ -98,13 +106,13 @@ def main() -> None:
     dtype = next(model.parameters()).dtype
     rank = 8
     u = torch.eye(width, rank, device=device, dtype=dtype)
-    wrapper = InjectedDecoder(layers[layer_index], u, beta=1.0)
+    wrapper = InjectedDecoder(layers[layer_index], u, beta=1.0, family=family)
     ids = torch.tensor([[1, 3, 5, 7, 9]], dtype=torch.long, device=device)
     base_key = CacheKey(
         model_id + "@" + revision,
         "token-ids-fixture-v1",
         "1,3,5,7,9",
-        f"qwen3-attention-residual-layer-{layer_index}-rank8-basis-v1",
+        f"{family}-attention-residual-layer-{layer_index}-rank8-basis-v1",
         modulation_digest((0.0,) * rank),
         "last-prefill-each-decode-v1",
         "float32" if args.tiny_cpu else args.precision,

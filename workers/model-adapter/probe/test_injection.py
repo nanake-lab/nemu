@@ -27,10 +27,13 @@ class Layer(nn.Module):
         self.self_attn = Attention()
         self.post_attention_layernorm = nn.Identity()
         self.mlp = Zero()
+        self.resid_attn_dropout = nn.Identity()
+        self.resid_mlp_dropout = nn.Identity()
 
 
-def test_zero_mask_and_real_nonzero_difference() -> None:
-    wrapper = InjectedDecoder(Layer(), torch.eye(4)[:, :2], beta=1.0)
+@pytest.mark.parametrize("family", ["qwen3", "phi3"])
+def test_zero_mask_and_real_nonzero_difference(family: str) -> None:
+    wrapper = InjectedDecoder(Layer(), torch.eye(4)[:, :2], beta=1.0, family=family)
     x = torch.ones(1, 3, 4)
     wrapper.begin((0.0, 0.0), observe=True)
     assert torch.equal(wrapper(x), 2 * x)
