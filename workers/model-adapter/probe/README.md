@@ -106,3 +106,35 @@ EOS stopping follows the full list in each pinned generation_config.json. Phi v1
 omitted one EOS and is retained as defective-stop evidence; v2 reruns only that
 direction case. Matrix v1 contains no occurrences of the omitted token, but remains
 historical evidence from the earlier script, not a claimed rerun of this version.
+
+## Int4 optimization experiments (2026-10-17)
+
+User authorized int4-only optimization with unchanged acceptance thresholds.
+Existing default eager/reference behavior is retained. New explicit switches:
+
+- `--attention sdpa`: use the installed Transformers/PyTorch SDPA integration.
+- `--lean`: cache Ua only inside one request and emit only last-position logits.
+  Ua is computed on the first measured forward, cleared at end/begin, never
+  carried across requests. Zero coefficients still execute the explicit addition.
+- `run_matrix.py --precision int4` runs only the three candidates and 8B control.
+  Every selected variant runs its own path probe before concurrent measurement.
+- `run_all.py --int4-only --attention sdpa --lean` also runs three-language
+  observations using those same switches. No acceptance is implied by availability.
+
+Fresh output paths are required. The fixture, TTS Base resident load, rendering,
+seed, greedy decoding, one warmup + 20 repeats, max96 tokens/30s and600ms remain
+unchanged. Examples (only in a notified quiet GPU window with runner offline):
+
+```powershell
+python workers/model-adapter/probe/profile_int4.py --model Qwen/Qwen3-4B --output reports/P0-07/profile-eager-NEW
+python workers/model-adapter/probe/run_matrix.py --precision int4 --output reports/P0-07/int4-reference-NEW
+python workers/model-adapter/probe/run_matrix.py --precision int4 --attention sdpa --output reports/P0-07/int4-sdpa-NEW
+python workers/model-adapter/probe/run_matrix.py --precision int4 --attention sdpa --lean --output reports/P0-07/int4-sdpa-lean-NEW
+```
+
+`profile_int4.py` is a separate solo-carrier diagnostic: one warmup then one
+prefill plus eight decode steps, raw CPU/CUDA events and Chrome trace. It is not a
+sentence benchmark or a concurrent-load acceptance run. Profiler instrumentation
+perturbs timing; CPU/device event sums must not be added as if they were elapsed
+wall time. Actual fused-kernel use must be established from the trace, not guessed
+from `sdpa` alone. No new dependency or compiler backend is introduced.

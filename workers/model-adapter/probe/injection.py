@@ -67,7 +67,8 @@ class InjectedDecoder(nn.Module):
     """
 
     def __init__(
-        self, original: nn.Module, u: torch.Tensor, beta: float, family: str = "qwen3"
+        self, original: nn.Module, u: torch.Tensor, beta: float, family: str = "qwen3",
+        cache_delta: bool = False,
     ) -> None:
         super().__init__()
         if u.ndim != 2 or not torch.isfinite(u).all() or not math.isfinite(beta) or beta <= 0:
@@ -83,6 +84,8 @@ class InjectedDecoder(nn.Module):
             self.attention_type = cast(str, original.attention_type)
         self.register_buffer("u", u.detach().clone())
         self.beta = beta
+        self.cache_delta = cache_delta
+        self.request_delta: torch.Tensor | None = None
         self.coefficients: tuple[float, ...] | None = None
         self.observe = False
         self.observations: list[dict[str, object]] = []
@@ -99,9 +102,11 @@ class InjectedDecoder(nn.Module):
         self.observe = observe
         self.observations = []
         self.calls = 0
+        self.request_delta = None
 
     def end(self) -> None:
         self.coefficients = None
+        self.request_delta = None
 
     def forward(self, hidden_states: torch.Tensor, **kwargs: object) -> torch.Tensor:
         if self.coefficients is None or hidden_states.shape[0] != 1:
@@ -116,8 +121,17 @@ class InjectedDecoder(nn.Module):
             attention = cast(nn.Module, layer.resid_attn_dropout)(attention)
         hidden_states = residual + attention
         u = cast(torch.Tensor, self.u)
-        a = torch.tensor(self.coefficients, dtype=u.dtype, device=u.device)
-        delta = (u @ a).to(hidden_states.dtype)
+        if self.cache_delta:
+            if self.request_delta is None:
+                # First forward stays inside the measured request. Nothing is
+                # moved before the timer; only repeated decode work is removed.
+                self.request_delta = u @ torch.tensor(
+                    self.coefficients, dtype=u.dtype, device=u.device,
+                )
+            delta = self.request_delta.to(hidden_states.dtype)
+        else:
+            a = torch.tensor(self.coefficients, dtype=u.dtype, device=u.device)
+            delta = (u @ a).to(hidden_states.dtype)
         before = hidden_states[:, -1, :]
         after = before + delta
         if self.observe:

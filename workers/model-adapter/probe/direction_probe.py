@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone
+from functools import partial
 import hashlib
 import importlib
 import json
@@ -41,6 +42,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--attention", choices=["eager", "sdpa"], default="eager")
+    parser.add_argument("--lean", action="store_true")
     args = parser.parse_args()
     if args.output.exists():
         parser.error("preserve previous measurements; choose a new output")
@@ -55,7 +58,8 @@ def main() -> None:
     result: dict[str, object] = dict(
         status="started", timestamp=datetime.now(timezone.utc).isoformat(), model=entry,
         calibration_pairs=PAIRS, generation_prompts=PROMPTS,
-        precision="int4 NF4; bf16 compute; no double quantization; eager",
+        precision=f"int4 NF4; bf16 compute; no double quantization; {args.attention}",
+        attention=args.attention, lean=args.lean,
         sampling="temperature 0.7; full vocabulary multinomial; matched seeds 731..740",
         budget="48 tokens and 25 seconds per request; fresh KV; immutable coefficient",
         limitation="exploratory single scenario per language; not M7, no psychological coordinate claim",
@@ -65,7 +69,7 @@ def main() -> None:
         api = importlib.import_module("transformers")
         model = cast(nn.Module, api.AutoModelForCausalLM.from_pretrained(
             str(local), local_files_only=True, trust_remote_code=False,
-            dtype=torch.bfloat16, device_map={"": "cuda:0"}, attn_implementation="eager",
+            dtype=torch.bfloat16, device_map={"": "cuda:0"}, attn_implementation=args.attention,
             quantization_config=api.BitsAndBytesConfig(
                 load_in_4bit=True, bnb_4bit_quant_type="nf4",
                 bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_use_double_quant=False,
@@ -80,7 +84,8 @@ def main() -> None:
         width = int(config["hidden_size"])
         original = layers[index]
         recorder = InjectedDecoder(original, torch.zeros(width, 8, device="cuda:0"),
-                                   beta=1, family=config["model_type"])
+                                   beta=1, family=config["model_type"], cache_delta=args.lean)
+        run_forward = partial(forward, last_logits=args.lean)
         layers[index] = recorder
 
         def encode(prompt: str) -> torch.Tensor:
@@ -97,7 +102,7 @@ def main() -> None:
                 vectors = []
                 for prompt in (calm, excited):
                     recorder.begin((0.0,) * 8, observe=True)
-                    out = forward(model, encode(prompt))
+                    out = run_forward(model, encode(prompt))
                     vector = torch.tensor(cast(list[list[float]], recorder.observations[0]["before"]),
                                           dtype=torch.float64).flatten()
                     vectors.append(vector)
@@ -112,7 +117,7 @@ def main() -> None:
             u = torch.zeros(width, 8, dtype=torch.float32)
             u[:, 0] = (direction / norm * 0.999).float()
             wrapper = InjectedDecoder(original, u.to("cuda:0"), beta=1,
-                                      family=config["model_type"])
+                                      family=config["model_type"], cache_delta=args.lean)
             layers[index] = wrapper
             result.update(
                 calibration=calibration, unnormalized_direction_l2=norm,
@@ -135,7 +140,7 @@ def main() -> None:
                         started = time.perf_counter()
                         stop = "token_limit"
                         for _ in range(48):
-                            out = forward(model, current, kv)
+                            out = run_forward(model, current, kv)
                             kv = out.past_key_values
                             probabilities = torch.softmax(out.logits[:, -1, :].float() / 0.7, dim=-1)
                             current = torch.multinomial(probabilities, 1)

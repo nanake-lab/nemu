@@ -24,6 +24,8 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--model", help="optional single model from the locked candidate list")
     parser.add_argument("--precision", choices=["bf16", "int8", "int4"])
+    parser.add_argument("--attention", choices=["eager", "sdpa"], default="eager")
+    parser.add_argument("--lean", action="store_true")
     args = parser.parse_args()
     require_runner_offline()
     destination = args.output.resolve()
@@ -36,6 +38,7 @@ def main() -> None:
     if args.model and args.model not in models:
         parser.error("model must be a locked carrier candidate")
     rows: list[dict[str, object]] = []
+    variant = ["--attention", args.attention] + (["--lean"] if args.lean else [])
     for model in models:
         if args.model and args.model != model:
             continue
@@ -47,12 +50,13 @@ def main() -> None:
             case = destination / (model.replace("/", "--") + "-" + precision)
             case.mkdir()
             print(f"BEGIN {model} {precision}", flush=True)
-            row: dict[str, object] = dict(model=model, precision=precision)
+            row: dict[str, object] = dict(model=model, precision=precision,
+                                          attention=args.attention, lean=args.lean)
             rows.append(row)
             with (case / "path.log").open("x", encoding="utf-8") as log:
                 path = subprocess.run(
                     [sys.executable, str(HERE / "path_probe.py"), "--model", model,
-                     "--precision", precision, "--output", str(case / "path.json")],
+                     "--precision", precision, "--output", str(case / "path.json"), *variant],
                     stdout=log, stderr=subprocess.STDOUT, timeout=600, check=False,
                 )
                 row["path_exit"] = path.returncode
@@ -72,7 +76,7 @@ def main() -> None:
                         measured = subprocess.run(
                             [sys.executable, str(HERE / "latency_probe.py"), "--model", model,
                              "--precision", precision, "--fixed-twenty", "--render-ready",
-                             str(ready), "--output", str(case / "concurrent.json")],
+                             str(ready), "--output", str(case / "concurrent.json"), *variant],
                             stdout=log, stderr=subprocess.STDOUT, timeout=900, check=False,
                         )
                         row["concurrent_exit"] = measured.returncode

@@ -43,6 +43,8 @@ def main() -> None:
     parser.add_argument("--render-ready", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--repeats", type=int, default=20)
+    parser.add_argument("--attention", choices=["eager", "sdpa"], default="eager")
+    parser.add_argument("--lean", action="store_true")
     parser.add_argument("--fixed-twenty", action="store_true",
                         help="controlled generation fixture; not a free-form fluency assessment")
     args = parser.parse_args()
@@ -61,9 +63,10 @@ def main() -> None:
     result: dict[str, object] = dict(
         timestamp=datetime.now(timezone.utc).isoformat(), model=args.model,
         precision=args.precision, render=render, prompt=prompt, samples=[],
+        attention=args.attention, lean=args.lean,
         fixture="fixed-twenty-v1" if args.fixed_twenty else "free-form-v1",
         status="started", baseline_gpu=gpu_memory(),
-        method="greedy; one warmup excluded; fresh KV; eager; max 96 new tokens; 30s cap",
+        method=f"greedy; one warmup excluded; fresh KV; {args.attention}; max 96 new tokens; 30s cap",
         vram_scope="whole GPU samples, includes unrelated desktop allocations; not Nemu attribution",
         tts_scope="resident Base model only; voice/variant remains P4-03",
     )
@@ -92,7 +95,7 @@ def main() -> None:
         model = cast(nn.Module, api.AutoModelForCausalLM.from_pretrained(
             str(local(args.model)), local_files_only=True, trust_remote_code=False,
             dtype=torch.bfloat16, device_map={"": "cuda:0"}, quantization_config=quant,
-            attn_implementation="eager",
+            attn_implementation=args.attention,
         )).eval().requires_grad_(False)
         tokenizer = api.AutoTokenizer.from_pretrained(str(local(args.model)), local_files_only=True)
         generation = json.loads(
@@ -106,6 +109,7 @@ def main() -> None:
         wrapper = InjectedDecoder(
             layers[index], torch.eye(int(config["hidden_size"]), 8, device="cuda:0",
                                      dtype=torch.bfloat16), beta=1, family=config["model_type"],
+            cache_delta=args.lean,
         )
         layers[index] = wrapper
         text = tokenizer.apply_chat_template(
@@ -131,7 +135,7 @@ def main() -> None:
                 output_text = ""
                 stop_reason = "token_limit"
                 for _ in range(96):
-                    out = forward(model, current, kv)
+                    out = forward(model, current, kv, last_logits=args.lean)
                     kv = out.past_key_values
                     current = out.logits[:, -1, :].argmax(-1, keepdim=True)
                     token = int(current.item())

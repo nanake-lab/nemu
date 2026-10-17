@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from dataclasses import asdict
 from datetime import datetime, timezone
+from functools import partial
 import importlib
 import json
 from pathlib import Path
@@ -29,8 +30,11 @@ class Output(Protocol):
     past_key_values: object
 
 
-def forward(model: nn.Module, ids: torch.Tensor, kv: object = None) -> Output:
-    return cast(Output, model(input_ids=ids, past_key_values=kv, use_cache=True))
+def forward(
+    model: nn.Module, ids: torch.Tensor, kv: object = None, *, last_logits: bool = False,
+) -> Output:
+    return cast(Output, model(input_ids=ids, past_key_values=kv, use_cache=True,
+                              logits_to_keep=1 if last_logits else 0))
 
 
 def main() -> None:
@@ -40,6 +44,8 @@ def main() -> None:
     parser.add_argument("--model", default="Qwen/Qwen3-4B")
     parser.add_argument("--precision", choices=["bf16", "int8", "int4"], default="bf16")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--attention", choices=["eager", "sdpa"], default="eager")
+    parser.add_argument("--lean", action="store_true", help="request Ua cache and last-position logits")
     args = parser.parse_args()
     if args.output.exists():
         parser.error("output must be new; preserve existing measurements")
@@ -64,6 +70,7 @@ def main() -> None:
             bos_token_id=1,
             eos_token_id=2,
         )
+        config._attn_implementation = args.attention
         model = cast(nn.Module, model_class(config)).eval()
         model_id, revision = "random-cpu-fixture", "seed-731"
         width, layer_index, device = 32, 0, "cpu"
@@ -98,7 +105,7 @@ def main() -> None:
                 torch_dtype=torch.bfloat16,
                 device_map={"": device},
                 quantization_config=quantization,
-                attn_implementation="eager",
+                attn_implementation=args.attention,
             ),
         ).eval()
     model.requires_grad_(False)
@@ -106,7 +113,9 @@ def main() -> None:
     dtype = next(model.parameters()).dtype
     rank = 8
     u = torch.eye(width, rank, device=device, dtype=dtype)
-    wrapper = InjectedDecoder(layers[layer_index], u, beta=1.0, family=family)
+    wrapper = InjectedDecoder(layers[layer_index], u, beta=1.0, family=family,
+                              cache_delta=args.lean)
+    run_forward = partial(forward, last_logits=args.lean)
     ids = torch.tensor([[1, 3, 5, 7, 9]], dtype=torch.long, device=device)
     base_key = CacheKey(
         model_id + "@" + revision,
@@ -115,19 +124,19 @@ def main() -> None:
         f"{family}-attention-residual-layer-{layer_index}-rank8-basis-v1",
         modulation_digest((0.0,) * rank),
         "last-prefill-each-decode-v1",
-        "float32" if args.tiny_cpu else args.precision,
+        f"{'float32' if args.tiny_cpu else args.precision};{args.attention};lean={args.lean}",
     )
     with torch.inference_mode():
-        baseline = forward(model, ids)
+        baseline = run_forward(model, ids)
         baseline_logits = baseline.logits.detach().clone()
         token = baseline_logits[:, -1, :].argmax(-1, keepdim=True)
-        baseline_decode = forward(model, token, baseline.past_key_values).logits.detach().clone()
+        baseline_decode = run_forward(model, token, baseline.past_key_values).logits.detach().clone()
         del baseline
         layers[layer_index] = wrapper
         wrapper.begin((0.0,) * rank, observe=True)
-        zero = forward(model, ids)
+        zero = run_forward(model, ids)
         zero_prefill_error = float((zero.logits - baseline_logits).abs().max().item())
-        zero_decode = forward(model, token, zero.past_key_values)
+        zero_decode = run_forward(model, token, zero.past_key_values)
         zero_decode_error = float((zero_decode.logits - baseline_decode).abs().max().item())
         cache = RequestCache()
         cache.begin(base_key)
@@ -139,14 +148,14 @@ def main() -> None:
         if changed_kv is not None:
             raise AssertionError("old modulation cache survived")
         wrapper.begin(amplitude, observe=True)
-        changed = forward(model, ids, changed_kv)
+        changed = run_forward(model, ids, changed_kv)
         cache.put(changed_key, changed.past_key_values)
         changed_logits = changed.logits.detach().clone()
-        forward(model, token, cache.get(changed_key))
+        run_forward(model, token, cache.get(changed_key))
         observations = wrapper.observations.copy()
         wrapper.end()
         wrapper.begin(amplitude)
-        fresh = forward(model, ids)
+        fresh = run_forward(model, ids)
         fresh_error = float((fresh.logits - changed_logits).abs().max().item())
         wrapper.end()
     result = dict(
@@ -156,6 +165,7 @@ def main() -> None:
         key=asdict(changed_key),
         torch=torch.__version__,
         dtype=str(dtype),
+        attention=args.attention, lean=args.lean,
         layer_index_zero_based=layer_index,
         rank=rank,
         u="first 8 columns of identity",

@@ -186,3 +186,21 @@ Luna只读计数来自各JSON的token_ids和u_operator_norm；主代理已读全
 下一步：按任务书“都不满足”分支等待用户选择BLOCKED.md中的后续路线。建议先评估现有实现优化并保持验收线；不擅自更换架构、增加硬件或将模式B当作严格载体通过。当前仅推送任务分支供审阅，不开PR、不触发CI、不启动下一张卡。需要Windows CI时提前明确通知runner任务与提交。
 
 Phi v2 机械核对补充：zh/en/ja各20条、各10对，无缺对/重复；token不同对数为7/5/5，首个EOS均为200020，60条均无EOS后token。统计见 direction-v2/microsoft--Phi-4-mini-instruct.analysis-meta.json。子进程已退出，测量窗口结束。
+
+## 2026-10-17 用户选择路线1：int4优化
+
+用户明确选择保持600ms、仅优化int4，暂不再投入bf16/int8；保留显式forward包装、固定残差注入位置。任何编译、量化或内核替换之后都重跑零调制、注入误差、缓存失效探针。本段解除此前等待后续路线的状态，不代表验收通过。
+
+主代理将4B/8B约18token/s作为固定开销假设的线索，不能据此排除所有算力/带宽影响。静态检查发现：每token创建a和重算Ua；prefill默认计算所有位置logits；eager注意力由多个小算子组成。安装的bitsandbytes 0.50.2在无梯度路径派发专用gemm_4bit，实际CUDA开销需profiler确认，不先假定完整反量化路径。
+
+计划先做独立诊断，再依次比较SDPA、只保留末位置logits、请求内固定Ua缓存；只使用既有依赖。正式重测保持模型修订、NF4/bf16计算、TTS与渲染并载、同一二十字夹具、greedy、一次预热+20次独立KV、96token/30s预算和600ms。诊断profiler不进入正式计时，不删慢/失败样本。GPU开始前通知用户，runner在线期间仅准备代码。
+
+依据：总方案§19要求优化后重跑路径；算子§13规定固定请求内m及缓存合同。PyTorch官方SDPA文档说明可按CUDA条件选择融合内核，是否实际采用和加速均以本机证据为准：https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention 。本机API以锁定torch2.10.0/transformers4.57.3源码核对。
+
+另按用户要求，将AGENTS第9节和.codex/agents配置从P0-07拆出独立小PR先合并；此处模型优化不进入该PR。
+
+### int4优化准备状态
+
+已新增可选SDPA、末位置logits和请求内Ua缓存；默认仍保留eager参考路径。缓存首次计算仍在计时forward内，结束清除，不跨请求复用，不对m=0跳过注入。另新增profile_int4.py独立CPU/CUDA诊断，不用profiler耗时做验收。无新增依赖或编译器。Ruff和9文件Mypy通过，原始日志在optimization-preparation/；尚未执行本轮GPU探针/重测，不能声称有性能收益。
+
+main的舞台代码自旧矩阵已有更新。规则PR合并并同步main后，先在同一版本重测int4参考路径，再比较SDPA/lean，避免跨版本渲染负载混淆。零调制探针对比相同后端/量化/末位置logits设置的未包装基准，不冒称跨内核逐位一致。后续保持所有原始失败和数值误差，生产容差仍不自行冻结。
