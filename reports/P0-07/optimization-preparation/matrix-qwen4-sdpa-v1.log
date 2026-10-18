@@ -1,0 +1,21 @@
+TASK: Qwen/Qwen3-4B int4 SDPA run_matrix
+WORKDIR: D:\Dev\nemu
+PREFLIGHT_COMMAND: Get-CimInstance Win32_Process filtered for Runner.Listener.exe, Runner.Worker.exe, electron.exe; Python command lines matching path_probe|latency_probe|direction_probe|profile_int4; Node command lines matching render_load|playwright.
+PREFLIGHT_STDOUT:
+CONFLICT_COUNT=0
+OUTPUT_EXISTS=False
+LOG_EXISTS=False
+PREFLIGHT_STDERR: (empty)
+EXACT_COMMAND: workers/model-adapter/probe/.venv/Scripts/python.exe workers/model-adapter/probe/run_matrix.py --model Qwen/Qwen3-4B --precision int4 --attention sdpa --output reports/P0-07/opt-sdpa-qwen4-v1
+ENVIRONMENT: HF_HUB_OFFLINE=1; TRANSFORMERS_OFFLINE=1; PYTHONIOENCODING=utf8
+START_UTC: 2026-10-17T23:30:59.0515120Z
+END_UTC: 2026-10-17T23:31:54.9640502Z
+EXIT_CODE: 0
+----- RAW STDOUT BEGIN -----
+BEGIN Qwen/Qwen3-4B int4
+END Qwen/Qwen3-4B int4: {'model': 'Qwen/Qwen3-4B', 'precision': 'int4', 'attention': 'sdpa', 'lean': False, 'path_exit': 0, 'concurrent_exit': 0, 'render_exit': 0}
+
+----- RAW STDOUT END -----
+----- RAW STDERR BEGIN -----
+
+----- RAW STDERR END -----

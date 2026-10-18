@@ -204,3 +204,60 @@ Phi v2 机械核对补充：zh/en/ja各20条、各10对，无缺对/重复；tok
 已新增可选SDPA、末位置logits和请求内Ua缓存；默认仍保留eager参考路径。缓存首次计算仍在计时forward内，结束清除，不跨请求复用，不对m=0跳过注入。另新增profile_int4.py独立CPU/CUDA诊断，不用profiler耗时做验收。无新增依赖或编译器。Ruff和9文件Mypy通过，原始日志在optimization-preparation/；尚未执行本轮GPU探针/重测，不能声称有性能收益。
 
 main的舞台代码自旧矩阵已有更新。规则PR合并并同步main后，先在同一版本重测int4参考路径，再比较SDPA/lean，避免跨版本渲染负载混淆。零调制探针对比相同后端/量化/末位置logits设置的未包装基准，不冒称跨内核逐位一致。后续保持所有原始失败和数值误差，生产容差仍不自行冻结。
+
+## 2026-10-18 规则PR合并及新测量准备
+
+独立PR #17已在最终head19c7ad9上获得Ubuntu/Windows全绿（run39045178103），main当时仍为ae803df；主代理按第6节核对并squash合并为9e12ba7。合并后的main CI run39045585344同样completed/success。规则已存在于main，P0-07与origin/main的AGENTS.md/.codex/agents差异为空。
+
+P0-07同步main为c267c49；仅有AGENTS末尾空行冲突，采用main全文，其他目录正常合入。runner API offline/busy=false，本机Runner进程计数0；用户已获安静窗口通知。pnpm12.11.2使用install --frozen-lockfile --ignore-scripts补齐main依赖链接（4个包复用缓存，未更新锁）。随后CPU回归和GPU诊断按次序执行，尚不报告新测量结论。
+
+### 优化准备的 CPU 回归（追加）
+
+Luna/max 子代理按既定命令完成 pytest（4 passed）、Qwen3 tiny CPU 与 Phi3 tiny CPU 的 SDPA+lean 路径探针，三条命令均退出0。两份 JSON 的 zero_prefill_logits_max_abs_error、zero_decode_logits_max_abs_error、changed_vs_fresh_logits_max_abs_error 均为0.0，changed_cache_discarded 均为true。主代理核对字段及原始日志；证据在 optimization-preparation/pytest-v1.log、tiny-qwen-sdpa-lean.{log,json}、tiny-phi-sdpa-lean.{log,json}。这些 CPU 小夹具不证明真实 int4 GPU 的数值误差或性能，真实权重探针和并载测量另行执行。
+
+### Qwen3-4B int4 eager 算子诊断
+
+独占 GPU、runner 离线下，profile_int4.py 退出0；原始日志 optimization-preparation/profile-qwen4-eager-v1.log，原始 Chrome 轨迹 optimization-profile/qwen4-eager-v1/trace.json（53,312,249 bytes），聚合 profile.json。一次预填充加8次decode，轨迹包含21,186个CUDA kernel事件；cudaLaunchKernel调用21,033次，其self CPU合计约137.7ms；bitsandbytes::gemm_4bit调用2,268次。decode使用专用gemm_4bit_simt，预填充出现sm80内核，不能把当前实现描述成每层先展开完整bf16权重再GEMM。
+
+这支持“小算子和派发开销值得优化”的方向，但不证明GPU算力/带宽完全无影响。聚合表里decode/prefill的device范围包含整个阶段，不能当作单个GPU内核、不能与子事件求和。profiler下decode约92ms，受采样扰动，不与旧18token/s直接比较，更不用于600ms验收。先在同一main版本重测eager参考，再测SDPA及请求内固定Ua/末位置logits选项。
+
+### SDPA 与 lean 的同版本对照
+
+Qwen3-4B int4，同一舞台版本/固定夹具/并载协议：eager p50=658.94605ms（opt-reference-qwen4-v1），SDPA=653.33925ms（opt-sdpa-qwen4-v1），SDPA+lean=655.67910ms（opt-sdpa-lean-qwen4-v1）。每组均20/20固定句匹配、20汉字、相同12token，全部路径/并载/渲染子进程退出0；零调制/注入/缓存比较误差0，缓存失效true。三组均未达到600ms，不把小差值认定为稳定收益。
+
+SDPA profiler（optimization-profile/qwen4-sdpa-v1）实际出现324次 aten::_scaled_dot_product_attention_math，23,607个CUDA kernel、23,526次cudaLaunchKernel；不是融合attention。因此下一项只使用已有PyTorch的原生RMSNorm，针对eager下每forward约145次RMS归约的小算子链进行替换；保留权重、epsilon、原dtype中间舍入位置和显式注入。另记录内核替换前后logits差异，不能以同内核零调制为0掩盖跨内核差异。无新增依赖，依据 https://raw.githubusercontent.com/pytorch/pytorch/v2.10.0/aten/src/ATen/native/layer_norm.cpp 。目前仅准备代码，尚无原生RMS性能结论。
+
+原生RMS准备首次Mypy失败已保留在 optimization-preparation/native-rms-check-v1-mypy.log：latency_probe.py 的 manifest JSON revision 动态Any使local()返回类型不明确。主代理新增字符串边界校验，未改测试或数值逻辑；修复后另存v2检查，不覆盖首次失败。
+
+### 原生RMS首次真实权重结果及同时段参考
+
+v2 Ruff、Mypy、pytest（4 passed）与Qwen/Phi tiny CPU均退出0。子代理额度中断后先核对已有日志，没有重复运行已完成CPU任务。恢复后的原生RMS并载路径位于 opt-native-rms-qwen4-v1，p50=538.8758499975665ms，20/20固定句，三子进程退出0；145个载体RMSNorm替换，TTS不变。零调制prefill/decode、注入误差、changed-vs-fresh、native-vs-original的5-token夹具比较均为0，changed_cache_discarded=true。
+
+中断后额外测量同时间段eager参考v2（opt-reference-qwen4-v2）：p50=654.7183500006213ms，20/20固定句，误差0/缓存失效true。单项优化相对该参考约17.7%提速；首次满足延迟阈值。仍需全候选/8B优化矩阵、三语方向、显存与完整入口证据，不提前选型。所有原始日志保留。
+
+原生RMS诊断轨迹补充：profile.json 中 aten::_fused_rms_norm 调用1,305次，对应实际CUDA kernel名称为 vectorized_layer_norm_kernel 的 RMS 模板实例（符号含 Lb1），不是字面包含rms的名称。kernel总数13,356，cudaLaunchKernel调用13,203，对比eager诊断21,186/21,033明显减少；不可将“按rms字符串搜索kernel为0”解释成未融合。诊断和完整原始轨迹位于 optimization-profile/qwen4-native-rms-v1/，profiler不参与正式验收计时。
+
+## 2026-10-18 完整 int4 原生RMS复测
+
+单命令 `workers/model-adapter/probe/.venv/Scripts/python.exe workers/model-adapter/probe/run_all.py --int4-only --native-rms --output reports/P0-07/opt-native-rms-all-v1` 已实际执行，UTC 04:26:03.5423967–04:34:19.3954781，退出0。四项矩阵的path/concurrent/render均0，三项方向进程均0，见 exit-codes.json 与 optimization-preparation/run-all-native-rms-v1.log。仍为eager、不lean，保留显式forward、层号、rank8、掩码、NF4和全部生成预算。无新增依赖。
+
+| 模型 | 首句p50 ms | 固定句/20 | 整卡离散显存 MiB | 载体+TTS torch reserved峰值 bytes | 内核替换前后logits最大差 prefill/decode |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Qwen3-4B | 546.9559 | 20 | 6636–6637 | 5263851520 | 0 / 0 |
+| Qwen3-4B-Instruct-2507 | 540.7334 | 20 | 6634–6635 | 5261754368 | 0.234375 / 0.125 |
+| Phi-4-mini-instruct | 593.8206 | 20 | 6826–6837 | 5463080960 | 0 / 0 |
+| Qwen3-8B（对照） | 542.63375 | 20 | 9867 | 8797552640 | 0 / 0 |
+
+四模型相同数值内核下的零调制prefill/decode误差、changed-vs-fresh误差都为0，缓存失效均true。注入测量三款4B均为0误差；8B预填充误差0.001953125、observed_l2=0.501953125，decode误差0。不能把相同内核的零调制为0写成所有内核替换前后相等，Instruct已明确观察到差异。
+
+整卡MiB数据包括桌面其他进程，且为离散采样；torch reserved峰值不含Chromium/驱动全部开销。两者分别列出，不据此冒称Nemu精确连续峰值。9867MiB约9.64GiB（10.35GB），不是9.87GB；不能直接把整卡采样当作8B的Nemu归因。
+
+### 三语人工阅读（主代理）
+
+主代理已逐条读完新三模型各60条输出。两款Qwen三语均有措辞/语气词/标点/扩句变化，未见批量语法崩溃；Qwen3-4B中文仍夹英语，日文seed735的正调制出现不自然的第三人称措辞。Instruct整体措辞更规整，但其RMS内核差异尚不能忽略。Phi中文“迫不及忙”等不自然措辞存在于零/正两侧；日文seed734正调制语义偏离，其他若干句也不自然。基线庆祝场景已偏兴奋，不能从这些变化推出稳定、独立验证的兴奋方向；本轮仍是信息性观察，不签发M7结论。
+
+当前结论：保持600ms的优化路线已产生可复现的达线配置，原“全部超过600ms”不再代表最新结果。一条命令的实际执行证据已补齐。完整P0-07仍为部分完成：原生RMS跨内核误差与生产数值容差、Nemu显存归因、方向观察的质量边界需在最终选型前处理。暂以Qwen3-4B作为进一步核验的优先候选（本夹具内核差异0、延迟有余量），不是正式选型，不修改候选状态为selected。不开P0-07 PR、不触发CI、不开始下一卡。
+
+测量结束后检查Runner/Worker、Electron、probe Python、render_load/Playwright Node相关进程均为0，安静窗口结束。后续GPU测量另行通知，Windows CI需要runner时提前列明提交和作业。
+
+方向机械核对补充：每模型每语言20条、10对；Qwen3-4B zh/en/ja token变化配对5/2/3，Instruct-2507为5/3/2，Phi为6/2/6。全部180条以EOS结束，EOS后token数均0。完整文本已经由主代理逐条核对，统计不替代上述语义阅读。轨迹压缩归档校验见 optimization-profile/ARCHIVE.md，原始JSON保留本机，提交gzip无损副本，解压SHA256一致。

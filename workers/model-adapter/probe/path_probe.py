@@ -20,6 +20,7 @@ import torch
 from torch import nn
 
 from injection import CacheKey, InjectedDecoder, RequestCache, modulation_digest
+from native_norm import replace_rms_norms
 from runtime_guard import require_runner_offline
 
 HERE = Path(__file__).resolve().parent
@@ -46,7 +47,10 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--attention", choices=["eager", "sdpa"], default="eager")
     parser.add_argument("--lean", action="store_true", help="request Ua cache and last-position logits")
+    parser.add_argument("--native-rms", action="store_true")
     args = parser.parse_args()
+    if args.native_rms and not args.tiny_cpu and args.precision != "int4":
+        parser.error("native RMS experiment is int4 only")
     if args.output.exists():
         parser.error("output must be new; preserve existing measurements")
     torch.manual_seed(731)
@@ -109,6 +113,7 @@ def main() -> None:
             ),
         ).eval()
     model.requires_grad_(False)
+    norm_count = 0
     layers = cast(nn.ModuleList, cast(nn.Module, model.model).layers)
     dtype = next(model.parameters()).dtype
     rank = 8
@@ -117,6 +122,18 @@ def main() -> None:
                               cache_delta=args.lean)
     run_forward = partial(forward, last_logits=args.lean)
     ids = torch.tensor([[1, 3, 5, 7, 9]], dtype=torch.long, device=device)
+    original_logits: torch.Tensor | None = None
+    original_decode: torch.Tensor | None = None
+    if args.native_rms:
+        with torch.inference_mode():
+            original = run_forward(model, ids)
+            original_logits = original.logits.detach().clone()
+            original_token = original_logits[:, -1, :].argmax(-1, keepdim=True)
+            original_decode = run_forward(
+                model, original_token, original.past_key_values,
+            ).logits.detach().clone()
+            del original
+        norm_count = replace_rms_norms(model)
     base_key = CacheKey(
         model_id + "@" + revision,
         "token-ids-fixture-v1",
@@ -124,13 +141,26 @@ def main() -> None:
         f"{family}-attention-residual-layer-{layer_index}-rank8-basis-v1",
         modulation_digest((0.0,) * rank),
         "last-prefill-each-decode-v1",
-        f"{'float32' if args.tiny_cpu else args.precision};{args.attention};lean={args.lean}",
+        f"{'float32' if args.tiny_cpu else args.precision};{args.attention};lean={args.lean};native_rms={args.native_rms}",
     )
     with torch.inference_mode():
         baseline = run_forward(model, ids)
         baseline_logits = baseline.logits.detach().clone()
         token = baseline_logits[:, -1, :].argmax(-1, keepdim=True)
         baseline_decode = run_forward(model, token, baseline.past_key_values).logits.detach().clone()
+        kernel_prefill_error = (
+            float((baseline_logits - original_logits).abs().max().item())
+            if original_logits is not None else None
+        )
+        # Compare decode with the same input token, even if argmax has changed.
+        kernel_decode_error = None
+        if original_decode is not None:
+            comparison = run_forward(model, ids)
+            comparison_decode = run_forward(
+                model, original_token, comparison.past_key_values,
+            ).logits
+            kernel_decode_error = float((comparison_decode - original_decode).abs().max().item())
+            del comparison, comparison_decode
         del baseline
         layers[layer_index] = wrapper
         wrapper.begin((0.0,) * rank, observe=True)
@@ -165,7 +195,9 @@ def main() -> None:
         key=asdict(changed_key),
         torch=torch.__version__,
         dtype=str(dtype),
-        attention=args.attention, lean=args.lean,
+        attention=args.attention, lean=args.lean, native_rms_count=norm_count,
+        native_rms_vs_original_prefill_max_abs_error=kernel_prefill_error,
+        native_rms_vs_original_decode_max_abs_error=kernel_decode_error,
         layer_index_zero_based=layer_index,
         rank=rank,
         u="first 8 columns of identity",

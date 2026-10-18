@@ -138,3 +138,11 @@ sentence benchmark or a concurrent-load acceptance run. Profiler instrumentation
 perturbs timing; CPU/device event sums must not be added as if they were elapsed
 wall time. Actual fused-kernel use must be established from the trace, not guessed
 from `sdpa` alone. No new dependency or compiler backend is introduced.
+
+### 原生 RMSNorm 实验（仅 int4）
+
+`--native-rms` 可与 `run_matrix.py --precision int4`、`run_all.py --int4-only` 组合；默认关闭。仅替换载体的 Qwen3RMSNorm/Phi3RMSNorm，不替换 TTS。调用现有 PyTorch 2.10 的 `torch.nn.functional.rms_norm(..., weight=None, eps=原值)`，结果转回输入 dtype 后再乘原 learned weight，保留原实现的中间舍入位置；无新依赖，无 forward hook，不改残差包装/层号/掩码。
+
+归约内核改变可能带来数值差异，不能假定逐位一致。路径 JSON 同时记录 `native_rms_vs_original_*`（内核替换对原始模型的差异）以及原有零调制、注入误差、缓存失效字段；零调制对照使用相同内核的未包装模型。所有数字为实测，不能自行据此冻结生产容差。正式计时保留同一并载协议，profiler 只用于诊断。
+
+依据：PyTorch v2.10.0 官方源码 `aten/src/ATen/native/layer_norm.cpp` 的 rms_norm_symint 调用 `_fused_rms_norm`，本机已安装 CUDA dispatch；实际是否使用融合内核仍以轨迹核对。

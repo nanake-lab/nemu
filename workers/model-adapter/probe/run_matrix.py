@@ -26,7 +26,10 @@ def main() -> None:
     parser.add_argument("--precision", choices=["bf16", "int8", "int4"])
     parser.add_argument("--attention", choices=["eager", "sdpa"], default="eager")
     parser.add_argument("--lean", action="store_true")
+    parser.add_argument("--native-rms", action="store_true")
     args = parser.parse_args()
+    if args.native_rms and args.precision != "int4":
+        parser.error("native RMS experiment requires --precision int4")
     require_runner_offline()
     destination = args.output.resolve()
     destination.mkdir(parents=True, exist_ok=False)
@@ -38,7 +41,8 @@ def main() -> None:
     if args.model and args.model not in models:
         parser.error("model must be a locked carrier candidate")
     rows: list[dict[str, object]] = []
-    variant = ["--attention", args.attention] + (["--lean"] if args.lean else [])
+    variant = (["--attention", args.attention] + (["--lean"] if args.lean else [])
+               + (["--native-rms"] if args.native_rms else []))
     for model in models:
         if args.model and args.model != model:
             continue
@@ -51,7 +55,7 @@ def main() -> None:
             case.mkdir()
             print(f"BEGIN {model} {precision}", flush=True)
             row: dict[str, object] = dict(model=model, precision=precision,
-                                          attention=args.attention, lean=args.lean)
+                                          attention=args.attention, lean=args.lean, native_rms=args.native_rms)
             rows.append(row)
             with (case / "path.log").open("x", encoding="utf-8") as log:
                 path = subprocess.run(

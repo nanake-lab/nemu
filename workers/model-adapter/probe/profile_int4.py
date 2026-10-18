@@ -19,6 +19,7 @@ from torch import nn
 from injection import InjectedDecoder
 from latency_probe import FIXED_SENTENCE
 from path_probe import forward
+from native_norm import replace_rms_norms
 from runtime_guard import require_runner_offline
 
 HERE = Path(__file__).resolve().parent
@@ -30,6 +31,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--attention", choices=["eager", "sdpa"], default="eager")
     parser.add_argument("--lean", action="store_true")
+    parser.add_argument("--native-rms", action="store_true")
     args = parser.parse_args()
     require_runner_offline()
     args.output.mkdir(parents=True, exist_ok=False)
@@ -57,6 +59,7 @@ def main() -> None:
         tokenize=False, add_generation_prompt=True, enable_thinking=False,
     )
     ids = tokenizer(text, return_tensors="pt")["input_ids"].to("cuda:0")
+    norm_count = replace_rms_norms(model) if args.native_rms else 0
     layers = cast(nn.ModuleList, cast(nn.Module, model.model).layers)
     layer_index = int(config["num_hidden_layers"]) // 2 - 1
     wrapper = InjectedDecoder(
@@ -100,7 +103,7 @@ def main() -> None:
                    device_total_us=e.device_time_total) for e in measured.key_averages()]
     (args.output / "profile.json").write_text(json.dumps(dict(
         timestamp=datetime.now(timezone.utc).isoformat(), model=entry,
-        attention=args.attention, lean=args.lean, precision="NF4 bf16-compute no-double-quant",
+        attention=args.attention, lean=args.lean, native_rms_count=norm_count, precision="NF4 bf16-compute no-double-quant",
         layer_index=layer_index, rank=8, steps=rows, events=events,
         scope="diagnostic-only; solo carrier; fixed 1 prefill + 8 decode; not sentence acceptance",
         limitation="profiler perturbs timings; self CPU/device event sums are not wall-time attribution",

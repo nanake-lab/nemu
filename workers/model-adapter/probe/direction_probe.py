@@ -21,6 +21,7 @@ from torch import nn
 
 from injection import InjectedDecoder
 from path_probe import forward
+from native_norm import replace_rms_norms
 from runtime_guard import require_runner_offline
 from stop_tokens import eos_ids
 
@@ -44,6 +45,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--attention", choices=["eager", "sdpa"], default="eager")
     parser.add_argument("--lean", action="store_true")
+    parser.add_argument("--native-rms", action="store_true")
     args = parser.parse_args()
     if args.output.exists():
         parser.error("preserve previous measurements; choose a new output")
@@ -79,6 +81,8 @@ def main() -> None:
         generation = json.loads((local / "generation_config.json").read_text(encoding="utf-8"))
         stopping = eos_ids(generation["eos_token_id"])
         result["eos_token_ids"] = sorted(stopping)
+        norm_count = replace_rms_norms(model) if args.native_rms else 0
+        result["native_rms_count"] = norm_count
         layers = cast(nn.ModuleList, cast(nn.Module, model.model).layers)
         index = int(config["num_hidden_layers"]) // 2 - 1
         width = int(config["hidden_size"])

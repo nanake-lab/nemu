@@ -22,12 +22,16 @@ def main() -> None:
     parser.add_argument("--int4-only", action="store_true")
     parser.add_argument("--attention", choices=["eager", "sdpa"], default="eager")
     parser.add_argument("--lean", action="store_true")
+    parser.add_argument("--native-rms", action="store_true")
     args = parser.parse_args()
+    if args.native_rms and not args.int4_only:
+        parser.error("native RMS experiment requires --int4-only")
     require_runner_offline()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     results: dict[str, int] = {}
-    variant = ["--attention", args.attention] + (["--lean"] if args.lean else [])
+    variant = (["--attention", args.attention] + (["--lean"] if args.lean else [])
+               + (["--native-rms"] if args.native_rms else []))
     matrix = subprocess.run(
         [sys.executable, str(HERE / "run_matrix.py"), "--output", str(output / "matrix"),
          *variant, *(["--precision", "int4"] if args.int4_only else [])],

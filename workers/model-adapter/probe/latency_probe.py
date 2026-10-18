@@ -21,6 +21,7 @@ from torch import nn
 
 from injection import InjectedDecoder
 from path_probe import forward
+from native_norm import replace_rms_norms
 from runtime_guard import require_runner_offline
 from stop_tokens import eos_ids
 
@@ -47,7 +48,10 @@ def main() -> None:
     parser.add_argument("--lean", action="store_true")
     parser.add_argument("--fixed-twenty", action="store_true",
                         help="controlled generation fixture; not a free-form fluency assessment")
+    parser.add_argument("--native-rms", action="store_true")
     args = parser.parse_args()
+    if args.native_rms and args.precision != "int4":
+        parser.error("native RMS experiment is int4 only")
     if args.output.exists() or args.repeats < 1:
         parser.error("new output and positive repeats required")
     require_runner_offline()
@@ -58,7 +62,10 @@ def main() -> None:
 
     def local(repo: str) -> Path:
         entry = next(m for m in manifest["models"] if m["id"] == repo)
-        return HERE / ".cache/models" / repo.replace("/", "--") / entry["revision"]
+        revision = entry["revision"]
+        if not isinstance(revision, str):
+            raise TypeError("locked revision must be a string")
+        return HERE / ".cache/models" / repo.replace("/", "--") / revision
 
     result: dict[str, object] = dict(
         timestamp=datetime.now(timezone.utc).isoformat(), model=args.model,
@@ -104,6 +111,8 @@ def main() -> None:
         stopping = eos_ids(generation["eos_token_id"])
         result["eos_token_ids"] = sorted(stopping)
         config = json.loads((local(args.model) / "config.json").read_text(encoding="utf-8"))
+        norm_count = replace_rms_norms(model) if args.native_rms else 0
+        result["native_rms_count"] = norm_count
         layers = cast(nn.ModuleList, cast(nn.Module, model.model).layers)
         index = int(config["num_hidden_layers"]) // 2 - 1
         wrapper = InjectedDecoder(

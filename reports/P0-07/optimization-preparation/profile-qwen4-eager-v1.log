@@ -1,0 +1,18 @@
+TASK: Qwen/Qwen3-4B eager int4 profile
+WORKDIR: D:\Dev\nemu
+PREFLIGHT: exact process query returned CONFLICT_COUNT=0; nvidia-smi exit=0; NVIDIA-SMI 610.88; GPU NVIDIA GeForce RTX 3080; memory 1095 MiB / 10240 MiB; utilization 2%.
+SETUP_NOTE: An initial wrapper exited 1 before starting Python because the optimization-profile parent directory was absent. No output path or log was created by that attempt. Parent authorized creation of the parent directory. The qwen4-eager-v1 output directory was not precreated; profile_int4.py creates it with exist_ok=False.
+EXACT_COMMAND: workers/model-adapter/probe/.venv/Scripts/python.exe workers/model-adapter/probe/profile_int4.py --model Qwen/Qwen3-4B --output reports/P0-07/optimization-profile/qwen4-eager-v1
+ENVIRONMENT: HF_HUB_OFFLINE=1; TRANSFORMERS_OFFLINE=1; PYTHONIOENCODING=utf8
+START_UTC: 2026-10-17T23:26:21.5124855Z
+END_UTC: 2026-10-17T23:26:58.4046660Z
+EXIT_CODE: 0
+----- RAW STDOUT BEGIN -----
+
+----- RAW STDOUT END -----
+----- RAW STDERR BEGIN -----
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:04<00:09,  4.58s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:09<00:04,  4.95s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:09<00:00,  2.76s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:09<00:00,  3.31s/it]
+D:\Dev\nemu\workers\model-adapter\probe\.venv\Lib\site-packages\torch\profiler\profiler.py:217: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+
+----- RAW STDERR END -----
