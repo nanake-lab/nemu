@@ -1,0 +1,4 @@
+Project     Requirement                             Actual                                                                                                                                                  Status Repair
+-------     -----------                             ------                                                                                                                                                  ------ ------
+Low IL 隔离 低完整性测试进程不能写入 Medium IL 目录 CreateProcessWithTokenW returned ERROR_PRIVILEGE_NOT_HELD (1314); CreateProcessAsUserW fallback succeeded; Low IL 子进程写入 Medium IL 临时目录时被拒绝 PASS   查看实际 Win32 错误码；若 1314 仍无法用当前用户令
+                                                                                                                                                                                                                   牌创建探针，则记录为环境阻塞，不视为通过

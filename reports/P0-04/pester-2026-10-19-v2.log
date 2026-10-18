@@ -1,0 +1,54 @@
+**********************
+PowerShell transcript start
+Start time: 20261019013708
+Username: DESKTOP-8LBF84O\nanake
+RunAs User: DESKTOP-8LBF84O\nanake
+Configuration Name: 
+Machine: DESKTOP-8LBF84O (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\Users\nanake\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+$log='reports\P0-04\pester-2026-10-19-v2.log'; Start-Transcript -Path $log -Force | Out-Null; try { $result=Invoke-Pester -Script .\tools\doctor.Tests.ps1 -PassThru; $result | Select-Object PassedCount,FailedCount,SkippedCount,Time | Format-List; if($result.FailedCount -gt 0){exit 1} } finally { Stop-Transcript | Out-Null }
+Process ID: 52780
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.19045
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+
+Describing New-DoctorVersionCheck
+ [+] passes an installed version that matches the exact requirement 249ms
+ [+] rejects an installed version below the minimum 39ms
+ [+] rejects a missing required tool 6ms
+ [+] passes a version inside a bounded major range 5ms
+ [+] rejects a version outside the bounded major range 5ms
+ [+] rejects unparseable version output 10ms
+ [+] marks an unpinned Blender version as blocked 5ms
+ [+] preserves a repair command in each row 5ms
+Describing Test-VRoidStartAppName
+ [+] recognizes the installed compact name with a version suffix 107ms
+ [+] recognizes the spaced app name 20ms
+ [+] rejects unrelated start menu entries 4ms
+Describing doctor process and optional dependency checks
+ [+] uses the installed Blender 5.2 patch version from an LTS version string 50ms
+ [+] rejects a Blender stable build without the required LTS marker 14ms
+ [+] does not require the CUDA Toolkit when checking a prompt-only row 5ms
+ [+] recognizes Microsoft Office COM server paths 10ms
+ [+] rejects WPS COM server paths even when they expose the Office ProgID 5ms
+ [+] applies an isolated timeout to process probes 1.06s
+ [+] gives Blender and Low IL probes longer bounded windows 13ms
+Tests completed in 1.62s
+Passed: 18 Failed: 0 Skipped: 0 Pending: 0 Inconclusive: 0
+
+PassedCount  : 18
+FailedCount  : 0
+SkippedCount : 0
+Time         : 00:00:01.6201825
+
+**********************
+PowerShell transcript end
+End time: 20261019013710
+**********************

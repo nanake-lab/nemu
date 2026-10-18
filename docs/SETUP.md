@@ -69,3 +69,49 @@ Windows 自托管时间不计入上述托管分钟估算。
 官方参考：[electron-vite](https://electron-vite.org/guide/dev)、
 [Electron 安全说明](https://www.electronjs.org/docs/latest/tutorial/security)、
 [GitHub runner 安装](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners)。
+
+## 首次开发环境搭建（P0-04）
+
+### 分项运行 doctor
+
+请在仓库根目录的 PowerShell 7 中一次检查一项，并按实际输出处理：
+
+```powershell
+pwsh -File tools/doctor.ps1 -Check Git
+pwsh -File tools/doctor.ps1 -Check Blender
+pwsh -File tools/doctor.ps1 -Check Office
+pwsh -File tools/doctor.ps1 -Check OfficeCOM
+pwsh -File tools/doctor.ps1 -Check NvidiaDriver
+pwsh -File tools/doctor.ps1 -Check Torch
+pwsh -File tools/doctor.ps1 -Check LowIL
+```
+
+每项检查在独立子进程中运行；默认 30 秒超时，Blender、VRM Add-on、PyTorch 和 Low IL 探针使用更长但有上限的时间。超时会终止该项的进程树。`-Check All` 也会逐项启动并分别计时；恢复或排查系统稳定性时应使用单项命令。
+
+### Blender 与 VRM Add-on
+
+项目要求 Blender LTS ≥ 5.1。本机经无头版本探针确认的首个锁定版本为 **5.2.2 LTS**，精确版本号记录在 `tools/asset-pipeline/blender-version.txt`；P2-03 开工后由该卡接管此文件。请安装与 Blender 5.2.2 兼容的 VRM Add-on，并在 Blender Preferences 中启用。doctor 只启动 Blender 后台 Python 查询版本和插件启用状态，不会打开模型或修改用户文件。
+
+### NVIDIA 驱动、CUDA Toolkit 与 PyTorch
+
+NVIDIA 驱动和 `nvidia-smi` 是 GPU 运行检查项。当前代码与 P0-07 的 PyTorch 运行路径没有自定义 CUDA 扩展编译；预编译的 PyTorch CUDA wheel 自带其所需的 CUDA 运行库，因此 **CUDA Toolkit / `nvcc` 是提示项，不要求为了运行 PyTorch 单独安装**。只有项目新增 CUDA 扩展或从源码编译 CUDA 代码时，才安装与该构建匹配的 Toolkit。参考 [PyTorch 安装命令](https://pytorch.org/get-started/previous-versions/) 和 [PyTorch C++/CUDA 扩展要求](https://docs.pytorch.org/docs/stable/cpp_extension.html)。
+
+model-adapter 的独立 uv 环境尚未记录 Torch 依赖。请在仓库根目录手动安装 CUDA 12.8 wheel：
+
+```powershell
+uv pip install --python workers/model-adapter/.venv/Scripts/python.exe torch --index-url https://download.pytorch.org/whl/cu128
+uv run --project workers/model-adapter --no-sync python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
+```
+
+第二条命令应显示已安装版本和 `True`；若不是 `True`，保留完整输出，检查 NVIDIA 驱动与 PyTorch CUDA wheel 的兼容性。安装完成后再单独运行 `pwsh -File tools/doctor.ps1 -Check Torch`。
+
+### Microsoft Office 与 WPS COM 注册
+
+Microsoft Word、Excel、PowerPoint 桌面版均为必需项。doctor 只读取注册表，不会启动 Office 或 WPS。它会逐项检查 64 位 `Word.Application`、`Excel.Application`、`PowerPoint.Application` 的 COM 服务器路径，并把 32 位视图作为诊断信息。如果 64 位 ProgID 指向 WPS，请先在 Windows“已安装的应用”中对 Microsoft 365/Office 执行“快速修复”，再执行“联机修复”；若注册仍被 WPS 占用，再修复或卸载 WPS 后重跑 `-Check OfficeCOM`。每次修复后重新确认三个 ProgID 指向 `Microsoft Office\...\WINWORD.EXE`、`EXCEL.EXE`、`POWERPNT.EXE`。
+### Blender 可执行文件路径
+
+当前 Blender 安装位置为 `D:\blender\blender.exe`。资产管线按 `.agents/skills/blender-headless/SKILL.md` 从 `NEMU_BLENDER` 读取 Blender 路径；本机当前没有设置该变量。为后续 P2-03 使用，请在 PowerShell 7 中执行以下命令，将路径保存到当前用户环境，并在新开的 PowerShell 窗口生效：
+
+```powershell
+[Environment]::SetEnvironmentVariable('NEMU_BLENDER', (Join-Path 'D:\blender' 'blender.exe'), 'User')
+```

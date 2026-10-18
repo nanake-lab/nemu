@@ -55,3 +55,38 @@ Describe 'Test-VRoidStartAppName' {
         (Test-VRoidStartAppName 'WPS Office') | Should Be $false
     }
 }
+
+Describe 'doctor process and optional dependency checks' {
+    It 'uses the installed Blender 5.2 patch version from an LTS version string' {
+        (ConvertTo-DoctorVersion 'Blender 5.2.2 LTS (hash d13f752e3b9c)') | Should Be ([version]'5.2.2')
+        (Test-BlenderLtsVersion '5.2.2 LTS') | Should Be $true
+    }
+
+    It 'rejects a Blender stable build without the required LTS marker' {
+        (Test-BlenderLtsVersion '5.2.2') | Should Be $false
+    }
+
+    It 'does not require the CUDA Toolkit when checking a prompt-only row' {
+        $result = New-DoctorCheck -Project 'CUDA Toolkit' -Requirement 'custom extensions only' -Actual 'not installed' -Status 'OPTIONAL' -Repair 'none'
+        $result.Status | Should Be 'OPTIONAL'
+    }
+
+    It 'recognizes Microsoft Office COM server paths' {
+        (Test-OfficeComServerPath '"C:\Program Files\Microsoft Office\Root\Office16\WINWORD.EXE" /Automation' 'WINWORD.EXE') | Should Be $true
+    }
+
+    It 'rejects WPS COM server paths even when they expose the Office ProgID' {
+        (Test-OfficeComServerPath 'D:\WPS Office\12.1.0.29158\office6\wps.exe /Automation' 'WINWORD.EXE') | Should Be $false
+    }
+
+    It 'applies an isolated timeout to process probes' {
+        $result = Invoke-DoctorCommand 'pwsh' @('-NoLogo','-NoProfile','-NonInteractive','-Command','Start-Sleep -Seconds 5') -CommandTimeoutSeconds 1
+        $result.TimedOut | Should Be $true
+        $result.ExitCode | Should Be 124
+    }
+
+    It 'gives Blender and Low IL probes longer bounded windows' {
+        (Get-DoctorTimeoutForCheck -CheckId 'Blender' -RequestedSeconds 30) | Should Be 60
+        (Get-DoctorTimeoutForCheck -CheckId 'LowIL' -RequestedSeconds 30) | Should Be 45
+    }
+}
