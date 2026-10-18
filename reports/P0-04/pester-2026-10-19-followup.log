@@ -1,0 +1,31 @@
+
+
+
+
+
+Describing New-DoctorVersionCheck
+ [+] passes an installed version that matches the exact requirement 377ms
+ [+] rejects an installed version below the minimum 52ms
+ [+] rejects a missing required tool 14ms
+ [+] passes a version inside a bounded major range 14ms
+ [+] rejects a version outside the bounded major range 13ms
+ [+] rejects unparseable version output 14ms
+ [+] marks an unpinned Blender version as blocked 18ms
+ [+] preserves a repair command in each row 16ms
+Describing Test-VRoidStartAppName
+ [+] recognizes the installed compact name with a version suffix 130ms
+ [+] recognizes the spaced app name 13ms
+ [+] rejects unrelated start menu entries 13ms
+Describing doctor process and optional dependency checks
+ [+] recognizes the legacy VRM add-on module 86ms
+ [+] recognizes the Blender extension repository module used by Blender 5.2 14ms
+ [+] does not accept unrelated modules with a similar name 18ms
+ [+] uses the installed Blender 5.2 patch version from an LTS version string 24ms
+ [+] rejects a Blender stable build without the required LTS marker 16ms
+ [+] does not require the CUDA Toolkit when checking a prompt-only row 15ms
+ [+] recognizes Microsoft Office COM server paths 21ms
+ [+] rejects WPS COM server paths even when they expose the Office ProgID 17ms
+ [+] applies an isolated timeout to process probes 1.08s
+ [+] gives Blender and Low IL probes longer bounded windows 22ms
+Tests completed in 1.99s
+Passed: 21 Failed: 0 Skipped: 0 Pending: 0 Inconclusive: 0

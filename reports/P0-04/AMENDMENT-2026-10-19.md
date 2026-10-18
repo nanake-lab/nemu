@@ -80,3 +80,23 @@ P0-05 第二部分还没有 `nemu-content` 子模块完成证据、完整环境�
 `NEMU_BLENDER` 当前未设置。doctor 通过安装登记找到 Blender 并通过版本检查；P2-03 的管线直接读取 `NEMU_BLENDER`，因此 SETUP 已追加用户设置该变量的命令。原始 VRM 哈希仍为 `5484C94F54F6C000767FEBACBC99FD7EA23AC074D9CA8EECEBAF65B967DE39AB`，本轮未改动源文件。
 
 当前 P0-05 第二部分仍等待：用户确认内容子模块迁移方案、安装 VRM Add-on 和 Torch、修正 64 位 Office COM 指向 WPS 的问题，以及之后的 Windows runner 验收。全量 doctor 与 Windows runner 均未运行。
+## 2026-10-19 用户澄清后的单项复核和修正
+
+用户澄清 VRM Add-on 已安装。单独检查 Blender Preferences 后确认模块 `bl_ext.blender_org.vrm` 已启用。原 doctor 只检查旧模块名 `io_scene_vrm`，因此产生了假 FAIL；现已修正识别逻辑，兼容旧模块和 Blender 扩展模块，并将模块名写入检查输出。
+
+| 单项 | 结果 | 证据 |
+| --- | --- | --- |
+| Blender 5.2.2 LTS 与用户级 `NEMU_BLENDER` 路径 | PASS | `probes/Blender-after-user-path.txt`；用户环境值为 `D:\blender\blender.exe` |
+| VRM Add-on | PASS | `probes/VRMAddon-after-checker-fix.txt`；启用模块 `bl_ext.blender_org.vrm` |
+| Word、Excel、PowerPoint 64/32 位 COM | PASS | `probes/OfficeCOM-after-repair.txt` |
+| PyTorch CUDA | PASS | `probes/Torch-after-user-update.txt`；`torch=2.11.0+cu128; cuda=True` |
+
+Office 检查确认机器级 64 位 COM 注册原本已指向 Microsoft Office；当前用户 HKCU 中三个 CLSID 的 `LocalServer32` 默认值被 WPS 覆盖。已只将这三个用户级默认值改为各自机器级 Office 服务器字符串，保留 WPS 安装和其他注册值。原值、新值与键路径记录在 `probes/OfficeCOM-repair-2026-10-19.txt`。修复后 doctor 对两个注册表视图均判为 PASS。
+
+Torch 探针输出 `cuda=True`，同时提示环境缺少 NumPy、Torch 的 NumPy 互操作初始化不可用。该探针只判定 CUDA 可用性；没有安装或改动其他包。P0-04 未据此扩大 model-adapter 依赖范围。
+
+本次 doctor 变更的 Pester 3.4.0 单元测试为 21 passed、0 failed，完整输出见 `pester-2026-10-19-v5.log`。`v3`、`v4` 保留了两次使用 Pester 5 参数调用旧版 Pester 3 的命令错误记录；这些调用未执行测试，随后按本机 Pester 3.4.0 语法运行成功。
+
+用户已明确批准执行内容子模块迁移方案。只读查询确认目标私有仓库 `https://github.com/nanake-lab/nemu-content` 存在且当前凭据可查看。仍按任务依赖与一张卡一条分支规则，待 P0-04 Windows 检查完成后，在 P0-05 第二部分分支实施；当前没有修改 `.gitmodules`、`content/`、Bible 文件或其历史。
+
+截至本节，Blender、VRM Add-on、Office COM 和 Torch 已各自独立复验通过。全量 doctor 与 Windows runner 均未运行。PR #19 的 Windows desktop/isolation 检查现在需要自托管 runner；运行任务为 PR #19 当前最新提交的该 Windows job。等待主代理更新 PR 后，先通知用户启动 runner。

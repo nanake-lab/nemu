@@ -1,0 +1,11 @@
+Project      Requirement                                     Actual
+-------      -----------                                     ------
+PyTorch CUDA model-adapter uv 环境 torch.cuda.is_available() torch=2.11.0+cu128; cuda=True
+
+                                                             D:\Dev\nemu\workers\model-adapter\.venv\Lib\site-packages\torch\_subclasses\functional_tensor.py:307: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at C:\acti
+                                                             ons-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_numpy.cpp:84.)
+                                                               cpu = _conversion_method_template(device=torch.device("cpu"))
+Single check: pwsh -NoProfile -File tools/doctor.ps1 -Check Torch
+Exit code: 0
+Result: torch=2.11.0+cu128; cuda=True
+Stderr warning: NumPy is not installed in this environment, so Torch could not initialize NumPy interoperability. The doctor criterion checks CUDA availability; this warning did not change its PASS result. No package was installed or modified by the probe.
