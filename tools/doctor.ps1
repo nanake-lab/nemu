@@ -27,6 +27,11 @@ function Test-BlenderLtsVersion {
     return $minimum -and $version -ge $minimum -and $VersionText -match '\bLTS\b'
 }
 
+function Test-VRMAddonEnabled {
+    param([AllowNull()][string[]]$EnabledModules)
+    return [bool]($EnabledModules | Where-Object { $_ -eq 'io_scene_vrm' -or $_ -match '^bl_ext\.[^.]+\.vrm$' } | Select-Object -First 1)
+}
+
 function New-DoctorCheck {
     param(
         [Parameter(Mandatory)][string]$Project,
@@ -187,7 +192,7 @@ function Find-BlenderExecutable {
 
 function Get-BlenderInfo {
     param([Parameter(Mandatory)][string]$Executable)
-    $expression = "import bpy; print('NEMU_BLENDER_VERSION=' + bpy.app.version_string); print('NEMU_VRM_ADDON=' + str('io_scene_vrm' in bpy.context.preferences.addons))"
+    $expression = "import bpy; modules=list(bpy.context.preferences.addons.keys()); print('NEMU_BLENDER_VERSION=' + bpy.app.version_string); print('NEMU_VRM_MODULES=' + ','.join(m for m in modules if m == 'io_scene_vrm' or (m.startswith('bl_ext.') and m.endswith('.vrm')))); print('NEMU_VRM_ADDON=' + str(any(m == 'io_scene_vrm' or (m.startswith('bl_ext.') and m.endswith('.vrm')) for m in modules)))"
     try {
         $commandResult = Invoke-DoctorCommand $Executable @('--background','--python-expr',$expression) -CommandTimeoutSeconds 45
         $lines = $commandResult.Text -split "`r?`n"
@@ -198,10 +203,11 @@ function Get-BlenderInfo {
             ExitCode = $exitCode
             Version = if ($versionLine) { ($versionLine -replace '^.*NEMU_BLENDER_VERSION=','').Trim() } else { '' }
             AddonEnabled = if ($addonLine) { ($addonLine -replace '^.*NEMU_VRM_ADDON=','').Trim() -eq 'True' } else { $false }
+            AddonModules = (($lines | Where-Object { $_ -match 'NEMU_VRM_MODULES=' } | Select-Object -Last 1) -replace '^.*NEMU_VRM_MODULES=','').Trim()
             Output = ($lines -join "`n").Trim()
         }
     } catch {
-        [pscustomobject]@{ ExitCode = 1; Version = ''; AddonEnabled = $false; Output = $_.Exception.Message }
+        [pscustomobject]@{ ExitCode = 1; Version = ''; AddonEnabled = $false; AddonModules = ''; Output = $_.Exception.Message }
     }
 }
 
@@ -470,7 +476,7 @@ function Invoke-NemuDoctor {
         $blenderPath = Find-BlenderExecutable
         if (-not $blenderPath) {
             if (Test-DoctorCheckSelected 'Blender') { $rows.Add((New-DoctorCheck 'Blender' 'Blender LTS >= 5.1 且与版本锁一致' $env:NEMU_BLENDER 'FAIL' '设置 NEMU_BLENDER 为有效 blender.exe 路径；安装 Blender LTS >= 5.1')) }
-            if (Test-DoctorCheckSelected 'VRMAddon') { $rows.Add((New-DoctorCheck 'VRM Add-on' 'Blender 中 io_scene_vrm 已启用' '' 'FAIL' '先找到 Blender，再在其 Preferences 中安装并启用兼容版本的 VRM Add-on')) }
+            if (Test-DoctorCheckSelected 'VRMAddon') { $rows.Add((New-DoctorCheck 'VRM Add-on' 'Blender 中 VRM Add-on 已启用' '' 'FAIL' '先找到 Blender，再在其 Preferences 中安装并启用兼容版本的 VRM Add-on')) }
         } else {
             $blenderInfo = Get-BlenderInfo $blenderPath
             if (Test-DoctorCheckSelected 'Blender') {
@@ -486,7 +492,7 @@ function Invoke-NemuDoctor {
             }
             if (Test-DoctorCheckSelected 'VRMAddon') {
                 $addonStatus = if ($blenderInfo.ExitCode -eq 0 -and $blenderInfo.AddonEnabled) {'PASS'} else {'FAIL'}
-                $rows.Add((New-DoctorCheck 'VRM Add-on' 'Blender 中 io_scene_vrm 已启用' "$($blenderInfo.AddonEnabled); $($blenderInfo.Output)" $addonStatus '在当前 NEMU_BLENDER 对应的 Blender Preferences 中安装并启用 VRM Add-on'))
+                $rows.Add((New-DoctorCheck 'VRM Add-on' 'Blender 中 VRM Add-on 已启用' "$($blenderInfo.AddonEnabled); modules=$($blenderInfo.AddonModules); $($blenderInfo.Output)" $addonStatus '在当前 NEMU_BLENDER 对应的 Blender Preferences 中安装并启用 VRM Add-on'))
             }
         }
     }

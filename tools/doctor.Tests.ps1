@@ -57,6 +57,18 @@ Describe 'Test-VRoidStartAppName' {
 }
 
 Describe 'doctor process and optional dependency checks' {
+    It 'recognizes the legacy VRM add-on module' {
+        (Test-VRMAddonEnabled @('io_scene_vrm')) | Should Be $true
+    }
+
+    It 'recognizes the Blender extension repository module used by Blender 5.2' {
+        (Test-VRMAddonEnabled @('bl_ext.blender_org.vrm')) | Should Be $true
+    }
+
+    It 'does not accept unrelated modules with a similar name' {
+        (Test-VRMAddonEnabled @('bl_ext.blender_org.vrm_tools')) | Should Be $false
+    }
+
     It 'uses the installed Blender 5.2 patch version from an LTS version string' {
         (ConvertTo-DoctorVersion 'Blender 5.2.2 LTS (hash d13f752e3b9c)') | Should Be ([version]'5.2.2')
         (Test-BlenderLtsVersion '5.2.2 LTS') | Should Be $true

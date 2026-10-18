@@ -1,0 +1,10 @@
+Office COM 64-bit per-user override repair; date 2026-10-19
+Word.Application [Software\Classes\CLSID\{000209FF-0000-0000-C000-000000000046}\LocalServer32]
+  before=D:\WPS Office\12.1.0.29158\office6\wps.exe /Automation
+  after =C:\Program Files\Microsoft Office\Root\Office16\WINWORD.EXE /Automation
+Excel.Application [Software\Classes\CLSID\{00024500-0000-0000-C000-000000000046}\LocalServer32]
+  before=D:\WPS Office\12.1.0.29158\office6\et.exe /Automation
+  after =C:\Program Files\Microsoft Office\Root\Office16\EXCEL.EXE /automation
+PowerPoint.Application [Software\Classes\CLSID\{91493441-5A91-11CF-8700-00AA0060263B}\LocalServer32]
+  before=D:\WPS Office\12.1.0.29158\office6\wpp.exe /Automation
+  after =C:\Program Files\Microsoft Office\Root\Office16\POWERPNT.EXE /AUTOMATION
