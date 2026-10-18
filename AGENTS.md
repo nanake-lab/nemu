@@ -203,3 +203,30 @@ Antigravity 会自动发现这些技能；Codex 请在开始相关任务时手�
 
 配置依据：OpenAI 官方 [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)。项目自定义角色使用独立 TOML 文件，权限继承父代理；角色文件不用于绕过父代理权限或平台并发限制。
 
+## 10. Claude 施工线（2026-10-19 用户追加规则）
+
+本节只追加规则，前文保留。用户已决定增加第三个执行者 Claude（Claude Code 云端会话），承担 Echo Core 中不依赖 Windows 和显卡的核心数学链，与 Codex 并行施工。
+
+### 10.1 目录所有权调整
+
+以下目录从第 2 节表中的 Codex 改为 **Claude** 负责；第 2 节的其余条目、共享文件规则和目录重叠规则不变，并同样适用于 Claude 与 Codex 之间：
+
+| 路径 | 负责方 |
+| --- | --- |
+| `core/crates/core-policy/**` | Claude |
+| `core/crates/core-kernel/**` | Claude |
+
+`core/Cargo.toml`、`core/Cargo.lock` 和各 crate 入口文件的模块登记行仍按第 2 节的共享文件规则处理。Claude 需要其他目录改动时，按第 2 节在 `tasks/requests/` 新建请求文件。
+
+### 10.2 Claude 的取卡顺序
+
+Claude 只取下列卡，按顺序：**P5-09 → P5-10 → P5-12**。这三张卡从 `tasks/README.md` 第 2 节的 Codex 列表中移出，Codex 跳过它们，其余顺序不变。取卡仍须满足 `tasks/README.md` 第 2 节的三个条件（依赖已合并、没有别人在做、目录不重叠）。其他卡是否交给 Claude，由用户另行决定并追加记录。
+
+### 10.3 规则
+
+- Claude 遵守本文件全部规则：一次只做一张卡，按第 6 节写报告，不放宽验收，不补写规格，契约只从 `@nemu/contracts` 或 Echo Core IDL 生成的类型导入，Echo Core 相关卡附规格对照表。
+- 分支命名同第 5 节：`task/<任务号>-<短名>`。
+- **交叉审查：** Claude 的 PR 在满足第 6 节合并条件之外，还须经 Codex 审查（建议 GPT-6 Astra 档）。审查结论写在 PR 评论里；有阻塞意见时不合并。反过来，Codex 的 Echo Core PR 可由用户转交 Claude 审查。
+- **工具链：** Claude 的环境可能无法安装 `core/rust-toolchain.toml` 锁定的版本。此时 Claude 可以用环境内可用的 stable 版本做本地开发和测试，但以 CI 中按锁定版本运行的结果为准；报告里写明本地实际使用的版本。
+- **Windows CI：** Claude 的 PR 同样会触发 Windows 作业。需要 Windows runner 时，Claude 提前通知用户，不自行判断不需要。
+- Claude 的会话是临时云端环境，不保存任何本地状态；所有进度以推送到 GitHub 的分支、PR 和报告为准。
