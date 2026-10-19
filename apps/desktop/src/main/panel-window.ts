@@ -6,11 +6,16 @@ export interface PanelWindowOptions {
 
 export class PanelWindowManager {
   private window: BrowserWindow | null = null;
+  private isQuitting = false;
 
   constructor(private readonly options: PanelWindowOptions) {}
 
   public getWindow(): BrowserWindow | null {
     return this.window;
+  }
+
+  public prepareQuit(): void {
+    this.isQuitting = true;
   }
 
   public create(): BrowserWindow {
@@ -33,10 +38,11 @@ export class PanelWindowManager {
     this.window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
     this.window.webContents.on('will-navigate', (event) => event.preventDefault());
 
-    // When closed by user, hide instead of destroying so it can be summoned quickly
+    // When closed by user (e.g. clicking 'X'), hide instead of destroying unless app is quitting
     this.window.on('close', (event) => {
-      if (!this.window?.isDestroyed() && !event.defaultPrevented) {
-        // Prevent default close unless app is quitting
+      if (!this.isQuitting) {
+        event.preventDefault();
+        this.window?.hide();
       }
     });
 

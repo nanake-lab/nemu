@@ -1,24 +1,24 @@
 import { globalShortcut } from 'electron';
 import type { DesktopSettings } from '../settings/index.js';
 import type { PanelWindowManager } from './panel-window.js';
-import type { AppBus } from '../bus/bus.js';
+import type { ChannelManager } from './channels.js';
 
 export interface ShortcutManagerOptions {
   settings: DesktopSettings;
   panelWindowManager: PanelWindowManager;
-  appBus: AppBus;
+  channelManager: ChannelManager;
 }
 
 export class ShortcutManager {
   private panelWindowManager: PanelWindowManager;
-  private appBus: AppBus;
+  private channelManager: ChannelManager;
   private settings: DesktopSettings;
   private isTalking = false;
 
   constructor(options: ShortcutManagerOptions) {
     this.settings = options.settings;
     this.panelWindowManager = options.panelWindowManager;
-    this.appBus = options.appBus;
+    this.channelManager = options.channelManager;
   }
 
   public registerAll(): void {
@@ -27,25 +27,23 @@ export class ShortcutManager {
     const summonKey = this.settings.shortcuts.summonPanel || 'CommandOrControl+Shift+N';
     const talkKey = this.settings.shortcuts.pushToTalk || 'CommandOrControl+Shift+Space';
 
-    try {
-      globalShortcut.register(summonKey, () => {
-        this.panelWindowManager.toggle();
-      });
-    } catch (err) {
-      console.warn(`[Shortcuts] Failed to register summonPanel shortcut '${summonKey}':`, err);
+    const summonRegistered = globalShortcut.register(summonKey, () => {
+      this.panelWindowManager.toggle();
+    });
+    if (!summonRegistered) {
+      console.warn(`[Shortcuts] Failed to register summonPanel shortcut '${summonKey}' (accelerator may be in use).`);
     }
 
-    try {
-      globalShortcut.register(talkKey, () => {
-        // Toggle push-to-talk speech state
-        this.isTalking = !this.isTalking;
-        const vadEvent = this.appBus.createEvent('voice', 'voice.vad', {
-          state: this.isTalking ? 'speechStart' : 'speechEnd',
-        });
-        this.appBus.publish(vadEvent);
+    const talkRegistered = globalShortcut.register(talkKey, () => {
+      // Toggle push-to-talk speech state via stage.mic.set command without forging voice.vad
+      this.isTalking = !this.isTalking;
+      this.channelManager.sendStageCommand('stage.mic.set', {
+        enabled: this.isTalking,
+        mode: 'pushToTalk',
       });
-    } catch (err) {
-      console.warn(`[Shortcuts] Failed to register pushToTalk shortcut '${talkKey}':`, err);
+    });
+    if (!talkRegistered) {
+      console.warn(`[Shortcuts] Failed to register pushToTalk shortcut '${talkKey}' (accelerator may be in use).`);
     }
   }
 

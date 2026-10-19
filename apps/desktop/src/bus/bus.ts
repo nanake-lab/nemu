@@ -2,6 +2,7 @@ import {
   type ApplicationEvent,
   type AppBusPayloads,
   appBusEventSchema,
+  forwardedAppBusTypes,
 } from '@nemu/contracts';
 import { RingBuffer } from './ring-buffer.js';
 import { generateUlid } from './ulid.js';
@@ -143,12 +144,26 @@ export class AppBus {
       const data = event.data;
       if (!data || typeof data !== 'object') return;
       const msg = data as { type?: string; event?: ApplicationEvent };
-      if (msg.type === 'bus:event' && msg.event) {
-        this.publish(msg.event, portId);
-      } else if ('v' in msg && 'type' in msg && 'payload' in msg) {
-        // Direct event object passed
-        this.publish(msg as unknown as ApplicationEvent, portId);
+      const rawEvent =
+        msg.type === 'bus:event' && msg.event
+          ? msg.event
+          : 'v' in msg && 'type' in msg && 'payload' in msg
+            ? (msg as unknown as ApplicationEvent)
+            : null;
+      if (!rawEvent) return;
+
+      // Restrict source and permissions according to port identity
+      if (portId === 'stage') {
+        if ((forwardedAppBusTypes as readonly string[]).includes(rawEvent.type)) {
+          console.warn(`[AppBus] Dropped unauthorized forwarded event type '${rawEvent.type}' from stage port.`);
+          return;
+        }
+        rawEvent.source = 'stage';
+      } else if (portId === 'panel') {
+        rawEvent.source = 'panel';
       }
+
+      this.publish(rawEvent, portId);
     };
 
     if (typeof port.addEventListener === 'function') {

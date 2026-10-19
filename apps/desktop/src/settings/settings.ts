@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync, copyFileSync, renameSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { app } from 'electron';
 import {
@@ -15,12 +15,17 @@ export class SettingsStore {
     if (customPath) {
       this.filePath = customPath;
     } else {
-      try {
-        const userData = app.getPath('userData');
-        this.filePath = join(userData, 'settings.json');
-      } catch {
-        // Fallback if app is not ready or in pure Node environment
-        this.filePath = join(process.cwd(), 'settings.json');
+      const scaffoldData = process.env.NEMU_SCAFFOLD_USER_DATA;
+      if (scaffoldData) {
+        this.filePath = join(scaffoldData, 'settings.json');
+      } else {
+        try {
+          // On Windows, resolve %APPDATA%/Nemu/settings.json
+          const appData = app.getPath('appData');
+          this.filePath = join(appData, 'Nemu', 'settings.json');
+        } catch {
+          this.filePath = join(process.cwd(), 'settings.json');
+        }
       }
     }
     this.settings = this.load();
@@ -54,7 +59,17 @@ export class SettingsStore {
       const migrated = migrateSettings(parsed);
       this.settings = migrated;
       return migrated;
-    } catch {
+    } catch (err) {
+      // Backup corrupted settings before falling back to defaults
+      try {
+        if (existsSync(this.filePath)) {
+          const backupPath = `${this.filePath}.bak.${Date.now()}`;
+          copyFileSync(this.filePath, backupPath);
+          console.warn(`[SettingsStore] Corrupt settings backed up to ${backupPath}:`, err);
+        }
+      } catch (backupErr) {
+        console.warn('[SettingsStore] Failed to backup corrupt settings file:', backupErr);
+      }
       const defaults = getDefaultSettings();
       this.settings = defaults;
       return defaults;
@@ -67,7 +82,10 @@ export class SettingsStore {
       if (!existsSync(dir)) {
         mkdirSync(dir, { recursive: true });
       }
-      writeFileSync(this.filePath, JSON.stringify(this.settings, null, 2), 'utf-8');
+      // True atomic write via temporary file + renameSync
+      const tempPath = `${this.filePath}.${process.pid}.${Date.now()}.tmp`;
+      writeFileSync(tempPath, JSON.stringify(this.settings, null, 2), 'utf-8');
+      renameSync(tempPath, this.filePath);
     } catch (error) {
       console.error(`Failed to save settings to ${this.filePath}:`, error);
     }

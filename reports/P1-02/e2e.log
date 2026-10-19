@@ -1,15 +1,9 @@
-﻿node.exe : $ pnpm build && playwright test --config apps/desktop/playwright.config.ts
-At C:\Users\nanake\AppData\Local\fnm_multishells\34856_1792387740014\pnpm.ps1:16 char:5
-+     & "$basedir/node$exe"  "$basedir/node_modules/corepack/dist/pnpm. ...
-+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ($ pnpm build &&...right.config.ts:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 
+$ pnpm build && playwright test --config apps/desktop/playwright.config.ts
 $ pnpm -r build
+packages/contracts build$ tsc -p tsconfig.json
+executors/codex-bridge build$ tsc -p tsconfig.json
 apps/panel build$ vite build
 packages/desktop-sense build$ tsc -p tsconfig.json
-executors/codex-bridge build$ tsc -p tsconfig.json
-packages/contracts build$ tsc -p tsconfig.json
 apps/panel build: vite v7.3.7 building client environment for production...
 apps/panel build: transforming...
 packages/desktop-sense build: Done
@@ -22,12 +16,12 @@ apps/panel build: computing gzip size...
 apps/panel build: dist/index.html                   0.64 kB │ gzip:  0.38 kB
 apps/panel build: dist/assets/index-CC1gZTDU.css    0.26 kB │ gzip:  0.20 kB
 apps/panel build: dist/assets/index-Bdkm1e0w.js   223.36 kB │ gzip: 69.70 kB
-apps/panel build: ✓ built in 1.02s
+apps/panel build: ✓ built in 944ms
 apps/panel build: Done
 packages/voice build$ tsc -p tsconfig.json
-packages/terminal build: Done
-spikes/stage-overlay build$ electron-vite build
 packages/log build: Done
+spikes/stage-overlay build$ electron-vite build
+packages/terminal build: Done
 packages/contracts build: Done
 apps/desktop build$ electron-vite build
 packages/avatar-runtime build$ tsc -p tsconfig.json
@@ -38,35 +32,32 @@ spikes/stage-overlay build: transforming...
 spikes/stage-overlay build: ✓ 1 modules transformed.
 spikes/stage-overlay build: rendering chunks...
 spikes/stage-overlay build: out/main/index.js  8.46 kB
-spikes/stage-overlay build: ✓ built in 113ms
+spikes/stage-overlay build: ✓ built in 98ms
 spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
 spikes/stage-overlay build: transforming...
 spikes/stage-overlay build: ✓ 1 modules transformed.
 spikes/stage-overlay build: rendering chunks...
 spikes/stage-overlay build: out/preload/index.cjs  1.33 kB
-spikes/stage-overlay build: ✓ built in 15ms
+spikes/stage-overlay build: ✓ built in 13ms
 spikes/stage-overlay build: vite v7.3.7 building client environment for production...
 spikes/stage-overlay build: transforming...
 apps/desktop build: vite v7.3.7 building ssr environment for production...
 apps/desktop build: transforming...
 apps/desktop build: ✓ 34 modules transformed.
 apps/desktop build: rendering chunks...
-apps/desktop build: out/main/index.js  54.44 kB
-apps/desktop build: ✓ built in 294ms
+apps/desktop build: out/main/index.js  66.28 kB
+apps/desktop build: ✓ built in 304ms
 apps/desktop build: vite v7.3.7 building ssr environment for production...
 apps/desktop build: transforming...
-apps/desktop build: ✓ 1 modules transformed.
+apps/desktop build: ✓ 3 modules transformed.
 apps/desktop build: rendering chunks...
+apps/desktop build: out/preload/panel.cjs  0.31 kB
 apps/desktop build: out/preload/index.cjs  1.02 kB
-apps/desktop build: ✓ built in 16ms
+apps/desktop build: out/preload/stage.cjs  1.46 kB
+apps/desktop build: ✓ built in 17ms
 apps/desktop build: vite v7.3.7 building client environment for production...
 apps/desktop build: transforming...
 spikes/stage-overlay build: ✓ 8 modules transformed.
-apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
-apps/desktop build: 
-apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
-apps/desktop build: 
-apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
 apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
 apps/desktop build: 
 apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
@@ -74,10 +65,15 @@ apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argume
 apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
 apps/desktop build: 
 apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/desktop build: 
+apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
 spikes/stage-overlay build: rendering chunks...
 spikes/stage-overlay build: ../../out/renderer/index.html                    6.52 kB
 spikes/stage-overlay build: ../../out/renderer/assets/index-P4FdMocT.js  1,448.72 kB
-spikes/stage-overlay build: ✓ built in 2.22s
+spikes/stage-overlay build: ✓ built in 2.09s
 spikes/stage-overlay build: Done
 tools/asset-lint build$ pnpm --filter @nemu/contracts build && tsc -p tsconfig.json
 packages/body build: Done
@@ -88,11 +84,6 @@ apps/stage build: vite v7.3.7 building client environment for production...
 apps/stage build: transforming...
 apps/desktop build: ✓ 170 modules transformed.
 apps/desktop build: rendering chunks...
-apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
-apps/stage build: 
-apps/stage build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
-apps/stage build: 
-apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
 apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
 apps/stage build: 
 apps/stage build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
@@ -100,13 +91,18 @@ apps/stage build:  * esbuild will not drop a `@__PURE__` call whose own argument
 apps/stage build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
 apps/stage build: 
 apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/stage build: 
+apps/stage build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/stage build: 
+apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
 apps/desktop build: desktop/out/renderer/panel/index.html               0.64 kB
 apps/desktop build: desktop/out/renderer/stage/index.html               0.68 kB
 apps/desktop build: desktop/out/renderer/assets/panel-DTdR6wTX.css      0.34 kB
 apps/desktop build: desktop/out/renderer/assets/stage-DABzvroO.css      0.66 kB
 apps/desktop build: desktop/out/renderer/assets/panel-CCRrQb_K.js     642.98 kB
 apps/desktop build: desktop/out/renderer/assets/stage-DxjPgQAC.js   1,770.21 kB
-apps/desktop build: ✓ built in 3.22s
+apps/desktop build: ✓ built in 3.03s
 apps/desktop build: Done
 apps/stage build: ✓ 177 modules transformed.
 apps/stage build: rendering chunks...
@@ -123,19 +119,14 @@ apps/stage build: (!) Some chunks are larger than 500 kB after minification. Con
 apps/stage build: - Using dynamic import() to code-split the application
 apps/stage build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 apps/stage build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-apps/stage build: ✓ built in 2.36s
+apps/stage build: ✓ built in 2.26s
 apps/stage build: Done
 tools/asset-lint build: Done
 
 Running 3 tests using 1 worker
 
-  ok 1 apps\desktop\tests\click-through.spec.ts:7:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures (878ms)
-  ok 2 apps\desktop\tests\shell.spec.ts:7:1 › stage window shell properties and clean process termination (1.3s)
-Exception: D:\Dev\nemu-antigravity\tools\scaffold\windows-evidence.ps1:28
-Line |
-  28 |  … -Path $root 'run.json'))) { throw 'Missing evidence initialization' }
-     |                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     | Missing evidence initialization
-  ok 3 apps\desktop\tests\smoke.spec.ts:9:1 › two visible isolated windows; transparent stage; no core storage (1.5s)
+  ok 1 apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures (4.4s)
+  ok 2 apps\desktop\tests\shell.spec.ts:12:1 › stage window shell properties, channel routing, panel summoning and clean process termination (3.5s)
+  ok 3 apps\desktop\tests\smoke.spec.ts:9:1 › two visible isolated windows; transparent stage; no core storage (1.2s)
 
-  3 passed (4.4s)
+  3 passed (9.5s)

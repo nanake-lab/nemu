@@ -1,10 +1,12 @@
-import { appendFileSync, existsSync, mkdirSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, renameSync, statSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { app } from 'electron';
 
 export class DesktopLogger {
   private logDir: string;
   private logFile: string;
+  private maxSizeBytes = 5 * 1024 * 1024; // 5 MB per file
+  private writesSinceCheck = 0;
 
   constructor(customDir?: string) {
     if (customDir) {
@@ -41,7 +43,30 @@ export class DesktopLogger {
     return this.logFile;
   }
 
+  private checkRotation(): void {
+    try {
+      if (existsSync(this.logFile)) {
+        const stat = statSync(this.logFile);
+        if (stat.size >= this.maxSizeBytes) {
+          const backupFile = join(this.logDir, 'app.1.log');
+          if (existsSync(backupFile)) {
+            unlinkSync(backupFile);
+          }
+          renameSync(this.logFile, backupFile);
+        }
+      }
+    } catch {
+      // Avoid failing log operations on rotation errors
+    }
+  }
+
   public write(level: 'info' | 'warn' | 'error' | 'debug', message: string, detail?: Record<string, unknown>): void {
+    this.writesSinceCheck++;
+    if (this.writesSinceCheck > 100) {
+      this.writesSinceCheck = 0;
+      this.checkRotation();
+    }
+
     const entry = {
       timestamp: new Date().toISOString(),
       pid: process.pid,

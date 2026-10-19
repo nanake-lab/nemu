@@ -6,7 +6,7 @@ export interface StageWindowOptions {
 
 export class StageWindowManager {
   private window: BrowserWindow | null = null;
-  private isIgnored = true;
+  private isIgnored = false;
 
   constructor(private readonly options: StageWindowOptions) {}
 
@@ -57,6 +57,29 @@ export class StageWindowManager {
     });
 
     return this.window;
+  }
+
+  public isVisible(): boolean {
+    return this.window !== null && !this.window.isDestroyed() && this.window.isVisible();
+  }
+
+  public show(): void {
+    if (!this.window || this.window.isDestroyed()) return;
+    this.window.show();
+  }
+
+  public hide(): void {
+    if (!this.window || this.window.isDestroyed()) return;
+    this.window.hide();
+  }
+
+  public toggle(): void {
+    if (!this.window || this.window.isDestroyed()) return;
+    if (this.window.isVisible()) {
+      this.window.hide();
+    } else {
+      this.window.show();
+    }
   }
 
   public setClickThrough(ignore: boolean): void {

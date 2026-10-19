@@ -55,7 +55,13 @@ export class TrayManager {
 
     const contextMenu = Menu.buildFromTemplate([
       {
-        label: '显示/隐藏 面板',
+        label: '显示/隐藏 舞台角色',
+        click: () => {
+          this.stageWindowManager.toggle();
+        },
+      },
+      {
+        label: '召唤/隐藏 面板',
         click: () => {
           this.panelWindowManager.toggle();
         },

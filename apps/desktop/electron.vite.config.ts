@@ -6,7 +6,16 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts'] })],
   },
   preload: {
-    build: { rollupOptions: { output: { format: 'cjs', entryFileNames: '[name].cjs' } } },
+    build: {
+      rollupOptions: {
+        input: {
+          stage: resolve(import.meta.dirname, 'src/preload/stage.ts'),
+          panel: resolve(import.meta.dirname, 'src/preload/panel.ts'),
+          index: resolve(import.meta.dirname, 'src/preload/index.ts'),
+        },
+        output: { format: 'cjs', entryFileNames: '[name].cjs' },
+      },
+    },
   },
   renderer: {
     root: resolve(import.meta.dirname, '..'),

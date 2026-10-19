@@ -134,4 +134,38 @@ describe('SupervisedProcess Exponential Backoff and Restart', () => {
       expect(p.state).toBe('stopped');
     }
   });
+
+  it('detects hung process missing heartbeats and restarts it via health check', async () => {
+    // Process that stays alive but produces no heartbeats
+    const proc = new SupervisedProcess({
+      name: 'hung-process',
+      isWorker: false,
+      command: process.execPath,
+      args: ['-e', 'setInterval(() => {}, 100)'],
+      baseDelayMs: 20,
+      autoRestart: true,
+      healthCheck: {
+        intervalMs: 30,
+        timeoutMs: 50,
+        maxConsecutiveFailures: 1,
+      },
+    });
+    activeProcesses.push(proc);
+
+    await proc.start();
+    expect(proc.getStatus().state).toBe('running');
+    expect(proc.getStatus().restartCount).toBe(0);
+
+    const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    let waited = 0;
+    while (proc.getStatus().restartCount < 1 && waited < 2000) {
+      await wait(20);
+      waited += 20;
+    }
+
+    expect(proc.getStatus().restartCount).toBeGreaterThanOrEqual(1);
+
+    await proc.stop();
+    expect(proc.getStatus().state).toBe('stopped');
+  });
 });

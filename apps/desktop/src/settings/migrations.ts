@@ -60,6 +60,11 @@ export function migrateSettings(raw: unknown): DesktopSettings {
   const obj = raw as Record<string, unknown>;
   const version = typeof obj.version === 'number' ? obj.version : 0;
 
+  if (version > CURRENT_SETTINGS_VERSION) {
+    // Newer schema version detected; preserve without destructive downgrade
+    return raw as DesktopSettings;
+  }
+
   let current = obj;
 
   if (version === 0) {

@@ -6,6 +6,12 @@ export type ProcessState =
   | 'backing-off'
   | 'stopping';
 
+export interface HealthCheckConfig {
+  intervalMs: number;
+  timeoutMs: number;
+  maxConsecutiveFailures: number;
+}
+
 export interface ProcessConfig {
   name: string;
   isWorker: boolean;
@@ -20,6 +26,7 @@ export interface ProcessConfig {
   maxDelayMs?: number | undefined;
   backoffFactor?: number | undefined;
   stableThresholdMs?: number | undefined;
+  healthCheck?: HealthCheckConfig | undefined;
 }
 
 export interface ProcessStatus {
