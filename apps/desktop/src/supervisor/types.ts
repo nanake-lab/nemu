@@ -6,10 +6,14 @@ export type ProcessState =
   | 'backing-off'
   | 'stopping';
 
+export type HealthProbeType = 'stdout-heartbeat' | 'http-get' | 'none';
+
 export interface HealthCheckConfig {
-  intervalMs: number;
-  timeoutMs: number;
-  maxConsecutiveFailures: number;
+  type: HealthProbeType;
+  intervalMs?: number | undefined;
+  timeoutMs?: number | undefined;
+  maxConsecutiveFailures?: number | undefined;
+  endpoint?: string | undefined;
 }
 
 export interface ProcessConfig {

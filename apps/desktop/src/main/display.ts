@@ -81,11 +81,15 @@ export class DisplayManager {
     });
 
     if (!targetDisplay) {
-      const primaryScale = screen.getPrimaryDisplay().scaleFactor || 1;
-      const dipPoint = {
-        x: Math.round(centerPhysicalX / primaryScale),
-        y: Math.round(centerPhysicalY / primaryScale),
-      };
+      const dipPoint = typeof (screen as unknown as { screenToDipPoint?: (p: { x: number; y: number }) => { x: number; y: number } }).screenToDipPoint === 'function'
+        ? (screen as unknown as { screenToDipPoint: (p: { x: number; y: number }) => { x: number; y: number } }).screenToDipPoint({
+            x: Math.round(centerPhysicalX),
+            y: Math.round(centerPhysicalY),
+          })
+        : {
+            x: Math.round(centerPhysicalX / (screen.getPrimaryDisplay().scaleFactor || 1)),
+            y: Math.round(centerPhysicalY / (screen.getPrimaryDisplay().scaleFactor || 1)),
+          };
       targetDisplay = screen.getDisplayNearestPoint(dipPoint);
     }
 

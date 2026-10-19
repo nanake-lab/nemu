@@ -11,7 +11,6 @@ export default defineConfig({
         input: {
           stage: resolve(import.meta.dirname, 'src/preload/stage.ts'),
           panel: resolve(import.meta.dirname, 'src/preload/panel.ts'),
-          index: resolve(import.meta.dirname, 'src/preload/index.ts'),
         },
         output: { format: 'cjs', entryFileNames: '[name].cjs' },
       },

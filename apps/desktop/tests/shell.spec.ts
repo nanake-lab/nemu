@@ -37,7 +37,9 @@ test('stage window shell properties, channel routing, panel summoning and clean 
       if (!stage) throw new Error('Stage window missing');
 
       const hwndBuf = stage.getNativeWindowHandle();
-      const hwndNum = hwndBuf.readBigInt64LE ? hwndBuf.readBigInt64LE() : BigInt(hwndBuf.readInt32LE());
+      const hwndNum = hwndBuf.length >= 8 && typeof hwndBuf.readBigInt64LE === 'function'
+        ? hwndBuf.readBigInt64LE()
+        : BigInt(hwndBuf.readInt32LE());
       const hwndHex = '0x' + hwndNum.toString(16);
 
       return {

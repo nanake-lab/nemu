@@ -61,8 +61,11 @@ export function migrateSettings(raw: unknown): DesktopSettings {
   const version = typeof obj.version === 'number' ? obj.version : 0;
 
   if (version > CURRENT_SETTINGS_VERSION) {
-    // Newer schema version detected; preserve without destructive downgrade
-    return raw as DesktopSettings;
+    // Newer schema version detected; preserve without destructive downgrade while ensuring baseline fields exist
+    return {
+      ...getDefaultSettings(),
+      ...obj,
+    } as DesktopSettings;
   }
 
   let current = obj;

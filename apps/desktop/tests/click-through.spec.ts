@@ -8,6 +8,8 @@ import type { AppBus } from '../src/bus/index.js';
 import type { StageWindowManager } from '../src/main/stage-window.js';
 
 test('click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures', async () => {
+  test.skip(process.platform !== 'win32', 'Click-through via Win32 SendInput and low-level mouse hooks is Windows-specific');
+
   const scratch = await mkdtemp(join(tmpdir(), 'nemu-scaffold-click-'));
   let application: ElectronApplication | undefined;
 
@@ -84,10 +86,33 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
       // Re-assert stage is on top of counter window
       stage.setAlwaysOnTop(true, 'screen-saver');
 
+      const transparentDIP = { x: originX + 50, y: originY + 50 };
+      const characterDIP = { x: originX + 275, y: originY + 275 };
+
+      const transparentPhys = typeof (screen as unknown as { dipToScreenPoint?: (p: { x: number; y: number }) => { x: number; y: number } }).dipToScreenPoint === 'function'
+        ? (screen as unknown as { dipToScreenPoint: (p: { x: number; y: number }) => { x: number; y: number } }).dipToScreenPoint(transparentDIP)
+        : { x: Math.round(transparentDIP.x * scaleFactor), y: Math.round(transparentDIP.y * scaleFactor) };
+
+      const characterPhys = typeof (screen as unknown as { dipToScreenPoint?: (p: { x: number; y: number }) => { x: number; y: number } }).dipToScreenPoint === 'function'
+        ? (screen as unknown as { dipToScreenPoint: (p: { x: number; y: number }) => { x: number; y: number } }).dipToScreenPoint(characterDIP)
+        : { x: Math.round(characterDIP.x * scaleFactor), y: Math.round(characterDIP.y * scaleFactor) };
+
+      const stageHwnd = stage.getNativeWindowHandle();
+      const stageHwndHex = '0x' + (stageHwnd.length >= 8 ? stageHwnd.readBigInt64LE() : BigInt(stageHwnd.readInt32LE())).toString(16);
+
+      const counterHwnd = counterWindow.getNativeWindowHandle();
+      const counterHwndHex = '0x' + (counterHwnd.length >= 8 ? counterHwnd.readBigInt64LE() : BigInt(counterHwnd.readInt32LE())).toString(16);
+
+      console.log(`[Stage HWND]: ${stageHwndHex}, bounds:`, stage.getBounds());
+      console.log(`[Counter HWND]: ${counterHwndHex}, bounds:`, counterWindow.getBounds());
+
       return {
         originX,
         originY,
         scaleFactor,
+        transparentPhys,
+        characterPhys,
+        stageHwndHex,
       };
     });
 
@@ -96,6 +121,13 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
     const stagePage = application.windows().find((w) => w.url().includes('/stage/'));
     expect(counterPage).toBeDefined();
     expect(stagePage).toBeDefined();
+
+    stagePage?.on('console', (msg) => {
+      // Ignore resource 404s from unbuilt mock assets in test environment
+      if (!msg.text().includes('Failed to load resource') && !msg.text().includes('Failed to initialize stage avatar')) {
+        // debug logging if needed
+      }
+    });
 
     // 2. Setup interactive character region and hit testing inside the stage page
     await stagePage?.evaluate(() => {
@@ -143,10 +175,28 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
 
     const clickScriptPath = resolve('apps/desktop/tests/helpers/click-mouse.ps1');
 
-    function sendNativeClicks(dipX: number, dipY: number, count: number): void {
-      const physX = Math.round(dipX * layout.scaleFactor);
-      const physY = Math.round(dipY * layout.scaleFactor);
+    function sendNativeMouseMove(physX: number, physY: number): void {
+      if (process.platform === 'win32') {
+        execFileSync(
+          'pwsh',
+          [
+            '-NoProfile',
+            '-File',
+            clickScriptPath,
+            '-X',
+            String(physX),
+            '-Y',
+            String(physY),
+            '-MoveOnly',
+            '-StageHwndHex',
+            layout.stageHwndHex,
+          ],
+          { encoding: 'utf-8' },
+        );
+      }
+    }
 
+    function sendNativeClicks(physX: number, physY: number, count: number): void {
       if (process.platform === 'win32') {
         execFileSync(
           'pwsh',
@@ -162,28 +212,20 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
             String(count),
             '-DelayMs',
             '10',
+            '-StageHwndHex',
+            layout.stageHwndHex,
           ],
           { encoding: 'utf-8' },
         );
-      } else {
-        // Fallback for non-Windows (e.g. Linux / xvfb with xdotool)
-        try {
-          execFileSync('xdotool', ['mousemove', String(physX), String(physY), 'click', '--repeat', String(count), '1']);
-        } catch {
-          // If xdotool is unavailable in non-win environment
-        }
       }
     }
 
     // 3. Phase 1: 50 clicks on transparent area
-    // Point (layout.originX + 50, layout.originY + 50) is empty transparent stage area
-    // First trigger hitTest via mouse move to set stage into click-through mode
-    await stagePage?.evaluate(() => {
-      window.dispatchEvent(new MouseEvent('mousemove', { clientX: 50, clientY: 50, bubbles: true }));
-      window.postMessage({ type: 'stage.hitTest', payload: { overCharacter: false } }, '*');
-    });
+    // Move cursor natively via Win32 SendInput to transparent area
+    sendNativeMouseMove(layout.transparentPhys.x, layout.transparentPhys.y);
 
-    // Wait for stageWindowManager to confirm click-through state
+    // Wait for stageWindowManager to confirm click-through state (isIgnored = true)
+    // triggered genuinely via WH_MOUSE_LL hook forwarding cursor move to Chromium
     await expect
       .poll(async () => {
         return await application?.evaluate(({ app }) => {
@@ -194,7 +236,7 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
       .toBe(true);
 
     // Send 50 OS mouse clicks through transparent stage area to the counter window below
-    sendNativeClicks(layout.originX + 50, layout.originY + 50, 50);
+    sendNativeClicks(layout.transparentPhys.x, layout.transparentPhys.y, 50);
 
     // Assert counter window received all 50 clicks
     await expect
@@ -213,13 +255,11 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
     expect(initialHits).toBe(0);
 
     // 4. Phase 2: 50 clicks on character pixels
-    // Point (layout.originX + 250, layout.originY + 250) is over the character hit box (at 200..350)
-    await stagePage?.evaluate(() => {
-      window.dispatchEvent(new MouseEvent('mousemove', { clientX: 250, clientY: 250, bubbles: true }));
-      window.postMessage({ type: 'stage.hitTest', payload: { overCharacter: true } }, '*');
-    });
+    // Move cursor natively via Win32 SendInput onto the character hit box (200..350)
+    sendNativeMouseMove(layout.characterPhys.x, layout.characterPhys.y);
 
     // Wait for stageWindowManager to confirm character capture mode (isIgnored = false)
+    // triggered genuinely via WH_MOUSE_LL hook forwarding cursor move to Chromium
     await expect
       .poll(async () => {
         return await application?.evaluate(({ app }) => {
@@ -230,7 +270,7 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
       .toBe(false);
 
     // Send 50 OS mouse clicks on the character
-    sendNativeClicks(layout.originX + 250, layout.originY + 250, 50);
+    sendNativeClicks(layout.characterPhys.x, layout.characterPhys.y, 50);
 
     // Assert counter window did NOT receive any additional clicks (100% blocked/captured by stage)
     const finalCounterClicks = await counterPage?.evaluate(() => {

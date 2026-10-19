@@ -135,16 +135,26 @@ describe('SupervisedProcess Exponential Backoff and Restart', () => {
     }
   });
 
-  it('detects hung process missing heartbeats and restarts it via health check', async () => {
-    // Process that stays alive but produces no heartbeats
+  it('detects hung process missing heartbeats and restarts it without leaving orphan processes', async () => {
+    const isPidAlive = (pid: number): boolean => {
+      try {
+        process.kill(pid, 0);
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
+    const observedPids = new Set<number>();
     const proc = new SupervisedProcess({
       name: 'hung-process',
       isWorker: false,
       command: process.execPath,
       args: ['-e', 'setInterval(() => {}, 100)'],
-      baseDelayMs: 20,
+      baseDelayMs: 25,
       autoRestart: true,
       healthCheck: {
+        type: 'stdout-heartbeat',
         intervalMs: 30,
         timeoutMs: 50,
         maxConsecutiveFailures: 1,
@@ -155,17 +165,62 @@ describe('SupervisedProcess Exponential Backoff and Restart', () => {
     await proc.start();
     expect(proc.getStatus().state).toBe('running');
     expect(proc.getStatus().restartCount).toBe(0);
+    const initialPid = proc.getStatus().pid;
+    expect(initialPid).toBeDefined();
+    if (initialPid) observedPids.add(initialPid);
 
     const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
     let waited = 0;
-    while (proc.getStatus().restartCount < 1 && waited < 2000) {
-      await wait(20);
-      waited += 20;
+
+    // Track PIDs and assert at most 1 alive child process at any sampling moment
+    while (proc.getStatus().restartCount < 2 && waited < 3000) {
+      const pid = proc.getStatus().pid;
+      if (pid) observedPids.add(pid);
+
+      // Check how many of the observed PIDs are alive right now
+      const alivePids = Array.from(observedPids).filter(isPidAlive);
+      expect(alivePids.length).toBeLessThanOrEqual(1);
+
+      await wait(25);
+      waited += 25;
     }
 
     expect(proc.getStatus().restartCount).toBeGreaterThanOrEqual(1);
+    expect(observedPids.size).toBeGreaterThanOrEqual(2);
 
     await proc.stop();
     expect(proc.getStatus().state).toBe('stopped');
+
+    // Wait a brief moment for OS taskkill cleanup to settle
+    await wait(100);
+
+    // Verify 0 orphan processes remain from all observed children
+    const leakedPids = Array.from(observedPids).filter(isPidAlive);
+    expect(leakedPids).toEqual([]);
+  });
+
+  it('supports http-get probe and none probe without requiring stdout heartbeats', async () => {
+    // Process configured with health probe 'none'
+    const procNone = new SupervisedProcess({
+      name: 'none-probe-test',
+      isWorker: false,
+      command: process.execPath,
+      args: ['-e', 'setInterval(() => {}, 200)'],
+      autoRestart: false,
+      healthCheck: {
+        type: 'none',
+      },
+    });
+    activeProcesses.push(procNone);
+    await procNone.start();
+    expect(procNone.getStatus().state).toBe('running');
+
+    // Wait 100ms - should still be running and not restarted
+    await new Promise((r) => setTimeout(r, 100));
+    expect(procNone.getStatus().state).toBe('running');
+    expect(procNone.getStatus().restartCount).toBe(0);
+
+    await procNone.stop();
+    expect(procNone.getStatus().state).toBe('stopped');
   });
 });

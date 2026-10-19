@@ -1,4 +1,4 @@
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.08s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.09s
      Running unittests src\lib.rs (target\debug\deps\action_gate-ac675a4710f9ccae.exe)
 
 running 0 tests
@@ -8,20 +8,20 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
      Running unittests src\lib.rs (target\debug\deps\core_kernel-4df46f3327408afa.exe)
 
 running 17 tests
-test effects::tests::f06_drive_proposal_may_not_reencode_an_r_or_theta_effect ... ok
+test effects::tests::parameter_canonical_bytes_golden_layout ... ok
 test effects::tests::i08_new_evidence_revision_does_not_release_a_taken_over_responsibility ... ok
+test effects::tests::f06_drive_proposal_may_not_reencode_an_r_or_theta_effect ... ok
+test effects::tests::j06_out_of_scope_and_unauthorised_effects_contribute_zero ... ok
 test effects::tests::i07_theta_takeover_suppresses_r_even_after_legal_disable ... ok
-test effects::tests::i12_failure_barrier_blocks_effects_immediately ... ok
+test effects::tests::evaluate_rejects_missing_inputs_foreign_fields_and_version_mismatch ... ok
 test effects::tests::j06_candidate_with_non_whitelisted_field_is_rejected ... ok
 test effects::tests::compile_budget_overflow_in_stored_state_is_a_fault ... ok
-test effects::tests::evaluate_rejects_missing_inputs_foreign_fields_and_version_mismatch ... ok
 test effects::tests::effects_sum_in_canonical_order_with_receipts ... ok
-test effects::tests::parameter_canonical_bytes_golden_layout ... ok
-test effects::tests::i06_only_active_r_effects_are_authorised ... ok
 test effects::tests::i22_theta_outside_validity_contract_quarantines_instead_of_local_disable ... ok
-test effects::tests::i21_compile_is_pure_and_repeated_reads_do_not_accumulate_decay ... ok
+test effects::tests::i12_failure_barrier_blocks_effects_immediately ... ok
+test effects::tests::i06_only_active_r_effects_are_authorised ... ok
 test effects::tests::integrity_and_time_faults_are_structural ... ok
-test effects::tests::j06_out_of_scope_and_unauthorised_effects_contribute_zero ... ok
+test effects::tests::i21_compile_is_pure_and_repeated_reads_do_not_accumulate_decay ... ok
 test effects::tests::j06_candidate_over_budget_or_cancelling_is_rejected_and_existing_kept ... ok
 test effects::tests::i07_two_owners_for_one_responsibility_and_domain_is_a_structural_fault ... ok
 test effects::tests::r_certificate_expiry_and_dependency_faults_withhold_authorisation ... ok
@@ -38,8 +38,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 running 5 tests
 test foreign_catalog_version_is_unknown_not_disjoint ... ok
-test dnf_limit_reports_unknown_overlap ... ok
 test pair_limit_reports_unknown_overlap ... ok
+test dnf_limit_reports_unknown_overlap ... ok
 test product_limit_reports_unknown_overlap ... ok
 test intersection_cases_hold_in_both_directions ... ok
 
@@ -81,8 +81,8 @@ running 5 tests
 test numeric::tests::sys21_count_accepts_boundaries_rejects_limit_and_overflow ... ok
 test numeric::tests::sys21_finite_values_preserve_binary64_bits ... ok
 test numeric::tests::sys21_intervals_are_explicitly_bounded_and_never_wrap ... ok
-test numeric::tests::sys21_normalizes_negative_zero_only ... ok
 test numeric::tests::sys21_rejects_all_nonfinite_categories ... ok
+test numeric::tests::sys21_normalizes_negative_zero_only ... ok
 
 test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
