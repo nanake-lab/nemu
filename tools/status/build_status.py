@@ -20,6 +20,11 @@ Rules, first match wins:
     all dependencies done, card is yours -> needs_you
     all dependencies done                -> ready
     otherwise                            -> blocked
+
+Review (AGENTS.md section 6): medium and high cards need a review comment whose
+first line is "审查结论：通过" or "审查结论：有阻塞问题". Claude reviews unless
+Claude is the suggested executor, in which case Codex does; the board asks the
+user to forward a PR only when Codex is the reviewer.
 """
 
 from __future__ import annotations
@@ -64,7 +69,42 @@ def windows_waiting(repo: str, sha: str) -> bool:
         return False
     jobs = gh(f"repos/{repo}/actions/runs/{runs[0]['id']}/jobs")
     jobs = jobs.get("jobs", []) if isinstance(jobs, dict) else []
-    return any("Windows" in j["name"] and j["status"] in ("queued", "waiting") for j in jobs)
+    return any(
+        "Windows" in j["name"] and j["status"] in ("queued", "waiting") for j in jobs
+    )
+
+
+VERDICT = "审查结论："
+
+
+def review_verdict(repo: str, number: int) -> str | None:
+    """'pass', 'block' or None, from the latest review comment on the PR."""
+    comments = gh(f"repos/{repo}/issues/{number}/comments?per_page=100")
+    verdict = None
+    for cm in comments if isinstance(comments, list) else []:
+        body = (cm.get("body") or "").lstrip()
+        if body.startswith(VERDICT):
+            verdict = "pass" if body.startswith(VERDICT + "通过") else "block"
+    return verdict
+
+
+def reviewer(card: dict) -> str:
+    return "Codex" if card["suggested"] == "Claude" else "Claude"
+
+
+def label_of(card: dict) -> str:
+    if card["status"] != "review":
+        return LABELS[card["status"]]
+    if card["difficulty"] == "低":
+        return "等合并"
+    verdicts = {
+        p.get("verdict") for p in card["prs"] if p["state"] == "open" and not p["draft"]
+    }
+    if "pass" in verdicts:
+        return "审查通过·待合并"
+    if "block" in verdicts:
+        return "审查有阻塞·待修改"
+    return f"等 {reviewer(card)} 审查"
 
 
 def main() -> None:
@@ -72,7 +112,9 @@ def main() -> None:
     ap.add_argument("--repo", default="nanake-lab/nemu")
     ap.add_argument("--catalog", default="tasks/cards.json")
     ap.add_argument("--out", default="status.json")
-    ap.add_argument("--board", help="also write the web board's row file (one row per card)")
+    ap.add_argument(
+        "--board", help="also write the web board's row file (one row per card)"
+    )
     args = ap.parse_args()
 
     catalog = json.loads(Path(args.catalog).read_text(encoding="utf-8"))
@@ -98,6 +140,8 @@ def main() -> None:
             }
             if state == "open":
                 entry["waiting_runner"] = windows_waiting(args.repo, pr["head"]["sha"])
+                if not entry["draft"]:
+                    entry["verdict"] = review_verdict(args.repo, pr["number"])
             cards[cid]["prs"].append(entry)
     claimed = {m.group(1) for b in branches if (m := BRANCH.match(b))}
 
@@ -111,7 +155,9 @@ def main() -> None:
             return "in_progress"
         if open_prs:
             return "review"
-        if any(p["state"] == "merged" and "unverified" in p["labels"] for p in c["prs"]):
+        if any(
+            p["state"] == "merged" and "unverified" in p["labels"] for p in c["prs"]
+        ):
             return "unverified"
         if any(p["state"] == "merged" for p in c["prs"]):
             return "done"
@@ -133,38 +179,85 @@ def main() -> None:
             if all(status.get(d) == "done" for d in c["deps"]):
                 status[cid] = "needs_you" if c["suggested"] == "你" else "ready"
                 changed = True
-    for cid in cards:
-        status.setdefault(cid, "blocked")
-        cards[cid]["status"] = status[cid]
-        cards[cid]["waiting_on"] = [d for d in cards[cid]["deps"] if status.get(d) != "done"]
+    for cid, card in cards.items():
+        card["status"] = status.setdefault(cid, "blocked")
+        card["waiting_on"] = [d for d in card["deps"] if status.get(d) != "done"]
+        card["status_label"] = label_of(card)
 
     attention = []
     for c in sorted(cards.values(), key=lambda c: c["id"]):
         open_prs = [p for p in c["prs"] if p["state"] == "open"]
         for p in open_prs:
             if "needs-user" in p["labels"]:
-                attention.append({"card": c["id"], "kind": "approve", "pr": p["number"], "url": p["url"],
-                                  "text": f"PR #{p['number']} 需要你批准"})
+                attention.append(
+                    {
+                        "card": c["id"],
+                        "kind": "approve",
+                        "pr": p["number"],
+                        "url": p["url"],
+                        "text": f"PR #{p['number']} 需要你批准",
+                    }
+                )
             if p.get("waiting_runner"):
-                attention.append({"card": c["id"], "kind": "runner", "pr": p["number"], "url": p["url"],
-                                  "text": f"PR #{p['number']} 的 Windows 检查在排队，需要开 runner"})
-            if c["difficulty"] == "高" and not p["draft"] and "needs-user" not in p["labels"]:
-                other = "Codex" if c["suggested"] == "Claude" else "Claude"
-                attention.append({"card": c["id"], "kind": "cross_review", "pr": p["number"], "url": p["url"],
-                                  "text": f"PR #{p['number']} 是高难度卡，请转给 {other} 交叉审查"})
+                attention.append(
+                    {
+                        "card": c["id"],
+                        "kind": "runner",
+                        "pr": p["number"],
+                        "url": p["url"],
+                        "text": f"PR #{p['number']} 的 Windows 检查在排队，需要开 runner",
+                    }
+                )
+            if (
+                c["difficulty"] in ("中", "高")
+                and reviewer(c) == "Codex"
+                and not p["draft"]
+                and "needs-user" not in p["labels"]
+                and p.get("verdict") is None
+            ):
+                attention.append(
+                    {
+                        "card": c["id"],
+                        "kind": "cross_review",
+                        "pr": p["number"],
+                        "url": p["url"],
+                        "text": f"PR #{p['number']}（{c['id']}，{c['difficulty']}难度）请转给 Codex 审查",
+                    }
+                )
         for p in c["prs"]:
             if p["state"] == "merged" and "unverified" in p["labels"]:
-                attention.append({"card": c["id"], "kind": "unverified", "pr": p["number"], "url": p["url"],
-                                  "text": f"{c['id']} 已合并但交叉审查没做完（PR #{p['number']}），需要补完核验"})
+                attention.append(
+                    {
+                        "card": c["id"],
+                        "kind": "unverified",
+                        "pr": p["number"],
+                        "url": p["url"],
+                        "text": f"{c['id']} 已合并但交叉审查没做完（PR #{p['number']}），需要补完核验",
+                    }
+                )
         if c["status"] == "needs_you" and c["suggested"] == "你":
-            attention.append({"card": c["id"], "kind": "your_card", "text": f"{c['id']} {c['title']} 可以开始了"})
+            attention.append(
+                {
+                    "card": c["id"],
+                    "kind": "your_card",
+                    "text": f"{c['id']} {c['title']} 可以开始了",
+                }
+            )
 
     milestones = []
     for m in catalog["milestones"]:
         ids = [cid for cid, c in cards.items() if c["milestone"] == m["id"]]
         done = sum(1 for cid in ids if cards[cid]["status"] == "done")
-        milestones.append({**m, "total": len(ids), "done": done,
-                           "remaining": sorted(cid for cid in ids if cards[cid]["status"] != "done")})
+        milestones.append(
+            {
+                **m,
+                "total": len(ids),
+                "done": done,
+                "remaining": sorted(
+                    cid for cid in ids if cards[cid]["status"] != "done"
+                ),
+            }
+        )
 
     next_up: dict[str, list[str]] = {}
     for c in sorted(cards.values(), key=lambda c: (c["milestone"], c["id"])):
@@ -179,7 +272,9 @@ def main() -> None:
         "next_up": next_up,
         "cards": [cards[cid] for cid in sorted(cards)],
     }
-    Path(args.out).write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    Path(args.out).write_text(
+        json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
     if args.board:
         write_board(Path(args.board), out)
     counts: dict[str, int] = {}
@@ -209,28 +304,31 @@ def write_board(path: Path, out: dict) -> None:
     attention: dict[str, list[dict]] = {}
     for a in out["attention"]:
         attention.setdefault(a["card"], []).append(
-            {"kind": a["kind"], "text": a["text"], "url": a.get("url", "")})
+            {"kind": a["kind"], "text": a["text"], "url": a.get("url", "")}
+        )
     rows = []
     for c in out["cards"]:
         live = [p for p in c["prs"] if p["state"] == "open"] or c["prs"]
         pr = max(live, key=lambda p: p["number"]) if live else None
-        rows.append({
-            "id": c["id"],
-            "title": c["title"],
-            "milestone": c["milestone"],
-            "milestone_name": names.get(c["milestone"], ""),
-            "difficulty": c["difficulty"],
-            "suggested": c["suggested"],
-            "you": c.get("you") or "",
-            "status": c["status"],
-            "status_label": LABELS[c["status"]],
-            "waiting_on": " ".join(c["waiting_on"]),
-            "pr": f"#{pr['number']}" if pr else "",
-            "pr_url": pr["url"] if pr else "",
-            "note": c.get("note", ""),
-            "attention": attention.get(c["id"], []),
-            "generated_at": out["generated_at"],
-        })
+        rows.append(
+            {
+                "id": c["id"],
+                "title": c["title"],
+                "milestone": c["milestone"],
+                "milestone_name": names.get(c["milestone"], ""),
+                "difficulty": c["difficulty"],
+                "suggested": c["suggested"],
+                "you": c.get("you") or "",
+                "status": c["status"],
+                "status_label": c["status_label"],
+                "waiting_on": " ".join(c["waiting_on"]),
+                "pr": f"#{pr['number']}" if pr else "",
+                "pr_url": pr["url"] if pr else "",
+                "note": c.get("note", ""),
+                "attention": attention.get(c["id"], []),
+                "generated_at": out["generated_at"],
+            }
+        )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
 
