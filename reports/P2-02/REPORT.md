@@ -16,20 +16,20 @@
 | 用户验收 | 通过 | 用户明确确认 P2-02 已验收通过。 |
 | 交付范围与仓库提交 | 通过 | `nemu-content` 提交仅含最终 `.vroid`、导出 `.vrm` 和过程截图；未提交中间版本。 |
 | Git LFS 规则与远端对象 | 通过 | `content/.gitattributes` 已有 `*.vroid`、`*.vrm`、`*.png` LFS 规则；远端提交中的三个文件均为 LFS 指针，且 `git lfs fetch --refetch origin main` 成功取回对象。 |
-| 子模块指针与主仓库 PR | 进行中 | 本报告所在分支 `task/P2-02-vroid` 将更新子模块指针；CI 状态以关联 PR 检查为准。 |
+| 子模块指针与主仓库 PR | 通过 | [PR #26](https://github.com/nanake-lab/nemu/pull/26) 已更新子模块指针并带 `needs-user` 标签；[CI run 39200983634](https://github.com/nanake-lab/nemu/actions/runs/39200983634) 中 Ubuntu 与 Windows 检查均通过。 |
 | `pnpm asset:lint content/nemu/source/nemu-vroid-export.vrm --json` | 结果作为后续卡输入 | 原始完整输出见下方。该 lint 结果交给 P2-03、P2-05、P2-06；不是 P2-02 的验收门槛，本卡不修复其中问题。 |
 
 ## 新增依赖
 无。
 
 ## 待用户确认
-- [ ] （阻塞）主仓库 PR CI 全绿后，请用户批准 PR；PR 将带 `needs-user` 标签。
+- [ ] （阻塞）请用户批准 PR #26（`needs-user`）。
 
 ## 后续建议（不在本任务范围内）
 - P2-03 写出「VRoid 导出设置」后，使用本报告交付的 `.vroid` 重新导出一次，并由 P2-03/P2-05/P2-06 处理下方 lint 结果。
 
 ## 下一步
-等待主仓库 PR 的 CI 全绿与用户批准；之后再按看板安排下一张卡。
+等待用户批准 PR #26；批准后再按看板安排下一张卡。
 
 ## Asset lint 原始结果
 以下保留 `pnpm asset:lint content/nemu/source/nemu-vroid-export.vrm --json` 的完整终端输出，作为 P2-03、P2-05、P2-06 的输入：
