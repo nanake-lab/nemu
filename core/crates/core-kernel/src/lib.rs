@@ -1,2 +1,5 @@
 #![forbid(unsafe_code)]
-//! P0-01 scaffold. No domain types, state transitions, or storage access yet.
+//! Echo Core kernel: pure transitions only. No storage, network, clock or
+//! model access.
+
+pub mod effects;
