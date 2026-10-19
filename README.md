@@ -45,3 +45,17 @@ Nemu 的核心是你设计的 Echo Core。桌面应用是她的身体、感官�
 - **美术由你定。** 代理只做候选、脚本和截图，不替你判断好不好看；整个项目不安排手绘，也不委托外部建模。
 - **路线不推翻。** 代理觉得哪里不对，写 ADR 交给你批准；批准前照原设计推进。
 - **她的数据不是测试数据。** 排练存储和她诞生后的正式存储都只属于她和你，代理开发和测试时一律使用临时存储。
+
+## AI Contributors
+
+Nemu 由 [nanake-lab](https://github.com/nanake-lab) 发起并拥有。架构、Echo Core 规格、美术取舍、诞生与所有定稿决定都属于项目所有者。
+
+下列 AI 编码代理按 `AGENTS.md` 的规则参与施工。它们只修改自己负责的目录，所有改动都经 PR 提交，按 `AGENTS.md` 第 6 节的条件合并；需要用户确认的事项交由项目所有者决定。
+
+| 协作者 | 提供方 | 主要负责 |
+| --- | --- | --- |
+| [Codex](https://openai.com/codex/) | OpenAI | Echo Core（`core-policy`、`core-kernel` 除外）、worker、执行器、旁路服务、桌面应用、契约与工具链；审查 Claude 的 PR |
+| [Claude](https://claude.com/product/claude-code)（Claude Code） | Anthropic | Echo Core 核心数学链：`core-policy`、`core-kernel`（P5-09、P5-10、P5-12）；受转交时审查 Codex 的 Echo Core PR |
+| [Antigravity](https://antigravity.google/) | Google | 舞台、评审台、角色运行时与身体（`apps/stage`、`apps/panel`、`packages/avatar-runtime`、`packages/body`） |
+
+各方的目录所有权以 `AGENTS.md` 第 2 节和第 10 节为准。
