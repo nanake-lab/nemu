@@ -37,6 +37,7 @@ version = "0.0.0"
 dependencies = [
  "core-policy",
  "core-types",
+ "libm",
 ]
 
 [[package]]
@@ -44,6 +45,7 @@ name = "core-policy"
 version = "0.0.0"
 dependencies = [
  "core-types",
+ "sha2",
 ]
 
 [[package]]
@@ -152,6 +154,12 @@ name = "libc"
 version = "0.2.190"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ce5d3ddc6d3fa000eb1536d85e147bfe31aacaba692ed6a876f95cb7c855be78"
+
+[[package]]
+name = "libm"
+version = "0.2.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b6d2cec3eae94f9f509c767b45932f1ada8350c4bdb85af2fcab4a3c14807981"
 
 [[package]]
 name = "memchr"

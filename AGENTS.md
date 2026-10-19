@@ -1,6 +1,6 @@
 # AGENTS.md — Nemu 3D 桌面伙伴
 
-本文件是 Codex 与 Antigravity 共用的项目规则。开始任何任务之前，先完整读完本文件、`docs/ARCHITECTURE.md`、`docs/CONTRACTS.md` 和 `docs/echo-core/README.md`。做 Echo Core 相关的卡（P5、P6）前，还要按 `docs/echo-core/README.md` 第 5 节读规格原文。
+本文件是 Codex、Antigravity 与 Claude 三个执行者共用的项目规则。开始任何任务之前，先完整读完本文件、`docs/ARCHITECTURE.md`、`docs/CONTRACTS.md` 和 `docs/echo-core/README.md`。做 Echo Core 相关的卡（P5、P6）前，还要按 `docs/echo-core/README.md` 第 5 节读规格原文。
 
 ## 1. 项目一句话
 
@@ -15,11 +15,13 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 
 架构已经定稿。不要提议更换引擎、框架、核心或角色管线。如果你认为某个决定有问题，按第 7 节写 ADR，然后继续按现有设计完成任务。
 
-## 2. 模块所有权
+## 2. 认领、目录与建议执行者
 
-按目录划分所有权，只修改自己负责的目录。需要对方改动时，在 `tasks/requests/` 下新建一个请求文件，写明原因和期望的接口，然后继续做不受影响的部分。
+任务卡不固定由谁完成。每张卡头部写有「建议执行者」，它是默认人选：熟悉相关目录，也有验收需要的环境（Windows、显卡、浏览器等）。用户派活时可以点名让别的执行者接手（`tasks/README.md` 第 2 节）。
 
-Codex 同时开三个线程（见 `tasks/README.md` 第 2 节）。三个线程共用 Codex 的目录，但**「目录」有重叠的两张卡不能同时做**。每张任务卡的「目录」一栏列出它可以修改的范围，卡里没写到的目录不能改。两个目录相同，或者一个是另一个的上级目录，就算重叠。比如 `core/crates/core-runtime/` 与 `core/crates/core-runtime/src/metrics/` 重叠，`core/crates/fact-view/` 与 `core/crates/gateway/` 不重叠。
+**认领：** 开工时先在 `task/<任务号>-<短名>` 分支上开一个草稿 PR（draft），标题写成 `<类型>(<任务号>): <标题>`，例如 `feat(P5-10): …`。草稿 PR 就是认领标记：看板据此显示「进行中」，其他执行者看到就跳过这张卡。做完后把草稿转为可审查。放弃时关闭草稿 PR，并在评论里说明原因。
+
+**目录：** 每张任务卡的「目录」一栏列出它可以修改的范围，卡里没写到的目录不能改。**「目录」有重叠的两张卡不能同时在做**，不论是谁在做。两个目录相同，或者一个是另一个的上级目录，就算重叠。比如 `core/crates/core-runtime/` 与 `core/crates/core-runtime/src/metrics/` 重叠，`core/crates/fact-view/` 与 `core/crates/gateway/` 不重叠。需要改卡外的目录时，在 `tasks/requests/` 下新建一个请求文件，写明原因和期望的接口，然后继续做不受影响的部分。
 
 以下共享文件不受这条限制，任何卡都可以改，冲突按规则处理：
 
@@ -28,9 +30,12 @@ Codex 同时开三个线程（见 `tasks/README.md` 第 2 节）。三个线程�
 - **根目录脚本与 CI 配置：** 只追加，不改别人加的条目。
 - **只追加的记录：** `docs/traceability/diff-register.md`、`reports/`。
 
-| 路径 | 负责方 |
+下表是各目录通常由谁做，以及特别规则。执行者一栏是建议；括号里的特别规则对所有执行者都有效。
+
+| 路径 | 建议执行者与特别规则 |
 | --- | --- |
 | `core/**`（Echo Core：Rust 工作区、IDL、黄金向量） | Codex（`core/contracts/` 只在标注「契约变更」且有 ADR 的任务里修改） |
+| `core/crates/core-policy/**`、`core/crates/core-kernel/**` | Claude |
 | `workers/**`（irl、drive、model-adapter） | Codex |
 | `executors/**`（codex-bridge、office-connector） | Codex |
 | `services/**`（voice-sidecar） | Codex |
@@ -43,12 +48,12 @@ Codex 同时开三个线程（见 `tasks/README.md` 第 2 节）。三个线程�
 | `packages/body/**`（物理状态机、反射、读出应用） | Antigravity |
 | `packages/desktop-sense/**` | Codex |
 | `packages/voice/**`（含 `packages/voice/web/**` 麦克风采集模块） | Codex |
-| `tools/**` | Codex |
+| `tools/**` | Codex（`tools/status/` 看板状态脚本：Claude） |
 | `config/**` | Codex（`opportunities.json`、`helpers.json` 的修改需要 ADR） |
 | `profiles/**`（Echo Core 结构夹具与部署配置） | Codex |
 | `spikes/**` | 由任务卡指定 |
 | `content/**` | 用户。代理可以提交管线生成的产物：`nemu.vrm`、`nemu.profile.json`、`lipsync/*.json`、`motions/*.vrma` 及其清单条目。其余内容在用户确认之前只能放进 `content/_candidates/`：设定集、源文件、`build.yaml` 里的审美参数、定稿的音色、协议 p、genesis 清单、语气样例库 |
-| `docs/**`、`tasks/**` | 只能追加报告、请求和 ADR，不能改已有内容；`docs/echo-core/original/` 永远不改 |
+| `docs/**`、`tasks/**` | 只能追加报告、请求和 ADR，不能改已有内容；`docs/echo-core/original/` 永远不改。`tasks/cards.json`（每张卡的建议执行者、难度、里程碑、依赖）的修改需要用户批准。2026-10-19 用户一次性授权整理了 `tasks/README.md` 和各任务卡头部 |
 
 ## 3. 黄金规则
 
@@ -145,15 +150,31 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 已合并 / 等待用户（写明在等什么）；接下来取的卡：<任务号>
 ```
 
-### 合并
+### 审查与合并
 
-同时满足下面三条时，代理自己把 PR 合并（squash），不用等用户：
+每张卡头部写有难度（低、中、高），它决定 PR 合并前要经过谁的审查：
+
+| 难度 | 审查 | 合并 |
+| --- | --- | --- |
+| 低 | 不需要审查。Claude 的每日审查事后抽查。 | 满足下面三条，执行者自己合并 |
+| 中 | 一方实现，Claude 审查；Claude 实现的卡由 Codex 审查。 | 满足下面三条且审查通过，执行者自己合并 |
+| 高 | Claude 与 Codex 协作：一方实现，另一方交叉审查。Codex 审查时用 GPT-6 Astra、最高推理强度。 | 同上 |
+
+合并条件，不论难度：
 
 - 分支已经更新到最新的 `main`，并在更新后重跑了测试；
 - CI 全绿，任务卡列出的验收命令全部通过；
 - 报告里没有「阻塞」类的待确认项。
 
-以下情况属于「阻塞」：PR 加上 `needs-user` 标签，等用户批准后再合并。
+合并一律用 squash。
+
+**审查结论**写成一条 PR 评论，第一行固定是「审查结论：通过」或「审查结论：有阻塞问题」，下面逐条写问题：文件和行、原因、建议。看板按第一行判断状态。有阻塞问题时，执行者修改后在 PR 里回复，审查方复审，再写一条新的结论。审查方只审查，不替执行者改代码。
+
+需要 Codex 审查时，由用户把 PR 转给 Codex，看板的「等你处理」会提示。需要 Claude 审查时，Claude 的每日审查会处理，用户也可以直接让 Claude 审。
+
+**未核验就合并：** PR 在审查完成前被合并时，给它加 `unverified` 标签。审查方照常补完审查，发现的问题另开修复 PR，全部解决后去掉标签。依赖这张卡的卡在标签去掉之前不能开工。
+
+以下情况属于「阻塞」，不论难度：PR 加上 `needs-user` 标签，等用户批准后再合并。
 
 - 任何偏离 `docs/echo-core/` 规格、`docs/CONTRACTS.md`、`docs/ARCHITECTURE.md` 的改动，以及新的 ADR；
 - W00 差异登记中新增的「重建」「待用户确认」条目；
@@ -165,7 +186,7 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 
 其余待确认项（例如「呼吸幅度是否合适」）标成「不阻塞」，照常合并；用户之后提出的意见，作为新的小改动处理。
 
-合并之后，按 `tasks/README.md` 第 2 节的顺序取下一张卡，开新分支接着做。没有可以开工的卡（依赖还没合并、需要用户参与、或者「目录」与另一个线程正在做的卡重叠）时停下，在报告的「下一步」里写明在等什么。
+合并之后，按 `tasks/README.md` 第 2 节的规则取下一张卡，开草稿 PR 接着做。没有可以开工的卡（依赖还没合并、需要用户参与、或者「目录」与正在做的卡重叠）时停下，在报告的「下一步」里写明在等什么。
 
 ## 7. ADR（架构决策记录）
 
@@ -203,3 +224,12 @@ Antigravity 会自动发现这些技能；Codex 请在开始相关任务时手�
 
 配置依据：OpenAI 官方 [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)。项目自定义角色使用独立 TOML 文件，权限继承父代理；角色文件不用于绕过父代理权限或平台并发限制。
 
+## 10. Claude（2026-10-19 用户追加，同日按新的第 2、6 节整理）
+
+用户已决定增加第三个执行者 Claude（Claude Code 云端会话）。Claude 遵守本文件全部规则，另有以下几点：
+
+- **建议执行者为 Claude 的卡：** P5-09 → P5-10 → P5-12，即 `core/crates/core-policy/` 与 `core/crates/core-kernel/` 里不依赖 Windows 和显卡的 Echo Core 数学链。其他卡要不要交给 Claude，由用户在派活时点名，或改 `tasks/cards.json`。
+- **审查：** Claude 是中、高难度卡的审查方之一（第 6 节）。Claude 每天早上例行审查一次：给等它审查的 PR 写审查结论，抽查前一天合并的低难度 PR。
+- **环境：** Linux 云端临时会话，没有 Windows、显卡和用户的机器，也不保存本地状态。验收需要这些的卡，Claude 不认领。所有进度以推送到 GitHub 的分支、PR 和报告为准。
+- **工具链：** Claude 的环境可能无法安装 `core/rust-toolchain.toml` 锁定的版本。此时 Claude 可以用环境内可用的 stable 版本做本地开发和测试，但以 CI 中按锁定版本运行的结果为准；报告里写明本地实际使用的版本。
+- **Windows CI：** Claude 的 PR 同样会触发 Windows 作业。需要 Windows runner 时，Claude 提前通知用户，不自行判断不需要。

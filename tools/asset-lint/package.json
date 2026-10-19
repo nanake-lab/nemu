@@ -1,0 +1,19 @@
+{
+  "name": "@nemu/asset-lint",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm --filter @nemu/contracts build && tsc -p tsconfig.json",
+    "asset:lint": "node launch.mjs",
+    "test": "pnpm build && node --test dist/*.test.js"
+  },
+  "dependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@nemu/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "6.0.3"
+  }
+}

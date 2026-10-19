@@ -21,7 +21,7 @@
     "test:edge": "node apps/stage/tests/visual/edge-check.mjs",
     "bench": "node tools/scaffold/pending.mjs P7-01",
     "asset:build": "node tools/scaffold/pending.mjs P2-03",
-    "asset:lint": "node tools/scaffold/pending.mjs P2-04",
+    "asset:lint": "node tools/asset-lint/launch.mjs",
     "accept:core": "node tools/scaffold/pending.mjs P5-18",
     "eval:helpers": "node tools/scaffold/pending.mjs P6-06",
     "eval:speech": "node tools/scaffold/pending.mjs P4-06",
@@ -30,7 +30,8 @@
     "test:transport": "node --test tools/scaffold/transport.test.mjs",
     "ci:budget": "node tools/scaffold/ci-budget.mjs",
     "test:contracts": "vitest run --config packages/contracts/vitest.config.ts --coverage",
-    "test:core-contracts": "python core/contracts/verify.py"
+    "test:core-contracts": "python core/contracts/verify.py",
+    "board": "python tools/status/serve_board.py"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
