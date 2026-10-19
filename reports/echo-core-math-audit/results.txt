@@ -1,0 +1,85 @@
+python 3.13.16 on Linux x86_64
+[OK  ] PHI-0   counterexample F §2.2 Φ₀=Id; D I §10.6
+         x=1e-17,b=0.5: literal formula gives 0.0 (not x), alt form gives 1e-17; random 20000 cases: literal non-identity 20000, alt non-identity 0
+[OK  ] PHI-1   property       F §2.2, §11 Φ_{s+t}=Φ_t∘Φ_s; O §5.1; F01; D I §10.6
+         max |Φ_(s+t) - Φ_t∘Φ_s|∞ over 20000 random cases = 4.441e-16 (tolerance 1e-14)
+[OK  ] PHI-2   property       O §5.1 'X 前向不变', O §18 有界性
+         200000 random projections with x on/inside [-1,1]^4: 0 left the box in binary64 (max excess 0.000e+00); the convexity proof is exact-arithmetic, this is empirical only
+[OK  ] PHI-3   property       O §5.1 ||δx(t)||∞ ≤ exp(-λ_min t)||δx(0)||∞ (no events); I05; F03
+         violations of the contraction bound over 20000 event-free cases: 0
+[OK  ] PHI-4   counterexample F §2.2 general Λ(θ) (closed by O §5.1 Λ=diag, 0<λ_min)
+         Λ=[[1,-4],[0,1]] (eigenvalues 1,1), b=0, x=(1,1), t=0.25 → Φ(x)=(1.5576,0.7788); leaves [-1,1]^2: True; ∞-norm distance to b grows 1 → 1.5576
+[OK  ] PHI-5   counterexample F §2.2 '非负对角' (closed by O §5.1 λ_i ≥ λ_min > 0; F03 'λ=0 版本失败')
+         λ=0: |δx| stays 1.0 after 1e6 s (initial 1.0)
+[OK  ] PHI-6   property       F §5 '不会丢失或重复计算经过时间'; F §16.13; O §15
+         max |piecewise − one-shot| over 5000 random segmentations = 4.441e-16
+[OK  ] PHI-7   counterexample O §5.1 contraction sentence; I05 (premise: no event drive or non-expansive event map)
+         λ=1/s, identical event every 0.1 s, u=tanh(5x̄): after 100 s |δx|=2.0000 vs claimed bound 7.440e-46; with non-expansive u=tanh(-0.5x̄): |δx|=9.881e-324 ≤ bound
+[OK  ] PHI-8   property       O §15 q envelope semigroup; O §15 λ_min/γ_max ≥ ρ > 1; S §6 fixture
+         max semigroup error 2.220e-16; structural fixture λ_min/γ_max = 1/0.05 = 20 (>1)
+[OK  ] PHI-9   counterexample O §3.2 / §12 / §15 / §10.1 and S §12 CompileAuthorizedEffects signatures; I04, I21
+         q0=1, γ=0.05/s, Δ=10 s: correct q=0.6065; Compile on projected R̄ that keeps its new anchor → 0.6065; on R̄ that keeps the old anchor → 0.3679 (double decay)
+[OK  ] DRV-1   property       O §5.2 ‖δ‖∞ ≤ η_x with absolute-value sums; F02; J06 (no cancellation)
+         100000 random (B0, ΔB_j, residual, u, g, x̄): 0 exceed the absolute-sum bound ‖B0‖∞+Σ‖ΔB_j‖∞+Σ(‖M_j‖∞+‖v_j‖∞); cancelling pair B0=1, ΔB=-1 is charged 2
+[OK  ] JW-1    property       O §12.1 ‖W_l‖∞→2 ≤ Σ_j ‖w_j‖₂ (conservative bound)
+         2000 random W (vertex enumeration): 0 cases where exact > bound; worst looseness 1.978; for W=I_8 the bound is √d=2.828 times exact
+[OK  ] JW-2    property       design suggestion for O §12.1: min(Σ‖w_j‖₂, √d·√(‖W‖₁‖W‖∞))
+         2000 random W: 0 cases where exact > √d·√(‖W‖₁‖W‖∞); the min of both bounds is strictly tighter than the column sum in 28 cases (I_d: exact √d)
+[OK  ] JW-3    property       O §12.1 Σβ_r,l+β_x,l ≤ β_l ⇒ ‖a_l‖₂ ≤ β_l; O §13.1 ‖U_l a_l‖₂ ≤ β_l
+         30000 random (W, J_direct, U, x∈vertices of X): 0 violations of ‖a‖₂ ≤ β or ‖Ua‖₂ ≤ β
+[OK  ] JW-4    counterexample O §12 reference point (closed in v1 by '第一版取固定原点')
+         d=1, W=[1], β_x=1, x_ref=-1, x=1: |W(x-x_ref)| = 2 > β_x
+[OK  ] ST-1    property       O §6.2 Σ_j Σ_n α_jn = α
+         Σ_(j≤1e6) α_j = 0.049999969604 (α=0.05, remaining tail < 3.04e-08); Σ_(n≤N) 1/(n(n+1)) = N/(N+1) checked to N=1e4 → total family-wise budget = α
+[OK  ] ST-2    property       O §6.2 radius(j,n) = sqrt(2 log(2/α_jn)/n) is the Hoeffding inversion for range [-1,1]
+         max relative mismatch between 2exp(-n r²/2) and α_jn over a (j,n) grid: 8.22e-15
+[OK  ] ST-3    property       O §6.2 sequential looks covered by α_jn; G09 (repeated looks must not inflate error)
+         Rademacher null (μ=0), 4000 streams × 400 looks: allocated rule miscoverage 0.0000 ≤ α_1=0.0304; naive per-look 95% rule 0.462 > α=0.05
+[OK  ] ST-4    property       O §6.2 / S §15 sample size grows with the opportunity index j (informational)
+         smallest n with radius(j,n) ≤ r at α=0.05: j=1,r≤0.2: n≥889; j=1,r≤0.1: n≥4172; j=10,r≤0.2: n≥1144; j=10,r≤0.1: n≥5180; j=100,r≤0.2: n≥1394; j=100,r≤0.1: n≥6171; j=1000,r≤0.2: n≥1641; j=1000,r≤0.1: n≥7151
+[OK  ] ST-5    counterexample O §6.2 equivalence rule with ε ≥ 1 (design suggestion: require ε < 1)
+         ε=1, n=1, mean=0.9: CI=[-1,1] ⊆ [-1,1] → 'equivalent' with one block (the conclusion |μ| ≤ 1 is true but carries no information)
+[OK  ] PA-1    property       S §18 P/A prefix index ≡ O §15 any-interval bound (incl. single step and equal times)
+         38495 candidate decisions (16937 accepted) over 3000 random sequences: 0 disagreements with brute-force O(n²) interval check
+[OK  ] WIN-1   counterexample F §8 window budget (aligned reading) vs O §15 any-interval bound; X07
+         W=10 s, B=1, ε=1: d=1 at 9.99 s and d=1 at 10.00 s pass aligned windows (True); path 2 in 10 ms. Rolling-window reading passes: False; O §15 bound with v=B/W passes: False
+[OK  ] BUD-1   property       F §8 / O §18 finite-root path ≤ κ Σ_e b(e) (O §11: κ_Θ, b_Θ(e))
+         3000 random ledgers: 0 with cumulative ordinary path > κΣb(e) or negative balance
+[OK  ] TAU-1   property       O §15 τ_θ lower bound (D−ε_Θ)/v_Θ for accepted sequences
+         2000 accepted sequences: 0 intervals reached path D>ε_Θ faster than (D−ε_Θ)/v_Θ
+[OK  ] DT-1    property       O §10.3 d_Θ is a metric on canonical slot representations (w_p, w_c > 0)
+         20000 random triples: 0 violations of identity/symmetry/triangle/non-negativity
+[OK  ] DT-2    counterexample O §10.3 premise w_c > 0 (w_c = 0 gives only a pseudometric)
+         same parameters, different enable flag: d_Θ = 0 when w_c = 0
+[OK  ] DT-3    counterexample O §10.3 '离散字段使用规范原值比较而非把哈希碰撞当相等'
+         scopes 'scope:2' and 'scope:13' collide under an 8-bit digest: hash comparison gives distance 0 for distinct θ, raw comparison gives 1
+[OK  ] DT-4    counterexample design note for O §10.3 / S §18 '组合次序' encoding
+         insert one module ahead of 8: Hamming part = 9 with rank encoding, 1 with a stable order key
+[OK  ] G01-1   counterexample F §6.1 ~_R / O §6.1 ~_E are not transitive (closed by O §6.3); G01
+         0~0.75 and 0.75~1.5 with ε=1, but |0−1.5| = 1.5 > ε: the 'equivalence classes' of F §6.1 are not defined by ~ itself
+[OK  ] G01-2   counterexample F §6.1 '最小必要细分' is not unique (closed by O §6.3 / D II §2.4 fixed ordering)
+         merged class {0,0.75,1.5}, ε=1: 2 distinct minimal refinements [[[0.0], [0.75, 1.5]], [[0.0, 0.75], [1.5]]]; a fixed canonical order selects [[0.0], [0.75, 1.5]]
+[OK  ] G01-3   counterexample O §6.3 '不能对 A≈B、B≈C 做传递闭包'
+         400 random points on [0,50] with consecutive gaps ≤ ε: the closure of ~ is one class of diameter 49.8 = 50ε
+[OK  ] G01-4   counterexample O §6.3 'merge 必须验证整个合并域的误差界'
+         two ε-compatible leaves {0,0.9} and {1.0,1.9} (ε=1) whose union is not ε-compatible
+[OK  ] NX-1    counterexample F §11 local integrability does not imply Pr(lim T_n=∞)=1 (closed by O §17.3 / S §20)
+         λ_n = 2^n /s: 1.000 of 2000 paths start 60 actions within 10 s; mean T_60 = 2.009 s (theory E[T_∞] = 2 s) → explosion with probability 1
+[OK  ] NX-2    property       O §17.3 λ ≤ λ_sched,max and minimum interval ⇒ N(t) ≤ ⌊t/δ⌋+1
+         2000 paths with the explosive rule clipped at λ_max=2/s and δ=0.5 s: max actions in 10 s = 15 ≤ 21
+[OK  ] TH-1    property       F §11 Pr(Δ>s) = exp(−∫λ) realised by S §20 bounded thinning with gate g(s)
+         20000 first-arrival samples, λ(s)=g(s)(0.2+0.8sin²s), gate closed on [1,1.5): max |empirical − exp(−∫λ)| = 1.52 standard errors
+[OK  ] TH-2    counterexample F §11 survival law with S §20 minimum interval: gate (rejection) vs deferral
+         P(T ≤ δ+0.01): gate 0.0106 (exp(−∫gλ) predicts 0.0100); deferral 0.4068 — deferring breaks the stated survival function
+[OK  ] ORD-1   property       O §4 / §18 无同事件环; F §5; X06 (swap G/C, repeated Φ)
+         spec order: 0 violations (every read is from snapshot k or an earlier stage; G reads θ_k). Swapping G/C → "C reads ['R_next'] before it is produced"; second Φ → 'time advanced more than once'
+[OK  ] META-1  property       O §7.1 / §21 meta exclusion of self + ancestors; I10; G06 (A→B→A)
+         3000 random runs: self-ancestry feedback loops with transitive ancestry = 0; with direct-parent exclusion only = 2990 (A→B→C→A allowed: True)
+[OK  ] LIN-1   property       F §13.1 SameLineage / ValidContinuation; F §16.10; SYS16
+         200 random checkpoint trees (forks get new branch ids, 5% records missing): 0 violations; SameLineage is an equivalence, ValidContinuation a partial order, 7478 sibling-fork pairs are never continuations; verifier never misreports
+[OK  ] ING-1   property       F §4 Γ / Π_Γ; F §5 filtered commit; F §16.1 D=(e1,e2,e2); SYS01
+         16.1 case: H=[('e1', 'a'), ('e2', 'b')], decisions=['accepted', 'accepted', 'duplicate'], ℓ=3; 2000 random raw logs: 0 violations of replay determinism, id uniqueness, prefix recursion or no-overwrite
+[OK  ] IDS-1   property       O §18/§20 vs S §28/§30; S §29 vs S §32 (W00-C02, already resolved as a typo)
+         O §20 has 45 IDs {'F': 7, 'G': 11, 'C': 12, 'J': 7, 'X': 8}, same set and text as S §28 up to punctuation (diffs: none); I01–I22: 22 in O, 22 in S, wording diffs: none; SYS IDs SYS01–SYS25 = 25 while S §32 says 24
+
+41 checks (24 properties, 17 counterexamples) in 14.7 s; failed: none
