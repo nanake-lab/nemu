@@ -6,11 +6,13 @@
 
 这一节写给你。第 1 节以后是派活和排期的细节，代理也读。
 
-**每天看一眼看板：** [Nemu 进度看板](https://claude.ai/artifact/STq3YqG38U5m8PRLfiHixu)
+**每天看一眼看板：** 在仓库目录（`D:\Dev\nemu`）的 PowerShell 里运行 `pnpm board`，浏览器会打开本地看板 http://127.0.0.1:8765 。
 
 - 最上面的「等你处理」列出所有在等你的事，处理完就会消失。
 - 下面依次是里程碑进度、进行中的卡、可以开工的卡、全部 70 张卡。
-- 卡的状态没人手改：`tools/status/build_status.py` 根据 GitHub 上的 PR、分支和审查结论推算。看板每小时刷新一次，PR 有变动时也会刷新。
+- 每次打开、每次点「刷新」，看板都直接从 GitHub 读最新状态，大约两秒。页面开着时每分钟自动刷新一次，右上角可以关掉。
+- 卡的状态没人手改：`tools/status/build_status.py` 根据 GitHub 上的 PR、分支和审查结论推算。
+- 第一次用之前，先装 GitHub CLI 并登录：`winget install --id GitHub.cli`，然后 `gh auth login`。看板只在你这台电脑上运行，不经过任何云端服务。
 
 「等你处理」里会出现这几种事：
 

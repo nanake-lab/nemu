@@ -39,7 +39,7 @@ Nemu 的核心是你设计的 Echo Core。桌面应用是她的身体、感官�
 | `docs/echo-core/` | 你的 Echo Core 规格：原文（`original/`）、供代理阅读的转换版、优先级与 v1.0 范围、集成扩展登记 E1–E14 | 代理 |
 | `tasks/README.md` | 从这里开始（看板、等你处理的事）、派任务的提示词、取卡规则、依赖、里程碑、你的时间 | 你 |
 | `tasks/P0-…P7-*.md` | 70 张任务卡，头部写明建议执行者、难度、里程碑；标「你」的卡是给你的 | 代理 |
-| `tasks/cards.json`、`tools/status/` | 每张卡的静态信息，以及从 GitHub 推算状态、生成看板数据的脚本 | 代理 |
+| `tasks/cards.json`、`tools/status/` | 每张卡的静态信息，以及本地进度看板（`pnpm board`）：从 GitHub 实时推算每张卡的状态 | 你和代理 |
 | `.agents/skills/` | 三个技能：舞台视觉验证、Blender 无头脚本、Echo Core 施工方法 | 代理 |
 
 ## 四条底线

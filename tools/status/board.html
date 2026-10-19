@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nemu 进度看板</title>
+<style>
+  /* Minimal black. Colour is reserved for what needs action:
+     amber = waiting on you, red = something is wrong. Everything else is greyscale. */
+  :root {
+    --bg: #0c0c0d;
+    --panel: #141415;
+    --line: #262628;
+    --ink: #ebebe8;
+    --muted: #8b8b90;
+    --faint: #3a3a3d;
+    --amber: #e3b25b;
+    --red: #e0645c;
+    --sans: "Segoe UI", "Microsoft YaHei UI", "PingFang SC", system-ui, sans-serif;
+    --serif: Georgia, "Times New Roman", serif;
+    --title: 28px;
+    --heading: 17px;
+    --caption: 12.5px;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--sans); }
+  .nb { max-width: 1240px; margin: 0 auto; padding: clamp(16px, 3vw, 32px); display: grid; gap: 28px; }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: var(--title); margin: 0; }
+  h2 { font-size: var(--heading); font-weight: 500; margin: 0; display: flex; gap: 10px; align-items: baseline; }
+  a { color: inherit; text-decoration-color: var(--faint); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--ink); }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .nb-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; align-items: end; }
+  .nb-lede { margin: 6px 0 0; max-width: 62ch; line-height: 1.6; }
+  .nb-bar-top { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: var(--caption); color: var(--muted); }
+  .nb-bar-top button {
+    font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 6px 14px; cursor: pointer;
+  }
+  .nb-bar-top button:hover { border-color: var(--muted); }
+  .nb-bar-top button:disabled { color: var(--muted); cursor: default; }
+  .nb-bar-top label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+  .nb-err { color: var(--red); }
+  .nb-note { margin: 0; color: var(--muted); font-size: var(--caption); }
+  .nb-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 12px; min-width: 0; align-content: start; }
+
+  /* Waiting on you: the one place with a coloured frame. */
+  .nb-attn-card { border-color: color-mix(in srgb, var(--amber) 45%, var(--line)); }
+  .nb-count { font-size: 15px; color: var(--amber); font-variant-numeric: tabular-nums; }
+  .nb-attn { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; min-height: 1.5em; }
+  .nb-attn li { display: grid; grid-template-columns: 8px 1fr; gap: 12px; align-items: baseline; }
+  .nb-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); transform: translateY(-1px); }
+  .nb-dot[data-kind="unverified"] { background: var(--red); }
+  .nb-attn .nb-empty { display: block; color: var(--muted); }
+
+  /* Milestones */
+  .nb-section { display: grid; gap: 4px; }
+  .nb-ms { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr)); gap: 12px; margin-top: 8px; }
+  .nb-ms .nb-card { gap: 8px; }
+  .nb-ms .nb-card[data-state="now"] { border-top: 2px solid var(--amber); }
+  .nb-ms-head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .nb-ms-id { color: var(--muted); font-size: var(--caption); letter-spacing: .06em; }
+  .nb-ms-state { font-size: var(--caption); color: var(--muted); }
+  .nb-ms .nb-card[data-state="now"] .nb-ms-state { color: var(--amber); }
+  .nb-ms-name { font-weight: 500; }
+  .nb-ms-count { font-family: var(--serif); font-size: var(--title); font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .nb-ms-count small { font-family: var(--sans); font-size: var(--caption); color: var(--muted); }
+  .nb-bar { height: 3px; border-radius: 3px; background: var(--faint); overflow: hidden; }
+  .nb-bar span { display: block; height: 100%; background: var(--ink); }
+  .nb-ms-left { font-size: var(--caption); color: var(--muted); }
+
+  /* Lists */
+  .nb-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 12px; align-items: start; }
+  .nb-list { list-style: none; margin: 0; padding: 0; display: grid; min-height: 1.5em; }
+  .nb-list li { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--line); }
+  .nb-list li:last-child { border-bottom: 0; }
+  .nb-list .nb-empty { display: block; color: var(--muted); border: 0; }
+  .nb-id { color: var(--muted); font-variant-numeric: tabular-nums; font-size: var(--caption); white-space: nowrap; }
+  .nb-name { min-width: 0; overflow-wrap: anywhere; }
+  .nb-group { display: grid; gap: 4px; }
+  .nb-group + .nb-group { margin-top: 10px; }
+  .nb-group-name { font-size: var(--caption); color: var(--muted); }
+  .nb-nw { white-space: nowrap; }
+
+  /* Status words: greyscale except the two that need action. */
+  .nb-st { font-size: var(--caption); white-space: nowrap; color: var(--muted); }
+  .nb-s-ready, .nb-s-review, .nb-s-in_progress { color: var(--ink); }
+  .nb-s-blocked { color: var(--faint); }
+  .nb-s-needs_you { color: var(--amber); }
+  .nb-s-unverified { color: var(--red); }
+
+  /* Table */
+  .nb-tools { display: flex; flex-wrap: wrap; gap: 8px; }
+  .nb-tools input, .nb-tools select {
+    font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; min-width: 0;
+  }
+  .nb-tools input { flex: 1 1 12rem; }
+  .nb-tools input::placeholder { color: var(--muted); }
+  .nb-tablebox { max-height: 34rem; overflow: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th { position: sticky; top: 0; background: var(--panel); text-align: left; font-weight: 500; font-size: var(--caption); color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td:first-child { color: var(--muted); white-space: nowrap; }
+  td:nth-child(2) { min-width: 10rem; }
+  tbody tr:hover td { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+  @media (max-width: 40rem) {
+    .nb-hide-narrow { display: none; }
+    th, td { padding-inline: 6px; }
+    td:nth-child(2) { min-width: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="nb">
+  <header class="nb-head">
+    <div>
+      <h1>Nemu 进度看板</h1>
+      <p class="nb-lede" id="nb-lede">正在从 GitHub 读取…</p>
+    </div>
+    <div class="nb-bar-top">
+      <span id="nb-stamp"></span>
+      <label><input type="checkbox" id="nb-auto" checked> 每分钟自动刷新</label>
+      <button type="button" id="nb-refresh">刷新</button>
+    </div>
+  </header>
+
+  <section class="nb-card nb-attn-card" id="attention">
+    <h2>等你处理 <span class="nb-count" id="nb-count">—</span></h2>
+    <ul class="nb-attn" id="nb-attn"></ul>
+  </section>
+
+  <section class="nb-section" id="milestones">
+    <h2>里程碑</h2>
+    <p class="nb-note">每个里程碑以你的一次评审结束。数字是已完成的卡 / 全部卡。</p>
+    <div class="nb-ms" id="nb-ms"></div>
+  </section>
+
+  <div class="nb-two">
+    <section class="nb-card" id="active">
+      <h2>进行中</h2>
+      <p class="nb-note">已认领、等审查、等你批准，或已合并但还没核验的卡。</p>
+      <ul class="nb-list" id="nb-active"></ul>
+    </section>
+    <section class="nb-card" id="ready">
+      <h2>可以开工</h2>
+      <p class="nb-note">依赖都已完成、还没人认领，按建议执行者分组。</p>
+      <div id="nb-ready"></div>
+    </section>
+  </div>
+
+  <section class="nb-card" id="all-cards">
+    <h2>全部任务卡</h2>
+    <div class="nb-tools">
+      <input id="nb-q" type="search" placeholder="搜索卡号或名称" aria-label="搜索卡号或名称">
+      <select id="nb-fm" aria-label="里程碑"><option value="">全部里程碑</option></select>
+      <select id="nb-fs" aria-label="状态"><option value="">全部状态</option></select>
+    </div>
+    <div class="nb-tablebox">
+      <table id="nb-table">
+        <thead><tr>
+          <th>卡号</th>
+          <th>名称</th>
+          <th class="nb-hide-narrow">里程碑</th>
+          <th class="nb-hide-narrow">难度</th>
+          <th class="nb-hide-narrow">建议执行者</th>
+          <th>状态</th>
+          <th class="nb-hide-narrow">在等</th>
+          <th>PR</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const AUTO_MS = 60_000;
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const ORDER = ['needs_you', 'unverified', 'review', 'in_progress', 'ready', 'blocked', 'done'];
+  const LABEL = { needs_you: '等你', unverified: '已合并·待核验', review: '等审查', in_progress: '进行中', ready: '可开工', blocked: '等依赖', done: '已完成' };
+  const link = (text, url) => { if (!url) return el('span', null, text); const a = el('a', null, text); a.href = url; a.target = '_blank'; a.rel = 'noopener'; return a; };
+  const status = (c) => el('span', 'nb-st nb-s-' + c.status, c.status_label);
+  const ids = (list) => list.flatMap((id, i) => i ? ['、', el('span', 'nb-nw', id)] : [el('span', 'nb-nw', id)]);
+  const clock = (d) => d.toLocaleTimeString('zh-CN', { hour12: false });
+
+  // Derived from the card rows, the same way for every refresh.
+  const milestonesOf = (cards) => {
+    const by = {};
+    for (const c of cards) {
+      const m = (by[c.milestone] ||= { id: c.milestone, name: c.milestone_name, total: 0, done: 0, left: [] });
+      m.total += 1;
+      if (c.status === 'done') m.done += 1; else m.left.push(c.id);
+    }
+    return Object.values(by).sort((a, b) => a.id.localeCompare(b.id)).map((m) => ({ ...m, left: m.left.sort() }));
+  };
+  const attentionOf = (cards) => cards.flatMap((c) => (c.attention || []).map((a) => ({ card: c.id, ...a })));
+
+  const q = $('nb-q'), fm = $('nb-fm'), fs = $('nb-fs'), auto = $('nb-auto'), btn = $('nb-refresh'), stamp = $('nb-stamp');
+  ORDER.forEach((s) => fs.append(new Option(LABEL[s], s)));
+  [q, fm, fs].forEach((c) => c.addEventListener('input', () => drawTable()));
+  try { auto.checked = localStorage.getItem('nemu-board-auto') !== 'off'; } catch { /* storage unavailable */ }
+  auto.addEventListener('change', () => { try { localStorage.setItem('nemu-board-auto', auto.checked ? 'on' : 'off'); } catch { /* ignore */ } });
+
+  let cards = [];
+  let lastOk = 0;
+
+  function drawTable() {
+    const body = $('nb-table').tBodies[0];
+    const term = q.value.trim().toLowerCase();
+    const rows = cards.filter((c) => (!fm.value || c.milestone === fm.value) && (!fs.value || c.status === fs.value)
+      && (!term || (c.id + ' ' + c.title).toLowerCase().includes(term)));
+    body.replaceChildren(...rows.map((c) => {
+      const tr = document.createElement('tr');
+      const st = el('td'); st.append(status(c));
+      const pr = el('td'); pr.append(link(c.pr, c.pr_url));
+      tr.append(el('td', null, c.id), el('td', null, c.title), el('td', 'nb-hide-narrow', c.milestone), el('td', 'nb-hide-narrow', c.difficulty),
+        el('td', 'nb-hide-narrow', c.suggested), st, el('td', 'nb-hide-narrow', c.waiting_on), pr);
+      return tr;
+    }));
+  }
+
+  function render(rows, other) {
+    cards = rows.slice().sort((a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status) || a.id.localeCompare(b.id));
+    const ms = milestonesOf(rows);
+    const attn = [...(other || []), ...attentionOf(rows)];
+    const done = rows.filter((c) => c.status === 'done').length;
+    const next = ms.find((m) => m.done < m.total);
+
+    $('nb-lede').replaceChildren(`${rows.length} 张卡已完成 ${done} 张。`, ...(next
+      ? [`下一个里程碑 ${next.id}「${next.name}」还差：`, ...ids(next.left), '。']
+      : ['全部里程碑都已完成。']));
+
+    $('nb-count').textContent = String(attn.length);
+    $('nb-attn').replaceChildren(...(attn.length ? attn.map((a) => {
+      const li = el('li'); const dot = el('span', 'nb-dot'); dot.dataset.kind = a.kind;
+      li.append(dot, link(a.text, a.url)); return li;
+    }) : [el('li', 'nb-empty', '现在没有等你处理的事。')]));
+
+    $('nb-ms').replaceChildren(...ms.map((m) => {
+      const state = m.done >= m.total ? 'clear' : (next && m.id === next.id ? 'now' : 'later');
+      const card = el('div', 'nb-card'); card.dataset.state = state;
+      const head = el('div', 'nb-ms-head');
+      head.append(el('span', 'nb-ms-id', m.id), el('span', 'nb-ms-state', state === 'clear' ? '已完成' : state === 'now' ? '当前' : ''));
+      const count = el('div', 'nb-ms-count');
+      count.append(String(m.done), el('small', null, ' / ' + m.total));
+      const bar = el('div', 'nb-bar'); const fill = el('span'); fill.style.width = (m.total ? 100 * m.done / m.total : 0) + '%'; bar.append(fill);
+      const rest = el('div', 'nb-ms-left');
+      if (m.left.length) rest.append('还差 ', ...ids(m.left.slice(0, 8)), m.left.length > 8 ? ` 等 ${m.left.length} 张` : '');
+      card.append(head, el('div', 'nb-ms-name', m.name), count, bar, rest);
+      return card;
+    }));
+    if (fm.options.length === 1) ms.forEach((m) => fm.append(new Option(m.id + ' ' + m.name, m.id)));
+
+    const act = cards.filter((c) => ['needs_you', 'unverified', 'review', 'in_progress'].includes(c.status));
+    $('nb-active').replaceChildren(...(act.length ? act.map((c) => {
+      const li = el('li');
+      const mid = el('span', 'nb-name'); mid.append(c.pr ? link(c.title + ' ' + c.pr, c.pr_url) : c.title);
+      li.append(el('span', 'nb-id', c.id), mid, status(c));
+      return li;
+    }) : [el('li', 'nb-empty', '暂无。')]));
+
+    const groups = {};
+    cards.filter((c) => c.status === 'ready').forEach((c) => (groups[c.suggested] ||= []).push(c));
+    const names = Object.keys(groups).sort();
+    $('nb-ready').replaceChildren(...(names.length ? names.map((n) => {
+      const g = el('div', 'nb-group');
+      const ul = el('ul', 'nb-list');
+      ul.append(...groups[n].map((c) => {
+        const li = el('li');
+        li.append(el('span', 'nb-id', c.id), el('span', 'nb-name', c.title), el('span', 'nb-st', '难度 ' + c.difficulty));
+        return li;
+      }));
+      g.append(el('div', 'nb-group-name', n), ul);
+      return g;
+    }) : [el('p', 'nb-note', '暂无可以开工的卡。')]));
+    drawTable();
+  }
+
+  let inFlight = false;
+  async function refresh() {
+    if (inFlight) return;
+    inFlight = true; btn.disabled = true; btn.textContent = '读取中…';
+    try {
+      const res = await fetch('/api/board', { cache: 'no-store' });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error || ('HTTP ' + res.status));
+      render(body.rows, body.other_attention);
+      lastOk = Date.now();
+      stamp.className = ''; stamp.textContent = '更新于 ' + clock(new Date());
+    } catch (err) {
+      stamp.className = 'nb-err';
+      stamp.textContent = '读取失败：' + (err instanceof TypeError ? '本地服务没在运行，先在仓库目录运行 pnpm board' : err.message)
+        + (lastOk ? `（下面是 ${clock(new Date(lastOk))} 的数据）` : '');
+    } finally {
+      inFlight = false; btn.disabled = false; btn.textContent = '刷新';
+    }
+  }
+
+  btn.addEventListener('click', refresh);
+  setInterval(() => { if (auto.checked && document.visibilityState === 'visible') refresh(); }, AUTO_MS);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && auto.checked && Date.now() - lastOk > AUTO_MS) refresh();
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>

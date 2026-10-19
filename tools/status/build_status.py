@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
-"""Derive every task card's status from GitHub and write status.json.
+"""Derive every task card's status from GitHub.
 
 Nobody edits card status by hand. The catalog (tasks/cards.json) holds static
-facts; this script infers status from pull requests and branches, so the board
-cannot go stale and parallel PRs never conflict on a status file.
+facts; this module infers status from pull requests, branches and review
+comments, so the board cannot go stale and parallel PRs never conflict on a
+status file. The local board (serve_board.py) calls compute() on every refresh.
 
 Usage (repository root, GitHub CLI authenticated):
     python tools/status/build_status.py [--out status.json] [--board board.json] [--repo owner/name]
 
 Rules, first match wins:
     status_override in the catalog       -> that status
-    merged PR with label unverified      -> unverified (merged, cross-review unfinished;
-                                            dependants stay blocked)
     open PR with label needs-user        -> needs_you
     open draft PR                        -> in_progress (claimed)
     open ready PR                        -> review
+    merged PR with label unverified      -> unverified (merged, review unfinished;
+                                            dependants stay blocked)
     merged PR                            -> done
     branch task/<id>-* without any PR    -> in_progress (claimed)
     all dependencies done, card is yours -> needs_you
@@ -34,23 +35,73 @@ import datetime as dt
 import json
 import re
 import subprocess
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+REPO = "nanake-lab/nemu"
 CARD = re.compile(r"\((P\d-\d{2})\)")
 BRANCH = re.compile(r"^task/(P\d-\d{2})\b")
+VERDICT = "审查结论："
+
+LABELS = {
+    "done": "已完成",
+    "review": "等审查",
+    "in_progress": "进行中",
+    "needs_you": "等你",
+    "ready": "可开工",
+    "blocked": "等依赖",
+    "unverified": "已合并·待核验",
+}
+
+
+class GitHubError(RuntimeError):
+    """The GitHub CLI is missing, not signed in, or a call failed."""
+
+
+def gh_raw(args: list[str]) -> str:
+    try:
+        done = subprocess.run(
+            ["gh", *args],
+            capture_output=True,
+            check=False,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except FileNotFoundError as exc:
+        raise GitHubError(
+            "没找到 gh 命令。先安装 GitHub CLI（winget install --id GitHub.cli），"
+            "再运行 gh auth login 登录。"
+        ) from exc
+    if done.returncode != 0:
+        raise GitHubError((done.stderr or done.stdout).strip() or "gh 调用失败")
+    return done.stdout
 
 
 def gh(path: str) -> list | dict:
-    raw = subprocess.run(
-        ["gh", "api", "--paginate", "--slurp", path],
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout
-    pages = json.loads(raw)
+    pages = json.loads(gh_raw(["api", "--paginate", "--slurp", path]))
     if pages and isinstance(pages[0], list):
         return [item for page in pages for item in page]
     return pages[0] if pages else {}
+
+
+def load_catalog(repo: str, local: Path) -> dict:
+    """The catalog on main, so the board is right whichever branch is checked out.
+
+    Falls back to the local file (before the catalog reaches main, or offline).
+    """
+    try:
+        raw = gh_raw(
+            [
+                "api",
+                "-H",
+                "Accept: application/vnd.github.raw",
+                f"repos/{repo}/contents/tasks/cards.json?ref=main",
+            ]
+        )
+        return json.loads(raw)
+    except (GitHubError, json.JSONDecodeError):
+        return json.loads(local.read_text(encoding="utf-8"))
 
 
 def cards_of_pr(pr: dict) -> set[str]:
@@ -74,9 +125,6 @@ def windows_waiting(repo: str, sha: str) -> bool:
     )
 
 
-VERDICT = "审查结论："
-
-
 def review_verdict(repo: str, number: int) -> str | None:
     """'pass', 'block' or None, from the latest review comment on the PR."""
     comments = gh(f"repos/{repo}/issues/{number}/comments?per_page=100")
@@ -86,6 +134,13 @@ def review_verdict(repo: str, number: int) -> str | None:
         if body.startswith(VERDICT):
             verdict = "pass" if body.startswith(VERDICT + "通过") else "block"
     return verdict
+
+
+def open_pr_details(repo: str, pr: dict) -> dict:
+    details = {"waiting_runner": windows_waiting(repo, pr["head"]["sha"])}
+    if not pr.get("draft"):
+        details["verdict"] = review_verdict(repo, pr["number"])
+    return details
 
 
 def reviewer(card: dict) -> str:
@@ -107,53 +162,50 @@ def label_of(card: dict) -> str:
     return f"等 {reviewer(card)} 审查"
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--repo", default="nanake-lab/nemu")
-    ap.add_argument("--catalog", default="tasks/cards.json")
-    ap.add_argument("--out", default="status.json")
-    ap.add_argument(
-        "--board", help="also write the web board's row file (one row per card)"
-    )
-    args = ap.parse_args()
-
-    catalog = json.loads(Path(args.catalog).read_text(encoding="utf-8"))
+def compute(repo: str, catalog: dict) -> dict:
     cards = {c["id"]: dict(c) for c in catalog["cards"]}
-    prs = gh(f"repos/{args.repo}/pulls?state=all&per_page=100")
-    branches = [b["name"] for b in gh(f"repos/{args.repo}/branches?per_page=100")]
+    prs = gh(f"repos/{repo}/pulls?state=all&per_page=100")
+    branches = [b["name"] for b in gh(f"repos/{repo}/branches?per_page=100")]
+
+    relevant = [pr for pr in prs if cards_of_pr(pr) & cards.keys()]
+    open_prs = [pr for pr in prs if pr["state"] == "open" and not pr.get("merged_at")]
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        details = dict(
+            zip(
+                (pr["number"] for pr in open_prs),
+                pool.map(lambda pr: open_pr_details(repo, pr), open_prs),
+            )
+        )
 
     for c in cards.values():
         c["prs"] = []
-    for pr in prs:
+    for pr in relevant:
+        state = "merged" if pr.get("merged_at") else pr["state"]
+        if state == "closed":
+            continue
+        entry = {
+            "number": pr["number"],
+            "url": pr["html_url"],
+            "title": pr["title"],
+            "state": state,
+            "draft": bool(pr.get("draft")),
+            "labels": [lbl["name"] for lbl in pr.get("labels", [])],
+            "updated_at": pr["updated_at"],
+            **details.get(pr["number"], {}),
+        }
         for cid in cards_of_pr(pr) & cards.keys():
-            state = "merged" if pr.get("merged_at") else pr["state"]
-            if state == "closed":
-                continue
-            entry = {
-                "number": pr["number"],
-                "url": pr["html_url"],
-                "title": pr["title"],
-                "state": state,
-                "draft": bool(pr.get("draft")),
-                "labels": [lbl["name"] for lbl in pr.get("labels", [])],
-                "updated_at": pr["updated_at"],
-            }
-            if state == "open":
-                entry["waiting_runner"] = windows_waiting(args.repo, pr["head"]["sha"])
-                if not entry["draft"]:
-                    entry["verdict"] = review_verdict(args.repo, pr["number"])
             cards[cid]["prs"].append(entry)
     claimed = {m.group(1) for b in branches if (m := BRANCH.match(b))}
 
     def direct(c: dict) -> str | None:
         if c.get("status_override"):
             return c["status_override"]["status"]
-        open_prs = [p for p in c["prs"] if p["state"] == "open"]
-        if any("needs-user" in p["labels"] for p in open_prs):
+        live = [p for p in c["prs"] if p["state"] == "open"]
+        if any("needs-user" in p["labels"] for p in live):
             return "needs_you"
-        if any(p["draft"] for p in open_prs):
+        if any(p["draft"] for p in live):
             return "in_progress"
-        if open_prs:
+        if live:
             return "review"
         if any(
             p["state"] == "merged" and "unverified" in p["labels"] for p in c["prs"]
@@ -186,25 +238,17 @@ def main() -> None:
 
     attention = []
     for c in sorted(cards.values(), key=lambda c: c["id"]):
-        open_prs = [p for p in c["prs"] if p["state"] == "open"]
-        for p in open_prs:
+        for p in (p for p in c["prs"] if p["state"] == "open"):
+            item = {"card": c["id"], "pr": p["number"], "url": p["url"]}
             if "needs-user" in p["labels"]:
                 attention.append(
-                    {
-                        "card": c["id"],
-                        "kind": "approve",
-                        "pr": p["number"],
-                        "url": p["url"],
-                        "text": f"PR #{p['number']} 需要你批准",
-                    }
+                    {**item, "kind": "approve", "text": f"PR #{p['number']} 需要你批准"}
                 )
             if p.get("waiting_runner"):
                 attention.append(
                     {
-                        "card": c["id"],
+                        **item,
                         "kind": "runner",
-                        "pr": p["number"],
-                        "url": p["url"],
                         "text": f"PR #{p['number']} 的 Windows 检查在排队，需要开 runner",
                     }
                 )
@@ -217,10 +261,8 @@ def main() -> None:
             ):
                 attention.append(
                     {
-                        "card": c["id"],
+                        **item,
                         "kind": "cross_review",
-                        "pr": p["number"],
-                        "url": p["url"],
                         "text": f"PR #{p['number']}（{c['id']}，{c['difficulty']}难度）请转给 Codex 审查",
                     }
                 )
@@ -229,9 +271,9 @@ def main() -> None:
                 attention.append(
                     {
                         "card": c["id"],
-                        "kind": "unverified",
                         "pr": p["number"],
                         "url": p["url"],
+                        "kind": "unverified",
                         "text": f"{c['id']} 已合并但交叉审查没做完（PR #{p['number']}），需要补完核验",
                     }
                 )
@@ -244,15 +286,39 @@ def main() -> None:
                 }
             )
 
+    # Open PRs that belong to no card (rule changes, tooling) still need the
+    # user when they wait for approval or for the Windows runner.
+    other_attention = []
+    for pr in open_prs:
+        if cards_of_pr(pr) & cards.keys():
+            continue
+        item = {"card": "", "pr": pr["number"], "url": pr["html_url"]}
+        labels = [lbl["name"] for lbl in pr.get("labels", [])]
+        if "needs-user" in labels:
+            other_attention.append(
+                {
+                    **item,
+                    "kind": "approve",
+                    "text": f"PR #{pr['number']} 需要你批准：{pr['title']}",
+                }
+            )
+        if details.get(pr["number"], {}).get("waiting_runner"):
+            other_attention.append(
+                {
+                    **item,
+                    "kind": "runner",
+                    "text": f"PR #{pr['number']} 的 Windows 检查在排队，需要开 runner",
+                }
+            )
+
     milestones = []
     for m in catalog["milestones"]:
         ids = [cid for cid, c in cards.items() if c["milestone"] == m["id"]]
-        done = sum(1 for cid in ids if cards[cid]["status"] == "done")
         milestones.append(
             {
                 **m,
                 "total": len(ids),
-                "done": done,
+                "done": sum(1 for cid in ids if cards[cid]["status"] == "done"),
                 "remaining": sorted(
                     cid for cid in ids if cards[cid]["status"] != "done"
                 ),
@@ -264,42 +330,20 @@ def main() -> None:
         if c["status"] == "ready":
             next_up.setdefault(c["suggested"], []).append(c["id"])
 
-    out = {
+    return {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-        "repo": args.repo,
+        "repo": repo,
         "milestones": milestones,
         "attention": attention,
+        "other_attention": other_attention,
         "next_up": next_up,
         "cards": [cards[cid] for cid in sorted(cards)],
     }
-    Path(args.out).write_text(
-        json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8"
-    )
-    if args.board:
-        write_board(Path(args.board), out)
-    counts: dict[str, int] = {}
-    for c in cards.values():
-        counts[c["status"]] = counts.get(c["status"], 0) + 1
-    print(json.dumps(counts, ensure_ascii=False))
 
 
-LABELS = {
-    "done": "已完成",
-    "review": "等审查",
-    "in_progress": "进行中",
-    "needs_you": "等你",
-    "ready": "可开工",
-    "blocked": "等依赖",
-    "unverified": "已合并·待核验",
-}
-
-
-def write_board(path: Path, out: dict) -> None:
-    """One flat row per card for the web board.
-
-    The board derives milestones, the attention list and the totals from these
-    rows itself, so a refresh replaces a single file.
-    """
+def board_rows(out: dict) -> list[dict]:
+    """One flat row per card. The board derives milestones, the attention list
+    and the totals from these rows itself."""
     names = {m["id"]: m["name"] for m in out["milestones"]}
     attention: dict[str, list[dict]] = {}
     for a in out["attention"]:
@@ -329,8 +373,33 @@ def write_board(path: Path, out: dict) -> None:
                 "generated_at": out["generated_at"],
             }
         )
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+    return rows
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--repo", default=REPO)
+    ap.add_argument("--catalog", default="tasks/cards.json")
+    ap.add_argument("--out", default="status.json")
+    ap.add_argument(
+        "--board", help="also write the board's row file (one row per card)"
+    )
+    args = ap.parse_args()
+
+    out = compute(args.repo, load_catalog(args.repo, Path(args.catalog)))
+    Path(args.out).write_text(
+        json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+    if args.board:
+        path = Path(args.board)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(board_rows(out), ensure_ascii=False, indent=1), encoding="utf-8"
+        )
+    counts: dict[str, int] = {}
+    for c in out["cards"]:
+        counts[c["status"]] = counts.get(c["status"], 0) + 1
+    print(json.dumps(counts))
 
 
 if __name__ == "__main__":
