@@ -6,11 +6,12 @@ pub mod canonical;
 pub mod catalog;
 pub mod endpoint;
 pub mod error;
+pub mod numeric;
 pub mod overlap;
 pub mod scope;
 
 pub use catalog::{Catalog, FieldId, FieldKind, FieldSpec, ScopeLimits};
 pub use endpoint::Endpoint;
 pub use error::PolicyError;
-pub use overlap::{Overlap, overlap};
+pub use overlap::{Overlap, contains, overlap};
 pub use scope::{Atom, FieldValue, Scope, ScopeExpr, ScopeMatch};

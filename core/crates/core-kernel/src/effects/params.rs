@@ -9,6 +9,8 @@ use std::collections::BTreeMap;
 use core_policy::PolicyError;
 use core_policy::canonical::{Writer, digest};
 
+use super::bound::sum_up;
+
 /// Frozen type tag of an effect parameter object.
 pub const PARAMETERS_TAG: &str = "echo.effect-parameters";
 
@@ -35,10 +37,17 @@ impl EffectParameters {
         Ok(())
     }
 
-    /// Conservative magnitude: L1 norm, summed in index order. It bounds the
-    /// L2 norm from above, so budgets checked with it cannot be evaded.
+    /// L1 norm summed in index order, rounded to nearest. Used for receipts
+    /// (the magnitude actually applied), never for a bound check.
     pub fn l1(&self) -> f64 {
         self.entries.values().fold(0.0, |acc, v| acc + v.abs())
+    }
+
+    /// Upper bound of the exact L1 norm. L1 bounds the L2 norm from above,
+    /// and rounding never lowers this value below the exact norm, so amplitude
+    /// checks made with it cannot be evaded (S 6).
+    pub fn l1_upper(&self) -> f64 {
+        sum_up(self.entries.values().map(|v| v.abs()))
     }
 
     pub fn canonical_bytes(&self) -> Result<Vec<u8>, PolicyError> {

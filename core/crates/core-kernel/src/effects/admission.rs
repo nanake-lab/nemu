@@ -9,7 +9,8 @@ use std::collections::BTreeSet;
 use core_policy::{Endpoint, Scope, overlap};
 use core_types::generated::EffectContract;
 
-use super::compile::check_objects;
+use super::bound::add_up;
+use super::objects::check_objects;
 use super::params::EffectParameters;
 use super::types::{AuthorizedEffectSet, CompileConfig};
 
@@ -46,10 +47,9 @@ pub fn admit_candidate(
 ) -> Result<(), AdmissionRejection> {
     let catalog = &config.catalog;
     let contract = &candidate.contract;
-    // Re-validating the scope enforces the endpoint whitelist ("超 scope").
     let endpoint = Endpoint::from(contract.endpoint);
-    Scope::new(endpoint, candidate.scope.expr.clone(), catalog)
-        .map_err(|e| AdmissionRejection::Invalid(e.to_string()))?;
+    // Re-validates the scope (whitelist, limits, interpreter version) and
+    // the parameter binding, exactly as the compiler does ("超 scope").
     check_objects(contract, &candidate.scope, &candidate.parameters, config)
         .map_err(AdmissionRejection::Invalid)?;
     if existing.catalog_version != catalog.version {
@@ -68,12 +68,17 @@ pub fn admit_candidate(
                 e.responsibility_id.clone(),
             ));
         }
-        if candidate.conflict_set.contains(&e.responsibility_id) {
+        // A conflict declared by either side counts: an existing effect's
+        // declaration is not lost because the candidate omits it.
+        if candidate.conflict_set.contains(&e.responsibility_id)
+            || e.conflicts.contains(&contract.responsibility_id)
+        {
             return Err(AdmissionRejection::Conflict(e.responsibility_id.clone()));
         }
         // Full bound, not the decayed factor: a decaying effect may still be
-        // near its bound when the candidate first acts.
-        overlapping_total += e.amplitude_bound;
+        // near its bound when the candidate first acts. The sum is an upper
+        // bound of the exact total (S 6).
+        overlapping_total = add_up(overlapping_total, e.amplitude_bound);
     }
     let budget =
         config

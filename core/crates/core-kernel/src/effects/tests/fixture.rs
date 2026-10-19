@@ -14,6 +14,7 @@ use crate::effects::*;
 
 pub const CATALOG: &str = "fixture-catalog-1";
 pub const PARAMS: &str = "fixture-carrier-1";
+pub const VALIDITY: &str = "fixture-validity-1";
 pub const SECOND: u64 = 1_000_000_000;
 
 pub fn catalog() -> Catalog {
@@ -65,6 +66,7 @@ pub fn config() -> CompileConfig {
             .into_iter()
             .collect(),
         parameter_resource_version: PARAMS.into(),
+        validity_resource_version: VALIDITY.into(),
     }
 }
 
@@ -167,7 +169,13 @@ pub fn theta(
     bound: f64,
 ) -> ThetaModuleRecord {
     let c = contract(rid, "theta-rev-1", EffectOwner::THETA_OWNER, &s, &p, bound);
-    ThetaModuleRecord {
+    let validity = ThetaValidity {
+        scope_digest: scope_digest(&s).unwrap(),
+        assumptions: BTreeSet::new(),
+        valid_until: Some(ProcessTime(100 * SECOND)),
+        conditions: BTreeSet::new(),
+    };
+    let mut rec = ThetaModuleRecord {
         module: ThetaModule {
             schema_version: 1,
             module_id: module.into(),
@@ -194,15 +202,26 @@ pub fn theta(
         },
         scope: s,
         parameters: p,
-        validity: ThetaValidity {
-            valid_until: Some(ProcessTime(100 * SECOND)),
-            conditions: BTreeSet::new(),
-        },
-    }
+        validity,
+    };
+    bind_validity(&mut rec);
+    rec
+}
+
+/// Points the module's ValidityContract reference at the record's current
+/// validity object, as a legal commit of that contract would.
+pub fn bind_validity(rec: &mut ThetaModuleRecord) {
+    let v = &rec.validity;
+    rec.module.validity_contract = oref(
+        VALIDITY_TAG,
+        VALIDITY,
+        v.digest().unwrap(),
+        v.canonical_bytes().unwrap().len(),
+    );
 }
 
 /// Validity snapshot where the fixture certificate is qualified and the
-/// fixture dependency is a known leaf.
+/// fixture qualification, carrier and dependency are known leaves.
 pub fn validity() -> ValiditySnapshot {
     ValiditySnapshot {
         certificates: [(
@@ -216,7 +235,10 @@ pub fn validity() -> ValiditySnapshot {
         .collect(),
         invalidated: BTreeSet::new(),
         satisfied: BTreeSet::new(),
-        dependency_graph: [(d(0xD1), BTreeSet::new())].into_iter().collect(),
+        dependency_graph: [d(0xA1), d(0xC0), d(0xD1)]
+            .into_iter()
+            .map(|n| (n, BTreeSet::new()))
+            .collect(),
     }
 }
 

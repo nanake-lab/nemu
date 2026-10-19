@@ -5,10 +5,16 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use core_policy::{Catalog, Endpoint, Scope};
+use core_policy::canonical::{Writer, digest};
+use core_policy::{Catalog, Endpoint, PolicyError, Scope};
 use core_types::generated::{CouplingPhase, EffectContract, ResponsibilityBinding, ThetaModule};
 
 use super::params::EffectParameters;
+
+/// Frozen type tag of a θ ValidityContract object. Like the scope and
+/// parameter objects it is a Trusted Core internal encoding, not an IDL
+/// message; `ThetaModule.validity_contract` references it by digest.
+pub const VALIDITY_TAG: &str = "echo.theta-validity-contract";
 
 /// SHA-256 digest of a content-addressed object.
 pub type Digest = [u8; 32];
@@ -35,13 +41,50 @@ pub struct REffectRecord {
     pub conflict_set: BTreeSet<String>,
 }
 
-/// Validity contract of one θ module (O 10.2; I22). At least one of a finite
-/// `valid_until` or a non-empty set of verifiable conditions is required.
+/// ValidityContract of one θ module (O 10.2; I22): the scope it covers, its
+/// dependency assumptions, and a finite `valid_until` or verifiable
+/// continuing-validity conditions (at least one of the two). The compiler
+/// uses it only after checking that `ThetaModule.validity_contract` binds
+/// exactly these bytes, so a side-loaded expiry or condition set cannot
+/// replace the committed contract.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ThetaValidity {
+    /// Digest of the module's scope object.
+    pub scope_digest: Digest,
+    /// Dependency assumptions; they join the module's dependency closure.
+    pub assumptions: BTreeSet<Digest>,
     pub valid_until: Option<ProcessTime>,
     /// Conditions that must all be present in `ValiditySnapshot::satisfied`.
     pub conditions: BTreeSet<Digest>,
+}
+
+impl ThetaValidity {
+    /// CanonicalV1 bytes: scope digest, assumptions (sorted, counted),
+    /// presence byte + u64 LE expiry, conditions (sorted, counted).
+    pub fn canonical_bytes(&self) -> Result<Vec<u8>, PolicyError> {
+        let mut w = Writer::with_header(VALIDITY_TAG)?;
+        w.bytes.extend_from_slice(&self.scope_digest);
+        w.count(self.assumptions.len())?;
+        self.assumptions
+            .iter()
+            .for_each(|d| w.bytes.extend_from_slice(d));
+        match self.valid_until {
+            Some(t) => {
+                w.bytes.push(1);
+                w.bytes.extend_from_slice(&t.0.to_le_bytes());
+            }
+            None => w.bytes.push(0),
+        }
+        w.count(self.conditions.len())?;
+        self.conditions
+            .iter()
+            .for_each(|d| w.bytes.extend_from_slice(d));
+        Ok(w.bytes)
+    }
+
+    pub fn digest(&self) -> Result<Digest, PolicyError> {
+        digest(VALIDITY_TAG, &self.canonical_bytes()?)
+    }
 }
 
 /// One stored θ module with its responsibility binding and resolved objects.
@@ -84,6 +127,8 @@ pub struct CompileConfig {
     pub endpoint_dimensions: BTreeMap<Endpoint, u32>,
     /// Resource version of parameter objects (carrier contract version).
     pub parameter_resource_version: String,
+    /// Resource version of θ ValidityContract objects.
+    pub validity_resource_version: String,
 }
 
 /// Effective owner of a responsibility.
@@ -107,6 +152,9 @@ pub struct CompiledEffect {
     pub factor: f64,
     pub amplitude_bound: f64,
     pub dependencies: BTreeSet<Digest>,
+    /// Responsibilities this effect is declared to conflict with. Kept so
+    /// that a later candidate is checked against both sides (O 3.3, 12.1).
+    pub conflicts: BTreeSet<String>,
 }
 
 /// Minimal effective description at one processing time. It carries no
@@ -153,6 +201,18 @@ pub enum StructuralFault {
     /// I07: more than one owner for one responsibility in one domain.
     DuplicateOwner {
         responsibility_id: String,
+    },
+    /// O 9: a stored R entry of a taken-over responsibility is neither
+    /// provably inside the θ sub-domain nor provably disjoint from it, so the
+    /// split is not safe and no owner can be chosen.
+    AmbiguousTakeover {
+        responsibility_id: String,
+    },
+    /// O 3.3, 12.1: two authorised effects with a declared conflict overlap.
+    /// Qualification must pick one, or a composite must be requalified.
+    DeclaredConflict {
+        first: String,
+        second: String,
     },
     /// θ outside its ValidityContract or behind a failure barrier (I22).
     ThetaInvalid {

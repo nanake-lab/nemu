@@ -50,6 +50,17 @@ impl Constraint {
             _ => Some(self.clone()),
         }
     }
+
+    /// Whether every value allowed by `self` is allowed by `outer`.
+    /// Mismatched kinds are never proven contained.
+    fn within(&self, outer: &Self) -> bool {
+        match (self, outer) {
+            (Self::Enum(a), Self::Enum(b)) => a.is_subset(b),
+            (Self::Concept(a), Self::Concept(b)) => a.is_subset(b),
+            (Self::Num(a0, a1), Self::Num(b0, b1)) => b0 <= a0 && a1 <= b1,
+            _ => false,
+        }
+    }
 }
 
 /// One conjunction of field constraints. A field absent from the map is
@@ -153,4 +164,37 @@ pub fn overlap(a: &Scope, b: &Scope, catalog: &Catalog) -> Overlap {
         }
     }
     Overlap::Disjoint
+}
+
+/// Whether `inner ⊆ outer` is proven (O 9: a takeover sub-domain must be
+/// decidable). Sound but not complete: each normal-form term of `inner` must
+/// lie inside one single term of `outer`. A term covered only by a union of
+/// several `outer` terms, a limit hit or a version mismatch is "not proven",
+/// and callers must then treat the domains as not safely split.
+pub fn contains(outer: &Scope, inner: &Scope, catalog: &Catalog) -> bool {
+    if outer.endpoint != inner.endpoint
+        || outer.catalog_version != catalog.version
+        || inner.catalog_version != catalog.version
+    {
+        return false;
+    }
+    let limits = catalog.limits;
+    let (Some(to), Some(ti)) = (
+        normal_form(&outer.expr, limits),
+        normal_form(&inner.expr, limits),
+    ) else {
+        return false;
+    };
+    if to.len().saturating_mul(ti.len()) > limits.max_overlap_pairs {
+        return false;
+    }
+    ti.iter().all(|t| to.iter().any(|o| term_within(t, o)))
+}
+
+/// A field `outer` constrains must be constrained at least as tightly by
+/// `inner`; a field `outer` leaves free imposes nothing.
+fn term_within(inner: &Term, outer: &Term) -> bool {
+    outer
+        .iter()
+        .all(|(field, oc)| inner.get(field).is_some_and(|ic| ic.within(oc)))
 }

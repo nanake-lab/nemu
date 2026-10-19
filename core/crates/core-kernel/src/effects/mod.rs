@@ -7,10 +7,13 @@
 //! exercised with structural fixtures.
 
 mod admission;
+mod bound;
 mod compile;
 mod dag;
 mod evaluate;
+mod objects;
 mod params;
+mod takeover;
 mod types;
 
 #[cfg(test)]

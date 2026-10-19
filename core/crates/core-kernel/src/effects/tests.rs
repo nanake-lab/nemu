@@ -2,6 +2,9 @@
 //! structural part of F06; invariants I06, I07, I08, I12, I21, I22.
 
 mod fixture;
+mod review;
+mod review_numeric;
+mod review_scope;
 
 use std::collections::BTreeMap;
 
@@ -80,8 +83,11 @@ fn i07_theta_takeover_suppresses_r_even_after_legal_disable() {
     assert_eq!(audit.excluded[0].2, ExclusionReason::TakenOverByTheta);
 }
 
+/// Suppression is keyed by the stable responsibility, so a new causal
+/// revision of the R entry does not release it. The R record has no separate
+/// evidence-revision field yet; a true evidence-only path is a follow-up.
 #[test]
-fn i08_new_evidence_revision_does_not_release_a_taken_over_responsibility() {
+fn i08_new_causal_revision_does_not_release_a_taken_over_responsibility() {
     let s = jd(ScopeExpr::True);
     let p = params(&[(0, 0.5)]);
     let mut r = r_effect("resp-a", s.clone(), p.clone(), 1.0);
@@ -126,26 +132,36 @@ fn i22_theta_outside_validity_contract_quarantines_instead_of_local_disable() {
         params(&[(0, 0.4)]),
         1.0,
     );
+    let detail = |r: Result<_, StructuralFault>| match r {
+        Err(StructuralFault::ThetaInvalid { detail, .. }) => detail,
+        other => panic!("expected θ quarantine, got {other:?}"),
+    };
     // Expired finite validity.
-    let err = compile(&[], std::slice::from_ref(&base), &validity(), 100 * SECOND).unwrap_err();
-    assert!(
-        matches!(err, StructuralFault::ThetaInvalid { .. }),
-        "{err:?}"
-    );
-    // No finite expiry and no verifiable condition.
+    let expired = compile(&[], std::slice::from_ref(&base), &validity(), 100 * SECOND);
+    assert_eq!(detail(expired), "validity contract expired");
+    // No finite expiry and no verifiable condition (contract legally bound,
+    // so the rejection is about its content, not its reference).
     let mut open = base.clone();
     open.validity.valid_until = None;
-    assert!(matches!(
-        compile(&[], &[open], &validity(), SECOND),
-        Err(StructuralFault::ThetaInvalid { .. })
-    ));
+    bind_validity(&mut open);
+    assert_eq!(
+        detail(compile(&[], &[open], &validity(), SECOND)),
+        "no finite validity or verifiable condition"
+    );
     // Continuing condition present but not currently verified.
     let mut cond = base.clone();
-    cond.validity = ThetaValidity {
-        valid_until: None,
-        conditions: [d(0x77)].into_iter().collect(),
-    };
-    assert!(compile(&[], std::slice::from_ref(&cond), &validity(), SECOND).is_err());
+    cond.validity.valid_until = None;
+    cond.validity.conditions = [d(0x77)].into_iter().collect();
+    bind_validity(&mut cond);
+    assert_eq!(
+        detail(compile(
+            &[],
+            std::slice::from_ref(&cond),
+            &validity(),
+            SECOND
+        )),
+        "continuing-validity condition not satisfied"
+    );
     let mut v = validity();
     v.satisfied.insert(d(0x77));
     assert!(compile(&[], &[cond], &v, SECOND).is_ok());

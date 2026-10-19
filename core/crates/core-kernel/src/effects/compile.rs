@@ -1,4 +1,4 @@
-//! CompileAuthorizedEffects (O 3.2, 12, 15; S 12).
+//! CompileAuthorizedEffects (O 3.2, 9, 12, 15; S 6, 12).
 //!
 //! Pure: it reads the committed R/θ views and the validity snapshot, and
 //! returns the minimal effective description at time `t`. It never writes
@@ -6,12 +6,15 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use core_policy::canonical::{SCOPE_TAG, scope_bytes, scope_digest};
+use core_policy::canonical::scope_digest;
 use core_policy::{Endpoint, overlap};
-use core_types::generated::{CouplingPhase, EffectContract, EffectOwner, ObjectRef};
+use core_types::generated::{CouplingPhase, EffectContract, EffectOwner};
 
+use super::bound::{add_up, mul_up};
 use super::dag::{self, DagError};
-use super::params::{EffectParameters, PARAMETERS_TAG};
+use super::objects::{check_objects, check_scope, check_validity, closure_roots, digests_of};
+use super::params::EffectParameters;
+use super::takeover::{self, Relation, Takeover};
 use super::types::*;
 
 const NANOS_PER_SECOND: f64 = 1_000_000_000.0;
@@ -29,34 +32,31 @@ pub fn compile_authorized_effects(
     let mut audit = CompileAudit::default();
     let mut expires_at: Option<ProcessTime> = None;
     let mut dependency_dag = BTreeMap::new();
-    let mut taken_over = BTreeSet::new();
+    let mut takeovers: Vec<Takeover> = Vec::new();
 
     // θ first: its takeover registry is the suppression authority (I07).
     for rec in theta_snapshot {
         let contract = &rec.module.mechanism_effect;
-        let rid = contract.responsibility_id.clone();
         let theta_fault = |detail: &str| StructuralFault::ThetaInvalid {
             module_id: rec.module.module_id.clone(),
             detail: detail.to_owned(),
         };
-        if rec.binding.responsibility_id != rid
-            || rec.binding.module_id != rec.module.module_id
-            || rec.binding.owner != EffectOwner::THETA_OWNER
-            || contract.owner != EffectOwner::THETA_OWNER
-        {
-            return Err(theta_fault("binding does not match module"));
-        }
-        taken_over.insert(rid.clone());
-        // A legal C disposition keeps the takeover record; it never frees R.
+        takeover::check_binding(rec).map_err(|d| theta_fault(&d))?;
+        // The takeover sub-domain must be a verified scope even when the
+        // module is disabled: disposal keeps the takeover record (O 3.1).
+        check_scope(contract, &rec.scope, config).map_err(|d| theta_fault(&d))?;
+        takeovers.push(Takeover {
+            responsibility_id: contract.responsibility_id.clone(),
+            endpoint: rec.scope.endpoint,
+            scope: rec.scope.clone(),
+        });
         if !rec.module.enabled {
             continue;
         }
         check_objects(contract, &rec.scope, &rec.parameters, config)
             .map_err(|d| theta_fault(&d))?;
+        check_validity(rec, config).map_err(|d| theta_fault(&d))?;
         let v = &rec.validity;
-        if v.valid_until.is_none() && v.conditions.is_empty() {
-            return Err(theta_fault("no finite validity or verifiable condition"));
-        }
         if let Some(until) = v.valid_until {
             if t >= until {
                 return Err(theta_fault("validity contract expired"));
@@ -66,9 +66,12 @@ pub fn compile_authorized_effects(
         if !v.conditions.is_subset(&validity.satisfied) {
             return Err(theta_fault("continuing-validity condition not satisfied"));
         }
-        let roots = digests(&contract.dependencies);
+        // A hard failure anywhere in the closure (qualifications and their
+        // upstream included) quarantines the core; θ is never disabled
+        // locally (O 3.2; I12, I22).
+        let roots = closure_roots(contract, &v.assumptions).map_err(|d| theta_fault(&d))?;
         let dag = dag::resolve(&roots, &validity.dependency_graph, &validity.invalidated)
-            .map_err(|e| theta_fault(&format!("dependency: {e:?}")))?;
+            .map_err(|e| theta_fault(&format!("dependency closure: {e:?}")))?;
         dependency_dag.extend(dag);
         effects.push(compiled(
             contract,
@@ -77,6 +80,7 @@ pub fn compile_authorized_effects(
             Owner::Theta,
             1.0,
             roots,
+            BTreeSet::new(),
         )?);
     }
 
@@ -92,17 +96,28 @@ pub fn compile_authorized_effects(
             exclude(ExclusionReason::NotActive);
             continue;
         }
-        if taken_over.contains(&rid) {
-            exclude(ExclusionReason::TakenOverByTheta);
-            continue;
-        }
         if rec.scope.catalog_version != config.catalog.version {
             exclude(ExclusionReason::InterpreterMismatch);
             continue;
         }
         check_objects(contract, &rec.scope, &rec.parameters, config)
             .map_err(|d| integrity(&rid, &d))?;
-        let quals = digests(&contract.qualifications);
+        match takeover::relation(&takeovers, &rid, &rec.scope, &config.catalog) {
+            Relation::Free => {}
+            Relation::Suppressed => {
+                exclude(ExclusionReason::TakenOverByTheta);
+                continue;
+            }
+            Relation::Ambiguous => {
+                return Err(StructuralFault::AmbiguousTakeover {
+                    responsibility_id: rid,
+                });
+            }
+        }
+        let quals = digests_of(&contract.qualifications).map_err(|d| integrity(&rid, &d))?;
+        let roots = closure_roots(contract, &BTreeSet::new()).map_err(|d| integrity(&rid, &d))?;
+        // Failure barrier first: a withdrawn qualification stops the effect
+        // before anything else is looked at (I12).
         if quals.iter().any(|q| validity.invalidated.contains(q)) {
             exclude(ExclusionReason::Invalidated);
             continue;
@@ -116,7 +131,8 @@ pub fn compile_authorized_effects(
             exclude(ExclusionReason::NoValidQualification);
             continue;
         }
-        let roots = digests(&contract.dependencies);
+        // The closure includes the qualifications themselves, so a withdrawn
+        // upstream of a qualification blocks the effect too.
         let dag = match dag::resolve(&roots, &validity.dependency_graph, &validity.invalidated) {
             Ok(dag) => dag,
             Err(DagError::Invalidated(_)) => {
@@ -147,11 +163,13 @@ pub fn compile_authorized_effects(
             Owner::R,
             q,
             roots,
+            rec.conflict_set.clone(),
         )?);
     }
 
     effects.sort_by(|a, b| key(a).cmp(&key(b)));
     check_unique_owners(&effects, config)?;
+    check_declared_conflicts(&effects, config)?;
     check_budgets(&effects, config)?;
     let set = AuthorizedEffectSet {
         at: t,
@@ -183,12 +201,6 @@ fn integrity(rid: &str, detail: &str) -> StructuralFault {
     }
 }
 
-fn digests(refs: &[ObjectRef]) -> BTreeSet<Digest> {
-    refs.iter()
-        .filter_map(|r| <[u8; 32]>::try_from(r.digest.0.as_slice()).ok())
-        .collect()
-}
-
 fn check_config(config: &CompileConfig) -> Result<(), StructuralFault> {
     let bad = |d: &str| Err(StructuralFault::InvalidConfig(d.to_owned()));
     if config.catalog.validate().is_err() {
@@ -196,6 +208,9 @@ fn check_config(config: &CompileConfig) -> Result<(), StructuralFault> {
     }
     if config.parameter_resource_version.is_empty() {
         return bad("parameter resource version");
+    }
+    if config.validity_resource_version.is_empty() {
+        return bad("validity resource version");
     }
     if config
         .endpoint_budgets
@@ -208,62 +223,6 @@ fn check_config(config: &CompileConfig) -> Result<(), StructuralFault> {
         return bad("endpoint dimension");
     }
     Ok(())
-}
-
-/// Verifies that the contract's scope and parameter references bind exactly
-/// the resolved objects, and that parameters respect the declared bounds.
-pub(crate) fn check_objects(
-    contract: &EffectContract,
-    scope: &core_policy::Scope,
-    params: &EffectParameters,
-    config: &CompileConfig,
-) -> Result<(), String> {
-    let endpoint = Endpoint::from(contract.endpoint);
-    if scope.endpoint != endpoint {
-        return Err("scope endpoint differs from contract endpoint".into());
-    }
-    if contract.responsibility_id.is_empty() || contract.causal_revision.is_empty() {
-        return Err("empty identity".into());
-    }
-    let sb = scope_bytes(scope).map_err(|e| e.to_string())?;
-    let sd = scope_digest(scope).map_err(|e| e.to_string())?;
-    if !binds(
-        &contract.scope,
-        SCOPE_TAG,
-        &config.catalog.version,
-        sb.len(),
-        &sd,
-    ) {
-        return Err("scope reference does not bind scope object".into());
-    }
-    params.validate()?;
-    let pb = params.canonical_bytes().map_err(|e| e.to_string())?;
-    let pd = params.digest().map_err(|e| e.to_string())?;
-    if !binds(
-        &contract.parameters,
-        PARAMETERS_TAG,
-        &config.parameter_resource_version,
-        pb.len(),
-        &pd,
-    ) {
-        return Err("parameter reference does not bind parameter object".into());
-    }
-    if config.endpoint_dimensions.get(&endpoint) != Some(&params.dimension) {
-        return Err("parameter dimension differs from endpoint dimension".into());
-    }
-    let bound = contract.amplitude_bound;
-    if !bound.is_finite() || bound < 0.0 || params.l1() > bound {
-        return Err("parameters exceed amplitude bound".into());
-    }
-    Ok(())
-}
-
-fn binds(r: &ObjectRef, tag: &str, version: &str, len: usize, digest: &Digest) -> bool {
-    r.schema_version == 1
-        && r.object_type == tag
-        && r.resource_version == version
-        && r.byte_length.0 == len as u64
-        && r.digest.0.as_slice() == digest.as_slice()
 }
 
 /// q(t) = q(anchor) · exp(−γ Δ). Pure projection from the committed anchor:
@@ -292,6 +251,7 @@ fn compiled(
     owner: Owner,
     factor: f64,
     dependencies: BTreeSet<Digest>,
+    conflicts: BTreeSet<String>,
 ) -> Result<CompiledEffect, StructuralFault> {
     let scope_digest =
         scope_digest(&scope).map_err(|e| integrity(&contract.responsibility_id, &e.to_string()))?;
@@ -306,6 +266,7 @@ fn compiled(
         factor,
         amplitude_bound: contract.amplitude_bound,
         dependencies,
+        conflicts,
     })
 }
 
@@ -331,15 +292,42 @@ fn check_unique_owners(
     Ok(())
 }
 
-/// Conservative absolute budget per endpoint: Σ factor·bound ≤ β. Signs are
-/// ignored, so opposite strong effects cannot cancel their way through.
+/// O 3.3, 12.1: a conflict declared by either side, between effects whose
+/// scopes may overlap, cannot be executed together.
+fn check_declared_conflicts(
+    effects: &[CompiledEffect],
+    config: &CompileConfig,
+) -> Result<(), StructuralFault> {
+    for (i, a) in effects.iter().enumerate() {
+        for b in &effects[i + 1..] {
+            let declared = a.conflicts.contains(&b.responsibility_id)
+                || b.conflicts.contains(&a.responsibility_id);
+            if declared
+                && a.responsibility_id != b.responsibility_id
+                && overlap(&a.scope, &b.scope, &config.catalog).is_conflict()
+            {
+                return Err(StructuralFault::DeclaredConflict {
+                    first: a.responsibility_id.clone(),
+                    second: b.responsibility_id.clone(),
+                });
+            }
+        }
+    }
+    Ok(())
+}
+
+/// Conservative absolute budget per endpoint: an upper bound of
+/// Σ factor·bound must not exceed β (S 6). Signs are ignored, so opposite
+/// strong effects cannot cancel their way through, and rounding can only
+/// raise the total.
 fn check_budgets(
     effects: &[CompiledEffect],
     config: &CompileConfig,
 ) -> Result<(), StructuralFault> {
     let mut used: BTreeMap<Endpoint, f64> = BTreeMap::new();
     for e in effects {
-        *used.entry(e.endpoint).or_insert(0.0) += e.factor * e.amplitude_bound;
+        let total = used.entry(e.endpoint).or_insert(0.0);
+        *total = add_up(*total, mul_up(e.factor, e.amplitude_bound));
     }
     for (endpoint, total) in used {
         let budget = config.endpoint_budgets.get(&endpoint).ok_or_else(|| {

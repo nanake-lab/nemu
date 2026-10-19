@@ -10,6 +10,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use crate::catalog::{Catalog, FieldId, FieldKind};
 use crate::endpoint::Endpoint;
 use crate::error::PolicyError;
+use crate::numeric::in_units;
 
 /// One field constraint.
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -238,10 +239,8 @@ fn evaluate_atom(
             let FieldKind::Numeric { decimals, .. } = catalog.field(field)?.kind else {
                 return Err(PolicyError::KindMismatch(field.to_owned()));
             };
-            let scale = pow10(decimals);
-            // Integers below 2^53 divided by an exact power of ten are
-            // correctly rounded, so the bound is deterministic.
-            *v >= to_f64(*lo)? / scale && *v <= to_f64(*hi)? / scale
+            // Quantised exactly to the field unit: the units overlap proves on.
+            in_units(*v, *lo, *hi, decimals)
         }
         _ => return Err(PolicyError::KindMismatch(field.to_owned())),
     };
@@ -250,24 +249,4 @@ fn evaluate_atom(
     } else {
         ScopeMatch::Miss
     })
-}
-
-/// Exact power of ten for `decimals <= MAX_DECIMALS`.
-pub(crate) fn pow10(decimals: u8) -> f64 {
-    let mut out: i64 = 1;
-    for _ in 0..decimals {
-        out *= 10;
-    }
-    out as f64
-}
-
-const F64_EXACT: i64 = 1 << 53;
-
-fn to_f64(units: i64) -> Result<f64, PolicyError> {
-    if !(-F64_EXACT..=F64_EXACT).contains(&units) {
-        return Err(PolicyError::OutOfDomain(
-            "numeric bound exceeds 2^53".into(),
-        ));
-    }
-    Ok(units as f64)
 }
