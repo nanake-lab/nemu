@@ -1,7 +1,10 @@
-import { defineConfig } from 'electron-vite';
+import { defineConfig, externalizeDepsPlugin } from 'electron-vite';
 import { resolve } from 'node:path';
+
 export default defineConfig({
-  main: {},
+  main: {
+    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts'] })],
+  },
   preload: {
     build: { rollupOptions: { output: { format: 'cjs', entryFileNames: '[name].cjs' } } },
   },
