@@ -20,7 +20,8 @@
 | 同版 `codex app-server generate-ts --experimental` | 通过；888 个文件 | `spikes/codex-app-server/drafts/cli-protocol-candidate.json` |
 | `node --check spikes/codex-app-server/src/probe.mjs` | 通过 | 本轮命令退出码 0 |
 | `node --check spikes/codex-app-server/src/hash-generated.mjs` | 通过 | 本轮命令退出码 0 |
-| probe `--help` | 通过 | 列出 catalog、speech、speech-all、irl、controls 命令 |
+| probe `--help` | 通过 | 列出 catalog、smoke、speech、speech-all、irl、controls 命令 |
+| `node spikes/codex-app-server/src/probe.mjs smoke --code-home <isolated path>` | 通过 | `local-smoke.json`：初始化成功并启动 ephemeral thread；未启动推理 turn |
 | 合成语料生成 | 通过；200 条（zh 67、en 67、ja 66） | `spikes/codex-app-server/fixtures/irl-cases.json` |
 | 远程语音首增量，三种语言各 50 次 | 未运行；隔离 profile 未登录 | `reports/P0-08/BLOCKED.md` |
 | 远程 IRL `outputSchema` 200 次 | 未运行；隔离 profile 未登录 | `reports/P0-08/BLOCKED.md` |

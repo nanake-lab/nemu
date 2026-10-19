@@ -21,3 +21,4 @@ No P0-08 measurements have run yet. This file only records the claim and executi
 - Generated and parsed the 200-case synthetic multilingual fixture set (zh 67, en 67, ja 66). No user rehearsal or formal storage was opened.
 - Built the measurement commands and candidate configuration templates. Remote model/usage access remains blocked by isolated-profile sign-in; local carrier measurement remains blocked on P0-07.
 - Configuration writes remain limited to candidate drafts because the card directory excludes `config/`; see `tasks/requests/P0-08-config-scope.md`.
+- Local app-server smoke now initializes successfully and starts an ephemeral thread with the restricted feature configuration; no model turn or remote inference was started.

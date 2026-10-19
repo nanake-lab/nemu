@@ -31,12 +31,15 @@ Sign in only through the normal Codex CLI flow after confirming that account set
 
 ```powershell
 node spikes/codex-app-server/src/probe.mjs catalog --code-home $probeHome
+node spikes/codex-app-server/src/probe.mjs smoke --code-home $probeHome
 node spikes/codex-app-server/src/probe.mjs speech-all --code-home $probeHome --model <catalog-model-id>
 node spikes/codex-app-server/src/probe.mjs irl --code-home $probeHome --model <catalog-model-id> --runs 200
 node spikes/codex-app-server/src/probe.mjs controls --code-home $probeHome --model <catalog-model-id>
 ```
 
 `speech-all` performs exactly 50 short responses in each language (150 total) and records account quota snapshots before the batch, after the first 100, and after all 150. `irl` performs 200 structured-output calls and records the same quota boundaries after calls 100 and 200. These snapshots are account-level observations; they are not a billing estimate.
+
+`smoke` initializes app-server and starts an ephemeral thread without starting a model turn. It verifies local protocol setup only; it does not replace authenticated inference measurements.
 
 Raw JSONL records and summaries are written to `reports/P0-08/`. Records retain synthetic case identifiers, latency, status, output length, schema validity, and token usage when available. Response text, account identifiers, authentication data, and raw stderr are not written.
 

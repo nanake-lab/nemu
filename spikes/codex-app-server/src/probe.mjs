@@ -579,6 +579,7 @@ function printHelp() {
     "",
     "Commands (run from the repository root):",
     "  node spikes/codex-app-server/src/probe.mjs catalog --code-home <isolated path>",
+    "  node spikes/codex-app-server/src/probe.mjs smoke --code-home <isolated path>",
     "  node spikes/codex-app-server/src/probe.mjs speech --code-home <path> --model <id> --lang zh|en|ja --runs 50",
     "  node spikes/codex-app-server/src/probe.mjs speech-all --code-home <path> --model <id> --runs-per-language 50",
     "  node spikes/codex-app-server/src/probe.mjs irl --code-home <path> --model <id> --runs 200",
@@ -599,6 +600,14 @@ async function main() {
     await server.initialize();
     let result;
     if (mode === "catalog") result = await catalog(server);
+    else if (mode === "smoke") {
+      const threadId = await server.startThread({});
+      result = { initialized: true, ephemeralThreadStarted: typeof threadId === "string" && threadId.length > 0, configuredModel: null, turnStarted: false };
+      const outPath = resolve(reportRoot, "local-smoke.json");
+      await mkdir(dirname(outPath), { recursive: true });
+      const { writeFile } = await import("node:fs/promises");
+      await writeFile(outPath, `${JSON.stringify(result, null, 2)}\n`, "utf8");
+    }
     else if (mode === "speech") {
       const lang = required(options, "lang");
       if (!["zh", "en", "ja"].includes(lang)) throw new Error("--lang must be zh, en, or ja");
