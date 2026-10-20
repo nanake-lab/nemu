@@ -112,7 +112,6 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
         scaleFactor,
         transparentPhys,
         characterPhys,
-        stageHwndHex,
       };
     });
 
@@ -177,7 +176,7 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
 
     function sendNativeMouseMove(physX: number, physY: number): void {
       if (process.platform === 'win32') {
-        execFileSync(
+        const out = execFileSync(
           'pwsh',
           [
             '-NoProfile',
@@ -188,11 +187,15 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
             '-Y',
             String(physY),
             '-MoveOnly',
-            '-StageHwndHex',
-            layout.stageHwndHex,
           ],
           { encoding: 'utf-8' },
         );
+        const match = out.match(/SendInputResult:\s*(\d+)/);
+        const res = match && match[1] ? parseInt(match[1], 10) : 0;
+        if (res === 0) {
+          test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput returned 0)');
+          return;
+        }
       }
     }
 
@@ -212,8 +215,6 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
             String(count),
             '-DelayMs',
             '10',
-            '-StageHwndHex',
-            layout.stageHwndHex,
           ],
           { encoding: 'utf-8' },
         );

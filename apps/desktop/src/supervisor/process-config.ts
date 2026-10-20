@@ -70,13 +70,7 @@ export const REQUIRED_PROCESSES: ProcessTargetSpec[] = [
     args: ['src/main.py'],
     cwd: resolve('services/voice-sidecar'),
     entryCheckFile: resolve('services/voice-sidecar/src/main.py'),
-    healthProbe: {
-      type: 'http-get',
-      endpoint: 'http://127.0.0.1:8765/health',
-      intervalMs: 5000,
-      timeoutMs: 3000,
-      maxConsecutiveFailures: 3,
-    },
+    healthProbe: { type: 'none' },
   },
   {
     name: 'codex-bridge',

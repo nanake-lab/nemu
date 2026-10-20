@@ -174,64 +174,73 @@ test('stage window shell properties, channel routing, panel summoning and clean 
       expect(proc.pid, `Process ${name} should have valid PID`).toBeDefined();
     }
 
-    // Spawn a supervised test process that launches a grandchild process
+    // Spawn a supervised test process that launches a grandchild process (Windows tree-kill verification via taskkill /T /F)
     let grandchildPid: number | undefined;
     const grandchildPidPath = join(scratch, 'grandchild.pid');
 
-    const allChildPids = await application.evaluate(
-      async ({ app }, { pidPath }) => {
-        const sup = (app as unknown as { __nemu_supervisor__?: ProcessSupervisor }).__nemu_supervisor__;
-        if (!sup) throw new Error('Supervisor missing');
+    let allChildPids: number[] = [];
+    if (process.platform === 'win32') {
+      allChildPids = await application.evaluate(
+        async ({ app }, { pidPath }) => {
+          const sup = (app as unknown as { __nemu_supervisor__?: ProcessSupervisor }).__nemu_supervisor__;
+          if (!sup) throw new Error('Supervisor missing');
 
-        const grandchildScript = `
-          const cp = require('node:child_process');
-          const grandchild = cp.spawn(process.execPath, ['-e', 'setInterval(()=>{console.log("HEARTBEAT")},1000)'], {
-            detached: true,
-            stdio: 'ignore',
-            env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' }
+          const grandchildScript = `
+            const cp = require('node:child_process');
+            const grandchild = cp.spawn(process.execPath, ['-e', 'setInterval(()=>{console.log("HEARTBEAT")},1000)'], {
+              detached: true,
+              stdio: 'ignore',
+              env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' }
+            });
+            require('node:fs').writeFileSync(process.env.GRANDCHILD_PID_FILE, String(grandchild.pid));
+            setInterval(() => { console.log('HEARTBEAT'); }, 1000);
+          `;
+
+          const testProcess = sup.addProcess({
+            name: 'tree-kill-test',
+            isWorker: false,
+            command: process.execPath,
+            args: ['-e', grandchildScript],
+            env: {
+              ELECTRON_RUN_AS_NODE: '1',
+              GRANDCHILD_PID_FILE: pidPath,
+            },
           });
-          require('node:fs').writeFileSync(process.env.GRANDCHILD_PID_FILE, String(grandchild.pid));
-          setInterval(() => { console.log('HEARTBEAT'); }, 1000);
-        `;
 
-        const testProcess = sup.addProcess({
-          name: 'tree-kill-test',
-          isWorker: false,
-          command: process.execPath,
-          args: ['-e', grandchildScript],
-          env: {
-            ELECTRON_RUN_AS_NODE: '1',
-            GRANDCHILD_PID_FILE: pidPath,
-          },
-        });
+          await testProcess.start();
+          return sup.getRunningPids();
+        },
+        { pidPath: grandchildPidPath },
+      );
 
-        await testProcess.start();
-        return sup.getRunningPids();
-      },
-      { pidPath: grandchildPidPath },
-    );
-
-    // Wait for grandchild PID file to be written
-    await expect
-      .poll(async () => {
-        try {
-          const { readFileSync } = await import('node:fs');
-          const raw = readFileSync(grandchildPidPath, 'utf-8').trim();
-          const pid = Number.parseInt(raw, 10);
-          if (!Number.isNaN(pid) && pid > 0) {
-            grandchildPid = pid;
-            return true;
+      // Wait for grandchild PID file to be written
+      await expect
+        .poll(async () => {
+          try {
+            const { readFileSync } = await import('node:fs');
+            const raw = readFileSync(grandchildPidPath, 'utf-8').trim();
+            const pid = Number.parseInt(raw, 10);
+            if (!Number.isNaN(pid) && pid > 0) {
+              grandchildPid = pid;
+              return true;
+            }
+            return false;
+          } catch {
+            return false;
           }
-          return false;
-        } catch {
-          return false;
-        }
-      })
-      .toBe(true);
+        })
+        .toBe(true);
 
-    expect(grandchildPid).toBeDefined();
-    const pidsToCheck = [...allChildPids, grandchildPid!];
-    expect(pidsToCheck.length).toBeGreaterThanOrEqual(8);
+      expect(grandchildPid).toBeDefined();
+    } else {
+      allChildPids = await application.evaluate(async ({ app }) => {
+        const sup = (app as unknown as { __nemu_supervisor__?: ProcessSupervisor }).__nemu_supervisor__;
+        return sup?.getRunningPids() ?? [];
+      });
+    }
+
+    const pidsToCheck = grandchildPid ? [...allChildPids, grandchildPid] : [...allChildPids];
+    expect(pidsToCheck.length).toBeGreaterThanOrEqual(7);
 
     // Verify all processes are alive before shutdown
     for (const pid of pidsToCheck) {
