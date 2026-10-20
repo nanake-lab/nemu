@@ -3,6 +3,7 @@ export default defineConfig({
   test: {
     include: [
       'apps/panel/src/legacy/**/*.test.tsx',
+      'apps/panel/src/debug/**/*.test.{ts,tsx}',
       'apps/stage/src/**/*.test.ts',
       'apps/desktop/src/**/*.test.ts',
       'packages/*/src/**/*.test.ts',
