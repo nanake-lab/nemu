@@ -151,3 +151,38 @@ All positive growth claims, real-time dwell experiments, multi-root qualificatio
 ## Update — 2026-10-19 (ADR 0009, ADR 0010)
 
 ADR 0010 revises the v1.0 scope: v1.0 includes every mechanism of the v2.0 core (`docs/echo-core/echo-core-v2.0-first-principles.md`) and growth is on from birth. W06–W10 are replaced by the v2.0 growth work (evidence law, recomputation, EXPERIMENT lineage) and move into v1.0; W23 stays out of scope. The W06–W10 rows, the G/C acceptance rows and the growth-related invariant rows above are kept as history. The card that re-plans acceptance (P5-18) re-routes them against v2.0 §§15 and 17; until then this plan is not authoritative for growth items.
+
+## Update — 2026-10-20 (task cards rewritten for v2.0)
+
+The task cards were rewritten for v2.0 with the user's approval. v2.0 sections now route to the cards listed in the header table of `tasks/P5-echo-core.md`. The new acceptance and invariant IDs route as follows; P5-18 aggregates all of them into `pnpm accept:core` and appends the full list to `docs/echo-core/README.md`.
+
+| ID | Card(s) |
+| --- | --- |
+| AC2-01, AC2-02, AC2-06, AC2-07 | P5-23 |
+| AC2-03 | P5-23 (repeats), P5-24 (accounts) |
+| AC2-04 | P5-30 |
+| AC2-05 | P5-23 (R), P5-25 (θ), P5-08 (maintenance wake-ups) |
+| AC2-08 | P5-26; P5-29 (runtime); P5-15 (`echoctl verify --recompute`) |
+| AC2-09 | P5-26; P5-25 (θ part) |
+| AC2-10 | P5-24 |
+| AC2-11, AC2-12 | P5-24 (property), P5-30 (experiment) |
+| AC2-13 | P5-23 (property), P5-30 (experiment) |
+| AC2-14 | P5-25 |
+| AC2-15 | P5-10 |
+| AC2-16 | P5-31; cited by P5-17 |
+| AC2-17 | P5-31 |
+| AC2-18 | P5-26; P5-29 |
+| AC2-19 | P5-26 |
+| AC2-20 | P5-26 (core); P5-29 (runtime); P5-22 and P6-16 (no voting entry) |
+| AC2-21 | P5-23 (capacity, single-group cap); P5-26 (jump check); P5-29 (structural fault) |
+| AC2-22 | P5-02 (storage); P5-15 (`echoctl experiment new`) |
+| AC2-23 | P6-14 (structure); P6-15 (integration) |
+| AC2-24 | P5-15 (name is the first fact); P5-17 and P6-01 (no character or style text) |
+| AC2-25 | P5-25 (property); P5-30 (experiment) |
+| I05 (extended), I06, I10, I13, I17 | P5-10, P5-27, P5-23, P5-25, P5-31 |
+| I23 | P5-26; P5-15 |
+| I24, I27 | P5-24 |
+| I25 | P5-23 |
+| I26 | P5-05, P5-14; P5-22 (terminal); P6-14 (social) |
+| I28 | P5-21 (types); P6-01 (p v0); P5-17 (genesis, p v1) |
+| I29 | P5-02; P5-15; P5-30 |
