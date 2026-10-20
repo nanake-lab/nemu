@@ -1,0 +1,215 @@
+{
+  "command": "PowerShell wrapper: python -u \"C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-p007-instruct-weights-031bf09d6ba742b69c2c41f7a02b165c.py\" --hash; Python standard-library finalizer: python \"C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-p007-instruct-weights-031bf09d6ba742b69c2c41f7a02b165c.py\" --finalize \"C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-p007-instruct-weights-031bf09d6ba742b69c2c41f7a02b165c.json\"",
+  "workingDirectory": "D:\\Dev\\nemu-p007",
+  "startedAt": "2026-10-20T23:32:33.6163636+08:00",
+  "hashProcessStartedAt": "2026-10-20T23:32:33.6164972+08:00",
+  "hashProcessEndedAt": "2026-10-20T23:32:40.3018420+08:00",
+  "hashProcessExitCode": 0,
+  "endedAt": null,
+  "exitCode": null,
+  "stdout": "{\"status\":\"completed\",\"workingDirectory\":\"D:\\\\Dev\\\\nemu-p007\",\"startedAt\":\"2026-10-20T23:32:33.717923+08:00\",\"checks\":[{\"type\":\"revision\",\"result\":{\"model\":\"Qwen/Qwen3-4B-Instruct-2507\",\"expectedRevision\":\"cdbee75f17c01a7cc42f958dc650907174af0554\",\"manifestRevision\":\"cdbee75f17c01a7cc42f958dc650907174af0554\",\"manifestRevisionMatches\":true,\"metadataRevision\":\"cdbee75f17c01a7cc42f958dc650907174af0554\",\"metadataRevisionMatches\":true,\"cachePathRevision\":\"cdbee75f17c01a7cc42f958dc650907174af0554\",\"cachePathRevisionMatches\":true,\"preparationRepository\":\"Qwen/Qwen3-4B-Instruct-2507\",\"preparationRevision\":\"cdbee75f17c01a7cc42f958dc650907174af0554\",\"preparationRevisionMatches\":true,\"allChecksMatch\":true}},{\"type\":\"file\",\"result\":{\"model\":\"Qwen/Qwen3-4B-Instruct-2507\",\"revision\":\"cdbee75f17c01a7cc42f958dc650907174af0554\",\"path\":\"model-00001-of-00003.safetensors\",\"evidencePath\":\"D:\\\\Dev\\\\nemu-p007\\\\workers\\\\model-adapter\\\\probe\\\\.cache\\\\models\\\\Qwen--Qwen3-4B-Instruct-2507\\\\cdbee75f17c01a7cc42f958dc650907174af0554\\\\model-00001-of-00003.safetensors\",\"expected\":{\"preparationSha256\":\"75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6\",\"preparationBytes\":3957900840,\"metadataLfsSha256\":\"75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6\",\"metadataLfsBytes\":3957900840,\"metadataListedBytes\":3957900840},\"actual\":{\"sha256\":\"75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6\",\"bytes\":3957900840},\"comparison\":{\"metadataEntryCountIsOne\":true,\"actualShaMatchesPreparation\":true,\"actualShaMatchesMetadataLfs\":true,\"actualBytesMatchPreparation\":true,\"actualBytesMatchMetadataLfs\":true,\"metadataBytesMatchListedSize\":true,\"allChecksMatch\":true},\"error\":null}},{\"type\":\"file\",\"result\":{\"model\":\"Qwen/Qwen3-4B-Instruct-2507\",\"revision\":\"cdbee75f17c01a7cc42f958dc650907174af0554\",\"path\":\"model-00002-of-00003.safetensors\",\"evidencePath\":\"D:\\\\Dev\\\\nemu-p007\\\\workers\\\\model-adapter\\\\probe\\\\.cache\\\\models\\\\Qwen--Qwen3-4B-Instruct-2507\\\\cdbee75f17c01a7cc42f958dc650907174af0554\\\\model-00002-of-00003.safetensors\",\"expected\":{\"preparationSha256\":\"0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1\",\"preparationBytes\":3987450520,\"metadataLfsSha256\":\"0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1\",\"metadataLfsBytes\":3987450520,\"metadataListedBytes\":3987450520},\"actual\":{\"sha256\":\"0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1\",\"bytes\":3987450520},\"comparison\":{\"metadataEntryCountIsOne\":true,\"actualShaMatchesPreparation\":true,\"actualShaMatchesMetadataLfs\":true,\"actualBytesMatchPreparation\":true,\"actualBytesMatchMetadataLfs\":true,\"metadataBytesMatchListedSize\":true,\"allChecksMatch\":true},\"error\":null}},{\"type\":\"file\",\"result\":{\"model\":\"Qwen/Qwen3-4B-Instruct-2507\",\"revision\":\"cdbee75f17c01a7cc42f958dc650907174af0554\",\"path\":\"model-00003-of-00003.safetensors\",\"evidencePath\":\"D:\\\\Dev\\\\nemu-p007\\\\workers\\\\model-adapter\\\\probe\\\\.cache\\\\models\\\\Qwen--Qwen3-4B-Instruct-2507\\\\cdbee75f17c01a7cc42f958dc650907174af0554\\\\model-00003-of-00003.safetensors\",\"expected\":{\"preparationSha256\":\"7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d\",\"preparationBytes\":99630640,\"metadataLfsSha256\":\"7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d\",\"metadataLfsBytes\":99630640,\"metadataListedBytes\":99630640},\"actual\":{\"sha256\":\"7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d\",\"bytes\":99630640},\"comparison\":{\"metadataEntryCountIsOne\":true,\"actualShaMatchesPreparation\":true,\"actualShaMatchesMetadataLfs\":true,\"actualBytesMatchPreparation\":true,\"actualBytesMatchMetadataLfs\":true,\"metadataBytesMatchListedSize\":true,\"allChecksMatch\":true},\"error\":null}},{\"type\":\"revision\",\"result\":{\"model\":\"Qwen/Qwen3-TTS-12Hz-0.6B-Base\",\"expectedRevision\":\"5d83992436eae1d760afd27aff78a71d676296fc\",\"manifestRevision\":\"5d83992436eae1d760afd27aff78a71d676296fc\",\"manifestRevisionMatches\":true,\"metadataRevision\":\"5d83992436eae1d760afd27aff78a71d676296fc\",\"metadataRevisionMatches\":true,\"cachePathRevision\":\"5d83992436eae1d760afd27aff78a71d676296fc\",\"cachePathRevisionMatches\":true,\"preparationRepository\":\"Qwen/Qwen3-TTS-12Hz-0.6B-Base\",\"preparationRevision\":\"5d83992436eae1d760afd27aff78a71d676296fc\",\"preparationRevisionMatches\":true,\"allChecksMatch\":true}},{\"type\":\"file\",\"result\":{\"model\":\"Qwen/Qwen3-TTS-12Hz-0.6B-Base\",\"revision\":\"5d83992436eae1d760afd27aff78a71d676296fc\",\"path\":\"model.safetensors\",\"evidencePath\":\"D:\\\\Dev\\\\nemu-p007\\\\workers\\\\model-adapter\\\\probe\\\\.cache\\\\models\\\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\\\5d83992436eae1d760afd27aff78a71d676296fc\\\\model.safetensors\",\"expected\":{\"preparationSha256\":\"180b3b10eb1c9f1b4db7806d5475bae3071c0243c299d49926bab1da3b6946f6\",\"preparationBytes\":1829344272,\"metadataLfsSha256\":\"180b3b10eb1c9f1b4db7806d5475bae3071c0243c299d49926bab1da3b6946f6\",\"metadataLfsBytes\":1829344272,\"metadataListedBytes\":1829344272},\"actual\":{\"sha256\":\"180b3b10eb1c9f1b4db7806d5475bae3071c0243c299d49926bab1da3b6946f6\",\"bytes\":1829344272},\"comparison\":{\"metadataEntryCountIsOne\":true,\"actualShaMatchesPreparation\":true,\"actualShaMatchesMetadataLfs\":true,\"actualBytesMatchPreparation\":true,\"actualBytesMatchMetadataLfs\":true,\"metadataBytesMatchListedSize\":true,\"allChecksMatch\":true},\"error\":null}},{\"type\":\"file\",\"result\":{\"model\":\"Qwen/Qwen3-TTS-12Hz-0.6B-Base\",\"revision\":\"5d83992436eae1d760afd27aff78a71d676296fc\",\"path\":\"speech_tokenizer/model.safetensors\",\"evidencePath\":\"D:\\\\Dev\\\\nemu-p007\\\\workers\\\\model-adapter\\\\probe\\\\.cache\\\\models\\\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\\\5d83992436eae1d760afd27aff78a71d676296fc\\\\speech_tokenizer\\\\model.safetensors\",\"expected\":{\"preparationSha256\":\"836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258\",\"preparationBytes\":682293092,\"metadataLfsSha256\":\"836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258\",\"metadataLfsBytes\":682293092,\"metadataListedBytes\":682293092},\"actual\":{\"sha256\":\"836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258\",\"bytes\":682293092},\"comparison\":{\"metadataEntryCountIsOne\":true,\"actualShaMatchesPreparation\":true,\"actualShaMatchesMetadataLfs\":true,\"actualBytesMatchPreparation\":true,\"actualBytesMatchMetadataLfs\":true,\"metadataBytesMatchListedSize\":true,\"allChecksMatch\":true},\"error\":null}}],\"allChecksMatch\":true,\"evidencePaths\":[\"D:\\\\Dev\\\\nemu-p007\\\\workers\\\\model-adapter\\\\probe\\\\manifest.json\",\"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\preparation\\\\Qwen--Qwen3-4B-Instruct-2507-weights-20261016T151833171127Z.json\",\"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\preparation\\\\Qwen--Qwen3-TTS-12Hz-0.6B-Base-weights-20261016T170527361239Z.json\",\"D:\\\\Dev\\\\nemu-p007\\\\workers\\\\model-adapter\\\\probe\\\\.cache\\\\models\\\\Qwen--Qwen3-4B-Instruct-2507\\\\cdbee75f17c01a7cc42f958dc650907174af0554\\\\.cache\\\\weight-metadata.json\",\"D:\\\\Dev\\\\nemu-p007\\\\workers\\\\model-adapter\\\\probe\\\\.cache\\\\models\\\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\\\5d83992436eae1d760afd27aff78a71d676296fc\\\\.cache\\\\weight-metadata.json\"],\"endedAt\":\"2026-10-20T23:32:40.294826+08:00\"}",
+  "stderr": "",
+  "stderrLogPath": "C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-p007-instruct-weights-031bf09d6ba742b69c2c41f7a02b165c.stderr.log",
+  "originalFailureLogPath": "C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-p007-instruct-weights-original-failure-031bf09d6ba742b69c2c41f7a02b165c.txt",
+  "pythonScriptPath": "C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-p007-instruct-weights-031bf09d6ba742b69c2c41f7a02b165c.py",
+  "result": {
+    "status": "completed",
+    "workingDirectory": "D:\\Dev\\nemu-p007",
+    "startedAt": "2026-10-20T23:32:33.717923+08:00",
+    "checks": [
+      {
+        "type": "revision",
+        "result": {
+          "model": "Qwen/Qwen3-4B-Instruct-2507",
+          "expectedRevision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+          "manifestRevision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+          "manifestRevisionMatches": true,
+          "metadataRevision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+          "metadataRevisionMatches": true,
+          "cachePathRevision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+          "cachePathRevisionMatches": true,
+          "preparationRepository": "Qwen/Qwen3-4B-Instruct-2507",
+          "preparationRevision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+          "preparationRevisionMatches": true,
+          "allChecksMatch": true
+        }
+      },
+      {
+        "type": "file",
+        "result": {
+          "model": "Qwen/Qwen3-4B-Instruct-2507",
+          "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+          "path": "model-00001-of-00003.safetensors",
+          "evidencePath": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\model-00001-of-00003.safetensors",
+          "expected": {
+            "preparationSha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6",
+            "preparationBytes": 3957900840,
+            "metadataLfsSha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6",
+            "metadataLfsBytes": 3957900840,
+            "metadataListedBytes": 3957900840
+          },
+          "actual": {
+            "sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6",
+            "bytes": 3957900840
+          },
+          "comparison": {
+            "metadataEntryCountIsOne": true,
+            "actualShaMatchesPreparation": true,
+            "actualShaMatchesMetadataLfs": true,
+            "actualBytesMatchPreparation": true,
+            "actualBytesMatchMetadataLfs": true,
+            "metadataBytesMatchListedSize": true,
+            "allChecksMatch": true
+          },
+          "error": null
+        }
+      },
+      {
+        "type": "file",
+        "result": {
+          "model": "Qwen/Qwen3-4B-Instruct-2507",
+          "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+          "path": "model-00002-of-00003.safetensors",
+          "evidencePath": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\model-00002-of-00003.safetensors",
+          "expected": {
+            "preparationSha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1",
+            "preparationBytes": 3987450520,
+            "metadataLfsSha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1",
+            "metadataLfsBytes": 3987450520,
+            "metadataListedBytes": 3987450520
+          },
+          "actual": {
+            "sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1",
+            "bytes": 3987450520
+          },
+          "comparison": {
+            "metadataEntryCountIsOne": true,
+            "actualShaMatchesPreparation": true,
+            "actualShaMatchesMetadataLfs": true,
+            "actualBytesMatchPreparation": true,
+            "actualBytesMatchMetadataLfs": true,
+            "metadataBytesMatchListedSize": true,
+            "allChecksMatch": true
+          },
+          "error": null
+        }
+      },
+      {
+        "type": "file",
+        "result": {
+          "model": "Qwen/Qwen3-4B-Instruct-2507",
+          "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+          "path": "model-00003-of-00003.safetensors",
+          "evidencePath": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\model-00003-of-00003.safetensors",
+          "expected": {
+            "preparationSha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d",
+            "preparationBytes": 99630640,
+            "metadataLfsSha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d",
+            "metadataLfsBytes": 99630640,
+            "metadataListedBytes": 99630640
+          },
+          "actual": {
+            "sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d",
+            "bytes": 99630640
+          },
+          "comparison": {
+            "metadataEntryCountIsOne": true,
+            "actualShaMatchesPreparation": true,
+            "actualShaMatchesMetadataLfs": true,
+            "actualBytesMatchPreparation": true,
+            "actualBytesMatchMetadataLfs": true,
+            "metadataBytesMatchListedSize": true,
+            "allChecksMatch": true
+          },
+          "error": null
+        }
+      },
+      {
+        "type": "revision",
+        "result": {
+          "model": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+          "expectedRevision": "5d83992436eae1d760afd27aff78a71d676296fc",
+          "manifestRevision": "5d83992436eae1d760afd27aff78a71d676296fc",
+          "manifestRevisionMatches": true,
+          "metadataRevision": "5d83992436eae1d760afd27aff78a71d676296fc",
+          "metadataRevisionMatches": true,
+          "cachePathRevision": "5d83992436eae1d760afd27aff78a71d676296fc",
+          "cachePathRevisionMatches": true,
+          "preparationRepository": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+          "preparationRevision": "5d83992436eae1d760afd27aff78a71d676296fc",
+          "preparationRevisionMatches": true,
+          "allChecksMatch": true
+        }
+      },
+      {
+        "type": "file",
+        "result": {
+          "model": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+          "revision": "5d83992436eae1d760afd27aff78a71d676296fc",
+          "path": "model.safetensors",
+          "evidencePath": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\5d83992436eae1d760afd27aff78a71d676296fc\\model.safetensors",
+          "expected": {
+            "preparationSha256": "180b3b10eb1c9f1b4db7806d5475bae3071c0243c299d49926bab1da3b6946f6",
+            "preparationBytes": 1829344272,
+            "metadataLfsSha256": "180b3b10eb1c9f1b4db7806d5475bae3071c0243c299d49926bab1da3b6946f6",
+            "metadataLfsBytes": 1829344272,
+            "metadataListedBytes": 1829344272
+          },
+          "actual": {
+            "sha256": "180b3b10eb1c9f1b4db7806d5475bae3071c0243c299d49926bab1da3b6946f6",
+            "bytes": 1829344272
+          },
+          "comparison": {
+            "metadataEntryCountIsOne": true,
+            "actualShaMatchesPreparation": true,
+            "actualShaMatchesMetadataLfs": true,
+            "actualBytesMatchPreparation": true,
+            "actualBytesMatchMetadataLfs": true,
+            "metadataBytesMatchListedSize": true,
+            "allChecksMatch": true
+          },
+          "error": null
+        }
+      },
+      {
+        "type": "file",
+        "result": {
+          "model": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+          "revision": "5d83992436eae1d760afd27aff78a71d676296fc",
+          "path": "speech_tokenizer/model.safetensors",
+          "evidencePath": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\5d83992436eae1d760afd27aff78a71d676296fc\\speech_tokenizer\\model.safetensors",
+          "expected": {
+            "preparationSha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258",
+            "preparationBytes": 682293092,
+            "metadataLfsSha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258",
+            "metadataLfsBytes": 682293092,
+            "metadataListedBytes": 682293092
+          },
+          "actual": {
+            "sha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258",
+            "bytes": 682293092
+          },
+          "comparison": {
+            "metadataEntryCountIsOne": true,
+            "actualShaMatchesPreparation": true,
+            "actualShaMatchesMetadataLfs": true,
+            "actualBytesMatchPreparation": true,
+            "actualBytesMatchMetadataLfs": true,
+            "metadataBytesMatchListedSize": true,
+            "allChecksMatch": true
+          },
+          "error": null
+        }
+      }
+    ],
+    "allChecksMatch": true,
+    "evidencePaths": [
+      "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\manifest.json",
+      "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-Instruct-2507-weights-20261016T151833171127Z.json",
+      "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-TTS-12Hz-0.6B-Base-weights-20261016T170527361239Z.json",
+      "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\.cache\\weight-metadata.json",
+      "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\5d83992436eae1d760afd27aff78a71d676296fc\\.cache\\weight-metadata.json"
+    ],
+    "endedAt": "2026-10-20T23:32:40.294826+08:00"
+  }
+}

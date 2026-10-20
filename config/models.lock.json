@@ -21,7 +21,34 @@
         "role": "4B candidate",
         "license": "Apache-2.0",
         "redistributable": true,
-        "source": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507"
+        "source": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
+        "carrier_config": {
+          "version": 1,
+          "layer_index_zero_based": 17,
+          "rank": 8,
+          "hook": "after attention residual, before post_attention_layernorm",
+          "precision": "NF4",
+          "compute_dtype": "bfloat16",
+          "attention": "eager",
+          "double_quantization": false,
+          "kernel_name": "aten::_fused_rms_norm",
+          "kernel_api": "torch.nn.functional.rms_norm",
+          "kernel_wrapper": "native_norm.NativeRMSNorm",
+          "torch_version": "2.10.0+cu128",
+          "transformers_version": "4.57.3",
+          "bitsandbytes_version": "0.50.2",
+          "zero_modulation_reference": "same carrier configuration without wrapper; ADR 0012 section 2.1",
+          "cross_kernel_reference": "Transformers 4.57.3 Qwen3RMSNorm",
+          "cross_kernel_logits_max_abs": {
+            "zh": 0.34375,
+            "en": 0.4375,
+            "ja": 0.546875
+          },
+          "cross_kernel_argmax_changes": 0,
+          "cross_kernel_positions": 27,
+          "cross_kernel_evidence": "reports/P0-07/evidence-20261020/kernels-v1/Qwen--Qwen3-4B-Instruct-2507/result.json",
+          "kernel_change_policy": "carrier migration per v2.0 section 9.5 / I17"
+        }
       },
       {
         "id": "Qwen/Qwen3-8B",

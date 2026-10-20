@@ -1,0 +1,10 @@
+$ node workers/model-adapter/probe/launch_chat.mjs --help
+usage: chat.py [-h] [--ratio RATIO] [--norms NORMS]
+
+Manually launched CLI trial. RAM-only context; no transcript, logging or core
+storage.
+
+options:
+  -h, --help     show this help message and exit
+  --ratio RATIO  0 for m=0; otherwise a registered ratio
+  --norms NORMS  Measured norms.json from instruct_direction.py

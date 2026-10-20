@@ -182,3 +182,46 @@ exploratory beta=4 budget is recorded explicitly; it does not modify the old
 beta=1 probe or approve a production amplitude. Token/time/EOS budgets remain
 unchanged. Every output is retained. `direction_html.py` renders all outputs
 locally with HTML escaping. This study is informational, not P5-31 or AC2-16.
+
+## Instruct-only ADR 0012 follow-up and manual chat
+
+The current follow-up uses only Instruct-2507 at revision
+`cdbee75f17c01a7cc42f958dc650907174af0554`, NF4/bf16, eager attention,
+native RMS (`aten::_fused_rms_norm`, PyTorch 2.10.0+cu128), zero-based layer 17,
+after the attention residual and before post-attention normalization, rank 8.
+The archived calm/excited U and extraction pairs are reused without fitting.
+`instruct-dose-plan-v1.json` was committed before GPU execution: ratios
+0, ±0.05, ±0.1, ±0.2, ±0.4 of a single reference norm (median of six
+language/phase medians); actual U column norm is included in the conversion.
+
+Only after obtaining a quiet GPU window and checking both runner processes absent:
+
+```powershell
+workers/model-adapter/probe/.venv/Scripts/python.exe workers/model-adapter/probe/instruct_finish.py --output reports/P0-07/instruct-adr0012-NEW
+```
+
+This runs three independent fresh-process, twenty-character concurrent fixtures
+with WDDM sampling, then the informational norm/dose study and comparison.html.
+All samples, stops and failed measurements are retained. Each run must have
+p50 ≤ 600 ms; dedicated and shared owned-process maxima are added separately
+and compared with 8 GB (decimal), with allocator peaks reported separately.
+
+Manual chat is a separate, informational trial. In the same offline-runner GPU
+window, start it yourself from the repository root:
+
+```powershell
+pnpm probe:chat
+# After the measured norms.json exists, choose a preregistered signed ratio:
+pnpm probe:chat --ratio 0.1 --norms reports/P0-07/instruct-adr0012-NEW/direction/norms.json
+```
+
+Default ratio 0 means m=0. A positive ratio uses the archived calm-to-excited
+direction; a negative ratio reverses it. No preferred dose is selected here.
+Nonzero runs verify model revision, U digest and plan digest against norms.json.
+The launcher uses the existing probe .venv, or an existing Python executable set
+in `NEMU_PROBE_PYTHON`; it never downloads weights. CI refuses to run chat.
+Each turn displays first-sentence latency (or reports no boundary within the
+48-token/25-second budget). This timing is not the acceptance fixture.
+Context stays in RAM, `/reset` clears it, and `/exit` quits. No transcript is
+written and no rehearsal, production or other Echo Core store is opened.
+The chat command is never launched by the measurement suite or CI.

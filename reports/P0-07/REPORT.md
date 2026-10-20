@@ -277,3 +277,9 @@ v2 Ruff、Mypy、pytest（4 passed）与Qwen/Phi tiny CPU均退出0。子代理�
 实测揭示新的边界：四模型真实提示的跨内核最大logits差均非零；Qwen3-4B 的旧五token零误差不能推广。进程显存采样改善归因，但不能认证连续峰值；8B本轮专用显存最高观测9.311465472GB。含采样器的p50仅Instruct低于600ms；Qwen无采样器对照592.81675ms但余量有限。三款模型本轮中文七档输出无变化，不能认证三语方向条件。51条英文token_limit保留，不放宽预算。
 
 Ruff、严格Mypy14文件、CPU pytest6项、pnpm lint/typecheck/test通过（403 tests）。独立NPZ核验的p99插值精度差异及其复核原样保留，最大差/argmax全部匹配。没有选定载体、冻结生产容差或更改正式锁文件；600ms/9GB不变。补证建议已追加decision.md，阻塞保留在BLOCKED.md。PR #27保持草稿，等待用户决定和后续交叉审查，不启动下一卡。
+
+## 2026-10-20 ADR 0012 收尾准备（追加）
+
+已 merge 最新 main（含已合并 PR #38），按用户指示仅围绕 Instruct-2507 收尾。详见 instruct-adr0012-preparation/README.md。剂量比例已预先提交 03071ae；五个 Instruct/TTS 权重重算通过，复用本机缓存，无下载。机械核验外层包装器失败和成功哈希子进程分别保留，未抹除失败。
+
+新增 pnpm probe:chat，仅用户手动启动、RAM 对话、不打开 Core 存储；每轮报告首句延迟，非零参数绑定本轮 norms.json。未实际运行聊天或 GPU。CPU pytest 9 passed、Ruff、严格 Mypy 5 文件、pnpm lint/typecheck/test（443 tests）通过；无新依赖。跨内核差与固定内核名称/版本已加入 Instruct 候选条目，models.lock 仍为 candidates-only。等待本轮 GPU 证据，PR #27 保持草稿。
