@@ -1,0 +1,449 @@
+{
+  "model": {
+    "id": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "role": "8B comparison",
+    "license": "Apache-2.0",
+    "redistributable": true,
+    "source": "https://huggingface.co/Qwen/Qwen3-8B"
+  },
+  "timestamp": "2026-10-20T07:50:39.489603+00:00",
+  "status": "measured-not-accepted",
+  "precision": "NF4/bf16 eager",
+  "torch": "2.10.0+cu128",
+  "protocol": "one full prefill + eight teacher-forced decode steps; independent KV per kernel",
+  "limitation": "Three synthetic prompts; empirical evidence, no production tolerance frozen",
+  "cases": [
+    {
+      "language": "zh",
+      "prompt": "桌上有一本书和一杯水。请用中文简短描述这个场景。",
+      "input_ids": [
+        [
+          151644,
+          872,
+          198,
+          109792,
+          99992,
+          101602,
+          33108,
+          107165,
+          52510,
+          1773,
+          14880,
+          11622,
+          104811,
+          98237,
+          99534,
+          53481,
+          99487,
+          102122,
+          1773,
+          151645,
+          198,
+          151644,
+          77091,
+          198,
+          151667,
+          271,
+          151668,
+          271
+        ]
+      ],
+      "teacher_tokens": [
+        109792,
+        53222,
+        99164,
+        115909,
+        33108,
+        107165,
+        52510,
+        1773,
+        151645
+      ],
+      "native_rms_count": 145,
+      "metrics": [
+        {
+          "step": 0,
+          "phase": "prefill",
+          "max_abs": 0.32421875,
+          "mean_abs": 0.05043748393654823,
+          "p99_abs": 0.17578125,
+          "reference_argmax": 109792,
+          "native_argmax": 109792,
+          "argmax_equal": true
+        },
+        {
+          "step": 1,
+          "phase": "decode",
+          "max_abs": 0.40625,
+          "mean_abs": 0.06689226627349854,
+          "p99_abs": 0.21875,
+          "reference_argmax": 53222,
+          "native_argmax": 53222,
+          "argmax_equal": true
+        },
+        {
+          "step": 2,
+          "phase": "decode",
+          "max_abs": 0.4375,
+          "mean_abs": 0.05654168128967285,
+          "p99_abs": 0.1875,
+          "reference_argmax": 99164,
+          "native_argmax": 99164,
+          "argmax_equal": true
+        },
+        {
+          "step": 3,
+          "phase": "decode",
+          "max_abs": 0.5,
+          "mean_abs": 0.07876075804233551,
+          "p99_abs": 0.25,
+          "reference_argmax": 115909,
+          "native_argmax": 115909,
+          "argmax_equal": true
+        },
+        {
+          "step": 4,
+          "phase": "decode",
+          "max_abs": 0.4375,
+          "mean_abs": 0.05420684814453125,
+          "p99_abs": 0.1875,
+          "reference_argmax": 33108,
+          "native_argmax": 33108,
+          "argmax_equal": true
+        },
+        {
+          "step": 5,
+          "phase": "decode",
+          "max_abs": 0.375,
+          "mean_abs": 0.050557348877191544,
+          "p99_abs": 0.1875,
+          "reference_argmax": 107165,
+          "native_argmax": 107165,
+          "argmax_equal": true
+        },
+        {
+          "step": 6,
+          "phase": "decode",
+          "max_abs": 0.375,
+          "mean_abs": 0.07063670456409454,
+          "p99_abs": 0.21875,
+          "reference_argmax": 52510,
+          "native_argmax": 52510,
+          "argmax_equal": true
+        },
+        {
+          "step": 7,
+          "phase": "decode",
+          "max_abs": 0.5625,
+          "mean_abs": 0.08784826844930649,
+          "p99_abs": 0.2646484375,
+          "reference_argmax": 1773,
+          "native_argmax": 1773,
+          "argmax_equal": true
+        },
+        {
+          "step": 8,
+          "phase": "decode",
+          "max_abs": 0.375,
+          "mean_abs": 0.07860032469034195,
+          "p99_abs": 0.21875,
+          "reference_argmax": 151645,
+          "native_argmax": 151645,
+          "argmax_equal": true
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "prompt": "There is a book and a glass of water on the table. Briefly describe the scene in English.",
+      "input_ids": [
+        [
+          151644,
+          872,
+          198,
+          3862,
+          374,
+          264,
+          2311,
+          323,
+          264,
+          8991,
+          315,
+          3015,
+          389,
+          279,
+          1965,
+          13,
+          36518,
+          398,
+          7512,
+          279,
+          6109,
+          304,
+          6364,
+          13,
+          151645,
+          198,
+          151644,
+          77091,
+          198,
+          151667,
+          271,
+          151668,
+          271
+        ]
+      ],
+      "teacher_tokens": [
+        32,
+        2311,
+        374,
+        1787,
+        389,
+        279,
+        1965,
+        11,
+        323
+      ],
+      "native_rms_count": 145,
+      "metrics": [
+        {
+          "step": 0,
+          "phase": "prefill",
+          "max_abs": 0.75,
+          "mean_abs": 0.08019154518842697,
+          "p99_abs": 0.25,
+          "reference_argmax": 32,
+          "native_argmax": 32,
+          "argmax_equal": true
+        },
+        {
+          "step": 1,
+          "phase": "decode",
+          "max_abs": 0.5,
+          "mean_abs": 0.0616217777132988,
+          "p99_abs": 0.21875,
+          "reference_argmax": 2311,
+          "native_argmax": 2311,
+          "argmax_equal": true
+        },
+        {
+          "step": 2,
+          "phase": "decode",
+          "max_abs": 0.4375,
+          "mean_abs": 0.0560939759016037,
+          "p99_abs": 0.1875,
+          "reference_argmax": 374,
+          "native_argmax": 374,
+          "argmax_equal": true
+        },
+        {
+          "step": 3,
+          "phase": "decode",
+          "max_abs": 0.40625,
+          "mean_abs": 0.05598451569676399,
+          "p99_abs": 0.1875,
+          "reference_argmax": 1787,
+          "native_argmax": 1787,
+          "argmax_equal": true
+        },
+        {
+          "step": 4,
+          "phase": "decode",
+          "max_abs": 0.375,
+          "mean_abs": 0.05343654379248619,
+          "p99_abs": 0.1875,
+          "reference_argmax": 389,
+          "native_argmax": 389,
+          "argmax_equal": true
+        },
+        {
+          "step": 5,
+          "phase": "decode",
+          "max_abs": 0.5625,
+          "mean_abs": 0.12131783366203308,
+          "p99_abs": 0.3125,
+          "reference_argmax": 279,
+          "native_argmax": 279,
+          "argmax_equal": true
+        },
+        {
+          "step": 6,
+          "phase": "decode",
+          "max_abs": 0.5625,
+          "mean_abs": 0.10417758673429489,
+          "p99_abs": 0.3125,
+          "reference_argmax": 1965,
+          "native_argmax": 1965,
+          "argmax_equal": true
+        },
+        {
+          "step": 7,
+          "phase": "decode",
+          "max_abs": 0.375,
+          "mean_abs": 0.07692983746528625,
+          "p99_abs": 0.25,
+          "reference_argmax": 11,
+          "native_argmax": 11,
+          "argmax_equal": true
+        },
+        {
+          "step": 8,
+          "phase": "decode",
+          "max_abs": 0.40625,
+          "mean_abs": 0.06113802641630173,
+          "p99_abs": 0.205078125,
+          "reference_argmax": 323,
+          "native_argmax": 323,
+          "argmax_equal": true
+        }
+      ]
+    },
+    {
+      "language": "ja",
+      "prompt": "机の上に本と水の入ったコップがあります。日本語で短く描写してください。",
+      "input_ids": [
+        [
+          151644,
+          872,
+          198,
+          32648,
+          15767,
+          17447,
+          19655,
+          21894,
+          19182,
+          52510,
+          15767,
+          17254,
+          123857,
+          46160,
+          124871,
+          126375,
+          1773,
+          101059,
+          102819,
+          16161,
+          99534,
+          46784,
+          109478,
+          134093,
+          1773,
+          151645,
+          198,
+          151644,
+          77091,
+          198,
+          151667,
+          271,
+          151668,
+          271
+        ]
+      ],
+      "teacher_tokens": [
+        32648,
+        15767,
+        17447,
+        19655,
+        21894,
+        19182,
+        52510,
+        15767,
+        17254
+      ],
+      "native_rms_count": 145,
+      "metrics": [
+        {
+          "step": 0,
+          "phase": "prefill",
+          "max_abs": 0.34375,
+          "mean_abs": 0.05598532781004906,
+          "p99_abs": 0.1875,
+          "reference_argmax": 32648,
+          "native_argmax": 32648,
+          "argmax_equal": true
+        },
+        {
+          "step": 1,
+          "phase": "decode",
+          "max_abs": 0.34375,
+          "mean_abs": 0.05613645538687706,
+          "p99_abs": 0.1875,
+          "reference_argmax": 15767,
+          "native_argmax": 15767,
+          "argmax_equal": true
+        },
+        {
+          "step": 2,
+          "phase": "decode",
+          "max_abs": 0.375,
+          "mean_abs": 0.04629083722829819,
+          "p99_abs": 0.15625,
+          "reference_argmax": 17447,
+          "native_argmax": 17447,
+          "argmax_equal": true
+        },
+        {
+          "step": 3,
+          "phase": "decode",
+          "max_abs": 0.375,
+          "mean_abs": 0.055287767201662064,
+          "p99_abs": 0.1875,
+          "reference_argmax": 19655,
+          "native_argmax": 19655,
+          "argmax_equal": true
+        },
+        {
+          "step": 4,
+          "phase": "decode",
+          "max_abs": 0.5,
+          "mean_abs": 0.07244112342596054,
+          "p99_abs": 0.21875,
+          "reference_argmax": 21894,
+          "native_argmax": 21894,
+          "argmax_equal": true
+        },
+        {
+          "step": 5,
+          "phase": "decode",
+          "max_abs": 0.375,
+          "mean_abs": 0.05775813013315201,
+          "p99_abs": 0.1875,
+          "reference_argmax": 19182,
+          "native_argmax": 19182,
+          "argmax_equal": true
+        },
+        {
+          "step": 6,
+          "phase": "decode",
+          "max_abs": 0.625,
+          "mean_abs": 0.05922819301486015,
+          "p99_abs": 0.203125,
+          "reference_argmax": 52510,
+          "native_argmax": 52510,
+          "argmax_equal": true
+        },
+        {
+          "step": 7,
+          "phase": "decode",
+          "max_abs": 0.5,
+          "mean_abs": 0.06505537778139114,
+          "p99_abs": 0.203125,
+          "reference_argmax": 15767,
+          "native_argmax": 15767,
+          "argmax_equal": true
+        },
+        {
+          "step": 8,
+          "phase": "decode",
+          "max_abs": 0.34375,
+          "mean_abs": 0.05104372650384903,
+          "p99_abs": 0.1875,
+          "reference_argmax": 17254,
+          "native_argmax": 17254,
+          "argmax_equal": true
+        }
+      ]
+    }
+  ]
+}

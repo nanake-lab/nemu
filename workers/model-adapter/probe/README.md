@@ -146,3 +146,39 @@ from `sdpa` alone. No new dependency or compiler backend is introduced.
 归约内核改变可能带来数值差异，不能假定逐位一致。路径 JSON 同时记录 `native_rms_vs_original_*`（内核替换对原始模型的差异）以及原有零调制、注入误差、缓存失效字段；零调制对照使用相同内核的未包装模型。所有数字为实测，不能自行据此冻结生产容差。正式计时保留同一并载协议，profiler 只用于诊断。
 
 依据：PyTorch v2.10.0 官方源码 `aten/src/ATen/native/layer_norm.cpp` 的 rms_norm_symint 调用 `_fused_rms_norm`，本机已安装 CUDA dispatch；实际是否使用融合内核仍以轨迹核对。
+
+## 2026-10-20 supplementary evidence
+
+The following entry point runs supplementary kernels, sampled process-memory
+attribution with the unchanged int4 concurrent matrix, and a neutral-scene dose
+study sequentially. It requires a user-approved quiet GPU window and offline
+runner. All weights must have passed the pinned-revision SHA-256 checks first.
+It never downloads models and never chooses a carrier or production tolerance.
+
+```powershell
+# Activate the probe environment first (or use its python.exe explicitly).
+pnpm probe:supplement --output reports/P0-07/supplement-NEW
+```
+
+Use `--phase kernels|memory|direction` to run one phase into a separate fresh
+directory. `kernel_probe.py` saves full reference/native logits in NPZ, using
+identical baseline-selected tokens and independent KV for each kernel: prefill
+and eight decode steps on three synthetic language prompts. Decode continues
+for the fixed diagnostic depth even if EOS occurs; this is not generation or
+performance acceptance. Max/mean/p99 error and argmax changes are empirical data.
+
+`memory_watch.ps1` records WDDM process counters and the measurement process tree
+throughout the int4 matrix. Each row includes acquisition start/end time, all
+counter instances, and owned process identities. CIM/provider refresh and query
+latency limit temporal resolution; polling is not an exact continuous peak.
+Driver allocations outside process counters and missed short-lived processes
+remain limitations. Allocator peaks, global GPU readings and process counters
+are distinct measures. Instrumented matrix timing must be reported separately.
+
+`direction_probe.py --neutral-dose` preserves the historical default. It uses
+the same synthetic extraction pairs, a separate neutral evaluation prompt per
+language, coefficients -4/-2/-1/0/1/2/4 and matched seeds 731–733. The independent
+exploratory beta=4 budget is recorded explicitly; it does not modify the old
+beta=1 probe or approve a production amplitude. Token/time/EOS budgets remain
+unchanged. Every output is retained. `direction_html.py` renders all outputs
+locally with HTML escaping. This study is informational, not P5-31 or AC2-16.

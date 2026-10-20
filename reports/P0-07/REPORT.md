@@ -261,3 +261,19 @@ v2 Ruff、Mypy、pytest（4 passed）与Qwen/Phi tiny CPU均退出0。子代理�
 测量结束后检查Runner/Worker、Electron、probe Python、render_load/Playwright Node相关进程均为0，安静窗口结束。后续GPU测量另行通知，Windows CI需要runner时提前列明提交和作业。
 
 方向机械核对补充：每模型每语言20条、10对；Qwen3-4B zh/en/ja token变化配对5/2/3，Instruct-2507为5/3/2，Phi为6/2/6。全部180条以EOS结束，EOS后token数均0。完整文本已经由主代理逐条核对，统计不替代上述语义阅读。轨迹压缩归档校验见 optimization-profile/ARCHIVE.md，原始JSON保留本机，提交gzip无损副本，解压SHA256一致。
+
+## 2026-10-20 工作树恢复与路线1接手（追加）
+
+已在 D:/Dev/nemu-p007 接手草稿 PR #27；初始 HEAD 2ba7d16、status 干净。最新 origin/main 5a0f106 已通过 merge 合入并推送为 62d38d3，Ubuntu/Windows CI 均通过。恢复步骤、CPU 检查和后续补证边界见 recovery-20261020/README.md。
+
+本机旧 cache 找到全部五个固定修订，15 个 safetensors 实际大小和 SHA-256 与固定修订 metadata、历史 preparation 清单均一致，详见 recovery-20261020/weights-audit.json；已通过忽略的 junction 复用，无下载。CPU pytest 4 passed；Ruff、严格 Mypy 九文件通过。没有新增依赖、契约或实现变更。
+
+2026-10-20 任务卡追加已读：方向仍为信息性观察；不扩大到 P5-31。2026-10-18 的三项未闭合内容仍有效，没有新的 GPU 测量结论。已告知首个补证窗口预计 45–60 分钟，等待用户停 runner 后再次核对进程。最终载体由用户决定，不启动下一卡。
+
+## 2026-10-20 路线1补证结果（追加）
+
+详见 [本轮完整报告](evidence-20261020/REPORT.md)。用户确认停 runner 后串行完成四模型真实三语跨内核对照、四项 int4/TTS/硬件渲染并载与 WDDM 进程采样、Qwen3-4B 无采样器对照、三模型共189条中性七档剂量观察。全部测量子进程退出0；GPU结束后检查探针及5174监听已退出，已通知恢复runner。
+
+实测揭示新的边界：四模型真实提示的跨内核最大logits差均非零；Qwen3-4B 的旧五token零误差不能推广。进程显存采样改善归因，但不能认证连续峰值；8B本轮专用显存最高观测9.311465472GB。含采样器的p50仅Instruct低于600ms；Qwen无采样器对照592.81675ms但余量有限。三款模型本轮中文七档输出无变化，不能认证三语方向条件。51条英文token_limit保留，不放宽预算。
+
+Ruff、严格Mypy14文件、CPU pytest6项、pnpm lint/typecheck/test通过（403 tests）。独立NPZ核验的p99插值精度差异及其复核原样保留，最大差/argmax全部匹配。没有选定载体、冻结生产容差或更改正式锁文件；600ms/9GB不变。补证建议已追加decision.md，阻塞保留在BLOCKED.md。PR #27保持草稿，等待用户决定和后续交叉审查，不启动下一卡。
