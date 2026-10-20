@@ -17,27 +17,6 @@ public class Win32Mouse {
     public static extern bool SetProcessDPIAware();
 
     [DllImport("user32.dll")]
-    public static extern IntPtr WindowFromPoint(POINT pt);
-
-    [DllImport("user32.dll")]
-    public static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder text, int count);
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct POINT { public int X; public int Y; }
-
-    [DllImport("user32.dll")]
-    public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
-
-    [DllImport("user32.dll")]
-    public static extern IntPtr GetAncestor(IntPtr hWnd, uint gaFlags);
-
-    [DllImport("user32.dll")]
-    public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-    [DllImport("user32.dll")]
-    public static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
-
-    [DllImport("user32.dll")]
     public static extern bool SetCursorPos(int X, int Y);
 
     [DllImport("user32.dll")]
@@ -69,29 +48,10 @@ public class Win32Mouse {
     public const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
     public const uint MOUSEEVENTF_VIRTUALDESK = 0x4000;
 
-    public const uint WM_LBUTTONDOWN = 0x0201;
-    public const uint WM_LBUTTONUP = 0x0202;
-    public const uint MK_LBUTTON = 0x0001;
-
     static Win32Mouse() {
         try {
             SetProcessDPIAware();
         } catch {}
-    }
-
-    public static string Inspect(int x, int y) {
-        POINT pt; pt.X = x; pt.Y = y;
-        IntPtr hwnd = WindowFromPoint(pt);
-        IntPtr root = GetAncestor(hwnd, 2);
-        uint pid = 0;
-        GetWindowThreadProcessId(hwnd, out pid);
-        var sb = new System.Text.StringBuilder(256);
-        GetWindowText(hwnd, sb, 256);
-        string procName = "unknown";
-        try {
-            procName = System.Diagnostics.Process.GetProcessById((int)pid).ProcessName;
-        } catch {}
-        return string.Format("0x{0:X} (root: 0x{1:X}) '{2}' PID={3} ({4})", hwnd.ToInt64(), root.ToInt64(), sb.ToString(), pid, procName);
     }
 
     public static uint Move(int x, int y) {
@@ -123,37 +83,53 @@ public class Win32Mouse {
         return res;
     }
 
-    public static void Click(int x, int y) {
-        uint res = Move(x, y);
-        if (res > 0) {
-            INPUT[] inputs = new INPUT[2];
-            inputs[0].type = INPUT_MOUSE;
-            inputs[0].mi = new MOUSEINPUT {
-                dwFlags = MOUSEEVENTF_LEFTDOWN,
-                time = 0,
-                dwExtraInfo = IntPtr.Zero
-            };
-            inputs[1].type = INPUT_MOUSE;
-            inputs[1].mi = new MOUSEINPUT {
-                dwFlags = MOUSEEVENTF_LEFTUP,
-                time = 0,
-                dwExtraInfo = IntPtr.Zero
-            };
-            SendInput(2, inputs, Marshal.SizeOf(typeof(INPUT)));
-            return;
+    public static uint Click(int x, int y) {
+        uint moveRes = Move(x, y);
+        if (moveRes != 1) {
+            return 0;
         }
 
-        POINT pt; pt.X = x; pt.Y = y;
-        IntPtr hwnd = WindowFromPoint(pt);
-        if (hwnd == IntPtr.Zero) return;
+        int vLeft = GetSystemMetrics(76);
+        int vTop = GetSystemMetrics(77);
+        int vWidth = GetSystemMetrics(78);
+        int vHeight = GetSystemMetrics(79);
+        if (vWidth <= 0) vWidth = GetSystemMetrics(0);
+        if (vHeight <= 0) vHeight = GetSystemMetrics(1);
 
-        POINT clientPt = pt;
-        ScreenToClient(hwnd, ref clientPt);
-        IntPtr lParam = (IntPtr)(((clientPt.Y & 0xFFFF) << 16) | (clientPt.X & 0xFFFF));
+        int normX = (int)(((x - vLeft) * 65535.0f / (vWidth - 1)) + 0.5f);
+        int normY = (int)(((y - vTop) * 65535.0f / (vHeight - 1)) + 0.5f);
 
-        PostMessage(hwnd, WM_LBUTTONDOWN, (IntPtr)MK_LBUTTON, lParam);
-        System.Threading.Thread.Sleep(5);
-        PostMessage(hwnd, WM_LBUTTONUP, IntPtr.Zero, lParam);
+        INPUT[] down = new INPUT[1];
+        down[0].type = INPUT_MOUSE;
+        down[0].mi = new MOUSEINPUT {
+            dx = normX,
+            dy = normY,
+            dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_VIRTUALDESK | MOUSEEVENTF_LEFTDOWN,
+            time = 0,
+            dwExtraInfo = IntPtr.Zero
+        };
+        uint downRes = SendInput(1, down, Marshal.SizeOf(typeof(INPUT)));
+        if (downRes != 1) {
+            return 0;
+        }
+
+        System.Threading.Thread.Sleep(15);
+
+        INPUT[] up = new INPUT[1];
+        up[0].type = INPUT_MOUSE;
+        up[0].mi = new MOUSEINPUT {
+            dx = normX,
+            dy = normY,
+            dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_VIRTUALDESK | MOUSEEVENTF_LEFTUP,
+            time = 0,
+            dwExtraInfo = IntPtr.Zero
+        };
+        uint upRes = SendInput(1, up, Marshal.SizeOf(typeof(INPUT)));
+        if (upRes != 1) {
+            return 0;
+        }
+
+        return 1;
     }
 }
 '@
@@ -161,18 +137,26 @@ public class Win32Mouse {
 if ($MoveOnly) {
     $res = [Win32Mouse]::Move($X, $Y)
     Write-Output "SendInputResult: $res"
+    if ($res -ne 1) {
+        Write-Error "SendInput move failed (returned $res)"
+        exit 1
+    }
     Write-Output "Moved cursor to ($X, $Y)"
     exit 0
 }
 
-$targetWin = [Win32Mouse]::Inspect($X, $Y)
-Write-Output "Window under cursor at ($X, $Y): $targetWin"
-
 for ($i = 0; $i -lt $Count; $i++) {
-    [Win32Mouse]::Click($X, $Y)
+    $res = [Win32Mouse]::Click($X, $Y)
+    if ($res -ne 1) {
+        Write-Output "SendInputResult: $res"
+        Write-Error "SendInput click failed (returned $res) at ($X, $Y)"
+        exit 1
+    }
     if ($DelayMs -gt 0) {
         Start-Sleep -Milliseconds $DelayMs
     }
 }
 
+Write-Output "SendInputResult: 1"
 Write-Output "Clicked $Count times at ($X, $Y)"
+exit 0
