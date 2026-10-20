@@ -48,10 +48,20 @@ public class Win32Mouse {
     public const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
     public const uint MOUSEEVENTF_VIRTUALDESK = 0x4000;
 
-    static Win32Mouse() {
-        try {
-            SetProcessDPIAware();
-        } catch {}
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINT { public int X; public int Y; }
+    [DllImport("user32.dll")] public static extern IntPtr WindowFromPoint(POINT pt);
+    [DllImport("user32.dll")] public static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder text, int count);
+    [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint pid);
+
+    public static string Inspect(int x, int y) {
+        POINT pt; pt.X = x; pt.Y = y;
+        IntPtr hwnd = WindowFromPoint(pt);
+        uint pid = 0;
+        GetWindowThreadProcessId(hwnd, out pid);
+        var sb = new System.Text.StringBuilder(256);
+        GetWindowText(hwnd, sb, 256);
+        return string.Format("0x{0:X} '{1}' PID={2}", hwnd.ToInt64(), sb.ToString(), pid);
     }
 
     public static uint Move(int x, int y) {
@@ -133,6 +143,9 @@ public class Win32Mouse {
     }
 }
 '@
+
+$target = [Win32Mouse]::Inspect($X, $Y)
+Write-Output "Window under cursor: $target"
 
 if ($MoveOnly) {
     $res = [Win32Mouse]::Move($X, $Y)

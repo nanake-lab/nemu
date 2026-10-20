@@ -1,5 +1,38 @@
+﻿================================================================================
+Interactive Click-Through Verification (瀹屾垚鏍囧噯绗?17 椤?
+Commit: c58248dcafe35dc5eb27135dd8f9c847e242e015
+Timestamp: 2026-10-20T14:42:44.310+08:00
+Session: Console (User: DESKTOP-8LBF84O\nanake)
+Input Desktop: WinSta0\Default
+Mode: Pure Win32 SendInput (No PostMessage fallback)
+================================================================================
+
+
 Running 1 test using 1 worker
 
-  ok 1 apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures (5.6s)
+[Layout Info] {
+  originX: 100,
+  originY: 100,
+  scaleFactor: 1,
+  transparentPhys: { x: 150, y: 150 },
+  characterPhys: { x: 375, y: 375 },
+  stageHwndHex: '0xc0e82',
+  counterHwndHex: '0x12e0a26'
+}
+[NativeMouseMove] (x=150, y=150) -> out: Window under cursor: 0xB60DB6 'Chrome Legacy Window' PID=22412 | SendInputResult: 1 | Moved cursor to (150, 150) | 
+[NativeClicks] (x=150, y=150, count=50) -> out: Window under cursor: 0xB60DB6 'Chrome Legacy Window' PID=22412 | SendInputResult: 1 | Clicked 50 times at (150, 150) | 
+Before assert, counterPage state: {
+  count: 50,
+  events: [
+    'pointerdown', 'mousedown',
+    'pointerup',   'mouseup',
+    'click',       'pointerdown',
+    'mousedown',   'pointerup',
+    'mouseup',     'click'
+  ]
+}
+[NativeMouseMove] (x=375, y=375) -> out: Window under cursor: 0xB60DB6 'Chrome Legacy Window' PID=22412 | SendInputResult: 1 | Moved cursor to (375, 375) | 
+[NativeClicks] (x=375, y=375, count=50) -> out: Window under cursor: 0xC0E78 'Chrome Legacy Window' PID=22412 | SendInputResult: 1 | Clicked 50 times at (375, 375) | 
+  ok 1 apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures (7.1s)
 
-  1 passed (6.6s)
+  1 passed (8.1s)

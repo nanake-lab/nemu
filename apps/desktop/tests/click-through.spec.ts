@@ -81,7 +81,9 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
           `),
       );
 
+      counterWindow.setAlwaysOnTop(true, 'pop-up-menu');
       counterWindow.show();
+      counterWindow.focus();
 
       // Re-assert stage is on top of counter window
       stage.setAlwaysOnTop(true, 'screen-saver');
@@ -112,8 +114,12 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
         scaleFactor,
         transparentPhys,
         characterPhys,
+        stageHwndHex,
+        counterHwndHex,
       };
     });
+
+    console.log('[Layout Info]', layout);
 
     await expect.poll(() => application?.windows().length).toBe(3);
     const counterPage = application.windows().find((w) => w.url().includes('data:text/html'));
@@ -193,7 +199,7 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
           );
           const match = out.match(/SendInputResult:\s*(\d+)/);
           const res = match && match[1] ? parseInt(match[1], 10) : 0;
-          console.log(`[NativeMouseMove] (x=${physX}, y=${physY}) -> SendInputResult: ${res}`);
+          console.log(`[NativeMouseMove] (x=${physX}, y=${physY}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
           if (res === 0) {
             test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput move returned 0)');
             return;
@@ -202,7 +208,7 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
           const out = (err as { stdout?: string }).stdout || String(err);
           const match = out.match(/SendInputResult:\s*(\d+)/);
           const res = match && match[1] ? parseInt(match[1], 10) : 0;
-          console.log(`[NativeMouseMove] (x=${physX}, y=${physY}) -> SendInputResult: ${res}`);
+          console.log(`[NativeMouseMove] (x=${physX}, y=${physY}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
           if (res === 0) {
             test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput move returned 0)');
             return;
@@ -234,7 +240,7 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
           );
           const match = out.match(/SendInputResult:\s*(\d+)/);
           const res = match && match[1] ? parseInt(match[1], 10) : 0;
-          console.log(`[NativeClicks] (x=${physX}, y=${physY}, count=${count}) -> SendInputResult: ${res}`);
+          console.log(`[NativeClicks] (x=${physX}, y=${physY}, count=${count}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
           if (res === 0) {
             test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput click returned 0)');
             return;
@@ -243,7 +249,7 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
           const out = (err as { stdout?: string }).stdout || String(err);
           const match = out.match(/SendInputResult:\s*(\d+)/);
           const res = match && match[1] ? parseInt(match[1], 10) : 0;
-          console.log(`[NativeClicks] (x=${physX}, y=${physY}, count=${count}) -> SendInputResult: ${res}`);
+          console.log(`[NativeClicks] (x=${physX}, y=${physY}, count=${count}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
           if (res === 0) {
             test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput click returned 0)');
             return;
@@ -272,6 +278,13 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
     sendNativeClicks(layout.transparentPhys.x, layout.transparentPhys.y, 50);
 
     // Assert counter window received all 50 clicks
+    console.log(
+      'Before assert, counterPage state:',
+      await counterPage?.evaluate(() => {
+        const win = window as unknown as { __CLICK_COUNT__?: number; __EVENTS__?: string[] };
+        return { count: win.__CLICK_COUNT__, events: win.__EVENTS__?.slice(-10) };
+      }),
+    );
     await expect
       .poll(async () => {
         return await counterPage?.evaluate(() => {
