@@ -95,11 +95,12 @@
 - [ ] （不阻塞）更改 Windows 系统缩放比例（DPI）后角色位置与包围盒保持稳定无跳动
 
 ## 后续建议（不在本任务范围内）
-- 真实子进程健康探针补全：当前除占位进程外，真实组件探针均配置为 none（由 exit 事件与进程树强杀兜底）；后续接入各真实进程的任务卡（P4-voice、P5-echo-core、P6-presence 等）需依据各组件契约规范补充专用探针（如 HTTP GET /health 或命名管道握手）
+- 150% 缩放实跑：当前测试环境为 100% 缩放（scaleFactor = 1），虽然代码已引入 `SetProcessDpiAwarenessContext(-4)` 与 `screen.screenToDipPoint`，后续建议在具备高分屏/150% DPI 缩放配置的 Windows 真实主机上实跑点击穿透回归，验证缩放换算无像素偏差。
+- 真实组件健康探针：当前除占位进程外，真实组件探针均配置为 `none`（由子进程 exit 事件监听与进程树强杀兜底）；后续接入各真实后台进程的任务卡（P4-voice、P5-echo-core、P6-presence 等）需依据各组件契约规范补充专用健康探针（如 HTTP GET /health 或命名管道握手）。
+- 非 Windows 进程树清理：当前进程树强杀在 Windows 上使用 `taskkill /pid <PID> /T /F`，POSIX 平台上建议后续在守护模块引入基于进程组（`process.kill(-pid, 'SIGKILL')`）或 cgroup 的清理机制，以提升跨平台开发时的孙进程回收彻底性。
 - P1-03 实现评审台视图与参数调优界面
 - P1-04 实现调试面板（事件流查看器、核心状态查看器、延迟瀑布图与舞台命令发送）
 - P5-05 实现真实的 Windows Low IL（低完整性）子进程启动器后，无缝替换 `apps/desktop/src/supervisor/low-integrity-launcher.ts`
 
 ## 下一步
-已完成。推送到 GitHub 分支 `task/P1-02-desktop-shell`，并在 PR #28 中回复审查意见，等待 Claude 复审。
-复审通过后按 AGENTS.md 第 6 节合并，接下来可取的卡：`P1-04`（调试面板，依赖 P1-02，建议执行者 Antigravity）。
+审查已通过。合并最新 `main`（`5a0f106`），CI 验证全绿后通过 squash 合并至 `main`。接下来取的卡：按 `tasks/README.md` 第 2 节取下一张卡。
