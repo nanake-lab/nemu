@@ -387,6 +387,19 @@
    "effort": "5 天（你约 3 小时）"
   },
   {
+   "id": "P3-06",
+   "title": "身体读出 v2（E5 修订）",
+   "phase": "P3",
+   "milestone": "N3",
+   "deps": [
+    "P5-22"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "3 天"
+  },
+  {
    "id": "P4-01",
    "title": "语音识别与语言识别",
    "phase": "P4",
@@ -527,25 +540,27 @@
    "phase": "P5",
    "milestone": "N2",
    "deps": [
-    "P5-02"
-   ],
-   "difficulty": "高",
-   "suggested": "Codex",
-   "you": null,
-   "effort": "5 天"
-  },
-  {
-   "id": "P5-06",
-   "title": "语义核心：IRL 治理与概念注册表（W20 核心部分）",
-   "phase": "P5",
-   "milestone": "N3",
-   "deps": [
-    "P5-04"
+    "P5-02",
+    "P5-21"
    ],
    "difficulty": "高",
    "suggested": "Codex",
    "you": null,
    "effort": "6 天"
+  },
+  {
+   "id": "P5-06",
+   "title": "语义核心：IRL 与解释记录的治理、概念注册表（W20 核心部分）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-04",
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "7 天"
   },
   {
    "id": "P5-07",
@@ -568,12 +583,13 @@
    "milestone": "N2",
    "deps": [
     "P5-03",
-    "P5-04"
+    "P5-04",
+    "P5-21"
    ],
    "difficulty": "高",
    "suggested": "Codex",
    "you": null,
-   "effort": "5 天"
+   "effort": "6 天"
   },
   {
    "id": "P5-09",
@@ -590,11 +606,12 @@
   },
   {
    "id": "P5-10",
-   "title": "快状态 F（W05 核心部分）",
+   "title": "快状态 F（v2.0 第 6 节）",
    "phase": "P5",
    "milestone": "N3",
    "deps": [
-    "P5-09"
+    "P5-21",
+    "P5-27"
    ],
    "difficulty": "高",
    "suggested": "Claude",
@@ -603,30 +620,30 @@
   },
   {
    "id": "P5-11",
-   "title": "A_x 驱动 worker（W05 提议部分）",
+   "title": "天性评估 worker（原 A_x）",
    "phase": "P5",
    "milestone": "N3",
    "deps": [
-    "P5-01"
+    "P5-07",
+    "P5-21"
    ],
    "difficulty": "中",
    "suggested": "Codex",
    "you": null,
-   "effort": "3 天"
+   "effort": "4 天"
   },
   {
    "id": "P5-12",
-   "title": "J 编译与读出（W11）",
+   "title": "J 编译与读出（v2.0 第 9 节）",
    "phase": "P5",
    "milestone": "N3",
    "deps": [
-    "P5-09",
     "P5-10"
    ],
    "difficulty": "高",
    "suggested": "Claude",
    "you": null,
-   "effort": "4 天"
+   "effort": "5 天"
   },
   {
    "id": "P5-13",
@@ -641,7 +658,7 @@
    "difficulty": "高",
    "suggested": "Codex",
    "you": null,
-   "effort": "6 天"
+   "effort": "7 天"
   },
   {
    "id": "P5-14",
@@ -659,17 +676,17 @@
   },
   {
    "id": "P5-15",
-   "title": "结构重放、检查点、本机备份与诞生（W14）",
+   "title": "结构重放、整段重算、本机备份与诞生（W14）",
    "phase": "P5",
    "milestone": "N3",
    "deps": [
     "P5-14",
-    "P5-19"
+    "P5-29"
    ],
    "difficulty": "高",
    "suggested": "Codex",
    "you": null,
-   "effort": "6 天"
+   "effort": "7 天"
   },
   {
    "id": "P5-16",
@@ -677,7 +694,8 @@
    "phase": "P5",
    "milestone": "N3",
    "deps": [
-    "P5-08"
+    "P5-08",
+    "P5-29"
    ],
    "difficulty": "中",
    "suggested": "Codex",
@@ -686,41 +704,44 @@
   },
   {
    "id": "P5-17",
-   "title": "genesis 校准（W17 子集，你参与）",
+   "title": "genesis 校准（你参与）",
    "phase": "P5",
    "milestone": "N3",
    "deps": [
-    "P2-01",
     "P5-13",
-    "P5-19",
+    "P5-29",
+    "P5-30",
+    "P5-31",
     "P6-01"
    ],
    "difficulty": "高",
    "suggested": "Codex",
-   "you": "评审成对样例并签字",
-   "effort": "6 天（你约 3 小时）",
+   "you": "查看成对样例并签字",
+   "effort": "6 天（你约 1 小时）",
    "note": "高难度：Claude 与 Codex 协作；你评审并签字"
   },
   {
    "id": "P5-18",
-   "title": "M2 阶段门验收（W16 子集）",
+   "title": "v2.0 验收（N3 阶段门）",
    "phase": "P5",
    "milestone": "N3",
    "deps": [
     "P5-15",
     "P5-17",
-    "P5-19",
     "P5-20",
+    "P5-29",
+    "P5-30",
+    "P5-31",
     "P6-01"
    ],
    "difficulty": "高",
    "suggested": "Codex",
    "you": null,
-   "effort": "6 天"
+   "effort": "8 天"
   },
   {
    "id": "P5-19",
-   "title": "第一集成里程碑：语义与快状态接入编排",
+   "title": "第一集成里程碑：语义、天性与情绪接入编排",
    "phase": "P5",
    "milestone": "N3",
    "deps": [
@@ -728,26 +749,180 @@
     "P5-07",
     "P5-08",
     "P5-10",
-    "P5-11"
+    "P5-11",
+    "P5-12",
+    "P5-22"
    ],
    "difficulty": "高",
    "suggested": "Codex",
    "you": null,
-   "effort": "4 天"
+   "effort": "5 天"
   },
   {
    "id": "P5-20",
-   "title": "自主调度、机会规则与安静模式（W13 调度）",
+   "title": "自主调度与主动（v2.0 第 9.4 节）",
    "phase": "P5",
    "milestone": "N3",
    "deps": [
     "P5-12",
-    "P5-14"
+    "P5-14",
+    "P5-22",
+    "P6-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天"
+  },
+  {
+   "id": "P5-21",
+   "title": "IDL 契约变更：v2.0 的状态与记录",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P5-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天"
+  },
+  {
+   "id": "P5-22",
+   "title": "终端契约变更：身体读出、主动边界、成长的查询与通知",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-21"
    ],
    "difficulty": "中",
    "suggested": "Codex",
    "you": null,
    "effort": "4 天"
+  },
+  {
+   "id": "P5-23",
+   "title": "规律引擎 G：倾向的证据计数",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天"
+  },
+  {
+   "id": "P5-24",
+   "title": "证据组装：从解释记录到证据组",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-23"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天"
+  },
+  {
+   "id": "P5-25",
+   "title": "动力学 C：θ 的学习与回应回路",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "4 天"
+  },
+  {
+   "id": "P5-26",
+   "title": "重算、来源更正、暂停与复核",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-12",
+    "P5-23",
+    "P5-24",
+    "P5-25"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天"
+  },
+  {
+   "id": "P5-27",
+   "title": "作用视图按 v2.0 简化（P5-09 后续）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-09"
+   ],
+   "difficulty": "中",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "2 天"
+  },
+  {
+   "id": "P5-28",
+   "title": "情境吻合与候选倾向 worker（M）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-13",
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天"
+  },
+  {
+   "id": "P5-29",
+   "title": "第二集成里程碑：成长接入编排",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-19",
+    "P5-26",
+    "P5-28",
+    "P5-31"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天"
+  },
+  {
+   "id": "P5-30",
+   "title": "实验谱系：合成世界与规律校准",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-26"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "7 天"
+  },
+  {
+   "id": "P5-31",
+   "title": "方向提取与验证",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-13"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天"
   },
   {
    "id": "P6-01",
@@ -936,6 +1111,7 @@
    "milestone": "N3",
    "deps": [
     "P3-05",
+    "P3-06",
     "P5-16",
     "P5-18",
     "P5-20",
@@ -945,12 +1121,54 @@
     "P6-07",
     "P6-09",
     "P6-11",
-    "P6-12"
+    "P6-12",
+    "P6-16"
    ],
    "difficulty": "—",
    "suggested": "你",
    "you": "你来做",
    "effort": "约 3 小时，加上诞生后的第一天"
+  },
+  {
+   "id": "P6-14",
+   "title": "网络生活：边界与隔离",
+   "phase": "P6",
+   "milestone": "N4",
+   "deps": [
+    "P5-29",
+    "P6-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天"
+  },
+  {
+   "id": "P6-15",
+   "title": "网络生活：平台连接器",
+   "phase": "P6",
+   "milestone": "N4",
+   "deps": [
+    "P6-14"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": "指定首批平台与账号",
+   "effort": "6 天（你约 1 小时）"
+  },
+  {
+   "id": "P6-16",
+   "title": "面板：成长记录、暂停与复核通知",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P5-22",
+    "P6-10"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "4 天"
   },
   {
    "id": "P7-01",
@@ -1036,6 +1254,7 @@
     "P3-03",
     "P3-04",
     "P3-05",
+    "P3-06",
     "P4-01",
     "P4-02",
     "P4-03",
@@ -1062,6 +1281,17 @@
     "P5-18",
     "P5-19",
     "P5-20",
+    "P5-21",
+    "P5-22",
+    "P5-23",
+    "P5-24",
+    "P5-25",
+    "P5-26",
+    "P5-27",
+    "P5-28",
+    "P5-29",
+    "P5-30",
+    "P5-31",
     "P6-01",
     "P6-02",
     "P6-03",
@@ -1075,6 +1305,9 @@
     "P6-11",
     "P6-12",
     "P6-13",
+    "P6-14",
+    "P6-15",
+    "P6-16",
     "P7-01",
     "P7-02",
     "P7-03",

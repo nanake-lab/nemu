@@ -87,3 +87,9 @@ CompileAuthorizedEffects(stored_R, stored_θ, process_time, validity) -> E_eff
 - `docs/echo-core/` 原文、IDL、阈值和验收编号都不变。
 - P5-10、P5-11、P5-12 按本 ADR 实现。P5-11 的 A_x 输入视图不含 x̄，卡片交付物中的 `W_x x̄` 项不再实现。
 - W00 差异登记追加 W00-C03 至 W00-C07。`tasks/P5-echo-core.md` 末尾追加说明。
+
+## 追加（2026-10-19）：与 ADR 0009 的关系
+
+- 本 ADR 保留。第 1 节正是 v2.0 对快状态的要求：情境作用 f_k(e) 对每个事件是常数，不读 x̄。第 1 节第 4 点中的「witness/χ/K 路径」读作 v2.0 中 R 的倾向。
+- 第 2、3 节的签名不变。v2.0 取消了 q 包络和 ValidityContract，validity 为空。
+- 「不在本 ADR 内」一节的 P-2、X-1（W00-C06、W00-C07）已由 ADR 0009 消解，D-7 不再需要回答。

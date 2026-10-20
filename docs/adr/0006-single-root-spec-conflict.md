@@ -18,3 +18,7 @@ Choose one:
 ## Interim behavior and consequences
 
 Existing approved v1.0 behavior is unchanged: empty R, genesis θ, identity G/C, audited NO-GROWTH/GROWTH_NOT_ENABLED_V1. No single-root or multi-root growth is implemented in P0-06. Option 1 affects future growth acceptance and must not silently delete original 16.2/16.9 evidence. Option 2 permits only an explicitly bounded v1.0 baseline, not a claim that the full specifications are consistent. Option 3 delays the baseline pending authoritative text. No original document, threshold, IDL or runtime code is changed by this proposal.
+
+## Status update — 2026-10-19
+
+**SUPERSEDED by ADR 0009.** The v2.0 core (`docs/echo-core/echo-core-v2.0-first-principles.md`) has no single-root or multi-root qualification, so W00-C01 is dissolved rather than decided between options 1–3. The text above is kept as history.
