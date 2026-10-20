@@ -85,6 +85,7 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
           `),
       );
 
+      counterWindow.setAlwaysOnTop(true, 'pop-up-menu');
       counterWindow.show();
       counterWindow.focus();
 
@@ -306,6 +307,13 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
     expect(initialHits).toBe(0);
 
     // 4. Phase 2: 50 clicks on character pixels
+    // Re-assert stage is topmost above counterWindow after counterWindow received phase 1 clicks
+    await application.evaluate(({ BrowserWindow }) => {
+      const stage = BrowserWindow.getAllWindows().find((w) => w.getTitle() === 'Nemu stage');
+      stage?.setAlwaysOnTop(true, 'screen-saver');
+      stage?.moveTop();
+    });
+
     // Move cursor natively via Win32 SendInput onto the character hit box (200..350) (subsequent move -> isInitial = false)
     sendNativeMouseMove(layout.characterPhys.x, layout.characterPhys.y, false);
 

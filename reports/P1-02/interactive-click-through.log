@@ -1,7 +1,7 @@
 ﻿================================================================================
 Interactive Click-Through Verification (Standard Item 17)
-Commit: ef32355dca53cab4008551a0981ef1297f8f1b2b
-Timestamp: 2026-10-20T15:15:43.717+08:00
+Commit: 32d9f5588422c7a5cb98bca28c02fe8f6ec7a373
+Timestamp: 2026-10-20T15:20:36.997+08:00
 Session: Console (User: DESKTOP-8LBF84O\nanake)
 Input Desktop: WinSta0\Default
 Mode: Pure Win32 SendInput (Per-Monitor v2 DPI, zero PostMessage fallback)
@@ -16,23 +16,35 @@ Running 1 test using 1 worker
   scaleFactor: 1,
   transparentPhys: { x: 150, y: 150 },
   characterPhys: { x: 375, y: 375 },
-  stageHwndHex: '0x1260754',
-  counterHwndHex: '0x1280de8'
+  stageHwndHex: '0x5e09ec',
+  counterHwndHex: '0x12e0de8'
 }
-[NativeMouseMove] (x=150, y=150, isInitial=true) -> out: Window under cursor: 0x2F0AD6 'Chrome Legacy Window' PID=27032 | SendInputResult: 1 | Moved cursor to (150, 150) | 
-[NativeClicks] (x=150, y=150, count=50) -> out: Window under cursor: 0x2F0AD6 'Chrome Legacy Window' PID=27032 | SendInputResult: 1 | Clicked 50 times at (150, 150) | 
-Before assert, counterPage state: {
-  count: 50,
-  events: [
-    'pointerdown', 'mousedown',
-    'pointerup',   'mouseup',
-    'click',       'pointerdown',
-    'mousedown',   'pointerup',
-    'mouseup',     'click'
-  ]
-}
-[NativeMouseMove] (x=375, y=375, isInitial=false) -> out: Window under cursor: 0x2F0AD6 'Chrome Legacy Window' PID=27032 | SendInputResult: 1 | Moved cursor to (375, 375) | 
-[NativeClicks] (x=375, y=375, count=50) -> out: Window under cursor: 0x3A0BF0 'Chrome Legacy Window' PID=27032 | SendInputResult: 1 | Clicked 50 times at (375, 375) | 
-  ok 1 apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures (6.9s)
+[NativeMouseMove] (x=150, y=150, isInitial=true) -> out: Window under cursor: 0x450D5A 'Chrome Legacy Window' PID=16276 | SendInputResult: 1 | Moved cursor to (150, 150) | 
+[NativeClicks] (x=150, y=150, count=50) -> out: Window under cursor: 0x450D5A 'Chrome Legacy Window' PID=16276 | SendInputResult: 1 | Clicked 50 times at (150, 150) | 
+Before assert, counterPage state: { count: 0, events: [] }
+  x  1 apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures (9.0s)
 
-  1 passed (7.9s)
+
+  1) apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 50
+    Received: 0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      298 |         });
+      299 |       })
+    > 300 |       .toBe(50);
+          |        ^
+      301 |
+      302 |     // Assert stage received 0 hits
+      303 |     const initialHits = await application.evaluate(({ app }) => {
+        at D:\Dev\nemu-antigravity\apps\desktop\tests\click-through.spec.ts:300:8
+
+    Error Context: test-results\apps-desktop-tests-click-t-c1761-s-and-50-character-captures\error-context.md
+
+  1 failed
+    apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures 
