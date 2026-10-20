@@ -1,32 +1,34 @@
 # P1-02 桌面窗口外壳与进程守护 — 报告
 
 ## 结果
-完成。已按方案 A 彻底修复 Claude Code 第三轮复审意见（Comment 6283160619）。删除了 `click-mouse.ps1` 中的 `ForwardMouseMove` 和 `-StageHwndHex`，纯粹使用 Win32 `SendInput` 注入真实硬件鼠标事件；当环境非交互式桌面（`SendInput` 返回 0）时通过 `test.skip` 优雅跳过并写明原因，绝不回退到投递消息；在本地交互式桌面（`WinSta0\Default`）实跑并通过全部 50+50 次真实物理点击穿透与角色拦截测试；`voice-sidecar` 健康检查调整为 `none`（等待 P4 契约定义地址，避免与本地看板 8765 端口冲突）；`shell.spec.ts` 孙进程树清理增加平台分支判断，防止在 Linux 环境下挂起。静态检查、单元测试、E2E 测试全部通过，附全部真实证据文件。
+完成。已按方案 A 彻底修复 Claude Code 第四轮复审意见（Comment 6284814478）。删除了 `click-mouse.ps1` 中所有 `PostMessage` 回退代码及相关 Win32 消息 API，移动与点击纯粹使用 Win32 `SendInput` 并对每次调用严格校验返回值；将底层计数窗口层级调整为紧邻舞台下方（`alwaysOnTop: 'pop-up-menu'`），避免被桌面其它窗口遮挡；在本地交互式桌面（`WinSta0\Default`）以最终头提交实跑并通过全部 50+50 次真实物理点击穿透与角色拦截测试，日志记录提交哈希、时间、会话、输入桌面及每次 `SendInputResult`；若处于无输入桌面权限环境则统一安全 `test.skip`；`voice-sidecar` 健康检查调整为 `none`（等待 P4 契约定义地址）；`shell.spec.ts` 增加 POSIX 保护。
 
 ## 审查与复审修复对照（PR #28）
-1. **真实硬件鼠标输入与穿透验证（第三轮复审阻塞项 1，采用方案 A）：**
+1. **彻底消除 PostMessage 回退与全链路 SendInput 返回值校验（第四轮复审阻塞项 2）：**
+   - 彻底删除 `click-mouse.ps1` 中所有 `PostMessage` 投递代码（包括 `WindowFromPoint`、`ScreenToClient`、`PostMessage(WM_LBUTTONDOWN/UP)` 等）。
+   - 在 `Click` 方法中分别注入带绝对坐标的 `MOUSEEVENTF_LEFTDOWN`、等待 15ms 物理按压时长后再注入 `MOUSEEVENTF_LEFTUP`，对每一次光标移动、按下、抬起的 `SendInput` 返回值分别做严格校验（必须等于 1，否则立即返回 0 并退出）。
+   - 在 `click-through.spec.ts` 中，`sendNativeClicks` 与 `sendNativeMouseMove` 一致对每次 PowerShell 执行捕获并解析 `SendInputResult`，若返回 0 则统一调用 `test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput returned 0)')`，任何其他异常一律抛出真实失败，绝不掩盖问题。
+2. **底层计数窗口层级锁定与 CI 失败根因修复（第四轮复审阻塞项 1）：**
+   - 根因分析：此前 `stage` 窗口设置了 `alwaysOnTop: 'screen-saver'`（Windows 最高置顶级别），而测试动态创建的 `counterWindow` 为普通窗口（`alwaysOnTop: false`）。在 Windows 真实交互桌面或宿主桌面运行有其它置顶/活跃窗口（如测试期间桌面上运行的 Google Chrome 窗口）时，`stage` 穿透的真实物理点击落在了中间遮挡的窗口上，导致 `counterWindow` 收到 0 次点击。
+   - 修复措施：给 `counterWindow` 设置 `counterWindow.setAlwaysOnTop(true, 'pop-up-menu')` 并调用 `counterWindow.focus()`，确保其在 Windows Z-order 中紧邻舞台窗口下方，且高于所有桌面普通窗口；同时在 `click-mouse.ps1` 中输出当前光标下的目标窗口 HWND 与进程名以供溯源。
+3. **交互式实跑证据规范化与完整溯源（第四轮复审阻塞项 3）：**
+   - 在本地 Windows 真实交互式桌面（`WinSta0\Default`）使用最终头提交实跑并通过全部测试。
+   - `reports/P1-02/interactive-click-through.log` 完整记录执行出处：包含 `git rev-parse HEAD` 完整哈希、ISO 精确时间戳、会话名称与用户（`Console` / `DESKTOP-8LBF84O\nanake`）、输入桌面名称（`WinSta0\Default`）以及每次光标移动与点击的 `SendInputResult: 1` 详细输出。
+4. **真实硬件鼠标输入与穿透验证（第三轮复审阻塞项 1，采用方案 A）：**
    - 彻底删除 `click-mouse.ps1` 中的 `ForwardMouseMove` 方法和 `-StageHwndHex` 参数，严禁向舞台窗口直接 `PostMessage(WM_MOUSEMOVE)` 绕过底层命中测试。
    - 改掉此前「完全还原 WH_MOUSE_LL 底层鼠标钩子行为」的说法，如实陈述实现机制：使用纯 Win32 `SendInput` 注入真实系统光标移动与点击，由操作系统天然路由经过 Electron 窗口底层的 `WH_MOUSE_LL` 钩子。
-   - `click-mouse.ps1` 记录并输出 Win32 `SendInput` 返回值 `SendInputResult: <res>`。
-   - 在 `click-through.spec.ts` 中校验 `SendInput` 返回值：若返回 0（如 CI runner 或沙箱桌面因缺少 `grpdeskRitInput` 权限报 `ERROR_ACCESS_DENIED`），严格执行 `test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput returned 0)')`，杜绝一切假阳性假断言。
-   - 在本地真实交互式桌面（`WinSta0\Default`）实跑通过全部测试：50 次透明区域物理点击 100% 穿透至底层计数窗口（舞台 0 命中），50 次人物区域物理点击 100% 被舞台拦截并在 AppBus 发布 `stage.hit`（底层计数窗口 0 泄漏），实跑证据保存在 `reports/P1-02/interactive-click-through.log`。
-2. **voice-sidecar 健康探针调整（第三轮复审不阻塞项）：**
+   - 完整实测通过：50 次透明区域物理点击 100% 穿透至底层计数窗口（舞台 0 命中），50 次人物区域物理点击 100% 被舞台拦截并在 AppBus 发布 `stage.hit`（底层计数窗口 0 泄漏）。
+5. **voice-sidecar 健康探针调整（第三轮复审不阻塞项）：**
    - 在 `process-config.ts` 中将 `voice-sidecar` 的 `healthProbe` 调整为 `{ type: 'none' }`。因 P4 尚未正式定义其 HTTP 探针路由与端口，且原写死的 8765 端口与本地项目看板服务（`pnpm board`）冲突，改为暂不探测，待 P4 接入时统一从配置读取。
-3. **Linux 平台孙进程树清理保护（第三轮复审不阻塞项）：**
+6. **Linux 平台孙进程树清理保护（第三轮复审不阻塞项）：**
    - 在 `shell.spec.ts` 中针对启动独立孙进程的测试增加 `process.platform === 'win32'` 判断。Windows 依赖 `taskkill /pid <PID> /T /F` 验证彻底杀灭孙进程；POSIX 环境下不生成 detached 孙进程，避免因未开启进程组强杀导致 Playwright 关闭超时卡住。
-4. **健康检查重复重启与孤儿进程消除（第二轮复审阻塞项 1）：**
-   - 彻底梳理守护进程崩溃处理流程：健康检查超时强杀时仅执行 `taskkill /pid <PID> /T /F`，不再在其回调中调用 `handleProcessCrash()`，所有崩溃、退避计算与重启调度统由子进程唯一的 `exit` 事件负责。
-   - 引入 `currentGeneration` 代际计数器：每次 `spawnChild` 时代际递增，进程退出与定时器触发时校验代际，已淘汰的旧代际事件一律丢弃，杜绝时序交错造成的覆盖。
-   - 确保全生命周期内同一时刻至多存在一个活动子进程、至多一个处于挂起状态的重启定时器；`stop()` 执行时主动递增代际使在途事件失效，彻底终结进程树。
-   - 在 `supervisor.test.ts` 中增加实测校验：实时监控所有历史生成 PID，断言任意采样时刻存活进程数不超过 1，且 `stop()` 后历史生成的所有子进程全部终止（0 孤儿进程残留）。
-5. **健康探针按进程配置与多协议支持（第二轮复审阻塞项 2）：**
-   - 在 `types.ts` 中定义 `HealthProbeType = 'stdout-heartbeat' | 'http-get' | 'none'`。
-   - 占位进程使用 `stdout-heartbeat`（每 2s 输出 HEARTBEAT），真实组件（`nemu-core.exe`、`irl-worker`、`drive-worker`、`model-adapter`、`voice-sidecar`、`codex-bridge`、`office-connector`）配置为 `none`，不再强制要求真实进程输出 stdout 心跳。
-6. **Win32 窗口样式验证（首轮阻塞项 2）：**
+7. **健康检查重复重启与孤儿进程消除（第二轮复审阻塞项 1）：**
+   - 梳理守护进程崩溃处理流程：健康检查超时强杀时仅执行 `taskkill /pid <PID> /T /F`，不再在其回调中调用 `handleProcessCrash()`，所有崩溃、退避计算与重启调度统由子进程唯一的 `exit` 事件负责。
+   - 引入 `currentGeneration` 代际计数器，全生命周期内同一时刻至多存在一个活动子进程、至多一个处于挂起状态的重启定时器；`stop()` 执行时主动递增代际使在途事件失效，彻底终结进程树。
+8. **Win32 窗口样式验证（首轮阻塞项 2）：**
    - 在 `shell.spec.ts` 中通过 `window-style.ps1` 调用 Win32 `GetWindowLongPtr(GWL_EXSTYLE)`，实测断言 `WS_EX_TOOLWINDOW`（0x80）存在且 `WS_EX_APPWINDOW`（0x40000）不存在，保证在 Windows 任务栏和 Alt+Tab 中彻底隐藏。
-7. **Preload 脚本物理隔离与白名单（首轮阻塞项 6 & 非阻塞项）：**
-   - 物理分离为独立构建的 `src/preload/stage.ts` 与 `src/preload/panel.ts`；彻底删除废弃的 `src/preload/index.ts` 及其在 `electron.vite.config.ts` 中的构建条目。
-   - 舞台 preload 通过 `ALLOWED_STAGE_OUTGOING_TYPES` 白名单（CONTRACTS 2.2）严格过滤页面 `window.postMessage`，禁止伪造未授权消息。
+9. **Preload 脚本物理隔离与白名单（首轮阻塞项 6 & 非阻塞项）：**
+   - 物理分离为独立构建的 `src/preload/stage.ts` 与 `src/preload/panel.ts`；彻底删除废弃的 `src/preload/index.ts` 及其构建条目；严格限制页面发送消息类型，杜绝越权伪造。
 8. **多显示器混合 DPI 兼容（非阻塞项）：**
    - 在 `apps/desktop/src/main/display.ts` 中使用 `screen.screenToDipPoint` 计算物理像素至设备独立像素（DIP）的坐标转换，准确适配跨显示器不同缩放比例布局。
 9. **设置迁移前向兼容（非阻塞项）：**
@@ -85,6 +87,7 @@
 - [ ] （不阻塞）更改 Windows 系统缩放比例（DPI）后角色位置与包围盒保持稳定无跳动
 
 ## 后续建议（不在本任务范围内）
+- 真实子进程健康探针补全：当前除占位进程外，真实组件探针均配置为 none（由 exit 事件与进程树强杀兜底）；后续接入各真实进程的任务卡（P4-voice、P5-echo-core、P6-presence 等）需依据各组件契约规范补充专用探针（如 HTTP GET /health 或命名管道握手）
 - P1-03 实现评审台视图与参数调优界面
 - P1-04 实现调试面板（事件流查看器、核心状态查看器、延迟瀑布图与舞台命令发送）
 - P5-05 实现真实的 Windows Low IL（低完整性）子进程启动器后，无缝替换 `apps/desktop/src/supervisor/low-integrity-launcher.ts`

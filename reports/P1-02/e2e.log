@@ -1,8 +1,18 @@
 Running 3 tests using 1 worker
 
+[Layout Info] {
+  originX: 100,
+  originY: 100,
+  scaleFactor: 1,
+  transparentPhys: { x: 150, y: 150 },
+  characterPhys: { x: 375, y: 375 },
+  stageHwndHex: '0x960a9e',
+  counterHwndHex: '0xd30cb2'
+}
+[NativeMouseMove] (x=150, y=150) -> out: Window under cursor: 0xBF0E3A 'Chrome Legacy Window' PID=26528 | SendInputResult: 0 | 
   -  1 apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures
   ok 2 apps\desktop\tests\shell.spec.ts:12:1 › stage window shell properties, channel routing, panel summoning and clean process termination (3.5s)
   ok 3 apps\desktop\tests\smoke.spec.ts:9:1 › two visible isolated windows; transparent stage; no core storage (1.2s)
 
   1 skipped
-  2 passed (7.6s)
+  2 passed (7.4s)
