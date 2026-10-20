@@ -1,0 +1,41 @@
+$ vitest run
+
+ RUN  v5.0.4 D:/Dev/nemu-antigravity
+
+ ✓ packages/body/src/idle/idle.test.ts (9 tests) 19ms
+ ✓ packages/body/src/readout/readout.test.ts (8 tests) 36ms
+ ✓ apps/desktop/src/settings/settings.test.ts (4 tests) 39ms
+ ✓ packages/body/src/actions/actions.test.ts (4 tests) 21ms
+ ✓ packages/body/src/fsm/fsm.test.ts (8 tests) 43ms
+ ✓ packages/avatar-runtime/src/animation/animation.test.ts (19 tests) 86ms
+ ✓ packages/contracts/src/performance.test.ts (197 tests) 126ms
+ ✓ packages/body/src/reflex/reflex.test.ts (4 tests) 8ms
+ ✓ apps/panel/src/legacy/Composer.test.tsx (1 test) 15ms
+ ✓ packages/body/src/actions/cue-scheduler.test.ts (2 tests) 9ms
+ ✓ apps/desktop/src/bus/bus.test.ts (6 tests) 36ms
+ ✓ apps/desktop/src/main/display.test.ts (3 tests) 8ms
+ ✓ packages/contracts/src/schemas.test.ts (114 tests) 132ms
+ ✓ packages/voice/src/index.test.ts (1 test) 4ms
+ ✓ packages/desktop-sense/src/index.test.ts (1 test) 4ms
+ ✓ packages/log/src/index.test.ts (1 test) 4ms
+ ✓ executors/codex-bridge/src/index.test.ts (1 test) 3ms
+ ✓ packages/avatar-runtime/src/index.test.ts (9 tests) 23ms
+ ✓ apps/stage/src/review/review.test.ts (6 tests) 11ms
+ ✓ packages/terminal/src/index.test.ts (1 test) 3ms
+ ✓ packages/contracts/src/index.test.ts (1 test) 3ms
+ ✓ packages/body/src/index.test.ts (1 test) 3ms
+ ✓ tools/scaffold/structure.test.ts (4 tests) 111ms
+ ✓ apps/desktop/src/supervisor/supervisor.test.ts (6 tests) 1823ms
+   ✓ SupervisedProcess Exponential Backoff and Restart (6)
+     ✓ spawns a placeholder process when target binary does not exist 321ms
+     ✓ detects hung process missing heartbeats and restarts it without leaving orphan processes 538ms
+ ✓ packages/avatar-runtime/src/lipsync/lipsync.test.ts (11 tests) 2787ms
+   ✓ Cross-correlation deviation test (完成标准第 10 项) (3)
+     ✓ cross-correlation delay for 20 sentences in zh: mean <= 50ms, max <= 80ms 668ms
+     ✓ cross-correlation delay for 20 sentences in en: mean <= 50ms, max <= 80ms 1420ms
+     ✓ cross-correlation delay for 20 sentences in ja: mean <= 50ms, max <= 80ms 591ms
+
+ Test Files  25 passed (25)
+      Tests  422 passed (422)
+   Start at  12:21:29
+   Duration  3.70s

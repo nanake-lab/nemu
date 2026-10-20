@@ -17,6 +17,7 @@
     "test": "vitest run",
     "build": "pnpm -r build",
     "test:e2e": "pnpm build && playwright test --config apps/desktop/playwright.config.ts",
+    "test:panel:e2e": "pnpm build && playwright test --config apps/panel/src/debug/playwright.config.ts",
     "test:visual": "node apps/stage/tests/visual/runner.mjs",
     "test:edge": "node apps/stage/tests/visual/edge-check.mjs",
     "bench": "node tools/scaffold/pending.mjs P7-01",

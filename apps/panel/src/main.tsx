@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { useState } from 'react';
 import { Composer } from './legacy/Composer';
+import { DebugPanel } from './debug/index.js';
 import './style.css';
 const root = document.getElementById('root');
 if (!root) throw new Error('Missing panel root');
@@ -12,6 +13,7 @@ function Panel() {
       <p>Application scaffold</p>
       <p>Core, conversation, and voice are not connected.</p>
       <Composer draft={draft} setDraft={setDraft} onSubmit={() => {}} disabled />
+      <DebugPanel />
     </main>
   );
 }
