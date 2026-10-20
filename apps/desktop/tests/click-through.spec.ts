@@ -9,6 +9,10 @@ import type { StageWindowManager } from '../src/main/stage-window.js';
 
 test('click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures', async () => {
   test.skip(process.platform !== 'win32', 'Click-through via Win32 SendInput and low-level mouse hooks is Windows-specific');
+  test.skip(
+    Boolean(process.env.CI || process.env.GITHUB_ACTIONS),
+    'CI 环境下无独立交互式桌面且会干扰宿主鼠标输入，第 17 项点击穿透通过本机交互实跑证据验收 (reports/P1-02/interactive-click-through.log)',
+  );
 
   const scratch = await mkdtemp(join(tmpdir(), 'nemu-scaffold-click-'));
   let application: ElectronApplication | undefined;
@@ -180,10 +184,12 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
 
     const clickScriptPath = resolve('apps/desktop/tests/helpers/click-mouse.ps1');
 
-    function sendNativeMouseMove(physX: number, physY: number): void {
+    function sendNativeMouseMove(physX: number, physY: number, isInitial = false): void {
       if (process.platform === 'win32') {
+        let out: string;
+        let res: number;
         try {
-          const out = execFileSync(
+          out = execFileSync(
             'pwsh',
             [
               '-NoProfile',
@@ -198,30 +204,35 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
             { encoding: 'utf-8' },
           );
           const match = out.match(/SendInputResult:\s*(\d+)/);
-          const res = match && match[1] ? parseInt(match[1], 10) : 0;
-          console.log(`[NativeMouseMove] (x=${physX}, y=${physY}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
-          if (res === 0) {
-            test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput move returned 0)');
-            return;
-          }
+          res = match && match[1] ? parseInt(match[1], 10) : 0;
         } catch (err: unknown) {
-          const out = (err as { stdout?: string }).stdout || String(err);
+          out = (err as { stdout?: string }).stdout || String(err);
           const match = out.match(/SendInputResult:\s*(\d+)/);
-          const res = match && match[1] ? parseInt(match[1], 10) : 0;
-          console.log(`[NativeMouseMove] (x=${physX}, y=${physY}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
-          if (res === 0) {
+          res = match && match[1] ? parseInt(match[1], 10) : 0;
+          console.log(`[NativeMouseMove] (x=${physX}, y=${physY}, isInitial=${isInitial}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
+          if (res === 0 && isInitial) {
             test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput move returned 0)');
             return;
           }
-          throw err;
+          throw new Error(`NativeMouseMove failed (res=${res}, isInitial=${isInitial}): ${out}`, { cause: err });
+        }
+        console.log(`[NativeMouseMove] (x=${physX}, y=${physY}, isInitial=${isInitial}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
+        if (res === 0) {
+          if (isInitial) {
+            test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput move returned 0)');
+            return;
+          }
+          throw new Error(`NativeMouseMove failed (res=0, isInitial=${isInitial}): ${out}`);
         }
       }
     }
 
     function sendNativeClicks(physX: number, physY: number, count: number): void {
       if (process.platform === 'win32') {
+        let out: string;
+        let res: number;
         try {
-          const out = execFileSync(
+          out = execFileSync(
             'pwsh',
             [
               '-NoProfile',
@@ -239,29 +250,24 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
             { encoding: 'utf-8' },
           );
           const match = out.match(/SendInputResult:\s*(\d+)/);
-          const res = match && match[1] ? parseInt(match[1], 10) : 0;
-          console.log(`[NativeClicks] (x=${physX}, y=${physY}, count=${count}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
-          if (res === 0) {
-            test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput click returned 0)');
-            return;
-          }
+          res = match && match[1] ? parseInt(match[1], 10) : 0;
         } catch (err: unknown) {
-          const out = (err as { stdout?: string }).stdout || String(err);
+          out = (err as { stdout?: string }).stdout || String(err);
           const match = out.match(/SendInputResult:\s*(\d+)/);
-          const res = match && match[1] ? parseInt(match[1], 10) : 0;
+          res = match && match[1] ? parseInt(match[1], 10) : 0;
           console.log(`[NativeClicks] (x=${physX}, y=${physY}, count=${count}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
-          if (res === 0) {
-            test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput click returned 0)');
-            return;
-          }
-          throw err;
+          throw new Error(`NativeClicks failed (res=${res}): ${out}`, { cause: err });
+        }
+        console.log(`[NativeClicks] (x=${physX}, y=${physY}, count=${count}) -> out: ${out.replace(/\r?\n/g, ' | ')}`);
+        if (res !== 1) {
+          throw new Error(`NativeClicks failed (res=${res}): ${out}`);
         }
       }
     }
 
     // 3. Phase 1: 50 clicks on transparent area
-    // Move cursor natively via Win32 SendInput to transparent area
-    sendNativeMouseMove(layout.transparentPhys.x, layout.transparentPhys.y);
+    // Move cursor natively via Win32 SendInput to transparent area (initial move -> isInitial = true)
+    sendNativeMouseMove(layout.transparentPhys.x, layout.transparentPhys.y, true);
 
     // Wait for stageWindowManager to confirm click-through state (isIgnored = true)
     // triggered genuinely via WH_MOUSE_LL hook forwarding cursor move to Chromium
@@ -301,8 +307,8 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
     expect(initialHits).toBe(0);
 
     // 4. Phase 2: 50 clicks on character pixels
-    // Move cursor natively via Win32 SendInput onto the character hit box (200..350)
-    sendNativeMouseMove(layout.characterPhys.x, layout.characterPhys.y);
+    // Move cursor natively via Win32 SendInput onto the character hit box (200..350) (subsequent move -> isInitial = false)
+    sendNativeMouseMove(layout.characterPhys.x, layout.characterPhys.y, false);
 
     // Wait for stageWindowManager to confirm character capture mode (isIgnored = false)
     // triggered genuinely via WH_MOUSE_LL hook forwarding cursor move to Chromium

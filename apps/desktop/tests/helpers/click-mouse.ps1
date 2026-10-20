@@ -13,8 +13,22 @@ using System;
 using System.Runtime.InteropServices;
 
 public class Win32Mouse {
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool SetProcessDpiAwarenessContext(IntPtr dpiContext);
+
     [DllImport("user32.dll")]
     public static extern bool SetProcessDPIAware();
+
+    static Win32Mouse() {
+        try {
+            // DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4
+            if (!SetProcessDpiAwarenessContext((IntPtr)(-4))) {
+                SetProcessDPIAware();
+            }
+        } catch {
+            try { SetProcessDPIAware(); } catch {}
+        }
+    }
 
     [DllImport("user32.dll")]
     public static extern bool SetCursorPos(int X, int Y);
