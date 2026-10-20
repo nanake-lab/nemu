@@ -1,4 +1,4 @@
-# Nemu 任务书包
+# Nemu 任务书包（created by opus5.5）
 
 这是交给 Codex、Antigravity 和 Claude 执行的全部材料。完整的设计理由、选型对比和风险分析在《Nemu 3D 桌面伙伴 · 总体工程设计 v2.0》文档里，这里只放代理需要的部分。
 
