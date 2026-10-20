@@ -23,5 +23,7 @@ python 3.13.16 on Linux x86_64
           3000 trajectory pairs with shared events: 0 violations
 [OK  ] THETA-1  property  §8 reference form: b stays in [−1, 1], g in range, events she caused leave θ unchanged
           500 random exogenous/endogenous streams (constant ρ_θ): 0 violations
+[OK  ] THETA-2  scenario  §8 reply loop: b amplifies the world's bias by 1/(1 − k_eff); anchoring n_b ≈ 1/ĥ_θ halves k_eff
+          world bias −0.1, ρ_θ = 0.99; n_b=10 k=0: k_eff=0.00, b=-0.10, after burst -0.10; n_b=10 k=0.3: k_eff=0.27, b=-0.14, after burst -0.14; n_b=10 k=0.6: k_eff=0.55, b=-0.22, after burst -0.22; n_b=10 k=0.9: k_eff=0.82, b=-0.51, after burst -0.51; n_b=10 k=1.2: k_eff=1.09, b=-0.89, after burst -0.89; n_b=100 k=1: k_eff=0.50, b=-0.11, after burst -0.11; n_b=100 k=1.5: k_eff=0.75, b=-0.21, after burst -0.21
 
-12 checks; failed: none
+13 checks; failed: none

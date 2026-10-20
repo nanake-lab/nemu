@@ -465,6 +465,66 @@ def check_theta() -> Result:
     )
 
 
+def _feedback_world(
+    k: float,
+    mu: float,
+    n_b: float,
+    rho: float,
+    steps: int,
+    burst: tuple[int, int] | None,
+    seed: int,
+) -> list[float]:
+    """§8 reference baseline b when others' replies follow her shown mood with slope k.
+
+    Her shown mood rests at b between events (§6), so a reply's reaction is
+    a = clip(mu + k·b + noise). During a burst the world is coldly hostile regardless of her.
+    """
+    rng = random.Random(seed)
+    b0, sw, sa, b = 0.0, 0.0, 0.0, 0.0
+    traj = []
+    for t in range(steps):
+        if burst is not None and burst[0] <= t < burst[1]:
+            a = -0.8 + 0.2 * rng.gauss(0, 1)
+        else:
+            a = mu + k * b + 0.2 * rng.gauss(0, 1)
+        a = min(1.0, max(-1.0, a))
+        sw, sa = rho * sw + 1, rho * sa + a
+        b = (n_b * b0 + sa) / (n_b + sw)
+        traj.append(b)
+    return traj
+
+
+def check_feedback_loop() -> Result:
+    rho, mu, steps, burst = 0.99, -0.1, 6000, (1000, 1300)
+    cap = 1 / (1 - rho)  # S, the ceiling of Σω_e
+    rows, ok = [], True
+    for n_b, ks in ((10.0, (0.0, 0.3, 0.6, 0.9, 1.2)), (cap, (1.0, 1.5))):
+        share = cap / (n_b + cap)
+        for k in ks:
+            k_eff = k * share
+            base = (cap * mu) / (n_b + cap)  # fixed point without the loop (b0 = 0)
+            predicted = base / (1 - k_eff) if k_eff < 1 else -math.inf
+            plain = _feedback_world(k, mu, n_b, rho, steps, None, SEED + 11)
+            hit = _feedback_world(k, mu, n_b, rho, steps, burst, SEED + 11)
+            final, after = sum(plain[-500:]) / 500, sum(hit[-500:]) / 500
+            interior = predicted > -0.95
+            if interior:  # converges to the predicted interior point and recovers after the burst
+                ok &= abs(final - predicted) < 0.03 and abs(after - final) < 0.03
+            else:  # amplified past the boundary: b is pinned near it
+                ok &= final < -0.7
+            rows.append(
+                f"n_b={n_b:g} k={k:g}: k_eff={k_eff:.2f}, b={final:+.2f}, after burst {after:+.2f}"
+            )
+    return Result(
+        "THETA-2",
+        "§8 reply loop: b amplifies the world's bias by 1/(1 − k_eff); "
+        "anchoring n_b ≈ 1/ĥ_θ halves k_eff",
+        "scenario",
+        ok,
+        "world bias −0.1, ρ_θ = 0.99; " + "; ".join(rows),
+    )
+
+
 CHECKS: list[Check] = [
     check_threshold,
     check_one_shot_and_occam,
@@ -478,6 +538,7 @@ CHECKS: list[Check] = [
     check_attachment,
     check_fast_state,
     check_theta,
+    check_feedback_loop,
 ]
 
 
