@@ -147,3 +147,7 @@ S §30 attack-review examples are also retained: AT01–AT04 → P5-01/P5-02/P5-
 Additional attack-example routing: AT14 → P5-08/P5-10 recovery gating (growth invalidation v1.x); AT15 → P5-17/P5-18 evidence completeness (growth experiments v1.x); AT16 → P5-05/P5-15 typed maintenance APIs; AT17 → v1.x W23; AT18 → P5-08/X06; AT19 → v1.x W06/W07; AT20 → v1.x W07/W09/W10 and W00-C01; AT21 → v1.x W09/W10; AT22 → P5-01/P5-06/P5-18/SYS25; AT23 → P5-08/P5-09/I21.
 
 All positive growth claims, real-time dwell experiments, multi-root qualification, nonzero G/C, remote failover and M7 functionality remain **v1.x / not_run**. Never accelerate residence time, change thresholds, use structural fixtures as deployment proof, or count text-only modulation as strict J success.
+
+## Update — 2026-10-19 (ADR 0009, ADR 0010)
+
+ADR 0010 revises the v1.0 scope: v1.0 includes every mechanism of the v2.0 core (`docs/echo-core/echo-core-v2.0-first-principles.md`) and growth is on from birth. W06–W10 are replaced by the v2.0 growth work (evidence law, recomputation, EXPERIMENT lineage) and move into v1.0; W23 stays out of scope. The W06–W10 rows, the G/C acceptance rows and the growth-related invariant rows above are kept as history. The card that re-plans acceptance (P5-18) re-routes them against v2.0 §§15 and 17; until then this plan is not authoritative for growth items.
