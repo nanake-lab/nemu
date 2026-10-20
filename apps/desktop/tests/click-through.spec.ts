@@ -85,7 +85,6 @@ test('click-through verification (完成标准第 17 项): 50 transparent pass-t
           `),
       );
 
-      counterWindow.setAlwaysOnTop(true, 'pop-up-menu');
       counterWindow.show();
       counterWindow.focus();
 

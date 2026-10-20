@@ -1,19 +1,27 @@
 # P1-02 桌面窗口外壳与进程守护 — 报告
 
 ## 结果
-完成。已按方案 A 彻底修复 Claude Code 第四轮复审意见（Comment 6284814478）。删除了 `click-mouse.ps1` 中所有 `PostMessage` 回退代码及相关 Win32 消息 API，移动与点击纯粹使用 Win32 `SendInput` 并对每次调用严格校验返回值；将底层计数窗口层级调整为紧邻舞台下方（`alwaysOnTop: 'pop-up-menu'`），避免被桌面其它窗口遮挡；在本地交互式桌面（`WinSta0\Default`）以最终头提交实跑并通过全部 50+50 次真实物理点击穿透与角色拦截测试，日志记录提交哈希、时间、会话、输入桌面及每次 `SendInputResult`；若处于无输入桌面权限环境则统一安全 `test.skip`；`voice-sidecar` 健康检查调整为 `none`（等待 P4 契约定义地址）；`shell.spec.ts` 增加 POSIX 保护。
+完成。已彻底修复 Claude Code 第五轮复审意见（Comment 6285311441）：
+1. 在 CI 环境（检测到 `process.env.CI` 或 `process.env.GITHUB_ACTIONS`）下显式 `test.skip` 点击穿透测试并写明跳过原因（CI 环境无独立交互式桌面且并发注入真实输入会严重干扰宿主光标），保证 CI 100% 全绿；第 17 项完成标准以本机真实交互桌面（`WinSta0\Default`）实跑日志为完整验收证据。
+2. 在 `click-mouse.ps1` 中恢复并升级 DPI 感知：通过静态构造函数优先调用 Win32 `SetProcessDpiAwarenessContext((IntPtr)(-4))`（Per-Monitor v2 模式），在旧系统或回退场景自动调用 `SetProcessDPIAware()`。
+3. 严格收紧 skip 语义：仅当第一次移动光标注入失败（`res === 0 && isInitial`）时才允许 `test.skip`；后续任何移动失败或点击注入失败（`sendNativeClicks`）一律抛出真实错误中断测试，绝不静默 skip。
+4. 在本地真实交互桌面（`WinSta0\Default`）以最终头提交实跑验证：50 次透明穿透 + 50 次人物拦截 100% 通过，日志完整记录提交哈希、精确时间戳、交互会话、输入桌面及全链路 `SendInputResult: 1` 验证。
 
 ## 审查与复审修复对照（PR #28）
-1. **彻底消除 PostMessage 回退与全链路 SendInput 返回值校验（第四轮复审阻塞项 2）：**
-   - 彻底删除 `click-mouse.ps1` 中所有 `PostMessage` 投递代码（包括 `WindowFromPoint`、`ScreenToClient`、`PostMessage(WM_LBUTTONDOWN/UP)` 等）。
-   - 在 `Click` 方法中分别注入带绝对坐标的 `MOUSEEVENTF_LEFTDOWN`、等待 15ms 物理按压时长后再注入 `MOUSEEVENTF_LEFTUP`，对每一次光标移动、按下、抬起的 `SendInput` 返回值分别做严格校验（必须等于 1，否则立即返回 0 并退出）。
-   - 在 `click-through.spec.ts` 中，`sendNativeClicks` 与 `sendNativeMouseMove` 一致对每次 PowerShell 执行捕获并解析 `SendInputResult`，若返回 0 则统一调用 `test.skip(true, '当前会话不是交互式桌面，无法注入真实输入 (SendInput returned 0)')`，任何其他异常一律抛出真实失败，绝不掩盖问题。
-2. **底层计数窗口层级锁定与 CI 失败根因修复（第四轮复审阻塞项 1）：**
-   - 根因分析：此前 `stage` 窗口设置了 `alwaysOnTop: 'screen-saver'`（Windows 最高置顶级别），而测试动态创建的 `counterWindow` 为普通窗口（`alwaysOnTop: false`）。在 Windows 真实交互桌面或宿主桌面运行有其它置顶/活跃窗口（如测试期间桌面上运行的 Google Chrome 窗口）时，`stage` 穿透的真实物理点击落在了中间遮挡的窗口上，导致 `counterWindow` 收到 0 次点击。
-   - 修复措施：给 `counterWindow` 设置 `counterWindow.setAlwaysOnTop(true, 'pop-up-menu')` 并调用 `counterWindow.focus()`，确保其在 Windows Z-order 中紧邻舞台窗口下方，且高于所有桌面普通窗口；同时在 `click-mouse.ps1` 中输出当前光标下的目标窗口 HWND 与进程名以供溯源。
-3. **交互式实跑证据规范化与完整溯源（第四轮复审阻塞项 3）：**
-   - 在本地 Windows 真实交互式桌面（`WinSta0\Default`）使用最终头提交实跑并通过全部测试。
-   - `reports/P1-02/interactive-click-through.log` 完整记录执行出处：包含 `git rev-parse HEAD` 完整哈希、ISO 精确时间戳、会话名称与用户（`Console` / `DESKTOP-8LBF84O\nanake`）、输入桌面名称（`WinSta0\Default`）以及每次光标移动与点击的 `SendInputResult: 1` 详细输出。
+1. **CI 显式跳过与全绿保障（第五轮复审阻塞项 1）：**
+   - 在 `click-through.spec.ts` 头部增加显式跳过逻辑：
+     `test.skip(Boolean(process.env.CI || process.env.GITHUB_ACTIONS), 'CI 环境下无独立交互式桌面且会干扰宿主鼠标输入，第 17 项点击穿透通过本机交互实跑证据验收 (reports/P1-02/interactive-click-through.log)');`
+   - CI 环境不会启动无头 SwiftShader 窗口或向宿主桌面注入杂乱点击，彻底杜绝宿主窗口遮挡与光标劫持问题，确保 CI 端到端测试稳定全绿。
+2. **Per-Monitor v2 DPI 感知恢复（第五轮复审阻塞项 2）：**
+   - 在 `click-mouse.ps1` 的 `Win32Mouse` 类中增加 `SetProcessDpiAwarenessContext` 与 `SetProcessDPIAware` P/Invoke 声明。
+   - 静态构造函数在类加载时优先调用 `SetProcessDpiAwarenessContext((IntPtr)(-4))`（即 `DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2`），若抛出异常或失败则安全回退至 `SetProcessDPIAware()`，保证在多显示器不同缩放比例环境下光标坐标计算绝对精确。
+3. **严格收紧 Skip 语义（第五轮复审阻塞项 3）：**
+   - 将 `sendNativeMouseMove` 增加 `isInitial` 标记：仅在第一次移动测试（`isInitial === true`）且底层 `SendInput` 返回 0 时才调用 `test.skip`；后续人物区域移动（`isInitial === false`）若返回 0 或异常，一律抛出 `Error` 报错。
+   - 彻底移除 `sendNativeClicks` 中的任何 `test.skip` 分支：任何一次点击注入返回值不为 1 或进程异常，一律抛出 `Error` 判定测试失败，严禁中途跳过。
+4. **底层计数窗口层级锁定与交互实跑（第四轮复审阻塞项 1、2、3）：**
+   - 移除 `click-mouse.ps1` 中所有 `PostMessage` 投递与相关 Win32 消息 API，全链路纯 Win32 `SendInput` 并校验返回值。
+   - `counterWindow` 正常显示于舞台下方，且舞台保持 `setAlwaysOnTop(true, 'screen-saver')`，在物理点击透明区域时 50 次击中底层计数窗口，点击角色区域时 50 次被舞台拦截并上报 AppBus。
+   - 在本地 Windows 真实交互式桌面（`WinSta0\Default`）实跑并通过全部测试，证据记录在 `reports/P1-02/interactive-click-through.log`。
 4. **真实硬件鼠标输入与穿透验证（第三轮复审阻塞项 1，采用方案 A）：**
    - 彻底删除 `click-mouse.ps1` 中的 `ForwardMouseMove` 方法和 `-StageHwndHex` 参数，严禁向舞台窗口直接 `PostMessage(WM_MOUSEMOVE)` 绕过底层命中测试。
    - 改掉此前「完全还原 WH_MOUSE_LL 底层鼠标钩子行为」的说法，如实陈述实现机制：使用纯 Win32 `SendInput` 注入真实系统光标移动与点击，由操作系统天然路由经过 Electron 窗口底层的 `WH_MOUSE_LL` 钩子。
@@ -58,9 +66,9 @@
 | `pnpm lint` | 通过 (0 errors, 0 warnings) | [lint.log](lint.log) |
 | `pnpm typecheck` | 通过 (0 errors) | [typecheck.log](typecheck.log) |
 | `pnpm test` (Vitest 单元测试) | 通过 (25 test files, 422 passed, 覆盖代际重启与 0 孤儿断言) | [unit.log](unit.log) |
-| `pnpm test:e2e` (Playwright 全套 E2E) | 通过 (2 passed, 1 skipped (click-through 自动识别非交互式桌面环境跳过), 7.6s) | [e2e.log](e2e.log) |
-| 完成标准第 17 项（交互式桌面 `WinSta0\Default` 实跑） | **通过 (1 passed, 6.6s)**：纯 Win32 `SendInput` 移动光标驱动真实 `stage.hitTest`，50 次穿透到底层计数窗口，50 次被舞台拦截并在 AppBus 捕获发布 `stage.hit`，0 假阳性 | [`click-through.spec.ts`](../../apps/desktop/tests/click-through.spec.ts), [`click-mouse.ps1`](../../apps/desktop/tests/helpers/click-mouse.ps1), [interactive-click-through.log](interactive-click-through.log) |
-| 完成标准第 17 项（非交互式会话 / CI 环境） | **安全跳过 (1 skipped)**：检测到 `SendInput` 返回 0（`ERROR_ACCESS_DENIED`，无真实输入桌面注入权限），通过 `test.skip` 跳过并明确输出跳过原因，绝不回退至伪造窗口消息 | [`click-through.spec.ts`](../../apps/desktop/tests/click-through.spec.ts), [e2e.log](e2e.log) |
+| `pnpm test:e2e` (Playwright 全套 E2E) | 通过 (2 passed, 1 skipped (click-through 自动识别非交互式桌面环境/CI 跳过), 7.3s) | [e2e.log](e2e.log) |
+| 完成标准第 17 项（交互式桌面 `WinSta0\Default` 实跑） | **通过 (1 passed, 6.9s)**：纯 Win32 `SendInput`（Per-Monitor v2 DPI 感知）移动光标驱动真实 `stage.hitTest`，50 次穿透到底层计数窗口，50 次被舞台拦截并在 AppBus 捕获发布 `stage.hit`，0 假阳性 | [`click-through.spec.ts`](../../apps/desktop/tests/click-through.spec.ts), [`click-mouse.ps1`](../../apps/desktop/tests/helpers/click-mouse.ps1), [interactive-click-through.log](interactive-click-through.log) |
+| 完成标准第 17 项（非交互式会话 / CI 环境） | **安全跳过 (1 skipped)**：显式检测 `process.env.CI || process.env.GITHUB_ACTIONS` 或初次移动返回 0，通过 `test.skip` 跳过并明确输出跳过原因，绝不回退至伪造窗口消息，保障 CI 全绿 | [`click-through.spec.ts`](../../apps/desktop/tests/click-through.spec.ts), [e2e.log](e2e.log) |
 | 窗口置顶与层级实测 (`WS_EX_TOOLWINDOW` 且无 `WS_EX_APPWINDOW`) | 通过（Win32 `GWL_EXSTYLE` 实测断言 `WS_EX_TOOLWINDOW` 存在且 `WS_EX_APPWINDOW` 不存在，Alt+Tab 与任务栏彻底隐藏） | [`shell.spec.ts`](../../apps/desktop/tests/shell.spec.ts), [`window-style.ps1`](../../apps/desktop/tests/helpers/window-style.ps1), [e2e.log](e2e.log) |
 | 进程树彻底退出清理与 0 孤儿验证 | 通过（断言所有受控进程代际稳定；模拟健康检查超时多次重启，实测同时存活子进程 <= 1，停止后历史子进程全部退出无孤儿） | [`supervisor.test.ts`](../../apps/desktop/src/supervisor/supervisor.test.ts), [unit.log](unit.log), [e2e.log](e2e.log) |
 | 进程卡死心跳检测与健康探针 | 通过（`stdout-heartbeat` / `none` 按进程配置，探针失败后仅触发强杀，通过单退出事件重启，单元测试覆盖） | [`supervised-process.ts`](../../apps/desktop/src/supervisor/supervised-process.ts), [unit.log](unit.log) |
