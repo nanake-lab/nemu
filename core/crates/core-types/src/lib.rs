@@ -6,6 +6,7 @@ pub mod contract;
 pub mod numeric;
 mod protobuf;
 pub mod scalar;
+pub mod semantic;
 #[rustfmt::skip]
 pub mod generated;
 
@@ -28,6 +29,9 @@ fn verify_typed<T: WireMessage>(
 
 pub trait WireMessage: serde::Serialize + serde::de::DeserializeOwned {
     const NAME: &'static str;
+    /// True for types superseded by a later contract (P5-21). They stay
+    /// decodable for old data and tests; no runtime path may produce them.
+    const SUPERSEDED: bool = false;
     fn canonical_bytes(&self, limits: contract::Limits) -> contract::Result<Vec<u8>> {
         let schema = contract::Schema::builtin()?;
         schema.encode_canonical(

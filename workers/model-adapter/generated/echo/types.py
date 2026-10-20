@@ -5,23 +5,35 @@ from enum import IntEnum
 class Lineage(IntEnum):
     REHEARSAL = 1
     LIFE = 2
+    EXPERIMENT = 3
 class RunStatus(IntEnum):
     NORMAL = 1
     NO_GROWTH = 2
     CORE_UNMODULATED = 3
+    # Superseded (no successor): P5-21; v2.0 §12: no whole-core quarantine, evidence is removed and recomputed
     CORE_QUARANTINED = 4
+    # Superseded (successor A_DEGRADED): P5-21; V2-17: A_x is now nature appraisal A
     AX_DEGRADED = 5
     IRL_DEGRADED = 6
     TEXT_PROJECTED = 7
     MODULATION_NOT_ENABLED = 8
     STORAGE_RECOVERY_FAULT = 9
+    GROWTH_PAUSED = 10
+    GROWTH_REVIEW_PENDING = 11
+    A_DEGRADED = 12
+    M_DEGRADED = 13
 class FailureCode(IntEnum):
+    # Superseded (successor GROWTH_OFF_REHEARSAL): P5-21; ADR 0010 decision 1: v1.0 grows from birth
     GROWTH_NOT_ENABLED_V1 = 1
+    # Superseded (no successor): P5-21; V2-17: A failures use A_DEGRADED with a generic reason
     AX_UNAVAILABLE = 2
     IRL_FAILED = 3
     CARRIER_UNAVAILABLE = 4
+    # Superseded (no successor): P5-21; v2.0 §15: C consolidation query plans are replaced
     EVIDENCE_INCOMPLETE = 5
+    # Superseded (no successor): P5-21; v2.0 §15: consolidation slices are replaced
     UNSUPPORTED_SLICE = 6
+    # Superseded (no successor): P5-21; v2.0 §15: scope DSL overlap checks are replaced
     UNKNOWN_OVERLAP = 7
     DEPENDENCY_FAULT = 8
     STRUCTURAL_FAULT = 9
@@ -29,6 +41,7 @@ class FailureCode(IntEnum):
     NUMERIC_INVALID = 11
     RESOURCE_LIMIT = 12
     MODULATION_DISABLED = 13
+    GROWTH_OFF_REHEARSAL = 14
 class EventKind(IntEnum):
     STARTUP = 1
     OBSERVATION = 2
@@ -66,6 +79,7 @@ class SpeechMode(IntEnum):
     A_LOCAL_STRICT = 1
     B_REMOTE_PROJECTED = 2
     C_DRAFT_REWRITE = 3
+# Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class QualificationBranch(IntEnum):
     MULTI_ROOT = 1
     SINGLE_ROOT = 2
@@ -78,14 +92,17 @@ class ActionStatus(IntEnum):
     FAILED = 6
     CANCELLED_ACTION = 7
     UNKNOWN_ACTION = 8
+# Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class EffectEndpoint(IntEnum):
     F_EVENT = 1
     F_TIME = 2
     J_DIRECT = 3
     G_META = 4
+# Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class EffectOwner(IntEnum):
     R_OWNER = 1
     THETA_OWNER = 2
+# Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class CouplingPhase(IntEnum):
     ZERO = 1
     SHADOW = 2
@@ -93,26 +110,61 @@ class CouplingPhase(IntEnum):
     ACTIVE = 4
     SUSPENDED = 5
     SUPERSEDED = 6
+# Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class TrialOutcome(IntEnum):
     QUALIFIED = 1
     REJECTED_TRIAL = 2
     NON_IDENTIFIABLE = 3
     CONTINUE_SHADOW = 4
+class RelationKind(IntEnum):
+    CLOSENESS = 1
+    TRUST = 2
+# Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class DistinctionForm(IntEnum):
     EXEMPLAR = 1
     PATTERN = 2
+# Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class DistinctionStatus(IntEnum):
     DISTINCTION_PROVISIONAL = 1
     DISTINCTION_QUALIFIED = 2
     DISTINCTION_SUPERSEDED = 3
+# Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class TraceLifecycle(IntEnum):
     LIVE = 1
     RETIRED = 2
+# Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class EvidenceRelation(IntEnum):
     SUPPORT = 1
     COUNTEREVIDENCE = 2
     RESOLVES_TRIAL = 3
     EVIDENCE_UNKNOWN = 4
+class EvidenceSign(IntEnum):
+    SIGN_NEGATIVE = 1
+    SIGN_POSITIVE = 2
+class GrowthCommandKind(IntEnum):
+    GROWTH_PAUSE = 1
+    GROWTH_RESUME = 2
+    GROWTH_REVIEW_CONCLUSION = 3
+class LedgerKind(IntEnum):
+    LEDGER_TENDENCY_CHANGED = 1
+    LEDGER_THETA_CHANGED = 2
+    LEDGER_RECOMPUTED = 3
+    LEDGER_MIGRATED = 4
+    LEDGER_GROWTH_PAUSED = 5
+    LEDGER_GROWTH_RESUMED = 6
+    LEDGER_REVIEW_HELD = 7
+    LEDGER_REVIEW_CONCLUDED = 8
+class RecomputeCause(IntEnum):
+    CAUSE_LAW_VERSION = 1
+    CAUSE_SOURCE_CORRECTION = 2
+    CAUSE_REINTERPRETATION = 3
+class ReviewTrigger(IntEnum):
+    TRIGGER_JUMP = 1
+    TRIGGER_THETA_STEP = 2
+    TRIGGER_SLOW_DRIFT = 3
+class ReviewVerdict(IntEnum):
+    LAW_CORRECT = 1
+    LAW_INCORRECT = 2
 class Lang(IntEnum):
     ZH = 1
     EN = 2
@@ -229,6 +281,7 @@ class ConceptRef:
     registry_version: str
 @dataclass(frozen=True)
 class VersionedEnvironment:
+    # Superseded (successor VersionedEnvironmentV2): P5-21; v2.0 §15: scope_interpreter is replaced; v2 adds A, M, directions and law version
     schema_version: int
     registry: ObjectRef
     irl: ObjectRef
@@ -250,6 +303,7 @@ class DegradedStatus:
     reasons: list[FailureReason]
 @dataclass(frozen=True)
 class LineageHeader:
+    # Superseded (successor LineageHeaderV2): P5-21; ADR 0010 decision 2: EXPERIMENT needs world identity and seed
     schema_version: int
     lineage: Lineage
     created_at_ns: int
@@ -261,7 +315,62 @@ class AuditExtension:
     audit_schema_version: int
     payload: bytes
 @dataclass(frozen=True)
+class NatureVector:
+    schema_version: int
+    connection: float
+    empathy: float
+    curiosity: float
+    achievement: float
+@dataclass(frozen=True)
+class NatureScale:
+    schema_version: int
+    connection: float
+    empathy: float
+    curiosity: float
+    achievement: float
+@dataclass(frozen=True)
+class NatureReal:
+    schema_version: int
+    connection: float
+    empathy: float
+    curiosity: float
+    achievement: float
+@dataclass(frozen=True)
+class TrilingualText:
+    schema_version: int
+    zh: str
+    en: str
+    ja: str
+@dataclass(frozen=True)
+class PersonRelation:
+    schema_version: int
+    person_id: str
+    kind: RelationKind
+@dataclass(frozen=True)
+class VersionedEnvironmentV2:
+    schema_version: int
+    registry: ObjectRef
+    irl: ObjectRef
+    carrier: ObjectRef
+    model: ObjectRef
+    tokenizer: ObjectRef
+    config: ObjectRef
+    implementations: list[ObjectRef]
+    nature_appraiser: ObjectRef | None
+    situation_matcher: ObjectRef | None
+    direction_set: ObjectRef | None
+    law_version: ObjectRef | None
+@dataclass(frozen=True)
+class LineageHeaderV2:
+    schema_version: int
+    lineage: Lineage
+    created_at_ns: int
+    genesis_manifest_digest: bytes | None
+    world_id: str | None
+    world_seed: int | None
+@dataclass(frozen=True)
 class EffectContract:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     responsibility_id: str
     causal_revision: str
@@ -276,6 +385,7 @@ class EffectContract:
     dependencies: list[ObjectRef]
 @dataclass(frozen=True)
 class QualificationCertificate:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     test_domain: ObjectRef
     root_blocks: ObjectRef
@@ -289,6 +399,7 @@ class QualificationCertificate:
     outcome: TrialOutcome
 @dataclass(frozen=True)
 class ConsolidationSlice:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     source_trace_revision: str
     source_coupling_revision: str
@@ -306,6 +417,7 @@ class ConsolidationSlice:
     validity_contract: ObjectRef
 @dataclass(frozen=True)
 class ThetaModule:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     module_id: str
     revision: str
@@ -319,6 +431,7 @@ class ThetaModule:
     validity_contract: ObjectRef
 @dataclass(frozen=True)
 class ResponsibilityBinding:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     responsibility_id: str
     causal_revision: str
@@ -330,6 +443,7 @@ class ResponsibilityBinding:
     disposition: ObjectRef
 @dataclass(frozen=True)
 class TrialResult:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     trial_id: str
     settlement_id: str
@@ -342,6 +456,7 @@ class TrialResult:
     dependencies: list[ObjectRef]
 @dataclass(frozen=True)
 class DistinctionRevision:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     distinction_id: str
     revision: str
@@ -352,6 +467,7 @@ class DistinctionRevision:
     representation: ObjectRef
 @dataclass(frozen=True)
 class CouplingRevision:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     coupling_id: str
     revision: str
@@ -369,6 +485,7 @@ class CouplingRevision:
     metaplastic_flag: bool
 @dataclass(frozen=True)
 class PlasticEvidenceLink:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     event_id: str
     root_id: str
@@ -377,12 +494,14 @@ class PlasticEvidenceLink:
     relation: EvidenceRelation
 @dataclass(frozen=True)
 class MechanismContext:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     theta_modules: list[ObjectRef]
     metaplastic_couplings: list[ObjectRef]
     previous_commit: str
 @dataclass(frozen=True)
 class DescendantReviewMarker:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     ancestor: ObjectRef
     affected_responsibilities: list[str]
@@ -390,6 +509,7 @@ class DescendantReviewMarker:
     needs_review: bool
 @dataclass(frozen=True)
 class PlasticTraceRevision:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     trace_id: str
     revision: str
@@ -407,11 +527,13 @@ class PlasticTraceRevision:
     lifecycle: TraceLifecycle
 @dataclass(frozen=True)
 class TraceHead:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     trace_id: str
     revision: str
 @dataclass(frozen=True)
 class RepresentationInadequacyWitness:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     equivalence_class: ObjectRef
     controlled_variables: ObjectRef
@@ -423,6 +545,7 @@ class RepresentationInadequacyWitness:
     reference_contract: ObjectRef
 @dataclass(frozen=True)
 class FrozenPrediction:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     candidate_revision: str
     baseline: ObjectRef
@@ -436,6 +559,7 @@ class FrozenPrediction:
     validator_version: str
 @dataclass(frozen=True)
 class ShadowTrial:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     trial_id: str
     frozen_prediction: FrozenPrediction
@@ -443,6 +567,7 @@ class ShadowTrial:
     settlement: TrialResult | None
 @dataclass(frozen=True)
 class EffectBudgetLedger:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     root_id: str
     budget_lineage_id: str
@@ -455,6 +580,7 @@ class EffectBudgetLedger:
     remaining: float
 @dataclass(frozen=True)
 class SingleRootLedger:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     root_id: str
     branch: QualificationBranch
@@ -467,23 +593,288 @@ class SingleRootLedger:
     total_root_ledger: ObjectRef
 @dataclass(frozen=True)
 class EffectiveCausalProjection:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     snapshot_id: str
     projected_at_ns: int
     effects: list[EffectContract]
 @dataclass(frozen=True)
 class ConsolidationBinding:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     source_slice_id: str
     theta_module_id: str
     responsibility: ResponsibilityBinding
 @dataclass(frozen=True)
 class ThetaModuleSourceBinding:
+    # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
     schema_version: int
     module_id: str
     source_slice_id: str
     source_trace_revision: str
     source_coupling_revision: str
+@dataclass(frozen=True)
+class EvidenceAllocation:
+    schema_version: int
+    tendency_id: str
+    support: float
+    intensity: float
+    share: float
+@dataclass(frozen=True)
+class EvidenceGroup:
+    schema_version: int
+    group_id: str
+    members: list[str]
+    source_key: str
+    credibility: float
+    verifiability: float
+    allocations: list[EvidenceAllocation]
+@dataclass(frozen=True)
+class Tendency:
+    schema_version: int
+    tendency_id: str
+    concept: ConceptRef
+    predicate: list[TrilingualText]
+    direction: NatureVector
+    evidence_a: float
+    evidence_b: float
+    h_hat: float
+    group_count: int
+    flip_count: int
+    last_sign: EvidenceSign | None
+    pi: float
+    typical_magnitude: float
+    relation: PersonRelation | None
+    attachment_prior: float | None
+@dataclass(frozen=True)
+class RSnapshot:
+    schema_version: int
+    revision: str
+    law_version: ObjectRef
+    tendencies: list[Tendency]
+@dataclass(frozen=True)
+class ThetaSnapshot:
+    schema_version: int
+    revision: str
+    law_version: ObjectRef
+    values: ThetaValues
+    sigma: NatureScale
+    tau_s: NatureScale
+    weight_sum: float
+    h_hat_theta: float
+    estimator_state: ObjectRef
+@dataclass(frozen=True)
+class GrowthCommand:
+    schema_version: int
+    command_id: str
+    kind: GrowthCommandKind
+    verdict: ReviewVerdict | None
+    review_record: ObjectRef | None
+@dataclass(frozen=True)
+class LawParameters:
+    schema_version: int
+    n0: float
+    kappa1: float
+    w_max: float
+    w_teach: float
+    v_u: float
+    r_min: float
+    r_max: float
+    h0: float
+    n_h: float
+    h_hat_min: float | None
+    h0_theta: float
+    h_hat_theta_min: float
+    n_b: float
+    n_sigma: float
+    g_min: float
+    g_max: float
+    recovery_min_per_s: float
+    recovery_max_per_s: float
+    w_min: float
+    t_x_s: float
+    epsilon_x: float
+    k_max: float
+@dataclass(frozen=True)
+class LawVersion:
+    schema_version: int
+    version: int
+    reference_form: str
+    parameters: LawParameters
+@dataclass(frozen=True)
+class FuseConfig:
+    schema_version: int
+    r_capacity: int
+    delta_theta_max: float
+    jump_threshold: float
+    jump_probes: ObjectRef
+    slow_drift_run: int
+    slow_drift_margin: float
+    contact_limit: int
+    message_limit: int
+    network_window_ns: int
+@dataclass(frozen=True)
+class GenesisManifestV2:
+    schema_version: int
+    law_version: LawVersion
+    nature_structure: str
+    initial_gain: NatureScale
+    initial_baseline: NatureVector
+    sigma0: float
+    tau0_s: float
+    attachment_prior: float
+    caretaker_id: str
+    carrier: ObjectRef
+    direction_set: ObjectRef
+    direction_validation: ObjectRef
+    body_readout: ObjectRef
+    proactivity_readout: ObjectRef
+    fuses: FuseConfig
+    boundaries: ObjectRef
+    protocol: ObjectRef
+@dataclass(frozen=True)
+class ThetaValues:
+    schema_version: int
+    baseline: NatureVector
+    gain: NatureScale
+    recovery_per_s: NatureScale
+@dataclass(frozen=True)
+class TendencyChange:
+    schema_version: int
+    tendency_id: str
+    pi_before: float | None
+    pi_after: float | None
+    evidence_groups: list[str]
+@dataclass(frozen=True)
+class ThetaChange:
+    schema_version: int
+    before: ThetaValues
+    after: ThetaValues
+    events: list[str]
+@dataclass(frozen=True)
+class RecomputeRecord:
+    schema_version: int
+    cause: RecomputeCause
+    law_version: ObjectRef
+    previous_law_version: ObjectRef | None
+    r_revision_before: str
+    r_revision_after: str
+    theta_revision_before: str
+    theta_revision_after: str
+    changed_tendencies: list[str]
+    theta_changed: bool
+@dataclass(frozen=True)
+class MigrationRecord:
+    schema_version: int
+    previous_environment: ObjectRef
+    environment: ObjectRef
+    validation: ObjectRef
+@dataclass(frozen=True)
+class LedgerEntry:
+    schema_version: int
+    entry_id: str
+    event_id: str
+    kind: LedgerKind
+    tendency_change: TendencyChange | None
+    theta_change: ThetaChange | None
+    recompute: RecomputeRecord | None
+    migration: MigrationRecord | None
+    review_trigger: ReviewTrigger | None
+    review_verdict: ReviewVerdict | None
+    review_record: ObjectRef | None
+@dataclass(frozen=True)
+class NatureAppraisalRecord:
+    schema_version: int
+    record_id: str
+    event_id: str
+    appraisal: NatureVector
+    persons: list[str]
+    binding: ProposalBindingV2
+    producer: str
+    producer_version: str
+@dataclass(frozen=True)
+class TendencyMatch:
+    schema_version: int
+    tendency_id: str
+    mu: float
+@dataclass(frozen=True)
+class SituationMatchRecord:
+    schema_version: int
+    record_id: str
+    event_id: str
+    matches: list[TendencyMatch]
+    binding: ProposalBindingV2
+    producer: str
+    producer_version: str
+@dataclass(frozen=True)
+class TendencyConcept:
+    schema_version: int
+    name: TrilingualText
+    definition: TrilingualText
+    positive_examples: list[TrilingualText]
+    negative_examples: list[TrilingualText]
+@dataclass(frozen=True)
+class TendencyCandidateRecord:
+    schema_version: int
+    record_id: str
+    event_id: str
+    concept: TendencyConcept
+    predicate: list[TrilingualText]
+    direction: NatureVector
+    relation: PersonRelation | None
+    binding: ProposalBindingV2
+    producer: str
+    producer_version: str
+@dataclass(frozen=True)
+class TeachingAnnotation:
+    schema_version: int
+    record_id: str
+    event_id: str
+    speaker: str
+    tendency_id: str
+    supports: bool
+    binding: ProposalBindingV2
+    producer: str
+    producer_version: str
+@dataclass(frozen=True)
+class LieAnnotation:
+    schema_version: int
+    record_id: str
+    event_id: str
+    statement: str
+    contradicts: str
+    binding: ProposalBindingV2
+    producer: str
+    producer_version: str
+@dataclass(frozen=True)
+class SameMatterAnnotation:
+    schema_version: int
+    record_id: str
+    event_id: str
+    same_as: list[str]
+    binding: ProposalBindingV2
+    producer: str
+    producer_version: str
+@dataclass(frozen=True)
+class ReinterpretationLink:
+    schema_version: int
+    record_id: str
+    event_id: str
+    new_record: str
+    prior_records: list[str]
+    interpreter_version: str
+    binding: ProposalBindingV2
+    producer: str
+    producer_version: str
+@dataclass(frozen=True)
+class EventAttributesRecord:
+    schema_version: int
+    event_id: str
+    rule_table_version: str
+    exogenous: bool
+    self_narrative: bool
+    verifiable: bool
+    source_key: str
 @dataclass(frozen=True)
 class EventEnvelope:
     schema_version: int
@@ -572,6 +963,7 @@ class SemanticGraph:
     edges: list[Edge]
 @dataclass(frozen=True)
 class ProposalBinding:
+    # Superseded (successor ProposalBindingV2): P5-21; binds VersionedEnvironmentV2 (v2.0 §1 Ω)
     schema_version: int
     branch_id: str
     event_id: str
@@ -593,6 +985,7 @@ class ProposalBinding:
     read_set: list[ObjectRef]
 @dataclass(frozen=True)
 class SemanticCandidate:
+    # Superseded (successor SemanticCandidateV2): P5-21; carries ProposalBindingV2
     schema_version: int
     binding: ProposalBinding
     candidate_graph: ObjectRef
@@ -601,6 +994,7 @@ class SemanticCandidate:
     actual_output: ObjectRef
 @dataclass(frozen=True)
 class ConceptProposal:
+    # Superseded (successor ConceptProposalV2): P5-21; carries ProposalBindingV2
     schema_version: int
     binding: ProposalBinding
     mention: str
@@ -610,6 +1004,7 @@ class ConceptProposal:
     source_refs: list[str]
 @dataclass(frozen=True)
 class FastStateSnapshot:
+    # Superseded (successor FastStateSnapshotV2): P5-21; v2.0 §6: nature channels plus learned components by tendency ID
     schema_version: int
     revision: str
     representation_version: str
@@ -618,6 +1013,7 @@ class FastStateSnapshot:
     anchor_time_ns: int
 @dataclass(frozen=True)
 class FastDriveProposal:
+    # Superseded (successor NatureAppraisalRecord): P5-21; v2.0 §2.4, §3, §6: drive is assembled by F from the recorded a(e)
     schema_version: int
     binding: ProposalBinding
     semantic_graph_id: str
@@ -629,6 +1025,7 @@ class FastDriveProposal:
     proposal_hash: bytes
 @dataclass(frozen=True)
 class CoreTransaction:
+    # Superseded (successor CoreTransactionV2): P5-21; adds staged L entries for R and θ changes (v2.0 §2.4)
     schema_version: int
     binding: ProposalBinding
     staged_h: ObjectRef
@@ -645,6 +1042,7 @@ class CoreTransaction:
     audit_refs: list[ObjectRef]
 @dataclass(frozen=True)
 class CoreCommitResult:
+    # Superseded (successor CoreCommitResultV2): P5-21; reports published L entries (v2.0 §2.4)
     schema_version: int
     branch_id: str
     event_id: str
@@ -652,6 +1050,84 @@ class CoreCommitResult:
     committed: bool
     snapshot: ObjectRef
     status: DegradedStatus
+@dataclass(frozen=True)
+class ProposalBindingV2:
+    schema_version: int
+    branch_id: str
+    event_id: str
+    raw_log_position: int
+    base_commit: str
+    process_time_ns: int
+    anchor_time_ns: int
+    projected_state_digest: bytes
+    accepted_z_digest: bytes
+    c_core_digest: bytes
+    x_revision: str
+    r_revision: str
+    theta_revision: str
+    validation_snapshot: ObjectRef
+    source_validity_version: str
+    relevant_effect_set_digest: bytes
+    proposal_payload_digest: bytes
+    read_set: list[ObjectRef]
+    environment: VersionedEnvironmentV2
+@dataclass(frozen=True)
+class SemanticCandidateV2:
+    schema_version: int
+    candidate_graph: ObjectRef
+    producer: str
+    producer_version: str
+    actual_output: ObjectRef
+    binding: ProposalBindingV2
+@dataclass(frozen=True)
+class ConceptProposalV2:
+    schema_version: int
+    mention: str
+    signature: ObjectRef
+    grounding: ObjectRef
+    relations: ObjectRef
+    source_refs: list[str]
+    binding: ProposalBindingV2
+@dataclass(frozen=True)
+class LearnedComponent:
+    schema_version: int
+    tendency_id: str
+    value: float
+@dataclass(frozen=True)
+class FastStateSnapshotV2:
+    schema_version: int
+    revision: str
+    representation_version: str
+    anchor_time_ns: int
+    nature: NatureVector
+    learned: list[LearnedComponent]
+@dataclass(frozen=True)
+class CoreTransactionV2:
+    schema_version: int
+    staged_h: ObjectRef
+    staged_x: ObjectRef
+    staged_r: ObjectRef
+    staged_theta: ObjectRef
+    staged_l: ObjectRef
+    staged_q: ObjectRef
+    staged_u: ObjectRef
+    processed_position: int
+    anchor_time_ns: int
+    staged_concepts: list[ObjectRef]
+    accepted_results: list[ObjectRef]
+    audit_refs: list[ObjectRef]
+    binding: ProposalBindingV2
+    staged_ledger: list[LedgerEntry]
+@dataclass(frozen=True)
+class CoreCommitResultV2:
+    schema_version: int
+    branch_id: str
+    event_id: str
+    commit_id: str
+    committed: bool
+    snapshot: ObjectRef
+    status: DegradedStatus
+    ledger_entries: list[str]
 @dataclass(frozen=True)
 class UserUtterance:
     schema_version: int
@@ -846,6 +1322,7 @@ class OutputCancel:
     output_id: str
 @dataclass(frozen=True)
 class HookCoefficients:
+    # Superseded (no successor): P5-21; v2.0 §9.1: per-direction coefficients are carried by ModulationEnvelopeV2
     schema_version: int
     hook: ObjectRef
     coefficients: list[float]
@@ -854,6 +1331,7 @@ class HookCoefficients:
     conversion_tolerance: float
 @dataclass(frozen=True)
 class ModulationEnvelope:
+    # Superseded (successor ModulationEnvelopeV2): P5-21; v2.0 §9.1: direction set, nature and learned coefficients
     schema_version: int
     snapshot_id: str
     projected_at_ns: int
@@ -908,3 +1386,24 @@ class PlanAndCarrierReceipt:
     projection_version: str | None
     intermediate_results: list[ObjectRef]
     usage: ObjectRef
+@dataclass(frozen=True)
+class LearnedCoefficient:
+    schema_version: int
+    tendency_id: str
+    coefficient: float
+@dataclass(frozen=True)
+class ModulationEnvelopeV2:
+    schema_version: int
+    snapshot_id: str
+    projected_at_ns: int
+    x_digest: bytes
+    r_digest: bytes
+    theta_digest: bytes
+    carrier: ObjectRef
+    model: ObjectRef
+    tokenizer: ObjectRef
+    total_bound: float
+    effect_receipt_digest: bytes
+    direction_set: ObjectRef
+    nature_coefficients: NatureReal
+    learned_coefficients: list[LearnedCoefficient]
