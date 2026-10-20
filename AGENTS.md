@@ -35,7 +35,7 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 | 路径 | 建议执行者与特别规则 |
 | --- | --- |
 | `core/**`（Echo Core：Rust 工作区、IDL、黄金向量） | Codex（`core/contracts/` 只在标注「契约变更」且有 ADR 的任务里修改） |
-| `core/crates/core-policy/**`、`core/crates/core-kernel/**` | Claude |
+| `core/crates/core-policy/**`、`core/crates/core-kernel/**`、`core/crates/experiment-world/**` | Claude |
 | `workers/**`（irl、drive、model-adapter） | Codex |
 | `executors/**`（codex-bridge、office-connector） | Codex |
 | `services/**`（voice-sidecar） | Codex |
@@ -53,7 +53,7 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 | `profiles/**`（Echo Core 结构夹具与部署配置） | Codex |
 | `spikes/**` | 由任务卡指定 |
 | `content/**` | 用户。代理可以提交管线生成的产物：`nemu.vrm`、`nemu.profile.json`、`lipsync/*.json`、`motions/*.vrma` 及其清单条目。其余内容在用户确认之前只能放进 `content/_candidates/`：设定集、源文件、`build.yaml` 里的审美参数、定稿的音色、协议 p、genesis 清单、语气样例库 |
-| `docs/**`、`tasks/**` | 只能追加报告、请求和 ADR，不能改已有内容；`docs/echo-core/original/` 永远不改。`tasks/cards.json`（每张卡的建议执行者、难度、里程碑、依赖）的修改需要用户批准。2026-10-19 用户一次性授权整理了 `tasks/README.md` 和各任务卡头部 |
+| `docs/**`、`tasks/**` | 只能追加报告、请求和 ADR，不能改已有内容；`docs/echo-core/original/` 永远不改。`tasks/cards.json`（每张卡的建议执行者、难度、里程碑、依赖）的修改需要用户批准。2026-10-19 用户一次性授权整理了 `tasks/README.md` 和各任务卡头部。2026-10-20 用户批准按 v2.0 改写任务卡（含 `tasks/cards.json`、`tasks/README.md`），并修订 `docs/ARCHITECTURE.md` 中受 v2.0 影响的部分；`docs/CONTRACTS.md` 第 4.1、4.3、5.3、6–8 节的修订由 P5-22 完成 |
 
 ## 3. 黄金规则
 
@@ -61,8 +61,8 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 2. **契约是唯一真相源。** 跨进程的类型、事件名、标记语法只能从 `@nemu/contracts` 或 Echo Core IDL 生成的类型导入，不允许在别处重复定义。
 3. **Echo Core 是唯一权威。** 她的历史、状态、成长和行动只能经核心的外层事务提交。worker、执行器、终端、界面、模型都只能提出 Proposal 或上报事件，不得直接写权威存储。
 4. **不准制造隐藏状态。** 任何会影响她未来行为的持久信息，只能存在于 H、x、R、θ、L、Q 或显式版本化的资源里（不变量 I18）。终端里不得保存情绪、好感、亲密度之类的变量；缓存可以加速，但不得改变权威结果。
-5. **不准放宽验收。** 不能为了通过而修改阈值、跳过测试、删除断言。Echo Core 的验收编号（F01…、SYS…、I01…）按原文执行。确实做不到时，写 `reports/<任务号>/BLOCKED.md`，说明实测数据和备选方案。
-6. **不准补写规格。** Echo Core 规格里没有定义、或依赖缺失的「Review_and_Remediation」增补的内容，不得凭经验自行补写；写进差异登记，标为「待用户提供」或「待用户确认」。
+5. **不准放宽验收。** 不能为了通过而修改阈值、跳过测试、删除断言。Echo Core 的验收编号（AC2-01…、F01…、SYS…、I01…）按原文执行。确实做不到时，写 `reports/<任务号>/BLOCKED.md`，说明实测数据和备选方案。
+6. **不准补写规格。** Echo Core 规格（以 v2.0 为准）没有定义的内容，不得凭经验自行补写；写进差异登记，标为「待用户确认」。v2.0 标「参考」的写法可以换成实验中更好的写法（v2.0 第 0 节第 4 条），但换写法就是发布新的规律版本：要登记，并在实验谱系里检验。
 7. **美术不靠猜。** 涉及外观的改动，一律产出候选和截图，交给用户选择。不要安排需要用户手绘或手工修图的步骤：贴图修整用 krita-ai-diffusion 局部重绘或脚本完成。
 8. **依赖要登记。** 新增运行时依赖时，在报告里写明名称、版本和许可证。禁止在应用代码里引入 GPL、AGPL 依赖；不能复制 Mate-Engine 的代码。
 9. **资产要登记。** 每个模型、动作、声音、贴图、核心配置都必须在对应的 `manifest.json` 里登记来源、许可证和能否分发。
@@ -89,9 +89,10 @@ pnpm bench                  # 性能与延迟基准（只能在用户的 GPU 主
 pnpm asset:build            # 运行 Blender 资产管线
 pnpm asset:lint <file.vrm>  # 资产契约校验
 cargo test --workspace      # Echo Core 测试（在 core/ 下）
-cargo run -p echoctl -- <inspect|replay|verify|checkpoint|restore|birth>   # Echo Core 管理命令（birth 只由用户在 N3 执行）
+cargo run -p echoctl -- <inspect|replay|verify|checkpoint|restore|birth|growth|experiment>   # Echo Core 管理命令（birth 只由用户在 N3 执行；growth 只由用户执行）
 uv run pytest               # worker 与旁路服务测试（在 workers/、services/ 下）
-pnpm accept:core            # Echo Core M2 范围验收套件（P5-18）
+pnpm accept:core            # Echo Core v2.0 验收套件（P5-18）
+pnpm experiment:core        # 实验谱系：在合成世界里跑 v2.0 第 14 节的实验（P5-30）
 pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 ```
 
@@ -217,9 +218,12 @@ Antigravity 会自动发现这些技能；Codex 请在开始相关任务时手�
 - 解读规格、判断是否通过验收、选型、批准/合并条件判断和实际合并仍由主代理承担，不委派给子代理。
 - 项目不人为限定累计子代理数量；可按任务需要分派。并发受当前平台实际槽位、服务限制和资源约束控制，超出槽位排队，不绕过限制，不用一个虚构的“无限”配置值。子代理不递归委派。
 - 主代理统一调度重负载；编译、Electron/Playwright/视觉测试、GPU 测量等一次只运行一个。子代理未获本次明确独占窗口不得启动重负载。只读轻量证据整理可以并行，但不能干扰安静测量窗口。
-- GPU 测量不能与 Windows runner 同时运行；测量前检查 Runner.Listener / Runner.Worker，在线或无法确认则停止并报告。runner 在线时也不得在本机同时运行 Electron、Playwright 或视觉测试。
-- 需要 Windows runner 时，由主代理提前明确通知用户并列出任务和提交。GPU 测量开始前通知安静窗口；窗口内不运行其他测试或 GPU 工作。
-- 用户主机内存已升级到 32 GB；这一容量更新不放宽重负载串行、runner 互斥或任务验收要求。
+- Windows runner 默认常驻在线（2026-10-19 用户调整）。runner 空闲时只是一个等待作业的小进程，不影响本机测试；冲突只发生在 CI 作业正在执行的那几分钟，表现为单实例锁、端口或命名管道被占用、置顶窗口挡住视觉截图。因此：
+  - 本机运行 Electron、Playwright 或视觉测试前，先看有没有 CI 作业在执行（存在 `Runner.Worker` 进程就是有）。没有就直接运行；有就等它结束再开始。
+  - 测试中途遇到 CI 作业开始执行而失败的，等作业结束后重跑，不当作代码问题，也不为此改测试或阈值。
+- GPU 测量需要用户安排的安静窗口：主代理提前告诉用户要测什么、大约多久，用户停掉 runner 后再开始。测量前确认 `Runner.Listener` 和 `Runner.Worker` 都没有在运行，在运行或无法确认就停止并报告。窗口内不运行其他测试或 GPU 工作；测完通知用户重新启动 runner。
+- PR 需要 Windows 检查而 runner 不在线时，由主代理通知用户，并列出相关的 PR 和提交。
+- 用户主机内存已升级到 32 GB；这一容量更新不放宽重负载串行、GPU 测量窗口或任务验收要求。
 - 当前客户端若不能按名称选择自定义角色，主代理必须显式传入相同的模型和推理强度，并让子代理读取该配置的职责指令；报告区分“显式参数试用”与“按角色名自动加载已验证”，不得声称未验证的自动加载能力。
 
 配置依据：OpenAI 官方 [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)。项目自定义角色使用独立 TOML 文件，权限继承父代理；角色文件不用于绕过父代理权限或平台并发限制。
@@ -228,7 +232,7 @@ Antigravity 会自动发现这些技能；Codex 请在开始相关任务时手�
 
 用户已决定增加第三个执行者 Claude（Claude Code 云端会话）。Claude 遵守本文件全部规则，另有以下几点：
 
-- **建议执行者为 Claude 的卡：** P5-09 → P5-10 → P5-12，即 `core/crates/core-policy/` 与 `core/crates/core-kernel/` 里不依赖 Windows 和显卡的 Echo Core 数学链。其他卡要不要交给 Claude，由用户在派活时点名，或改 `tasks/cards.json`。
+- **建议执行者为 Claude 的卡**（2026-10-20 按 v2.0 扩展）：P5-09（已完成）→ P5-21 → P5-27 → P5-10 → P5-12 → P5-23 → P5-25 → P5-24 → P5-26 → P5-30。即核心状态的 IDL（P5-21，契约变更），以及 `core/crates/core-policy/`、`core/crates/core-kernel/`、`core/crates/experiment-world/` 里不依赖 Windows 和显卡的 Echo Core 部分。其他卡要不要交给 Claude，由用户在派活时点名，或改 `tasks/cards.json`。
 - **审查：** Claude 是中、高难度卡的审查方之一（第 6 节）。Claude 每天早上例行审查一次：给等它审查的 PR 写审查结论，抽查前一天合并的低难度 PR。
 - **环境：** Linux 云端临时会话，没有 Windows、显卡和用户的机器，也不保存本地状态。验收需要这些的卡，Claude 不认领。所有进度以推送到 GitHub 的分支、PR 和报告为准。
 - **工具链：** Claude 的环境可能无法安装 `core/rust-toolchain.toml` 锁定的版本。此时 Claude 可以用环境内可用的 stable 版本做本地开发和测试，但以 CI 中按锁定版本运行的结果为准；报告里写明本地实际使用的版本。
