@@ -1,0 +1,61 @@
+{
+  "stage": "direction-dose-norm-audit",
+  "evidence_files": {
+    "plan": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\instruct-dose-plan-v1.json",
+    "archived_direction": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\Qwen--Qwen3-4B-Instruct-2507.json",
+    "norms": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\direction\\norms.json",
+    "direction": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\direction\\direction.json"
+  },
+  "plan": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "ratios": [
+      -0.4,
+      -0.2,
+      -0.1,
+      -0.05,
+      0.0,
+      0.05,
+      0.1,
+      0.2,
+      0.4
+    ],
+    "seeds": [
+      731,
+      732,
+      733
+    ],
+    "generation_budget": {
+      "max_new_tokens": 48,
+      "max_seconds": 25,
+      "temperature": 0.7,
+      "sampling": "full vocabulary multinomial; reset matched seed per condition; fresh KV",
+      "prompts": "unchanged NEUTRAL_PROMPTS from direction_probe.py",
+      "extraction": "reuse exact archived U and calibration pairs; do not re-fit or select direction"
+    },
+    "sha256_worktree_bytes": "034638c683c27de5e004d6fea5f1bddd18ad9531328e9b1447c36b8c47986b52",
+    "plan_commit": "03071ae101d39f9a90d0de7e0bd4c5e52509c496",
+    "git_show_exit": 0,
+    "sha256_committed_bytes": "034638c683c27de5e004d6fea5f1bddd18ad9531328e9b1447c36b8c47986b52",
+    "worktree_equals_committed_bytes": true,
+    "declared_plan_hash_norms": "034638c683c27de5e004d6fea5f1bddd18ad9531328e9b1447c36b8c47986b52",
+    "declared_plan_hash_direction": "034638c683c27de5e004d6fea5f1bddd18ad9531328e9b1447c36b8c47986b52",
+    "norms_hash_equals_committed_bytes": true,
+    "direction_hash_equals_committed_bytes": true,
+    "committed_plan_json_equals_worktree_plan": true
+  },
+  "u_integrity": {
+    "shape": [
+      2560,
+      8
+    ],
+    "float32_little_endian_sha256_recomputed": "3173bb95b4f94029f4a1a6ae008e0e5be9e0d6d7984d252b2facbff2ee00534b",
+    "source_declared_sha256": "3173bb95b4f94029f4a1a6ae008e0e5be9e0d6d7984d252b2facbff2ee00534b",
+    "norms_declared_sha256": "3173bb95b4f94029f4a1a6ae008e0e5be9e0d6d7984d252b2facbff2ee00534b",
+    "direction_declared_sha256": "3173bb95b4f94029f4a1a6ae008e0e5be9e0d6d7984d252b2facbff2ee00534b",
+    "all_equal": true
+  },
+  "norms": {
+    "sample_count": 9,
+    "language_seed_counts": {
+      

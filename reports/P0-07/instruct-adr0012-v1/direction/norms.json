@@ -1,0 +1,1491 @@
+{
+  "status": "measured-informational-only",
+  "model": {
+    "id": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554"
+  },
+  "plan_commit": "03071ae101d39f9a90d0de7e0bd4c5e52509c496",
+  "plan_sha256": "034638c683c27de5e004d6fea5f1bddd18ad9531328e9b1447c36b8c47986b52",
+  "u_sha256": "3173bb95b4f94029f4a1a6ae008e0e5be9e0d6d7984d252b2facbff2ee00534b",
+  "h_l2_medians": {
+    "zh": {
+      "prefill": 41.82356466481255,
+      "decode": 49.85668451192784
+    },
+    "en": {
+      "prefill": 42.52559240686032,
+      "decode": 51.02159645683774
+    },
+    "ja": {
+      "prefill": 43.634513447314866,
+      "decode": 47.899637549257605
+    }
+  },
+  "reference_norm": 45.76707549828623,
+  "reference_rule": "median of six medians: zh/en/ja times prefill/decode, all measured before injection under m=0; reject if any phase has no observations",
+  "direction_norm": 0.9990000009987084,
+  "ratios": [
+    -0.4,
+    -0.2,
+    -0.1,
+    -0.05,
+    0.0,
+    0.05,
+    0.1,
+    0.2,
+    0.4
+  ],
+  "coefficients": [
+    -18.325155336349354,
+    -9.162577668174677,
+    -4.581288834087339,
+    -2.2906444170436693,
+    0.0,
+    2.2906444170436693,
+    4.581288834087339,
+    9.162577668174677,
+    18.325155336349354
+  ],
+  "samples": [
+    {
+      "language": "zh",
+      "seed": 731,
+      "positions": [
+        {
+          "position": 0,
+          "phase": "prefill",
+          "h_l2": 41.82356466481255
+        },
+        {
+          "position": 1,
+          "phase": "decode",
+          "h_l2": 54.35291687865453
+        },
+        {
+          "position": 2,
+          "phase": "decode",
+          "h_l2": 50.41439936851581
+        },
+        {
+          "position": 3,
+          "phase": "decode",
+          "h_l2": 46.24040139338331
+        },
+        {
+          "position": 4,
+          "phase": "decode",
+          "h_l2": 53.340218723226464
+        },
+        {
+          "position": 5,
+          "phase": "decode",
+          "h_l2": 48.167297632388056
+        },
+        {
+          "position": 6,
+          "phase": "decode",
+          "h_l2": 52.949790638769436
+        },
+        {
+          "position": 7,
+          "phase": "decode",
+          "h_l2": 49.29896965533987
+        },
+        {
+          "position": 8,
+          "phase": "decode",
+          "h_l2": 40.0281230663703
+        }
+      ],
+      "generation": {
+        "output": "桌上放着一本书和一杯水。",
+        "token_ids": [
+          109792,
+          53222,
+          99164,
+          115909,
+          33108,
+          107165,
+          52510,
+          1773,
+          151645
+        ],
+        "stop": "eos",
+        "elapsed_s": 0.6826030999945942,
+        "first_sentence_ms": 638.635900002555
+      }
+    },
+    {
+      "language": "zh",
+      "seed": 732,
+      "positions": [
+        {
+          "position": 0,
+          "phase": "prefill",
+          "h_l2": 41.82356466481255
+        },
+        {
+          "position": 1,
+          "phase": "decode",
+          "h_l2": 54.35291687865453
+        },
+        {
+          "position": 2,
+          "phase": "decode",
+          "h_l2": 50.41439936851581
+        },
+        {
+          "position": 3,
+          "phase": "decode",
+          "h_l2": 46.24040139338331
+        },
+        {
+          "position": 4,
+          "phase": "decode",
+          "h_l2": 53.340218723226464
+        },
+        {
+          "position": 5,
+          "phase": "decode",
+          "h_l2": 48.167297632388056
+        },
+        {
+          "position": 6,
+          "phase": "decode",
+          "h_l2": 52.949790638769436
+        },
+        {
+          "position": 7,
+          "phase": "decode",
+          "h_l2": 49.29896965533987
+        },
+        {
+          "position": 8,
+          "phase": "decode",
+          "h_l2": 40.0281230663703
+        }
+      ],
+      "generation": {
+        "output": "桌上放着一本书和一杯水。",
+        "token_ids": [
+          109792,
+          53222,
+          99164,
+          115909,
+          33108,
+          107165,
+          52510,
+          1773,
+          151645
+        ],
+        "stop": "eos",
+        "elapsed_s": 0.4189977999922121,
+        "first_sentence_ms": 372.841199990944
+      }
+    },
+    {
+      "language": "zh",
+      "seed": 733,
+      "positions": [
+        {
+          "position": 0,
+          "phase": "prefill",
+          "h_l2": 41.82356466481255
+        },
+        {
+          "position": 1,
+          "phase": "decode",
+          "h_l2": 54.35291687865453
+        },
+        {
+          "position": 2,
+          "phase": "decode",
+          "h_l2": 50.41439936851581
+        },
+        {
+          "position": 3,
+          "phase": "decode",
+          "h_l2": 46.24040139338331
+        },
+        {
+          "position": 4,
+          "phase": "decode",
+          "h_l2": 53.340218723226464
+        },
+        {
+          "position": 5,
+          "phase": "decode",
+          "h_l2": 48.167297632388056
+        },
+        {
+          "position": 6,
+          "phase": "decode",
+          "h_l2": 52.949790638769436
+        },
+        {
+          "position": 7,
+          "phase": "decode",
+          "h_l2": 49.29896965533987
+        },
+        {
+          "position": 8,
+          "phase": "decode",
+          "h_l2": 40.0281230663703
+        }
+      ],
+      "generation": {
+        "output": "桌上放着一本书和一杯水。",
+        "token_ids": [
+          109792,
+          53222,
+          99164,
+          115909,
+          33108,
+          107165,
+          52510,
+          1773,
+          151645
+        ],
+        "stop": "eos",
+        "elapsed_s": 0.41770059999544173,
+        "first_sentence_ms": 373.59859999560285
+      }
+    },
+    {
+      "language": "en",
+      "seed": 731,
+      "positions": [
+        {
+          "position": 0,
+          "phase": "prefill",
+          "h_l2": 42.52559240686032
+        },
+        {
+          "position": 1,
+          "phase": "decode",
+          "h_l2": 44.02155829708435
+        },
+        {
+          "position": 2,
+          "phase": "decode",
+          "h_l2": 46.47405824473743
+        },
+        {
+          "position": 3,
+          "phase": "decode",
+          "h_l2": 53.978036891966056
+        },
+        {
+          "position": 4,
+          "phase": "decode",
+          "h_l2": 50.78551684720216
+        },
+        {
+          "position": 5,
+          "phase": "decode",
+          "h_l2": 43.718198453325705
+        },
+        {
+          "position": 6,
+          "phase": "decode",
+          "h_l2": 54.43272508685017
+        },
+        {
+          "position": 7,
+          "phase": "decode",
+          "h_l2": 58.3809695409819
+        },
+        {
+          "position": 8,
+          "phase": "decode",
+          "h_l2": 55.31620291415337
+        },
+        {
+          "position": 9,
+          "phase": "decode",
+          "h_l2": 49.43589619501098
+        },
+        {
+          "position": 10,
+          "phase": "decode",
+          "h_l2": 52.253141863857685
+        },
+        {
+          "position": 11,
+          "phase": "decode",
+          "h_l2": 44.31969595701258
+        },
+        {
+          "position": 12,
+          "phase": "decode",
+          "h_l2": 48.8119194446363
+        },
+        {
+          "position": 13,
+          "phase": "decode",
+          "h_l2": 54.28617716814214
+        },
+        {
+          "position": 14,
+          "phase": "decode",
+          "h_l2": 52.033951726541574
+        },
+        {
+          "position": 15,
+          "phase": "decode",
+          "h_l2": 55.44059135038127
+        },
+        {
+          "position": 16,
+          "phase": "decode",
+          "h_l2": 45.087049476158924
+        },
+        {
+          "position": 17,
+          "phase": "decode",
+          "h_l2": 52.673423801483395
+        },
+        {
+          "position": 18,
+          "phase": "decode",
+          "h_l2": 54.98345331987713
+        },
+        {
+          "position": 19,
+          "phase": "decode",
+          "h_l2": 48.82813817264379
+        },
+        {
+          "position": 20,
+          "phase": "decode",
+          "h_l2": 56.57093158972578
+        },
+        {
+          "position": 21,
+          "phase": "decode",
+          "h_l2": 55.718608605368026
+        },
+        {
+          "position": 22,
+          "phase": "decode",
+          "h_l2": 53.51467097994819
+        },
+        {
+          "position": 23,
+          "phase": "decode",
+          "h_l2": 50.57837870489768
+        },
+        {
+          "position": 24,
+          "phase": "decode",
+          "h_l2": 42.529449108283266
+        },
+        {
+          "position": 25,
+          "phase": "decode",
+          "h_l2": 43.48522248644434
+        },
+        {
+          "position": 26,
+          "phase": "decode",
+          "h_l2": 58.99101523977821
+        },
+        {
+          "position": 27,
+          "phase": "decode",
+          "h_l2": 56.4565795725009
+        },
+        {
+          "position": 28,
+          "phase": "decode",
+          "h_l2": 53.25774325234244
+        },
+        {
+          "position": 29,
+          "phase": "decode",
+          "h_l2": 47.98927909624279
+        },
+        {
+          "position": 30,
+          "phase": "decode",
+          "h_l2": 55.47567630939555
+        },
+        {
+          "position": 31,
+          "phase": "decode",
+          "h_l2": 46.86316121881054
+        },
+        {
+          "position": 32,
+          "phase": "decode",
+          "h_l2": 54.031996287745784
+        },
+        {
+          "position": 33,
+          "phase": "decode",
+          "h_l2": 46.281801076674284
+        },
+        {
+          "position": 34,
+          "phase": "decode",
+          "h_l2": 52.12990713126979
+        },
+        {
+          "position": 35,
+          "phase": "decode",
+          "h_l2": 45.74841692669473
+        },
+        {
+          "position": 36,
+          "phase": "decode",
+          "h_l2": 42.893514451114825
+        },
+        {
+          "position": 37,
+          "phase": "decode",
+          "h_l2": 51.14569938595128
+        },
+        {
+          "position": 38,
+          "phase": "decode",
+          "h_l2": 46.74210858071379
+        },
+        {
+          "position": 39,
+          "phase": "decode",
+          "h_l2": 51.678676945817834
+        },
+        {
+          "position": 40,
+          "phase": "decode",
+          "h_l2": 43.49365835828416
+        },
+        {
+          "position": 41,
+          "phase": "decode",
+          "h_l2": 50.35853603265159
+        },
+        {
+          "position": 42,
+          "phase": "decode",
+          "h_l2": 51.60834827269433
+        },
+        {
+          "position": 43,
+          "phase": "decode",
+          "h_l2": 49.15886958340658
+        },
+        {
+          "position": 44,
+          "phase": "decode",
+          "h_l2": 51.02159645683774
+        },
+        {
+          "position": 45,
+          "phase": "decode",
+          "h_l2": 47.33403494247638
+        },
+        {
+          "position": 46,
+          "phase": "decode",
+          "h_l2": 41.65481924335469
+        },
+        {
+          "position": 47,
+          "phase": "decode",
+          "h_l2": 45.222281626918054
+        }
+      ],
+      "generation": {
+        "output": "On the table lies a book open to a page, its edges slightly worn, resting beside a clear glass of water. The sunlight streams through the window, catching the reflection of the water and highlighting the soft cover of the book. A quiet",
+        "token_ids": [
+          1925,
+          279,
+          1965,
+          15448,
+          264,
+          2311,
+          1787,
+          311,
+          264,
+          2150,
+          11,
+          1181,
+          12822,
+          10078,
+          23704,
+          11,
+          40119,
+          29388,
+          264,
+          2797,
+          8991,
+          315,
+          3015,
+          13,
+          576,
+          39020,
+          23045,
+          1526,
+          279,
+          3241,
+          11,
+          33068,
+          279,
+          21844,
+          315,
+          279,
+          3015,
+          323,
+          38586,
+          279,
+          8413,
+          3421,
+          315,
+          279,
+          2311,
+          13,
+          362,
+          11340
+        ],
+        "stop": "token_limit",
+        "elapsed_s": 2.2339823999936925,
+        "first_sentence_ms": 1104.6380999905523
+      }
+    },
+    {
+      "language": "en",
+      "seed": 732,
+      "positions": [
+        {
+          "position": 0,
+          "phase": "prefill",
+          "h_l2": 42.52559240686032
+        },
+        {
+          "position": 1,
+          "phase": "decode",
+          "h_l2": 44.02155829708435
+        },
+        {
+          "position": 2,
+          "phase": "decode",
+          "h_l2": 46.47405824473743
+        },
+        {
+          "position": 3,
+          "phase": "decode",
+          "h_l2": 53.978036891966056
+        },
+        {
+          "position": 4,
+          "phase": "decode",
+          "h_l2": 50.78551684720216
+        },
+        {
+          "position": 5,
+          "phase": "decode",
+          "h_l2": 43.718198453325705
+        },
+        {
+          "position": 6,
+          "phase": "decode",
+          "h_l2": 54.43272508685017
+        },
+        {
+          "position": 7,
+          "phase": "decode",
+          "h_l2": 58.3809695409819
+        },
+        {
+          "position": 8,
+          "phase": "decode",
+          "h_l2": 55.31620291415337
+        },
+        {
+          "position": 9,
+          "phase": "decode",
+          "h_l2": 49.43589619501098
+        },
+        {
+          "position": 10,
+          "phase": "decode",
+          "h_l2": 52.253141863857685
+        },
+        {
+          "position": 11,
+          "phase": "decode",
+          "h_l2": 44.31969595701258
+        },
+        {
+          "position": 12,
+          "phase": "decode",
+          "h_l2": 48.8119194446363
+        },
+        {
+          "position": 13,
+          "phase": "decode",
+          "h_l2": 47.10015888229707
+        },
+        {
+          "position": 14,
+          "phase": "decode",
+          "h_l2": 54.375461552850986
+        },
+        {
+          "position": 15,
+          "phase": "decode",
+          "h_l2": 51.45673423379079
+        },
+        {
+          "position": 16,
+          "phase": "decode",
+          "h_l2": 54.79365951417864
+        },
+        {
+          "position": 17,
+          "phase": "decode",
+          "h_l2": 44.26210156960414
+        },
+        {
+          "position": 18,
+          "phase": "decode",
+          "h_l2": 51.932981311268534
+        },
+        {
+          "position": 19,
+          "phase": "decode",
+          "h_l2": 54.85274285810915
+        },
+        {
+          "position": 20,
+          "phase": "decode",
+          "h_l2": 48.751551114716435
+        },
+        {
+          "position": 21,
+          "phase": "decode",
+          "h_l2": 56.76361367620173
+        },
+        {
+          "position": 22,
+          "phase": "decode",
+          "h_l2": 52.53693824359278
+        },
+        {
+          "position": 23,
+          "phase": "decode",
+          "h_l2": 53.683250974117215
+        },
+        {
+          "position": 24,
+          "phase": "decode",
+          "h_l2": 50.36077030100226
+        },
+        {
+          "position": 25,
+          "phase": "decode",
+          "h_l2": 42.53294092926876
+        },
+        {
+          "position": 26,
+          "phase": "decode",
+          "h_l2": 43.46662252610155
+        },
+        {
+          "position": 27,
+          "phase": "decode",
+          "h_l2": 58.95721996907676
+        },
+        {
+          "position": 28,
+          "phase": "decode",
+          "h_l2": 56.644242784849304
+        },
+        {
+          "position": 29,
+          "phase": "decode",
+          "h_l2": 53.78021831513609
+        },
+        {
+          "position": 30,
+          "phase": "decode",
+          "h_l2": 49.01160934038206
+        },
+        {
+          "position": 31,
+          "phase": "decode",
+          "h_l2": 56.03294966126257
+        },
+        {
+          "position": 32,
+          "phase": "decode",
+          "h_l2": 46.837426203010416
+        },
+        {
+          "position": 33,
+          "phase": "decode",
+          "h_l2": 54.19306062816125
+        },
+        {
+          "position": 34,
+          "phase": "decode",
+          "h_l2": 46.48885339485509
+        },
+        {
+          "position": 35,
+          "phase": "decode",
+          "h_l2": 52.12040004117231
+        },
+        {
+          "position": 36,
+          "phase": "decode",
+          "h_l2": 45.87677792307118
+        },
+        {
+          "position": 37,
+          "phase": "decode",
+          "h_l2": 43.08859823669747
+        },
+        {
+          "position": 38,
+          "phase": "decode",
+          "h_l2": 51.688408764218835
+        },
+        {
+          "position": 39,
+          "phase": "decode",
+          "h_l2": 46.75459680387705
+        },
+        {
+          "position": 40,
+          "phase": "decode",
+          "h_l2": 51.80689288833854
+        },
+        {
+          "position": 41,
+          "phase": "decode",
+          "h_l2": 43.44338144590058
+        },
+        {
+          "position": 42,
+          "phase": "decode",
+          "h_l2": 51.6807322439515
+        },
+        {
+          "position": 43,
+          "phase": "decode",
+          "h_l2": 51.477119871388226
+        },
+        {
+          "position": 44,
+          "phase": "decode",
+          "h_l2": 48.523554085201596
+        },
+        {
+          "position": 45,
+          "phase": "decode",
+          "h_l2": 46.17754932241321
+        },
+        {
+          "position": 46,
+          "phase": "decode",
+          "h_l2": 47.2632582858339
+        },
+        {
+          "position": 47,
+          "phase": "decode",
+          "h_l2": 48.6737708595258
+        }
+      ],
+      "generation": {
+        "output": "On the table lies a book open to a page, its spines slightly worn, resting beside a glass of clear water. The sunlight streams through the window, catching the reflection of the water and highlighting the quiet stillness of the moment.",
+        "token_ids": [
+          1925,
+          279,
+          1965,
+          15448,
+          264,
+          2311,
+          1787,
+          311,
+          264,
+          2150,
+          11,
+          1181,
+          978,
+          1543,
+          10078,
+          23704,
+          11,
+          40119,
+          29388,
+          264,
+          8991,
+          315,
+          2797,
+          3015,
+          13,
+          576,
+          39020,
+          23045,
+          1526,
+          279,
+          3241,
+          11,
+          33068,
+          279,
+          21844,
+          315,
+          279,
+          3015,
+          323,
+          38586,
+          279,
+          11340,
+          2058,
+          2090,
+          315,
+          279,
+          4445,
+          13
+        ],
+        "stop": "token_limit",
+        "elapsed_s": 2.1671610999910627,
+        "first_sentence_ms": 1132.3715999897104
+      }
+    },
+    {
+      "language": "en",
+      "seed": 733,
+      "positions": [
+        {
+          "position": 0,
+          "phase": "prefill",
+          "h_l2": 42.52559240686032
+        },
+        {
+          "position": 1,
+          "phase": "decode",
+          "h_l2": 44.02155829708435
+        },
+        {
+          "position": 2,
+          "phase": "decode",
+          "h_l2": 46.47405824473743
+        },
+        {
+          "position": 3,
+          "phase": "decode",
+          "h_l2": 53.978036891966056
+        },
+        {
+          "position": 4,
+          "phase": "decode",
+          "h_l2": 50.78551684720216
+        },
+        {
+          "position": 5,
+          "phase": "decode",
+          "h_l2": 43.718198453325705
+        },
+        {
+          "position": 6,
+          "phase": "decode",
+          "h_l2": 54.43272508685017
+        },
+        {
+          "position": 7,
+          "phase": "decode",
+          "h_l2": 58.3809695409819
+        },
+        {
+          "position": 8,
+          "phase": "decode",
+          "h_l2": 55.31620291415337
+        },
+        {
+          "position": 9,
+          "phase": "decode",
+          "h_l2": 49.43589619501098
+        },
+        {
+          "position": 10,
+          "phase": "decode",
+          "h_l2": 52.253141863857685
+        },
+        {
+          "position": 11,
+          "phase": "decode",
+          "h_l2": 44.31969595701258
+        },
+        {
+          "position": 12,
+          "phase": "decode",
+          "h_l2": 48.8119194446363
+        },
+        {
+          "position": 13,
+          "phase": "decode",
+          "h_l2": 54.28617716814214
+        },
+        {
+          "position": 14,
+          "phase": "decode",
+          "h_l2": 52.033951726541574
+        },
+        {
+          "position": 15,
+          "phase": "decode",
+          "h_l2": 55.44059135038127
+        },
+        {
+          "position": 16,
+          "phase": "decode",
+          "h_l2": 45.087049476158924
+        },
+        {
+          "position": 17,
+          "phase": "decode",
+          "h_l2": 52.673423801483395
+        },
+        {
+          "position": 18,
+          "phase": "decode",
+          "h_l2": 54.98345331987713
+        },
+        {
+          "position": 19,
+          "phase": "decode",
+          "h_l2": 48.82813817264379
+        },
+        {
+          "position": 20,
+          "phase": "decode",
+          "h_l2": 56.84511485670278
+        },
+        {
+          "position": 21,
+          "phase": "decode",
+          "h_l2": 52.860326168001556
+        },
+        {
+          "position": 22,
+          "phase": "decode",
+          "h_l2": 53.80177457275269
+        },
+        {
+          "position": 23,
+          "phase": "decode",
+          "h_l2": 50.49173440974148
+        },
+        {
+          "position": 24,
+          "phase": "decode",
+          "h_l2": 42.62213235501631
+        },
+        {
+          "position": 25,
+          "phase": "decode",
+          "h_l2": 43.57605145703725
+        },
+        {
+          "position": 26,
+          "phase": "decode",
+          "h_l2": 58.816982608217046
+        },
+        {
+          "position": 27,
+          "phase": "decode",
+          "h_l2": 53.75855487544562
+        },
+        {
+          "position": 28,
+          "phase": "decode",
+          "h_l2": 53.07790319772177
+        },
+        {
+          "position": 29,
+          "phase": "decode",
+          "h_l2": 47.773390323616795
+        },
+        {
+          "position": 30,
+          "phase": "decode",
+          "h_l2": 55.57437836648478
+        },
+        {
+          "position": 31,
+          "phase": "decode",
+          "h_l2": 47.75710336155417
+        },
+        {
+          "position": 32,
+          "phase": "decode",
+          "h_l2": 53.46454670488331
+        },
+        {
+          "position": 33,
+          "phase": "decode",
+          "h_l2": 46.372032738499975
+        },
+        {
+          "position": 34,
+          "phase": "decode",
+          "h_l2": 52.394787122627726
+        },
+        {
+          "position": 35,
+          "phase": "decode",
+          "h_l2": 51.20250347176827
+        },
+        {
+          "position": 36,
+          "phase": "decode",
+          "h_l2": 46.51380283555322
+        },
+        {
+          "position": 37,
+          "phase": "decode",
+          "h_l2": 52.033102709568176
+        },
+        {
+          "position": 38,
+          "phase": "decode",
+          "h_l2": 51.80715103606269
+        },
+        {
+          "position": 39,
+          "phase": "decode",
+          "h_l2": 48.95017078438998
+        },
+        {
+          "position": 40,
+          "phase": "decode",
+          "h_l2": 41.33440385118416
+        },
+        {
+          "position": 41,
+          "phase": "decode",
+          "h_l2": 45.30896590660782
+        },
+        {
+          "position": 42,
+          "phase": "decode",
+          "h_l2": 51.043808473179816
+        },
+        {
+          "position": 43,
+          "phase": "decode",
+          "h_l2": 50.08212457447812
+        },
+        {
+          "position": 44,
+          "phase": "decode",
+          "h_l2": 52.93361992497895
+        },
+        {
+          "position": 45,
+          "phase": "decode",
+          "h_l2": 51.576597215883154
+        },
+        {
+          "position": 46,
+          "phase": "decode",
+          "h_l2": 47.222141834066846
+        },
+        {
+          "position": 47,
+          "phase": "decode",
+          "h_l2": 50.13142780008889
+        }
+      ],
+      "generation": {
+        "output": "On the table lies a book open to a page, its edges slightly worn, resting beside a glass of clear water. The sunlight filters through the window, catching the reflection on the water’s surface. A quiet stillness fills the moment,",
+        "token_ids": [
+          1925,
+          279,
+          1965,
+          15448,
+          264,
+          2311,
+          1787,
+          311,
+          264,
+          2150,
+          11,
+          1181,
+          12822,
+          10078,
+          23704,
+          11,
+          40119,
+          29388,
+          264,
+          8991,
+          315,
+          2797,
+          3015,
+          13,
+          576,
+          39020,
+          13406,
+          1526,
+          279,
+          3241,
+          11,
+          33068,
+          279,
+          21844,
+          389,
+          279,
+          3015,
+          748,
+          7329,
+          13,
+          362,
+          11340,
+          2058,
+          2090,
+          40587,
+          279,
+          4445,
+          11
+        ],
+        "stop": "token_limit",
+        "elapsed_s": 2.147801700004493,
+        "first_sentence_ms": 1065.1820999919437
+      }
+    },
+    {
+      "language": "ja",
+      "seed": 731,
+      "positions": [
+        {
+          "position": 0,
+          "phase": "prefill",
+          "h_l2": 43.634513447314866
+        },
+        {
+          "position": 1,
+          "phase": "decode",
+          "h_l2": 57.5770600298383
+        },
+        {
+          "position": 2,
+          "phase": "decode",
+          "h_l2": 44.83454359915185
+        },
+        {
+          "position": 3,
+          "phase": "decode",
+          "h_l2": 54.92712656260699
+        },
+        {
+          "position": 4,
+          "phase": "decode",
+          "h_l2": 46.958409349974424
+        },
+        {
+          "position": 5,
+          "phase": "decode",
+          "h_l2": 52.69345480269441
+        },
+        {
+          "position": 6,
+          "phase": "decode",
+          "h_l2": 47.23489274141429
+        },
+        {
+          "position": 7,
+          "phase": "decode",
+          "h_l2": 50.3904293339649
+        },
+        {
+          "position": 8,
+          "phase": "decode",
+          "h_l2": 42.60288369822535
+        },
+        {
+          "position": 9,
+          "phase": "decode",
+          "h_l2": 47.37008956783963
+        },
+        {
+          "position": 10,
+          "phase": "decode",
+          "h_l2": 49.065209922932716
+        },
+        {
+          "position": 11,
+          "phase": "decode",
+          "h_l2": 43.57017301094996
+        },
+        {
+          "position": 12,
+          "phase": "decode",
+          "h_l2": 51.76731953862165
+        },
+        {
+          "position": 13,
+          "phase": "decode",
+          "h_l2": 47.899637549257605
+        },
+        {
+          "position": 14,
+          "phase": "decode",
+          "h_l2": 40.40865212772576
+        }
+      ],
+      "generation": {
+        "output": "机の上に本と水の入ったコップがある。",
+        "token_ids": [
+          32648,
+          15767,
+          17447,
+          19655,
+          21894,
+          19182,
+          52510,
+          15767,
+          17254,
+          123857,
+          46160,
+          124871,
+          126223,
+          1773,
+          151645
+        ],
+        "stop": "eos",
+        "elapsed_s": 0.6815343999915058,
+        "first_sentence_ms": 636.1401999893133
+      }
+    },
+    {
+      "language": "ja",
+      "seed": 732,
+      "positions": [
+        {
+          "position": 0,
+          "phase": "prefill",
+          "h_l2": 43.634513447314866
+        },
+        {
+          "position": 1,
+          "phase": "decode",
+          "h_l2": 57.5770600298383
+        },
+        {
+          "position": 2,
+          "phase": "decode",
+          "h_l2": 44.83454359915185
+        },
+        {
+          "position": 3,
+          "phase": "decode",
+          "h_l2": 54.92712656260699
+        },
+        {
+          "position": 4,
+          "phase": "decode",
+          "h_l2": 46.958409349974424
+        },
+        {
+          "position": 5,
+          "phase": "decode",
+          "h_l2": 52.69345480269441
+        },
+        {
+          "position": 6,
+          "phase": "decode",
+          "h_l2": 47.23489274141429
+        },
+        {
+          "position": 7,
+          "phase": "decode",
+          "h_l2": 50.3904293339649
+        },
+        {
+          "position": 8,
+          "phase": "decode",
+          "h_l2": 42.60288369822535
+        },
+        {
+          "position": 9,
+          "phase": "decode",
+          "h_l2": 47.37008956783963
+        },
+        {
+          "position": 10,
+          "phase": "decode",
+          "h_l2": 49.065209922932716
+        },
+        {
+          "position": 11,
+          "phase": "decode",
+          "h_l2": 43.57017301094996
+        },
+        {
+          "position": 12,
+          "phase": "decode",
+          "h_l2": 51.76731953862165
+        },
+        {
+          "position": 13,
+          "phase": "decode",
+          "h_l2": 47.899637549257605
+        },
+        {
+          "position": 14,
+          "phase": "decode",
+          "h_l2": 40.40865212772576
+        }
+      ],
+      "generation": {
+        "output": "机の上に本と水の入ったコップがある。",
+        "token_ids": [
+          32648,
+          15767,
+          17447,
+          19655,
+          21894,
+          19182,
+          52510,
+          15767,
+          17254,
+          123857,
+          46160,
+          124871,
+          126223,
+          1773,
+          151645
+        ],
+        "stop": "eos",
+        "elapsed_s": 0.6889621000009356,
+        "first_sentence_ms": 643.994300000486
+      }
+    },
+    {
+      "language": "ja",
+      "seed": 733,
+      "positions": [
+        {
+          "position": 0,
+          "phase": "prefill",
+          "h_l2": 43.634513447314866
+        },
+        {
+          "position": 1,
+          "phase": "decode",
+          "h_l2": 57.5770600298383
+        },
+        {
+          "position": 2,
+          "phase": "decode",
+          "h_l2": 44.83454359915185
+        },
+        {
+          "position": 3,
+          "phase": "decode",
+          "h_l2": 54.92712656260699
+        },
+        {
+          "position": 4,
+          "phase": "decode",
+          "h_l2": 46.83438481412237
+        },
+        {
+          "position": 5,
+          "phase": "decode",
+          "h_l2": 52.588702527458
+        },
+        {
+          "position": 6,
+          "phase": "decode",
+          "h_l2": 47.305644682202235
+        },
+        {
+          "position": 7,
+          "phase": "decode",
+          "h_l2": 50.68272570820387
+        },
+        {
+          "position": 8,
+          "phase": "decode",
+          "h_l2": 43.50670461450374
+        },
+        {
+          "position": 9,
+          "phase": "decode",
+          "h_l2": 47.42142882291377
+        },
+        {
+          "position": 10,
+          "phase": "decode",
+          "h_l2": 49.44317379916086
+        },
+        {
+          "position": 11,
+          "phase": "decode",
+          "h_l2": 43.20013976869096
+        },
+        {
+          "position": 12,
+          "phase": "decode",
+          "h_l2": 51.89193397223969
+        },
+        {
+          "position": 13,
+          "phase": "decode",
+          "h_l2": 48.0748754128168
+        },
+        {
+          "position": 14,
+          "phase": "decode",
+          "h_l2": 53.12958111667482
+        },
+        {
+          "position": 15,
+          "phase": "decode",
+          "h_l2": 49.907668607445004
+        },
+        {
+          "position": 16,
+          "phase": "decode",
+          "h_l2": 45.28344673052548
+        },
+        {
+          "position": 17,
+          "phase": "decode",
+          "h_l2": 39.97120728241191
+        }
+      ],
+      "generation": {
+        "output": "机の上には本と水の入ったコップが置かれている。",
+        "token_ids": [
+          32648,
+          15767,
+          17447,
+          125009,
+          21894,
+          19182,
+          52510,
+          15767,
+          17254,
+          123857,
+          46160,
+          124871,
+          28195,
+          21596,
+          132147,
+          125024,
+          1773,
+          151645
+        ],
+        "stop": "eos",
+        "elapsed_s": 0.8127787999983411,
+        "first_sentence_ms": 767.7744999964489
+      }
+    }
+  ]
+}

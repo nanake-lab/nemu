@@ -36,7 +36,10 @@
           "const": 1
         },
         "status": {
-          "const": "candidates-only"
+          "enum": [
+            "candidates-only",
+            "selected"
+          ]
         },
         "models": {
           "type": "array",
@@ -209,8 +212,56 @@
               }
             }
           }
+        },
+        "selected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "model_id",
+            "revision",
+            "evidence",
+            "decision_record"
+          ],
+          "properties": {
+            "model_id": {
+              "const": "Qwen/Qwen3-4B-Instruct-2507"
+            },
+            "revision": {
+              "const": "cdbee75f17c01a7cc42f958dc650907174af0554"
+            },
+            "evidence": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decision_record": {
+              "const": "reports/P0-07/decision.md"
+            }
+          }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "selected"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "selected"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "selected"
+              ]
+            }
+          }
+        }
+      ]
     }
   }
 }

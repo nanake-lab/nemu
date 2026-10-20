@@ -283,3 +283,11 @@ Ruff、严格Mypy14文件、CPU pytest6项、pnpm lint/typecheck/test通过（40
 已 merge 最新 main（含已合并 PR #38），按用户指示仅围绕 Instruct-2507 收尾。详见 instruct-adr0012-preparation/README.md。剂量比例已预先提交 03071ae；五个 Instruct/TTS 权重重算通过，复用本机缓存，无下载。机械核验外层包装器失败和成功哈希子进程分别保留，未抹除失败。
 
 新增 pnpm probe:chat，仅用户手动启动、RAM 对话、不打开 Core 存储；每轮报告首句延迟，非零参数绑定本轮 norms.json。未实际运行聊天或 GPU。CPU pytest 9 passed、Ruff、严格 Mypy 5 文件、pnpm lint/typecheck/test（443 tests）通过；无新依赖。跨内核差与固定内核名称/版本已加入 Instruct 候选条目，models.lock 仍为 candidates-only。等待本轮 GPU 证据，PR #27 保持草稿。
+
+## 2026-10-20 Instruct / ADR 0012 实测收尾（追加）
+
+完整证据见 [本轮报告](instruct-adr0012-v1/REPORT.md)。用户确认安静窗口后串行完成三次独立含采样器的 Instruct/TTS/RTX 3080 渲染并载，p50 540.5973 / 548.7047 / 545.4835 ms，专用/共享各自最高观测之和 6.098952192 / 6.075985920 / 6.075985920 GB，均满足 ADR 0012。三次路径同内核零调制与注入误差 0、缓存失效正确。采样间隙照实保留；没有放宽 600 ms / 9 GB。
+
+预注册九档范数比例、三 seed、三语 81 条观察及比较页完成；先有六个范数中位数与统一参考，再生成非零剂量。中文高正剂量出现变化，但英文截断、日文混杂文字及各语场景扩写风险保留，不宣称 P5-31 验证通过、不挑选偏好剂量。手动试聊入口就绪，其非零比例与实测资源绑定已用 CPU 核对，未自动试聊或记录对话。无新增依赖。
+
+PR #38 已合并且实测口径满足，按用户授权更新 decision 第一行和 models.lock selected，交付可审查结果；该状态不等于用户最终批准。等待 Claude 交叉审查与用户批准，保留 needs-user，不合并、不启动下一卡。测量退出 0，结束核对探针/渲染进程与端口已退出，已通知恢复 runner。

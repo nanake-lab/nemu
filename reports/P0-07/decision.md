@@ -1,4 +1,4 @@
-未选定载体：真实权重与测量尚未完成；当前仅试验 attention 残差后、下一归一化前的单点注入，rank=8，量化方式待实测。
+选定 Qwen/Qwen3-4B-Instruct-2507（cdbee75f17c01a7cc42f958dc650907174af0554）；hook=零起算第17层 attention 残差后、post_attention_layernorm 前，rank=8，NF4/bf16，eager，原生 RMS aten::_fused_rms_norm（PyTorch 2.10.0+cu128）；按 ADR 0012 实测满足，待 Claude 交叉审查与用户批准。
 
 本记录不是选型批准。候选清单见 `workers/model-adapter/probe/manifest.json`，测量状态见 `benchmark.md`。尚不修改 `config/models.lock.json`。
 
@@ -39,3 +39,11 @@
 | 2.5 收尾 | 尚不选定或转可审查；等待本轮实测，之后仍需 Claude 交叉审查和用户批准。 |
 
 候选内核 aten::_fused_rms_norm，PyTorch 2.10.0+cu128、Transformers 4.57.3、bitsandbytes 0.50.2；NF4/bf16、eager、第 17 层 attention 残差后/下一归一化前、rank 8。以后换内核按 v2.0 第 9.5 节 / I17 迁移处理。详见 instruct-adr0012-preparation/README.md。
+
+### 2026-10-20 实测后的建议（按 ADR 0012）
+
+PR #38 已合并，三次含 WDDM 采样器的 Instruct 独立并载实测完成。2.1：三次同内核零调制 prefill/decode、注入误差和 changed/fresh cache 对照均为 0，满足。2.2：专用与共享各自最大观测之和分别为 6.098952192 / 6.075985920 / 6.075985920 GB，均 ≤ 8 GB，allocator allocated/reserved 为 5.040005120 / 5.261754368 GB，满足。2.3：三次 p50 为 540.5973000015365 / 548.7046999987797 / 545.4835000055027 ms，均 ≤ 600 ms，满足；p90 为 551.8742300017038 / 564.4164599987562 / 553.569240005163 ms。
+
+2.4：先测六个 h 范数中位数，固定统一参考 45.76707549828623；预注册的九比例、三 seed、三语 81 条及 comparison.html 已完成。本项按 ADR 为信息性：中文 +0.4 有变化，英/日也变，但有扩写、英文 25 条 token_limit、日文一次混杂文字；不以此挑剂量或宣称 P5-31 通过。低剂量中文不变与高剂量语义/流畅度风险均记录。
+
+建议按已合并 ADR 0012 第 2.5 条，提交第一行的选定配置及 models.lock 的 selected 条目供审查。历史段落保留，以上实测更新其状态；原生/参考 RMS 三语差仍完整记入配置，换内核按迁移。完整报告见 instruct-adr0012-v1/REPORT.md。PR 转可审查并保留 needs-user，仍等待 Claude 交叉审查、用户批准及最终 CI；不合并、不启动下一卡。

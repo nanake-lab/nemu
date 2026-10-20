@@ -5,7 +5,7 @@
   },
   "p0_07_probe": {
     "version": 1,
-    "status": "candidates-only",
+    "status": "selected",
     "models": [
       {
         "id": "Qwen/Qwen3-4B",
@@ -74,6 +74,12 @@
         "redistributable": true,
         "source": "https://huggingface.co/microsoft/Phi-4-mini-instruct"
       }
-    ]
+    ],
+    "selected": {
+      "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "evidence": "reports/P0-07/instruct-adr0012-v1/REPORT.md",
+      "decision_record": "reports/P0-07/decision.md"
+    }
   }
 }
