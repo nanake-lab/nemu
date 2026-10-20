@@ -1,9 +1,20 @@
-import { defineConfig } from 'electron-vite';
+import { defineConfig, externalizeDepsPlugin } from 'electron-vite';
 import { resolve } from 'node:path';
+
 export default defineConfig({
-  main: {},
+  main: {
+    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts'] })],
+  },
   preload: {
-    build: { rollupOptions: { output: { format: 'cjs', entryFileNames: '[name].cjs' } } },
+    build: {
+      rollupOptions: {
+        input: {
+          stage: resolve(import.meta.dirname, 'src/preload/stage.ts'),
+          panel: resolve(import.meta.dirname, 'src/preload/panel.ts'),
+        },
+        output: { format: 'cjs', entryFileNames: '[name].cjs' },
+      },
+    },
   },
   renderer: {
     root: resolve(import.meta.dirname, '..'),
