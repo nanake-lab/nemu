@@ -179,3 +179,21 @@ fn ac2_21_single_group_weight_never_exceeds_w_max() {
     .unwrap();
     assert_eq!(g.intensity, l.w_max);
 }
+
+#[test]
+fn teaching_weight_follows_trust_in_the_speaker_and_verifiability() {
+    // EV7, V2-45: S = ±1, strength w_teach, credibility = trust (½ for a stranger).
+    let l = law(3.0, 1.0, 0.1, 10.0);
+    let r = caretaker_r(&l);
+    let for_it = crate::law::teaching(true, l.w_teach);
+    let against = crate::law::teaching(false, l.w_teach);
+    assert_eq!((for_it.support, against.support), (1.0, -1.0));
+    assert_eq!((for_it.intensity, for_it.projection), (l.w_teach, None));
+    let w_parent = crate::law::weight(for_it.intensity, trust(&r, "u-star"), 1.0, 1.0).unwrap();
+    let w_stranger = crate::law::weight(for_it.intensity, trust(&r, "stranger"), 1.0, 1.0).unwrap();
+    let w_unverified =
+        crate::law::weight(for_it.intensity, trust(&r, "stranger"), l.v_u, 1.0).unwrap();
+    assert!(w_parent > w_stranger && w_stranger > w_unverified);
+    assert_eq!(w_stranger, l.w_teach * 0.5);
+    assert!(w_parent <= l.w_max);
+}

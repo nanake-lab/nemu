@@ -1,0 +1,56 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/lib.rs (target/debug/deps/core_kernel-a37ea9ec9e298994)
+
+running 37 tests
+test law::num::tests::exact_mean_is_order_and_repetition_invariant ... ok
+test law::num::tests::exact_mean_of_single_value_is_the_value ... ok
+test law::num::tests::exact_mean_rejects_bad_inputs ... ok
+test law::num::tests::exact_mean_rounds_ties_to_even ... ok
+test law::num::tests::finite_normalises_negative_zero_and_rejects_nonfinite ... ok
+test law::tests::ac2_count::ac2_01_consistent_evidence_raises_pi_and_contrary_lowers_it ... AC2-01: 4000 groups, 0 violations at rho = 1, 0 over the decay
+ok
+test law::tests::ac2_count::ac2_01_reference_form_lets_old_support_give_way ... ok
+test law::tests::ac2_count::ac2_02_i25_each_side_sums_to_one_and_zero_support_gets_nothing ... ok
+test law::tests::ac2_count::ac2_06_complex_tendencies_need_more_and_one_salient_group_suffices ... ok
+test law::tests::ac2_count::ac2_07_one_group_moves_pi_at_most_by_corollary_4 ... AC2-07: 20000 groups, 0 violations at rho = 1, 0 over the decay
+ok
+test law::tests::ac2_count::shares_reject_duplicates_and_out_of_range_values ... ok
+test law::tests::engine::ac2_05_without_new_evidence_r_is_bitwise_unchanged ... ok
+test law::tests::engine::ac2_21_capacity_removes_the_weakest_candidate_and_stages_it_in_l ... ok
+test law::tests::engine::alias_adr_0014_any_number_of_synonyms_leaves_pi_and_r_unchanged ... ok
+test law::tests::engine::candidate_enters_r_at_pi_zero_with_an_l_entry ... ok
+test law::tests::engine::evidence_groups_are_an_explicit_contract_gap ... ok
+test law::tests::engine::i10_g_signature_has_no_x_m_g_or_lambda ... ok
+test law::tests::engine::relation_candidate_becomes_the_structural_tendency ... ok
+test law::tests::engine::stored_state_is_checked_before_use ... ok
+test law::tests::group_props::law_10_attachment_corollary_7 ... LAW-10: contrary groups to bring pi below 1/2 after 200 supporting: ordinary Some(29), A_att=60 Some(51), A_att=600 Some(421); exact true; alternating keeps pi >= 0.833
+ok
+test law::tests::group_props::law_8_shares_sum_to_one_per_side_i25 ... LAW-8: 20000 random groups with 1-8 matching tendencies, 0 violations
+ok
+test law::tests::group_props::law_9_repeats_add_nothing_and_missing_reaction_counts ... LAW-9: 5000 groups repeated 2-9 times: 0 changes beyond 1e-12, 0 bitwise; silent (-1.0, 1.0), striking (1.0, 5.0)
+ok
+test law::tests::law_props::law_1_threshold_corollary_1 ... LAW-1: 41607 states, 0 violations
+ok
+test law::tests::law_props::law_2_one_shot_and_occam_corollary_2 ... LAW-2: 20000 single groups, 0 violations; ordinary groups for kappa 0..5: [4, 5, 6, 7, 8, 9]
+ok
+test law::tests::law_props::law_3_reversal_corollary_3 ... LAW-3: 61604 states, 0 violations
+ok
+test law::tests::law_props::law_4_single_group_bound_corollary_4 ... LAW-4: 30000 states, 0 violations, largest |dpi|/bound = 0.9899
+ok
+test law::tests::law_props::law_5_time_and_state_independence_corollary_5 ... LAW-5: 500 sequences, 0 bitwise differences in pi
+ok
+test law::tests::law_props::law_6_memory_bound_corollary_6 ... LAW-6: 3000 sequences, 0 violations
+ok
+test law::tests::law_props::law_7_recurrence_is_canonical ... LAW-7: replay differs bitwise in 0; closed form differs in 410 (max relative 4.4e-16)
+ok
+test law::tests::numeric::exact_mean_matches_correctly_rounded_reference ... ok
+test law::tests::pyrandom::matches_cpython_reference_draws ... ok
+test law::tests::relations::ac2_13_attachment_resists_ordinary_contrary_experience_but_is_finite ... ok
+test law::tests::relations::ac2_21_capacity_choice_takes_the_weakest_candidate_never_personality ... ok
+test law::tests::relations::ac2_21_single_group_weight_never_exceeds_w_max ... ok
+test law::tests::relations::relation_readouts_closeness_weight_and_trust ... ok
+test law::tests::relations::relation_structure_ids_directions_and_r0 ... ok
+test law::tests::relations::teaching_weight_follows_trust_in_the_speaker_and_verifiability ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 17 filtered out; finished in 2.66s
+

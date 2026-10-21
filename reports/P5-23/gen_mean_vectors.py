@@ -18,11 +18,13 @@ SEED = 20261021
 
 
 def bits(x: float) -> int:
-    return struct.unpack("<Q", struct.pack("<d", x))[0]
+    (value,) = struct.unpack("<Q", struct.pack("<d", x))
+    return int(value)
 
 
 def from_bits(b: int) -> float:
-    return struct.unpack("<d", struct.pack("<Q", b))[0]
+    (value,) = struct.unpack("<d", struct.pack("<Q", b))
+    return float(value)
 
 
 def canonical_mean(xs: list[float]) -> float:
