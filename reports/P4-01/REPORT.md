@@ -139,3 +139,19 @@ SenseVoice 源码的 MIT 不能替代权重许可证；转换仓库的 LICENSE �
 - 规范整轨只转换为 16 kHz 单声道 PCM16，SHA-256：ae86600f0bf28cd2eabaeb9b7133d7001e0e4f29553c693c15ee8eb805fab2ed。未裁静音、未归一化；有损 AAC 来源不能被描述成无损采集。
 - 连续输入规则在 CONTINUOUS-IMPORT-PREREGISTRATION.md 追加预登记：独立工具定位、固定顺序、保留最多 1 秒前后余量、逐样本切分与哈希、全部 60 条覆盖；参考时标仍在正式逐句输入冻结后独立重新生成。
 - 当前正在确认用户实际录制顺序与是否重读。候选音频不写正式 user.json；全部验收仍未完成，PR 保持草稿与 needs-user。对齐工具环境安装/模型下载只在本机进行。
+
+### 连续录音工具实际环境与本轮检查
+| 本机评测包 | 实际版本 | 许可证（包元数据） |
+| --- | --- | --- |
+| qwen-asr | 0.0.6 | Apache-2.0 |
+| torch | 2.10.0+cpu | BSD-3-Clause |
+| transformers | 4.57.6 | Apache-2.0 |
+| nagisa | 0.2.11 | MIT |
+| dynet38 | 2.2 | Apache-2.0 |
+| numpy | 2.2.6 | BSD-3-Clause |
+| soundfile | 0.13.1 | BSD-3-Clause |
+| accelerate | 1.12.0 | Apache-2.0 |
+
+独立环境仅用于本机评测；不进应用运行时依赖或打包。`Qwen3ForcedAligner` 实际导入成功；nagisa 有厂商代码的无效转义 SyntaxWarning，未修改其源码。模型权重仍须完整下载、按已登记 SHA-256 验证后才可加载。
+
+合并 origin/main（f0303c2）后串行验证：`pnpm lint`、`pnpm typecheck` 通过，`pnpm test` 33 个文件 462 项通过；证据为 import-main-lint.log、import-main-typecheck.log、import-main-tests.log。连续切分辅助测试 5 项通过、Python 严格类型检查 3 个文件通过，见 continuous-import-tests.log 和 continuous-import-mypy.log。没有把这些检查写成录音/语言/延迟验收通过。
