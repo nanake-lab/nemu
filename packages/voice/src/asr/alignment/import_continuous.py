@@ -11,8 +11,8 @@ import shutil
 import subprocess
 from typing import Protocol, cast
 import wave
-from align_user import Aligner, Factory, LANGUAGES, REVISION, Torch, verify_models
-from reference_data import boundaries, file_sha, freeze, inside, obj, objects, read_json, text
+from align_user import Aligner, Factory, REVISION, Torch, verify_models
+from reference_data import file_sha, freeze, inside, number, obj, objects, read_json, text
 
 REPO = Path(__file__).resolve().parents[5]
 DOC = REPO / 'reports/P4-01/CONTINUOUS-IMPORT-PREREGISTRATION.md'
@@ -44,6 +44,24 @@ def sentence_lengths(units: list[list[str]], joint: list[str]) -> list[int]:
     if any(count <= 0 for count in counts):
         raise ValueError('Empty sentence token group')
     return counts
+
+def candidate_bounds(items: list[dict[str, object]], duration: float) -> tuple[float, float, list[int]]:
+    # Only coarse audio preparation; these spans NEVER become timing references.
+    if not items:
+        raise ValueError('Empty candidate alignment')
+    previous_start, previous_end = 0.0, 0.0
+    zero_units: list[int] = []
+    for index, item in enumerate(items):
+        start, end = number(item['start_time']), number(item['end_time'])
+        if start < previous_start or end < previous_end or end < start or start < 0 or end > duration:
+            raise ValueError('Invalid candidate span; preserve failure')
+        if end == start:
+            zero_units.append(index)
+        previous_start, previous_end = start, end
+    start, end = number(items[0]['start_time']), number(items[-1]['end_time'])
+    if end <= start:
+        raise ValueError('Non-positive complete candidate interval')
+    return start*1000, end*1000, zero_units
 
 def check_method() -> str:
     files = [DOC, Path(__file__), PROMPTS]
@@ -136,15 +154,15 @@ def main() -> None:
     candidates: list[dict[str, object]] = []
     cursor = 0
     previous_end = 0.0
-    for group_index in range(0, 60):
-        group = prompts[group_index:group_index+1]
-        language = LANGUAGES[text(group[0]['lang'])]
+    for group_index in range(0, 60, 3):
+        group = prompts[group_index:group_index+3]
+        language = 'Japanese'
         units = [aligner.aligner_processor.encode_timestamp(text(p['text']), language)[0] for p in group]
         joined = '\n'.join(text(p['text']) for p in group)
         joint_units = aligner.aligner_processor.encode_timestamp(joined, language)[0]
         unit_counts = sentence_lengths(units, joint_units)
-        stop = min(frames, cursor+20*16000)
-        wav = attempt / f'window-{group_index+1:02d}.wav'
+        stop = min(frames, cursor+45*16000)
+        wav = attempt / f'window-{group_index//3+1:02d}.wav'
         extract(canonical, wav, cursor, stop)
         aligned = aligner.align(audio=str(wav), text=joined, language=language)
         if len(aligned) != 1:
@@ -155,12 +173,12 @@ def main() -> None:
             raise ValueError('Unexpected alignment unit count')
         offset = 0
         for prompt, unit_count in zip(group, unit_counts, strict=True):
-            start_ms, end_ms = boundaries(items[offset:offset+unit_count], (stop-cursor)/16000)
+            start_ms, end_ms, zero_units = candidate_bounds(items[offset:offset+unit_count], (stop-cursor)/16000)
             offset += unit_count
             start, end = cursor/16000+start_ms/1000, cursor/16000+end_ms/1000
             if start < previous_end or end > stop/16000-1:
                 raise ValueError(f'Overlapping/edge candidate: {prompt["id"]}')
-            candidates.append({**prompt, 'speechStartSample': round(start*16000), 'speechEndSample': round(end*16000)})
+            candidates.append({**prompt, 'speechStartSample': round(start*16000), 'speechEndSample': round(end*16000), 'coarseZeroDurationUnits': zero_units, 'notTimingReference': True})
             previous_end = end
             print(f'Located {prompt["id"]}: {start:.3f}..{end:.3f}', flush=True)
         cursor = round(previous_end*16000)
@@ -172,7 +190,7 @@ def main() -> None:
         path = attempt / (text(row['id'])+'.wav')
         extract(canonical, path, start, stop)
         row.update(startSample=start, stopSample=stop, sha256=file_sha(path), candidatePath=path.relative_to(archive).as_posix())
-    freeze(archive/'import-candidates.json', {'methodCommit':commit,'methodSha256':file_sha(DOC),'sourceSha256':file_sha(source),'canonicalSha256':file_sha(canonical),'samples':candidates})
+    freeze(archive/'import-candidates.json', {'methodCommit':commit,'methodSha256':file_sha(DOC),'sourceSha256':file_sha(source),'canonicalSha256':file_sha(canonical),'purpose':'coarse-audio-candidates-not-valid-timing-references','samples':candidates})
     print('60 candidates frozen outside Git; awaiting user recording/order confirmation before promotion')
 
 if __name__ == '__main__':
