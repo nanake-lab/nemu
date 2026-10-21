@@ -97,3 +97,10 @@ qwen-tts 0.1.1 的 `non_streaming_mode=False` 本身仍整句返回。适配器�
 - [Qwen3-TTS 官方代码与说明](https://github.com/QwenLM/Qwen3-TTS)，以及 probe 环境 qwen-tts 0.1.1 安装源码。
 - [FastAPI WebSocket 文档](https://fastapi.tiangolo.com/advanced/websockets/)。Context7 配额不足后使用官方文档和已安装源码核对。
 - [OpenAI PCM 格式说明](https://developers.openai.com/api/docs/guides/text-to-speech)，仅用于兼容接口格式；未进行真实调用。
+
+## 最终交付补记（2026-10-21）
+
+- PR #45 已转为可审查，带 `needs-user`；等待 Claude 审查实现。没有合并，没有取下一张卡。
+- 代码提交 `d7bc45d590fcaa499893c83dff0dd7f77ed433f3` 的 [Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/39561117049) 和 [Windows CI](https://github.com/nanake-lab/nemu/actions/runs/39562278216) 均为 SUCCESS，完整步骤状态见 `CI-ubuntu.json`、`CI-windows.json`。Windows 包含 transport、isolation、e2e、visual 及证据溯源检查。
+- VoiceDesign 下载已经完成，三个 TTS snapshot 共 33 个文件再次离线哈希复核通过，见 `cache-verification.json`。仍未加载真实模型进行 GPU 推理，也未生成声音。前文下载状态是首次推送时的记录。
+- 此补记和缓存/CI 归档只追加报告证据，运行代码与上述受测提交一致；报告提交按仓库文档/报告 CI 排除规则处理。
