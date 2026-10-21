@@ -1,3 +1,10 @@
+# P0-08 当前结果：第二部分实测（2026-10-22）
+
+技术测量已完成；整卡仍等待 Claude 审查和 P0-09 用户确认。当前完整报告见 [PART2-REPORT.md](PART2-REPORT.md)，数据见 [benchmark.md](benchmark.md)，候选选型见 [decision.md](decision.md)。本地回退后端候选 P90 截止时间 26168.09769999236 ms；正式配置未改。
+
+---
+
+## 第一部分历史报告（以下原文保留，其未测状态已由第二部分更新）
 # P0-08 Codex app-server 与 IRL 路径验证 — 报告
 
 ## 结果
