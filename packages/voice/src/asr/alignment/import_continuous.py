@@ -11,7 +11,7 @@ import shutil
 import subprocess
 from typing import Protocol, cast
 import wave
-from align_user import Aligner, Factory, REVISION, Torch, verify_models
+from align_user import Aligner, Factory, LANGUAGES, REVISION, Torch, verify_models
 from reference_data import boundaries, file_sha, freeze, inside, obj, objects, read_json, text
 
 REPO = Path(__file__).resolve().parents[5]
@@ -136,16 +136,15 @@ def main() -> None:
     candidates: list[dict[str, object]] = []
     cursor = 0
     previous_end = 0.0
-    for group_index in range(0, 60, 3):
-        group = prompts[group_index:group_index+3]
-        # Mixed-language row: Japanese tokenizer supports kana as well as CJK/Latin.
-        language = 'Japanese'
+    for group_index in range(0, 60):
+        group = prompts[group_index:group_index+1]
+        language = LANGUAGES[text(group[0]['lang'])]
         units = [aligner.aligner_processor.encode_timestamp(text(p['text']), language)[0] for p in group]
         joined = '\n'.join(text(p['text']) for p in group)
         joint_units = aligner.aligner_processor.encode_timestamp(joined, language)[0]
         unit_counts = sentence_lengths(units, joint_units)
-        stop = min(frames, cursor+45*16000)
-        wav = attempt / f'window-{group_index//3+1:02d}.wav'
+        stop = min(frames, cursor+20*16000)
+        wav = attempt / f'window-{group_index+1:02d}.wav'
         extract(canonical, wav, cursor, stop)
         aligned = aligner.align(audio=str(wav), text=joined, language=language)
         if len(aligned) != 1:
