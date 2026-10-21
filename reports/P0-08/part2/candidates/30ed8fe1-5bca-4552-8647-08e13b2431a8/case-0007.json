@@ -1,0 +1,105 @@
+{
+  "caseId": "case-0007",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0007",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0007"
+        ],
+        "sourceSpan": [
+          4,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "周末"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0007"
+        ],
+        "sourceSpan": [
+          9,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "下雨"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0007"
+        ],
+        "sourceSpan": [
+          0,
+          11
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "certainty_about_rain",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "我"
+          },
+          {
+            "role": "time",
+            "value": "周末"
+          },
+          {
+            "role": "event",
+            "value": "下雨"
+          }
+        ],
+        "value": "不确定",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": "周末"
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0007"
+        ],
+        "sourceSpan": [
+          12,
+          19
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "rain_probability",
+        "roles": [
+          {
+            "role": "time",
+            "value": "周末"
+          },
+          {
+            "role": "event",
+            "value": "下雨"
+          }
+        ],
+        "value": "约3成",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": "周末"
+      }
+    ]
+  }
+}

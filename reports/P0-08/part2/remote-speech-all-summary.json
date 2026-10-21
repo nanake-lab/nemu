@@ -1,0 +1,107 @@
+{
+  "mode": "remote-speech-all",
+  "model": "gpt-6-luna",
+  "effort": "max",
+  "segments": [
+    {
+      "lang": "zh",
+      "runId": "4dbc2d76-d217-41d9-b5d1-553619a375bc",
+      "kind": "primary",
+      "path": "raw/remote-speech-zh-4dbc2d76-d217-41d9-b5d1-553619a375bc.jsonl"
+    },
+    {
+      "lang": "en",
+      "runId": "63179398-4994-444f-a015-3ed0d61ab704",
+      "kind": "primary",
+      "path": "raw/remote-speech-en-63179398-4994-444f-a015-3ed0d61ab704.jsonl"
+    },
+    {
+      "lang": "ja",
+      "runId": "76eaab3d-c6c0-4c61-a9e4-8329ce0a9ace",
+      "kind": "primary",
+      "path": "raw/remote-speech-ja-76eaab3d-c6c0-4c61-a9e4-8329ce0a9ace.jsonl"
+    },
+    {
+      "lang": "ja",
+      "runId": "8a414384-c1ea-48a9-a7f0-65cc197f0a89",
+      "kind": "primary",
+      "path": "raw/remote-speech-ja-8a414384-c1ea-48a9-a7f0-65cc197f0a89.jsonl"
+    },
+    {
+      "lang": "ja",
+      "runId": "11cad3d6-8868-47e9-8ff4-24b15e3efab4",
+      "kind": "supplemental",
+      "path": "raw/remote-speech-ja-11cad3d6-8868-47e9-8ff4-24b15e3efab4.jsonl"
+    }
+  ],
+  "rateLimitsBefore": {
+    "ordinaryUsageAllowed": true,
+    "buckets": [
+      {
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 0,
+          "windowDurationMins": 300,
+          "resetsAt": 1792618138
+        },
+        "secondary": {
+          "usedPercent": 51,
+          "windowDurationMins": 10080,
+          "resetsAt": 1793082973
+        },
+        "credits": {
+          "hasCredits": false,
+          "unlimited": false
+        }
+      }
+    ]
+  },
+  "rateLimitsAfter100": {
+    "ordinaryUsageAllowed": true,
+    "buckets": [
+      {
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 1,
+          "windowDurationMins": 300,
+          "resetsAt": 1792618138
+        },
+        "secondary": {
+          "usedPercent": 51,
+          "windowDurationMins": 10080,
+          "resetsAt": 1793082973
+        },
+        "credits": {
+          "hasCredits": false,
+          "unlimited": false
+        }
+      }
+    ]
+  },
+  "rateLimitsAfter": {
+    "ordinaryUsageAllowed": true,
+    "buckets": [
+      {
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 1,
+          "windowDurationMins": 300,
+          "resetsAt": 1792618138
+        },
+        "secondary": {
+          "usedPercent": 51,
+          "windowDurationMins": 10080,
+          "resetsAt": 1793082973
+        },
+        "credits": {
+          "hasCredits": false,
+          "unlimited": false
+        }
+      }
+    ]
+  },
+  "quotaNote": "After100 is the exact completed English-batch boundary. Original all-language process aborted during Japanese. Final snapshot follows 150 successful replies plus 9 failed attempt slots, not an uninterrupted 150-call batch. Failed slots may not have started model turns. Shared account observations cannot isolate other activity."
+}

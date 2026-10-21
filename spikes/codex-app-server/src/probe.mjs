@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import { spawn, execFileSync } from "node:child_process";
 import { createInterface } from "node:readline";
-import { appendFile, mkdir, readFile, rm } from "node:fs/promises";
+import { appendFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { validateSchema } from "./candidate-validation.mjs";
 import { existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -10,9 +12,10 @@ import { performance } from "node:perf_hooks";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
-const reportRoot = resolve(repoRoot, "reports/P0-08");
-const schemaPath = resolve(repoRoot, "spikes/codex-app-server/semantic-candidate.schema.json");
+const reportRoot = resolve(repoRoot, "reports/P0-08/part2");
+const schemaPath = resolve(repoRoot, "spikes/codex-app-server/semantic-candidate.wire.schema.json");
 const fixturesPath = resolve(repoRoot, "spikes/codex-app-server/fixtures/irl-cases.json");
+const measurementEffort = "max";
 const sampleProtocol = [
   "You are a small measurement assistant. Reply only to the supplied test input.",
   "Use the same language as the input. Do not call tools, browse, access files, or use external context.",
@@ -88,6 +91,10 @@ class AppServer {
     this.pending = new Map();
     this.nextId = 0;
     this.turns = new Map();
+    this.completedAt = new Map();
+    this.finalMessages = new Map();
+    this.observedItems = new Map();
+    this.reroutes = new Map();
     this.messages = new Map();
     this.firstDeltas = new Map();
     this.tokenUsage = new Map();
@@ -167,6 +174,14 @@ class AppServer {
 
   #handleNotification(message) {
     const params = message.params ?? {};
+    if (message.method === "model/rerouted") {
+      this.reroutes.set(params.turnId, { fromModel: params.fromModel, toModel: params.toModel, reason: params.reason });
+    }
+    if (message.method === "item/started" && params.item?.type) {
+      const types = this.observedItems.get(params.turnId) ?? [];
+      types.push(params.item.type);
+      this.observedItems.set(params.turnId, types);
+    }
     if (message.method === "item/agentMessage/delta") {
       const turnId = params.turnId;
       if (typeof turnId !== "string") return;
@@ -175,7 +190,14 @@ class AppServer {
       return;
     }
     if (message.method === "turn/completed" && typeof params.turn?.id === "string") {
+      this.completedAt.set(params.turn.id, performance.now());
       this.turns.set(params.turn.id, params);
+      return;
+    }
+    if (message.method === "item/completed" && params.item?.type === "agentMessage") {
+      if (params.item.phase === "final_answer" || !params.item.phase) {
+        this.finalMessages.set(params.turnId, params.item.text ?? "");
+      }
       return;
     }
     if (message.method === "thread/tokenUsage/updated" && typeof params.turnId === "string") {
@@ -258,7 +280,7 @@ class AppServer {
       cwd: workdir,
       approvalPolicy: readOnly ? "never" : "on-request",
       sandbox: "read-only",
-      baseInstructions: sampleProtocol,
+      baseInstructions: readOnly ? sampleProtocol : "You are a synthetic approval routing probe. Perform only the explicitly requested test action in the temporary working directory. Request client approval whenever required; never work around a denial.",
       personality: "none",
       ephemeral: true,
       dynamicTools: [],
@@ -277,7 +299,7 @@ class AppServer {
     return result.thread.id;
   }
 
-  async startTurn({ threadId, model, text, outputSchema, effort = "low", approval = false }) {
+  async startTurn({ threadId, model, text, outputSchema, effort = measurementEffort, approval = false }) {
     const params = {
       threadId,
       model,
@@ -297,6 +319,7 @@ class AppServer {
     const deadline = Date.now() + timeoutMs;
     while (Date.now() < deadline) {
       if (this.turns.has(turnId)) return this.turns.get(turnId);
+      if (this.child.exitCode !== null || this.child.signalCode !== null) throw new Error("server_exited");
       await new Promise((resolvePromise) => setTimeout(resolvePromise, 50));
     }
     throw new Error("turn_timeout");
@@ -312,29 +335,42 @@ class AppServer {
     return null;
   }
 
-  async runOne({ model, text, outputSchema, mode = "speech", cwd = repoRoot, approval = false }) {
+  async runOne({ model, text, outputSchema, mode = "speech", cwd, approval = false }) {
     const threadId = await this.startThread({ model, mode, cwd });
     const { turnId, startedAt } = await this.startTurn({ threadId, model, text, outputSchema, approval });
-    const completed = await this.waitForTurn(turnId);
+    let completed;
+    try {
+      completed = await this.waitForTurn(turnId, 300_000);
+    } catch (error) {
+      await this.request("turn/interrupt", { threadId, turnId }).catch(() => {});
+      throw error;
+    }
     const firstDeltaAt = this.firstDeltas.get(turnId);
-    const fullText = this.messages.get(turnId) ?? "";
+    const fullText = this.finalMessages.get(turnId) ?? this.messages.get(turnId) ?? "";
     const usage = tokenSummary(this.tokenUsage.get(turnId));
-    return {
+    const record = {
       threadId,
       turnId,
       turnStatus: completed.turn.status,
       firstDeltaMs: firstDeltaAt === undefined ? null : Math.round((firstDeltaAt - startedAt) * 100) / 100,
-      completedMs: completed.turn.durationMs ?? null,
+      completedMs: Math.round((this.completedAt.get(turnId) - startedAt) * 100) / 100,
+      errorInfo: completed.turn.error?.codexErrorInfo ?? null,
+      observedItemTypes: this.observedItems.get(turnId) ?? [],
+      reroute: this.reroutes.get(turnId) ?? null,
+      errorDetail: completed.turn.error?.message?.replace(/https?:\/\/[^\s]+/g, "[url]").replace(/(?:sk-|Bearer\s+)[A-Za-z0-9_.-]+/g, "[redacted]").slice(0, 1200) ?? null,
       outputChars: fullText.length,
       text: fullText,
       usage
     };
+    try { await this.request("thread/unsubscribe", { threadId }); }
+    catch (error) { record.cleanupError = error.message; }
+    return record;
   }
 
   async close() {
     this.child.kill();
     await new Promise((resolvePromise) => {
-      if (this.child.exitCode !== null) resolvePromise();
+      if (this.child.exitCode !== null || this.child.signalCode !== null) resolvePromise();
       else this.child.once("exit", resolvePromise);
     });
     await Promise.all([...this.tempWorkdirs].map((workdir) => rm(workdir, { recursive: true, force: true })));
@@ -342,7 +378,7 @@ class AppServer {
   }
 }
 
-function validateSemanticCandidate(value, testCase) {
+export function validateSemanticCandidate(value, testCase) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return false;
   if (Object.keys(value).some((key) => !["schemaVersion", "sourceRef", "nodes"].includes(key))) return false;
   if (value.schemaVersion !== "p0-08-candidate-v1" || value.sourceRef !== testCase.sourceRef || !Array.isArray(value.nodes)) return false;
@@ -404,44 +440,47 @@ async function summarizeRecords(mode, rows, metadata = {}) {
     completionP50Ms: percentile(rows.map((r) => r.completedMs), 0.50),
     completionP90Ms: percentile(rows.map((r) => r.completedMs), 0.90),
     successCount: rows.filter((r) => r.turnStatus === "completed").length,
-    failures: rows.filter((r) => r.errorCode !== undefined).length,
+    failures: rows.filter((r) => r.errorCode !== undefined || r.turnStatus !== "completed").length,
     usageRows: usageRows.length,
     usageTotals,
     ...metadata
   };
   const outPath = resolve(reportRoot, `${mode}-summary.json`);
   await mkdir(dirname(outPath), { recursive: true });
-  const { writeFile } = await import("node:fs/promises");
   await writeFile(outPath, `${JSON.stringify(output, null, 2)}\n`, "utf8");
   return output;
 }
 
-async function speechBatch(server, model, lang, runs) {
+async function speechBatch(server, model, lang, runs, startIndex = 1) {
   const dataset = JSON.parse(await readFile(fixturesPath, "utf8")).cases.filter((item) => item.lang === lang);
-  if (dataset.length < runs) throw new Error(`not enough ${lang} fixtures for ${runs} speech runs`);
+  if (dataset.length < startIndex - 1 + runs) throw new Error(`not enough ${lang} fixtures for ${runs} speech runs`);
   const runId = randomUUID();
   const rawPath = resolve(reportRoot, `raw/remote-speech-${lang}-${runId}.jsonl`);
   const rateLimitsBefore = await server.readRateLimits();
   const rows = [];
   for (let index = 0; index < runs; index += 1) {
-    const sample = dataset[index];
+    const sample = dataset[startIndex - 1 + index];
     const instruction = lang === "zh" ? `请用中文用一句简短、自然的话回应，最多20字：${sample.text}`
       : lang === "ja" ? `日本語で20語以内の短い自然な一文で返答してください：${sample.text}`
         : `Reply in English with one short, natural sentence, at most 20 words: ${sample.text}`;
     try {
       const result = await server.runOne({ model, text: instruction });
-      const row = { index: index + 1, caseId: sample.id, lang, model, turnStatus: result.turnStatus, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, usage: result.usage };
+      const row = { index: startIndex + index, caseId: sample.id, lang, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, usage: result.usage };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
     } catch (error) {
-      const row = { index: index + 1, caseId: sample.id, lang, model, errorCode: error.rpcCode ?? null, errorClass: error.message };
+      const row = { index: startIndex + index, caseId: sample.id, lang, model, effort: measurementEffort, errorCode: error.rpcCode ?? null, errorClass: error.message };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
-      if (error.message === "server_exited" || error.message === "spawn_error") throw error;
+      if (["server_exited", "spawn_error", "rpc_timeout", "turn_timeout"].includes(error.message)) {
+        await summarizeRecords(`remote-speech-${lang}-${runId}-partial`, rows, { runId, startIndex, rateLimitsBefore, aborted: true });
+        throw error;
+      }
     }
+    process.stderr.write(`speech ${lang}: ${index + 1}/${runs}\n`);
   }
   const rateLimitsAfter = await server.readRateLimits();
-  return summarizeRecords(`remote-speech-${lang}`, rows, { runId, rateLimitsBefore, rateLimitsAfter });
+  return summarizeRecords(`remote-speech-${lang}`, rows, { runId, startIndex, rateLimitsBefore, rateLimitsAfter });
 }
 
 async function speechAll(server, model, runsPerLanguage) {
@@ -464,41 +503,52 @@ async function speechAll(server, model, runsPerLanguage) {
   };
   const outPath = resolve(reportRoot, "remote-speech-all-summary.json");
   await mkdir(dirname(outPath), { recursive: true });
-  const { writeFile } = await import("node:fs/promises");
   await writeFile(outPath, `${JSON.stringify(output, null, 2)}\n`, "utf8");
   return output;
 }
 
-async function irlBatch(server, model, runs, schema) {
+async function irlBatch(server, model, runs, schema, startIndex = 1) {
   const dataset = JSON.parse(await readFile(fixturesPath, "utf8")).cases;
-  if (dataset.length < runs) throw new Error(`not enough fixtures for ${runs} IRL runs`);
+  if (dataset.length < startIndex - 1 + runs) throw new Error(`not enough fixtures for ${runs} IRL runs`);
   const runId = randomUUID();
   const rawPath = resolve(reportRoot, `raw/remote-irl-${runId}.jsonl`);
+  const outputDir = resolve(reportRoot, `candidates/${runId}`);
+  await mkdir(outputDir, { recursive: true });
   const rateLimitsBefore = await server.readRateLimits();
   const rows = [];
+  await writeFile(resolve(reportRoot, `remote-irl-${runId}-quota-before.json`), `${JSON.stringify(rateLimitsBefore, null, 2)}\n`);
   let rateLimitsAfter100 = null;
   for (let index = 0; index < runs; index += 1) {
-    const sample = dataset[index];
+    const sample = dataset[startIndex - 1 + index];
     const prompt = `Convert this single synthetic user utterance into an experimental SemanticCandidate JSON object using the supplied schema. Preserve only what the sentence says. Use sourceRef ${sample.sourceRef}; sourceSpan is a half-open range of Unicode code points in the utterance. Do not fill missing facts. Language=${sample.lang}; utterance=${JSON.stringify(sample.text)}`;
     try {
       const result = await server.runOne({ model, text: prompt, outputSchema: schema });
       const candidate = parseJsonOutput(result.text);
-      const schemaValid = validateSemanticCandidate(candidate, sample);
-      const row = { index: index + 1, caseId: sample.id, lang: sample.lang, category: sample.category, model, turnStatus: result.turnStatus, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, schemaValid, nodeCount: schemaValid ? candidate.nodes.length : null, usage: result.usage };
+      const schemaResult = validateSchema(candidate);
+      const schemaValid = schemaResult.valid;
+      const sourceBindingValid = schemaValid && validateSemanticCandidate(candidate, sample);
+      await writeFile(resolve(outputDir, `${sample.id}.json`), `${JSON.stringify({ caseId: sample.id, candidate }, null, 2)}\n`, "utf8");
+      const row = { index: startIndex + index, caseId: sample.id, lang: sample.lang, category: sample.category, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, outputSha256: createHash("sha256").update(result.text).digest("hex"), schemaValid, sourceBindingValid, schemaErrors: schemaResult.errors, nodeCount: schemaValid ? candidate.nodes.length : null, usage: result.usage };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
     } catch (error) {
-      const row = { index: index + 1, caseId: sample.id, lang: sample.lang, category: sample.category, model, errorCode: error.rpcCode ?? null, errorClass: error.message, schemaValid: false };
+      const row = { index: startIndex + index, caseId: sample.id, lang: sample.lang, category: sample.category, model, effort: measurementEffort, errorCode: error.rpcCode ?? null, errorClass: error.message, schemaValid: false };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
-      if (error.message === "server_exited" || error.message === "spawn_error") throw error;
+      if (["server_exited", "spawn_error", "rpc_timeout", "turn_timeout"].includes(error.message)) {
+        await summarizeRecords(`remote-irl-${runId}-partial`, rows, { runId, rateLimitsBefore, rateLimitsAfter100, aborted: true });
+        throw error;
+      }
     }
-    if (index === 99) rateLimitsAfter100 = await server.readRateLimits();
+    if (startIndex + index === 100) {
+      rateLimitsAfter100 = await server.readRateLimits();
+      await writeFile(resolve(reportRoot, `remote-irl-${runId}-quota-after100.json`), `${JSON.stringify(rateLimitsAfter100, null, 2)}\n`);
+    }
+    process.stderr.write(`irl: ${index + 1}/${runs}\n`);
   }
   const rateLimitsAfter = await server.readRateLimits();
-  const output = await summarizeRecords("remote-irl", rows, { runId, rateLimitsBefore, rateLimitsAfter100, rateLimitsAfter });
+  const output = await summarizeRecords("remote-irl", rows, { runId, startIndex, rateLimitsBefore, rateLimitsAfter100, rateLimitsAfter });
   const validated = rows.filter((row) => row.turnStatus === "completed");
-  const { writeFile } = await import("node:fs/promises");
   await writeFile(resolve(reportRoot, "remote-irl-schema-summary.json"), `${JSON.stringify({ runId, total: rows.length, completed: validated.length, valid: validated.filter((row) => row.schemaValid).length, schemaValidity: validated.length === 0 ? null : validated.filter((row) => row.schemaValid).length / validated.length }, null, 2)}\n`, "utf8");
   return output;
 }
@@ -510,7 +560,6 @@ async function catalog(server) {
   const output = { measuredAtUtc: new Date().toISOString(), cliVersion, modelCount: models.length, models, rateLimits };
   const outPath = resolve(reportRoot, "model-catalog.json");
   await mkdir(dirname(outPath), { recursive: true });
-  const { writeFile } = await import("node:fs/promises");
   await writeFile(outPath, `${JSON.stringify(output, null, 2)}\n`, "utf8");
   return output;
 }
@@ -520,25 +569,26 @@ async function controlProbe(server, model) {
   const longText = "Write a long numbered response in English, continuing for at least 400 numbered items unless interrupted. Do not use tools.";
   const threadId = await server.startThread({ model });
   const { turnId, startedAt } = await server.startTurn({ threadId, model, text: longText });
-  await new Promise((resolvePromise) => setTimeout(resolvePromise, 750));
+  const interruptFirstDelta = await server.waitForFirstDelta(turnId, 60_000);
+  const interruptAt = performance.now();
   try {
     await server.request("turn/interrupt", { threadId, turnId }, 15_000);
     const completed = await server.waitForTurn(turnId, 30_000);
-    controls.push({ control: "turn/interrupt", requestAccepted: true, turnStatus: completed.turn.status, firstDeltaMs: server.firstDeltas.has(turnId) ? Math.round((server.firstDeltas.get(turnId) - startedAt) * 100) / 100 : null });
+    controls.push({ control: "turn/interrupt", requestAccepted: true, turnStatus: completed.turn.status, firstDeltaSeen: interruptFirstDelta !== null, interruptCompletionMs: Math.round((server.completedAt.get(turnId) - interruptAt) * 100) / 100, firstDeltaMs: server.firstDeltas.has(turnId) ? Math.round((server.firstDeltas.get(turnId) - startedAt) * 100) / 100 : null });
   } catch (error) {
     controls.push({ control: "turn/interrupt", requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message });
   }
 
   const steerThread = await server.startThread({ model });
   const steerTurn = await server.startTurn({ threadId: steerThread, model, text: longText });
-  const firstDeltaAt = await server.waitForFirstDelta(steerTurn.turnId, 20_000);
+  const firstDeltaAt = await server.waitForFirstDelta(steerTurn.turnId, 60_000);
   try {
     const steered = await server.request("turn/steer", {
       threadId: steerThread,
       expectedTurnId: steerTurn.turnId,
       input: [{ type: "text", text: "Stop the list and reply with exactly STEERED.", text_elements: [] }]
     }, 15_000);
-    const completed = await server.waitForTurn(steerTurn.turnId, 60_000);
+    const completed = await server.waitForTurn(steerTurn.turnId, 180_000);
     controls.push({ control: "turn/steer", requestAccepted: true, firstDeltaSeen: firstDeltaAt !== null, turnStatus: completed.turn.status, outputContainsMarker: (server.messages.get(steerTurn.turnId) ?? "").includes("STEERED"), responseObserved: Boolean(steered) });
   } catch (error) {
     controls.push({ control: "turn/steer", requestAccepted: false, firstDeltaSeen: firstDeltaAt !== null, errorCode: error.rpcCode ?? null, errorClass: error.message });
@@ -551,25 +601,24 @@ async function controlProbe(server, model) {
     { control: "command-approval", text: "Use the command execution tool to create a file named COMMAND-PROBE.txt in the current directory using shell output redirection, with only the text P0-08 approval probe. Do not do anything else." },
     { control: "file-change-approval", text: `Use the file editing tool to create a file named APPROVAL-PROBE.txt in the current directory containing only P0-08 probe. Do not use a shell command.` }
   ];
-  const approvalStartIndex = server.approvals.length;
   for (const prompt of approvalPrompts) {
+    const approvalStartIndex = server.approvals.length;
     try {
       const result = await server.runOne({ model, text: prompt.text, mode: "approval", cwd: approvalDir, approval: true });
-      controls.push({ control: prompt.control, turnStatus: result.turnStatus, outputChars: result.outputChars });
+      controls.push({ control: prompt.control, turnStatus: result.turnStatus, outputChars: result.outputChars, observedItemTypes: result.observedItemTypes, requests: server.approvals.slice(approvalStartIndex) });
     } catch (error) {
       controls.push({ control: prompt.control, requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message });
     }
   }
   controls.push({
     control: "approval-routing",
-    requests: server.approvals.slice(approvalStartIndex).map(({ method, decision }) => ({ method, decision })),
+    requests: server.approvals.map(({ method, decision }) => ({ method, decision })),
     commandFileCreated: existsSync(join(approvalDir, "COMMAND-PROBE.txt")),
     testFileCreated: existsSync(join(approvalDir, "APPROVAL-PROBE.txt"))
   });
   await rm(approvalDir, { recursive: true, force: true });
   const outPath = resolve(reportRoot, "controls.json");
-  const { writeFile } = await import("node:fs/promises");
-  await writeFile(outPath, `${JSON.stringify({ measuredAtUtc: new Date().toISOString(), model, controls }, null, 2)}\n`, "utf8");
+  await writeFile(outPath, `${JSON.stringify({ measuredAtUtc: new Date().toISOString(), model, effort: measurementEffort, controls }, null, 2)}\n`, "utf8");
   return controls;
 }
 
@@ -605,20 +654,19 @@ async function main() {
       result = { initialized: true, ephemeralThreadStarted: typeof threadId === "string" && threadId.length > 0, configuredModel: null, turnStarted: false };
       const outPath = resolve(reportRoot, "local-smoke.json");
       await mkdir(dirname(outPath), { recursive: true });
-      const { writeFile } = await import("node:fs/promises");
-      await writeFile(outPath, `${JSON.stringify(result, null, 2)}\n`, "utf8");
+          await writeFile(outPath, `${JSON.stringify(result, null, 2)}\n`, "utf8");
     }
     else if (mode === "speech") {
       const lang = required(options, "lang");
       if (!["zh", "en", "ja"].includes(lang)) throw new Error("--lang must be zh, en, or ja");
-      result = await speechBatch(server, model, lang, safeInteger(options.runs, 50, 1, 50));
+      result = await speechBatch(server, model, lang, safeInteger(options.runs, 50, 1, 50), safeInteger(options["start-index"], 1, 1, 50));
     } else if (mode === "speech-all") {
       const runsPerLanguage = safeInteger(options["runs-per-language"], 50, 1, 50);
       if (runsPerLanguage !== 50) throw new Error("speech-all requires exactly 50 runs per language");
       result = await speechAll(server, model, runsPerLanguage);
     } else if (mode === "irl") {
       const schema = JSON.parse(await readFile(schemaPath, "utf8"));
-      result = await irlBatch(server, model, safeInteger(options.runs, 200, 1, 200), schema);
+      result = await irlBatch(server, model, safeInteger(options.runs, 200, 1, 200), schema, safeInteger(options["start-index"], 1, 1, 200));
     } else if (mode === "controls") result = await controlProbe(server, model);
     else throw new Error(`unknown command: ${mode}`);
     process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
@@ -627,8 +675,10 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  const detail = error.rpcCode === undefined ? error.message : `rpc_error_${error.rpcCode}`;
-  process.stderr.write(`P0-08 probe failed: ${detail}\n`);
-  process.exitCode = 1;
-});
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    const detail = error.rpcCode === undefined ? error.message : `rpc_error_${error.rpcCode}`;
+    process.stderr.write(`P0-08 probe failed: ${detail}\n`);
+    process.exitCode = 1;
+  });
+}

@@ -1,0 +1,121 @@
+{
+  "caseId": "case-0011",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0011",
+    "nodes": [
+      {
+        "id": "ref-meeting",
+        "sourceRefs": [
+          "p0-08-0011"
+        ],
+        "sourceSpan": [
+          7,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "meeting"
+      },
+      {
+        "id": "ref-lunch",
+        "sourceRefs": [
+          "p0-08-0011"
+        ],
+        "sourceSpan": [
+          38,
+          43
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "lunch"
+      },
+      {
+        "id": "ref-time",
+        "sourceRefs": [
+          "p0-08-0011"
+        ],
+        "sourceSpan": [
+          47,
+          56
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "4 o'clock"
+      },
+      {
+        "id": "claim-meeting-runs-long",
+        "sourceRefs": [
+          "p0-08-0011"
+        ],
+        "sourceSpan": [
+          0,
+          25
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "runs_long",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "meeting"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      },
+      {
+        "id": "claim-move-lunch",
+        "sourceRefs": [
+          "p0-08-0011"
+        ],
+        "sourceSpan": [
+          26,
+          56
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "move",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "I"
+          },
+          {
+            "role": "object",
+            "value": "lunch"
+          },
+          {
+            "role": "to_time",
+            "value": "4 o'clock"
+          },
+          {
+            "role": "condition",
+            "value": "meeting runs long"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      }
+    ]
+  }
+}
