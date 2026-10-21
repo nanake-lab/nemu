@@ -9,13 +9,13 @@ import { loadTimingReferences } from './timing-reference.js';
 import { assertQuiet } from './quiet.js';
 const gated = process.argv[2] === 'gated';
 const outputPath = gated
-  ? 'reports/P4-01/vad-diagnostic-gated.json'
+  ? 'reports/P4-01/vad-diagnostic-gated-effective.json'
   : 'reports/P4-01/vad-diagnostic-grid.json';
 const configs = gated
   ? [
-      { id: 'gated-050', threshold: 0.5, speech: 0, silence: 0.168 },
-      { id: 'gated-035', threshold: 0.35, speech: 0, silence: 0.168 },
-      { id: 'gated-020', threshold: 0.2, speech: 0, silence: 0.168 },
+      { id: 'gated-effective-050', threshold: 0.5, speech: 0.000001, silence: 0.168 },
+      { id: 'gated-effective-035', threshold: 0.35, speech: 0.000001, silence: 0.168 },
+      { id: 'gated-effective-020', threshold: 0.2, speech: 0.000001, silence: 0.168 },
     ]
   : [
       { id: 'baseline', threshold: 0.5, speech: 0.2, silence: 0.2 },
@@ -53,7 +53,7 @@ for (const config of configs) {
           sileroVad: {
             model: join(cacheDirectory(), 'silero_vad.onnx'),
             threshold: barge ? config.threshold : 0.5,
-            minSilenceDuration: barge ? (gated ? 0 : 0.032) : config.silence,
+            minSilenceDuration: barge ? (gated ? 0.000001 : 0.032) : config.silence,
             minSpeechDuration: barge ? config.speech : 0.032,
             windowSize: 512,
             maxSpeechDuration: 20,

@@ -6,7 +6,8 @@ export interface WindowDetector {
   pop(): void;
   reset(): void;
 }
-/** Requires native minSpeech=0 and minSilence=0, window/shift=512 at 16 kHz.
+/** Requires effective native zero-sample delays, window/shift=512 at 16 kHz.
+ * The C API uses numeric 0 as a default sentinel; callers use 1e-6 seconds (0 samples).
  * Native onset then confirms two positive windows before isDetected can become true.
  * Count that confirmed window pair once; subsequent hysteresis-positive windows add 32 ms.
  * A negative window clears the run, so endpoint hangover cannot satisfy the 200 ms gate.

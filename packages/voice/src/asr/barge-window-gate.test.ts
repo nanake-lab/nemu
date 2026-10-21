@@ -44,3 +44,9 @@ it('reset discards both a confirmed run and buffered samples', () => {
   expect(gate.feed(new Float32Array(512))).toBe(false);
   expect(detector.calls).toHaveLength(0);
 });
+
+it('encodes zero sample delay without the native C API numeric-zero default sentinel', () => {
+  const nativeSeconds = 0.000001;
+  expect(nativeSeconds).toBeGreaterThan(0);
+  expect(Math.trunc(nativeSeconds * 16000)).toBe(0);
+});
