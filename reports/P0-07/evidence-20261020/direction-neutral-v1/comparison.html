@@ -1,0 +1,206 @@
+<!doctype html><html lang="zh"><meta charset="utf-8">
+<title>P0-07 中性场景剂量比较</title><style>
+body{font:16px/1.6 system-ui;margin:32px;max-width:1500px}table{border-collapse:collapse;width:100%}
+td,th{border:1px solid #bbb;padding:10px;text-align:left;vertical-align:top}th{background:#eee}
+td:nth-child(3){white-space:pre-wrap}tr:has(td:nth-child(2):is(:empty)){background:#eee}
+</style><h1>P0-07 中性场景剂量比较</h1>
+<p>信息性探索；beta=4 是独立探索预算，不是生产参数或阈值批准。
+同一模型内提示、方向、seed 与生成预算固定。全部输出保留，文本变化不等于方向或能力验证通过。</p>
+<h2>Qwen/Qwen3-4B</h2><p>{&#x27;zh&#x27;: &#x27;桌上有一本书和一杯水。请用中文简短描述这个场景。&#x27;, &#x27;en&#x27;: &#x27;There is a book and a glass of water on the table. Briefly describe the scene in English.&#x27;, &#x27;ja&#x27;: &#x27;机の上に本と水の入ったコップがあります。日本語で短く描写してください。&#x27;}</p>
+<table><thead><tr><th>Language / seed</th><th>Coefficient</th><th>Output</th><th>Stop / seconds</th></tr></thead><tbody>
+<tr><td>zh / 731</td><td>-4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.540</td></tr>
+<tr><td>zh / 731</td><td>-2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.405</td></tr>
+<tr><td>zh / 731</td><td>-1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.417</td></tr>
+<tr><td>zh / 731</td><td>0.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.403</td></tr>
+<tr><td>zh / 731</td><td>1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.400</td></tr>
+<tr><td>zh / 731</td><td>2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.399</td></tr>
+<tr><td>zh / 731</td><td>4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.405</td></tr>
+<tr><td>zh / 732</td><td>-4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.414</td></tr>
+<tr><td>zh / 732</td><td>-2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.413</td></tr>
+<tr><td>zh / 732</td><td>-1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.395</td></tr>
+<tr><td>zh / 732</td><td>0.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.395</td></tr>
+<tr><td>zh / 732</td><td>1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.414</td></tr>
+<tr><td>zh / 732</td><td>2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.416</td></tr>
+<tr><td>zh / 732</td><td>4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.435</td></tr>
+<tr><td>zh / 733</td><td>-4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.406</td></tr>
+<tr><td>zh / 733</td><td>-2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.412</td></tr>
+<tr><td>zh / 733</td><td>-1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.417</td></tr>
+<tr><td>zh / 733</td><td>0.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.403</td></tr>
+<tr><td>zh / 733</td><td>1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.425</td></tr>
+<tr><td>zh / 733</td><td>2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.447</td></tr>
+<tr><td>zh / 733</td><td>4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.403</td></tr>
+<tr><td>en / 731</td><td>-4.0</td><td>A book lies on the table alongside a glass of water. The book is open, and the glass is half-full, with a few droplets of water on the table. The room is quiet, and the sunlight filters through the window,</td><td>token_limit / 2.199</td></tr>
+<tr><td>en / 731</td><td>-2.0</td><td>A book lies on the table alongside a glass of water. The book is open, and the glass is half-full, with a few droplets of water on the surface. The room is quiet, and the sunlight filters through the window,</td><td>token_limit / 2.217</td></tr>
+<tr><td>en / 731</td><td>-1.0</td><td>A book lies on the table alongside a glass of water, the surface of the water reflecting the soft light, and the book&#x27;s pages slightly open, suggesting a moment of quiet reflection or a paused conversation.</td><td>eos / 1.934</td></tr>
+<tr><td>en / 731</td><td>0.0</td><td>A book lies on the table alongside a glass of water, the surface of the water reflecting the soft light, and the book&#x27;s pages slightly open, suggesting a moment of quiet reflection or a paused conversation.</td><td>eos / 1.879</td></tr>
+<tr><td>en / 731</td><td>1.0</td><td>A book lies on the table alongside a glass of water, the pages slightly open, and the glass is half-full, reflecting the soft light of a dimly lit room.</td><td>eos / 1.642</td></tr>
+<tr><td>en / 731</td><td>2.0</td><td>A book lies on the table alongside a glass of water, the pages slightly open, and the glass is half-full, reflecting the soft light of a dimly lit room.</td><td>eos / 1.648</td></tr>
+<tr><td>en / 731</td><td>4.0</td><td>A book lies on the table alongside a glass of water, the pages slightly open, and the glass is half-full, reflecting the soft light of a dimly lit room.</td><td>eos / 1.617</td></tr>
+<tr><td>en / 732</td><td>-4.0</td><td>There is a book on the table, and a glass of water next to it. The room is quiet, with soft light coming through the window. The book is open, and the glass sits steadily on the surface, reflecting the light.</td><td>token_limit / 2.200</td></tr>
+<tr><td>en / 732</td><td>-2.0</td><td>There is a book on the table, and a glass of water next to it. The room is quiet, with soft light coming through the window. The book is open, and the glass holds clear water with a few ice cubes floating in</td><td>token_limit / 2.178</td></tr>
+<tr><td>en / 732</td><td>-1.0</td><td>There is a book on the table, and a glass of water next to it. The room is quiet, with soft light coming through the window. The book is open, and the glass holds clear water with a few ice cubes floating in</td><td>token_limit / 2.175</td></tr>
+<tr><td>en / 732</td><td>0.0</td><td>There is a book on the table, and a glass of water next to it. The room is quiet, with soft light coming through the window. The book is open, and the glass holds a clear liquid, its surface reflecting the gentle</td><td>token_limit / 2.155</td></tr>
+<tr><td>en / 732</td><td>1.0</td><td>There is a book on the table, and a glass of water next to it. The book is open, and the glass is half-full. The room is quiet, with soft sunlight coming through the window.</td><td>eos / 1.907</td></tr>
+<tr><td>en / 732</td><td>2.0</td><td>There is a book on the table, and a glass of water next to it. The book is open, and the glass is half-full, with a faint reflection of the table beneath it. The room is quiet, and the sunlight filters</td><td>token_limit / 2.151</td></tr>
+<tr><td>en / 732</td><td>4.0</td><td>There is a book on the table, and a glass of water next to it. The book is open, and the glass is half-full, with a faint reflection of the table beneath it. The room is quiet, and the sunlight filters</td><td>token_limit / 2.338</td></tr>
+<tr><td>en / 733</td><td>-4.0</td><td>A book lies on the table alongside a glass of water. The book is open, and the glass is half-full, with a small amount of water visible. The table is plain, with a soft, even light casting a calm atmosphere.</td><td>token_limit / 2.413</td></tr>
+<tr><td>en / 733</td><td>-2.0</td><td>A book lies on the table alongside a glass of water. The book is open, and the glass is half-full, with a small amount of water visible. The table is plain, with a faint wooden texture. The scene is quiet and</td><td>token_limit / 2.156</td></tr>
+<tr><td>en / 733</td><td>-1.0</td><td>A book lies on the table alongside a glass of water, the glass filled with clear liquid and a few ice cubes visible. The book is open to a page, and the surface is tidy and calm.</td><td>eos / 1.872</td></tr>
+<tr><td>en / 733</td><td>0.0</td><td>A book lies on the table alongside a glass of water, creating a simple and peaceful scene. The book is open, and the glass is half-full, adding a quiet, everyday atmosphere to the setting.</td><td>eos / 1.921</td></tr>
+<tr><td>en / 733</td><td>1.0</td><td>A book lies on the table alongside a glass of water, creating a simple and peaceful scene. The book is open, and the glass is half-full, adding a touch of calm and everyday serenity to the moment.</td><td>eos / 2.045</td></tr>
+<tr><td>en / 733</td><td>2.0</td><td>A book lies on the table alongside a glass of water, creating a simple and peaceful scene. The book is open, and the glass is half-full, adding a touch of calm and everyday serenity to the moment.</td><td>eos / 2.128</td></tr>
+<tr><td>en / 733</td><td>4.0</td><td>A book lies on the table alongside a glass of water, creating a simple and peaceful scene. The book is open, and the glass is half-full, adding a touch of calm and everyday serenity to the moment.</td><td>eos / 2.044</td></tr>
+<tr><td>ja / 731</td><td>-4.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.677</td></tr>
+<tr><td>ja / 731</td><td>-2.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.683</td></tr>
+<tr><td>ja / 731</td><td>-1.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.675</td></tr>
+<tr><td>ja / 731</td><td>0.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.683</td></tr>
+<tr><td>ja / 731</td><td>1.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.681</td></tr>
+<tr><td>ja / 731</td><td>2.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.674</td></tr>
+<tr><td>ja / 731</td><td>4.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.670</td></tr>
+<tr><td>ja / 732</td><td>-4.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.670</td></tr>
+<tr><td>ja / 732</td><td>-2.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.682</td></tr>
+<tr><td>ja / 732</td><td>-1.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.670</td></tr>
+<tr><td>ja / 732</td><td>0.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.669</td></tr>
+<tr><td>ja / 732</td><td>1.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.674</td></tr>
+<tr><td>ja / 732</td><td>2.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.674</td></tr>
+<tr><td>ja / 732</td><td>4.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.676</td></tr>
+<tr><td>ja / 733</td><td>-4.0</td><td>机の上には本と水の入ったコップがありました。</td><td>eos / 0.674</td></tr>
+<tr><td>ja / 733</td><td>-2.0</td><td>机の上には本と水の入ったコップがありました。</td><td>eos / 0.668</td></tr>
+<tr><td>ja / 733</td><td>-1.0</td><td>机の上には本と水の入ったコップがありました。</td><td>eos / 0.678</td></tr>
+<tr><td>ja / 733</td><td>0.0</td><td>机の上には本と水の入ったコップがありました。</td><td>eos / 0.675</td></tr>
+<tr><td>ja / 733</td><td>1.0</td><td>机の上には本と水の入ったコップがありました。</td><td>eos / 0.681</td></tr>
+<tr><td>ja / 733</td><td>2.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.677</td></tr>
+<tr><td>ja / 733</td><td>4.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.686</td></tr>
+</tbody></table>
+<h2>Qwen/Qwen3-4B-Instruct-2507</h2><p>{&#x27;zh&#x27;: &#x27;桌上有一本书和一杯水。请用中文简短描述这个场景。&#x27;, &#x27;en&#x27;: &#x27;There is a book and a glass of water on the table. Briefly describe the scene in English.&#x27;, &#x27;ja&#x27;: &#x27;机の上に本と水の入ったコップがあります。日本語で短く描写してください。&#x27;}</p>
+<table><thead><tr><th>Language / seed</th><th>Coefficient</th><th>Output</th><th>Stop / seconds</th></tr></thead><tbody>
+<tr><td>zh / 731</td><td>-4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.492</td></tr>
+<tr><td>zh / 731</td><td>-2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.403</td></tr>
+<tr><td>zh / 731</td><td>-1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.408</td></tr>
+<tr><td>zh / 731</td><td>0.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.415</td></tr>
+<tr><td>zh / 731</td><td>1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.416</td></tr>
+<tr><td>zh / 731</td><td>2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.414</td></tr>
+<tr><td>zh / 731</td><td>4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.417</td></tr>
+<tr><td>zh / 732</td><td>-4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.412</td></tr>
+<tr><td>zh / 732</td><td>-2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.413</td></tr>
+<tr><td>zh / 732</td><td>-1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.413</td></tr>
+<tr><td>zh / 732</td><td>0.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.413</td></tr>
+<tr><td>zh / 732</td><td>1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.412</td></tr>
+<tr><td>zh / 732</td><td>2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.412</td></tr>
+<tr><td>zh / 732</td><td>4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.413</td></tr>
+<tr><td>zh / 733</td><td>-4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.413</td></tr>
+<tr><td>zh / 733</td><td>-2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.414</td></tr>
+<tr><td>zh / 733</td><td>-1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.415</td></tr>
+<tr><td>zh / 733</td><td>0.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.416</td></tr>
+<tr><td>zh / 733</td><td>1.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.411</td></tr>
+<tr><td>zh / 733</td><td>2.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.414</td></tr>
+<tr><td>zh / 733</td><td>4.0</td><td>桌上放着一本书和一杯水。</td><td>eos / 0.417</td></tr>
+<tr><td>en / 731</td><td>-4.0</td><td>On the table lies a book open to a page, resting beside a glass of clear water. The book is placed neatly, its cover worn at the edges, while the glass sits slightly to the side, the water reflecting the soft light.</td><td>token_limit / 2.196</td></tr>
+<tr><td>en / 731</td><td>-2.0</td><td>On the table lies a book open to a page, resting beside a glass of clear water. The sunlight streams in slightly, casting a soft glow on the wooden surface, creating a calm and quiet atmosphere. The book and water are arranged simply</td><td>token_limit / 2.187</td></tr>
+<tr><td>en / 731</td><td>-1.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a glass of clear water. The glass is half-full, its surface reflecting the soft light, and the book rests quietly, as if waiting to be</td><td>token_limit / 2.175</td></tr>
+<tr><td>en / 731</td><td>0.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a clear glass of water. The sunlight streams through the window, catching the reflection of the water and highlighting the soft cover of the book. A quiet</td><td>token_limit / 2.186</td></tr>
+<tr><td>en / 731</td><td>1.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a clear glass of water. The sunlight streams through the window, catching the reflection of the water and highlighting the soft cover of the book. A quiet</td><td>token_limit / 2.177</td></tr>
+<tr><td>en / 731</td><td>2.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a clear glass of water. The sunlight streams through the window, catching the reflection of the water and highlighting the book&#x27;s cover. A quiet, peaceful</td><td>token_limit / 2.178</td></tr>
+<tr><td>en / 731</td><td>4.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a clear glass of water. The sunlight streams through the window, catching the reflection on the water&#x27;s surface and highlighting the book&#x27;s spine. A quiet</td><td>token_limit / 2.174</td></tr>
+<tr><td>en / 732</td><td>-4.0</td><td>On the table lies a book open to a page, sitting beside a glass of water. The book is placed neatly, its spine slightly worn, and the glass contains clear water, perhaps with a few ice cubes, reflecting the soft light from</td><td>token_limit / 2.180</td></tr>
+<tr><td>en / 732</td><td>-2.0</td><td>On the table lies a book open to a page, sitting beside a glass of clear water. The sunlight filters through the window, casting a soft glow on the wooden surface. The book rests quietly, its spines slightly worn, while the</td><td>token_limit / 2.178</td></tr>
+<tr><td>en / 732</td><td>-1.0</td><td>On the table lies a book open to a page, its spines slightly worn, resting beside a glass of clear water. The sunlight streams through the window, catching the reflection of the water and highlighting the quiet stillness of the moment.</td><td>token_limit / 2.176</td></tr>
+<tr><td>en / 732</td><td>0.0</td><td>On the table lies a book open to a page, its spines slightly worn, resting beside a glass of clear water. The sunlight streams through the window, catching the reflection of the water and highlighting the quiet stillness of the moment.</td><td>token_limit / 2.175</td></tr>
+<tr><td>en / 732</td><td>1.0</td><td>On the table lies a book open to a page, its spines slightly worn, resting beside a clear glass of water. The sunlight streams through the window, catching the reflection of the water and highlighting the quiet stillness of the moment.</td><td>token_limit / 2.181</td></tr>
+<tr><td>en / 732</td><td>2.0</td><td>On the table lies a book open to a page, its spines slightly worn, resting beside a clear glass of water. The sunlight streams through the window, catching the reflection of the water and highlighting the edges of the book. A quiet</td><td>token_limit / 2.171</td></tr>
+<tr><td>en / 732</td><td>4.0</td><td>On the table lies a book open to a page, its spines slightly worn, resting beside a clear glass of water. The sunlight streams through the window, catching the reflection of the water and highlighting the edges of the book. A quiet</td><td>token_limit / 2.177</td></tr>
+<tr><td>en / 733</td><td>-4.0</td><td>On the table lies a book open to a page, resting beside a glass of clear water. The sunlight streams through the window, casting a soft glow over the wooden surface, creating a calm and quiet atmosphere. The book and the glass form</td><td>token_limit / 2.171</td></tr>
+<tr><td>en / 733</td><td>-2.0</td><td>On the table lies a book open to a page, its cover worn and the pages slightly curled, resting beside a clear glass of water. The glass is half-full, the water reflecting the soft light, and the book sits quietly, as</td><td>token_limit / 2.181</td></tr>
+<tr><td>en / 733</td><td>-1.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a glass of clear water. The sunlight filters through the window, catching the reflection on the water’s surface. The stillness of the moment is broken</td><td>token_limit / 2.177</td></tr>
+<tr><td>en / 733</td><td>0.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a glass of clear water. The sunlight filters through the window, catching the reflection on the water’s surface. A quiet stillness fills the moment,</td><td>token_limit / 2.177</td></tr>
+<tr><td>en / 733</td><td>1.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a glass of clear water. The sunlight filters through the window, catching the reflection on the water’s surface. A quiet stillness fills the moment,</td><td>token_limit / 2.175</td></tr>
+<tr><td>en / 733</td><td>2.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a glass of clear water. The sunlight filters through the window, catching the reflection on the water’s surface and illuminating the book’s cover. The</td><td>token_limit / 2.178</td></tr>
+<tr><td>en / 733</td><td>4.0</td><td>On the table lies a book open to a page, its edges slightly worn, resting beside a glass of clear water. The sunlight filters through the window, catching the water&#x27;s surface and highlighting the book&#x27;s cover. A quiet, peaceful moment</td><td>token_limit / 2.186</td></tr>
+<tr><td>ja / 731</td><td>-4.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.690</td></tr>
+<tr><td>ja / 731</td><td>-2.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.668</td></tr>
+<tr><td>ja / 731</td><td>-1.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.669</td></tr>
+<tr><td>ja / 731</td><td>0.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.675</td></tr>
+<tr><td>ja / 731</td><td>1.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.685</td></tr>
+<tr><td>ja / 731</td><td>2.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.685</td></tr>
+<tr><td>ja / 731</td><td>4.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.685</td></tr>
+<tr><td>ja / 732</td><td>-4.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.682</td></tr>
+<tr><td>ja / 732</td><td>-2.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.683</td></tr>
+<tr><td>ja / 732</td><td>-1.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.683</td></tr>
+<tr><td>ja / 732</td><td>0.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.686</td></tr>
+<tr><td>ja / 732</td><td>1.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.687</td></tr>
+<tr><td>ja / 732</td><td>2.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.710</td></tr>
+<tr><td>ja / 732</td><td>4.0</td><td>机の上に本と水の入ったコップがある。</td><td>eos / 0.696</td></tr>
+<tr><td>ja / 733</td><td>-4.0</td><td>机の上には本と水の入ったコップが置かれている。</td><td>eos / 0.821</td></tr>
+<tr><td>ja / 733</td><td>-2.0</td><td>机の上には本と水の入ったコップが置かれていた。</td><td>eos / 0.865</td></tr>
+<tr><td>ja / 733</td><td>-1.0</td><td>机の上には本と水の入ったコップが置かれていた。</td><td>eos / 0.867</td></tr>
+<tr><td>ja / 733</td><td>0.0</td><td>机の上には本と水の入ったコップが置かれている。</td><td>eos / 0.821</td></tr>
+<tr><td>ja / 733</td><td>1.0</td><td>机の上には本と水の入ったコップが置かれている。</td><td>eos / 0.820</td></tr>
+<tr><td>ja / 733</td><td>2.0</td><td>机の上には本と水の入ったコップが置かれている。</td><td>eos / 0.820</td></tr>
+<tr><td>ja / 733</td><td>4.0</td><td>机の上には本と水の入ったコップが並んでいる。</td><td>eos / 0.775</td></tr>
+</tbody></table>
+<h2>microsoft/Phi-4-mini-instruct</h2><p>{&#x27;zh&#x27;: &#x27;桌上有一本书和一杯水。请用中文简短描述这个场景。&#x27;, &#x27;en&#x27;: &#x27;There is a book and a glass of water on the table. Briefly describe the scene in English.&#x27;, &#x27;ja&#x27;: &#x27;机の上に本と水の入ったコップがあります。日本語で短く描写してください。&#x27;}</p>
+<table><thead><tr><th>Language / seed</th><th>Coefficient</th><th>Output</th><th>Stop / seconds</th></tr></thead><tbody>
+<tr><td>zh / 731</td><td>-4.0</td><td>桌上有一本书和一杯水。</td><td>eos / 0.417</td></tr>
+<tr><td>zh / 731</td><td>-2.0</td><td>桌上有一本书和一杯水。</td><td>eos / 0.370</td></tr>
+<tr><td>zh / 731</td><td>-1.0</td><td>桌上有一本书和一杯水。</td><td>eos / 0.370</td></tr>
+<tr><td>zh / 731</td><td>0.0</td><td>桌上有一本书和一杯水。</td><td>eos / 0.393</td></tr>
+<tr><td>zh / 731</td><td>1.0</td><td>桌上有一本书和一杯水。</td><td>eos / 0.387</td></tr>
+<tr><td>zh / 731</td><td>2.0</td><td>桌上有一本书和一杯水。</td><td>eos / 0.387</td></tr>
+<tr><td>zh / 731</td><td>4.0</td><td>桌上有一本书和一杯水。</td><td>eos / 0.390</td></tr>
+<tr><td>zh / 732</td><td>-4.0</td><td>桌上的书和杯子里有水。</td><td>eos / 0.386</td></tr>
+<tr><td>zh / 732</td><td>-2.0</td><td>桌上的书和杯子里有水。</td><td>eos / 0.386</td></tr>
+<tr><td>zh / 732</td><td>-1.0</td><td>桌上的书和杯子里有水。</td><td>eos / 0.389</td></tr>
+<tr><td>zh / 732</td><td>0.0</td><td>桌上的书和杯子里有水。</td><td>eos / 0.369</td></tr>
+<tr><td>zh / 732</td><td>1.0</td><td>桌上的书和杯子里有水。</td><td>eos / 0.370</td></tr>
+<tr><td>zh / 732</td><td>2.0</td><td>桌上的书和杯子里有水。</td><td>eos / 0.373</td></tr>
+<tr><td>zh / 732</td><td>4.0</td><td>桌上的书和杯子里有水。</td><td>eos / 0.390</td></tr>
+<tr><td>zh / 733</td><td>-4.0</td><td>桌子上放着一本书和一杯水。</td><td>eos / 0.457</td></tr>
+<tr><td>zh / 733</td><td>-2.0</td><td>桌子上放着一本书和一杯水。</td><td>eos / 0.457</td></tr>
+<tr><td>zh / 733</td><td>-1.0</td><td>桌子上放着一本书和一杯水。</td><td>eos / 0.457</td></tr>
+<tr><td>zh / 733</td><td>0.0</td><td>桌子上放着一本书和一杯水。</td><td>eos / 0.438</td></tr>
+<tr><td>zh / 733</td><td>1.0</td><td>桌子上放着一本书和一杯水。</td><td>eos / 0.442</td></tr>
+<tr><td>zh / 733</td><td>2.0</td><td>桌子上放着一本书和一杯水。</td><td>eos / 0.450</td></tr>
+<tr><td>zh / 733</td><td>4.0</td><td>桌子上放着一本书和一杯水。</td><td>eos / 0.461</td></tr>
+<tr><td>en / 731</td><td>-4.0</td><td>On the table, a book lies open with its pages partially turned down, and a glass of water sits beside it. The book appears to be resting against the edge, while the glass of water is filled to a moderate level, reflecting the</td><td>token_limit / 1.661</td></tr>
+<tr><td>en / 731</td><td>-2.0</td><td>On the table, a book lies open with its pages partially turned down, and a glass of water sits beside it. The book appears to be resting against the edge, its cover slightly askew. The glass, filled with water, casts</td><td>token_limit / 1.642</td></tr>
+<tr><td>en / 731</td><td>-1.0</td><td>On the table, a book lies open with its pages partially turned down, and a glass of water sits beside it. The book appears to be resting against the edge, its cover slightly askew, while the glass of water sits poised in</td><td>token_limit / 1.621</td></tr>
+<tr><td>en / 731</td><td>0.0</td><td>On the table, a book lies open, its pages blank and waiting for someone to fill them with words. Next to the book, there&#x27;s a glass of water, still and clear, reflecting the light in subtle ripples. The scene ex</td><td>token_limit / 1.659</td></tr>
+<tr><td>en / 731</td><td>1.0</td><td>On the table, a book lies open, its pages filled with stories untold, while beside it, a glass of water sits clear and serene, untouched and inviting, reflecting the quiet atmosphere of the room.</td><td>eos / 1.447</td></tr>
+<tr><td>en / 731</td><td>2.0</td><td>On the table, a classic book lies open, its pages worn and filled with stories from a bygone era. Beside the book, a pristine glass of water sits, untouched and gleaming under the dim light of the room, reflecting</td><td>token_limit / 1.685</td></tr>
+<tr><td>en / 731</td><td>4.0</td><td>On the table, a classic novel lies open, its pages worn and marked by a reader&#x27;s journey through its pages. Nearby, a glass of water sits empty, reflecting the dim light that filters through the window, casting glimmering spe</td><td>token_limit / 1.614</td></tr>
+<tr><td>en / 732</td><td>-4.0</td><td>On the table, there is a book lying flat, its cover slightly askew, inviting a reader to delve into its pages. Adjacent to it, a glass of water sits atop a coaster, the surface reflecting a soft glow from the</td><td>token_limit / 1.681</td></tr>
+<tr><td>en / 732</td><td>-2.0</td><td>On the table, there&#x27;s a book resting against a glass, spilling a few drops of water onto the book&#x27;s cover. The glass, filled to the brim, sits unwatched beside the book, which seems undisturbed. The arrangement suggests</td><td>token_limit / 1.655</td></tr>
+<tr><td>en / 732</td><td>-1.0</td><td>On the table, there is a book lying open, its pages turned down, inviting someone to start reading. Beside the book, there is a glass of water, half-filled, suggesting someone drank from it recently or it has been placed</td><td>token_limit / 1.713</td></tr>
+<tr><td>en / 732</td><td>0.0</td><td>On the table, there&#x27;s a book resting against a glass, spilling a few drops of water onto the book&#x27;s cover. The glass, filled to the brim, sits unwatched beside the book, which seems undisturbed. The arrangement suggests</td><td>token_limit / 1.626</td></tr>
+<tr><td>en / 732</td><td>1.0</td><td>On the table, there&#x27;s a book resting against a glass, spilling a few drops of water onto the book&#x27;s cover. The glass, filled to the brim, sits unwatched beside the book, which seems to hold a steady promise of stories</td><td>token_limit / 1.667</td></tr>
+<tr><td>en / 732</td><td>2.0</td><td>On the table, there&#x27;s a book resting against a glass, spilling a few drops of water onto the book&#x27;s cover. The glass, filled to the brim, sits unwatched beside the book, which seems to hold a steady promise of stories</td><td>token_limit / 1.625</td></tr>
+<tr><td>en / 732</td><td>4.0</td><td>On the table, there&#x27;s a book resting against a glass, spilling a few drops of water onto the book&#x27;s cover. The glass, filled to the brim, sits unwatched beside the book, reflecting the dim light of the room and casting</td><td>token_limit / 1.650</td></tr>
+<tr><td>en / 733</td><td>-4.0</td><td>On the table, there is a book and a glass of water resting side by side. The book appears to be open, indicating that someone might be reading or studying it, and the glass of water is filled to the brim, suggesting a</td><td>token_limit / 1.642</td></tr>
+<tr><td>en / 733</td><td>-2.0</td><td>On the table, there&#x27;s a book resting beside a glass of water, both placed neatly. The sunlight streams through the window, casting a warm glow across the scene. The book, untouched, appears to be waiting for someone to start reading.</td><td>token_limit / 1.654</td></tr>
+<tr><td>en / 733</td><td>-1.0</td><td>On the table, there is a well-worn book resting beside a pristine glass of water. The book, with its cover slightly worn from frequent use, lies open, inviting a reader to delve into its pages. The glass, filled to</td><td>token_limit / 1.642</td></tr>
+<tr><td>en / 733</td><td>0.0</td><td>On the table, there&#x27;s a book resting beside a glass of water, both seemingly inviting. The book&#x27;s pages flutter gently, indicating that it hasn&#x27;t been touched in a while, and the glass is filled to the brim, the water sparkling in</td><td>token_limit / 1.664</td></tr>
+<tr><td>en / 733</td><td>1.0</td><td>On the table, there&#x27;s a book resting beside a glass of water, both seemingly inviting. The book&#x27;s pages flutter gently, indicating the breeze from the open window nearby, while the glass of water gleams under the soft light, catching the</td><td>token_limit / 1.639</td></tr>
+<tr><td>en / 733</td><td>2.0</td><td>On the table, there&#x27;s a book resting beside a glass of water, both seemingly inviting. The book&#x27;s pages flutter gently, indicating that it might be open, catching a faint gleam from the nearby window. The glass is half-filled,</td><td>token_limit / 1.633</td></tr>
+<tr><td>en / 733</td><td>4.0</td><td>On the table, there&#x27;s a book resting beside a glass of water, both seemingly inviting the attention of any observer. The book, perhaps a novel or a collection of stories, exudes the allure of countless adventures or the comfort of familiar narratives</td><td>token_limit / 1.645</td></tr>
+<tr><td>ja / 731</td><td>-4.0</td><td>机上に本と水を満たしたコップがあります。</td><td>eos / 0.506</td></tr>
+<tr><td>ja / 731</td><td>-2.0</td><td>机上に本と水を満たしたコップがあります。</td><td>eos / 0.505</td></tr>
+<tr><td>ja / 731</td><td>-1.0</td><td>机上に本と水を満たしたコップがあります。</td><td>eos / 0.526</td></tr>
+<tr><td>ja / 731</td><td>0.0</td><td>机上に本と水を満たしたコップがあります。</td><td>eos / 0.527</td></tr>
+<tr><td>ja / 731</td><td>1.0</td><td>机上に本と水を満たしたコップがあります。</td><td>eos / 0.526</td></tr>
+<tr><td>ja / 731</td><td>2.0</td><td>机上に本と水を満たしたコップが置かれており、空気は静かで落ち着いた雰囲気を感じさせます。</td><td>eos / 1.382</td></tr>
+<tr><td>ja / 731</td><td>4.0</td><td>机上に本と水を満たしたコップが置かれており、空気は静かで落ち着いた雰囲気を感じさせます。</td><td>eos / 1.344</td></tr>
+<tr><td>ja / 732</td><td>-4.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.533</td></tr>
+<tr><td>ja / 732</td><td>-2.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.526</td></tr>
+<tr><td>ja / 732</td><td>-1.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.526</td></tr>
+<tr><td>ja / 732</td><td>0.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.517</td></tr>
+<tr><td>ja / 732</td><td>1.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.507</td></tr>
+<tr><td>ja / 732</td><td>2.0</td><td>机の上に本と水の入ったコップがあります。</td><td>eos / 0.502</td></tr>
+<tr><td>ja / 732</td><td>4.0</td><td>机の上に本と水の入ったコップが置かれています。</td><td>eos / 0.664</td></tr>
+<tr><td>ja / 733</td><td>-4.0</td><td>机の上に本と水が入ったコップが置かれていました。</td><td>eos / 0.665</td></tr>
+<tr><td>ja / 733</td><td>-2.0</td><td>机の上に本と水が入ったコップが置かれていました。</td><td>eos / 0.662</td></tr>
+<tr><td>ja / 733</td><td>-1.0</td><td>机の上に本と水が入ったコップが置かれている。</td><td>eos / 0.663</td></tr>
+<tr><td>ja / 733</td><td>0.0</td><td>机の上に本と水が入ったコップが置かれている。</td><td>eos / 0.666</td></tr>
+<tr><td>ja / 733</td><td>1.0</td><td>机の上に本と水が満たされたコップが置かれている。</td><td>eos / 0.679</td></tr>
+<tr><td>ja / 733</td><td>2.0</td><td>机の上に本と水が満たされたコップが置かれている。</td><td>eos / 0.667</td></tr>
+<tr><td>ja / 733</td><td>4.0</td><td>机の上に本と水が満たされたコップが置かれている。</td><td>eos / 0.686</td></tr>
+</tbody></table></html>

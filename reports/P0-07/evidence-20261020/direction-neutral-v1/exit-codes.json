@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Qwen--Qwen3-4B",
+    "command": [
+      "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.venv\\Scripts\\python.exe",
+      "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\direction_probe.py",
+      "--model",
+      "Qwen/Qwen3-4B",
+      "--neutral-dose",
+      "--native-rms",
+      "--output",
+      "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\Qwen--Qwen3-4B.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "Qwen--Qwen3-4B-Instruct-2507",
+    "command": [
+      "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.venv\\Scripts\\python.exe",
+      "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\direction_probe.py",
+      "--model",
+      "Qwen/Qwen3-4B-Instruct-2507",
+      "--neutral-dose",
+      "--native-rms",
+      "--output",
+      "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\Qwen--Qwen3-4B-Instruct-2507.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "microsoft--Phi-4-mini-instruct",
+    "command": [
+      "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.venv\\Scripts\\python.exe",
+      "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\direction_probe.py",
+      "--model",
+      "microsoft/Phi-4-mini-instruct",
+      "--neutral-dose",
+      "--native-rms",
+      "--output",
+      "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\microsoft--Phi-4-mini-instruct.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "html",
+    "command": [
+      "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.venv\\Scripts\\python.exe",
+      "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\direction_html.py",
+      "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\Qwen--Qwen3-4B.json",
+      "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\Qwen--Qwen3-4B-Instruct-2507.json",
+      "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\microsoft--Phi-4-mini-instruct.json",
+      "--output",
+      "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\comparison.html"
+    ],
+    "exit": 0
+  }
+]

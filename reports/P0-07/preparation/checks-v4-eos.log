@@ -1,0 +1,30 @@
+WORKDIR=D:\Dev\nemu
+START_UTC=2026-10-17T15:14:24.3964826Z
+COMMAND='D:\Dev\nemu\workers\model-adapter\probe\.venv\Scripts\python.exe' -c <stdlib assertions; source recorded in log>
+PYTHON_SOURCE_BEGIN
+import sys
+sys.path.insert(0, r"D:\Dev\nemu\workers\model-adapter\probe")
+from stop_tokens import eos_ids
+assert eos_ids(199999) == frozenset({199999})
+assert eos_ids([200020, 199999]) == frozenset({200020, 199999})
+for invalid in ([], "199999", True):
+    try:
+        eos_ids(invalid)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(f"expected ValueError for {invalid!r}")
+print("single EOS, EOS list, and invalid empty-list/string/bool cases passed")
+PYTHON_SOURCE_END
+ENVIRONMENT_BEGIN
+PYTHONDONTWRITEBYTECODE=1
+ENVIRONMENT_END
+STDOUT_BEGIN
+single EOS, EOS list, and invalid empty-list/string/bool cases passed
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+EXIT_CODE=0
+END_UTC=2026-10-17T15:14:24.4682745Z

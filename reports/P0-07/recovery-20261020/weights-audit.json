@@ -1,0 +1,538 @@
+{
+  "startedLocal": "2026-10-20T15:00:29.4224184+08:00",
+  "workdir": "D:\\Dev\\nemu-p007",
+  "manifestPath": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\manifest.json",
+  "cacheRoot": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models",
+  "preparationPaths": [
+    "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\microsoft--Phi-4-mini-instruct-weights-20261017T030634659061Z.json",
+    "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\phi-weights-verified-20261017.json",
+    "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-Instruct-2507-weights-20261016T151833171127Z.json",
+    "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-weights-20261016T144939955890Z.json",
+    "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-8B-weights-20261016T165318306382Z.json",
+    "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-TTS-12Hz-0.6B-Base-weights-20261016T170527361239Z.json"
+  ],
+  "models": [
+    {
+      "id": "Qwen/Qwen3-4B",
+      "manifestRevision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "expectedCacheDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B",
+      "revisionDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B\\1cfa9a7208912126459214e8b04321603b3df60c",
+      "revisionDirectoryExists": true,
+      "metadataPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B\\1cfa9a7208912126459214e8b04321603b3df60c\\.cache\\weight-metadata.json",
+      "metadataPresent": true,
+      "metadataError": null,
+      "metadataId": "Qwen/Qwen3-4B",
+      "metadataSha": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "manifestRevisionMatchesDirectory": true,
+      "manifestRevisionMatchesMetadataSha": true,
+      "metadataIdMatchesManifest": true,
+      "preparationCount": 1,
+      "preparationRevisionValues": [
+        "1cfa9a7208912126459214e8b04321603b3df60c"
+      ],
+      "preparationRevisionsMatchManifest": true,
+      "preparations": [
+        {
+          "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-weights-20261016T144939955890Z.json",
+          "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+          "status": "verified-not-measured"
+        }
+      ],
+      "weights": [
+        {
+          "relativePath": "model-00001-of-00003.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B\\1cfa9a7208912126459214e8b04321603b3df60c\\model-00001-of-00003.safetensors",
+          "siblingSizeBytes": 3957900840,
+          "lfsSizeBytes": 3957900840,
+          "lfsSha256": "328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-weights-20261016T144939955890Z.json",
+              "bytes": 3957900840,
+              "sha256": "328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 3957900840,
+          "actualSha256": "328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "model-00002-of-00003.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B\\1cfa9a7208912126459214e8b04321603b3df60c\\model-00002-of-00003.safetensors",
+          "siblingSizeBytes": 3987450520,
+          "lfsSizeBytes": 3987450520,
+          "lfsSha256": "6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-weights-20261016T144939955890Z.json",
+              "bytes": 3987450520,
+              "sha256": "6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 3987450520,
+          "actualSha256": "6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "model-00003-of-00003.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B\\1cfa9a7208912126459214e8b04321603b3df60c\\model-00003-of-00003.safetensors",
+          "siblingSizeBytes": 99630640,
+          "lfsSizeBytes": 99630640,
+          "lfsSha256": "e4bf436957184f4eeb86a80e9db394503f1f56446b2e6b7edeac5b81470f4ca1",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-weights-20261016T144939955890Z.json",
+              "bytes": 99630640,
+              "sha256": "e4bf436957184f4eeb86a80e9db394503f1f56446b2e6b7edeac5b81470f4ca1"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 99630640,
+          "actualSha256": "e4bf436957184f4eeb86a80e9db394503f1f56446b2e6b7edeac5b81470f4ca1",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        }
+      ]
+    },
+    {
+      "id": "Qwen/Qwen3-4B-Instruct-2507",
+      "manifestRevision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "expectedCacheDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507",
+      "revisionDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554",
+      "revisionDirectoryExists": true,
+      "metadataPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\.cache\\weight-metadata.json",
+      "metadataPresent": true,
+      "metadataError": null,
+      "metadataId": "Qwen/Qwen3-4B-Instruct-2507",
+      "metadataSha": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "manifestRevisionMatchesDirectory": true,
+      "manifestRevisionMatchesMetadataSha": true,
+      "metadataIdMatchesManifest": true,
+      "preparationCount": 1,
+      "preparationRevisionValues": [
+        "cdbee75f17c01a7cc42f958dc650907174af0554"
+      ],
+      "preparationRevisionsMatchManifest": true,
+      "preparations": [
+        {
+          "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-Instruct-2507-weights-20261016T151833171127Z.json",
+          "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+          "status": "verified-not-measured"
+        }
+      ],
+      "weights": [
+        {
+          "relativePath": "model-00001-of-00003.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\model-00001-of-00003.safetensors",
+          "siblingSizeBytes": 3957900840,
+          "lfsSizeBytes": 3957900840,
+          "lfsSha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-Instruct-2507-weights-20261016T151833171127Z.json",
+              "bytes": 3957900840,
+              "sha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 3957900840,
+          "actualSha256": "75311d91bb08cf0b882913da464a1e722a31fb44db35208663487efb7a3d8ed6",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "model-00002-of-00003.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\model-00002-of-00003.safetensors",
+          "siblingSizeBytes": 3987450520,
+          "lfsSizeBytes": 3987450520,
+          "lfsSha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-Instruct-2507-weights-20261016T151833171127Z.json",
+              "bytes": 3987450520,
+              "sha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 3987450520,
+          "actualSha256": "0b48adbb1f60e901153d91907ba11ce63bd4b8b584482e730f48808d055dfba1",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "model-00003-of-00003.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\model-00003-of-00003.safetensors",
+          "siblingSizeBytes": 99630640,
+          "lfsSizeBytes": 99630640,
+          "lfsSha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-4B-Instruct-2507-weights-20261016T151833171127Z.json",
+              "bytes": 99630640,
+              "sha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 99630640,
+          "actualSha256": "7dd39ccca5e4de123c74c14af44c9bf2eb75df33b4614382af0134528e060d5d",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        }
+      ]
+    },
+    {
+      "id": "Qwen/Qwen3-8B",
+      "manifestRevision": "b968826d9c46dd6066d109eabc6255188de91218",
+      "expectedCacheDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-8B",
+      "revisionDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-8B\\b968826d9c46dd6066d109eabc6255188de91218",
+      "revisionDirectoryExists": true,
+      "metadataPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-8B\\b968826d9c46dd6066d109eabc6255188de91218\\.cache\\weight-metadata.json",
+      "metadataPresent": true,
+      "metadataError": null,
+      "metadataId": "Qwen/Qwen3-8B",
+      "metadataSha": "b968826d9c46dd6066d109eabc6255188de91218",
+      "manifestRevisionMatchesDirectory": true,
+      "manifestRevisionMatchesMetadataSha": true,
+      "metadataIdMatchesManifest": true,
+      "preparationCount": 1,
+      "preparationRevisionValues": [
+        "b968826d9c46dd6066d109eabc6255188de91218"
+      ],
+      "preparationRevisionsMatchManifest": true,
+      "preparations": [
+        {
+          "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-8B-weights-20261016T165318306382Z.json",
+          "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+          "status": "verified-not-measured"
+        }
+      ],
+      "weights": [
+        {
+          "relativePath": "model-00001-of-00005.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-8B\\b968826d9c46dd6066d109eabc6255188de91218\\model-00001-of-00005.safetensors",
+          "siblingSizeBytes": 3996250744,
+          "lfsSizeBytes": 3996250744,
+          "lfsSha256": "31d6a825ae35f11fb85b195b4c42c146c051e446433125a215336abdf95cbf5f",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-8B-weights-20261016T165318306382Z.json",
+              "bytes": 3996250744,
+              "sha256": "31d6a825ae35f11fb85b195b4c42c146c051e446433125a215336abdf95cbf5f"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 3996250744,
+          "actualSha256": "31d6a825ae35f11fb85b195b4c42c146c051e446433125a215336abdf95cbf5f",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "model-00002-of-00005.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-8B\\b968826d9c46dd6066d109eabc6255188de91218\\model-00002-of-00005.safetensors",
+          "siblingSizeBytes": 3993160032,
+          "lfsSizeBytes": 3993160032,
+          "lfsSha256": "5991236cea6fe21f3d43cab0f0e84448734fbbe0789816202989f2ddc9d18282",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-8B-weights-20261016T165318306382Z.json",
+              "bytes": 3993160032,
+              "sha256": "5991236cea6fe21f3d43cab0f0e84448734fbbe0789816202989f2ddc9d18282"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 3993160032,
+          "actualSha256": "5991236cea6fe21f3d43cab0f0e84448734fbbe0789816202989f2ddc9d18282",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "model-00003-of-00005.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-8B\\b968826d9c46dd6066d109eabc6255188de91218\\model-00003-of-00005.safetensors",
+          "siblingSizeBytes": 3959604768,
+          "lfsSizeBytes": 3959604768,
+          "lfsSha256": "c5185c4794be2d8a9784d5753c9922db38df478ce11f9ed0b415b7304d896836",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-8B-weights-20261016T165318306382Z.json",
+              "bytes": 3959604768,
+              "sha256": "c5185c4794be2d8a9784d5753c9922db38df478ce11f9ed0b415b7304d896836"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 3959604768,
+          "actualSha256": "c5185c4794be2d8a9784d5753c9922db38df478ce11f9ed0b415b7304d896836",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "model-00004-of-00005.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-8B\\b968826d9c46dd6066d109eabc6255188de91218\\model-00004-of-00005.safetensors",
+          "siblingSizeBytes": 3187841392,
+          "lfsSizeBytes": 3187841392,
+          "lfsSha256": "b5ee7de71fbf17db3d5704e0c8f2bc7d005ca9e1d7ca2aeb19827b0cfcaa917a",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-8B-weights-20261016T165318306382Z.json",
+              "bytes": 3187841392,
+              "sha256": "b5ee7de71fbf17db3d5704e0c8f2bc7d005ca9e1d7ca2aeb19827b0cfcaa917a"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 3187841392,
+          "actualSha256": "b5ee7de71fbf17db3d5704e0c8f2bc7d005ca9e1d7ca2aeb19827b0cfcaa917a",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "model-00005-of-00005.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-8B\\b968826d9c46dd6066d109eabc6255188de91218\\model-00005-of-00005.safetensors",
+          "siblingSizeBytes": 1244659840,
+          "lfsSizeBytes": 1244659840,
+          "lfsSha256": "20c2d6366ab85c90786ccdd829cd2b9e7d30ef3b2ebbb998280e7e4014b542ff",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-8B-weights-20261016T165318306382Z.json",
+              "bytes": 1244659840,
+              "sha256": "20c2d6366ab85c90786ccdd829cd2b9e7d30ef3b2ebbb998280e7e4014b542ff"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 1244659840,
+          "actualSha256": "20c2d6366ab85c90786ccdd829cd2b9e7d30ef3b2ebbb998280e7e4014b542ff",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        }
+      ]
+    },
+    {
+      "id": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+      "manifestRevision": "5d83992436eae1d760afd27aff78a71d676296fc",
+      "expectedCacheDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-TTS-12Hz-0.6B-Base",
+      "revisionDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\5d83992436eae1d760afd27aff78a71d676296fc",
+      "revisionDirectoryExists": true,
+      "metadataPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\5d83992436eae1d760afd27aff78a71d676296fc\\.cache\\weight-metadata.json",
+      "metadataPresent": true,
+      "metadataError": null,
+      "metadataId": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+      "metadataSha": "5d83992436eae1d760afd27aff78a71d676296fc",
+      "manifestRevisionMatchesDirectory": true,
+      "manifestRevisionMatchesMetadataSha": true,
+      "metadataIdMatchesManifest": true,
+      "preparationCount": 1,
+      "preparationRevisionValues": [
+        "5d83992436eae1d760afd27aff78a71d676296fc"
+      ],
+      "preparationRevisionsMatchManifest": true,
+      "preparations": [
+        {
+          "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-TTS-12Hz-0.6B-Base-weights-20261016T170527361239Z.json",
+          "revision": "5d83992436eae1d760afd27aff78a71d676296fc",
+          "status": "verified-not-measured"
+        }
+      ],
+      "weights": [
+        {
+          "relativePath": "model.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\5d83992436eae1d760afd27aff78a71d676296fc\\model.safetensors",
+          "siblingSizeBytes": 1829344272,
+          "lfsSizeBytes": 1829344272,
+          "lfsSha256": "180b3b10eb1c9f1b4db7806d5475bae3071c0243c299d49926bab1da3b6946f6",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-TTS-12Hz-0.6B-Base-weights-20261016T170527361239Z.json",
+              "bytes": 1829344272,
+              "sha256": "180b3b10eb1c9f1b4db7806d5475bae3071c0243c299d49926bab1da3b6946f6"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 1829344272,
+          "actualSha256": "180b3b10eb1c9f1b4db7806d5475bae3071c0243c299d49926bab1da3b6946f6",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "speech_tokenizer/model.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\Qwen--Qwen3-TTS-12Hz-0.6B-Base\\5d83992436eae1d760afd27aff78a71d676296fc\\speech_tokenizer\\model.safetensors",
+          "siblingSizeBytes": 682293092,
+          "lfsSizeBytes": 682293092,
+          "lfsSha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\Qwen--Qwen3-TTS-12Hz-0.6B-Base-weights-20261016T170527361239Z.json",
+              "bytes": 682293092,
+              "sha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 682293092,
+          "actualSha256": "836b7b357f5ea43e889936a3709af68dfe3751881acefe4ecf0dbd30ba571258",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        }
+      ]
+    },
+    {
+      "id": "microsoft/Phi-4-mini-instruct",
+      "manifestRevision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+      "expectedCacheDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\microsoft--Phi-4-mini-instruct",
+      "revisionDirectory": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\microsoft--Phi-4-mini-instruct\\cfbefacb99257ffa30c83adab238a50856ac3083",
+      "revisionDirectoryExists": true,
+      "metadataPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\microsoft--Phi-4-mini-instruct\\cfbefacb99257ffa30c83adab238a50856ac3083\\.cache\\weight-metadata.json",
+      "metadataPresent": true,
+      "metadataError": null,
+      "metadataId": "microsoft/Phi-4-mini-instruct",
+      "metadataSha": "cfbefacb99257ffa30c83adab238a50856ac3083",
+      "manifestRevisionMatchesDirectory": true,
+      "manifestRevisionMatchesMetadataSha": true,
+      "metadataIdMatchesManifest": true,
+      "preparationCount": 2,
+      "preparationRevisionValues": [
+        "cfbefacb99257ffa30c83adab238a50856ac3083"
+      ],
+      "preparationRevisionsMatchManifest": true,
+      "preparations": [
+        {
+          "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\microsoft--Phi-4-mini-instruct-weights-20261017T030634659061Z.json",
+          "revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+          "status": "verified-not-measured"
+        },
+        {
+          "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\phi-weights-verified-20261017.json",
+          "revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+          "status": "verified-not-measured"
+        }
+      ],
+      "weights": [
+        {
+          "relativePath": "model-00001-of-00002.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\microsoft--Phi-4-mini-instruct\\cfbefacb99257ffa30c83adab238a50856ac3083\\model-00001-of-00002.safetensors",
+          "siblingSizeBytes": 4903637712,
+          "lfsSizeBytes": 4903637712,
+          "lfsSha256": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\microsoft--Phi-4-mini-instruct-weights-20261017T030634659061Z.json",
+              "bytes": 4903637712,
+              "sha256": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6"
+            },
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\phi-weights-verified-20261017.json",
+              "bytes": 4903637712,
+              "sha256": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 4903637712,
+          "actualSha256": "bc703090b63eda16f639fa4de7ac54635c23105ab1da2f6ec4d3403151d38ee6",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        },
+        {
+          "relativePath": "model-00002-of-00002.safetensors",
+          "actualPath": "D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.cache\\models\\microsoft--Phi-4-mini-instruct\\cfbefacb99257ffa30c83adab238a50856ac3083\\model-00002-of-00002.safetensors",
+          "siblingSizeBytes": 2768428504,
+          "lfsSizeBytes": 2768428504,
+          "lfsSha256": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983",
+          "preparationEntries": [
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\microsoft--Phi-4-mini-instruct-weights-20261017T030634659061Z.json",
+              "bytes": 2768428504,
+              "sha256": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983"
+            },
+            {
+              "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\preparation\\phi-weights-verified-20261017.json",
+              "bytes": 2768428504,
+              "sha256": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983"
+            }
+          ],
+          "actualPresent": true,
+          "actualSizeBytes": 2768428504,
+          "actualSha256": "7ff79b9d2d31076bac2663393451f6530f4fc8ca49b09002116c92c373dba983",
+          "hashError": null,
+          "actualSizeMatchesSibling": true,
+          "actualSizeMatchesLfs": true,
+          "actualShaMatchesLfs": true,
+          "actualSizeMatchesPreparation": true,
+          "actualShaMatchesPreparation": true,
+          "preparationEntriesMatchMetadataLfs": true
+        }
+      ]
+    }
+  ],
+  "endedLocal": "2026-10-20T15:01:20.0962274+08:00",
+  "elapsedSeconds": 50.674
+}

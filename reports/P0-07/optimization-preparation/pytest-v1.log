@@ -1,0 +1,16 @@
+WORKDIR=D:\Dev\nemu
+COMMAND='D:\Dev\nemu\workers\model-adapter\probe\.venv\Scripts\python.exe' -m pytest workers/model-adapter/probe/test_injection.py -q -p no:cacheprovider
+ENVIRONMENT_BEGIN
+PYTHONDONTWRITEBYTECODE=1
+ENVIRONMENT_END
+START_UTC=2026-10-17T23:20:03.8586549Z
+END_UTC=2026-10-17T23:20:06.9466327Z
+EXIT_CODE=0
+STDOUT_BEGIN
+....                                                                     [100%]
+4 passed in 2.16s
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

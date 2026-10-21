@@ -32,7 +32,9 @@
     "ci:budget": "node tools/scaffold/ci-budget.mjs",
     "test:contracts": "vitest run --config packages/contracts/vitest.config.ts --coverage",
     "test:core-contracts": "python core/contracts/verify.py",
-    "board": "python tools/status/serve_board.py"
+    "board": "python tools/status/serve_board.py",
+    "probe:supplement": "python workers/model-adapter/probe/run_supplement.py",
+    "probe:chat": "node workers/model-adapter/probe/launch_chat.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

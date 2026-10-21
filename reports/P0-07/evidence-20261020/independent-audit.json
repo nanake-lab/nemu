@@ -1,0 +1,1841 @@
+{
+  "command": "& 'D:\\Dev\\_leftover\\2026-10-20\\workers\\model-adapter\\probe\\.venv\\Scripts\\python.exe' -c <inline NumPy read-only audit script>",
+  "working_directory": "D:\\Dev\\nemu-p007",
+  "started_utc": "2026-10-20T08:08:05.5634483+00:00",
+  "ended_utc": "2026-10-20T08:08:06.5929264+00:00",
+  "exit_code": 0,
+  "stdout": "{\n  \"tool\": \"existing probe .venv Python with NumPy; read-only evidence recomputation\",\n  \"python\": \"3.12.14\",\n  \"numpy\": \"2.5.4\",\n  \"metric_tolerance\": 1e-06,\n  \"quantile\": \"numpy.quantile default method (linear)\",\n  \"kernels_v1\": {\n    \"result_json_count\": 4,\n    \"logits_npz_count\": 12,\n    \"model_results\": [\n      {\n        \"result_json\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\microsoft--Phi-4-mini-instruct\\\\result.json\",\n        \"model_directory\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\microsoft--Phi-4-mini-instruct\",\n        \"languages\": [\n          {\n            \"language\": \"zh\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\microsoft--Phi-4-mini-instruct\\\\zh-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 3.725290298461914e-09,\n              \"p99_abs\": 1.2218952178955078e-06\n            },\n            \"metric_rows_outside_tolerance\": [\n              {\n                \"row_index\": 5,\n                \"json_step\": 5,\n                \"differences\": [\n                  {\n                    \"field\": \"p99_abs\",\n                    \"json\": 0.154144287109375,\n                    \"numpy\": 0.1541430652141571,\n                    \"absolute_delta\": 1.2218952178955078e-06\n                  }\n                ]\n              }\n            ],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              200064\n            ],\n            \"native_shape\": [\n              9,\n              200064\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 1.2218952178955078e-06,\n            \"metrics_within_tolerance\": false,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": false,\n            \"match_status\": \"differences or errors recorded\"\n          },\n          {\n            \"language\": \"en\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\microsoft--Phi-4-mini-instruct\\\\en-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 2,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 7.450580596923828e-09,\n              \"p99_abs\": 0.0\n            },\n            \"metric_rows_outside_tolerance\": [],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              200064\n            ],\n            \"native_shape\": [\n              9,\n              200064\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 7.450580596923828e-09,\n            \"metrics_within_tolerance\": true,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": true,\n            \"match_status\": \"all matched\"\n          },\n          {\n            \"language\": \"ja\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\microsoft--Phi-4-mini-instruct\\\\ja-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 7.450580596923828e-09,\n              \"p99_abs\": 0.0\n            },\n            \"metric_rows_outside_tolerance\": [],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              200064\n            ],\n            \"native_shape\": [\n              9,\n              200064\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 7.450580596923828e-09,\n            \"metrics_within_tolerance\": true,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": true,\n            \"match_status\": \"all matched\"\n          }\n        ],\n        \"errors\": [],\n        \"model_id\": \"microsoft/Phi-4-mini-instruct\",\n        \"languages_in_result_json\": [\n          \"zh\",\n          \"en\",\n          \"ja\"\n        ],\n        \"all_languages_match\": false\n      },\n      {\n        \"result_json\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B\\\\result.json\",\n        \"model_directory\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B\",\n        \"languages\": [\n          {\n            \"language\": \"zh\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B\\\\zh-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 7.450580596923828e-09,\n              \"p99_abs\": 0.0\n            },\n            \"metric_rows_outside_tolerance\": [],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              151936\n            ],\n            \"native_shape\": [\n              9,\n              151936\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 7.450580596923828e-09,\n            \"metrics_within_tolerance\": true,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": true,\n            \"match_status\": \"all matched\"\n          },\n          {\n            \"language\": \"en\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B\\\\en-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 7.450580596923828e-09,\n              \"p99_abs\": 6.102025508880615e-06\n            },\n            \"metric_rows_outside_tolerance\": [\n              {\n                \"row_index\": 4,\n                \"json_step\": 4,\n                \"differences\": [\n                  {\n                    \"field\": \"p99_abs\",\n                    \"json\": 0.121734619140625,\n                    \"numpy\": 0.12172851711511612,\n                    \"absolute_delta\": 6.102025508880615e-06\n                  }\n                ]\n              }\n            ],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              151936\n            ],\n            \"native_shape\": [\n              9,\n              151936\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 6.102025508880615e-06,\n            \"metrics_within_tolerance\": false,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": false,\n            \"match_status\": \"differences or errors recorded\"\n          },\n          {\n            \"language\": \"ja\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B\\\\ja-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 3.725290298461914e-09,\n              \"p99_abs\": 3.0547380447387695e-06\n            },\n            \"metric_rows_outside_tolerance\": [\n              {\n                \"row_index\": 2,\n                \"json_step\": 2,\n                \"differences\": [\n                  {\n                    \"field\": \"p99_abs\",\n                    \"json\": 0.0974884033203125,\n                    \"numpy\": 0.09748534858226776,\n                    \"absolute_delta\": 3.0547380447387695e-06\n                  }\n                ]\n              },\n              {\n                \"row_index\": 4,\n                \"json_step\": 4,\n                \"differences\": [\n                  {\n                    \"field\": \"p99_abs\",\n                    \"json\": 0.0750274658203125,\n                    \"numpy\": 0.07502441108226776,\n                    \"absolute_delta\": 3.0547380447387695e-06\n                  }\n                ]\n              }\n            ],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              151936\n            ],\n            \"native_shape\": [\n              9,\n              151936\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 3.0547380447387695e-06,\n            \"metrics_within_tolerance\": false,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": false,\n            \"match_status\": \"differences or errors recorded\"\n          }\n        ],\n        \"errors\": [],\n        \"model_id\": \"Qwen/Qwen3-4B\",\n        \"languages_in_result_json\": [\n          \"zh\",\n          \"en\",\n          \"ja\"\n        ],\n        \"all_languages_match\": false\n      },\n      {\n        \"result_json\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B-Instruct-2507\\\\result.json\",\n        \"model_directory\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B-Instruct-2507\",\n        \"languages\": [\n          {\n            \"language\": \"zh\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B-Instruct-2507\\\\zh-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 3.725290298461914e-09,\n              \"p99_abs\": 0.0\n            },\n            \"metric_rows_outside_tolerance\": [],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              151936\n            ],\n            \"native_shape\": [\n              9,\n              151936\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 3.725290298461914e-09,\n            \"metrics_within_tolerance\": true,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": true,\n            \"match_status\": \"all matched\"\n          },\n          {\n            \"language\": \"en\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B-Instruct-2507\\\\en-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 0.0,\n              \"p99_abs\": 0.0\n            },\n            \"metric_rows_outside_tolerance\": [],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              151936\n            ],\n            \"native_shape\": [\n              9,\n              151936\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 0.0,\n            \"metrics_within_tolerance\": true,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": true,\n            \"match_status\": \"all matched\"\n          },\n          {\n            \"language\": \"ja\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-4B-Instruct-2507\\\\ja-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 7.450580596923828e-09,\n              \"p99_abs\": 1.1473894119262695e-06\n            },\n            \"metric_rows_outside_tolerance\": [\n              {\n                \"row_index\": 5,\n                \"json_step\": 5,\n                \"differences\": [\n                  {\n                    \"field\": \"p99_abs\",\n                    \"json\": 0.1884136199951172,\n                    \"numpy\": 0.18841247260570526,\n                    \"absolute_delta\": 1.1473894119262695e-06\n                  }\n                ]\n              }\n            ],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              151936\n            ],\n            \"native_shape\": [\n              9,\n              151936\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 1.1473894119262695e-06,\n            \"metrics_within_tolerance\": false,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": false,\n            \"match_status\": \"differences or errors recorded\"\n          }\n        ],\n        \"errors\": [],\n        \"model_id\": \"Qwen/Qwen3-4B-Instruct-2507\",\n        \"languages_in_result_json\": [\n          \"zh\",\n          \"en\",\n          \"ja\"\n        ],\n        \"all_languages_match\": false\n      },\n      {\n        \"result_json\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-8B\\\\result.json\",\n        \"model_directory\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-8B\",\n        \"languages\": [\n          {\n            \"language\": \"zh\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-8B\\\\zh-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 0.0,\n              \"p99_abs\": 0.0\n            },\n            \"metric_rows_outside_tolerance\": [],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              151936\n            ],\n            \"native_shape\": [\n              9,\n              151936\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 0.0,\n            \"metrics_within_tolerance\": true,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": true,\n            \"match_status\": \"all matched\"\n          },\n          {\n            \"language\": \"en\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-8B\\\\en-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 3.725290298461914e-09,\n              \"p99_abs\": 0.0\n            },\n            \"metric_rows_outside_tolerance\": [],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              151936\n            ],\n            \"native_shape\": [\n              9,\n              151936\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 3.725290298461914e-09,\n            \"metrics_within_tolerance\": true,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": true,\n            \"match_status\": \"all matched\"\n          },\n          {\n            \"language\": \"ja\",\n            \"npz_path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\kernels-v1\\\\Qwen--Qwen3-8B\\\\ja-logits.npz\",\n            \"json_metric_rows\": 9,\n            \"metric_rows_compared\": 9,\n            \"argmax_changes\": 0,\n            \"argmax_json_mismatch_rows\": [],\n            \"metric_max_abs_delta\": {\n              \"max_abs\": 0.0,\n              \"mean_abs\": 7.450580596923828e-09,\n              \"p99_abs\": 0.0\n            },\n            \"metric_rows_outside_tolerance\": [],\n            \"errors\": [],\n            \"reference_shape\": [\n              9,\n              151936\n            ],\n            \"native_shape\": [\n              9,\n              151936\n            ],\n            \"reference_dtype\": \"float32\",\n            \"native_dtype\": \"float32\",\n            \"metric_maximum_absolute_delta\": 7.450580596923828e-09,\n            \"metrics_within_tolerance\": true,\n            \"argmax_json_all_match\": true,\n            \"all_compared_fields_match\": true,\n            \"match_status\": \"all matched\"\n          }\n        ],\n        \"errors\": [],\n        \"model_id\": \"Qwen/Qwen3-8B\",\n        \"languages_in_result_json\": [\n          \"zh\",\n          \"en\",\n          \"ja\"\n        ],\n        \"all_languages_match\": true\n      }\n    ],\n    \"npz_without_result_language_pair\": [],\n    \"expected_npz_missing\": []\n  },\n  \"direction_neutral_v1\": {\n    \"json_file_count\": 3,\n    \"model_results\": [\n      {\n        \"path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\direction-neutral-v1\\\\microsoft--Phi-4-mini-instruct.json\",\n        \"errors\": [],\n        \"model_id\": \"microsoft/Phi-4-mini-instruct\",\n        \"sample_count\": 63,\n        \"metadata_coefficients\": [\n          -4.0,\n          -2.0,\n          -1.0,\n          0.0,\n          1.0,\n          2.0,\n          4.0\n        ],\n        \"metadata_seeds\": [\n          731,\n          732,\n          733\n        ],\n        \"metadata_coefficients_match_expected\": true,\n        \"metadata_seeds_match_expected\": true,\n        \"duplicate_sample_keys\": [],\n        \"missing_sample_keys\": [],\n        \"unexpected_sample_keys\": [],\n        \"language_counts\": {\n          \"zh\": 21,\n          \"en\": 21,\n          \"ja\": 21\n        },\n        \"unexpected_language_counts\": {},\n        \"per_language_coefficient_seed_counts\": {\n          \"zh\": {\n            \"-4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"0.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            }\n          },\n          \"en\": {\n            \"-4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"0.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            }\n          },\n          \"ja\": {\n            \"-4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"0.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            }\n          }\n        },\n        \"completeness_matches_expected\": true,\n        \"stop_distribution\": {\n          \"eos\": 43,\n          \"token_limit\": 20\n        },\n        \"stop_distribution_by_language\": {\n          \"zh\": {\n            \"eos\": 21\n          },\n          \"en\": {\n            \"eos\": 1,\n            \"token_limit\": 20\n          },\n          \"ja\": {\n            \"eos\": 21\n          }\n        },\n        \"eos_first_position\": {\n          \"with_eos_token\": 43,\n          \"first_eos_at_last_position\": 43,\n          \"first_eos_not_at_last_position\": 0,\n          \"eos_token_absent\": 20,\n          \"not_last_examples\": []\n        },\n        \"eos_first_position_by_language\": {\n          \"zh\": {\n            \"with_eos_token\": 21,\n            \"first_eos_at_last_position\": 21,\n            \"first_eos_not_at_last_position\": 0,\n            \"eos_token_absent\": 0\n          },\n          \"en\": {\n            \"with_eos_token\": 1,\n            \"first_eos_at_last_position\": 1,\n            \"first_eos_not_at_last_position\": 0,\n            \"eos_token_absent\": 20\n          },\n          \"ja\": {\n            \"with_eos_token\": 21,\n            \"first_eos_at_last_position\": 21,\n            \"first_eos_not_at_last_position\": 0,\n            \"eos_token_absent\": 0\n          }\n        },\n        \"same_seed_zero_vs_modulated_token_pairs\": [\n          {\n            \"language\": \"zh\",\n            \"coefficient\": -4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": -2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": -1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": 1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": 2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": 4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": -4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": -2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 2,\n            \"token_ids_unchanged\": 1,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": -1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": 1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": 2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": 4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": -4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 1,\n            \"token_ids_unchanged\": 2,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": -2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 1,\n            \"token_ids_unchanged\": 2,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": -1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": 1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 1,\n            \"token_ids_unchanged\": 2,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": 2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 2,\n            \"token_ids_unchanged\": 1,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": 4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          }\n        ],\n        \"same_seed_pair_summary_by_language\": {\n          \"zh\": {\n            \"paired_count\": 18,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 18,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          \"en\": {\n            \"paired_count\": 18,\n            \"token_ids_changed\": 17,\n            \"token_ids_unchanged\": 1,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          \"ja\": {\n            \"paired_count\": 18,\n            \"token_ids_changed\": 8,\n            \"token_ids_unchanged\": 10,\n            \"missing_or_ambiguous_pairs\": 0\n          }\n        },\n        \"same_seed_pair_summary\": {\n          \"paired_count\": 54,\n          \"token_ids_changed\": 25,\n          \"token_ids_unchanged\": 29,\n          \"missing_or_ambiguous_pairs\": 0\n        }\n      },\n      {\n        \"path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\direction-neutral-v1\\\\Qwen--Qwen3-4B-Instruct-2507.json\",\n        \"errors\": [],\n        \"model_id\": \"Qwen/Qwen3-4B-Instruct-2507\",\n        \"sample_count\": 63,\n        \"metadata_coefficients\": [\n          -4.0,\n          -2.0,\n          -1.0,\n          0.0,\n          1.0,\n          2.0,\n          4.0\n        ],\n        \"metadata_seeds\": [\n          731,\n          732,\n          733\n        ],\n        \"metadata_coefficients_match_expected\": true,\n        \"metadata_seeds_match_expected\": true,\n        \"duplicate_sample_keys\": [],\n        \"missing_sample_keys\": [],\n        \"unexpected_sample_keys\": [],\n        \"language_counts\": {\n          \"zh\": 21,\n          \"en\": 21,\n          \"ja\": 21\n        },\n        \"unexpected_language_counts\": {},\n        \"per_language_coefficient_seed_counts\": {\n          \"zh\": {\n            \"-4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"0.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            }\n          },\n          \"en\": {\n            \"-4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"0.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            }\n          },\n          \"ja\": {\n            \"-4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"0.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            }\n          }\n        },\n        \"completeness_matches_expected\": true,\n        \"stop_distribution\": {\n          \"eos\": 42,\n          \"token_limit\": 21\n        },\n        \"stop_distribution_by_language\": {\n          \"zh\": {\n            \"eos\": 21\n          },\n          \"en\": {\n            \"token_limit\": 21\n          },\n          \"ja\": {\n            \"eos\": 21\n          }\n        },\n        \"eos_first_position\": {\n          \"with_eos_token\": 42,\n          \"first_eos_at_last_position\": 42,\n          \"first_eos_not_at_last_position\": 0,\n          \"eos_token_absent\": 21,\n          \"not_last_examples\": []\n        },\n        \"eos_first_position_by_language\": {\n          \"zh\": {\n            \"with_eos_token\": 21,\n            \"first_eos_at_last_position\": 21,\n            \"first_eos_not_at_last_position\": 0,\n            \"eos_token_absent\": 0\n          },\n          \"en\": {\n            \"with_eos_token\": 0,\n            \"first_eos_at_last_position\": 0,\n            \"first_eos_not_at_last_position\": 0,\n            \"eos_token_absent\": 21\n          },\n          \"ja\": {\n            \"with_eos_token\": 21,\n            \"first_eos_at_last_position\": 21,\n            \"first_eos_not_at_last_position\": 0,\n            \"eos_token_absent\": 0\n          }\n        },\n        \"same_seed_zero_vs_modulated_token_pairs\": [\n          {\n            \"language\": \"zh\",\n            \"coefficient\": -4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": -2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": -1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": 1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": 2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": 4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": -4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": -2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": -1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 2,\n            \"token_ids_unchanged\": 1,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": 1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 1,\n            \"token_ids_unchanged\": 2,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": 2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": 4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": -4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": -2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 1,\n            \"token_ids_unchanged\": 2,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": -1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 1,\n            \"token_ids_unchanged\": 2,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": 1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": 2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": 4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 1,\n            \"token_ids_unchanged\": 2,\n            \"missing_or_ambiguous_pairs\": 0\n          }\n        ],\n        \"same_seed_pair_summary_by_language\": {\n          \"zh\": {\n            \"paired_count\": 18,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 18,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          \"en\": {\n            \"paired_count\": 18,\n            \"token_ids_changed\": 15,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          \"ja\": {\n            \"paired_count\": 18,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 15,\n            \"missing_or_ambiguous_pairs\": 0\n          }\n        },\n        \"same_seed_pair_summary\": {\n          \"paired_count\": 54,\n          \"token_ids_changed\": 18,\n          \"token_ids_unchanged\": 36,\n          \"missing_or_ambiguous_pairs\": 0\n        }\n      },\n      {\n        \"path\": \"D:\\\\Dev\\\\nemu-p007\\\\reports\\\\P0-07\\\\evidence-20261020\\\\direction-neutral-v1\\\\Qwen--Qwen3-4B.json\",\n        \"errors\": [],\n        \"model_id\": \"Qwen/Qwen3-4B\",\n        \"sample_count\": 63,\n        \"metadata_coefficients\": [\n          -4.0,\n          -2.0,\n          -1.0,\n          0.0,\n          1.0,\n          2.0,\n          4.0\n        ],\n        \"metadata_seeds\": [\n          731,\n          732,\n          733\n        ],\n        \"metadata_coefficients_match_expected\": true,\n        \"metadata_seeds_match_expected\": true,\n        \"duplicate_sample_keys\": [],\n        \"missing_sample_keys\": [],\n        \"unexpected_sample_keys\": [],\n        \"language_counts\": {\n          \"zh\": 21,\n          \"en\": 21,\n          \"ja\": 21\n        },\n        \"unexpected_language_counts\": {},\n        \"per_language_coefficient_seed_counts\": {\n          \"zh\": {\n            \"-4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"0.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            }\n          },\n          \"en\": {\n            \"-4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"0.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            }\n          },\n          \"ja\": {\n            \"-4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"-1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"0.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"1.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"2.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            },\n            \"4.0\": {\n              \"count\": 3,\n              \"seeds\": [\n                731,\n                732,\n                733\n              ],\n              \"three_expected_seeds_once\": true\n            }\n          }\n        },\n        \"completeness_matches_expected\": true,\n        \"stop_distribution\": {\n          \"eos\": 53,\n          \"token_limit\": 10\n        },\n        \"stop_distribution_by_language\": {\n          \"zh\": {\n            \"eos\": 21\n          },\n          \"en\": {\n            \"eos\": 11,\n            \"token_limit\": 10\n          },\n          \"ja\": {\n            \"eos\": 21\n          }\n        },\n        \"eos_first_position\": {\n          \"with_eos_token\": 53,\n          \"first_eos_at_last_position\": 53,\n          \"first_eos_not_at_last_position\": 0,\n          \"eos_token_absent\": 10,\n          \"not_last_examples\": []\n        },\n        \"eos_first_position_by_language\": {\n          \"zh\": {\n            \"with_eos_token\": 21,\n            \"first_eos_at_last_position\": 21,\n            \"first_eos_not_at_last_position\": 0,\n            \"eos_token_absent\": 0\n          },\n          \"en\": {\n            \"with_eos_token\": 11,\n            \"first_eos_at_last_position\": 11,\n            \"first_eos_not_at_last_position\": 0,\n            \"eos_token_absent\": 10\n          },\n          \"ja\": {\n            \"with_eos_token\": 21,\n            \"first_eos_at_last_position\": 21,\n            \"first_eos_not_at_last_position\": 0,\n            \"eos_token_absent\": 0\n          }\n        },\n        \"same_seed_zero_vs_modulated_token_pairs\": [\n          {\n            \"language\": \"zh\",\n            \"coefficient\": -4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": -2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": -1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": 1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": 2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"zh\",\n            \"coefficient\": 4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": -4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": -2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": -1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 2,\n            \"token_ids_unchanged\": 1,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": 1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": 2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"en\",\n            \"coefficient\": 4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 3,\n            \"token_ids_unchanged\": 0,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": -4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": -2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": -1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": 1.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 3,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": 2.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 1,\n            \"token_ids_unchanged\": 2,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          {\n            \"language\": \"ja\",\n            \"coefficient\": 4.0,\n            \"paired_count\": 3,\n            \"token_ids_changed\": 1,\n            \"token_ids_unchanged\": 2,\n            \"missing_or_ambiguous_pairs\": 0\n          }\n        ],\n        \"same_seed_pair_summary_by_language\": {\n          \"zh\": {\n            \"paired_count\": 18,\n            \"token_ids_changed\": 0,\n            \"token_ids_unchanged\": 18,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          \"en\": {\n            \"paired_count\": 18,\n            \"token_ids_changed\": 17,\n            \"token_ids_unchanged\": 1,\n            \"missing_or_ambiguous_pairs\": 0\n          },\n          \"ja\": {\n            \"paired_count\": 18,\n            \"token_ids_changed\": 2,\n            \"token_ids_unchanged\": 16,\n            \"missing_or_ambiguous_pairs\": 0\n          }\n        },\n        \"same_seed_pair_summary\": {\n          \"paired_count\": 54,\n          \"token_ids_changed\": 19,\n          \"token_ids_unchanged\": 35,\n          \"missing_or_ambiguous_pairs\": 0\n        }\n      }\n    ]\n  }\n}",
+  "stderr": "",
+  "stderr_capture_path": "C:\\Users\\nanake\\AppData\\Local\\Temp\\p007-audit-supplement-20261020-085bbaefba784b838be28974f439af45.stderr.txt",
+  "parsed_result": {
+    "tool": "existing probe .venv Python with NumPy; read-only evidence recomputation",
+    "python": "3.12.14",
+    "numpy": "2.5.4",
+    "metric_tolerance": 1E-06,
+    "quantile": "numpy.quantile default method (linear)",
+    "kernels_v1": {
+      "result_json_count": 4,
+      "logits_npz_count": 12,
+      "model_results": [
+        {
+          "result_json": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\microsoft--Phi-4-mini-instruct\\result.json",
+          "model_directory": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\microsoft--Phi-4-mini-instruct",
+          "languages": [
+            {
+              "language": "zh",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\microsoft--Phi-4-mini-instruct\\zh-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 3.725290298461914E-09,
+                "p99_abs": 1.2218952178955078E-06
+              },
+              "metric_rows_outside_tolerance": [
+                {
+                  "row_index": 5,
+                  "json_step": 5,
+                  "differences": [
+                    {
+                      "field": "p99_abs",
+                      "json": 0.154144287109375,
+                      "numpy": 0.1541430652141571,
+                      "absolute_delta": 1.2218952178955078E-06
+                    }
+                  ]
+                }
+              ],
+              "errors": [],
+              "reference_shape": [
+                9,
+                200064
+              ],
+              "native_shape": [
+                9,
+                200064
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 1.2218952178955078E-06,
+              "metrics_within_tolerance": false,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": false,
+              "match_status": "differences or errors recorded"
+            },
+            {
+              "language": "en",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\microsoft--Phi-4-mini-instruct\\en-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 2,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 7.450580596923828E-09,
+                "p99_abs": 0.0
+              },
+              "metric_rows_outside_tolerance": [],
+              "errors": [],
+              "reference_shape": [
+                9,
+                200064
+              ],
+              "native_shape": [
+                9,
+                200064
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 7.450580596923828E-09,
+              "metrics_within_tolerance": true,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": true,
+              "match_status": "all matched"
+            },
+            {
+              "language": "ja",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\microsoft--Phi-4-mini-instruct\\ja-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 7.450580596923828E-09,
+                "p99_abs": 0.0
+              },
+              "metric_rows_outside_tolerance": [],
+              "errors": [],
+              "reference_shape": [
+                9,
+                200064
+              ],
+              "native_shape": [
+                9,
+                200064
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 7.450580596923828E-09,
+              "metrics_within_tolerance": true,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": true,
+              "match_status": "all matched"
+            }
+          ],
+          "errors": [],
+          "model_id": "microsoft/Phi-4-mini-instruct",
+          "languages_in_result_json": [
+            "zh",
+            "en",
+            "ja"
+          ],
+          "all_languages_match": false
+        },
+        {
+          "result_json": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B\\result.json",
+          "model_directory": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B",
+          "languages": [
+            {
+              "language": "zh",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B\\zh-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 7.450580596923828E-09,
+                "p99_abs": 0.0
+              },
+              "metric_rows_outside_tolerance": [],
+              "errors": [],
+              "reference_shape": [
+                9,
+                151936
+              ],
+              "native_shape": [
+                9,
+                151936
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 7.450580596923828E-09,
+              "metrics_within_tolerance": true,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": true,
+              "match_status": "all matched"
+            },
+            {
+              "language": "en",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B\\en-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 7.450580596923828E-09,
+                "p99_abs": 6.102025508880615E-06
+              },
+              "metric_rows_outside_tolerance": [
+                {
+                  "row_index": 4,
+                  "json_step": 4,
+                  "differences": [
+                    {
+                      "field": "p99_abs",
+                      "json": 0.121734619140625,
+                      "numpy": 0.12172851711511612,
+                      "absolute_delta": 6.102025508880615E-06
+                    }
+                  ]
+                }
+              ],
+              "errors": [],
+              "reference_shape": [
+                9,
+                151936
+              ],
+              "native_shape": [
+                9,
+                151936
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 6.102025508880615E-06,
+              "metrics_within_tolerance": false,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": false,
+              "match_status": "differences or errors recorded"
+            },
+            {
+              "language": "ja",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B\\ja-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 3.725290298461914E-09,
+                "p99_abs": 3.0547380447387695E-06
+              },
+              "metric_rows_outside_tolerance": [
+                {
+                  "row_index": 2,
+                  "json_step": 2,
+                  "differences": [
+                    {
+                      "field": "p99_abs",
+                      "json": 0.0974884033203125,
+                      "numpy": 0.09748534858226776,
+                      "absolute_delta": 3.0547380447387695E-06
+                    }
+                  ]
+                },
+                {
+                  "row_index": 4,
+                  "json_step": 4,
+                  "differences": [
+                    {
+                      "field": "p99_abs",
+                      "json": 0.0750274658203125,
+                      "numpy": 0.07502441108226776,
+                      "absolute_delta": 3.0547380447387695E-06
+                    }
+                  ]
+                }
+              ],
+              "errors": [],
+              "reference_shape": [
+                9,
+                151936
+              ],
+              "native_shape": [
+                9,
+                151936
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 3.0547380447387695E-06,
+              "metrics_within_tolerance": false,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": false,
+              "match_status": "differences or errors recorded"
+            }
+          ],
+          "errors": [],
+          "model_id": "Qwen/Qwen3-4B",
+          "languages_in_result_json": [
+            "zh",
+            "en",
+            "ja"
+          ],
+          "all_languages_match": false
+        },
+        {
+          "result_json": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B-Instruct-2507\\result.json",
+          "model_directory": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B-Instruct-2507",
+          "languages": [
+            {
+              "language": "zh",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B-Instruct-2507\\zh-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 3.725290298461914E-09,
+                "p99_abs": 0.0
+              },
+              "metric_rows_outside_tolerance": [],
+              "errors": [],
+              "reference_shape": [
+                9,
+                151936
+              ],
+              "native_shape": [
+                9,
+                151936
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 3.725290298461914E-09,
+              "metrics_within_tolerance": true,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": true,
+              "match_status": "all matched"
+            },
+            {
+              "language": "en",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B-Instruct-2507\\en-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 0.0,
+                "p99_abs": 0.0
+              },
+              "metric_rows_outside_tolerance": [],
+              "errors": [],
+              "reference_shape": [
+                9,
+                151936
+              ],
+              "native_shape": [
+                9,
+                151936
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 0.0,
+              "metrics_within_tolerance": true,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": true,
+              "match_status": "all matched"
+            },
+            {
+              "language": "ja",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-4B-Instruct-2507\\ja-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 7.450580596923828E-09,
+                "p99_abs": 1.1473894119262695E-06
+              },
+              "metric_rows_outside_tolerance": [
+                {
+                  "row_index": 5,
+                  "json_step": 5,
+                  "differences": [
+                    {
+                      "field": "p99_abs",
+                      "json": 0.1884136199951172,
+                      "numpy": 0.18841247260570526,
+                      "absolute_delta": 1.1473894119262695E-06
+                    }
+                  ]
+                }
+              ],
+              "errors": [],
+              "reference_shape": [
+                9,
+                151936
+              ],
+              "native_shape": [
+                9,
+                151936
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 1.1473894119262695E-06,
+              "metrics_within_tolerance": false,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": false,
+              "match_status": "differences or errors recorded"
+            }
+          ],
+          "errors": [],
+          "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+          "languages_in_result_json": [
+            "zh",
+            "en",
+            "ja"
+          ],
+          "all_languages_match": false
+        },
+        {
+          "result_json": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-8B\\result.json",
+          "model_directory": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-8B",
+          "languages": [
+            {
+              "language": "zh",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-8B\\zh-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 0.0,
+                "p99_abs": 0.0
+              },
+              "metric_rows_outside_tolerance": [],
+              "errors": [],
+              "reference_shape": [
+                9,
+                151936
+              ],
+              "native_shape": [
+                9,
+                151936
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 0.0,
+              "metrics_within_tolerance": true,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": true,
+              "match_status": "all matched"
+            },
+            {
+              "language": "en",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-8B\\en-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 3.725290298461914E-09,
+                "p99_abs": 0.0
+              },
+              "metric_rows_outside_tolerance": [],
+              "errors": [],
+              "reference_shape": [
+                9,
+                151936
+              ],
+              "native_shape": [
+                9,
+                151936
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 3.725290298461914E-09,
+              "metrics_within_tolerance": true,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": true,
+              "match_status": "all matched"
+            },
+            {
+              "language": "ja",
+              "npz_path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\kernels-v1\\Qwen--Qwen3-8B\\ja-logits.npz",
+              "json_metric_rows": 9,
+              "metric_rows_compared": 9,
+              "argmax_changes": 0,
+              "argmax_json_mismatch_rows": [],
+              "metric_max_abs_delta": {
+                "max_abs": 0.0,
+                "mean_abs": 7.450580596923828E-09,
+                "p99_abs": 0.0
+              },
+              "metric_rows_outside_tolerance": [],
+              "errors": [],
+              "reference_shape": [
+                9,
+                151936
+              ],
+              "native_shape": [
+                9,
+                151936
+              ],
+              "reference_dtype": "float32",
+              "native_dtype": "float32",
+              "metric_maximum_absolute_delta": 7.450580596923828E-09,
+              "metrics_within_tolerance": true,
+              "argmax_json_all_match": true,
+              "all_compared_fields_match": true,
+              "match_status": "all matched"
+            }
+          ],
+          "errors": [],
+          "model_id": "Qwen/Qwen3-8B",
+          "languages_in_result_json": [
+            "zh",
+            "en",
+            "ja"
+          ],
+          "all_languages_match": true
+        }
+      ],
+      "npz_without_result_language_pair": [],
+      "expected_npz_missing": []
+    },
+    "direction_neutral_v1": {
+      "json_file_count": 3,
+      "model_results": [
+        {
+          "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\microsoft--Phi-4-mini-instruct.json",
+          "errors": [],
+          "model_id": "microsoft/Phi-4-mini-instruct",
+          "sample_count": 63,
+          "metadata_coefficients": [
+            -4.0,
+            -2.0,
+            -1.0,
+            0.0,
+            1.0,
+            2.0,
+            4.0
+          ],
+          "metadata_seeds": [
+            731,
+            732,
+            733
+          ],
+          "metadata_coefficients_match_expected": true,
+          "metadata_seeds_match_expected": true,
+          "duplicate_sample_keys": [],
+          "missing_sample_keys": [],
+          "unexpected_sample_keys": [],
+          "language_counts": {
+            "zh": 21,
+            "en": 21,
+            "ja": 21
+          },
+          "unexpected_language_counts": {},
+          "per_language_coefficient_seed_counts": {
+            "zh": {
+              "-4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "0.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              }
+            },
+            "en": {
+              "-4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "0.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              }
+            },
+            "ja": {
+              "-4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "0.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              }
+            }
+          },
+          "completeness_matches_expected": true,
+          "stop_distribution": {
+            "eos": 43,
+            "token_limit": 20
+          },
+          "stop_distribution_by_language": {
+            "zh": {
+              "eos": 21
+            },
+            "en": {
+              "eos": 1,
+              "token_limit": 20
+            },
+            "ja": {
+              "eos": 21
+            }
+          },
+          "eos_first_position": {
+            "with_eos_token": 43,
+            "first_eos_at_last_position": 43,
+            "first_eos_not_at_last_position": 0,
+            "eos_token_absent": 20,
+            "not_last_examples": []
+          },
+          "eos_first_position_by_language": {
+            "zh": {
+              "with_eos_token": 21,
+              "first_eos_at_last_position": 21,
+              "first_eos_not_at_last_position": 0,
+              "eos_token_absent": 0
+            },
+            "en": {
+              "with_eos_token": 1,
+              "first_eos_at_last_position": 1,
+              "first_eos_not_at_last_position": 0,
+              "eos_token_absent": 20
+            },
+            "ja": {
+              "with_eos_token": 21,
+              "first_eos_at_last_position": 21,
+              "first_eos_not_at_last_position": 0,
+              "eos_token_absent": 0
+            }
+          },
+          "same_seed_zero_vs_modulated_token_pairs": [
+            {
+              "language": "zh",
+              "coefficient": -4.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": -2.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": -1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": 1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": 2.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": 4.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": -4.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": -2.0,
+              "paired_count": 3,
+              "token_ids_changed": 2,
+              "token_ids_unchanged": 1,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": -1.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": 1.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": 2.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": 4.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": -4.0,
+              "paired_count": 3,
+              "token_ids_changed": 1,
+              "token_ids_unchanged": 2,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": -2.0,
+              "paired_count": 3,
+              "token_ids_changed": 1,
+              "token_ids_unchanged": 2,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": -1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": 1.0,
+              "paired_count": 3,
+              "token_ids_changed": 1,
+              "token_ids_unchanged": 2,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": 2.0,
+              "paired_count": 3,
+              "token_ids_changed": 2,
+              "token_ids_unchanged": 1,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": 4.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            }
+          ],
+          "same_seed_pair_summary_by_language": {
+            "zh": {
+              "paired_count": 18,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 18,
+              "missing_or_ambiguous_pairs": 0
+            },
+            "en": {
+              "paired_count": 18,
+              "token_ids_changed": 17,
+              "token_ids_unchanged": 1,
+              "missing_or_ambiguous_pairs": 0
+            },
+            "ja": {
+              "paired_count": 18,
+              "token_ids_changed": 8,
+              "token_ids_unchanged": 10,
+              "missing_or_ambiguous_pairs": 0
+            }
+          },
+          "same_seed_pair_summary": {
+            "paired_count": 54,
+            "token_ids_changed": 25,
+            "token_ids_unchanged": 29,
+            "missing_or_ambiguous_pairs": 0
+          }
+        },
+        {
+          "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\Qwen--Qwen3-4B-Instruct-2507.json",
+          "errors": [],
+          "model_id": "Qwen/Qwen3-4B-Instruct-2507",
+          "sample_count": 63,
+          "metadata_coefficients": [
+            -4.0,
+            -2.0,
+            -1.0,
+            0.0,
+            1.0,
+            2.0,
+            4.0
+          ],
+          "metadata_seeds": [
+            731,
+            732,
+            733
+          ],
+          "metadata_coefficients_match_expected": true,
+          "metadata_seeds_match_expected": true,
+          "duplicate_sample_keys": [],
+          "missing_sample_keys": [],
+          "unexpected_sample_keys": [],
+          "language_counts": {
+            "zh": 21,
+            "en": 21,
+            "ja": 21
+          },
+          "unexpected_language_counts": {},
+          "per_language_coefficient_seed_counts": {
+            "zh": {
+              "-4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "0.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              }
+            },
+            "en": {
+              "-4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "0.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              }
+            },
+            "ja": {
+              "-4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "0.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              }
+            }
+          },
+          "completeness_matches_expected": true,
+          "stop_distribution": {
+            "eos": 42,
+            "token_limit": 21
+          },
+          "stop_distribution_by_language": {
+            "zh": {
+              "eos": 21
+            },
+            "en": {
+              "token_limit": 21
+            },
+            "ja": {
+              "eos": 21
+            }
+          },
+          "eos_first_position": {
+            "with_eos_token": 42,
+            "first_eos_at_last_position": 42,
+            "first_eos_not_at_last_position": 0,
+            "eos_token_absent": 21,
+            "not_last_examples": []
+          },
+          "eos_first_position_by_language": {
+            "zh": {
+              "with_eos_token": 21,
+              "first_eos_at_last_position": 21,
+              "first_eos_not_at_last_position": 0,
+              "eos_token_absent": 0
+            },
+            "en": {
+              "with_eos_token": 0,
+              "first_eos_at_last_position": 0,
+              "first_eos_not_at_last_position": 0,
+              "eos_token_absent": 21
+            },
+            "ja": {
+              "with_eos_token": 21,
+              "first_eos_at_last_position": 21,
+              "first_eos_not_at_last_position": 0,
+              "eos_token_absent": 0
+            }
+          },
+          "same_seed_zero_vs_modulated_token_pairs": [
+            {
+              "language": "zh",
+              "coefficient": -4.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": -2.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": -1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": 1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": 2.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": 4.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": -4.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": -2.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": -1.0,
+              "paired_count": 3,
+              "token_ids_changed": 2,
+              "token_ids_unchanged": 1,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": 1.0,
+              "paired_count": 3,
+              "token_ids_changed": 1,
+              "token_ids_unchanged": 2,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": 2.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": 4.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": -4.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": -2.0,
+              "paired_count": 3,
+              "token_ids_changed": 1,
+              "token_ids_unchanged": 2,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": -1.0,
+              "paired_count": 3,
+              "token_ids_changed": 1,
+              "token_ids_unchanged": 2,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": 1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": 2.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": 4.0,
+              "paired_count": 3,
+              "token_ids_changed": 1,
+              "token_ids_unchanged": 2,
+              "missing_or_ambiguous_pairs": 0
+            }
+          ],
+          "same_seed_pair_summary_by_language": {
+            "zh": {
+              "paired_count": 18,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 18,
+              "missing_or_ambiguous_pairs": 0
+            },
+            "en": {
+              "paired_count": 18,
+              "token_ids_changed": 15,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            "ja": {
+              "paired_count": 18,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 15,
+              "missing_or_ambiguous_pairs": 0
+            }
+          },
+          "same_seed_pair_summary": {
+            "paired_count": 54,
+            "token_ids_changed": 18,
+            "token_ids_unchanged": 36,
+            "missing_or_ambiguous_pairs": 0
+          }
+        },
+        {
+          "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\evidence-20261020\\direction-neutral-v1\\Qwen--Qwen3-4B.json",
+          "errors": [],
+          "model_id": "Qwen/Qwen3-4B",
+          "sample_count": 63,
+          "metadata_coefficients": [
+            -4.0,
+            -2.0,
+            -1.0,
+            0.0,
+            1.0,
+            2.0,
+            4.0
+          ],
+          "metadata_seeds": [
+            731,
+            732,
+            733
+          ],
+          "metadata_coefficients_match_expected": true,
+          "metadata_seeds_match_expected": true,
+          "duplicate_sample_keys": [],
+          "missing_sample_keys": [],
+          "unexpected_sample_keys": [],
+          "language_counts": {
+            "zh": 21,
+            "en": 21,
+            "ja": 21
+          },
+          "unexpected_language_counts": {},
+          "per_language_coefficient_seed_counts": {
+            "zh": {
+              "-4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "0.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              }
+            },
+            "en": {
+              "-4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "0.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              }
+            },
+            "ja": {
+              "-4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "-1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "0.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "1.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "2.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              },
+              "4.0": {
+                "count": 3,
+                "seeds": [
+                  731,
+                  732,
+                  733
+                ],
+                "three_expected_seeds_once": true
+              }
+            }
+          },
+          "completeness_matches_expected": true,
+          "stop_distribution": {
+            "eos": 53,
+            "token_limit": 10
+          },
+          "stop_distribution_by_language": {
+            "zh": {
+              "eos": 21
+            },
+            "en": {
+              "eos": 11,
+              "token_limit": 10
+            },
+            "ja": {
+              "eos": 21
+            }
+          },
+          "eos_first_position": {
+            "with_eos_token": 53,
+            "first_eos_at_last_position": 53,
+            "first_eos_not_at_last_position": 0,
+            "eos_token_absent": 10,
+            "not_last_examples": []
+          },
+          "eos_first_position_by_language": {
+            "zh": {
+              "with_eos_token": 21,
+              "first_eos_at_last_position": 21,
+              "first_eos_not_at_last_position": 0,
+              "eos_token_absent": 0
+            },
+            "en": {
+              "with_eos_token": 11,
+              "first_eos_at_last_position": 11,
+              "first_eos_not_at_last_position": 0,
+              "eos_token_absent": 10
+            },
+            "ja": {
+              "with_eos_token": 21,
+              "first_eos_at_last_position": 21,
+              "first_eos_not_at_last_position": 0,
+              "eos_token_absent": 0
+            }
+          },
+          "same_seed_zero_vs_modulated_token_pairs": [
+            {
+              "language": "zh",
+              "coefficient": -4.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": -2.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": -1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": 1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": 2.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "zh",
+              "coefficient": 4.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": -4.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": -2.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": -1.0,
+              "paired_count": 3,
+              "token_ids_changed": 2,
+              "token_ids_unchanged": 1,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": 1.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": 2.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "en",
+              "coefficient": 4.0,
+              "paired_count": 3,
+              "token_ids_changed": 3,
+              "token_ids_unchanged": 0,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": -4.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": -2.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": -1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": 1.0,
+              "paired_count": 3,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 3,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": 2.0,
+              "paired_count": 3,
+              "token_ids_changed": 1,
+              "token_ids_unchanged": 2,
+              "missing_or_ambiguous_pairs": 0
+            },
+            {
+              "language": "ja",
+              "coefficient": 4.0,
+              "paired_count": 3,
+              "token_ids_changed": 1,
+              "token_ids_unchanged": 2,
+              "missing_or_ambiguous_pairs": 0
+            }
+          ],
+          "same_seed_pair_summary_by_language": {
+            "zh": {
+              "paired_count": 18,
+              "token_ids_changed": 0,
+              "token_ids_unchanged": 18,
+              "missing_or_ambiguous_pairs": 0
+            },
+            "en": {
+              "paired_count": 18,
+              "token_ids_changed": 17,
+              "token_ids_unchanged": 1,
+              "missing_or_ambiguous_pairs": 0
+            },
+            "ja": {
+              "paired_count": 18,
+              "token_ids_changed": 2,
+              "token_ids_unchanged": 16,
+              "missing_or_ambiguous_pairs": 0
+            }
+          },
+          "same_seed_pair_summary": {
+            "paired_count": 54,
+            "token_ids_changed": 19,
+            "token_ids_unchanged": 35,
+            "missing_or_ambiguous_pairs": 0
+          }
+        }
+      ]
+    }
+  }
+}

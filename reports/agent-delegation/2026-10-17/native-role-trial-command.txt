@@ -1,0 +1,53 @@
+PROCESSSTARTINFO.FileName=D:\Dev\nemu\workers\model-adapter\probe\.venv\Scripts\python.exe
+PROCESSSTARTINFO.ArgumentList[0]=-c
+PROCESSSTARTINFO.Environment[PYTHONIOENCODING]=utf-8
+PYTHON_SOURCE_BEGIN
+import json, hashlib, pathlib, tomllib
+root = pathlib.Path(r"D:\Dev\nemu")
+data_path = root / "reports/P0-07/direction-v1/microsoft--Phi-4-mini-instruct.json"
+config_path = root / "workers/model-adapter/probe/.cache/models/microsoft--Phi-4-mini-instruct/cfbefacb99257ffa30c83adab238a50856ac3083/generation_config.json"
+role_path = root / ".codex/agents/routine-reporter.toml"
+data = json.loads(data_path.read_text(encoding="utf-8"))
+samples = data["samples"] if isinstance(data, dict) else data
+eos_ids = {200020, 199999}
+position_rows = []
+after_by_language = {}
+target = []
+for index, sample in enumerate(samples):
+    ids = sample["token_ids"]
+    eos_positions = [i for i, token in enumerate(ids) if token in eos_ids]
+    first = eos_positions[0] if eos_positions else None
+    language = sample.get("language", "<missing>")
+    remaining_after = max(0, len(ids) - first - 1) if first is not None else None
+    has_tokens_after = bool(remaining_after)
+    position_rows.append({
+        "sample_index": index,
+        "language": language,
+        "first_eos_position": first,
+        "token_count_after_first_eos": remaining_after,
+        "has_tokens_after_first_eos": has_tokens_after,
+    })
+    if first is not None:
+        bucket = after_by_language.setdefault(language, {"samples_with_eos": 0, "samples_with_tokens_after_first_eos": 0})
+        bucket["samples_with_eos"] += 1
+        if has_tokens_after:
+            bucket["samples_with_tokens_after_first_eos"] += 1
+    if sample.get("seed") == 731 and language in ("zh", "中文", "Chinese") and sample.get("modulation") in (0, "zero", "none", "off", "zero_modulation"):
+        target.append({
+            "sample_index": index,
+            "language": language,
+            "seed": sample.get("seed"),
+            "modulation": sample.get("modulation"),
+            "first_eos_position": first,
+            "token_count_after_first_eos": remaining_after,
+        })
+config = json.loads(config_path.read_text(encoding="utf-8"))
+role = tomllib.loads(role_path.read_text(encoding="utf-8"))
+print("SAMPLE_COUNT=" + str(len(samples)))
+print("FIRST_EOS_POSITIONS_JSON=" + json.dumps(position_rows, ensure_ascii=True, separators=(",", ":")))
+print("AFTER_FIRST_EOS_BY_LANGUAGE_JSON=" + json.dumps(after_by_language, ensure_ascii=True, separators=(",", ":")))
+print("SEED731_ZH_ZERO_MODULATION_JSON=" + json.dumps(target, ensure_ascii=True, separators=(",", ":")))
+print("GENERATION_CONFIG_BOS_EOS_PAD_JSON=" + json.dumps({k: config.get(k) for k in ("bos_token_id", "eos_token_id", "pad_token_id")}, ensure_ascii=True, separators=(",", ":")))
+print("GENERATION_CONFIG_SHA256=" + hashlib.sha256(config_path.read_bytes()).hexdigest())
+print("ROLE_CONFIG_MODEL_FIELDS_JSON=" + json.dumps({k: role.get(k) for k in ("model", "model_reasoning_effort")}, ensure_ascii=True, separators=(",", ":")))
+PYTHON_SOURCE_END
