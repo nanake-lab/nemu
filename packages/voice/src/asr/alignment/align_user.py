@@ -133,6 +133,7 @@ def main() -> None:
     aligner = factory.from_pretrained(str(cache), dtype=torch.float32, device_map='cpu',
                                       attn_implementation='eager', local_files_only=True)
     output: list[dict[str, object]] = []
+    diagnostics: list[dict[str, object]] = []
     raw_root = root / ('alignment-raw-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ'))
     raw_root.mkdir()
     for (recording, wav), frozen_row in zip(canonical, frozen, strict=True):
@@ -145,10 +146,28 @@ def main() -> None:
         (raw_root / f'{recording.id}.json').write_text(json.dumps(items, ensure_ascii=False, indent=2), encoding='utf-8')
         with wave.open(str(wav), 'rb') as stream:
             duration = stream.getnframes() / stream.getframerate()
-        start, end = boundaries(items, duration)
+        zeros = [i for i, item in enumerate(items) if item['end_time'] == item['start_time']]
+        try:
+            start, end = boundaries(items, duration)
+        except ValueError as error:
+            diagnostics.append({'id': recording.id, 'lang': recording.lang, 'status': 'invalid',
+                                'error': str(error), 'zeroUnitIndices': zeros,
+                                'unitCount': len(items), 'sourceSha256': recording.source_sha256,
+                                'rawSha256': file_sha(raw_root / f'{recording.id}.json')})
+            print(f'Strict alignment invalid: {recording.id}; raw retained', flush=True)
+            continue
+        diagnostics.append({'id': recording.id, 'lang': recording.lang, 'status': 'valid',
+                            'zeroUnitIndices': zeros, 'unitCount': len(items),
+                            'sourceSha256': recording.source_sha256,
+                            'rawSha256': file_sha(raw_root / f'{recording.id}.json')})
         output.append({**frozen_row, 'speechStartMs': start, 'speechEndMs': end,
                        'annotation': ANNOTATION})
         print(f'Aligned {recording.id}; raw spans remain outside Git')
+    freeze(raw_root / 'diagnostics.json', {'method': method, 'count': len(diagnostics),
+        'validCount': len(output), 'invalidCount': len(selected)-len(output),
+        'validReferencesCreated': False, 'samples': diagnostics})
+    if len(output) != len(selected):
+        raise ValueError(f'Strict alignment invalid for {len(selected)-len(output)}/60 samples; all raw diagnostics preserved')
     metadata = {**method, 'method': METHOD, 'tool': 'qwen-asr', 'toolVersion': '0.0.6',
                 'modelRevision': REVISION, 'referenceResolutionMs': 80, 'count': len(output),
                 'referenceKind': 'independent-model-estimate-not-manual-ground-truth',
