@@ -67,7 +67,15 @@ def main() -> None:
     anchor_path=inside(root,text(anchor['path']))
     if file_sha(anchor_path)!=anchor['sha256'] or anchor['sha256']!=obj(plan['context'])['anchorSha256']:
         raise ValueError('Public anchor SHA-256 mismatch')
-    anchor_pcm=pcm(anchor_path)
+    normalized_anchor=root/'alignment-context-anchor/public-zh-001-pcm16.wav'
+    normalized_anchor.parent.mkdir(parents=True,exist_ok=True)
+    if not normalized_anchor.exists():
+        subprocess.run(['ffmpeg','-v','error','-i',str(anchor_path),'-ar','16000',
+                        '-ac','1','-c:a','pcm_s16le',str(normalized_anchor)],check=True,capture_output=True)
+    anchor_pcm=pcm(normalized_anchor)
+    freeze(root/'alignment-context-anchor/snapshot.json',{
+        'sourceSha256':file_sha(anchor_path),'normalizedSha256':file_sha(normalized_anchor),
+        'frameCount':len(anchor_pcm)//2,'format':'mono 16 kHz PCM16; no trimming or gain'})
     canonical=[(r,canonicalize_v3(r,root)) for r in selected]
     frozen=[{'id':r.id,'lang':r.lang,'sourcePath':r.source_path,'sourceSha256':r.source_sha256,
              'transcriptSha256':r.transcript_sha256,'path':p.relative_to(root).as_posix(),
@@ -129,7 +137,7 @@ def main() -> None:
     meta={**provenance,'method':METHOD,'tool':'qwen-asr','toolVersion':'0.0.6',
           'modelRevision':REVISION,'referenceResolutionMs':80,'count':60,
           'createdAt':datetime.now(timezone.utc).isoformat(),'contextAnchorId':'public-zh-001',
-          'contextAnchorSha256':anchor['sha256'],'contextGapSamples':12800,
+          'contextAnchorSha256':anchor['sha256'],'normalizedAnchorSha256':file_sha(normalized_anchor),'contextGapSamples':12800,
           'contextPrefixSamples':len(anchor_pcm)//2+12800,'canonicalLeadingPaddingMs':1000,
           'canonicalTailPaddingMs':1000,'rawDirectory':raw.name,
           'referenceKind':'independent-model-estimate-not-manual-ground-truth',
