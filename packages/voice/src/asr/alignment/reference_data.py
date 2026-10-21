@@ -126,3 +126,45 @@ def freeze(path: Path, value: object) -> None:
             raise ValueError('Frozen alignment inputs changed; preserve prior attempt and preregister amendment')
         return
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+
+METHOD_V2 = 'P4-01-forced-alignment-v2'
+ANNOTATION_V2 = 'qwen3-forced-alignment-v2'
+
+
+def canonicalize_v2(recording: Recording, root: Path) -> Path:
+    """Preserve every source sample; append one second of digital silence."""
+    source = canonicalize(recording, root)
+    target = inside(root, f'alignment-input-v2/{recording.id}.wav')
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        return target
+    import wave
+    with wave.open(str(source), 'rb') as audio:
+        if audio.getframerate() != 16000 or audio.getnchannels() != 1 or audio.getsampwidth() != 2:
+            raise ValueError('Canonical PCM must be mono 16 kHz PCM16')
+        pcm = audio.readframes(audio.getnframes())
+    with target.open('xb') as output:
+        with wave.open(output, 'wb') as result:
+            result.setnchannels(1)
+            result.setsampwidth(2)
+            result.setframerate(16000)
+            result.writeframes(pcm + bytes(32000))
+    return target
+
+
+def boundaries_v2(items: list[dict[str, object]], duration_seconds: float) -> tuple[float, float]:
+    """V2 uses timestamp points, retaining collapsed 80 ms token intervals."""
+    lexical: list[tuple[float, float]] = []
+    for item in items:
+        if not any(unicodedata.category(ch)[0] in ('L', 'N') for ch in text(item['text'])):
+            continue
+        start, end = number(item['start_time']), number(item['end_time'])
+        if start < 0 or end < start or end > duration_seconds:
+            raise ValueError('Invalid/out-of-range V2 points; no clamping')
+        if lexical and (start < lexical[-1][0] or end < lexical[-1][1]):
+            raise ValueError('Non-monotonic V2 points')
+        lexical.append((start, end))
+    if not lexical or lexical[-1][1] <= lexical[0][0]:
+        raise ValueError('No positive complete speech interval')
+    return lexical[0][0]*1000, lexical[-1][1]*1000

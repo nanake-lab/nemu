@@ -11,13 +11,13 @@ import subprocess
 import sys
 from typing import Protocol, cast
 import wave
-from reference_data import (ANNOTATION, METHOD, boundaries, canonicalize, file_sha, freeze,
+from reference_data import (ANNOTATION_V2 as ANNOTATION, METHOD_V2 as METHOD, boundaries_v2 as boundaries, canonicalize_v2 as canonicalize, file_sha, freeze,
                             inside, obj, objects, read_json, recordings, text)
 
 REPO = Path(__file__).resolve().parents[5]
 HERE = Path(__file__).resolve().parent
-PLAN = REPO / 'reports/P4-01/alignment-preregistration.json'
-METHOD_DOC = REPO / 'reports/P4-01/ALIGNMENT-PREREGISTRATION.md'
+PLAN = REPO / 'reports/P4-01/alignment-preregistration-v2.json'
+METHOD_DOC = REPO / 'reports/P4-01/ALIGNMENT-PREREGISTRATION-V2.md'
 REVISION = 'c7cbfc2048c462b0d63a45797104fc9db3ad62b7'
 LANGUAGES = {'zh': 'Chinese', 'en': 'English', 'ja': 'Japanese'}
 
@@ -117,7 +117,7 @@ def main() -> None:
     frozen = [{'id': r.id, 'lang': r.lang, 'sourcePath': r.source_path,
                'sourceSha256': r.source_sha256, 'transcriptSha256': r.transcript_sha256,
                'path': p.relative_to(root).as_posix(), 'sha256': file_sha(p)} for r, p in canonical]
-    freeze(root / 'alignment-inputs.json', frozen)
+    freeze(root / 'alignment-inputs-v2.json', frozen)
     os.environ['CUDA_VISIBLE_DEVICES'] = ''
     os.environ['HF_HUB_OFFLINE'] = '1'
     os.environ['TRANSFORMERS_OFFLINE'] = '1'
@@ -171,13 +171,14 @@ def main() -> None:
     metadata = {**method, 'method': METHOD, 'tool': 'qwen-asr', 'toolVersion': '0.0.6',
                 'modelRevision': REVISION, 'referenceResolutionMs': 80, 'count': len(output),
                 'referenceKind': 'independent-model-estimate-not-manual-ground-truth',
+                'canonicalTailPaddingMs': 1000, 'quantizationWarnings': [d for d in diagnostics if d['zeroUnitIndices']],
                 'createdAt': datetime.now(timezone.utc).isoformat(), 'pythonVersion': sys.version,
                 'rawDirectory': raw_root.name,
                 'environment': {d.metadata['Name']: d.version for d in importlib.metadata.distributions()}}
     # The final references appear only if every one of the 60 alignments succeeds.
     freeze(root / 'timing-references.json', output)
     metadata['referencesSha256'] = file_sha(root / 'timing-references.json')
-    metadata['inputsSha256'] = file_sha(root / 'alignment-inputs.json')
+    metadata['inputsSha256'] = file_sha(root / 'alignment-inputs-v2.json')
     metadata['ffmpegVersion'] = subprocess.check_output(['ffmpeg', '-version'], text=True).splitlines()[0]
     (root / 'timing-references.meta.json').write_text(json.dumps(metadata, indent=2) + '\n', encoding='utf-8')
     print(f'Created 60 independent references under {root}; aligner exits before DUT measurement')

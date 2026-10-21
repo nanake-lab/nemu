@@ -6,10 +6,39 @@ import tempfile
 import unittest
 import wave
 from import_continuous import candidate_bounds, extract, sentence_lengths
-from reference_data import boundaries, freeze, inside, recordings
+from reference_data import boundaries, boundaries_v2, canonicalize_v2, Recording, freeze, inside, recordings
 
 
 class ReferenceTests(unittest.TestCase):
+    def test_v2_retains_quantized_points_and_rejects_invalid_whole_interval(self) -> None:
+        items: list[dict[str, object]] = [
+            {'text':'a','start_time':0.1,'end_time':0.1},
+            {'text':'b','start_time':0.2,'end_time':0.4},
+            {'text':'c','start_time':0.5,'end_time':0.5}]
+        self.assertEqual(boundaries_v2(items,1.0),(100.0,500.0))
+        with self.assertRaises(ValueError):
+            boundaries(items,1.0)
+        for start,end in [(1,1),(-0.1,1),(0,float('nan')),(0,4),(1,0.5)]:
+            with self.subTest(start=start,end=end), self.assertRaises(ValueError):
+                boundaries_v2([{'text':'word','start_time':start,'end_time':end}],3.0)
+
+    def test_v2_tail_padding_preserves_every_source_sample(self) -> None:
+        with tempfile.TemporaryDirectory(prefix='nemu-padding-v2-') as tmp:
+            root=Path(tmp)
+            original=root/'source.wav'
+            pcm=bytes(range(24))
+            with wave.open(str(original),'wb') as w:
+                w.setnchannels(1)
+                w.setsampwidth(2)
+                w.setframerate(16000)
+                w.writeframes(pcm)
+            before=original.read_bytes()
+            rec=Recording('synthetic','en',original,'source.wav','unused','human','unused')
+            target=canonicalize_v2(rec,root)
+            with wave.open(str(target),'rb') as w:
+                self.assertEqual(w.readframes(w.getnframes()),pcm+bytes(32000))
+            self.assertEqual(original.read_bytes(),before)
+
     def test_candidate_warning_cannot_become_valid_reference(self) -> None:
         items: list[dict[str, object]] = [
             {'text':'a','start_time':0.1,'end_time':0.2},

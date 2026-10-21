@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { replayPcm } from './replay.js';
 import { validateTimingReferences } from './timing-reference.js';
-import plan from '../../../../reports/P4-01/alignment-preregistration.json' with { type: 'json' };
+import plan from '../../../../reports/P4-01/alignment-preregistration-v2.json' with { type: 'json' };
 describe('Independent alignment measurement validity', () => {
   it('sends complete 20 ms packets at their deadlines, including tail silence', async () => {
     let clock = 0;
@@ -48,13 +48,18 @@ describe('Independent alignment measurement validity', () => {
       sourcePath: r.path,
       sourceSha256: 'a'.repeat(64),
       transcriptSha256: 'b'.repeat(64),
-      path: `alignment-input/${r.id}.wav`,
+      path: `alignment-input-v2/${r.id}.wav`,
       sha256: 'c'.repeat(64),
       speechStartMs: 800,
       speechEndMs: 2000,
-      annotation: 'qwen3-forced-alignment-v1',
+      annotation: 'qwen3-forced-alignment-v2',
     }));
     expect(validateTimingReferences(refs)).toHaveLength(60);
+    expect(() =>
+      validateTimingReferences(
+        refs.map((r) => ({ ...r, annotation: 'qwen3-forced-alignment-v1' })),
+      ),
+    ).toThrow();
     expect(() => validateTimingReferences(refs.slice(1))).toThrow();
     expect(() =>
       validateTimingReferences(refs.map((r, i) => (i === 1 ? { ...r, id: refs[0]?.id } : r))),
