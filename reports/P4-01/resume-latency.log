@@ -1,0 +1,11 @@
+$ tsx packages/voice/src/asr/latency.ts
+C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\latency.ts:137
+    if (pipelineFailure) throw new Error(`Voice pipeline error: ${pipelineFailure}`);
+                               ^
+
+Error: Voice pipeline error: ASR_LANGUAGE_MAPPED
+    at <anonymous> (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\latency.ts:137:32)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

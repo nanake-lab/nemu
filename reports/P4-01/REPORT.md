@@ -35,12 +35,12 @@ pnpm asr:latency      # 使用仓库外 timing-references.json 的独立起止�
 | --- | --- | --- |
 | 模型下载/哈希 | 三文件已校验；SenseVoice int8 239233841 字节 | lock、manifest、model-hashes.json |
 | 公开数据准备 | 90 条，三语各 30，三个 Parquet SHA-256 与官方 LFS 元数据一致 | public-download.log、public-data.lock.json |
-| P4-01 单测 / 整仓 Vitest | 16/16；整仓 32 文件、459/459 | unit-v3.log、final-test.log |
-| TypeScript 类型检查 | 通过 | final-typecheck.log |
-| ESLint | 通过 | final-lint.log |
-| Python mypy --strict | 通过 | mypy.log |
-| workspace build | 通过；含最终 Worklet 修复的桌面构建通过 | build-final.log、desktop-build-v4.log |
-| 完整 pnpm test:e2e | 4 通过、1 个专门的静音 CPU 测量按设计跳过（已单独实测通过）；附加 OS 快照因没有初始化 run.json 报错，测试本身退出 0；Windows CI 将按标准初始化后重跑 | full-e2e.log、full-e2e/ |
+| P4-01 单测 / 整仓 Vitest | 整仓 35 文件、469/469，通过 | resume-tests.log |
+| TypeScript 类型检查 | 通过 | resume-typecheck.log |
+| ESLint | 通过 | resume-lint.log |
+| Python mypy --strict / 辅助测试 | 8 个文件通过；11 项测试通过，使用 D 盘环境 | resume-mypy.log、resume-python-tests.log |
+| workspace build | 同步 main 并补齐桌面工作区依赖后通过，路径函数已打入主进程包 | resume-build.log |
+| 完整 Electron E2E（构建后 Playwright） | 4 通过，专门静音 CPU 测量 1 项按设计跳过且随后单独实测通过；已正确初始化 run.json，含 OS 快照，整体退出 0 | resume-e2e.log、resume-e2e-*/ |
 | 真实麦克风/utility 通道测试 | 通过：50 packets/s、异步关闭，未读取真实用户麦克风，使用 Chromium fake device | voice-e2e-v5.log、e2e-v5/ |
 | Electron 首次测试 | 失败，原始日志保留。与 CI 窗口重叠且临时目录前缀不符合隔离约束；不能据失败推断单一原因 | voice-e2e.log、e2e/ |
 | Electron 第二次测试 | 安静窗口检查把 PowerShell 空列表 null 当成占用，已修正；等待最终复跑 | voice-e2e-v2.log、e2e-v2/ |
@@ -49,7 +49,7 @@ pnpm asr:latency      # 使用仓库外 timing-references.json 的独立起止�
 | 独立语音起止参考 | 60/60，方法 v4 在测量前提交；所有数值检查通过。80 ms 网格是模型分辨率，不代表已经校准的误差上限 | ALIGNMENT-PREREGISTRATION-V4.md、alignment-v4-evidence.json、alignment-v4-diagnostics.json |
 | VAD 中位延迟 ≤300 ms | 独立参考已齐，安静窗口测量进行中 | 待测 |
 | 打断延迟 ≤250 ms | 逻辑测试验证 ≥200 ms 持续语音及每次话语一次打断；本机真实延迟未测 | unit-v3.log；待测 |
-| utilityProcess 静音 CPU ≤2% | 60.92 秒、真实采集静音 PCM；均值 0.107%、最大 0.126%，通过 | idle-cpu.json、idle-measurement.log、measurement/ |
+| utilityProcess 静音 CPU ≤2% | 迁移后复测 60.73 秒；平均 0.11191%、峰值 0.14086%，通过。此前结果另存，未覆盖历史证据 | idle-cpu.json、resume-idle.log、measurement-*/ |
 
 CER/WER 采用总编辑距离/总参考单位数；NFKC、小写、去 Unicode 标点与符号，中文日文逐 Unicode 字符、英文按空白分词。没有繁简替换、数字语义替换或删除失败样本。公开集和用户集计数分别记录；不足每语 30+20 时状态固定为“待用户录音”，不会返回完整 PASS。
 
@@ -215,3 +215,8 @@ v4 在 c224bf2 提交后、首次实际延迟之前，按目标原语言分词�
 
 ## 2026-10-21 D 盘迁移（用户明确指示）
 默认缓存统一为 D:\NemuData，模型及完整评测资料按 SHA-256 验证，评测环境按原锁文件在 D 盘重建且 94 个依赖版本一致。原生 ASR/VAD 和独立 Qwen3 对齐均在 D 盘实际运行通过后，已清理 C 盘三处 Nemu 专用副本。详见 [CACHE-MIGRATION.md](CACHE-MIGRATION.md) 与 cache-migration-*.json；没有更改冻结输入、时标或验收阈值。
+
+
+## 2026-10-21 同步与迁移后复验
+已合入 origin/main 806e09b（ADR 0015，资产许可字段追加），本卡语音契约未变。CI 暴露桌面导入 @nemu/voice 缺工作区依赖，已补齐 apps/desktop/package.json、生成锁文件，并把路径函数打入 Electron 主进程包；未新增第三方运行时包。失败日志 cache-migration-ci-failure.log 保留。当前 lint、类型、469 项单测、Python 严格检查和 11 项辅助测试、整仓构建、4 项 Electron E2E、静音 CPU 复测及 150 条识别全部通过。E2E 的专用 CPU 项在普通套件内明确跳过，随后单独实测通过。完整延迟测量进行中；不得把尚未得到的结果记为通过。
+

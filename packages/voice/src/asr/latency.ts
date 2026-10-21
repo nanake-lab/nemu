@@ -8,7 +8,7 @@ import { assertQuiet, assertQuietAsync } from './quiet.js';
 import { cacheDirectory, verifyModels } from './models.js';
 import { VoiceRuntime, type VoicePort } from './runtime.js';
 import { loadTimingReferences } from './timing-reference.js';
-import { replayPcm } from './replay.js';
+import { replayPcm, isFatalVoiceDiagnostic } from './replay.js';
 const root = asrDataDirectory();
 const attempt = `reports/P4-01/latency-attempt-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
 class ReplayPort implements VoicePort {
@@ -34,6 +34,7 @@ const results: Array<{
   bargeInMs: number | null;
   maximumLatenessMs: number;
   trace: Trace[];
+  diagnosticCodes: string[];
 }> = [];
 let runtime: VoiceRuntime | undefined;
 try {
@@ -41,6 +42,7 @@ try {
   assertQuiet();
   await verifyModels();
   let trace: Trace[] = [],
+    diagnosticCodes: string[] = [],
     collecting = false,
     pipelineFailure: string | undefined;
   runtime = new VoiceRuntime(cacheDirectory(), (event: ApplicationEvent) => {
@@ -53,7 +55,10 @@ try {
       });
     if (event.type === 'voice.bargeIn')
       trace.push({ type: event.type, at: event.ts - performance.timeOrigin });
-    if (event.type === 'stage.error') pipelineFailure = event.payload.code;
+    if (event.type === 'stage.error') {
+      diagnosticCodes.push(event.payload.code);
+      if (isFatalVoiceDiagnostic(event.payload.code)) pipelineFailure = event.payload.code;
+    }
   });
   for (const ref of references) {
     assertQuiet();
@@ -99,6 +104,7 @@ try {
       payload: { sentenceId: ref.id, at: 0 },
     });
     trace = [];
+    diagnosticCodes = [];
     pipelineFailure = undefined;
     collecting = true;
     let seq = 0;
@@ -119,6 +125,7 @@ try {
       vadEndMs: lastEnd ? lastEnd.at - replay.startedAt - ref.speechEndMs : null,
       bargeInMs: firstBarge ? firstBarge.at - replay.startedAt - ref.speechStartMs : null,
       maximumLatenessMs: replay.maximumLatenessMs,
+      diagnosticCodes: [...diagnosticCodes],
       trace: trace.map((e) => ({ ...e, at: e.at - replay.startedAt })),
     });
     // Forced close cannot supply a missing speechEnd or barge-in for the measured trace.

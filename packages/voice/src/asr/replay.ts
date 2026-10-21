@@ -42,3 +42,8 @@ export async function replayPcm(
   if (failure) throw failure;
   return { startedAt, maximumLatenessMs };
 }
+
+/** Unsupported-language mapping is a required diagnostic, not a stopped ASR pipeline. */
+export function isFatalVoiceDiagnostic(code: string): boolean {
+  return code !== 'ASR_LANGUAGE_MAPPED';
+}

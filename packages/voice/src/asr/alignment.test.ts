@@ -1,8 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { replayPcm } from './replay.js';
+import { replayPcm, isFatalVoiceDiagnostic } from './replay.js';
 import { validateTimingReferences } from './timing-reference.js';
 import plan from '../../../../reports/P4-01/alignment-preregistration-v4.json' with { type: 'json' };
 describe('Independent alignment measurement validity', () => {
+  it('keeps required language mapping diagnostic nonfatal while rejecting pipeline errors', () => {
+    expect(isFatalVoiceDiagnostic('ASR_LANGUAGE_MAPPED')).toBe(false);
+    for (const code of ['ASR_QUEUE_FULL', 'ASR_DECODE_FAILED', 'ASR_PCM_GAP', 'UNKNOWN'])
+      expect(isFatalVoiceDiagnostic(code)).toBe(true);
+  });
   it('sends complete 20 ms packets at their deadlines, including tail silence', async () => {
     let clock = 0;
     const times: number[] = [];
