@@ -58,8 +58,8 @@ P5-23 试过的办法（`reports/P5-23/BLOCKED.md`）：
 | `EvidenceGroupV2`（取代 `EvidenceGroup`） | `echo.evidence-group-v2` | 1–6 与前任相同；7 `reserved`；8 `allocations`（EvidenceAllocationV2，按 tendency_id 成集合） |
 | `RSnapshotV2`（取代 `RSnapshot`） | `echo.r-snapshot-v2` | 1–3 与前任相同；4 `reserved`；5 `tendencies`（TendencyV2，按 tendency_id 成集合） |
 
-- 证据组与 R 的快照只是因为装着换代的消息才换代：活的消息不能嵌入被取代的类型（`check_compat.py` 规则 6）。字段 7、4 换了类型，所以保留旧号，新字段号大于前任的最大号（规则 5）。
-- 没有其他活的消息嵌入这四个类型。
+- 证据组与 R 的快照只是因为装着换代的消息才换代：活的消息不能嵌入被取代的类型（`check_compat.py` 规则 6）。字段 7、4 换了类型，所以保留旧号；新字段号大于前任的最大号（规则 5），字段名不变。
+- 没有其他活的消息嵌入这四个类型。`CoreTransactionV2.staged_r` 是对象引用：从此它指向 `RSnapshotV2` 对象（`object_type` 为 `echo.r-snapshot-v2`），消息本身不变。
 
 ### 3. 两条语义检查（`core-types/src/semantic.rs`）
 
