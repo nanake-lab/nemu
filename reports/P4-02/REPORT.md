@@ -2,125 +2,110 @@
 
 ## 结果
 
-部分完成：代码与 CPU/模拟验证已交付，真实 GPU 验收由用户明确暂缓，见 [BLOCKED.md](BLOCKED.md)。不声称 250 ms、显存、30 分钟压力或真实 GPU 取消验收通过。没有合并，也没有取下一张卡。
+部分完成，真实验收未通过。2026-10-21 用户授权 GPU 安静窗口后，已解决 SoX 导入调用，生成纯合成三语参考，分别以新进程串行完成 0.6B 和 1.7B 的三语各 20 句、真实链路取消和至少 30 分钟压力测试。两者首包 p50 均超过 250 ms，1.7B 合计显存超过 8 GB；RSS 仍有上升趋势，不能签发稳定性通过。详见 [BLOCKED.md](BLOCKED.md)。
 
-从 `origin/main` 创建独立工作树和 `task/P4-02-tts-sidecar`，草稿认领 PR [#45](https://github.com/nanake-lab/nemu/pull/45)。开工与收尾均执行 fetch；以远端规则、卡片和锁定载体为准。用户另外批准补齐 CONTRACTS §5.4 既有接口，记录在 `tasks/requests/P4-02-tts-contract.md`。
+PR [#45](https://github.com/nanake-lab/nemu/pull/45) 保持草稿及 needs-user，不转可审查、不合并、不取下一张卡。已 fetch 并 merge 最新 origin/main，合并提交为 9c986a6；必读规则与 P4-02 卡未变化。下列静态/功能检查在该合并后重跑，GPU 数据来自合并前同一 P4-02 运行实现；main 没有改动这部分实现。
 
 ## 交付物
 
-- `services/voice-sidecar/src/main.py`：supervisor 入口；缺 FastAPI 等依赖时使用标准库的降级健康服务，保持存活。
-- `services/voice-sidecar/src/nemu_voice_sidecar/`：FastAPI health/warmup、WebSocket PCM/取消、有界背压、串行推理 lane、Base 逐步解码、离线模型校验、参考来源和哈希校验。
-- `packages/voice/src/tts/`：本地 TtsProvider 和 OpenAI 兼容云端适配器；云端只有模拟测试，无真实请求或密钥。
-- `packages/contracts/src/tts.ts`：实现既有 TtsProvider/请求类型及 zod 校验；沿用 Lang。Python schema 由它生成，并有漂移检查。
-- `apps/desktop/src/supervisor/process-config.ts`：只修改 voice-sidecar 一条健康检查，另加对应测试；未改 P4-01 的 utilityProcess、通道或主进程文件。
-- `config/models.lock.json`/schema：只追加顶层 `tts`。登记 Base 0.6B、Base 1.7B、测试用 VoiceDesign 的来源、固定修订、11 个运行文件各自的 SHA-256、大小、Apache-2.0 与可分发标记。其他分区保持原样。
-- `prepare_models.py`、`design_test_voice.py`、`benchmark.py`、`gpu_common.py` 和 README：显式下载、纯合成参考与待执行的验收工具。模型与未来测试声音放在本工作树的被忽略缓存中，不提交权重或音频。
-- 本目录：成功/失败原始测试日志、模型元数据、载体文件校验、e2e 输出和截图。e2e 生成的 P0-01 路径已先复制进本目录，再按 HEAD 原始字节恢复，没有更新视觉基准。
+- `services/voice-sidecar/`：FastAPI health/warmup、WebSocket float32 PCM、取消、有界背压、串行推理、模型离线校验和 Base 逐步解码。缺 Python 依赖或模型时降级保持存活。
+- `packages/voice/src/tts/`：本地 TtsProvider、OpenAI 兼容云端适配器。云端仅模拟验证，没有真实云端请求或密钥。
+- `packages/contracts/src/tts.ts`：用户批准的最小补齐 CONTRACTS §5.4 既有类型与 zod 校验，沿用 Lang；Python schema 从共享契约生成。批准记录见 `tasks/requests/P4-02-tts-contract.md`。
+- desktop 仅 voice-sidecar supervisor 配置条目及其测试；未改 P4-01 utilityProcess/通道。模型锁/schema 仅追加 tts 分区，其他分区随 main 保留。
+- `qwen_import.py`、`audit_qwen_import.py`：锁定 qwen-tts 0.1.1，禁用未使用的 25 Hz SoX 能力；真实导入审计阻止并记录任何 SoX 启动尝试。
+- `design_test_voice.py`、`benchmark.py`、`gpu_common.py`、`launch-benchmark.mjs`、`summarize_acceptance.py`：生成参考、精确变体测量及无 CUDA 的原始数据复算。README 保留复现步骤。
+- `services/voice-sidecar/tests/fixtures/voice-design-v1/`：三语纯合成参考 WAV（LFS）及 voice.json/manifest，登记 VoiceDesign 固定修订、Apache-2.0、cloneAllowed、SHA-256；没有使用任何 P4-01 录音或真实人物参考，也不是 Nemu 定稿音色。
+- 本报告目录保留逐句 JSONL、WDDM 原始采样、失败运行、控制台日志、参考元数据和检查证据。`gpu-evidence-sha256.json` 是原始文件清单；`git-byte-preservation.json` 核对 24 个原始文件 Git blob 与磁盘字节摘要一致。原始 CRLF 数据通过局部 attributes 保持原字节。
 
-缓存准备状态：Base 0.6B 的 11 个文件已从既有 probe 缓存复制并重新校验；Base 1.7B 的 11 个文件已下载并校验；VoiceDesign 下载仍在进行，只有完整文件通过 SHA-256 后才可供后续使用。选定载体缓存的 10 个文件也已逐文件与固定修订的远端摘要核对，见 `carrier-file-lock.json`，此过程没有导入模型或启动 GPU。
+## 真实 GPU 验收
 
-## 验收
+用户停止 runner 后确认 Runner.Listener、Runner.Worker、Blender 和其他测量均未运行，窗口中没有交叉运行编译或测试，见 `quiet-window-20261021.json`。RTX 3080；使用 P0-07 probe 环境，载体 Qwen3-4B-Instruct-2507 固定修订、NF4/bfloat16、eager、原生 RMS、layer 17/rank 8 m=0 hook、48 步 decode 的 KV 同时驻留。TTS snapshot 共 33 个文件和载体 10 个文件均已校验。
 
-| 命令或检查 | 结果 | 证据 |
-| --- | --- | --- |
-| `pnpm lint` | 通过 | `lint-final.log` |
-| `pnpm typecheck` | 通过 | `typecheck-final.log` |
-| `pnpm test` | 454 项通过 | `vitest-final.log` |
-| `pnpm tts:schema` | 通过；共享契约与 Python schema 一致 | `schema-drift.log` |
-| `uv sync --project services/voice-sidecar --locked` | 默认环境通过；不安装 inference extra | `uv-sync-default.log` |
-| `uv run --project services/voice-sidecar ruff check services/voice-sidecar` | 通过 | `ruff-final.log` |
-| `uv run --project services/voice-sidecar mypy --strict services/voice-sidecar` | 全部 16 个 Python 源/测试/工具文件通过 | `mypy-final.log` |
-| `uv run --project services/voice-sidecar pytest services/voice-sidecar/tests -ra` | 24 通过、1 明确跳过 | `pytest-final.log` |
-| `uv build --project services/voice-sidecar` | sdist/wheel 通过 | `python-build-final.log` |
-| `pnpm test:e2e`（含 workspace build） | 3 项通过，0 重试 | `e2e-final.log`、`e2e-final-captures/e2e-results.json` |
-| 原样 shell.spec.ts 的 7 进程/重启 0 次 | 通过；voice-sidecar 使用真实入口、降级运行，其余未实现进程可仍为原有占位进程 | 同上；未改断言 |
-| 无 site-packages 的 `python -S src/main.py` | 真实子进程 HTTP health 200、保持存活 | `test_stdlib_fallback_without_site_packages` |
-| 三语、语气映射、坏输入、参考篡改、取消、OOM | CPU doubles/TestClient 通过；不是硬件性能结论 | `test_service.py`、`test_qwen_adapter.py` |
-| GPU smoke | 明确跳过：未请求 GPU、CI 不下载模型或分配 CUDA | `pytest-final.log` |
-| 真实三语首包/显存/30 分钟压力/取消 | **未执行：用户暂缓安静窗口** | `BLOCKED.md` |
-| GitHub CI/Windows | 交付时以 PR 检查与本目录追加 CI 状态为准 | PR #45 |
+复用 probe 的实际 NVIDIA/D3D11 渲染夹具及 sample.vrm，并采集所属子进程；该夹具不等于正式 Nemu 角色的最终整机视觉验收。实际包版本/路径见 `gpu-runtime-environment.json`：推理栈与 probe 一致；其 FastAPI 0.143.2、uvicorn 0.54.0 与服务默认锁的 0.115.12、0.34.2 不同，不能把本次数据描述成默认锁环境的完整复验。
 
-测试中保留了初始失败日志：新导出 schema 未登记共享测试夹具、客户端错误被正常 close 覆盖、类型/格式检查错误。已修正并重跑；没有降低阈值、删断言或修改 e2e 测试。
-
-## 实现与证据边界
-
-Base 的 `style` 只选 `voice.json` 的语言/语气参考，不送文字指令。参考必须登记来源、许可、cloneAllowed 和 SHA-256，且不能越出声音目录；请求不能直接指定任意音频路径。没有读取 P4-01 用户音频，没有克隆任何人声，测试 VoiceDesign 也尚未执行；Python 的字节占位 fixture 只用于传输测试，未交给任何真实模型。
-
-qwen-tts 0.1.1 的 `non_streaming_mode=False` 本身仍整句返回。适配器使用请求范围内的 talker forward hook，每 4 个 codec frame 解码、保留 25 个左上下文；上游的末尾整句解码仍会执行。CPU double 验证首个解码发生在生成结束前、取消移除 hook、输出长度及有界左上下文。真实音质、接缝、GPU 延迟和压力稳定性都待测，不能仅凭有二进制分块判为性能通过。
-
-1.7B 的低显存准入与 OOM 都可降至 0.6B；已经发出部分音频时返回失败，不重播句子。health 的 HTTP 200 代表存活，`ready` 代表后端可用；显存降级原因不隐藏。取消后先停止网络发送，合作终止生成，原推理线程退出前 lane 不释放。
-
-云端通过调用者提供的 `instructions[lang][style]` 表映射语气，支持 24 kHz int16 PCM 转 float32、跨帧半采样和取消。不保存密钥、不记录远端错误正文；没有把网络模拟延迟当作真实云端结果。
-
-## GPU 预注册计划与待测比较
-
-两个变体依次在独立进程中测量；使用 P0-07 probe 环境、选定的 Instruct-2507 固定修订、NF4/bfloat16、eager、原生 RMS 和 layer 17/rank 8 的 m=0 hook。固定合成三语输入及 48 步 decode 的 KV 同时保留。载体缓存按远端固定修订逐文件校验，TTS 本地模型按本卡锁校验。
-
-每个变体先三语预热，再每种语言 20 句首包（含 WS 连接和请求），每种语言 5 次取消，以及固定至少 1800 秒连续压力。全程复用 P0-07 的 GPU 渲染夹具并采集全部子进程。该夹具不替代正式 Nemu 资产或最终整机视觉验收。
-
-按 ADR 0012 §2.2，上界为 Nemu 所有进程专用显存的最高观测值与共享显存的最高观测值之和，判定 ≤ 8,000,000,000 字节，同时报告 torch allocated/reserved 峰值。原始采样缺失不得算作 0 显存通过；保留 WDDM 刷新/采样间隙限制。RSS 与显存趋势从逐句原始记录判断，不自行发明允许增长阈值。
-
-| 方案 | 实际首包 p50 | Nemu 合计显存 | 当前可确认的范围 |
+| 项目 | Base 0.6B | Base 1.7B | 判定 |
 | --- | --- | --- | --- |
-| Base 0.6B | 未测 | 未测 | 模型已锁；本地实现/CPU 模拟通过 |
-| Base 1.7B | 未测 | 未测 | 模型已锁；低显存/加载及生成 OOM 回退有 CPU 测试 |
-| 云端回退 | 未测 | 未测 | 兼容接口与模拟测试；真实延迟依赖网络和供应商，未调用 |
+| 中文首包 p50，20 句 | 854.682 ms | 854.117 ms | 均失败，要求 ≤250 ms |
+| 英文首包 p50，20 句 | 851.609 ms | 863.247 ms | 均失败 |
+| 日文首包 p50，20 句 | 853.555 ms | 862.669 ms | 均失败 |
+| 专用显存观测峰值 | 6,899,363,840 B | 8,925,876,224 B | 全部所属进程 |
+| 共享显存观测峰值 | 288,731,136 B | 288,436,224 B | 全部所属进程 |
+| ADR 0012 §2.2 两项峰值之和 | 7,188,094,976 B（7.188 GB） | 9,214,312,448 B（9.214 GB） | 0.6B 通过；1.7B 失败，要求 ≤8,000,000,000 B |
+| torch allocator allocated 峰值 | 5,508,812,800 B | 7,543,661,568 B | 补充指标，不替代 WDDM 合计 |
+| torch allocator reserved 峰值 | 6,341,787,648 B | 8,283,750,400 B | 同上 |
+| 连续压力时长/合成次数 | 1800.125 s / 289 | 1804.297 s / 298 | 均完成，无运行异常 |
+| 压力首末 RSS 差 | +12.813 MiB | +15.012 MiB | 5 分钟中位数仍上升，稳定性不接受 |
+| 取消后最后分块，15 次 | 最大 0.7621 ms | 取消后未观测到新分块（记 0） | 均满足 ≤50 ms 的停止出块要求 |
 
-任何方案未达到 250 ms 或超显存时保留真实失败并比较，不放宽阈值。测试语句和声音设计描述已固化在脚本中。
+1.7B 确实驻留并完成自身测量，精确变体模式禁用了自动回退；没有将 0.6B 数据当作 1.7B。取消值是客户端发送取消后收到末块的时间，0 不代表推理核/服务确认耗时为零。
 
-## 新增依赖
+压力中 torch 当前 allocated 保持不变；0.6B reserved 在前段扩张，1.7B reserved 保持不变。RSS 六个 5 分钟分箱的中位数仍递增，完整数值见 `acceptance-summary.json`。RSS 属于同进程的载体、TTS、HTTP 客户端/服务，未定位归因，不能直接断言某模型泄漏，也不能自行设允许增长百分比判通过。
 
-默认 runtime 的精确版本：FastAPI 0.115.12（MIT）、uvicorn 0.34.2（BSD-3-Clause）、websockets 15.0.1（BSD-3-Clause）、structlog 25.3.0（MIT/Apache-2.0）、jsonschema 4.23.0（MIT）。开发检查新增 httpx 0.28.1 和 types-jsonschema 4.26.0.20261006；uv.lock 固定完整依赖与哈希，Python 3.12。
+WDDM 两次分别有 5560/5710 个观测，无采样错误，最大开始间隙 1.431/1.336 秒；渲染/采样子进程均退出 0。观测峰值受 CIM/驱动刷新与瞬态漏采限制，不是连续精确峰值。ADR 上界使用专用最高值加共享最高值，未以 torch allocator、显卡全机数字或 total committed 替代。
 
-可选 `inference` 与既有 probe 对齐：qwen-tts 0.1.1（Apache-2.0）、torch/torchaudio 2.10.0+cu128（BSD）、transformers 4.57.3（Apache-2.0）。CI 默认不启用该 extra，不下载模型。载体的 bitsandbytes 来自既有 probe 环境，本卡未改变载体分区或其版本。
+证据：`gpu-0.6B-v2/`、`gpu-1.7B-v1/` 及对应 console 日志。最初 `gpu-0.6B-v1/` 因 warmup 响应 JSON 解析失败而终止，完整失败保留，不算 TTS 性能通过；随后基准客户端禁用 localhost 环境代理、增加 HTTP 状态检查，未改变系统代理或验收阈值。复算：`python services/voice-sidecar/summarize_acceptance.py --reports reports/P4-02`。
 
-用户 2026-10-21 已批准下列可选 Qwen 推理依赖，批准条件是动态加载、不静态链接、不修改第三方源码：
+## 替代方案比较
 
-| 依赖 | 版本 | 许可 | 用户决定与条件 | 后续核验 |
-| --- | --- | --- | --- | --- |
-| soxr | 1.1.0 | LGPL-2.1-or-later | 已有条件批准；Python 通过独立 soxr_ext.pyd 加载，本卡未静态链接或修改源码 | P7 打包前复核 LGPL 分发义务：许可证文本、源码出处、可替换 |
-| soundfile 随包 libsndfile | soundfile 0.14.0 | LGPL-2.1 | 已有条件批准；soundfile 通过 CFFI dlopen 加载独立 libsndfile DLL，本卡未静态链接或修改源码 | P7 打包前复核 LGPL 分发义务：许可证文本、源码出处、可替换 |
-| sox（Python 包装） | 1.5.0 | BSD-3-Clause | 已确认是命令行 SoX 的包装，wheel RECORD 不含 exe/dll/pyd；本服务没有直接 sox 调用或打包配置 | **尚不满足“不调用 sox 程序”：上游导入副作用会尝试 sox -h，见下文** |
+| 方案 | 实测与限制 | 当前可用结论 |
+| --- | --- | --- |
+| 本地 0.6B | 三语 p50 851.609–854.682 ms；合计 7.188 GB | 显存符合，延迟不符合；RSS 稳定性待定位 |
+| 本地 1.7B | 三语 p50 854.117–863.247 ms；合计 9.214 GB | 延迟和显存均不符合 |
+| 云端适配器 | 接口/格式/风格映射/取消模拟测试通过；未测真实云端 | 不提供虚构的网络延迟或显存节省数字；真实云端本次仍不测 |
 
-独立 .pyd 的加载只确认 Nemu/Python 一侧的动态模块边界；没有据此声称上游 wheel 内部所有组件均采用动态链接。P7 还需核对所交付二进制的链接方式与可替换性。许可证据见 `probe-audio-licenses.json`、`licenses/` 和 `license-followup-20261021.json`。
+## 合并 main 后的代码检查
 
-sox 核查发现：锁定的 `sox/__init__.py:8` 在导入时执行 `os.popen('sox -h')`。Qwen 的 core 包无条件导入 25 Hz tokenizer，后者导入 speech_vq，speech_vq 顶层导入 sox；因此不能以本卡只使用 12 Hz 模型为由宣称不会尝试启动外部 SoX。本轮只做静态读取，没有导入 qwen/sox，也没有执行 SoX。没有打包命令行 SoX，但“不调用”的条件尚未满足，保持阻塞，不写成确认通过。
+| 命令/检查 | 结果 | 证据 |
+| --- | --- | --- |
+| `pnpm install --frozen-lockfile` | 通过 | `post-main-install.log` |
+| `pnpm lint`、`pnpm typecheck` | 通过 | `post-main-lint.log`、`post-main-typecheck.log` |
+| `pnpm test` | 454 通过 | `post-main-test.log` |
+| `pnpm tts:schema` | 通过 | `post-main-schema.log` |
+| `uv sync --project services/voice-sidecar --locked` | 通过，默认环境无 inference extra | `post-main-uv-sync.log` |
+| ruff、mypy --strict | 通过，20 个 Python 文件 | `post-main-ruff.log`、`post-main-mypy.log` |
+| pytest | 26 通过，1 个 opt-in GPU smoke 明确跳过；完整 GPU 测量另见上表 | `post-main-pytest.log` |
+| `uv build --project services/voice-sidecar` | sdist/wheel 通过 | `post-main-wheel.log` |
+| `pnpm test:e2e`（含 workspace build） | 3 通过，0 重试；原样 7 进程/0 重启断言通过 | `post-main-e2e.log`、`post-main-e2e-captures/` |
 
-## 待用户确认
+原样 shell.spec.ts 保留 7 个受守护进程、重启 0 次的断言；服务缺依赖/模型的降级路径另有真实子进程测试。CPU doubles/TestClient 验证三语/style、坏输入、参考篡改、取消、背压和 OOM 回退，不能替代 GPU 性能验收。e2e 生成的 P0-01 文件已复制到本卡证据目录，再按 HEAD 原始字节恢复，未更新视觉基准。之前提交 d7bc45d 的 Ubuntu/Windows CI 成功见 `CI-ubuntu.json`、`CI-windows.json`；它们属于历史提交，不代表本轮新 HEAD 已通过 CI。
 
-- [ ] （阻塞）以后安排 GPU 安静窗口，完成上列硬件验收；2026-10-21 用户选择本轮先交付代码与待测报告。
-- [x] 用户 2026-10-21 有条件批准 soxr / 随包 libsndfile：动态加载、不静态链接、不改第三方源码；P7 复核分发义务。
-- [ ] （阻塞）解决并核验 Qwen 导入链尝试 `sox -h` 的副作用；当前不能确认“不调用 sox 程序”。
-- [ ] （不阻塞代码审查）真实分块音频接缝与听感待测；Nemu 声音定稿属于 P4-03。
+## 实现边界
 
-## 后续建议（不在本任务范围内）
+Base 的 style 只索引参考，不接收文字指令。参考路径不得越出音色目录，必须校验来源、cloneAllowed 与 SHA-256。合成用请求范围 talker forward hook，每 4 个 codec frame 解码，保留 25 个左上下文；上游末尾整句解码仍执行。实际接缝听感没有签发通过。
 
-- P4-03 提供正式 voice.json 与跨语言/语气参考；当前没有定稿任何声音。
-- P4-06 接入输出投递记账与舞台播放；本卡客户端异常结束会报错，不替终端宣称音频已投递。
+1.7B 生产路径可因低可用显存/OOM 降至 0.6B，并在 health 报告；已发送部分音频时不重播句子。取消先停止发送，原推理线程退出前保留 lane。云端 API key 仅由调用者临时提供，不持久化或输出远端错误正文。
+
+## 新增依赖与许可决定
+
+| 名称 | 版本 | 许可证 | 用途 |
+| --- | --- | --- | --- |
+| FastAPI | 0.115.12 | MIT | 默认 HTTP/WS 服务 |
+| uvicorn | 0.34.2 | BSD-3-Clause | ASGI |
+| websockets | 15.0.1 | BSD-3-Clause | WS 客户端/服务 |
+| structlog | 25.3.0 | MIT/Apache-2.0 | 结构化日志 |
+| jsonschema | 4.23.0 | MIT | 校验生成的共享边界 schema |
+| qwen-tts | 0.1.1 | Apache-2.0 | 可选推理链 |
+| torch / torchaudio | 2.10.0+cu128 | BSD | 可选 CUDA 推理 |
+| transformers | 4.57.3 | Apache-2.0 | 可选模型加载 |
+| soxr | 1.1.0 | LGPL-2.1-or-later | 用户 2026-10-21 有条件批准，动态加载、不静态链接、不改源码；P7 打包前复核 LGPL 分发义务：许可证文本、源码出处、可替换 |
+| soundfile 随包 libsndfile | soundfile 0.14.0 | LGPL-2.1 | 用户同日有条件批准，CFFI 加载独立 DLL，不静态链接、不改源码；P7 打包前复核 LGPL 分发义务：许可证文本、源码出处、可替换 |
+| sox Python 包装 | 1.5.0 | BSD-3-Clause | wheel 不含 exe/dll/pyd，不打包或调用 SoX 程序；未使用的能力在服务自有导入边界被禁止 |
+
+开发检查依赖 httpx 0.28.1（BSD-3-Clause）、types-jsonschema 4.26.0.20261006（Apache-2.0），其余精确锁见 uv.lock。bitsandbytes 0.50.2 来自既有 probe，本卡未修改载体分区。没有新增 GPL/AGPL 应用代码。
+
+原 SoX 阻塞已解决：pysox 导入会调用 `sox -h`，Qwen 无条件导入未使用的 25 Hz 路径会触发它。`qwen_import.py` 在真实 pysox 导入前提供明确拒绝 Transformer/Combiner 的能力模块，仅支持锁定的 12 Hz 模型；版本不符或已有不受控 SoX 模块时拒绝启动推理。没有修改第三方源码或全局 subprocess。真实 Qwen 导入审计的 `sox_process_attempts=[]`，禁用能力调用也被拒绝，见 `sox-import-audit-v1.json`。随后 VoiceDesign 和两种 Base 的真实运行均走此边界。源码/许可证静态证据见 `license-followup-20261021.json`、`probe-audio-licenses.json`、`licenses/`。独立 pyd/DLL 边界不等于已完成上游二进制内部链接和分发复核，P7 仍须核查。
+
+## 待用户确认与后续建议
+
+- [ ] （阻塞）三语 250 ms 首包失败、1.7B 显存超线；保留当前数据，不放宽阈值。
+- [ ] （阻塞）定位持续 RSS 上升，再安排新安静窗口验证稳定性；本次不以完整跑满 30 分钟代替稳定性通过。
+- [x] LGPL 条件批准、SoX 调用阻塞解除、纯合成参考生成与登记。
+- [ ] 真实分块音频接缝/听感尚未签发；声音定稿属于 P4-03。
+
+后续可在本卡范围定位首包耗时与 RSS 来源，再决定优化与复测；真实云端比较须另获授权。P4-06 的投递记账和正式角色声音不在本卡范围内。
 
 ## 下一步
 
-转为可审查后等待 Claude 审查实现；硬件验收与非宽松许可仍待用户。**不合并，不取下一张卡。**
+等待解决上述验收阻塞并复测。PR 保持草稿，不合并，不取下一张卡；全部标准满足后才转可审查，由 Claude 审查。
 
-## 核对来源
-
-- 本仓库 `tasks/P4-voice.md` P4-02、`docs/CONTRACTS.md` §5.4、`docs/adr/0012-continuity-carrier-mobile.md` §2.2、`config/models.lock.json` 的选定载体。
-- [Qwen3-TTS 官方代码与说明](https://github.com/QwenLM/Qwen3-TTS)，以及 probe 环境 qwen-tts 0.1.1 安装源码。
-- [FastAPI WebSocket 文档](https://fastapi.tiangolo.com/advanced/websockets/)。Context7 配额不足后使用官方文档和已安装源码核对。
-- [OpenAI PCM 格式说明](https://developers.openai.com/api/docs/guides/text-to-speech)，仅用于兼容接口格式；未进行真实调用。
-
-## 最终交付补记（2026-10-21）
-
-- PR #45 已转为可审查，带 `needs-user`；等待 Claude 审查实现。没有合并，没有取下一张卡。
-- 代码提交 `d7bc45d590fcaa499893c83dff0dd7f77ed433f3` 的 [Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/39561117049) 和 [Windows CI](https://github.com/nanake-lab/nemu/actions/runs/39562278216) 均为 SUCCESS，完整步骤状态见 `CI-ubuntu.json`、`CI-windows.json`。Windows 包含 transport、isolation、e2e、visual 及证据溯源检查。
-- VoiceDesign 下载已经完成，三个 TTS snapshot 共 33 个文件再次离线哈希复核通过，见 `cache-verification.json`。仍未加载真实模型进行 GPU 推理，也未生成声音。前文下载状态是首次推送时的记录。
-- 此补记和缓存/CI 归档只追加报告证据，运行代码与上述受测提交一致；报告提交按仓库文档/报告 CI 排除规则处理。
-
-
-## 继续阶段更新：许可决定与草稿（2026-10-21）
-
-- 按用户指示，PR #45 已转回草稿；全部验收完成前不转为可审查。
-- 上表替代此前“LGPL 许可待批准”的当前状态；批准已有明确条件，SoX 的禁止调用要求尚未满足。
-- 本轮只记录决定、静态核查与更新 PR 状态；没有停 runner、没有运行测试、没有生成声音或启动 GPU。
-- 已 fetch，origin/main 更新到 9042c59；必读规则与 P4-02 卡对比无变化。按用户第 3、4 条限定，本轮不合并 main 或改实现，安静窗口及验收完成后再按要求 merge 和重跑检查。
-- 等待用户通知 GPU 安静窗口开始；真实云端延迟仍不测。开始推理前还须先解决“不调用 SoX”的已知问题，不能直接执行当前导入链。
+本轮 GPU 和本机重负载检查已结束，已通知用户可以恢复 Windows runner。新 HEAD 的 CI 状态单独记录，不以旧提交检查替代。

@@ -34,7 +34,7 @@ uv run --project services/voice-sidecar python services/voice-sidecar/src/main.p
 
 1.7B 加载时可用显存不足 6 GB，或加载/合成遇到 CUDA OOM，会降至 0.6B，并在 health 报告。该 6 GB 是运行时保守准入值，不是验收阈值。合成已发出 PCM 后发生 OOM 时，当前句报错而不重播；下一句使用小模型。精确变体基准禁用回退，避免把 0.6B 数据算作 1.7B 数据。
 
-qwen-tts 0.1.1 的公开 `generate_voice_clone` 会整句返回。本适配器为该锁定版本安装请求范围内的 talker forward hook，每 4 个 codec frame 解码一次、保留 25 个左上下文 frame；hook 在退出和取消时移除。私有输出布局有运行时检查和 CPU double 测试。真实音质、接缝、吞吐与延迟尚未验证；上游末尾的整句解码仍会执行，计入真实压力与耗时，不能据 CPU 测试断言性能达标。
+qwen-tts 0.1.1 的公开 `generate_voice_clone` 会整句返回。本适配器为该锁定版本安装请求范围内的 talker forward hook，每 4 个 codec frame 解码一次、保留 25 个左上下文 frame；hook 在退出和取消时移除。私有输出布局有运行时检查和 CPU double 测试。真实音质与接缝尚未签发；2026-10-21 双变体实测延迟未达标，详见 reports/P4-02/REPORT.md；上游末尾的整句解码仍会执行，计入真实压力与耗时，不能据 CPU 测试断言性能达标。
 
 ## 音色文件
 
@@ -89,3 +89,9 @@ pnpm tts:bench --variant 1.7B --cache services/voice-sidecar/.cache/models --voi
 ```
 
 两个变体在新进程中顺序运行；各有三语 warmup、每语言 20 句、每语言 5 次取消、固定至少 1800 秒压力测试。全程保留载体、P0-07 的真实 GPU 渲染夹具，记录 WDDM 专用和共享显存、torch allocator、进程 RSS 与每次请求原始数据。已有证据目录不得覆盖；失败也保留。显存判定按 ADR 0012：两项观测峰值之和 ≤ 8 GB（9 GB 内保留 1 GB）；渲染夹具不是完整 Nemu 正式资产的最终整机验收。测完通知用户可恢复 runner。
+
+## 2026-10-21 实测状态与 SoX 边界
+
+双变体串行测量已完成：首包均约 852–863 ms，未满足 250 ms；0.6B 合计显存 7.188 GB，1.7B 9.214 GB（超 8 GB）；取消停止出块通过。30 分钟均跑完，但 RSS 分箱中位数仍上升，不接受稳定性通过。原始数据与复算工具见 reports/P4-02/REPORT.md；已有结果目录不得覆盖。纯合成参考已归档 tests/fixtures/voice-design-v1，不是正式角色音色。
+
+锁定 qwen-tts 0.1.1 的未使用 25 Hz 路径会间接导入 pysox 并尝试 sox -h。qwen_import.py 在服务自有边界禁用该能力，真实 pysox 不导入，Transformer/Combiner 明确抛错；仅允许锁定的 12 Hz 模型。禁止绕开 load_qwen 直接导入 Qwen；不修改第三方源码或全局 subprocess。audit_qwen_import.py 在真实导入时审计并阻断任何 SoX 启动，当前尝试数为 0。soxr/随包 libsndfile 仅按用户许可动态加载，P7 复核分发义务。
