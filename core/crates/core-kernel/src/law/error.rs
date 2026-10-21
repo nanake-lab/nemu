@@ -17,6 +17,9 @@ pub enum LawError {
     Overflow(&'static str),
     /// R is over capacity and holds no candidate (π ≤ ½) to remove (v2.0 §12; V2-43).
     CapacityExhausted { capacity: u32, personality: usize },
+    /// The step needs R state the IDL does not hold yet (V2-48,
+    /// `reports/P5-23/BLOCKED.md`). Never a silent approximation.
+    ContractGap(&'static str),
     /// A single group's weight exceeds w_max (v2.0 §12; D8). Cannot happen
     /// with checked parameters; reported if it ever does.
     WeightAboveCap {
@@ -40,6 +43,7 @@ impl fmt::Display for LawError {
                 f,
                 "R over capacity {capacity} with {personality} personality tendencies and no candidate to remove"
             ),
+            Self::ContractGap(m) => write!(f, "law state missing from the IDL (V2-48): {m}"),
             Self::WeightAboveCap {
                 group_id,
                 tendency_id,

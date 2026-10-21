@@ -2,6 +2,7 @@
 //! LAW-1…LAW-10 for corollaries 1–7). Synthetic data only; no store is opened.
 
 mod ac2_count;
+mod engine;
 mod fixture;
 mod group_props;
 mod law_props;

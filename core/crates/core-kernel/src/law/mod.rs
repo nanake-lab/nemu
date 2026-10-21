@@ -10,8 +10,10 @@
 //! V2-38 to V2-48. Parts that need the R fields missing from the IDL (V2-48)
 //! are not implemented yet (`reports/P5-23/BLOCKED.md`).
 
+mod engine;
 mod error;
 mod fuse;
+mod input;
 mod num;
 mod params;
 mod recurrence;
@@ -22,8 +24,12 @@ mod support;
 #[cfg(test)]
 mod tests;
 
+pub use engine::{Output, g};
 pub use error::{LawError, LawResult};
 pub use fuse::{check_weight_cap, eviction_choice, exhausted};
+pub use input::{
+    Candidate, GroupContent, GroupItem, LawContext, Match, MatchTarget, RState, Step, ThetaView,
+};
 pub use num::{Nature4, exact_mean};
 pub use params::Law;
 pub use recurrence::{
