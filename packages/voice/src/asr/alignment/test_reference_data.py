@@ -5,11 +5,18 @@ from pathlib import Path
 import tempfile
 import unittest
 import wave
-from import_continuous import extract
+from import_continuous import extract, sentence_lengths
 from reference_data import boundaries, freeze, inside, recordings
 
 
 class ReferenceTests(unittest.TestCase):
+    def test_context_tokenization_cannot_change_text_or_cross_sentences(self) -> None:
+        self.assertEqual(sentence_lengths([['天气'], ['good', 'morning'], ['おはよう']], ['天','气','goodmorning','おはよう']), [2,1,1])
+        with self.assertRaises(ValueError):
+            sentence_lengths([['天'], ['气']], ['天气'])
+        with self.assertRaises(ValueError):
+            sentence_lengths([['weather']], ['other'])
+
     def test_pcm_extraction_preserves_samples_and_original(self) -> None:
         with tempfile.TemporaryDirectory(prefix='nemu-pcm-slice-') as tmp:
             source, target = Path(tmp)/'source.wav', Path(tmp)/'slice.wav'

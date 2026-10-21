@@ -24,6 +24,27 @@ class Tokenizer(Protocol):
 class CoarseAligner(Aligner, Protocol):
     aligner_processor: Tokenizer
 
+def sentence_lengths(units: list[list[str]], joint: list[str]) -> list[int]:
+    # Context may change boundaries inside a sentence, never its characters.
+    if ''.join(joint) != ''.join(u for sentence in units for u in sentence):
+        raise ValueError('Group tokenization changed text')
+    ends: dict[int, int] = {}
+    characters = 0
+    for index, token in enumerate(joint):
+        characters += len(token)
+        ends[characters] = index+1
+    counts: list[int] = []
+    target, previous = 0, 0
+    for sentence in units:
+        target += sum(len(token) for token in sentence)
+        if target not in ends:
+            raise ValueError('Joint unit crosses a sentence boundary')
+        counts.append(ends[target]-previous)
+        previous = ends[target]
+    if any(count <= 0 for count in counts):
+        raise ValueError('Empty sentence token group')
+    return counts
+
 def check_method() -> str:
     files = [DOC, Path(__file__), PROMPTS]
     paths = [str(p.relative_to(REPO)) for p in files]
@@ -122,8 +143,7 @@ def main() -> None:
         units = [aligner.aligner_processor.encode_timestamp(text(p['text']), language)[0] for p in group]
         joined = '\n'.join(text(p['text']) for p in group)
         joint_units = aligner.aligner_processor.encode_timestamp(joined, language)[0]
-        if joint_units != [u for sentence in units for u in sentence]:
-            raise ValueError('Sentence/group tokenization mismatch')
+        unit_counts = sentence_lengths(units, joint_units)
         stop = min(frames, cursor+45*16000)
         wav = attempt / f'window-{group_index//3+1:02d}.wav'
         extract(canonical, wav, cursor, stop)
@@ -135,9 +155,9 @@ def main() -> None:
         if len(aligned) != 1 or len(items) != len(joint_units):
             raise ValueError('Unexpected alignment unit count')
         offset = 0
-        for prompt, sentence_units in zip(group, units, strict=True):
-            start_ms, end_ms = boundaries(items[offset:offset+len(sentence_units)], (stop-cursor)/16000)
-            offset += len(sentence_units)
+        for prompt, unit_count in zip(group, unit_counts, strict=True):
+            start_ms, end_ms = boundaries(items[offset:offset+unit_count], (stop-cursor)/16000)
+            offset += unit_count
             start, end = cursor/16000+start_ms/1000, cursor/16000+end_ms/1000
             if start < previous_end or end > stop/16000-1:
                 raise ValueError(f'Overlapping/edge candidate: {prompt["id"]}')
