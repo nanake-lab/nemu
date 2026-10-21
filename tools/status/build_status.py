@@ -11,7 +11,8 @@ Usage (repository root, GitHub CLI authenticated):
 
 Rules, first match wins:
     status_override in the catalog       -> that status
-    open PR with label needs-user        -> needs_you
+    open PR with label needs-user        -> needs_you ("等你决定" while the PR is
+                                            a draft, "等你合并" once it is ready)
     open draft PR                        -> in_progress (claimed)
     open ready PR                        -> review
     merged PR with label unverified      -> unverified (merged, review unfinished;
@@ -152,6 +153,17 @@ def open_pr_details(repo: str, pr: dict) -> dict:
     return details
 
 
+def needs_user_item(number: int, draft: bool, title: str = "") -> dict:
+    """AGENTS.md section 6: a draft waits for a decision; a ready PR waits for the merge."""
+    suffix = f"：{title}" if title else ""
+    if draft:
+        return {"kind": "decide", "text": f"PR #{number} 等你决定（草稿，还不能合并）{suffix}"}
+    return {
+        "kind": "merge",
+        "text": f"PR #{number} 等你合并：先看 CI 全绿、没有落后 main{suffix}",
+    }
+
+
 def reviewer(card: dict) -> str:
     return "Codex" if card["suggested"] == "Claude" else "Claude"
 
@@ -250,9 +262,7 @@ def compute(repo: str, catalog: dict) -> dict:
         for p in (p for p in c["prs"] if p["state"] == "open"):
             item = {"card": c["id"], "pr": p["number"], "url": p["url"]}
             if "needs-user" in p["labels"]:
-                attention.append(
-                    {**item, "kind": "approve", "text": f"PR #{p['number']} 需要你批准"}
-                )
+                attention.append({**item, **needs_user_item(p["number"], p["draft"])})
             if p.get("waiting_runner"):
                 attention.append(
                     {
@@ -305,11 +315,7 @@ def compute(repo: str, catalog: dict) -> dict:
         labels = [lbl["name"] for lbl in pr.get("labels", [])]
         if "needs-user" in labels:
             other_attention.append(
-                {
-                    **item,
-                    "kind": "approve",
-                    "text": f"PR #{pr['number']} 需要你批准：{pr['title']}",
-                }
+                {**item, **needs_user_item(pr["number"], bool(pr.get("draft")), pr["title"])}
             )
         if details.get(pr["number"], {}).get("waiting_runner"):
             other_attention.append(
