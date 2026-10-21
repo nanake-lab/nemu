@@ -1,0 +1,24 @@
+{"step": "validate", "command": ["D:\\blender\\blender.exe", "-b", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-03\\.cache\\01-import.blend", "--python-exit-code", "1", "--python", "D:\\Dev\\nemu\\tools\\asset-pipeline\\validate_source.py", "--", "--config", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-03\\.cache\\resolved-build.json", "--output-dir", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-03", "--output-blend", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-03\\.cache\\02-validate.blend"]}
+00:00.828  blend            | Read blend: "D:\Dev\nemu\tools\asset-pipeline\.cache\trial-03\.cache\01-import.blend"
+{"step": "validate", "status": "failed", "detail": "step=validate object=hips expected=existing bone name or humanoid role actual=missing"}
+Traceback (most recent call last):
+  File "D:\Dev\nemu\tools\asset-pipeline\validate_source.py", line 32, in <module>
+    run("validate", execute)
+    ~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\blender_common.py", line 69, in run
+    action(config, args)
+    ~~~~~~^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\validate_source.py", line 20, in execute
+    resolve_bone(arm, name, "validate")
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\blender_common.py", line 32, in resolve_bone
+    fail(step, name, "existing bone name or humanoid role", "missing")
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\errors.py", line 6, in fail
+    raise BuildError(f"step={step} object={obj} expected={expected} actual={actual}")
+errors.BuildError: step=validate object=hips expected=existing bone name or humanoid role actual=missing
+
+Error: script failed, file: 'D:\Dev\nemu\tools\asset-pipeline\validate_source.py', exiting.
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

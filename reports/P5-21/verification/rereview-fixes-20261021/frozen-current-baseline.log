@@ -1,0 +1,8 @@
+script: check_compat.py at 55849b7 (before fix); baselines: p5-01 + p5-21 (current IDL frozen)
+VIOLATION [p5-21] self-test missed control third generation is rejected: message ProposalBindingV2 field 20 changed
+Compatibility against p5-01, p5-21: 1 violations; 120 messages (32 superseded), 44 enums
+exit=1
+
+script: check_compat.py (fixed); baselines: p5-01 + p5-21 (current IDL frozen)
+Compatibility against p5-01, p5-21, current: 0 violations; 120 messages (32 superseded), 44 enums
+exit=0

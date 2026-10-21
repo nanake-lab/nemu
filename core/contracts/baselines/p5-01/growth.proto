@@ -1,0 +1,275 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+
+enum DistinctionForm { FORM_UNSPECIFIED = 0; EXEMPLAR = 1; PATTERN = 2; }
+enum DistinctionStatus { DISTINCTION_UNSPECIFIED = 0; DISTINCTION_PROVISIONAL = 1; DISTINCTION_QUALIFIED = 2; DISTINCTION_SUPERSEDED = 3; }
+enum TraceLifecycle { LIFECYCLE_UNSPECIFIED = 0; LIVE = 1; RETIRED = 2; }
+enum EvidenceRelation { EVIDENCE_UNSPECIFIED = 0; SUPPORT = 1; COUNTEREVIDENCE = 2; RESOLVES_TRIAL = 3; EVIDENCE_UNKNOWN = 4; }
+
+// @message echo.effect-contract | O 3.1; S 5
+message EffectContract {
+  optional uint32 schema_version = 1; // required
+  optional string responsibility_id = 2; // required,nonempty
+  optional string causal_revision = 3; // required,nonempty
+  optional EffectOwner owner = 4; // required
+  optional EffectEndpoint endpoint = 5; // required
+  optional ObjectRef scope = 6; // required
+  optional ObjectRef carrier = 7; // required
+  optional ObjectRef parameters = 8; // required
+  optional double amplitude_bound = 9; // required,min=0
+  repeated ObjectRef qualifications = 10; // required
+  repeated string ancestors = 11; // required,set=self
+  repeated ObjectRef dependencies = 12; // required,set=digest
+}
+
+// @message echo.qualification | S 5; O 6,8,9
+message QualificationCertificate {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef test_domain = 2; // required
+  optional ObjectRef root_blocks = 3; // required
+  optional ObjectRef ancestry = 4; // required
+  optional ObjectRef exposure = 5; // required
+  optional ObjectRef assumptions = 6; // required
+  optional string opportunity_id = 7; // required,nonempty
+  optional ObjectRef criteria = 8; // required
+  repeated ObjectRef raw_results = 9; // required
+  repeated ObjectRef dependencies = 10; // required,set=digest
+  optional TrialOutcome outcome = 11; // required
+}
+
+// @message echo.consolidation-slice | D II 5.2; O 9
+message ConsolidationSlice {
+  optional uint32 schema_version = 1; // required
+  optional string source_trace_revision = 2; // required,nonempty
+  optional string source_coupling_revision = 3; // required,nonempty
+  optional EffectContract responsibility = 4; // required
+  optional ObjectRef scope = 5; // required
+  optional ObjectRef functional_contract = 6; // required
+  optional double current_q = 7; // required,min=0,max=1
+  optional ObjectRef candidate_envelope = 8; // required
+  repeated string supporting_roots = 9; // required,set=self
+  repeated QualificationCertificate qualifications = 10; // required
+  optional ObjectRef ancestry = 11; // required
+  repeated ObjectRef dependencies = 12; // required,set=digest
+  optional ObjectRef budget_claim = 13; // required
+  optional uint64 promote_interval_ns = 14; // required
+  optional ObjectRef validity_contract = 15; // required
+}
+
+// @message echo.theta-module | D II 5.2; O 9,10
+message ThetaModule {
+  optional uint32 schema_version = 1; // required
+  optional string module_id = 2; // required,nonempty
+  optional string revision = 3; // required,nonempty
+  optional string source_slice_id = 4; // required,nonempty
+  optional ObjectRef carrier = 5; // required
+  optional ObjectRef parameters = 6; // required
+  optional uint64 composition_order = 7; // required
+  optional bool enabled = 8; // required
+  optional ObjectRef scope = 9; // required
+  optional EffectContract mechanism_effect = 10; // required
+  optional ObjectRef validity_contract = 11; // required
+}
+
+// @message echo.responsibility-binding | D II 5.3; O 3,10.1
+message ResponsibilityBinding {
+  optional uint32 schema_version = 1; // required
+  optional string responsibility_id = 2; // required,nonempty
+  optional string causal_revision = 3; // required,nonempty
+  optional EffectOwner owner = 4; // required
+  optional EffectEndpoint endpoint = 5; // required
+  optional ObjectRef scope = 6; // required
+  optional string source_slice_id = 7; // required,nonempty
+  optional string module_id = 8; // required,nonempty
+  optional ObjectRef disposition = 9; // required
+}
+
+// @message echo.trial-result | O 6,8; S 15
+message TrialResult {
+  optional uint32 schema_version = 1; // required
+  optional string trial_id = 2; // required,nonempty
+  optional string settlement_id = 3; // required,nonempty
+  optional ObjectRef plan = 4; // required
+  optional string candidate_revision = 5; // required,nonempty
+  optional ObjectRef baseline = 6; // required
+  optional TrialOutcome outcome = 7; // required
+  repeated ObjectRef actual_results = 8; // required
+  optional ObjectRef root_blocks = 9; // required
+  repeated ObjectRef dependencies = 10; // required,set=digest
+}
+
+// @message echo.distinction | D II 1.3,1.4
+message DistinctionRevision {
+  optional uint32 schema_version = 1; // required
+  optional string distinction_id = 2; // required,nonempty
+  optional string revision = 3; // required,nonempty
+  optional DistinctionForm form = 4; // required
+  optional DistinctionStatus status = 5; // required
+  repeated string anchor_roots = 6; // required,set=self
+  optional ObjectRef scope = 7; // required
+  optional ObjectRef representation = 8; // required
+}
+
+// @message echo.coupling | D II 1.5; O 7
+message CouplingRevision {
+  optional uint32 schema_version = 1; // required
+  optional string coupling_id = 2; // required,nonempty
+  optional string revision = 3; // required,nonempty
+  optional CouplingPhase phase = 4; // required
+  optional ObjectRef carrier = 5; // required
+  optional ObjectRef condition_scope = 6; // required
+  optional EffectEndpoint target = 7; // required
+  optional ObjectRef parameters = 8; // required
+  optional ObjectRef uncertainty = 9; // required
+  optional ObjectRef qualification_scope = 10; // required
+  optional ObjectRef effect_bounds = 11; // required
+  repeated ObjectRef evidence_refs = 12; // required
+  repeated ObjectRef trial_refs = 13; // required
+  repeated string conflict_set = 14; // required,set=self
+  optional bool metaplastic_flag = 15; // required
+}
+
+// @message echo.plastic-evidence | D II 1.8,2.2
+message PlasticEvidenceLink {
+  optional uint32 schema_version = 1; // required
+  optional string event_id = 2; // required,nonempty
+  optional string root_id = 3; // required,nonempty
+  optional string distinction_id = 4; // required,nonempty
+  optional string coupling_revision = 5; // required,nonempty
+  optional EvidenceRelation relation = 6; // required
+}
+
+// @message echo.mechanism-context | D 0.4; D II 1.8; O 7.1
+message MechanismContext {
+  optional uint32 schema_version = 1; // required
+  repeated ObjectRef theta_modules = 2; // required,set=digest
+  repeated ObjectRef metaplastic_couplings = 3; // required,set=digest
+  optional string previous_commit = 4; // required,nonempty
+}
+
+// @message echo.descendant-review | D 0.4; D II 5.6; O 8
+message DescendantReviewMarker {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef ancestor = 2; // required
+  repeated string affected_responsibilities = 3; // required,set=self
+  optional ObjectRef dependency_snapshot = 4; // required
+  optional bool needs_review = 5; // required
+}
+
+// @message echo.plastic-trace | D 0.4; D II 1.3
+message PlasticTraceRevision {
+  optional uint32 schema_version = 1; // required
+  optional string trace_id = 2; // required,nonempty
+  optional string revision = 3; // required,nonempty
+  optional string budget_lineage_id = 4; // required,nonempty
+  repeated string source_ids = 5; // required,set=self
+  repeated string root_ids = 6; // required,set=self
+  optional ObjectRef time_range = 7; // required
+  repeated PlasticEvidenceLink evidence_links = 8; // required
+  optional DistinctionRevision distinction = 9; // required
+  repeated CouplingRevision coupling_hypotheses = 10; // required
+  optional ObjectRef validation_state = 11; // required
+  optional ObjectRef effect_control = 12; // required
+  repeated ResponsibilityBinding consolidation_bindings = 13; // required
+  optional MechanismContext mechanism_context = 14; // required
+  optional TraceLifecycle lifecycle = 15; // required
+}
+
+// @message echo.trace-head | D 0.4; D II 1.8
+message TraceHead {
+  optional uint32 schema_version = 1; // required
+  optional string trace_id = 2; // required,nonempty
+  optional string revision = 3; // required,nonempty
+}
+
+// @message echo.inadequacy-witness | D II 2.3; O 6.1
+message RepresentationInadequacyWitness {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef equivalence_class = 2; // required
+  optional ObjectRef controlled_variables = 3; // required
+  optional ObjectRef scope = 4; // required
+  optional ObjectRef observed_difference = 5; // required
+  optional ObjectRef alternative_checks = 6; // required
+  optional ObjectRef statistical_evidence = 7; // required
+  optional ObjectRef non_identifiable = 8; // required
+  optional ObjectRef reference_contract = 9; // required
+}
+
+// @message echo.frozen-prediction | D II 3.4; O 6,8
+message FrozenPrediction {
+  optional uint32 schema_version = 1; // required
+  optional string candidate_revision = 2; // required,nonempty
+  optional ObjectRef baseline = 3; // required
+  optional ObjectRef scope = 4; // required
+  optional ObjectRef allowed_information = 5; // required
+  optional ObjectRef forbidden_information = 6; // required
+  optional ObjectRef target = 7; // required
+  optional ObjectRef time_window = 8; // required
+  optional ObjectRef scorer = 9; // required
+  optional ObjectRef criteria = 10; // required
+  optional string validator_version = 11; // required,nonempty
+}
+
+// @message echo.shadow-trial | D 0.4; D II 1.8,3.4
+message ShadowTrial {
+  optional uint32 schema_version = 1; // required
+  optional string trial_id = 2; // required,nonempty
+  optional FrozenPrediction frozen_prediction = 3; // required
+  repeated ObjectRef actual_results = 4; // required
+  optional TrialResult settlement = 5; // optional
+}
+
+// @message echo.effect-budget-ledger | D II 4.4; O 11
+message EffectBudgetLedger {
+  optional uint32 schema_version = 1; // required
+  optional string root_id = 2; // required,nonempty
+  optional string budget_lineage_id = 3; // required,nonempty
+  optional EffectEndpoint endpoint = 4; // required
+  optional ObjectRef window = 5; // required
+  optional double total_allocation = 6; // required,min=0
+  optional double r_allocation = 7; // required,min=0
+  optional double theta_allocation = 8; // required,min=0
+  optional double consumed = 9; // required,min=0
+  optional double remaining = 10; // required,min=0
+}
+
+// @message echo.single-root-ledger | F 7.1,8; user C01
+message SingleRootLedger {
+  optional uint32 schema_version = 1; // required
+  optional string root_id = 2; // required,nonempty
+  optional QualificationBranch branch = 3; // required
+  optional string content_version = 4; // required,nonempty
+  optional string support_version = 5; // required,nonempty
+  optional uint64 dwell_start_ns = 6; // required
+  repeated ObjectRef revalidation_records = 7; // required
+  optional ObjectRef impact_metrics = 8; // required
+  optional double cumulative_single_root_path = 9; // required,min=0
+  optional ObjectRef total_root_ledger = 10; // required
+}
+
+// @message echo.effective-causal-projection | D II 1.2; O 3.2
+message EffectiveCausalProjection {
+  optional uint32 schema_version = 1; // required
+  optional string snapshot_id = 2; // required,nonempty
+  optional uint64 projected_at_ns = 3; // required
+  repeated EffectContract effects = 4; // required
+}
+
+// @message echo.consolidation-binding | D 0.4; D II 5.3
+message ConsolidationBinding {
+  optional uint32 schema_version = 1; // required
+  optional string source_slice_id = 2; // required,nonempty
+  optional string theta_module_id = 3; // required,nonempty
+  optional ResponsibilityBinding responsibility = 4; // required
+}
+
+// @message echo.theta-source-binding | D 0.4; D II 5.2
+message ThetaModuleSourceBinding {
+  optional uint32 schema_version = 1; // required
+  optional string module_id = 2; // required,nonempty
+  optional string source_slice_id = 3; // required,nonempty
+  optional string source_trace_revision = 4; // required,nonempty
+  optional string source_coupling_revision = 5; // required,nonempty
+}
+

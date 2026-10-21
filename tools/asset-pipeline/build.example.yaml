@@ -1,0 +1,412 @@
+# P2-03 integration sample only; not Nemu design or approved aesthetic values.
+# Paths are repository-relative. Every aesthetic value is explicit; no implicit defaults.
+# tail.curve is a dimensionless polyline, resampled to lengthM and boneCount.
+# radiusCurve entries are [arc fraction, radius in metres]. tipShape: flat or taper.
+# profile dimensions/tailBones are measured; all other profile fields are contract validated.
+# materials.Body_00_SKIN values below copy the sample VRM, without aesthetic retuning.
+# pipelineProbe exercises binding serialization only; it is not a Nemu expression.
+version: 1
+source: apps/stage/public/sample.vrm
+provenance:
+  source: https://github.com/pixiv/three-vrm/tree/dev/packages/three-vrm/examples/models/VRM1_Constraint_Twist_Sample
+  license: custom:VRM Public License 1.0 (embedded meta; pixiv Inc.)
+  redistributable: true
+  author: pixiv Inc.
+  notes: Pipeline integration fixture derived from the repository sample; not approved
+    Nemu appearance.
+sourceChecks:
+  bones:
+  - hips
+  - head
+  - upperChest
+  expressions:
+  - happy
+  - aa
+  - blink
+  materials:
+  - Hair_00_HAIR
+meta:
+  name: Nemu
+  version: pipeline-fixture-1
+  authors:
+  - pixiv Inc.
+  contentLicenseUrl: https://vrm.dev/licenses/1.0/
+tail:
+  enabled: true
+  objectName: PipelineTail
+  bonePrefix: PipelineTail
+  boneCount: 8
+  parentBone: hips
+  offsetM:
+  - 0
+  - 0
+  - 0
+  lengthM: 0.3
+  curve:
+  - - 0
+    - 0
+    - 0
+  - - 0
+    - 1
+    - 0
+  - - 0
+    - 2
+    - 0
+  radiusCurve:
+  - - 0
+    - 0.015
+  - - 0.8
+    - 0.01
+  - - 1
+    - 0.001
+  resolution: 8
+  sectionResolution: 2
+  capEnds: true
+  tipShape: taper
+  tipRadiusM: 0.001
+  hairMaterial: Hair_00_HAIR
+  materialName: PipelineTailMaterial
+  color:
+  - 1
+  - 1
+  - 1
+  - 1
+springs:
+  mode: append
+  attachToExisting: true
+  groupName: PipelineBody
+  colliders:
+  - bone: head
+    shape: sphere
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+  - bone: neck
+    shape: capsule
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+    tailM:
+    - 0
+    - 0.02
+    - 0
+  - bone: upperChest
+    shape: capsule
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+    tailM:
+    - 0
+    - 0.02
+    - 0
+  - bone: leftUpperArm
+    shape: capsule
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+    tailM:
+    - 0
+    - 0.02
+    - 0
+  - bone: rightUpperArm
+    shape: capsule
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+    tailM:
+    - 0
+    - 0.02
+    - 0
+  - bone: leftLowerArm
+    shape: capsule
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+    tailM:
+    - 0
+    - 0.02
+    - 0
+  - bone: rightLowerArm
+    shape: capsule
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+    tailM:
+    - 0
+    - 0.02
+    - 0
+  - bone: hips
+    shape: capsule
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+    tailM:
+    - 0
+    - 0.02
+    - 0
+  - bone: leftUpperLeg
+    shape: capsule
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+    tailM:
+    - 0
+    - 0.02
+    - 0
+  - bone: rightUpperLeg
+    shape: capsule
+    offsetM:
+    - 0
+    - 0
+    - 0
+    radiusM: 0.01
+    tailM:
+    - 0
+    - 0.02
+    - 0
+  chains:
+  - name: PipelineTail
+    bones:
+    - $tail
+    centerBone: hips
+    hitRadiusM: 0.01
+    stiffness: 1
+    gravityPower: 0
+    gravityDir:
+    - 0
+    - 0
+    - -1
+    dragForce: 0.5
+expressions:
+  preset:
+    happy:
+      overrideMouth: none
+      overrideBlink: blend
+      overrideLookAt: none
+      isBinary: false
+    angry:
+      overrideMouth: none
+      overrideBlink: none
+      overrideLookAt: none
+      isBinary: false
+    sad:
+      overrideMouth: none
+      overrideBlink: none
+      overrideLookAt: none
+      isBinary: false
+    relaxed:
+      overrideMouth: none
+      overrideBlink: blend
+      overrideLookAt: none
+      isBinary: false
+    surprised:
+      overrideMouth: none
+      overrideBlink: block
+      overrideLookAt: none
+      isBinary: false
+    aa:
+      overrideMouth: none
+      overrideBlink: none
+      overrideLookAt: none
+      isBinary: false
+    ih:
+      overrideMouth: none
+      overrideBlink: none
+      overrideLookAt: none
+      isBinary: false
+    ou:
+      overrideMouth: none
+      overrideBlink: none
+      overrideLookAt: none
+      isBinary: false
+    ee:
+      overrideMouth: none
+      overrideBlink: none
+      overrideLookAt: none
+      isBinary: false
+    oh:
+      overrideMouth: none
+      overrideBlink: none
+      overrideLookAt: none
+      isBinary: false
+  custom:
+    pipelineProbe:
+      overrideMouth: none
+      overrideBlink: none
+      overrideLookAt: none
+      isBinary: false
+      morphs:
+      - object: Face
+        key: Face_Blendshape.Fcl_ALL_Neutral
+        weight: 0.25
+      colors:
+      - material: Body_00_SKIN
+        type: color
+        target:
+        - 1
+        - 1
+        - 1
+        - 1
+      transforms:
+      - material: Body_00_SKIN
+        scale:
+        - 1
+        - 1
+        offset:
+        - 0
+        - 0
+materials:
+  Body_00_SKIN:
+    baseColor:
+    - 1
+    - 1
+    - 1
+    - 1
+    mtoon:
+      shading_shift_factor: -0.05
+      shading_toony_factor: 0.9
+      gi_equalization_factor: 0.9
+      rim_lighting_mix_factor: 1
+      parametric_rim_fresnel_power_factor: 5
+      parametric_rim_lift_factor: 0
+      outline_width_factor: 0.0008
+      outline_lighting_mix_factor: 1
+      shade_color_factor:
+      - 0.9301109
+      - 0.623960435
+      - 0.708375931
+      parametric_rim_color_factor:
+      - 0
+      - 0
+      - 0
+      outline_color_factor:
+      - 0.0612459742
+      - 0.0085681
+      - 0.0144438017
+      outline_width_mode: worldCoordinates
+textures:
+  maxSize: 2048
+profile:
+  hitRegions:
+  - id: head
+    bone: head
+    shape: sphere
+    radiusM: 0.15
+    offsetM:
+    - 0
+    - 0.05
+    - 0
+  - id: body
+    bone: spine
+    shape: capsule
+    radiusM: 0.18
+    lengthM: 0.35
+    offsetM:
+    - 0
+    - 0.1
+    - 0
+  - id: handL
+    bone: leftHand
+    shape: sphere
+    radiusM: 0.08
+  - id: handR
+    bone: rightHand
+    shape: sphere
+    radiusM: 0.08
+  gazeLimits:
+    yawDeg: 45
+    pitchUpDeg: 25
+    pitchDownDeg: 30
+  framing:
+    fullBody:
+      fovDeg: 20
+      distanceM: 3.8
+      targetBone: hips
+      offsetM:
+      - 0
+      - 0.1
+      - 0
+    upperBody:
+      fovDeg: 20
+      distanceM: 1.6
+      targetBone: chest
+      offsetM:
+      - 0
+      - 0.1
+      - 0
+  rig:
+    earBonesL: []
+    earBonesR: []
+    earBackMaxDeg: 30
+    tailSwingDeg:
+    - -20
+    - 20
+  emotionMap:
+    neutral:
+    - expression: neutral
+      weight: 1.0
+    happy:
+    - expression: happy
+      weight: 1.0
+    sad:
+    - expression: sad
+      weight: 1.0
+    angry:
+    - expression: angry
+      weight: 1.0
+    surprised:
+    - expression: surprised
+      weight: 1.0
+    relaxed:
+    - expression: relaxed
+      weight: 0.8
+    shy:
+    - expression: surprised
+      weight: 0.5
+    sleepy:
+    - expression: neutral
+      weight: 0.5
+    smug:
+    - expression: happy
+      weight: 0.7
+    pout:
+    - expression: angry
+      weight: 0.5
+    excited:
+    - expression: happy
+      weight: 0.9
+    worried:
+    - expression: sad
+      weight: 0.6
+  visemeMap:
+    A: aa
+    I: ih
+    U: ou
+    E: ee
+    O: oh
+  lipSyncProfiles:
+    zh: lipsync/zh.json
+    en: lipsync/en.json
+    ja: lipsync/ja.json
+  idleSet:
+  - motionId: idle_stand
+    weight: 1.0
+    cooldownS: 5.0

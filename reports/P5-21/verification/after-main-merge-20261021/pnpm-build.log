@@ -1,0 +1,135 @@
+$ pnpm -r build
+executors/codex-bridge build$ tsc -p tsconfig.json
+packages/contracts build$ tsc -p tsconfig.json
+executors/codex-bridge build: Done
+packages/desktop-sense build$ tsc -p tsconfig.json
+packages/desktop-sense build: Done
+packages/log build$ tsc -p tsconfig.json
+packages/contracts build: Done
+packages/terminal build$ tsc -p tsconfig.json
+packages/log build: Done
+packages/voice build$ tsc -p tsconfig.json
+packages/terminal build: Done
+spikes/stage-overlay build$ electron-vite build
+packages/voice build: Done
+apps/desktop build$ electron-vite build
+apps/desktop build: vite v7.3.7 building ssr environment for production...
+spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+spikes/stage-overlay build: transforming...
+apps/desktop build: transforming...
+spikes/stage-overlay build: ✓ 1 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: out/main/index.js  8.46 kB
+spikes/stage-overlay build: ✓ built in 141ms
+spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+spikes/stage-overlay build: transforming...
+spikes/stage-overlay build: ✓ 1 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: out/preload/index.cjs  1.33 kB
+spikes/stage-overlay build: ✓ built in 25ms
+spikes/stage-overlay build: vite v7.3.7 building client environment for production...
+spikes/stage-overlay build: transforming...
+apps/desktop build: ✓ 34 modules transformed.
+apps/desktop build: rendering chunks...
+apps/desktop build: out/main/index.js  68.74 kB
+apps/desktop build: ✓ built in 819ms
+apps/desktop build: vite v7.3.7 building ssr environment for production...
+apps/desktop build: transforming...
+apps/desktop build: ✓ 2 modules transformed.
+apps/desktop build: rendering chunks...
+apps/desktop build: out/preload/panel.cjs  0.31 kB
+apps/desktop build: out/preload/stage.cjs  1.46 kB
+apps/desktop build: ✓ built in 55ms
+apps/desktop build: vite v7.3.7 building client environment for production...
+apps/desktop build: transforming...
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/desktop build: 
+apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/desktop build: 
+apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+spikes/stage-overlay build: ✓ 8 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: ../../out/renderer/index.html                    6.52 kB
+spikes/stage-overlay build: ../../out/renderer/assets/index-P4FdMocT.js  1,448.72 kB
+spikes/stage-overlay build: ✓ built in 3.95s
+spikes/stage-overlay build: Done
+apps/panel build$ vite build
+apps/panel build: vite v7.3.7 building client environment for production...
+apps/panel build: transforming...
+apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/panel build: 
+apps/panel build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/panel build: 
+apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/panel build: 
+apps/panel build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/panel build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/panel build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/panel build: 
+apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: ✓ 182 modules transformed.
+apps/desktop build: rendering chunks...
+apps/panel build: ✓ 148 modules transformed.
+apps/desktop build: desktop/out/renderer/panel/index.html               0.72 kB
+apps/desktop build: desktop/out/renderer/stage/index.html               0.76 kB
+apps/desktop build: desktop/out/renderer/assets/stage-DABzvroO.css      0.66 kB
+apps/desktop build: desktop/out/renderer/assets/panel-Bf-HAcZX.css     11.36 kB
+apps/desktop build: desktop/out/renderer/assets/stage-d-QzxjZ7.js     211.50 kB
+apps/desktop build: desktop/out/renderer/assets/panel-BJXt_0sI.js     698.27 kB
+apps/desktop build: desktop/out/renderer/assets/stage-BoTnbDLl.js   1,557.39 kB
+apps/desktop build: ✓ built in 7.90s
+apps/desktop build: Done
+packages/avatar-runtime build$ tsc -p tsconfig.json
+apps/panel build: rendering chunks...
+apps/panel build: computing gzip size...
+apps/panel build: dist/index.html                   0.64 kB │ gzip:   0.39 kB
+apps/panel build: dist/assets/index-ibGTfxG7.css    8.91 kB │ gzip:   2.32 kB
+apps/panel build: dist/assets/index-B_WOGkzu.js   358.32 kB │ gzip: 109.09 kB
+apps/panel build: ✓ built in 3.96s
+apps/panel build: Done
+packages/body build$ tsc -p tsconfig.json
+packages/body build: Done
+tools/asset-lint build$ pnpm --filter @nemu/contracts build && tsc -p tsconfig.json
+packages/avatar-runtime build: Done
+apps/stage build$ vite build
+tools/asset-lint build: $ tsc -p tsconfig.json
+apps/stage build: vite v7.3.7 building client environment for production...
+apps/stage build: transforming...
+apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/stage build: 
+apps/stage build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/stage build: 
+apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/stage build: 
+apps/stage build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/stage build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/stage build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/stage build: 
+apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/stage build: ✓ 177 modules transformed.
+apps/stage build: rendering chunks...
+apps/stage build: computing gzip size...
+apps/stage build: dist/index.html                     0.76 kB │ gzip:   0.42 kB
+apps/stage build: dist/review.html                   15.07 kB │ gzip:   3.34 kB
+apps/stage build: dist/assets/stage-j6owz3Q9.css      0.50 kB │ gzip:   0.29 kB
+apps/stage build: 
+apps/stage build: (!) Some chunks are larger than 500 kB after minification. Consider:
+apps/stage build: - Using dynamic import() to code-split the application
+apps/stage build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+apps/stage build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+apps/stage build: dist/assets/review-CW6rIG6O.css     5.07 kB │ gzip:   1.60 kB
+apps/stage build: dist/assets/stage-nau3J8JJ.js      13.14 kB │ gzip:   4.42 kB
+apps/stage build: dist/assets/review-CDDmsqWz.js     26.48 kB │ gzip:   7.99 kB
+apps/stage build: dist/assets/profiles-Dtk_ysI3.js  868.29 kB │ gzip: 224.34 kB
+apps/stage build: ✓ built in 6.58s
+apps/stage build: Done
+tools/asset-lint build: Done

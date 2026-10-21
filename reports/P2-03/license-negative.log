@@ -1,0 +1,50 @@
+$ node tools/asset-pipeline/launch.mjs step export tools/asset-pipeline/.cache/final-2/.cache/07-textures.blend tools/asset-pipeline/.cache/license-negative.blend -Config tools/asset-pipeline/.cache/license-negative.yaml -Output tools/asset-pipeline/.cache/license-negative
+step=export exit=1 log=D:\Dev\nemu\tools\asset-pipeline\.cache\license-negative\08-export.log
+{"step": "export", "command": ["D:\\blender\\blender.exe", "-b", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\final-2\\.cache\\07-textures.blend", "--python-exit-code", "1", "--python", "D:\\Dev\\nemu\\tools\\asset-pipeline\\export_vrm.py", "--", "--config", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\license-negative\\.cache\\resolved-build.json", "--output-dir", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\license-negative", "--output-blend", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\license-negative.blend"]}
+00:00.891  blend            | Read blend: "D:\Dev\nemu\tools\asset-pipeline\.cache\final-2\.cache\07-textures.blend"
+INFO Draco is available, use library at D:\blender\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at D:\blender\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+14:46:40 | INFO: Starting glTF 2.0 export
+14:46:40 | INFO: Starting glTF 2.0 export
+14:46:40 | INFO: Extracting primitive: Body
+14:46:40 | INFO: Extracting primitive: Body
+14:46:40 | INFO: Primitives created: 5
+14:46:40 | INFO: Primitives created: 5
+14:46:40 | INFO: Extracting primitive: Face
+14:46:40 | INFO: Extracting primitive: Face
+14:46:41 | INFO: Primitives created: 7
+14:46:41 | INFO: Primitives created: 7
+14:46:41 | INFO: Extracting primitive: Hair
+14:46:41 | INFO: Extracting primitive: Hair
+14:46:41 | INFO: Primitives created: 1
+14:46:41 | INFO: Primitives created: 1
+14:46:41 | INFO: Extracting primitive: PipelineTailCurve
+14:46:41 | INFO: Extracting primitive: PipelineTailCurve
+14:46:41 | INFO: Primitives created: 1
+14:46:41 | INFO: Primitives created: 1
+14:46:41 | INFO: Finished glTF 2.0 export in 0.8625197410583496 s
+14:46:41 | INFO: Finished glTF 2.0 export in 0.8625197410583496 s
+{"step": "export", "status": "failed", "detail": "step=export object=meta.licenseUrl expected=https://example.invalid/content-license actual=https://vrm.dev/licenses/1.0/; VRM 1.0 extension fixes this URL. Resolve CONTRACTS 1.5 before exporting a different content license URL."}
+Traceback (most recent call last):
+  File "D:\Dev\nemu\tools\asset-pipeline\export_vrm.py", line 41, in <module>
+    run("export", execute)
+    ~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\blender_common.py", line 71, in run
+    action(config, args)
+    ~~~~~~^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\export_vrm.py", line 37, in execute
+    fail("export", "meta.licenseUrl", config["meta"]["contentLicenseUrl"], f"{actual_license}; VRM 1.0 extension fixes this URL. Resolve CONTRACTS 1.5 before exporting a different content license URL.")
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\errors.py", line 9, in fail
+    raise BuildError(f"step={step} object={obj} expected={expected} actual={actual}")
+errors.BuildError: step=export object=meta.licenseUrl expected=https://example.invalid/content-license actual=https://vrm.dev/licenses/1.0/; VRM 1.0 extension fixes this URL. Resolve CONTRACTS 1.5 before exporting a different content license URL.
+
+
+Error: script failed, file: 'D:\Dev\nemu\tools\asset-pipeline\export_vrm.py', exiting.
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit
+
+step=export object=export_vrm.py expected=exit code 0 actual=failed; see step log
+[ELIFECYCLE] Command failed with exit code 1.
+EXPECTED_EXIT=1

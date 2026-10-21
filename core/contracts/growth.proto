@@ -2,13 +2,18 @@ syntax = "proto3";
 package nemu.echo.v1;
 import "base.proto";
 
+// @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 enum DistinctionForm { FORM_UNSPECIFIED = 0; EXEMPLAR = 1; PATTERN = 2; }
+// @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 enum DistinctionStatus { DISTINCTION_UNSPECIFIED = 0; DISTINCTION_PROVISIONAL = 1; DISTINCTION_QUALIFIED = 2; DISTINCTION_SUPERSEDED = 3; }
+// @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 enum TraceLifecycle { LIFECYCLE_UNSPECIFIED = 0; LIVE = 1; RETIRED = 2; }
+// @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 enum EvidenceRelation { EVIDENCE_UNSPECIFIED = 0; SUPPORT = 1; COUNTEREVIDENCE = 2; RESOLVES_TRIAL = 3; EVIDENCE_UNKNOWN = 4; }
 
 // @message echo.effect-contract | O 3.1; S 5
 message EffectContract {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string responsibility_id = 2; // required,nonempty
   optional string causal_revision = 3; // required,nonempty
@@ -25,6 +30,7 @@ message EffectContract {
 
 // @message echo.qualification | S 5; O 6,8,9
 message QualificationCertificate {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional ObjectRef test_domain = 2; // required
   optional ObjectRef root_blocks = 3; // required
@@ -40,6 +46,7 @@ message QualificationCertificate {
 
 // @message echo.consolidation-slice | D II 5.2; O 9
 message ConsolidationSlice {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string source_trace_revision = 2; // required,nonempty
   optional string source_coupling_revision = 3; // required,nonempty
@@ -59,6 +66,7 @@ message ConsolidationSlice {
 
 // @message echo.theta-module | D II 5.2; O 9,10
 message ThetaModule {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string module_id = 2; // required,nonempty
   optional string revision = 3; // required,nonempty
@@ -74,6 +82,7 @@ message ThetaModule {
 
 // @message echo.responsibility-binding | D II 5.3; O 3,10.1
 message ResponsibilityBinding {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string responsibility_id = 2; // required,nonempty
   optional string causal_revision = 3; // required,nonempty
@@ -87,6 +96,7 @@ message ResponsibilityBinding {
 
 // @message echo.trial-result | O 6,8; S 15
 message TrialResult {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string trial_id = 2; // required,nonempty
   optional string settlement_id = 3; // required,nonempty
@@ -101,6 +111,7 @@ message TrialResult {
 
 // @message echo.distinction | D II 1.3,1.4
 message DistinctionRevision {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string distinction_id = 2; // required,nonempty
   optional string revision = 3; // required,nonempty
@@ -113,6 +124,7 @@ message DistinctionRevision {
 
 // @message echo.coupling | D II 1.5; O 7
 message CouplingRevision {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string coupling_id = 2; // required,nonempty
   optional string revision = 3; // required,nonempty
@@ -132,6 +144,7 @@ message CouplingRevision {
 
 // @message echo.plastic-evidence | D II 1.8,2.2
 message PlasticEvidenceLink {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string event_id = 2; // required,nonempty
   optional string root_id = 3; // required,nonempty
@@ -142,6 +155,7 @@ message PlasticEvidenceLink {
 
 // @message echo.mechanism-context | D 0.4; D II 1.8; O 7.1
 message MechanismContext {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   repeated ObjectRef theta_modules = 2; // required,set=digest
   repeated ObjectRef metaplastic_couplings = 3; // required,set=digest
@@ -150,6 +164,7 @@ message MechanismContext {
 
 // @message echo.descendant-review | D 0.4; D II 5.6; O 8
 message DescendantReviewMarker {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional ObjectRef ancestor = 2; // required
   repeated string affected_responsibilities = 3; // required,set=self
@@ -159,6 +174,7 @@ message DescendantReviewMarker {
 
 // @message echo.plastic-trace | D 0.4; D II 1.3
 message PlasticTraceRevision {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string trace_id = 2; // required,nonempty
   optional string revision = 3; // required,nonempty
@@ -178,6 +194,7 @@ message PlasticTraceRevision {
 
 // @message echo.trace-head | D 0.4; D II 1.8
 message TraceHead {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string trace_id = 2; // required,nonempty
   optional string revision = 3; // required,nonempty
@@ -185,6 +202,7 @@ message TraceHead {
 
 // @message echo.inadequacy-witness | D II 2.3; O 6.1
 message RepresentationInadequacyWitness {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional ObjectRef equivalence_class = 2; // required
   optional ObjectRef controlled_variables = 3; // required
@@ -198,6 +216,7 @@ message RepresentationInadequacyWitness {
 
 // @message echo.frozen-prediction | D II 3.4; O 6,8
 message FrozenPrediction {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string candidate_revision = 2; // required,nonempty
   optional ObjectRef baseline = 3; // required
@@ -213,6 +232,7 @@ message FrozenPrediction {
 
 // @message echo.shadow-trial | D 0.4; D II 1.8,3.4
 message ShadowTrial {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string trial_id = 2; // required,nonempty
   optional FrozenPrediction frozen_prediction = 3; // required
@@ -222,6 +242,7 @@ message ShadowTrial {
 
 // @message echo.effect-budget-ledger | D II 4.4; O 11
 message EffectBudgetLedger {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string root_id = 2; // required,nonempty
   optional string budget_lineage_id = 3; // required,nonempty
@@ -236,6 +257,7 @@ message EffectBudgetLedger {
 
 // @message echo.single-root-ledger | F 7.1,8; user C01
 message SingleRootLedger {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string root_id = 2; // required,nonempty
   optional QualificationBranch branch = 3; // required
@@ -250,6 +272,7 @@ message SingleRootLedger {
 
 // @message echo.effective-causal-projection | D II 1.2; O 3.2
 message EffectiveCausalProjection {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string snapshot_id = 2; // required,nonempty
   optional uint64 projected_at_ns = 3; // required
@@ -258,6 +281,7 @@ message EffectiveCausalProjection {
 
 // @message echo.consolidation-binding | D 0.4; D II 5.3
 message ConsolidationBinding {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string source_slice_id = 2; // required,nonempty
   optional string theta_module_id = 3; // required,nonempty
@@ -266,6 +290,7 @@ message ConsolidationBinding {
 
 // @message echo.theta-source-binding | D 0.4; D II 5.2
 message ThetaModuleSourceBinding {
+  // @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
   optional uint32 schema_version = 1; // required
   optional string module_id = 2; // required,nonempty
   optional string source_slice_id = 3; // required,nonempty

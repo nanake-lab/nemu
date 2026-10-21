@@ -1,0 +1,18 @@
+{"step": "import", "command": ["D:\\blender\\blender.exe", "-b", "--python-exit-code", "1", "--python", "D:\\Dev\\nemu\\tools\\asset-pipeline\\import_vrm.py", "--", "--config", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-02\\.cache\\resolved-build.json", "--output-dir", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-02", "--output-blend", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-02\\.cache\\01-import.blend"]}
+{"step": "import", "status": "failed", "detail": "module 'bl_ext.blender_org.vrm' has no attribute 'bl_info'"}
+Traceback (most recent call last):
+  File "D:\Dev\nemu\tools\asset-pipeline\import_vrm.py", line 27, in <module>
+    run("import", execute)
+    ~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\blender_common.py", line 65, in run
+    check_versions()
+    ~~~~~~~~~~~~~~^^
+  File "D:\Dev\nemu\tools\asset-pipeline\blender_common.py", line 52, in check_versions
+    actual = ".".join(map(str, module.bl_info["version"]))
+                               ^^^^^^^^^^^^^^
+AttributeError: module 'bl_ext.blender_org.vrm' has no attribute 'bl_info'
+
+Error: script failed, file: 'D:\Dev\nemu\tools\asset-pipeline\import_vrm.py', exiting.
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

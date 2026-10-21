@@ -1,7 +1,7 @@
 # Echo Core IDL / CanonicalV1
 
 Approved byte contract: `docs/adr/0007-initial-idl-canonical-encoding.md`.
-The four `.proto` files are the sole source of fields, enum values, frozen type
+The `.proto` files in this directory are the sole source of fields, enum values, frozen type
 tags, required presence, bounds, set keys and variant constraints. `@message`
 includes the source specification pointer; `@rules` expresses source-required
 cross-field constraints. All R/G objects are types only; no runtime is wired here.
@@ -60,3 +60,33 @@ Before N3, revisions require backup and migration documentation. Genesis signatu
 locks the encoding; subsequent changes require a new encoding version and migration.
 Changing a frozen type tag always means a new encoding version. All tests use
 synthetic data in memory/build scratch directories and never open lineage stores.
+
+## v2.0 state and records (P5-21)
+
+`ledger.proto`, `law.proto` and `records.proto` add the Echo Core v2.0 types: interpretation
+records, event attributes, R (tendencies, evidence groups), θ, the change ledger L, growth
+commands, the law version and the genesis manifest. Changed messages are successors with new
+frozen tags (`VersionedEnvironmentV2`, `ProposalBindingV2`, `FastStateSnapshotV2`,
+`CoreTransactionV2`, `CoreCommitResultV2`, `ModulationEnvelopeV2`, `LineageHeaderV2`, and the
+two carriers of the new binding); every published message keeps its exact bytes.
+
+- `// @superseded <successor or -> | <reason>` in a message body, before an enum, or after an
+  enum value marks it superseded. It stays decodable to read old data and for tests; no
+  runtime path may produce it (`WireMessage::SUPERSEDED`, `<Enum>::is_superseded`,
+  `generated::SUPERSEDED_MESSAGES`). Live messages may not embed superseded types.
+- `// @supersedes <predecessor>` marks a successor. It keeps each predecessor field number
+  identical or `reserved`, and numbers new fields above the predecessor's maximum.
+- `check_compat.py` (run by `verify.py`) compares the IDL with every frozen baseline in
+  `baselines/` and fails on any reused field number, enum value or type tag, or any change to
+  a frozen golden vector; its self-test proves each rule fires. `--ref <git-ref>` also
+  compares with the `.proto` files at a ref.
+  The gate also checks the current IDL against itself, as the next contract card will
+  freeze it as a baseline. Self-test fixtures never rewrite a published field: rules on
+  successors are exercised on a synthetic chain `SelfTestV1 → V2 → V3`, and each mutation
+  counts only if the rule it targets fires. `--baselines <dir>` points the gate at another
+  baseline directory.
+- `freeze_vectors.py` is append-only: it re-verifies every frozen vector byte for byte with the
+  Rust authority before adding vectors for messages that have none yet and the targeted P5-21
+  vectors in `fixture_inputs.py`.
+- Semantic checks the codec cannot express (unit d_k, μ > 0, π ∈ (−1, 1), law parameter
+  inequalities, genesis consistency) are in `core_types::semantic`.

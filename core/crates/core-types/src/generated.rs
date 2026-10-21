@@ -6,12 +6,18 @@ use super::scalar::{DecimalU64, DecimalI64, HexBytes};
 pub enum Lineage {
     REHEARSAL = 1,
     LIFE = 2,
+    EXPERIMENT = 3,
 }
 impl TryFrom<u32> for Lineage { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
 1 => Ok(Self::REHEARSAL),
 2 => Ok(Self::LIFE),
+3 => Ok(Self::EXPERIMENT),
 _ => Err("unknown enum".into()), }}}
 impl From<Lineage> for u32 {fn from(v:Lineage)->Self{v as u32}}
+impl Lineage {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -19,12 +25,18 @@ pub enum RunStatus {
     NORMAL = 1,
     NO_GROWTH = 2,
     CORE_UNMODULATED = 3,
+    /// Superseded (no successor): P5-21; v2.0 §12: no whole-core quarantine, evidence is removed and recomputed
     CORE_QUARANTINED = 4,
+    /// Superseded (successor A_DEGRADED): P5-21; V2-17: A_x is now nature appraisal A
     AX_DEGRADED = 5,
     IRL_DEGRADED = 6,
     TEXT_PROJECTED = 7,
     MODULATION_NOT_ENABLED = 8,
     STORAGE_RECOVERY_FAULT = 9,
+    GROWTH_PAUSED = 10,
+    GROWTH_REVIEW_PENDING = 11,
+    A_DEGRADED = 12,
+    M_DEGRADED = 13,
 }
 impl TryFrom<u32> for RunStatus { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
 1 => Ok(Self::NORMAL),
@@ -36,18 +48,31 @@ impl TryFrom<u32> for RunStatus { type Error = String; fn try_from(v:u32)->Resul
 7 => Ok(Self::TEXT_PROJECTED),
 8 => Ok(Self::MODULATION_NOT_ENABLED),
 9 => Ok(Self::STORAGE_RECOVERY_FAULT),
+10 => Ok(Self::GROWTH_PAUSED),
+11 => Ok(Self::GROWTH_REVIEW_PENDING),
+12 => Ok(Self::A_DEGRADED),
+13 => Ok(Self::M_DEGRADED),
 _ => Err("unknown enum".into()), }}}
 impl From<RunStatus> for u32 {fn from(v:RunStatus)->Self{v as u32}}
+impl RunStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { matches!(self, Self::CORE_QUARANTINED | Self::AX_DEGRADED) }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
 pub enum FailureCode {
+    /// Superseded (successor GROWTH_OFF_REHEARSAL): P5-21; ADR 0010 decision 1: v1.0 grows from birth
     GROWTH_NOT_ENABLED_V1 = 1,
+    /// Superseded (no successor): P5-21; V2-17: A failures use A_DEGRADED with a generic reason
     AX_UNAVAILABLE = 2,
     IRL_FAILED = 3,
     CARRIER_UNAVAILABLE = 4,
+    /// Superseded (no successor): P5-21; v2.0 §15: C consolidation query plans are replaced
     EVIDENCE_INCOMPLETE = 5,
+    /// Superseded (no successor): P5-21; v2.0 §15: consolidation slices are replaced
     UNSUPPORTED_SLICE = 6,
+    /// Superseded (no successor): P5-21; v2.0 §15: scope DSL overlap checks are replaced
     UNKNOWN_OVERLAP = 7,
     DEPENDENCY_FAULT = 8,
     STRUCTURAL_FAULT = 9,
@@ -55,6 +80,7 @@ pub enum FailureCode {
     NUMERIC_INVALID = 11,
     RESOURCE_LIMIT = 12,
     MODULATION_DISABLED = 13,
+    GROWTH_OFF_REHEARSAL = 14,
 }
 impl TryFrom<u32> for FailureCode { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
 1 => Ok(Self::GROWTH_NOT_ENABLED_V1),
@@ -70,8 +96,13 @@ impl TryFrom<u32> for FailureCode { type Error = String; fn try_from(v:u32)->Res
 11 => Ok(Self::NUMERIC_INVALID),
 12 => Ok(Self::RESOURCE_LIMIT),
 13 => Ok(Self::MODULATION_DISABLED),
+14 => Ok(Self::GROWTH_OFF_REHEARSAL),
 _ => Err("unknown enum".into()), }}}
 impl From<FailureCode> for u32 {fn from(v:FailureCode)->Self{v as u32}}
+impl FailureCode {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { matches!(self, Self::GROWTH_NOT_ENABLED_V1 | Self::AX_UNAVAILABLE | Self::EVIDENCE_INCOMPLETE | Self::UNSUPPORTED_SLICE | Self::UNKNOWN_OVERLAP) }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -96,6 +127,10 @@ impl TryFrom<u32> for EventKind { type Error = String; fn try_from(v:u32)->Resul
 8 => Ok(Self::MAINTENANCE),
 _ => Err("unknown enum".into()), }}}
 impl From<EventKind> for u32 {fn from(v:EventKind)->Self{v as u32}}
+impl EventKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -112,6 +147,10 @@ impl TryFrom<u32> for Derivation { type Error = String; fn try_from(v:u32)->Resu
 4 => Ok(Self::INFERRED),
 _ => Err("unknown enum".into()), }}}
 impl From<Derivation> for u32 {fn from(v:Derivation)->Self{v as u32}}
+impl Derivation {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -134,6 +173,10 @@ impl TryFrom<u32> for EpistemicType { type Error = String; fn try_from(v:u32)->R
 7 => Ok(Self::EPISTEMIC_UNKNOWN),
 _ => Err("unknown enum".into()), }}}
 impl From<EpistemicType> for u32 {fn from(v:EpistemicType)->Self{v as u32}}
+impl EpistemicType {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -148,6 +191,10 @@ impl TryFrom<u32> for ResolutionState { type Error = String; fn try_from(v:u32)-
 3 => Ok(Self::PROVISIONAL),
 _ => Err("unknown enum".into()), }}}
 impl From<ResolutionState> for u32 {fn from(v:ResolutionState)->Self{v as u32}}
+impl ResolutionState {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -168,6 +215,10 @@ impl TryFrom<u32> for QueryStatus { type Error = String; fn try_from(v:u32)->Res
 6 => Ok(Self::BUDGET_EXHAUSTED),
 _ => Err("unknown enum".into()), }}}
 impl From<QueryStatus> for u32 {fn from(v:QueryStatus)->Self{v as u32}}
+impl QueryStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -182,6 +233,11 @@ impl TryFrom<u32> for SpeechMode { type Error = String; fn try_from(v:u32)->Resu
 3 => Ok(Self::C_DRAFT_REWRITE),
 _ => Err("unknown enum".into()), }}}
 impl From<SpeechMode> for u32 {fn from(v:SpeechMode)->Self{v as u32}}
+impl SpeechMode {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+/// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -194,6 +250,10 @@ impl TryFrom<u32> for QualificationBranch { type Error = String; fn try_from(v:u
 2 => Ok(Self::SINGLE_ROOT),
 _ => Err("unknown enum".into()), }}}
 impl From<QualificationBranch> for u32 {fn from(v:QualificationBranch)->Self{v as u32}}
+impl QualificationBranch {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { true }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -218,6 +278,11 @@ impl TryFrom<u32> for ActionStatus { type Error = String; fn try_from(v:u32)->Re
 8 => Ok(Self::UNKNOWN_ACTION),
 _ => Err("unknown enum".into()), }}}
 impl From<ActionStatus> for u32 {fn from(v:ActionStatus)->Self{v as u32}}
+impl ActionStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+/// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -234,6 +299,11 @@ impl TryFrom<u32> for EffectEndpoint { type Error = String; fn try_from(v:u32)->
 4 => Ok(Self::G_META),
 _ => Err("unknown enum".into()), }}}
 impl From<EffectEndpoint> for u32 {fn from(v:EffectEndpoint)->Self{v as u32}}
+impl EffectEndpoint {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { true }
+}
+/// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -246,6 +316,11 @@ impl TryFrom<u32> for EffectOwner { type Error = String; fn try_from(v:u32)->Res
 2 => Ok(Self::THETA_OWNER),
 _ => Err("unknown enum".into()), }}}
 impl From<EffectOwner> for u32 {fn from(v:EffectOwner)->Self{v as u32}}
+impl EffectOwner {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { true }
+}
+/// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -266,6 +341,11 @@ impl TryFrom<u32> for CouplingPhase { type Error = String; fn try_from(v:u32)->R
 6 => Ok(Self::SUPERSEDED),
 _ => Err("unknown enum".into()), }}}
 impl From<CouplingPhase> for u32 {fn from(v:CouplingPhase)->Self{v as u32}}
+impl CouplingPhase {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { true }
+}
+/// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -282,6 +362,27 @@ impl TryFrom<u32> for TrialOutcome { type Error = String; fn try_from(v:u32)->Re
 4 => Ok(Self::CONTINUE_SHADOW),
 _ => Err("unknown enum".into()), }}}
 impl From<TrialOutcome> for u32 {fn from(v:TrialOutcome)->Self{v as u32}}
+impl TrialOutcome {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { true }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum RelationKind {
+    CLOSENESS = 1,
+    TRUST = 2,
+}
+impl TryFrom<u32> for RelationKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::CLOSENESS),
+2 => Ok(Self::TRUST),
+_ => Err("unknown enum".into()), }}}
+impl From<RelationKind> for u32 {fn from(v:RelationKind)->Self{v as u32}}
+impl RelationKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+/// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -294,6 +395,11 @@ impl TryFrom<u32> for DistinctionForm { type Error = String; fn try_from(v:u32)-
 2 => Ok(Self::PATTERN),
 _ => Err("unknown enum".into()), }}}
 impl From<DistinctionForm> for u32 {fn from(v:DistinctionForm)->Self{v as u32}}
+impl DistinctionForm {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { true }
+}
+/// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -308,6 +414,11 @@ impl TryFrom<u32> for DistinctionStatus { type Error = String; fn try_from(v:u32
 3 => Ok(Self::DISTINCTION_SUPERSEDED),
 _ => Err("unknown enum".into()), }}}
 impl From<DistinctionStatus> for u32 {fn from(v:DistinctionStatus)->Self{v as u32}}
+impl DistinctionStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { true }
+}
+/// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -320,6 +431,11 @@ impl TryFrom<u32> for TraceLifecycle { type Error = String; fn try_from(v:u32)->
 2 => Ok(Self::RETIRED),
 _ => Err("unknown enum".into()), }}}
 impl From<TraceLifecycle> for u32 {fn from(v:TraceLifecycle)->Self{v as u32}}
+impl TraceLifecycle {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { true }
+}
+/// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -336,6 +452,124 @@ impl TryFrom<u32> for EvidenceRelation { type Error = String; fn try_from(v:u32)
 4 => Ok(Self::EVIDENCE_UNKNOWN),
 _ => Err("unknown enum".into()), }}}
 impl From<EvidenceRelation> for u32 {fn from(v:EvidenceRelation)->Self{v as u32}}
+impl EvidenceRelation {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { true }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum EvidenceSign {
+    SIGN_NEGATIVE = 1,
+    SIGN_POSITIVE = 2,
+}
+impl TryFrom<u32> for EvidenceSign { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::SIGN_NEGATIVE),
+2 => Ok(Self::SIGN_POSITIVE),
+_ => Err("unknown enum".into()), }}}
+impl From<EvidenceSign> for u32 {fn from(v:EvidenceSign)->Self{v as u32}}
+impl EvidenceSign {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum GrowthCommandKind {
+    GROWTH_PAUSE = 1,
+    GROWTH_RESUME = 2,
+    GROWTH_REVIEW_CONCLUSION = 3,
+}
+impl TryFrom<u32> for GrowthCommandKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::GROWTH_PAUSE),
+2 => Ok(Self::GROWTH_RESUME),
+3 => Ok(Self::GROWTH_REVIEW_CONCLUSION),
+_ => Err("unknown enum".into()), }}}
+impl From<GrowthCommandKind> for u32 {fn from(v:GrowthCommandKind)->Self{v as u32}}
+impl GrowthCommandKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum LedgerKind {
+    LEDGER_TENDENCY_CHANGED = 1,
+    LEDGER_THETA_CHANGED = 2,
+    LEDGER_RECOMPUTED = 3,
+    LEDGER_MIGRATED = 4,
+    LEDGER_GROWTH_PAUSED = 5,
+    LEDGER_GROWTH_RESUMED = 6,
+    LEDGER_REVIEW_HELD = 7,
+    LEDGER_REVIEW_CONCLUDED = 8,
+}
+impl TryFrom<u32> for LedgerKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::LEDGER_TENDENCY_CHANGED),
+2 => Ok(Self::LEDGER_THETA_CHANGED),
+3 => Ok(Self::LEDGER_RECOMPUTED),
+4 => Ok(Self::LEDGER_MIGRATED),
+5 => Ok(Self::LEDGER_GROWTH_PAUSED),
+6 => Ok(Self::LEDGER_GROWTH_RESUMED),
+7 => Ok(Self::LEDGER_REVIEW_HELD),
+8 => Ok(Self::LEDGER_REVIEW_CONCLUDED),
+_ => Err("unknown enum".into()), }}}
+impl From<LedgerKind> for u32 {fn from(v:LedgerKind)->Self{v as u32}}
+impl LedgerKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum RecomputeCause {
+    CAUSE_LAW_VERSION = 1,
+    CAUSE_SOURCE_CORRECTION = 2,
+    CAUSE_REINTERPRETATION = 3,
+}
+impl TryFrom<u32> for RecomputeCause { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::CAUSE_LAW_VERSION),
+2 => Ok(Self::CAUSE_SOURCE_CORRECTION),
+3 => Ok(Self::CAUSE_REINTERPRETATION),
+_ => Err("unknown enum".into()), }}}
+impl From<RecomputeCause> for u32 {fn from(v:RecomputeCause)->Self{v as u32}}
+impl RecomputeCause {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum ReviewTrigger {
+    TRIGGER_JUMP = 1,
+    TRIGGER_THETA_STEP = 2,
+    TRIGGER_SLOW_DRIFT = 3,
+}
+impl TryFrom<u32> for ReviewTrigger { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::TRIGGER_JUMP),
+2 => Ok(Self::TRIGGER_THETA_STEP),
+3 => Ok(Self::TRIGGER_SLOW_DRIFT),
+_ => Err("unknown enum".into()), }}}
+impl From<ReviewTrigger> for u32 {fn from(v:ReviewTrigger)->Self{v as u32}}
+impl ReviewTrigger {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum ReviewVerdict {
+    LAW_CORRECT = 1,
+    LAW_INCORRECT = 2,
+}
+impl TryFrom<u32> for ReviewVerdict { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::LAW_CORRECT),
+2 => Ok(Self::LAW_INCORRECT),
+_ => Err("unknown enum".into()), }}}
+impl From<ReviewVerdict> for u32 {fn from(v:ReviewVerdict)->Self{v as u32}}
+impl ReviewVerdict {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -350,6 +584,10 @@ impl TryFrom<u32> for Lang { type Error = String; fn try_from(v:u32)->Result<Sel
 3 => Ok(Self::JA),
 _ => Err("unknown enum".into()), }}}
 impl From<Lang> for u32 {fn from(v:Lang)->Self{v as u32}}
+impl Lang {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -370,6 +608,10 @@ impl TryFrom<u32> for TouchKind { type Error = String; fn try_from(v:u32)->Resul
 6 => Ok(Self::FLING),
 _ => Err("unknown enum".into()), }}}
 impl From<TouchKind> for u32 {fn from(v:TouchKind)->Self{v as u32}}
+impl TouchKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -394,6 +636,10 @@ impl TryFrom<u32> for DesktopKind { type Error = String; fn try_from(v:u32)->Res
 8 => Ok(Self::MEETING_ENDED),
 _ => Err("unknown enum".into()), }}}
 impl From<DesktopKind> for u32 {fn from(v:DesktopKind)->Self{v as u32}}
+impl DesktopKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -414,6 +660,10 @@ impl TryFrom<u32> for DndState { type Error = String; fn try_from(v:u32)->Result
 6 => Ok(Self::QUIET_HOURS),
 _ => Err("unknown enum".into()), }}}
 impl From<DndState> for u32 {fn from(v:DndState)->Self{v as u32}}
+impl DndState {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -428,6 +678,10 @@ impl TryFrom<u32> for SessionEvent { type Error = String; fn try_from(v:u32)->Re
 3 => Ok(Self::STOP),
 _ => Err("unknown enum".into()), }}}
 impl From<SessionEvent> for u32 {fn from(v:SessionEvent)->Self{v as u32}}
+impl SessionEvent {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -444,6 +698,10 @@ impl TryFrom<u32> for DeliveryStatus { type Error = String; fn try_from(v:u32)->
 4 => Ok(Self::UNKNOWN_DELIVERY),
 _ => Err("unknown enum".into()), }}}
 impl From<DeliveryStatus> for u32 {fn from(v:DeliveryStatus)->Self{v as u32}}
+impl DeliveryStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -460,6 +718,10 @@ impl TryFrom<u32> for MaintenanceKind { type Error = String; fn try_from(v:u32)-
 4 => Ok(Self::CLOCK_EPOCH),
 _ => Err("unknown enum".into()), }}}
 impl From<MaintenanceKind> for u32 {fn from(v:MaintenanceKind)->Self{v as u32}}
+impl MaintenanceKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -476,6 +738,10 @@ impl TryFrom<u32> for ReceiptStage { type Error = String; fn try_from(v:u32)->Re
 4 => Ok(Self::REJECTED),
 _ => Err("unknown enum".into()), }}}
 impl From<ReceiptStage> for u32 {fn from(v:ReceiptStage)->Self{v as u32}}
+impl ReceiptStage {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -490,6 +756,10 @@ impl TryFrom<u32> for OutputEndReason { type Error = String; fn try_from(v:u32)-
 3 => Ok(Self::ERROR),
 _ => Err("unknown enum".into()), }}}
 impl From<OutputEndReason> for u32 {fn from(v:OutputEndReason)->Self{v as u32}}
+impl OutputEndReason {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -506,6 +776,10 @@ impl TryFrom<u32> for AnchorKind { type Error = String; fn try_from(v:u32)->Resu
 4 => Ok(Self::TASKBAR),
 _ => Err("unknown enum".into()), }}}
 impl From<AnchorKind> for u32 {fn from(v:AnchorKind)->Self{v as u32}}
+impl AnchorKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -520,6 +794,10 @@ impl TryFrom<u32> for Side { type Error = String; fn try_from(v:u32)->Result<Sel
 3 => Ok(Self::BOTTOM),
 _ => Err("unknown enum".into()), }}}
 impl From<Side> for u32 {fn from(v:Side)->Self{v as u32}}
+impl Side {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -538,6 +816,10 @@ impl TryFrom<u32> for GazeKind { type Error = String; fn try_from(v:u32)->Result
 5 => Ok(Self::POINT),
 _ => Err("unknown enum".into()), }}}
 impl From<GazeKind> for u32 {fn from(v:GazeKind)->Self{v as u32}}
+impl GazeKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -560,6 +842,10 @@ impl TryFrom<u32> for BodyActionKind { type Error = String; fn try_from(v:u32)->
 7 => Ok(Self::GAZE),
 _ => Err("unknown enum".into()), }}}
 impl From<BodyActionKind> for u32 {fn from(v:BodyActionKind)->Self{v as u32}}
+impl BodyActionKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -576,6 +862,10 @@ impl TryFrom<u32> for ToolTier { type Error = String; fn try_from(v:u32)->Result
 4 => Ok(Self::T3),
 _ => Err("unknown enum".into()), }}}
 impl From<ToolTier> for u32 {fn from(v:ToolTier)->Self{v as u32}}
+impl ToolTier {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -588,6 +878,10 @@ impl TryFrom<u32> for Autonomy { type Error = String; fn try_from(v:u32)->Result
 2 => Ok(Self::PAUSED),
 _ => Err("unknown enum".into()), }}}
 impl From<Autonomy> for u32 {fn from(v:Autonomy)->Self{v as u32}}
+impl Autonomy {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -620,6 +914,10 @@ impl TryFrom<u32> for Emotion { type Error = String; fn try_from(v:u32)->Result<
 12 => Ok(Self::WORRIED),
 _ => Err("unknown enum".into()), }}}
 impl From<Emotion> for u32 {fn from(v:Emotion)->Self{v as u32}}
+impl Emotion {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -634,6 +932,10 @@ impl TryFrom<u32> for QueryKind { type Error = String; fn try_from(v:u32)->Resul
 3 => Ok(Self::RUN_HISTORY),
 _ => Err("unknown enum".into()), }}}
 impl From<QueryKind> for u32 {fn from(v:QueryKind)->Self{v as u32}}
+impl QueryKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
@@ -648,6 +950,11 @@ impl TryFrom<u32> for ApprovalChoice { type Error = String; fn try_from(v:u32)->
 3 => Ok(Self::DENY),
 _ => Err("unknown enum".into()), }}}
 impl From<ApprovalChoice> for u32 {fn from(v:ApprovalChoice)->Self{v as u32}}
+impl ApprovalChoice {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+/// S 5,6,7; D I 7.1; frozen tag `echo.object-ref`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ObjectRef {
@@ -658,6 +965,7 @@ pub r#resource_version: String,
 pub r#byte_length: DecimalU64,
 }
 impl super::WireMessage for ObjectRef {const NAME: &'static str = "ObjectRef";}
+/// F 3.4; D I 4.4; frozen tag `echo.concept-ref`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ConceptRef {
@@ -666,6 +974,7 @@ pub r#concept_id: String,
 pub r#registry_version: String,
 }
 impl super::WireMessage for ConceptRef {const NAME: &'static str = "ConceptRef";}
+/// O 2.1,16.1; S 5; frozen tag `echo.environment`. Superseded (successor VersionedEnvironmentV2): P5-21; v2.0 §15: scope_interpreter is replaced; v2 adds A, M, directions and law version
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct VersionedEnvironment {
@@ -679,7 +988,8 @@ pub r#tokenizer: ObjectRef,
 pub r#config: ObjectRef,
 pub r#implementations: Vec<ObjectRef>,
 }
-impl super::WireMessage for VersionedEnvironment {const NAME: &'static str = "VersionedEnvironment";}
+impl super::WireMessage for VersionedEnvironment {const NAME: &'static str = "VersionedEnvironment"; const SUPERSEDED: bool = true;}
+/// D I 6.2; S 21; frozen tag `echo.failure-reason`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct FailureReason {
@@ -689,6 +999,7 @@ pub r#code: FailureCode,
 pub r#detail_ref: Option<ObjectRef>,
 }
 impl super::WireMessage for FailureReason {const NAME: &'static str = "FailureReason";}
+/// D I 4.5,5.4; S 21; E13; frozen tag `echo.degraded-status`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct DegradedStatus {
@@ -697,6 +1008,7 @@ pub r#states: Vec<RunStatus>,
 pub r#reasons: Vec<FailureReason>,
 }
 impl super::WireMessage for DegradedStatus {const NAME: &'static str = "DegradedStatus";}
+/// ADR 0005; frozen tag `echo.lineage`. Superseded (successor LineageHeaderV2): P5-21; ADR 0010 decision 2: EXPERIMENT needs world identity and seed
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct LineageHeader {
@@ -706,7 +1018,8 @@ pub r#created_at_ns: DecimalI64,
 #[serde(default, skip_serializing_if = "Option::is_none")]
 pub r#genesis_manifest_digest: Option<HexBytes>,
 }
-impl super::WireMessage for LineageHeader {const NAME: &'static str = "LineageHeader";}
+impl super::WireMessage for LineageHeader {const NAME: &'static str = "LineageHeader"; const SUPERSEDED: bool = true;}
+/// S 6; D I 7.1; frozen tag `echo.audit-extension`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct AuditExtension {
@@ -716,6 +1029,108 @@ pub r#audit_schema_version: u32,
 pub r#payload: HexBytes,
 }
 impl super::WireMessage for AuditExtension {const NAME: &'static str = "AuditExtension";}
+/// v2.0 §1 a(e) ∈ [−1,1]⁴, §3, §6 x_i, §8 b ∈ [−1,1]⁴; frozen tag `echo.nature-vector`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct NatureVector {
+pub r#schema_version: u32,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#connection: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#empathy: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#curiosity: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#achievement: f64,
+}
+impl super::WireMessage for NatureVector {const NAME: &'static str = "NatureVector";}
+/// v2.0 §8 g, λ, σ̂, τ̂ per nature channel; frozen tag `echo.nature-scale`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct NatureScale {
+pub r#schema_version: u32,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#connection: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#empathy: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#curiosity: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#achievement: f64,
+}
+impl super::WireMessage for NatureScale {const NAME: &'static str = "NatureScale";}
+/// v2.0 §9.1 β_i·x_i coefficients; frozen tag `echo.nature-real`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct NatureReal {
+pub r#schema_version: u32,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#connection: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#empathy: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#curiosity: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#achievement: f64,
+}
+impl super::WireMessage for NatureReal {const NAME: &'static str = "NatureReal";}
+/// v2.0 §7 concept in three languages; E11; frozen tag `echo.trilingual-text`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TrilingualText {
+pub r#schema_version: u32,
+pub r#zh: String,
+pub r#en: String,
+pub r#ja: String,
+}
+impl super::WireMessage for TrilingualText {const NAME: &'static str = "TrilingualText";}
+/// v2.0 §7, §10 relations are tendencies about a person; V2-13; frozen tag `echo.person-relation`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct PersonRelation {
+pub r#schema_version: u32,
+pub r#person_id: String,
+pub r#kind: RelationKind,
+}
+impl super::WireMessage for PersonRelation {const NAME: &'static str = "PersonRelation";}
+/// v2.0 §1 Ω, §2.4, §9; O 2.1,16.1; S 5; frozen tag `echo.environment-v2`. Supersedes [`VersionedEnvironment`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct VersionedEnvironmentV2 {
+pub r#schema_version: u32,
+pub r#registry: ObjectRef,
+pub r#irl: ObjectRef,
+pub r#carrier: ObjectRef,
+pub r#model: ObjectRef,
+pub r#tokenizer: ObjectRef,
+pub r#config: ObjectRef,
+pub r#implementations: Vec<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#nature_appraiser: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#situation_matcher: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#direction_set: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#law_version: Option<ObjectRef>,
+}
+impl super::WireMessage for VersionedEnvironmentV2 {const NAME: &'static str = "VersionedEnvironmentV2";}
+/// v2.0 §13, §14; ADR 0005; ADR 0010 decision 2; frozen tag `echo.lineage-v2`. Supersedes [`LineageHeader`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LineageHeaderV2 {
+pub r#schema_version: u32,
+pub r#lineage: Lineage,
+pub r#created_at_ns: DecimalI64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#genesis_manifest_digest: Option<HexBytes>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#world_id: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#world_seed: Option<DecimalU64>,
+}
+impl super::WireMessage for LineageHeaderV2 {const NAME: &'static str = "LineageHeaderV2";}
+/// O 3.1; S 5; frozen tag `echo.effect-contract`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EffectContract {
@@ -733,7 +1148,8 @@ pub r#qualifications: Vec<ObjectRef>,
 pub r#ancestors: Vec<String>,
 pub r#dependencies: Vec<ObjectRef>,
 }
-impl super::WireMessage for EffectContract {const NAME: &'static str = "EffectContract";}
+impl super::WireMessage for EffectContract {const NAME: &'static str = "EffectContract"; const SUPERSEDED: bool = true;}
+/// S 5; O 6,8,9; frozen tag `echo.qualification`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct QualificationCertificate {
@@ -749,7 +1165,8 @@ pub r#raw_results: Vec<ObjectRef>,
 pub r#dependencies: Vec<ObjectRef>,
 pub r#outcome: TrialOutcome,
 }
-impl super::WireMessage for QualificationCertificate {const NAME: &'static str = "QualificationCertificate";}
+impl super::WireMessage for QualificationCertificate {const NAME: &'static str = "QualificationCertificate"; const SUPERSEDED: bool = true;}
+/// D II 5.2; O 9; frozen tag `echo.consolidation-slice`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ConsolidationSlice {
@@ -770,7 +1187,8 @@ pub r#budget_claim: ObjectRef,
 pub r#promote_interval_ns: DecimalU64,
 pub r#validity_contract: ObjectRef,
 }
-impl super::WireMessage for ConsolidationSlice {const NAME: &'static str = "ConsolidationSlice";}
+impl super::WireMessage for ConsolidationSlice {const NAME: &'static str = "ConsolidationSlice"; const SUPERSEDED: bool = true;}
+/// D II 5.2; O 9,10; frozen tag `echo.theta-module`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ThetaModule {
@@ -786,7 +1204,8 @@ pub r#scope: ObjectRef,
 pub r#mechanism_effect: EffectContract,
 pub r#validity_contract: ObjectRef,
 }
-impl super::WireMessage for ThetaModule {const NAME: &'static str = "ThetaModule";}
+impl super::WireMessage for ThetaModule {const NAME: &'static str = "ThetaModule"; const SUPERSEDED: bool = true;}
+/// D II 5.3; O 3,10.1; frozen tag `echo.responsibility-binding`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ResponsibilityBinding {
@@ -800,7 +1219,8 @@ pub r#source_slice_id: String,
 pub r#module_id: String,
 pub r#disposition: ObjectRef,
 }
-impl super::WireMessage for ResponsibilityBinding {const NAME: &'static str = "ResponsibilityBinding";}
+impl super::WireMessage for ResponsibilityBinding {const NAME: &'static str = "ResponsibilityBinding"; const SUPERSEDED: bool = true;}
+/// O 6,8; S 15; frozen tag `echo.trial-result`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TrialResult {
@@ -815,7 +1235,8 @@ pub r#actual_results: Vec<ObjectRef>,
 pub r#root_blocks: ObjectRef,
 pub r#dependencies: Vec<ObjectRef>,
 }
-impl super::WireMessage for TrialResult {const NAME: &'static str = "TrialResult";}
+impl super::WireMessage for TrialResult {const NAME: &'static str = "TrialResult"; const SUPERSEDED: bool = true;}
+/// D II 1.3,1.4; frozen tag `echo.distinction`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct DistinctionRevision {
@@ -828,7 +1249,8 @@ pub r#anchor_roots: Vec<String>,
 pub r#scope: ObjectRef,
 pub r#representation: ObjectRef,
 }
-impl super::WireMessage for DistinctionRevision {const NAME: &'static str = "DistinctionRevision";}
+impl super::WireMessage for DistinctionRevision {const NAME: &'static str = "DistinctionRevision"; const SUPERSEDED: bool = true;}
+/// D II 1.5; O 7; frozen tag `echo.coupling`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct CouplingRevision {
@@ -848,7 +1270,8 @@ pub r#trial_refs: Vec<ObjectRef>,
 pub r#conflict_set: Vec<String>,
 pub r#metaplastic_flag: bool,
 }
-impl super::WireMessage for CouplingRevision {const NAME: &'static str = "CouplingRevision";}
+impl super::WireMessage for CouplingRevision {const NAME: &'static str = "CouplingRevision"; const SUPERSEDED: bool = true;}
+/// D II 1.8,2.2; frozen tag `echo.plastic-evidence`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct PlasticEvidenceLink {
@@ -859,7 +1282,8 @@ pub r#distinction_id: String,
 pub r#coupling_revision: String,
 pub r#relation: EvidenceRelation,
 }
-impl super::WireMessage for PlasticEvidenceLink {const NAME: &'static str = "PlasticEvidenceLink";}
+impl super::WireMessage for PlasticEvidenceLink {const NAME: &'static str = "PlasticEvidenceLink"; const SUPERSEDED: bool = true;}
+/// D 0.4; D II 1.8; O 7.1; frozen tag `echo.mechanism-context`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct MechanismContext {
@@ -868,7 +1292,8 @@ pub r#theta_modules: Vec<ObjectRef>,
 pub r#metaplastic_couplings: Vec<ObjectRef>,
 pub r#previous_commit: String,
 }
-impl super::WireMessage for MechanismContext {const NAME: &'static str = "MechanismContext";}
+impl super::WireMessage for MechanismContext {const NAME: &'static str = "MechanismContext"; const SUPERSEDED: bool = true;}
+/// D 0.4; D II 5.6; O 8; frozen tag `echo.descendant-review`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct DescendantReviewMarker {
@@ -878,7 +1303,8 @@ pub r#affected_responsibilities: Vec<String>,
 pub r#dependency_snapshot: ObjectRef,
 pub r#needs_review: bool,
 }
-impl super::WireMessage for DescendantReviewMarker {const NAME: &'static str = "DescendantReviewMarker";}
+impl super::WireMessage for DescendantReviewMarker {const NAME: &'static str = "DescendantReviewMarker"; const SUPERSEDED: bool = true;}
+/// D 0.4; D II 1.3; frozen tag `echo.plastic-trace`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct PlasticTraceRevision {
@@ -898,7 +1324,8 @@ pub r#consolidation_bindings: Vec<ResponsibilityBinding>,
 pub r#mechanism_context: MechanismContext,
 pub r#lifecycle: TraceLifecycle,
 }
-impl super::WireMessage for PlasticTraceRevision {const NAME: &'static str = "PlasticTraceRevision";}
+impl super::WireMessage for PlasticTraceRevision {const NAME: &'static str = "PlasticTraceRevision"; const SUPERSEDED: bool = true;}
+/// D 0.4; D II 1.8; frozen tag `echo.trace-head`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TraceHead {
@@ -906,7 +1333,8 @@ pub r#schema_version: u32,
 pub r#trace_id: String,
 pub r#revision: String,
 }
-impl super::WireMessage for TraceHead {const NAME: &'static str = "TraceHead";}
+impl super::WireMessage for TraceHead {const NAME: &'static str = "TraceHead"; const SUPERSEDED: bool = true;}
+/// D II 2.3; O 6.1; frozen tag `echo.inadequacy-witness`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RepresentationInadequacyWitness {
@@ -920,7 +1348,8 @@ pub r#statistical_evidence: ObjectRef,
 pub r#non_identifiable: ObjectRef,
 pub r#reference_contract: ObjectRef,
 }
-impl super::WireMessage for RepresentationInadequacyWitness {const NAME: &'static str = "RepresentationInadequacyWitness";}
+impl super::WireMessage for RepresentationInadequacyWitness {const NAME: &'static str = "RepresentationInadequacyWitness"; const SUPERSEDED: bool = true;}
+/// D II 3.4; O 6,8; frozen tag `echo.frozen-prediction`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct FrozenPrediction {
@@ -936,7 +1365,8 @@ pub r#scorer: ObjectRef,
 pub r#criteria: ObjectRef,
 pub r#validator_version: String,
 }
-impl super::WireMessage for FrozenPrediction {const NAME: &'static str = "FrozenPrediction";}
+impl super::WireMessage for FrozenPrediction {const NAME: &'static str = "FrozenPrediction"; const SUPERSEDED: bool = true;}
+/// D 0.4; D II 1.8,3.4; frozen tag `echo.shadow-trial`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ShadowTrial {
@@ -947,7 +1377,8 @@ pub r#actual_results: Vec<ObjectRef>,
 #[serde(default, skip_serializing_if = "Option::is_none")]
 pub r#settlement: Option<TrialResult>,
 }
-impl super::WireMessage for ShadowTrial {const NAME: &'static str = "ShadowTrial";}
+impl super::WireMessage for ShadowTrial {const NAME: &'static str = "ShadowTrial"; const SUPERSEDED: bool = true;}
+/// D II 4.4; O 11; frozen tag `echo.effect-budget-ledger`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EffectBudgetLedger {
@@ -967,7 +1398,8 @@ pub r#consumed: f64,
 #[serde(serialize_with = "super::scalar::finite")]
 pub r#remaining: f64,
 }
-impl super::WireMessage for EffectBudgetLedger {const NAME: &'static str = "EffectBudgetLedger";}
+impl super::WireMessage for EffectBudgetLedger {const NAME: &'static str = "EffectBudgetLedger"; const SUPERSEDED: bool = true;}
+/// F 7.1,8; user C01; frozen tag `echo.single-root-ledger`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct SingleRootLedger {
@@ -983,7 +1415,8 @@ pub r#impact_metrics: ObjectRef,
 pub r#cumulative_single_root_path: f64,
 pub r#total_root_ledger: ObjectRef,
 }
-impl super::WireMessage for SingleRootLedger {const NAME: &'static str = "SingleRootLedger";}
+impl super::WireMessage for SingleRootLedger {const NAME: &'static str = "SingleRootLedger"; const SUPERSEDED: bool = true;}
+/// D II 1.2; O 3.2; frozen tag `echo.effective-causal-projection`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EffectiveCausalProjection {
@@ -992,7 +1425,8 @@ pub r#snapshot_id: String,
 pub r#projected_at_ns: DecimalU64,
 pub r#effects: Vec<EffectContract>,
 }
-impl super::WireMessage for EffectiveCausalProjection {const NAME: &'static str = "EffectiveCausalProjection";}
+impl super::WireMessage for EffectiveCausalProjection {const NAME: &'static str = "EffectiveCausalProjection"; const SUPERSEDED: bool = true;}
+/// D 0.4; D II 5.3; frozen tag `echo.consolidation-binding`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ConsolidationBinding {
@@ -1001,7 +1435,8 @@ pub r#source_slice_id: String,
 pub r#theta_module_id: String,
 pub r#responsibility: ResponsibilityBinding,
 }
-impl super::WireMessage for ConsolidationBinding {const NAME: &'static str = "ConsolidationBinding";}
+impl super::WireMessage for ConsolidationBinding {const NAME: &'static str = "ConsolidationBinding"; const SUPERSEDED: bool = true;}
+/// D 0.4; D II 5.2; frozen tag `echo.theta-source-binding`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ThetaModuleSourceBinding {
@@ -1011,7 +1446,435 @@ pub r#source_slice_id: String,
 pub r#source_trace_revision: String,
 pub r#source_coupling_revision: String,
 }
-impl super::WireMessage for ThetaModuleSourceBinding {const NAME: &'static str = "ThetaModuleSourceBinding";}
+impl super::WireMessage for ThetaModuleSourceBinding {const NAME: &'static str = "ThetaModuleSourceBinding"; const SUPERSEDED: bool = true;}
+/// v2.0 §5.2 S_{c,k}, weight factors, shares; LP2, I25; frozen tag `echo.evidence-allocation`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EvidenceAllocation {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#support: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#intensity: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#share: f64,
+}
+impl super::WireMessage for EvidenceAllocation {const NAME: &'static str = "EvidenceAllocation";}
+/// v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; frozen tag `echo.evidence-group`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EvidenceGroup {
+pub r#schema_version: u32,
+pub r#group_id: String,
+pub r#members: Vec<String>,
+pub r#source_key: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#credibility: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#verifiability: f64,
+pub r#allocations: Vec<EvidenceAllocation>,
+}
+impl super::WireMessage for EvidenceGroup {const NAME: &'static str = "EvidenceGroup";}
+/// v2.0 §5.2, §5.3 corollary 7, §7, §10; frozen tag `echo.tendency`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Tendency {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+pub r#concept: ConceptRef,
+pub r#predicate: Vec<TrilingualText>,
+pub r#direction: NatureVector,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#evidence_a: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#evidence_b: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#h_hat: f64,
+pub r#group_count: DecimalU64,
+pub r#flip_count: DecimalU64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#last_sign: Option<EvidenceSign>,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#pi: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#typical_magnitude: f64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#relation: Option<PersonRelation>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#attachment_prior: Option<f64>,
+}
+impl super::WireMessage for Tendency {const NAME: &'static str = "Tendency";}
+/// v2.0 §2.1, §2.2, §7; frozen tag `echo.r-snapshot`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RSnapshot {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#law_version: ObjectRef,
+pub r#tendencies: Vec<Tendency>,
+}
+impl super::WireMessage for RSnapshot {const NAME: &'static str = "RSnapshot";}
+/// v2.0 §8 θ and the statistics of C; frozen tag `echo.theta-snapshot`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaSnapshot {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#law_version: ObjectRef,
+pub r#values: ThetaValues,
+pub r#sigma: NatureScale,
+pub r#tau_s: NatureScale,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#weight_sum: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#h_hat_theta: f64,
+pub r#estimator_state: ObjectRef,
+}
+impl super::WireMessage for ThetaSnapshot {const NAME: &'static str = "ThetaSnapshot";}
+/// v2.0 §5.4, §10; ADR 0010 decision 5; permissions P5-05; frozen tag `echo.growth-command`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct GrowthCommand {
+pub r#schema_version: u32,
+pub r#command_id: String,
+pub r#kind: GrowthCommandKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#verdict: Option<ReviewVerdict>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#review_record: Option<ObjectRef>,
+}
+impl super::WireMessage for GrowthCommand {const NAME: &'static str = "GrowthCommand";}
+/// v2.0 §5.2, §6, §8, §16; frozen tag `echo.law-parameters`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LawParameters {
+pub r#schema_version: u32,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#n0: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#kappa1: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#w_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#w_teach: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#v_u: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#r_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#r_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#h0: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#n_h: f64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#h_hat_min: Option<f64>,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#h0_theta: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#h_hat_theta_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#n_b: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#n_sigma: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#g_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#g_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#recovery_min_per_s: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#recovery_max_per_s: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#w_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#t_x_s: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#epsilon_x: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#k_max: f64,
+}
+impl super::WireMessage for LawParameters {const NAME: &'static str = "LawParameters";}
+/// v2.0 §1 𝔏_v, §5.4, §16; frozen tag `echo.law-version`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LawVersion {
+pub r#schema_version: u32,
+pub r#version: u32,
+pub r#reference_form: String,
+pub r#parameters: LawParameters,
+}
+impl super::WireMessage for LawVersion {const NAME: &'static str = "LawVersion";}
+/// v2.0 §11, §12, §16; frozen tag `echo.fuse-config`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FuseConfig {
+pub r#schema_version: u32,
+pub r#r_capacity: u32,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#delta_theta_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#jump_threshold: f64,
+pub r#jump_probes: ObjectRef,
+pub r#slow_drift_run: u32,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#slow_drift_margin: f64,
+pub r#contact_limit: u32,
+pub r#message_limit: u32,
+pub r#network_window_ns: DecimalU64,
+}
+impl super::WireMessage for FuseConfig {const NAME: &'static str = "FuseConfig";}
+/// v2.0 §2.3, §13, §16; I28; ADR 0010 decision 6; frozen tag `echo.genesis-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct GenesisManifestV2 {
+pub r#schema_version: u32,
+pub r#law_version: LawVersion,
+pub r#nature_structure: String,
+pub r#initial_gain: NatureScale,
+pub r#initial_baseline: NatureVector,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#sigma0: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#tau0_s: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#attachment_prior: f64,
+pub r#caretaker_id: String,
+pub r#carrier: ObjectRef,
+pub r#direction_set: ObjectRef,
+pub r#direction_validation: ObjectRef,
+pub r#body_readout: ObjectRef,
+pub r#proactivity_readout: ObjectRef,
+pub r#fuses: FuseConfig,
+pub r#boundaries: ObjectRef,
+pub r#protocol: ObjectRef,
+}
+impl super::WireMessage for GenesisManifestV2 {const NAME: &'static str = "GenesisManifestV2";}
+/// v2.0 §8 θ = (b, g, λ); frozen tag `echo.theta-values`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaValues {
+pub r#schema_version: u32,
+pub r#baseline: NatureVector,
+pub r#gain: NatureScale,
+pub r#recovery_per_s: NatureScale,
+}
+impl super::WireMessage for ThetaValues {const NAME: &'static str = "ThetaValues";}
+/// v2.0 §2.5 R change: tendency, π before and after, evidence groups; frozen tag `echo.tendency-change`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TendencyChange {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#pi_before: Option<f64>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#pi_after: Option<f64>,
+pub r#evidence_groups: Vec<String>,
+}
+impl super::WireMessage for TendencyChange {const NAME: &'static str = "TendencyChange";}
+/// v2.0 §2.5 θ change: before and after values, referenced events; frozen tag `echo.theta-change`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaChange {
+pub r#schema_version: u32,
+pub r#before: ThetaValues,
+pub r#after: ThetaValues,
+pub r#events: Vec<String>,
+}
+impl super::WireMessage for ThetaChange {const NAME: &'static str = "ThetaChange";}
+/// v2.0 §2.5, §5.4 recompute: law version and difference summary; frozen tag `echo.recompute-record`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RecomputeRecord {
+pub r#schema_version: u32,
+pub r#cause: RecomputeCause,
+pub r#law_version: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#previous_law_version: Option<ObjectRef>,
+pub r#r_revision_before: String,
+pub r#r_revision_after: String,
+pub r#theta_revision_before: String,
+pub r#theta_revision_after: String,
+pub r#changed_tendencies: Vec<String>,
+pub r#theta_changed: bool,
+}
+impl super::WireMessage for RecomputeRecord {const NAME: &'static str = "RecomputeRecord";}
+/// v2.0 §2.5, §9.5 model change is a migration, not growth; frozen tag `echo.migration-record`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct MigrationRecord {
+pub r#schema_version: u32,
+pub r#previous_environment: ObjectRef,
+pub r#environment: ObjectRef,
+pub r#validation: ObjectRef,
+}
+impl super::WireMessage for MigrationRecord {const NAME: &'static str = "MigrationRecord";}
+/// v2.0 §1 L, §2.5, §5.4, §12; V2-10, V2-11; frozen tag `echo.ledger-entry`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LedgerEntry {
+pub r#schema_version: u32,
+pub r#entry_id: String,
+pub r#event_id: String,
+pub r#kind: LedgerKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#tendency_change: Option<TendencyChange>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#theta_change: Option<ThetaChange>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#recompute: Option<RecomputeRecord>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#migration: Option<MigrationRecord>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#review_trigger: Option<ReviewTrigger>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#review_verdict: Option<ReviewVerdict>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#review_record: Option<ObjectRef>,
+}
+impl super::WireMessage for LedgerEntry {const NAME: &'static str = "LedgerEntry";}
+/// v2.0 §1 a(e), §3, EV6, EV10; frozen tag `echo.nature-appraisal`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct NatureAppraisalRecord {
+pub r#schema_version: u32,
+pub r#record_id: String,
+pub r#event_id: String,
+pub r#appraisal: NatureVector,
+pub r#persons: Vec<String>,
+pub r#binding: ProposalBindingV2,
+pub r#producer: String,
+pub r#producer_version: String,
+}
+impl super::WireMessage for NatureAppraisalRecord {const NAME: &'static str = "NatureAppraisalRecord";}
+/// v2.0 §1 μ_k(e) ∈ [0,1]; frozen tag `echo.tendency-match`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TendencyMatch {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#mu: f64,
+}
+impl super::WireMessage for TendencyMatch {const NAME: &'static str = "TendencyMatch";}
+/// v2.0 §1 μ, §2.4 M, EV5, EV6; frozen tag `echo.situation-match`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SituationMatchRecord {
+pub r#schema_version: u32,
+pub r#record_id: String,
+pub r#event_id: String,
+pub r#matches: Vec<TendencyMatch>,
+pub r#binding: ProposalBindingV2,
+pub r#producer: String,
+pub r#producer_version: String,
+}
+impl super::WireMessage for SituationMatchRecord {const NAME: &'static str = "SituationMatchRecord";}
+/// v2.0 §7 concept: name, definition, examples, three languages; frozen tag `echo.tendency-concept`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TendencyConcept {
+pub r#schema_version: u32,
+pub r#name: TrilingualText,
+pub r#definition: TrilingualText,
+pub r#positive_examples: Vec<TrilingualText>,
+pub r#negative_examples: Vec<TrilingualText>,
+}
+impl super::WireMessage for TendencyConcept {const NAME: &'static str = "TendencyConcept";}
+/// v2.0 §7 candidates, EV3, EV5; §5.2 κ, d_k; V2-13; frozen tag `echo.tendency-candidate`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TendencyCandidateRecord {
+pub r#schema_version: u32,
+pub r#record_id: String,
+pub r#event_id: String,
+pub r#concept: TendencyConcept,
+pub r#predicate: Vec<TrilingualText>,
+pub r#direction: NatureVector,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#relation: Option<PersonRelation>,
+pub r#binding: ProposalBindingV2,
+pub r#producer: String,
+pub r#producer_version: String,
+}
+impl super::WireMessage for TendencyCandidateRecord {const NAME: &'static str = "TendencyCandidateRecord";}
+/// v2.0 EV7, §10; frozen tag `echo.teaching-annotation`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TeachingAnnotation {
+pub r#schema_version: u32,
+pub r#record_id: String,
+pub r#event_id: String,
+pub r#speaker: String,
+pub r#tendency_id: String,
+pub r#supports: bool,
+pub r#binding: ProposalBindingV2,
+pub r#producer: String,
+pub r#producer_version: String,
+}
+impl super::WireMessage for TeachingAnnotation {const NAME: &'static str = "TeachingAnnotation";}
+/// v2.0 EV4, §10; I27; frozen tag `echo.lie-annotation`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LieAnnotation {
+pub r#schema_version: u32,
+pub r#record_id: String,
+pub r#event_id: String,
+pub r#statement: String,
+pub r#contradicts: String,
+pub r#binding: ProposalBindingV2,
+pub r#producer: String,
+pub r#producer_version: String,
+}
+impl super::WireMessage for LieAnnotation {const NAME: &'static str = "LieAnnotation";}
+/// v2.0 EV2; frozen tag `echo.same-matter-annotation`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SameMatterAnnotation {
+pub r#schema_version: u32,
+pub r#record_id: String,
+pub r#event_id: String,
+pub r#same_as: Vec<String>,
+pub r#binding: ProposalBindingV2,
+pub r#producer: String,
+pub r#producer_version: String,
+}
+impl super::WireMessage for SameMatterAnnotation {const NAME: &'static str = "SameMatterAnnotation";}
+/// v2.0 EV5, EV6, §5.4; frozen tag `echo.reinterpretation`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ReinterpretationLink {
+pub r#schema_version: u32,
+pub r#record_id: String,
+pub r#event_id: String,
+pub r#new_record: String,
+pub r#prior_records: Vec<String>,
+pub r#interpreter_version: String,
+pub r#binding: ProposalBindingV2,
+pub r#producer: String,
+pub r#producer_version: String,
+}
+impl super::WireMessage for ReinterpretationLink {const NAME: &'static str = "ReinterpretationLink";}
+/// v2.0 §1 exogenous, EV2, EV3, EV9; P5-06 rule table; frozen tag `echo.event-attributes`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EventAttributesRecord {
+pub r#schema_version: u32,
+pub r#event_id: String,
+pub r#rule_table_version: String,
+pub r#exogenous: bool,
+pub r#self_narrative: bool,
+pub r#verifiable: bool,
+pub r#source_key: String,
+}
+impl super::WireMessage for EventAttributesRecord {const NAME: &'static str = "EventAttributesRecord";}
+/// F 4; S 9; frozen tag `echo.event`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EventEnvelope {
@@ -1036,6 +1899,7 @@ pub r#correction_of: Vec<String>,
 pub r#derivation: Derivation,
 }
 impl super::WireMessage for EventEnvelope {const NAME: &'static str = "EventEnvelope";}
+/// F 3; S 11; frozen tag `echo.fact-item`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct FactItem {
@@ -1046,6 +1910,7 @@ pub r#availability: QueryStatus,
 pub r#correction_chain: Vec<String>,
 }
 impl super::WireMessage for FactItem {const NAME: &'static str = "FactItem";}
+/// F 3; S 11; frozen tag `echo.fact-projection`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct FactProjection {
@@ -1058,6 +1923,7 @@ pub r#index_version: String,
 pub r#truncated: bool,
 }
 impl super::WireMessage for FactProjection {const NAME: &'static str = "FactProjection";}
+/// F 3.2; S 10; frozen tag `echo.source-metadata`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct SourceMetadata {
@@ -1070,6 +1936,7 @@ pub r#resolution_state: ResolutionState,
 pub r#representation_version: String,
 }
 impl super::WireMessage for SourceMetadata {const NAME: &'static str = "SourceMetadata";}
+/// F 3.2; frozen tag `echo.semantic-ref`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Ref {
@@ -1080,6 +1947,7 @@ pub r#metadata: SourceMetadata,
 pub r#referent: Option<ConceptRef>,
 }
 impl super::WireMessage for Ref {const NAME: &'static str = "Ref";}
+/// F 3.2,3.4; frozen tag `echo.role-binding`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RoleBinding {
@@ -1088,6 +1956,7 @@ pub r#role: String,
 pub r#node_ref: String,
 }
 impl super::WireMessage for RoleBinding {const NAME: &'static str = "RoleBinding";}
+/// F 3.2,3.4; frozen tag `echo.semantic-claim`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Claim {
@@ -1102,6 +1971,7 @@ pub r#modality: ObjectRef,
 pub r#time: ObjectRef,
 }
 impl super::WireMessage for Claim {const NAME: &'static str = "Claim";}
+/// F 3.2; frozen tag `echo.semantic-act`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Act {
@@ -1111,6 +1981,7 @@ pub r#metadata: SourceMetadata,
 pub r#interaction_kind: String,
 }
 impl super::WireMessage for Act {const NAME: &'static str = "Act";}
+/// F 3.2; frozen tag `echo.semantic-edge`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Edge {
@@ -1120,6 +1991,7 @@ pub r#from_node: String,
 pub r#to_node: String,
 }
 impl super::WireMessage for Edge {const NAME: &'static str = "Edge";}
+/// F 3.2; D I 4.3; frozen tag `echo.semantic-graph`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct SemanticGraph {
@@ -1131,6 +2003,7 @@ pub r#acts: Vec<Act>,
 pub r#edges: Vec<Edge>,
 }
 impl super::WireMessage for SemanticGraph {const NAME: &'static str = "SemanticGraph";}
+/// D I 3; O 16.1; frozen tag `echo.proposal-binding`. Superseded (successor ProposalBindingV2): P5-21; binds VersionedEnvironmentV2 (v2.0 §1 Ω)
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ProposalBinding {
@@ -1154,7 +2027,8 @@ pub r#relevant_effect_set_digest: HexBytes,
 pub r#proposal_payload_digest: HexBytes,
 pub r#read_set: Vec<ObjectRef>,
 }
-impl super::WireMessage for ProposalBinding {const NAME: &'static str = "ProposalBinding";}
+impl super::WireMessage for ProposalBinding {const NAME: &'static str = "ProposalBinding"; const SUPERSEDED: bool = true;}
+/// D I 4.2,7.1; frozen tag `echo.semantic-candidate`. Superseded (successor SemanticCandidateV2): P5-21; carries ProposalBindingV2
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct SemanticCandidate {
@@ -1165,7 +2039,8 @@ pub r#producer: String,
 pub r#producer_version: String,
 pub r#actual_output: ObjectRef,
 }
-impl super::WireMessage for SemanticCandidate {const NAME: &'static str = "SemanticCandidate";}
+impl super::WireMessage for SemanticCandidate {const NAME: &'static str = "SemanticCandidate"; const SUPERSEDED: bool = true;}
+/// F 3.4; D I 4.4; frozen tag `echo.concept-proposal`. Superseded (successor ConceptProposalV2): P5-21; carries ProposalBindingV2
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ConceptProposal {
@@ -1177,7 +2052,8 @@ pub r#grounding: ObjectRef,
 pub r#relations: ObjectRef,
 pub r#source_refs: Vec<String>,
 }
-impl super::WireMessage for ConceptProposal {const NAME: &'static str = "ConceptProposal";}
+impl super::WireMessage for ConceptProposal {const NAME: &'static str = "ConceptProposal"; const SUPERSEDED: bool = true;}
+/// D I 5.1; O 5.1; frozen tag `echo.fast-state`. Superseded (successor FastStateSnapshotV2): P5-21; v2.0 §6: nature channels plus learned components by tendency ID
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct FastStateSnapshot {
@@ -1189,7 +2065,8 @@ pub r#dimension: u32,
 pub r#coordinates: Vec<f64>,
 pub r#anchor_time_ns: DecimalU64,
 }
-impl super::WireMessage for FastStateSnapshot {const NAME: &'static str = "FastStateSnapshot";}
+impl super::WireMessage for FastStateSnapshot {const NAME: &'static str = "FastStateSnapshot"; const SUPERSEDED: bool = true;}
+/// D I 5.3; O 5.2; frozen tag `echo.fast-drive`. Superseded (successor NatureAppraisalRecord): P5-21; v2.0 §2.4, §3, §6: drive is assembled by F from the recorded a(e)
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct FastDriveProposal {
@@ -1204,7 +2081,8 @@ pub r#producer: String,
 pub r#producer_version: String,
 pub r#proposal_hash: HexBytes,
 }
-impl super::WireMessage for FastDriveProposal {const NAME: &'static str = "FastDriveProposal";}
+impl super::WireMessage for FastDriveProposal {const NAME: &'static str = "FastDriveProposal"; const SUPERSEDED: bool = true;}
+/// D I 3,7; O 16.2; S 8; frozen tag `echo.transaction`. Superseded (successor CoreTransactionV2): P5-21; adds staged L entries for R and θ changes (v2.0 §2.4)
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct CoreTransaction {
@@ -1223,7 +2101,8 @@ pub r#staged_concepts: Vec<ObjectRef>,
 pub r#accepted_results: Vec<ObjectRef>,
 pub r#audit_refs: Vec<ObjectRef>,
 }
-impl super::WireMessage for CoreTransaction {const NAME: &'static str = "CoreTransaction";}
+impl super::WireMessage for CoreTransaction {const NAME: &'static str = "CoreTransaction"; const SUPERSEDED: bool = true;}
+/// D I 6.2; O 16.2; frozen tag `echo.commit-result`. Superseded (successor CoreCommitResultV2): P5-21; reports published L entries (v2.0 §2.4)
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct CoreCommitResult {
@@ -1235,7 +2114,115 @@ pub r#committed: bool,
 pub r#snapshot: ObjectRef,
 pub r#status: DegradedStatus,
 }
-impl super::WireMessage for CoreCommitResult {const NAME: &'static str = "CoreCommitResult";}
+impl super::WireMessage for CoreCommitResult {const NAME: &'static str = "CoreCommitResult"; const SUPERSEDED: bool = true;}
+/// D I 3; O 16.1; v2.0 §1 Ω, §2.4; frozen tag `echo.proposal-binding-v2`. Supersedes [`ProposalBinding`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ProposalBindingV2 {
+pub r#schema_version: u32,
+pub r#branch_id: String,
+pub r#event_id: String,
+pub r#raw_log_position: DecimalU64,
+pub r#base_commit: String,
+pub r#process_time_ns: DecimalU64,
+pub r#anchor_time_ns: DecimalU64,
+pub r#projected_state_digest: HexBytes,
+pub r#accepted_z_digest: HexBytes,
+pub r#c_core_digest: HexBytes,
+pub r#x_revision: String,
+pub r#r_revision: String,
+pub r#theta_revision: String,
+pub r#validation_snapshot: ObjectRef,
+pub r#source_validity_version: String,
+pub r#relevant_effect_set_digest: HexBytes,
+pub r#proposal_payload_digest: HexBytes,
+pub r#read_set: Vec<ObjectRef>,
+pub r#environment: VersionedEnvironmentV2,
+}
+impl super::WireMessage for ProposalBindingV2 {const NAME: &'static str = "ProposalBindingV2";}
+/// D I 4.2,7.1; v2.0 §2.4; frozen tag `echo.semantic-candidate-v2`. Supersedes [`SemanticCandidate`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SemanticCandidateV2 {
+pub r#schema_version: u32,
+pub r#candidate_graph: ObjectRef,
+pub r#producer: String,
+pub r#producer_version: String,
+pub r#actual_output: ObjectRef,
+pub r#binding: ProposalBindingV2,
+}
+impl super::WireMessage for SemanticCandidateV2 {const NAME: &'static str = "SemanticCandidateV2";}
+/// F 3.4; D I 4.4; v2.0 §7; frozen tag `echo.concept-proposal-v2`. Supersedes [`ConceptProposal`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ConceptProposalV2 {
+pub r#schema_version: u32,
+pub r#mention: String,
+pub r#signature: ObjectRef,
+pub r#grounding: ObjectRef,
+pub r#relations: ObjectRef,
+pub r#source_refs: Vec<String>,
+pub r#binding: ProposalBindingV2,
+}
+impl super::WireMessage for ConceptProposalV2 {const NAME: &'static str = "ConceptProposalV2";}
+/// v2.0 §6 x_k for k ∈ R⁺; frozen tag `echo.learned-component`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LearnedComponent {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#value: f64,
+}
+impl super::WireMessage for LearnedComponent {const NAME: &'static str = "LearnedComponent";}
+/// v2.0 §6 X = [−1,1]^{4+|R⁺|}; D I 5.1; frozen tag `echo.fast-state-v2`. Supersedes [`FastStateSnapshot`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastStateSnapshotV2 {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#representation_version: String,
+pub r#anchor_time_ns: DecimalU64,
+pub r#nature: NatureVector,
+pub r#learned: Vec<LearnedComponent>,
+}
+impl super::WireMessage for FastStateSnapshotV2 {const NAME: &'static str = "FastStateSnapshotV2";}
+/// D I 3,7; O 16.2; S 8; v2.0 §2.4, §2.5; frozen tag `echo.transaction-v2`. Supersedes [`CoreTransaction`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CoreTransactionV2 {
+pub r#schema_version: u32,
+pub r#staged_h: ObjectRef,
+pub r#staged_x: ObjectRef,
+pub r#staged_r: ObjectRef,
+pub r#staged_theta: ObjectRef,
+pub r#staged_l: ObjectRef,
+pub r#staged_q: ObjectRef,
+pub r#staged_u: ObjectRef,
+pub r#processed_position: DecimalU64,
+pub r#anchor_time_ns: DecimalU64,
+pub r#staged_concepts: Vec<ObjectRef>,
+pub r#accepted_results: Vec<ObjectRef>,
+pub r#audit_refs: Vec<ObjectRef>,
+pub r#binding: ProposalBindingV2,
+pub r#staged_ledger: Vec<LedgerEntry>,
+}
+impl super::WireMessage for CoreTransactionV2 {const NAME: &'static str = "CoreTransactionV2";}
+/// D I 6.2; O 16.2; v2.0 §2.4, §2.5; frozen tag `echo.commit-result-v2`. Supersedes [`CoreCommitResult`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CoreCommitResultV2 {
+pub r#schema_version: u32,
+pub r#branch_id: String,
+pub r#event_id: String,
+pub r#commit_id: String,
+pub r#committed: bool,
+pub r#snapshot: ObjectRef,
+pub r#status: DegradedStatus,
+pub r#ledger_entries: Vec<String>,
+}
+impl super::WireMessage for CoreCommitResultV2 {const NAME: &'static str = "CoreCommitResultV2";}
+/// CONTRACTS 4.2; frozen tag `echo.user-utterance`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct UserUtterance {
@@ -1249,6 +2236,7 @@ pub r#duration_ms: DecimalU64,
 pub r#audio_ref: Option<ObjectRef>,
 }
 impl super::WireMessage for UserUtterance {const NAME: &'static str = "UserUtterance";}
+/// CONTRACTS 4.2; frozen tag `echo.user-text`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct UserText {
@@ -1256,6 +2244,7 @@ pub r#schema_version: u32,
 pub r#text: String,
 }
 impl super::WireMessage for UserText {const NAME: &'static str = "UserText";}
+/// CONTRACTS 4.2; frozen tag `echo.user-retraction`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct UserRetraction {
@@ -1265,6 +2254,7 @@ pub r#target_refs: Vec<String>,
 pub r#note: Option<String>,
 }
 impl super::WireMessage for UserRetraction {const NAME: &'static str = "UserRetraction";}
+/// CONTRACTS 4.2; frozen tag `echo.touch`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TouchObservation {
@@ -1276,6 +2266,7 @@ pub r#kind: TouchKind,
 pub r#speed: Option<f64>,
 }
 impl super::WireMessage for TouchObservation {const NAME: &'static str = "TouchObservation";}
+/// CONTRACTS 4.2; frozen tag `echo.desktop-observation`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct DesktopObservation {
@@ -1291,6 +2282,7 @@ pub r#dnd: Option<DndState>,
 pub r#idle_ms: Option<DecimalU64>,
 }
 impl super::WireMessage for DesktopObservation {const NAME: &'static str = "DesktopObservation";}
+/// CONTRACTS 4.2; frozen tag `echo.codex-session`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct CodexSessionObservation {
@@ -1303,6 +2295,7 @@ pub r#cwd_label: Option<String>,
 pub r#summary: Option<String>,
 }
 impl super::WireMessage for CodexSessionObservation {const NAME: &'static str = "CodexSessionObservation";}
+/// CONTRACTS 4.2; frozen tag `echo.speech-delivery`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct SpeechDelivery {
@@ -1314,6 +2307,7 @@ pub r#played_chars: DecimalU64,
 pub r#status: DeliveryStatus,
 }
 impl super::WireMessage for SpeechDelivery {const NAME: &'static str = "SpeechDelivery";}
+/// CONTRACTS 4.2; frozen tag `echo.body-action-result`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct BodyActionResult {
@@ -1324,6 +2318,7 @@ pub r#status: ActionStatus,
 pub r#detail: Option<String>,
 }
 impl super::WireMessage for BodyActionResult {const NAME: &'static str = "BodyActionResult";}
+/// CONTRACTS 4.2; frozen tag `echo.terminal-maintenance`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TerminalMaintenance {
@@ -1332,6 +2327,7 @@ pub r#kind: MaintenanceKind,
 pub r#detail: String,
 }
 impl super::WireMessage for TerminalMaintenance {const NAME: &'static str = "TerminalMaintenance";}
+/// CONTRACTS 4.3; frozen tag `echo.receipt`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Receipt {
@@ -1344,6 +2340,7 @@ pub r#event_id: Option<String>,
 pub r#reason: Option<String>,
 }
 impl super::WireMessage for Receipt {const NAME: &'static str = "Receipt";}
+/// CONTRACTS 4.3; frozen tag `echo.output-chunk`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct OutputChunk {
@@ -1358,6 +2355,7 @@ pub r#speech_mode: SpeechMode,
 pub r#strict: bool,
 }
 impl super::WireMessage for OutputChunk {const NAME: &'static str = "OutputChunk";}
+/// CONTRACTS 4.3; ADR 0007 hand example; frozen tag `echo.output-end`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct OutputEnd {
@@ -1366,6 +2364,7 @@ pub r#output_id: String,
 pub r#reason: OutputEndReason,
 }
 impl super::WireMessage for OutputEnd {const NAME: &'static str = "OutputEnd";}
+/// CONTRACTS 2.1; frozen tag `echo.anchor`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Anchor {
@@ -1389,6 +2388,7 @@ pub r#side: Option<Side>,
 pub r#along: Option<f64>,
 }
 impl super::WireMessage for Anchor {const NAME: &'static str = "Anchor";}
+/// CONTRACTS 2.1; frozen tag `echo.gaze-target`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct GazeTarget {
@@ -1402,6 +2402,7 @@ pub r#x: Option<f64>,
 pub r#y: Option<f64>,
 }
 impl super::WireMessage for GazeTarget {const NAME: &'static str = "GazeTarget";}
+/// CONTRACTS 2.1,4.3; frozen tag `echo.body-action`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct BodyAction {
@@ -1421,6 +2422,7 @@ pub r#target: Option<GazeTarget>,
 pub r#hold_ms: Option<DecimalU64>,
 }
 impl super::WireMessage for BodyAction {const NAME: &'static str = "BodyAction";}
+/// CONTRACTS 4.3; O 16.3; frozen tag `echo.action-request`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ActionRequest {
@@ -1431,6 +2433,7 @@ pub r#action: BodyAction,
 pub r#expires_at_ns: DecimalI64,
 }
 impl super::WireMessage for ActionRequest {const NAME: &'static str = "ActionRequest";}
+/// CONTRACTS 4.3; frozen tag `echo.approval-request`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ApprovalRequest {
@@ -1443,6 +2446,7 @@ pub r#detail: String,
 pub r#expires_at_ns: DecimalI64,
 }
 impl super::WireMessage for ApprovalRequest {const NAME: &'static str = "ApprovalRequest";}
+/// CONTRACTS 4.3; frozen tag `echo.run-state`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RunState {
@@ -1457,6 +2461,7 @@ pub r#autonomy: Autonomy,
 pub r#reasons: Vec<String>,
 }
 impl super::WireMessage for RunState {const NAME: &'static str = "RunState";}
+/// CONTRACTS 7; frozen tag `echo.expression-weight`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ExpressionWeight {
@@ -1466,6 +2471,7 @@ pub r#emotion: Emotion,
 pub r#weight: f64,
 }
 impl super::WireMessage for ExpressionWeight {const NAME: &'static str = "ExpressionWeight";}
+/// CONTRACTS 7; frozen tag `echo.body-readout`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct BodyReadout {
@@ -1484,6 +2490,7 @@ pub r#gaze_sociability: f64,
 pub r#posture: f64,
 }
 impl super::WireMessage for BodyReadout {const NAME: &'static str = "BodyReadout";}
+/// CONTRACTS 4.3; frozen tag `echo.readout`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Readout {
@@ -1493,6 +2500,7 @@ pub r#snapshot_id: String,
 pub r#projected_at_ns: DecimalU64,
 }
 impl super::WireMessage for Readout {const NAME: &'static str = "Readout";}
+/// CONTRACTS 4.1; frozen tag `echo.query-filter`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct QueryFilter {
@@ -1508,6 +2516,7 @@ pub r#kinds: Vec<String>,
 pub r#include_retracted: Option<bool>,
 }
 impl super::WireMessage for QueryFilter {const NAME: &'static str = "QueryFilter";}
+/// CONTRACTS 4.1; frozen tag `echo.query-item`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct QueryItem {
@@ -1520,6 +2529,7 @@ pub r#source: String,
 pub r#retracted: bool,
 }
 impl super::WireMessage for QueryItem {const NAME: &'static str = "QueryItem";}
+/// CONTRACTS 4.3; frozen tag `echo.query`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Query {
@@ -1531,6 +2541,7 @@ pub r#filter: Option<QueryFilter>,
 pub r#limit: DecimalU64,
 }
 impl super::WireMessage for Query {const NAME: &'static str = "Query";}
+/// CONTRACTS 4.3; frozen tag `echo.query-result`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct QueryResult {
@@ -1540,6 +2551,7 @@ pub r#status: QueryStatus,
 pub r#items: Vec<QueryItem>,
 }
 impl super::WireMessage for QueryResult {const NAME: &'static str = "QueryResult";}
+/// CONTRACTS 4.3; frozen tag `echo.approval-decision`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ApprovalDecision {
@@ -1548,6 +2560,7 @@ pub r#approval_id: String,
 pub r#decision: ApprovalChoice,
 }
 impl super::WireMessage for ApprovalDecision {const NAME: &'static str = "ApprovalDecision";}
+/// CONTRACTS 4.3; frozen tag `echo.output-cancel`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct OutputCancel {
@@ -1555,6 +2568,7 @@ pub r#schema_version: u32,
 pub r#output_id: String,
 }
 impl super::WireMessage for OutputCancel {const NAME: &'static str = "OutputCancel";}
+/// O 13.1,13.2; frozen tag `echo.hook-coefficients`. Superseded (no successor): P5-21; v2.0 §9.1: per-direction coefficients are carried by ModulationEnvelopeV2
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct HookCoefficients {
@@ -1567,7 +2581,8 @@ pub r#dtype: String,
 #[serde(serialize_with = "super::scalar::finite")]
 pub r#conversion_tolerance: f64,
 }
-impl super::WireMessage for HookCoefficients {const NAME: &'static str = "HookCoefficients";}
+impl super::WireMessage for HookCoefficients {const NAME: &'static str = "HookCoefficients"; const SUPERSEDED: bool = true;}
+/// O 13.2; S 19; frozen tag `echo.modulation`. Superseded (successor ModulationEnvelopeV2): P5-21; v2.0 §9.1: direction set, nature and learned coefficients
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ModulationEnvelope {
@@ -1585,7 +2600,8 @@ pub r#hooks: Vec<HookCoefficients>,
 pub r#total_bound: f64,
 pub r#effect_receipt_digest: HexBytes,
 }
-impl super::WireMessage for ModulationEnvelope {const NAME: &'static str = "ModulationEnvelope";}
+impl super::WireMessage for ModulationEnvelope {const NAME: &'static str = "ModulationEnvelope"; const SUPERSEDED: bool = true;}
+/// CONTRACTS 5.1; frozen tag `echo.task-input`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TaskInput {
@@ -1599,6 +2615,7 @@ pub r#max_tokens: DecimalU64,
 pub r#max_duration_ns: DecimalU64,
 }
 impl super::WireMessage for TaskInput {const NAME: &'static str = "TaskInput";}
+/// S 11,20; frozen tag `echo.action-plan`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ActionPlan {
@@ -1613,6 +2630,7 @@ pub r#dependencies: Vec<ObjectRef>,
 pub r#deadline_ns: DecimalI64,
 }
 impl super::WireMessage for ActionPlan {const NAME: &'static str = "ActionPlan";}
+/// S 20; O 16.3; frozen tag `echo.action-lifecycle`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ActionLifecycle {
@@ -1626,6 +2644,7 @@ pub r#request: Option<ObjectRef>,
 pub r#actual_result: Option<ObjectRef>,
 }
 impl super::WireMessage for ActionLifecycle {const NAME: &'static str = "ActionLifecycle";}
+/// CONTRACTS 5.1; frozen tag `echo.plan-carrier-receipt`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct PlanAndCarrierReceipt {
@@ -1645,6 +2664,37 @@ pub r#intermediate_results: Vec<ObjectRef>,
 pub r#usage: ObjectRef,
 }
 impl super::WireMessage for PlanAndCarrierReceipt {const NAME: &'static str = "PlanAndCarrierReceipt";}
+/// v2.0 §9.1 β_k·x_k for k ∈ R⁺, §9.2; frozen tag `echo.learned-coefficient`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LearnedCoefficient {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#coefficient: f64,
+}
+impl super::WireMessage for LearnedCoefficient {const NAME: &'static str = "LearnedCoefficient";}
+/// v2.0 §9.1, §9.2; O 13.2; S 19; ADR 0008 §3; frozen tag `echo.modulation-v2`. Supersedes [`ModulationEnvelope`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ModulationEnvelopeV2 {
+pub r#schema_version: u32,
+pub r#snapshot_id: String,
+pub r#projected_at_ns: DecimalU64,
+pub r#x_digest: HexBytes,
+pub r#r_digest: HexBytes,
+pub r#theta_digest: HexBytes,
+pub r#carrier: ObjectRef,
+pub r#model: ObjectRef,
+pub r#tokenizer: ObjectRef,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#total_bound: f64,
+pub r#effect_receipt_digest: HexBytes,
+pub r#direction_set: ObjectRef,
+pub r#nature_coefficients: NatureReal,
+pub r#learned_coefficients: Vec<LearnedCoefficient>,
+}
+impl super::WireMessage for ModulationEnvelopeV2 {const NAME: &'static str = "ModulationEnvelopeV2";}
 /// Conformance dispatch through every generated DTO and both typed codecs.
 pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contract::Limits) -> Result<(), String> {match name {
 "ObjectRef" => super::verify_typed::<ObjectRef>(value, limits),
@@ -1654,6 +2704,13 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "DegradedStatus" => super::verify_typed::<DegradedStatus>(value, limits),
 "LineageHeader" => super::verify_typed::<LineageHeader>(value, limits),
 "AuditExtension" => super::verify_typed::<AuditExtension>(value, limits),
+"NatureVector" => super::verify_typed::<NatureVector>(value, limits),
+"NatureScale" => super::verify_typed::<NatureScale>(value, limits),
+"NatureReal" => super::verify_typed::<NatureReal>(value, limits),
+"TrilingualText" => super::verify_typed::<TrilingualText>(value, limits),
+"PersonRelation" => super::verify_typed::<PersonRelation>(value, limits),
+"VersionedEnvironmentV2" => super::verify_typed::<VersionedEnvironmentV2>(value, limits),
+"LineageHeaderV2" => super::verify_typed::<LineageHeaderV2>(value, limits),
 "EffectContract" => super::verify_typed::<EffectContract>(value, limits),
 "QualificationCertificate" => super::verify_typed::<QualificationCertificate>(value, limits),
 "ConsolidationSlice" => super::verify_typed::<ConsolidationSlice>(value, limits),
@@ -1675,6 +2732,32 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "EffectiveCausalProjection" => super::verify_typed::<EffectiveCausalProjection>(value, limits),
 "ConsolidationBinding" => super::verify_typed::<ConsolidationBinding>(value, limits),
 "ThetaModuleSourceBinding" => super::verify_typed::<ThetaModuleSourceBinding>(value, limits),
+"EvidenceAllocation" => super::verify_typed::<EvidenceAllocation>(value, limits),
+"EvidenceGroup" => super::verify_typed::<EvidenceGroup>(value, limits),
+"Tendency" => super::verify_typed::<Tendency>(value, limits),
+"RSnapshot" => super::verify_typed::<RSnapshot>(value, limits),
+"ThetaSnapshot" => super::verify_typed::<ThetaSnapshot>(value, limits),
+"GrowthCommand" => super::verify_typed::<GrowthCommand>(value, limits),
+"LawParameters" => super::verify_typed::<LawParameters>(value, limits),
+"LawVersion" => super::verify_typed::<LawVersion>(value, limits),
+"FuseConfig" => super::verify_typed::<FuseConfig>(value, limits),
+"GenesisManifestV2" => super::verify_typed::<GenesisManifestV2>(value, limits),
+"ThetaValues" => super::verify_typed::<ThetaValues>(value, limits),
+"TendencyChange" => super::verify_typed::<TendencyChange>(value, limits),
+"ThetaChange" => super::verify_typed::<ThetaChange>(value, limits),
+"RecomputeRecord" => super::verify_typed::<RecomputeRecord>(value, limits),
+"MigrationRecord" => super::verify_typed::<MigrationRecord>(value, limits),
+"LedgerEntry" => super::verify_typed::<LedgerEntry>(value, limits),
+"NatureAppraisalRecord" => super::verify_typed::<NatureAppraisalRecord>(value, limits),
+"TendencyMatch" => super::verify_typed::<TendencyMatch>(value, limits),
+"SituationMatchRecord" => super::verify_typed::<SituationMatchRecord>(value, limits),
+"TendencyConcept" => super::verify_typed::<TendencyConcept>(value, limits),
+"TendencyCandidateRecord" => super::verify_typed::<TendencyCandidateRecord>(value, limits),
+"TeachingAnnotation" => super::verify_typed::<TeachingAnnotation>(value, limits),
+"LieAnnotation" => super::verify_typed::<LieAnnotation>(value, limits),
+"SameMatterAnnotation" => super::verify_typed::<SameMatterAnnotation>(value, limits),
+"ReinterpretationLink" => super::verify_typed::<ReinterpretationLink>(value, limits),
+"EventAttributesRecord" => super::verify_typed::<EventAttributesRecord>(value, limits),
 "EventEnvelope" => super::verify_typed::<EventEnvelope>(value, limits),
 "FactItem" => super::verify_typed::<FactItem>(value, limits),
 "FactProjection" => super::verify_typed::<FactProjection>(value, limits),
@@ -1692,6 +2775,13 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "FastDriveProposal" => super::verify_typed::<FastDriveProposal>(value, limits),
 "CoreTransaction" => super::verify_typed::<CoreTransaction>(value, limits),
 "CoreCommitResult" => super::verify_typed::<CoreCommitResult>(value, limits),
+"ProposalBindingV2" => super::verify_typed::<ProposalBindingV2>(value, limits),
+"SemanticCandidateV2" => super::verify_typed::<SemanticCandidateV2>(value, limits),
+"ConceptProposalV2" => super::verify_typed::<ConceptProposalV2>(value, limits),
+"LearnedComponent" => super::verify_typed::<LearnedComponent>(value, limits),
+"FastStateSnapshotV2" => super::verify_typed::<FastStateSnapshotV2>(value, limits),
+"CoreTransactionV2" => super::verify_typed::<CoreTransactionV2>(value, limits),
+"CoreCommitResultV2" => super::verify_typed::<CoreCommitResultV2>(value, limits),
 "UserUtterance" => super::verify_typed::<UserUtterance>(value, limits),
 "UserText" => super::verify_typed::<UserText>(value, limits),
 "UserRetraction" => super::verify_typed::<UserRetraction>(value, limits),
@@ -1725,4 +2815,8 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "ActionPlan" => super::verify_typed::<ActionPlan>(value, limits),
 "ActionLifecycle" => super::verify_typed::<ActionLifecycle>(value, limits),
 "PlanAndCarrierReceipt" => super::verify_typed::<PlanAndCarrierReceipt>(value, limits),
+"LearnedCoefficient" => super::verify_typed::<LearnedCoefficient>(value, limits),
+"ModulationEnvelopeV2" => super::verify_typed::<ModulationEnvelopeV2>(value, limits),
 _ => Err("unknown message".into()), }}
+/// Message types kept only to read old data and for tests; no runtime path may produce them.
+pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "HookCoefficients", "ModulationEnvelope"];
