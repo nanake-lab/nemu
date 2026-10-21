@@ -56,6 +56,11 @@ def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
     cases = message["rules"].get("cases")
     if cases:
         discriminator = message["rules"].get("discriminator", "kind")
+        # Choose among declared cases only: an enum may gain values that an older,
+        # superseded message never accepted (e.g. Lineage EXPERIMENT for LineageHeader).
+        # For every message whose cases cover its enum this is the previous choice.
+        declared = sorted(int(k) for k in cases)
+        out[discriminator] = declared[seed % len(declared)]
         case = cases[str(out[discriminator])]
         required = case.get("required", [])
         allowed = set(
@@ -81,9 +86,180 @@ def requests() -> list[dict[str, Any]]:
         for n in SCHEMA["messages"]
         for s in range(3)
     ]
-    for name in ("Anchor", "GazeTarget", "BodyAction"):
+    for name in ("Anchor", "GazeTarget", "BodyAction", "LedgerEntry"):
         base.extend(
             dict(name=name, op="encode", value=sample(name, seed), limits=LIMITS)
             for seed in range(3, len(SCHEMA["messages"][name]["rules"]["cases"]))
         )
     return base
+
+
+def request(name: str, value: dict[str, Any]) -> dict[str, Any]:
+    return dict(name=name, op="encode", value=value, limits=LIMITS)
+
+
+def unit(c: float, e: float, q: float, a: float) -> dict[str, Any]:
+    return dict(schema_version=1, connection=c, empathy=e, curiosity=q, achievement=a)
+
+
+def targeted_legal() -> list[dict[str, Any]]:
+    """P5-21 vectors for values that seeded samples do not reach (new enum codes) and
+    semantically realistic v2 records. Additional vectors only; never replace frozen ones."""
+    e = SCHEMA["enums"]
+    rs, fc = e["RunStatus"], e["FailureCode"]
+    reason = dict(schema_version=1, code=fc["GROWTH_OFF_REHEARSAL"])
+    tendency = sample("Tendency", 0) | dict(
+        tendency_id="caretaker-closeness",
+        direction=unit(1.0, 0.0, 0.0, 0.0),
+        evidence_a=1.0,
+        evidence_b=4.0,
+        h_hat=0.1,
+        group_count="3",
+        flip_count="0",
+        last_sign=e["EvidenceSign"]["SIGN_POSITIVE"],
+        pi=0.875,
+        typical_magnitude=0.25,
+        relation=dict(
+            schema_version=1, person_id="u*", kind=e["RelationKind"]["CLOSENESS"]
+        ),
+        attachment_prior=20.0,
+    )
+    appraisal = sample("NatureAppraisalRecord", 1) | dict(
+        appraisal=unit(0.5, -0.25, 0.75, -1.0), persons=["person-a", "u*"]
+    )
+    match = sample("SituationMatchRecord", 0) | dict(
+        matches=[
+            dict(schema_version=1, tendency_id="t-1", mu=0.5),
+            dict(schema_version=1, tendency_id="t-2", mu=1.0),
+        ]
+    )
+    return [
+        request("FailureReason", reason),
+        request(
+            "DegradedStatus",
+            dict(schema_version=1, states=[rs["NO_GROWTH"]], reasons=[reason]),
+        ),
+        request(
+            "DegradedStatus",
+            dict(
+                schema_version=1,
+                states=[
+                    rs["GROWTH_PAUSED"],
+                    rs["GROWTH_REVIEW_PENDING"],
+                    rs["A_DEGRADED"],
+                    rs["M_DEGRADED"],
+                ],
+                reasons=[],
+            ),
+        ),
+        request("Tendency", tendency),
+        request("NatureAppraisalRecord", appraisal),
+        request("SituationMatchRecord", match),
+    ]
+
+
+def targeted_illegal() -> list[dict[str, Any]]:
+    """P5-21 frozen rejections: out-of-range a(e), μ, π; lineage and ledger variants;
+    duplicate set keys; removed fields. Each is labelled with the rule it breaks."""
+    e = SCHEMA["enums"]
+    lineage = e["Lineage"]
+    digest = "11" * 32
+    cases: list[tuple[str, str, dict[str, Any]]] = []
+
+    def bad(label: str, name: str, value: dict[str, Any]) -> None:
+        cases.append((label, name, value))
+
+    bad("a(e) above 1", "NatureVector", unit(1.5, 0.0, 0.0, 0.0))
+    appraisal = sample("NatureAppraisalRecord", 0)
+    bad(
+        "a(e) below -1",
+        "NatureAppraisalRecord",
+        appraisal | dict(appraisal=unit(0.0, -1.0000001, 0.0, 0.0)),
+    )
+    bad("mu above 1", "TendencyMatch", dict(schema_version=1, tendency_id="t", mu=1.5))
+    bad("mu below 0", "TendencyMatch", dict(schema_version=1, tendency_id="t", mu=-0.1))
+    bad("pi above 1", "Tendency", sample("Tendency", 0) | dict(pi=1.5))
+    bad(
+        "pi below -1",
+        "TendencyChange",
+        sample("TendencyChange", 0) | dict(pi_after=-2.0),
+    )
+    header = dict(schema_version=1, created_at_ns="0")
+    bad(
+        "EXPERIMENT carries genesis digest",
+        "LineageHeaderV2",
+        header
+        | dict(
+            lineage=lineage["EXPERIMENT"],
+            world_id="w",
+            world_seed="1",
+            genesis_manifest_digest=digest,
+        ),
+    )
+    bad(
+        "EXPERIMENT without seed",
+        "LineageHeaderV2",
+        header | dict(lineage=lineage["EXPERIMENT"], world_id="w"),
+    )
+    bad(
+        "LIFE without genesis",
+        "LineageHeaderV2",
+        header | dict(lineage=lineage["LIFE"]),
+    )
+    bad(
+        "REHEARSAL carries world",
+        "LineageHeaderV2",
+        header | dict(lineage=lineage["REHEARSAL"], world_id="w", world_seed="1"),
+    )
+    bad(
+        "superseded header cannot express EXPERIMENT",
+        "LineageHeader",
+        header | dict(lineage=lineage["EXPERIMENT"]),
+    )
+    entry = sample("LedgerEntry", 0)
+    bad(
+        "ledger variant field mismatch",
+        "LedgerEntry",
+        {k: v for k, v in entry.items() if k != "tendency_change"}
+        | dict(theta_change=sample("ThetaChange", 0)),
+    )
+    command = sample("GrowthCommand", 2)
+    bad(
+        "review conclusion without record",
+        "GrowthCommand",
+        {k: v for k, v in command.items() if k != "review_record"},
+    )
+    bad(
+        "pause carries verdict",
+        "GrowthCommand",
+        sample("GrowthCommand", 0) | dict(verdict=e["ReviewVerdict"]["LAW_CORRECT"]),
+    )
+    t = sample("Tendency", 0)
+    bad(
+        "duplicate tendency in R",
+        "RSnapshot",
+        sample("RSnapshot", 0) | dict(tendencies=[t, t]),
+    )
+    learned = dict(schema_version=1, tendency_id="t", value=0.5)
+    bad(
+        "duplicate learned component",
+        "FastStateSnapshotV2",
+        sample("FastStateSnapshotV2", 0) | dict(learned=[learned, learned]),
+    )
+    bad(
+        "unknown RunStatus code",
+        "DegradedStatus",
+        dict(schema_version=1, states=[14], reasons=[]),
+    )
+    bad(
+        "removed field hooks",
+        "ModulationEnvelopeV2",
+        sample("ModulationEnvelopeV2", 0) | dict(hooks=[]),
+    )
+    bad(
+        "removed field scope_interpreter",
+        "VersionedEnvironmentV2",
+        sample("VersionedEnvironmentV2", 0)
+        | dict(scope_interpreter=sample("ObjectRef", 0)),
+    )
+    return [dict(label=label, request=request(n, v)) for label, n, v in cases]

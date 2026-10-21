@@ -32,9 +32,19 @@ export interface Schema {
           { required?: string[]; optional?: string[]; values?: Record<string, number[]> }
         >;
       };
+      /** Lifecycle metadata only (P5-21); never changes encoding. */
+      superseded?: Supersession;
+      supersedes?: string;
+      reserved?: number[];
     }
   >;
   enums: Record<string, Record<string, number>>;
+  superseded_enums?: Record<string, Supersession>;
+  superseded_values?: Record<string, Record<string, Supersession>>;
+}
+export interface Supersession {
+  by: string;
+  reason: string;
 }
 export interface Limits {
   max_bytes: number;

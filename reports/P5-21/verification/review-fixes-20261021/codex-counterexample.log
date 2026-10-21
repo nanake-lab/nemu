@@ -1,0 +1,4 @@
+reuse ['message ProposalBindingV2 field 20 changed', "VersionedEnvironmentV3 field 4 reuses VersionedEnvironmentV2's reserved number 4"]
+drop  ['message ProposalBindingV2 field 20 changed', "VersionedEnvironmentV3 must inherit VersionedEnvironmentV2's reserved number 4"]
+vs p5-01 reuse ["VersionedEnvironmentV3 field 4 reuses VersionedEnvironmentV2's reserved number 4"]
+vs p5-01 drop  ["VersionedEnvironmentV3 must inherit VersionedEnvironmentV2's reserved number 4"]
