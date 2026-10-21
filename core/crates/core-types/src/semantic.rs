@@ -7,9 +7,9 @@
 //! v2.0 states between law parameters. They read nothing but their argument.
 use crate::contract::{Result, require};
 use crate::generated::{
-    GenesisManifestV2, LawParameters, NatureScale, NatureVector, RelationKind,
-    SituationMatchRecord, Tendency, TendencyCandidateRecord, TendencyChange, ThetaSnapshot,
-    ThetaValues,
+    EvidenceGroupV2, EvidenceSign, GenesisManifestV2, LawParameters, NatureScale, NatureVector,
+    PersonRelation, RelationKind, SituationMatchRecord, Tendency, TendencyCandidateRecord,
+    TendencyChange, TendencyV2, ThetaSnapshot, ThetaValues,
 };
 use std::cmp::Ordering;
 
@@ -67,31 +67,96 @@ pub fn check_candidate(c: &TendencyCandidateRecord) -> Result<()> {
     check_direction(&c.direction)
 }
 
-/// Counting invariants of a tendency under the v2.0 §5.2 reference form.
-pub fn check_tendency(t: &Tendency) -> Result<()> {
-    check_direction(&t.direction)?;
+/// The stored counts of one tendency, shared by `Tendency` and `TendencyV2`.
+struct Counts<'a> {
+    direction: &'a NatureVector,
+    pi: f64,
+    a: f64,
+    b: f64,
+    groups: u64,
+    flips: u64,
+    last_sign: Option<EvidenceSign>,
+    prior: Option<f64>,
+    relation: Option<&'a PersonRelation>,
+}
+
+fn check_counts(t: &Counts<'_>) -> Result<()> {
+    check_direction(t.direction)?;
     require(t.pi > -1.0 && t.pi < 1.0, "pi must lie in (-1, 1)")?;
     // B_k = n₀ + κ_k + Σ ω·W·|S| > 0 and |A_k| = |Σ ω·W·S| ≤ Σ ω·W·|S| < B_k.
-    require(t.evidence_b > 0.0, "B must be positive")?;
-    require(t.evidence_a.abs() <= t.evidence_b, "|A| must not exceed B")?;
-    let (groups, flips) = (t.group_count.0, t.flip_count.0);
+    require(t.b > 0.0, "B must be positive")?;
+    require(t.a.abs() <= t.b, "|A| must not exceed B")?;
     require(
-        flips <= groups.saturating_sub(1),
+        t.flips <= t.groups.saturating_sub(1),
         "flip count exceeds adjacent group pairs",
     )?;
     require(
-        groups > 0 || t.last_sign.is_none(),
+        t.groups > 0 || t.last_sign.is_none(),
         "no group, so no last sign",
     )?;
-    if t.attachment_prior.is_some() {
+    if t.prior.is_some() {
         require(
             t.relation
-                .as_ref()
                 .is_some_and(|r| r.kind == RelationKind::CLOSENESS),
             "attachment prior belongs to a closeness tendency",
         )?;
     }
     Ok(())
+}
+
+/// Counting invariants of a tendency under the v2.0 §5.2 reference form.
+pub fn check_tendency(t: &Tendency) -> Result<()> {
+    check_counts(&Counts {
+        direction: &t.direction,
+        pi: t.pi,
+        a: t.evidence_a,
+        b: t.evidence_b,
+        groups: t.group_count.0,
+        flips: t.flip_count.0,
+        last_sign: t.last_sign,
+        prior: t.attachment_prior,
+        relation: t.relation.as_ref(),
+    })
+}
+
+/// `check_tendency` for the successor (ADR 0016), plus: an empty typical-magnitude
+/// weight U = Σ ω·μ carries no sum M = Σ ω·μ·p_c.
+pub fn check_tendency_v2(t: &TendencyV2) -> Result<()> {
+    check_counts(&Counts {
+        direction: &t.direction,
+        pi: t.pi,
+        a: t.evidence_a,
+        b: t.evidence_b,
+        groups: t.group_count.0,
+        flips: t.flip_count.0,
+        last_sign: t.last_sign,
+        prior: t.attachment_prior,
+        relation: t.relation.as_ref(),
+    })?;
+    require(
+        t.magnitude_weight != 0.0 || t.magnitude_sum == 0.0,
+        "magnitude sum without magnitude weight",
+    )
+}
+
+/// The allocations of one tendency across R's evidence groups carry the ordinals
+/// 0, 1, …, N_k − 1, each exactly once (ADR 0016): the order G replays them in.
+pub fn check_allocation_ordinals(t: &TendencyV2, groups: &[EvidenceGroupV2]) -> Result<()> {
+    let mut ordinals: Vec<u64> = groups
+        .iter()
+        .flat_map(|g| g.allocations.iter())
+        .filter(|a| a.tendency_id == t.tendency_id)
+        .map(|a| a.ordinal.0)
+        .collect();
+    ordinals.sort_unstable();
+    require(
+        u64::try_from(ordinals.len()).is_ok_and(|n| n == t.group_count.0),
+        "allocation count differs from the group count",
+    )?;
+    require(
+        ordinals.iter().zip(0u64..).all(|(o, i)| *o == i),
+        "allocation ordinals are not 0..N-1 exactly once",
+    )
 }
 
 /// A ledger R change names a tendency entering, changing or leaving R.

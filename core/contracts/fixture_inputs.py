@@ -155,6 +155,37 @@ def targeted_legal() -> list[dict[str, Any]]:
         request("Tendency", tendency),
         request("NatureAppraisalRecord", appraisal),
         request("SituationMatchRecord", match),
+    ] + targeted_legal_p5_32(tendency)
+
+
+def p5_32_allocation(tendency_id: str, ordinal: str, projection: float | None) -> dict[str, Any]:
+    out: dict[str, Any] = dict(
+        schema_version=1,
+        tendency_id=tendency_id,
+        support=-0.5,
+        intensity=1.25,
+        share=0.6,
+        ordinal=ordinal,
+        mu=0.75,
+    )
+    if projection is not None:
+        out["projection"] = projection
+    return out
+
+
+def targeted_legal_p5_32(tendency: dict[str, Any]) -> list[dict[str, Any]]:
+    """P5-32 (ADR 0016): realistic successors with the replay fields set."""
+    v2 = tendency | dict(magnitude_sum=-0.125, magnitude_weight=2.5)
+    experience = p5_32_allocation("t-1", "4", -0.25)
+    teaching = p5_32_allocation("t-2", "0", None) | dict(support=1.0, mu=1.0)
+    group = sample("EvidenceGroupV2", 0) | dict(allocations=[experience, teaching])
+    snapshot = sample("RSnapshotV2", 0) | dict(tendencies=[v2])
+    return [
+        request("TendencyV2", v2),
+        request("EvidenceAllocationV2", experience),
+        request("EvidenceAllocationV2", teaching),
+        request("EvidenceGroupV2", group),
+        request("RSnapshotV2", snapshot),
     ]
 
 
@@ -261,5 +292,36 @@ def targeted_illegal() -> list[dict[str, Any]]:
         "VersionedEnvironmentV2",
         sample("VersionedEnvironmentV2", 0)
         | dict(scope_interpreter=sample("ObjectRef", 0)),
+    )
+    allocation = p5_32_allocation("t", "0", 0.5)
+    bad("allocation mu above 1", "EvidenceAllocationV2", allocation | dict(mu=1.5))
+    bad("allocation mu below 0", "EvidenceAllocationV2", allocation | dict(mu=-0.1))
+    bad(
+        "allocation without ordinal",
+        "EvidenceAllocationV2",
+        {k: v for k, v in allocation.items() if k != "ordinal"},
+    )
+    bad("ordinal above u64", "EvidenceAllocationV2", allocation | dict(ordinal=str(2**64)))
+    v2 = sample("TendencyV2", 0)
+    bad("magnitude weight below 0", "TendencyV2", v2 | dict(magnitude_weight=-1.0))
+    bad(
+        "tendency v2 without magnitude sum",
+        "TendencyV2",
+        {k: v for k, v in v2.items() if k != "magnitude_sum"},
+    )
+    bad(
+        "duplicate allocation in group v2",
+        "EvidenceGroupV2",
+        sample("EvidenceGroupV2", 0) | dict(allocations=[allocation, allocation]),
+    )
+    bad(
+        "duplicate tendency in R v2",
+        "RSnapshotV2",
+        sample("RSnapshotV2", 0) | dict(tendencies=[v2, v2]),
+    )
+    bad(
+        "superseded allocation in group v2",
+        "EvidenceGroupV2",
+        sample("EvidenceGroupV2", 0) | dict(allocations=[sample("EvidenceAllocation", 0)]),
     )
     return [dict(label=label, request=request(n, v)) for label, n, v in cases]
