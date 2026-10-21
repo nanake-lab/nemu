@@ -1,0 +1,39 @@
+
+Running 1 test using 1 worker
+
+(node:38860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable (8.5s)
+
+
+  1) apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "code": "PROFILE_FETCH_FAILED",
+    +     "message": "Failed to fetch profile: Failed to fetch",
+    +   },
+    + ]
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+       97 |         }),
+       98 |       )
+    >  99 |       .toEqual([]);
+          |        ^
+      100 |     await expect
+      101 |       .poll(() =>
+      102 |         stage.evaluate(
+        at C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\apps\desktop\tests\voice.spec.ts:99:8
+
+    Error Context: reports\P4-01\e2e-v4\test-results\electron\voice-P4-01-utility-ports--f3975-Worklet-capture-and-disable\error-context.md
+
+  1 failed
+    apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable 

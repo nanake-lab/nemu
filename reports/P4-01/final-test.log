@@ -1,0 +1,21 @@
+COMMAND: pnpm test
+WORKDIR: C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu
+STARTED_UTC: 2026-10-21T07:25:51.0590869Z
+ENDED_UTC: 2026-10-21T07:25:55.7374508Z
+EXIT_CODE: 0
+=== STDOUT ===
+
+ RUN  v5.0.4 C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu
+
+
+ Test Files  32 passed (32)
+      Tests  459 passed (459)
+   Start at  15:25:51
+   Duration  4.01s (tests 41%, transform 32%, import 25%, worker 2%)
+
+    Isolate  32 workers spawned · ~274ms startup each (spawn + environment, per file)
+             at least ~311ms faster with isolate: false — reuses workers across files instead of one per file
+
+
+=== STDERR ===
+$ vitest run

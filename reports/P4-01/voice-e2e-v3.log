@@ -1,0 +1,31 @@
+
+Running 1 test using 1 worker
+
+(node:33576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable (7.9s)
+
+
+  1) apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 10
+    Received:   0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      80 |         }),
+      81 |       )
+    > 82 |       .toBeGreaterThan(10);
+         |        ^
+      83 |     await application.evaluate(({ app }) => {
+      84 |       const g = app as unknown as {
+      85 |         __nemu_channels__: { sendStageCommand(type: string, payload: unknown): void };
+        at C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\apps\desktop\tests\voice.spec.ts:82:8
+
+    Error Context: reports\P4-01\e2e-v3\test-results\electron\voice-P4-01-utility-ports--f3975-Worklet-capture-and-disable\error-context.md
+
+  1 failed
+    apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable 

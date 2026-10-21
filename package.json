@@ -34,7 +34,13 @@
     "test:core-contracts": "python core/contracts/verify.py",
     "board": "python tools/status/serve_board.py",
     "probe:supplement": "python workers/model-adapter/probe/run_supplement.py",
-    "probe:chat": "node workers/model-adapter/probe/launch_chat.mjs"
+    "probe:chat": "node workers/model-adapter/probe/launch_chat.mjs",
+    "asr:models": "tsx packages/voice/src/asr/models.ts download",
+    "asr:public": "tsx packages/voice/src/asr/public-data.ts",
+    "eval:asr": "tsx packages/voice/src/asr/evaluate.ts",
+    "measure:asr": "tsx packages/voice/src/asr/measure.ts",
+    "asr:user": "tsx packages/voice/src/asr/user-data.ts",
+    "asr:latency": "tsx packages/voice/src/asr/latency.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
@@ -52,6 +58,7 @@
     "pixelmatch": "^8.0.0",
     "pngjs": "7.0.0",
     "prettier": "3.9.10",
+    "tsx": "4.21.0",
     "typescript": "6.0.3",
     "typescript-eslint": "8.71.2",
     "vite": "7.3.7",
