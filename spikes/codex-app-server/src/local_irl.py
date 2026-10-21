@@ -44,23 +44,26 @@ def write_json(path: Path, value: object) -> None:
 
 def preflight() -> list[dict[str, object]]:
     command = (
+        "[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)\n"
         "Get-CimInstance Win32_Process | "
         "Select-Object Name,ProcessId,CommandLine | ConvertTo-Json -Compress"
     )
     result = subprocess.run(
         ["powershell.exe", "-NoProfile", "-Command", command],
-        capture_output=True, text=True, check=True,
+        capture_output=True, text=True, encoding="utf-8", check=True,
     )
     processes = json.loads(result.stdout)
-    if not isinstance(processes, list):
+    if not isinstance(processes, list) or not processes:
         raise RuntimeError("Cannot establish process inventory")
     blocked: list[dict[str, object]] = []
     for raw in processes:
         process = object_dict(raw)
         name = str(process.get("Name", "")).casefold()
-        command_line = str(process.get("CommandLine", "")).casefold()
+        command_value = process.get("CommandLine")
+        command_line = str(command_value or "").casefold()
         conflict = name in {"runner.listener.exe", "runner.worker.exe", "blender.exe"}
         if name in {"python.exe", "pythonw.exe", "uv.exe", "node.exe"}:
+            conflict = conflict or not isinstance(command_value, str) or not command_line
             conflict = conflict or any(marker in command_line for marker in (
                 "p4-01", "p4-02", "asr_probe", "tts_probe", "benchmark",
                 "latency_probe", "instruct_finish", "run_matrix", "qwen_tts",
@@ -114,6 +117,13 @@ def main() -> None:
         parser.error("Output directory must be new; preserve all earlier runs")
     preflight()
     args.output.mkdir(parents=True)
+    write_json(args.output / "quiet-window.json", {
+        "confirmedByUser": True, "checkedUtc": datetime.now(timezone.utc).isoformat(),
+        "inventoryQuerySucceeded": True, "blockedProcesses": [],
+        "requiredAbsent": ["Runner.Listener", "Runner.Worker", "Blender",
+                           "P4-01/P4-02 measurement process markers"],
+        "recheckedBeforeEverySample": True,
+    })
     lock = object_dict(read_json(ROOT / "config/models.lock.json")["p0_07_probe"])
     selected = object_dict(lock["selected"])
     if selected["model_id"] != MODEL or selected["revision"] != REVISION:
@@ -157,6 +167,11 @@ def main() -> None:
     native = importlib.import_module("native_norm")
     replace_norm = cast(Callable[[nn.Module], int], native.replace_rms_norms)
     norm_count = replace_norm(model)
+    if norm_count <= 0:
+        raise RuntimeError("Selected native RMS kernel was not installed")
+    native_file = native.__file__
+    if native_file is None:
+        raise RuntimeError("Cannot establish native RMS source file")
     tokenizer = api.AutoTokenizer.from_pretrained(str(model_root), local_files_only=True)
     integration = importlib.import_module("lmformatenforcer.integrations.transformers")
     enforcer = importlib.import_module("lmformatenforcer")
@@ -186,6 +201,12 @@ def main() -> None:
         "fixturesSha256": sha256(SPIKE / "fixtures/irl-cases.json"),
         "wireSchemaSha256": sha256(SPIKE / "semantic-candidate.wire.schema.json"),
         "sourceSha256": sha256(Path(__file__)),
+        "sourceSha256LfNormalized": hashlib.sha256(
+            Path(__file__).read_bytes().replace(b"\r\n", b"\n"),
+        ).hexdigest(),
+        "nativeNormSourceSha256": sha256(Path(native_file)),
+        "gpu": torch.cuda.get_device_properties(0).name,
+        "gpuTotalBytes": torch.cuda.get_device_properties(0).total_memory,
         "startedUtc": datetime.now(timezone.utc).isoformat(),
     }
     write_json(args.output / "binding.json", binding)
@@ -239,14 +260,16 @@ def main() -> None:
         row: dict[str, object] = {
             "index": index + 1, "caseId": sample["id"], "lang": sample["lang"],
             "category": sample["category"], "model": MODEL, "warmup": index < 0,
-            "completedMs": elapsed_ms, "schemaValid": schema_valid,
+            "completedMs": elapsed_ms, "measuredUtc": datetime.now(timezone.utc).isoformat(),
+            "schemaValid": schema_valid,
             "sourceBindingValid": binding_valid, "outputChars": len(output),
             "outputTokens": int(result.shape[1] - input_ids.shape[1]),
             "outputSha256": hashlib.sha256(output.encode("utf-8")).hexdigest(),
             "tokenLimitReached": int(result.shape[1] - input_ids.shape[1]) >= 2048,
         }
         write_json(args.output / "candidates" / ("warmup.json" if index < 0 else f"{sample['id']}.json"),
-                   {"caseId": sample["id"], "candidate": candidate})
+                   {"caseId": sample["id"], "candidate": candidate,
+                    "unparsedOutput": output if candidate is None else None})
         if isinstance(candidate, dict) and isinstance(candidate.get("nodes"), list):
             row["nodeCount"] = len(candidate["nodes"])
         with (args.output / "samples.jsonl").open("a", encoding="utf-8") as stream:

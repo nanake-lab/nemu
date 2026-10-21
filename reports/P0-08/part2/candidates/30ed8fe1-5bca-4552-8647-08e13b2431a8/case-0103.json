@@ -1,0 +1,87 @@
+{
+  "caseId": "case-0103",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0103",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0103"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0103"
+        ],
+        "sourceSpan": [
+          4,
+          9
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "35号之前"
+      },
+      {
+        "id": "r3",
+        "sourceRefs": [
+          "p0-08-0103"
+        ],
+        "sourceSpan": [
+          11,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "这本书"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0103"
+        ],
+        "sourceSpan": [
+          0,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "读完",
+        "roles": [
+          {
+            "role": "读者",
+            "value": "我"
+          },
+          {
+            "role": "对象",
+            "value": "这本书"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "35号之前"
+      }
+    ]
+  }
+}

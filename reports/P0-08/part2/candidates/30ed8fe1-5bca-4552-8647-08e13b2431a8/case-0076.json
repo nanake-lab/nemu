@@ -1,0 +1,118 @@
+{
+  "caseId": "case-0076",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0076",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          8,
+          10
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "周二"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          12,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "周26天"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          3,
+          10
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "said_content",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "我"
+          },
+          {
+            "role": "content",
+            "value": "周二"
+          }
+        ],
+        "value": "周二",
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-2",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          11,
+          16
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "said_content",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "我"
+          },
+          {
+            "role": "content",
+            "value": "周26天"
+          }
+        ],
+        "value": "周26天",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          0,
+          17
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "我说的不是周二，是周26天。"
+      }
+    ]
+  }
+}

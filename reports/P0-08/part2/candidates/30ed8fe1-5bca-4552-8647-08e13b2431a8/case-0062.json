@@ -1,0 +1,87 @@
+{
+  "caseId": "case-0062",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0062",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0062"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "I"
+      },
+      {
+        "id": "ref2",
+        "sourceRefs": [
+          "p0-08-0062"
+        ],
+        "sourceSpan": [
+          19,
+          23
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "desk"
+      },
+      {
+        "id": "ref3",
+        "sourceRefs": [
+          "p0-08-0062"
+        ],
+        "sourceSpan": [
+          27,
+          33
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "day 21"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0062"
+        ],
+        "sourceSpan": [
+          0,
+          34
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "plan_to_tidy",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "I"
+          },
+          {
+            "role": "object",
+            "value": "the desk"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "day 21"
+      }
+    ]
+  }
+}

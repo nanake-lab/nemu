@@ -103,5 +103,29 @@
       }
     ]
   },
-  "quotaNote": "After100 is the exact completed English-batch boundary. Original all-language process aborted during Japanese. Final snapshot follows 150 successful replies plus 9 failed attempt slots, not an uninterrupted 150-call batch. Failed slots may not have started model turns. Shared account observations cannot isolate other activity."
+  "quotaNote": "After100 is the exact completed English-batch boundary. Original all-language process aborted during Japanese. Final snapshot follows 150 successful replies plus 9 failed attempt slots, not an uninterrupted 150-call batch. Failed slots may not have started model turns. Shared account observations cannot isolate other activity.",
+  "rateLimitsAfter150PrimarySlots": {
+    "ordinaryUsageAllowed": true,
+    "buckets": [
+      {
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 1,
+          "windowDurationMins": 300,
+          "resetsAt": 1792618138
+        },
+        "secondary": {
+          "usedPercent": 51,
+          "windowDurationMins": 10080,
+          "resetsAt": 1793082973
+        },
+        "credits": {
+          "hasCredits": false,
+          "unlimited": false
+        }
+      }
+    ]
+  },
+  "completedAt150PrimarySlots": 141
 }

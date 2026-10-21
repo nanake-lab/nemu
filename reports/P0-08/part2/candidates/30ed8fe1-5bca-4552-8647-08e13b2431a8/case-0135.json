@@ -1,0 +1,134 @@
+{
+  "caseId": "case-0135",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0135",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0135"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "リン"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0135"
+        ],
+        "sourceSpan": [
+          4,
+          10
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "来週の45日"
+      },
+      {
+        "id": "ref-3",
+        "sourceRefs": [
+          "p0-08-0135"
+        ],
+        "sourceSpan": [
+          11,
+          12
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "雪"
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0135"
+        ],
+        "sourceSpan": [
+          3,
+          22
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "来週の45日に雪が降るかもしれない"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0135"
+        ],
+        "sourceSpan": [
+          4,
+          21
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "降る",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "雪"
+          },
+          {
+            "role": "time",
+            "value": "来週の45日"
+          }
+        ],
+        "value": true,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "来週の45日"
+      },
+      {
+        "id": "claim-2",
+        "sourceRefs": [
+          "p0-08-0135"
+        ],
+        "sourceSpan": [
+          0,
+          29
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "言う",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "リン"
+          },
+          {
+            "role": "content",
+            "value": "来週の45日に雪が降るかもしれない"
+          }
+        ],
+        "value": true,
+        "polarity": "positive",
+        "modality": "reported",
+        "time": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "caseId": "case-0037",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0037",
+    "nodes": [
+      {
+        "id": "ref-folder",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          2,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "第13个蓝色文件夹"
+      },
+      {
+        "id": "ref-desktop",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          13,
+          15
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "桌面"
+      },
+      {
+        "id": "claim-put",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          2,
+          16
+        ],
+        "derivation": "inferred",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "放到",
+        "roles": [
+          {
+            "role": "object",
+            "value": "ref-folder"
+          },
+          {
+            "role": "destination",
+            "value": "ref-desktop"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "act-request",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          0,
+          17
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "把第13个蓝色文件夹放到桌面上"
+      }
+    ]
+  }
+}

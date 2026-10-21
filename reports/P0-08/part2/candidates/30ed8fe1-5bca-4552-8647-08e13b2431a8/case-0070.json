@@ -1,0 +1,56 @@
+{
+  "caseId": "case-0070",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0070",
+    "nodes": [
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0070"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "改到某时间吃饭",
+        "roles": [
+          {
+            "role": "主体",
+            "value": "我"
+          },
+          {
+            "role": "条件",
+            "value": "会议延长"
+          }
+        ],
+        "value": "24点",
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      },
+      {
+        "id": "a1",
+        "sourceRefs": [
+          "p0-08-0070"
+        ],
+        "sourceSpan": [
+          0,
+          17
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "commitment",
+        "content": "如果会议延长，我就改到24点吃饭。"
+      }
+    ]
+  }
+}

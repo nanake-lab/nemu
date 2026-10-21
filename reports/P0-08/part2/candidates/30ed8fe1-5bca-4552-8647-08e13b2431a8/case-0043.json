@@ -1,0 +1,94 @@
+{
+  "caseId": "case-0043",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0043",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0043"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0043"
+        ],
+        "sourceSpan": [
+          4,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "15号"
+      },
+      {
+        "id": "r3",
+        "sourceRefs": [
+          "p0-08-0043"
+        ],
+        "sourceSpan": [
+          11,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "这本书"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0043",
+          "r1",
+          "r2",
+          "r3"
+        ],
+        "sourceSpan": [
+          0,
+          14
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "finish_reading",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "我"
+          },
+          {
+            "role": "object",
+            "value": "这本书"
+          },
+          {
+            "role": "deadline",
+            "value": "15号之前"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "15号之前"
+      }
+    ]
+  }
+}

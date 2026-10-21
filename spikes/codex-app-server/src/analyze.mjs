@@ -17,16 +17,19 @@ function percentile(values, proportion) {
 function describe(rows) {
   const completed = rows.filter((row) => row.turnStatus === "completed" || (row.warmup === false && row.completedMs !== undefined));
   const values = completed.map((row) => row.completedMs);
+  const schemaApplicable = rows.some((row) => Object.hasOwn(row, "schemaValid"));
   return {
     attempts: rows.length,
     completed: completed.length,
     failed: rows.length - completed.length,
     p50Ms: percentile(values, .5),
     p90Ms: percentile(values, .9),
+    firstDeltaObservedCount: completed.filter((row) => Number.isFinite(row.firstDeltaMs)).length,
+    emptyReplyCount: completed.filter((row) => row.outputChars === 0).length,
     firstDeltaP50Ms: percentile(completed.map((row) => row.firstDeltaMs), .5),
     firstDeltaP90Ms: percentile(completed.map((row) => row.firstDeltaMs), .9),
-    schemaValidCount: rows.filter((row) => row.schemaValid === true).length,
-    schemaValidity: rows.length ? rows.filter((row) => row.schemaValid === true).length / rows.length : null,
+    schemaValidCount: schemaApplicable ? completed.filter((row) => row.schemaValid === true).length : null,
+    schemaValidity: schemaApplicable && rows.length ? completed.filter((row) => row.schemaValid === true).length / rows.length : null,
     sourceBindingValidCount: rows.filter((row) => row.sourceBindingValid === true).length,
     emptyGraphCount: completed.filter((row) => row.nodeCount === 0).length,
     tokenLimitCount: rows.filter((row) => row.tokenLimitReached === true).length,
@@ -67,9 +70,9 @@ if (process.argv[2]) {
   local = describe(rows);
 }
 const remote = describe(remoteRows);
-const qualifies = (backend) => backend !== null && backend.completed === 200 && backend.p50Ms <= 400 && backend.schemaValidity >= .95;
+const qualifies = (backend) => backend !== null && backend.attempts === 200 && backend.p50Ms !== null && backend.p50Ms <= 400 && backend.schemaValidity >= .95;
 let selected = null;
-if (local && remote.completed === 200) {
+if (local && local.p50Ms !== null && remote.p50Ms !== null) {
   if (qualifies(local)) selected = "local";
   else if (qualifies(remote)) selected = "remote";
   else selected = local.p50Ms <= remote.p50Ms ? "local" : "remote";
@@ -77,10 +80,11 @@ if (local && remote.completed === 200) {
 const output = {
   model: "gpt-6-luna", effort: "max", percentileMethod: "nearest rank; completed samples; failed attempts remain in schema-rate denominator",
   speech: speechByLanguage, remoteIrl: remote, localIrl: local,
+  protocol: { remoteReroutes: remote.reroutes, remoteToolItems: remote.toolItemCount, note: "Configured capability flags and observed item types are recorded; zero tool calls does not independently enumerate every model-visible built-in tool." },
   selection: selected, irlDeadlineP90Ms: selected ? (selected === "local" ? local : remote).p90Ms : null,
   modes: { A: { p50Ms: null, p90Ms: null }, B: { p50Ms: null, p90Ms: null }, C: { p50Ms: null, p90Ms: null } },
   modeEstimateMissing: ["ASR and VAD end-to-end samples", "A/M and core transaction timings", "TTS and audio buffer timings", "mode C draft-to-rewrite timing"],
-  quota: { speechBefore: speech.rateLimitsBefore, speechAfter100: speech.rateLimitsAfter100, speechAfterFinalSupplement: speech.rateLimitsAfter, speechQuotaNote: speech.quotaNote, irlBefore: remoteSummary.rateLimitsBefore, irlAfter100: remoteSummary.rateLimitsAfter100, irlAfter200: remoteSummary.rateLimitsAfter },
+  quota: { speechBefore: speech.rateLimitsBefore, speechAfter100: speech.rateLimitsAfter100, speechAfterFinalSupplement: speech.rateLimitsAfter, speechAfter150PrimarySlots: speech.rateLimitsAfter150PrimarySlots, speechQuotaNote: speech.quotaNote, irlBefore: remoteSummary.rateLimitsBefore, irlAfter100: remoteSummary.rateLimitsAfter100, irlAfter200: remoteSummary.rateLimitsAfter },
   accountQuotaAttribution: "Shared account; snapshots report observed changes and cannot isolate this spike from other account activity."
 };
 await writeFile(resolve(evidence, "analysis.json"), `${JSON.stringify(output, null, 2)}\n`, "utf8");

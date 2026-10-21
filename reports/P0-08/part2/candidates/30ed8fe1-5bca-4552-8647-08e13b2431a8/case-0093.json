@@ -1,0 +1,68 @@
+{
+  "caseId": "case-0093",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0093",
+    "nodes": [
+      {
+        "id": "date_1",
+        "sourceRefs": [
+          "p0-08-0093"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "31日"
+      },
+      {
+        "id": "parcel_1",
+        "sourceRefs": [
+          "p0-08-0093"
+        ],
+        "sourceSpan": [
+          4,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "小包"
+      },
+      {
+        "id": "claim_1",
+        "sourceRefs": [
+          "date_1",
+          "parcel_1"
+        ],
+        "sourceSpan": [
+          0,
+          18
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "receive",
+        "roles": [
+          {
+            "role": "object",
+            "value": "parcel_1"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": "31日"
+      }
+    ]
+  }
+}

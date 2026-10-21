@@ -1,0 +1,71 @@
+{
+  "caseId": "case-0118",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0118",
+    "nodes": [
+      {
+        "id": "ref_speaker",
+        "sourceRefs": [
+          "p0-08-0118"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "ref_list_40",
+        "sourceRefs": [
+          "p0-08-0118"
+        ],
+        "sourceSpan": [
+          7,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "第40份清单"
+      },
+      {
+        "id": "claim_possible_forget_update",
+        "sourceRefs": [
+          "p0-08-0118"
+        ],
+        "sourceSpan": [
+          0,
+          13
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "忘记更新",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "ref_speaker"
+          },
+          {
+            "role": "object",
+            "value": "ref_list_40"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "caseId": "case-0095",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0095",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0095"
+        ],
+        "sourceSpan": [
+          0,
+          4
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "This"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0095"
+        ],
+        "sourceSpan": [
+          0,
+          33
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is_hypothesis",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "r1"
+          }
+        ],
+        "value": true,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0095"
+        ],
+        "sourceSpan": [
+          13,
+          33
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "has_hypothesis_number",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "r1"
+          }
+        ],
+        "value": 32,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c3",
+        "sourceRefs": [
+          "p0-08-0095"
+        ],
+        "sourceSpan": [
+          35,
+          61
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is_happened_event",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "r1"
+          }
+        ],
+        "value": true,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}
