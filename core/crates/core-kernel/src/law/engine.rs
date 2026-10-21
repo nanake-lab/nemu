@@ -3,37 +3,38 @@
 //! Stages, in this order:
 //! 1. new tendencies: candidates after alias canonicalisation (D10), then the
 //!    structural relation tendencies of people first involved (D6);
-//! 2. evidence groups in H order (D3–D5);
+//! 2. evidence groups in H order (D3–D5; `group.rs`);
 //! 3. the capacity fuse (D7);
 //! 4. staged L entries (D11).
 //!
-//! Stage 2 and the re-sharing after a capacity removal need R fields that the
-//! IDL lacks (V2-48); they return `LawError::ContractGap` instead of computing
-//! with state that would not survive storage.
+//! R is held in the crate-internal pending structures until P5-32 merges
+//! (`pending.rs`); G is therefore crate-internal too until then.
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use core_types::generated::{EvidenceGroup, RSnapshot, Tendency, TendencyChange};
+use core_types::generated::{RSnapshot, Tendency, TendencyChange};
 use core_types::semantic::tendency_order;
 
 use super::error::{LawError, LawResult};
-use super::fuse::{eviction_choice, exhausted};
+use super::group;
 use super::input::{GroupContent, LawContext, MatchTarget, RState, Step, ThetaView};
-use super::recurrence::{Origin, check_stored, initial};
+use super::pending::{PendingGroup, PendingSnapshot, PendingTendency};
+use super::recurrence::{Origin, initial};
 use super::relation::{relation_tendency, relation_tendency_id};
+use super::replay::{Stored, check_pending, replay};
 
 /// R′ and what the outer transaction stages with it.
 #[derive(Clone, Debug, PartialEq)]
-pub struct Output {
-    pub r: RSnapshot,
+pub(crate) struct Output {
+    pub(crate) r: PendingSnapshot,
     /// Group summaries created or changed in this step, by group_id order.
-    pub groups: Vec<EvidenceGroup>,
+    pub(crate) groups: Vec<PendingGroup>,
     /// L payloads: one per tendency whose value changed (D11, V2-47).
-    pub changes: Vec<TendencyChange>,
+    pub(crate) changes: Vec<TendencyChange>,
 }
 
 /// G. The signature carries no x, m, g or λ (LP8, I10).
-pub fn g(
+pub(crate) fn g(
     r: RState<'_>,
     theta: &ThetaView,
     step: &Step<'_>,
@@ -43,8 +44,10 @@ pub fn g(
     let mut work = Work::new(r);
     let remap = new_candidates(&mut work, step, ctx)?;
     new_relations(&mut work, step, ctx)?;
-    groups(&mut work, theta, step, &remap)?;
-    capacity(&mut work, ctx)?;
+    for item in ordered_groups(step)? {
+        group::process(&mut work, item, theta, &remap, ctx)?;
+    }
+    super::fuse::capacity(&mut work, ctx)?;
     work.finish(r, step, ctx)
 }
 
@@ -52,81 +55,154 @@ fn canonical<'s>(aliases: &'s BTreeMap<String, String>, concept: &'s str) -> &'s
     aliases.get(concept).map_or(concept, String::as_str)
 }
 
+/// Every stored allocation of `id` with its group's factors.
+fn stored_of<'a>(groups: impl Iterator<Item = &'a PendingGroup>, id: &str) -> Vec<Stored<'a>> {
+    groups
+        .flat_map(|g| {
+            g.allocations
+                .iter()
+                .filter(move |a| a.base.tendency_id == id)
+                .map(move |a| Stored {
+                    group_id: &g.base.group_id,
+                    allocation: a,
+                    credibility: g.base.credibility,
+                    verifiability: g.base.verifiability,
+                })
+        })
+        .collect()
+}
+
 fn validate(r: RState<'_>, ctx: &LawContext<'_>) -> LawResult<()> {
-    if r.snapshot.law_version != *ctx.law_version {
+    if r.snapshot.base.law_version != *ctx.law_version {
         return Err(LawError::InvalidInput(
             "R was computed under another law version; recompute it (v2.0 §5.4)".into(),
+        ));
+    }
+    if !r.snapshot.base.tendencies.is_empty()
+        || r.groups.iter().any(|g| !g.base.allocations.is_empty())
+    {
+        return Err(LawError::InconsistentState(
+            "pending R carries its values outside the IDL lists".into(),
         ));
     }
     let ts = &r.snapshot.tendencies;
     if ts
         .windows(2)
-        .any(|p| !tendency_order(&p[0].tendency_id, &p[1].tendency_id).is_lt())
+        .any(|p| !tendency_order(p[0].id(), p[1].id()).is_lt())
     {
         return Err(LawError::InconsistentState(
             "R's tendencies are not in canonical order or repeat".into(),
         ));
     }
-    for t in ts {
-        check_stored(t, &ctx.law)?;
-    }
-    let ids: BTreeSet<&str> = ts.iter().map(|t| t.tendency_id.as_str()).collect();
+    let ids: BTreeSet<&str> = ts.iter().map(PendingTendency::id).collect();
     let mut groups = BTreeSet::new();
     for g in r.groups {
-        if !groups.insert(g.group_id.as_str()) {
+        if !groups.insert(g.base.group_id.as_str()) {
             return Err(LawError::InconsistentState(format!(
                 "group {} repeats",
-                g.group_id
+                g.base.group_id
             )));
         }
-        if let Some(a) = g
-            .allocations
-            .iter()
-            .find(|a| !ids.contains(a.tendency_id.as_str()))
-        {
-            return Err(LawError::InconsistentState(format!(
-                "group {} allocates to {}, which is not in R",
-                g.group_id, a.tendency_id
-            )));
+        let mut seen = BTreeSet::new();
+        for a in &g.allocations {
+            if !ids.contains(a.base.tendency_id.as_str()) || !seen.insert(&a.base.tendency_id) {
+                return Err(LawError::InconsistentState(format!(
+                    "group {} allocates to {} twice or outside R",
+                    g.base.group_id, a.base.tendency_id
+                )));
+            }
         }
+    }
+    for t in ts {
+        check_pending(t, &ctx.law, stored_of(r.groups.iter(), t.id()))?;
     }
     Ok(())
 }
 
-struct Work {
-    before: BTreeMap<String, Tendency>,
-    now: BTreeMap<String, Tendency>,
-    groups: BTreeMap<String, EvidenceGroup>,
-    touched: BTreeSet<String>,
+/// D2: groups by position, then group_id; a group appears at most once per step.
+fn ordered_groups<'a>(step: &Step<'a>) -> LawResult<Vec<&'a super::input::GroupItem>> {
+    let mut items: Vec<&super::input::GroupItem> = step.groups.iter().collect();
+    items.sort_by(|a, b| {
+        a.position
+            .cmp(&b.position)
+            .then_with(|| tendency_order(&a.group_id, &b.group_id))
+    });
+    let mut ids: Vec<&str> = items.iter().map(|g| g.group_id.as_str()).collect();
+    ids.sort_unstable();
+    if ids.windows(2).any(|p| p[0] == p[1]) {
+        return Err(LawError::InvalidInput(
+            "a group appears twice in one step".into(),
+        ));
+    }
+    Ok(items)
+}
+
+pub(super) struct Work {
+    before: BTreeMap<String, PendingTendency>,
+    pub(super) now: BTreeMap<String, PendingTendency>,
+    groups_before: BTreeMap<String, PendingGroup>,
+    pub(super) groups: BTreeMap<String, PendingGroup>,
+    pub(super) touched: BTreeSet<String>,
     processed: BTreeMap<String, BTreeSet<String>>,
 }
 
 impl Work {
     fn new(r: RState<'_>) -> Self {
-        let now: BTreeMap<String, Tendency> = r
+        let now: BTreeMap<String, PendingTendency> = r
             .snapshot
             .tendencies
             .iter()
-            .map(|t| (t.tendency_id.clone(), t.clone()))
+            .map(|t| (t.id().to_owned(), t.clone()))
+            .collect();
+        let groups: BTreeMap<String, PendingGroup> = r
+            .groups
+            .iter()
+            .map(|g| (g.base.group_id.clone(), g.clone()))
             .collect();
         Self {
             before: now.clone(),
             now,
-            groups: r
-                .groups
-                .iter()
-                .map(|g| (g.group_id.clone(), g.clone()))
-                .collect(),
+            groups_before: groups.clone(),
+            groups,
             touched: BTreeSet::new(),
             processed: BTreeMap::new(),
         }
     }
 
     /// Tendency IDs in canonical order.
-    fn ordered_ids(&self) -> Vec<String> {
+    pub(super) fn ordered_ids(&self) -> Vec<String> {
         let mut ids: Vec<String> = self.now.keys().cloned().collect();
         ids.sort_by(|a, b| tendency_order(a, b));
         ids
+    }
+
+    /// The tendencies of R in canonical order, as IDL values.
+    pub(super) fn bases(&self) -> Vec<Tendency> {
+        self.ordered_ids()
+            .into_iter()
+            .map(|id| self.now[&id].base.clone())
+            .collect()
+    }
+
+    /// Records that this step processed `group` for `id` (the L entry's evidence groups).
+    pub(super) fn mark(&mut self, id: &str, group: &str) {
+        self.processed
+            .entry(id.to_owned())
+            .or_default()
+            .insert(group.to_owned());
+    }
+
+    /// D5: recompute `id` from its starting value and its allocations by ordinal.
+    pub(super) fn replay(&mut self, id: &str, ctx: &LawContext<'_>) -> LawResult<()> {
+        let t = self.now[id].clone();
+        let fresh = replay(
+            &t,
+            stored_of(self.groups.values(), id),
+            &ctx.law,
+            ctx.caretaker,
+        )?;
+        self.now.insert(id.to_owned(), fresh);
+        Ok(())
     }
 
     fn finish(self, r: RState<'_>, step: &Step<'_>, ctx: &LawContext<'_>) -> LawResult<Output> {
@@ -150,34 +226,39 @@ impl Work {
             changes.push(TendencyChange {
                 schema_version: 1,
                 tendency_id: id.clone(),
-                pi_before: b.map(|t| t.pi),
-                pi_after: a.map(|t| t.pi),
+                pi_before: b.map(|t| t.base.pi),
+                pi_after: a.map(|t| t.base.pi),
                 evidence_groups: groups,
             });
         }
-        if changes.is_empty() && self.touched.is_empty() {
+        let groups: Vec<PendingGroup> = self
+            .touched
+            .iter()
+            .filter(|id| self.groups.get(*id) != self.groups_before.get(*id))
+            .filter_map(|id| self.groups.get(id).cloned())
+            .collect();
+        if changes.is_empty() && groups.is_empty() {
             return Ok(Output {
                 r: r.snapshot.clone(),
-                groups: Vec::new(),
+                groups,
                 changes,
             });
         }
         if step.revision.is_empty() {
             return Err(LawError::InvalidInput("R' needs a revision".into()));
         }
-        let mut tendencies: Vec<Tendency> = self.now.into_values().collect();
-        tendencies.sort_by(|a, b| tendency_order(&a.tendency_id, &b.tendency_id));
-        let mut groups: Vec<EvidenceGroup> = self
-            .touched
-            .iter()
-            .filter_map(|id| self.groups.get(id).cloned())
-            .collect();
-        groups.sort_by(|a, b| tendency_order(&a.group_id, &b.group_id));
+        let mut tendencies: Vec<PendingTendency> = self.now.into_values().collect();
+        tendencies.sort_by(|a, b| tendency_order(a.id(), b.id()));
+        let mut groups = groups;
+        groups.sort_by(|a, b| tendency_order(&a.base.group_id, &b.base.group_id));
         Ok(Output {
-            r: RSnapshot {
-                schema_version: 1,
-                revision: step.revision.to_owned(),
-                law_version: ctx.law_version.clone(),
+            r: PendingSnapshot {
+                base: RSnapshot {
+                    schema_version: 1,
+                    revision: step.revision.to_owned(),
+                    law_version: ctx.law_version.clone(),
+                    tendencies: Vec::new(),
+                },
                 tendencies,
             },
             groups,
@@ -216,7 +297,7 @@ fn new_candidates(
                     &rel.person_id,
                     rel.kind,
                 )?;
-                work.now.insert(id.clone(), t);
+                work.now.insert(id.clone(), PendingTendency::fresh(t));
             }
             remap.insert(c.record_id.clone(), id);
             continue;
@@ -225,7 +306,7 @@ fn new_candidates(
         let existing = work
             .ordered_ids()
             .into_iter()
-            .find(|id| canonical(step.aliases, &work.now[id].concept.concept_id) == canon);
+            .find(|id| canonical(step.aliases, &work.now[id].base.concept.concept_id) == canon);
         if let Some(id) = existing {
             remap.insert(c.record_id.clone(), id);
             continue;
@@ -248,7 +329,8 @@ fn new_candidates(
                 initial_evidence: 0.0,
             },
         )?;
-        work.now.insert(c.record_id.clone(), t);
+        work.now
+            .insert(c.record_id.clone(), PendingTendency::fresh(t));
         remap.insert(c.record_id.clone(), c.record_id.clone());
     }
     Ok(remap)
@@ -270,63 +352,14 @@ fn new_relations(work: &mut Work, step: &Step<'_>, ctx: &LawContext<'_>) -> LawR
     wanted.dedup_by(|a, b| a.0 == b.0);
     for (id, person, kind) in wanted {
         if let std::collections::btree_map::Entry::Vacant(slot) = work.now.entry(id) {
-            slot.insert(relation_tendency(
+            slot.insert(PendingTendency::fresh(relation_tendency(
                 &ctx.law,
                 ctx.relation_concepts,
                 ctx.caretaker,
                 person,
                 kind,
-            )?);
+            )?));
         }
-    }
-    Ok(())
-}
-
-/// Stage 2 (D3–D5): every group updates r_k and may need a replay, which
-/// needs the R fields of V2-48. Until the contract has them this is an
-/// explicit fault, never an approximation.
-fn groups(
-    _work: &mut Work,
-    _theta: &ThetaView,
-    step: &Step<'_>,
-    _remap: &BTreeMap<String, String>,
-) -> LawResult<()> {
-    if step.groups.is_empty() {
-        return Ok(());
-    }
-    Err(LawError::ContractGap(
-        "evidence groups need the typical-magnitude sums and allocation ordinals",
-    ))
-}
-
-/// Stage 3 (D7): remove the weakest candidates until R fits its capacity.
-fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
-    let cap = usize::try_from(ctx.r_capacity).map_err(|_| LawError::Overflow("capacity"))?;
-    while work.now.len() > cap {
-        let ids = work.ordered_ids();
-        let ts: Vec<Tendency> = ids.iter().map(|id| work.now[id].clone()).collect();
-        let Some(i) = eviction_choice(&ts, &ctx.law)? else {
-            return Err(exhausted(&ts, ctx.r_capacity));
-        };
-        let gone = ids[i].clone();
-        for (gid, g) in &mut work.groups {
-            let Some(pos) = g.allocations.iter().position(|a| a.tendency_id == gone) else {
-                continue;
-            };
-            let side = g.allocations[pos].support.signum();
-            let shared = g
-                .allocations
-                .iter()
-                .any(|a| a.tendency_id != gone && a.support != 0.0 && a.support.signum() == side);
-            if shared && g.allocations[pos].support != 0.0 {
-                return Err(LawError::ContractGap(
-                    "re-sharing a group after a capacity removal needs allocation ordinals",
-                ));
-            }
-            g.allocations.remove(pos);
-            work.touched.insert(gid.clone());
-        }
-        work.now.remove(&gone);
     }
     Ok(())
 }

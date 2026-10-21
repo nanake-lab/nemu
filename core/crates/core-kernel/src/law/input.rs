@@ -8,14 +8,15 @@
 use std::collections::BTreeMap;
 
 use core_types::generated::{
-    ConceptRef, EvidenceGroup, FuseConfig, GenesisManifestV2, NatureScale, NatureVector, ObjectRef,
-    PersonRelation, RSnapshot, RelationKind, ThetaSnapshot, TrilingualText,
+    ConceptRef, FuseConfig, GenesisManifestV2, NatureScale, NatureVector, ObjectRef,
+    PersonRelation, RelationKind, ThetaSnapshot, TrilingualText,
 };
 use core_types::semantic::{nature, scale};
 
 use super::error::{LawError, LawResult};
 use super::num::Nature4;
 use super::params::Law;
+use super::pending::{PendingGroup, PendingSnapshot};
 use super::relation::{Caretaker, RelationConcepts};
 
 /// b and σ̂ of θ before the event (v2.0 §2.4, §8): the only parts of θ G reads.
@@ -89,11 +90,13 @@ impl<'a> LawContext<'a> {
 }
 
 /// R as G reads it: the snapshot of tendencies and the stored summaries of
-/// the evidence groups (both part of R, v2.0 §7; P5-21).
+/// the evidence groups (both part of R, v2.0 §7; P5-21). Until P5-32 merges
+/// these are the crate-internal pending structures (`pending.rs`); then they
+/// become `RSnapshotV2` and `EvidenceGroupV2`.
 #[derive(Clone, Copy, Debug)]
-pub struct RState<'a> {
-    pub snapshot: &'a RSnapshot,
-    pub groups: &'a [EvidenceGroup],
+pub(crate) struct RState<'a> {
+    pub(crate) snapshot: &'a PendingSnapshot,
+    pub(crate) groups: &'a [PendingGroup],
 }
 
 /// A candidate tendency proposed with this event (TendencyCandidateRecord),

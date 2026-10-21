@@ -8,13 +8,17 @@
 //! Single-group cap: one group's weight never exceeds w_max.
 
 use std::cmp::Ordering;
+use std::collections::BTreeSet;
 
-use core_types::generated::Tendency;
+use core_types::generated::{EvidenceAllocation, Tendency};
 use core_types::semantic::tendency_order;
 
+use super::engine::Work;
 use super::error::{LawError, LawResult};
+use super::input::LawContext;
 use super::params::Law;
 use super::recurrence::{evidence_amount, is_personality};
+use super::shares::{ShareInput, shares};
 
 /// Index of the tendency to remove next: the candidate with the smallest
 /// evidence amount V_k = (B_k − n₀ − κ_k) + A_att; ties go to the first in
@@ -56,6 +60,84 @@ pub fn check_weight_cap(w: f64, law: &Law, group_id: &str, tendency_id: &str) ->
             group_id: group_id.to_owned(),
             tendency_id: tendency_id.to_owned(),
         });
+    }
+    Ok(())
+}
+
+/// Stage 3 (D7, V2-43): remove the weakest candidates until R fits its capacity.
+/// The removed tendency's allocations leave their groups; the remaining
+/// tendencies on the same side are re-shared with the current π and replayed.
+#[cfg_attr(
+    not(test),
+    allow(
+        dead_code,
+        reason = "reached only through G, which P5-29 wires; public once P5-32 merges"
+    )
+)]
+pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
+    let cap = usize::try_from(ctx.r_capacity).map_err(|_| LawError::Overflow("capacity"))?;
+    while work.now.len() > cap {
+        let ids = work.ordered_ids();
+        let bases = work.bases();
+        let Some(i) = eviction_choice(&bases, &ctx.law)? else {
+            return Err(exhausted(&bases, ctx.r_capacity));
+        };
+        let gone = ids[i].clone();
+        work.now.remove(&gone);
+        let mut dirty = BTreeSet::new();
+        let group_ids: Vec<String> = work.groups.keys().cloned().collect();
+        for gid in group_ids {
+            let g = work.groups.get_mut(&gid).expect("listed");
+            let Some(pos) = g
+                .allocations
+                .iter()
+                .position(|a| a.base.tendency_id == gone)
+            else {
+                continue;
+            };
+            let removed = g.allocations.remove(pos);
+            work.touched.insert(gid.clone());
+            let side = removed.base.support;
+            if side == 0.0 {
+                continue;
+            }
+            let same: Vec<usize> = (0..g.allocations.len())
+                .filter(|&k| {
+                    let s = g.allocations[k].base.support;
+                    s != 0.0 && s.signum() == side.signum()
+                })
+                .collect();
+            if same.is_empty() {
+                continue;
+            }
+            let inputs: Vec<ShareInput<'_>> = same
+                .iter()
+                .map(|&k| {
+                    let a: &EvidenceAllocation = &g.allocations[k].base;
+                    ShareInput {
+                        tendency_id: &a.tendency_id,
+                        pi: work.now[&a.tendency_id].base.pi,
+                        support: a.support,
+                    }
+                })
+                .collect();
+            let new_shares = shares(&inputs)?;
+            let mut marked = Vec::with_capacity(same.len());
+            for (&k, s) in same.iter().zip(new_shares) {
+                let a = &mut g.allocations[k];
+                if a.base.share.to_bits() != s.to_bits() {
+                    a.base.share = s;
+                    dirty.insert(a.base.tendency_id.clone());
+                }
+                marked.push(a.base.tendency_id.clone());
+            }
+            for id in marked {
+                work.mark(&id, &gid);
+            }
+        }
+        for id in dirty {
+            work.replay(&id, ctx)?;
+        }
     }
     Ok(())
 }

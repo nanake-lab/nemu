@@ -7,28 +7,71 @@
 //!
 //! The canonical calculation order and the readings this card fixes are in
 //! `docs/traceability/P5-23.md` §1 (D1–D11) and the difference register
-//! V2-38 to V2-48. Parts that need the R fields missing from the IDL (V2-48)
-//! are not implemented yet (`reports/P5-23/BLOCKED.md`).
+//! V2-38 to V2-49. Until P5-32 (ADR 0016) merges, R is held in crate-internal
+//! pending structures (`pending.rs`), so G itself is crate-internal; the
+//! building blocks below only use IDL types and are public.
 
+#[cfg_attr(
+    not(test),
+    allow(
+        dead_code,
+        reason = "reached only through G, which P5-29 wires; public once P5-32 merges"
+    )
+)]
 mod engine;
 mod error;
 mod fuse;
+#[cfg_attr(
+    not(test),
+    allow(
+        dead_code,
+        reason = "reached only through G, which P5-29 wires; public once P5-32 merges"
+    )
+)]
+mod group;
 mod input;
 mod num;
 mod params;
+#[cfg_attr(
+    not(test),
+    allow(
+        dead_code,
+        reason = "reached only through G, which P5-29 wires; public once P5-32 merges"
+    )
+)]
+mod pending;
+#[cfg_attr(
+    not(test),
+    allow(
+        dead_code,
+        reason = "reached only through G, which P5-29 wires; public once P5-32 merges"
+    )
+)]
+mod plan;
 mod recurrence;
 mod relation;
+#[cfg_attr(
+    not(test),
+    allow(
+        dead_code,
+        reason = "reached only through G, which P5-29 wires; public once P5-32 merges"
+    )
+)]
+mod replay;
 mod shares;
 mod support;
 
 #[cfg(test)]
 mod tests;
 
-pub use engine::{Output, g};
+#[allow(unused_imports, reason = "wired in P5-29; public once P5-32 merges")]
+pub(crate) use engine::{Output, g};
 pub use error::{LawError, LawResult};
 pub use fuse::{check_weight_cap, eviction_choice, exhausted};
+#[allow(unused_imports, reason = "wired in P5-29; public once P5-32 merges")]
+pub(crate) use input::RState;
 pub use input::{
-    Candidate, GroupContent, GroupItem, LawContext, Match, MatchTarget, RState, Step, ThetaView,
+    Candidate, GroupContent, GroupItem, LawContext, Match, MatchTarget, Step, ThetaView,
 };
 pub use num::{Nature4, exact_mean};
 pub use params::Law;
