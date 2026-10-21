@@ -1,0 +1,73 @@
+{
+  "runId": "d96a10ba-3119-4b49-9f80-d0c65f81703d",
+  "measuredAtUtc": "2026-10-21T19:21:56.274Z",
+  "model": "gpt-6-luna",
+  "effort": "max",
+  "scope": "Same read-only/never speech capability flags; only base instructions and raw-event reporting changed to request harmless capability tests. Does not count as a latency sample.",
+  "records": [
+    {
+      "test": "clock",
+      "status": "completed",
+      "observedItemTypes": [
+        "userMessage",
+        "reasoning",
+        "agentMessage"
+      ],
+      "approvalRequests": [],
+      "fileCreated": false,
+      "notificationMethods": [
+        "account/updated",
+        "thread/started",
+        "thread/settings/updated",
+        "thread/status/changed",
+        "turn/started",
+        "mcpServer/startupStatus/updated",
+        "rawResponseItem/completed",
+        "item/started",
+        "item/completed",
+        "turn/moderationMetadata",
+        "rawResponse/completed",
+        "thread/tokenUsage/updated",
+        "account/rateLimits/updated",
+        "item/agentMessage/delta",
+        "turn/completed"
+      ],
+      "rawToolCallNames": [
+        "exec"
+      ],
+      "clockIdentifierSeen": true
+    },
+    {
+      "test": "file-change",
+      "status": "completed",
+      "observedItemTypes": [
+        "userMessage",
+        "reasoning",
+        "reasoning",
+        "agentMessage"
+      ],
+      "approvalRequests": [],
+      "fileCreated": false,
+      "notificationMethods": [
+        "thread/started",
+        "mcpServer/startupStatus/updated",
+        "thread/settings/updated",
+        "thread/status/changed",
+        "turn/started",
+        "rawResponseItem/completed",
+        "item/started",
+        "item/completed",
+        "turn/moderationMetadata",
+        "rawResponse/completed",
+        "thread/tokenUsage/updated",
+        "account/rateLimits/updated",
+        "item/agentMessage/delta",
+        "turn/completed"
+      ],
+      "rawToolCallNames": [
+        "exec"
+      ],
+      "clockIdentifierSeen": false
+    }
+  ]
+}

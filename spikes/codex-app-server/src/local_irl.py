@@ -14,6 +14,8 @@ import sys
 import time
 from typing import Protocol, cast
 
+from decoder_adapter import harden_tokenizer_data
+
 ROOT = Path(__file__).resolve().parents[3]
 SPIKE = ROOT / "spikes/codex-app-server"
 MODEL = "Qwen/Qwen3-4B-Instruct-2507"
@@ -175,7 +177,9 @@ def main() -> None:
     tokenizer = api.AutoTokenizer.from_pretrained(str(model_root), local_files_only=True)
     integration = importlib.import_module("lmformatenforcer.integrations.transformers")
     enforcer = importlib.import_module("lmformatenforcer")
-    tokenizer_data = integration.build_token_enforcer_tokenizer_data(tokenizer)
+    tokenizer_data, decoder_info = harden_tokenizer_data(
+        integration.build_token_enforcer_tokenizer_data(tokenizer),
+    )
     schema = read_json(SPIKE / "semantic-candidate.wire.schema.json")
     validation = importlib.import_module("jsonschema")
     validator = cast(SchemaValidator, validation.Draft202012Validator(
@@ -197,6 +201,8 @@ def main() -> None:
         "doubleQuantization": False, "nativeRmsCount": norm_count,
         "kernel": "aten::_fused_rms_norm", "torch": torch.__version__,
         "transformers": api.__version__, "bitsandbytes": quant.__version__,
+        "decoder": decoder_info,
+        "decoderAdapterSourceSha256": sha256(SPIKE / "src/decoder_adapter.py"),
         "maxNewTokens": 2048, "sampling": "greedy", "seed": 731,
         "fixturesSha256": sha256(SPIKE / "fixtures/irl-cases.json"),
         "wireSchemaSha256": sha256(SPIKE / "semantic-candidate.wire.schema.json"),
@@ -235,7 +241,10 @@ def main() -> None:
         attention_mask = cast(torch.Tensor, tokens["attention_mask"]).to("cuda:0")
         torch.cuda.synchronize()
         started = time.perf_counter()
-        character_parser = enforcer.JsonSchemaParser(schema)
+        parser_config = enforcer.CharacterLevelParserConfig(
+            alphabet=tokenizer_data.tokenizer_alphabet,
+        )
+        character_parser = enforcer.JsonSchemaParser(schema, config=parser_config)
         allowed = integration.build_transformers_prefix_allowed_tokens_fn(
             tokenizer_data, character_parser,
         )

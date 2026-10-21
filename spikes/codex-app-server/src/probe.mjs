@@ -12,7 +12,7 @@ import { performance } from "node:perf_hooks";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
-const reportRoot = resolve(repoRoot, "reports/P0-08/part2");
+let reportRoot = resolve(repoRoot, "reports/P0-08/part2");
 const schemaPath = resolve(repoRoot, "spikes/codex-app-server/semantic-candidate.wire.schema.json");
 const fixturesPath = resolve(repoRoot, "spikes/codex-app-server/fixtures/irl-cases.json");
 const measurementEffort = "max";
@@ -89,10 +89,12 @@ function rateLimitSummary(snapshot) {
   };
 }
 
-class AppServer {
-  constructor(codeHome) {
+export class AppServer {
+  constructor(codeHome, { catalogPath, strictTools = false } = {}) {
     if (!codeHome) throw new Error("provide an isolated CODEX_HOME with --code-home");
+    this.strictTools = strictTools;
     this.approvalPolicy = "untrusted";
+    this.serverFailure = null;
     this.pending = new Map();
     this.nextId = 0;
     this.turns = new Map();
@@ -100,6 +102,7 @@ class AppServer {
     this.finalMessages = new Map();
     this.observedItems = new Map();
     this.reroutes = new Map();
+    this.rawToolCalls = new Map();
     this.messages = new Map();
     this.firstDeltas = new Map();
     this.tokenUsage = new Map();
@@ -108,13 +111,14 @@ class AppServer {
     this.rateLimitUpdates = [];
     this.tempWorkdirs = new Set();
     this.nonJsonStdoutLines = 0;
-    this.child = spawn("codex", ["app-server", "--stdio"], {
+    this.child = spawn("codex", [...(catalogPath ? ["-c", `model_catalog_json=${JSON.stringify(catalogPath)}`] : []), ...(strictTools ? ["-c", "features.apps=false", "-c", "features.remote_plugin=false", "-c", "features.hooks=false"] : []), "app-server", "--stdio"], {
       cwd: repoRoot,
       env: { ...process.env, CODEX_HOME: codeHome },
       stdio: ["pipe", "pipe", "pipe"]
     });
     const stdout = createInterface({ input: this.child.stdout });
     stdout.on("line", (line) => this.#handleLine(line));
+    this.child.stdin.on("error", () => this.#failPending("server_stdin_closed"));
     this.child.stderr.on("data", () => {}); // Never persist raw app-server stderr.
     this.child.on("error", () => this.#failPending("spawn_error"));
     this.child.on("exit", () => this.#failPending("server_exited"));
@@ -126,6 +130,7 @@ class AppServer {
   }
 
   #failPending(reason) {
+    this.serverFailure = reason;
     for (const entry of this.pending.values()) {
       clearTimeout(entry.timer);
       entry.reject(new Error(reason));
@@ -182,6 +187,11 @@ class AppServer {
 
   #handleNotification(message) {
     const params = message.params ?? {};
+    if (message.method === "rawResponseItem/completed" && (typeof params.item?.type === "string" && (params.item.type.endsWith("_call") || params.item.type === "mcp_list_tools"))) {
+      const calls = this.rawToolCalls.get(params.turnId) ?? [];
+      calls.push(params.item.name ?? params.item.type);
+      this.rawToolCalls.set(params.turnId, calls);
+    }
     if (message.method === "model/rerouted") {
       this.reroutes.set(params.turnId, { fromModel: params.fromModel, toModel: params.toModel, reason: params.reason });
     }
@@ -218,6 +228,7 @@ class AppServer {
   }
 
   async request(method, params = {}, timeoutMs = 30_000) {
+    if (this.serverFailure) throw new Error(this.serverFailure);
     const id = `p0-08-${++this.nextId}`;
     return new Promise((resolvePromise, rejectPromise) => {
       const timer = setTimeout(() => {
@@ -276,7 +287,7 @@ class AppServer {
     return models;
   }
 
-  async startThread({ model, mode = "speech", cwd }) {
+  async startThread({ model, mode = "speech", cwd, baseInstructions, experimentalRawEvents = false }) {
     const readOnly = mode !== "approval";
     const workdir = cwd ?? join(tmpdir(), `nemu-p0-08-thread-${randomUUID()}`);
     if (!cwd) {
@@ -289,18 +300,22 @@ class AppServer {
       approvalPolicy: readOnly ? "never" : this.approvalPolicy,
       ...(readOnly ? {} : { approvalsReviewer: "user" }),
       sandbox: "read-only",
-      baseInstructions: readOnly ? sampleProtocol : "You are a synthetic approval routing probe. Perform only the explicitly requested test action in the temporary working directory. Request client approval whenever required; never work around a denial.",
+      baseInstructions: readOnly ? (baseInstructions ?? sampleProtocol) : "You are a synthetic approval routing probe. Perform only the explicitly requested test action in the temporary working directory. Request client approval whenever required; never work around a denial.",
       personality: "none",
       ephemeral: true,
       dynamicTools: [],
+      ...(readOnly && this.strictTools ? { environments: [], selectedCapabilityRoots: [] } : {}),
+      ...((experimentalRawEvents || this.strictTools) ? { experimentalRawEvents: true } : {}),
       config: {
         web_search: "disabled",
+        ...(readOnly && this.strictTools ? { tools: { update_plan: { enabled: false }, experimental_request_user_input: { enabled: false } } } : {}),
         features: {
           apps: false,
           hooks: false,
           multi_agent: false,
           remote_plugin: false,
-          shell_tool: !readOnly
+          shell_tool: !readOnly,
+          ...(readOnly && this.strictTools ? { multi_agent_v2: false, stable_environment_tools: false, view_image: false, image_generation: false, request_permissions_tool: false, tool_search: false, tool_suggest: false, deferred_executor: false, token_budget: false, sleep_tool: false, current_time_reminder: false, send_message_to_user_async: false, goals: false, code_mode: false, code_mode_host: false } : {})
         }
       }
     };
@@ -365,6 +380,7 @@ class AppServer {
       completedMs: Math.round((this.completedAt.get(turnId) - startedAt) * 100) / 100,
       errorInfo: completed.turn.error?.codexErrorInfo ?? null,
       observedItemTypes: this.observedItems.get(turnId) ?? [],
+      rawToolCallNames: this.strictTools ? (this.rawToolCalls.get(turnId) ?? []) : null,
       reroute: this.reroutes.get(turnId) ?? null,
       errorDetail: completed.turn.error?.message?.replace(/https?:\/\/[^\s]+/g, "[url]").replace(/(?:sk-|Bearer\s+)[A-Za-z0-9_.-]+/g, "[redacted]").slice(0, 1200) ?? null,
       outputChars: fullText.length,
@@ -474,17 +490,21 @@ async function speechBatch(server, model, lang, runs, startIndex = 1) {
         : `Reply in English with one short, natural sentence, at most 20 words: ${sample.text}`;
     try {
       const result = await server.runOne({ model, text: instruction });
-      const row = { index: startIndex + index, caseId: sample.id, lang, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, usage: result.usage };
+      const row = { index: startIndex + index, caseId: sample.id, lang, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, rawToolCallNames: result.rawToolCallNames, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, usage: result.usage };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
     } catch (error) {
       const row = { index: startIndex + index, caseId: sample.id, lang, model, effort: measurementEffort, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
-      if (["server_exited", "spawn_error", "rpc_timeout", "turn_timeout"].includes(error.message)) {
+      if (["server_exited", "spawn_error", "server_stdin_closed", "rpc_timeout", "turn_timeout"].includes(error.message)) {
         await summarizeRecords(`remote-speech-${lang}-${runId}-partial`, rows, { runId, startIndex, rateLimitsBefore, aborted: true });
         throw error;
       }
+    }
+    if (server.strictTools && rows.at(-1)?.rawToolCallNames?.length) {
+      await summarizeRecords(`remote-speech-${lang}-${runId}-partial`, rows, { runId, startIndex, rateLimitsBefore, aborted: true });
+      throw new Error("strict_tool_surface_violation");
     }
     process.stderr.write(`speech ${lang}: ${index + 1}/${runs}\n`);
   }
@@ -537,14 +557,14 @@ async function irlBatch(server, model, runs, schema, startIndex = 1) {
       const schemaValid = schemaResult.valid;
       const sourceBindingValid = schemaValid && validateSemanticCandidate(candidate, sample);
       await writeFile(resolve(outputDir, `${sample.id}.json`), `${JSON.stringify({ caseId: sample.id, candidate }, null, 2)}\n`, "utf8");
-      const row = { index: startIndex + index, caseId: sample.id, lang: sample.lang, category: sample.category, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, outputSha256: createHash("sha256").update(result.text).digest("hex"), schemaValid, sourceBindingValid, schemaErrors: schemaResult.errors, nodeCount: schemaValid ? candidate.nodes.length : null, usage: result.usage };
+      const row = { index: startIndex + index, caseId: sample.id, lang: sample.lang, category: sample.category, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, rawToolCallNames: result.rawToolCallNames, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, outputSha256: createHash("sha256").update(result.text).digest("hex"), schemaValid, sourceBindingValid, schemaErrors: schemaResult.errors, nodeCount: schemaValid ? candidate.nodes.length : null, usage: result.usage };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
     } catch (error) {
       const row = { index: startIndex + index, caseId: sample.id, lang: sample.lang, category: sample.category, model, effort: measurementEffort, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null, schemaValid: false };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
-      if (["server_exited", "spawn_error", "rpc_timeout", "turn_timeout"].includes(error.message)) {
+      if (["server_exited", "spawn_error", "server_stdin_closed", "rpc_timeout", "turn_timeout"].includes(error.message)) {
         await summarizeRecords(`remote-irl-${runId}-partial`, rows, { runId, rateLimitsBefore, rateLimitsAfter100, aborted: true });
         throw error;
       }
@@ -563,10 +583,10 @@ async function irlBatch(server, model, runs, schema, startIndex = 1) {
 }
 
 async function catalog(server) {
-  const [models, rateLimits] = await Promise.all([server.listModels(), server.readRateLimits()]);
+  const [models, rateLimits, mcp] = await Promise.all([server.listModels(), server.readRateLimits(), server.request("mcpServerStatus/list", { limit: 100 })]);
   let cliVersion = null;
   try { cliVersion = execFileSync("codex", ["--version"], { encoding: "utf8" }).trim().replace(/^codex-cli\s+/, ""); } catch {}
-  const output = { measuredAtUtc: new Date().toISOString(), cliVersion, modelCount: models.length, models, rateLimits };
+  const output = { measuredAtUtc: new Date().toISOString(), cliVersion, modelCount: models.length, models, rateLimits, mcpServerCount: mcp.data?.length ?? null, mcpHasNextPage: Boolean(mcp.nextCursor), strictTools: server.strictTools };
   const outPath = resolve(reportRoot, "model-catalog.json");
   await mkdir(dirname(outPath), { recursive: true });
   await writeFile(outPath, `${JSON.stringify(output, null, 2)}\n`, "utf8");
@@ -575,59 +595,66 @@ async function catalog(server) {
 
 async function controlProbe(server, model) {
   const controls = [];
-  const longText = "Write a long numbered response in English, continuing for at least 400 numbered items unless interrupted. Do not use tools.";
-  const threadId = await server.startThread({ model });
-  const { turnId, startedAt } = await server.startTurn({ threadId, model, text: longText });
-  const interruptFirstDelta = await server.waitForFirstDelta(turnId, 60_000);
-  const interruptAt = performance.now();
+  let fatalError = null;
   try {
-    await server.request("turn/interrupt", { threadId, turnId }, 15_000);
-    const completed = await server.waitForTurn(turnId, 30_000);
-    controls.push({ control: "turn/interrupt", requestAccepted: true, turnStatus: completed.turn.status, firstDeltaSeen: interruptFirstDelta !== null, interruptCompletionMs: Math.round((server.completedAt.get(turnId) - interruptAt) * 100) / 100, firstDeltaMs: server.firstDeltas.has(turnId) ? Math.round((server.firstDeltas.get(turnId) - startedAt) * 100) / 100 : null });
-  } catch (error) {
-    controls.push({ control: "turn/interrupt", requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
-  }
-
-  const steerThread = await server.startThread({ model });
-  const steerTurn = await server.startTurn({ threadId: steerThread, model, text: longText });
-  const firstDeltaAt = await server.waitForFirstDelta(steerTurn.turnId, 60_000);
-  try {
-    const steered = await server.request("turn/steer", {
-      threadId: steerThread,
-      expectedTurnId: steerTurn.turnId,
-      input: [{ type: "text", text: "Stop the list and reply with exactly STEERED.", text_elements: [] }]
-    }, 15_000);
-    const completed = await server.waitForTurn(steerTurn.turnId, 180_000);
-    controls.push({ control: "turn/steer", requestAccepted: true, firstDeltaSeen: firstDeltaAt !== null, turnStatus: completed.turn.status, outputContainsMarker: (server.messages.get(steerTurn.turnId) ?? "").includes("STEERED"), outputEndsWithMarker: (server.messages.get(steerTurn.turnId) ?? "").trimEnd().endsWith("STEERED"), responseObserved: Boolean(steered) });
-  } catch (error) {
-    controls.push({ control: "turn/steer", requestAccepted: false, firstDeltaSeen: firstDeltaAt !== null, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
-  }
-
-  const approvalDir = join(tmpdir(), `nemu-p0-08-approvals-${randomUUID()}`);
-  const { mkdir: makeDir, rm } = await import("node:fs/promises");
-  await makeDir(approvalDir, { recursive: true });
-  const approvalPrompts = [
-    { control: "command-approval", text: "Use the command execution tool to create a file named COMMAND-PROBE.txt in the current directory using shell output redirection, with only the text P0-08 approval probe. Do not do anything else." },
-    { control: "file-change-approval", text: `Use the file editing tool to create a file named APPROVAL-PROBE.txt in the current directory containing only P0-08 probe. Do not use a shell command.` }
-  ];
-  for (const prompt of approvalPrompts) {
-    const approvalStartIndex = server.approvals.length;
+    const longText = "Write a long numbered response in English, continuing for at least 400 numbered items unless interrupted. Do not use tools.";
+    const threadId = await server.startThread({ model });
+    const { turnId, startedAt } = await server.startTurn({ threadId, model, text: longText });
+    const interruptFirstDelta = await server.waitForFirstDelta(turnId, 60_000);
+    const interruptAt = performance.now();
     try {
-      const result = await server.runOne({ model, text: prompt.text, mode: "approval", cwd: approvalDir, approval: true });
-      controls.push({ control: prompt.control, turnStatus: result.turnStatus, outputChars: result.outputChars, observedItemTypes: result.observedItemTypes, requests: server.approvals.slice(approvalStartIndex) });
+      await server.request("turn/interrupt", { threadId, turnId }, 15_000);
+      const completed = await server.waitForTurn(turnId, 30_000);
+      controls.push({ control: "turn/interrupt", requestAccepted: true, turnStatus: completed.turn.status, firstDeltaSeen: interruptFirstDelta !== null, interruptCompletionMs: Math.round((server.completedAt.get(turnId) - interruptAt) * 100) / 100, firstDeltaMs: server.firstDeltas.has(turnId) ? Math.round((server.firstDeltas.get(turnId) - startedAt) * 100) / 100 : null });
     } catch (error) {
-      controls.push({ control: prompt.control, requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
+      controls.push({ control: "turn/interrupt", requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
     }
+
+    const steerThread = await server.startThread({ model });
+    const steerTurn = await server.startTurn({ threadId: steerThread, model, text: longText });
+    const firstDeltaAt = await server.waitForFirstDelta(steerTurn.turnId, 60_000);
+    try {
+      const steered = await server.request("turn/steer", {
+        threadId: steerThread,
+        expectedTurnId: steerTurn.turnId,
+        input: [{ type: "text", text: "Stop the list and reply with exactly STEERED.", text_elements: [] }]
+      }, 15_000);
+      const completed = await server.waitForTurn(steerTurn.turnId, 180_000);
+      controls.push({ control: "turn/steer", requestAccepted: true, firstDeltaSeen: firstDeltaAt !== null, turnStatus: completed.turn.status, outputContainsMarker: (server.messages.get(steerTurn.turnId) ?? "").includes("STEERED"), outputEndsWithMarker: (server.messages.get(steerTurn.turnId) ?? "").trimEnd().endsWith("STEERED"), responseObserved: Boolean(steered) });
+    } catch (error) {
+      controls.push({ control: "turn/steer", requestAccepted: false, firstDeltaSeen: firstDeltaAt !== null, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
+    }
+
+    const approvalDir = join(tmpdir(), `nemu-p0-08-approvals-${randomUUID()}`);
+    const { mkdir: makeDir, rm } = await import("node:fs/promises");
+    await makeDir(approvalDir, { recursive: true });
+    const approvalPrompts = [
+      { control: "command-approval", text: "Use the command execution tool to create a file named COMMAND-PROBE.txt in the current directory using shell output redirection, with only the text P0-08 approval probe. Do not do anything else." },
+      { control: "file-change-approval", text: `Use the file editing tool to create a file named APPROVAL-PROBE.txt in the current directory containing only P0-08 probe. Do not use a shell command.` }
+    ];
+    for (const prompt of approvalPrompts) {
+      const approvalStartIndex = server.approvals.length;
+      try {
+        const result = await server.runOne({ model, text: prompt.text, mode: "approval", cwd: approvalDir, approval: true });
+        controls.push({ control: prompt.control, turnStatus: result.turnStatus, outputChars: result.outputChars, observedItemTypes: result.observedItemTypes, requests: server.approvals.slice(approvalStartIndex) });
+      } catch (error) {
+        controls.push({ control: prompt.control, requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
+      }
+    }
+    controls.push({
+      control: "approval-routing",
+      requests: server.approvals.map(({ method, decision }) => ({ method, decision })),
+      commandFileCreated: existsSync(join(approvalDir, "COMMAND-PROBE.txt")),
+      testFileCreated: existsSync(join(approvalDir, "APPROVAL-PROBE.txt"))
+    });
+    await rm(approvalDir, { recursive: true, force: true });
+  } catch (error) {
+    fatalError = { errorClass: safeErrorDetail(error.message), errorCode: error.rpcCode ?? null, errorDetail: error.rpcDetail ?? null };
+    throw error;
+  } finally {
+    const outPath = resolve(reportRoot, `controls-${server.approvalPolicy}.json`);
+    await writeFile(outPath, `${JSON.stringify({ measuredAtUtc: new Date().toISOString(), model, effort: measurementEffort, approvalPolicy: server.approvalPolicy, approvalsReviewer: "user", fatalError, serverRequests: server.serverRequests, controls }, null, 2)}\n`, "utf8");
   }
-  controls.push({
-    control: "approval-routing",
-    requests: server.approvals.map(({ method, decision }) => ({ method, decision })),
-    commandFileCreated: existsSync(join(approvalDir, "COMMAND-PROBE.txt")),
-    testFileCreated: existsSync(join(approvalDir, "APPROVAL-PROBE.txt"))
-  });
-  await rm(approvalDir, { recursive: true, force: true });
-  const outPath = resolve(reportRoot, `controls-${server.approvalPolicy}.json`);
-  await writeFile(outPath, `${JSON.stringify({ measuredAtUtc: new Date().toISOString(), model, effort: measurementEffort, approvalPolicy: server.approvalPolicy, approvalsReviewer: "user", serverRequests: server.serverRequests, controls }, null, 2)}\n`, "utf8");
   return controls;
 }
 
@@ -643,7 +670,7 @@ function printHelp() {
     "  node spikes/codex-app-server/src/probe.mjs irl --code-home <path> --model <id> --runs 200",
     "  node spikes/codex-app-server/src/probe.mjs controls --code-home <path> --model <id>",
     "",
-    "All raw records omit response text, account identifiers, and credentials."
+    "Timing JSONL omits response text and credentials; synthetic candidates are separate artifacts."
   ].join("\n"));
 }
 
@@ -653,7 +680,13 @@ async function main() {
   const codeHome = required(options, "code-home");
   const model = options.model;
   if (["speech", "speech-all", "irl", "controls"].includes(mode)) required(options, "model");
-  const server = new AppServer(codeHome);
+  const catalogPath = typeof options.catalog === "string" ? resolve(options.catalog) : undefined;
+  if (options["report-subdir"] !== undefined) {
+    if (options["report-subdir"] !== "strict-speech") throw new Error("Only --report-subdir strict-speech is supported");
+    reportRoot = resolve(reportRoot, "strict-speech");
+  }
+  if (catalogPath && model && model !== "gpt-6-luna") throw new Error("Strict catalog measurements require gpt-6-luna");
+  const server = new AppServer(codeHome, { catalogPath, strictTools: Boolean(catalogPath) });
   if (mode === "controls") {
     const policy = options["approval-policy"] ?? "untrusted";
     if (!["untrusted", "on-request"].includes(policy)) {

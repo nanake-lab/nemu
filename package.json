@@ -35,7 +35,10 @@
     "test:core-contracts": "python core/contracts/verify.py",
     "board": "python tools/status/serve_board.py",
     "probe:supplement": "python workers/model-adapter/probe/run_supplement.py",
-    "probe:chat": "node workers/model-adapter/probe/launch_chat.mjs"
+    "probe:chat": "node workers/model-adapter/probe/launch_chat.mjs",
+    "probe:p0-08": "node spikes/codex-app-server/src/probe.mjs",
+    "probe:p0-08:local": "uv run --project spikes/codex-app-server python spikes/codex-app-server/src/local_irl.py",
+    "probe:p0-08:analyze": "node spikes/codex-app-server/src/analyze.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

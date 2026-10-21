@@ -93,6 +93,7 @@ class AppServer {
   constructor(codeHome) {
     if (!codeHome) throw new Error("provide an isolated CODEX_HOME with --code-home");
     this.approvalPolicy = "untrusted";
+    this.serverFailure = null;
     this.pending = new Map();
     this.nextId = 0;
     this.turns = new Map();
@@ -115,6 +116,7 @@ class AppServer {
     });
     const stdout = createInterface({ input: this.child.stdout });
     stdout.on("line", (line) => this.#handleLine(line));
+    this.child.stdin.on("error", () => this.#failPending("server_stdin_closed"));
     this.child.stderr.on("data", () => {}); // Never persist raw app-server stderr.
     this.child.on("error", () => this.#failPending("spawn_error"));
     this.child.on("exit", () => this.#failPending("server_exited"));
@@ -126,6 +128,7 @@ class AppServer {
   }
 
   #failPending(reason) {
+    this.serverFailure = reason;
     for (const entry of this.pending.values()) {
       clearTimeout(entry.timer);
       entry.reject(new Error(reason));
@@ -218,6 +221,7 @@ class AppServer {
   }
 
   async request(method, params = {}, timeoutMs = 30_000) {
+    if (this.serverFailure) throw new Error(this.serverFailure);
     const id = `p0-08-${++this.nextId}`;
     return new Promise((resolvePromise, rejectPromise) => {
       const timer = setTimeout(() => {
@@ -481,7 +485,7 @@ async function speechBatch(server, model, lang, runs, startIndex = 1) {
       const row = { index: startIndex + index, caseId: sample.id, lang, model, effort: measurementEffort, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
-      if (["server_exited", "spawn_error", "rpc_timeout", "turn_timeout"].includes(error.message)) {
+      if (["server_exited", "spawn_error", "server_stdin_closed", "rpc_timeout", "turn_timeout"].includes(error.message)) {
         await summarizeRecords(`remote-speech-${lang}-${runId}-partial`, rows, { runId, startIndex, rateLimitsBefore, aborted: true });
         throw error;
       }
@@ -544,7 +548,7 @@ async function irlBatch(server, model, runs, schema, startIndex = 1) {
       const row = { index: startIndex + index, caseId: sample.id, lang: sample.lang, category: sample.category, model, effort: measurementEffort, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null, schemaValid: false };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
-      if (["server_exited", "spawn_error", "rpc_timeout", "turn_timeout"].includes(error.message)) {
+      if (["server_exited", "spawn_error", "server_stdin_closed", "rpc_timeout", "turn_timeout"].includes(error.message)) {
         await summarizeRecords(`remote-irl-${runId}-partial`, rows, { runId, rateLimitsBefore, rateLimitsAfter100, aborted: true });
         throw error;
       }
@@ -575,59 +579,66 @@ async function catalog(server) {
 
 async function controlProbe(server, model) {
   const controls = [];
-  const longText = "Write a long numbered response in English, continuing for at least 400 numbered items unless interrupted. Do not use tools.";
-  const threadId = await server.startThread({ model });
-  const { turnId, startedAt } = await server.startTurn({ threadId, model, text: longText });
-  const interruptFirstDelta = await server.waitForFirstDelta(turnId, 60_000);
-  const interruptAt = performance.now();
+  let fatalError = null;
   try {
-    await server.request("turn/interrupt", { threadId, turnId }, 15_000);
-    const completed = await server.waitForTurn(turnId, 30_000);
-    controls.push({ control: "turn/interrupt", requestAccepted: true, turnStatus: completed.turn.status, firstDeltaSeen: interruptFirstDelta !== null, interruptCompletionMs: Math.round((server.completedAt.get(turnId) - interruptAt) * 100) / 100, firstDeltaMs: server.firstDeltas.has(turnId) ? Math.round((server.firstDeltas.get(turnId) - startedAt) * 100) / 100 : null });
-  } catch (error) {
-    controls.push({ control: "turn/interrupt", requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
-  }
-
-  const steerThread = await server.startThread({ model });
-  const steerTurn = await server.startTurn({ threadId: steerThread, model, text: longText });
-  const firstDeltaAt = await server.waitForFirstDelta(steerTurn.turnId, 60_000);
-  try {
-    const steered = await server.request("turn/steer", {
-      threadId: steerThread,
-      expectedTurnId: steerTurn.turnId,
-      input: [{ type: "text", text: "Stop the list and reply with exactly STEERED.", text_elements: [] }]
-    }, 15_000);
-    const completed = await server.waitForTurn(steerTurn.turnId, 180_000);
-    controls.push({ control: "turn/steer", requestAccepted: true, firstDeltaSeen: firstDeltaAt !== null, turnStatus: completed.turn.status, outputContainsMarker: (server.messages.get(steerTurn.turnId) ?? "").includes("STEERED"), outputEndsWithMarker: (server.messages.get(steerTurn.turnId) ?? "").trimEnd().endsWith("STEERED"), responseObserved: Boolean(steered) });
-  } catch (error) {
-    controls.push({ control: "turn/steer", requestAccepted: false, firstDeltaSeen: firstDeltaAt !== null, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
-  }
-
-  const approvalDir = join(tmpdir(), `nemu-p0-08-approvals-${randomUUID()}`);
-  const { mkdir: makeDir, rm } = await import("node:fs/promises");
-  await makeDir(approvalDir, { recursive: true });
-  const approvalPrompts = [
-    { control: "command-approval", text: "Use the command execution tool to create a file named COMMAND-PROBE.txt in the current directory using shell output redirection, with only the text P0-08 approval probe. Do not do anything else." },
-    { control: "file-change-approval", text: `Use the file editing tool to create a file named APPROVAL-PROBE.txt in the current directory containing only P0-08 probe. Do not use a shell command.` }
-  ];
-  for (const prompt of approvalPrompts) {
-    const approvalStartIndex = server.approvals.length;
+    const longText = "Write a long numbered response in English, continuing for at least 400 numbered items unless interrupted. Do not use tools.";
+    const threadId = await server.startThread({ model });
+    const { turnId, startedAt } = await server.startTurn({ threadId, model, text: longText });
+    const interruptFirstDelta = await server.waitForFirstDelta(turnId, 60_000);
+    const interruptAt = performance.now();
     try {
-      const result = await server.runOne({ model, text: prompt.text, mode: "approval", cwd: approvalDir, approval: true });
-      controls.push({ control: prompt.control, turnStatus: result.turnStatus, outputChars: result.outputChars, observedItemTypes: result.observedItemTypes, requests: server.approvals.slice(approvalStartIndex) });
+      await server.request("turn/interrupt", { threadId, turnId }, 15_000);
+      const completed = await server.waitForTurn(turnId, 30_000);
+      controls.push({ control: "turn/interrupt", requestAccepted: true, turnStatus: completed.turn.status, firstDeltaSeen: interruptFirstDelta !== null, interruptCompletionMs: Math.round((server.completedAt.get(turnId) - interruptAt) * 100) / 100, firstDeltaMs: server.firstDeltas.has(turnId) ? Math.round((server.firstDeltas.get(turnId) - startedAt) * 100) / 100 : null });
     } catch (error) {
-      controls.push({ control: prompt.control, requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
+      controls.push({ control: "turn/interrupt", requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
     }
+
+    const steerThread = await server.startThread({ model });
+    const steerTurn = await server.startTurn({ threadId: steerThread, model, text: longText });
+    const firstDeltaAt = await server.waitForFirstDelta(steerTurn.turnId, 60_000);
+    try {
+      const steered = await server.request("turn/steer", {
+        threadId: steerThread,
+        expectedTurnId: steerTurn.turnId,
+        input: [{ type: "text", text: "Stop the list and reply with exactly STEERED.", text_elements: [] }]
+      }, 15_000);
+      const completed = await server.waitForTurn(steerTurn.turnId, 180_000);
+      controls.push({ control: "turn/steer", requestAccepted: true, firstDeltaSeen: firstDeltaAt !== null, turnStatus: completed.turn.status, outputContainsMarker: (server.messages.get(steerTurn.turnId) ?? "").includes("STEERED"), outputEndsWithMarker: (server.messages.get(steerTurn.turnId) ?? "").trimEnd().endsWith("STEERED"), responseObserved: Boolean(steered) });
+    } catch (error) {
+      controls.push({ control: "turn/steer", requestAccepted: false, firstDeltaSeen: firstDeltaAt !== null, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
+    }
+
+    const approvalDir = join(tmpdir(), `nemu-p0-08-approvals-${randomUUID()}`);
+    const { mkdir: makeDir, rm } = await import("node:fs/promises");
+    await makeDir(approvalDir, { recursive: true });
+    const approvalPrompts = [
+      { control: "command-approval", text: "Use the command execution tool to create a file named COMMAND-PROBE.txt in the current directory using shell output redirection, with only the text P0-08 approval probe. Do not do anything else." },
+      { control: "file-change-approval", text: `Use the file editing tool to create a file named APPROVAL-PROBE.txt in the current directory containing only P0-08 probe. Do not use a shell command.` }
+    ];
+    for (const prompt of approvalPrompts) {
+      const approvalStartIndex = server.approvals.length;
+      try {
+        const result = await server.runOne({ model, text: prompt.text, mode: "approval", cwd: approvalDir, approval: true });
+        controls.push({ control: prompt.control, turnStatus: result.turnStatus, outputChars: result.outputChars, observedItemTypes: result.observedItemTypes, requests: server.approvals.slice(approvalStartIndex) });
+      } catch (error) {
+        controls.push({ control: prompt.control, requestAccepted: false, errorCode: error.rpcCode ?? null, errorClass: error.message, errorDetail: error.rpcDetail ?? null });
+      }
+    }
+    controls.push({
+      control: "approval-routing",
+      requests: server.approvals.map(({ method, decision }) => ({ method, decision })),
+      commandFileCreated: existsSync(join(approvalDir, "COMMAND-PROBE.txt")),
+      testFileCreated: existsSync(join(approvalDir, "APPROVAL-PROBE.txt"))
+    });
+    await rm(approvalDir, { recursive: true, force: true });
+  } catch (error) {
+    fatalError = { errorClass: safeErrorDetail(error.message), errorCode: error.rpcCode ?? null, errorDetail: error.rpcDetail ?? null };
+    throw error;
+  } finally {
+    const outPath = resolve(reportRoot, `controls-${server.approvalPolicy}.json`);
+    await writeFile(outPath, `${JSON.stringify({ measuredAtUtc: new Date().toISOString(), model, effort: measurementEffort, approvalPolicy: server.approvalPolicy, approvalsReviewer: "user", fatalError, serverRequests: server.serverRequests, controls }, null, 2)}\n`, "utf8");
   }
-  controls.push({
-    control: "approval-routing",
-    requests: server.approvals.map(({ method, decision }) => ({ method, decision })),
-    commandFileCreated: existsSync(join(approvalDir, "COMMAND-PROBE.txt")),
-    testFileCreated: existsSync(join(approvalDir, "APPROVAL-PROBE.txt"))
-  });
-  await rm(approvalDir, { recursive: true, force: true });
-  const outPath = resolve(reportRoot, `controls-${server.approvalPolicy}.json`);
-  await writeFile(outPath, `${JSON.stringify({ measuredAtUtc: new Date().toISOString(), model, effort: measurementEffort, approvalPolicy: server.approvalPolicy, approvalsReviewer: "user", serverRequests: server.serverRequests, controls }, null, 2)}\n`, "utf8");
   return controls;
 }
 

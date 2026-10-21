@@ -25,7 +25,7 @@ node spikes/codex-app-server/src/prepare-fixtures.mjs
 
 `hash-generated.mjs` writes a candidate manifest under `drafts/`. It records the CLI version, generated file count, and a deterministic SHA-256 over sorted relative paths and file hashes. It does not update `config/models.lock.json`.
 
-Sign in only through the normal Codex CLI flow after confirming that account settings permit it. The observed account requires device-code sign-in to be enabled by the account owner; this spike does not change that setting. Check with `codex login status` using the isolated `CODEX_HOME` before running remote measurements.
+Sign in through the normal Codex CLI flow. The second phase used browser authorization successfully; the earlier device-code attempt was blocked. This spike does not change account settings. Check with `codex login status` using the isolated `CODEX_HOME` before running remote measurements.
 
 ## Measurements
 
@@ -41,13 +41,13 @@ node spikes/codex-app-server/src/probe.mjs controls --code-home $probeHome --mod
 
 `smoke` initializes app-server and starts an ephemeral thread without starting a model turn. It verifies local protocol setup only; it does not replace authenticated inference measurements.
 
-Raw JSONL records and summaries are written to `reports/P0-08/`. Records retain synthetic case identifiers, latency, status, output length, schema validity, and token usage when available. Response text, account identifiers, authentication data, and raw stderr are not written.
+Raw JSONL records and summaries are written to `reports/P0-08/`. Records retain synthetic case identifiers, latency, status, output length, schema validity, and token usage when available. Speech reply text, account identifiers, authentication data, and raw server stderr are not written. IRL candidates (including malformed synthetic outputs) are separate evidence artifacts so validity can be checked independently.
 
 Speech and IRL threads use an empty temporary working directory, `dynamicTools: []`, disabled shell/app/plugin/web-search/multi-agent features, a read-only sandbox, and no network. The approval-control threads enable shell execution only for the isolated temporary working directory; they remain read-only, have no network, and the client declines every approval request. Runtime behavior still needs confirmation from the authenticated control probe.
 
-## Current blockers
+## Historical blockers
 
-See `reports/P0-08/BLOCKED.md`. No remote measurements are recorded until the isolated profile is authenticated. No local carrier measurement is recorded until P0-07 selects the carrier and the runner/GPU preflight passes.
+See `reports/P0-08/BLOCKED.md` for the first-phase blockers and second-phase resolution. Authentication, the selected carrier and the quiet-window checks were completed in the second phase. P0-09 target approval and formal configuration ADR remain separate gates.
 
 ## Second phase (2026-10-22)
 
@@ -88,3 +88,34 @@ Generated protocol types, synthetic fixtures, and candidate drafts here are spik
 Each completed ephemeral measurement thread is unsubscribed after its latency is captured. Connection-level RPC or turn timeouts stop a batch and preserve a partial summary. `speech` and `irl` accept a one-based `--start-index` to continue later fixtures; the raw row index remains the original fixture index. Supplemental attempts use unique run IDs and never overwrite failed raw records. The Japanese interruption and supplemental segment manifest in `reports/P0-08/part2/remote-speech-all-summary.json` must be included in analysis. Completed-only latency percentiles exclude censored timeouts; failure counts and supplemental counts remain visible.
 
 The first connection stalled after 127 successful replies; the cause is unconfirmed. Unsubscribing completed threads bounds live server resources but does not establish the cause. Speech source snapshots preserve the version actually loaded by each batch. Formal IRL source and hash are separate. No model/effort fallback is configured or accepted as equivalent evidence.
+
+## Strict remote profile (final second-phase measurements)
+
+The earlier feature flags alone left code-mode built-ins exposed. The adverse clock/file tests observed raw `exec` calls even when `item/started` contained no tool item. The original remote groups remain as legacy evidence and do not determine the final backend. The corrected profile uses the supported `model_catalog_json` override to narrow only Luna's tool metadata, disables apps/plugins/hooks at server startup, disables remaining built-ins per thread, and supplies empty environments and capability roots. The model stays `gpt-6-luna`, effort `max`. Catalog capability metadata is read from `models_cache.json`; authentication files are never read. The complete derived provider catalog remains outside Git; only hashes and changed fields are recorded.
+
+```powershell
+$probeHome = Join-Path $env:LOCALAPPDATA 'Nemu\probes\P0-08\CODEX_HOME'
+$talkCatalog = Join-Path $env:LOCALAPPDATA 'Nemu\probes\P0-08\derived\no-tools-catalog-NEW.json'
+node spikes/codex-app-server/src/prepare-talk-catalog.mjs --source (Join-Path $probeHome 'models_cache.json') --output $talkCatalog --report reports/P0-08/part2/protocol/no-tools-catalog-NEW.json
+node spikes/codex-app-server/src/tool-surface-audit.mjs --code-home $probeHome --model gpt-6-luna --catalog $talkCatalog
+node spikes/codex-app-server/src/probe.mjs catalog --code-home $probeHome --model gpt-6-luna --catalog $talkCatalog --report-subdir strict-speech
+node spikes/codex-app-server/src/probe.mjs speech-all --code-home $probeHome --model gpt-6-luna --catalog $talkCatalog --report-subdir strict-speech
+node spikes/codex-app-server/src/probe.mjs irl --code-home $probeHome --model gpt-6-luna --runs 200 --catalog $talkCatalog --report-subdir strict-speech
+```
+
+Use a fresh checkout/evidence location when reproducing: summaries have fixed names, while raw records and candidate directories use unique run IDs. Do not overwrite accepted evidence. Both final speech and IRL records live in `part2/strict-speech/` (the directory name is retained for the frozen run). Raw response-item notifications are enabled for every final turn, and each row records `rawToolCallNames`. The final analyzer rejects missing/nonempty raw-call evidence. Startup catalog evidence reports zero MCP servers. Adverse tests and zero observed calls establish measured behavior, not a general security proof.
+
+The final local batch is `part2/local-irl-20261022-v2/`: 200 requests, one excluded warmup. Version 1 was aborted after ten returned formal requests because the decoder admitted literal control characters. `decoder_adapter.py` narrows the in-memory alphabet/free-string cache without modifying installed dependencies or rewriting generated text. Eight of the final 200 outputs still fail JSON parsing; they remain failures. The adapter is not claimed to solve every token/Unicode interaction. Neither failed outputs nor the aborted batch are silently replaced.
+
+Final analysis uses nearest-rank percentiles over all completed generation responses, including schema-invalid responses. Schema-valid-only latency is reported separately. Transport failures are censored, not assigned finite latency; all attempts remain in schema-rate denominators. The fallback comparison uses completion P50 (preregistered); the deadline is the selected backend's measured P90. Schema validity and source binding are separate from semantic correctness. Remote timing starts before `turn/start`; local timing includes parser construction and generation after model/tokenizer load. These are request timings for the tested paths, not end-to-end audio latency.
+
+`pnpm probe:p0-08:analyze reports/P0-08/part2/local-irl-20261022-v2` rebuilds `part2/analysis.json` after the strict batch manifest is finalized. Missing ASR, core, TTS and rewrite components stay `null` for speaking modes A/B/C; marginal quantiles are not summed into invented end-to-end quantiles.
+
+CPU-only checks (run serially outside measurement windows):
+
+```powershell
+node --test spikes/codex-app-server/src/validation.test.mjs spikes/codex-app-server/src/prepare-talk-catalog.test.mjs
+spikes/codex-app-server/.venv/Scripts/python.exe -m unittest discover -s spikes/codex-app-server/src -p 'test_*.py'
+spikes/codex-app-server/.venv/Scripts/python.exe -m ruff check spikes/codex-app-server/src/local_irl.py spikes/codex-app-server/src/decoder_adapter.py spikes/codex-app-server/src/test_local_irl.py spikes/codex-app-server/src/test_decoder_adapter.py
+spikes/codex-app-server/.venv/Scripts/python.exe -m mypy --strict --follow-imports silent spikes/codex-app-server/src/local_irl.py spikes/codex-app-server/src/decoder_adapter.py spikes/codex-app-server/src/test_local_irl.py spikes/codex-app-server/src/test_decoder_adapter.py
+```
