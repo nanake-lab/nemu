@@ -3,8 +3,8 @@ use core_types::{
     WireMessage,
     contract::{Limits, Schema},
     generated::{
-        EffectContract, FailureCode, GenesisManifestV2, LawParameters, RunStatus, Tendency,
-        TendencyChange,
+        ActionStatus, DeliveryStatus, EffectContract, EpistemicType, EvidenceRelation, FailureCode,
+        GenesisManifestV2, LawParameters, RunStatus, TeachingAnnotation, Tendency, TendencyChange,
     },
     semantic,
 };
@@ -246,6 +246,40 @@ fn superseded_registry() {
     assert!(!RunStatus::A_DEGRADED.is_superseded());
     assert!(FailureCode::GROWTH_NOT_ENABLED_V1.is_superseded());
     assert!(!FailureCode::GROWTH_OFF_REHEARSAL.is_superseded());
+}
+
+/// ADR 0014 (with its 2026-10-21 correction) relies on these values, so they must stay
+/// live: no superseded mark, and the message is not in the superseded registry.
+/// `EVIDENCE_UNKNOWN` belongs to the superseded `EvidenceRelation`; per the correction it
+/// is not used, and this test pins that it stays superseded rather than revived.
+#[test]
+fn adr_0014_values_are_live() {
+    assert!(!EpistemicType::USER_SELF_REPORT.is_superseded());
+    assert!(!ActionStatus::UNKNOWN_ACTION.is_superseded());
+    assert!(!DeliveryStatus::UNKNOWN_DELIVERY.is_superseded());
+    const { assert!(!TeachingAnnotation::SUPERSEDED) };
+    assert!(!core_types::generated::SUPERSEDED_MESSAGES.contains(&"TeachingAnnotation"));
+    // The same facts in the schema every language loads.
+    let s: Value =
+        serde_json::from_str(include_str!("../../../contracts/generated/schema.json")).unwrap();
+    for (e, v) in [
+        ("EpistemicType", "USER_SELF_REPORT"),
+        ("ActionStatus", "UNKNOWN_ACTION"),
+        ("DeliveryStatus", "UNKNOWN_DELIVERY"),
+    ] {
+        assert!(s["enums"][e][v].is_u64(), "{e}.{v} exists");
+        assert!(s["superseded_enums"].get(e).is_none(), "{e} is live");
+        assert!(
+            s["superseded_values"][e].get(v).is_none(),
+            "{e}.{v} is live"
+        );
+    }
+    assert!(
+        s["messages"]["TeachingAnnotation"]
+            .get("superseded")
+            .is_none()
+    );
+    assert!(EvidenceRelation::EVIDENCE_UNKNOWN.is_superseded());
 }
 
 /// The codec's set order and `semantic::tendency_order` agree, so P5-10 can order

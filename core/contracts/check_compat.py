@@ -106,16 +106,32 @@ def discipline(s: Schema) -> list[str]:
             if p.get("superseded", {}).get("by") != name:
                 out.append(f"{name} supersedes {predecessor}, which does not name it")
             kept = {f["number"]: f for f in m["fields"]}
+            reserved = set(m.get("reserved", []))
             numbers = {f["number"] for f in p.get("fields", [])} | set(
                 p.get("reserved", [])
             )
+            # A field number is never reused, however many generations later.
+            if kept.keys() & reserved:
+                out.append(
+                    f"{name} uses its own reserved numbers {sorted(kept.keys() & reserved)}"
+                )
             for f in p.get("fields", []):
                 if f["number"] in kept and kept[f["number"]] != f:
                     out.append(
                         f"{name} field {f['number']} reuses {predecessor}.{f['name']} differently"
                     )
-                if f["number"] not in kept and f["number"] not in m.get("reserved", []):
+                if f["number"] not in kept and f["number"] not in reserved:
                     out.append(f"{name} must reserve {predecessor} field {f['number']}")
+            # The predecessor's reserved numbers are inherited in full and stay unused.
+            for number in sorted(set(p.get("reserved", []))):
+                if number in kept:
+                    out.append(
+                        f"{name} field {number} reuses {predecessor}'s reserved number {number}"
+                    )
+                elif number not in reserved:
+                    out.append(
+                        f"{name} must inherit {predecessor}'s reserved number {number}"
+                    )
             for number in kept:
                 if number not in numbers and number <= max(numbers, default=0):
                     out.append(
@@ -225,8 +241,45 @@ def self_test(old: Schema, new: Schema) -> list[str]:
     def unmark_value(s: Schema) -> None:
         del s["superseded_values"]["RunStatus"]["AX_DEGRADED"]
 
-    missed = []
-    for mutation in (
+    def third_generation(s: Schema, reuse: bool, inherit: bool) -> None:
+        """VersionedEnvironmentV3 succeeds V2; the live binding moves to V3 so the
+        dependency chain stays consistent and only the reserved-number rule is tested."""
+        m = s["messages"]
+        v2 = m["VersionedEnvironmentV2"]
+        v3 = copy.deepcopy(v2)
+        v3.update(tag="echo.environment-v3", supersedes="VersionedEnvironmentV2")
+        if inherit:
+            v3["reserved"] = list(v2["reserved"])
+        else:
+            del v3["reserved"]
+        number = 4 if reuse else 14
+        v3["fields"].append(
+            dict(
+                name="scope_v3",
+                type="double",
+                number=number,
+                repeated=False,
+                required=False,
+                nonempty=False,
+            )
+        )
+        m["VersionedEnvironmentV3"] = v3
+        v2["superseded"] = dict(by="VersionedEnvironmentV3", reason="self-test")
+        field(s, "ProposalBindingV2", "environment")["type"] = "VersionedEnvironmentV3"
+
+    def reuse_inherited_reserved(s: Schema) -> None:
+        # Codex PR #36 counterexample: V2's reserved 4 becomes a new field in V3.
+        third_generation(s, reuse=True, inherit=False)
+
+    def drop_inherited_reserved(s: Schema) -> None:
+        # V3 does not reuse 4 but no longer reserves it, so V4 could.
+        third_generation(s, reuse=False, inherit=False)
+
+    def reuse_own_reserved(s: Schema) -> None:
+        # V3 inherits reserved 4 and also declares a field 4.
+        third_generation(s, reuse=True, inherit=True)
+
+    mutations = (
         renumber,
         retype,
         recycle_enum,
@@ -238,13 +291,27 @@ def self_test(old: Schema, new: Schema) -> list[str]:
         embed_old,
         unmark,
         unmark_value,
-    ):
+        reuse_inherited_reserved,
+        drop_inherited_reserved,
+        reuse_own_reserved,
+    )
+    missed = []
+    for mutation in mutations:
         mutated = copy.deepcopy(new)
         mutation(mutated)
         # unmark/unmark_value are only violations against a baseline that already had the mark.
         base = new if mutation in (unmark, unmark_value) else old
         if not violations(base, mutated):
             missed.append(mutation.__name__)
+    # Control: a correct third generation (inherits reserved 4, adds field 14) passes, so
+    # the three cross-generation mutations above fail for the reserved rule, not for noise.
+    control = copy.deepcopy(new)
+    third_generation(control, reuse=False, inherit=True)
+    if violations(old, control):
+        missed.append(
+            "control third generation is rejected: "
+            + "; ".join(violations(old, control))
+        )
     return missed
 
 

@@ -184,3 +184,16 @@ Windows 作业没有在本地运行。本卡不改动桌面、隔离与视觉相
 - ADR 0014 用到的取值（`USER_SELF_REPORT`、`UNKNOWN_ACTION`、`UNKNOWN_DELIVERY`、`EVIDENCE_UNKNOWN`、`TeachingAnnotation`）在本卡契约中都已存在，不需要改动。
 - 合并后的复跑结果见 `verification/after-main-merge-20261021/`。
 
+
+## 2026-10-21 Codex 审查后的修正（追加）
+
+Codex 交叉审查（[PR #36 评论](https://github.com/nanake-lab/nemu/pull/36#issuecomment-6310131751)）提出 2 项 P2。已合并最新 main（含 #46，ADR 0014 的更正），merge，不 rebase，不强推。
+
+- **更正（第 1 项）：** 上一节「2026-10-21 合并 main 与登记重编号」说 ADR 0014 用到的取值都已存在、不需要改动，并把 `EVIDENCE_UNKNOWN` 列在其中。这一说法不成立：`EVIDENCE_UNKNOWN` 属于整体标为取代的 `EvidenceRelation`（v2.0 第 15 节），生产者不能再用。以 ADR 0014 的「更正」一节为准：结果是否未知按 H 中已有的记录判定，不需要证据关系取值，也不需要契约变更。本卡不恢复这个取值，`EvidenceRelation` 的取代标注不变。ADR 0014 仍依赖的 `USER_SELF_REPORT`、`UNKNOWN_ACTION`、`UNKNOWN_DELIVERY`、`TeachingAnnotation` 都是有效取值。新增测试 `v2_contract.rs::adr_0014_values_are_live` 断言这一点：生成的 Rust 标志与三种语言共用的 `schema.json` 都要求它们没有取代标注，并锁定 `EVIDENCE_UNKNOWN` 仍为取代。临时把 `USER_SELF_REPORT` 标为取代时，这个测试失败。
+- **修正（第 2 项）：** `check_compat.py` 的后继规则原先只检查前任的实际字段。前任已保留的号虽然并入了比较集合，却没有要求后继继承，所以跨两代时可以被复用。现在后继必须完整继承前任的 `reserved`，也就是前任保留的号，加上前任字段中没有沿用、被取代的号；后继的字段也不得与自己的 `reserved` 相交。自检新增三种跨两代的负例：
+  - Codex 的反例：VersionedEnvironmentV3 继承 V2，把 V2 的 reserved 4 改作新字段；
+  - V3 不再保留 4；
+  - V3 保留 4 的同时又声明字段 4。
+
+  另有一个对照组：正确继承 reserved 4、新增字段 14 的 V3 必须通过，证明三种负例失败是因为 reserved 规则，而不是别的噪声。原有 11 种自检照旧全部报出，共 14 种。把检查规则换回修复前的版本时，新增的三种全部漏报。本卡的 IDL 本身没有复用任何号，check_compat 对 P5-01 基线与 `origin/main` 仍为 0 违例。
+- 复跑结果见 `verification/review-fixes-20261021/`。
