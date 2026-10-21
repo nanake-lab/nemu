@@ -1,0 +1,74 @@
+name: Docs guard
+# Runs only when the frozen spec originals or the task catalog change. CI skips
+# document-only changes, so these two checks stand in for it there.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/echo-core/original/**'
+      - 'tasks/cards.json'
+      - '.github/workflows/docs-guard.yml'
+  pull_request:
+    paths:
+      - 'docs/echo-core/original/**'
+      - 'tasks/cards.json'
+      - '.github/workflows/docs-guard.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  guard:
+    name: Frozen specs and task catalog
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: docs/echo-core/original is never modified (AGENTS.md section 2)
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          # A pull request checks out its merge commit: the first parent is the base tip.
+          if [ "$EVENT" = pull_request ]; then
+            base=HEAD^1
+          elif [ "$EVENT" = push ]; then
+            base="$BEFORE"
+          else
+            echo "Manual run: nothing to compare."
+            exit 0
+          fi
+          changed=$(git diff --name-only "$base" HEAD -- docs/echo-core/original)
+          if [ -n "$changed" ]; then
+            echo "::error::docs/echo-core/original/ must never be modified:"
+            echo "$changed"
+            exit 1
+          fi
+      - name: tasks/cards.json parses and its references resolve
+        shell: python
+        run: |
+          import json
+          import sys
+
+          with open("tasks/cards.json", encoding="utf-8") as f:
+              catalog = json.load(f)
+          cards = catalog["cards"]
+          ids = [c["id"] for c in cards]
+          milestones = {m["id"] for m in catalog.get("milestones", [])}
+          required = ("id", "title", "phase", "milestone", "deps", "difficulty", "suggested", "effort")
+          problems = []
+          problems += [f"duplicate id {i}" for i in sorted({i for i in ids if ids.count(i) > 1})]
+          for c in cards:
+              problems += [f"{c.get('id', '?')}: missing {k}" for k in required if k not in c]
+              problems += [f"{c['id']}: unknown dependency {d}" for d in c.get("deps", []) if d not in ids]
+              if milestones and c.get("milestone") not in milestones:
+                  problems.append(f"{c['id']}: unknown milestone {c.get('milestone')}")
+          for p in problems:
+              print(f"::error::{p}")
+          print(f"{len(cards)} cards, {len(problems)} problems")
+          sys.exit(1 if problems else 0)

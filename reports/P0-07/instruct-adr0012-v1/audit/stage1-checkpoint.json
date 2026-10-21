@@ -1,0 +1,1014 @@
+{
+  "stage": "run-latency-memory-path",
+  "evidence_root": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1",
+  "runs": [
+    {
+      "run": 1,
+      "files": {
+        "summary": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-1\\summary.json",
+        "concurrent": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-1\\matrix\\Qwen--Qwen3-4B-Instruct-2507-int4\\concurrent.json",
+        "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-1\\matrix\\Qwen--Qwen3-4B-Instruct-2507-int4\\path.json",
+        "render": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-1\\matrix\\Qwen--Qwen3-4B-Instruct-2507-int4\\render.json",
+        "memory": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-1\\memory.jsonl"
+      },
+      "recorded_times": {
+        "summary_start_utc": "2026-10-20T15:41:23.372158+00:00",
+        "summary_end_utc": "2026-10-20T15:42:45.282707+00:00",
+        "concurrent_timestamp": "2026-10-20T15:42:09.649351+00:00",
+        "path_timestamp": "2026-10-20T15:42:01.333276+00:00",
+        "render_startedAt": "2026-10-20T15:42:06.615Z"
+      },
+      "subprocess_exit_codes": {
+        "matrix": 0,
+        "memory_watch": 0
+      },
+      "sample_counts": {
+        "all": 21,
+        "warmup": 1,
+        "nonwarmup": 20,
+        "numeric_latency": 20
+      },
+      "latency_ms": {
+        "p50_recomputed": 540.5973000015365,
+        "p90_linear_recomputed": 551.8742300017038,
+        "p50_summary": 540.5973000015365,
+        "p90_summary": 551.8742300017038,
+        "summary_method": "p50 median; p90 numpy linear"
+      },
+      "fixture": {
+        "nonwarmup_han_count_histogram": {
+          "20": 20
+        },
+        "exactly_20_han_count": 20,
+        "matches_fixed_fixture_true_count": 20,
+        "stop_reason_counts": {
+          "sentence_boundary": 20
+        }
+      },
+      "wddm": {
+        "jsonl_line_count": 261,
+        "owned_gpu_counter_observation_count": 158,
+        "no_owned_gpu_counter_samples": 103,
+        "dedicated_peak_sample": {
+          "line": 209,
+          "startedUtc": "2026-10-20T15:42:28.4537629+00:00",
+          "endedUtc": "2026-10-20T15:42:28.5741230+00:00",
+          "dedicated_bytes": 5805043712,
+          "shared_bytes": 293908480,
+          "sum_bytes": 6098952192,
+          "counter_rows": 2,
+          "owned_process_ids": [
+            6828,
+            8932,
+            9580,
+            10356,
+            17380,
+            17912,
+            22160,
+            24292,
+            24552,
+            27256,
+            28952,
+            29220,
+            33268,
+            34160,
+            34336
+          ]
+        },
+        "shared_peak_sample": {
+          "line": 206,
+          "startedUtc": "2026-10-20T15:42:27.4723924+00:00",
+          "endedUtc": "2026-10-20T15:42:27.5854135+00:00",
+          "dedicated_bytes": 5781975040,
+          "shared_bytes": 293908480,
+          "sum_bytes": 6075883520,
+          "counter_rows": 2,
+          "owned_process_ids": [
+            6828,
+            8932,
+            9580,
+            10356,
+            17380,
+            17912,
+            22160,
+            24056,
+            24292,
+            24552,
+            27256,
+            28952,
+            29220,
+            33268,
+            34160,
+            34336
+          ]
+        },
+        "recomputed_bound_bytes": 6098952192,
+        "summary_bound_bytes": 6098952192,
+        "summary_sampled_peaks": {
+          "dedicated_bytes": 5805043712,
+          "shared_bytes": 293908480,
+          "total_committed_bytes": 6099656704
+        },
+        "summary_errors": [],
+        "maximum_sample_start_interval": {
+          "seconds": 6.015322,
+          "previous_line": 1,
+          "previous_start": "2026-10-20T15:41:17.3738512+00:00",
+          "current_line": 2,
+          "current_start": "2026-10-20T15:41:23.3891731+00:00"
+        },
+        "summary_maximum_sample_start_interval_s": 6.015322,
+        "gap_relative_to_recorded_events_s": {
+          "summary_start": {
+            "current_minus_anchor_s": 0.017015,
+            "previous_minus_anchor_s": -5.998307
+          },
+          "concurrent_timestamp": {
+            "current_minus_anchor_s": -46.260178,
+            "previous_minus_anchor_s": -52.2755
+          },
+          "path_timestamp": {
+            "current_minus_anchor_s": -37.944103,
+            "previous_minus_anchor_s": -43.959425
+          },
+          "render_startedAt": {
+            "current_minus_anchor_s": -43.225827,
+            "previous_minus_anchor_s": -49.241149
+          }
+        }
+      },
+      "torch_allocator": {
+        "allocated_sample_count": 21,
+        "allocated_peak_recomputed_bytes": 5040005120,
+        "allocated_peak_summary_bytes": 5040005120,
+        "reserved_sample_count": 21,
+        "reserved_peak_recomputed_bytes": 5261754368,
+        "reserved_peak_summary_bytes": 5261754368
+      },
+      "path": {
+        "torch": "2.10.0+cu128",
+        "dtype": "torch.bfloat16",
+        "attention": "eager",
+        "native_rms_count": 145,
+        "native_rms_vs_original_prefill_max_abs_error": 0.234375,
+        "native_rms_vs_original_decode_max_abs_error": 0.125,
+        "layer_index_zero_based": 17,
+        "rank": 8,
+        "zero_prefill_logits_max_abs_error": 0.0,
+        "zero_decode_logits_max_abs_error": 0.0,
+        "injection_observations": [
+          {
+            "phase": "prefill",
+            "sequence_length": 5,
+            "injected_position": 4,
+            "max_abs_error": 0.0,
+            "observed_l2": 0.5
+          },
+          {
+            "phase": "decode",
+            "sequence_length": 1,
+            "injected_position": 0,
+            "max_abs_error": 0.0,
+            "observed_l2": 0.5
+          }
+        ],
+        "changed_cache_discarded": true,
+        "changed_vs_fresh_logits_max_abs_error": 0.0
+      },
+      "render_tts": {
+        "render_json": {
+          "browser": "156.0.8078.4",
+          "frame_start": 1,
+          "frame_end": 14,
+          "mode": "continuous-hardware-rendering-not-visual-regression",
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "vendor": "Google Inc. (NVIDIA)",
+          "canvas": [
+            420,
+            600
+          ],
+          "gpu_devices": [
+            {
+              "vendorId": 4318,
+              "deviceId": 8710,
+              "subSysId": 352416631,
+              "revision": 161,
+              "vendorString": "",
+              "deviceString": "NVIDIA GeForce RTX 3080",
+              "driverVendor": "NVIDIA",
+              "driverVersion": "32.0.16.1088"
+            },
+            {
+              "vendorId": 5140,
+              "deviceId": 140,
+              "subSysId": 0,
+              "revision": 0,
+              "vendorString": "",
+              "deviceString": "Microsoft Basic Render Driver",
+              "driverVendor": "",
+              "driverVersion": "10.0.19041.5794"
+            }
+          ]
+        },
+        "concurrent_render": {
+          "startedAt": "2026-10-20T15:42:06.615Z",
+          "browser": "156.0.8078.4",
+          "frameStart": 1,
+          "frameEnd": 14,
+          "state": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "vendor": "Google Inc. (NVIDIA)",
+            "canvasWidth": 420,
+            "canvasHeight": 600,
+            "dpr": 1
+          },
+          "gpu": {
+            "devices": [
+              {
+                "vendorId": 4318,
+                "deviceId": 8710,
+                "subSysId": 352416631,
+                "revision": 161,
+                "vendorString": "",
+                "deviceString": "NVIDIA GeForce RTX 3080",
+                "driverVendor": "NVIDIA",
+                "driverVersion": "32.0.16.1088"
+              },
+              {
+                "vendorId": 5140,
+                "deviceId": 140,
+                "subSysId": 0,
+                "revision": 0,
+                "vendorString": "",
+                "deviceString": "Microsoft Basic Render Driver",
+                "driverVendor": "",
+                "driverVersion": "10.0.19041.5794"
+              }
+            ],
+            "auxAttributes": {
+              "amdSwitchable": false,
+              "bgra8OverlaySupport": "SOFTWARE",
+              "canSupportThreadedTextureMailbox": false,
+              "directComposition": true,
+              "directMLFeatureLevel": "Not supported",
+              "directRenderingVersion": "",
+              "displayType": "ANGLE_D3D11",
+              "dx12FeatureLevel": "Not supported",
+              "glExtensions": "GL_AMD_performance_monitor GL_ANGLE_base_vertex_base_instance_shader_builtin GL_ANGLE_blob_cache GL_ANGLE_client_arrays GL_ANGLE_clip_cull_distance GL_ANGLE_copy_texture_3d GL_ANGLE_depth_texture GL_ANGLE_framebuffer_blit GL_ANGLE_framebuffer_multisample GL_ANGLE_get_serialized_context_string GL_ANGLE_get_tex_level_parameter GL_ANGLE_instanced_arrays GL_ANGLE_memory_size GL_ANGLE_multiview_multisample GL_ANGLE_pack_reverse_row_order GL_ANGLE_polygon_mode GL_ANGLE_program_binary_readiness_query GL_ANGLE_program_cache_control GL_ANGLE_provoking_vertex GL_ANGLE_renderability_validation GL_ANGLE_request_extension GL_ANGLE_robust_client_memory GL_ANGLE_shader_pixel_local_storage GL_ANGLE_shader_pixel_local_storage_coherent GL_ANGLE_stencil_texturing GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_ANGLE_texture_multisample GL_ANGLE_texture_usage GL_ANGLE_translated_shader_source GL_APPLE_clip_distance GL_ARM_rgba8 GL_CHROMIUM_bind_generates_resource GL_CHROMIUM_bind_uniform_location GL_CHROMIUM_copy_compressed_texture GL_CHROMIUM_copy_texture GL_CHROMIUM_lose_context GL_EXT_EGL_image_external_wrap_modes GL_EXT_base_instance GL_EXT_blend_func_extended GL_EXT_blend_minmax GL_EXT_clip_control GL_EXT_clip_cull_distance GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_conservative_depth GL_EXT_debug_label GL_EXT_debug_marker GL_EXT_depth_clamp GL_EXT_discard_framebuffer GL_EXT_disjoint_timer_query GL_EXT_draw_buffers GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_float_blend GL_EXT_frag_depth GL_EXT_instanced_arrays GL_EXT_map_buffer_range GL_EXT_occlusion_query_boolean GL_EXT_polygon_offset_clamp GL_EXT_read_format_bgra GL_EXT_render_snorm GL_EXT_robustness GL_EXT_sRGB GL_EXT_shader_texture_lod GL_EXT_texture_border_clamp GL_EXT_texture_compression_bptc GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc_srgb GL_EXT_texture_filter_anisotropic GL_EXT_texture_format_BGRA8888 GL_EXT_texture_mirror_clamp_to_edge GL_EXT_texture_norm16 GL_EXT_texture_rg GL_EXT_texture_storage GL_EXT_texture_type_2_10_10_10_REV GL_EXT_unpack_subimage GL_KHR_debug GL_KHR_parallel_shader_compile GL_KHR_robustness GL_NV_EGL_stream_consumer_external GL_NV_fence GL_NV_framebuffer_blit GL_NV_pack_subimage GL_NV_pixel_buffer_object GL_NV_shader_noperspective_interpolation GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_EGL_image_external_essl3 GL_OES_depth24 GL_OES_depth32 GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_get_program_binary GL_OES_mapbuffer GL_OES_packed_depth_stencil GL_OES_required_internalformat GL_OES_rgb8_rgba8 GL_OES_sample_variables GL_OES_shader_multisample_interpolation GL_OES_standard_derivatives GL_OES_surfaceless_context GL_OES_texture_border_clamp GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_texture_stencil8 GL_OES_texture_storage_multisample_2d_array GL_OES_vertex_array_object GL_OVR_multiview GL_OVR_multiview2 ",
+              "glImplementationParts": "(gl=egl-angle,angle=d3d11)",
+              "glRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.16.1088)",
+              "glResetNotificationStrategy": 33362,
+              "glVendor": "Google Inc. (NVIDIA)",
+              "glVersion": "OpenGL ES 3.0 (ANGLE 2.1.28967 git hash: dfeede58b618)",
+              "glWsExtensions": "EGL_EXT_create_context_robustness EGL_ANGLE_d3d_share_handle_client_buffer EGL_ANGLE_d3d_texture_client_buffer EGL_ANGLE_surface_d3d_texture_2d_share_handle EGL_ANGLE_query_surface_pointer EGL_ANGLE_window_fixed_size EGL_ANGLE_keyed_mutex EGL_ANGLE_surface_orientation EGL_ANGLE_direct_composition EGL_NV_post_sub_buffer EGL_KHR_create_context EGL_KHR_image EGL_KHR_image_base EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_gl_renderbuffer_image EGL_KHR_get_all_proc_addresses EGL_KHR_stream EGL_KHR_stream_consumer_gltexture EGL_NV_stream_consumer_gltexture_yuv EGL_ANGLE_stream_producer_d3d_texture EGL_ANGLE_create_context_webgl_compatibility EGL_CHROMIUM_create_context_bind_generates_resource EGL_CHROMIUM_sync_control EGL_EXT_pixel_format_float EGL_KHR_surfaceless_context EGL_ANGLE_display_texture_share_group EGL_ANGLE_display_semaphore_share_group EGL_ANGLE_create_context_client_arrays EGL_ANGLE_program_cache_control EGL_ANGLE_robust_resource_initialization EGL_ANGLE_create_context_extensions_enabled EGL_ANDROID_blob_cache EGL_ANDROID_recordable EGL_ANGLE_image_d3d11_texture EGL_ANGLE_create_context_backwards_compatible EGL_KHR_no_config_context EGL_KHR_create_context_no_error EGL_KHR_reusable_sync EGL_ANGLE_memory_usage_report ",
+              "glWsVendor": "Google Inc. (NVIDIA)",
+              "glWsVersion": "1.5 (ANGLE 2.1.28967 git hash: dfeede58b618)",
+              "inProcessGpu": false,
+              "initializationTime": 0.222167,
+              "isAsan": false,
+              "isClangCoverage": false,
+              "jpegDecodeAcceleratorSupported": false,
+              "maxMsaaSamples": "8",
+              "nv12OverlaySupport": "DIRECT",
+              "optimus": false,
+              "p010OverlaySupport": "SOFTWARE",
+              "passthroughCmdDecoder": true,
+              "pixelShaderVersion": "5.0",
+              "processCrashCount": 0,
+              "rgb10a2OverlaySupport": "SOFTWARE",
+              "sandboxed": false,
+              "skiaBackendType": "GaneshGL",
+              "subpixelFontRendering": true,
+              "supportsD3dSharedImages": true,
+              "supportsDirectML": false,
+              "supportsDx12": false,
+              "supportsOverlays": true,
+              "supportsVulkan": false,
+              "targetCpuBits": 64,
+              "vertexShaderVersion": "5.0",
+              "visibilityCallbackCallCount": 0,
+              "vulkanVersion": "Not supported",
+              "yuy2OverlaySupport": "DIRECT"
+            },
+            "featureStatus": {
+              "2d_canvas": "enabled",
+              "direct_rendering_display_compositor": "disabled_off_ok",
+              "gpu_compositing": "enabled",
+              "multiple_raster_threads": "enabled_on",
+              "opengl": "enabled_on",
+              "rasterization": "enabled",
+              "raw_draw": "disabled_off_ok",
+              "skia_graphite": "disabled_off",
+              "trees_in_viz": "disabled_off",
+              "video_decode": "enabled",
+              "video_encode": "enabled",
+              "webgl": "enabled",
+              "webgpu": "enabled",
+              "webnn": "disabled_off"
+            },
+            "driverBugWorkarounds": [
+              "disable_d3d11_vp9_ksvc_decoding",
+              "disable_d3d12_video_encoder",
+              "disable_dcomp_texture",
+              "enable_webgl_timer_query_extensions",
+              "exit_on_context_lost",
+              "unpack_overlapping_rows_separately_unpack_buffer",
+              "use_g22_topleft_color_space_for_yuv_vp",
+              "disabled_extension_GL_KHR_blend_equation_advanced",
+              "disabled_extension_GL_KHR_blend_equation_advanced_coherent"
+            ],
+            "videoDecoding": [],
+            "videoEncoding": []
+          },
+          "stage": "sample.vrm",
+          "mode": "continuous-hardware-rendering-not-visual-regression"
+        },
+        "tts_scope": "resident Base model only; voice/variant remains P4-03",
+        "tts_parameter_devices": [
+          "cuda:0"
+        ],
+        "baseline_gpu": "2026/10/20 23:42:09.679, 1273, 4",
+        "after_tts_gpu": "2026/10/20 23:42:20.176, 3707, 0"
+      },
+      "summary_consistency": {
+        "p50_exact_match": true,
+        "p90_abs_diff": 0.0,
+        "wddm_bound_exact_match": true,
+        "allocator_allocated_exact_match": true,
+        "allocator_reserved_exact_match": true
+      }
+    },
+    {
+      "run": 2,
+      "files": {
+        "summary": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-2\\summary.json",
+        "concurrent": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-2\\matrix\\Qwen--Qwen3-4B-Instruct-2507-int4\\concurrent.json",
+        "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-2\\matrix\\Qwen--Qwen3-4B-Instruct-2507-int4\\path.json",
+        "render": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-2\\matrix\\Qwen--Qwen3-4B-Instruct-2507-int4\\render.json",
+        "memory": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-2\\memory.jsonl"
+      },
+      "recorded_times": {
+        "summary_start_utc": "2026-10-20T15:42:46.274298+00:00",
+        "summary_end_utc": "2026-10-20T15:43:47.377225+00:00",
+        "concurrent_timestamp": "2026-10-20T15:43:11.620938+00:00",
+        "path_timestamp": "2026-10-20T15:43:03.591630+00:00",
+        "render_startedAt": "2026-10-20T15:43:08.202Z"
+      },
+      "subprocess_exit_codes": {
+        "matrix": 0,
+        "memory_watch": 0
+      },
+      "sample_counts": {
+        "all": 21,
+        "warmup": 1,
+        "nonwarmup": 20,
+        "numeric_latency": 20
+      },
+      "latency_ms": {
+        "p50_recomputed": 548.7046999987797,
+        "p90_linear_recomputed": 564.4164599987562,
+        "p50_summary": 548.7046999987797,
+        "p90_summary": 564.4164599987562,
+        "summary_method": "p50 median; p90 numpy linear"
+      },
+      "fixture": {
+        "nonwarmup_han_count_histogram": {
+          "20": 20
+        },
+        "exactly_20_han_count": 20,
+        "matches_fixed_fixture_true_count": 20,
+        "stop_reason_counts": {
+          "sentence_boundary": 20
+        }
+      },
+      "wddm": {
+        "jsonl_line_count": 195,
+        "owned_gpu_counter_observation_count": 154,
+        "no_owned_gpu_counter_samples": 41,
+        "dedicated_peak_sample": {
+          "line": 141,
+          "startedUtc": "2026-10-20T15:43:29.7744951+00:00",
+          "endedUtc": "2026-10-20T15:43:29.8881402+00:00",
+          "dedicated_bytes": 5804998656,
+          "shared_bytes": 270987264,
+          "sum_bytes": 6075985920,
+          "counter_rows": 2,
+          "owned_process_ids": [
+            4552,
+            5348,
+            6828,
+            6972,
+            7660,
+            9780,
+            13776,
+            18236,
+            26932,
+            28136,
+            30648,
+            31692,
+            33144,
+            34180,
+            34836
+          ]
+        },
+        "shared_peak_sample": {
+          "line": 139,
+          "startedUtc": "2026-10-20T15:43:29.1503716+00:00",
+          "endedUtc": "2026-10-20T15:43:29.2505585+00:00",
+          "dedicated_bytes": 5792415744,
+          "shared_bytes": 270987264,
+          "sum_bytes": 6063403008,
+          "counter_rows": 2,
+          "owned_process_ids": [
+            4552,
+            5348,
+            6828,
+            6972,
+            7660,
+            9780,
+            13776,
+            18236,
+            26932,
+            28136,
+            30648,
+            31692,
+            33144,
+            34180,
+            34836
+          ]
+        },
+        "recomputed_bound_bytes": 6075985920,
+        "summary_bound_bytes": 6075985920,
+        "summary_sampled_peaks": {
+          "dedicated_bytes": 5804998656,
+          "shared_bytes": 270987264,
+          "total_committed_bytes": 6076690432
+        },
+        "summary_errors": [],
+        "maximum_sample_start_interval": {
+          "seconds": 0.426681,
+          "previous_line": 1,
+          "previous_start": "2026-10-20T15:42:45.8664837+00:00",
+          "current_line": 2,
+          "current_start": "2026-10-20T15:42:46.2931644+00:00"
+        },
+        "summary_maximum_sample_start_interval_s": 0.426681,
+        "gap_relative_to_recorded_events_s": {
+          "summary_start": {
+            "current_minus_anchor_s": 0.018866,
+            "previous_minus_anchor_s": -0.407815
+          },
+          "concurrent_timestamp": {
+            "current_minus_anchor_s": -25.327774,
+            "previous_minus_anchor_s": -25.754455
+          },
+          "path_timestamp": {
+            "current_minus_anchor_s": -17.298466,
+            "previous_minus_anchor_s": -17.725147
+          },
+          "render_startedAt": {
+            "current_minus_anchor_s": -21.908836,
+            "previous_minus_anchor_s": -22.335517
+          }
+        }
+      },
+      "torch_allocator": {
+        "allocated_sample_count": 21,
+        "allocated_peak_recomputed_bytes": 5040005120,
+        "allocated_peak_summary_bytes": 5040005120,
+        "reserved_sample_count": 21,
+        "reserved_peak_recomputed_bytes": 5261754368,
+        "reserved_peak_summary_bytes": 5261754368
+      },
+      "path": {
+        "torch": "2.10.0+cu128",
+        "dtype": "torch.bfloat16",
+        "attention": "eager",
+        "native_rms_count": 145,
+        "native_rms_vs_original_prefill_max_abs_error": 0.234375,
+        "native_rms_vs_original_decode_max_abs_error": 0.125,
+        "layer_index_zero_based": 17,
+        "rank": 8,
+        "zero_prefill_logits_max_abs_error": 0.0,
+        "zero_decode_logits_max_abs_error": 0.0,
+        "injection_observations": [
+          {
+            "phase": "prefill",
+            "sequence_length": 5,
+            "injected_position": 4,
+            "max_abs_error": 0.0,
+            "observed_l2": 0.5
+          },
+          {
+            "phase": "decode",
+            "sequence_length": 1,
+            "injected_position": 0,
+            "max_abs_error": 0.0,
+            "observed_l2": 0.5
+          }
+        ],
+        "changed_cache_discarded": true,
+        "changed_vs_fresh_logits_max_abs_error": 0.0
+      },
+      "render_tts": {
+        "render_json": {
+          "browser": "156.0.8078.4",
+          "frame_start": 1,
+          "frame_end": 13,
+          "mode": "continuous-hardware-rendering-not-visual-regression",
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "vendor": "Google Inc. (NVIDIA)",
+          "canvas": [
+            420,
+            600
+          ],
+          "gpu_devices": [
+            {
+              "vendorId": 4318,
+              "deviceId": 8710,
+              "subSysId": 352416631,
+              "revision": 161,
+              "vendorString": "",
+              "deviceString": "NVIDIA GeForce RTX 3080",
+              "driverVendor": "NVIDIA",
+              "driverVersion": "32.0.16.1088"
+            },
+            {
+              "vendorId": 5140,
+              "deviceId": 140,
+              "subSysId": 0,
+              "revision": 0,
+              "vendorString": "",
+              "deviceString": "Microsoft Basic Render Driver",
+              "driverVendor": "",
+              "driverVersion": "10.0.19041.5794"
+            }
+          ]
+        },
+        "concurrent_render": {
+          "startedAt": "2026-10-20T15:43:08.202Z",
+          "browser": "156.0.8078.4",
+          "frameStart": 1,
+          "frameEnd": 13,
+          "state": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "vendor": "Google Inc. (NVIDIA)",
+            "canvasWidth": 420,
+            "canvasHeight": 600,
+            "dpr": 1
+          },
+          "gpu": {
+            "devices": [
+              {
+                "vendorId": 4318,
+                "deviceId": 8710,
+                "subSysId": 352416631,
+                "revision": 161,
+                "vendorString": "",
+                "deviceString": "NVIDIA GeForce RTX 3080",
+                "driverVendor": "NVIDIA",
+                "driverVersion": "32.0.16.1088"
+              },
+              {
+                "vendorId": 5140,
+                "deviceId": 140,
+                "subSysId": 0,
+                "revision": 0,
+                "vendorString": "",
+                "deviceString": "Microsoft Basic Render Driver",
+                "driverVendor": "",
+                "driverVersion": "10.0.19041.5794"
+              }
+            ],
+            "auxAttributes": {
+              "amdSwitchable": false,
+              "bgra8OverlaySupport": "SOFTWARE",
+              "canSupportThreadedTextureMailbox": false,
+              "directComposition": true,
+              "directMLFeatureLevel": "Not supported",
+              "directRenderingVersion": "",
+              "displayType": "ANGLE_D3D11",
+              "dx12FeatureLevel": "Not supported",
+              "glExtensions": "GL_AMD_performance_monitor GL_ANGLE_base_vertex_base_instance_shader_builtin GL_ANGLE_blob_cache GL_ANGLE_client_arrays GL_ANGLE_clip_cull_distance GL_ANGLE_copy_texture_3d GL_ANGLE_depth_texture GL_ANGLE_framebuffer_blit GL_ANGLE_framebuffer_multisample GL_ANGLE_get_serialized_context_string GL_ANGLE_get_tex_level_parameter GL_ANGLE_instanced_arrays GL_ANGLE_memory_size GL_ANGLE_multiview_multisample GL_ANGLE_pack_reverse_row_order GL_ANGLE_polygon_mode GL_ANGLE_program_binary_readiness_query GL_ANGLE_program_cache_control GL_ANGLE_provoking_vertex GL_ANGLE_renderability_validation GL_ANGLE_request_extension GL_ANGLE_robust_client_memory GL_ANGLE_shader_pixel_local_storage GL_ANGLE_shader_pixel_local_storage_coherent GL_ANGLE_stencil_texturing GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_ANGLE_texture_multisample GL_ANGLE_texture_usage GL_ANGLE_translated_shader_source GL_APPLE_clip_distance GL_ARM_rgba8 GL_CHROMIUM_bind_generates_resource GL_CHROMIUM_bind_uniform_location GL_CHROMIUM_copy_compressed_texture GL_CHROMIUM_copy_texture GL_CHROMIUM_lose_context GL_EXT_EGL_image_external_wrap_modes GL_EXT_base_instance GL_EXT_blend_func_extended GL_EXT_blend_minmax GL_EXT_clip_control GL_EXT_clip_cull_distance GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_conservative_depth GL_EXT_debug_label GL_EXT_debug_marker GL_EXT_depth_clamp GL_EXT_discard_framebuffer GL_EXT_disjoint_timer_query GL_EXT_draw_buffers GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_float_blend GL_EXT_frag_depth GL_EXT_instanced_arrays GL_EXT_map_buffer_range GL_EXT_occlusion_query_boolean GL_EXT_polygon_offset_clamp GL_EXT_read_format_bgra GL_EXT_render_snorm GL_EXT_robustness GL_EXT_sRGB GL_EXT_shader_texture_lod GL_EXT_texture_border_clamp GL_EXT_texture_compression_bptc GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc_srgb GL_EXT_texture_filter_anisotropic GL_EXT_texture_format_BGRA8888 GL_EXT_texture_mirror_clamp_to_edge GL_EXT_texture_norm16 GL_EXT_texture_rg GL_EXT_texture_storage GL_EXT_texture_type_2_10_10_10_REV GL_EXT_unpack_subimage GL_KHR_debug GL_KHR_parallel_shader_compile GL_KHR_robustness GL_NV_EGL_stream_consumer_external GL_NV_fence GL_NV_framebuffer_blit GL_NV_pack_subimage GL_NV_pixel_buffer_object GL_NV_shader_noperspective_interpolation GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_EGL_image_external_essl3 GL_OES_depth24 GL_OES_depth32 GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_get_program_binary GL_OES_mapbuffer GL_OES_packed_depth_stencil GL_OES_required_internalformat GL_OES_rgb8_rgba8 GL_OES_sample_variables GL_OES_shader_multisample_interpolation GL_OES_standard_derivatives GL_OES_surfaceless_context GL_OES_texture_border_clamp GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_texture_stencil8 GL_OES_texture_storage_multisample_2d_array GL_OES_vertex_array_object GL_OVR_multiview GL_OVR_multiview2 ",
+              "glImplementationParts": "(gl=egl-angle,angle=d3d11)",
+              "glRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.16.1088)",
+              "glResetNotificationStrategy": 33362,
+              "glVendor": "Google Inc. (NVIDIA)",
+              "glVersion": "OpenGL ES 3.0 (ANGLE 2.1.28967 git hash: dfeede58b618)",
+              "glWsExtensions": "EGL_EXT_create_context_robustness EGL_ANGLE_d3d_share_handle_client_buffer EGL_ANGLE_d3d_texture_client_buffer EGL_ANGLE_surface_d3d_texture_2d_share_handle EGL_ANGLE_query_surface_pointer EGL_ANGLE_window_fixed_size EGL_ANGLE_keyed_mutex EGL_ANGLE_surface_orientation EGL_ANGLE_direct_composition EGL_NV_post_sub_buffer EGL_KHR_create_context EGL_KHR_image EGL_KHR_image_base EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_gl_renderbuffer_image EGL_KHR_get_all_proc_addresses EGL_KHR_stream EGL_KHR_stream_consumer_gltexture EGL_NV_stream_consumer_gltexture_yuv EGL_ANGLE_stream_producer_d3d_texture EGL_ANGLE_create_context_webgl_compatibility EGL_CHROMIUM_create_context_bind_generates_resource EGL_CHROMIUM_sync_control EGL_EXT_pixel_format_float EGL_KHR_surfaceless_context EGL_ANGLE_display_texture_share_group EGL_ANGLE_display_semaphore_share_group EGL_ANGLE_create_context_client_arrays EGL_ANGLE_program_cache_control EGL_ANGLE_robust_resource_initialization EGL_ANGLE_create_context_extensions_enabled EGL_ANDROID_blob_cache EGL_ANDROID_recordable EGL_ANGLE_image_d3d11_texture EGL_ANGLE_create_context_backwards_compatible EGL_KHR_no_config_context EGL_KHR_create_context_no_error EGL_KHR_reusable_sync EGL_ANGLE_memory_usage_report ",
+              "glWsVendor": "Google Inc. (NVIDIA)",
+              "glWsVersion": "1.5 (ANGLE 2.1.28967 git hash: dfeede58b618)",
+              "inProcessGpu": false,
+              "initializationTime": 0.207563,
+              "isAsan": false,
+              "isClangCoverage": false,
+              "jpegDecodeAcceleratorSupported": false,
+              "maxMsaaSamples": "8",
+              "nv12OverlaySupport": "DIRECT",
+              "optimus": false,
+              "p010OverlaySupport": "SOFTWARE",
+              "passthroughCmdDecoder": true,
+              "pixelShaderVersion": "5.0",
+              "processCrashCount": 0,
+              "rgb10a2OverlaySupport": "SOFTWARE",
+              "sandboxed": false,
+              "skiaBackendType": "GaneshGL",
+              "subpixelFontRendering": true,
+              "supportsD3dSharedImages": true,
+              "supportsDirectML": false,
+              "supportsDx12": false,
+              "supportsOverlays": true,
+              "supportsVulkan": false,
+              "targetCpuBits": 64,
+              "vertexShaderVersion": "5.0",
+              "visibilityCallbackCallCount": 0,
+              "vulkanVersion": "Not supported",
+              "yuy2OverlaySupport": "DIRECT"
+            },
+            "featureStatus": {
+              "2d_canvas": "enabled",
+              "direct_rendering_display_compositor": "disabled_off_ok",
+              "gpu_compositing": "enabled",
+              "multiple_raster_threads": "enabled_on",
+              "opengl": "enabled_on",
+              "rasterization": "enabled",
+              "raw_draw": "disabled_off_ok",
+              "skia_graphite": "disabled_off",
+              "trees_in_viz": "disabled_off",
+              "video_decode": "enabled",
+              "video_encode": "enabled",
+              "webgl": "enabled",
+              "webgpu": "enabled",
+              "webnn": "disabled_off"
+            },
+            "driverBugWorkarounds": [
+              "disable_d3d11_vp9_ksvc_decoding",
+              "disable_d3d12_video_encoder",
+              "disable_dcomp_texture",
+              "enable_webgl_timer_query_extensions",
+              "exit_on_context_lost",
+              "unpack_overlapping_rows_separately_unpack_buffer",
+              "use_g22_topleft_color_space_for_yuv_vp",
+              "disabled_extension_GL_KHR_blend_equation_advanced",
+              "disabled_extension_GL_KHR_blend_equation_advanced_coherent"
+            ],
+            "videoDecoding": [],
+            "videoEncoding": []
+          },
+          "stage": "sample.vrm",
+          "mode": "continuous-hardware-rendering-not-visual-regression"
+        },
+        "tts_scope": "resident Base model only; voice/variant remains P4-03",
+        "tts_parameter_devices": [
+          "cuda:0"
+        ],
+        "baseline_gpu": "2026/10/20 23:43:11.646, 1437, 25",
+        "after_tts_gpu": "2026/10/20 23:43:21.670, 3865, 1"
+      },
+      "summary_consistency": {
+        "p50_exact_match": true,
+        "p90_abs_diff": 0.0,
+        "wddm_bound_exact_match": true,
+        "allocator_allocated_exact_match": true,
+        "allocator_reserved_exact_match": true
+      }
+    },
+    {
+      "run": 3,
+      "files": {
+        "summary": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-3\\summary.json",
+        "concurrent": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-3\\matrix\\Qwen--Qwen3-4B-Instruct-2507-int4\\concurrent.json",
+        "path": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-3\\matrix\\Qwen--Qwen3-4B-Instruct-2507-int4\\path.json",
+        "render": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-3\\matrix\\Qwen--Qwen3-4B-Instruct-2507-int4\\render.json",
+        "memory": "D:\\Dev\\nemu-p007\\reports\\P0-07\\instruct-adr0012-v1\\run-3\\memory.jsonl"
+      },
+      "recorded_times": {
+        "summary_start_utc": "2026-10-20T15:43:48.459845+00:00",
+        "summary_end_utc": "2026-10-20T15:44:49.511725+00:00",
+        "concurrent_timestamp": "2026-10-20T15:44:14.363177+00:00",
+        "path_timestamp": "2026-10-20T15:44:06.645518+00:00",
+        "render_startedAt": "2026-10-20T15:44:11.340Z"
+      },
+      "subprocess_exit_codes": {
+        "matrix": 0,
+        "memory_watch": 0
+      },
+      "sample_counts": {
+        "all": 21,
+        "warmup": 1,
+        "nonwarmup": 20,
+        "numeric_latency": 20
+      },
+      "latency_ms": {
+        "p50_recomputed": 545.4835000055027,
+        "p90_linear_recomputed": 553.569240005163,
+        "p50_summary": 545.4835000055027,
+        "p90_summary": 553.569240005163,
+        "summary_method": "p50 median; p90 numpy linear"
+      },
+      "fixture": {
+        "nonwarmup_han_count_histogram": {
+          "20": 20
+        },
+        "exactly_20_han_count": 20,
+        "matches_fixed_fixture_true_count": 20,
+        "stop_reason_counts": {
+          "sentence_boundary": 20
+        }
+      },
+      "wddm": {
+        "jsonl_line_count": 194,
+        "owned_gpu_counter_observation_count": 153,
+        "no_owned_gpu_counter_samples": 41,
+        "dedicated_peak_sample": {
+          "line": 141,
+          "startedUtc": "2026-10-20T15:44:32.3485475+00:00",
+          "endedUtc": "2026-10-20T15:44:32.4696492+00:00",
+          "dedicated_bytes": 5804998656,
+          "shared_bytes": 270987264,
+          "sum_bytes": 6075985920,
+          "counter_rows": 2,
+          "owned_process_ids": [
+            6828,
+            7852,
+            9160,
+            9300,
+            18248,
+            20136,
+            21156,
+            23828,
+            25316,
+            26956,
+            28336,
+            28440,
+            34120,
+            34924,
+            35376
+          ]
+        },
+        "shared_peak_sample": {
+          "line": 139,
+          "startedUtc": "2026-10-20T15:44:31.7039810+00:00",
+          "endedUtc": "2026-10-20T15:44:31.8125472+00:00",
+          "dedicated_bytes": 5796610048,
+          "shared_bytes": 270987264,
+          "sum_bytes": 6067597312,
+          "counter_rows": 2,
+          "owned_process_ids": [
+            6828,
+            7852,
+            9160,
+            9300,
+            18248,
+            20136,
+            21156,
+            23828,
+            25316,
+            26956,
+            28336,
+            28440,
+            34120,
+            34924,
+            35376
+          ]
+        },
+        "recomputed_bound_bytes": 6075985920,
+        "summary_bound_bytes": 6075985920,
+        "summary_sampled_peaks": {
+          "dedicated_bytes": 5804998656,
+          "shared_bytes": 270987264,
+          "total_committed_bytes": 6076690432
+        },
+        "summary_errors": [],
+        "maximum_sample_start_interval": {
+          "seconds": 0.416919,
+          "previous_line": 1,
+          "previous_start": "2026-10-20T15:43:48.0516143+00:00",
+          "current_line": 2,
+          "current_start": "2026-10-20T15:43:48.4685336+00:00"
+        },
+        "summary_maximum_sample_start_interval_s": 0.416919,
+        "gap_relative_to_recorded_events_s": {
+          "summary_start": {
+            "current_minus_anchor_s": 0.008688,
+            "previous_minus_anchor_s": -0.408231
+          },
+          "concurrent_timestamp": {
+            "current_minus_anchor_s": -25.894644,
+            "previous_minus_anchor_s": -26.311563
+          },
+          "path_timestamp": {
+            "current_minus_anchor_s": -18.176985,
+            "previous_minus_anchor_s": -18.593904
+          },
+          "render_startedAt": {
+            "current_minus_anchor_s": -22.871467,
+            "previous_minus_anchor_s": -23.288386
+          }
+        }
+      },
+      "torch_allocator": {
+        "allocated_sample_count": 21,
+        "allocated_peak_recomputed_bytes": 5040005120,
+        "allocated_peak_summary_bytes": 5040005120,
+        "reserved_sample_count": 21,
+        "reserved_peak_recomputed_bytes": 5261754368,
+        "reserved_peak_summary_bytes": 5261754368
+      },
+      "path": {
+        "torch": "2.10.0+cu128",
+        "dtype": "torch.bfloat16",
+        "attention": "eager",
+        "native_rms_count": 145,
+        "native_rms_vs_original_prefill_max_abs_error": 0.234375,
+        "native_rms_vs_original_decode_max_abs_error": 0.125,
+        "layer_index_zero_based": 17,
+        "rank": 8,
+        "zero_prefill_logits_max_abs_error": 0.0,
+        "zero_decode_logits_max_abs_error": 0.0,
+        "injection_observations": [
+          {
+            "phase": "prefill",
+            "sequence_length": 5,
+            "injected_position": 4,
+            "max_abs_error": 0.0,
+            "observed_l2": 0.5
+          },
+          {
+            "phase": "decode",
+            "sequence_length": 1,
+            "injected_position": 0,
+            "max_abs_error": 0.0,
+            "observed_l2": 0.5
+          }
+        ],
+        "changed_cache_discarded": true,
+        "changed_vs_fresh_logits_max_abs_error": 0.0
+      },
+      "render_tts": {
+        "render_json": {
+          "browser": "156.0.8078.4",
+          "frame_start": 1,
+          "frame_end": 11,
+          "mode": "continuous-hardware-rendering-not-visual-regression",
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "vendor": "Google Inc. (NVIDIA)",
+          "canvas": [
+            420,
+            600
+          ],
+          "gpu_devices": [
+            {
+              "vendorId": 4318,
+              "deviceId": 8710,
+              "subSysId": 352416631,
+              "revision": 161,
+              "vendorString": "",
+              "deviceString": "NVIDIA GeForce RTX 3080",
+              "driverVendor": "NVIDIA",
+              "driverVersion": "32.0.16.1088"
+            },
+            {
+              "vendorId": 5140,
+              "deviceId": 140,
+              "subSysId": 0,
+              "revision": 0,
+              "vendorString": "",
+              "deviceString": "Microsoft Basic Render Driver",
+              "driverVendor": "",
+              "driverVersion": "10.0.19041.5794"
+            }
+          ]
+        },
+        "concurrent_render": {
+          "startedAt": "2026-10-20T15:44:11.340Z",
+          "browser": "156.0.8078.4",
+          "frameStart": 1,
+          "frameEnd": 11,
+          "state": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "vendor": "Google Inc. (NVIDIA)",
+            "canvasWidth": 420,
+            "canvasHeight": 600,
+            "dpr": 1
+          },
+          "gpu": {
+            "devices": [
+              {
+                "vendorId": 4318,
+                "deviceId": 8710,
+                "subSysId": 352416631,
+                "revision": 161,
+                "vendorString": "",
+                "deviceString": "NVIDIA GeForce RTX 3080",
+                "driverVendor": "NVIDIA",
+                "driverVersion": "32.0.16.1088"
+              },
+              {
+                "vendorId": 5140,
+                "deviceId": 140,
+                "subSysId": 0,
+                "revision": 0,
+                "vendorString": "",
+                "deviceString": "Microsoft Basic Render Driver",
+                "driverVendor": "",
+                "driverVersion": "10.0.19041.5794"
+              }
+            ],
+            "auxAttributes": {
+              "amdSwitchable": false,
+              "bgra8OverlaySupport": "SOFTWARE",
+              "canSupportThreadedTextureMailbox": false,
+              "directComposition": true,
+              "directMLFeatureLevel": "Not supported",
+              "directRenderingVersion": "",
+              "displayType": "ANGLE_D3D11",
+              "dx12FeatureLevel": "Not supported",
+              "glExtensions": "GL_AMD_performance_monitor GL_ANGLE_base_vertex_base_instance_shader_builtin GL_ANGLE_blob_cache GL_ANGLE_client_arrays GL_ANGLE_clip_cull_distance GL_ANGLE_copy_texture_3d GL_ANGLE_depth_texture GL_ANGLE_framebuffer_blit GL_ANGLE_framebuffer_multisample GL_ANGLE_get_serialized_context_string GL_ANGLE_get_tex_level_parameter GL_ANGLE_instanced_arrays GL_ANGLE_memory_size GL_ANGLE_multiview_multisample GL_ANGLE_pack_reverse_row_order GL_ANGLE_polygon_mode GL_ANGLE_program_binary_readiness_query GL_ANGLE_program_cache_control GL_ANGLE_provoking_vertex GL_ANGLE_renderability_validation GL_ANGLE_request_extension GL_ANGLE_robust_client_memory GL_ANGLE_shader_pixel_local_storage GL_ANGLE_shader_pixel_local_storage_coherent GL_ANGLE_stencil_texturing GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_ANGLE_texture_multisample GL_ANGLE_texture_usage GL_ANGLE_translated_shader_source GL_APPLE_clip_distance GL_ARM_rgba8 GL_CHROMIUM_bind_generates_resource GL_CHROMIUM_bind_uniform_location GL_CHROMIUM_copy_compressed_texture GL_CHROMIUM_copy_texture GL_CHROMIUM_lose_context GL_EXT_EGL_image_external_wrap_modes GL_EXT_base_instance GL_EXT_blend_func_extended GL_EXT_blend_minmax GL_EXT_clip_control GL_EXT_clip_cull_distance GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_conservative_depth GL_EXT_debug_label GL_EXT_debug_marker GL_EXT_depth_clamp GL_EXT_discard_framebuffer GL_EXT_disjoint_timer_query GL_EXT_draw_buffers GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_float_blend GL_EXT_frag_depth GL_EXT_instanced_arrays GL_EXT_map_buffer_range GL_EXT_occlusion_query_boolean GL_EXT_polygon_offset_clamp GL_EXT_read_format_bgra GL_EXT_render_snorm GL_EXT_robustness GL_EXT_sRGB GL_EXT_shader_texture_lod GL_EXT_texture_border_clamp GL_EXT_texture_compression_bptc GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc_srgb GL_EXT_texture_filter_anisotropic GL_EXT_texture_format_BGRA8888 GL_EXT_texture_mirror_clamp_to_edge GL_EXT_texture_norm16 GL_EXT_texture_rg GL_EXT_texture_storage GL_EXT_texture_type_2_10_10_10_REV GL_EXT_unpack_subimage GL_KHR_debug GL_KHR_parallel_shader_compile GL_KHR_robustness GL_NV_EGL_stream_consumer_external GL_NV_fence GL_NV_framebuffer_blit GL_NV_pack_subimage GL_NV_pixel_buffer_object GL_NV_shader_noperspective_interpolation GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_EGL_image_external_essl3 GL_OES_depth24 GL_OES_depth32 GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_get_program_binary GL_OES_mapbuffer GL_OES_packed_depth_stencil GL_OES_required_internalformat GL_OES_rgb8_rgba8 GL_OES_sample_variables GL_OES_shader_multisample_interpolation GL_OES_standard_derivatives GL_OES_surfaceless_context GL_OES_texture_border_clamp GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_texture_stencil8 GL_OES_texture_storage_multisample_2d_array GL_OES_vertex_array_object GL_OVR_multiview GL_OVR_multiview2 ",
+              "glImplementationParts": "(gl=egl-angle,angle=d3d11)",
+              "glRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.16.1088)",
+              "glResetNotificationStrategy": 33362,
+              "glVendor": "Google Inc. (NVIDIA)",
+              "glVersion": "OpenGL ES 3.0 (ANGLE 2.1.28967 git hash: dfeede58b618)",
+              "glWsExtensions": "EGL_EXT_create_context_robustness EGL_ANGLE_d3d_share_handle_client_buffer EGL_ANGLE_d3d_texture_client_buffer EGL_ANGLE_surface_d3d_texture_2d_share_handle EGL_ANGLE_query_surface_pointer EGL_ANGLE_window_fixed_size EGL_ANGLE_keyed_mutex EGL_ANGLE_surface_orientation EGL_ANGLE_direct_composition EGL_NV_post_sub_buffer EGL_KHR_create_context EGL_KHR_image EGL_KHR_image_base EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_gl_renderbuffer_image EGL_KHR_get_all_proc_addresses EGL_KHR_stream EGL_KHR_stream_consumer_gltexture EGL_NV_stream_consumer_gltexture_yuv EGL_ANGLE_stream_producer_d3d_texture EGL_ANGLE_create_context_webgl_compatibility EGL_CHROMIUM_create_context_bind_generates_resource EGL_CHROMIUM_sync_control EGL_EXT_pixel_format_float EGL_KHR_surfaceless_context EGL_ANGLE_display_texture_share_group EGL_ANGLE_display_semaphore_share_group EGL_ANGLE_create_context_client_arrays EGL_ANGLE_program_cache_control EGL_ANGLE_robust_resource_initialization EGL_ANGLE_create_context_extensions_enabled EGL_ANDROID_blob_cache EGL_ANDROID_recordable EGL_ANGLE_image_d3d11_texture EGL_ANGLE_create_context_backwards_compatible EGL_KHR_no_config_context EGL_KHR_create_context_no_error EGL_KHR_reusable_sync EGL_ANGLE_memory_usage_report ",
+              "glWsVendor": "Google Inc. (NVIDIA)",
+              "glWsVersion": "1.5 (ANGLE 2.1.28967 git hash: dfeede58b618)",
+              "inProcessGpu": false,
+              "initializationTime": 0.221508,
+              "isAsan": false,
+              "isClangCoverage": false,
+              "jpegDecodeAcceleratorSupported": false,
+              "maxMsaaSamples": "8",
+              "nv12OverlaySupport": "DIRECT",
+              "optimus": false,
+              "p010OverlaySupport": "SOFTWARE",
+              "passthroughCmdDecoder": true,
+              "pixelShaderVersion": "5.0",
+              "processCrashCount": 0,
+              "rgb10a2OverlaySupport": "SOFTWARE",
+              "sandboxed": false,
+              "skiaBackendType": "GaneshGL",
+              "subpixelFontRendering": true,
+              "supportsD3dSharedImages": true,
+              "supportsDirectML": false,
+              "supportsDx12": false,
+              "supportsOverlays": true,
+              "supportsVulkan": false,
+              "targetCpuBits": 64,
+              "vertexShaderVersion": "5.0",
+              "visibilityCallbackCallCount": 0,
+              "vulkanVersion": "Not supported",
+              "yuy2OverlaySupport": "DIRECT"
+            },
+            "featureStatus": {
+              "2d_canvas": "enabled",
+              "direct_rendering_display_compositor": "disabled_off_ok",
+              "gpu_compositing": "enabled",
+              "multiple_raster_threads": "enabled_on",
+              "opengl": "enabled_on",
+              "rasterization": "enabled",
+              "raw_draw": "disabled_off_ok",
+              "skia_graphite": "disabled_off",
+              "trees_in_viz": "disabled_off",
+              "video_decode": "enabled",
+              "video_encode": "enabled",
+              "webgl": "enabled",
+              "webgpu": "enabled",
+              "webnn": "disabled_off"
+            },
+            "driverBugWorkarounds": [
+              "disable_d3d11_vp9_ksvc_decoding",
+              "disable_d3d12_video_encoder",
+              "disable_dcomp_texture",
+              "enable_webgl_timer_query_extensions",
+              "exit_on_context_lost",
+              "unpack_overlapping_rows_separately_unpack_buffer",
+              "use_g22_topleft_color_space_for_yuv_vp",
+              "disabled_extension_GL_KHR_blend_equation_advanced",
+              "disabled_extension_GL_KHR_blend_equation_advanced_coherent"
+            ],
+            "videoDecoding": [],
+            "videoEncoding": []
+          },
+          "stage": "sample.vrm",
+          "mode": "continuous-hardware-rendering-not-visual-regression"
+        },
+        "tts_scope": "resident Base model only; voice/variant remains P4-03",
+        "tts_parameter_devices": [
+          "cuda:0"
+        ],
+        "baseline_gpu": "2026/10/20 23:44:14.389, 1334, 12",
+        "after_tts_gpu": "2026/10/20 23:44:24.176, 3696, 2"
+      },
+      "summary_consistency": {
+        "p50_exact_match": true,
+        "p90_abs_diff": 0.0,
+        "wddm_bound_exact_match": true,
+        "allocator_allocated_exact_match": true,
+        "allocator_reserved_exact_match": true
+      }
+    }
+  ],
+  "ended_utc": "2026-10-20T15:52:53.859634+00:00",
+  "started_utc": "2026-10-20T15:52:53.773439+00:00"
+}

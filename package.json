@@ -17,6 +17,7 @@
     "test": "vitest run",
     "build": "pnpm -r build",
     "test:e2e": "pnpm build && playwright test --config apps/desktop/playwright.config.ts",
+    "test:panel:e2e": "pnpm build && playwright test --config apps/panel/src/debug/playwright.config.ts",
     "test:visual": "node apps/stage/tests/visual/runner.mjs",
     "test:edge": "node apps/stage/tests/visual/edge-check.mjs",
     "bench": "node tools/scaffold/pending.mjs P7-01",
@@ -31,7 +32,9 @@
     "ci:budget": "node tools/scaffold/ci-budget.mjs",
     "test:contracts": "vitest run --config packages/contracts/vitest.config.ts --coverage",
     "test:core-contracts": "python core/contracts/verify.py",
-    "board": "python tools/status/serve_board.py"
+    "board": "python tools/status/serve_board.py",
+    "probe:supplement": "python workers/model-adapter/probe/run_supplement.py",
+    "probe:chat": "node workers/model-adapter/probe/launch_chat.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

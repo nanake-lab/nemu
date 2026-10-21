@@ -1,0 +1,35 @@
+{
+  "working_directory": "D:\\Dev\\nemu",
+  "command": "'D:\\Dev\\nemu\\workers\\model-adapter\\probe\\.venv\\Scripts\\python.exe' workers/model-adapter/probe/direction_probe.py --model microsoft/Phi-4-mini-instruct --output reports/P0-07/direction-v2/microsoft--Phi-4-mini-instruct.json",
+  "arguments": [
+    "workers/model-adapter/probe/direction_probe.py",
+    "--model",
+    "microsoft/Phi-4-mini-instruct",
+    "--output",
+    "reports/P0-07/direction-v2/microsoft--Phi-4-mini-instruct.json"
+  ],
+  "environment": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "PYTHONIOENCODING": "utf8"
+  },
+  "preflight": {
+    "start_utc": "2026-10-17T15:16:59.3653982Z",
+    "end_utc": "2026-10-17T15:16:59.5765823Z",
+    "exact_filter_conflict_count": 0,
+    "status": "clear"
+  },
+  "prior_false_block": {
+    "start_utc": "2026-10-17T15:15:10.5818162Z",
+    "end_utc": "2026-10-17T15:15:10.9451011Z",
+    "exit_code": 3,
+    "note": "Earlier helper used $matches, colliding with PowerShell automatic $Matches; it emitted a blank process_conflict row. No model process was started during that preflight."
+  },
+  "run_start_utc": "2026-10-17T15:16:59.6122294Z",
+  "run_end_utc": "2026-10-17T15:18:23.6833963Z",
+  "exit_code": 0,
+  "python_process_has_exited": true,
+  "output_json": "D:\\Dev\\nemu\\reports\\P0-07\\direction-v2\\microsoft--Phi-4-mini-instruct.json",
+  "stdout_file": "D:\\Dev\\nemu\\reports\\P0-07\\direction-v2\\microsoft--Phi-4-mini-instruct.stdout.log",
+  "stderr_file": "D:\\Dev\\nemu\\reports\\P0-07\\direction-v2\\microsoft--Phi-4-mini-instruct.stderr.log"
+}

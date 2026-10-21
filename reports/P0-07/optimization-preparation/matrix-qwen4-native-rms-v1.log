@@ -1,0 +1,19 @@
+TASK: Qwen/Qwen3-4B int4 eager native-rms run_matrix
+WORKDIR: D:\Dev\nemu
+CPU_PRECHECK: v2 ruff=0; mypy=0; pytest=0; qwen tiny CPU=0; phi tiny CPU=0; Qwen/phi tiny JSON files present.
+PROCESS_PREFLIGHT: Get-CimInstance Win32_Process filtered for Runner.Listener.exe, Runner.Worker.exe, electron.exe; Python command lines matching path_probe|latency_probe|direction_probe|profile_int4|run_matrix; Node command lines matching render_load|playwright. Observed conflict count=0.
+OUTPUT_EXISTS=False
+LOG_EXISTS=False
+EXACT_COMMAND: workers/model-adapter/probe/.venv/Scripts/python.exe workers/model-adapter/probe/run_matrix.py --model Qwen/Qwen3-4B --precision int4 --native-rms --output reports/P0-07/opt-native-rms-qwen4-v1
+ENVIRONMENT: HF_HUB_OFFLINE=1; TRANSFORMERS_OFFLINE=1; PYTHONIOENCODING=utf8
+START_UTC: 2026-10-18T04:19:28.1977470Z
+END_UTC: 2026-10-18T04:20:46.8912753Z
+EXIT_CODE: 0
+----- RAW STDOUT BEGIN -----
+BEGIN Qwen/Qwen3-4B int4
+END Qwen/Qwen3-4B int4: {'model': 'Qwen/Qwen3-4B', 'precision': 'int4', 'attention': 'eager', 'lean': False, 'native_rms': True, 'path_exit': 0, 'concurrent_exit': 0, 'render_exit': 0}
+
+----- RAW STDOUT END -----
+----- RAW STDERR BEGIN -----
+
+----- RAW STDERR END -----

@@ -2,14 +2,14 @@
 
 ## 结果
 
-完成，待审查与用户批准。v2.0 的状态与记录类型已进 IDL，旧的 R/G 类型标为取代；已发布的 78 种消息的字段表、类型标签与黄金向量逐字节不变。三种语言对 9,004 个用例结论一致。这是契约变更，PR #36 标 `needs-user`，合并前需要你批准本卡与差异登记 V2-19 至 V2-27，并由 Codex 交叉审查。
+完成，待审查与用户批准。v2.0 的状态与记录类型已进 IDL，旧的 R/G 类型标为取代；已发布的 78 种消息的字段表、类型标签与黄金向量逐字节不变。三种语言对 9,004 个用例结论一致。这是契约变更，PR #36 标 `needs-user`，合并前需要你批准本卡与差异登记 V2-29 至 V2-37，并由 Codex 交叉审查。
 
 ## 交付物
 
 - `core/contracts/records.proto`（新）：解释记录。天性评估、情境吻合、候选倾向、教导、撒谎、同一件事、重新解释，以及事件属性记录。
 - `core/contracts/ledger.proto`（新）：变化账本 L 的条目，包括 R 与 θ 的变化、整段重算、迁移、暂停与恢复、复核暂缓与复核结论。
 - `core/contracts/law.proto`（新）：R（倾向、证据组、快照）、θ 的快照、成长的管理命令、规律版本 𝔏_v 与参数、保险丝、genesis v2。
-- `core/contracts/base.proto`、`state.proto`、`terminal.proto`：枚举只增不改；新增共享值类型；改动的消息以带新类型标签的后继消息实现（V2-25），旧消息原样保留并标为取代。`terminal.proto` 只改 ModulationEnvelope：新增 ModulationEnvelopeV2，只被它用到的 HookCoefficients 随之标为取代。
+- `core/contracts/base.proto`、`state.proto`、`terminal.proto`：枚举只增不改；新增共享值类型；改动的消息以带新类型标签的后继消息实现（V2-35），旧消息原样保留并标为取代。`terminal.proto` 只改 ModulationEnvelope：新增 ModulationEnvelopeV2，只被它用到的 HookCoefficients 随之标为取代。
 - `core/contracts/growth.proto`：21 种消息、4 个枚举全部标为取代，字段不变。
 - `core/contracts/generate.py`：解析 `@superseded`、`@supersedes`、`reserved`。生成的 Rust、TypeScript、Python 类型带取代说明，并生成 `WireMessage::SUPERSEDED`、`<Enum>::is_superseded`、`SUPERSEDED_MESSAGES`。未改动的 `.proto` 生成的描述符逐字节相同（先改生成器、后改 IDL 时 `schema.json` 没有变化）。
 - `core/contracts/check_compat.py`（新）+ `baselines/p5-01/`：不复用检查。比较当前 `.proto` 与 P5-01 发布时的 `.proto`，以及黄金向量的冻结前缀。自检对 11 种故意违例逐一报错，结果不会空过。由 `verify.py` 调用，也可以用 `--ref` 比较任意 git 引用。
@@ -18,7 +18,7 @@
 - `core/crates/core-types/src/semantic.rs`（新）：编解码之外的语义检查。包括 d_k 的单位范数、μ > 0、π ∈ (−1, 1)、倾向的计数不变量、第 16 节参数间的不等式、genesis 的一致性，以及倾向 ID 的规范次序。
 - `core/crates/core-types/tests/v2_contract.rs`（新）：I28 的类型检查、语义检查与取代登记的测试。
 - 生成产物：`core/crates/core-types/src/generated.rs`、`packages/contracts/src/generated/echo/`、`workers/{irl,drive,model-adapter}/generated/echo/`。
-- `docs/traceability/P5-21.md`（新，按 echo-core-work 技能；只新增文件）、`docs/traceability/diff-register.md`（追加 V2-19 至 V2-27）。
+- `docs/traceability/P5-21.md`（新，按 echo-core-work 技能；只新增文件）、`docs/traceability/diff-register.md`（追加 V2-29 至 V2-37）。
 - `.github/workflows/ci.yml`：追加一步，对两个新脚本跑 `mypy --strict`。不改已有条目。
 - `reports/P5-21/`：本报告、`IMPLEMENTED-MAP.md`（每条消息的规格、IDL、类型标签与字段）、`review_vectors.py`（独立的字节复核）、`verification/`（全部日志）。
 
@@ -154,23 +154,33 @@ Windows 作业没有在本地运行。本卡不改动桌面、隔离与视觉相
 ## 待用户确认
 
 - [ ] （阻塞）批准本次契约变更（P5-21 卡，ADR 0009、0010）。
-- [ ] （阻塞）差异登记 V2-19：第 16 节的参数按第 13、16 节分放在规律版本、genesis 与保险丝中，而不是全部放进规律版本。
-- [ ] （阻塞）V2-20：L 条目与保险丝的最小字段集（重建）。
-- [ ] （阻塞）V2-21：速率以 1/秒、持续时间以秒计。
-- [ ] （阻塞）V2-22：语义检查的读法，单位范数容差 1e-12，成事的初始增益严格最弱。
-- [ ] （阻塞）V2-23：解释记录的外形（重建）。
-- [ ] （阻塞）V2-24：R、θ 的存储字段（重建）。其中 θ 的递推状态是一个由 P5-25 定格式的对象引用。
-- [ ] （阻塞）V2-25：以后继消息实现改动。ProposalBinding 换代后，SemanticCandidate、ConceptProposal 也随之有后继，卡里没有写到这两条。
-- [ ] （阻塞）V2-26：原因码与状态的判定。RunState 在 P5-22 收紧之前，编解码层也接受 EXPERIMENT。
-- [ ] （阻塞）V2-27：genesis v2 的读法（不含名字与 x 的初值，读出与边界以引用给出）。
+- [ ] （阻塞）差异登记 V2-29：第 16 节的参数按第 13、16 节分放在规律版本、genesis 与保险丝中，而不是全部放进规律版本。
+- [ ] （阻塞）V2-30：L 条目与保险丝的最小字段集（重建）。
+- [ ] （阻塞）V2-31：速率以 1/秒、持续时间以秒计。
+- [ ] （阻塞）V2-32：语义检查的读法，单位范数容差 1e-12，成事的初始增益严格最弱。
+- [ ] （阻塞）V2-33：解释记录的外形（重建）。
+- [ ] （阻塞）V2-34：R、θ 的存储字段（重建）。其中 θ 的递推状态是一个由 P5-25 定格式的对象引用。
+- [ ] （阻塞）V2-35：以后继消息实现改动。ProposalBinding 换代后，SemanticCandidate、ConceptProposal 也随之有后继，卡里没有写到这两条。
+- [ ] （阻塞）V2-36：原因码与状态的判定。RunState 在 P5-22 收紧之前，编解码层也接受 EXPERIMENT。
+- [ ] （阻塞）V2-37：genesis v2 的读法（不含名字与 x 的初值，读出与边界以引用给出）。
 
 ## 后续建议（不在本任务范围内）
 
-- **P5-22：** 用后继消息或 `@rules` 把终端 RunState 的谱系限制在 REHEARSAL、LIFE（V2-26）。
+- **P5-22：** 用后继消息或 `@rules` 把终端 RunState 的谱系限制在 REHEARSAL、LIFE（V2-36）。
 - **P5-26：** 来源更正事件的载荷类型（事件是假的、几个账号是同一个人、内容被篡改）还没有 IDL。P5-26 开工前需要一张契约卡，或在该卡里登记。
 - **P5-27：** 不再使用 EffectContract 等取代类型后，可以让 core-kernel 不再依赖它们。`generated::SUPERSEDED_MESSAGES` 可用来做静态检查。
 - **P5-21 之后的契约卡：** 在 `baselines/` 下新增一个基线目录，冻结本卡发布的 `.proto` 与黄金向量摘要，check_compat 会自动比较全部基线。
 
 ## 下一步
 
-等待两件事：Codex（GPT-6 Astra，最高推理强度）交叉审查，以及你批准契约变更与 V2-19 至 V2-27。在 P5-21 合并之前，Codex 不能开 P5-07，因为两者都改 `workers/irl/`。接下来取的卡：P5-27（依赖 P5-09，已合并；目录 `core/crates/core-kernel/src/effects/`、`core/crates/core-policy/`，与本卡不重叠）。按「一次只做一张卡」，本卡合并后再开工，或者等你另行指示。
+等待两件事：Codex（GPT-6 Astra，最高推理强度）交叉审查，以及你批准契约变更与 V2-29 至 V2-37。在 P5-21 合并之前，Codex 不能开 P5-07，因为两者都改 `workers/irl/`。接下来取的卡：P5-27（依赖 P5-09，已合并；目录 `core/crates/core-kernel/src/effects/`、`core/crates/core-policy/`，与本卡不重叠）。按「一次只做一张卡」，本卡合并后再开工，或者等你另行指示。
+
+## 2026-10-21 合并 main 与登记重编号（追加）
+
+- 合并最新 main（含 #27、#37、#38、#39、#41、#42），不 rebase、不强推。两处冲突：
+  - `.github/workflows/ci.yml`：#39 把 Windows 作业移到 `windows.yml`。本卡追加的契约工具检查步骤放在 Ubuntu 作业末尾，内容不变；
+  - `docs/traceability/diff-register.md`：保留双方。
+- 差异登记编号：本卡原用 V2-19 至 V2-27，与先合并的 ADR 0012（V2-19 至 V2-23）、ADR 0014（V2-24 至 V2-28）重号，改为 V2-29 至 V2-37（V2-19→29 … V2-27→37），内容不变。本报告、`docs/traceability/P5-21.md`、`law.proto` 与 `ledger.proto` 的注释、`core-types/src/semantic.rs` 的文档注释随之改号。注释不进入生成代码，已发布的字节与摘要不受影响。
+- ADR 0014 用到的取值（`USER_SELF_REPORT`、`UNKNOWN_ACTION`、`UNKNOWN_DELIVERY`、`EVIDENCE_UNKNOWN`、`TeachingAnnotation`）在本卡契约中都已存在，不需要改动。
+- 合并后的复跑结果见 `verification/after-main-merge-20261021/`。
+

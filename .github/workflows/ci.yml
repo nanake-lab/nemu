@@ -1,8 +1,23 @@
 name: CI
+# Changes that touch only documents, task cards, reports or the content submodule pointer
+# cannot affect any check below, so they skip this workflow. Docs guard covers the frozen
+# specs and the task catalog. The Windows job lives in windows.yml with its own path filter.
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'tasks/**'
+      - 'reports/**'
+      - '**.md'
+      - 'content'
   pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - 'tasks/**'
+      - 'reports/**'
+      - '**.md'
+      - 'content'
   workflow_dispatch:
 permissions:
   contents: read
@@ -82,56 +97,3 @@ jobs:
       - name: P5-21 contract compatibility tooling (no reuse; checked by test:core-contracts)
         run: |
           uv run --project core/contracts --locked mypy --strict core/contracts/check_compat.py core/contracts/freeze_vectors.py
-  windows:
-    name: Windows desktop and isolation
-    # Only owner-triggered, same-repository code may run on the user's machine.
-    if: github.actor == github.repository_owner && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
-    runs-on: [self-hosted, Windows, X64, nemu]
-    timeout-minutes: 20
-    defaults:
-      run:
-        shell: pwsh
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          lfs: true
-          persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version-file: .nvmrc
-      - run: npm install --global pnpm@12.11.2
-      - run: pnpm install --frozen-lockfile
-      - name: Detect installed .NET SDK
-        id: dotnet
-        working-directory: executors/office-connector
-        run: |
-          $required = (Get-Content global.json | ConvertFrom-Json).sdk.version
-          $available = (dotnet --list-sdks) -match ("^" + [regex]::Escape($required) + " ")
-          "available=$([bool]$available)".ToLowerInvariant() >> $env:GITHUB_OUTPUT
-      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
-        if: steps.dotnet.outputs.available != 'true'
-        env:
-          DOTNET_INSTALL_DIR: ${{ runner.temp }}/dotnet
-        with:
-          global-json-file: executors/office-connector/global.json
-      - run: pnpm exec playwright install chromium
-      - name: Initialize current-run Windows evidence
-        run: ./tools/scaffold/windows-evidence.ps1 -Mode Init
-      - name: Evidence provenance regression tests
-        run: pwsh -NoProfile -File tools/scaffold/windows-evidence.tests.ps1
-      - name: Snapshot timing and repository filtering checks
-        run: node --test tools/scaffold/window-wait-diagnostics.test.mjs
-      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport
-      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation
-      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e
-      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual
-      - name: Verify Windows evidence provenance
-        id: evidence
-        if: always() && env.NEMU_EVIDENCE_DIR != ''
-        run: ./tools/scaffold/windows-evidence.ps1 -Mode Verify
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: always() && steps.evidence.outcome == 'success'
-        with:
-          name: windows-P0-01-evidence-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ env.NEMU_EVIDENCE_DIR }}/
-          if-no-files-found: error

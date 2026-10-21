@@ -1,0 +1,13 @@
+COMMAND: workers/model-adapter/probe/.venv/Scripts/python.exe -m mypy --strict workers/model-adapter/probe/native_norm.py workers/model-adapter/probe/path_probe.py workers/model-adapter/probe/latency_probe.py workers/model-adapter/probe/direction_probe.py workers/model-adapter/probe/profile_int4.py workers/model-adapter/probe/run_matrix.py workers/model-adapter/probe/run_all.py
+WORKDIR: D:\Dev\nemu
+START_UTC: 2026-10-17T23:36:30.3497127Z
+END_UTC: 2026-10-17T23:36:50.4271182Z
+EXIT_CODE: 1
+----- RAW STDOUT BEGIN -----
+workers\model-adapter\probe\latency_probe.py:65: error: Returning Any from function declared to return "Path"  [no-any-return]
+Found 1 error in 1 file (checked 7 source files)
+
+----- RAW STDOUT END -----
+----- RAW STDERR BEGIN -----
+
+----- RAW STDERR END -----

@@ -1,0 +1,12 @@
+{
+  "provenance": "Transcribed from the stage-2 tool output; no stdout redirection was configured.",
+  "command": "python C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-p007-audit-36f8b00b33b84edaaebc58d373f3d01b\\audit.py 2 C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-p007-audit-36f8b00b33b84edaaebc58d373f3d01b",
+  "workingDirectory": "D:\\Dev\\nemu-p007",
+  "startedUtc": "2026-10-20T15:53:00.1677378Z",
+  "endedUtc": "2026-10-20T15:53:00.3404103Z",
+  "pythonExitCode": 1,
+  "powershellExitCode": 0,
+  "pythonStdout": "",
+  "wrapperStdout": "STAGE2_STARTED_UTC=2026-10-20T15:53:00.1677378Z\nSTAGE2_ENDED_UTC=2026-10-20T15:53:00.3404103Z\nSTAGE2_PY_EXIT_CODE=1",
+  "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\nanake\\AppData\\Local\\Temp\\nemu-p007-audit-36f8b00b33b84edaaebc58d373f3d01b\\audit.py\", line 147, in <module>\n    with dest.open('x',encoding='utf-8',newline='\\n') as fh: json.dump(result,fh,ensure_ascii=True,indent=2); fh.write('\\n')\n                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\nanake\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\json\\__init__.py\", line 179, in dump\n    for chunk in iterable:\n                 ^^^^^^^^^\n  File \"C:\\Users\\nanake\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\json\\encoder.py\", line 432, in _iterencode\n    yield from _iterencode_dict(o, _current_indent_level)\n  File \"C:\\Users\\nanake\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\json\\encoder.py\", line 406, in _iterencode_dict\n    yield from chunks\n  File \"C:\\Users\\nanake\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\json\\encoder.py\", line 406, in _iterencode_dict\n    yield from chunks\n  File \"C:\\Users\\nanake\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\json\\encoder.py\", line 377, in _iterencode_dict\n    raise TypeError(f'keys must be str, int, float, bool or None, '\nTypeError: keys must be str, int, float, bool or None, not tuple"
+}

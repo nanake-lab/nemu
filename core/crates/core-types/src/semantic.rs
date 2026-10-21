@@ -14,7 +14,7 @@ use crate::generated::{
 use std::cmp::Ordering;
 
 /// Allowed |‖d‖₂ − 1| for a direction d_k ∈ ℝ⁴. A few binary64 ulps; producers
-/// normalize in binary64 before proposing (reading registered as V2-22).
+/// normalize in binary64 before proposing (reading registered as V2-32).
 pub const UNIT_NORM_TOLERANCE: f64 = 1e-12;
 
 /// The four nature channels in the fixed order of v2.0 §3: connection, empathy,

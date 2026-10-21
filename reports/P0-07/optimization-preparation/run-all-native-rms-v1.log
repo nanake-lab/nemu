@@ -1,0 +1,21 @@
+COMMAND: workers/model-adapter/probe/.venv/Scripts/python.exe workers/model-adapter/probe/run_all.py --int4-only --native-rms --output reports/P0-07/opt-native-rms-all-v1
+CWD: D:\Dev\nemu
+PREFLIGHT_CONFLICT_COUNT: 0
+ENV: HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 PYTHONIOENCODING=utf8
+START_UTC: 2026-10-18T04:26:03.5423967Z
+END_UTC: 2026-10-18T04:34:19.3954781Z
+EXIT_CODE: 0
+STDOUT_BEGIN
+BEGIN Qwen/Qwen3-4B int4
+END Qwen/Qwen3-4B int4: {'model': 'Qwen/Qwen3-4B', 'precision': 'int4', 'attention': 'eager', 'lean': False, 'native_rms': True, 'path_exit': 0, 'concurrent_exit': 0, 'render_exit': 0}
+BEGIN Qwen/Qwen3-4B-Instruct-2507 int4
+END Qwen/Qwen3-4B-Instruct-2507 int4: {'model': 'Qwen/Qwen3-4B-Instruct-2507', 'precision': 'int4', 'attention': 'eager', 'lean': False, 'native_rms': True, 'path_exit': 0, 'concurrent_exit': 0, 'render_exit': 0}
+BEGIN microsoft/Phi-4-mini-instruct int4
+END microsoft/Phi-4-mini-instruct int4: {'model': 'microsoft/Phi-4-mini-instruct', 'precision': 'int4', 'attention': 'eager', 'lean': False, 'native_rms': True, 'path_exit': 0, 'concurrent_exit': 0, 'render_exit': 0}
+BEGIN Qwen/Qwen3-8B int4
+END Qwen/Qwen3-8B int4: {'model': 'Qwen/Qwen3-8B', 'precision': 'int4', 'attention': 'eager', 'lean': False, 'native_rms': True, 'path_exit': 0, 'concurrent_exit': 0, 'render_exit': 0}
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

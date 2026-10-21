@@ -11,7 +11,7 @@ enum ReviewVerdict { VERDICT_UNSPECIFIED = 0; LAW_CORRECT = 1; LAW_INCORRECT = 2
 
 // @message echo.theta-values | v2.0 §8 θ = (b, g, λ)
 message ThetaValues {
-  // recovery_per_s is λ in 1/s (unit: P5-21 reading, V2-21).
+  // recovery_per_s is λ in 1/s (unit: P5-21 reading, V2-31).
   optional uint32 schema_version = 1; // required
   optional NatureVector baseline = 2; // required
   optional NatureScale gain = 3; // required
@@ -20,7 +20,7 @@ message ThetaValues {
 
 // @message echo.tendency-change | v2.0 §2.5 R change: tendency, π before and after, evidence groups
 message TendencyChange {
-  // pi_before absent: the tendency entered R; pi_after absent: it left R (capacity fuse, v2.0 §12). V2-20.
+  // pi_before absent: the tendency entered R; pi_after absent: it left R (capacity fuse, v2.0 §12). V2-30.
   optional uint32 schema_version = 1; // required
   optional string tendency_id = 2; // required,nonempty
   optional double pi_before = 3; // optional,min=-1,max=1
@@ -38,7 +38,7 @@ message ThetaChange {
 
 // @message echo.recompute-record | v2.0 §2.5, §5.4 recompute: law version and difference summary
 message RecomputeRecord {
-  // Difference summary fields are a minimal reconstruction (V2-20).
+  // Difference summary fields are a minimal reconstruction (V2-30).
   optional uint32 schema_version = 1; // required
   optional RecomputeCause cause = 2; // required
   optional ObjectRef law_version = 3; // required
@@ -53,7 +53,7 @@ message RecomputeRecord {
 
 // @message echo.migration-record | v2.0 §2.5, §9.5 model change is a migration, not growth
 message MigrationRecord {
-  // Environments carry carrier, model, tokenizer and direction set; validation is the §9.6 record (V2-20).
+  // Environments carry carrier, model, tokenizer and direction set; validation is the §9.6 record (V2-30).
   optional uint32 schema_version = 1; // required
   optional ObjectRef previous_environment = 2; // required
   optional ObjectRef environment = 3; // required

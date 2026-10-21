@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "status": "preregistered-informational-only",
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "configuration": "NF4, bf16 compute, no double quantization, native RMS, eager, existing layer, rank 8",
+  "direction_source": "reports/P0-07/evidence-20261020/direction-neutral-v1/Qwen--Qwen3-4B-Instruct-2507.json",
+  "ratios": [-0.4, -0.2, -0.1, -0.05, 0.0, 0.05, 0.1, 0.2, 0.4],
+  "seeds": [731, 732, 733],
+  "norm_protocol": "m=0; unchanged neutral zh/en/ja prompts; last prefill position and each single-token decode position; full request bounded by the existing EOS/token/time limits",
+  "reference_rule": "median of six medians: zh/en/ja times prefill/decode, all measured before injection under m=0; reject if any phase has no observations",
+  "coefficient_rule": "a[0] = ratio * reference_norm / l2(U[:,0]); other seven coefficients zero; U unchanged; beta=max(abs(a[0])); one immutable coefficient per request",
+  "generation": {
+    "max_new_tokens": 48,
+    "max_seconds": 25,
+    "temperature": 0.7,
+    "sampling": "full vocabulary multinomial; reset matched seed per condition; fresh KV",
+    "prompts": "unchanged NEUTRAL_PROMPTS from direction_probe.py",
+    "extraction": "reuse exact archived U and calibration pairs; do not re-fit or select direction"
+  },
+  "interpretation": "Informational only; no sample-based parameter selection; not P5-31; report all failures and stop reasons. Same fixed reference for every language and generation phase."
+}

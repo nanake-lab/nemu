@@ -21,6 +21,13 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 
 **认领：** 开工时先在 `task/<任务号>-<短名>` 分支上开一个草稿 PR（draft），标题写成 `<类型>(<任务号>): <标题>`，例如 `feat(P5-10): …`。草稿 PR 就是认领标记：看板据此显示「进行中」，其他执行者看到就跳过这张卡。做完后把草稿转为可审查。放弃时关闭草稿 PR，并在评论里说明原因。
 
+**与 main 同步（2026-10-21 用户追加）：** 规则、任务卡和 ADR 随时可能在 main 上更新，执行者自己同步，不等用户提醒。
+
+- **开新卡：** 先 `git fetch origin`，从 `origin/main` 新建任务分支。本文件、任务卡和必读文档都以这个版本为准。不依赖本地 `main`，也不需要检出它。
+- **继续做已有的卡**（新会话、隔天、收到用户的新指示时）：先 `git fetch origin`。`origin/main` 有新提交时，把它合并进任务分支（merge，不 rebase，不强推），再看本文件和本卡在这期间有没有变化，按新版本继续。
+- **以 `origin/main` 为准：** 本地文件与 `origin/main` 不一致时，以 `origin/main` 为准。
+- **合并前：** 照第 6 节，把分支更新到最新的 `main` 并重跑测试。
+
 **目录：** 每张任务卡的「目录」一栏列出它可以修改的范围，卡里没写到的目录不能改。**「目录」有重叠的两张卡不能同时在做**，不论是谁在做。两个目录相同，或者一个是另一个的上级目录，就算重叠。比如 `core/crates/core-runtime/` 与 `core/crates/core-runtime/src/metrics/` 重叠，`core/crates/fact-view/` 与 `core/crates/gateway/` 不重叠。需要改卡外的目录时，在 `tasks/requests/` 下新建一个请求文件，写明原因和期望的接口，然后继续做不受影响的部分。
 
 以下共享文件不受这条限制，任何卡都可以改，冲突按规则处理：
@@ -227,6 +234,13 @@ Antigravity 会自动发现这些技能；Codex 请在开始相关任务时手�
 - 当前客户端若不能按名称选择自定义角色，主代理必须显式传入相同的模型和推理强度，并让子代理读取该配置的职责指令；报告区分“显式参数试用”与“按角色名自动加载已验证”，不得声称未验证的自动加载能力。
 
 配置依据：OpenAI 官方 [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)。项目自定义角色使用独立 TOML 文件，权限继承父代理；角色文件不用于绕过父代理权限或平台并发限制。
+
+**CI 的范围（2026-10-20 按用户要求追加）：**
+
+- 只改文档、任务卡、报告或 `content` 子模块指针的 PR 和提交，不跑 CI（`ci.yml` 的 `paths-ignore`）。
+- `docs/echo-core/original/` 或 `tasks/cards.json` 有改动时，由 Docs guard（`docs-guard.yml`）检查：前者一律不允许改，后者检查能否解析、依赖和里程碑是否存在。
+- Windows 检查在 `windows.yml` 里，只在改动可能影响它时运行，路径列表在该文件开头。草稿 PR 不跑 Windows 检查，转为可审查时自动运行；草稿阶段需要时，用 `gh workflow run windows.yml --ref <分支>` 手动触发。
+- 新增一类 Windows 检查时，同时把它涉及的目录加进 `windows.yml` 的路径列表。
 
 ## 10. Claude（2026-10-19 用户追加，同日按新的第 2、6 节整理）
 

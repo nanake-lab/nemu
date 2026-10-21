@@ -67,7 +67,7 @@ message RSnapshot {
 message ThetaSnapshot {
   // sigma is σ̂, tau_s is τ̂ in seconds, weight_sum is Σω_e, h_hat_theta is ĥ_θ. estimator_state
   // holds the remaining recursion state (change-point detector, current same-sign runs), whose
-  // format the law version defines (P5-25; V2-20).
+  // format the law version defines (P5-25; V2-30).
   optional uint32 schema_version = 1; // required
   optional string revision = 2; // required,nonempty
   optional ObjectRef law_version = 3; // required
@@ -94,8 +94,8 @@ message GrowthCommand {
 // @message echo.law-parameters | v2.0 §5.2, §6, §8, §16
 message LawParameters {
   // Law, θ-prior weight and fast-state window parameters. Initial nature values (g₀, b₀, σ₀, τ₀),
-  // A_att, fuses and interface parameters live in GenesisManifestV2 (v2.0 §13; V2-19).
-  // Rates are 1/s and durations are seconds (V2-21). Cross-field inequalities are checked in core-types.
+  // A_att, fuses and interface parameters live in GenesisManifestV2 (v2.0 §13; V2-29).
+  // Rates are 1/s and durations are seconds (V2-31). Cross-field inequalities are checked in core-types.
   optional uint32 schema_version = 1; // required
   optional double n0 = 2; // required,min=0
   optional double kappa1 = 3; // required,min=0
@@ -134,7 +134,7 @@ message LawVersion {
 // @message echo.fuse-config | v2.0 §11, §12, §16
 message FuseConfig {
   // Caretaker boundaries: initial values come from genesis; later adjustments are events in H (v2.0 §16).
-  // Field set is a minimal reconstruction (V2-20).
+  // Field set is a minimal reconstruction (V2-30).
   optional uint32 schema_version = 1; // required
   optional uint32 r_capacity = 2; // required,min=1
   optional double delta_theta_max = 3; // required,min=0

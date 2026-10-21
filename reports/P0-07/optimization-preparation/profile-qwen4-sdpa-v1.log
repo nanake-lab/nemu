@@ -1,0 +1,22 @@
+TASK: Qwen/Qwen3-4B SDPA int4 profile
+WORKDIR: D:\Dev\nemu
+PREFLIGHT_COMMAND: Get-CimInstance Win32_Process filtered for Runner.Listener.exe, Runner.Worker.exe, electron.exe; Python command lines matching path_probe|latency_probe|direction_probe|profile_int4; Node command lines matching render_load|playwright.
+PREFLIGHT_STDOUT:
+CONFLICT_COUNT=0
+OUTPUT_EXISTS=False
+LOG_EXISTS=False
+PREFLIGHT_STDERR: (empty)
+EXACT_COMMAND: workers/model-adapter/probe/.venv/Scripts/python.exe workers/model-adapter/probe/profile_int4.py --model Qwen/Qwen3-4B --attention sdpa --output reports/P0-07/optimization-profile/qwen4-sdpa-v1
+ENVIRONMENT: HF_HUB_OFFLINE=1; TRANSFORMERS_OFFLINE=1; PYTHONIOENCODING=utf8
+START_UTC: 2026-10-17T23:32:45.2988275Z
+END_UTC: 2026-10-17T23:33:18.3972119Z
+EXIT_CODE: 0
+----- RAW STDOUT BEGIN -----
+
+----- RAW STDOUT END -----
+----- RAW STDERR BEGIN -----
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:04,  2.18s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:04<00:02,  2.21s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:04<00:00,  1.49s/it]
+D:\Dev\nemu\workers\model-adapter\probe\.venv\Lib\site-packages\torch\profiler\profiler.py:217: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+
+----- RAW STDERR END -----

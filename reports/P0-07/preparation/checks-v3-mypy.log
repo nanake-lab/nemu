@@ -1,0 +1,18 @@
+WORKDIR=D:\Dev\nemu
+START_UTC=2026-10-17T15:12:30.0177254Z
+COMMAND='D:\Dev\nemu\workers\model-adapter\probe\.venv\Scripts\python.exe' -m mypy workers/model-adapter/probe/injection.py workers/model-adapter/probe/path_probe.py workers/model-adapter/probe/latency_probe.py workers/model-adapter/probe/run_matrix.py workers/model-adapter/probe/direction_probe.py workers/model-adapter/probe/run_all.py workers/model-adapter/probe/summarize_matrix.py workers/model-adapter/probe/stop_tokens.py workers/model-adapter/probe/test_injection.py
+ENVIRONMENT_BEGIN
+PYTHONDONTWRITEBYTECODE=1
+MYPY_CACHE_DIR=D:\Dev\nemu\workers\model-adapter\probe\.cache\mypy\checks-v3
+ENVIRONMENT_END
+STDOUT_BEGIN
+workers\model-adapter\probe\direction_probe.py:75: error: Item "Tensor" of "Tensor | Module" has no attribute "eos_token_id"  [union-attr]
+workers\model-adapter\probe\latency_probe.py:98: error: Item "Tensor" of "Tensor | Module" has no attribute "eos_token_id"  [union-attr]
+Found 2 errors in 2 files (checked 9 source files)
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+EXIT_CODE=1
+END_UTC=2026-10-17T15:12:52.4228512Z

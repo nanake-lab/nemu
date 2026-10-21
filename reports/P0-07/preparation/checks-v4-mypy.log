@@ -1,0 +1,16 @@
+WORKDIR=D:\Dev\nemu
+START_UTC=2026-10-17T15:13:47.9564732Z
+COMMAND='D:\Dev\nemu\workers\model-adapter\probe\.venv\Scripts\python.exe' -m mypy workers/model-adapter/probe/injection.py workers/model-adapter/probe/path_probe.py workers/model-adapter/probe/latency_probe.py workers/model-adapter/probe/run_matrix.py workers/model-adapter/probe/direction_probe.py workers/model-adapter/probe/run_all.py workers/model-adapter/probe/summarize_matrix.py workers/model-adapter/probe/stop_tokens.py workers/model-adapter/probe/test_injection.py
+ENVIRONMENT_BEGIN
+PYTHONDONTWRITEBYTECODE=1
+MYPY_CACHE_DIR=D:\Dev\nemu\workers\model-adapter\probe\.cache\mypy\checks-v4
+ENVIRONMENT_END
+STDOUT_BEGIN
+Success: no issues found in 9 source files
+
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
+EXIT_CODE=0
+END_UTC=2026-10-17T15:14:08.8349394Z
