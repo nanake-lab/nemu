@@ -354,3 +354,40 @@ fn i10_g_signature_has_no_x_m_g_or_lambda() {
     assert_eq!(fields, ["baseline: Nature4,", "sigma: Nature4,"]);
     let _ = Law::new; // the law context is built from the law version only
 }
+
+#[test]
+fn pending_structures_stay_inside_law_until_p5_32() {
+    // User decision 2026-10-22: the temporary R structures are used only inside
+    // `law/`, never exported, persisted or sent across processes.
+    let module = include_str!("../mod.rs");
+    for line in module.lines().filter(|l| l.trim_start().starts_with("pub")) {
+        for private in [
+            "pending", "engine", "replay", "group", "plan", "RState", "Output",
+        ] {
+            assert!(!line.contains(private), "law exports `{private}`: {line}");
+        }
+    }
+    assert!(
+        module.contains("\nmod pending;"),
+        "pending stays a private module"
+    );
+    let pending = include_str!("../pending.rs");
+    assert!(pending.contains("P5-32 合并后换成 IDL 生成的类型"));
+    for forbidden in [
+        "Serialize",
+        "Deserialize",
+        "serde",
+        "WireMessage",
+        "canonical_bytes",
+        "protobuf",
+    ] {
+        let code: String = pending
+            .lines()
+            .map(|l| l.split("//").next().unwrap_or(""))
+            .collect();
+        assert!(
+            !code.contains(forbidden),
+            "pending structures must not serialize: {forbidden}"
+        );
+    }
+}

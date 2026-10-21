@@ -136,7 +136,7 @@ pub fn rho(t: &Tendency, law: &Law) -> LawResult<f64> {
 
 /// Record one group with weight W ≥ 0 and support S ∈ [−1, 1] (D4): multiply
 /// the old evidence by the current ρ_k, then add the group. Returns the ρ used.
-/// The typical magnitude r_k is updated separately (V2-48).
+/// The typical magnitude r_k is updated by `replay::record_group` (ADR 0016).
 pub fn record(t: &mut Tendency, law: &Law, w: f64, s: f64) -> LawResult<f64> {
     let r = rho(t, law)?;
     apply(t, law, r, w, s)?;

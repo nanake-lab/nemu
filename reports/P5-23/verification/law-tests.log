@@ -1,7 +1,7 @@
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
      Running unittests src/lib.rs (target/debug/deps/core_kernel-a37ea9ec9e298994)
 
-running 37 tests
+running 45 tests
 test law::num::tests::exact_mean_is_order_and_repetition_invariant ... ok
 test law::num::tests::exact_mean_of_single_value_is_the_value ... ok
 test law::num::tests::exact_mean_rejects_bad_inputs ... ok
@@ -15,14 +15,24 @@ test law::tests::ac2_count::ac2_06_complex_tendencies_need_more_and_one_salient_
 test law::tests::ac2_count::ac2_07_one_group_moves_pi_at_most_by_corollary_4 ... AC2-07: 20000 groups, 0 violations at rho = 1, 0 over the decay
 ok
 test law::tests::ac2_count::shares_reject_duplicates_and_out_of_range_values ... ok
+test law::tests::boundaries::ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups ... ok
+test law::tests::boundaries::alias_adr_0014_any_number_of_synonyms_leaves_pi_and_r_unchanged ... ok
+test law::tests::boundaries::candidate_enters_r_at_pi_zero_with_an_l_entry ... ok
+test law::tests::boundaries::i10_g_signature_has_no_x_m_g_or_lambda ... ok
+test law::tests::boundaries::pending_structures_stay_inside_law_until_p5_32 ... ok
+test law::tests::boundaries::relation_candidate_becomes_the_structural_tendency ... ok
+test law::tests::boundaries::stored_state_is_checked_before_use ... ok
+test law::tests::cases::ev5_back_collection_reshares_old_groups_and_keeps_i25 ... ok
+test law::tests::cases::first_group_records_ordinal_zero_and_the_typical_magnitude ... ok
+test law::tests::cases::late_member_updates_the_group_without_a_second_count ... ok
+test law::tests::cases::teaching_counts_by_trust_and_repeats_do_not_refresh ... ok
+test law::tests::engine::ac2_02_i25_and_replay_identity_hold_after_every_step_of_random_worlds ... G worlds: 40 x 120 events, 5702 groups, 7498 allocations; I25 and replay identity hold after every step
+ok
+test law::tests::engine::ac2_03_the_same_group_arriving_again_changes_nothing ... AC2-03: 1760 groups re-delivered under other b and sigma: R unchanged
+ok
 test law::tests::engine::ac2_05_without_new_evidence_r_is_bitwise_unchanged ... ok
-test law::tests::engine::ac2_21_capacity_removes_the_weakest_candidate_and_stages_it_in_l ... ok
-test law::tests::engine::alias_adr_0014_any_number_of_synonyms_leaves_pi_and_r_unchanged ... ok
-test law::tests::engine::candidate_enters_r_at_pi_zero_with_an_l_entry ... ok
-test law::tests::engine::evidence_groups_are_an_explicit_contract_gap ... ok
-test law::tests::engine::i10_g_signature_has_no_x_m_g_or_lambda ... ok
-test law::tests::engine::relation_candidate_becomes_the_structural_tendency ... ok
-test law::tests::engine::stored_state_is_checked_before_use ... ok
+test law::tests::engine::ac2_21_capacity_with_resharing_keeps_i25_in_small_worlds ... ok
+test law::tests::engine::step_order_of_inputs_does_not_matter ... ok
 test law::tests::group_props::law_10_attachment_corollary_7 ... LAW-10: contrary groups to bring pi below 1/2 after 200 supporting: ordinary Some(29), A_att=60 Some(51), A_att=600 Some(421); exact true; alternating keeps pi >= 0.833
 ok
 test law::tests::group_props::law_8_shares_sum_to_one_per_side_i25 ... LAW-8: 20000 random groups with 1-8 matching tendencies, 0 violations
@@ -52,5 +62,5 @@ test law::tests::relations::relation_readouts_closeness_weight_and_trust ... ok
 test law::tests::relations::relation_structure_ids_directions_and_r0 ... ok
 test law::tests::relations::teaching_weight_follows_trust_in_the_speaker_and_verifiability ... ok
 
-test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 17 filtered out; finished in 2.66s
+test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 17 filtered out; finished in 23.59s
 
