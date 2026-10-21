@@ -1,0 +1,25 @@
+META {"allowAntisocialOrHateUsage": false, "allowExcessivelySexualUsage": true, "allowExcessivelyViolentUsage": true, "allowPoliticalOrReligiousUsage": true, "allowRedistribution": true, "authors": ["pixiv Inc."], "avatarPermission": "everyone", "commercialUsage": "corporation", "copyrightInformation": "(c) 2022 pixiv Inc.", "creditNotation": "unnecessary", "licenseUrl": "https://vrm.dev/licenses/1.0/", "modification": "allowModificationRedistribution", "name": "VRM1_Constraint_Twist_Sample", "thumbnailImage": 18, "version": "v1.0.1"}
+MATERIALS ['Body_00_SKIN', 'Bottoms_01_CLOTH', 'Shoes_01_CLOTH', 'Tops_01_CLOTH', 'HairBack_00_HAIR', 'FaceMouth_00_FACE', 'EyeIris_00_EYE', 'Face_00_SKIN', 'EyeWhite_00_EYE', 'FaceEyeline_00_FACE', 'FaceBrow_00_FACE', 'EyeHighlight_00_EYE', 'Hair_00_HAIR']
+PRESETS ['aa', 'angry', 'blink', 'blinkLeft', 'blinkRight', 'ee', 'happy', 'ih', 'lookDown', 'lookLeft', 'lookRight', 'lookUp', 'neutral', 'oh', 'ou', 'relaxed', 'sad', 'surprised']
+14:05:28 | INFO: Data are loaded, start creating Blender stuff
+14:05:28 | INFO: Blender create Mesh node Body
+14:05:28 | INFO: Blender create Mesh node Face
+14:05:29 | INFO: Blender create Mesh node Hair
+14:05:29 | INFO: Blender create Mesh node BlenderVrmAddonImport855042907535372Temp_20_
+14:05:29 | INFO: Blender create Mesh node BlenderVrmAddonImport855042907535372Temp_23_
+14:05:29 | INFO: glTF import finished in 0.23s
+Traceback (most recent call last):
+  File "D:\Dev\nemu\reports\P2-03\probe_api.py", line 12, in <module>
+    x=v.expressions.custom.add(); show('CUSTOM',x); show('MORPH',x.expression.morph_target_binds.add()); show('COLOR',x.expression.material_color_binds.add());show('TRANSFORM',x.expression.texture_transform_binds.add())
+                                                                 ^^^^^^^^^^^^
+AttributeError: 'Vrm1CustomExpressionPropertyGroup' object has no attribute 'expression'
+EXT VrmAddonArmatureExtensionPropertyGroup [('rna_type', 'POINTER'), ('name', 'STRING'), ('addon_version', 'INT'), ('vrm0', 'POINTER'), ('vrm1', 'POINTER'), ('spring_bone1', 'POINTER'), ('node_constraint1', 'POINTER'), ('khr_character', 'POINTER'), ('spec_version', 'ENUM')]
+
+Error: script failed, file: 'reports/P2-03/probe_api.py', exiting.
+META_PROP Vrm1MetaPropertyGroup [('rna_type', 'POINTER'), ('name', 'STRING'), ('vrm_name', 'STRING'), ('version', 'STRING'), ('authors', 'COLLECTION'), ('copyright_information', 'STRING'), ('contact_information', 'STRING'), ('references', 'COLLECTION'), ('third_party_licenses', 'STRING'), ('thumbnail_image', 'POINTER'), ('avatar_permission', 'ENUM'), ('allow_excessively_violent_usage', 'BOOLEAN'), ('allow_excessively_sexual_usage', 'BOOLEAN'), ('commercial_usage', 'ENUM'), ('allow_political_or_religious_usage', 'BOOLEAN'), ('allow_antisocial_or_hate_usage', 'BOOLEAN'), ('credit_notation', 'ENUM'), ('allow_redistribution', 'BOOLEAN'), ('modification', 'ENUM'), ('other_license_url', 'STRING'), ('active_author_index', 'INT'), ('active_reference_index', 'INT')]
+EXPRS Vrm1ExpressionsPropertyGroup [('rna_type', 'POINTER'), ('name', 'STRING'), ('preset', 'POINTER'), ('custom', 'COLLECTION'), ('expression_ui_list_elements', 'COLLECTION'), ('active_expression_ui_list_element_index', 'INT'), ('initial_automatic_expression_assignment', 'BOOLEAN')]
+EXPR Vrm1ExpressionPropertyGroup [('rna_type', 'POINTER'), ('name', 'STRING'), ('morph_target_binds', 'COLLECTION'), ('material_color_binds', 'COLLECTION'), ('texture_transform_binds', 'COLLECTION'), ('materials_to_update', 'COLLECTION'), ('is_binary', 'BOOLEAN'), ('override_blink', 'ENUM'), ('override_look_at', 'ENUM'), ('override_mouth', 'ENUM'), ('show_expanded', 'BOOLEAN'), ('show_expanded_morph_target_binds', 'BOOLEAN'), ('show_expanded_material_color_binds', 'BOOLEAN'), ('show_expanded_texture_transform_binds', 'BOOLEAN'), ('preview', 'FLOAT'), ('active_morph_target_bind_index', 'INT'), ('active_material_color_bind_index', 'INT'), ('active_texture_transform_bind_index', 'INT')]
+CUSTOM Vrm1CustomExpressionPropertyGroup [('rna_type', 'POINTER'), ('name', 'STRING'), ('morph_target_binds', 'COLLECTION'), ('material_color_binds', 'COLLECTION'), ('texture_transform_binds', 'COLLECTION'), ('materials_to_update', 'COLLECTION'), ('is_binary', 'BOOLEAN'), ('override_blink', 'ENUM'), ('override_look_at', 'ENUM'), ('override_mouth', 'ENUM'), ('show_expanded', 'BOOLEAN'), ('show_expanded_morph_target_binds', 'BOOLEAN'), ('show_expanded_material_color_binds', 'BOOLEAN'), ('show_expanded_texture_transform_binds', 'BOOLEAN'), ('preview', 'FLOAT'), ('active_morph_target_bind_index', 'INT'), ('active_material_color_bind_index', 'INT'), ('active_texture_transform_bind_index', 'INT'), ('custom_name', 'STRING')]
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

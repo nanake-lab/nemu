@@ -1,0 +1,75 @@
+[
+  {
+    "name": "pytest",
+    "executable": "D:\\Dev\\nemu\\workers\\irl\\.venv\\Scripts\\python.exe",
+    "arguments": [
+      "-m",
+      "pytest",
+      "tools/asset-pipeline/tests",
+      "-q"
+    ],
+    "startedUtc": "2026-10-21T07:55:09.7713299+00:00",
+    "endedUtc": "2026-10-21T07:55:27.7581624+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "ruff",
+    "executable": "D:\\Dev\\nemu\\workers\\irl\\.venv\\Scripts\\python.exe",
+    "arguments": [
+      "-m",
+      "ruff",
+      "check",
+      "tools/asset-pipeline",
+      "tools/texture-fix"
+    ],
+    "startedUtc": "2026-10-21T07:55:27.7779811+00:00",
+    "endedUtc": "2026-10-21T07:55:27.9961192+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "mypy",
+    "executable": "D:\\Dev\\nemu\\workers\\irl\\.venv\\Scripts\\python.exe",
+    "arguments": [
+      "-m",
+      "mypy",
+      "--strict",
+      "--config-file",
+      "tools/asset-pipeline/pyproject.toml",
+      "tools/asset-pipeline",
+      "tools/texture-fix/texture_fix.py"
+    ],
+    "startedUtc": "2026-10-21T07:55:27.9980696+00:00",
+    "endedUtc": "2026-10-21T07:55:28.6414759+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "pnpm-lint",
+    "executable": "pnpm",
+    "arguments": [
+      "lint"
+    ],
+    "startedUtc": "2026-10-21T07:55:28.6432463+00:00",
+    "endedUtc": "2026-10-21T07:55:41.3409901+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "pnpm-typecheck",
+    "executable": "pnpm",
+    "arguments": [
+      "typecheck"
+    ],
+    "startedUtc": "2026-10-21T07:55:41.3424653+00:00",
+    "endedUtc": "2026-10-21T07:55:46.2303375+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "pnpm-test",
+    "executable": "pnpm",
+    "arguments": [
+      "test"
+    ],
+    "startedUtc": "2026-10-21T07:55:46.2320600+00:00",
+    "endedUtc": "2026-10-21T07:55:51.0263516+00:00",
+    "exitCode": 0
+  }
+]
