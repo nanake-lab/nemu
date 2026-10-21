@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { busyProcesses } from './quiet.js';
+import { busyProcesses, inspectQuietSnapshot, inspectQuietSnapshotAsync } from './quiet.js';
 const p = (Name: string, ProcessId: number, CommandLine: string | null, ParentProcessId = 1) => ({
   Name,
   ProcessId,
@@ -45,4 +45,38 @@ describe('Quiet host measurement', () => {
       ),
     ).toEqual(['cannot-inspect-worker', 'heavy-process']);
   });
+});
+
+it('confirms a disappeared unknown worker with a fresh full snapshot', () => {
+  let reads = 0;
+  const unknown = { Name: 'python.exe', ProcessId: 400000, ParentProcessId: 0, CommandLine: null };
+  expect(() => inspectQuietSnapshot(() => (++reads === 1 ? [unknown] : []))).not.toThrow();
+  expect(reads).toBe(2);
+});
+it('never ignores a live unknown worker after confirmation', () => {
+  const unknown = { Name: 'node.exe', ProcessId: 400001, ParentProcessId: 0, CommandLine: null };
+  expect(() => inspectQuietSnapshot(() => [unknown])).toThrow('cannot-inspect-worker');
+});
+it('blocks a new heavy process discovered during confirmation', () => {
+  let reads = 0;
+  const unknown = { Name: 'node.exe', ProcessId: 400001, ParentProcessId: 0, CommandLine: null };
+  const heavy = {
+    Name: 'electron.exe',
+    ProcessId: 400002,
+    ParentProcessId: 0,
+    CommandLine: 'electron',
+  };
+  expect(() => inspectQuietSnapshot(() => (++reads === 1 ? [unknown] : [heavy]))).toThrow(
+    'heavy-process',
+  );
+});
+it('also confirms async snapshots without allowing persistent unknown workers', async () => {
+  let reads = 0;
+  const unknown = { Name: 'python.exe', ProcessId: 400000, ParentProcessId: 0, CommandLine: null };
+  await expect(
+    inspectQuietSnapshotAsync(async () => (++reads === 1 ? [unknown] : [])),
+  ).resolves.toBeUndefined();
+  await expect(inspectQuietSnapshotAsync(async () => [unknown])).rejects.toThrow(
+    'cannot-inspect-worker',
+  );
 });

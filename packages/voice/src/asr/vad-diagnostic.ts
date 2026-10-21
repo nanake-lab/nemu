@@ -8,9 +8,12 @@ import { cacheDirectory, verifyModels } from './models.js';
 import { loadTimingReferences } from './timing-reference.js';
 import { assertQuiet } from './quiet.js';
 const gated = process.argv[2] === 'gated';
-const outputPath = gated
-  ? 'reports/P4-01/vad-diagnostic-gated-effective.json'
-  : 'reports/P4-01/vad-diagnostic-grid.json';
+const missingOnly = process.argv[3] === 'missing-020';
+const outputPath = missingOnly
+  ? 'reports/P4-01/vad-diagnostic-gated-effective-020.json'
+  : gated
+    ? 'reports/P4-01/vad-diagnostic-gated-effective.json'
+    : 'reports/P4-01/vad-diagnostic-grid.json';
 const configs = gated
   ? [
       { id: 'gated-effective-050', threshold: 0.5, speech: 0.000001, silence: 0.168 },
@@ -43,7 +46,7 @@ for (const ref of refs) {
   );
 }
 const output = [];
-for (const config of configs) {
+for (const config of configs.filter((c) => !missingOnly || c.threshold === 0.2)) {
   const rows = [];
   for (const ref of refs) {
     assertQuiet();

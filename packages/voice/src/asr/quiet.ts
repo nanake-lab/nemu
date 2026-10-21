@@ -58,6 +58,7 @@ export function busyProcesses(
         'pytest',
         'align_user.py',
         'context_references.py',
+        'vad-diagnostic.ts',
         'voice_sidecar.server',
         'mfa align',
       ].some((part) => cmd.includes(part)) ||
@@ -78,24 +79,50 @@ export function busyProcesses(
     return [];
   });
 }
-function validate(out: string, allowedElectronRoot?: number): void {
-  const busy = busyProcesses(z.array(processSchema).parse(JSON.parse(out)), allowedElectronRoot);
+function parseSnapshot(out: string): HostProcess[] {
+  return z.array(processSchema).parse(JSON.parse(out));
+}
+function uninspectable(processes: HostProcess[], root?: number): boolean {
+  return busyProcesses(processes, root).some((p) => p.reason === 'cannot-inspect-worker');
+}
+function validateProcesses(processes: HostProcess[], root?: number): void {
+  const busy = busyProcesses(processes, root);
   // Never print other processes' command lines: they may contain private arguments.
   if (busy.length) throw new Error(`Quiet window unavailable: ${JSON.stringify(busy)}`);
 }
+/** CIM can retain an exited process with a null command line. Confirm with a fresh full
+ * snapshot once; a still-live unknown worker or any new heavy process continues to block. */
+export function inspectQuietSnapshot(read: () => HostProcess[], root?: number): void {
+  let processes = read();
+  if (uninspectable(processes, root)) processes = read();
+  validateProcesses(processes, root);
+}
+export async function inspectQuietSnapshotAsync(read: () => Promise<HostProcess[]>): Promise<void> {
+  let processes = await read();
+  if (uninspectable(processes)) processes = await read();
+  validateProcesses(processes);
+}
 export function assertQuiet(allowedElectronRoot?: number): void {
   if (process.platform !== 'win32') throw new Error('P4-01 measurement requires the Windows host');
-  validate(
-    execFileSync('pwsh', args, { encoding: 'utf8', windowsHide: true }),
+  inspectQuietSnapshot(
+    () =>
+      parseSnapshot(
+        execFileSync('pwsh', args, {
+          encoding: 'utf8',
+          windowsHide: true,
+        }),
+      ),
     allowedElectronRoot,
   );
 }
 export async function assertQuietAsync(): Promise<void> {
   if (process.platform !== 'win32') throw new Error('P4-01 measurement requires the Windows host');
-  const { stdout } = await execAsync('pwsh', args, {
-    encoding: 'utf8',
-    windowsHide: true,
-    timeout: 5000,
+  await inspectQuietSnapshotAsync(async () => {
+    const { stdout } = await execAsync('pwsh', args, {
+      encoding: 'utf8',
+      windowsHide: true,
+      timeout: 5000,
+    });
+    return parseSnapshot(stdout);
   });
-  validate(stdout);
 }
