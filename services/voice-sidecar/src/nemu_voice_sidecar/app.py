@@ -5,6 +5,8 @@ import asyncio
 from contextlib import suppress
 import json
 import os
+import time
+import uuid
 from pathlib import Path
 from threading import Event
 from typing import cast
@@ -57,6 +59,8 @@ def create_app(engine: Engine | None = None, bank: VoiceBank | None = None) -> F
             return
         await ws.accept()
         cancelled = Event()
+        wire_start = time.perf_counter()
+        wire: list[dict[str, float | int]] = []
         worker: asyncio.Task[None] | None = None
         receive: asyncio.Task[str] | None = None
         chunk: asyncio.Task[bytes | Exception | None] | None = None
@@ -88,6 +92,8 @@ def create_app(engine: Engine | None = None, bank: VoiceBank | None = None) -> F
                 if isinstance(item, Exception):
                     raise item
                 await asyncio.wait_for(ws.send_bytes(item), timeout=2)
+                if os.getenv("NEMU_TTS_TRACE_DIR"):
+                    wire.append({"wall_ms": (time.perf_counter()-wire_start)*1000, "bytes": len(item)})
                 chunk = asyncio.create_task(queue.get())
         except WebSocketDisconnect:
             pass
@@ -99,6 +105,12 @@ def create_app(engine: Engine | None = None, bank: VoiceBank | None = None) -> F
             with suppress(RuntimeError, WebSocketDisconnect):
                 await ws.close(code=1011)
         finally:
+            if os.getenv("NEMU_TTS_TRACE_DIR"):
+                folder = Path(os.environ["NEMU_TTS_TRACE_DIR"]) / "wire"
+                folder.mkdir(parents=True, exist_ok=True)
+                (folder / (uuid.uuid4().hex+".json")).write_text(
+                    json.dumps({"emissions": wire, "clock": "perf_counter; after ws.send_bytes completes"})+"\n",
+                    encoding="utf-8")
             cancelled.set()
             for task in (receive, chunk):
                 if task is not None:

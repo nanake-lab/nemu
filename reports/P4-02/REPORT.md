@@ -113,3 +113,57 @@ Base 的 style 只索引参考，不接收文字指令。参考路径不得越�
 ## 本轮远端检查归档
 
 代码/报告提交 `4a4eb935b7e12e5bf27f982414c6e75baf83ce91` 的 [Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/39583470293) 已成功，包含 TS/构建、契约、transport、四个 Python 项目、Rust、.NET 和 IDL/三语言一致性检查，见 `CI-ubuntu-gpu-followup.json`。同提交 [Windows 作业](https://github.com/nanake-lab/nemu/actions/runs/39583470934) 因 PR 为草稿按规则跳过，见 `CI-windows-draft-gpu-followup.json`；本轮本机 e2e 已通过，不声称当前提交的 Windows CI 已运行。此后仅追加该检查归档与报告澄清，未改变受测实现。
+
+## 2026-10-21 用户批准的后续压力重测判据
+
+此规则仅用于后续重测，不追溯重判已归档的原始结果：torch allocated 首末不变，且第 20–30 分钟 RSS 对时间的普通最小二乘线性斜率 ≤12 MiB/小时。任一条件不满足，延长同一轮连续压力到总计 2 小时，报告第 110–120 分钟斜率、allocator 和趋势，由用户判断是否趋平；延长不自动等于通过。`pressure.py` 提供复算，正式 benchmark 固定执行，不增加延迟或实时率门槛。正式安静窗口需为可能的延长预留时间。
+
+## 本地首包/生成优化候选（2026-10-21 后续指令）
+
+代码与开发验证完成，正式验收尚未重跑。全部改动仅在 services/voice-sidecar/ 与 reports/P4-02/；PR #45 继续草稿及 needs-user。原始 20 句/30 分钟结果和失败全部保留。未测真实云端。
+
+### 方案与兼容性
+
+未新增运行时依赖。评估 [faster-qwen3-tts](https://github.com/andimarafioti/faster-qwen3-tts/tree/b35fdc7d71eb3e4d19e63f4b4a330a1aef31d682) 0.5.4（MIT，commit b35fdc7d71eb3e4d19e63f4b4a330a1aef31d682）后发现其要求 Transformers >=5.15.1 与 qwen-tts-hf，不能直接用于现有 qwen-tts 0.1.1/Transformers 4.57.3 锁。源码仅在忽略缓存中研究，没有安装、复制或提交其应用代码；许可及 pyproject 摘要见 faster-qwen-evaluation.json。Context7 配额不足，按 [PyTorch 2.10 CUDA graph/stream 文档](https://docs.pytorch.org/docs/2.10/notes/cuda.html) 和实际安装源码核对。
+
+自有 cuda_graph.py 保留上游采样、精度、词表头、条件输入和 512 帧生成上限，版本门禁固定 torch 2.10.0+cu128 / transformers 4.57.3 / qwen-tts 0.1.1。predictor 15 个单步 graph 使用固定 KV 存储；talker 以精确注意力长度/连续布局捕获单步。资源预算：256-token 静态 KV 缓冲、每请求前 16 个 talker decode 帧、最多 48 个位置图；超范围/预算走上游 eager，范围末端按原值复制 KV 后继续生成，不截断音频，不更换模型。所有图共用捕获 stream/内存池，跨图可见输出保持引用，重放串行；tokenizer 使用独立池/持久 stream。
+
+固定填充 softmax 的第一版出现 codec 差异，已拒绝；仅 predictor 加速的隔离试验一致，talker 隔离试验不一致，随后修正实际 KV 长度与连续布局。早期逐图 stream/大缓冲版本还出现 0.6B 8.550 GB、1.7B 10.333 GB 和满卡停滞，均保留原始证据，没有冒充优化成功。最终缩小缓冲、共用捕获资源；独立解码复用同一 CUDA stream，避免每请求累积 stream workspace。
+
+默认继续原 eager/4 帧路径。候选正式重测时显式启用 NEMU_TTS_CUDA_GRAPH=1、NEMU_TTS_ASYNC_DECODE=1、NEMU_TTS_FIRST_FRAMES=2；完整命令见服务 README。
+
+### 分段计时与解码
+
+timing.py/profiling.py 记录 prefill、上游 prefill 与冷 graph_prepare、每帧 talker backbone、每个 predictor 步骤、每次 tokenizer 解码的 host/CUDA 时间；事件只在请求结束收集，不逐步 synchronize。frame 完成时间及引擎投递首末块另有记录。app.py 的 wire/ 证据记录 ws.send_bytes 完成时刻；正式 benchmark 另记客户端首末包。
+
+实时率 = 音频时长 / 首块至末块间隔，只作报告指标。不能把引擎投递时刻等同客户端收到时刻，也不能把含冷捕获的首次请求称为预热结果。上游结束时的整句解码仍执行，tokenizer_decode 的最后一项可看到该成本；未以删除其计算来隐藏耗时/显存。
+
+解码改为有界队列、独立线程与持久 CUDA stream；producer event 保证 codec 就绪。首块 2 帧，其余 4 帧，左上下文仍 25 帧。取消后不再投递，生成与解码线程都退出才释放 lane。
+
+### 最终开发短测（不是正式 p50/压力验收）
+
+载体与同一真实 GPU 渲染夹具驻留；两个变体各新进程串行。每模式三条固定贪心输入，双方相同 64-token 限制，仅用于开发一致性；正式 benchmark 强制 generation_limit==512。基线为 optimization-0.6B-v3/、optimization-1.7B-v1/ 的原始 eager4/eager2，不改原始数据。最终结果为 optimization-0.6B-v9/、optimization-1.7B-v4/。
+
+| 指标 | 0.6B | 1.7B |
+| --- | --- | --- |
+| 热图/异步首块，中/英/日 ms | 见 optimization-summary.json | 见 optimization-summary.json |
+| 首块到末块实时率 | 见 optimization-summary.json | 见 optimization-summary.json |
+| 同条件完整 codec 序列 | 三语全部逐元素相同 | 三语全部逐元素相同 |
+| 同 2 帧分块的上游 vs 候选 PCM | 三语逐样本相同，最大绝对差 0 | 三语逐样本相同，最大绝对差 0 |
+| 候选同步 vs 异步 PCM | 三语逐样本相同，最大绝对差 0 | 三语逐样本相同，最大绝对差 0 |
+| 专用峰值 + 共享峰值 | 7,539,003,392 + 277,065,728 = 7,816,069,120 B（7.816 GB） | 9,382,764,544 + 270,987,264 = 9,653,751,808 B（9.654 GB，超线） |
+| 三条异步样本的 torch allocated | 相同，5,121,306,624 B | 相同，7,151,142,912 B |
+
+不能用三条开发样本冒充各语言 20 句 p50，也不能用这次 allocated 稳定签发 30 分钟压力通过。1.7B 仍有真实显存阻塞。两个最终短测的原始 WDDM/torch 数据、timing JSON、音频和 codec 哈希均归档。
+
+另外用最终资源配置做了同一 512-token 上限的完整对照：optimization-full-0.6B-v2/，511 帧 codec 与上游逐元素相同，SHA-256 同为 db8760c04daf7bd0a81ee5ad0d6dec8054c40667bcf977bbcb98e5571a1cc032。40.88 秒音频的首块到末块 37.248 秒，实时率 1.098；该请求含冷捕获，不用于预热首包判定。其 Nemu 合计峰值为 8,089,268,224 B（8.089 GB），仍超过 8 GB，不能隐藏这一长输出边界。正式重测前需保留此风险/阻塞；未放宽阈值。
+
+接缝：按真实 codec 片段边界计算跳变，见 optimization-summary.json。0.6B 日文 2 帧首块方案边界最大跳变 0.037994，原 4 帧为 0.011566；两者边界位置不同，不据此单独判定音质通过或失败。其余数值及原始 WAV 均保留。异步与同分块同步 PCM 完全相同，未引入额外波形差异；听感没有签发。optimization-audio-manifest.json 登记所有开发音频的来源、许可、cloneAllowed、参考 SHA 和产物 SHA；没有使用真实人物或 P4-01 音频。
+
+summarize_optimization.py 无 CUDA 复算分段计时/接缝/PCM 差异；optimization-evidence-sha256.json 为逐文件原始摘要。原始 CRLF 字节保留，WAV 用 LFS。
+
+### 检查与下一步
+
+ruff、mypy --strict（30 文件）通过，pytest 35 通过/1 个 opt-in GPU smoke 明确跳过；见 optimization-*-final-v2.log。初始格式/类型失败日志也保留。即将 merge main 的 ADR 0015 文档更新后重跑检查并追加结果。PR 不转可审查、不合并、不取下一张卡。
+
+正式窗口另约：载体/渲染照常驻留，两变体各语言 20 句、真实链路取消、ADR 0012 §2.2 显存和压力均按原阈值。通常约 90 分钟；如两轮压力均触发用户批准的 2 小时延长，需约 4–4.5 小时。压力判据仅用于新测量，不追溯原结果。

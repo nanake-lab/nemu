@@ -173,3 +173,18 @@ def test_runtime_oom_downgrades_without_replaying_partial_output(
         engine.stream(*args)
         assert packets == [b'small'] and calls == ['1.7B', '0.6B']
     assert engine.variant == '0.6B'
+
+
+@pytest.mark.parametrize("first", [1, 2])
+def test_small_first_decode_keeps_all_samples_and_25_left_context(
+    monkeypatch: pytest.MonkeyPatch, first: int,
+) -> None:
+    monkeypatch.setenv("NEMU_TTS_FIRST_FRAMES", str(first))
+    engine, model = engine_and_model()
+    packets: list[bytes] = []
+    engine.stream(Request('hello', 'en', 'neutral', 'test'),
+                  Reference(Path('synthetic.wav'), 'ref', 'a'*64), Event(), packets.append)
+    assert model.decode_lengths[0] == first
+    assert max(model.decode_lengths) <= 29
+    assert sum(map(len, packets)) == 45*1920*4
+    assert model.removed

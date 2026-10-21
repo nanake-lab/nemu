@@ -1,0 +1,168 @@
+{
+  "variant": "0.6B",
+  "status": "failed",
+  "error": "output with shape [1024] doesn't match the broadcast shape [1, 1, 1024]",
+  "render_exit": 0,
+  "memory_watch_exit": 0,
+  "memory": {
+    "status": "sampled-not-accepted",
+    "observations": 230,
+    "maximum_start_interval_s": 0.490076,
+    "maximum_acquisition_s": 0.273187,
+    "no_owned_gpu_counter_samples": 3,
+    "errors": [],
+    "sampled_peaks": {
+      "dedicated_bytes": 6375444480,
+      "shared_bytes": 280948736,
+      "total_committed_bytes": 6657097728
+    },
+    "processes": [
+      {
+        "ProcessId": 38292,
+        "ParentProcessId": 43632,
+        "Name": "python.exe",
+        "CreationDate": "/Date(1792591349894)/"
+      },
+      {
+        "ProcessId": 47172,
+        "ParentProcessId": 38292,
+        "Name": "powershell.exe",
+        "CreationDate": "/Date(1792591350613)/"
+      },
+      {
+        "ProcessId": 46172,
+        "ParentProcessId": 38292,
+        "Name": "node.exe",
+        "CreationDate": "/Date(1792591350625)/"
+      },
+      {
+        "ProcessId": 40188,
+        "ParentProcessId": 47172,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792591350628)/"
+      },
+      {
+        "ProcessId": 26392,
+        "ParentProcessId": 46172,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792591350633)/"
+      },
+      {
+        "ProcessId": 19840,
+        "ParentProcessId": 46172,
+        "Name": "node.exe",
+        "CreationDate": "/Date(1792591351356)/"
+      },
+      {
+        "ProcessId": 36088,
+        "ParentProcessId": 19840,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792591351361)/"
+      },
+      {
+        "ProcessId": 44892,
+        "ParentProcessId": 19840,
+        "Name": "esbuild.exe",
+        "CreationDate": "/Date(1792591351633)/"
+      },
+      {
+        "ProcessId": 45444,
+        "ParentProcessId": 46172,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792591351921)/"
+      },
+      {
+        "ProcessId": 40676,
+        "ParentProcessId": 45444,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792591351970)/"
+      },
+      {
+        "ProcessId": 2084,
+        "ParentProcessId": 45444,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792591351981)/"
+      },
+      {
+        "ProcessId": 41900,
+        "ParentProcessId": 45444,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792591351994)/"
+      },
+      {
+        "ProcessId": 38788,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591354551)/"
+      },
+      {
+        "ProcessId": 33632,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591384856)/"
+      },
+      {
+        "ProcessId": 36660,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591385333)/"
+      },
+      {
+        "ProcessId": 42080,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591398034)/"
+      },
+      {
+        "ProcessId": 23840,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591409138)/"
+      },
+      {
+        "ProcessId": 43020,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591414485)/"
+      },
+      {
+        "ProcessId": 47704,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591414952)/"
+      },
+      {
+        "ProcessId": 48112,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591425750)/"
+      },
+      {
+        "ProcessId": 43116,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591436479)/"
+      },
+      {
+        "ProcessId": 6136,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591442060)/"
+      },
+      {
+        "ProcessId": 40528,
+        "ParentProcessId": 38292,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591443155)/"
+      }
+    ],
+    "adapters": [
+      "luid_0x00000000_0x0000BE91_phys_0"
+    ],
+    "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+  },
+  "nemu_memory_upper_bound_bytes": 6656393216,
+  "adr0012_limit_bytes": 8000000000,
+  "memory_evidence_available": true,
+  "vram_within_limit": true
+}

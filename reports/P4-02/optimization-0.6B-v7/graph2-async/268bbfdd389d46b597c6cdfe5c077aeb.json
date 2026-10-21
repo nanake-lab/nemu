@@ -1,0 +1,4277 @@
+{
+  "lang": "ja",
+  "cancelled": false,
+  "failed": false,
+  "spans": [
+    {
+      "name": "upstream_prefill",
+      "index": 0,
+      "start_ms": 7.322400022530928,
+      "host_ms": 51.495199993951246,
+      "cuda_ms": 48.36044692993164
+    },
+    {
+      "name": "graph_prepare",
+      "index": 141,
+      "start_ms": 60.39779999991879,
+      "host_ms": 0.03680001827888191,
+      "cuda_ms": 0.0019839999731630087
+    },
+    {
+      "name": "prefill",
+      "index": 0,
+      "start_ms": 7.274200004758313,
+      "host_ms": 53.18200000328943,
+      "cuda_ms": 50.297855377197266
+    },
+    {
+      "name": "code_predictor",
+      "index": 0,
+      "start_ms": 66.36980001349002,
+      "host_ms": 0.17779998597688973,
+      "cuda_ms": 1.1018240451812744
+    },
+    {
+      "name": "code_predictor",
+      "index": 1,
+      "start_ms": 67.73010001052171,
+      "host_ms": 0.08339999476447701,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 2,
+      "start_ms": 68.91140001243912,
+      "host_ms": 0.08440000237897038,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 3,
+      "start_ms": 70.13020000886172,
+      "host_ms": 0.12929999502375722,
+      "cuda_ms": 1.06496000289917
+    },
+    {
+      "name": "code_predictor",
+      "index": 4,
+      "start_ms": 71.79390001692809,
+      "host_ms": 0.08800000068731606,
+      "cuda_ms": 1.2093440294265747
+    },
+    {
+      "name": "code_predictor",
+      "index": 5,
+      "start_ms": 73.53069999953732,
+      "host_ms": 0.08090000483207405,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 6,
+      "start_ms": 74.71080002142116,
+      "host_ms": 0.08069997420534492,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 7,
+      "start_ms": 75.90749999508262,
+      "host_ms": 0.0813000078778714,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 8,
+      "start_ms": 77.08460002322681,
+      "host_ms": 0.08139997953549027,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 9,
+      "start_ms": 78.29970002057962,
+      "host_ms": 0.13020000187680125,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 10,
+      "start_ms": 79.61810001870617,
+      "host_ms": 0.12569999671541154,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 11,
+      "start_ms": 80.93120000557974,
+      "host_ms": 0.1289999927394092,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 12,
+      "start_ms": 82.24129999871366,
+      "host_ms": 0.12840001727454364,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 13,
+      "start_ms": 83.54290001443587,
+      "host_ms": 0.12680000509135425,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 14,
+      "start_ms": 84.839400020428,
+      "host_ms": 0.0921999744605273,
+      "cuda_ms": 1.908735990524292
+    },
+    {
+      "name": "talker",
+      "index": 0,
+      "start_ms": 87.88989999447949,
+      "host_ms": 0.3032000095117837,
+      "cuda_ms": 5.179391860961914
+    },
+    {
+      "name": "code_predictor",
+      "index": 15,
+      "start_ms": 99.2231999989599,
+      "host_ms": 0.17660000594332814,
+      "cuda_ms": 1.1182080507278442
+    },
+    {
+      "name": "code_predictor",
+      "index": 16,
+      "start_ms": 100.60299999895506,
+      "host_ms": 0.08230001549236476,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 17,
+      "start_ms": 101.78470000391826,
+      "host_ms": 0.08170001092366874,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 18,
+      "start_ms": 102.96839999500662,
+      "host_ms": 0.0813000078778714,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 19,
+      "start_ms": 104.14800001308322,
+      "host_ms": 0.08019999950192869,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 20,
+      "start_ms": 105.34320000442676,
+      "host_ms": 0.08399999933317304,
+      "cuda_ms": 1.1991039514541626
+    },
+    {
+      "name": "code_predictor",
+      "index": 21,
+      "start_ms": 106.91040000529028,
+      "host_ms": 0.08170001092366874,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 22,
+      "start_ms": 108.11020000255667,
+      "host_ms": 0.08510000770911574,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 23,
+      "start_ms": 109.29590000887401,
+      "host_ms": 0.08060000254772604,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 24,
+      "start_ms": 110.48329999903217,
+      "host_ms": 0.08110000635497272,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 25,
+      "start_ms": 111.66710001998581,
+      "host_ms": 0.0788999896030873,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 26,
+      "start_ms": 112.86059999838471,
+      "host_ms": 0.08070000330917537,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 27,
+      "start_ms": 114.0445000200998,
+      "host_ms": 0.08159998105838895,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 28,
+      "start_ms": 115.22770000738092,
+      "host_ms": 0.079699995694682,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 29,
+      "start_ms": 116.41040001995862,
+      "host_ms": 0.08229998638853431,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "talker",
+      "index": 1,
+      "start_ms": 118.23789999471046,
+      "host_ms": 0.30520002474077046,
+      "cuda_ms": 6.170623779296875
+    },
+    {
+      "name": "code_predictor",
+      "index": 30,
+      "start_ms": 131.1610999982804,
+      "host_ms": 0.20780001068487763,
+      "cuda_ms": 1.120255947113037
+    },
+    {
+      "name": "code_predictor",
+      "index": 31,
+      "start_ms": 132.66550001571886,
+      "host_ms": 0.1297999988310039,
+      "cuda_ms": 1.0424319505691528
+    },
+    {
+      "name": "code_predictor",
+      "index": 32,
+      "start_ms": 133.99450000724755,
+      "host_ms": 0.0816000101622194,
+      "cuda_ms": 0.8591359853744507
+    },
+    {
+      "name": "code_predictor",
+      "index": 33,
+      "start_ms": 135.30090000131167,
+      "host_ms": 0.14069999451749027,
+      "cuda_ms": 4.080639839172363
+    },
+    {
+      "name": "code_predictor",
+      "index": 34,
+      "start_ms": 139.67930001672357,
+      "host_ms": 0.09859999408945441,
+      "cuda_ms": 0.8622080087661743
+    },
+    {
+      "name": "code_predictor",
+      "index": 35,
+      "start_ms": 141.00870001129806,
+      "host_ms": 0.11130000348202884,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 36,
+      "start_ms": 144.72410001326352,
+      "host_ms": 1.0855000000447035,
+      "cuda_ms": 0.8724799752235413
+    },
+    {
+      "name": "code_predictor",
+      "index": 37,
+      "start_ms": 147.03170000575483,
+      "host_ms": 0.09879999561235309,
+      "cuda_ms": 0.894976019859314
+    },
+    {
+      "name": "code_predictor",
+      "index": 38,
+      "start_ms": 148.23690001503564,
+      "host_ms": 0.12680000509135425,
+      "cuda_ms": 0.8755199909210205
+    },
+    {
+      "name": "code_predictor",
+      "index": 39,
+      "start_ms": 149.4195999985095,
+      "host_ms": 0.09860002319328487,
+      "cuda_ms": 0.8775680065155029
+    },
+    {
+      "name": "code_predictor",
+      "index": 40,
+      "start_ms": 150.59000000474043,
+      "host_ms": 0.12090001837350428,
+      "cuda_ms": 0.8744959831237793
+    },
+    {
+      "name": "code_predictor",
+      "index": 41,
+      "start_ms": 151.98419999796897,
+      "host_ms": 0.1846000086516142,
+      "cuda_ms": 0.869376003742218
+    },
+    {
+      "name": "code_predictor",
+      "index": 42,
+      "start_ms": 153.39429999585263,
+      "host_ms": 0.12770001194439828,
+      "cuda_ms": 0.8734719753265381
+    },
+    {
+      "name": "code_predictor",
+      "index": 43,
+      "start_ms": 154.73300000303425,
+      "host_ms": 0.10840001050382853,
+      "cuda_ms": 1.2892160415649414
+    },
+    {
+      "name": "code_predictor",
+      "index": 44,
+      "start_ms": 156.71860001748428,
+      "host_ms": 0.11369999265298247,
+      "cuda_ms": 0.8622080087661743
+    },
+    {
+      "name": "talker",
+      "index": 2,
+      "start_ms": 158.6418000224512,
+      "host_ms": 0.3426999901421368,
+      "cuda_ms": 5.095424175262451
+    },
+    {
+      "name": "code_predictor",
+      "index": 45,
+      "start_ms": 170.69729999639094,
+      "host_ms": 0.39370000013150275,
+      "cuda_ms": 1.3096959590911865
+    },
+    {
+      "name": "code_predictor",
+      "index": 46,
+      "start_ms": 172.31120000360534,
+      "host_ms": 0.09210000280290842,
+      "cuda_ms": 0.8785920143127441
+    },
+    {
+      "name": "code_predictor",
+      "index": 47,
+      "start_ms": 173.65830001654103,
+      "host_ms": 0.09610000415705144,
+      "cuda_ms": 0.8683519959449768
+    },
+    {
+      "name": "code_predictor",
+      "index": 48,
+      "start_ms": 174.76429999805987,
+      "host_ms": 0.09950000094249845,
+      "cuda_ms": 0.8775680065155029
+    },
+    {
+      "name": "code_predictor",
+      "index": 49,
+      "start_ms": 176.04099999880418,
+      "host_ms": 0.08680002065375447,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 50,
+      "start_ms": 177.24960000487044,
+      "host_ms": 0.08630001684650779,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 51,
+      "start_ms": 178.43290002201684,
+      "host_ms": 0.13069997658021748,
+      "cuda_ms": 0.9256960153579712
+    },
+    {
+      "name": "code_predictor",
+      "index": 52,
+      "start_ms": 179.67380001209676,
+      "host_ms": 0.079699995694682,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 53,
+      "start_ms": 180.91940000886098,
+      "host_ms": 0.12479998986236751,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 54,
+      "start_ms": 182.24220001138747,
+      "host_ms": 0.1345000055152923,
+      "cuda_ms": 0.899071991443634
+    },
+    {
+      "name": "code_predictor",
+      "index": 55,
+      "start_ms": 183.69890001486056,
+      "host_ms": 0.08789999992586672,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 56,
+      "start_ms": 184.90990001009777,
+      "host_ms": 0.08639998850412667,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 57,
+      "start_ms": 186.10990000888705,
+      "host_ms": 0.0850000069476664,
+      "cuda_ms": 0.8724480271339417
+    },
+    {
+      "name": "code_predictor",
+      "index": 58,
+      "start_ms": 187.43600000743754,
+      "host_ms": 0.12459998833946884,
+      "cuda_ms": 1.0168960094451904
+    },
+    {
+      "name": "code_predictor",
+      "index": 59,
+      "start_ms": 188.7373000208754,
+      "host_ms": 0.08469997555948794,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "talker",
+      "index": 3,
+      "start_ms": 190.58330002008006,
+      "host_ms": 0.3006999904755503,
+      "cuda_ms": 5.637119770050049
+    },
+    {
+      "name": "code_predictor",
+      "index": 60,
+      "start_ms": 203.08410000870936,
+      "host_ms": 0.20539999241009355,
+      "cuda_ms": 1.6455680131912231
+    },
+    {
+      "name": "code_predictor",
+      "index": 61,
+      "start_ms": 204.97960000648163,
+      "host_ms": 0.08349999552592635,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 62,
+      "start_ms": 206.22210000874475,
+      "host_ms": 0.08540000999346375,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 63,
+      "start_ms": 207.43239999865182,
+      "host_ms": 0.22080002236180007,
+      "cuda_ms": 0.9062399864196777
+    },
+    {
+      "name": "code_predictor",
+      "index": 64,
+      "start_ms": 208.71220002300106,
+      "host_ms": 0.08869997691363096,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 65,
+      "start_ms": 209.90850002272055,
+      "host_ms": 0.08279999019578099,
+      "cuda_ms": 1.1694079637527466
+    },
+    {
+      "name": "code_predictor",
+      "index": 66,
+      "start_ms": 211.51550000649877,
+      "host_ms": 0.17660000594332814,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "tokenizer_decode",
+      "index": 0,
+      "start_ms": 124.89690000074916,
+      "host_ms": 87.98530002241023,
+      "cuda_ms": 87.74649810791016
+    },
+    {
+      "name": "decode",
+      "index": 2,
+      "start_ms": 124.8007999965921,
+      "host_ms": 88.13490002648905,
+      "cuda_ms": 87.80499267578125
+    },
+    {
+      "name": "code_predictor",
+      "index": 67,
+      "start_ms": 213.18150000297464,
+      "host_ms": 0.08510000770911574,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 68,
+      "start_ms": 214.3690999946557,
+      "host_ms": 0.08120000711642206,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 69,
+      "start_ms": 215.56929999496788,
+      "host_ms": 0.08120000711642206,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 70,
+      "start_ms": 216.85530000831932,
+      "host_ms": 0.08279999019578099,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 71,
+      "start_ms": 218.063100008294,
+      "host_ms": 0.08269998943433166,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 72,
+      "start_ms": 219.25620001275092,
+      "host_ms": 0.08140000863932073,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 73,
+      "start_ms": 220.43680000933819,
+      "host_ms": 0.08979998528957367,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 74,
+      "start_ms": 221.64250002242625,
+      "host_ms": 0.08129997877404094,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "talker",
+      "index": 4,
+      "start_ms": 223.45059999497607,
+      "host_ms": 0.32479999936185777,
+      "cuda_ms": 5.567488193511963
+    },
+    {
+      "name": "code_predictor",
+      "index": 75,
+      "start_ms": 234.9658000166528,
+      "host_ms": 0.17749998369254172,
+      "cuda_ms": 1.9957760572433472
+    },
+    {
+      "name": "code_predictor",
+      "index": 76,
+      "start_ms": 237.2400000167545,
+      "host_ms": 0.09079999290406704,
+      "cuda_ms": 1.2001279592514038
+    },
+    {
+      "name": "code_predictor",
+      "index": 77,
+      "start_ms": 238.78549999790266,
+      "host_ms": 0.0813000078778714,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 78,
+      "start_ms": 239.98490002122708,
+      "host_ms": 0.08529998012818396,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 79,
+      "start_ms": 241.16700000013225,
+      "host_ms": 0.08080000407062471,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 80,
+      "start_ms": 242.3508000210859,
+      "host_ms": 0.07929999264888465,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 81,
+      "start_ms": 243.54419999872334,
+      "host_ms": 0.08040000102482736,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 82,
+      "start_ms": 244.73460001172498,
+      "host_ms": 0.08949998300522566,
+      "cuda_ms": 0.8591359853744507
+    },
+    {
+      "name": "code_predictor",
+      "index": 83,
+      "start_ms": 245.9355000173673,
+      "host_ms": 0.08080000407062471,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 84,
+      "start_ms": 247.11940000997856,
+      "host_ms": 0.07929999264888465,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 85,
+      "start_ms": 248.30320000182837,
+      "host_ms": 0.08019999950192869,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 86,
+      "start_ms": 249.4901000172831,
+      "host_ms": 0.07999999797903001,
+      "cuda_ms": 0.8519359827041626
+    },
+    {
+      "name": "code_predictor",
+      "index": 87,
+      "start_ms": 250.67890001810156,
+      "host_ms": 0.07899999036453664,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 88,
+      "start_ms": 251.89270000555553,
+      "host_ms": 0.08550001075491309,
+      "cuda_ms": 0.857088029384613
+    },
+    {
+      "name": "code_predictor",
+      "index": 89,
+      "start_ms": 253.10170001466759,
+      "host_ms": 0.08179998258128762,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "talker",
+      "index": 5,
+      "start_ms": 254.9388000043109,
+      "host_ms": 0.30109999352134764,
+      "cuda_ms": 5.643263816833496
+    },
+    {
+      "name": "code_predictor",
+      "index": 90,
+      "start_ms": 268.0912000068929,
+      "host_ms": 0.2697999880183488,
+      "cuda_ms": 1.0444799661636353
+    },
+    {
+      "name": "code_predictor",
+      "index": 91,
+      "start_ms": 269.47900000959635,
+      "host_ms": 0.1221999991685152,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 92,
+      "start_ms": 270.73550000204705,
+      "host_ms": 0.08349999552592635,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 93,
+      "start_ms": 272.0108000212349,
+      "host_ms": 0.2759999770205468,
+      "cuda_ms": 2.209791898727417
+    },
+    {
+      "name": "code_predictor",
+      "index": 94,
+      "start_ms": 276.9527000200469,
+      "host_ms": 1.1028999870177358,
+      "cuda_ms": 0.8755199909210205
+    },
+    {
+      "name": "code_predictor",
+      "index": 95,
+      "start_ms": 279.5142999966629,
+      "host_ms": 0.1215000229422003,
+      "cuda_ms": 0.8796160221099854
+    },
+    {
+      "name": "code_predictor",
+      "index": 96,
+      "start_ms": 281.5433000214398,
+      "host_ms": 2.1065999753773212,
+      "cuda_ms": 0.8785920143127441
+    },
+    {
+      "name": "code_predictor",
+      "index": 97,
+      "start_ms": 286.26140000415035,
+      "host_ms": 0.17010001465678215,
+      "cuda_ms": 0.886784017086029
+    },
+    {
+      "name": "code_predictor",
+      "index": 98,
+      "start_ms": 287.67030002200045,
+      "host_ms": 0.1149999734479934,
+      "cuda_ms": 0.8755199909210205
+    },
+    {
+      "name": "code_predictor",
+      "index": 99,
+      "start_ms": 288.98330000811256,
+      "host_ms": 0.1078000059351325,
+      "cuda_ms": 1.2902400493621826
+    },
+    {
+      "name": "code_predictor",
+      "index": 100,
+      "start_ms": 290.853500016965,
+      "host_ms": 0.1112000027205795,
+      "cuda_ms": 0.8683519959449768
+    },
+    {
+      "name": "code_predictor",
+      "index": 101,
+      "start_ms": 292.28320001857355,
+      "host_ms": 0.1260999997612089,
+      "cuda_ms": 0.872704029083252
+    },
+    {
+      "name": "code_predictor",
+      "index": 102,
+      "start_ms": 293.659100017976,
+      "host_ms": 0.1050999853760004,
+      "cuda_ms": 0.8776320219039917
+    },
+    {
+      "name": "code_predictor",
+      "index": 103,
+      "start_ms": 294.9731000117026,
+      "host_ms": 0.1379000023007393,
+      "cuda_ms": 0.8796160221099854
+    },
+    {
+      "name": "code_predictor",
+      "index": 104,
+      "start_ms": 296.2804000126198,
+      "host_ms": 0.09899999713525176,
+      "cuda_ms": 0.8611840009689331
+    },
+    {
+      "name": "talker",
+      "index": 6,
+      "start_ms": 298.1444000033662,
+      "host_ms": 0.2995000104419887,
+      "cuda_ms": 5.360640048980713
+    },
+    {
+      "name": "code_predictor",
+      "index": 105,
+      "start_ms": 309.82829999993555,
+      "host_ms": 0.18060000729747117,
+      "cuda_ms": 1.0751999616622925
+    },
+    {
+      "name": "code_predictor",
+      "index": 106,
+      "start_ms": 311.1655999964569,
+      "host_ms": 0.10060000931844115,
+      "cuda_ms": 0.9164800047874451
+    },
+    {
+      "name": "code_predictor",
+      "index": 107,
+      "start_ms": 312.54770001396537,
+      "host_ms": 0.09329998283647001,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 108,
+      "start_ms": 313.77510001766495,
+      "host_ms": 0.09580000187270343,
+      "cuda_ms": 0.9410560131072998
+    },
+    {
+      "name": "code_predictor",
+      "index": 109,
+      "start_ms": 314.9868000182323,
+      "host_ms": 0.09970000246539712,
+      "cuda_ms": 0.9850879907608032
+    },
+    {
+      "name": "code_predictor",
+      "index": 110,
+      "start_ms": 316.3992000045255,
+      "host_ms": 0.08739999611862004,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 111,
+      "start_ms": 317.5913000013679,
+      "host_ms": 0.11630001245066524,
+      "cuda_ms": 0.8724480271339417
+    },
+    {
+      "name": "code_predictor",
+      "index": 112,
+      "start_ms": 318.87960000312887,
+      "host_ms": 0.09010001667775214,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 113,
+      "start_ms": 320.0862999947276,
+      "host_ms": 0.08760002674534917,
+      "cuda_ms": 0.8558080196380615
+    },
+    {
+      "name": "code_predictor",
+      "index": 114,
+      "start_ms": 321.3304000091739,
+      "host_ms": 0.10909998673014343,
+      "cuda_ms": 0.8785920143127441
+    },
+    {
+      "name": "code_predictor",
+      "index": 115,
+      "start_ms": 322.64779999968596,
+      "host_ms": 0.08880000677891076,
+      "cuda_ms": 0.8744959831237793
+    },
+    {
+      "name": "code_predictor",
+      "index": 116,
+      "start_ms": 323.9027000090573,
+      "host_ms": 0.13719999697059393,
+      "cuda_ms": 1.274880051612854
+    },
+    {
+      "name": "code_predictor",
+      "index": 117,
+      "start_ms": 325.7674000051338,
+      "host_ms": 0.10830000974237919,
+      "cuda_ms": 0.8785920143127441
+    },
+    {
+      "name": "code_predictor",
+      "index": 118,
+      "start_ms": 327.14979999582283,
+      "host_ms": 0.0889000075403601,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 119,
+      "start_ms": 328.3796000177972,
+      "host_ms": 0.10889998520724475,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "talker",
+      "index": 7,
+      "start_ms": 330.3602000232786,
+      "host_ms": 0.32389999250881374,
+      "cuda_ms": 5.3882880210876465
+    },
+    {
+      "name": "code_predictor",
+      "index": 120,
+      "start_ms": 342.09370001917705,
+      "host_ms": 0.18069997895509005,
+      "cuda_ms": 0.954367995262146
+    },
+    {
+      "name": "code_predictor",
+      "index": 121,
+      "start_ms": 343.374699994456,
+      "host_ms": 0.08850000449456275,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 122,
+      "start_ms": 344.5899000216741,
+      "host_ms": 0.12349997996352613,
+      "cuda_ms": 0.9277439713478088
+    },
+    {
+      "name": "code_predictor",
+      "index": 123,
+      "start_ms": 345.98020001430996,
+      "host_ms": 0.08329999400302768,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 124,
+      "start_ms": 347.1885000180919,
+      "host_ms": 0.16219998360611498,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "tokenizer_decode",
+      "index": 1,
+      "start_ms": 261.14010001765564,
+      "host_ms": 87.3210999998264,
+      "cuda_ms": 87.24214172363281
+    },
+    {
+      "name": "decode",
+      "index": 6,
+      "start_ms": 260.9548000036739,
+      "host_ms": 87.57979999063537,
+      "cuda_ms": 87.30681610107422
+    },
+    {
+      "name": "code_predictor",
+      "index": 125,
+      "start_ms": 348.81350002251565,
+      "host_ms": 0.08399999933317304,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 126,
+      "start_ms": 349.9984000227414,
+      "host_ms": 0.08019999950192869,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 127,
+      "start_ms": 351.18620001594536,
+      "host_ms": 0.09220000356435776,
+      "cuda_ms": 1.0557440519332886
+    },
+    {
+      "name": "code_predictor",
+      "index": 128,
+      "start_ms": 352.7800000156276,
+      "host_ms": 0.09439999121241271,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 129,
+      "start_ms": 354.05620001256466,
+      "host_ms": 0.08100000559352338,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 130,
+      "start_ms": 355.2733999968041,
+      "host_ms": 0.08210001396946609,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 131,
+      "start_ms": 356.4888999972027,
+      "host_ms": 0.08980001439340413,
+      "cuda_ms": 1.18886399269104
+    },
+    {
+      "name": "code_predictor",
+      "index": 132,
+      "start_ms": 358.1957000133116,
+      "host_ms": 0.08249998791143298,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 133,
+      "start_ms": 359.37010002089664,
+      "host_ms": 0.08129997877404094,
+      "cuda_ms": 0.8538560271263123
+    },
+    {
+      "name": "code_predictor",
+      "index": 134,
+      "start_ms": 360.5643000046257,
+      "host_ms": 0.08719999459572136,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "talker",
+      "index": 8,
+      "start_ms": 362.410000001546,
+      "host_ms": 0.37029999657534063,
+      "cuda_ms": 4.9838080406188965
+    },
+    {
+      "name": "code_predictor",
+      "index": 135,
+      "start_ms": 373.37050001951866,
+      "host_ms": 0.172999978531152,
+      "cuda_ms": 1.0956799983978271
+    },
+    {
+      "name": "code_predictor",
+      "index": 136,
+      "start_ms": 374.721000000136,
+      "host_ms": 0.08260001777671278,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 137,
+      "start_ms": 375.91360000078566,
+      "host_ms": 0.08210001396946609,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 138,
+      "start_ms": 377.1197000169195,
+      "host_ms": 0.0819999841041863,
+      "cuda_ms": 0.857088029384613
+    },
+    {
+      "name": "code_predictor",
+      "index": 139,
+      "start_ms": 378.2968000159599,
+      "host_ms": 0.08060000254772604,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 140,
+      "start_ms": 379.4676999968942,
+      "host_ms": 0.0816000101622194,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 141,
+      "start_ms": 380.6351000093855,
+      "host_ms": 0.0805000017862767,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 142,
+      "start_ms": 381.8036000011489,
+      "host_ms": 0.07890001870691776,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 143,
+      "start_ms": 382.9750000149943,
+      "host_ms": 0.08019999950192869,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 144,
+      "start_ms": 384.16940000024624,
+      "host_ms": 0.08200001320801675,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 145,
+      "start_ms": 385.35230001434684,
+      "host_ms": 0.08179998258128762,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 146,
+      "start_ms": 386.527800001204,
+      "host_ms": 0.0838999985717237,
+      "cuda_ms": 0.8499199748039246
+    },
+    {
+      "name": "code_predictor",
+      "index": 147,
+      "start_ms": 387.72250001784414,
+      "host_ms": 0.08349999552592635,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 148,
+      "start_ms": 388.92860000487417,
+      "host_ms": 0.08630001684650779,
+      "cuda_ms": 0.8499199748039246
+    },
+    {
+      "name": "code_predictor",
+      "index": 149,
+      "start_ms": 390.11170002049766,
+      "host_ms": 0.08259998867288232,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "talker",
+      "index": 9,
+      "start_ms": 392.0496000209823,
+      "host_ms": 0.30769998556934297,
+      "cuda_ms": 5.004288196563721
+    },
+    {
+      "name": "code_predictor",
+      "index": 150,
+      "start_ms": 404.3039999960456,
+      "host_ms": 0.4057000041939318,
+      "cuda_ms": 1.2225600481033325
+    },
+    {
+      "name": "code_predictor",
+      "index": 151,
+      "start_ms": 406.05600000708364,
+      "host_ms": 0.10189999011345208,
+      "cuda_ms": 0.8704000115394592
+    },
+    {
+      "name": "code_predictor",
+      "index": 152,
+      "start_ms": 407.2154000168666,
+      "host_ms": 0.11860000086016953,
+      "cuda_ms": 0.9943040013313293
+    },
+    {
+      "name": "code_predictor",
+      "index": 153,
+      "start_ms": 409.4918000046164,
+      "host_ms": 2.0314000139478594,
+      "cuda_ms": 0.8826879858970642
+    },
+    {
+      "name": "code_predictor",
+      "index": 154,
+      "start_ms": 414.57000002264977,
+      "host_ms": 2.0483999978750944,
+      "cuda_ms": 2.0439040660858154
+    },
+    {
+      "name": "code_predictor",
+      "index": 155,
+      "start_ms": 418.86520001571625,
+      "host_ms": 0.12290000449866056,
+      "cuda_ms": 0.8898559808731079
+    },
+    {
+      "name": "code_predictor",
+      "index": 156,
+      "start_ms": 420.09590001543984,
+      "host_ms": 0.15549999079667032,
+      "cuda_ms": 1.0844160318374634
+    },
+    {
+      "name": "code_predictor",
+      "index": 157,
+      "start_ms": 421.84250001446344,
+      "host_ms": 0.15029998030513525,
+      "cuda_ms": 0.9134079813957214
+    },
+    {
+      "name": "code_predictor",
+      "index": 158,
+      "start_ms": 423.2036000175867,
+      "host_ms": 0.13719999697059393,
+      "cuda_ms": 0.8755199909210205
+    },
+    {
+      "name": "code_predictor",
+      "index": 159,
+      "start_ms": 424.4522000080906,
+      "host_ms": 0.1010000123642385,
+      "cuda_ms": 0.8765439987182617
+    },
+    {
+      "name": "code_predictor",
+      "index": 160,
+      "start_ms": 425.8055000100285,
+      "host_ms": 0.13569998554885387,
+      "cuda_ms": 1.533951997756958
+    },
+    {
+      "name": "code_predictor",
+      "index": 161,
+      "start_ms": 427.6829000154976,
+      "host_ms": 0.12270000297576189,
+      "cuda_ms": 0.8806399703025818
+    },
+    {
+      "name": "code_predictor",
+      "index": 162,
+      "start_ms": 428.94060001708567,
+      "host_ms": 0.09129999671131372,
+      "cuda_ms": 1.230847954750061
+    },
+    {
+      "name": "code_predictor",
+      "index": 163,
+      "start_ms": 430.7263999944553,
+      "host_ms": 0.09560000034980476,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 164,
+      "start_ms": 431.9475000083912,
+      "host_ms": 0.08900000830180943,
+      "cuda_ms": 0.8734719753265381
+    },
+    {
+      "name": "talker",
+      "index": 10,
+      "start_ms": 433.9369000226725,
+      "host_ms": 0.2987999760080129,
+      "cuda_ms": 5.198847770690918
+    },
+    {
+      "name": "code_predictor",
+      "index": 165,
+      "start_ms": 446.0286000103224,
+      "host_ms": 0.18539998563937843,
+      "cuda_ms": 1.0659840106964111
+    },
+    {
+      "name": "code_predictor",
+      "index": 166,
+      "start_ms": 447.35950001631863,
+      "host_ms": 0.12419998529367149,
+      "cuda_ms": 0.881663978099823
+    },
+    {
+      "name": "code_predictor",
+      "index": 167,
+      "start_ms": 448.84900000761263,
+      "host_ms": 0.11920000542886555,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 168,
+      "start_ms": 450.1415000122506,
+      "host_ms": 0.10340000153519213,
+      "cuda_ms": 0.8919039964675903
+    },
+    {
+      "name": "code_predictor",
+      "index": 169,
+      "start_ms": 451.4548000006471,
+      "host_ms": 0.17179999849759042,
+      "cuda_ms": 0.9000959992408752
+    },
+    {
+      "name": "code_predictor",
+      "index": 170,
+      "start_ms": 452.91370002087206,
+      "host_ms": 0.09529999806545675,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 171,
+      "start_ms": 454.34690002002753,
+      "host_ms": 0.1340000017080456,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 172,
+      "start_ms": 455.7388999965042,
+      "host_ms": 0.10580001980997622,
+      "cuda_ms": 0.8939520120620728
+    },
+    {
+      "name": "code_predictor",
+      "index": 173,
+      "start_ms": 457.215600006748,
+      "host_ms": 0.09580000187270343,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 174,
+      "start_ms": 458.44770001713187,
+      "host_ms": 0.0853999808896333,
+      "cuda_ms": 0.8548799753189087
+    },
+    {
+      "name": "code_predictor",
+      "index": 175,
+      "start_ms": 459.6705000149086,
+      "host_ms": 0.11860000086016953,
+      "cuda_ms": 0.9594879746437073
+    },
+    {
+      "name": "code_predictor",
+      "index": 176,
+      "start_ms": 461.1793000076432,
+      "host_ms": 0.08789999992586672,
+      "cuda_ms": 0.8754240274429321
+    },
+    {
+      "name": "code_predictor",
+      "index": 177,
+      "start_ms": 462.460300012026,
+      "host_ms": 0.09799998952075839,
+      "cuda_ms": 0.9748479723930359
+    },
+    {
+      "name": "code_predictor",
+      "index": 178,
+      "start_ms": 463.69840000988916,
+      "host_ms": 0.08329999400302768,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 179,
+      "start_ms": 464.8919000173919,
+      "host_ms": 0.08149998029693961,
+      "cuda_ms": 0.8796160221099854
+    },
+    {
+      "name": "talker",
+      "index": 11,
+      "start_ms": 466.80340002058074,
+      "host_ms": 0.3479000006336719,
+      "cuda_ms": 5.4128642082214355
+    },
+    {
+      "name": "code_predictor",
+      "index": 180,
+      "start_ms": 479.11549999844283,
+      "host_ms": 0.35450002178549767,
+      "cuda_ms": 1.3199360370635986
+    },
+    {
+      "name": "code_predictor",
+      "index": 181,
+      "start_ms": 480.8289000065997,
+      "host_ms": 0.08440000237897038,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 182,
+      "start_ms": 482.08109999541193,
+      "host_ms": 0.08690002141520381,
+      "cuda_ms": 0.856768012046814
+    },
+    {
+      "name": "code_predictor",
+      "index": 183,
+      "start_ms": 483.3390999992844,
+      "host_ms": 0.1218999968841672,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "tokenizer_decode",
+      "index": 2,
+      "start_ms": 397.48410001629964,
+      "host_ms": 87.44329999899492,
+      "cuda_ms": 88.16604614257812
+    },
+    {
+      "name": "code_predictor",
+      "index": 184,
+      "start_ms": 484.71190000418574,
+      "host_ms": 0.2415000053588301,
+      "cuda_ms": 1.2789759635925293
+    },
+    {
+      "name": "decode",
+      "index": 10,
+      "start_ms": 397.39680002094246,
+      "host_ms": 87.61999997659586,
+      "cuda_ms": 88.223388671875
+    },
+    {
+      "name": "code_predictor",
+      "index": 185,
+      "start_ms": 486.25580000225455,
+      "host_ms": 0.09700001101009548,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 186,
+      "start_ms": 487.48360000899993,
+      "host_ms": 0.0881000014487654,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 187,
+      "start_ms": 488.87980001745746,
+      "host_ms": 0.08249998791143298,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 188,
+      "start_ms": 490.26610000873916,
+      "host_ms": 0.11449999874457717,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 189,
+      "start_ms": 491.55530001735315,
+      "host_ms": 0.08289999095723033,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 190,
+      "start_ms": 492.7715999947395,
+      "host_ms": 0.08090000483207405,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 191,
+      "start_ms": 493.96630001137964,
+      "host_ms": 0.08009999874047935,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 192,
+      "start_ms": 495.16200000653043,
+      "host_ms": 0.08140000863932073,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 193,
+      "start_ms": 496.37280000024475,
+      "host_ms": 0.0889000075403601,
+      "cuda_ms": 1.0158079862594604
+    },
+    {
+      "name": "code_predictor",
+      "index": 194,
+      "start_ms": 497.87089999881573,
+      "host_ms": 0.12740000966005027,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "talker",
+      "index": 12,
+      "start_ms": 499.7864000033587,
+      "host_ms": 0.29910000739619136,
+      "cuda_ms": 5.337088108062744
+    },
+    {
+      "name": "code_predictor",
+      "index": 195,
+      "start_ms": 511.04599999962375,
+      "host_ms": 0.1742000167723745,
+      "cuda_ms": 1.0893440246582031
+    },
+    {
+      "name": "code_predictor",
+      "index": 196,
+      "start_ms": 512.3890000104439,
+      "host_ms": 0.08259998867288232,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 197,
+      "start_ms": 513.5672000178602,
+      "host_ms": 0.08209998486563563,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 198,
+      "start_ms": 514.7419999993872,
+      "host_ms": 0.0813000078778714,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 199,
+      "start_ms": 515.951600013068,
+      "host_ms": 0.08510000770911574,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 200,
+      "start_ms": 517.152000014903,
+      "host_ms": 0.08080000407062471,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 201,
+      "start_ms": 518.3302000223193,
+      "host_ms": 0.0803999719209969,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 202,
+      "start_ms": 519.5135000103619,
+      "host_ms": 0.08100000559352338,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 203,
+      "start_ms": 520.6892999995034,
+      "host_ms": 0.08120000711642206,
+      "cuda_ms": 0.8499199748039246
+    },
+    {
+      "name": "code_predictor",
+      "index": 204,
+      "start_ms": 521.868000010727,
+      "host_ms": 0.08009999874047935,
+      "cuda_ms": 0.857088029384613
+    },
+    {
+      "name": "code_predictor",
+      "index": 205,
+      "start_ms": 523.0706000002101,
+      "host_ms": 0.08140000863932073,
+      "cuda_ms": 1.2031999826431274
+    },
+    {
+      "name": "code_predictor",
+      "index": 206,
+      "start_ms": 524.7644000046421,
+      "host_ms": 0.0805000017862767,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 207,
+      "start_ms": 525.9406999975909,
+      "host_ms": 0.08230001549236476,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 208,
+      "start_ms": 527.125900000101,
+      "host_ms": 0.08290002006106079,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 209,
+      "start_ms": 528.3034000021871,
+      "host_ms": 0.0824000162538141,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "talker",
+      "index": 13,
+      "start_ms": 530.1383000041824,
+      "host_ms": 0.2935999946203083,
+      "cuda_ms": 5.025792121887207
+    },
+    {
+      "name": "code_predictor",
+      "index": 210,
+      "start_ms": 541.931800020393,
+      "host_ms": 0.2235999854747206,
+      "cuda_ms": 1.154047966003418
+    },
+    {
+      "name": "code_predictor",
+      "index": 211,
+      "start_ms": 543.4223000193015,
+      "host_ms": 0.09929999941959977,
+      "cuda_ms": 0.8673279881477356
+    },
+    {
+      "name": "code_predictor",
+      "index": 212,
+      "start_ms": 544.5597000070848,
+      "host_ms": 0.08450000314041972,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 213,
+      "start_ms": 546.7977999942377,
+      "host_ms": 2.026400004979223,
+      "cuda_ms": 1.6660480499267578
+    },
+    {
+      "name": "code_predictor",
+      "index": 214,
+      "start_ms": 550.6588999996893,
+      "host_ms": 1.1611000227276236,
+      "cuda_ms": 4.118527889251709
+    },
+    {
+      "name": "code_predictor",
+      "index": 215,
+      "start_ms": 556.1380000144709,
+      "host_ms": 0.14200000441633165,
+      "cuda_ms": 0.881663978099823
+    },
+    {
+      "name": "code_predictor",
+      "index": 216,
+      "start_ms": 557.4933000025339,
+      "host_ms": 0.1419000036548823,
+      "cuda_ms": 1.6005120277404785
+    },
+    {
+      "name": "code_predictor",
+      "index": 217,
+      "start_ms": 559.4964000047185,
+      "host_ms": 0.0906999921426177,
+      "cuda_ms": 0.8755199909210205
+    },
+    {
+      "name": "code_predictor",
+      "index": 218,
+      "start_ms": 560.8609000046272,
+      "host_ms": 0.18580001778900623,
+      "cuda_ms": 0.8755199909210205
+    },
+    {
+      "name": "code_predictor",
+      "index": 219,
+      "start_ms": 562.0433000149205,
+      "host_ms": 0.15320000238716602,
+      "cuda_ms": 0.8765439987182617
+    },
+    {
+      "name": "code_predictor",
+      "index": 220,
+      "start_ms": 563.2423000060953,
+      "host_ms": 0.13870000839233398,
+      "cuda_ms": 0.8826879858970642
+    },
+    {
+      "name": "code_predictor",
+      "index": 221,
+      "start_ms": 564.5877000060864,
+      "host_ms": 0.13420000323094428,
+      "cuda_ms": 0.8714240193367004
+    },
+    {
+      "name": "code_predictor",
+      "index": 222,
+      "start_ms": 565.7783000206109,
+      "host_ms": 0.13869997928850353,
+      "cuda_ms": 1.0086400508880615
+    },
+    {
+      "name": "code_predictor",
+      "index": 223,
+      "start_ms": 567.0621000172105,
+      "host_ms": 0.09539999882690609,
+      "cuda_ms": 0.8652799725532532
+    },
+    {
+      "name": "code_predictor",
+      "index": 224,
+      "start_ms": 568.1678999972064,
+      "host_ms": 0.08650001836940646,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "talker",
+      "index": 14,
+      "start_ms": 570.2206999994814,
+      "host_ms": 0.3047000209335238,
+      "cuda_ms": 5.470208168029785
+    },
+    {
+      "name": "code_predictor",
+      "index": 225,
+      "start_ms": 582.5091000006068,
+      "host_ms": 0.31350000062957406,
+      "cuda_ms": 0.995136022567749
+    },
+    {
+      "name": "code_predictor",
+      "index": 226,
+      "start_ms": 583.9206000091508,
+      "host_ms": 0.08349999552592635,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 227,
+      "start_ms": 585.1260000199545,
+      "host_ms": 0.09319998207502067,
+      "cuda_ms": 0.8642560243606567
+    },
+    {
+      "name": "code_predictor",
+      "index": 228,
+      "start_ms": 586.3941000134218,
+      "host_ms": 0.15419998089782894,
+      "cuda_ms": 0.9082880020141602
+    },
+    {
+      "name": "code_predictor",
+      "index": 229,
+      "start_ms": 587.9236000182573,
+      "host_ms": 0.0940999889280647,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 230,
+      "start_ms": 589.1449000046123,
+      "host_ms": 0.08430000161752105,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 231,
+      "start_ms": 590.3929000196513,
+      "host_ms": 0.09669997962191701,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 232,
+      "start_ms": 591.6217000049073,
+      "host_ms": 0.08399999933317304,
+      "cuda_ms": 0.954367995262146
+    },
+    {
+      "name": "code_predictor",
+      "index": 233,
+      "start_ms": 592.9692000208888,
+      "host_ms": 0.09319998207502067,
+      "cuda_ms": 1.2451839447021484
+    },
+    {
+      "name": "code_predictor",
+      "index": 234,
+      "start_ms": 594.6897999965586,
+      "host_ms": 0.08870000601746142,
+      "cuda_ms": 0.8734719753265381
+    },
+    {
+      "name": "code_predictor",
+      "index": 235,
+      "start_ms": 595.9673000033945,
+      "host_ms": 0.08420000085607171,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 236,
+      "start_ms": 597.1777000231668,
+      "host_ms": 0.08629998774267733,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 237,
+      "start_ms": 598.3819999964908,
+      "host_ms": 0.08040000102482736,
+      "cuda_ms": 0.857088029384613
+    },
+    {
+      "name": "code_predictor",
+      "index": 238,
+      "start_ms": 599.6095000009518,
+      "host_ms": 0.08359999628737569,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 239,
+      "start_ms": 600.8200000214856,
+      "host_ms": 0.09389998740516603,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "talker",
+      "index": 15,
+      "start_ms": 602.8758000175003,
+      "host_ms": 0.31239999225363135,
+      "cuda_ms": 5.370880126953125
+    },
+    {
+      "name": "code_predictor",
+      "index": 240,
+      "start_ms": 614.7554000199307,
+      "host_ms": 0.18000000272877514,
+      "cuda_ms": 0.9502720236778259
+    },
+    {
+      "name": "code_predictor",
+      "index": 241,
+      "start_ms": 616.0236000141595,
+      "host_ms": 0.08709999383427203,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 242,
+      "start_ms": 617.2507000155747,
+      "host_ms": 0.1264000020455569,
+      "cuda_ms": 0.899071991443634
+    },
+    {
+      "name": "code_predictor",
+      "index": 243,
+      "start_ms": 618.7247000052594,
+      "host_ms": 0.08359999628737569,
+      "cuda_ms": 0.8857600092887878
+    },
+    {
+      "name": "code_predictor",
+      "index": 244,
+      "start_ms": 619.9831000121776,
+      "host_ms": 0.10370000381954014,
+      "cuda_ms": 1.277951955795288
+    },
+    {
+      "name": "code_predictor",
+      "index": 245,
+      "start_ms": 621.9774000055622,
+      "host_ms": 0.08800000068731606,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 246,
+      "start_ms": 623.3376000018325,
+      "host_ms": 0.14570000348612666,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "tokenizer_decode",
+      "index": 3,
+      "start_ms": 535.712600016268,
+      "host_ms": 89.0021999948658,
+      "cuda_ms": 88.88175964355469
+    },
+    {
+      "name": "decode",
+      "index": 14,
+      "start_ms": 535.5003000004217,
+      "host_ms": 89.27540000877343,
+      "cuda_ms": 88.93936157226562
+    },
+    {
+      "name": "code_predictor",
+      "index": 247,
+      "start_ms": 624.998700019205,
+      "host_ms": 0.08709999383427203,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 248,
+      "start_ms": 626.2009000056423,
+      "host_ms": 0.0813000078778714,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 249,
+      "start_ms": 627.4212000134867,
+      "host_ms": 0.08609998621977866,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 250,
+      "start_ms": 628.6910000198986,
+      "host_ms": 0.08189998334273696,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 251,
+      "start_ms": 629.8890000034589,
+      "host_ms": 0.08270001853816211,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 252,
+      "start_ms": 631.0704000061378,
+      "host_ms": 0.09089999366551638,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 253,
+      "start_ms": 632.2750000108499,
+      "host_ms": 0.08040000102482736,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 254,
+      "start_ms": 633.4691000229213,
+      "host_ms": 0.08449997403658926,
+      "cuda_ms": 1.0424319505691528
+    },
+    {
+      "name": "talker",
+      "index": 16,
+      "start_ms": 635.7208999979775,
+      "host_ms": 40.34580002189614,
+      "cuda_ms": 40.262752532958984
+    },
+    {
+      "name": "code_predictor",
+      "index": 255,
+      "start_ms": 678.9047000056598,
+      "host_ms": 0.18420000560581684,
+      "cuda_ms": 1.0301439762115479
+    },
+    {
+      "name": "code_predictor",
+      "index": 256,
+      "start_ms": 680.147200007923,
+      "host_ms": 0.08259998867288232,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 257,
+      "start_ms": 681.3312000012957,
+      "host_ms": 0.07979999645613134,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 258,
+      "start_ms": 682.5113000231795,
+      "host_ms": 0.08109997725114226,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 259,
+      "start_ms": 683.7170000071637,
+      "host_ms": 0.08090000483207405,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 260,
+      "start_ms": 684.9102000123821,
+      "host_ms": 0.08209998486563563,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 261,
+      "start_ms": 686.0862000030465,
+      "host_ms": 0.10190001921728253,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 262,
+      "start_ms": 687.3087999993004,
+      "host_ms": 0.07890001870691776,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 263,
+      "start_ms": 688.4987000084948,
+      "host_ms": 0.07929999264888465,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 264,
+      "start_ms": 689.6960000158288,
+      "host_ms": 0.08030000026337802,
+      "cuda_ms": 1.3783040046691895
+    },
+    {
+      "name": "code_predictor",
+      "index": 265,
+      "start_ms": 691.4066000026651,
+      "host_ms": 0.08009999874047935,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 266,
+      "start_ms": 692.5821000186261,
+      "host_ms": 0.0805000017862767,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 267,
+      "start_ms": 693.7543000094593,
+      "host_ms": 0.08399999933317304,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 268,
+      "start_ms": 694.9343000014778,
+      "host_ms": 0.08040000102482736,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 269,
+      "start_ms": 696.1091000121087,
+      "host_ms": 0.08060000254772604,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "talker",
+      "index": 17,
+      "start_ms": 697.9068000218831,
+      "host_ms": 40.10009998455644,
+      "cuda_ms": 37.63404846191406
+    },
+    {
+      "name": "code_predictor",
+      "index": 270,
+      "start_ms": 741.3357000041287,
+      "host_ms": 0.18000000272877514,
+      "cuda_ms": 1.031167984008789
+    },
+    {
+      "name": "code_predictor",
+      "index": 271,
+      "start_ms": 742.6231999997981,
+      "host_ms": 0.12510002125054598,
+      "cuda_ms": 0.8898559808731079
+    },
+    {
+      "name": "code_predictor",
+      "index": 272,
+      "start_ms": 743.9243000117131,
+      "host_ms": 0.12039998546242714,
+      "cuda_ms": 0.8898559808731079
+    },
+    {
+      "name": "code_predictor",
+      "index": 273,
+      "start_ms": 745.1155000017025,
+      "host_ms": 0.09879999561235309,
+      "cuda_ms": 0.8724480271339417
+    },
+    {
+      "name": "code_predictor",
+      "index": 274,
+      "start_ms": 746.2242000037804,
+      "host_ms": 0.0805000017862767,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 275,
+      "start_ms": 747.4065000133123,
+      "host_ms": 0.10099998326040804,
+      "cuda_ms": 0.8847360014915466
+    },
+    {
+      "name": "code_predictor",
+      "index": 276,
+      "start_ms": 748.7445000151638,
+      "host_ms": 0.10800000745803118,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 277,
+      "start_ms": 753.3218000025954,
+      "host_ms": 0.13359999866224825,
+      "cuda_ms": 0.8857600092887878
+    },
+    {
+      "name": "code_predictor",
+      "index": 278,
+      "start_ms": 754.6699999948032,
+      "host_ms": 0.11240001185797155,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 279,
+      "start_ms": 758.7003000080585,
+      "host_ms": 1.2549000093713403,
+      "cuda_ms": 0.881663978099823
+    },
+    {
+      "name": "code_predictor",
+      "index": 280,
+      "start_ms": 761.4515000022948,
+      "host_ms": 0.12959999730810523,
+      "cuda_ms": 0.869376003742218
+    },
+    {
+      "name": "code_predictor",
+      "index": 281,
+      "start_ms": 762.662499997532,
+      "host_ms": 0.09560000034980476,
+      "cuda_ms": 0.8775680065155029
+    },
+    {
+      "name": "code_predictor",
+      "index": 282,
+      "start_ms": 763.9540999953169,
+      "host_ms": 0.12989999959245324,
+      "cuda_ms": 0.8754240274429321
+    },
+    {
+      "name": "code_predictor",
+      "index": 283,
+      "start_ms": 765.191100013908,
+      "host_ms": 0.08379999781027436,
+      "cuda_ms": 0.8775680065155029
+    },
+    {
+      "name": "code_predictor",
+      "index": 284,
+      "start_ms": 766.5025000169408,
+      "host_ms": 0.19869999960064888,
+      "cuda_ms": 0.8735039830207825
+    },
+    {
+      "name": "talker",
+      "index": 18,
+      "start_ms": 768.8151000184007,
+      "host_ms": 47.91409999597818,
+      "cuda_ms": 47.422462463378906
+    },
+    {
+      "name": "code_predictor",
+      "index": 285,
+      "start_ms": 819.8080000001937,
+      "host_ms": 0.3346000157762319,
+      "cuda_ms": 1.2799999713897705
+    },
+    {
+      "name": "code_predictor",
+      "index": 286,
+      "start_ms": 822.1266000182368,
+      "host_ms": 0.10489998385310173,
+      "cuda_ms": 1.0219520330429077
+    },
+    {
+      "name": "code_predictor",
+      "index": 287,
+      "start_ms": 823.6662000126671,
+      "host_ms": 0.09670000872574747,
+      "cuda_ms": 0.8663039803504944
+    },
+    {
+      "name": "code_predictor",
+      "index": 288,
+      "start_ms": 825.0604000058956,
+      "host_ms": 0.08379999781027436,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 289,
+      "start_ms": 826.3463000184856,
+      "host_ms": 0.09459999273531139,
+      "cuda_ms": 0.8775680065155029
+    },
+    {
+      "name": "code_predictor",
+      "index": 290,
+      "start_ms": 827.8661000076681,
+      "host_ms": 0.08600001456215978,
+      "cuda_ms": 0.9154559969902039
+    },
+    {
+      "name": "code_predictor",
+      "index": 291,
+      "start_ms": 829.3133999977726,
+      "host_ms": 0.11059999815188348,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 292,
+      "start_ms": 830.6167999980971,
+      "host_ms": 0.08540000999346375,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 293,
+      "start_ms": 832.2216999949887,
+      "host_ms": 0.15540001913905144,
+      "cuda_ms": 0.883840024471283
+    },
+    {
+      "name": "code_predictor",
+      "index": 294,
+      "start_ms": 833.7669000029564,
+      "host_ms": 0.08460000390186906,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 295,
+      "start_ms": 835.0115000212099,
+      "host_ms": 0.10609999299049377,
+      "cuda_ms": 0.881663978099823
+    },
+    {
+      "name": "tokenizer_decode",
+      "index": 4,
+      "start_ms": 738.6529000068549,
+      "host_ms": 97.79319999506697,
+      "cuda_ms": 97.62470245361328
+    },
+    {
+      "name": "decode",
+      "index": 18,
+      "start_ms": 738.4799999999814,
+      "host_ms": 98.06099999696016,
+      "cuda_ms": 97.6888656616211
+    },
+    {
+      "name": "code_predictor",
+      "index": 296,
+      "start_ms": 836.7253000033088,
+      "host_ms": 0.09710001177154481,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 297,
+      "start_ms": 837.9593999998178,
+      "host_ms": 0.08420000085607171,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 298,
+      "start_ms": 839.1577000147663,
+      "host_ms": 0.09119999594986439,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 299,
+      "start_ms": 840.373000013642,
+      "host_ms": 0.08639998850412667,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "talker",
+      "index": 19,
+      "start_ms": 842.2449000063352,
+      "host_ms": 40.5054000148084,
+      "cuda_ms": 37.87776184082031
+    },
+    {
+      "name": "code_predictor",
+      "index": 300,
+      "start_ms": 885.5806000065058,
+      "host_ms": 0.17859999206848443,
+      "cuda_ms": 1.026047945022583
+    },
+    {
+      "name": "code_predictor",
+      "index": 301,
+      "start_ms": 886.8134000222199,
+      "host_ms": 0.08259998867288232,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 302,
+      "start_ms": 888.0061999952886,
+      "host_ms": 0.08600001456215978,
+      "cuda_ms": 0.8528000116348267
+    },
+    {
+      "name": "code_predictor",
+      "index": 303,
+      "start_ms": 889.2263000016101,
+      "host_ms": 0.08210001396946609,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 304,
+      "start_ms": 890.4090000141878,
+      "host_ms": 0.08040000102482736,
+      "cuda_ms": 0.857088029384613
+    },
+    {
+      "name": "code_predictor",
+      "index": 305,
+      "start_ms": 891.6033999994397,
+      "host_ms": 0.08349999552592635,
+      "cuda_ms": 0.857088029384613
+    },
+    {
+      "name": "code_predictor",
+      "index": 306,
+      "start_ms": 892.8744000149891,
+      "host_ms": 0.079699995694682,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 307,
+      "start_ms": 894.0533999993932,
+      "host_ms": 0.08090000483207405,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 308,
+      "start_ms": 895.2567999949679,
+      "host_ms": 0.0866000191308558,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 309,
+      "start_ms": 896.4485000178684,
+      "host_ms": 0.08460000390186906,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 310,
+      "start_ms": 897.6672000135295,
+      "host_ms": 0.08749999688006938,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 311,
+      "start_ms": 898.8693999999668,
+      "host_ms": 0.08120000711642206,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 312,
+      "start_ms": 900.0662000034936,
+      "host_ms": 0.08610001532360911,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 313,
+      "start_ms": 901.2584000010975,
+      "host_ms": 0.08090000483207405,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 314,
+      "start_ms": 902.4649000202771,
+      "host_ms": 0.08410000009462237,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "talker",
+      "index": 20,
+      "start_ms": 904.3335000169463,
+      "host_ms": 39.77989999111742,
+      "cuda_ms": 37.110782623291016
+    },
+    {
+      "name": "code_predictor",
+      "index": 315,
+      "start_ms": 946.9242000195663,
+      "host_ms": 0.17319998005405068,
+      "cuda_ms": 1.026047945022583
+    },
+    {
+      "name": "code_predictor",
+      "index": 316,
+      "start_ms": 948.1541000131983,
+      "host_ms": 0.08120000711642206,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 317,
+      "start_ms": 949.3312000122387,
+      "host_ms": 0.079699995694682,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 318,
+      "start_ms": 950.519300007727,
+      "host_ms": 0.08269998943433166,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 319,
+      "start_ms": 951.7040000064299,
+      "host_ms": 0.0824000162538141,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 320,
+      "start_ms": 952.9027999960817,
+      "host_ms": 0.08009999874047935,
+      "cuda_ms": 0.857088029384613
+    },
+    {
+      "name": "code_predictor",
+      "index": 321,
+      "start_ms": 954.1001000034157,
+      "host_ms": 0.10490001295693219,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 322,
+      "start_ms": 955.400600010762,
+      "host_ms": 0.08090000483207405,
+      "cuda_ms": 0.8549759984016418
+    },
+    {
+      "name": "code_predictor",
+      "index": 323,
+      "start_ms": 956.5784000151325,
+      "host_ms": 0.07949999417178333,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 324,
+      "start_ms": 957.7499000006355,
+      "host_ms": 0.07920002099126577,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 325,
+      "start_ms": 958.9221000205725,
+      "host_ms": 0.07939999341033399,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 326,
+      "start_ms": 960.1114999968559,
+      "host_ms": 0.08090000483207405,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 327,
+      "start_ms": 961.2915000179783,
+      "host_ms": 0.0805000017862767,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 328,
+      "start_ms": 962.4710000061896,
+      "host_ms": 0.08019999950192869,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 329,
+      "start_ms": 963.6560000071768,
+      "host_ms": 0.08679999154992402,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "talker",
+      "index": 21,
+      "start_ms": 965.4487000079826,
+      "host_ms": 40.26889998931438,
+      "cuda_ms": 37.605377197265625
+    },
+    {
+      "name": "code_predictor",
+      "index": 330,
+      "start_ms": 1008.8154000113718,
+      "host_ms": 0.34840000444091856,
+      "cuda_ms": 1.1980799436569214
+    },
+    {
+      "name": "code_predictor",
+      "index": 331,
+      "start_ms": 1010.3294000145979,
+      "host_ms": 0.12069998774677515,
+      "cuda_ms": 1.0178560018539429
+    },
+    {
+      "name": "code_predictor",
+      "index": 332,
+      "start_ms": 1011.6479000134859,
+      "host_ms": 0.09789998875930905,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 333,
+      "start_ms": 1012.8533999959473,
+      "host_ms": 0.1516000193078071,
+      "cuda_ms": 0.8806399703025818
+    },
+    {
+      "name": "code_predictor",
+      "index": 334,
+      "start_ms": 1014.8639999970328,
+      "host_ms": 2.2661000257357955,
+      "cuda_ms": 0.8847360014915466
+    },
+    {
+      "name": "code_predictor",
+      "index": 335,
+      "start_ms": 1019.9972999980673,
+      "host_ms": 2.9275999986566603,
+      "cuda_ms": 2.2210559844970703
+    },
+    {
+      "name": "code_predictor",
+      "index": 336,
+      "start_ms": 1024.5282000105362,
+      "host_ms": 0.1613000058569014,
+      "cuda_ms": 0.8775680065155029
+    },
+    {
+      "name": "code_predictor",
+      "index": 337,
+      "start_ms": 1025.683600018965,
+      "host_ms": 0.1109000004362315,
+      "cuda_ms": 0.8857600092887878
+    },
+    {
+      "name": "code_predictor",
+      "index": 338,
+      "start_ms": 1026.8646000185981,
+      "host_ms": 0.09319998207502067,
+      "cuda_ms": 0.8755199909210205
+    },
+    {
+      "name": "code_predictor",
+      "index": 339,
+      "start_ms": 1028.1533999950625,
+      "host_ms": 0.10050000855699182,
+      "cuda_ms": 0.8663039803504944
+    },
+    {
+      "name": "code_predictor",
+      "index": 340,
+      "start_ms": 1029.3084000004455,
+      "host_ms": 0.10750000365078449,
+      "cuda_ms": 0.8775680065155029
+    },
+    {
+      "name": "code_predictor",
+      "index": 341,
+      "start_ms": 1030.6175000150688,
+      "host_ms": 0.13800000306218863,
+      "cuda_ms": 0.881663978099823
+    },
+    {
+      "name": "code_predictor",
+      "index": 342,
+      "start_ms": 1031.8376000213902,
+      "host_ms": 0.10179998935200274,
+      "cuda_ms": 0.8714240193367004
+    },
+    {
+      "name": "code_predictor",
+      "index": 343,
+      "start_ms": 1033.2041000074241,
+      "host_ms": 0.16709999181330204,
+      "cuda_ms": 0.8744959831237793
+    },
+    {
+      "name": "code_predictor",
+      "index": 344,
+      "start_ms": 1034.3997000018135,
+      "host_ms": 0.12670000432990491,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "talker",
+      "index": 22,
+      "start_ms": 1036.5210000018124,
+      "host_ms": 44.87390001304448,
+      "cuda_ms": 43.010047912597656
+    },
+    {
+      "name": "code_predictor",
+      "index": 345,
+      "start_ms": 1084.5840999973007,
+      "host_ms": 0.18060000729747117,
+      "cuda_ms": 1.0096640586853027
+    },
+    {
+      "name": "code_predictor",
+      "index": 346,
+      "start_ms": 1086.0696000163443,
+      "host_ms": 0.10229999315924942,
+      "cuda_ms": 0.8704000115394592
+    },
+    {
+      "name": "code_predictor",
+      "index": 347,
+      "start_ms": 1087.547800008906,
+      "host_ms": 0.1210999907925725,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 348,
+      "start_ms": 1089.1245999955572,
+      "host_ms": 0.12340000830590725,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 349,
+      "start_ms": 1090.4137000034098,
+      "host_ms": 0.15070001245476305,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "tokenizer_decode",
+      "index": 5,
+      "start_ms": 1006.1876999970991,
+      "host_ms": 85.51190001890063,
+      "cuda_ms": 85.48585510253906
+    },
+    {
+      "name": "decode",
+      "index": 22,
+      "start_ms": 1006.0516000085045,
+      "host_ms": 85.72130001266487,
+      "cuda_ms": 85.53887939453125
+    },
+    {
+      "name": "code_predictor",
+      "index": 350,
+      "start_ms": 1092.0450999983586,
+      "host_ms": 0.0881000014487654,
+      "cuda_ms": 1.06496000289917
+    },
+    {
+      "name": "code_predictor",
+      "index": 351,
+      "start_ms": 1093.6269000230823,
+      "host_ms": 0.08669999078847468,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 352,
+      "start_ms": 1094.9131000088528,
+      "host_ms": 0.08180001168511808,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 353,
+      "start_ms": 1096.0912000155076,
+      "host_ms": 0.08120000711642206,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 354,
+      "start_ms": 1097.279300010996,
+      "host_ms": 0.079699995694682,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 355,
+      "start_ms": 1098.447500000475,
+      "host_ms": 0.08560001151636243,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 356,
+      "start_ms": 1099.653400015086,
+      "host_ms": 0.08599998545832932,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 357,
+      "start_ms": 1100.8483000041451,
+      "host_ms": 0.08090000483207405,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 358,
+      "start_ms": 1102.0475999976043,
+      "host_ms": 0.08280001929961145,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 359,
+      "start_ms": 1103.2436999958009,
+      "host_ms": 0.08230001549236476,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "talker",
+      "index": 23,
+      "start_ms": 1105.1125999947544,
+      "host_ms": 40.134500013664365,
+      "cuda_ms": 37.41900634765625
+    },
+    {
+      "name": "code_predictor",
+      "index": 360,
+      "start_ms": 1148.01860001171,
+      "host_ms": 0.17549999756738544,
+      "cuda_ms": 1.0270719528198242
+    },
+    {
+      "name": "code_predictor",
+      "index": 361,
+      "start_ms": 1149.2590999987442,
+      "host_ms": 0.08260001777671278,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 362,
+      "start_ms": 1150.4349000169896,
+      "host_ms": 0.08060000254772604,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 363,
+      "start_ms": 1151.6500000143424,
+      "host_ms": 0.10040000779554248,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 364,
+      "start_ms": 1152.887300006114,
+      "host_ms": 0.0816000101622194,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 365,
+      "start_ms": 1154.0786999976262,
+      "host_ms": 0.0813000078778714,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 366,
+      "start_ms": 1155.2928000164684,
+      "host_ms": 0.083099992480129,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 367,
+      "start_ms": 1156.5496000112034,
+      "host_ms": 0.08719999459572136,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 368,
+      "start_ms": 1157.743500021752,
+      "host_ms": 0.08019999950192869,
+      "cuda_ms": 0.8499199748039246
+    },
+    {
+      "name": "code_predictor",
+      "index": 369,
+      "start_ms": 1158.9076000091154,
+      "host_ms": 0.08009999874047935,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 370,
+      "start_ms": 1160.075699997833,
+      "host_ms": 0.08280001929961145,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 371,
+      "start_ms": 1161.2819000147283,
+      "host_ms": 0.08440000237897038,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 372,
+      "start_ms": 1162.5054000178352,
+      "host_ms": 0.08090000483207405,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 373,
+      "start_ms": 1163.7041000067256,
+      "host_ms": 0.07989999721758068,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 374,
+      "start_ms": 1164.8699000070337,
+      "host_ms": 0.08120000711642206,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "talker",
+      "index": 24,
+      "start_ms": 1166.6743000096176,
+      "host_ms": 39.88960001152009,
+      "cuda_ms": 37.217281341552734
+    },
+    {
+      "name": "code_predictor",
+      "index": 375,
+      "start_ms": 1209.371300006751,
+      "host_ms": 0.1778000150807202,
+      "cuda_ms": 1.026047945022583
+    },
+    {
+      "name": "code_predictor",
+      "index": 376,
+      "start_ms": 1210.6244000024162,
+      "host_ms": 0.0824000162538141,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 377,
+      "start_ms": 1211.810400011018,
+      "host_ms": 0.08070000330917537,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 378,
+      "start_ms": 1213.0078000191133,
+      "host_ms": 0.08679999154992402,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 379,
+      "start_ms": 1214.3115000217222,
+      "host_ms": 0.08089997572824359,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 380,
+      "start_ms": 1215.5067000130657,
+      "host_ms": 0.0805000017862767,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 381,
+      "start_ms": 1216.7560000088997,
+      "host_ms": 0.10880001354962587,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "code_predictor",
+      "index": 382,
+      "start_ms": 1217.9971000005025,
+      "host_ms": 0.08110000635497272,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 383,
+      "start_ms": 1219.2158999969251,
+      "host_ms": 0.12969999806955457,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 384,
+      "start_ms": 1220.4750000091735,
+      "host_ms": 0.08510000770911574,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 385,
+      "start_ms": 1221.658700000262,
+      "host_ms": 0.08120000711642206,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 386,
+      "start_ms": 1222.862399998121,
+      "host_ms": 0.0816000101622194,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 387,
+      "start_ms": 1224.0582999947947,
+      "host_ms": 0.08390002767555416,
+      "cuda_ms": 1.0496000051498413
+    },
+    {
+      "name": "code_predictor",
+      "index": 388,
+      "start_ms": 1225.6732000096235,
+      "host_ms": 0.1283999881707132,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 389,
+      "start_ms": 1226.9815000181552,
+      "host_ms": 0.12769998284056783,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "talker",
+      "index": 25,
+      "start_ms": 1228.9392999955453,
+      "host_ms": 40.34550001961179,
+      "cuda_ms": 37.59001541137695
+    },
+    {
+      "name": "code_predictor",
+      "index": 390,
+      "start_ms": 1272.877100011101,
+      "host_ms": 0.29749999521300197,
+      "cuda_ms": 1.0864640474319458
+    },
+    {
+      "name": "code_predictor",
+      "index": 391,
+      "start_ms": 1274.3304000177886,
+      "host_ms": 0.13010000111535192,
+      "cuda_ms": 0.8857600092887878
+    },
+    {
+      "name": "code_predictor",
+      "index": 392,
+      "start_ms": 1275.6791000138037,
+      "host_ms": 0.08510000770911574,
+      "cuda_ms": 0.881663978099823
+    },
+    {
+      "name": "code_predictor",
+      "index": 393,
+      "start_ms": 1276.9252000143752,
+      "host_ms": 0.08460000390186906,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 394,
+      "start_ms": 1278.1573999964166,
+      "host_ms": 0.1480000209994614,
+      "cuda_ms": 0.8765439987182617
+    },
+    {
+      "name": "code_predictor",
+      "index": 395,
+      "start_ms": 1280.6266999978106,
+      "host_ms": 2.193400025134906,
+      "cuda_ms": 0.8826879858970642
+    },
+    {
+      "name": "code_predictor",
+      "index": 396,
+      "start_ms": 1285.2957000141032,
+      "host_ms": 0.14509999891743064,
+      "cuda_ms": 0.8744959831237793
+    },
+    {
+      "name": "code_predictor",
+      "index": 397,
+      "start_ms": 1287.0202000194695,
+      "host_ms": 2.2899000032339245,
+      "cuda_ms": 0.8765439987182617
+    },
+    {
+      "name": "code_predictor",
+      "index": 398,
+      "start_ms": 1291.6110000223853,
+      "host_ms": 0.11599998106248677,
+      "cuda_ms": 0.869376003742218
+    },
+    {
+      "name": "code_predictor",
+      "index": 399,
+      "start_ms": 1292.9600000206847,
+      "host_ms": 0.08569998317398131,
+      "cuda_ms": 0.8753600120544434
+    },
+    {
+      "name": "code_predictor",
+      "index": 400,
+      "start_ms": 1294.2859000177123,
+      "host_ms": 0.14299998292699456,
+      "cuda_ms": 1.18886399269104
+    },
+    {
+      "name": "code_predictor",
+      "index": 401,
+      "start_ms": 1295.713200001046,
+      "host_ms": 0.1401000190526247,
+      "cuda_ms": 0.8908799886703491
+    },
+    {
+      "name": "code_predictor",
+      "index": 402,
+      "start_ms": 1296.9359999988228,
+      "host_ms": 0.1652000064495951,
+      "cuda_ms": 0.8755199909210205
+    },
+    {
+      "name": "code_predictor",
+      "index": 403,
+      "start_ms": 1298.3323000080418,
+      "host_ms": 0.12020001304335892,
+      "cuda_ms": 1.106943964958191
+    },
+    {
+      "name": "code_predictor",
+      "index": 404,
+      "start_ms": 1299.6904000174254,
+      "host_ms": 0.16090000281110406,
+      "cuda_ms": 1.260543942451477
+    },
+    {
+      "name": "talker",
+      "index": 26,
+      "start_ms": 1302.136000012979,
+      "host_ms": 45.5929999880027,
+      "cuda_ms": 43.52921676635742
+    },
+    {
+      "name": "code_predictor",
+      "index": 405,
+      "start_ms": 1350.8724000130314,
+      "host_ms": 0.16950001008808613,
+      "cuda_ms": 1.4735360145568848
+    },
+    {
+      "name": "code_predictor",
+      "index": 406,
+      "start_ms": 1352.7141000085976,
+      "host_ms": 0.10579999070614576,
+      "cuda_ms": 0.8559039831161499
+    },
+    {
+      "name": "code_predictor",
+      "index": 407,
+      "start_ms": 1354.3900000222493,
+      "host_ms": 0.09109999518841505,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 408,
+      "start_ms": 1356.1335999984294,
+      "host_ms": 0.08410000009462237,
+      "cuda_ms": 1.0680320262908936
+    },
+    {
+      "name": "tokenizer_decode",
+      "index": 6,
+      "start_ms": 1269.814100000076,
+      "host_ms": 88.08030001819134,
+      "cuda_ms": 87.76195526123047
+    },
+    {
+      "name": "decode",
+      "index": 26,
+      "start_ms": 1269.6673000173178,
+      "host_ms": 88.28929997980595,
+      "cuda_ms": 89.03449249267578
+    },
+    {
+      "name": "code_predictor",
+      "index": 409,
+      "start_ms": 1358.1261000072118,
+      "host_ms": 0.09580000187270343,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 410,
+      "start_ms": 1359.3385000131093,
+      "host_ms": 0.08040000102482736,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 411,
+      "start_ms": 1360.52909999853,
+      "host_ms": 0.08330002310685813,
+      "cuda_ms": 0.8539199829101562
+    },
+    {
+      "name": "code_predictor",
+      "index": 412,
+      "start_ms": 1361.722900008317,
+      "host_ms": 0.07949999417178333,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 413,
+      "start_ms": 1362.9059999948367,
+      "host_ms": 0.0805000017862767,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 414,
+      "start_ms": 1364.0985999954864,
+      "host_ms": 0.07950002327561378,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 415,
+      "start_ms": 1365.2856000117026,
+      "host_ms": 0.07999999797903001,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 416,
+      "start_ms": 1366.477900010068,
+      "host_ms": 0.08030000026337802,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 417,
+      "start_ms": 1367.6521000161301,
+      "host_ms": 0.08110000635497272,
+      "cuda_ms": 0.851967990398407
+    },
+    {
+      "name": "code_predictor",
+      "index": 418,
+      "start_ms": 1368.8331000157632,
+      "host_ms": 0.08219998562708497,
+      "cuda_ms": 1.0588159561157227
+    },
+    {
+      "name": "code_predictor",
+      "index": 419,
+      "start_ms": 1370.3851000173017,
+      "host_ms": 0.0805000017862767,
+      "cuda_ms": 0.8581119775772095
+    },
+    {
+      "name": "talker",
+      "index": 27,
+      "start_ms": 1372.21580001642,
+      "host_ms": 40.26159999193624,
+      "cuda_ms": 37.35859298706055
+    },
+    {
+      "name": "code_predictor",
+      "index": 420,
+      "start_ms": 1415.2963999949861,
+      "host_ms": 0.1784000196494162,
+      "cuda_ms": 1.022976040840149
+    },
+    {
+      "name": "code_predictor",
+      "index": 421,
+      "start_ms": 1416.5361000050325,
+      "host_ms": 0.08319999324157834,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 422,
+      "start_ms": 1417.71810001228,
+      "host_ms": 0.0813000078778714,
+      "cuda_ms": 0.8560640215873718
+    },
+    {
+      "name": "code_predictor",
+      "index": 423,
+      "start_ms": 1418.9048999978695,
+      "host_ms": 0.08399999933317304,
+      "cuda_ms": 0.8591359853744507
+    },
+    {
+      "name": "code_predictor",
+      "index": 424,
+      "start_ms": 1420.099000009941,
+      "host_ms": 0.08150000940077007,
+      "cuda_ms": 0.8509439826011658
+    },
+    {
+      "name": "code_predictor",
+      "index": 425,
+      "start_ms": 1421.3056000007782,
+      "host_ms": 0.08329999400302768,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 426,
+      "start_ms": 1422.576900018612,
+      "host_ms": 0.08070000330917537,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 427,
+      "start_ms": 1423.7585999944713,
+      "host_ms": 0.08140000863932073,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 428,
+      "start_ms": 1424.9456000106875,
+      "host_ms": 0.08800000068731606,
+      "cuda_ms": 0.857088029384613
+    },
+    {
+      "name": "code_predictor",
+      "index": 429,
+      "start_ms": 1426.175600005081,
+      "host_ms": 0.0900000159163028,
+      "cuda_ms": 1.0178560018539429
+    },
+    {
+      "name": "code_predictor",
+      "index": 430,
+      "start_ms": 1427.6424999989104,
+      "host_ms": 0.08590001380071044,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 431,
+      "start_ms": 1428.8386999978684,
+      "host_ms": 0.08200001320801675,
+      "cuda_ms": 0.8550400137901306
+    },
+    {
+      "name": "code_predictor",
+      "index": 432,
+      "start_ms": 1430.1059000135865,
+      "host_ms": 0.08259998867288232,
+      "cuda_ms": 0.8529919981956482
+    },
+    {
+      "name": "code_predictor",
+      "index": 433,
+      "start_ms": 1431.2941000098363,
+      "host_ms": 0.08040000102482736,
+      "cuda_ms": 0.8540160059928894
+    },
+    {
+      "name": "code_predictor",
+      "index": 434,
+      "start_ms": 1432.490900013363,
+      "host_ms": 0.089599983766675,
+      "cuda_ms": 0.857088029384613
+    },
+    {
+      "name": "talker",
+      "index": 28,
+      "start_ms": 1434.3712000118103,
+      "host_ms": 40.475099987816066,
+      "cuda_ms": 37.788673400878906
+    },
+    {
+      "name": "tokenizer_decode",
+      "index": 7,
+      "start_ms": 1477.6215000019874,
+      "host_ms": 70.0121000118088,
+      "cuda_ms": 69.98528289794922
+    },
+    {
+      "name": "generate_and_final_decode",
+      "index": 0,
+      "start_ms": 0.5360000068321824,
+      "host_ms": 1547.153099993011,
+      "cuda_ms": 1546.907958984375
+    },
+    {
+      "name": "decode",
+      "index": 29,
+      "start_ms": 1547.8318000095896,
+      "host_ms": 61.47369998507202,
+      "cuda_ms": 61.50851058959961
+    }
+  ],
+  "frames": [
+    {
+      "index": 1,
+      "wall_ms": 93.47540000453591
+    },
+    {
+      "index": 2,
+      "wall_ms": 124.6617000142578
+    },
+    {
+      "index": 3,
+      "wall_ms": 164.0196000225842
+    },
+    {
+      "index": 4,
+      "wall_ms": 196.5048999991268
+    },
+    {
+      "index": 5,
+      "wall_ms": 229.2541000060737
+    },
+    {
+      "index": 6,
+      "wall_ms": 260.819100018125
+    },
+    {
+      "index": 7,
+      "wall_ms": 303.7588000006508
+    },
+    {
+      "index": 8,
+      "wall_ms": 336.04819999891333
+    },
+    {
+      "index": 9,
+      "wall_ms": 367.6669000124093
+    },
+    {
+      "index": 10,
+      "wall_ms": 397.3026000021491
+    },
+    {
+      "index": 11,
+      "wall_ms": 439.4177000212949
+    },
+    {
+      "index": 12,
+      "wall_ms": 472.63720000046305
+    },
+    {
+      "index": 13,
+      "wall_ms": 505.352700012736
+    },
+    {
+      "index": 14,
+      "wall_ms": 535.3826000064146
+    },
+    {
+      "index": 15,
+      "wall_ms": 575.975500018103
+    },
+    {
+      "index": 16,
+      "wall_ms": 608.5163000097964
+    },
+    {
+      "index": 17,
+      "wall_ms": 676.2919000175316
+    },
+    {
+      "index": 18,
+      "wall_ms": 738.3302999951411
+    },
+    {
+      "index": 19,
+      "wall_ms": 817.0039000106044
+    },
+    {
+      "index": 20,
+      "wall_ms": 882.9946000187192
+    },
+    {
+      "index": 21,
+      "wall_ms": 944.3628000153694
+    },
+    {
+      "index": 22,
+      "wall_ms": 1005.9502000221983
+    },
+    {
+      "index": 23,
+      "wall_ms": 1081.841200008057
+    },
+    {
+      "index": 24,
+      "wall_ms": 1145.4617000126746
+    },
+    {
+      "index": 25,
+      "wall_ms": 1206.7767000116874
+    },
+    {
+      "index": 26,
+      "wall_ms": 1269.51640000334
+    },
+    {
+      "index": 27,
+      "wall_ms": 1347.9728999955114
+    },
+    {
+      "index": 28,
+      "wall_ms": 1412.7272000187077
+    },
+    {
+      "index": 29,
+      "wall_ms": 1475.0791999977082
+    }
+  ],
+  "emissions": [
+    {
+      "wall_ms": 212.94250001665205,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 212.94460000353865,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 212.94600001419894,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 212.9471000225749,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 348.543600004632,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 348.5462999960873,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 348.54740000446327,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 348.5487000143621,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 348.5500999959186,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 348.5514000058174,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 348.55270001571625,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 348.5536000225693,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 485.02490000100806,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 485.02710001775995,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 485.0284999993164,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 485.03140002139844,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 485.0340000120923,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 485.0352000212297,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 485.03680000430904,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 485.0381000142079,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 624.7829000058118,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 624.7853999957442,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 624.7867000056431,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 624.7879000147805,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 624.7893999970984,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 624.7908000077587,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 624.7923000191804,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 624.7931999969296,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 836.5501000080258,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 836.5536000055727,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 836.5553000185173,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 836.5565999993123,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 836.558100010734,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 836.5595000213943,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 836.5607000014279,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 836.5621000120882,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1091.7809999955352,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1091.7835000145715,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1091.784899996128,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1091.7862000060268,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1091.7879000189714,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1091.7894000012893,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1091.7904000089038,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1091.7914000165183,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1357.9635000205599,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1357.9656000074465,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1357.9669000173453,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1357.9707000171766,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1357.973000005586,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1357.9740000132006,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1357.975200022338,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1357.9762000008486,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1609.3150000087917,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1609.3172999972012,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1609.3185000063386,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1609.3201000185218,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1609.322100004647,
+      "bytes": 3840
+    },
+    {
+      "wall_ms": 1609.3233000137843,
+      "bytes": 3840
+    }
+  ],
+  "first_emit_ms": 212.94250001665205,
+  "last_emit_ms": 1609.3233000137843,
+  "audio_seconds": 2.32,
+  "first_to_last_seconds": 1.3963807999971323,
+  "audio_per_stream_second": 1.6614379114957498,
+  "metric_note": "audio duration / first-to-last engine emission; report only; WS arrival measured separately",
+  "codec_frames": [
+    [
+      1931,
+      117,
+      1130,
+      392,
+      442,
+      493,
+      1041,
+      1075,
+      564,
+      1179,
+      223,
+      175,
+      1713,
+      1759,
+      1008,
+      901
+    ],
+    [
+      791,
+      1402,
+      1143,
+      1209,
+      885,
+      575,
+      392,
+      1075,
+      480,
+      1314,
+      255,
+      1967,
+      1132,
+      1700,
+      1845,
+      1435
+    ],
+    [
+      660,
+      1516,
+      928,
+      527,
+      1854,
+      736,
+      55,
+      1641,
+      488,
+      1314,
+      743,
+      1603,
+      527,
+      109,
+      15,
+      2039
+    ],
+    [
+      1392,
+      1402,
+      1402,
+      1336,
+      285,
+      915,
+      761,
+      1544,
+      1058,
+      2007,
+      1567,
+      362,
+      706,
+      1956,
+      82,
+      369
+    ],
+    [
+      186,
+      1402,
+      1287,
+      512,
+      625,
+      121,
+      1794,
+      1902,
+      488,
+      1584,
+      1381,
+      146,
+      706,
+      1700,
+      1772,
+      457
+    ],
+    [
+      699,
+      1221,
+      1975,
+      2026,
+      1531,
+      1485,
+      243,
+      1059,
+      488,
+      266,
+      243,
+      362,
+      783,
+      1700,
+      1772,
+      803
+    ],
+    [
+      1554,
+      117,
+      1809,
+      279,
+      1210,
+      74,
+      34,
+      1059,
+      1149,
+      1179,
+      541,
+      823,
+      1108,
+      344,
+      812,
+      1978
+    ],
+    [
+      1524,
+      117,
+      1711,
+      1349,
+      350,
+      1543,
+      310,
+      1034,
+      564,
+      1673,
+      18,
+      949,
+      996,
+      344,
+      85,
+      1668
+    ],
+    [
+      1524,
+      117,
+      1711,
+      1349,
+      350,
+      1425,
+      1631,
+      428,
+      488,
+      1314,
+      18,
+      362,
+      783,
+      1700,
+      1772,
+      1978
+    ],
+    [
+      1524,
+      117,
+      1711,
+      1349,
+      350,
+      1543,
+      310,
+      428,
+      1857,
+      871,
+      18,
+      1047,
+      1555,
+      344,
+      812,
+      803
+    ],
+    [
+      1214,
+      689,
+      438,
+      1281,
+      1635,
+      2009,
+      17,
+      578,
+      612,
+      720,
+      930,
+      93,
+      169,
+      1669,
+      455,
+      497
+    ],
+    [
+      1900,
+      938,
+      409,
+      383,
+      393,
+      1142,
+      231,
+      52,
+      1073,
+      136,
+      801,
+      932,
+      362,
+      21,
+      37,
+      372
+    ],
+    [
+      677,
+      465,
+      1960,
+      1192,
+      460,
+      2026,
+      398,
+      775,
+      1148,
+      956,
+      541,
+      195,
+      492,
+      1240,
+      23,
+      1774
+    ],
+    [
+      677,
+      798,
+      1828,
+      768,
+      92,
+      740,
+      1912,
+      1682,
+      806,
+      553,
+      1365,
+      250,
+      764,
+      559,
+      883,
+      1153
+    ],
+    [
+      438,
+      145,
+      1666,
+      1398,
+      1474,
+      1721,
+      393,
+      134,
+      1939,
+      1949,
+      1203,
+      932,
+      633,
+      47,
+      1603,
+      639
+    ],
+    [
+      1634,
+      271,
+      391,
+      250,
+      267,
+      325,
+      687,
+      1491,
+      52,
+      1061,
+      1234,
+      1328,
+      1712,
+      853,
+      436,
+      1494
+    ],
+    [
+      679,
+      265,
+      1808,
+      46,
+      1418,
+      27,
+      215,
+      333,
+      1279,
+      1111,
+      1401,
+      254,
+      1664,
+      1068,
+      71,
+      1689
+    ],
+    [
+      1777,
+      1271,
+      1476,
+      1093,
+      73,
+      1966,
+      125,
+      470,
+      1154,
+      86,
+      944,
+      1456,
+      846,
+      820,
+      1779,
+      813
+    ],
+    [
+      1247,
+      1318,
+      119,
+      779,
+      508,
+      995,
+      1661,
+      161,
+      185,
+      250,
+      1127,
+      87,
+      1447,
+      341,
+      1487,
+      1553
+    ],
+    [
+      1406,
+      1243,
+      1875,
+      1020,
+      542,
+      1918,
+      1572,
+      975,
+      894,
+      1380,
+      391,
+      1200,
+      176,
+      1711,
+      540,
+      1060
+    ],
+    [
+      389,
+      1622,
+      290,
+      236,
+      21,
+      1286,
+      1786,
+      326,
+      1827,
+      1742,
+      135,
+      1220,
+      139,
+      1923,
+      954,
+      1640
+    ],
+    [
+      851,
+      180,
+      1040,
+      1685,
+      214,
+      963,
+      493,
+      473,
+      1569,
+      759,
+      523,
+      225,
+      854,
+      569,
+      989,
+      1977
+    ],
+    [
+      1246,
+      1982,
+      1402,
+      137,
+      1115,
+      907,
+      1361,
+      347,
+      174,
+      1024,
+      584,
+      840,
+      361,
+      626,
+      1468,
+      367
+    ],
+    [
+      843,
+      496,
+      1403,
+      818,
+      1341,
+      1104,
+      1625,
+      183,
+      889,
+      755,
+      665,
+      118,
+      104,
+      1248,
+      578,
+      724
+    ],
+    [
+      1819,
+      131,
+      313,
+      672,
+      169,
+      1966,
+      285,
+      212,
+      896,
+      1677,
+      1283,
+      1226,
+      551,
+      36,
+      181,
+      575
+    ],
+    [
+      424,
+      1368,
+      810,
+      555,
+      947,
+      845,
+      1698,
+      428,
+      1835,
+      84,
+      1384,
+      1446,
+      398,
+      2,
+      29,
+      1380
+    ],
+    [
+      892,
+      85,
+      604,
+      1349,
+      947,
+      326,
+      1041,
+      486,
+      1440,
+      844,
+      223,
+      1967,
+      996,
+      781,
+      586,
+      1668
+    ],
+    [
+      444,
+      117,
+      355,
+      279,
+      243,
+      1748,
+      34,
+      1034,
+      1452,
+      266,
+      645,
+      1331,
+      706,
+      1956,
+      85,
+      803
+    ],
+    [
+      109,
+      847,
+      999,
+      1641,
+      625,
+      785,
+      853,
+      1059,
+      742,
+      734,
+      223,
+      248,
+      1384,
+      653,
+      1095,
+      987
+    ]
+  ]
+}

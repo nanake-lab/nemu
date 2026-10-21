@@ -1,0 +1,114 @@
+{
+  "variant": "0.6B",
+  "status": "failed",
+  "error": "RENDER_NOT_READY",
+  "render_exit": 1,
+  "memory_watch_exit": 0,
+  "memory": {
+    "status": "sampled-not-accepted",
+    "observations": 10,
+    "maximum_start_interval_s": 1.2154,
+    "maximum_acquisition_s": 0.940102,
+    "no_owned_gpu_counter_samples": 4,
+    "errors": [],
+    "sampled_peaks": {
+      "dedicated_bytes": 284135424,
+      "shared_bytes": 203517952,
+      "total_committed_bytes": 490901504
+    },
+    "processes": [
+      {
+        "ProcessId": 41996,
+        "ParentProcessId": 31144,
+        "Name": "python.exe",
+        "CreationDate": "/Date(1792591029918)/"
+      },
+      {
+        "ProcessId": 30868,
+        "ParentProcessId": 41996,
+        "Name": "powershell.exe",
+        "CreationDate": "/Date(1792591030660)/"
+      },
+      {
+        "ProcessId": 39928,
+        "ParentProcessId": 41996,
+        "Name": "node.exe",
+        "CreationDate": "/Date(1792591030672)/"
+      },
+      {
+        "ProcessId": 38052,
+        "ParentProcessId": 30868,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792591030674)/"
+      },
+      {
+        "ProcessId": 9100,
+        "ParentProcessId": 39928,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792591030713)/"
+      },
+      {
+        "ProcessId": 22980,
+        "ParentProcessId": 39928,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792591031172)/"
+      },
+      {
+        "ProcessId": 37540,
+        "ParentProcessId": 22980,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792591031179)/"
+      },
+      {
+        "ProcessId": 37040,
+        "ParentProcessId": 39928,
+        "Name": "node.exe",
+        "CreationDate": "/Date(1792591031735)/"
+      },
+      {
+        "ProcessId": 12984,
+        "ParentProcessId": 37040,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792591031742)/"
+      },
+      {
+        "ProcessId": 31368,
+        "ParentProcessId": 37040,
+        "Name": "esbuild.exe",
+        "CreationDate": "/Date(1792591032122)/"
+      },
+      {
+        "ProcessId": 5492,
+        "ParentProcessId": 39928,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792591032558)/"
+      },
+      {
+        "ProcessId": 41548,
+        "ParentProcessId": 5492,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792591032677)/"
+      },
+      {
+        "ProcessId": 47280,
+        "ParentProcessId": 5492,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792591032695)/"
+      },
+      {
+        "ProcessId": 41892,
+        "ParentProcessId": 5492,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792591032707)/"
+      }
+    ],
+    "adapters": [
+      "luid_0x00000000_0x0000BE91_phys_0"
+    ],
+    "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+  },
+  "nemu_memory_upper_bound_bytes": 487653376,
+  "adr0012_limit_bytes": 8000000000,
+  "memory_evidence_available": true,
+  "vram_within_limit": true
+}

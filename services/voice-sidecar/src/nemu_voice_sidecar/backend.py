@@ -44,6 +44,7 @@ class Lane:
             self.failure = message if message in {
                 "MODEL_CACHE_NOT_CONFIGURED", "MODEL_FILES_MISSING", "MODEL_HASH_MISMATCH",
                 "CUDA_UNAVAILABLE", "QWEN_API_VERSION_MISMATCH", "INVALID_BASE_VARIANT",
+                "GRAPH_API_VERSION_MISMATCH", "SOX_ALREADY_IMPORTED_UNCONTROLLED",
             } else type(exc).__name__
             raise
         finally:

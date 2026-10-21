@@ -95,3 +95,24 @@ pnpm tts:bench --variant 1.7B --cache services/voice-sidecar/.cache/models --voi
 双变体串行测量已完成：首包均约 852–863 ms，未满足 250 ms；0.6B 合计显存 7.188 GB，1.7B 9.214 GB（超 8 GB）；取消停止出块通过。30 分钟均跑完，但 RSS 分箱中位数仍上升，不接受稳定性通过。原始数据与复算工具见 reports/P4-02/REPORT.md；已有结果目录不得覆盖。纯合成参考已归档 tests/fixtures/voice-design-v1，不是正式角色音色。
 
 锁定 qwen-tts 0.1.1 的未使用 25 Hz 路径会间接导入 pysox 并尝试 sox -h。qwen_import.py 在服务自有边界禁用该能力，真实 pysox 不导入，Transformer/Combiner 明确抛错；仅允许锁定的 12 Hz 模型。禁止绕开 load_qwen 直接导入 Qwen；不修改第三方源码或全局 subprocess。audit_qwen_import.py 在真实导入时审计并阻断任何 SoX 启动，当前尝试数为 0。soxr/随包 libsndfile 仅按用户许可动态加载，P7 复核分发义务。
+
+## 首包优化候选（正式重测前仍显式启用）
+
+原 eager/4 帧方案与数据保持不变。候选仅在服务自有实例上包裹 forward，不修改第三方源码；锁定 qwen-tts 0.1.1、transformers 4.57.3、torch 2.10.0+cu128，没有安装 faster-qwen3-tts。后者当前 0.5.4 改用了 Transformers 5.x/qwen-tts-hf，与现有锁不兼容，见报告源码版本记录。
+
+```powershell
+$env:NEMU_TTS_CUDA_GRAPH = '1'
+$env:NEMU_TTS_ASYNC_DECODE = '1'
+$env:NEMU_TTS_FIRST_FRAMES = '2'
+# 可选分段计时：不记录文本；每请求单独 JSON，GPU event 不逐步同步。
+$env:NEMU_TTS_TRACE_DIR = (Join-Path $PWD 'reports/P4-02/new-acceptance-traces')
+# 随后按上节原命令、独占窗口、载体/渲染驻留正式测两个变体。
+```
+
+捕获共用一条 stream 和一个 graph 内存池，避免逐图创建 cuBLAS workspace；所有重放串行，跨图可见的输出张量保持引用，临时池不与 tokenizer stream 共享。predictor 的 15 个单步 graph 保留上游 generate 的采样/词表头/条件。talker 使用 256-token 固定 KV 存储、与上游相同长度和连续布局的注意力视图（它限制优化覆盖，不限制可接受输入）：每条请求前 16 帧可加速，总共最多缓存 48 个位置图；超预算或长上下文使用上游 eager，生成到图范围末尾时无损复制 KV 后继续上游 eager。上限只限制优化资源，不截断音频、不改模型变体或 512 帧生成上限。未采用固定填充 softmax 的候选，因为它在真实三语 codec 比较中失败。
+
+tokenizer.decode 移到有界队列的独立线程/持久 CUDA stream，按 producer event 等待 codec 就绪；首块 2 帧，其余 4 帧，仍只保留 25 帧左上下文。取消期间停止投递，推理 lane 等生成与解码均退出后释放。上游末尾整句解码仍保留，单独记录耗时。
+
+Trace 记录 prefill、talker 每帧、predictor 每步、每次解码的 CUDA/host 时间、帧完成、引擎投递首末块和音频秒数；wire/ 子目录记录实际 ws.send_bytes 完成时刻，benchmark 另记客户端首末包。实时率为音频时长除以首块到末块间隔，仅为报告指标，不新增门槛。冷图准备单独计时，不能把冷请求结果称为热身后延迟。
+
+后续压力重测：torch allocated 首末相同，20–30 分钟 RSS OLS 斜率 ≤12 MiB/小时。失败自动延长该轮到总计 2 小时，报告 110–120 分钟斜率，交用户判断；不追溯旧结果。正式窗口请为两变体可能各 2 小时预留时间。短探针 optimization_probe.py 的相同 64-token 贪心限制仅用于开发 codec 对照，不能替代正式各语言 20 句或压力测试；正式 benchmark 强制 generation_limit==512。

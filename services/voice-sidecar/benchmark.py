@@ -1,7 +1,7 @@
 """Real GPU acceptance harness: serial variants, carrier+render resident, raw JSONL.
 
 Run each variant in a fresh process. No simulated fallback is accepted as a result
-for the requested variant. The 30-minute stress duration is fixed, not tunable.
+for the requested variant. Pressure is at least 30 minutes; the approved retest criterion extends failures to two hours.
 """
 from __future__ import annotations
 
@@ -17,7 +17,9 @@ import statistics
 import subprocess
 import time
 from typing import Any, cast
+from collections.abc import Callable, Coroutine
 
+from pressure import assess, slope_mib_hour
 from gpu_common import add_service_packages, load_carrier, quiet_gate
 
 BASE = {
@@ -46,6 +48,7 @@ def rss() -> int:
 
 
 async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> dict[str, object]:
+    assert engine.generation_limit == 512, "formal generation limit must remain unchanged"
     import httpx
     import uvicorn
     from websockets.asyncio.client import connect
@@ -70,6 +73,7 @@ async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> d
         started = time.perf_counter()
         first: float | None = None
         total = 0
+        last = 0.0
         cancel_at: float | None = None
         last_after_cancel = 0.0
         async with connect(f"ws://127.0.0.1:{args.port}/synthesize", max_queue=8,
@@ -82,6 +86,7 @@ async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> d
                 now = time.perf_counter()
                 if first is None:
                     first = (now - started) * 1000
+                last = now-started
                 total += len(block)
                 if cancel_test and cancel_at is None:
                     cancel_at = time.perf_counter()
@@ -99,8 +104,11 @@ async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> d
             raise RuntimeError("NO_AUDIO")
         row = {"phase": phase, "lang": lang, "index": index, "first_packet_ms": first,
                "elapsed_s": time.perf_counter() - started, "bytes": total,
+               "last_packet_ms": last*1000,
+               "audio_per_stream_second": (total/4/24000)/(last-first/1000) if last > first/1000 else None,
                "cancel_last_block_ms": last_after_cancel if cancel_at is not None else None,
-               "utc": datetime.now(timezone.utc).isoformat(), "rss_bytes": rss(), **engine.health()}
+               "utc": datetime.now(timezone.utc).isoformat(), "rss_bytes": rss(),
+               "timing": engine.last_timing, **engine.health()}
         raw.write(json.dumps(row) + "\n")
         raw.flush()
         print(f"{phase} {lang} {index}: {first:.2f} ms, {total} bytes", flush=True)
@@ -134,12 +142,28 @@ async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> d
                              "passed": max(cancellation) <= 50}
         stress_start = time.monotonic()
         index = 0
+        pressure: list[tuple[float, int, int]] = []
         while time.monotonic() - stress_start < 1800:
             lang = list(BASE)[index % 3]
-            await utterance(lang, BASE[lang][index % 20], "stress", index)
+            row = await utterance(lang, BASE[lang][index % 20], "stress", index)
+            pressure.append((time.monotonic()-stress_start, cast(int, row["rss_bytes"]),
+                             int(engine.health()["vram"]["allocatedBytes"])))
             index += 1
+        assessment = assess(pressure)
+        if assessment["extension_required"]:
+            while time.monotonic()-stress_start < 7200:
+                lang = list(BASE)[index % 3]
+                row = await utterance(lang, BASE[lang][index % 20], "stress", index)
+                pressure.append((time.monotonic()-stress_start, cast(int, row["rss_bytes"]),
+                                 int(engine.health()["vram"]["allocatedBytes"])))
+                index += 1
+            assessment["rss_110_120_min_slope_mib_hour"] = slope_mib_hour(pressure, 6600, 7200)
+            assessment["allocated_at_two_hours_bytes"] = pressure[-1][2]
+            assessment["rss_first_to_two_hours_delta_mib"] = (pressure[-1][1]-pressure[0][1])/2**20
+            assessment["extended_to_two_hours"] = True
+            assessment["decision"] = "requires user judgment; extension does not automatically pass"
         results["stress"] = {"seconds": time.monotonic() - stress_start, "iterations": index,
-                             "assessment": "inspect raw trend; no invented growth tolerance"}
+                             "assessment": assessment, "policy_samples": pressure}
         return results
     finally:
         raw.close()
@@ -147,7 +171,7 @@ async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> d
         await serving
 
 
-def main() -> None:
+def main(measurement: Callable[[argparse.Namespace, Any, Path], Coroutine[Any, Any, dict[str, object]]] = measure) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant", choices=["0.6B", "1.7B"], required=True)
     parser.add_argument("--probe", type=Path, required=True)
@@ -184,7 +208,7 @@ def main() -> None:
             carrier = load_carrier(args.probe)
             from nemu_voice_sidecar.qwen import QwenEngine
             engine = QwenEngine(measure_exact_variant=True)
-            result.update(asyncio.run(measure(args, engine, destination)))
+            result.update(asyncio.run(measurement(args, engine, destination)))
             result["status"] = "measured"
             result["carrier"] = {key: value for key, value in carrier.items()
                                  if key not in ("model", "cache")}

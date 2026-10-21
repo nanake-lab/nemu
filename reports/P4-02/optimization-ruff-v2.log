@@ -1,0 +1,12 @@
+E701 Multiple statements on one line (colon)
+  --> services\voice-sidecar\summarize_optimization.py:66:43
+   |
+64 |     for file in sorted(root.glob("optimization-*/**/*")):
+65 |         if file.is_file():
+66 |             with file.open("rb") as stream: digest=hashlib.file_digest(stream,"sha256").hexdigest()
+   |                                           ^
+67 |             inventory.append({"path":file.relative_to(root).as_posix(),"bytes":file.stat().st_size,"sha256":digest})
+68 |     (root/"optimization-evidence-sha256.json").write_text(json.dumps(inventory,indent=2)+"\n",encoding="utf-8")
+   |
+
+Found 1 error.
