@@ -100,6 +100,8 @@ Nemu 自定义表情（E），名称使用 camelCase，可以用形态键、材�
 
 `meta.name = "Nemu"`；`authors`、`licenseUrl` 必填（E）。`licenseUrl` 指向内容包的许可文件。
 
+> **2026-10-21 追加（ADR 0015）：** 按 VRM 1.0 规范，`licenseUrl` 固定为 VRM 公共许可地址 `https://vrm.dev/licenses/1.0/`。上一句所说的内容包许可文件写在 `otherLicenseUrl`，必填（E）。
+
 ### 1.6 `nemu.profile.json`
 
 与 `nemu.vrm` 放在同一目录，描述运行时需要、但 VRM 规范里没有的身体信息。
