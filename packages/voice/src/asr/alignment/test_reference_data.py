@@ -4,10 +4,29 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import wave
+from import_continuous import extract
 from reference_data import boundaries, freeze, inside, recordings
 
 
 class ReferenceTests(unittest.TestCase):
+    def test_pcm_extraction_preserves_samples_and_original(self) -> None:
+        with tempfile.TemporaryDirectory(prefix='nemu-pcm-slice-') as tmp:
+            source, target = Path(tmp)/'source.wav', Path(tmp)/'slice.wav'
+            pcm = bytes(range(24))
+            with wave.open(str(source), 'wb') as stream:
+                stream.setnchannels(1)
+                stream.setsampwidth(2)
+                stream.setframerate(16000)
+                stream.writeframes(pcm)
+            original = source.read_bytes()
+            extract(source, target, 4, 8)
+            with wave.open(str(target), 'rb') as stream:
+                self.assertEqual(stream.readframes(4), pcm[8:16])
+            self.assertEqual(source.read_bytes(), original)
+            with self.assertRaises(FileExistsError):
+                extract(source, target, 4, 8)
+
     def test_first_last_lexical_units_only(self) -> None:
         items: list[dict[str, object]] = [
             {'text': '。', 'start_time': 0, 'end_time': 0},

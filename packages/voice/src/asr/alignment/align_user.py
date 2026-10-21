@@ -50,7 +50,8 @@ class Torch(Protocol):
 
 def committed_method() -> dict[str, str]:
     files = [PLAN, METHOD_DOC, HERE / 'manifest.json', HERE / 'pyproject.toml',
-             HERE / 'uv.lock', Path(__file__), HERE / 'reference_data.py']
+             HERE / 'uv.lock', Path(__file__), HERE / 'reference_data.py',
+             HERE / 'import_continuous.py', REPO / 'reports/P4-01/CONTINUOUS-IMPORT-PREREGISTRATION.md']
     paths = [str(p.relative_to(REPO)) for p in files]
     subprocess.run(['git', 'ls-files', '--error-unmatch', *paths], cwd=REPO,
                    check=True, capture_output=True)
