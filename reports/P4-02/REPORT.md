@@ -177,3 +177,17 @@ ruff、mypy --strict（30 文件）通过，pytest 35 通过/1 个 opt-in GPU sm
 合并提交 d585926（origin/main 806e09b，ADR 0015 仅文档）后，pnpm lint/typecheck、454 项 TS 测试、共享 schema、ruff、mypy --strict 30 文件、pytest 35 通过/1 个 opt-in GPU smoke 明确跳过、sdist/wheel、Electron e2e 3 项均通过。原样 7 受守护进程/重启 0 次断言不变；optimization-post-main-*.log 和 optimization-post-main-e2e-captures/ 为证据。测试写到 P0-01 的文件已复制后按 HEAD 原字节恢复，没有更新视觉基准。
 
 GPU 与本机重负载检查均已结束，已通知可恢复 runner。没有运行新正式压力测试或真实云端请求；PR 不转可审查、不合并。下一轮窗口由用户另行通知。
+
+### 分段定位的配对结果
+
+optimization-stage-comparison.json 从相同贪心 codec 的逐步 CUDA event 区间复算。以英文 63 帧样本为例，上游 eager2 对比最终 graph2-async：0.6B predictor 的 15 步合计均值 96.270 →14.722 ms/帧，talker backbone 36.302 →34.571 ms/帧；1.7B predictor 97.910 →16.743 ms/帧，talker 37.730 →37.078 ms/帧。每条均有 945 个 predictor forward。prefill 约 39–46 ms，说明主要收益来自 predictor 调度区间，而不是减少权重大小。
+
+这些 CUDA event 区间包含 host 逐步供给导致的 GPU 空闲间隙，不等于纯 kernel 活跃时间，也不构成逐 kernel 的 Nsight 归因。talker 只加速有界前段，后段保持 eager，故整句平均降幅较小。异步 decode 与生成竞争同卡资源，0.6B 此样本每片段解码中位区间 37.520 →82.643 ms，不能把“移出生成线程”说成解码本身变快；实际首末块实时率仍提高。最后的上游整句解码成本单列保留。
+
+Trace 的引擎时钟从参考 prompt 准备完成后开始，开发表是热 prompt/热图的引擎投递边界；实际请求/WS 首包必须由另约的正式 benchmark 计量，不能直接以本表签发 ≤250 ms 验收。
+
+### 优化远端检查归档
+
+受测提交 1beae189796ba8439cf07af954c898179021fb27 的 [Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/39620971993) 已成功，完整状态见 CI-ubuntu-optimization.json，包含 TS/Python/Rust/.NET/契约检查。同提交 [Windows CI](https://github.com/nanake-lab/nemu/actions/runs/39620971933) 因草稿规则跳过，未冒充通过；本机合并后的原样 e2e 已通过。此后仅追加分段分析、检查归档和报告，未改变受测实现。
+
+优化执行后，Qwen/SoX/音频库的既有静态源码摘要仍与此前一致，见 optimization-third-party-source-audit.json；未修改第三方源码或打包/调用 SoX 程序。LGPL 的 P7 分发复核义务继续保留。

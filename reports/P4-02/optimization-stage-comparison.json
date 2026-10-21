@@ -1,0 +1,221 @@
+{
+  "note": "CUDA event elapsed intervals include host-fed GPU idle gaps; not a kernel-active profiler. Per-frame excludes sampling/embedding/control overhead outside wrapped forwards.",
+  "rows": [
+    {
+      "variant": "0.6B",
+      "lang": "zh",
+      "timings": [
+        {
+          "mode": "eager4",
+          "frames": 63,
+          "prefill_ms": 51.18463897705078,
+          "talker_per_frame_ms": 38.05593272617885,
+          "predictor_per_frame_ms": 100.95476314756606,
+          "predictor_calls": 945,
+          "decode_median_ms": 51.85555076599121,
+          "upstream_final_decode_ms": 43.179168701171875
+        },
+        {
+          "mode": "eager2",
+          "frames": 63,
+          "prefill_ms": 45.125633239746094,
+          "talker_per_frame_ms": 35.92258386763315,
+          "predictor_per_frame_ms": 95.19569782226804,
+          "predictor_calls": 945,
+          "decode_median_ms": 38.17555236816406,
+          "upstream_final_decode_ms": 36.4442253112793
+        },
+        {
+          "mode": "graph2-async",
+          "frames": 63,
+          "prefill_ms": 44.19993591308594,
+          "talker_per_frame_ms": 30.543666786617703,
+          "predictor_per_frame_ms": 14.874926229317984,
+          "predictor_calls": 945,
+          "decode_median_ms": 77.51350402832031,
+          "upstream_final_decode_ms": 77.2883529663086
+        }
+      ]
+    },
+    {
+      "variant": "0.6B",
+      "lang": "en",
+      "timings": [
+        {
+          "mode": "eager4",
+          "frames": 63,
+          "prefill_ms": 42.39052963256836,
+          "talker_per_frame_ms": 37.1408826434423,
+          "predictor_per_frame_ms": 98.44625318618048,
+          "predictor_calls": 945,
+          "decode_median_ms": 34.35003089904785,
+          "upstream_final_decode_ms": 35.49679946899414
+        },
+        {
+          "mode": "eager2",
+          "frames": 63,
+          "prefill_ms": 39.2171516418457,
+          "talker_per_frame_ms": 36.3020023164295,
+          "predictor_per_frame_ms": 96.27025614087543,
+          "predictor_calls": 945,
+          "decode_median_ms": 37.520320892333984,
+          "upstream_final_decode_ms": 36.43695831298828
+        },
+        {
+          "mode": "graph2-async",
+          "frames": 63,
+          "prefill_ms": 38.65804672241211,
+          "talker_per_frame_ms": 34.57093316789658,
+          "predictor_per_frame_ms": 14.721718369968354,
+          "predictor_calls": 945,
+          "decode_median_ms": 82.6428451538086,
+          "upstream_final_decode_ms": 77.46998596191406
+        }
+      ]
+    },
+    {
+      "variant": "0.6B",
+      "lang": "ja",
+      "timings": [
+        {
+          "mode": "eager4",
+          "frames": 29,
+          "prefill_ms": 38.31296157836914,
+          "talker_per_frame_ms": 36.00146760611698,
+          "predictor_per_frame_ms": 94.75074863433838,
+          "predictor_calls": 435,
+          "decode_median_ms": 32.7980318069458,
+          "upstream_final_decode_ms": 60.18048095703125
+        },
+        {
+          "mode": "eager2",
+          "frames": 29,
+          "prefill_ms": 45.51884841918945,
+          "talker_per_frame_ms": 38.24187390557651,
+          "predictor_per_frame_ms": 101.74134282408089,
+          "predictor_calls": 435,
+          "decode_median_ms": 34.61982345581055,
+          "upstream_final_decode_ms": 41.086368560791016
+        },
+        {
+          "mode": "graph2-async",
+          "frames": 29,
+          "prefill_ms": 46.98828887939453,
+          "talker_per_frame_ms": 23.606630703498578,
+          "predictor_per_frame_ms": 15.131424032408615,
+          "predictor_calls": 435,
+          "decode_median_ms": 93.43510437011719,
+          "upstream_final_decode_ms": 71.98726654052734
+        }
+      ]
+    },
+    {
+      "variant": "1.7B",
+      "lang": "zh",
+      "timings": [
+        {
+          "mode": "eager4",
+          "frames": 22,
+          "prefill_ms": 42.583038330078125,
+          "talker_per_frame_ms": 37.0723372372714,
+          "predictor_per_frame_ms": 96.81843051043424,
+          "predictor_calls": 330,
+          "decode_median_ms": 61.638654708862305,
+          "upstream_final_decode_ms": 68.65542602539062
+        },
+        {
+          "mode": "eager2",
+          "frames": 22,
+          "prefill_ms": 38.47782516479492,
+          "talker_per_frame_ms": 37.09388490156694,
+          "predictor_per_frame_ms": 96.44062096422368,
+          "predictor_calls": 330,
+          "decode_median_ms": 59.180192947387695,
+          "upstream_final_decode_ms": 87.3884506225586
+        },
+        {
+          "mode": "graph2-async",
+          "frames": 22,
+          "prefill_ms": 51.07302474975586,
+          "talker_per_frame_ms": 21.188512108542703,
+          "predictor_per_frame_ms": 16.73992292989384,
+          "predictor_calls": 330,
+          "decode_median_ms": 105.24361419677734,
+          "upstream_final_decode_ms": 106.88275146484375
+        }
+      ]
+    },
+    {
+      "variant": "1.7B",
+      "lang": "en",
+      "timings": [
+        {
+          "mode": "eager4",
+          "frames": 63,
+          "prefill_ms": 42.14067077636719,
+          "talker_per_frame_ms": 37.19527229430184,
+          "predictor_per_frame_ms": 96.2373318823557,
+          "predictor_calls": 945,
+          "decode_median_ms": 36.45720100402832,
+          "upstream_final_decode_ms": 36.995391845703125
+        },
+        {
+          "mode": "eager2",
+          "frames": 63,
+          "prefill_ms": 38.739967346191406,
+          "talker_per_frame_ms": 37.7296399313306,
+          "predictor_per_frame_ms": 97.91035886037918,
+          "predictor_calls": 945,
+          "decode_median_ms": 35.42969512939453,
+          "upstream_final_decode_ms": 35.72719955444336
+        },
+        {
+          "mode": "graph2-async",
+          "frames": 63,
+          "prefill_ms": 45.715614318847656,
+          "talker_per_frame_ms": 37.07754366738455,
+          "predictor_per_frame_ms": 16.743380290175242,
+          "predictor_calls": 945,
+          "decode_median_ms": 49.95084762573242,
+          "upstream_final_decode_ms": 71.66867065429688
+        }
+      ]
+    },
+    {
+      "variant": "1.7B",
+      "lang": "ja",
+      "timings": [
+        {
+          "mode": "eager4",
+          "frames": 63,
+          "prefill_ms": 43.412479400634766,
+          "talker_per_frame_ms": 37.20502459813678,
+          "predictor_per_frame_ms": 96.31342929507059,
+          "predictor_calls": 945,
+          "decode_median_ms": 35.43771171569824,
+          "upstream_final_decode_ms": 37.01766586303711
+        },
+        {
+          "mode": "eager2",
+          "frames": 63,
+          "prefill_ms": 38.29849624633789,
+          "talker_per_frame_ms": 37.16216387067522,
+          "predictor_per_frame_ms": 96.06348132330274,
+          "predictor_calls": 945,
+          "decode_median_ms": 35.18320083618164,
+          "upstream_final_decode_ms": 36.1910400390625
+        },
+        {
+          "mode": "graph2-async",
+          "frames": 63,
+          "prefill_ms": 40.367103576660156,
+          "talker_per_frame_ms": 36.281110521346804,
+          "predictor_per_frame_ms": 15.557092045980786,
+          "predictor_calls": 945,
+          "decode_median_ms": 88.08598327636719,
+          "upstream_final_decode_ms": 81.9840316772461
+        }
+      ]
+    }
+  ]
+}

@@ -19,3 +19,5 @@ P4-02 提供三语 TTS 旁路服务、共享边界校验、离线降级、模型
 已 merge origin/main 806e09b（合并 d585926），随后 lint/typecheck、454 TS 测试、schema、ruff/mypy、35 Python 测试、Python 构建及原样 Electron e2e 3 项通过；1 GPU smoke 按默认条件明确跳过，另有真实开发测量。当前提交的远端 CI 状态以检查页为准，历史成功不冒充本次。
 
 [REPORT.md](https://github.com/nanake-lab/nemu/blob/task/P4-02-tts-sidecar/reports/P4-02/REPORT.md) / [BLOCKED.md](https://github.com/nanake-lab/nemu/blob/task/P4-02-tts-sidecar/reports/P4-02/BLOCKED.md) / [开发摘要](https://github.com/nanake-lab/nemu/blob/task/P4-02-tts-sidecar/reports/P4-02/optimization-summary.json)。无合并，无下一张卡。
+
+受测提交 1beae18 的 Ubuntu CI 已成功（run 39620971993）；同提交 Windows CI 因草稿跳过（run 39620971933）。随后仅追加报告/证据，未修改受测实现。
