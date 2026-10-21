@@ -89,3 +89,6 @@ Python 校验使用已有 `workers/irl/.venv/Scripts/python.exe` 中 pytest 9.1.
 
 ## 下一步
 等待 Claude 审查 PR #43 及最终 CI；不合并，不取下一张卡。若最终 Windows 检查排队，等待现有 runner 空闲；不自行停止 runner 或其他卡作业。
+
+## 追加（2026-10-21）：审查通过后的 main 同步与重验
+Claude 已给出「审查结论：通过」，没有阻塞问题：<https://github.com/nanake-lab/nemu/pull/43#issuecomment-6310784213>。按用户本次指令，将只包含 #46 文档增量的 origin/main 合入任务分支（merge 提交8ff7ea4），并重跑 pytest、ruff、mypy、pnpm lint/typecheck/test，全部通过。具体命令、权限限制的原始失败和正常权限重验记录见 `merge-main-20261021/REPORT.md`。四条不阻塞意见不扩展为本次代码修复。等待本次推送的两套 CI 通过后 squash 合并；合并后不取下一张卡。本节保留原交付快照，最终操作以 PR 的 CI 与合并事件为准。
