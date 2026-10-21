@@ -164,9 +164,10 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 
 | 难度 | 审查 | 合并 |
 | --- | --- | --- |
-| 低 | 不需要审查。Claude 的每日审查事后抽查。 | 满足下面三条，执行者自己合并 |
-| 中 | 一方实现，Claude 审查；Claude 实现的卡由 Codex 审查。 | 满足下面三条且审查通过，执行者自己合并 |
-| 高 | Claude 与 Codex 协作：一方实现，另一方交叉审查。Codex 审查时用 GPT-6 Astra、最高推理强度。 | 同上 |
+| 低、中 | 不需要审查。 | 满足下面三条，执行者自己合并 |
+| 高 | Claude 与 Codex 协作：一方实现，另一方交叉审查。Codex 审查时用 GPT-6 Astra、最高推理强度。 | 满足下面三条且审查通过，执行者自己合并 |
+
+**不论难度，以下改动也要交叉审查**（2026-10-22 用户决定）：契约与 IDL（`core/contracts/`、`packages/contracts/`）、账本与存储格式（`core/crates/core-store/`）、行动闸门与权限（`core/crates/action-gate/`、`executors/`）、网络生活等对外行动、改规格或契约的 ADR。这几处出错，要么诞生后改不回来，要么伤到仓库之外。
 
 合并条件，不论难度：
 
@@ -178,7 +179,7 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 
 **审查结论**写成一条 PR 评论，第一行固定是「审查结论：通过」或「审查结论：有阻塞问题」，下面逐条写问题：文件和行、原因、建议。看板按第一行判断状态。有阻塞问题时，执行者修改后在 PR 里回复，审查方复审，再写一条新的结论。审查方只审查，不替执行者改代码。
 
-需要 Codex 审查时，由用户把 PR 转给 Codex，看板的「等你处理」会提示。需要 Claude 审查时，Claude 的每日审查会处理，用户也可以直接让 Claude 审。
+需要审查时，由用户把 PR 转给审查方（Codex 或 Claude），看板的「等你处理」会提示。
 
 **未核验就合并：** PR 在审查完成前被合并时，给它加 `unverified` 标签。审查方照常补完审查，发现的问题另开修复 PR，全部解决后去掉标签。依赖这张卡的卡在标签去掉之前不能开工。
 
@@ -247,7 +248,7 @@ Antigravity 会自动发现这些技能；Codex 请在开始相关任务时手�
 用户已决定增加第三个执行者 Claude（Claude Code 云端会话）。Claude 遵守本文件全部规则，另有以下几点：
 
 - **建议执行者为 Claude 的卡**（2026-10-20 按 v2.0 扩展）：P5-09（已完成）→ P5-21 → P5-27 → P5-10 → P5-12 → P5-23 → P5-25 → P5-24 → P5-26 → P5-30。即核心状态的 IDL（P5-21，契约变更），以及 `core/crates/core-policy/`、`core/crates/core-kernel/`、`core/crates/experiment-world/` 里不依赖 Windows 和显卡的 Echo Core 部分。其他卡要不要交给 Claude，由用户在派活时点名，或改 `tasks/cards.json`。
-- **审查：** Claude 是中、高难度卡的审查方之一（第 6 节）。Claude 每天早上例行审查一次：给等它审查的 PR 写审查结论，抽查前一天合并的低难度 PR。
+- **审查：** Claude 是需要交叉审查的 PR 的审查方之一（第 6 节），由用户转来时审查。
 - **环境：** Linux 云端临时会话，没有 Windows、显卡和用户的机器，也不保存本地状态。验收需要这些的卡，Claude 不认领。所有进度以推送到 GitHub 的分支、PR 和报告为准。
 - **工具链：** Claude 的环境可能无法安装 `core/rust-toolchain.toml` 锁定的版本。此时 Claude 可以用环境内可用的 stable 版本做本地开发和测试，但以 CI 中按锁定版本运行的结果为准；报告里写明本地实际使用的版本。
 - **Windows CI：** Claude 的 PR 同样会触发 Windows 作业。需要 Windows runner 时，Claude 提前通知用户，不自行判断不需要。
