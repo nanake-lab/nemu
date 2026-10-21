@@ -1,0 +1,809 @@
+{
+  "audit": "mechanical delivery verification",
+  "execution": {
+    "command": "python -B \"C:/Users/nanake/Documents/Nemu-Research/Echo-Core-V2-Revision-2026-10-21-execution/delivery-audit/delivery_audit.py\"",
+    "argv": [
+      "C:\\Users\\nanake\\Documents\\Nemu-Research\\Echo-Core-V2-Revision-2026-10-21-execution\\delivery-audit\\delivery_audit.py"
+    ],
+    "cwd": "D:\\Dev\\nemu",
+    "start_utc": "2026-10-21T05:17:15.670004+00:00",
+    "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "python_executable": "C:\\Users\\nanake\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "current_root": "C:\\Users\\nanake\\.codex\\worktrees\\echo-core-v2-revision\\nemu\\reports\\echo-core-v2-revision",
+    "external_root": "C:\\Users\\nanake\\Documents\\Nemu-Research\\Echo-Core-V2-Revision-2026-10-21-execution",
+    "output_json": "C:\\Users\\nanake\\Documents\\Nemu-Research\\Echo-Core-V2-Revision-2026-10-21-execution\\delivery-audit\\delivery-audit-final.json",
+    "prior_verifier_attempts": [
+      {
+        "command": "python -B \"C:\\Users\\nanake\\Documents\\Nemu-Research\\Echo-Core-V2-Revision-2026-10-21-execution\\delivery-audit\\delivery_audit.py\"",
+        "cwd": "D:\\Dev\\nemu",
+        "exit_code": 1,
+        "stderr": "SyntaxError: (unicode error) unicodeescape codec can't decode bytes in position 13-14: truncated \\UXXXXXXXX escape"
+      }
+    ],
+    "end_utc": "2026-10-21T05:17:15.855643+00:00",
+    "exit_code": 0
+  },
+  "checks": {
+    "raw_rows_and_uniqueness": {
+      "expected_rows": 6656,
+      "observed_rows": 6656,
+      "row_count_matches": true,
+      "non_object_rows": 0,
+      "unique_key": [
+        "experiment",
+        "arm",
+        "seed"
+      ],
+      "unique_key_count": 6656,
+      "duplicate_key_count": 0,
+      "duplicate_keys": []
+    },
+    "raw_csv_vs_json": {
+      "csv_row_count": 6656,
+      "json_row_count": 6656,
+      "csv_headers": [
+        "experiment",
+        "arm",
+        "seed",
+        "absolute_bias",
+        "abstain",
+        "accuracy",
+        "censored",
+        "correct",
+        "delay_capped",
+        "false_justified_order",
+        "hazard_weight_0",
+        "hazard_weight_1",
+        "hazard_weight_2",
+        "hazard_weight_3",
+        "late_mse",
+        "max_error",
+        "mean_hazard",
+        "mse",
+        "predicted_gap",
+        "wrong",
+        "wrong_side"
+      ],
+      "nonempty_cells_compared": 38528,
+      "mismatch_count": 0,
+      "mismatch_samples": []
+    },
+    "summary_recompute": {
+      "summary_entry_count_observed": 126,
+      "summary_entry_count_recomputed": 126,
+      "missing_key_count": 0,
+      "missing_keys": [],
+      "extra_key_count": 0,
+      "extra_keys": [],
+      "paired_term_count_recomputed": 16,
+      "paired_terms": {
+        "paired/stable/adaptive-minus-cumulative/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/stable/adaptive-minus-window16/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/stable/adaptive-minus-window64/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/stable/adaptive-minus-fixed_change/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/abrupt/adaptive-minus-cumulative/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/abrupt/adaptive-minus-window16/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/abrupt/adaptive-minus-window64/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/abrupt/adaptive-minus-fixed_change/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/gradual/adaptive-minus-cumulative/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/gradual/adaptive-minus-window16/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/gradual/adaptive-minus-window64/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/gradual/adaptive-minus-fixed_change/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/cycle/adaptive-minus-cumulative/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/cycle/adaptive-minus-window16/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/cycle/adaptive-minus-window64/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        },
+        "paired/cycle/adaptive-minus-fixed_change/mse": {
+          "common_seed_count": 128,
+          "numeric_delta_count": 128
+        }
+      },
+      "scalar_mismatch_count": 0,
+      "scalar_mismatch_samples": [],
+      "numeric_tolerance": {
+        "rel_tol": 1e-12,
+        "abs_tol": 1e-12
+      },
+      "float_comparison_count": 504,
+      "max_absolute_float_difference": 1.7763568394002505e-15,
+      "integer_n_mismatch_count": 0
+    },
+    "provenance_source_sha256": {
+      "source_count": 6,
+      "match_count": 6,
+      "mismatch_count": 0,
+      "sources": [
+        {
+          "path": "reference/evidence.py",
+          "exists": true,
+          "expected_sha256": "a98fc5aa81bba747727d03a1c5279f4b35598afc28f9883abacc1c590ad17a29",
+          "actual_sha256": "a98fc5aa81bba747727d03a1c5279f4b35598afc28f9883abacc1c590ad17a29",
+          "matches": true
+        },
+        {
+          "path": "reference/experiments.py",
+          "exists": true,
+          "expected_sha256": "d11352a048ce2f15b1d1338d50d307eb5e9f14284abfa2df368a6aca8bde9a68",
+          "actual_sha256": "d11352a048ce2f15b1d1338d50d307eb5e9f14284abfa2df368a6aca8bde9a68",
+          "matches": true
+        },
+        {
+          "path": "reference/learning.py",
+          "exists": true,
+          "expected_sha256": "420e235d6e455eaf61d155fb90cd4aa5f499ad1ff4ca58e133f7e1a9e2503c84",
+          "actual_sha256": "420e235d6e455eaf61d155fb90cd4aa5f499ad1ff4ca58e133f7e1a9e2503c84",
+          "matches": true
+        },
+        {
+          "path": "reference/run.py",
+          "exists": true,
+          "expected_sha256": "c8449b65c9b4c2f1a110e5e32e80484dc984fb016dba574c6b2c317e59907352",
+          "actual_sha256": "c8449b65c9b4c2f1a110e5e32e80484dc984fb016dba574c6b2c317e59907352",
+          "matches": true
+        },
+        {
+          "path": "reference/test_reference.py",
+          "exists": true,
+          "expected_sha256": "a2f7000a9ad35c771af9c7d7ca8c1af6869f73a38e006665a5e0f325836e0143",
+          "actual_sha256": "a2f7000a9ad35c771af9c7d7ca8c1af6869f73a38e006665a5e0f325836e0143",
+          "matches": true
+        },
+        {
+          "path": "PROTOCOL.md",
+          "exists": true,
+          "expected_sha256": "648887ed08fade0374c9ed632f489bcb43f18b405919b5ded4224fa394e33da8",
+          "actual_sha256": "648887ed08fade0374c9ed632f489bcb43f18b405919b5ded4224fa394e33da8",
+          "matches": true
+        }
+      ]
+    },
+    "E2_sample_traces": {
+      "expected_total_rows": 10240,
+      "observed_total_rows": 10240,
+      "total_row_count_matches": true,
+      "E2_row_count": 10240,
+      "non_E2_or_malformed_row_count": 0,
+      "world_count_expected": 4,
+      "method_count_expected": 5,
+      "expected_group_count": 20,
+      "observed_group_count": 20,
+      "missing_group_count": 0,
+      "missing_groups": [],
+      "per_group_t_coverage": [
+        {
+          "experiment": "E2_abrupt",
+          "arm": "adaptive",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_abrupt",
+          "arm": "cumulative",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_abrupt",
+          "arm": "fixed_change",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_abrupt",
+          "arm": "window16",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_abrupt",
+          "arm": "window64",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_cycle",
+          "arm": "adaptive",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_cycle",
+          "arm": "cumulative",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_cycle",
+          "arm": "fixed_change",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_cycle",
+          "arm": "window16",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_cycle",
+          "arm": "window64",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_gradual",
+          "arm": "adaptive",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_gradual",
+          "arm": "cumulative",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_gradual",
+          "arm": "fixed_change",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_gradual",
+          "arm": "window16",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_gradual",
+          "arm": "window64",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_stable",
+          "arm": "adaptive",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_stable",
+          "arm": "cumulative",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_stable",
+          "arm": "fixed_change",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_stable",
+          "arm": "window16",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        },
+        {
+          "experiment": "E2_stable",
+          "arm": "window64",
+          "row_count": 512,
+          "t_unique_count": 512,
+          "t_min": 0,
+          "t_max": 511,
+          "missing_t_count": 0,
+          "missing_t_sample": [],
+          "extra_t": [],
+          "duplicate_t": [],
+          "expected_group": true
+        }
+      ],
+      "finite_y_prediction_values_checked": 20480,
+      "nonfinite_y_prediction_count": 0,
+      "nonfinite_y_prediction_samples": []
+    },
+    "markdown_local_links": {
+      "markdown_file_count": 6,
+      "markdown_files": [
+        "PROPOSAL.md",
+        "PROTOCOL.md",
+        "REPORT.md",
+        "REVIEW_GUIDE.md",
+        "docs\\adr\\0013-grounded-experience-learning.md",
+        "tasks\\requests\\echo-core-v2-revision.md"
+      ],
+      "local_link_count_checked": 26,
+      "missing_local_link_count": 0,
+      "missing_local_links": [],
+      "ignored_targets": [
+        "sha256.json",
+        "verification/delivery-check.json"
+      ]
+    },
+    "external_results_byte_comparison": {
+      "comparison_count": 5,
+      "identical_count": 5,
+      "different_or_missing_count": 0,
+      "files": [
+        {
+          "name": "summary.json",
+          "current_exists": true,
+          "external_exists": true,
+          "current_size": 24142,
+          "external_size": 24142,
+          "current_sha256": "be00639797aaf7620dc9345ce4b34a3a4c44ab1016a0eb1f3de810da942050a4",
+          "external_sha256": "be00639797aaf7620dc9345ce4b34a3a4c44ab1016a0eb1f3de810da942050a4",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "name": "sample_traces.json",
+          "current_exists": true,
+          "external_exists": true,
+          "current_size": 1584432,
+          "external_size": 1584432,
+          "current_sha256": "97f4202cd48caa762b3baa14e25597cea40647a8ebdcb4e0fd88b75be8be6054",
+          "external_sha256": "97f4202cd48caa762b3baa14e25597cea40647a8ebdcb4e0fd88b75be8be6054",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "name": "raw.json",
+          "current_exists": true,
+          "external_exists": true,
+          "current_size": 1137919,
+          "external_size": 1137919,
+          "current_sha256": "4229cda9d7e39c1f9417b7dce94df946559957c78535888e2cbda08b9ac77509",
+          "external_sha256": "4229cda9d7e39c1f9417b7dce94df946559957c78535888e2cbda08b9ac77509",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "name": "raw.csv",
+          "current_exists": true,
+          "external_exists": true,
+          "current_size": 492387,
+          "external_size": 492387,
+          "current_sha256": "523988baf1efcf4667aab449a9e9c802d0d0bfe64d030b03ea00814e2c856eea",
+          "external_sha256": "523988baf1efcf4667aab449a9e9c802d0d0bfe64d030b03ea00814e2c856eea",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "name": "provenance.json",
+          "current_exists": true,
+          "external_exists": true,
+          "current_size": 932,
+          "external_size": 932,
+          "current_sha256": "0ce562c6205d7c70145f26b10296f5a75b941cb97d3d00e15c15562363137ccc",
+          "external_sha256": "0ce562c6205d7c70145f26b10296f5a75b941cb97d3d00e15c15562363137ccc",
+          "byte_identical_by_size_and_sha256": true
+        }
+      ]
+    },
+    "external_logs_vs_verification": {
+      "external_log_file_count": 24,
+      "verification_file_count": 24,
+      "matched_file_count": 24,
+      "different_or_missing_counterpart_count": 0,
+      "verification_files_without_external_log_counterpart": [],
+      "files": [
+        {
+          "relative_path": "input-hashes-attempt-02.tsv",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 475,
+          "verification_size": 475,
+          "external_log_sha256": "f6f0b8b4adbfafe16aef852e0ce88097cfb1126c2ae7b7b2bdb3afcad9150b35",
+          "verification_sha256": "f6f0b8b4adbfafe16aef852e0ce88097cfb1126c2ae7b7b2bdb3afcad9150b35",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "input-hashes.tsv",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 475,
+          "verification_size": 475,
+          "external_log_sha256": "5d2ec5bab3056bcade86c402ac3b37316010294e4993aa0e60bb286934c47ddc",
+          "verification_sha256": "5d2ec5bab3056bcade86c402ac3b37316010294e4993aa0e60bb286934c47ddc",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "mypy-attempt-01.meta.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 880,
+          "verification_size": 880,
+          "external_log_sha256": "5269369ca77070f7e744638a094904949498349b82a018c4976840951a0044c9",
+          "verification_sha256": "5269369ca77070f7e744638a094904949498349b82a018c4976840951a0044c9",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "mypy-attempt-01.stderr.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 0,
+          "verification_size": 0,
+          "external_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "verification_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "mypy-attempt-01.stdout.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 392,
+          "verification_size": 392,
+          "external_log_sha256": "e20539c23ce3788ced31f83d16f53aa206bbdc1263768ad54e79644ff5edf7e6",
+          "verification_sha256": "e20539c23ce3788ced31f83d16f53aa206bbdc1263768ad54e79644ff5edf7e6",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "mypy-attempt-02.meta.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 880,
+          "verification_size": 880,
+          "external_log_sha256": "c999db5c784564303f2d387e42177af67c1eeef8f83d3a4c89514fc5aa4b41d8",
+          "verification_sha256": "c999db5c784564303f2d387e42177af67c1eeef8f83d3a4c89514fc5aa4b41d8",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "mypy-attempt-02.stderr.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 0,
+          "verification_size": 0,
+          "external_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "verification_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "mypy-attempt-02.stdout.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 44,
+          "verification_size": 44,
+          "external_log_sha256": "718df785efbbd4b57e63b5f64aff2c5b5592e433447681f759b307f97a3ec96a",
+          "verification_sha256": "718df785efbbd4b57e63b5f64aff2c5b5592e433447681f759b307f97a3ec96a",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "post-run-hashes-attempt-02.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 647,
+          "verification_size": 647,
+          "external_log_sha256": "ab91416a980988aff5f2576a25ee53270ad74c26b0b8d1b687a54a3fe6530380",
+          "verification_sha256": "ab91416a980988aff5f2576a25ee53270ad74c26b0b8d1b687a54a3fe6530380",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "post-run-hashes.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 647,
+          "verification_size": 647,
+          "external_log_sha256": "6220b556f03f0cd7580df9972f22fe709b6de8a41a7f2c5ca4af174f1a29a6f1",
+          "verification_sha256": "6220b556f03f0cd7580df9972f22fe709b6de8a41a7f2c5ca4af174f1a29a6f1",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "preflight-attempt-02.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 357,
+          "verification_size": 357,
+          "external_log_sha256": "2c45107b155487fe5c5173045d23c8fdb622f64e548f27e25b17bb3a5add8de7",
+          "verification_sha256": "2c45107b155487fe5c5173045d23c8fdb622f64e548f27e25b17bb3a5add8de7",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "preflight.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 806,
+          "verification_size": 806,
+          "external_log_sha256": "ccc6de68ccb38e9f6a95134217016d69f246b8da3fe0f0c51ea9e5486ba4e881",
+          "verification_sha256": "ccc6de68ccb38e9f6a95134217016d69f246b8da3fe0f0c51ea9e5486ba4e881",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "ruff-attempt-01.meta.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 771,
+          "verification_size": 771,
+          "external_log_sha256": "762119583ec8f5b8116e083d6c8b1b3cee7554027f3aeaae4a2b7af0df9e4d6b",
+          "verification_sha256": "762119583ec8f5b8116e083d6c8b1b3cee7554027f3aeaae4a2b7af0df9e4d6b",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "ruff-attempt-01.stderr.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 0,
+          "verification_size": 0,
+          "external_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "verification_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "ruff-attempt-01.stdout.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 19,
+          "verification_size": 19,
+          "external_log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+          "verification_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "ruff-attempt-02.meta.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 771,
+          "verification_size": 771,
+          "external_log_sha256": "5152a3ec62cfcb34c46175f304b72ab80dc4500baf6af8daf020d5ec42142035",
+          "verification_sha256": "5152a3ec62cfcb34c46175f304b72ab80dc4500baf6af8daf020d5ec42142035",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "ruff-attempt-02.stderr.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 0,
+          "verification_size": 0,
+          "external_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "verification_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "ruff-attempt-02.stdout.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 19,
+          "verification_size": 19,
+          "external_log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+          "verification_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "run-attempt-01.meta.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 875,
+          "verification_size": 875,
+          "external_log_sha256": "17881c19da0241e611c6890d5d246427c7b9e35121c808fb0876fa8aa2ec31de",
+          "verification_sha256": "17881c19da0241e611c6890d5d246427c7b9e35121c808fb0876fa8aa2ec31de",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "run-attempt-01.stderr.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 0,
+          "verification_size": 0,
+          "external_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "verification_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "run-attempt-01.stdout.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 1143,
+          "verification_size": 1143,
+          "external_log_sha256": "aa969c69cb950842805804609dee6877d507fee60a957b23b6eeade112659b24",
+          "verification_sha256": "aa969c69cb950842805804609dee6877d507fee60a957b23b6eeade112659b24",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "unittest-attempt-01.meta.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 788,
+          "verification_size": 788,
+          "external_log_sha256": "091222f6bd35cec4c314af1d4aaad595d7771f9d7ba965525286ccf275934bfd",
+          "verification_sha256": "091222f6bd35cec4c314af1d4aaad595d7771f9d7ba965525286ccf275934bfd",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "unittest-attempt-01.stderr.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 1291,
+          "verification_size": 1291,
+          "external_log_sha256": "59838ba02cd1481098c4c669a9f5340eac1f079fbd267e46c85e95a88a689b1b",
+          "verification_sha256": "59838ba02cd1481098c4c669a9f5340eac1f079fbd267e46c85e95a88a689b1b",
+          "byte_identical_by_size_and_sha256": true
+        },
+        {
+          "relative_path": "unittest-attempt-01.stdout.txt",
+          "external_log_exists": true,
+          "verification_counterpart_exists": true,
+          "external_log_size": 0,
+          "verification_size": 0,
+          "external_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "verification_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_identical_by_size_and_sha256": true
+        }
+      ]
+    }
+  },
+  "failure_count": 0,
+  "failure_texts": []
+}
