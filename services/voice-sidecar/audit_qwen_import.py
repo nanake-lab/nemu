@@ -37,7 +37,7 @@ def main() -> None:
         denied = str(exc) == "SOX_CLI_DISABLED_12HZ_ONLY"
     assert denied and not attempts
     distribution = importlib.metadata.distribution("sox")
-    original = Path(distribution.locate_file("sox/__init__.py"))
+    original = Path(str(distribution.locate_file("sox/__init__.py")))
     result = {"qwen_version": importlib.metadata.version("qwen-tts"),
               "sox_process_attempts": attempts, "optional_sox_capability_denied": denied,
               "original_sox_init_sha256": hashlib.sha256(original.read_bytes()).hexdigest(),
