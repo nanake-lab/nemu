@@ -6,10 +6,20 @@ import tempfile
 import unittest
 import wave
 from import_continuous import candidate_bounds, extract, sentence_lengths
-from reference_data import boundaries, boundaries_v2, canonicalize_v2, Recording, freeze, inside, recordings
+from reference_data import boundaries, boundaries_v2, canonicalize_v2, canonicalize_v3, contextual_pcm, Recording, freeze, inside, recordings
 
 
 class ReferenceTests(unittest.TestCase):
+    def test_fixed_context_preserves_target_samples_and_exact_offset(self) -> None:
+        anchor=bytes(range(16))
+        target=bytes(range(24))
+        joined,offset=contextual_pcm(anchor,target)
+        self.assertEqual(offset,8+12800)
+        self.assertEqual(joined[:16],anchor)
+        self.assertEqual(joined[offset*2:],target)
+        with self.assertRaises(ValueError):
+            contextual_pcm(b'odd',target)
+
     def test_v2_retains_quantized_points_and_rejects_invalid_whole_interval(self) -> None:
         items: list[dict[str, object]] = [
             {'text':'a','start_time':0.1,'end_time':0.1},
@@ -37,6 +47,10 @@ class ReferenceTests(unittest.TestCase):
             target=canonicalize_v2(rec,root)
             with wave.open(str(target),'rb') as w:
                 self.assertEqual(w.readframes(w.getnframes()),pcm+bytes(32000))
+            self.assertEqual(original.read_bytes(),before)
+            context_target=canonicalize_v3(rec,root)
+            with wave.open(str(context_target),'rb') as w:
+                self.assertEqual(w.readframes(w.getnframes()),bytes(32000)+pcm+bytes(32000))
             self.assertEqual(original.read_bytes(),before)
 
     def test_candidate_warning_cannot_become_valid_reference(self) -> None:

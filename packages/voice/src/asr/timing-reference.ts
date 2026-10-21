@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { resolve, relative, isAbsolute } from 'node:path';
 import { z } from 'zod';
-import plan from '../../../../reports/P4-01/alignment-preregistration-v2.json' with { type: 'json' };
+import plan from '../../../../reports/P4-01/alignment-preregistration-v3.json' with { type: 'json' };
 const sha = z.string().regex(/^[a-f0-9]{64}$/);
 export const timingReferenceSchema = z
   .strictObject({
@@ -15,7 +15,7 @@ export const timingReferenceSchema = z
     sha256: sha,
     speechStartMs: z.number().nonnegative(),
     speechEndMs: z.number().positive(),
-    annotation: z.literal('qwen3-forced-alignment-v2'),
+    annotation: z.literal('qwen3-context-alignment-v3'),
   })
   .refine((row) => row.speechEndMs > row.speechStartMs, 'Non-positive speech interval');
 export type TimingReference = z.infer<typeof timingReferenceSchema>;
@@ -29,7 +29,7 @@ export function validateTimingReferences(raw: unknown): TimingReference[] {
       ref.id !== expected.id ||
       ref.lang !== expected.lang ||
       ref.sourcePath !== expected.path ||
-      ref.path !== `alignment-input-v2/${ref.id}.wav`
+      ref.path !== `alignment-input-v3/${ref.id}.wav`
     )
       throw new Error('Timing samples/order differ from preregistration');
   }
@@ -48,7 +48,7 @@ export async function loadTimingReferences(root: string): Promise<TimingReferenc
   const refs = validateTimingReferences(JSON.parse(bytes.toString('utf8')));
   const meta = z
     .object({
-      method: z.literal('P4-01-forced-alignment-v2'),
+      method: z.literal('P4-01-context-alignment-v3'),
       tool: z.literal('qwen-asr'),
       toolVersion: z.literal('0.0.6'),
       modelRevision: z.literal('c7cbfc2048c462b0d63a45797104fc9db3ad62b7'),
@@ -65,17 +65,17 @@ export async function loadTimingReferences(root: string): Promise<TimingReferenc
     .parse(JSON.parse(await readFile(within(root, 'timing-references.meta.json'), 'utf8')));
   const checks: Array<[string, Buffer]> = [
     [meta.referencesSha256, bytes],
-    [meta.inputsSha256, await readFile(within(root, 'alignment-inputs-v2.json'))],
+    [meta.inputsSha256, await readFile(within(root, 'alignment-inputs-v3.json'))],
     [
       meta.planSha256,
       await readFile(
-        new URL('../../../../reports/P4-01/alignment-preregistration-v2.json', import.meta.url),
+        new URL('../../../../reports/P4-01/alignment-preregistration-v3.json', import.meta.url),
       ),
     ],
     [
       meta.methodSha256,
       await readFile(
-        new URL('../../../../reports/P4-01/ALIGNMENT-PREREGISTRATION-V2.md', import.meta.url),
+        new URL('../../../../reports/P4-01/ALIGNMENT-PREREGISTRATION-V3.md', import.meta.url),
       ),
     ],
     [meta.manifestSha256, await readFile(new URL('./alignment/manifest.json', import.meta.url))],

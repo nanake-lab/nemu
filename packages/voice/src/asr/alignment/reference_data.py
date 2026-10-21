@@ -168,3 +168,29 @@ def boundaries_v2(items: list[dict[str, object]], duration_seconds: float) -> tu
     if not lexical or lexical[-1][1] <= lexical[0][0]:
         raise ValueError('No positive complete speech interval')
     return lexical[0][0]*1000, lexical[-1][1]*1000
+
+
+def canonicalize_v3(recording: Recording, root: Path) -> Path:
+    """One second of leading silence; all source samples and v2 tail remain."""
+    import wave
+    source = canonicalize_v2(recording, root)
+    target = inside(root, f'alignment-input-v3/{recording.id}.wav')
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        return target
+    with wave.open(str(source), 'rb') as w:
+        pcm = w.readframes(w.getnframes())
+    with target.open('xb') as output:
+        with wave.open(output, 'wb') as w:
+            w.setnchannels(1)
+            w.setsampwidth(2)
+            w.setframerate(16000)
+            w.writeframes(bytes(32000)+pcm)
+    return target
+
+
+def contextual_pcm(anchor: bytes, target: bytes) -> tuple[bytes, int]:
+    if len(anchor)%2 or len(target)%2:
+        raise ValueError('Incomplete PCM16 sample')
+    prefix_frames = len(anchor)//2+12800
+    return anchor+bytes(25600)+target, prefix_frames

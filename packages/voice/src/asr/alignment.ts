@@ -19,7 +19,7 @@ const args = [
   '--locked',
   '--',
   'python',
-  join(project, 'align_user.py'),
+  join(project, process.argv[2] === 'download' ? 'align_user.py' : 'context_references.py'),
 ];
 if (process.argv[2] === 'download') args.push('--download');
 const child = spawn('uv', args, {
