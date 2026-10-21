@@ -196,9 +196,61 @@ def schema_at(ref: str) -> Schema:
         return schema(Path(tmp))
 
 
+def _field(name: str, typ: str, number: int, required: bool = False) -> dict[str, Any]:
+    return dict(
+        name=name,
+        type=typ,
+        number=number,
+        repeated=False,
+        required=required,
+        nonempty=False,
+    )
+
+
+def with_chain(s: Schema) -> Schema:
+    """Add a correct synthetic three-generation chain SelfTestV1 -> V2 -> V3.
+
+    The chain has its own tags, is in no baseline and is embedded in no live message, so
+    the self-test never rewrites a published field, whichever baselines are frozen.
+    V1 has fields 1, 2, 5; V2 keeps 1, 2, reserves 5 and adds 6; V3 keeps 1, 2, 6,
+    inherits reserved 5 and adds 7."""
+    s = copy.deepcopy(s)
+    version = _field("schema_version", "uint32", 1, required=True)
+    a, b = _field("a", "string", 2), _field("b", "double", 5)
+    c, d = _field("c", "bool", 6), _field("d", "uint64", 7)
+
+    def message(tag: str, fields: list[dict[str, Any]]) -> dict[str, Any]:
+        return dict(
+            tag=tag,
+            source="check_compat self-test",
+            file="self-test",
+            rules={},
+            fields=copy.deepcopy(fields),
+        )
+
+    v1 = message("selftest.v1", [version, a, b])
+    v1["superseded"] = dict(by="SelfTestV2", reason="self-test")
+    v2 = message("selftest.v2", [version, a, c])
+    v2.update(
+        reserved=[5],
+        supersedes="SelfTestV1",
+        superseded=dict(by="SelfTestV3", reason="self-test"),
+    )
+    v3 = message("selftest.v3", [version, a, c, d])
+    v3.update(reserved=[5], supersedes="SelfTestV2")
+    s["messages"].update(SelfTestV1=v1, SelfTestV2=v2, SelfTestV3=v3)
+    return s
+
+
 def self_test(old: Schema, new: Schema) -> list[str]:
-    """Each mutation must be caught; returns the names of mutations that were not."""
+    """Each mutation must produce its own expected violation; returns what was missed.
+
+    A mutation counts as caught only when the rule it targets fires, so a mutation that
+    happens to touch a field frozen in some baseline cannot pass for the wrong reason.
+    The fixtures change no published field, so the self-test also passes with ``old``
+    equal to ``new`` (the current schema frozen as a baseline)."""
     assert not violations(old, new), "self-test needs a clean schema"
+    chained = with_chain(new)
 
     def field(s: Schema, message: str, name: str) -> dict[str, Any]:
         return next(f for f in s["messages"][message]["fields"] if f["name"] == name)
@@ -216,24 +268,27 @@ def self_test(old: Schema, new: Schema) -> list[str]:
         del s["enums"]["FailureCode"]["UNKNOWN_OVERLAP"]
 
     def reuse_tag(s: Schema) -> None:
-        s["messages"]["RSnapshot"]["tag"] = "echo.fast-state"
+        s["messages"]["SelfTestTag"] = dict(
+            copy.deepcopy(s["messages"]["SelfTestV1"]), tag="echo.fast-state"
+        )
+        del s["messages"]["SelfTestTag"]["superseded"]
 
     def reuse_reserved(s: Schema) -> None:
-        f = copy.deepcopy(field(s, "VersionedEnvironmentV2", "irl"))
-        s["messages"]["VersionedEnvironmentV2"]["fields"].append(
-            f | dict(name="scope_v2", number=4)
-        )
-        s["messages"]["VersionedEnvironmentV2"]["reserved"].remove(4)
+        v2 = s["messages"]["SelfTestV2"]
+        v2["fields"].append(_field("e", "string", 5))
+        v2["reserved"] = []
 
     def unreserve(s: Schema) -> None:
-        s["messages"]["FastStateSnapshotV2"]["reserved"] = [4]
+        s["messages"]["SelfTestV2"]["reserved"] = []
 
     def low_number(s: Schema) -> None:
-        field(s, "ProposalBindingV2", "environment")["number"] = 16
-        s["messages"]["ProposalBindingV2"]["reserved"] = []
+        field(s, "SelfTestV2", "c")["number"] = 3
 
     def embed_old(s: Schema) -> None:
-        field(s, "RSnapshot", "law_version")["type"] = "EffectContract"
+        s["messages"]["SelfTestV3"]["fields"].append(_field("e", "SelfTestV1", 8))
+
+    def embed_old_enum(s: Schema) -> None:
+        s["messages"]["SelfTestV3"]["fields"].append(_field("f", "EffectEndpoint", 8))
 
     def unmark(s: Schema) -> None:
         del s["messages"]["EffectContract"]["superseded"]
@@ -241,77 +296,82 @@ def self_test(old: Schema, new: Schema) -> list[str]:
     def unmark_value(s: Schema) -> None:
         del s["superseded_values"]["RunStatus"]["AX_DEGRADED"]
 
-    def third_generation(s: Schema, reuse: bool, inherit: bool) -> None:
-        """VersionedEnvironmentV3 succeeds V2; the live binding moves to V3 so the
-        dependency chain stays consistent and only the reserved-number rule is tested."""
-        m = s["messages"]
-        v2 = m["VersionedEnvironmentV2"]
-        v3 = copy.deepcopy(v2)
-        v3.update(tag="echo.environment-v3", supersedes="VersionedEnvironmentV2")
-        if inherit:
-            v3["reserved"] = list(v2["reserved"])
-        else:
-            del v3["reserved"]
-        number = 4 if reuse else 14
-        v3["fields"].append(
-            dict(
-                name="scope_v3",
-                type="double",
-                number=number,
-                repeated=False,
-                required=False,
-                nonempty=False,
-            )
-        )
-        m["VersionedEnvironmentV3"] = v3
-        v2["superseded"] = dict(by="VersionedEnvironmentV3", reason="self-test")
-        field(s, "ProposalBindingV2", "environment")["type"] = "VersionedEnvironmentV3"
-
     def reuse_inherited_reserved(s: Schema) -> None:
-        # Codex PR #36 counterexample: V2's reserved 4 becomes a new field in V3.
-        third_generation(s, reuse=True, inherit=False)
+        # Codex PR #36 counterexample, on the real messages: VersionedEnvironmentV3
+        # succeeds V2 and turns V2's reserved 4 into a field. No published field changes;
+        # the extra dependency-chain violations it causes are not what is checked here.
+        m = s["messages"]
+        v3 = copy.deepcopy(m["VersionedEnvironmentV2"])
+        v3.update(tag="echo.environment-v3", supersedes="VersionedEnvironmentV2")
+        del v3["reserved"]
+        v3["fields"].append(_field("scope_v3", "double", 4))
+        m["VersionedEnvironmentV3"] = v3
+        m["VersionedEnvironmentV2"]["superseded"] = dict(
+            by="VersionedEnvironmentV3", reason="self-test"
+        )
+
+    def reuse_inherited_reserved_chain(s: Schema) -> None:
+        v3 = s["messages"]["SelfTestV3"]
+        v3["fields"].append(_field("e", "double", 5))
+        v3["reserved"] = []
 
     def drop_inherited_reserved(s: Schema) -> None:
-        # V3 does not reuse 4 but no longer reserves it, so V4 could.
-        third_generation(s, reuse=False, inherit=False)
+        s["messages"]["SelfTestV3"]["reserved"] = []
 
     def reuse_own_reserved(s: Schema) -> None:
-        # V3 inherits reserved 4 and also declares a field 4.
-        third_generation(s, reuse=True, inherit=True)
+        s["messages"]["SelfTestV3"]["fields"].append(_field("e", "double", 5))
 
+    # (mutation, compare against the current schema instead of the baseline, expected)
     mutations = (
-        renumber,
-        retype,
-        recycle_enum,
-        drop_enum_value,
-        reuse_tag,
-        reuse_reserved,
-        unreserve,
-        low_number,
-        embed_old,
-        unmark,
-        unmark_value,
-        reuse_inherited_reserved,
-        drop_inherited_reserved,
-        reuse_own_reserved,
+        (renumber, False, "message EventEnvelope field 2 changed"),
+        (retype, False, "message OutputEnd field 3 changed"),
+        (recycle_enum, False, "enum RunStatus.RECYCLED reuses published value 4"),
+        (drop_enum_value, False, "enum FailureCode.UNKNOWN_OVERLAP = 7 removed"),
+        (
+            reuse_tag,
+            False,
+            "tag echo.fast-state of FastStateSnapshot reused by SelfTestTag",
+        ),
+        (reuse_reserved, False, "SelfTestV2 field 5 reuses SelfTestV1.b differently"),
+        (unreserve, False, "SelfTestV2 must reserve SelfTestV1 field 5"),
+        (low_number, False, "SelfTestV2 new field 3 is not above SelfTestV1's numbers"),
+        (embed_old, False, "live SelfTestV3.e uses superseded SelfTestV1"),
+        (embed_old_enum, False, "live SelfTestV3.f uses superseded EffectEndpoint"),
+        # Losing a mark is only a violation against a schema that already had the mark.
+        (unmark, True, "message EffectContract lost its superseded mark"),
+        (unmark_value, True, "enum RunStatus.AX_DEGRADED lost its superseded mark"),
+        (
+            reuse_inherited_reserved,
+            False,
+            "VersionedEnvironmentV3 field 4 reuses VersionedEnvironmentV2's reserved number 4",
+        ),
+        (
+            reuse_inherited_reserved_chain,
+            False,
+            "SelfTestV3 field 5 reuses SelfTestV2's reserved number 5",
+        ),
+        (
+            drop_inherited_reserved,
+            False,
+            "SelfTestV3 must inherit SelfTestV2's reserved number 5",
+        ),
+        (reuse_own_reserved, False, "SelfTestV3 uses its own reserved numbers [5]"),
     )
     missed = []
-    for mutation in mutations:
-        mutated = copy.deepcopy(new)
+    for mutation, against_current, expected in mutations:
+        mutated = copy.deepcopy(chained)
         mutation(mutated)
-        # unmark/unmark_value are only violations against a baseline that already had the mark.
-        base = new if mutation in (unmark, unmark_value) else old
-        if not violations(base, mutated):
-            missed.append(mutation.__name__)
-    # Control: a correct third generation (inherits reserved 4, adds field 14) passes, so
-    # the three cross-generation mutations above fail for the reserved rule, not for noise.
-    control = copy.deepcopy(new)
-    third_generation(control, reuse=False, inherit=True)
-    if violations(old, control):
-        missed.append(
-            "control third generation is rejected: "
-            + "; ".join(violations(old, control))
-        )
+        found = violations(new if against_current else old, mutated)
+        if not any(expected in v for v in found):
+            missed.append(f"{mutation.__name__} (expected {expected!r}; got {found})")
+    # Controls: the correct chain passes against the baseline and against the current
+    # schema, so the chain mutations above fail for the rule they target, not for noise.
+    for label, base in (("baseline", old), ("current", new)):
+        found = violations(base, chained)
+        if found:
+            missed.append(
+                f"control chain rejected against {label}: " + "; ".join(found)
+            )
     return missed
 
 
@@ -320,11 +380,17 @@ def main() -> int:
     parser.add_argument(
         "--ref", help="also compare with the .proto files at this git ref"
     )
+    parser.add_argument(
+        "--baselines",
+        type=Path,
+        default=BASELINES,
+        help="directory of frozen baselines (default: baselines/)",
+    )
     args = parser.parse_args()
     current = schema()
     problems: list[str] = []
     checked = []
-    for baseline in sorted(p for p in BASELINES.iterdir() if p.is_dir()):
+    for baseline in sorted(p for p in args.baselines.iterdir() if p.is_dir()):
         old = schema(baseline)
         found = violations(old, current)
         problems += [f"[{baseline.name}] {v}" for v in found]
@@ -333,6 +399,15 @@ def main() -> int:
             missed = self_test(old, current)
             problems += [f"[{baseline.name}] self-test missed {m}" for m in missed]
         checked.append(baseline.name)
+    # The next contract card freezes the current IDL as a baseline: the gate must pass
+    # against itself, self-test included (Codex re-review on PR #36).
+    found = violations(current, current)
+    problems += [f"[current] {v}" for v in found]
+    if not found:
+        problems += [
+            f"[current] self-test missed {m}" for m in self_test(current, current)
+        ]
+    checked.append("current")
     if args.ref:
         problems += [
             f"[{args.ref}] {v}" for v in violations(schema_at(args.ref), current)

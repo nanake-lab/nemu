@@ -80,6 +80,11 @@ two carriers of the new binding); every published message keeps its exact bytes.
   `baselines/` and fails on any reused field number, enum value or type tag, or any change to
   a frozen golden vector; its self-test proves each rule fires. `--ref <git-ref>` also
   compares with the `.proto` files at a ref.
+  The gate also checks the current IDL against itself, as the next contract card will
+  freeze it as a baseline. Self-test fixtures never rewrite a published field: rules on
+  successors are exercised on a synthetic chain `SelfTestV1 → V2 → V3`, and each mutation
+  counts only if the rule it targets fires. `--baselines <dir>` points the gate at another
+  baseline directory.
 - `freeze_vectors.py` is append-only: it re-verifies every frozen vector byte for byte with the
   Rust authority before adding vectors for messages that have none yet and the targeted P5-21
   vectors in `fixture_inputs.py`.

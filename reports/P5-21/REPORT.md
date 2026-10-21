@@ -197,3 +197,22 @@ Codex 交叉审查（[PR #36 评论](https://github.com/nanake-lab/nemu/pull/36#
 
   另有一个对照组：正确继承 reserved 4、新增字段 14 的 V3 必须通过，证明三种负例失败是因为 reserved 规则，而不是别的噪声。原有 11 种自检照旧全部报出，共 14 种。把检查规则换回修复前的版本时，新增的三种全部漏报。本卡的 IDL 本身没有复用任何号，check_compat 对 P5-01 基线与 `origin/main` 仍为 0 违例。
 - 复跑结果见 `verification/review-fixes-20261021/`。
+
+## 2026-10-21 Codex 复审后的修正（追加）
+
+Codex 复审（[PR #36 评论](https://github.com/nanake-lab/nemu/pull/36#issuecomment-6310760209)）确认上一轮两项已闭环，新增 1 项 P2：上一轮新增的第三代夹具 `third_generation()` 把已发布的 `ProposalBindingV2.environment`（字段 20）改指向 VersionedEnvironmentV3。现在只有 P5-01 基线，所以对照组能通过；但按上文「后续建议」，下一张契约卡要把 P5-21 冻结为基线，到那时契约本身即使不变，门禁也会因为自检失败而误报。复现结果：`self_test(s, s)` 返回 `control third generation is rejected: message ProposalBindingV2 field 20 changed`；把当前 IDL 冻结为第二个基线后，`55849b7` 的门禁报 1 违例、退出码 1。
+
+我还发现同一类问题：原有的 `reuse_reserved`、`unreserve`、`low_number`、`reuse_tag` 改的也是 P5-21 已发布的消息。冻结 P5-21 之后它们仍会被报出，但报的是「字段变了」，不是它们要测的规则，等于空过。
+
+修正（`core/contracts/check_compat.py`）：
+
+- **测试夹具不碰已发布字段：** 后继规则在一条合成的三代链 `SelfTestV1 → V2 → V3` 上检验。这条链有自己的类型标签，不在任何基线里，也不被任何活动消息引用；V1 的字段号是 1、2、5，V2 保留 5、新增 6，V3 继承保留 5、新增 7。`reuse_tag` 改为新增一条借用已发布标签的合成消息。Codex 的原始反例仍在真实的 VersionedEnvironmentV2 上检验，但只新增 V3、给 V2 加取代标记，不改任何已发布字段。
+- **负例只认目标规则：** 16 种负例各自写明期望的违例文字，只有它出现才算报出：原有 11 种全部保留，另加内嵌取代枚举的 `embed_old_enum`，共 12 种；再加 4 种 reserved 继承，即 Codex 原始反例、合成链上的复用、遗漏继承和自相交。
+- **两组对照：** 正确的合成链对基线和对当前 schema 都必须 0 违例。
+- **门禁与自身比较：** `main()` 每次都把当前 IDL 当作已冻结的基线，跑一遍 `violations(current, current)` 和 `self_test(current, current)`；输出里的「current」就是这一步。另加 `--baselines <dir>` 参数。
+
+证据（`verification/rereview-fixes-20261021/`）：
+
+- `frozen-current-baseline.log`：在临时目录把当前 `.proto` 和黄金向量摘要冻结为 p5-21 基线。`55849b7` 的门禁 1 违例、退出码 1；修正后 0 违例、退出码 0。
+- `check-compat-self-test.log`：以 P5-01 为基线、以当前 IDL 为基线，修正后的规则都是 `missed: []`。把规则换回修复 reserved 继承之前的版本（`bea7cf9`）时，两种基线下都正好漏掉 4 种 reserved 继承负例，其余照旧报出。
+- 其余复跑见同一目录。
