@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts'] })],
+    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts', '@nemu/voice'] })],
     build: {
       rollupOptions: {
         external: ['sherpa-onnx-node'],
