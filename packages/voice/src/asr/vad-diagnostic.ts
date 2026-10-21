@@ -92,6 +92,10 @@ for (const config of configs) {
     maximumBargeMs: Math.max(...rows.flatMap((r) => (r.bargeInMs === null ? [] : [r.bargeInMs]))),
     rows,
   });
+  await writeFile(
+    'reports/P4-01/vad-diagnostic-progress.json',
+    JSON.stringify({ status: 'INCOMPLETE_DIAGNOSTIC_NOT_ACCEPTANCE', configs: output }, null, 2),
+  );
   console.log(`Diagnostic ${config.id} complete: 60/60`);
 }
 await writeFile(
