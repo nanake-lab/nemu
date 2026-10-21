@@ -74,12 +74,23 @@ qwen-tts 0.1.1 的 `non_streaming_mode=False` 本身仍整句返回。适配器�
 
 可选 `inference` 与既有 probe 对齐：qwen-tts 0.1.1（Apache-2.0）、torch/torchaudio 2.10.0+cu128（BSD）、transformers 4.57.3（Apache-2.0）。CI 默认不启用该 extra，不下载模型。载体的 bitsandbytes 来自既有 probe 环境，本卡未改变载体分区或其版本。
 
-许可核验另发现可选链的 soxr 1.1.0 为 LGPL-2.1-or-later，soundfile 0.14.0 随包 libsndfile 的 COPYING 为 LGPL-2.1；这两项属于 AGENTS 第 6 节的非宽松运行时依赖待确认。证据在 `probe-audio-licenses.json` 和 `licenses/`。PR 标记 `needs-user`，本卡不进行合并。
+用户 2026-10-21 已批准下列可选 Qwen 推理依赖，批准条件是动态加载、不静态链接、不修改第三方源码：
+
+| 依赖 | 版本 | 许可 | 用户决定与条件 | 后续核验 |
+| --- | --- | --- | --- | --- |
+| soxr | 1.1.0 | LGPL-2.1-or-later | 已有条件批准；Python 通过独立 soxr_ext.pyd 加载，本卡未静态链接或修改源码 | P7 打包前复核 LGPL 分发义务：许可证文本、源码出处、可替换 |
+| soundfile 随包 libsndfile | soundfile 0.14.0 | LGPL-2.1 | 已有条件批准；soundfile 通过 CFFI dlopen 加载独立 libsndfile DLL，本卡未静态链接或修改源码 | P7 打包前复核 LGPL 分发义务：许可证文本、源码出处、可替换 |
+| sox（Python 包装） | 1.5.0 | BSD-3-Clause | 已确认是命令行 SoX 的包装，wheel RECORD 不含 exe/dll/pyd；本服务没有直接 sox 调用或打包配置 | **尚不满足“不调用 sox 程序”：上游导入副作用会尝试 sox -h，见下文** |
+
+独立 .pyd 的加载只确认 Nemu/Python 一侧的动态模块边界；没有据此声称上游 wheel 内部所有组件均采用动态链接。P7 还需核对所交付二进制的链接方式与可替换性。许可证据见 `probe-audio-licenses.json`、`licenses/` 和 `license-followup-20261021.json`。
+
+sox 核查发现：锁定的 `sox/__init__.py:8` 在导入时执行 `os.popen('sox -h')`。Qwen 的 core 包无条件导入 25 Hz tokenizer，后者导入 speech_vq，speech_vq 顶层导入 sox；因此不能以本卡只使用 12 Hz 模型为由宣称不会尝试启动外部 SoX。本轮只做静态读取，没有导入 qwen/sox，也没有执行 SoX。没有打包命令行 SoX，但“不调用”的条件尚未满足，保持阻塞，不写成确认通过。
 
 ## 待用户确认
 
 - [ ] （阻塞）以后安排 GPU 安静窗口，完成上列硬件验收；2026-10-21 用户选择本轮先交付代码与待测报告。
-- [ ] （阻塞）确认可选 Qwen 推理链的 LGPL 音频依赖，按 AGENTS 第 6 节处理。
+- [x] 用户 2026-10-21 有条件批准 soxr / 随包 libsndfile：动态加载、不静态链接、不改第三方源码；P7 复核分发义务。
+- [ ] （阻塞）解决并核验 Qwen 导入链尝试 `sox -h` 的副作用；当前不能确认“不调用 sox 程序”。
 - [ ] （不阻塞代码审查）真实分块音频接缝与听感待测；Nemu 声音定稿属于 P4-03。
 
 ## 后续建议（不在本任务范围内）
@@ -104,3 +115,12 @@ qwen-tts 0.1.1 的 `non_streaming_mode=False` 本身仍整句返回。适配器�
 - 代码提交 `d7bc45d590fcaa499893c83dff0dd7f77ed433f3` 的 [Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/39561117049) 和 [Windows CI](https://github.com/nanake-lab/nemu/actions/runs/39562278216) 均为 SUCCESS，完整步骤状态见 `CI-ubuntu.json`、`CI-windows.json`。Windows 包含 transport、isolation、e2e、visual 及证据溯源检查。
 - VoiceDesign 下载已经完成，三个 TTS snapshot 共 33 个文件再次离线哈希复核通过，见 `cache-verification.json`。仍未加载真实模型进行 GPU 推理，也未生成声音。前文下载状态是首次推送时的记录。
 - 此补记和缓存/CI 归档只追加报告证据，运行代码与上述受测提交一致；报告提交按仓库文档/报告 CI 排除规则处理。
+
+
+## 继续阶段更新：许可决定与草稿（2026-10-21）
+
+- 按用户指示，PR #45 已转回草稿；全部验收完成前不转为可审查。
+- 上表替代此前“LGPL 许可待批准”的当前状态；批准已有明确条件，SoX 的禁止调用要求尚未满足。
+- 本轮只记录决定、静态核查与更新 PR 状态；没有停 runner、没有运行测试、没有生成声音或启动 GPU。
+- 已 fetch，origin/main 更新到 9042c59；必读规则与 P4-02 卡对比无变化。按用户第 3、4 条限定，本轮不合并 main 或改实现，安静窗口及验收完成后再按要求 merge 和重跑检查。
+- 等待用户通知 GPU 安静窗口开始；真实云端延迟仍不测。开始推理前还须先解决“不调用 SoX”的已知问题，不能直接执行当前导入链。

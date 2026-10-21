@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-21",
+  "method": "static file inspection only; no qwen/sox import, subprocess execution or GPU inference",
+  "sox_version": "1.5.0",
+  "sox_is_cli_wrapper": true,
+  "sox_wheel_binary_entries": [],
+  "sidecar_direct_sox_call_found": false,
+  "transitive_import_attempts_sox_h": true,
+  "no_sox_execution_condition_satisfied": false,
+  "third_party_sources_modified": false,
+  "files": [
+    {
+      "path": "sox/__init__.py",
+      "sha256": "0c3e15258ce1f95ca050e045af634d1b16956af2b47ff7670f78b08567d19d47",
+      "matches": [
+        {
+          "line": 8,
+          "text": "stream_handler = os.popen('sox -h')"
+        }
+      ]
+    },
+    {
+      "path": "qwen_tts/core/__init__.py",
+      "sha256": "1b380d9de843b6d585d938c339d066136567ca7125412674234204af4386679e",
+      "matches": [
+        {
+          "line": 17,
+          "text": "from .tokenizer_25hz.modeling_qwen3_tts_tokenizer_v1 import Qwen3TTSTokenizerV1Model"
+        }
+      ]
+    },
+    {
+      "path": "qwen_tts/core/tokenizer_25hz/modeling_qwen3_tts_tokenizer_v1.py",
+      "sha256": "8c6d5b7cfb133967f04286e069138ef7fe0cfca30e9acf3326106f6117135a7f",
+      "matches": [
+        {
+          "line": 33,
+          "text": "from .vq.speech_vq import WhisperEncoderVQ, XVectorExtractor"
+        }
+      ]
+    },
+    {
+      "path": "qwen_tts/core/tokenizer_25hz/vq/speech_vq.py",
+      "sha256": "7c68fcba8c508d8a18e2241b563302d1bf46f8ecb1515c59222263d8524bb298",
+      "matches": [
+        {
+          "line": 16,
+          "text": "import sox"
+        },
+        {
+          "line": 127,
+          "text": "        self.tfm = sox.Transformer()"
+        }
+      ]
+    },
+    {
+      "path": "soxr/__init__.py",
+      "sha256": "610148291f8312aad989d957324043556f63235faf31acd682b0e62342ec9fb9",
+      "matches": [
+        {
+          "line": 13,
+          "text": "from . import soxr_ext"
+        }
+      ]
+    },
+    {
+      "path": "soundfile.py",
+      "sha256": "085feb318464c2a5e82747e0d6da43c214f3a6a4ed3a7a18f2c07fe7b3750df2",
+      "matches": [
+        {
+          "line": 190,
+          "text": "    _snd = _ffi.dlopen(_full_path)  # OSError if file doesn't exist or can't be loaded"
+        },
+        {
+          "line": 197,
+          "text": "        _snd = _ffi.dlopen(_libname)"
+        },
+        {
+          "line": 216,
+          "text": "            _snd = _ffi.dlopen(_os.path.join(_hbrew_path, _explicit_libname))"
+        },
+        {
+          "line": 218,
+          "text": "            _snd = _ffi.dlopen(_explicit_libname)"
+        }
+      ]
+    }
+  ],
+  "p7_review": "P7 打包前复核 LGPL 分发义务：许可证文本、源码出处、可替换"
+}
