@@ -1,7 +1,7 @@
 # P4-01 语音识别与语言识别 — 报告
 
 ## 结果
-部分完成：用户已验证全部转写，60 条用户录音已登记，完整 150 条识别评测通过；SenseVoice 开发许可方案已决定。独立强制对齐已完成 60/60；执行方已完成 60 条完整实时延迟测量，但 VAD 中位 320.1 ms、59 条打断超限，延迟验收未通过，不再等待用户提供或确认录音。不得据此宣称整卡验收完成。
+部分完成：用户已验证全部转写，60 条用户录音已登记，完整 150 条识别评测通过；SenseVoice 开发许可方案已决定。已生成 60/60 独立模型参考（其上下文稳定性仍待复核）；执行方已完成 60 条完整实时延迟测量，但 VAD 中位 320.1 ms、59 条打断超限，延迟验收未通过，不再等待用户提供或确认录音。不得据此宣称整卡验收完成。
 
 ## 同步与认领
 - 从 `origin/main` 创建 `task/P4-01-asr`，独立工作树 `C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu`。
@@ -35,18 +35,18 @@ pnpm asr:latency      # 使用仓库外 timing-references.json 的独立起止�
 | --- | --- | --- |
 | 模型下载/哈希 | 三文件已校验；SenseVoice int8 239233841 字节 | lock、manifest、model-hashes.json |
 | 公开数据准备 | 90 条，三语各 30，三个 Parquet SHA-256 与官方 LFS 元数据一致 | public-download.log、public-data.lock.json |
-| P4-01 单测 / 整仓 Vitest | 整仓 36 文件、475/475，通过 | gated-effective-tests.log |
-| TypeScript 类型检查 | 通过 | resume-typecheck.log |
-| ESLint | 通过 | resume-lint.log |
+| P4-01 单测 / 整仓 Vitest | 整仓 36 文件、479/479，通过 | final-resume-tests.log |
+| TypeScript 类型检查 | 通过 | final-resume-typecheck.log |
+| ESLint | 通过 | final-resume-lint.log |
 | Python mypy --strict / 辅助测试 | 8 个文件通过；11 项测试通过，使用 D 盘环境 | resume-mypy.log、resume-python-tests.log |
-| workspace build | 同步 main 并补齐桌面工作区依赖后通过，路径函数已打入主进程包 | resume-build.log |
+| workspace build | 同步 main 并补齐桌面工作区依赖后通过，路径函数已打入主进程包 | final-resume-build.log |
 | 完整 Electron E2E（构建后 Playwright） | 4 通过，专门静音 CPU 测量 1 项按设计跳过且随后单独实测通过；已正确初始化 run.json，含 OS 快照，整体退出 0 | resume-e2e.log、resume-e2e-*/ |
 | 真实麦克风/utility 通道测试 | 通过：50 packets/s、异步关闭，未读取真实用户麦克风，使用 Chromium fake device | voice-e2e-v5.log、e2e-v5/ |
 | Electron 首次测试 | 失败，原始日志保留。与 CI 窗口重叠且临时目录前缀不符合隔离约束；不能据失败推断单一原因 | voice-e2e.log、e2e/ |
 | Electron 第二次测试 | 安静窗口检查把 PowerShell 空列表 null 当成占用，已修正；等待最终复跑 | voice-e2e-v2.log、e2e-v2/ |
 | 各语言 50 条/150 条语言准确率 | 用户录音 60/60 已验证并登记；zh CER 6.29%、en WER 6.69%、ja CER 7.52%，LID 149/150 = 99.33%，通过 | evaluation.json、eval150-user-verified.log、user-verification-20261021.json |
 | 公开集 CER/WER 与 LID | 中文 74/989 = 7.48%，英文 54/664 = 8.13%，日文 126/1438 = 8.76%；LID 90/90 = 100% | public90-before-user-verification.json、public-evaluation.log |
-| 独立语音起止参考 | 60/60，方法 v4 在测量前提交；所有数值检查通过。80 ms 网格是模型分辨率，不代表已经校准的误差上限 | ALIGNMENT-PREREGISTRATION-V4.md、alignment-v4-evidence.json、alignment-v4-diagnostics.json |
+| 独立语音起止参考 | 60/60 数值有效，方法 v4 在测量前提交；上下文敏感性与负延迟样本仍待复核。80 ms 网格是模型分辨率，不代表已经校准的误差上限 | ALIGNMENT-PREREGISTRATION-V4.md、alignment-v4-evidence.json、alignment-v4-diagnostics.json |
 | VAD 中位延迟 ≤300 ms | **FAIL：320.1 ms**；60/60 实时完整，最大重放迟到 17.35 ms，未超过 20 ms 无效门槛；另 1 条结束事件相对参考提前，保留原值 | latency.json、latency-attempt-2026-10-21T15-52-58-219Z.json、resume-latency-v2.log |
 | 打断延迟 ≤250 ms | **FAIL：59/60 超过 250 ms**，最大 1340.5 ms；余下 1 条为 -119.9 ms 提前值，不能当通过。无缺事件 | latency.json、同轮唯一尝试与日志 |
 | utilityProcess 静音 CPU ≤2% | 迁移后复测 60.73 秒；平均 0.11191%、峰值 0.14086%，通过。此前结果另存，未覆盖历史证据 | idle-cpu.json、resume-idle.log、measurement-*/ |
@@ -104,9 +104,7 @@ SenseVoice 源码的 MIT 不能替代权重许可证；转换仓库的 LICENSE �
 - P4-02 也在独立工作树对 apps/desktop 做集成；合并时按规则保留双方，不能覆盖另一张卡的启动/守护改动。
 
 ## 下一步
-实现提交：`4d97e30`。Windows CI 与 Claude 审查均针对提交后的 PR，最终状态见 PR 检查。
-已等待 P2-03 Blender 与 P4-02 Electron 重负载结束并复核进程，再串行完成公开集和静音 CPU；最后完成回归后转可审查，交 Claude 审查实现。不合并，不取下一张卡。等待用户录音与模型许可决定。
-
+未完成：继续独立参考稳定性 QA 与 VAD／打断延迟优化。PR #44 保持草稿与 needs-user；达成全部验收后再转可审查、交 Claude 审查。不合并、不取下一张卡。无需用户重录、重验文字或重新决定 SenseVoice 开发许可。
 
 ## 2026-10-21 继续施工（当前状态取代前文的历史下一步）
 - PR #44 已按用户要求转回草稿，`needs-user` 保留；**整张卡的验收结果齐全并重跑检查之前，不转可审查、不请求提前审查**。
@@ -244,3 +242,17 @@ v4 在 c224bf2 提交后、首次实际延迟之前，按目标原语言分词�
 后续必须先取得全量可靠且独立的时间参考或明确其不确定性，再验证持续语音判定优化。可在同一工具上对全部 60 条做预登记的同语言双锚点一致性检查；若仍不稳定，再评估覆盖混合文字的独立音素级工具。任何新参考方法都须在再次测量前提交，旧参考和失败结果保留，不以 DUT 结果选点，不以能量阈值或 Silero/SenseVoice 输出替代真值。
 
 当前不是等待用户录音、重读处理或 SenseVoice 开发许可；这些已决定。待解决的是执行方的延迟性能及时间参考质量。PR #44 保持草稿和 needs-user，不请求 Claude 提前审查，不合并，不取下一张卡。
+
+
+### 2026-10-22 诊断补齐与最终状态
+有效零样本门控的第三组只续跑原定 0.2 配置全部 60 条，结果为 42 条打断超限、2 条提前、1 条提前结束，最大打断约 1300 ms，仍不解决问题。原有效前两组的 47/45 条超限及全部原始数据保留，未覆盖或选择成功样本。故所有候选均未进入生产实现。
+
+针对 CIM 进程退出竞态，未知工作进程只触发一次新的完整快照；只有新快照证明已无未知进程且没有重负载才继续。仍存在的信息不明进程或新出现的重负载仍会阻止执行，四项测试证明该边界。此前中断仍是中断，不追溯为有效。最终静态检查前已再次确认安静，不再把过去中断写作当前用户资源待办。
+
+最终本机 lint、typecheck、479 项单测及整仓构建见 final-resume-*.log；Python 8 文件严格检查与 11 项辅助测试、Electron 4 项功能验证及 60 秒 CPU 复测证据保持。最后 fetch 的 origin/main 没有新提交，当前已含 806e09b。整卡仍未完成，下一步是独立参考稳定性复核及满足既定持续语音语义的低延迟实现，而不是要求用户重录或重新核实已确认稿。
+
+### 历史下一步原文（保留记录，已被当前状态取代）
+## 下一步
+实现提交：`4d97e30`。Windows CI 与 Claude 审查均针对提交后的 PR，最终状态见 PR 检查。
+已等待 P2-03 Blender 与 P4-02 Electron 重负载结束并复核进程，再串行完成公开集和静音 CPU；最后完成回归后转可审查，交 Claude 审查实现。不合并，不取下一张卡。等待用户录音与模型许可决定。
+
