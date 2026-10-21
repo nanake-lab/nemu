@@ -1,21 +1,21 @@
-P4-02 提供三语本地 TTS 旁路服务、共享请求校验、本地/云端适配器、模型锁与离线降级健康检查。缺依赖/模型时服务保持运行。用户批准的 SoX 约束已在自有导入边界解决，真实 Qwen 导入审计无 SoX 启动尝试；无第三方源码修改。LGPL 条件批准与 P7 分发复核义务已登记。
+P4-02 提供三语 TTS 旁路服务、共享边界校验、离线降级、模型锁、本地/云端适配器。云端仅模拟，无真实请求或密钥。
 
-**保持草稿：真实验收未通过，不转可审查，不合并。**
+**保持草稿和 needs-user；不合并。正式验收仍未完成。**
 
-2026-10-21 用户开放安静窗口后，以纯 VoiceDesign 合成参考、P0-07 载体与渲染驻留，两个新进程串行实测，未回退冒充变体：
+本次优化只改 services/voice-sidecar/ 与 reports/P4-02/。自有 bounded CUDA graph 使用静态 KV、与上游相同的注意力长度/连续布局，保留原采样/精度；predictor 全部单步、talker 每请求前 16 帧/总 48 个位置图、256-token 优化缓存，超范围继续上游 eager，生成上限仍 512。独立线程/持久 CUDA stream 解码，首块 2 帧，其余 4 帧，左上下文 25 帧不变。未新增 faster-qwen3-tts 依赖（其当前 0.5.4 与锁定栈不兼容）。候选显式启用，默认旧路径保留。
 
-| 验收 | 0.6B | 1.7B |
+分段计时包括 prefill、talker、predictor 每步、每次解码、冷捕获、引擎/实际 WS 发送首末块。实时率仅作报告指标。两个变体的三语有界贪心 codec 与上游全部一致，同 2 帧分块的 PCM 逐样本相同；0.6B 511 帧完整序列 SHA-256 也相同。所有失败和满卡停滞证据保留。
+
+| 开发短测（不是正式 p50） | 0.6B | 1.7B |
 | --- | --- | --- |
-| 中/英/日首包 p50 ms，要求 ≤250 | 854.682 / 851.609 / 853.555，失败 | 854.117 / 863.247 / 862.669，失败 |
-| 专用峰值+共享峰值，要求 ≤8 GB | 7.188 GB，通过 | 9.214 GB，失败 |
-| 30 分钟连续合成 | 1800.125 秒，289 次 | 1804.297 秒，298 次 |
-| RSS 首末变化 | +12.813 MiB，中位数仍上升 | +15.012 MiB，中位数仍上升 |
-| 取消后最后分块，要求 ≤50 ms | 最大 0.7621 ms，通过 | 未观测新块，通过 |
+| 中/英/日首块 ms | 233.205 / 196.403 / 223.672 | 269.548 / 249.451 / 210.670 |
+| 首块到末块实时率 | 1.280 / 1.222 / 1.490 | 1.497 / 1.110 / 1.158 |
+| ADR 0012 Nemu 合计显存 | 7.816 GB | 9.654 GB，超 8 GB |
 
-压力测试完成但不能签发“内存不持续增长”；没有放宽阈值。保留失败、逐句原始 JSONL、WDDM 数据、torch allocator、来源许可和 SHA-256。真实云端仍未测，声音不是角色定稿。
+另一个 0.6B 40.88 秒完整输出峰值 **8.089 GB，仍超线**；不能只报告短句符合。接缝数值/原始波形已归档，听感未签发。
 
-已 merge origin/main（9c986a6），随后 lint/typecheck、454 TS 测试、schema、ruff/mypy（20 文件）、26 Python 测试、Python 构建和 Electron e2e（3 项、原样 7 进程/0 重启断言）通过；1 个 opt-in GPU smoke 明确跳过，另有上述完整真实 GPU 测量。新 HEAD 的 CI 以检查页为准，历史成功记录不替代本次。
+用户批准的后续压力判据已登记且实现：torch allocated 首末不变、20–30 分钟 RSS 斜率 ≤12 MiB/小时；不满足延长到总 2 小时，报告趋势交用户判断，不追溯旧数据。优化后正式各语言 20 句 p50、WS 取消和压力仍需另约安静窗口，载体/渲染照常驻留，原阈值不变。
 
-详见 [REPORT.md](reports/P4-02/REPORT.md)、[BLOCKED.md](reports/P4-02/BLOCKED.md)、[acceptance-summary.json](reports/P4-02/acceptance-summary.json)。后续需定位首包/RSS 并在新安静窗口复测；全部验收满足前保持草稿。无合并，无下一张卡。
+已 merge origin/main 806e09b（合并 d585926），随后 lint/typecheck、454 TS 测试、schema、ruff/mypy、35 Python 测试、Python 构建及原样 Electron e2e 3 项通过；1 GPU smoke 按默认条件明确跳过，另有真实开发测量。当前提交的远端 CI 状态以检查页为准，历史成功不冒充本次。
 
-提交 4a4eb93 的 Ubuntu CI 已成功（run 39583470293）；Windows CI 因草稿跳过（run 39583470934），不记为通过。原始数据归档和报告补记不改变受测实现。
+[REPORT.md](https://github.com/nanake-lab/nemu/blob/task/P4-02-tts-sidecar/reports/P4-02/REPORT.md) / [BLOCKED.md](https://github.com/nanake-lab/nemu/blob/task/P4-02-tts-sidecar/reports/P4-02/BLOCKED.md) / [开发摘要](https://github.com/nanake-lab/nemu/blob/task/P4-02-tts-sidecar/reports/P4-02/optimization-summary.json)。无合并，无下一张卡。

@@ -2,6 +2,8 @@
 
 ## 结果
 
+当前优化候选及开发短测已交付，正式重测尚未执行；候选结果与剩余显存边界见文末。PR 仍为草稿及 needs-user。
+
 部分完成，真实验收未通过。2026-10-21 用户授权 GPU 安静窗口后，已解决 SoX 导入调用，生成纯合成三语参考，分别以新进程串行完成 0.6B 和 1.7B 的三语各 20 句、真实链路取消和至少 30 分钟压力测试。两者首包 p50 均超过 250 ms，1.7B 合计显存超过 8 GB；RSS 仍有上升趋势，不能签发稳定性通过。详见 [BLOCKED.md](BLOCKED.md)。
 
 PR [#45](https://github.com/nanake-lab/nemu/pull/45) 保持草稿及 needs-user，不转可审查、不合并、不取下一张卡。已 fetch 并 merge 最新 origin/main，合并提交为 9c986a6；必读规则与 P4-02 卡未变化。下列静态/功能检查在该合并后重跑，GPU 数据来自合并前同一 P4-02 运行实现；main 没有改动这部分实现。
@@ -17,7 +19,7 @@ PR [#45](https://github.com/nanake-lab/nemu/pull/45) 保持草稿及 needs-user�
 - `services/voice-sidecar/tests/fixtures/voice-design-v1/`：三语纯合成参考 WAV（LFS）及 voice.json/manifest，登记 VoiceDesign 固定修订、Apache-2.0、cloneAllowed、SHA-256；没有使用任何 P4-01 录音或真实人物参考，也不是 Nemu 定稿音色。
 - 本报告目录保留逐句 JSONL、WDDM 原始采样、失败运行、控制台日志、参考元数据和检查证据。`gpu-evidence-sha256.json` 是原始文件清单；`git-byte-preservation.json` 核对 24 个原始文件 Git blob 与磁盘字节摘要一致。原始 CRLF 数据通过局部 attributes 保持原字节。
 
-## 真实 GPU 验收
+## 初轮真实 GPU 验收（优化前，保留原结论）
 
 用户停止 runner 后确认 Runner.Listener、Runner.Worker、Blender 和其他测量均未运行，窗口中没有交叉运行编译或测试，见 `quiet-window-20261021.json`。RTX 3080；使用 P0-07 probe 环境，载体 Qwen3-4B-Instruct-2507 固定修订、NF4/bfloat16、eager、原生 RMS、layer 17/rank 8 m=0 hook、48 步 decode 的 KV 同时驻留。TTS snapshot 共 33 个文件和载体 10 个文件均已校验。
 
@@ -146,8 +148,8 @@ timing.py/profiling.py 记录 prefill、上游 prefill 与冷 graph_prepare、�
 
 | 指标 | 0.6B | 1.7B |
 | --- | --- | --- |
-| 热图/异步首块，中/英/日 ms | 见 optimization-summary.json | 见 optimization-summary.json |
-| 首块到末块实时率 | 见 optimization-summary.json | 见 optimization-summary.json |
+| 热图/异步首块，中/英/日 ms | 233.205 / 196.403 / 223.672 | 269.548 / 249.451 / 210.670 |
+| 首块到末块实时率，中/英/日 | 1.280 / 1.222 / 1.490 | 1.497 / 1.110 / 1.158 |
 | 同条件完整 codec 序列 | 三语全部逐元素相同 | 三语全部逐元素相同 |
 | 同 2 帧分块的上游 vs 候选 PCM | 三语逐样本相同，最大绝对差 0 | 三语逐样本相同，最大绝对差 0 |
 | 候选同步 vs 异步 PCM | 三语逐样本相同，最大绝对差 0 | 三语逐样本相同，最大绝对差 0 |
@@ -164,6 +166,14 @@ summarize_optimization.py 无 CUDA 复算分段计时/接缝/PCM 差异；optimi
 
 ### 检查与下一步
 
-ruff、mypy --strict（30 文件）通过，pytest 35 通过/1 个 opt-in GPU smoke 明确跳过；见 optimization-*-final-v2.log。初始格式/类型失败日志也保留。即将 merge main 的 ADR 0015 文档更新后重跑检查并追加结果。PR 不转可审查、不合并、不取下一张卡。
+ruff、mypy --strict（30 文件）通过，pytest 35 通过/1 个 opt-in GPU smoke 明确跳过；见 optimization-*-final-v2.log。初始格式/类型失败日志也保留。已 merge main 的 ADR 0015 文档更新；合并后检查另行归档。PR 不转可审查、不合并、不取下一张卡。
 
 正式窗口另约：载体/渲染照常驻留，两变体各语言 20 句、真实链路取消、ADR 0012 §2.2 显存和压力均按原阈值。通常约 90 分钟；如两轮压力均触发用户批准的 2 小时延长，需约 4–4.5 小时。压力判据仅用于新测量，不追溯原结果。
+
+原始文件 Git/LFS 字节核对见 optimization-git-byte-audit.json，所有记录摘要均一致。
+
+### 优化合并 main 后检查
+
+合并提交 d585926（origin/main 806e09b，ADR 0015 仅文档）后，pnpm lint/typecheck、454 项 TS 测试、共享 schema、ruff、mypy --strict 30 文件、pytest 35 通过/1 个 opt-in GPU smoke 明确跳过、sdist/wheel、Electron e2e 3 项均通过。原样 7 受守护进程/重启 0 次断言不变；optimization-post-main-*.log 和 optimization-post-main-e2e-captures/ 为证据。测试写到 P0-01 的文件已复制后按 HEAD 原字节恢复，没有更新视觉基准。
+
+GPU 与本机重负载检查均已结束，已通知可恢复 runner。没有运行新正式压力测试或真实云端请求；PR 不转可审查、不合并。下一轮窗口由用户另行通知。
