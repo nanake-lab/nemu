@@ -1,3 +1,4 @@
+import { asrDataDirectory } from './cache.js';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -8,8 +9,7 @@ import { cacheDirectory, verifyModels } from './models.js';
 import { VoiceRuntime, type VoicePort } from './runtime.js';
 import { loadTimingReferences } from './timing-reference.js';
 import { replayPcm } from './replay.js';
-const root =
-  process.env.NEMU_ASR_DATA ?? resolve(process.env.LOCALAPPDATA ?? '', 'Nemu/asr-evaluation');
+const root = asrDataDirectory();
 const attempt = `reports/P4-01/latency-attempt-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
 class ReplayPort implements VoicePort {
   private handler: ((event: { data: unknown }) => void) | undefined;

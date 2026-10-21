@@ -7,6 +7,9 @@ import importlib.metadata
 import json
 import os
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from cache_paths import data_directory, evaluation_directory, configure_cache_environment
 import shutil
 import subprocess
 from typing import Protocol, cast
@@ -110,6 +113,7 @@ def promote(root: Path, archive: Path) -> None:
     print('Promoted 60 WAVs; run pnpm asr:user to register, then independent per-clip alignment')
 
 def main() -> None:
+    configure_cache_environment()
     parser = argparse.ArgumentParser()
     parser.add_argument('--archive', type=Path, required=True)
     parser.add_argument('--promote', action='store_true')
@@ -117,8 +121,7 @@ def main() -> None:
     if os.environ.get('CI'):
         raise ValueError('Local-only import')
     archive = cast(Path, args.archive).resolve()
-    local = Path(os.environ['LOCALAPPDATA'])
-    root = Path(os.environ.get('NEMU_ASR_DATA', str(local / 'Nemu/asr-evaluation'))).resolve()
+    root = data_directory().resolve()
     commit = check_method()
     if args.promote:
         promote(root, archive)
@@ -133,7 +136,7 @@ def main() -> None:
         raise ValueError('Canonical recording changed')
     with wave.open(str(canonical), 'rb') as audio:
         frames = audio.getnframes()
-    cache = local / 'Nemu/models/evaluation/qwen3-forced-aligner' / REVISION
+    cache = evaluation_directory() / 'qwen3-forced-aligner' / REVISION
     verify_models(cache, False)
     os.environ.update(CUDA_VISIBLE_DEVICES='', HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1')
     for package, expected in {'qwen-asr': '0.0.6', 'torch': '2.10.0+cpu', 'transformers': '4.57.6'}.items():

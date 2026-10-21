@@ -1,3 +1,4 @@
+import { asrModelDirectory } from '@nemu/voice';
 import { _electron as electron, expect, test } from '@playwright/test';
 import { mkdtemp, rm, access, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
@@ -5,8 +6,7 @@ import { tmpdir } from 'node:os';
 import { existsSync, appendFileSync } from 'node:fs';
 import { assertQuiet } from '../../../packages/voice/src/asr/quiet.js';
 import type { ApplicationEvent } from '@nemu/contracts';
-const modelDir =
-  process.env.NEMU_ASR_MODELS ?? join(process.env.LOCALAPPDATA ?? '', 'Nemu/models/asr');
+const modelDir = asrModelDirectory();
 test('P4-01 utility ports, real AudioWorklet capture and disable', async () => {
   test.skip(
     !existsSync(join(modelDir, 'model.int8.onnx')),
@@ -111,8 +111,15 @@ test('P4-01 utility ports, real AudioWorklet capture and disable', async () => {
     await access(join(scratch, 'logs'));
     expect(existsSync(join(scratch, 'core'))).toBe(false);
   } finally {
-    const errors = await application.evaluate(({ app }) => (app as unknown as { __nemu_bus__?: { getHistory(): ApplicationEvent[] } }).__nemu_bus__?.getHistory().filter(e => e.type === 'stage.error'));
-    await writeFile(resolve(process.env.NEMU_EVIDENCE_DIR ?? 'reports/P4-01', 'voice-stage-errors.json'), JSON.stringify(errors, null, 2));
+    const errors = await application.evaluate(({ app }) =>
+      (app as unknown as { __nemu_bus__?: { getHistory(): ApplicationEvent[] } }).__nemu_bus__
+        ?.getHistory()
+        .filter((e) => e.type === 'stage.error'),
+    );
+    await writeFile(
+      resolve(process.env.NEMU_EVIDENCE_DIR ?? 'reports/P4-01', 'voice-stage-errors.json'),
+      JSON.stringify(errors, null, 2),
+    );
     await application.close();
     await rm(scratch, { recursive: true, force: true });
   }

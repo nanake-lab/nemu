@@ -1,3 +1,4 @@
+import { asrModelDirectory } from '@nemu/voice';
 import { _electron as electron, expect, test } from '@playwright/test';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
@@ -11,8 +12,7 @@ test('P4-01 60-second utility CPU with live silent PCM', async () => {
   );
   test.setTimeout(120000);
   assertQuiet();
-  const directory =
-    process.env.NEMU_ASR_MODELS ?? join(process.env.LOCALAPPDATA ?? '', 'Nemu/models/asr');
+  const directory = asrModelDirectory();
   test.skip(
     !existsSync(join(directory, 'model.int8.onnx')),
     'ASR models absent: CI never downloads models',

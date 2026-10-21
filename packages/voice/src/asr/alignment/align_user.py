@@ -7,8 +7,10 @@ import importlib.metadata
 import json
 import os
 from pathlib import Path
-import subprocess
 import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from cache_paths import data_directory, evaluation_directory, configure_cache_environment
+import subprocess
 from typing import Protocol, cast
 import wave
 from reference_data import (ANNOTATION_V2 as ANNOTATION, METHOD_V2 as METHOD, boundaries_v2 as boundaries, canonicalize_v2 as canonicalize, file_sha, freeze,
@@ -50,7 +52,7 @@ class Torch(Protocol):
 
 def committed_method() -> dict[str, str]:
     files = [PLAN, METHOD_DOC, HERE / 'manifest.json', HERE / 'pyproject.toml',
-             HERE / 'uv.lock', Path(__file__), HERE / 'reference_data.py',
+             HERE / 'uv.lock', HERE.parent / 'cache_paths.py', Path(__file__), HERE / 'reference_data.py',
              HERE / 'import_continuous.py', REPO / 'reports/P4-01/CONTINUOUS-IMPORT-PREREGISTRATION.md']
     paths = [str(p.relative_to(REPO)) for p in files]
     subprocess.run(['git', 'ls-files', '--error-unmatch', *paths], cwd=REPO,
@@ -88,15 +90,15 @@ def verify_models(cache: Path, download: bool) -> None:
 
 
 def main() -> None:
+    configure_cache_environment()
     parser = argparse.ArgumentParser()
     parser.add_argument('--download', action='store_true')
     parser.add_argument('--preflight', action='store_true')
     args = parser.parse_args()
     if os.environ.get('CI'):
         raise ValueError('Alignment and downloads are local-only; disabled in CI')
-    local = Path(os.environ.get('LOCALAPPDATA', str(Path.home() / '.cache')))
-    root = Path(os.environ.get('NEMU_ASR_DATA', str(local / 'Nemu/asr-evaluation'))).resolve()
-    cache = local / 'Nemu/models/evaluation/qwen3-forced-aligner' / REVISION
+    root = data_directory().resolve()
+    cache = evaluation_directory() / 'qwen3-forced-aligner' / REVISION
     if args.download:
         verify_models(cache, True)
         print('Independent evaluation model verified; no alignment or measurement was run')

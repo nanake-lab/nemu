@@ -9,10 +9,11 @@ import json
 import os
 from pathlib import Path
 import subprocess
+from cache_paths import data_directory, configure_cache_environment
 import pyarrow.parquet as pq  # type: ignore[import-untyped]
 
 ROOT = Path(__file__).resolve().parents[4]
-CACHE = Path(os.environ.get('NEMU_ASR_DATA', str(Path(os.environ.get('LOCALAPPDATA', str(Path.home()))) / 'Nemu' / 'asr-evaluation')))
+CACHE = data_directory()
 REV = '168de341b3db6859a9bac1c50a2ef5e3b47647e0'
 SHARDS = [('zh', 'cmn_hans_cn', '87c0aebbe183f3a36ac87b5c3421b6ab57036824744ff695029a3f858e7622fd'), ('en', 'en_us', '6428a4d04d3aac29e16b45e039bb1470a8bd7aa334cf92f7984c9c520d1f234d'), ('ja', 'ja_jp', 'e954b67e934b9a31d7a74a070a75225379660d50c8d1aacdb755852c57f23e6b')]
 
@@ -21,6 +22,7 @@ def sha(path: Path) -> str:
         return hashlib.file_digest(f, 'sha256').hexdigest()
 
 def main() -> None:
+    configure_cache_environment()
     if os.environ.get('CI'):
         raise RuntimeError('Public audio download is local-only, disabled in CI')
     CACHE.mkdir(parents=True, exist_ok=True)

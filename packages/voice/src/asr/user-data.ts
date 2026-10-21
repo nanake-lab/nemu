@@ -1,3 +1,4 @@
+import { asrDataDirectory } from './cache.js';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -6,8 +7,7 @@ import { langSchema } from '@nemu/contracts';
 const prompts = z
   .array(z.object({ id: z.string(), lang: langSchema, path: z.string(), text: z.string() }))
   .parse(JSON.parse(await readFile(new URL('./reading-prompts.json', import.meta.url), 'utf8')));
-const root =
-  process.env.NEMU_ASR_DATA ?? join(process.env.LOCALAPPDATA ?? '', 'Nemu', 'asr-evaluation');
+const root = asrDataDirectory();
 const rows = [];
 for (const row of prompts) {
   const dir = join(root, 'user', row.lang);

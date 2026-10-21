@@ -27,8 +27,8 @@ pnpm eval:asr         # 一条命令输出三语 CER/WER、语言准确率到 ev
 pnpm measure:asr      # 独占窗口内测真实 utilityProcess 静音 CPU 60 秒
 pnpm asr:latency      # 使用仓库外 timing-references.json 的独立起止参考，实时 20 ms 输入测 VAD/打断
 ```
-模型：`%LOCALAPPDATA%\Nemu\models\asr`，可用 `NEMU_ASR_MODELS` 覆盖。
-音频：`%LOCALAPPDATA%\Nemu\asr-evaluation`，可用 `NEMU_ASR_DATA` 覆盖。用户录音、用户文字稿、user.json、FLEURS 音频和 Parquet 均在仓库外。
+模型：`D:\NemuData\models\asr`，可用 `NEMU_ASR_MODELS` 覆盖。
+音频：`D:\NemuData\asr-evaluation`，可用 `NEMU_ASR_DATA` 覆盖。用户录音、用户文字稿、user.json、FLEURS 音频和 Parquet 均在仓库外。
 
 ## 验收
 | 命令或检查 | 结果 | 证据 |
@@ -211,3 +211,7 @@ v4 在 c224bf2 提交后、首次实际延迟之前，按目标原语言分词�
 首次 pnpm asr:latency 在启动前安静检查通过，但完成 15/60 后检测到 uv/Python 测试或模型任务，立即停止。状态 INVALID，原因是资源窗口中断，不能把部分数值或缺失的 45 条当成最终验收，也不因该失败修改代码或阈值。原始日志及唯一尝试文件完整保留：latency-v4-run.log、latency-attempt-2026-10-21T13-53-12-367Z.json。待其他任务结束后从头重测全部 60 条。当前录音和文字稿没有待用户确认项，PR #44 仍为草稿，needs-user 保留。
 
 测量覆盖 20 ms PCM 输入到本机 VoiceRuntime AppBus 回调；没有把它表述成物理麦克风驱动到 UI 的全链路测量。真实 Electron utilityProcess 的采集／通道和静音 CPU 单独有对应证据。
+
+
+## 2026-10-21 D 盘迁移（用户明确指示）
+默认缓存统一为 D:\NemuData，模型及完整评测资料按 SHA-256 验证，评测环境按原锁文件在 D 盘重建且 94 个依赖版本一致。原生 ASR/VAD 和独立 Qwen3 对齐均在 D 盘实际运行通过后，已清理 C 盘三处 Nemu 专用副本。详见 [CACHE-MIGRATION.md](CACHE-MIGRATION.md) 与 cache-migration-*.json；没有更改冻结输入、时标或验收阈值。

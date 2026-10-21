@@ -1,3 +1,4 @@
+import { asrDataDirectory, evaluationDirectory, evaluationEnvironment } from './cache.js';
 import { spawn } from 'node:child_process';
 import { mkdir, open } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -6,11 +7,11 @@ import { assertQuiet } from './quiet.js';
 if (process.env.CI) throw new Error('Independent alignment is local-only; disabled in CI');
 assertQuiet();
 const project = fileURLToPath(new URL('./alignment/', import.meta.url));
-const cache = join(process.env.LOCALAPPDATA ?? '', 'Nemu', 'models', 'evaluation');
-const data =
-  process.env.NEMU_ASR_DATA ?? join(process.env.LOCALAPPDATA ?? '', 'Nemu', 'asr-evaluation');
+const cache = evaluationDirectory();
+const data = asrDataDirectory();
 const logs = join(data, 'alignment-logs');
 await mkdir(logs, { recursive: true });
+await mkdir(evaluationEnvironment().TEMP!, { recursive: true });
 const log = await open(join(logs, `${new Date().toISOString().replace(/[:.]/g, '-')}.log`), 'wx');
 const args = [
   'run',
@@ -25,7 +26,7 @@ if (process.argv[2] === 'download') args.push('--download');
 const child = spawn('uv', args, {
   windowsHide: true,
   env: {
-    ...process.env,
+    ...evaluationEnvironment(),
     CUDA_VISIBLE_DEVICES: '',
     UV_PROJECT_ENVIRONMENT: join(cache, 'alignment-venv'),
     HF_HUB_DISABLE_TELEMETRY: '1',

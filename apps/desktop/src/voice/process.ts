@@ -1,3 +1,4 @@
+import { asrModelDirectory } from '@nemu/voice';
 import { utilityProcess, type UtilityProcess, type MessagePortMain } from 'electron';
 import { appBusEventSchema, type ControlCommand } from '@nemu/contracts';
 import { join } from 'node:path';
@@ -25,8 +26,7 @@ export class VoiceProcess {
   }
   start(): void {
     if (this.stopped || this.child) return;
-    const models =
-      process.env.NEMU_ASR_MODELS ?? join(process.env.LOCALAPPDATA ?? '', 'Nemu', 'models', 'asr');
+    const models = asrModelDirectory();
     if (!existsSync(join(models, 'model.int8.onnx'))) {
       this.logger.warn('ASR models absent; run pnpm asr:models to enable local voice');
       return;

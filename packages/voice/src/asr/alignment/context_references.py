@@ -6,8 +6,10 @@ import importlib.metadata
 import json
 import os
 from pathlib import Path
-import subprocess
 import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from cache_paths import data_directory, evaluation_directory, configure_cache_environment
+import subprocess
 from typing import cast
 import wave
 from align_user import Factory, LANGUAGES, REVISION, Torch, verify_models
@@ -39,7 +41,7 @@ def write_pcm(path: Path, value: bytes) -> None:
 
 def method() -> dict[str,str]:
     files=[PLAN,DOC,Path(__file__),HERE/'reference_data.py',HERE/'import_continuous.py',
-           HERE/'align_user.py',HERE/'segmented_tokens.py',HERE/'manifest.json',HERE/'uv.lock',HERE/'pyproject.toml',
+           HERE/'align_user.py',HERE.parent/'cache_paths.py',HERE/'segmented_tokens.py',HERE/'manifest.json',HERE/'uv.lock',HERE/'pyproject.toml',
            REPO/'packages/voice/src/asr/public-data.lock.json']
     paths=[str(p.relative_to(REPO)) for p in files]
     subprocess.run(['git','ls-files','--error-unmatch',*paths],cwd=REPO,capture_output=True,check=True)
@@ -49,10 +51,10 @@ def method() -> dict[str,str]:
             'manifestSha256':file_sha(HERE/'manifest.json'),'uvLockSha256':file_sha(HERE/'uv.lock')}
 
 def main() -> None:
+    configure_cache_environment()
     if os.environ.get('CI'):
         raise ValueError('Independent alignment is local-only')
-    local=Path(os.environ['LOCALAPPDATA'])
-    root=Path(os.environ.get('NEMU_ASR_DATA',str(local/'Nemu/asr-evaluation'))).resolve()
+    root = data_directory().resolve()
     plan=obj(read_json(PLAN))
     if plan['method']!=METHOD:
         raise ValueError('Unexpected fixed-context plan')
@@ -82,7 +84,7 @@ def main() -> None:
              'transcriptSha256':r.transcript_sha256,'path':p.relative_to(root).as_posix(),
              'sha256':file_sha(p)} for r,p in canonical]
     freeze(root/'alignment-inputs-v3.json',frozen)
-    cache=local/'Nemu/models/evaluation/qwen3-forced-aligner'/REVISION
+    cache = evaluation_directory() / 'qwen3-forced-aligner' / REVISION
     verify_models(cache,False)
     os.environ.update(CUDA_VISIBLE_DEVICES='',HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1')
     for package,version in {'qwen-asr':'0.0.6','torch':'2.10.0+cpu','transformers':'4.57.6'}.items():

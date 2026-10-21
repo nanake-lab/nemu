@@ -1,3 +1,4 @@
+import { asrDataDirectory } from './cache.js';
 import { assertQuiet } from './quiet.js';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { join, resolve, relative, isAbsolute } from 'node:path';
@@ -15,8 +16,7 @@ const rowSchema = z.object({
   text: z.string(),
   sha256: z.string().regex(/^[a-f0-9]{64}$/),
 });
-const dataRoot =
-  process.env.NEMU_ASR_DATA ?? join(process.env.LOCALAPPDATA ?? '', 'Nemu', 'asr-evaluation');
+const dataRoot = asrDataDirectory();
 const report = resolve('reports/P4-01');
 await mkdir(report, { recursive: true });
 assertQuiet();

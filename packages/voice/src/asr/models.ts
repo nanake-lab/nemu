@@ -2,7 +2,7 @@ import bundledLock from '../../../../config/models.lock.json' with { type: 'json
 import { createHash } from 'node:crypto';
 import { readFile, mkdir, writeFile, rename } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
-import { homedir } from 'node:os';
+import { asrModelDirectory } from './cache.js';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
 const entry = z.strictObject({
@@ -14,9 +14,7 @@ const entry = z.strictObject({
   license: z.string(),
   redistributable: z.boolean(),
 });
-export const cacheDirectory = () =>
-  process.env.NEMU_ASR_MODELS ??
-  join(process.env.LOCALAPPDATA ?? join(homedir(), '.cache'), 'Nemu', 'models', 'asr');
+export const cacheDirectory = asrModelDirectory;
 export async function modelEntries(path?: string) {
   const lock: unknown = path ? JSON.parse(await readFile(path, 'utf8')) : bundledLock;
   return z
