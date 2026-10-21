@@ -48,6 +48,8 @@ GPU 窗口获用户授权；开始及 v2 重启前确认 Runner.Listener、Runne
 - 额度使用账号显示快照；共享账号可能有其他活动、百分比取整或窗口重置，不能把变化全部归因给本卡或当成计费单价。
 - A/B/C 的端到端说话延迟还缺 VAD/ASR、A/M 与核心事务、TTS/缓冲及 C 起草改写计时。保持 null；不把边际 P50/P90 相加成端到端百分位。
 
+这些输入是模板生成的合成句，使用固定顺序；远程缓存命中和 token usage 原样记录，没有分成冷热实验。当前是一组配置下的一批请求，不能推广为自然对话、任意时段网络服务或生产负载的保证。本地结果也没有同时加载 TTS/渲染，不能替代 P0-07 的载体共存验收。
+
 ## 资源、范围与依赖
 
 本卡使用临时目录与合成输入，不打开正式/排练存储；所有审批请求均拒绝。原始模型目录完整文本不入库；IRL 合成候选单列，不记录用户完整对话。
@@ -55,3 +57,5 @@ GPU 窗口获用户授权；开始及 v2 重启前确认 Runner.Listener、Runne
 新增 spike 运行依赖：lm-format-enforcer 0.11.3（MIT）、jsonschema 4.26.0（MIT）；开发检查 mypy 1.20.2（MIT）、ruff 0.15.6（MIT）。mypy 的传递开发依赖 pathspec 1.1.1 为 MPL-2.0，仅用于检查，不进入应用运行时。详见 `part2/protocol/python-dependencies.json` 和 `dev-license-evidence.json`。AJV 8.20.0（MIT）是已有工作区依赖；P0-07 CUDA 依赖沿用已有环境。
 
 正式 helpers.json、models.lock.json、部署 profile 和契约不在本卡修改范围。候选结果只写入 spike 草稿；正式配置按 `tasks/requests/P0-08-config-scope.md` 走 ADR。`probe.mjs` 超过 400 行，保留集中式 JSON-RPC 生命周期/事件相关/计时/审批处理，已捕获每版测量源码；本卡不在测量中途重构改变时序。
+
+机械性核验由客户端提供的同名 `routine_reporter` 角色（gpt-6-luna/max）执行，并另行读取项目 TOML 的职责指令。这里只核对职责与模型配置，不声称项目自定义 TOML 的自动加载能力已验证。主代理授予串行 CPU 检查窗口，子代理只返回命令、时间、退出码和原始日志；选型、验收判断、提交与 PR 操作由主代理完成。

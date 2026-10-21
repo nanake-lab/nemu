@@ -1,0 +1,55 @@
+{
+  "caseId": "case-0054",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0054",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0054"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "リストを訂正すると、項目は18番目です。"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "ref-1"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "has_ordinal_position",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "項目"
+          },
+          {
+            "role": "condition",
+            "value": "リストを訂正する"
+          }
+        ],
+        "value": "18番目",
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      }
+    ]
+  }
+}

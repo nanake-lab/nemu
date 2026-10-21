@@ -1,0 +1,87 @@
+{
+  "caseId": "case-0002",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0002",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0002"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "I"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0002"
+        ],
+        "sourceSpan": [
+          15,
+          23
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "the desk"
+      },
+      {
+        "id": "ref-3",
+        "sourceRefs": [
+          "p0-08-0002"
+        ],
+        "sourceSpan": [
+          27,
+          32
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "day 1"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0002"
+        ],
+        "sourceSpan": [
+          0,
+          32
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "plan to tidy",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "I"
+          },
+          {
+            "role": "object",
+            "value": "the desk"
+          }
+        ],
+        "value": true,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": "day 1"
+      }
+    ]
+  }
+}

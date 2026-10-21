@@ -1,0 +1,96 @@
+{
+  "caseId": "case-0047",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0047",
+    "nodes": [
+      {
+        "id": "p0-08-0047-ref-data",
+        "sourceRefs": [
+          "p0-08-0047"
+        ],
+        "sourceSpan": [
+          26,
+          30
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "data"
+      },
+      {
+        "id": "p0-08-0047-ref-meeting-16",
+        "sourceRefs": [
+          "p0-08-0047"
+        ],
+        "sourceSpan": [
+          35,
+          45
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "meeting 16"
+      },
+      {
+        "id": "p0-08-0047-claim",
+        "sourceRefs": [
+          "p0-08-0047"
+        ],
+        "sourceSpan": [
+          0,
+          52
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "check",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "we"
+          },
+          {
+            "role": "object",
+            "value": "data"
+          },
+          {
+            "role": "context",
+            "value": "meeting 16"
+          },
+          {
+            "role": "repetition",
+            "value": "again"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": null
+      },
+      {
+        "id": "p0-08-0047-act",
+        "sourceRefs": [
+          "p0-08-0047"
+        ],
+        "sourceSpan": [
+          0,
+          52
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "other",
+        "content": "Maybe we should check the data for meeting 16 again."
+      }
+    ]
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "caseId": "case-0039",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0039",
+    "nodes": [
+      {
+        "id": "ref-folder",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          0,
+          12
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "番号13の青いフォルダー"
+      },
+      {
+        "id": "ref-desk",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          13,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "机"
+      },
+      {
+        "id": "claim-folder-number",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          0,
+          4
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "folder_number",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "ref-folder"
+          }
+        ],
+        "value": 13,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-folder-color",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          5,
+          12
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "color",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "ref-folder"
+          }
+        ],
+        "value": "青い",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-request",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          0,
+          23
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "番号13の青いフォルダーを机に置いてください。"
+      }
+    ]
+  }
+}

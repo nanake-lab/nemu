@@ -1,0 +1,75 @@
+{
+  "caseId": "case-0174",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0174",
+    "nodes": [
+      {
+        "id": "ref-list",
+        "sourceRefs": [
+          "p0-08-0174"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "リスト"
+      },
+      {
+        "id": "ref-item",
+        "sourceRefs": [
+          "p0-08-0174"
+        ],
+        "sourceSpan": [
+          10,
+          12
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "項目"
+      },
+      {
+        "id": "claim-rank",
+        "sourceRefs": [
+          "p0-08-0174"
+        ],
+        "sourceSpan": [
+          0,
+          19
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "ordinal_position",
+        "roles": [
+          {
+            "role": "item",
+            "value": "ref-item"
+          },
+          {
+            "role": "list",
+            "value": "ref-list"
+          },
+          {
+            "role": "condition",
+            "value": "リストを訂正すると"
+          }
+        ],
+        "value": 58,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      }
+    ]
+  }
+}

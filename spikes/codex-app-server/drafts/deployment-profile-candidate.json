@@ -1,7 +1,39 @@
 {
-  "status": "blocked_pending_measurements_and_p0_09_review",
-  "irlBackend": null,
-  "irlDeadlineP90Ms": null,
-  "evidence": [],
-  "note": "Candidate only. Backend and deadline require measured local/remote p50, p90, and schema validity; none are available yet."
+  "status": "measured_candidate_pending_claude_and_p0_09",
+  "irlBackend": "local",
+  "irlDeadlineP90Ms": 26168.09769999236,
+  "localCarrier": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "m": 0,
+    "hookInstalled": false,
+    "precision": "NF4",
+    "kernel": "aten::_fused_rms_norm"
+  },
+  "remoteComparator": {
+    "model": "gpt-6-luna",
+    "reasoningEffort": "max",
+    "profile": "strict-tools-v3"
+  },
+  "selectionRule": "Both fail p50 <=400 ms; choose lower completed-generation p50. Schema-invalid completed responses remain in latency population.",
+  "modes": {
+    "A": {
+      "p50Ms": null,
+      "p90Ms": null
+    },
+    "B": {
+      "p50Ms": null,
+      "p90Ms": null
+    },
+    "C": {
+      "p50Ms": null,
+      "p90Ms": null
+    }
+  },
+  "evidence": [
+    "reports/P0-08/part2/analysis.json",
+    "reports/P0-08/decision.md",
+    "reports/P0-08/PART2-METHODS.md"
+  ],
+  "note": "Candidate only; no formal deployment configuration changed. P0-09 targets and formal configuration ADR remain pending."
 }

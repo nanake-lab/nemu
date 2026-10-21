@@ -63,6 +63,8 @@ const speech = {
 const remoteEvidence = resolve(evidence, speech.remoteDirectory);
 const requireNoTools = (rows) => {
   if (rows.some((row) => !Array.isArray(row.rawToolCallNames) || row.rawToolCallNames.length !== 0)) throw new Error("Strict remote raw tool-call evidence missing or nonempty");
+  if (rows.some((row) => row.reroute)) throw new Error("Final remote batch includes model rerouting");
+  if (rows.some((row) => row.turnStatus === "completed" && (!Number.isFinite(row.completedMs) || row.completedMs <= 0))) throw new Error("Completed remote timing missing or invalid");
 };
 const speechByLanguage = {};
 for (const lang of ["zh", "en", "ja"]) {
@@ -74,6 +76,7 @@ for (const lang of ["zh", "en", "ja"]) {
   if (rows.some((row) => row.model !== "gpt-6-luna" || (row.effort !== "max" && row.turnStatus === "completed"))) throw new Error("Speech protocol mismatch");
   const completed = rows.filter((row) => row.turnStatus === "completed");
   if (completed.length !== 50 || new Set(completed.map((row) => row.index)).size !== 50) throw new Error("Speech completed fixture coverage mismatch");
+  if (completed.some((row) => !Number.isFinite(row.firstDeltaMs) || row.firstDeltaMs <= 0 || row.outputChars <= 0)) throw new Error("Speech first-delta evidence missing or invalid");
   const primary = rows.filter((row) => segments.find((segment) => segment.runId === row.runId).kind !== "supplemental");
   speechByLanguage[lang] = { ...describe(rows), primaryAttempts: primary.length, primaryCompleted: primary.filter((row) => row.turnStatus === "completed").length, primaryFailures: primary.filter((row) => row.turnStatus !== "completed").length, supplementalAttempts: rows.length - primary.length };
 }
@@ -91,11 +94,13 @@ if (remoteRows.length !== 200 || remoteRows.some((row) => row.model !== "gpt-6-l
 let local = null;
 if (process.argv[2]) {
   const rows = (await readJsonl(resolve(process.argv[2], "samples.jsonl"))).filter((row) => !row.warmup);
+  if (rows.some((row) => !Number.isFinite(row.completedMs) || row.completedMs <= 0)) throw new Error("Local completed timing missing or invalid");
   if (rows.length !== 200 || new Set(rows.map((row) => row.caseId)).size !== 200 || rows.some((row, index) => row.caseId !== fixtures[index].id)) throw new Error("Local IRL fixture coverage incomplete");
   const binding = await readJson(resolve(process.argv[2], "binding.json"));
   if (binding.fixturesSha256 !== fixturesSha256 || binding.wireSchemaSha256 !== wireSchemaSha256) throw new Error("Local fixture/schema binding mismatch");
   if (binding.m !== 0 || binding.hookInstalled !== false || binding.model !== "Qwen/Qwen3-4B-Instruct-2507" || binding.revision !== "cdbee75f17c01a7cc42f958dc650907174af0554") throw new Error("Local carrier binding mismatch");
   if (hash(gunzipSync(await readFile(resolve(evidence, "protocol/local-irl-v2-source.py.gz")))) !== binding.sourceSha256 || hash(gunzipSync(await readFile(resolve(evidence, "protocol/decoder-adapter-v2-source.py.gz")))) !== binding.decoderAdapterSourceSha256) throw new Error("Local source archive mismatch");
+  if (hash(gunzipSync(await readFile(resolve(evidence, "protocol/native-norm-measured-source.py.gz")))) !== binding.nativeNormSourceSha256) throw new Error("Native RMS measured source archive mismatch");
   for (const row of rows) {
     const { candidate } = await readJson(resolve(process.argv[2], `candidates/${row.caseId}.json`));
     if (validateSchema(candidate).valid !== row.schemaValid) throw new Error(`Local schema evidence mismatch: ${row.caseId}`);
@@ -120,7 +125,7 @@ const output = {
   selection: selected, irlDeadlineP90Ms: selected ? (selected === "local" ? local : remote).p90Ms : null,
   modes: { A: { p50Ms: null, p90Ms: null }, B: { p50Ms: null, p90Ms: null }, C: { p50Ms: null, p90Ms: null } },
   modeEstimateMissing: ["ASR and VAD end-to-end samples", "A/M and core transaction timings", "TTS and audio buffer timings", "mode C draft-to-rewrite timing"],
-  quota: { speechBefore: speech.rateLimitsBefore, speechAfter100: speech.rateLimitsAfter100, speechAfterFinalSupplement: speech.rateLimitsAfter, speechAfter150PrimarySlots: speech.rateLimitsAfter150PrimarySlots, speechQuotaNote: speech.quotaNote, irlBefore: remoteSummary.rateLimitsBefore, irlAfter100: remoteSummary.rateLimitsAfter100, irlAfter200: remoteSummary.rateLimitsAfter },
+  quota: { speechBefore: speech.rateLimitsBefore, speechAfter100: speech.rateLimitsAfter100, speechAfter150: speech.rateLimitsAfter, irlBefore: remoteSummary.rateLimitsBefore, irlAfter100: remoteSummary.rateLimitsAfter100, irlAfter200: remoteSummary.rateLimitsAfter },
   accountQuotaAttribution: "Shared account; snapshots report observed changes and cannot isolate this spike from other account activity."
 };
 await writeFile(resolve(evidence, "remote-speech-all-summary.json"), `${JSON.stringify(speech, null, 2)}\n`, "utf8");

@@ -1,0 +1,89 @@
+{
+  "caseId": "case-0018",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0018",
+    "nodes": [
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          0,
+          26
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "訂正します。火曜日ではなく水曜日で、日付は6日です。"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          6,
+          13
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "weekday",
+        "roles": [],
+        "value": "火曜日",
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-2",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          13,
+          17
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "weekday",
+        "roles": [],
+        "value": "水曜日",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-3",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          18,
+          25
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "日付",
+        "roles": [],
+        "value": "6日",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

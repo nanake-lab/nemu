@@ -1,0 +1,84 @@
+{
+  "caseId": "case-0066",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0066",
+    "nodes": [
+      {
+        "id": "r_date",
+        "sourceRefs": [
+          "p0-08-0066"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "22日"
+      },
+      {
+        "id": "r_report",
+        "sourceRefs": [
+          "p0-08-0066"
+        ],
+        "sourceSpan": [
+          4,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "報告書"
+      },
+      {
+        "id": "c_submit",
+        "sourceRefs": [
+          "p0-08-0066"
+        ],
+        "sourceSpan": [
+          0,
+          14
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "提出する",
+        "roles": [
+          {
+            "role": "object",
+            "value": "報告書"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "22日"
+      },
+      {
+        "id": "a_request",
+        "sourceRefs": [
+          "p0-08-0066"
+        ],
+        "sourceSpan": [
+          0,
+          29
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "22日に報告書を提出するよう、私にリマインドしてください。"
+      }
+    ]
+  }
+}
