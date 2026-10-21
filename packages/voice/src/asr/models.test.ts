@@ -15,7 +15,7 @@ describe('P4-01 frozen models', () => {
         ...f,
         notes: f.redistributable
           ? 'Retain MIT notice'
-          : 'SenseVoice redistribution pending user approval',
+          : '用户自行下载，不随应用分发；2026-10-21 已决定仅继续开发使用，正式发布前 P7 重新评估许可。保留 FunAudioLLM/SenseVoiceSmall 模型名、原出处和 FunASR 模型协议。',
       })),
     );
   });

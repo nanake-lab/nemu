@@ -91,7 +91,8 @@ CER/WER 采用总编辑距离/总参考单位数；NFKC、小写、去 Unicode �
 SenseVoice 源码的 MIT 不能替代权重许可证；转换仓库的 LICENSE 转向 FunASR 模型协议。协议含归属、模型名、行为与自动终止等条款，因此没有把它标成 MIT/Apache。按用户本次明确指示加 needs-user，等待用户决定；不自动换模型。
 
 ## 待用户确认
-- [ ] （阻塞）SenseVoice 自定义模型许可下是否同意本项目继续使用及未来分发方案。
+- [x] （已决定，2026-10-21）SenseVoice 现阶段继续用于开发；将来不随应用打包，由每位用户自行下载模型；正式发布前（P7）重新评估许可。模型登记保持 `redistributable=false`，注明“用户自行下载，不随应用分发”，保留 FunASR 要求的出处与模型名。
+  - 原记录（保留作历史，已由上述决定取代，不再作为当前许可阻塞）：（阻塞）SenseVoice 自定义模型许可下是否同意本项目继续使用及未来分发方案。
 - [ ] （阻塞）待用户三语各 20 条录音，完整 150 条验收尚不能完成。
 - [ ] （阻塞）VAD/打断物理延迟的独立语音时标仍需补齐，完整 150 条验收仍需用户录音；CI 以最终提交为准。
 - [ ] （不阻塞）可选 Nemu 唤醒词默认关闭。当前实现为常开模式下识别结果的 Nemu 文本门控，不宣称专用声学关键词模型或唤醒时延验收。
@@ -104,3 +105,31 @@ SenseVoice 源码的 MIT 不能替代权重许可证；转换仓库的 LICENSE �
 ## 下一步
 实现提交：`4d97e30`。Windows CI 与 Claude 审查均针对提交后的 PR，最终状态见 PR 检查。
 已等待 P2-03 Blender 与 P4-02 Electron 重负载结束并复核进程，再串行完成公开集和静音 CPU；最后完成回归后转可审查，交 Claude 审查实现。不合并，不取下一张卡。等待用户录音与模型许可决定。
+
+
+## 2026-10-21 继续施工（当前状态取代前文的历史下一步）
+- PR #44 已按用户要求转回草稿，`needs-user` 保留；**整张卡的验收结果齐全并重跑检查之前，不转可审查、不请求提前审查**。
+- 已 fetch 并以 merge 同步最新 origin/main；本轮必读规则和任务卡未变，保留 P2-03 的根脚本追加。
+- 已实际运行 `pnpm asr:user`。本机目录 `C:\Users\nanake\AppData\Local\Nemu\asr-evaluation\user\` 下 zh/en/ja 各 20 个同名 `.txt`，录音仍为 0/60；原文字稿未覆盖。用户录完通知后再登记和评测。
+- 当前许可状态：开发使用方案已决定；前文“等待许可决定”等表述保留为历史，已被本次用户决定取代。`redistributable=false` 不变，不把此决定扩大成应用打包分发许可。P7 必须再次评估。
+- 独立参考方案见 `ALIGNMENT-PREREGISTRATION.md`。`qwen-asr==0.0.6`（Apache-2.0）与 `Qwen/Qwen3-ForcedAligner-0.6B`（Apache-2.0，修订 c7cbfc2048c462b0d63a45797104fc9db3ad62b7）；Torch 2.10.0+cpu、transformers 4.57.6，完整环境由 ASR 子目录的 uv.lock 固定。这是本机评测工具，不加入应用运行时依赖或运行时模型锁。
+- 已核验官方 wheel SHA-256 `b9c55a38413298f3a990a4475467399daec6e8f4172363053fc42e2166c2dfd3`，固定模型全部文件哈希；本轮未加载模型、未运行用户音频对齐或延迟测量。
+- 官方配置的 timestamp_segment_time 为 80 ms。这是模型输出的时间网格，不是经过校准的真实边界误差上限。最后词/字结束点作为最后音节结束的模型估计，不宣称人工真实标注；临界案例随结果完整报告。
+- 待用户录音后：冻结全部 60 条用户 WAV 与人工文字稿的哈希 → 独立强制对齐 → 仓库外生成 timing-references.json → 150 条 CER/WER/LID → 安静窗口延迟测量。无缺样本、无按结果筛选、无能量阈值、无 Silero/SenseVoice 参考。失败保留并阻塞整卡。
+- 本轮准备检查与未来真实验收严格区分；之前 CI/静音 CPU/公开集数值属于先前提交，不自动冒充本轮完整验收。
+
+### 本轮准备验证（2026-10-21）
+| 命令或检查 | 结果 | 证据 |
+| --- | --- | --- |
+| pnpm asr:user | 已建立 zh/en/ja 各 20 份文字稿；0/60 WAV，等待用户 | 本机仓库外 user/ 和 user.json；READING.md |
+| pnpm lint | 通过；首次发现 replay.ts 的 finally 抛出 lint 错误，已把检查移到清理后修复 | continue-lint.log |
+| pnpm typecheck | 通过 | continue-typecheck.log |
+| pnpm exec vitest run packages/voice/src/asr | 4 文件、19 项通过 | continue-asr-tests.log |
+| python -m unittest discover -s packages/voice/src/asr/alignment -p test_reference_data.py | 4 项通过 | alignment-reference-tests.log |
+| mypy 1.19.1 --strict（对齐器及辅助脚本） | 3 文件通过 | alignment-mypy.log |
+| 独立对齐输入 --preflight | 预期拒绝：registered=0，未生成参考时标 | alignment-preflight.log |
+| uv lock | 已固定 96 个包；未安装完整对齐环境或加载权重 | alignment-lock.log、alignment/uv.lock |
+
+追加命令 `pnpm asr:align:models` 下载并逐文件校验独立对齐模型，`pnpm asr:align` 在全部 60 条录音登记后生成仓库外参考。对齐器真实运行、完整 150 条识别和延迟验收均待录音，不能用辅助单测替代。正式测量前本次方法文件必须已提交且无未提交修改；测量脚本拒绝旧式自声明时标、缺样本、哈希变化和追赶式突发 PCM 重放。
+
+当前 PR 保持草稿且保留 needs-user。录完通知后再进入真实评测；全部验收有结果后重新同步 main、串行重跑必要检查，再转可审查并通知用户。
