@@ -242,6 +242,13 @@ const samples: Record<string, unknown> = {
   audioMessageSchema: stage('stage.speech.done'),
   stageMessageSchema: stage('stage.loadAvatar'),
   microphoneMessageSchema: { v: 2, seq: 0, pcm: new Int16Array(320) },
+  ttsRequestSchema: {
+    text: 'Hello.',
+    lang: 'en',
+    style: 'neutral',
+    voiceId: 'test',
+    sampleRate: 24000,
+  },
 };
 const exportedEntries: Array<[string, unknown]> = Object.entries(contracts);
 const schemas = exportedEntries.filter(

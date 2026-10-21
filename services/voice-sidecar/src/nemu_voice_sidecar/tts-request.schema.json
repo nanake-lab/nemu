@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lang": {
+      "type": "string",
+      "enum": [
+        "zh",
+        "en",
+        "ja"
+      ]
+    },
+    "style": {
+      "type": "string"
+    },
+    "voiceId": {
+      "type": "string"
+    },
+    "sampleRate": {
+      "type": "number",
+      "const": 24000
+    }
+  },
+  "required": [
+    "text",
+    "lang",
+    "style",
+    "voiceId",
+    "sampleRate"
+  ],
+  "additionalProperties": false
+}

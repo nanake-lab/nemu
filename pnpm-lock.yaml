@@ -312,7 +312,11 @@ importers:
 
   packages/terminal: {}
 
-  packages/voice: {}
+  packages/voice:
+    dependencies:
+      '@nemu/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   spikes/stage-overlay:
     dependencies:
