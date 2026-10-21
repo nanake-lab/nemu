@@ -1,21 +1,63 @@
 syntax = "proto3";
 package nemu.echo.v1;
 
-enum Lineage { LINEAGE_UNSPECIFIED = 0; REHEARSAL = 1; LIFE = 2; }
-enum RunStatus { RUN_UNSPECIFIED = 0; NORMAL = 1; NO_GROWTH = 2; CORE_UNMODULATED = 3; CORE_QUARANTINED = 4; AX_DEGRADED = 5; IRL_DEGRADED = 6; TEXT_PROJECTED = 7; MODULATION_NOT_ENABLED = 8; STORAGE_RECOVERY_FAULT = 9; }
-enum FailureCode { FAILURE_UNSPECIFIED = 0; GROWTH_NOT_ENABLED_V1 = 1; AX_UNAVAILABLE = 2; IRL_FAILED = 3; CARRIER_UNAVAILABLE = 4; EVIDENCE_INCOMPLETE = 5; UNSUPPORTED_SLICE = 6; UNKNOWN_OVERLAP = 7; DEPENDENCY_FAULT = 8; STRUCTURAL_FAULT = 9; VERSION_MISMATCH = 10; NUMERIC_INVALID = 11; RESOURCE_LIMIT = 12; MODULATION_DISABLED = 13; }
+enum Lineage {
+  LINEAGE_UNSPECIFIED = 0;
+  REHEARSAL = 1;
+  LIFE = 2;
+  EXPERIMENT = 3; // v2.0 §13, §14; ADR 0010 decision 2 (P5-21)
+}
+enum RunStatus {
+  RUN_UNSPECIFIED = 0;
+  NORMAL = 1;
+  NO_GROWTH = 2; // v2.0 §13: REHEARSAL only; reason GROWTH_OFF_REHEARSAL
+  CORE_UNMODULATED = 3;
+  CORE_QUARANTINED = 4; // @superseded - | P5-21; v2.0 §12: no whole-core quarantine, evidence is removed and recomputed
+  AX_DEGRADED = 5; // @superseded A_DEGRADED | P5-21; V2-17: A_x is now nature appraisal A
+  IRL_DEGRADED = 6;
+  TEXT_PROJECTED = 7;
+  MODULATION_NOT_ENABLED = 8;
+  STORAGE_RECOVERY_FAULT = 9;
+  GROWTH_PAUSED = 10; // v2.0 §5.4: caretaker paused growth; G, C unchanged
+  GROWTH_REVIEW_PENDING = 11; // v2.0 §5.4, §12; V2-10: change held pending law review
+  A_DEGRADED = 12; // v2.0 §2.4; V2-17: nature appraisal failed for the event
+  M_DEGRADED = 13; // v2.0 §2.4; V2-17: situation match failed; may be redone in background
+}
+enum FailureCode {
+  FAILURE_UNSPECIFIED = 0;
+  GROWTH_NOT_ENABLED_V1 = 1; // @superseded GROWTH_OFF_REHEARSAL | P5-21; ADR 0010 decision 1: v1.0 grows from birth
+  AX_UNAVAILABLE = 2; // @superseded - | P5-21; V2-17: A failures use A_DEGRADED with a generic reason
+  IRL_FAILED = 3;
+  CARRIER_UNAVAILABLE = 4;
+  EVIDENCE_INCOMPLETE = 5; // @superseded - | P5-21; v2.0 §15: C consolidation query plans are replaced
+  UNSUPPORTED_SLICE = 6; // @superseded - | P5-21; v2.0 §15: consolidation slices are replaced
+  UNKNOWN_OVERLAP = 7; // @superseded - | P5-21; v2.0 §15: scope DSL overlap checks are replaced
+  DEPENDENCY_FAULT = 8;
+  STRUCTURAL_FAULT = 9;
+  VERSION_MISMATCH = 10;
+  NUMERIC_INVALID = 11;
+  RESOURCE_LIMIT = 12;
+  MODULATION_DISABLED = 13;
+  GROWTH_OFF_REHEARSAL = 14; // v2.0 §13; V2-17: rehearsal lineage does not grow
+}
 enum EventKind { EVENT_UNSPECIFIED = 0; STARTUP = 1; OBSERVATION = 2; ACTION_REQUEST = 3; EXECUTION_RESULT = 4; CONSEQUENCE = 5; CANCEL = 6; CORRECTION = 7; MAINTENANCE = 8; }
 enum Derivation { DERIVATION_UNSPECIFIED = 0; VERBATIM = 1; NORMALIZED = 2; RESOLVED = 3; INFERRED = 4; }
 enum EpistemicType { EPISTEMIC_UNSPECIFIED = 0; USER_ASSERTION = 1; USER_SELF_REPORT = 2; QUOTATION = 3; TOOL_OUTPUT = 4; SYSTEM_RECORD = 5; MODEL_INFERENCE = 6; EPISTEMIC_UNKNOWN = 7; }
 enum ResolutionState { RESOLUTION_UNSPECIFIED = 0; UNRESOLVED = 1; EXISTING = 2; PROVISIONAL = 3; }
 enum QueryStatus { QUERY_UNSPECIFIED = 0; OK = 1; NO_MATCH = 2; INDEX_LAGGING = 3; DENIED = 4; OBJECT_MISSING = 5; BUDGET_EXHAUSTED = 6; }
 enum SpeechMode { SPEECH_UNSPECIFIED = 0; A_LOCAL_STRICT = 1; B_REMOTE_PROJECTED = 2; C_DRAFT_REWRITE = 3; }
+// @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 enum QualificationBranch { BRANCH_UNSPECIFIED = 0; MULTI_ROOT = 1; SINGLE_ROOT = 2; }
 enum ActionStatus { ACTION_UNSPECIFIED = 0; PLANNED = 1; REQUESTED = 2; AUTHORIZED = 3; DISPATCHING = 4; SUCCEEDED = 5; FAILED = 6; CANCELLED_ACTION = 7; UNKNOWN_ACTION = 8; }
+// @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 enum EffectEndpoint { ENDPOINT_UNSPECIFIED = 0; F_EVENT = 1; F_TIME = 2; J_DIRECT = 3; G_META = 4; }
+// @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 enum EffectOwner { OWNER_UNSPECIFIED = 0; R_OWNER = 1; THETA_OWNER = 2; }
+// @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 enum CouplingPhase { PHASE_UNSPECIFIED = 0; ZERO = 1; SHADOW = 2; QUALIFIED_SHADOW = 3; ACTIVE = 4; SUSPENDED = 5; SUPERSEDED = 6; }
+// @superseded - | P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 enum TrialOutcome { TRIAL_UNSPECIFIED = 0; QUALIFIED = 1; REJECTED_TRIAL = 2; NON_IDENTIFIABLE = 3; CONTINUE_SHADOW = 4; }
+enum RelationKind { RELATION_UNSPECIFIED = 0; CLOSENESS = 1; TRUST = 2; }
 
 // @message echo.object-ref | S 5,6,7; D I 7.1
 message ObjectRef {
@@ -35,6 +77,7 @@ message ConceptRef {
 
 // @message echo.environment | O 2.1,16.1; S 5
 message VersionedEnvironment {
+  // @superseded VersionedEnvironmentV2 | P5-21; v2.0 §15: scope_interpreter is replaced; v2 adds A, M, directions and law version
   optional uint32 schema_version = 1; // required
   optional ObjectRef registry = 2; // required
   optional ObjectRef irl = 3; // required
@@ -62,6 +105,7 @@ message DegradedStatus {
 
 // @message echo.lineage | ADR 0005
 message LineageHeader {
+  // @superseded LineageHeaderV2 | P5-21; ADR 0010 decision 2: EXPERIMENT needs world identity and seed
   // @rules {"discriminator":"lineage","common":["created_at_ns"],"cases":{"1":{},"2":{"required":["genesis_manifest_digest"]}}}
   optional uint32 schema_version = 1; // required
   optional Lineage lineage = 2; // required
@@ -77,3 +121,83 @@ message AuditExtension {
   optional bytes payload = 4; // required
 }
 
+
+// ---- Echo Core v2.0 (P5-21). Shared value types. ----
+
+// @message echo.nature-vector | v2.0 §1 a(e) ∈ [−1,1]⁴, §3, §6 x_i, §8 b ∈ [−1,1]⁴
+message NatureVector {
+  // Fixed order (v2.0 §3; P5-21 card): connection 联结, empathy 共情, curiosity 好奇, achievement 成事.
+  optional uint32 schema_version = 1; // required
+  optional double connection = 2; // required,min=-1,max=1
+  optional double empathy = 3; // required,min=-1,max=1
+  optional double curiosity = 4; // required,min=-1,max=1
+  optional double achievement = 5; // required,min=-1,max=1
+}
+
+// @message echo.nature-scale | v2.0 §8 g, λ, σ̂, τ̂ per nature channel
+message NatureScale {
+  // Same fixed channel order as NatureVector. Non-negative; strict positivity and law bounds are semantic checks.
+  optional uint32 schema_version = 1; // required
+  optional double connection = 2; // required,min=0
+  optional double empathy = 3; // required,min=0
+  optional double curiosity = 4; // required,min=0
+  optional double achievement = 5; // required,min=0
+}
+
+// @message echo.nature-real | v2.0 §9.1 β_i·x_i coefficients
+message NatureReal {
+  // Same fixed channel order as NatureVector. Finite values; the Σβ budget is checked by J (P5-12).
+  optional uint32 schema_version = 1; // required
+  optional double connection = 2; // required
+  optional double empathy = 3; // required
+  optional double curiosity = 4; // required
+  optional double achievement = 5; // required
+}
+
+// @message echo.trilingual-text | v2.0 §7 concept in three languages; E11
+message TrilingualText {
+  optional uint32 schema_version = 1; // required
+  optional string zh = 2; // required,nonempty
+  optional string en = 3; // required,nonempty
+  optional string ja = 4; // required,nonempty
+}
+
+// @message echo.person-relation | v2.0 §7, §10 relations are tendencies about a person; V2-13
+message PersonRelation {
+  optional uint32 schema_version = 1; // required
+  optional string person_id = 2; // required,nonempty
+  optional RelationKind kind = 3; // required
+}
+
+// @message echo.environment-v2 | v2.0 §1 Ω, §2.4, §9; O 2.1,16.1; S 5
+message VersionedEnvironmentV2 {
+  // @supersedes VersionedEnvironment
+  // Field 4 (scope_interpreter) is superseded (v2.0 §15). New resources are optional so that an
+  // unconnected stage is visible as absent, never as a placeholder; LIFE and EXPERIMENT require all
+  // of them at startup (ADR 0010 decision 3; checked by P5-08).
+  reserved 4;
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef registry = 2; // required
+  optional ObjectRef irl = 3; // required
+  optional ObjectRef carrier = 5; // required
+  optional ObjectRef model = 6; // required
+  optional ObjectRef tokenizer = 7; // required
+  optional ObjectRef config = 8; // required
+  repeated ObjectRef implementations = 9; // required,set=digest
+  optional ObjectRef nature_appraiser = 10; // optional
+  optional ObjectRef situation_matcher = 11; // optional
+  optional ObjectRef direction_set = 12; // optional
+  optional ObjectRef law_version = 13; // optional
+}
+
+// @message echo.lineage-v2 | v2.0 §13, §14; ADR 0005; ADR 0010 decision 2
+message LineageHeaderV2 {
+  // @supersedes LineageHeader
+  // @rules {"discriminator":"lineage","common":["created_at_ns"],"cases":{"1":{},"2":{"required":["genesis_manifest_digest"]},"3":{"required":["world_id","world_seed"]}}}
+  optional uint32 schema_version = 1; // required
+  optional Lineage lineage = 2; // required
+  optional sint64 created_at_ns = 3; // required
+  optional bytes genesis_manifest_digest = 4; // optional,size=32
+  optional string world_id = 5; // optional,nonempty
+  optional uint64 world_seed = 6; // optional
+}

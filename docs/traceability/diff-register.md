@@ -146,3 +146,21 @@ ADR 0007 amendments have been implemented and cross-language checked. 78 source-
 | V2-26 | v2.0 第 5.1 节 LP3、第 4 节 EV2 | 同一规范概念的别名不建立新倾向，不增加证据或先验；π 与证据组对增加别名不变 | 否；明确推论 | 待用户批准，ADR 0014 第 4 条；P5-23、P5-24 |
 | V2-27 | v2.0 第 4 节 EV6 | m = 0 不保证判断无偏；IRL、A、M 的验收报告增加偏差度量，偏差敏感性在实验谱系估计；不设门槛 | 否 | 待用户批准，ADR 0014 第 5 条；P5-07、P5-11、P5-28、P5-30 |
 | V2-28 | v2.0 第 5.2 节（LP2、变化率）、第 14 节 | 实验谱系增加 LP2 分摊、变化检测、等价行动习惯、评估偏差敏感性四项对照；对照结果只用于决定是否发布新规律版本 | 否 | 待用户批准，ADR 0014 第 6 条；P5-30 |
+
+## 2026-10-20 追加：P5-21 IDL 契约变更中的重建与读法
+
+来源：任务卡 P5-21（v2.0 的状态与记录）。v2.0 没有写到、由本卡按最小字段集重建的地方，以及对 v2.0 条文的读法。原文不改。下表各条都随 PR #36 一并请用户确认；在确认之前，P5-21 不合并（`needs-user`）。
+
+编号说明（2026-10-21）：本节原用 V2-19 至 V2-27，与先合并的 ADR 0012（V2-19 至 V2-23）、ADR 0014（V2-24 至 V2-28）重号，改为 V2-29 至 V2-37，内容不变。
+
+| ID | 原文位置 | 重建或读法 | 冻结边界 | 状态 |
+| --- | --- | --- | --- | --- |
+| V2-29 | v2.0 第 13、16 节；P5-21 卡「规律版本：第 16 节的全部参数」 | 第 16 节的量按第 13、16 节自己的归属分放，每个值只出现一处：规律版本 `LawParameters` 放 n₀、κ₁、w_max、w_teach、v_u、r_min、r_max、h₀、n_h、ĥ 的下限（可选）、h₀,θ、ĥ_θ,min、n_b、n_σ、g_min、g_max、λ_min、λ_max、w_min、T_x、ε_x、k_max；genesis 另列 g₀、b₀、σ₀、τ₀ 与 A_att（第 13 节单列）；保险丝与网络上限是 u* 的边界（`FuseConfig`，初值在 genesis，之后作为事件调整）；方向、β、通路与能力的容差在方向集与验证记录里；读出参数在两个读出函数资源里（P5-12、P5-22 定格式） | 否；只是放置 | 待用户确认（阻塞，随本卡） |
+| V2-30 | v2.0 第 2.5、5.4、9.5、11、12 节 | L 与保险丝的最小字段集（重建）：R 的变化 `TendencyChange` 用 π 前值缺省表示进入 R、π 后值缺省表示因容量移出 R；整段重算的差异摘要为原因（新规律版本、来源更正、重新解释）、前后规律版本、R 与 θ 的前后修订号、变化的倾向 ID、θ 是否变化；迁移记前后两个环境对象与验证记录；复核暂缓记触发（跳变、θ 单步触顶、缓慢漂移）；每个 L 条目带同一事务中提交的 H 事件 ID（V2-11）；复核结论命令不带暂缓条目 ID（同一时间只有一个暂缓）；`FuseConfig` 为 R 容量、Δθ_max、跳变阈值与探测情境、缓慢漂移的持续组数与距边界的余量、新联系人数与消息数上限及其时间窗 | 否 | 重建，待用户确认 |
+| V2-31 | v2.0 第 6、8、16 节 | 单位：恢复速率 λ 以 1/秒计（`recovery_per_s`）；τ̂、τ₀、T_x 以秒计（double）；网络上限的时间窗以纳秒计（uint64）。H 中的时间仍是整数纳秒 | 否 | 重建，待用户确认 |
+| V2-32 | v2.0 第 1、3、5.2、7 节 | 编解码之外的语义检查（`core-types/src/semantic.rs`）：d_k 为单位向量，容差 \|‖d‖₂ − 1\| ≤ 1e-12；π 在开区间 (−1, 1)；列出的 μ > 0；\|A_k\| ≤ B_k、B_k > 0、翻转数不超过相邻组数；A_att 只在亲近倾向上；第 16 节写明的不等式（n₀ > 0、w_teach ≤ w_max、v_u < 1、λ_min > 0 等）；genesis 中成事的初始增益严格低于其余三个（第 3 节「最弱」，相等不算） | 否 | 待用户确认 |
+| V2-33 | v2.0 第 1、4 节（EV2–EV7）；P5-21 卡「解释记录」 | 解释记录的外形（重建）：每条记录有 record_id，并单列它解释的事件 event_id（EV5 回溯与重新解释时与 ProposalBinding 的事件不同）；教导、撒谎、同一件事分成三种记录；重新解释是一条单独的链接记录（新记录、旧记录、解释器版本）；天性评估带所涉之人的列表（取哪一个人做共情加权由 P5-10 定）；事件属性记录由核心按规则表给出，带规则表版本，不带 ProposalBinding | 否 | 重建，待用户确认 |
+| V2-34 | v2.0 第 5.2、7、8 节 | R、θ 的存储（重建）：倾向按第 5.2 节的定义存 A_k 与 B_k（B_k 含 n₀ + κ_k），另存 ĥ_k、组数、翻转数、上一组的符号（还没有非零支持时缺省）、π、r；证据组按组存可信与可核实，按倾向存支持 S、强度与份额；θ 的快照存 (b, g, λ)、σ̂、τ̂、Σω（标量）、ĥ_θ，变点检测与同号持续段的递推状态是一个由规律版本定义格式的对象引用（P5-25 定） | 否 | 重建，待用户确认 |
+| V2-35 | ADR 0007 第 2、11 条；P5-21 卡「VersionedEnvironment 增加…」等 | 改动的消息一律以带新类型标签的后继消息实现，旧消息原样保留并标为取代，已发布的字节与摘要不变：VersionedEnvironmentV2、ProposalBindingV2、FastStateSnapshotV2、CoreTransactionV2、CoreCommitResultV2、ModulationEnvelopeV2、LineageHeaderV2。后继消息沿用前任的字段号，被取代的号用 `reserved`，新字段号都大于前任的最大号。ProposalBinding 换代后，携带它的 SemanticCandidate、ConceptProposal 也有后继（卡里没有写到）。VersionedEnvironmentV2 中天性评估器、情境吻合器、方向集、规律版本四项可缺省，使尚未接通的阶段如实显示为缺省；正式谱系与实验谱系启动时要求四项都在（P5-08）。ModulationEnvelopeV2 去掉 HookCoefficients，保留 effect_receipt_digest；HookCoefficients 随之标为取代 | 否；不改任何已发布字节 | 待用户确认（阻塞，随本卡） |
+| V2-36 | v2.0 第 2.4、5.4、12、13、15 节；V2-17 | 原因码与状态的判定：`GROWTH_PAUSED`、`GROWTH_REVIEW_PENDING`、`A_DEGRADED`、`M_DEGRADED` 是 RunStatus 的状态，本身说明原因，不另设 FailureCode；`GROWTH_OFF_REHEARSAL` 是 FailureCode，配 NO_GROWTH；A、M 失败的原因用既有的通用码（DEPENDENCY_FAULT、VERSION_MISMATCH、NUMERIC_INVALID 等）。取代：CORE_QUARANTINED（第 12 节不再整体隔离）、AX_DEGRADED、GROWTH_NOT_ENABLED_V1、AX_UNAVAILABLE、EVIDENCE_INCOMPLETE（C 的凝固查询计划已取代）、UNSUPPORTED_SLICE、UNKNOWN_OVERLAP。`Lineage` 增加 EXPERIMENT 后，终端的 RunState 在编解码层也能带 EXPERIMENT；按 P5-22 卡「终端的 Lineage 不含 EXPERIMENT」，由 P5-22 收紧 | 否 | 待用户确认 |
+| V2-37 | v2.0 第 2.3、13 节；I28 | genesis v2 的读法：她的名字不在 genesis 里（它是 H 的第一条事实）；没有 x 的初值（x 从静息点 (b₀, 0) 开始）；载体只列 carrier（模型由载体条目确定）；天性结构以一个结构版本标识表示；边界配置、两个读出函数和协议 p 都以对象引用给出，不内嵌任何文本。I28 的类型检查：genesis 可达的字符串只有 5 个标识字段，字节只有 32 字节摘要，三语文本类型不可达 | 否 | 待用户确认 |

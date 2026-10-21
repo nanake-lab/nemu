@@ -273,6 +273,7 @@ message OutputCancel {
 
 // @message echo.hook-coefficients | O 13.1,13.2
 message HookCoefficients {
+  // @superseded - | P5-21; v2.0 §9.1: per-direction coefficients are carried by ModulationEnvelopeV2
   optional uint32 schema_version = 1; // required
   optional ObjectRef hook = 2; // required
   repeated double coefficients = 3 [packed = false]; // required
@@ -283,6 +284,7 @@ message HookCoefficients {
 
 // @message echo.modulation | O 13.2; S 19
 message ModulationEnvelope {
+  // @superseded ModulationEnvelopeV2 | P5-21; v2.0 §9.1: direction set, nature and learned coefficients
   optional uint32 schema_version = 1; // required
   optional string snapshot_id = 2; // required,nonempty
   optional uint64 projected_at_ns = 3; // required
@@ -347,3 +349,36 @@ message PlanAndCarrierReceipt {
   optional ObjectRef usage = 11; // required
 }
 
+
+// ---- Echo Core v2.0 (P5-21). Only ModulationEnvelope changes in this file; terminal messages
+// (readout, notice, query, approval) are P5-22. ----
+
+// @message echo.learned-coefficient | v2.0 §9.1 β_k·x_k for k ∈ R⁺, §9.2
+message LearnedCoefficient {
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double coefficient = 3; // required
+}
+
+// @message echo.modulation-v2 | v2.0 §9.1, §9.2; O 13.2; S 19; ADR 0008 §3
+message ModulationEnvelopeV2 {
+  // @supersedes ModulationEnvelope
+  // Field 10 (HookCoefficients) is replaced by one coefficient per extracted direction:
+  // nature_coefficients are β_i·x_i, learned_coefficients are β_k·x_k for validated k ∈ R⁺ in
+  // CanonicalV1 set order of tendency_id. total_bound is Σβ, with ‖h′ − h‖₂ ≤ Σβ (v2.0 §9.1).
+  reserved 10;
+  optional uint32 schema_version = 1; // required
+  optional string snapshot_id = 2; // required,nonempty
+  optional uint64 projected_at_ns = 3; // required
+  optional bytes x_digest = 4; // required,size=32
+  optional bytes r_digest = 5; // required,size=32
+  optional bytes theta_digest = 6; // required,size=32
+  optional ObjectRef carrier = 7; // required
+  optional ObjectRef model = 8; // required
+  optional ObjectRef tokenizer = 9; // required
+  optional double total_bound = 11; // required,min=0
+  optional bytes effect_receipt_digest = 12; // required,size=32
+  optional ObjectRef direction_set = 13; // required
+  optional NatureReal nature_coefficients = 14; // required
+  repeated LearnedCoefficient learned_coefficients = 15; // required,set=tendency_id
+}

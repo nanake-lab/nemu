@@ -16,14 +16,37 @@ ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
 
 
-def schema() -> dict[str, Any]:
+SUPERSEDED = r"@superseded (\S+) \| ([^\n]+)"
+
+
+def superseded(by: str, reason: str) -> dict[str, str]:
+    """Supersession metadata only; it never changes a field table or its bytes."""
+    assert reason.strip(), "supersession needs a reason"
+    return dict(by=by, reason=reason.strip())
+
+
+def schema(directory: Path = HERE) -> dict[str, Any]:
     messages: dict[str, Any] = {}
     enums: dict[str, Any] = {}
-    for path in sorted(HERE.glob("*.proto")):
+    superseded_enums: dict[str, Any] = {}
+    superseded_values: dict[str, Any] = {}
+    for path in sorted(directory.glob("*.proto")):
         text = path.read_text(encoding="utf-8")
-        for name, body in re.findall(r"enum (\w+)\s*\{([^}]+)\}", text):
+        for comments, name, body in re.findall(
+            r"((?:^//[^\n]*\n)*)^enum (\w+)\s*\{([^}]+)\}", text, re.MULTILINE
+        ):
             assert name not in enums, name
-            enums[name] = {k: int(v) for k, v in re.findall(r"(\w+)\s*=\s*(\d+)", body)}
+            code = re.sub(r"//[^\n]*", "", body)
+            enums[name] = {k: int(v) for k, v in re.findall(r"(\w+)\s*=\s*(\d+)", code)}
+            for line in comments.splitlines():
+                found = re.fullmatch(r"// " + SUPERSEDED, line)
+                if found:
+                    superseded_enums[name] = superseded(*found.groups())
+            for value, by, reason in re.findall(
+                r"(\w+)\s*=\s*\d+;[ \t]*// " + SUPERSEDED, body
+            ):
+                assert value in enums[name], (name, value)
+                superseded_values.setdefault(name, {})[value] = superseded(by, reason)
         for tag, source, name, body in re.findall(
             r"// @message (\S+) \| ([^\n]+)\nmessage (\w+) \{(.*?)\n\}", text, re.DOTALL
         ):
@@ -63,12 +86,42 @@ def schema() -> dict[str, Any]:
                 file=path.name,
                 rules=json.loads(rules[0]) if rules else {},
             )
+            # Lifecycle metadata (P5-21). Keys are added only when present, so
+            # unchanged messages keep byte-identical descriptors.
+            reserved = sorted(
+                int(n)
+                for line in re.findall(r"^\s*reserved ([\d, ]+);", body, re.MULTILINE)
+                for n in line.split(",")
+            )
+            assert not {f["number"] for f in fields} & set(reserved), name
+            gone = re.findall(r"// " + SUPERSEDED, body)
+            successor = re.findall(r"// @supersedes (\w+)", body)
+            assert len(gone) <= 1 and len(successor) <= 1, name
+            if gone:
+                messages[name]["superseded"] = superseded(*gone[0])
+            if successor:
+                messages[name]["supersedes"] = successor[0]
+            if reserved:
+                messages[name]["reserved"] = reserved
     assert len({m["tag"] for m in messages.values()}) == len(messages)
     scalars = {"uint32", "uint64", "sint64", "double", "bool", "string", "bytes"}
     for m in messages.values():
         for f in m["fields"]:
             assert f["type"] in scalars | messages.keys() | enums.keys(), f
-    return dict(messages=messages, enums=enums)
+        by = m.get("superseded", {}).get("by", "-")
+        assert by == "-" or by in messages, by
+        assert m.get("supersedes", next(iter(messages))) in messages
+    for enum, by in superseded_enums.items():
+        assert by["by"] == "-" or by["by"] in enums, (enum, by)
+    for enum, values in superseded_values.items():
+        for value, by in values.items():
+            assert by["by"] == "-" or by["by"] in enums[enum], (enum, value, by)
+    result: dict[str, Any] = dict(messages=messages, enums=enums)
+    if superseded_enums:
+        result["superseded_enums"] = superseded_enums
+    if superseded_values:
+        result["superseded_values"] = superseded_values
+    return result
 
 
 def outputs(s: dict[str, Any]) -> dict[Path, str]:
@@ -91,19 +144,36 @@ def outputs(s: dict[str, Any]) -> dict[Path, str]:
         "from dataclasses import dataclass",
         "from enum import IntEnum",
     ]
+
+    def note(meta: dict[str, str]) -> str:
+        by = "no successor" if meta["by"] == "-" else f"successor {meta['by']}"
+        return f"Superseded ({by}): {meta['reason']}"
+
     for name, values in s["enums"].items():
         valid = {k: v for k, v in values.items() if v != 0}
+        whole = s.get("superseded_enums", {}).get(name)
+        gone = s.get("superseded_values", {}).get(name, {})
+        if whole:
+            ts += [f"/** @deprecated {note(whole)} */"]
+            rust += [f"/// {note(whole)}"]
+            py += [f"# {note(whole)}"]
         ts += [
             f"export type {name} = " + " | ".join(str(v) for v in valid.values()) + ";"
         ]
-        py += [f"class {name}(IntEnum):"] + [f"    {k} = {v}" for k, v in valid.items()]
+        py += [f"class {name}(IntEnum):"]
+        for k, v in valid.items():
+            py += ([f"    # {note(gone[k])}"] if k in gone else []) + [f"    {k} = {v}"]
         rust += [
             "#[allow(non_camel_case_types)]",
             "#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]",
             '#[serde(try_from = "u32", into = "u32")]',
             f"pub enum {name} {{",
         ]
-        rust += [f"    {k} = {v}," for k, v in valid.items()] + ["}"]
+        for k, v in valid.items():
+            rust += ([f"    /// {note(gone[k])}"] if k in gone else []) + [
+                f"    {k} = {v},"
+            ]
+        rust += ["}"]
         rust += [
             f"impl TryFrom<u32> for {name} {{ type Error = String; fn try_from(v:u32)->Result<Self,String>{{match v {{"
         ]
@@ -111,6 +181,19 @@ def outputs(s: dict[str, Any]) -> dict[Path, str]:
             '_ => Err("unknown enum".into()), }}}'
         ]
         rust += [f"impl From<{name}> for u32 {{fn from(v:{name})->Self{{v as u32}}}}"]
+        body = (
+            "true"
+            if whole
+            else "matches!(self, " + " | ".join(f"Self::{k}" for k in gone) + ")"
+            if gone
+            else "false"
+        )
+        rust += [
+            f"impl {name} {{",
+            "    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).",
+            f"    pub const fn is_superseded(self) -> bool {{ {body} }}",
+            "}",
+        ]
     ts_types = dict(
         uint32="number",
         uint64="bigint",
@@ -139,16 +222,29 @@ def outputs(s: dict[str, Any]) -> dict[Path, str]:
         bytes="bytes",
     )
     for name, m in s["messages"].items():
+        gone = m.get("superseded")
+        lifecycle = (
+            f" @deprecated {note(gone)}"
+            if gone
+            else f" Supersedes {m['supersedes']}."
+            if "supersedes" in m
+            else ""
+        )
         ts += [
-            f"/** {m['source']}; frozen tag {m['tag']} */",
+            f"/** {m['source']}; frozen tag {m['tag']}.{lifecycle} */",
             f"export interface {name} {{",
         ]
         rust += [
+            f"/// {m['source']}; frozen tag `{m['tag']}`."
+            + (f" {note(gone)}" if gone else "")
+            + (f" Supersedes [`{m['supersedes']}`]." if "supersedes" in m else ""),
             "#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]",
             "#[serde(deny_unknown_fields)]",
             f"pub struct {name} {{",
         ]
         py += ["@dataclass(frozen=True)", f"class {name}:"]
+        if gone:
+            py += [f"    # {note(gone)}"]
         for f in m["fields"]:
             typ = f["type"]
             optional = not f["required"] and not f["repeated"]
@@ -180,7 +276,9 @@ def outputs(s: dict[str, Any]) -> dict[Path, str]:
         ts += ["}"]
         rust += ["}"]
         rust += [
-            f'impl super::WireMessage for {name} {{const NAME: &\'static str = "{name}";}}'
+            f'impl super::WireMessage for {name} {{const NAME: &\'static str = "{name}";'
+            + (" const SUPERSEDED: bool = true;" if gone else "")
+            + "}"
         ]
     ts += (
         ["export interface MessageMap {"]
@@ -195,6 +293,12 @@ def outputs(s: dict[str, Any]) -> dict[Path, str]:
         f'"{n}" => super::verify_typed::<{n}>(value, limits),' for n in s["messages"]
     ]
     rust += ['_ => Err("unknown message".into()), }}']
+    rust += [
+        "/// Message types kept only to read old data and for tests; no runtime path may produce them.",
+        "pub const SUPERSEDED_MESSAGES: &[&str] = &["
+        + ", ".join(f'"{n}"' for n, m in s["messages"].items() if "superseded" in m)
+        + "];",
+    ]
     result[ROOT / "packages/contracts/src/generated/echo/schema.ts"] = (
         "\n".join(ts) + "\n"
     )

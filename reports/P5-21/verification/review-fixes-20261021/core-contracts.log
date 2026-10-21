@@ -1,0 +1,17 @@
+Scope: all 14 workspace projects
+? Verifying lockfile against supply-chain policies (305 entries)...
+✓ Lockfile passes supply-chain policies (305 entries in 6.2s)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+Done in 7.6s using pnpm v12.11.2
+$ python core/contracts/verify.py
+0 generated files stale
+Compatibility against p5-01: 0 violations; 120 messages (32 superseded), 44 enums
+   Compiling core-types v0.0.0 (/home/claude/nemu/core/crates/core-types)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.26s
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+Official protoc and protobuf runtime: 378 transport vectors PASS
+Rust: 9004 cases PASS
+Python: 9004 cases PASS
+TypeScript: 9004 cases PASS
+{"messages": 120, "cases_per_language": 9004, "legal": 2130, "illegal": 6874}

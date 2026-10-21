@@ -160,7 +160,11 @@
         }
       ],
       "file": "base.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "VersionedEnvironmentV2",
+        "reason": "P5-21; v2.0 §15: scope_interpreter is replaced; v2 adds A, M, directions and law version"
+      }
     },
     "FailureReason": {
       "tag": "echo.failure-reason",
@@ -279,6 +283,10 @@
             ]
           }
         }
+      },
+      "superseded": {
+        "by": "LineageHeaderV2",
+        "reason": "P5-21; ADR 0010 decision 2: EXPERIMENT needs world identity and seed"
       }
     },
     "AuditExtension": {
@@ -321,6 +329,420 @@
       ],
       "file": "base.proto",
       "rules": {}
+    },
+    "NatureVector": {
+      "tag": "echo.nature-vector",
+      "source": "v2.0 §1 a(e) ∈ [−1,1]⁴, §3, §6 x_i, §8 b ∈ [−1,1]⁴",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "connection",
+          "type": "double",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "empathy",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "curiosity",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "achievement",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "NatureScale": {
+      "tag": "echo.nature-scale",
+      "source": "v2.0 §8 g, λ, σ̂, τ̂ per nature channel",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "connection",
+          "type": "double",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "empathy",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "curiosity",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "achievement",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "NatureReal": {
+      "tag": "echo.nature-real",
+      "source": "v2.0 §9.1 β_i·x_i coefficients",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "connection",
+          "type": "double",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "empathy",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "curiosity",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "achievement",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "TrilingualText": {
+      "tag": "echo.trilingual-text",
+      "source": "v2.0 §7 concept in three languages; E11",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "zh",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "en",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "ja",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "PersonRelation": {
+      "tag": "echo.person-relation",
+      "source": "v2.0 §7, §10 relations are tendencies about a person; V2-13",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "person_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "RelationKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "base.proto",
+      "rules": {}
+    },
+    "VersionedEnvironmentV2": {
+      "tag": "echo.environment-v2",
+      "source": "v2.0 §1 Ω, §2.4, §9; O 2.1,16.1; S 5",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "registry",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "irl",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "model",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tokenizer",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "config",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "implementations",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        },
+        {
+          "name": "nature_appraiser",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "situation_matcher",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "direction_set",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "base.proto",
+      "rules": {},
+      "supersedes": "VersionedEnvironment",
+      "reserved": [
+        4
+      ]
+    },
+    "LineageHeaderV2": {
+      "tag": "echo.lineage-v2",
+      "source": "v2.0 §13, §14; ADR 0005; ADR 0010 decision 2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "lineage",
+          "type": "Lineage",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "created_at_ns",
+          "type": "sint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "genesis_manifest_digest",
+          "type": "bytes",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "world_id",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "world_seed",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "base.proto",
+      "rules": {
+        "discriminator": "lineage",
+        "common": [
+          "created_at_ns"
+        ],
+        "cases": {
+          "1": {},
+          "2": {
+            "required": [
+              "genesis_manifest_digest"
+            ]
+          },
+          "3": {
+            "required": [
+              "world_id",
+              "world_seed"
+            ]
+          }
+        }
+      },
+      "supersedes": "LineageHeader"
     },
     "EffectContract": {
       "tag": "echo.effect-contract",
@@ -427,7 +849,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "QualificationCertificate": {
       "tag": "echo.qualification",
@@ -524,7 +950,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "ConsolidationSlice": {
       "tag": "echo.consolidation-slice",
@@ -656,7 +1086,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "ThetaModule": {
       "tag": "echo.theta-module",
@@ -752,7 +1186,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "ResponsibilityBinding": {
       "tag": "echo.responsibility-binding",
@@ -832,7 +1270,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "TrialResult": {
       "tag": "echo.trial-result",
@@ -921,7 +1363,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "DistinctionRevision": {
       "tag": "echo.distinction",
@@ -994,7 +1440,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "CouplingRevision": {
       "tag": "echo.coupling",
@@ -1123,7 +1573,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "PlasticEvidenceLink": {
       "tag": "echo.plastic-evidence",
@@ -1179,7 +1633,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "MechanismContext": {
       "tag": "echo.mechanism-context",
@@ -1221,7 +1679,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "DescendantReviewMarker": {
       "tag": "echo.descendant-review",
@@ -1270,7 +1732,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "PlasticTraceRevision": {
       "tag": "echo.plastic-trace",
@@ -1400,7 +1866,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "TraceHead": {
       "tag": "echo.trace-head",
@@ -1432,7 +1902,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "RepresentationInadequacyWitness": {
       "tag": "echo.inadequacy-witness",
@@ -1512,7 +1986,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "FrozenPrediction": {
       "tag": "echo.frozen-prediction",
@@ -1608,7 +2086,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "ShadowTrial": {
       "tag": "echo.shadow-trial",
@@ -1656,7 +2138,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "EffectBudgetLedger": {
       "tag": "echo.effect-budget-ledger",
@@ -1749,7 +2235,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "SingleRootLedger": {
       "tag": "echo.single-root-ledger",
@@ -1838,7 +2328,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "EffectiveCausalProjection": {
       "tag": "echo.effective-causal-projection",
@@ -1878,7 +2372,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "ConsolidationBinding": {
       "tag": "echo.consolidation-binding",
@@ -1918,7 +2416,11 @@
         }
       ],
       "file": "growth.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
     },
     "ThetaModuleSourceBinding": {
       "tag": "echo.theta-source-binding",
@@ -1966,6 +2468,2024 @@
         }
       ],
       "file": "growth.proto",
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
+      }
+    },
+    "EvidenceAllocation": {
+      "tag": "echo.evidence-allocation",
+      "source": "v2.0 §5.2 S_{c,k}, weight factors, shares; LP2, I25",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "support",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "intensity",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "share",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        }
+      ],
+      "file": "law.proto",
+      "rules": {}
+    },
+    "EvidenceGroup": {
+      "tag": "echo.evidence-group",
+      "source": "v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "group_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "members",
+          "type": "string",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "source_key",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "credibility",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "verifiability",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "allocations",
+          "type": "EvidenceAllocation",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "tendency_id"
+        }
+      ],
+      "file": "law.proto",
+      "rules": {}
+    },
+    "Tendency": {
+      "tag": "echo.tendency",
+      "source": "v2.0 §5.2, §5.3 corollary 7, §7, §10",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "concept",
+          "type": "ConceptRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "predicate",
+          "type": "TrilingualText",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "direction",
+          "type": "NatureVector",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "evidence_a",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "evidence_b",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "h_hat",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "group_count",
+          "type": "uint64",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "flip_count",
+          "type": "uint64",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "last_sign",
+          "type": "EvidenceSign",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "pi",
+          "type": "double",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "typical_magnitude",
+          "type": "double",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "relation",
+          "type": "PersonRelation",
+          "number": 14,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "attachment_prior",
+          "type": "double",
+          "number": 15,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "law.proto",
+      "rules": {}
+    },
+    "RSnapshot": {
+      "tag": "echo.r-snapshot",
+      "source": "v2.0 §2.1, §2.2, §7",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendencies",
+          "type": "Tendency",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "tendency_id"
+        }
+      ],
+      "file": "law.proto",
+      "rules": {}
+    },
+    "ThetaSnapshot": {
+      "tag": "echo.theta-snapshot",
+      "source": "v2.0 §8 θ and the statistics of C",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "values",
+          "type": "ThetaValues",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "sigma",
+          "type": "NatureScale",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tau_s",
+          "type": "NatureScale",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "weight_sum",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "h_hat_theta",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "estimator_state",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "law.proto",
+      "rules": {}
+    },
+    "GrowthCommand": {
+      "tag": "echo.growth-command",
+      "source": "v2.0 §5.4, §10; ADR 0010 decision 5; permissions P5-05",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "command_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "GrowthCommandKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "verdict",
+          "type": "ReviewVerdict",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "review_record",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "law.proto",
+      "rules": {
+        "common": [
+          "command_id"
+        ],
+        "cases": {
+          "1": {},
+          "2": {},
+          "3": {
+            "required": [
+              "verdict",
+              "review_record"
+            ]
+          }
+        }
+      }
+    },
+    "LawParameters": {
+      "tag": "echo.law-parameters",
+      "source": "v2.0 §5.2, §6, §8, §16",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "n0",
+          "type": "double",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "kappa1",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "w_max",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "w_teach",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "v_u",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "r_min",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "r_max",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "h0",
+          "type": "double",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "n_h",
+          "type": "double",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "h_hat_min",
+          "type": "double",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "h0_theta",
+          "type": "double",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "h_hat_theta_min",
+          "type": "double",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "n_b",
+          "type": "double",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "n_sigma",
+          "type": "double",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "g_min",
+          "type": "double",
+          "number": 16,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "g_max",
+          "type": "double",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "recovery_min_per_s",
+          "type": "double",
+          "number": 18,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "recovery_max_per_s",
+          "type": "double",
+          "number": 19,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "w_min",
+          "type": "double",
+          "number": 20,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "t_x_s",
+          "type": "double",
+          "number": 21,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "epsilon_x",
+          "type": "double",
+          "number": 22,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "k_max",
+          "type": "double",
+          "number": 23,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "law.proto",
+      "rules": {}
+    },
+    "LawVersion": {
+      "tag": "echo.law-version",
+      "source": "v2.0 §1 𝔏_v, §5.4, §16",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "uint32",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "reference_form",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "parameters",
+          "type": "LawParameters",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "law.proto",
+      "rules": {}
+    },
+    "FuseConfig": {
+      "tag": "echo.fuse-config",
+      "source": "v2.0 §11, §12, §16",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "r_capacity",
+          "type": "uint32",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "delta_theta_max",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "jump_threshold",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "jump_probes",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "slow_drift_run",
+          "type": "uint32",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "slow_drift_margin",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "contact_limit",
+          "type": "uint32",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "message_limit",
+          "type": "uint32",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "network_window_ns",
+          "type": "uint64",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "law.proto",
+      "rules": {}
+    },
+    "GenesisManifestV2": {
+      "tag": "echo.genesis-v2",
+      "source": "v2.0 §2.3, §13, §16; I28; ADR 0010 decision 6",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "law_version",
+          "type": "LawVersion",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "nature_structure",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "initial_gain",
+          "type": "NatureScale",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "initial_baseline",
+          "type": "NatureVector",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "sigma0",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "tau0_s",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "attachment_prior",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "caretaker_id",
+          "type": "string",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "direction_set",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "direction_validation",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "body_readout",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "proactivity_readout",
+          "type": "ObjectRef",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "fuses",
+          "type": "FuseConfig",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "boundaries",
+          "type": "ObjectRef",
+          "number": 16,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "protocol",
+          "type": "ObjectRef",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "law.proto",
+      "rules": {}
+    },
+    "ThetaValues": {
+      "tag": "echo.theta-values",
+      "source": "v2.0 §8 θ = (b, g, λ)",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "baseline",
+          "type": "NatureVector",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "gain",
+          "type": "NatureScale",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "recovery_per_s",
+          "type": "NatureScale",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "ledger.proto",
+      "rules": {}
+    },
+    "TendencyChange": {
+      "tag": "echo.tendency-change",
+      "source": "v2.0 §2.5 R change: tendency, π before and after, evidence groups",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "pi_before",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "pi_after",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "evidence_groups",
+          "type": "string",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        }
+      ],
+      "file": "ledger.proto",
+      "rules": {}
+    },
+    "ThetaChange": {
+      "tag": "echo.theta-change",
+      "source": "v2.0 §2.5 θ change: before and after values, referenced events",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "before",
+          "type": "ThetaValues",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "after",
+          "type": "ThetaValues",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "events",
+          "type": "string",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        }
+      ],
+      "file": "ledger.proto",
+      "rules": {}
+    },
+    "RecomputeRecord": {
+      "tag": "echo.recompute-record",
+      "source": "v2.0 §2.5, §5.4 recompute: law version and difference summary",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "cause",
+          "type": "RecomputeCause",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "previous_law_version",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "r_revision_before",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "r_revision_after",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "theta_revision_before",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "theta_revision_after",
+          "type": "string",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "changed_tendencies",
+          "type": "string",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "theta_changed",
+          "type": "bool",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "ledger.proto",
+      "rules": {}
+    },
+    "MigrationRecord": {
+      "tag": "echo.migration-record",
+      "source": "v2.0 §2.5, §9.5 model change is a migration, not growth",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "previous_environment",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "environment",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "validation",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "ledger.proto",
+      "rules": {}
+    },
+    "LedgerEntry": {
+      "tag": "echo.ledger-entry",
+      "source": "v2.0 §1 L, §2.5, §5.4, §12; V2-10, V2-11",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "entry_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "LedgerKind",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_change",
+          "type": "TendencyChange",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "theta_change",
+          "type": "ThetaChange",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "recompute",
+          "type": "RecomputeRecord",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "migration",
+          "type": "MigrationRecord",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "review_trigger",
+          "type": "ReviewTrigger",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "review_verdict",
+          "type": "ReviewVerdict",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "review_record",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "ledger.proto",
+      "rules": {
+        "common": [
+          "entry_id",
+          "event_id"
+        ],
+        "cases": {
+          "1": {
+            "required": [
+              "tendency_change"
+            ]
+          },
+          "2": {
+            "required": [
+              "theta_change"
+            ]
+          },
+          "3": {
+            "required": [
+              "recompute"
+            ]
+          },
+          "4": {
+            "required": [
+              "migration"
+            ]
+          },
+          "5": {},
+          "6": {},
+          "7": {
+            "required": [
+              "review_trigger"
+            ]
+          },
+          "8": {
+            "required": [
+              "review_verdict",
+              "review_record"
+            ]
+          }
+        }
+      }
+    },
+    "NatureAppraisalRecord": {
+      "tag": "echo.nature-appraisal",
+      "source": "v2.0 §1 a(e), §3, EV6, EV10",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "appraisal",
+          "type": "NatureVector",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "persons",
+          "type": "string",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "records.proto",
+      "rules": {}
+    },
+    "TendencyMatch": {
+      "tag": "echo.tendency-match",
+      "source": "v2.0 §1 μ_k(e) ∈ [0,1]",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "mu",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        }
+      ],
+      "file": "records.proto",
+      "rules": {}
+    },
+    "SituationMatchRecord": {
+      "tag": "echo.situation-match",
+      "source": "v2.0 §1 μ, §2.4 M, EV5, EV6",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "matches",
+          "type": "TendencyMatch",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "tendency_id"
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "records.proto",
+      "rules": {}
+    },
+    "TendencyConcept": {
+      "tag": "echo.tendency-concept",
+      "source": "v2.0 §7 concept: name, definition, examples, three languages",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "name",
+          "type": "TrilingualText",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "definition",
+          "type": "TrilingualText",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "positive_examples",
+          "type": "TrilingualText",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "negative_examples",
+          "type": "TrilingualText",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "records.proto",
+      "rules": {}
+    },
+    "TendencyCandidateRecord": {
+      "tag": "echo.tendency-candidate",
+      "source": "v2.0 §7 candidates, EV3, EV5; §5.2 κ, d_k; V2-13",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "concept",
+          "type": "TendencyConcept",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "predicate",
+          "type": "TrilingualText",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "direction",
+          "type": "NatureVector",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "relation",
+          "type": "PersonRelation",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "records.proto",
+      "rules": {}
+    },
+    "TeachingAnnotation": {
+      "tag": "echo.teaching-annotation",
+      "source": "v2.0 EV7, §10",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "speaker",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "supports",
+          "type": "bool",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "records.proto",
+      "rules": {}
+    },
+    "LieAnnotation": {
+      "tag": "echo.lie-annotation",
+      "source": "v2.0 EV4, §10; I27",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "statement",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "contradicts",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "records.proto",
+      "rules": {}
+    },
+    "SameMatterAnnotation": {
+      "tag": "echo.same-matter-annotation",
+      "source": "v2.0 EV2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "same_as",
+          "type": "string",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "records.proto",
+      "rules": {}
+    },
+    "ReinterpretationLink": {
+      "tag": "echo.reinterpretation",
+      "source": "v2.0 EV5, EV6, §5.4",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "new_record",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "prior_records",
+          "type": "string",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "interpreter_version",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "records.proto",
+      "rules": {}
+    },
+    "EventAttributesRecord": {
+      "tag": "echo.event-attributes",
+      "source": "v2.0 §1 exogenous, EV2, EV3, EV9; P5-06 rule table",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "rule_table_version",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "exogenous",
+          "type": "bool",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "self_narrative",
+          "type": "bool",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "verifiable",
+          "type": "bool",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_key",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "records.proto",
       "rules": {}
     },
     "EventEnvelope": {
@@ -2748,7 +5268,11 @@
         }
       ],
       "file": "state.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "ProposalBindingV2",
+        "reason": "P5-21; binds VersionedEnvironmentV2 (v2.0 §1 Ω)"
+      }
     },
     "SemanticCandidate": {
       "tag": "echo.semantic-candidate",
@@ -2804,7 +5328,11 @@
         }
       ],
       "file": "state.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "SemanticCandidateV2",
+        "reason": "P5-21; carries ProposalBindingV2"
+      }
     },
     "ConceptProposal": {
       "tag": "echo.concept-proposal",
@@ -2869,7 +5397,11 @@
         }
       ],
       "file": "state.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "ConceptProposalV2",
+        "reason": "P5-21; carries ProposalBindingV2"
+      }
     },
     "FastStateSnapshot": {
       "tag": "echo.fast-state",
@@ -2932,6 +5464,10 @@
         "lengths": {
           "coordinates": "dimension"
         }
+      },
+      "superseded": {
+        "by": "FastStateSnapshotV2",
+        "reason": "P5-21; v2.0 §6: nature channels plus learned components by tendency ID"
       }
     },
     "FastDriveProposal": {
@@ -3016,7 +5552,11 @@
         }
       ],
       "file": "state.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "NatureAppraisalRecord",
+        "reason": "P5-21; v2.0 §2.4, §3, §6: drive is assembled by F from the recorded a(e)"
+      }
     },
     "CoreTransaction": {
       "tag": "echo.transaction",
@@ -3136,7 +5676,11 @@
         }
       ],
       "file": "state.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "CoreTransactionV2",
+        "reason": "P5-21; adds staged L entries for R and θ changes (v2.0 §2.4)"
+      }
     },
     "CoreCommitResult": {
       "tag": "echo.commit-result",
@@ -3200,7 +5744,611 @@
         }
       ],
       "file": "state.proto",
+      "rules": {},
+      "superseded": {
+        "by": "CoreCommitResultV2",
+        "reason": "P5-21; reports published L entries (v2.0 §2.4)"
+      }
+    },
+    "ProposalBindingV2": {
+      "tag": "echo.proposal-binding-v2",
+      "source": "D I 3; O 16.1; v2.0 §1 Ω, §2.4",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "branch_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "raw_log_position",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "base_commit",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "process_time_ns",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "anchor_time_ns",
+          "type": "uint64",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "projected_state_digest",
+          "type": "bytes",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "accepted_z_digest",
+          "type": "bytes",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "c_core_digest",
+          "type": "bytes",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "x_revision",
+          "type": "string",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "r_revision",
+          "type": "string",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "theta_revision",
+          "type": "string",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "validation_snapshot",
+          "type": "ObjectRef",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_validity_version",
+          "type": "string",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "relevant_effect_set_digest",
+          "type": "bytes",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "proposal_payload_digest",
+          "type": "bytes",
+          "number": 18,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "read_set",
+          "type": "ObjectRef",
+          "number": 19,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        },
+        {
+          "name": "environment",
+          "type": "VersionedEnvironmentV2",
+          "number": 20,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {},
+      "supersedes": "ProposalBinding",
+      "reserved": [
+        16
+      ]
+    },
+    "SemanticCandidateV2": {
+      "tag": "echo.semantic-candidate-v2",
+      "source": "D I 4.2,7.1; v2.0 §2.4",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "candidate_graph",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "producer_version",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "actual_output",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {},
+      "supersedes": "SemanticCandidate",
+      "reserved": [
+        2
+      ]
+    },
+    "ConceptProposalV2": {
+      "tag": "echo.concept-proposal-v2",
+      "source": "F 3.4; D I 4.4; v2.0 §7",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "mention",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "signature",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "grounding",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "relations",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_refs",
+          "type": "string",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {},
+      "supersedes": "ConceptProposal",
+      "reserved": [
+        2
+      ]
+    },
+    "LearnedComponent": {
+      "tag": "echo.learned-component",
+      "source": "v2.0 §6 x_k for k ∈ R⁺",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        }
+      ],
+      "file": "state.proto",
       "rules": {}
+    },
+    "FastStateSnapshotV2": {
+      "tag": "echo.fast-state-v2",
+      "source": "v2.0 §6 X = [−1,1]^{4+|R⁺|}; D I 5.1",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "representation_version",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "anchor_time_ns",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "nature",
+          "type": "NatureVector",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "learned",
+          "type": "LearnedComponent",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "tendency_id"
+        }
+      ],
+      "file": "state.proto",
+      "rules": {},
+      "supersedes": "FastStateSnapshot",
+      "reserved": [
+        4,
+        5
+      ]
+    },
+    "CoreTransactionV2": {
+      "tag": "echo.transaction-v2",
+      "source": "D I 3,7; O 16.2; S 8; v2.0 §2.4, §2.5",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_h",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_x",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_r",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_theta",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_l",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_q",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_u",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "processed_position",
+          "type": "uint64",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "anchor_time_ns",
+          "type": "uint64",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_concepts",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "accepted_results",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "audit_refs",
+          "type": "ObjectRef",
+          "number": 14,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_ledger",
+          "type": "LedgerEntry",
+          "number": 16,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {},
+      "supersedes": "CoreTransaction",
+      "reserved": [
+        2
+      ]
+    },
+    "CoreCommitResultV2": {
+      "tag": "echo.commit-result-v2",
+      "source": "D I 6.2; O 16.2; v2.0 §2.4, §2.5",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "branch_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "commit_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "committed",
+          "type": "bool",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "status",
+          "type": "DegradedStatus",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ledger_entries",
+          "type": "string",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "state.proto",
+      "rules": {},
+      "supersedes": "CoreCommitResult"
     },
     "UserUtterance": {
       "tag": "echo.user-utterance",
@@ -4674,7 +7822,11 @@
         }
       ],
       "file": "terminal.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §9.1: per-direction coefficients are carried by ModulationEnvelopeV2"
+      }
     },
     "ModulationEnvelope": {
       "tag": "echo.modulation",
@@ -4783,7 +7935,11 @@
         }
       ],
       "file": "terminal.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "ModulationEnvelopeV2",
+        "reason": "P5-21; v2.0 §9.1: direction set, nature and learned coefficients"
+      }
     },
     "TaskInput": {
       "tag": "echo.task-input",
@@ -5090,13 +8246,176 @@
       ],
       "file": "terminal.proto",
       "rules": {}
+    },
+    "LearnedCoefficient": {
+      "tag": "echo.learned-coefficient",
+      "source": "v2.0 §9.1 β_k·x_k for k ∈ R⁺, §9.2",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "coefficient",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ModulationEnvelopeV2": {
+      "tag": "echo.modulation-v2",
+      "source": "v2.0 §9.1, §9.2; O 13.2; S 19; ADR 0008 §3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "projected_at_ns",
+          "type": "uint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "x_digest",
+          "type": "bytes",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "r_digest",
+          "type": "bytes",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "theta_digest",
+          "type": "bytes",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "model",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tokenizer",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "total_bound",
+          "type": "double",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "effect_receipt_digest",
+          "type": "bytes",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "direction_set",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "nature_coefficients",
+          "type": "NatureReal",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "learned_coefficients",
+          "type": "LearnedCoefficient",
+          "number": 15,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "tendency_id"
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "supersedes": "ModulationEnvelope",
+      "reserved": [
+        10
+      ]
     }
   },
   "enums": {
     "Lineage": {
       "LINEAGE_UNSPECIFIED": 0,
       "REHEARSAL": 1,
-      "LIFE": 2
+      "LIFE": 2,
+      "EXPERIMENT": 3
     },
     "RunStatus": {
       "RUN_UNSPECIFIED": 0,
@@ -5108,7 +8427,11 @@
       "IRL_DEGRADED": 6,
       "TEXT_PROJECTED": 7,
       "MODULATION_NOT_ENABLED": 8,
-      "STORAGE_RECOVERY_FAULT": 9
+      "STORAGE_RECOVERY_FAULT": 9,
+      "GROWTH_PAUSED": 10,
+      "GROWTH_REVIEW_PENDING": 11,
+      "A_DEGRADED": 12,
+      "M_DEGRADED": 13
     },
     "FailureCode": {
       "FAILURE_UNSPECIFIED": 0,
@@ -5124,7 +8447,8 @@
       "VERSION_MISMATCH": 10,
       "NUMERIC_INVALID": 11,
       "RESOURCE_LIMIT": 12,
-      "MODULATION_DISABLED": 13
+      "MODULATION_DISABLED": 13,
+      "GROWTH_OFF_REHEARSAL": 14
     },
     "EventKind": {
       "EVENT_UNSPECIFIED": 0,
@@ -5219,6 +8543,11 @@
       "NON_IDENTIFIABLE": 3,
       "CONTINUE_SHADOW": 4
     },
+    "RelationKind": {
+      "RELATION_UNSPECIFIED": 0,
+      "CLOSENESS": 1,
+      "TRUST": 2
+    },
     "DistinctionForm": {
       "FORM_UNSPECIFIED": 0,
       "EXEMPLAR": 1,
@@ -5241,6 +8570,45 @@
       "COUNTEREVIDENCE": 2,
       "RESOLVES_TRIAL": 3,
       "EVIDENCE_UNKNOWN": 4
+    },
+    "EvidenceSign": {
+      "SIGN_UNSPECIFIED": 0,
+      "SIGN_NEGATIVE": 1,
+      "SIGN_POSITIVE": 2
+    },
+    "GrowthCommandKind": {
+      "GROWTH_COMMAND_UNSPECIFIED": 0,
+      "GROWTH_PAUSE": 1,
+      "GROWTH_RESUME": 2,
+      "GROWTH_REVIEW_CONCLUSION": 3
+    },
+    "LedgerKind": {
+      "LEDGER_UNSPECIFIED": 0,
+      "LEDGER_TENDENCY_CHANGED": 1,
+      "LEDGER_THETA_CHANGED": 2,
+      "LEDGER_RECOMPUTED": 3,
+      "LEDGER_MIGRATED": 4,
+      "LEDGER_GROWTH_PAUSED": 5,
+      "LEDGER_GROWTH_RESUMED": 6,
+      "LEDGER_REVIEW_HELD": 7,
+      "LEDGER_REVIEW_CONCLUDED": 8
+    },
+    "RecomputeCause": {
+      "CAUSE_UNSPECIFIED": 0,
+      "CAUSE_LAW_VERSION": 1,
+      "CAUSE_SOURCE_CORRECTION": 2,
+      "CAUSE_REINTERPRETATION": 3
+    },
+    "ReviewTrigger": {
+      "TRIGGER_UNSPECIFIED": 0,
+      "TRIGGER_JUMP": 1,
+      "TRIGGER_THETA_STEP": 2,
+      "TRIGGER_SLOW_DRIFT": 3
+    },
+    "ReviewVerdict": {
+      "VERDICT_UNSPECIFIED": 0,
+      "LAW_CORRECT": 1,
+      "LAW_INCORRECT": 2
     },
     "Lang": {
       "LANG_UNSPECIFIED": 0,
@@ -5379,6 +8747,78 @@
       "ALLOW_ONCE": 1,
       "ALLOW_ALWAYS": 2,
       "DENY": 3
+    }
+  },
+  "superseded_enums": {
+    "QualificationBranch": {
+      "by": "-",
+      "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data"
+    },
+    "EffectEndpoint": {
+      "by": "-",
+      "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data"
+    },
+    "EffectOwner": {
+      "by": "-",
+      "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data"
+    },
+    "CouplingPhase": {
+      "by": "-",
+      "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data"
+    },
+    "TrialOutcome": {
+      "by": "-",
+      "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data"
+    },
+    "DistinctionForm": {
+      "by": "-",
+      "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data"
+    },
+    "DistinctionStatus": {
+      "by": "-",
+      "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data"
+    },
+    "TraceLifecycle": {
+      "by": "-",
+      "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data"
+    },
+    "EvidenceRelation": {
+      "by": "-",
+      "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data"
+    }
+  },
+  "superseded_values": {
+    "RunStatus": {
+      "CORE_QUARANTINED": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §12: no whole-core quarantine, evidence is removed and recomputed"
+      },
+      "AX_DEGRADED": {
+        "by": "A_DEGRADED",
+        "reason": "P5-21; V2-17: A_x is now nature appraisal A"
+      }
+    },
+    "FailureCode": {
+      "GROWTH_NOT_ENABLED_V1": {
+        "by": "GROWTH_OFF_REHEARSAL",
+        "reason": "P5-21; ADR 0010 decision 1: v1.0 grows from birth"
+      },
+      "AX_UNAVAILABLE": {
+        "by": "-",
+        "reason": "P5-21; V2-17: A failures use A_DEGRADED with a generic reason"
+      },
+      "EVIDENCE_INCOMPLETE": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: C consolidation query plans are replaced"
+      },
+      "UNSUPPORTED_SLICE": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: consolidation slices are replaced"
+      },
+      "UNKNOWN_OVERLAP": {
+        "by": "-",
+        "reason": "P5-21; v2.0 §15: scope DSL overlap checks are replaced"
+      }
     }
   }
 }
