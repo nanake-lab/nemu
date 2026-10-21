@@ -1,0 +1,19 @@
+{"step": "tail", "command": ["D:\\blender\\blender.exe", "-b", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-04\\.cache\\02-validate.blend", "--python-exit-code", "1", "--python", "D:\\Dev\\nemu\\tools\\asset-pipeline\\build_tail.py", "--", "--config", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-04\\.cache\\resolved-build.json", "--output-dir", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-04", "--output-blend", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-04\\.cache\\03-tail.blend"]}
+00:00.875  blend            | Read blend: "D:\Dev\nemu\tools\asset-pipeline\.cache\trial-04\.cache\02-validate.blend"
+{"step": "tail", "status": "failed", "detail": "bpy_struct: item.attr = val: Object.data expected a Curve type, not Mesh"}
+Traceback (most recent call last):
+  File "D:\Dev\nemu\tools\asset-pipeline\build_tail.py", line 103, in <module>
+    run("tail", execute)
+    ~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\blender_common.py", line 69, in run
+    action(config, args)
+    ~~~~~~^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\build_tail.py", line 47, in execute
+    obj.data = mesh
+    ^^^^^^^^
+TypeError: bpy_struct: item.attr = val: Object.data expected a Curve type, not Mesh
+
+Error: script failed, file: 'D:\Dev\nemu\tools\asset-pipeline\build_tail.py', exiting.
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit
