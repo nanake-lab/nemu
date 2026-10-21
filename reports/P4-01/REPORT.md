@@ -1,7 +1,7 @@
 # P4-01 语音识别与语言识别 — 报告
 
 ## 结果
-部分完成：用户已验证全部转写，60 条用户录音已登记，完整 150 条识别评测通过；SenseVoice 开发许可方案已决定。尚未完成执行方的独立时标与 VAD／打断延迟测量，不再等待用户提供或确认录音。不得据此宣称整卡验收完成。
+部分完成：用户已验证全部转写，60 条用户录音已登记，完整 150 条识别评测通过；SenseVoice 开发许可方案已决定。独立强制对齐已完成 60/60；尚未完成执行方的 VAD／打断延迟测量，不再等待用户提供或确认录音。不得据此宣称整卡验收完成。
 
 ## 同步与认领
 - 从 `origin/main` 创建 `task/P4-01-asr`，独立工作树 `C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu`。
@@ -44,9 +44,10 @@ pnpm asr:latency      # 使用仓库外 timing-references.json 的独立起止�
 | 真实麦克风/utility 通道测试 | 通过：50 packets/s、异步关闭，未读取真实用户麦克风，使用 Chromium fake device | voice-e2e-v5.log、e2e-v5/ |
 | Electron 首次测试 | 失败，原始日志保留。与 CI 窗口重叠且临时目录前缀不符合隔离约束；不能据失败推断单一原因 | voice-e2e.log、e2e/ |
 | Electron 第二次测试 | 安静窗口检查把 PowerShell 空列表 null 当成占用，已修正；等待最终复跑 | voice-e2e-v2.log、e2e-v2/ |
-| 各语言 50 条/150 条语言准确率 | 待用户录音；当前用户录音 0/60，不能签发完整验收 | user-recording-status.log |
-| 公开集 CER/WER 与 LID | 中文 74/989 = 7.48%，英文 54/664 = 8.13%，日文 126/1438 = 8.76%；LID 90/90 = 100% | evaluation.json、public-evaluation.log |
-| VAD 中位延迟 ≤300 ms | 待独立语音结束参考点与安静窗口；不以能量阈值或 Silero 本身输出替代最后音节结束 | 待测 |
+| 各语言 50 条/150 条语言准确率 | 用户录音 60/60 已验证并登记；zh CER 6.29%、en WER 6.69%、ja CER 7.52%，LID 149/150 = 99.33%，通过 | evaluation.json、eval150-user-verified.log、user-verification-20261021.json |
+| 公开集 CER/WER 与 LID | 中文 74/989 = 7.48%，英文 54/664 = 8.13%，日文 126/1438 = 8.76%；LID 90/90 = 100% | public90-before-user-verification.json、public-evaluation.log |
+| 独立语音起止参考 | 60/60，方法 v4 在测量前提交；所有数值检查通过。80 ms 网格是模型分辨率，不代表已经校准的误差上限 | ALIGNMENT-PREREGISTRATION-V4.md、alignment-v4-evidence.json、alignment-v4-diagnostics.json |
+| VAD 中位延迟 ≤300 ms | 独立参考已齐，安静窗口测量进行中 | 待测 |
 | 打断延迟 ≤250 ms | 逻辑测试验证 ≥200 ms 持续语音及每次话语一次打断；本机真实延迟未测 | unit-v3.log；待测 |
 | utilityProcess 静音 CPU ≤2% | 60.92 秒、真实采集静音 PCM；均值 0.107%、最大 0.126%，通过 | idle-cpu.json、idle-measurement.log、measurement/ |
 
@@ -76,7 +77,7 @@ CER/WER 采用总编辑距离/总参考单位数；NFKC、小写、去 Unicode �
 | zod / @nemu/contracts | 4.6.7 / workspace | 已有依赖 | 边界校验与权威类型 |
 | tsx | 4.21.0 | MIT | 开发/评测 CLI，不是应用运行时依赖 |
 | pyarrow | 23.0.1 | Apache-2.0 | 本机公开数据 Parquet 读取；PEP 723 固定版本 |
-| SenseVoice int8 + tokens | 2365baeacb507f821a0c8120fcee3d484dba7a07 | custom:FunASR-Model-1.1 | **阻塞：不是项目列出的宽松许可**；redistributable=false 表示本项目尚未批准打包分发，不代表对原协议作法律结论 |
+| SenseVoice int8 + tokens | 2365baeacb507f821a0c8120fcee3d484dba7a07 | custom:FunASR-Model-1.1 | 已决定：开发使用、用户自行下载，不随应用分发，P7 再评估；redistributable=false；原阻塞记录见下文 |
 | Silero VAD | 1e261b036686cd0017d500ee96acd1c4ba572a9d | MIT | 模型与源许可已登记 |
 | Google FLEURS 中/英/日 | Parquet 168de341b3db6859a9bac1c50a2ef5e3b47647e0 | CC-BY-4.0 | 公开测试数据；音频不入库，保留 Google/FLEURS 归属与来源 |
 
@@ -88,13 +89,13 @@ CER/WER 采用总编辑距离/总参考单位数；NFKC、小写、去 Unicode �
 - Silero：https://github.com/snakers4/silero-vad/blob/1e261b036686cd0017d500ee96acd1c4ba572a9d/LICENSE
 - 数据集：https://huggingface.co/datasets/google/fleurs （FLEURS: Few-shot Learning Evaluation of Universal Representations of Speech, Google, 2022）
 
-SenseVoice 源码的 MIT 不能替代权重许可证；转换仓库的 LICENSE 转向 FunASR 模型协议。协议含归属、模型名、行为与自动终止等条款，因此没有把它标成 MIT/Apache。按用户本次明确指示加 needs-user，等待用户决定；不自动换模型。
+SenseVoice 源码的 MIT 不能替代权重许可证；转换仓库的 LICENSE 转向 FunASR 模型协议。协议含归属、模型名、行为与自动终止等条款，因此没有把它标成 MIT/Apache。原先按用户指示加 needs-user 等待决定；2026-10-21 用户已决定继续开发使用、用户自行下载且不随应用分发，正式发布前 P7 再评估。needs-user 按用户明确指示继续保留至整卡完成。
 
 ## 待用户确认
 - [x] （已决定，2026-10-21）SenseVoice 现阶段继续用于开发；将来不随应用打包，由每位用户自行下载模型；正式发布前（P7）重新评估许可。模型登记保持 `redistributable=false`，注明“用户自行下载，不随应用分发”，保留 FunASR 要求的出处与模型名。
   - 原记录（保留作历史，已由上述决定取代，不再作为当前许可阻塞）：（阻塞）SenseVoice 自定义模型许可下是否同意本项目继续使用及未来分发方案。
 - [x] （已验证，2026-10-21）用户已确认机器转写正常无误；三语各 20 条已登记，完整 150 条识别评测通过，不再等待用户。
-- [ ] （执行方验收阻塞）独立起止时标与 VAD／打断延迟结果尚未完成；不需要用户再次核对录音。CI 以最终提交为准。
+- [ ] （执行方验收阻塞）独立起止时标已完成，VAD／打断延迟结果尚未完成；不需要用户再次核对录音。CI 以最终提交为准。
 - [ ] （不阻塞）可选 Nemu 唤醒词默认关闭。当前实现为常开模式下识别结果的 Nemu 文本门控，不宣称专用声学关键词模型或唤醒时延验收。
 
 ## 后续建议（不在本任务范围内）
@@ -198,3 +199,15 @@ Qwen3 ForcedAligner 权重及全部配置已完整下载并按 manifest 的 SHA-
 已在任何实际延迟测量之前登记 v2：保留全部量化时间点及警告，验证完整语音区间和单调／有限／边界合法性；全部规范 WAV 统一追加 1 秒数字静音，原文件不改，独立工具与被测系统使用同一 v2 WAV。旧函数和全部旧断言保留，v2 单独版本、路径、文件快照及测试；不改 250/300 ms 验收阈值，不删样本，不使用能量或被测时间点。见 ALIGNMENT-PREREGISTRATION-V2.md。准备验证：9 项 Python 测试、严格 mypy、lint/typecheck、19 项 ASR 单测通过；证据 alignment-v2-*.log。
 
 历史结果栏原文保留：部分完成：实现、公开集评测与静音 CPU 测量已完成；待用户录音、独立语音时标的延迟测量及 SenseVoice 模型许可确认。不得据此宣称 P4-01 全部验收通过。该状态已由本节与结果栏的新状态取代。
+
+
+## 2026-10-21 独立时标完成与测量窗口中断
+v2 全部数值有效，但孤立输入部分首单位被定位为 0，未用于被测延迟；v3 增加统一公开语音上下文与首尾数字静音，59/60 有效，日语 016 复合词拆分导致跨段错配，按规则拒绝整套发布。两轮原始输出、诊断和输入快照均保留在仓库外，均未用于签发延迟通过。
+
+v4 在 c224bf2 提交后、首次实际延迟之前，按目标原语言分词并固定上下文单位边界。60/60 参考有效，20 条含量化零时长单位警告，所有词元保留，整句起止合法；不使用能量阈值或被测系统时间点。目标音频、60 条完整录音和已验证文字均保持冻结。方法与诊断见 ALIGNMENT-PREREGISTRATION-V4.md、alignment-preregistration-v4.json、alignment-v4-evidence.json、alignment-v4-diagnostics.json；全部 timing-references.json 与原始词元留在仓库外。
+
+独立工具 qwen-asr 0.0.6 和 Qwen3-ForcedAligner-0.6B（Apache-2.0，固定修订与哈希见 manifest）仅用于本机评测，未进入应用运行时。80 ms 是模型输出网格，不是经人工校准的误差上限；临界样本必须保留，不能据此宣称参考是真实毫秒精度。
+
+首次 pnpm asr:latency 在启动前安静检查通过，但完成 15/60 后检测到 uv/Python 测试或模型任务，立即停止。状态 INVALID，原因是资源窗口中断，不能把部分数值或缺失的 45 条当成最终验收，也不因该失败修改代码或阈值。原始日志及唯一尝试文件完整保留：latency-v4-run.log、latency-attempt-2026-10-21T13-53-12-367Z.json。待其他任务结束后从头重测全部 60 条。当前录音和文字稿没有待用户确认项，PR #44 仍为草稿，needs-user 保留。
+
+测量覆盖 20 ms PCM 输入到本机 VoiceRuntime AppBus 回调；没有把它表述成物理麦克风驱动到 UI 的全链路测量。真实 Electron utilityProcess 的采集／通道和静音 CPU 单独有对应证据。
