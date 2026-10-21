@@ -11,21 +11,30 @@
 //! are not implemented yet (`reports/P5-23/BLOCKED.md`).
 
 mod error;
+mod fuse;
 mod num;
 mod params;
 mod recurrence;
+mod relation;
+mod shares;
 mod support;
 
 #[cfg(test)]
 mod tests;
 
 pub use error::{LawError, LawResult};
+pub use fuse::{check_weight_cap, eviction_choice, exhausted};
 pub use num::{Nature4, exact_mean};
 pub use params::Law;
 pub use recurrence::{
     MAX_GROUPS, Origin, check_stored, consistent_and_contrary, evidence_amount, initial,
     is_personality, pi, prior, record, rho, strength,
 };
+pub use relation::{
+    CLOSENESS_DIRECTION, Caretaker, RELATION_FORM, RelationConcepts, TRUST_DIRECTION,
+    closeness_weight, initial_r, relation_tendency, relation_tendency_id, trust,
+};
+pub use shares::{ShareInput, shares};
 pub use support::{
     GroupSupport, deviation, experience, fluctuation, mean_deviation, teaching, weight,
 };
