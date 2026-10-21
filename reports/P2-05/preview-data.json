@@ -1,0 +1,1816 @@
+{
+  "selected": "A 偏粗短",
+  "presets": {
+    "light": {
+      "hair": {
+        "stiffness": 0.6,
+        "dragForce": 0.35,
+        "gravityPower": 0.02,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.014
+      },
+      "ear": {
+        "stiffness": 1.275,
+        "dragForce": 0.35,
+        "gravityPower": 0.0,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.007
+      },
+      "tail": {
+        "stiffness": 0.975,
+        "dragForce": 0.35,
+        "gravityPower": 0.035,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      },
+      "skirt": {
+        "stiffness": 0.75,
+        "dragForce": 0.35,
+        "gravityPower": 0.04,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      }
+    },
+    "standard": {
+      "hair": {
+        "stiffness": 0.8,
+        "dragForce": 0.55,
+        "gravityPower": 0.02,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.014
+      },
+      "ear": {
+        "stiffness": 1.7,
+        "dragForce": 0.55,
+        "gravityPower": 0.0,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.007
+      },
+      "tail": {
+        "stiffness": 1.3,
+        "dragForce": 0.55,
+        "gravityPower": 0.035,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      },
+      "skirt": {
+        "stiffness": 1.0,
+        "dragForce": 0.55,
+        "gravityPower": 0.04,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      }
+    },
+    "calm": {
+      "hair": {
+        "stiffness": 1.08,
+        "dragForce": 0.75,
+        "gravityPower": 0.02,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.014
+      },
+      "ear": {
+        "stiffness": 2.295,
+        "dragForce": 0.75,
+        "gravityPower": 0.0,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.007
+      },
+      "tail": {
+        "stiffness": 1.755,
+        "dragForce": 0.75,
+        "gravityPower": 0.035,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      },
+      "skirt": {
+        "stiffness": 1.35,
+        "dragForce": 0.75,
+        "gravityPower": 0.04,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      }
+    }
+  },
+  "build": {
+    "version": 1,
+    "source": "D:/Dev/nemu/content/_candidates/P2-05/source/nemu-vroid-export.vrm",
+    "provenance": {
+      "source": "User VRoid export nemu-vroid-export.vrm; sha256 D3F4799C37ECFDD1806EF93264B06F5D979B697A592D4422884046B594E1CB2B",
+      "license": "custom:Nemu private content; final terms pending P7",
+      "redistributable": false,
+      "author": "nanake",
+      "notes": "Unapproved P2-05 review candidate. Source permissions retained."
+    },
+    "sourceChecks": {
+      "bones": [
+        "hips",
+        "head",
+        "upperChest"
+      ],
+      "expressions": [
+        "happy",
+        "aa",
+        "blink"
+      ],
+      "materials": [
+        "N00_000_Hair_00_HAIR (Instance)"
+      ]
+    },
+    "meta": {
+      "name": "Nemu",
+      "version": "P2-05-candidate-short-thick-standard",
+      "authors": [
+        "nanake"
+      ],
+      "contentLicenseUrl": "LICENSE.md"
+    },
+    "springs": {
+      "mode": "replace",
+      "attachToExisting": false,
+      "groupName": "P205-Body",
+      "colliders": [
+        {
+          "bone": "head",
+          "shape": "sphere",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.11
+        },
+        {
+          "bone": "neck",
+          "shape": "capsule",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.04,
+          "tailM": [
+            0,
+            0,
+            0.07
+          ]
+        },
+        {
+          "bone": "upperChest",
+          "shape": "capsule",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.105,
+          "tailM": [
+            0,
+            0,
+            0.12
+          ]
+        },
+        {
+          "bone": "leftUpperArm",
+          "shape": "capsule",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.04,
+          "tailM": [
+            0.17,
+            0,
+            0
+          ]
+        },
+        {
+          "bone": "rightUpperArm",
+          "shape": "capsule",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.04,
+          "tailM": [
+            -0.17,
+            0,
+            0
+          ]
+        },
+        {
+          "bone": "leftLowerArm",
+          "shape": "capsule",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.035,
+          "tailM": [
+            0.17,
+            0,
+            0
+          ]
+        },
+        {
+          "bone": "rightLowerArm",
+          "shape": "capsule",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.035,
+          "tailM": [
+            -0.17,
+            0,
+            0
+          ]
+        },
+        {
+          "bone": "hips",
+          "shape": "capsule",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.1,
+          "tailM": [
+            0,
+            0,
+            0.1
+          ]
+        },
+        {
+          "bone": "leftUpperLeg",
+          "shape": "capsule",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.065,
+          "tailM": [
+            0,
+            0,
+            -0.25
+          ]
+        },
+        {
+          "bone": "rightUpperLeg",
+          "shape": "capsule",
+          "offsetM": [
+            0,
+            0,
+            0
+          ],
+          "radiusM": 0.065,
+          "tailM": [
+            0,
+            0,
+            -0.25
+          ]
+        }
+      ],
+      "chains": [
+        {
+          "name": "Bust",
+          "bones": [
+            "J_Sec_L_Bust1",
+            "J_Sec_L_Bust2",
+            "J_Sec_L_Bust2_end"
+          ],
+          "centerBone": "Root",
+          "hitRadiusM": 0.009574057,
+          "stiffness": 0.75,
+          "gravityPower": 0,
+          "dragForce": 0.05,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ]
+        },
+        {
+          "name": "Bust",
+          "bones": [
+            "J_Sec_R_Bust1",
+            "J_Sec_R_Bust2",
+            "J_Sec_R_Bust2_end"
+          ],
+          "centerBone": "Root",
+          "hitRadiusM": 0.009574057,
+          "stiffness": 0.75,
+          "gravityPower": 0,
+          "dragForce": 0.05,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ]
+        },
+        {
+          "name": "P205-skirt-02",
+          "bones": [
+            "J_Sec_L_CoatSkirtBack_01",
+            "J_Sec_L_CoatSkirtBack_end_01",
+            "J_Sec_L_CoatSkirtBack_end_01_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-03",
+          "bones": [
+            "J_Sec_L_CoatSkirtFront_01",
+            "J_Sec_L_CoatSkirtFront_end_01",
+            "J_Sec_L_CoatSkirtFront_end_01_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-04",
+          "bones": [
+            "J_Sec_L_CoatSkirtSide1_01",
+            "J_Sec_L_CoatSkirtSide2_01",
+            "J_Sec_L_CoatSkirtSide2_end_01",
+            "J_Sec_L_CoatSkirtSide2_end_01_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-05",
+          "bones": [
+            "J_Sec_R_CoatSkirtBack_01",
+            "J_Sec_R_CoatSkirtBack_end_01",
+            "J_Sec_R_CoatSkirtBack_end_01_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-06",
+          "bones": [
+            "J_Sec_R_CoatSkirtFront_01",
+            "J_Sec_R_CoatSkirtFront_end_01",
+            "J_Sec_R_CoatSkirtFront_end_01_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-07",
+          "bones": [
+            "J_Sec_R_CoatSkirtSide1_01",
+            "J_Sec_R_CoatSkirtSide2_01",
+            "J_Sec_R_CoatSkirtSide2_end_01",
+            "J_Sec_R_CoatSkirtSide2_end_01_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-08",
+          "bones": [
+            "J_Sec_L_CoatSkirtBack_02",
+            "J_Sec_L_CoatSkirtBack_end_02",
+            "J_Sec_L_CoatSkirtBack_end_02_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-09",
+          "bones": [
+            "J_Sec_L_CoatSkirtFront_02",
+            "J_Sec_L_CoatSkirtFront_end_02",
+            "J_Sec_L_CoatSkirtFront_end_02_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-10",
+          "bones": [
+            "J_Sec_L_CoatSkirtSide1_02",
+            "J_Sec_L_CoatSkirtSide2_02",
+            "J_Sec_L_CoatSkirtSide2_end_02",
+            "J_Sec_L_CoatSkirtSide2_end_02_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-11",
+          "bones": [
+            "J_Sec_R_CoatSkirtBack_02",
+            "J_Sec_R_CoatSkirtBack_end_02",
+            "J_Sec_R_CoatSkirtBack_end_02_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-12",
+          "bones": [
+            "J_Sec_R_CoatSkirtFront_02",
+            "J_Sec_R_CoatSkirtFront_end_02",
+            "J_Sec_R_CoatSkirtFront_end_02_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-13",
+          "bones": [
+            "J_Sec_R_CoatSkirtSide1_02",
+            "J_Sec_R_CoatSkirtSide2_02",
+            "J_Sec_R_CoatSkirtSide2_end_02",
+            "J_Sec_R_CoatSkirtSide2_end_02_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-14",
+          "bones": [
+            "J_Sec_L_CoatSkirtBack_03",
+            "J_Sec_L_CoatSkirtBack_end_03",
+            "J_Sec_L_CoatSkirtBack_end_03_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-15",
+          "bones": [
+            "J_Sec_L_CoatSkirtFront_03",
+            "J_Sec_L_CoatSkirtFront_end_03",
+            "J_Sec_L_CoatSkirtFront_end_03_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-16",
+          "bones": [
+            "J_Sec_L_CoatSkirtSide1_03",
+            "J_Sec_L_CoatSkirtSide2_03",
+            "J_Sec_L_CoatSkirtSide2_end_03",
+            "J_Sec_L_CoatSkirtSide2_end_03_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-17",
+          "bones": [
+            "J_Sec_R_CoatSkirtBack_03",
+            "J_Sec_R_CoatSkirtBack_end_03",
+            "J_Sec_R_CoatSkirtBack_end_03_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-18",
+          "bones": [
+            "J_Sec_R_CoatSkirtFront_03",
+            "J_Sec_R_CoatSkirtFront_end_03",
+            "J_Sec_R_CoatSkirtFront_end_03_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-19",
+          "bones": [
+            "J_Sec_R_CoatSkirtSide1_03",
+            "J_Sec_R_CoatSkirtSide2_03",
+            "J_Sec_R_CoatSkirtSide2_end_03",
+            "J_Sec_R_CoatSkirtSide2_end_03_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-20",
+          "bones": [
+            "J_Sec_L_CoatSkirtBack_04",
+            "J_Sec_L_CoatSkirtBack_end_04",
+            "J_Sec_L_CoatSkirtBack_end_04_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-21",
+          "bones": [
+            "J_Sec_L_CoatSkirtFront_04",
+            "J_Sec_L_CoatSkirtFront_end_04",
+            "J_Sec_L_CoatSkirtFront_end_04_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-22",
+          "bones": [
+            "J_Sec_L_CoatSkirtSide1_04",
+            "J_Sec_L_CoatSkirtSide2_04",
+            "J_Sec_L_CoatSkirtSide2_end_04",
+            "J_Sec_L_CoatSkirtSide2_end_04_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-23",
+          "bones": [
+            "J_Sec_R_CoatSkirtBack_04",
+            "J_Sec_R_CoatSkirtBack_end_04",
+            "J_Sec_R_CoatSkirtBack_end_04_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-24",
+          "bones": [
+            "J_Sec_R_CoatSkirtFront_04",
+            "J_Sec_R_CoatSkirtFront_end_04",
+            "J_Sec_R_CoatSkirtFront_end_04_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-skirt-25",
+          "bones": [
+            "J_Sec_R_CoatSkirtSide1_04",
+            "J_Sec_R_CoatSkirtSide2_04",
+            "J_Sec_R_CoatSkirtSide2_end_04",
+            "J_Sec_R_CoatSkirtSide2_end_04_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.0,
+          "dragForce": 0.55,
+          "gravityPower": 0.04,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        },
+        {
+          "name": "P205-hair-26",
+          "bones": [
+            "J_Sec_Hair1_03",
+            "J_Sec_Hair2_03",
+            "J_Sec_Hair3_03",
+            "J_Sec_Hair3_03_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-27",
+          "bones": [
+            "J_Sec_Hair1_04",
+            "J_Sec_Hair2_04",
+            "J_Sec_Hair3_04",
+            "J_Sec_Hair3_04_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-28",
+          "bones": [
+            "J_Sec_Hair1_05",
+            "J_Sec_Hair2_05",
+            "J_Sec_Hair3_05",
+            "J_Sec_Hair3_05_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-29",
+          "bones": [
+            "J_Sec_Hair1_02",
+            "J_Sec_Hair2_02",
+            "J_Sec_Hair3_02",
+            "J_Sec_Hair3_02_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-30",
+          "bones": [
+            "J_Sec_Hair1_01",
+            "J_Sec_Hair2_01",
+            "J_Sec_Hair3_01",
+            "J_Sec_Hair3_01_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-31",
+          "bones": [
+            "J_Sec_Hair1_06",
+            "J_Sec_Hair2_06",
+            "J_Sec_Hair3_06",
+            "J_Sec_Hair3_06_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-32",
+          "bones": [
+            "J_Sec_Hair1_07",
+            "J_Sec_Hair2_07",
+            "J_Sec_Hair3_07",
+            "J_Sec_Hair3_07_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-33",
+          "bones": [
+            "J_Sec_Hair1_08",
+            "J_Sec_Hair2_08",
+            "J_Sec_Hair3_08",
+            "J_Sec_Hair3_08_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-34",
+          "bones": [
+            "J_Sec_Hair1_09",
+            "J_Sec_Hair2_09",
+            "J_Sec_Hair3_09",
+            "J_Sec_Hair3_09_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-35",
+          "bones": [
+            "J_Sec_Hair1_10",
+            "J_Sec_Hair2_10",
+            "J_Sec_Hair3_10",
+            "J_Sec_Hair3_10_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-36",
+          "bones": [
+            "J_Sec_Hair1_11",
+            "J_Sec_Hair2_11",
+            "J_Sec_Hair3_11",
+            "J_Sec_Hair3_11_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-37",
+          "bones": [
+            "J_Sec_Hair1_12",
+            "J_Sec_Hair2_12",
+            "J_Sec_Hair3_12",
+            "J_Sec_Hair4_12",
+            "J_Sec_Hair5_12",
+            "J_Sec_Hair6_12",
+            "J_Sec_Hair6_12_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-38",
+          "bones": [
+            "J_Sec_Hair1_13",
+            "J_Sec_Hair2_13",
+            "J_Sec_Hair3_13",
+            "J_Sec_Hair4_13",
+            "J_Sec_Hair5_13",
+            "J_Sec_Hair5_13_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-39",
+          "bones": [
+            "J_Sec_Hair1_14",
+            "J_Sec_Hair2_14",
+            "J_Sec_Hair3_14",
+            "J_Sec_Hair4_14",
+            "J_Sec_Hair5_14",
+            "J_Sec_Hair5_14_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-40",
+          "bones": [
+            "J_Sec_Hair1_15",
+            "J_Sec_Hair2_15",
+            "J_Sec_Hair3_15",
+            "J_Sec_Hair4_15",
+            "J_Sec_Hair5_15",
+            "J_Sec_Hair6_15",
+            "J_Sec_Hair7_15",
+            "J_Sec_Hair7_15_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-41",
+          "bones": [
+            "J_Sec_Hair1_16",
+            "J_Sec_Hair2_16",
+            "J_Sec_Hair3_16",
+            "J_Sec_Hair4_16",
+            "J_Sec_Hair5_16",
+            "J_Sec_Hair6_16",
+            "J_Sec_Hair6_16_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-42",
+          "bones": [
+            "J_Sec_Hair1_17",
+            "J_Sec_Hair2_17",
+            "J_Sec_Hair3_17",
+            "J_Sec_Hair4_17",
+            "J_Sec_Hair5_17",
+            "J_Sec_Hair6_17",
+            "J_Sec_Hair6_17_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-43",
+          "bones": [
+            "J_Sec_Hair1_18",
+            "J_Sec_Hair2_18",
+            "J_Sec_Hair3_18",
+            "J_Sec_Hair4_18",
+            "J_Sec_Hair5_18",
+            "J_Sec_Hair6_18",
+            "J_Sec_Hair6_18_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-44",
+          "bones": [
+            "J_Sec_Hair1_19",
+            "J_Sec_Hair2_19",
+            "J_Sec_Hair3_19",
+            "J_Sec_Hair4_19",
+            "J_Sec_Hair5_19",
+            "J_Sec_Hair6_19",
+            "J_Sec_Hair6_19_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-45",
+          "bones": [
+            "J_Sec_Hair1_20",
+            "J_Sec_Hair2_20",
+            "J_Sec_Hair3_20",
+            "J_Sec_Hair4_20",
+            "J_Sec_Hair5_20",
+            "J_Sec_Hair6_20",
+            "J_Sec_Hair6_20_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-46",
+          "bones": [
+            "J_Sec_Hair1_21",
+            "J_Sec_Hair2_21",
+            "J_Sec_Hair3_21",
+            "J_Sec_Hair4_21",
+            "J_Sec_Hair5_21",
+            "J_Sec_Hair5_21_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-hair-47",
+          "bones": [
+            "J_Sec_Hair1_22",
+            "J_Sec_Hair2_22",
+            "J_Sec_Hair3_22",
+            "J_Sec_Hair4_22",
+            "J_Sec_Hair5_22",
+            "J_Sec_Hair5_22_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 0.8,
+          "dragForce": 0.55,
+          "gravityPower": 0.02,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.014
+        },
+        {
+          "name": "P205-ear-48",
+          "bones": [
+            "J_Sec_Hair1_23",
+            "J_Sec_Hair2_23",
+            "J_Sec_Hair2_23_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.7,
+          "dragForce": 0.55,
+          "gravityPower": 0.0,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.007
+        },
+        {
+          "name": "P205-ear-49",
+          "bones": [
+            "J_Sec_Hair1_24",
+            "J_Sec_Hair2_24",
+            "J_Sec_Hair2_24_end"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.7,
+          "dragForce": 0.55,
+          "gravityPower": 0.0,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.007
+        },
+        {
+          "name": "P205-tail",
+          "bones": [
+            "$tail"
+          ],
+          "centerBone": "Root",
+          "stiffness": 1.3,
+          "dragForce": 0.55,
+          "gravityPower": 0.035,
+          "gravityDir": [
+            0,
+            0,
+            -1
+          ],
+          "hitRadiusM": 0.018
+        }
+      ]
+    },
+    "expressions": {
+      "preset": {},
+      "custom": {}
+    },
+    "materials": {
+      "NemuTailCandidateMaterial": {
+        "baseColor": [
+          0.0595112381629812,
+          0.05448027644244237,
+          0.08021982031446832,
+          1
+        ],
+        "mtoon": {
+          "shading_shift_factor": -0.199999988,
+          "shading_toony_factor": 0.8,
+          "gi_equalization_factor": 0.9,
+          "rim_lighting_mix_factor": 1,
+          "parametric_rim_fresnel_power_factor": 100,
+          "parametric_rim_lift_factor": 0.1,
+          "outline_width_factor": 0.000427083316,
+          "outline_lighting_mix_factor": 0,
+          "shade_color_factor": [
+            0.0295568344378088,
+            0.027320891639074894,
+            0.04518620438567554
+          ],
+          "parametric_rim_color_factor": [
+            0.05087609,
+            0.05087609,
+            0.05087609
+          ],
+          "outline_color_factor": [
+            0.014443843596092545,
+            0.012286488356915872,
+            0.022173884793387385
+          ],
+          "outline_width_mode": "worldCoordinates"
+        }
+      }
+    },
+    "textures": {
+      "maxSize": 2048
+    },
+    "profile": {
+      "hitRegions": [
+        {
+          "id": "head",
+          "bone": "head",
+          "shape": "sphere",
+          "radiusM": 0.14
+        },
+        {
+          "id": "body",
+          "bone": "spine",
+          "shape": "capsule",
+          "radiusM": 0.16,
+          "lengthM": 0.3
+        }
+      ],
+      "gazeLimits": {
+        "yawDeg": 45,
+        "pitchUpDeg": 25,
+        "pitchDownDeg": 30
+      },
+      "framing": {
+        "fullBody": {
+          "fovDeg": 20,
+          "distanceM": 5.3,
+          "targetBone": "hips",
+          "offsetM": [
+            0,
+            0.1,
+            0
+          ]
+        },
+        "upperBody": {
+          "fovDeg": 20,
+          "distanceM": 1.6,
+          "targetBone": "chest",
+          "offsetM": [
+            0,
+            0.1,
+            0
+          ]
+        }
+      },
+      "rig": {
+        "earBonesL": [
+          "J_Sec_Hair1_24",
+          "J_Sec_Hair2_24"
+        ],
+        "earBonesR": [
+          "J_Sec_Hair1_23",
+          "J_Sec_Hair2_23"
+        ],
+        "earBackMaxDeg": 30,
+        "tailSwingDeg": [
+          -20,
+          20
+        ]
+      },
+      "emotionMap": {
+        "neutral": [],
+        "happy": [],
+        "sad": [],
+        "angry": [],
+        "surprised": [],
+        "relaxed": [],
+        "shy": [],
+        "sleepy": [],
+        "smug": [],
+        "pout": [],
+        "excited": [],
+        "worried": []
+      },
+      "visemeMap": {
+        "A": "aa",
+        "I": "ih",
+        "U": "ou",
+        "E": "ee",
+        "O": "oh"
+      },
+      "lipSyncProfiles": {
+        "zh": "lipsync/zh.json",
+        "en": "lipsync/en.json",
+        "ja": "lipsync/ja.json"
+      },
+      "idleSet": []
+    },
+    "tail": {
+      "enabled": true,
+      "objectName": "NemuTailCandidate",
+      "bonePrefix": "NemuTail",
+      "boneCount": 12,
+      "parentBone": "hips",
+      "offsetM": [
+        0,
+        0.14,
+        0.065
+      ],
+      "curve": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.00302734,
+          0.01060181,
+          -0.00177002
+        ],
+        [
+          0.0059375,
+          0.02348633,
+          -0.00392578
+        ],
+        [
+          0.00884766,
+          0.03839722,
+          -0.00642334
+        ],
+        [
+          0.011875,
+          0.05507812,
+          -0.00921875
+        ],
+        [
+          0.01513672,
+          0.07327271,
+          -0.01226807
+        ],
+        [
+          0.01875,
+          0.09272461,
+          -0.01552734
+        ],
+        [
+          0.02283203,
+          0.11317749,
+          -0.01895264
+        ],
+        [
+          0.0275,
+          0.134375,
+          -0.0225
+        ],
+        [
+          0.03287109,
+          0.15606079,
+          -0.02612549
+        ],
+        [
+          0.0390625,
+          0.17797852,
+          -0.02978516
+        ],
+        [
+          0.04619141,
+          0.19987183,
+          -0.03343506
+        ],
+        [
+          0.054375,
+          0.22148438,
+          -0.03703125
+        ],
+        [
+          0.06373047,
+          0.24255981,
+          -0.04052979
+        ],
+        [
+          0.074375,
+          0.2628418,
+          -0.04388672
+        ],
+        [
+          0.08642578,
+          0.28207397,
+          -0.04705811
+        ],
+        [
+          0.1,
+          0.3,
+          -0.05
+        ],
+        [
+          0.11535889,
+          0.31754761,
+          -0.05315918
+        ],
+        [
+          0.13255859,
+          0.33569336,
+          -0.05691406
+        ],
+        [
+          0.15140869,
+          0.35425415,
+          -0.06111816
+        ],
+        [
+          0.17171875,
+          0.37304688,
+          -0.065625
+        ],
+        [
+          0.19329834,
+          0.39188843,
+          -0.07028809
+        ],
+        [
+          0.21595703,
+          0.4105957,
+          -0.07496094
+        ],
+        [
+          0.23950439,
+          0.4289856,
+          -0.07949707
+        ],
+        [
+          0.26375,
+          0.446875,
+          -0.08375
+        ],
+        [
+          0.28850342,
+          0.46408081,
+          -0.08757324
+        ],
+        [
+          0.31357422,
+          0.48041992,
+          -0.09082031
+        ],
+        [
+          0.33877197,
+          0.49570923,
+          -0.09334473
+        ],
+        [
+          0.36390625,
+          0.50976562,
+          -0.095
+        ],
+        [
+          0.38878662,
+          0.52240601,
+          -0.09563965
+        ],
+        [
+          0.41322266,
+          0.53344727,
+          -0.09511719
+        ],
+        [
+          0.43702393,
+          0.5427063,
+          -0.09328613
+        ],
+        [
+          0.46,
+          0.55,
+          -0.09
+        ],
+        [
+          0.48282959,
+          0.5552063,
+          -0.08519775
+        ],
+        [
+          0.50623047,
+          0.55844727,
+          -0.07900391
+        ],
+        [
+          0.5300708,
+          0.55990601,
+          -0.07155029
+        ],
+        [
+          0.55421875,
+          0.55976563,
+          -0.06296875
+        ],
+        [
+          0.57854248,
+          0.55820923,
+          -0.05339111
+        ],
+        [
+          0.60291016,
+          0.55541992,
+          -0.04294922
+        ],
+        [
+          0.62718994,
+          0.55158081,
+          -0.0317749
+        ],
+        [
+          0.65125,
+          0.546875,
+          -0.02
+        ],
+        [
+          0.6749585,
+          0.5414856,
+          -0.00775635
+        ],
+        [
+          0.69818359,
+          0.5355957,
+          0.00482422
+        ],
+        [
+          0.72079346,
+          0.52938843,
+          0.01760986
+        ],
+        [
+          0.74265625,
+          0.52304688,
+          0.03046875
+        ],
+        [
+          0.76364014,
+          0.51675415,
+          0.04326904
+        ],
+        [
+          0.78361328,
+          0.51069336,
+          0.05587891
+        ],
+        [
+          0.80244385,
+          0.50504761,
+          0.0681665
+        ],
+        [
+          0.82,
+          0.5,
+          0.08
+        ],
+        [
+          0.83652344,
+          0.49494019,
+          0.09204224
+        ],
+        [
+          0.85234375,
+          0.48920898,
+          0.10493164
+        ],
+        [
+          0.86746094,
+          0.48291626,
+          0.11849976
+        ],
+        [
+          0.881875,
+          0.47617188,
+          0.13257812
+        ],
+        [
+          0.89558594,
+          0.46908569,
+          0.14699829
+        ],
+        [
+          0.90859375,
+          0.46176758,
+          0.1615918
+        ],
+        [
+          0.92089844,
+          0.45432739,
+          0.17619019
+        ],
+        [
+          0.9325,
+          0.446875,
+          0.190625
+        ],
+        [
+          0.94339844,
+          0.43952026,
+          0.20472778
+        ],
+        [
+          0.95359375,
+          0.43237305,
+          0.21833008
+        ],
+        [
+          0.96308594,
+          0.42554321,
+          0.23126343
+        ],
+        [
+          0.971875,
+          0.41914062,
+          0.24335937
+        ],
+        [
+          0.97996094,
+          0.41327515,
+          0.25444946
+        ],
+        [
+          0.98734375,
+          0.40805664,
+          0.26436523
+        ],
+        [
+          0.99402344,
+          0.40359497,
+          0.27293823
+        ],
+        [
+          1,
+          0.4,
+          0.28
+        ]
+      ],
+      "resolution": 12,
+      "sectionResolution": 3,
+      "capEnds": true,
+      "tipShape": "taper",
+      "tipRadiusM": 0.003,
+      "hairMaterial": "N00_000_Hair_00_HAIR (Instance)",
+      "materialName": "NemuTailCandidateMaterial",
+      "lengthM": 0.553,
+      "radiusCurve": [
+        [
+          0,
+          0.022
+        ],
+        [
+          0.18,
+          0.035
+        ],
+        [
+          0.52,
+          0.08532
+        ],
+        [
+          0.72,
+          0.0948
+        ],
+        [
+          0.88,
+          0.06635999999999999
+        ],
+        [
+          1,
+          0.003
+        ]
+      ],
+      "color": [
+        0.0595112381629812,
+        0.05448027644244237,
+        0.08021982031446832,
+        1
+      ]
+    }
+  },
+  "modelDirectory": "D:/Dev/nemu/content/_candidates/P2-05/models/short-thick-standard"
+}

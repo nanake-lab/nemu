@@ -6,14 +6,26 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import argparse
 
-import bpy
+from typing import Any
 
-from blender_common import Json, armature, run
 from errors import fail
 from gltf import read_json
 
+Json = dict[str, Any]
+
+
+def validate_export_metadata(metadata: Json, content_license: str) -> None:
+    """ADR 0015: VRM public license and content license occupy distinct fields."""
+    if metadata.get("licenseUrl") != "https://vrm.dev/licenses/1.0/":
+        fail("export", "meta.licenseUrl", "https://vrm.dev/licenses/1.0/", metadata.get("licenseUrl"))
+    if not content_license.strip() or metadata.get("otherLicenseUrl") != content_license:
+        fail("export", "meta.otherLicenseUrl", content_license or "nonempty content license", metadata.get("otherLicenseUrl"))
+
 
 def execute(config: Json, args: argparse.Namespace) -> None:
+    import bpy
+    from blender_common import armature
+
     arm = armature()
     meta = arm.data.vrm_addon_extension.vrm1.meta
     meta.vrm_name = config["meta"]["name"]
@@ -32,10 +44,11 @@ def execute(config: Json, args: argparse.Namespace) -> None:
     )
     if result != {"FINISHED"}:
         fail("export", arm.name, "FINISHED", result)
-    actual_license = read_json(args.output_dir / "nemu.vrm")["extensions"]["VRMC_vrm"]["meta"]["licenseUrl"]
-    if actual_license != config["meta"]["contentLicenseUrl"]:
-        fail("export", "meta.licenseUrl", config["meta"]["contentLicenseUrl"], f"{actual_license}; VRM 1.0 extension fixes this URL. Resolve CONTRACTS 1.5 before exporting a different content license URL.")
+    metadata = read_json(args.output_dir / "nemu.vrm")["extensions"]["VRMC_vrm"]["meta"]
+    validate_export_metadata(metadata, config["meta"]["contentLicenseUrl"])
 
 
 if __name__ == "__main__":
+    from blender_common import run
+
     run("export", execute)
