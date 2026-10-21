@@ -5,11 +5,22 @@ from pathlib import Path
 import tempfile
 import unittest
 import wave
-from import_continuous import extract, sentence_lengths
+from import_continuous import candidate_bounds, extract, sentence_lengths
 from reference_data import boundaries, freeze, inside, recordings
 
 
 class ReferenceTests(unittest.TestCase):
+    def test_candidate_warning_cannot_become_valid_reference(self) -> None:
+        items: list[dict[str, object]] = [
+            {'text':'a','start_time':0.1,'end_time':0.2},
+            {'text':'b','start_time':0.2,'end_time':0.2},
+            {'text':'c','start_time':0.3,'end_time':0.5}]
+        self.assertEqual(candidate_bounds(items,1.0),(100.0,500.0,[1]))
+        with self.assertRaises(ValueError):
+            boundaries(items,1.0)
+        with self.assertRaises(ValueError):
+            candidate_bounds([{'text':'a','start_time':-0.1,'end_time':0.2}],1.0)
+
     def test_context_tokenization_cannot_change_text_or_cross_sentences(self) -> None:
         self.assertEqual(sentence_lengths([['天气'], ['good', 'morning'], ['おはよう']], ['天','气','goodmorning','おはよう']), [2,1,1])
         with self.assertRaises(ValueError):
