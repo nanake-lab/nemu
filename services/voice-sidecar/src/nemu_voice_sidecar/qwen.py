@@ -16,6 +16,7 @@ from typing import Any
 
 from .backend import Request
 from .models import verified_model
+from .qwen_import import load_qwen
 from .voices import Reference
 
 LANGUAGES = {"zh": "Chinese", "en": "English", "ja": "Japanese"}
@@ -74,7 +75,7 @@ class QwenEngine:
             self.reasons.append("LOW_VRAM_FALLBACK_0_6B")
         if self.variant not in ("0.6B", "1.7B"):
             raise ValueError("INVALID_BASE_VARIANT")
-        api = importlib.import_module("qwen_tts")
+        api = load_qwen()
         folder = verified_model(cache, self.variant)
         fallback = False
         try:

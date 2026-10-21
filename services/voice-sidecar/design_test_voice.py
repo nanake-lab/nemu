@@ -27,10 +27,11 @@ def main() -> None:
     quiet_gate()
     add_service_packages()
     from nemu_voice_sidecar.models import verified_model
+    from nemu_voice_sidecar.qwen_import import load_qwen
     metadata = json.loads((ROOT / "config/models.lock.json").read_text(encoding="utf-8-sig"))["tts"]["models"]["VoiceDesign"]
     torch = importlib.import_module("torch")
     sf = importlib.import_module("soundfile")
-    api = importlib.import_module("qwen_tts")
+    api = load_qwen()
     model = api.Qwen3TTSModel.from_pretrained(str(verified_model(args.cache, "VoiceDesign")),
                                         local_files_only=True, device_map="cuda:0",
                                         dtype=torch.bfloat16, attn_implementation="eager")
