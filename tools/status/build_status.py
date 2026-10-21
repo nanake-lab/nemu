@@ -23,10 +23,11 @@ Rules, first match wins:
     all dependencies done                -> ready
     otherwise                            -> blocked
 
-Review (AGENTS.md section 6): medium and high cards need a review comment whose
-first line is "审查结论：通过" or "审查结论：有阻塞问题". Claude reviews unless
-Claude is the suggested executor, in which case Codex does; the board asks the
-user to forward a PR only when Codex is the reviewer.
+Review (AGENTS.md section 6, 2026-10-22): high cards, and any PR that touches a
+guarded path (contracts, ledger storage, the action gate, executors, ADRs and
+specs), need a cross-review comment whose first line is "审查结论：通过" or
+"审查结论：有阻塞问题". Low and medium cards need none. The board asks the user
+to forward such a PR to the reviewer, and holds back "等你合并" until it passed.
 """
 
 from __future__ import annotations
@@ -43,6 +44,18 @@ REPO = "nanake-lab/nemu"
 CARD = re.compile(r"\((P\d-\d{2})\)")
 BRANCH = re.compile(r"^task/(P\d-\d{2})\b")
 VERDICT = "审查结论："
+# AGENTS.md section 6: whatever the difficulty, changes here need a cross review.
+GUARDED = (
+    "core/contracts/",
+    "packages/contracts/",
+    "core/crates/core-store/",
+    "core/crates/action-gate/",
+    "executors/",
+    "docs/adr/",
+    "docs/CONTRACTS.md",
+    "docs/ARCHITECTURE.md",
+    "docs/echo-core/",
+)
 
 LABELS = {
     "done": "已完成",
@@ -146,10 +159,20 @@ def review_verdict(repo: str, number: int) -> str | None:
     return verdict
 
 
+def touches_guarded(repo: str, number: int) -> bool:
+    path = f"repos/{repo}/pulls/{number}/files?per_page=100"
+    try:
+        files = gh(path)
+    except GitHubError:  # pagination refused: judge from the first page
+        files = json.loads(gh_raw(["api", path]))
+    return any(f["filename"].startswith(GUARDED) for f in files)
+
+
 def open_pr_details(repo: str, pr: dict) -> dict:
     details = {"waiting_runner": windows_waiting(repo, pr["head"]["sha"])}
     if not pr.get("draft"):
         details["verdict"] = review_verdict(repo, pr["number"])
+        details["guarded"] = touches_guarded(repo, pr["number"])
     return details
 
 
@@ -164,14 +187,32 @@ def needs_user_item(number: int, draft: bool, title: str = "") -> dict:
     }
 
 
-def reviewer(card: dict) -> str:
-    return "Codex" if card["suggested"] == "Claude" else "Claude"
+def reviewer(card: dict | None, branch: str = "") -> str:
+    """The other executor: by branch prefix for rule PRs, else by the card."""
+    if branch.startswith("claude/"):
+        return "Codex"
+    if branch.startswith("codex/"):
+        return "Claude"
+    return "Codex" if card and card["suggested"] == "Claude" else "Claude"
+
+
+def review_due(card: dict | None, pr: dict) -> bool:
+    """A ready PR that needs a cross review and has not passed one yet."""
+    if pr.get("draft"):
+        return False
+    needed = bool(pr.get("guarded")) or bool(card and card["difficulty"] == "高")
+    return needed and pr.get("verdict") != "pass"
+
+
+def review_item(number: int, who: str, why: str) -> dict:
+    return {"kind": "cross_review", "text": f"PR #{number}（{why}）请转给 {who} 审查，通过前不要合并"}
 
 
 def label_of(card: dict) -> str:
     if card["status"] != "review":
         return LABELS[card["status"]]
-    if card["difficulty"] == "低":
+    live = [p for p in card["prs"] if p["state"] == "open" and not p["draft"]]
+    if card["difficulty"] != "高" and not any(p.get("guarded") for p in live):
         return "等合并"
     verdicts = {
         p.get("verdict") for p in card["prs"] if p["state"] == "open" and not p["draft"]
@@ -180,7 +221,7 @@ def label_of(card: dict) -> str:
         return "审查通过·待合并"
     if "block" in verdicts:
         return "审查有阻塞·待修改"
-    return f"等 {reviewer(card)} 审查"
+    return f"等 {reviewer(card, live[0]['branch'] if live else '')} 审查"
 
 
 def compute(repo: str, catalog: dict) -> dict:
@@ -210,6 +251,7 @@ def compute(repo: str, catalog: dict) -> dict:
             "title": pr["title"],
             "state": state,
             "draft": bool(pr.get("draft")),
+            "branch": pr["head"]["ref"],
             "labels": [lbl["name"] for lbl in pr.get("labels", [])],
             "updated_at": pr["updated_at"],
             **details.get(pr["number"], {}),
@@ -261,7 +303,8 @@ def compute(repo: str, catalog: dict) -> dict:
     for c in sorted(cards.values(), key=lambda c: c["id"]):
         for p in (p for p in c["prs"] if p["state"] == "open"):
             item = {"card": c["id"], "pr": p["number"], "url": p["url"]}
-            if "needs-user" in p["labels"]:
+            due = review_due(c, p)
+            if "needs-user" in p["labels"] and not due:
                 attention.append({**item, **needs_user_item(p["number"], p["draft"])})
             if p.get("waiting_runner"):
                 attention.append(
@@ -271,20 +314,9 @@ def compute(repo: str, catalog: dict) -> dict:
                         "text": f"PR #{p['number']} 的 Windows 检查在排队，需要开 runner",
                     }
                 )
-            if (
-                c["difficulty"] in ("中", "高")
-                and reviewer(c) == "Codex"
-                and not p["draft"]
-                and "needs-user" not in p["labels"]
-                and p.get("verdict") is None
-            ):
-                attention.append(
-                    {
-                        **item,
-                        "kind": "cross_review",
-                        "text": f"PR #{p['number']}（{c['id']}，{c['difficulty']}难度）请转给 Codex 审查",
-                    }
-                )
+            if due and p.get("verdict") is None:
+                why = f"{c['id']}，高难度" if c["difficulty"] == "高" else f"{c['id']}，改动了契约、权限或规格"
+                attention.append({**item, **review_item(p["number"], reviewer(c, p["branch"]), why)})
         for p in c["prs"]:
             if p["state"] == "merged" and "unverified" in p["labels"]:
                 attention.append(
@@ -313,10 +345,13 @@ def compute(repo: str, catalog: dict) -> dict:
             continue
         item = {"card": "", "pr": pr["number"], "url": pr["html_url"]}
         labels = [lbl["name"] for lbl in pr.get("labels", [])]
-        if "needs-user" in labels:
-            other_attention.append(
-                {**item, **needs_user_item(pr["number"], bool(pr.get("draft")), pr["title"])}
-            )
+        info = {"draft": bool(pr.get("draft")), **details.get(pr["number"], {})}
+        due = review_due(None, info)
+        if "needs-user" in labels and not due:
+            other_attention.append({**item, **needs_user_item(pr["number"], info["draft"], pr["title"])})
+        if due and info.get("verdict") is None:
+            who = reviewer(None, pr["head"]["ref"])
+            other_attention.append({**item, **review_item(pr["number"], who, f"改动了契约、权限或规格：{pr['title']}")})
         if details.get(pr["number"], {}).get("waiting_runner"):
             other_attention.append(
                 {
