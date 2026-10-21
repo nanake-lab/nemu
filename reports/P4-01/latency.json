@@ -1,30 +1,116 @@
 {
-  "status": "INVALID",
+  "measuredAt": "2026-10-21T16:02:30.597Z",
+  "status": "FAIL",
+  "method": "P4-01-segmented-context-alignment-v4",
+  "referenceResolutionMs": 80,
+  "referenceUncertainty": "Model estimates; 80 ms is timestamp grid, not a calibrated error bound",
+  "referenceSha256": "d6889a9d9f2fd7d102e517d914da83f85e96648196579913f5d530a5dae03409",
+  "medianVadEndMs": 320.0913863281312,
   "passed": false,
-  "reason": "Voice pipeline error: ASR_LANGUAGE_MAPPED",
+  "nearThresholdIds": [
+    "user-zh-001",
+    "user-zh-002",
+    "user-zh-003",
+    "user-zh-005",
+    "user-zh-006",
+    "user-zh-007",
+    "user-zh-008",
+    "user-zh-009",
+    "user-zh-010",
+    "user-zh-011",
+    "user-zh-012",
+    "user-zh-013",
+    "user-zh-015",
+    "user-zh-016",
+    "user-zh-018",
+    "user-zh-019",
+    "user-zh-020",
+    "user-en-001",
+    "user-en-002",
+    "user-en-004",
+    "user-en-005",
+    "user-en-006",
+    "user-en-007",
+    "user-en-008",
+    "user-en-009",
+    "user-en-010",
+    "user-en-011",
+    "user-en-012",
+    "user-en-013",
+    "user-en-015",
+    "user-en-016",
+    "user-en-017",
+    "user-en-018",
+    "user-en-019",
+    "user-en-020",
+    "user-ja-001",
+    "user-ja-002",
+    "user-ja-003",
+    "user-ja-004",
+    "user-ja-005",
+    "user-ja-006",
+    "user-ja-007",
+    "user-ja-008",
+    "user-ja-009",
+    "user-ja-010",
+    "user-ja-011",
+    "user-ja-012",
+    "user-ja-013",
+    "user-ja-014",
+    "user-ja-015",
+    "user-ja-016",
+    "user-ja-017",
+    "user-ja-018",
+    "user-ja-019",
+    "user-ja-020"
+  ],
+  "perLanguage": [
+    {
+      "lang": "zh",
+      "count": 20,
+      "medianVadEndMs": 321.61790683593335,
+      "maximumVadEndMs": 401.38574648439,
+      "missingOrPremature": 0
+    },
+    {
+      "lang": "en",
+      "count": 20,
+      "medianVadEndMs": 309.91236191405915,
+      "maximumVadEndMs": 661.5274613281367,
+      "missingOrPremature": 1
+    },
+    {
+      "lang": "ja",
+      "count": 20,
+      "medianVadEndMs": 319.9500628906542,
+      "maximumVadEndMs": 379.84519296872804,
+      "missingOrPremature": 1
+    }
+  ],
   "results": [
     {
       "id": "user-zh-001",
       "lang": "zh",
       "sha256": "fc10711dd262f9d824e8b75c5287127c9c15f111e3902d7f88887fff9a322db4",
       "sourceSha256": "22ecc4e2d2c5f931812691f6365aeaff0d8d9afdfeef190d4442b119af7d02c9",
-      "vadEndMs": 360.2364910156248,
-      "bargeInMs": 262.17643242187523,
-      "maximumLatenessMs": 3.3890999999994165,
+      "vadEndMs": 360.55559140624973,
+      "bargeInMs": 261.1395757812502,
+      "maximumLatenessMs": 17.351199999999153,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2100.09220390625
+          "at": 2103.2081792968747
         },
         {
           "type": "voice.bargeIn",
-          "at": 2282.176432421875
+          "at": 2281.1395757812497
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4620.236491015625
+          "at": 4620.55559140625
         }
       ]
     },
@@ -33,23 +119,24 @@
       "lang": "zh",
       "sha256": "fc7bf82b76e1edcd28fe33d11d974627e8cd5825d08ca48b46f4ca5fbd3f5e98",
       "sourceSha256": "092f7198cd85dc3f41a9de1c5df28ca48e4083c26484bc1c7f9f4f63b541576c",
-      "vadEndMs": 341.2336222656254,
-      "bargeInMs": 1300.4477335937495,
-      "maximumLatenessMs": 3.9030000000002474,
+      "vadEndMs": 339.7924441406253,
+      "bargeInMs": 1299.7641238281244,
+      "maximumLatenessMs": 6.531100000000151,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2101.012919140625
+          "at": 2100.2502078125
         },
         {
           "type": "voice.bargeIn",
-          "at": 2280.44773359375
+          "at": 2279.764123828125
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4201.233622265625
+          "at": 4199.792444140625
         }
       ]
     },
@@ -58,23 +145,24 @@
       "lang": "zh",
       "sha256": "3cfa2e4b41fb1b7f70185fe3ba185c4b43a84084e5ff452bf5b7a02ae7964a88",
       "sourceSha256": "f1c512d5a59da8084eabd9eb9280c0a6cd8121735d5dac64acf85bd4c795951e",
-      "vadEndMs": 320.445333593751,
-      "bargeInMs": 300.588888281251,
-      "maximumLatenessMs": 2.82129999999961,
+      "vadEndMs": 320.6469714843738,
+      "bargeInMs": 300.6464832031238,
+      "maximumLatenessMs": 1.9323999999978696,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2119.0722867187505
+          "at": 2121.1931140624984
         },
         {
           "type": "voice.bargeIn",
-          "at": 2320.5888882812505
+          "at": 2320.6464832031234
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4180.445333593751
+          "at": 4180.646971484373
         }
       ]
     },
@@ -83,23 +171,24 @@
       "lang": "zh",
       "sha256": "40a2ab548e3fd2c0fc56dfe159228164c751c198dab073c83f412efb5ba48737",
       "sourceSha256": "d976d4f0bb5d218f3a5cf89f4674efd4bfaf5831e4a4e1809fea07f691e49041",
-      "vadEndMs": 380.07618671874934,
-      "bargeInMs": 340.5503078125007,
-      "maximumLatenessMs": 4.293499999999767,
+      "vadEndMs": 380.8355316406223,
+      "bargeInMs": 339.1924652343737,
+      "maximumLatenessMs": 3.674699999995937,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2100.7512355468753
+          "at": 2101.6392425781232
         },
         {
           "type": "voice.bargeIn",
-          "at": 2280.5503078125003
+          "at": 2279.1924652343732
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4080.0761867187503
+          "at": 4080.8355316406232
         }
       ]
     },
@@ -108,23 +197,24 @@
       "lang": "zh",
       "sha256": "c19df8e4b14dae59e3d65765800be8b752d0c72e396f4a6e0b1a92292164ef53",
       "sourceSha256": "4f5da742275ef0a60eab8f1c51d3043532bfb6d6d89f380bcf6c427faa940e7e",
-      "vadEndMs": 301.1211632812483,
-      "bargeInMs": 319.63019648437376,
-      "maximumLatenessMs": 4.283400000000256,
+      "vadEndMs": 300.07050820312725,
+      "bargeInMs": 321.4062015625027,
+      "maximumLatenessMs": 3.229299999999057,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2161.0042199218733
+          "at": 2161.3864261718772
         },
         {
           "type": "voice.bargeIn",
-          "at": 2339.6301964843733
+          "at": 2341.4062015625022
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4561.121163281248
+          "at": 4560.070508203127
         }
       ]
     },
@@ -133,23 +223,24 @@
       "lang": "zh",
       "sha256": "940db7de3633049f1c6f4a622ed120bc54c9590539d268129fe1f47878a03b93",
       "sourceSha256": "6a010e5e87c98f5a2bd932e5bcf0f2abfa15dce81493ee88c0f94e3e91b6c380",
-      "vadEndMs": 300.0894546874979,
-      "bargeInMs": 279.6185074218729,
-      "maximumLatenessMs": 4.6995999999999185,
+      "vadEndMs": 299.8969222656224,
+      "bargeInMs": 280.9672347656224,
+      "maximumLatenessMs": 1.9479999999966822,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 1540.4231949218738
+          "at": 1540.1454574218733
         },
         {
           "type": "voice.bargeIn",
-          "at": 1739.6185074218738
+          "at": 1740.9672347656233
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 3600.089454687499
+          "at": 3599.8969222656233
         }
       ]
     },
@@ -158,23 +249,24 @@
       "lang": "zh",
       "sha256": "d517b11f1effb5f8842546df3222a15466fe05ca1a56dd1b098497d5e90190ac",
       "sourceSha256": "6265f885033898fdf5d84eaf3908985b01fee701e393be34bb9849c8f73feb62",
-      "vadEndMs": 282.29781132812695,
-      "bargeInMs": 1141.8649500000024,
-      "maximumLatenessMs": 1.8291000000026543,
+      "vadEndMs": 279.73766835937477,
+      "bargeInMs": 1139.8060277343752,
+      "maximumLatenessMs": 3.269000000000233,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 1940.5646570312529
+          "at": 1940.2977269531257
         },
         {
           "type": "voice.bargeIn",
-          "at": 2121.864950000003
+          "at": 2119.8060277343757
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 3982.297811328128
+          "at": 3979.7376683593757
         }
       ]
     },
@@ -183,23 +275,24 @@
       "lang": "zh",
       "sha256": "463bd1caae6900bedecbd7cd149a45f1aab55998412d3f4cfbd66a481ea13b0e",
       "sourceSha256": "15d5eeeb9af706059cdc2c1d152caf64b9e545b65ff8448267a49bbf0fc5d52e",
-      "vadEndMs": 321.63584335937685,
-      "bargeInMs": 280.29941757812685,
-      "maximumLatenessMs": 3.7824000000036904,
+      "vadEndMs": 319.9233687500009,
+      "bargeInMs": 281.0464156250009,
+      "maximumLatenessMs": 4.046200000004319,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 5862.355081640628
+          "at": 5860.327909765627
         },
         {
           "type": "voice.bargeIn",
-          "at": 6060.299417578128
+          "at": 6061.046415625002
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 7941.635843359378
+          "at": 7939.923368750002
         }
       ]
     },
@@ -208,23 +301,24 @@
       "lang": "zh",
       "sha256": "bc0af59f26b9d41acd2123f144ee314c6d4facb8a29e404403e9c00d2ae6742a",
       "sourceSha256": "1b6528993d9b56c2237b1cf3229ec6cf7ddfb07e38c07f1f171bb963b5baa33b",
-      "vadEndMs": 260.4690148437503,
-      "bargeInMs": 1301.5100304687508,
-      "maximumLatenessMs": 2.044800000003306,
+      "vadEndMs": 259.8030562500053,
+      "bargeInMs": 1300.4329390625057,
+      "maximumLatenessMs": 3.391200000012759,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2099.960958203126
+          "at": 2100.907548437506
         },
         {
           "type": "voice.bargeIn",
-          "at": 2281.510030468751
+          "at": 2280.432939062506
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4040.469014843751
+          "at": 4039.803056250006
         }
       ]
     },
@@ -233,37 +327,38 @@
       "lang": "zh",
       "sha256": "d1b5ee3564807bfbe031532c9a3c711f42d13652b700713dfaf8220fc5164ad0",
       "sourceSha256": "0d94f0884536029d280ad9ea4dbbb715ee8c6eb6a170d706466bccd4d6d3ed88",
-      "vadEndMs": 240.4331886718719,
-      "bargeInMs": 280.17220234374577,
-      "maximumLatenessMs": 4.049199999994016,
+      "vadEndMs": 240.3785328124941,
+      "bargeInMs": 281.35802499999295,
+      "maximumLatenessMs": 3.018499999991036,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 1859.929282421872
+          "at": 1859.577019140619
         },
         {
           "type": "voice.bargeIn",
-          "at": 2060.172202343747
+          "at": 2061.358024999994
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 2960.865561718747
+          "at": 2960.298210546869
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 3281.810630078122
+          "at": 3280.375114843744
         },
         {
           "type": "voice.bargeIn",
-          "at": 3460.350669140622
+          "at": 3463.234733984369
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4340.433188671872
+          "at": 4340.378532812494
         }
       ]
     },
@@ -272,23 +367,24 @@
       "lang": "zh",
       "sha256": "4ef2f884975b653843e7f77d5a9549f102efe30ceb8fa867f6eeacd1149eb430",
       "sourceSha256": "7b4b8cd7b8300f1b70fe2afd13de73d93a805868159b0da7506415c2f30e9f40",
-      "vadEndMs": 340.3905308593821,
-      "bargeInMs": 301.1373570312576,
-      "maximumLatenessMs": 3.914500000013504,
+      "vadEndMs": 339.81424179687747,
+      "bargeInMs": 300.3674644531279,
+      "maximumLatenessMs": 8.24319999999716,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2119.259671484382
+          "at": 2122.3291343750025
         },
         {
           "type": "voice.bargeIn",
-          "at": 2321.137357031257
+          "at": 2320.3674644531275
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4520.390530859382
+          "at": 4519.8142417968775
         }
       ]
     },
@@ -297,23 +393,24 @@
       "lang": "zh",
       "sha256": "a80fdbc6a20247d4e28afd43946fe481b33b3cd95f30494166e17f89eef41b5a",
       "sourceSha256": "f210b44c08a1ce933257f7c28ea859d00d29e9648b528c64b7a3a34d9da4b940",
-      "vadEndMs": 320.49398398437097,
-      "bargeInMs": 1180.6751363281214,
-      "maximumLatenessMs": 2.3068999999959487,
+      "vadEndMs": 321.4409488281226,
+      "bargeInMs": 1180.350128515623,
+      "maximumLatenessMs": 4.1217000000033295,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 1960.5345113281219
+          "at": 1961.1260074218735
         },
         {
           "type": "voice.bargeIn",
-          "at": 2160.675136328122
+          "at": 2160.3501285156235
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4020.493983984372
+          "at": 4021.4409488281235
         }
       ]
     },
@@ -322,37 +419,38 @@
       "lang": "zh",
       "sha256": "e86354e40f4473f70e3fb51cb96a2aefd1196dc56176262364a81cffbe2b9ffb",
       "sourceSha256": "11845666f245b8cd3ae14f9c21bca02613f9d8e0f35c78a612ee76da42af9848",
-      "vadEndMs": 319.95740937499795,
-      "bargeInMs": 280.2271847656225,
-      "maximumLatenessMs": 4.176800000001094,
+      "vadEndMs": 319.5265164062439,
+      "bargeInMs": 281.12392851561845,
+      "maximumLatenessMs": 3.0292999999946915,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 1061.132458203123
+          "at": 1060.395412890619
         },
         {
           "type": "voice.bargeIn",
-          "at": 1260.227184765623
+          "at": 1261.123928515619
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 1621.415417187498
+          "at": 1620.798977343744
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 6741.093151562498
+          "at": 6740.780666796869
         },
         {
           "type": "voice.bargeIn",
-          "at": 6923.107555859373
+          "at": 6919.267483203119
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 8659.957409374998
+          "at": 8659.526516406244
         }
       ]
     },
@@ -361,23 +459,24 @@
       "lang": "zh",
       "sha256": "c19c3c05289b4878ae6e70c705370da5c021e27adfd960a4a018f68a98645ae1",
       "sourceSha256": "20362d4b50f9406f54cf96ad09985f48ebfaf5ccaa492b106b09f5265d66df39",
-      "vadEndMs": 380.93729648437784,
-      "bargeInMs": 380.0742593750042,
-      "maximumLatenessMs": 3.9331999999994878,
+      "vadEndMs": 380.4482910156212,
+      "bargeInMs": 380.53056640624754,
+      "maximumLatenessMs": 2.5482999999949243,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2120.6042886718787
+          "at": 2121.600878906247
         },
         {
           "type": "voice.bargeIn",
-          "at": 2320.0742593750037
+          "at": 2320.530566406247
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4080.9372964843787
+          "at": 4080.448291015622
         }
       ]
     },
@@ -386,37 +485,38 @@
       "lang": "zh",
       "sha256": "b67fc1f9f23775afa462325adf6ba70d93238bd49a8e387a23cb3f2ef4f792e6",
       "sourceSha256": "bb10890397dccdd923a9c4015db3ca88d51f249a77125b9a9b535434f1f0bf71",
-      "vadEndMs": 320.1274992187391,
-      "bargeInMs": 319.20538007811456,
-      "maximumLatenessMs": 3.2440999999816995,
+      "vadEndMs": 320.12507929687854,
+      "bargeInMs": 320.320391796879,
+      "maximumLatenessMs": 3.2880000000004657,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2159.666561718739
+          "at": 2160.3907042968785
         },
         {
           "type": "voice.bargeIn",
-          "at": 2339.205380078114
+          "at": 2340.3203917968785
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 2960.360165234364
+          "at": 2960.9624816406285
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 3021.400692578114
+          "at": 3021.3496886718785
         },
         {
           "type": "voice.bargeIn",
-          "at": 3221.075985546864
+          "at": 3220.5559875000035
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4500.127499218739
+          "at": 4500.1250792968785
         }
       ]
     },
@@ -425,23 +525,24 @@
       "lang": "zh",
       "sha256": "dac5451ac5b07be6a49b857494c4cfcf4f298a65727fee61d38cea6818e71114",
       "sourceSha256": "3cd5e06af336cb799a78c5d3a38a11ece5b23377f33a16a6925bc5b6ba0422f6",
-      "vadEndMs": 321.8440921874999,
-      "bargeInMs": 300.26962929687625,
-      "maximumLatenessMs": 3.799300000013318,
+      "vadEndMs": 321.7948648437441,
+      "bargeInMs": 300.3043863281205,
+      "maximumLatenessMs": 3.756099999998696,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 1960.0567386718758
+          "at": 1962.040470312495
         },
         {
           "type": "voice.bargeIn",
-          "at": 2160.269629296876
+          "at": 2160.30438632812
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 3781.844092187501
+          "at": 3781.794864843745
         }
       ]
     },
@@ -450,23 +551,24 @@
       "lang": "zh",
       "sha256": "79b9bb711be5f2a7997690d86daaf19a2458f0ea2ac54fbd024dda93661f93dc",
       "sourceSha256": "4db4169ac3ff5c6a956a99afb93d0d4838eea1b0c58abc1a6a9256a6c872ed4e",
-      "vadEndMs": 399.9428019531192,
-      "bargeInMs": 1180.9320597656183,
-      "maximumLatenessMs": 5.331500000000233,
+      "vadEndMs": 401.38574648439,
+      "bargeInMs": 1180.236088281264,
+      "maximumLatenessMs": 4.153500000014901,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 1962.0792765624938
+          "at": 1960.9687542968895
         },
         {
           "type": "voice.bargeIn",
-          "at": 2160.9320597656188
+          "at": 2160.2360882812645
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4419.942801953119
+          "at": 4421.3857464843895
         }
       ]
     },
@@ -475,23 +577,24 @@
       "lang": "zh",
       "sha256": "5df25f82c0c69210d809e713b6518eb1aac247ec0b9fea6449f51daaba8c9b58",
       "sourceSha256": "b0d9924e1a1f06c8ecd95c45f773c22180778f58d7dcb314c0d67cbf9deec46f",
-      "vadEndMs": 320.52040781249434,
-      "bargeInMs": 1280.3097144531198,
-      "maximumLatenessMs": 3.8475000000034925,
+      "vadEndMs": 322.04221523436627,
+      "bargeInMs": 1280.3344515624917,
+      "maximumLatenessMs": 5.959899999987101,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2059.9708472656203
+          "at": 2060.360086328117
         },
         {
           "type": "voice.bargeIn",
-          "at": 2260.3097144531203
+          "at": 2260.334451562492
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 3860.5204078124953
+          "at": 3862.042215234367
         }
       ]
     },
@@ -500,37 +603,38 @@
       "lang": "zh",
       "sha256": "e9faec88942595e522d3356fb3ef2f01d447e7c1ba4c162f50768ca58af392bd",
       "sourceSha256": "969a7305e83bd5109904ff685540fb2bc2726c251f9a4ddc995cead69e948c5c",
-      "vadEndMs": 360.27432460937325,
-      "bargeInMs": 281.7433187499987,
-      "maximumLatenessMs": 2.806299999996554,
+      "vadEndMs": 362.6348679687353,
+      "bargeInMs": 280.43979960936076,
+      "maximumLatenessMs": 1.9405999999726191,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 1059.8085042968742
+          "at": 1060.5547898437362
         },
         {
           "type": "voice.bargeIn",
-          "at": 1261.7433187499992
+          "at": 1260.4397996093612
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 1640.6224691406242
+          "at": 1641.5477097656112
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 5542.246492578124
+          "at": 5540.856303515611
         },
         {
           "type": "voice.bargeIn",
-          "at": 5740.794344140624
+          "at": 5739.902201953111
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 7500.274324609374
+          "at": 7502.634867968736
         }
       ]
     },
@@ -539,23 +643,24 @@
       "lang": "zh",
       "sha256": "2df9a880c5085e93397b5451fcace6b12d7712064f9371f353143beb3300f2df",
       "sourceSha256": "fae2cb4bf292868bf5a3cc7b8c5f69e705b5a531607c0a0e14292deb27da2d45",
-      "vadEndMs": 340.1889976562529,
-      "bargeInMs": 340.3613609375029,
-      "maximumLatenessMs": 3.3831000000063796,
+      "vadEndMs": 341.23642304688155,
+      "bargeInMs": 341.81625703125655,
+      "maximumLatenessMs": 3.924200000008568,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2100.6677574218775
+          "at": 2100.620700390631
         },
         {
           "type": "voice.bargeIn",
-          "at": 2280.3613609375025
+          "at": 2281.816257031256
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4200.1889976562525
+          "at": 4201.236423046881
         }
       ]
     },
@@ -564,37 +669,38 @@
       "lang": "en",
       "sha256": "0a70c2d45c3f99fbdebb9bb4ef09471a6c66b477e175607ea0cc0938e32a38a0",
       "sourceSha256": "4939ddd58449f2b1b0215d1923547140a8d047d7660b98fb6ef24e2ecbcc062b",
-      "vadEndMs": 280.13850156249873,
-      "bargeInMs": 1300.3364996093728,
-      "maximumLatenessMs": 3.464299999992363,
+      "vadEndMs": 280.1723140625113,
+      "bargeInMs": 1301.8439449218854,
+      "maximumLatenessMs": 3.680500000016764,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2101.7920660156233
+          "at": 2100.199657812511
         },
         {
           "type": "voice.bargeIn",
-          "at": 2280.3364996093733
+          "at": 2281.843944921886
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 3060.4571050781233
+          "at": 3062.963329687511
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 3220.8977789062483
+          "at": 3220.699657812511
         },
         {
           "type": "voice.bargeIn",
-          "at": 3399.6553472656233
+          "at": 3399.734569921886
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4300.138501562498
+          "at": 4300.172314062511
         }
       ]
     },
@@ -603,23 +709,24 @@
       "lang": "en",
       "sha256": "16f3d02f7b2ddc0b9d490b2850e98a33447747a83ba65c67b1caac8995909c1c",
       "sourceSha256": "64f0d033825274c5cb99a5e666396ebe9b417f5c278b07b67db69f58b00f7e3f",
-      "vadEndMs": 319.9709382812425,
-      "bargeInMs": 1340.159414843743,
-      "maximumLatenessMs": 11.03179999999702,
+      "vadEndMs": 322.05989804686305,
+      "bargeInMs": 1340.1187359374885,
+      "maximumLatenessMs": 2.912799999990966,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2121.6957917968684
+          "at": 2122.543784765614
         },
         {
           "type": "voice.bargeIn",
-          "at": 2320.1594148437434
+          "at": 2320.118735937489
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4099.970938281243
+          "at": 4102.059898046864
         }
       ]
     },
@@ -628,23 +735,24 @@
       "lang": "en",
       "sha256": "b8cc50aebc7471ade7e2a651b33180c689a1a5fe8397196dfdd505781cad578f",
       "sourceSha256": "49bece5090495556502c9e70d3138d807b5534e2ef9aaad20666f0c2632602de",
-      "vadEndMs": 659.8784359375136,
-      "bargeInMs": 1300.6867855468877,
-      "maximumLatenessMs": 3.7036000000080094,
+      "vadEndMs": 661.5274613281367,
+      "bargeInMs": 1301.3182328125108,
+      "maximumLatenessMs": 3.677800000004936,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2100.957049218763
+          "at": 2100.0843460937613
         },
         {
           "type": "voice.bargeIn",
-          "at": 2280.686785546888
+          "at": 2281.3182328125113
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4679.878435937513
+          "at": 4681.527461328136
         }
       ]
     },
@@ -653,23 +761,24 @@
       "lang": "en",
       "sha256": "75643544ae2a20f0e44752f4ce61649a79ba4996d69a9a153bd772a8548d1692",
       "sourceSha256": "bd79894519646f6d226051214e890e0b476a9b9ed628dd332aaeefda062b4351",
-      "vadEndMs": 320.3076066406211,
-      "bargeInMs": 320.72557539062154,
-      "maximumLatenessMs": 4.713799999997718,
+      "vadEndMs": 320.09876992186764,
+      "bargeInMs": 319.1827542968681,
+      "maximumLatenessMs": 2.380799999984447,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2160.530751171871
+          "at": 2160.3280179687426
         },
         {
           "type": "voice.bargeIn",
-          "at": 2340.725575390621
+          "at": 2339.1827542968676
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4500.307606640621
+          "at": 4500.098769921868
         }
       ]
     },
@@ -678,37 +787,38 @@
       "lang": "en",
       "sha256": "c9dbfed10f6809ac92411d0f7749cd45d7d8f89e0fe5325d2f3ce5532db59c95",
       "sourceSha256": "d012a0543eaa9c54c28ebcfcef710d7fec0fc3cc19745fa1211ea08697330e3c",
-      "vadEndMs": 319.8314691406267,
-      "bargeInMs": 342.0319085937522,
-      "maximumLatenessMs": 6.340599999995902,
+      "vadEndMs": 319.2168417968787,
+      "bargeInMs": 341.7944785156292,
+      "maximumLatenessMs": 3.5279999999911524,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2100.5258050781267
+          "at": 2100.5706015625037
         },
         {
           "type": "voice.bargeIn",
-          "at": 2282.0319085937517
+          "at": 2281.7944785156287
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4199.492601953127
+          "at": 4201.852583984379
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 4359.669848046877
+          "at": 4360.526412109379
         },
         {
           "type": "voice.bargeIn",
-          "at": 4559.949144921877
+          "at": 4560.600142578129
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4899.831469140627
+          "at": 4899.216841796879
         }
       ]
     },
@@ -717,23 +827,24 @@
       "lang": "en",
       "sha256": "965fc24cca795b42191854cac8d2b5747958ab0c144790dfc851631a562622ed",
       "sourceSha256": "0c5e73b3fd6c11143bbe2c868ba5923c3b8058432d6b3539377399294d385310",
-      "vadEndMs": 280.6846617187548,
-      "bargeInMs": 320.84921250000525,
-      "maximumLatenessMs": 4.558500000013737,
+      "vadEndMs": 279.9392999999982,
+      "bargeInMs": 320.22323554687364,
+      "maximumLatenessMs": 5.0112000000081025,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2160.780853125005
+          "at": 2160.719817578123
         },
         {
           "type": "voice.bargeIn",
-          "at": 2340.849212500005
+          "at": 2340.223235546873
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4620.684661718755
+          "at": 4619.939299999998
         }
       ]
     },
@@ -742,23 +853,24 @@
       "lang": "en",
       "sha256": "cb7cc5e74d1b5dc506fb6d17c126ce9aefd5c843124bd422e5fbc2735d3080e3",
       "sourceSha256": "271d297bd2782fe256f5925845b018642bb6bb8402c32320da1b2521b629c780",
-      "vadEndMs": 260.32850000000326,
-      "bargeInMs": 321.0887539062537,
-      "maximumLatenessMs": 2.807200000010198,
+      "vadEndMs": 259.61068945311126,
+      "bargeInMs": 320.1377890624867,
+      "maximumLatenessMs": 4.639699999999721,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2059.8226406250033
+          "at": 2060.4649374999863
         },
         {
           "type": "voice.bargeIn",
-          "at": 2261.0887539062533
+          "at": 2260.1377890624863
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4680.328500000003
+          "at": 4679.610689453111
         }
       ]
     },
@@ -767,51 +879,52 @@
       "lang": "en",
       "sha256": "411cc451576a9986c5808676b8c0beb04dfa9bae231b347d91ccffe0905870af",
       "sourceSha256": "1c4bb7f1cd01defbe4b85e9ff9bd83ae4189d09f6ed3865a78a23f9e1eca9a5e",
-      "vadEndMs": 299.7048773437564,
-      "bargeInMs": 1342.616986718756,
-      "maximumLatenessMs": 5.270199999999022,
+      "vadEndMs": 300.60788203123957,
+      "bargeInMs": 1339.8927941406141,
+      "maximumLatenessMs": 4.786699999996927,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2120.5234808593814
+          "at": 2121.2851281249896
         },
         {
           "type": "voice.bargeIn",
-          "at": 2322.6169867187564
+          "at": 2319.8927941406146
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 3660.3909125000064
+          "at": 3659.9408898437396
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 3779.6228460937564
+          "at": 3780.1020226562396
         },
         {
           "type": "voice.bargeIn",
-          "at": 3980.4507269531314
+          "at": 3980.4069542968646
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5221.498334375006
+          "at": 5219.946016796865
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 6099.939740625006
+          "at": 6102.577364453115
         },
         {
           "type": "voice.bargeIn",
-          "at": 6279.636517968756
+          "at": 6279.993380078115
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 6639.704877343756
+          "at": 6640.60788203124
         }
       ]
     },
@@ -820,23 +933,24 @@
       "lang": "en",
       "sha256": "e0fe012c633521896e0ab0fbe51c811cc4cf578df5d5575e35e49adc96a96938",
       "sourceSha256": "3f3d06963d690672e833e7a47efb326dfd59d58238e6820ce1724f4569ca015a",
-      "vadEndMs": 321.12590703123897,
-      "bargeInMs": 299.8114539062376,
-      "maximumLatenessMs": 3.9807000000146218,
+      "vadEndMs": 321.5531273437391,
+      "bargeInMs": 299.66006093748774,
+      "maximumLatenessMs": 3.9164999999920838,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2119.779715624987
+          "at": 2120.2716332031123
         },
         {
           "type": "voice.bargeIn",
-          "at": 2319.811453906237
+          "at": 2319.6600609374873
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5221.125907031237
+          "at": 5221.553127343737
         }
       ]
     },
@@ -845,23 +959,24 @@
       "lang": "en",
       "sha256": "760d9d5ea8f346772c06770729a3d90c2b13795d3ac213d7680782a80a4be89a",
       "sourceSha256": "80727ff574afc0c010a339243c9ddf6d3934b046f9fb52b5df046ea241d9efd8",
-      "vadEndMs": 339.5439687499893,
-      "bargeInMs": 1340.3867421874888,
-      "maximumLatenessMs": 3.7445999999763444,
+      "vadEndMs": 341.872354296851,
+      "bargeInMs": 1340.4131257812255,
+      "maximumLatenessMs": 4.231499999994412,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2119.5251699218643
+          "at": 2121.564004687476
         },
         {
           "type": "voice.bargeIn",
-          "at": 2320.3867421874893
+          "at": 2320.413125781226
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4999.543968749989
+          "at": 5001.872354296851
         }
       ]
     },
@@ -870,23 +985,24 @@
       "lang": "en",
       "sha256": "94d0325ef34c7780ff58640ae930a310958c3cf84c612317222a650d1dad7823",
       "sourceSha256": "8518f73f92b24affbe8f5c29f973fded384fdff3e3fd4084df84c57524f22db1",
-      "vadEndMs": 299.96827968751313,
-      "bargeInMs": 1301.5483578125127,
-      "maximumLatenessMs": 1.9199000000371598,
+      "vadEndMs": 300.22658398438944,
+      "bargeInMs": 1301.051535156264,
+      "maximumLatenessMs": 3.8659000000334345,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2099.871600000013
+          "at": 2100.9695039062644
         },
         {
           "type": "voice.bargeIn",
-          "at": 2281.548357812513
+          "at": 2281.0515351562644
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5039.968279687513
+          "at": 5040.226583984389
         }
       ]
     },
@@ -895,23 +1011,24 @@
       "lang": "en",
       "sha256": "dd324c63200a06ef84d013b4540ca77df8a725e78613276d4eedf3619a5dbb39",
       "sourceSha256": "7aad14d130984f0449ef7478d6bf87139d95491dc587ad2cf0c714bee3ded411",
-      "vadEndMs": 341.5373593749832,
-      "bargeInMs": 320.3872128906082,
-      "maximumLatenessMs": 3.1424999999580905,
+      "vadEndMs": 339.6544242187524,
+      "bargeInMs": 320.1053519531274,
+      "maximumLatenessMs": 8.152500000025611,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2060.2011777343578
+          "at": 2060.371953515627
         },
         {
           "type": "voice.bargeIn",
-          "at": 2260.3872128906078
+          "at": 2260.105351953127
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4361.537359374983
+          "at": 4359.654424218752
         }
       ]
     },
@@ -920,37 +1037,38 @@
       "lang": "en",
       "sha256": "81831f05084d80fc699e5e9853fa984ba9acbdfe73d0b53665c559ed50a2c17e",
       "sourceSha256": "f32f895eff3ac1db9d6b6b4bbd3682b98bfd7bae5d4432cc057bc5bdf27be8bc",
-      "vadEndMs": 262.3064671874754,
-      "bargeInMs": 1301.315012109349,
-      "maximumLatenessMs": 9.505699999979697,
+      "vadEndMs": 261.4480527343703,
+      "bargeInMs": 1300.165337890619,
+      "maximumLatenessMs": 2.339800000016112,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2100.4536839843495
+          "at": 2099.7192929687444
         },
         {
           "type": "voice.bargeIn",
-          "at": 2281.3150121093495
+          "at": 2280.1653378906194
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4302.3604222655995
+          "at": 4300.344781249994
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 5040.9666234374745
+          "at": 5040.999078124994
         },
         {
           "type": "voice.bargeIn",
-          "at": 5221.7796117187245
+          "at": 5222.417535156244
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5642.3064671874745
+          "at": 5641.448052734369
         }
       ]
     },
@@ -959,23 +1077,24 @@
       "lang": "en",
       "sha256": "796d3303370882e0c574f8e89eab0943a35f35ce8857d4786a4917689a1cab9b",
       "sourceSha256": "d149f7aa50f380e906ff7c7271a62824d8e867ca3daa372f299ee5320271be15",
-      "vadEndMs": -638.8286171875097,
-      "bargeInMs": 1340.5664023437416,
-      "maximumLatenessMs": 4.234500000020489,
+      "vadEndMs": -639.4919425781136,
+      "bargeInMs": 1339.7775886718878,
+      "maximumLatenessMs": 3.0151000000187196,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2121.901607421867
+          "at": 2121.729248828138
         },
         {
           "type": "voice.bargeIn",
-          "at": 2320.566402343742
+          "at": 2319.777588671888
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5461.171382812492
+          "at": 5460.508057421888
         }
       ]
     },
@@ -984,23 +1103,24 @@
       "lang": "en",
       "sha256": "711b2d1512a8631a1c9dc82429dd0fa3969f631389e9bd29b2a2a7b669b69745",
       "sourceSha256": "bbda14e0d0b2385785883adfbcd53c1a2ccfd72af8f975e4a3f0aeede9bdc901",
-      "vadEndMs": 300.98320078122197,
-      "bargeInMs": 260.5164039062224,
-      "maximumLatenessMs": 3.7279999999445863,
+      "vadEndMs": 299.7981097656302,
+      "bargeInMs": 259.65797304688067,
+      "maximumLatenessMs": 1.9749000000301749,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2100.661179296847
+          "at": 2099.866225000005
         },
         {
           "type": "voice.bargeIn",
-          "at": 2280.516403906222
+          "at": 2279.65797304688
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5040.983200781222
+          "at": 5039.79810976563
         }
       ]
     },
@@ -1009,23 +1129,24 @@
       "lang": "en",
       "sha256": "4a6c69e97d664d0d7681e44646baae68f03e771cd5327b5c9865a590ae402a2e",
       "sourceSha256": "a1f6774ec2d46813bffd1654885dc62589443b557e5e796193fef41cc0cc2519",
-      "vadEndMs": 319.78443242190497,
-      "bargeInMs": 260.6640710937795,
-      "maximumLatenessMs": 8.316800000029616,
+      "vadEndMs": 321.17248710937656,
+      "bargeInMs": 262.1920183593761,
+      "maximumLatenessMs": 3.93939999997383,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2100.284676562529
+          "at": 2100.4959734375007
         },
         {
           "type": "voice.bargeIn",
-          "at": 2280.664071093779
+          "at": 2282.1920183593757
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5859.784432421904
+          "at": 5861.172487109376
         }
       ]
     },
@@ -1034,37 +1155,38 @@
       "lang": "en",
       "sha256": "2893f26daf0be143c0e6ceaf855b0be8f01e7dde54146e27e859ec6ee5bda439",
       "sourceSha256": "c53977a1e0e3d73be43aa22c93ceebad8461d8cc280976a91a69a16c3389d269",
-      "vadEndMs": 240.19192226562882,
-      "bargeInMs": 1240.3855257812534,
-      "maximumLatenessMs": 4.141500000027008,
+      "vadEndMs": 240.06792109372327,
+      "bargeInMs": 1240.5527843749728,
+      "maximumLatenessMs": 3.278699999966193,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2019.4887972656288
+          "at": 2020.7568859374733
         },
         {
           "type": "voice.bargeIn",
-          "at": 2220.385525781254
+          "at": 2220.5527843749733
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 2700.705594140629
+          "at": 2701.0479015624733
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2819.947293359379
+          "at": 2819.6362804687233
         },
         {
           "type": "voice.bargeIn",
-          "at": 3019.747586328129
+          "at": 3021.7837414062233
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4580.191922265629
+          "at": 4580.067921093723
         }
       ]
     },
@@ -1073,23 +1195,24 @@
       "lang": "en",
       "sha256": "ed05f02bbb6403576f64aa3e2aa91b821cf2abf58b0abdda2215b015633bc844",
       "sourceSha256": "59ea7468d304151859bc0e66c277bbd78cacc3115a213d3ce792d7aa1245cde5",
-      "vadEndMs": 280.593756640621,
-      "bargeInMs": 1280.8349675781205,
-      "maximumLatenessMs": 4.008700000005774,
+      "vadEndMs": 280.2070457031368,
+      "bargeInMs": 1280.7519675781364,
+      "maximumLatenessMs": 4.136899999983143,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2060.173102343746
+          "at": 2060.908950000012
         },
         {
           "type": "voice.bargeIn",
-          "at": 2260.834967578121
+          "at": 2260.751967578137
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4940.593756640621
+          "at": 4940.207045703137
         }
       ]
     },
@@ -1098,37 +1221,38 @@
       "lang": "en",
       "sha256": "fa57b870e7aca1eab3c01f8d624a78cdbf11b317dbc62a6fcb95949668fb9cc0",
       "sourceSha256": "aded052bf5580a5c18e36ae63f9cc68024dda996d207bf05a3a5beefe49489ce",
-      "vadEndMs": 321.1480101562329,
-      "bargeInMs": 1301.2515257812333,
-      "maximumLatenessMs": 2.4738999999826774,
+      "vadEndMs": 321.3301593749775,
+      "bargeInMs": 1301.934895703103,
+      "maximumLatenessMs": 3.447199999995064,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2101.431457421859
+          "at": 2100.7132160156034
         },
         {
           "type": "voice.bargeIn",
-          "at": 2281.251525781234
+          "at": 2281.9348957031034
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4340.706603906234
+          "at": 4340.476887890603
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 4420.343810937484
+          "at": 4421.762532421853
         },
         {
           "type": "voice.bargeIn",
-          "at": 4619.987121484359
+          "at": 4622.069173046853
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5461.148010156234
+          "at": 5461.330159374978
         }
       ]
     },
@@ -1137,23 +1261,24 @@
       "lang": "en",
       "sha256": "0f608763208bef0de3c96e6f376e4f80c40f93989d7eae0c730f7357bd27afd0",
       "sourceSha256": "a49806fa66516adfff724f5c4428f5cc0d948d3ddbef0225b79d99c86276811c",
-      "vadEndMs": 321.833900000026,
-      "bargeInMs": 339.39005234377737,
-      "maximumLatenessMs": 2.5601000000024214,
+      "vadEndMs": 322.4204503906067,
+      "bargeInMs": 341.18534296873304,
+      "maximumLatenessMs": 6.183299999975134,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2101.105628515652
+          "at": 2100.1142980468576
         },
         {
           "type": "voice.bargeIn",
-          "at": 2279.390052343777
+          "at": 2281.1853429687326
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5461.833900000027
+          "at": 5462.420450390608
         }
       ]
     },
@@ -1162,37 +1287,38 @@
       "lang": "ja",
       "sha256": "dde1e66b88bd053c9616a8bbbeffeb2b50aa33efd9d7a01336875deb9de58f95",
       "sourceSha256": "a4dd23715e4394df10201e439971b374a97e9e4ed538c844343a4f8ac8b3320e",
-      "vadEndMs": 320.585794921848,
-      "bargeInMs": 339.70737695309845,
-      "maximumLatenessMs": 6.218899999978021,
+      "vadEndMs": 320.17221874999814,
+      "bargeInMs": 340.0408710937486,
+      "maximumLatenessMs": 3.9692999999970198,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2100.402933593723
+          "at": 2102.666847656248
         },
         {
           "type": "voice.bargeIn",
-          "at": 2279.707376953098
+          "at": 2280.040871093748
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 2959.736185546848
+          "at": 2960.876808593748
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 3180.830179687473
+          "at": 3180.080666015623
         },
         {
           "type": "voice.bargeIn",
-          "at": 3380.090921874973
+          "at": 3379.704201171873
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5140.585794921848
+          "at": 5140.172218749998
         }
       ]
     },
@@ -1201,23 +1327,24 @@
       "lang": "ja",
       "sha256": "1826c22634a4228a7809c7158da16bfee37ef4035c1c1f19e75772d5aaeb40be",
       "sourceSha256": "413307de129803262ae1c932d5b49152934e815d4db6bb1d7832198c3111de81",
-      "vadEndMs": 320.50181523436913,
-      "bargeInMs": 379.8939050781196,
-      "maximumLatenessMs": 2.572600000014063,
+      "vadEndMs": 321.53049179684604,
+      "bargeInMs": 379.8168687499715,
+      "maximumLatenessMs": 4.0333999999566,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2119.718612109369
+          "at": 2120.023899999971
         },
         {
           "type": "voice.bargeIn",
-          "at": 2319.893905078119
+          "at": 2319.816868749971
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5300.501815234369
+          "at": 5301.530491796846
         }
       ]
     },
@@ -1226,23 +1353,24 @@
       "lang": "ja",
       "sha256": "06b821c0d0d431db3516f18b900ab3969f4f8c47b8de5e16f0f39cbde28a4fb3",
       "sourceSha256": "257256f092e62c89fc4a3aabba2df9f00bbe6fdf132a168ba548dffafeb56a1a",
-      "vadEndMs": 320.42723085934995,
-      "bargeInMs": 322.2385101562254,
-      "maximumLatenessMs": 3.8031999999657273,
+      "vadEndMs": 321.5894910156494,
+      "bargeInMs": 321.06995976564986,
+      "maximumLatenessMs": 14.23150000005262,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2059.59910585935
+          "at": 2059.8075085937744
         },
         {
           "type": "voice.bargeIn",
-          "at": 2262.238510156225
+          "at": 2261.0699597656494
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5060.42723085935
+          "at": 5061.589491015649
         }
       ]
     },
@@ -1251,23 +1379,24 @@
       "lang": "ja",
       "sha256": "8cbc15ced02d8386f9e792a1505e86e262ddb3afc38625f1125113aa0fd2f5f9",
       "sourceSha256": "f9845e73380c5f3360c60bafe64bacd0c78f3d4f95c2eb1c590bd2a5d598b143",
-      "vadEndMs": 321.3073082031333,
-      "bargeInMs": 300.29925156250874,
-      "maximumLatenessMs": 3.910199999983888,
+      "vadEndMs": 321.60324296873296,
+      "bargeInMs": 300.9364949218584,
+      "maximumLatenessMs": 3.7023000000044703,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2121.7243003906333
+          "at": 2121.712129687483
         },
         {
           "type": "voice.bargeIn",
-          "at": 2320.2992515625083
+          "at": 2320.936494921858
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4581.307308203133
+          "at": 4581.603242968733
         }
       ]
     },
@@ -1276,37 +1405,38 @@
       "lang": "ja",
       "sha256": "a80e14d2b39861a45a7206f30c25ec16addeab48468f111ea2e89e1feb40b7c8",
       "sourceSha256": "d122405b7f8b50718289f8b06675b9cfe5b06e8b35ea99398d7960951966a28e",
-      "vadEndMs": 319.92569414060563,
-      "bargeInMs": 300.7423445312311,
-      "maximumLatenessMs": 2.7758000000030734,
+      "vadEndMs": 320.65393554687034,
+      "bargeInMs": 299.6241503906208,
+      "maximumLatenessMs": 2.543699999980163,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2120.1395613281056
+          "at": 2121.6319628906203
         },
         {
           "type": "voice.bargeIn",
-          "at": 2320.7423445312306
+          "at": 2319.6241503906203
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 3621.0865828124806
+          "at": 3621.0430957031203
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 3821.1446882812306
+          "at": 3819.7025195312453
         },
         {
           "type": "voice.bargeIn",
-          "at": 4019.8197371093556
+          "at": 4021.0562792968703
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5139.925694140606
+          "at": 5140.65393554687
         }
       ]
     },
@@ -1315,23 +1445,24 @@
       "lang": "ja",
       "sha256": "a007de738b8f1345ef168f1b2436ba3437aa65f59031b30aa9d4466256ee5ffe",
       "sourceSha256": "062c073f251c7038c309871a935f68205d429e708d5abaf3e43809891be819e0",
-      "vadEndMs": 381.3245082031344,
-      "bargeInMs": 300.1951136718858,
-      "maximumLatenessMs": 2.1761999999871477,
+      "vadEndMs": 379.84519296872804,
+      "bargeInMs": 301.0732203124794,
+      "maximumLatenessMs": 3.2897999999695458,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2120.6885218750103
+          "at": 2119.519021093729
         },
         {
           "type": "voice.bargeIn",
-          "at": 2320.1951136718853
+          "at": 2321.073220312479
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 5521.324508203135
+          "at": 5519.845192968729
         }
       ]
     },
@@ -1340,37 +1471,38 @@
       "lang": "ja",
       "sha256": "1f5169c6366050f1da3c8735139b456f9d9f5b002cdfc189b14f1083a28655a2",
       "sourceSha256": "dedbc37aa86735421b6790e8960c0af31caee2b20022b3519e9b64f672faab82",
-      "vadEndMs": 260.45372343750205,
-      "bargeInMs": 301.9044070312525,
-      "maximumLatenessMs": 4.808399999979883,
+      "vadEndMs": 261.4299886718509,
+      "bargeInMs": 300.03667812497633,
+      "maximumLatenessMs": 3.707200000004377,
+      "diagnosticCodes": [],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 2121.636096484377
+          "at": 2120.367000390601
         },
         {
           "type": "voice.bargeIn",
-          "at": 2321.904407031252
+          "at": 2320.036678124976
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 3461.927356250002
+          "at": 3462.060359765601
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 3660.049182421877
+          "at": 3660.251033593726
         },
         {
           "type": "voice.bargeIn",
-          "at": 3860.704700000002
+          "at": 3859.745906640601
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 4680.453723437502
+          "at": 4681.429988671851
         }
       ]
     },
@@ -1379,93 +1511,464 @@
       "lang": "ja",
       "sha256": "2f084f4a808b9df8647a9bf3d9f129627f5d3d214700d753cbf3e38c0749cfbb",
       "sourceSha256": "916bd6cf25e4c7a91d776279c640ee5cf8a4b9a5bb180fdb53f740e5c94998fa",
-      "vadEndMs": 300.50472187500964,
-      "bargeInMs": 340.673911328136,
-      "maximumLatenessMs": 2.6295999999856576,
+      "vadEndMs": 301.1927660156489,
+      "bargeInMs": 339.97841054690025,
+      "maximumLatenessMs": 4.029399999999441,
+      "diagnosticCodes": [
+        "ASR_LANGUAGE_MAPPED"
+      ],
       "trace": [
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 1140.6463234375115
+          "at": 1140.1309984375257
         },
         {
           "type": "voice.bargeIn",
-          "at": 1320.6739113281365
+          "at": 1319.9784105469007
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 1639.5213234375115
+          "at": 1640.2777269531507
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 6000.1023781250115
+          "at": 6001.125383203151
         },
         {
           "type": "voice.bargeIn",
-          "at": 6181.2842628906365
+          "at": 6179.788957421901
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 6701.2222511718865
+          "at": 6700.070695703151
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 6760.3816750000115
+          "at": 6760.156144921901
         },
         {
           "type": "voice.bargeIn",
-          "at": 6960.8785011718865
+          "at": 6960.403947656276
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 8080.5904152343865
+          "at": 8080.585832421901
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 8402.260337109386
+          "at": 8400.458635156276
         },
         {
           "type": "voice.bargeIn",
-          "at": 8580.390219921886
+          "at": 8580.871721093776
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 9161.210044140636
+          "at": 9159.200822656276
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 12240.170005078136
+          "at": 12240.7059496094
         },
         {
           "type": "voice.bargeIn",
-          "at": 12420.490805859386
+          "at": 12421.602189843776
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 14479.795981640636
+          "at": 14481.980607812526
         },
         {
           "type": "voice.vad",
           "state": "speechStart",
-          "at": 14660.011069531261
+          "at": 14660.5243089844
         },
         {
           "type": "voice.bargeIn",
-          "at": 14860.083335156261
+          "at": 14860.32167226565
         },
         {
           "type": "voice.vad",
           "state": "speechEnd",
-          "at": 15920.504721875011
+          "at": 15921.19276601565
+        }
+      ]
+    },
+    {
+      "id": "user-ja-009",
+      "lang": "ja",
+      "sha256": "54a39e025142ee40b4e1f496a937ad51cdf38c183177a1ebb13be2476fc90946",
+      "sourceSha256": "b5958da74d35209b7f44833291b12436ccf8437335263f4b541eea961cdf96a9",
+      "vadEndMs": 320.08400273439474,
+      "bargeInMs": 1339.7876160156443,
+      "maximumLatenessMs": 3.8355999999912456,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2122.2561218750197
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2319.7876160156447
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 5300.084002734395
+        }
+      ]
+    },
+    {
+      "id": "user-ja-010",
+      "lang": "ja",
+      "sha256": "876a2a4647c0b566773b5245d5d58fff851bd4db932f717f1fe1d8025394d55e",
+      "sourceSha256": "b09ad6370cb41cdb29b0a7dba7afa107a4b96fdb6aec4ab48976a2e423ddd715",
+      "vadEndMs": 259.9787148437463,
+      "bargeInMs": 259.94844140624673,
+      "maximumLatenessMs": 3.5016000000177883,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2100.5844277343713
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2279.9484414062463
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4999.978714843746
+        }
+      ]
+    },
+    {
+      "id": "user-ja-011",
+      "lang": "ja",
+      "sha256": "c01d80d6f5d7ac293b2414b25d7d7b6ac2322481e79c439c3d97dffd670cc574",
+      "sourceSha256": "b5691be70d86ac521d1ad5b144b97d035577566db8d7388a04c1a7d9881868c2",
+      "vadEndMs": 300.0866125000175,
+      "bargeInMs": 1340.489688671892,
+      "maximumLatenessMs": 2.6981000000378117,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2121.9870031250175
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2320.4896886718925
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4880.0866125000175
+        }
+      ]
+    },
+    {
+      "id": "user-ja-012",
+      "lang": "ja",
+      "sha256": "97c84fc8be0626f1742284a78536489d19296619a4e6721fd43fe3d5c1654258",
+      "sourceSha256": "6901724f4a988aaf4844fab67b0f4fc33049c5c0a8e7eb8fee7e4b896cabf922",
+      "vadEndMs": 239.13668046874227,
+      "bargeInMs": 300.1825789062427,
+      "maximumLatenessMs": 4.104300000006333,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2121.1720808593673
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2320.1825789062423
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4739.136680468742
+        }
+      ]
+    },
+    {
+      "id": "user-ja-013",
+      "lang": "ja",
+      "sha256": "0daa25c0755bde46e53ececc880f9acccfbba698abb7396ab106e8e89fbdccda",
+      "sourceSha256": "f2a39a71825677aa3cdf78a692ea2ee1f2ae803a10f127bb84be4760d96dd1ab",
+      "vadEndMs": 339.48018945311014,
+      "bargeInMs": 322.4804335937363,
+      "maximumLatenessMs": 3.341599999985192,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 1420.533412109362
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 1622.480433593737
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 2160.597621093737
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 6799.982874999987
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 6980.474818359362
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 10279.480189453112
+        }
+      ]
+    },
+    {
+      "id": "user-ja-014",
+      "lang": "ja",
+      "sha256": "6fb204ba5be443c184d5ba34afda43d4ef70efcd07ca4d15674c91d8ff02c58d",
+      "sourceSha256": "1ad6bb096aac1b54388076490a254c3c2ed1c383b29a49f8641cb4ab2380eee3",
+      "vadEndMs": 322.1409371093614,
+      "bargeInMs": -119.8754203125136,
+      "maximumLatenessMs": 4.061099999991711,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2020.7866890624864
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2220.1245796874864
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4502.140937109361
+        }
+      ]
+    },
+    {
+      "id": "user-ja-015",
+      "lang": "ja",
+      "sha256": "f4f477b0b3c82815f85b2c2d625c1db7b7009c963414a48acbabbc891182e978",
+      "sourceSha256": "46c3db76dade0a6e8a78f08fbb4a219202017d4903cc7d8a73bb12a800b263c8",
+      "vadEndMs": 299.8403562500034,
+      "bargeInMs": 259.98488750000297,
+      "maximumLatenessMs": 1.9003999999840744,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2100.3672117187525
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2279.9848875000025
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 3500.4499753906275
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 3760.1350339843775
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 3941.0903562500025
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 5359.8403562500025
+        }
+      ]
+    },
+    {
+      "id": "user-ja-016",
+      "lang": "ja",
+      "sha256": "f67040df314d21aa906d6106b9630ff71d1de44d93b1537b34c96ca086349c32",
+      "sourceSha256": "62a80f84b4976293b2ff4e24b5fe01a903124e14a9b47c5e4e5ce1944c64682c",
+      "vadEndMs": 320.0758066406711,
+      "bargeInMs": 342.3060312500461,
+      "maximumLatenessMs": 2.4798000000882894,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2102.3079843750456
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2282.3060312500456
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4340.075806640671
+        }
+      ]
+    },
+    {
+      "id": "user-ja-017",
+      "lang": "ja",
+      "sha256": "2c599478e79c680ce0ec15f0753729037eaa1fa33d317a3be356d543df4fb912",
+      "sourceSha256": "69a52c7c30ea01a8846f7aa2ecb5125dc2bd01ede360ac1801716c0425ab751e",
+      "vadEndMs": 240.4384523438057,
+      "bargeInMs": 261.58249531255615,
+      "maximumLatenessMs": 6.16890000004787,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2100.1147218750557
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2281.5824953125557
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 2739.8656984375557
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2920.2302003906807
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 3119.8920656250557
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 3820.0627199219307
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 6180.433569531306
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 6379.805151562556
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 7060.438452343806
+        }
+      ]
+    },
+    {
+      "id": "user-ja-018",
+      "lang": "ja",
+      "sha256": "46cf71dd7bb5d185d42474d4a4799e0b8de5df5d534b86d1620a9c37fb2cf608",
+      "sourceSha256": "9008ff193f781c410ef350932c2e36b4d1586a623f5af837f29d324aa3610237",
+      "vadEndMs": 259.60696562496196,
+      "bargeInMs": 299.9016433593356,
+      "maximumLatenessMs": 4.183799999998882,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2121.947541796835
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2319.901643359335
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 5159.60696562496
+        }
+      ]
+    },
+    {
+      "id": "user-ja-019",
+      "lang": "ja",
+      "sha256": "487c08329fb68d05948b04cd2cb3186db22c461c3fa7a086d8e2d3c3b89b99b9",
+      "sourceSha256": "af9e1e939ab8692ed2b663bbeef4b131e75c45a863fb0375ea7a7de227bbeccb",
+      "vadEndMs": 261.62519453128516,
+      "bargeInMs": 339.9826164062838,
+      "maximumLatenessMs": 4.734400000073947,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2100.1435050781583
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2279.9826164062833
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 5161.625194531283
+        }
+      ]
+    },
+    {
+      "id": "user-ja-020",
+      "lang": "ja",
+      "sha256": "1646f382614ed14db62cc205fb64fc9bfc35de1598ac6c278f44d8ab922d42b0",
+      "sourceSha256": "a1d35fd73db165103ab7639ac9c3813be15e8af333746c0c7ac85dad0f353b36",
+      "vadEndMs": 319.8243191406373,
+      "bargeInMs": 261.5074246093868,
+      "maximumLatenessMs": 3.138700000010431,
+      "diagnosticCodes": [],
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2099.9661648437614
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2281.5074246093864
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 5859.824319140636
         }
       ]
     }
