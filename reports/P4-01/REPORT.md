@@ -35,11 +35,13 @@ pnpm asr:latency      # 使用仓库外 timing-references.json 的独立起止�
 | --- | --- | --- |
 | 模型下载/哈希 | 三文件已校验；SenseVoice int8 239233841 字节 | lock、manifest、model-hashes.json |
 | 公开数据准备 | 90 条，三语各 30，三个 Parquet SHA-256 与官方 LFS 元数据一致 | public-download.log、public-data.lock.json |
-| P4-01 单测 | 16/16 | unit-v3.log |
-| TypeScript 类型检查 | 通过 | typecheck-v6.log |
-| ESLint | 通过 | lint-v4.log |
+| P4-01 单测 / 整仓 Vitest | 16/16；整仓 32 文件、459/459 | unit-v3.log、final-test.log |
+| TypeScript 类型检查 | 通过 | final-typecheck.log |
+| ESLint | 通过 | final-lint.log |
 | Python mypy --strict | 通过 | mypy.log |
 | workspace build | 通过；含最终 Worklet 修复的桌面构建通过 | build-final.log、desktop-build-v4.log |
+| 完整 pnpm test:e2e | 4 通过、1 个专门的静音 CPU 测量按设计跳过（已单独实测通过）；附加 OS 快照因没有初始化 run.json 报错，测试本身退出 0；Windows CI 将按标准初始化后重跑 | full-e2e.log、full-e2e/ |
+| 真实麦克风/utility 通道测试 | 通过：50 packets/s、异步关闭，未读取真实用户麦克风，使用 Chromium fake device | voice-e2e-v5.log、e2e-v5/ |
 | Electron 首次测试 | 失败，原始日志保留。与 CI 窗口重叠且临时目录前缀不符合隔离约束；不能据失败推断单一原因 | voice-e2e.log、e2e/ |
 | Electron 第二次测试 | 安静窗口检查把 PowerShell 空列表 null 当成占用，已修正；等待最终复跑 | voice-e2e-v2.log、e2e-v2/ |
 | 各语言 50 条/150 条语言准确率 | 待用户录音；当前用户录音 0/60，不能签发完整验收 | user-recording-status.log |
@@ -100,4 +102,5 @@ SenseVoice 源码的 MIT 不能替代权重许可证；转换仓库的 LICENSE �
 - P4-02 也在独立工作树对 apps/desktop 做集成；合并时按规则保留双方，不能覆盖另一张卡的启动/守护改动。
 
 ## 下一步
+实现提交：`4d97e30`。Windows CI 与 Claude 审查均针对提交后的 PR，最终状态见 PR 检查。
 已等待 P2-03 Blender 与 P4-02 Electron 重负载结束并复核进程，再串行完成公开集和静音 CPU；最后完成回归后转可审查，交 Claude 审查实现。不合并，不取下一张卡。等待用户录音与模型许可决定。
