@@ -1,0 +1,19 @@
+{"step": "springs", "command": ["D:\\blender\\blender.exe", "-b", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-05\\.cache\\03-tail.blend", "--python-exit-code", "1", "--python", "D:\\Dev\\nemu\\tools\\asset-pipeline\\springs.py", "--", "--config", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-05\\.cache\\resolved-build.json", "--output-dir", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-05", "--output-blend", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-05\\.cache\\04-springs.blend"]}
+00:00.844  blend            | Read blend: "D:\Dev\nemu\tools\asset-pipeline\.cache\trial-05\.cache\03-tail.blend"
+{"step": "springs", "status": "failed", "detail": "bpy_struct: item.attr = val: enum \"sphere\" not found in ('Sphere', 'Capsule')"}
+Traceback (most recent call last):
+  File "D:\Dev\nemu\tools\asset-pipeline\springs.py", line 64, in <module>
+    run("springs", execute)
+    ~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\blender_common.py", line 69, in run
+    action(config, args)
+    ~~~~~~^^^^^^^^^^^^^^
+  File "D:\Dev\nemu\tools\asset-pipeline\springs.py", line 36, in execute
+    collider.shape_type = item["shape"]
+    ^^^^^^^^^^^^^^^^^^^
+TypeError: bpy_struct: item.attr = val: enum "sphere" not found in ('Sphere', 'Capsule')
+
+Error: script failed, file: 'D:\Dev\nemu\tools\asset-pipeline\springs.py', exiting.
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

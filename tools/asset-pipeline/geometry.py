@@ -41,5 +41,3 @@ def weights_at(t: float, count: int) -> list[tuple[int, float]]:
     lower = math.floor(x)
     upper = min(lower + 1, count - 1)
     return [(lower, 1.0)] if lower == upper else [(lower, 1 - (x - lower)), (upper, x - lower)]
-
-

@@ -1,0 +1,10 @@
+{"step": "import", "command": ["D:\\blender\\blender.exe", "-b", "--python-exit-code", "1", "--python", "D:\\Dev\\nemu\\tools\\asset-pipeline\\import_vrm.py", "--", "--config", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-01\\.cache\\resolved-build.json", "--output-dir", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-01", "--output-blend", "D:\\Dev\\nemu\\tools\\asset-pipeline\\.cache\\trial-01\\.cache\\01-import.blend"]}
+Traceback (most recent call last):
+  File "D:\Dev\nemu\tools\asset-pipeline\import_vrm.py", line 7, in <module>
+    from blender_common import Json, run
+ModuleNotFoundError: No module named 'blender_common'
+
+Error: script failed, file: 'D:\Dev\nemu\tools\asset-pipeline\import_vrm.py', exiting.
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

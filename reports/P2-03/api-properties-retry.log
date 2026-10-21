@@ -1,0 +1,103 @@
+META {"allowAntisocialOrHateUsage": false, "allowExcessivelySexualUsage": true, "allowExcessivelyViolentUsage": true, "allowPoliticalOrReligiousUsage": true, "allowRedistribution": true, "authors": ["pixiv Inc."], "avatarPermission": "everyone", "commercialUsage": "corporation", "copyrightInformation": "(c) 2022 pixiv Inc.", "creditNotation": "unnecessary", "licenseUrl": "https://vrm.dev/licenses/1.0/", "modification": "allowModificationRedistribution", "name": "VRM1_Constraint_Twist_Sample", "thumbnailImage": 18, "version": "v1.0.1"}
+MATERIALS ['Body_00_SKIN', 'Bottoms_01_CLOTH', 'Shoes_01_CLOTH', 'Tops_01_CLOTH', 'HairBack_00_HAIR', 'FaceMouth_00_FACE', 'EyeIris_00_EYE', 'Face_00_SKIN', 'EyeWhite_00_EYE', 'FaceEyeline_00_FACE', 'FaceBrow_00_FACE', 'EyeHighlight_00_EYE', 'Hair_00_HAIR']
+PRESETS ['aa', 'angry', 'blink', 'blinkLeft', 'blinkRight', 'ee', 'happy', 'ih', 'lookDown', 'lookLeft', 'lookRight', 'lookUp', 'neutral', 'oh', 'ou', 'relaxed', 'sad', 'surprised']
+14:05:18 | INFO: Data are loaded, start creating Blender stuff
+Error in bpy.app.handlers.depsgraph_update_pre[1]:
+Traceback (most recent call last):
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\common\writable_context.py", line 70, in depsgraph_update_pre
+    trigger_writable_context_becomes_available_once_handlers(context, load_post=False)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\common\writable_context.py", line 53, in trigger_writable_context_becomes_available_once_handlers
+    handler(context, load_post=load_post)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\registration.py", line 651, in setup_once_when_writable_context_becomes_available
+    if preferences.get_preferences(context).add_mtoon_shader_node_group:
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\common\preferences.py", line 353, in get_preferences
+    raise AssertionError(message)
+AssertionError: No add-on preferences for bl_ext.blender_org.vrm
+14:05:18 | INFO: Blender create Mesh node Body
+14:05:18 | INFO: Blender create Mesh node Face
+14:05:18 | INFO: Blender create Mesh node Hair
+14:05:18 | INFO: Blender create Mesh node BlenderVrmAddonImport708951567181461Temp_20_
+14:05:18 | INFO: Blender create Mesh node BlenderVrmAddonImport708951567181461Temp_23_
+14:05:18 | INFO: glTF import finished in 0.25s
+Traceback (most recent call last):
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\import_scene.py", line 134, in execute
+    return import_vrm(
+        filepath,
+    ...<2 lines>...
+        license_validation=True,
+    )
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\import_scene.py", line 403, in import_vrm
+    vrm_importer.import_vrm()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\abstract_base_vrm_importer.py", line 205, in import_vrm
+    self.load_materials(progress.partial_progress(0.9))
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\vrm1_importer.py", line 453, in load_materials
+    self.make_mtoon1_material(index, material_dict)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\vrm1_importer.py", line 386, in make_mtoon1_material
+    mtoon.enable_outline_preview = get_preferences(
+                                   ~~~~~~~~~~~~~~~^
+        self._context
+        ^^^^^^^^^^^^^
+    ).enable_mtoon_outline_preview
+    ^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\common\preferences.py", line 353, in get_preferences
+    raise AssertionError(message)
+AssertionError: No add-on preferences for bl_ext.blender_org.vrm
+00:03.016  bpy.rna          | ERROR Python script error in IMPORT_SCENE_OT_vrm.execute
+Traceback (most recent call last):
+  File "D:\Dev\nemu\reports\P2-03\probe_api.py", line 8, in <module>
+    bpy.ops.import_scene.vrm(filepath=str(p.resolve()),use_addon_preferences=False,enable_mtoon_outline_preview=False)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Error: Python: Traceback (most recent call last):
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\import_scene.py", line 134, in execute
+    return import_vrm(
+        filepath,
+    ...<2 lines>...
+        license_validation=True,
+    )
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\import_scene.py", line 403, in import_vrm
+    vrm_importer.import_vrm()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\abstract_base_vrm_importer.py", line 205, in import_vrm
+    self.load_materials(progress.partial_progress(0.9))
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\vrm1_importer.py", line 453, in load_materials
+    self.make_mtoon1_material(index, material_dict)
+Error: Python: Traceback (most recent call last):
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\import_scene.py", line 134, in execute
+    return import_vrm(
+        filepath,
+    ...<2 lines>...
+        license_validation=True,
+    )
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\import_scene.py", line 403, in import_vrm
+    vrm_importer.import_vrm()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\abstract_base_vrm_importer.py", line 205, in import_vrm
+    self.load_materials(progress.partial_progress(0.9))
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\vrm1_importer.py", line 453, in load_materials
+    self.make_mtoon1_material(index, material_dict)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\importer\vrm1_importer.py", line 386, in make_mtoon1_material
+    mtoon.enable_outline_preview = get_preferences(
+                                   ~~~~~~~~~~~~~~~^
+        self._context
+        ^^^^^^^^^^^^^
+    ).enable_mtoon_outline_preview
+    ^
+  File "C:\Users\nanake\AppData\Roaming\Blender Foundation\Blender\5.2\extensions\blender_org\vrm\common\preferences.py", line 353, in get_preferences
+    raise AssertionError(message)
+AssertionError: No add-on preferences for bl_ext.blender_org.vrm
+Location: D:\Dev\nemu\reports\P2-03\probe_api.py:8
+
+
+Error: script failed, file: 'reports/P2-03/probe_api.py', exiting.
+    ~~~~~~~~~~... truncatedBlender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

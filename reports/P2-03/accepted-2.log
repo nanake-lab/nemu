@@ -1,0 +1,8 @@
+$ node tools/asset-pipeline/launch.mjs build -Config tools/asset-pipeline/build.example.yaml -Output tools/asset-pipeline/.cache/accepted-2
+Exception: D:\Dev\nemu\tools\asset-pipeline\run.ps1:11
+Line |
+  11 |  … nt -gt 0) { throw "step=schedule object=processes expected=exclusive  …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | step=schedule object=processes expected=exclusive Blender window actual=Runner.Worker
+[ELIFECYCLE] Command failed with exit code 1.
+EXIT=1

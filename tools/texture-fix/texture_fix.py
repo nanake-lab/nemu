@@ -72,7 +72,7 @@ def main() -> None:
             raise ValueError("step=texture-fix object=output expected=outside protected content actual=protected")
     config = json.loads(args.config.read_text(encoding="utf-8"))
     image = Image.open(args.source).convert("RGBA")
-    pixels = cast(list[Pixel], list(image.getdata()))
+    pixels = cast(list[Pixel], list(image.get_flattened_data()))
     for operation in config["operations"]:
         match operation["kind"]:
             case "edgeExtend":
