@@ -111,3 +111,9 @@ ADR 0016 第 5 节按 P5-23 D5 的三种情况逐一列出：重放读什么、�
 ## 下一步
 
 等待 Codex 交叉审查和你的批准（合并由你做）。转为可审查后 Windows 作业会运行：本卡改了 `packages/contracts/src/generated/`，在 `windows.yml` 的路径列表里。接下来取的卡：无。本卡合并后，回到 P5-23 换上生成的类型。
+
+## 2026-10-22 合并 main 后重跑（追加）
+
+合并最新 main（#51：needs-user 的 PR 由用户合并，提交信息不带跳过 CI 的标记），merge，不 rebase，不强推。没有冲突，变化只在 `AGENTS.md` 与 `tools/status/`。合并后重跑：`verify.py`（三种语言各 9,696 个用例，protoc 395 条，check_compat 0 违例）、cargo fmt、clippy、test（51 个），以及 pnpm lint、typecheck、test、build、test:contracts，全部通过。日志在 `verification/after-main-merge-20261022/`。
+
+按 #51 后的 AGENTS.md 第 6 节：本卡带 `needs-user`，由你合并，合并即批准。按你 2026-10-22 的指示，本卡转为可审查，请 Codex 交叉审查；审查通过后由你合并。
