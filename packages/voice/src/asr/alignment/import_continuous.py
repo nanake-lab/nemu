@@ -11,7 +11,7 @@ import shutil
 import subprocess
 from typing import Protocol, cast
 import wave
-from align_user import Aligner, Factory, LANGUAGES, REVISION, Torch, verify_models
+from align_user import Aligner, Factory, REVISION, Torch, verify_models
 from reference_data import boundaries, file_sha, freeze, inside, obj, objects, read_json, text
 
 REPO = Path(__file__).resolve().parents[5]
@@ -52,16 +52,19 @@ def promote(root: Path, archive: Path) -> None:
         raise ValueError('Import method changed')
     rows = objects(manifest['samples'])
     prompts = objects(read_json(PROMPTS))
-    if len(rows) != 60 or [r['id'] for r in rows] != [r['id'] for r in prompts]:
+    if len(rows) != 60 or {text(r['id']) for r in rows} != {text(r['id']) for r in prompts}:
         raise ValueError('Candidate coverage incomplete')
-    for row, prompt in zip(rows, prompts, strict=True):
+    indexed = {text(r['id']): r for r in rows}
+    for prompt in prompts:
+        row = indexed[text(prompt['id'])]
         source = inside(archive, text(row['candidatePath']))
         target = inside(root, text(prompt['path']))
         if target.exists() or file_sha(source) != row['sha256']:
             raise ValueError('Existing user WAV or changed candidate; no overwrite')
         if target.with_suffix('.txt').read_text(encoding='utf-8-sig').strip() != prompt['text']:
             raise ValueError('Human transcript differs; preserve and review before promotion')
-    for row, prompt in zip(rows, prompts, strict=True):
+    for prompt in prompts:
+        row = indexed[text(prompt['id'])]
         target = inside(root, text(prompt['path']))
         with inside(archive, text(row['candidatePath'])).open('rb') as src, target.open('xb') as dst:
             shutil.copyfileobj(src, dst)
@@ -106,20 +109,23 @@ def main() -> None:
     aligner = cast(CoarseAligner, factory.from_pretrained(str(cache), dtype=torch.float32, device_map='cpu', attn_implementation='eager', local_files_only=True))
     attempt = archive / ('import-attempt-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ'))
     attempt.mkdir()
-    prompts = objects(read_json(PROMPTS))
+    base_prompts = objects(read_json(PROMPTS))
+    indexed_prompts = {text(r['id']): r for r in base_prompts}
+    prompts = [indexed_prompts[f'user-{lang}-{number:03d}'] for number in range(1,21) for lang in ('zh','en','ja')]
     candidates: list[dict[str, object]] = []
     cursor = 0
     previous_end = 0.0
-    for group_index in range(0, 60, 5):
-        group = prompts[group_index:group_index+5]
-        language = LANGUAGES[text(group[0]['lang'])]
+    for group_index in range(0, 60, 3):
+        group = prompts[group_index:group_index+3]
+        # Mixed-language row: Japanese tokenizer supports kana as well as CJK/Latin.
+        language = 'Japanese'
         units = [aligner.aligner_processor.encode_timestamp(text(p['text']), language)[0] for p in group]
         joined = '\n'.join(text(p['text']) for p in group)
         joint_units = aligner.aligner_processor.encode_timestamp(joined, language)[0]
         if joint_units != [u for sentence in units for u in sentence]:
             raise ValueError('Sentence/group tokenization mismatch')
-        stop = min(frames, cursor+60*16000)
-        wav = attempt / f'window-{group_index//5+1:02d}.wav'
+        stop = min(frames, cursor+45*16000)
+        wav = attempt / f'window-{group_index//3+1:02d}.wav'
         extract(canonical, wav, cursor, stop)
         aligned = aligner.align(audio=str(wav), text=joined, language=language)
         if len(aligned) != 1:
