@@ -155,3 +155,10 @@ SenseVoice 源码的 MIT 不能替代权重许可证；转换仓库的 LICENSE �
 独立环境仅用于本机评测；不进应用运行时依赖或打包。`Qwen3ForcedAligner` 实际导入成功；nagisa 有厂商代码的无效转义 SyntaxWarning，未修改其源码。模型权重仍须完整下载、按已登记 SHA-256 验证后才可加载。
 
 合并 origin/main（f0303c2）后串行验证：`pnpm lint`、`pnpm typecheck` 通过，`pnpm test` 33 个文件 462 项通过；证据为 import-main-lint.log、import-main-typecheck.log、import-main-tests.log。连续切分辅助测试 5 项通过、Python 严格类型检查 3 个文件通过，见 continuous-import-tests.log 和 continuous-import-mypy.log。没有把这些检查写成录音/语言/延迟验收通过。
+
+### 连续录音当前阻塞状态（2026-10-21）
+已接收并保护原始连续 M4A，等待用户确认 zh20→en20→ja20 的录制顺序及是否重读/跳句。正式 user.json 尚未改变，当前没有可验收的 60 条切片或有效 timing-references.json。
+
+独立对齐工具已安装且导入成功，但 1,835,544,544 字节的模型权重尚在缓慢下载，未校验完成前不加载。原始 curl 下载保留继续；额外官方 HF HTTP/Xet 下载尝试未产出完整文件，已停止重复下载以免占用带宽，日志保留在仓库外 imports/58a8fe9653a2cdac/。固定模型来源、修订和 SHA-256 不变；不以未验证权重、能量阈值或被测系统替代参考。
+
+下一步：确认录制内容 → 完成模型哈希核验 → 依预登记生成全部切分候选及外部切分记录 → 登记输入 → 独立逐句对齐 → 150 条评测 → 安静窗口延迟测量。PR #44 保持草稿及 needs-user；当前未宣称拆分或整卡验收完成。
