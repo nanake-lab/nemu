@@ -1,0 +1,348 @@
+{
+  "gpu-0.6B-v2": {
+    "status": "measured",
+    "variant": "0.6B",
+    "latency": {
+      "zh": {
+        "samples": 20,
+        "p50_ms": 854.6824000077322,
+        "limit_ms": 250,
+        "passed": false
+      },
+      "en": {
+        "samples": 20,
+        "p50_ms": 851.6088999895146,
+        "limit_ms": 250,
+        "passed": false
+      },
+      "ja": {
+        "samples": 20,
+        "p50_ms": 853.555250010686,
+        "limit_ms": 250,
+        "passed": false
+      }
+    },
+    "cancel": {
+      "samples": 15,
+      "limit_ms": 50,
+      "maximum_last_block_ms": 0.7621000113431364,
+      "passed": true
+    },
+    "stress": {
+      "seconds": 1800.125,
+      "iterations": 289,
+      "assessment": "inspect raw trend; no invented growth tolerance"
+    },
+    "rss_first_mib": 2296.40625,
+    "rss_last_mib": 2309.21875,
+    "rss_delta_mib": 12.8125,
+    "rss_five_minute_bins": [
+      {
+        "minutes": [
+          0,
+          5
+        ],
+        "samples": 49,
+        "rss_median_mib": 2297.91796875
+      },
+      {
+        "minutes": [
+          5,
+          10
+        ],
+        "samples": 47,
+        "rss_median_mib": 2300.70703125
+      },
+      {
+        "minutes": [
+          10,
+          15
+        ],
+        "samples": 50,
+        "rss_median_mib": 2304.07421875
+      },
+      {
+        "minutes": [
+          15,
+          20
+        ],
+        "samples": 46,
+        "rss_median_mib": 2307.328125
+      },
+      {
+        "minutes": [
+          20,
+          25
+        ],
+        "samples": 49,
+        "rss_median_mib": 2308.328125
+      },
+      {
+        "minutes": [
+          25,
+          30
+        ],
+        "samples": 48,
+        "rss_median_mib": 2309.21875
+      }
+    ],
+    "pressure_assessment": "completed; RSS bin medians rise, stability not accepted; no growth tolerance invented",
+    "torch_max_bytes": {
+      "allocatedBytes": 5081658880,
+      "reservedBytes": 6341787648,
+      "peakAllocatedBytes": 5508812800,
+      "peakReservedBytes": 6341787648
+    },
+    "stress_torch_current_ranges": {
+      "allocatedBytes": [
+        5081658880,
+        5081658880
+      ],
+      "reservedBytes": [
+        6211764224,
+        6341787648
+      ]
+    },
+    "memory_sampled_peaks": {
+      "dedicated_bytes": 6899363840,
+      "shared_bytes": 288731136,
+      "total_committed_bytes": 7189848064
+    },
+    "memory_upper_bound_bytes": 7188094976,
+    "memory_observations": 5560,
+    "memory_max_gap_s": 1.431142,
+    "memory_errors": [],
+    "render_exit": 0,
+    "memory_watch_exit": 0
+  },
+  "gpu-1.7B-v1": {
+    "status": "measured",
+    "variant": "1.7B",
+    "latency": {
+      "zh": {
+        "samples": 20,
+        "p50_ms": 854.1169000091031,
+        "limit_ms": 250,
+        "passed": false
+      },
+      "en": {
+        "samples": 20,
+        "p50_ms": 863.2474999903934,
+        "limit_ms": 250,
+        "passed": false
+      },
+      "ja": {
+        "samples": 20,
+        "p50_ms": 862.6694499980658,
+        "limit_ms": 250,
+        "passed": false
+      }
+    },
+    "cancel": {
+      "samples": 15,
+      "limit_ms": 50,
+      "maximum_last_block_ms": 0.0,
+      "passed": true
+    },
+    "stress": {
+      "seconds": 1804.2969999999914,
+      "iterations": 298,
+      "assessment": "inspect raw trend; no invented growth tolerance"
+    },
+    "rss_first_mib": 2311.71484375,
+    "rss_last_mib": 2326.7265625,
+    "rss_delta_mib": 15.01171875,
+    "rss_five_minute_bins": [
+      {
+        "minutes": [
+          0,
+          5
+        ],
+        "samples": 50,
+        "rss_median_mib": 2312.279296875
+      },
+      {
+        "minutes": [
+          5,
+          10
+        ],
+        "samples": 49,
+        "rss_median_mib": 2317.85546875
+      },
+      {
+        "minutes": [
+          10,
+          15
+        ],
+        "samples": 51,
+        "rss_median_mib": 2324.02734375
+      },
+      {
+        "minutes": [
+          15,
+          20
+        ],
+        "samples": 49,
+        "rss_median_mib": 2325.6171875
+      },
+      {
+        "minutes": [
+          20,
+          25
+        ],
+        "samples": 49,
+        "rss_median_mib": 2326.58984375
+      },
+      {
+        "minutes": [
+          25,
+          30
+        ],
+        "samples": 50,
+        "rss_median_mib": 2326.71875
+      }
+    ],
+    "pressure_assessment": "completed; RSS bin medians rise, stability not accepted; no growth tolerance invented",
+    "torch_max_bytes": {
+      "allocatedBytes": 7110356480,
+      "reservedBytes": 8283750400,
+      "peakAllocatedBytes": 7543661568,
+      "peakReservedBytes": 8283750400
+    },
+    "stress_torch_current_ranges": {
+      "allocatedBytes": [
+        7110356480,
+        7110356480
+      ],
+      "reservedBytes": [
+        8283750400,
+        8283750400
+      ]
+    },
+    "memory_sampled_peaks": {
+      "dedicated_bytes": 8925876224,
+      "shared_bytes": 288436224,
+      "total_committed_bytes": 9228918784
+    },
+    "memory_upper_bound_bytes": 9214312448,
+    "memory_observations": 5710,
+    "memory_max_gap_s": 1.336269,
+    "memory_errors": [],
+    "render_exit": 0,
+    "memory_watch_exit": 0
+  },
+  "failed_startup_attempt": {
+    "variant": "0.6B",
+    "status": "failed",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "render_exit": 0,
+    "memory_watch_exit": 0,
+    "memory": {
+      "status": "sampled-not-accepted",
+      "observations": 72,
+      "maximum_start_interval_s": 6.498969,
+      "maximum_acquisition_s": 6.18791,
+      "no_owned_gpu_counter_samples": 1,
+      "errors": [],
+      "sampled_peaks": {
+        "dedicated_bytes": 4641136640,
+        "shared_bytes": 287846400,
+        "total_committed_bytes": 4929687552
+      },
+      "processes": [
+        {
+          "ProcessId": 44728,
+          "ParentProcessId": 46560,
+          "Name": "python.exe",
+          "CreationDate": "/Date(1792572424635)/"
+        },
+        {
+          "ProcessId": 27584,
+          "ParentProcessId": 44728,
+          "Name": "powershell.exe",
+          "CreationDate": "/Date(1792572425424)/"
+        },
+        {
+          "ProcessId": 38096,
+          "ParentProcessId": 27584,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792572425434)/"
+        },
+        {
+          "ProcessId": 31812,
+          "ParentProcessId": 44728,
+          "Name": "node.exe",
+          "CreationDate": "/Date(1792572425436)/"
+        },
+        {
+          "ProcessId": 31392,
+          "ParentProcessId": 31812,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792572425482)/"
+        },
+        {
+          "ProcessId": 4016,
+          "ParentProcessId": 31812,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792572425875)/"
+        },
+        {
+          "ProcessId": 28748,
+          "ParentProcessId": 4016,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792572425880)/"
+        },
+        {
+          "ProcessId": 41104,
+          "ParentProcessId": 31812,
+          "Name": "node.exe",
+          "CreationDate": "/Date(1792572426243)/"
+        },
+        {
+          "ProcessId": 44228,
+          "ParentProcessId": 41104,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792572426248)/"
+        },
+        {
+          "ProcessId": 46600,
+          "ParentProcessId": 41104,
+          "Name": "esbuild.exe",
+          "CreationDate": "/Date(1792572426689)/"
+        },
+        {
+          "ProcessId": 47752,
+          "ParentProcessId": 31812,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792572427162)/"
+        },
+        {
+          "ProcessId": 4608,
+          "ParentProcessId": 47752,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792572427203)/"
+        },
+        {
+          "ProcessId": 27708,
+          "ParentProcessId": 47752,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792572427215)/"
+        },
+        {
+          "ProcessId": 45496,
+          "ParentProcessId": 47752,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792572427231)/"
+        }
+      ],
+      "adapters": [
+        "luid_0x00000000_0x0000BE91_phys_0"
+      ],
+      "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+    },
+    "nemu_memory_upper_bound_bytes": 4928983040,
+    "adr0012_limit_bytes": 8000000000,
+    "memory_evidence_available": true,
+    "vram_within_limit": true
+  }
+}

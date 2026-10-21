@@ -73,7 +73,7 @@ async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> d
         cancel_at: float | None = None
         last_after_cancel = 0.0
         async with connect(f"ws://127.0.0.1:{args.port}/synthesize", max_queue=8,
-                           open_timeout=10, close_timeout=5) as socket:
+                           open_timeout=10, close_timeout=5, proxy=None) as socket:
             await socket.send(json.dumps({"text": text, "lang": lang, "style": "neutral",
                                           "voiceId": "p4-02-synthetic-test", "sampleRate": 24000}))
             async for block in socket:
@@ -89,7 +89,7 @@ async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> d
                 elif cancel_at is not None:
                     last_after_cancel = (now - cancel_at) * 1000
         # Await actual generation termination before starting the next sample.
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(trust_env=False) as client:
             deadline = time.monotonic() + 120
             while (await client.get(f"http://127.0.0.1:{args.port}/health")).json()["busy"]:
                 if time.monotonic() > deadline:
@@ -107,8 +107,10 @@ async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> d
         return row
 
     try:
-        async with httpx.AsyncClient(timeout=300) as client:
-            health = (await client.post(f"http://127.0.0.1:{args.port}/warmup")).json()
+        async with httpx.AsyncClient(timeout=300, trust_env=False) as client:
+            response = await client.post(f"http://127.0.0.1:{args.port}/warmup")
+            response.raise_for_status()
+            health = response.json()
             if not health["ready"]:
                 raise RuntimeError("TTS_WARMUP_DEGRADED")
         if engine.variant != args.variant:
