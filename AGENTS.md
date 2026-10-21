@@ -228,6 +228,13 @@ Antigravity 会自动发现这些技能；Codex 请在开始相关任务时手�
 
 配置依据：OpenAI 官方 [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)。项目自定义角色使用独立 TOML 文件，权限继承父代理；角色文件不用于绕过父代理权限或平台并发限制。
 
+**CI 的范围（2026-10-20 按用户要求追加）：**
+
+- 只改文档、任务卡、报告或 `content` 子模块指针的 PR 和提交，不跑 CI（`ci.yml` 的 `paths-ignore`）。
+- `docs/echo-core/original/` 或 `tasks/cards.json` 有改动时，由 Docs guard（`docs-guard.yml`）检查：前者一律不允许改，后者检查能否解析、依赖和里程碑是否存在。
+- Windows 检查在 `windows.yml` 里，只在改动可能影响它时运行，路径列表在该文件开头。草稿 PR 不跑 Windows 检查，转为可审查时自动运行；草稿阶段需要时，用 `gh workflow run windows.yml --ref <分支>` 手动触发。
+- 新增一类 Windows 检查时，同时把它涉及的目录加进 `windows.yml` 的路径列表。
+
 ## 10. Claude（2026-10-19 用户追加，同日按新的第 2、6 节整理）
 
 用户已决定增加第三个执行者 Claude（Claude Code 云端会话）。Claude 遵守本文件全部规则，另有以下几点：

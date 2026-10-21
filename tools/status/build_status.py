@@ -114,15 +114,24 @@ def cards_of_pr(pr: dict) -> set[str]:
 
 
 def windows_waiting(repo: str, sha: str) -> bool:
-    runs = gh(f"repos/{repo}/actions/runs?head_sha={sha}&per_page=5")
+    """True when a Windows job for this commit waits for the self-hosted runner.
+
+    The Windows job has its own workflow (windows.yml), so every run for the
+    commit is checked, not only the newest one.
+    """
+    runs = gh(f"repos/{repo}/actions/runs?head_sha={sha}&per_page=10")
     runs = runs.get("workflow_runs", []) if isinstance(runs, dict) else []
-    if not runs:
-        return False
-    jobs = gh(f"repos/{repo}/actions/runs/{runs[0]['id']}/jobs")
-    jobs = jobs.get("jobs", []) if isinstance(jobs, dict) else []
-    return any(
-        "Windows" in j["name"] and j["status"] in ("queued", "waiting") for j in jobs
-    )
+    for run in runs:
+        if run.get("status") == "completed":
+            continue
+        jobs = gh(f"repos/{repo}/actions/runs/{run['id']}/jobs")
+        jobs = jobs.get("jobs", []) if isinstance(jobs, dict) else []
+        if any(
+            "Windows" in j["name"] and j["status"] in ("queued", "waiting")
+            for j in jobs
+        ):
+            return True
+    return False
 
 
 def review_verdict(repo: str, number: int) -> str | None:
