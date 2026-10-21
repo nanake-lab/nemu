@@ -19,19 +19,11 @@ const root = asrDataDirectory(),
   refs = await loadTimingReferences(root);
 const audio = new Map<string, Float32Array>();
 for (const ref of refs) {
-  const decoded = spawnSync('ffmpeg', [
-    '-v',
-    'error',
-    '-i',
-    join(root, ref.path),
-    '-ar',
-    '16000',
-    '-ac',
-    '1',
-    '-f',
-    'f32le',
-    '-',
-  ]);
+  const decoded = spawnSync(
+    'ffmpeg',
+    ['-v', 'error', '-i', join(root, ref.path), '-ar', '16000', '-ac', '1', '-f', 'f32le', '-'],
+    { maxBuffer: 32 * 1024 * 1024 },
+  );
   if (decoded.status !== 0) throw new Error(`Decode failed: ${ref.id}`);
   const bytes = decoded.stdout;
   audio.set(
