@@ -81,3 +81,6 @@ PR #48 保持草稿和 needs-user；不合并、不取下一卡。等待 A 的�
 最终 v4 逐帧原始证据以 `.json.gz` 随报告保存；无压缩原件和较早 v1/v3/头碰撞体试验的大体量逐帧记录仍留在本机 D 盘 `reports/P2-05/` 和工具 `.cache/`，按本目录 .gitignore 不提交。旧失败日志和白色发光/图集失败截图仍随报告保留。
 
 内容候选快照已先推到私有 nemu-content 的 `task/P2-05-tail-springs`：`03742ab5a7350b565a1229b11d2730f656b52279`，6 个 LFS 对象共约73MB（5模型+源候选快照）。内容仓库只提交 `_candidates/P2-05/`；原 `nemu/source/nemu-vroid-export.vrm` 仍是原有未提交修改。主仓库随后更新本卡 gitlink；未合并内容分支或主 PR。
+
+## 本次发布状态
+主代码提交 `fbcd820ccd49372ab177f9e95c03dde2011f2b6d` 已推送到 PR #48；Ubuntu CI 运行中（39629389607），Windows 按草稿规则跳过，不称当前提交的 CI 全绿。根测试产生的八份临时进程 stdout 日志已按绝对路径核对后移入 `unit-test-process-logs/`，主目录原有 logs 不动。评审服务器仅为本卡可停止前台进程，默认暂停渲染；其保存动作不会推送或定稿内容。
