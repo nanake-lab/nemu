@@ -17,3 +17,5 @@ P4-02 提供三语本地 TTS 旁路服务、共享请求校验、本地/云端�
 已 merge origin/main（9c986a6），随后 lint/typecheck、454 TS 测试、schema、ruff/mypy（20 文件）、26 Python 测试、Python 构建和 Electron e2e（3 项、原样 7 进程/0 重启断言）通过；1 个 opt-in GPU smoke 明确跳过，另有上述完整真实 GPU 测量。新 HEAD 的 CI 以检查页为准，历史成功记录不替代本次。
 
 详见 [REPORT.md](reports/P4-02/REPORT.md)、[BLOCKED.md](reports/P4-02/BLOCKED.md)、[acceptance-summary.json](reports/P4-02/acceptance-summary.json)。后续需定位首包/RSS 并在新安静窗口复测；全部验收满足前保持草稿。无合并，无下一张卡。
+
+提交 4a4eb93 的 Ubuntu CI 已成功（run 39583470293）；Windows CI 因草稿跳过（run 39583470934），不记为通过。原始数据归档和报告补记不改变受测实现。

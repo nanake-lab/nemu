@@ -109,3 +109,7 @@ Base 的 style 只索引参考，不接收文字指令。参考路径不得越�
 等待解决上述验收阻塞并复测。PR 保持草稿，不合并，不取下一张卡；全部标准满足后才转可审查，由 Claude 审查。
 
 本轮 GPU 和本机重负载检查已结束，已通知用户可以恢复 Windows runner。新 HEAD 的 CI 状态单独记录，不以旧提交检查替代。
+
+## 本轮远端检查归档
+
+代码/报告提交 `4a4eb935b7e12e5bf27f982414c6e75baf83ce91` 的 [Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/39583470293) 已成功，包含 TS/构建、契约、transport、四个 Python 项目、Rust、.NET 和 IDL/三语言一致性检查，见 `CI-ubuntu-gpu-followup.json`。同提交 [Windows 作业](https://github.com/nanake-lab/nemu/actions/runs/39583470934) 因 PR 为草稿按规则跳过，见 `CI-windows-draft-gpu-followup.json`；本轮本机 e2e 已通过，不声称当前提交的 Windows CI 已运行。此后仅追加该检查归档与报告澄清，未改变受测实现。
