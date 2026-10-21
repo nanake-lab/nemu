@@ -1,3 +1,4 @@
+import { BargeWindowGate } from './barge-window-gate.js';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -6,13 +7,23 @@ import { asrDataDirectory } from './cache.js';
 import { cacheDirectory, verifyModels } from './models.js';
 import { loadTimingReferences } from './timing-reference.js';
 import { assertQuiet } from './quiet.js';
-const configs = [
-  { id: 'baseline', threshold: 0.5, speech: 0.2, silence: 0.2 },
-  { id: 'window-accounting', threshold: 0.5, speech: 0.168, silence: 0.168 },
-  { id: 'posterior-035', threshold: 0.35, speech: 0.168, silence: 0.168 },
-  { id: 'posterior-020', threshold: 0.2, speech: 0.168, silence: 0.168 },
-  { id: 'shorter-endpoint', threshold: 0.35, speech: 0.168, silence: 0.128 },
-];
+const gated = process.argv[2] === 'gated';
+const outputPath = gated
+  ? 'reports/P4-01/vad-diagnostic-gated.json'
+  : 'reports/P4-01/vad-diagnostic-grid.json';
+const configs = gated
+  ? [
+      { id: 'gated-050', threshold: 0.5, speech: 0, silence: 0.168 },
+      { id: 'gated-035', threshold: 0.35, speech: 0, silence: 0.168 },
+      { id: 'gated-020', threshold: 0.2, speech: 0, silence: 0.168 },
+    ]
+  : [
+      { id: 'baseline', threshold: 0.5, speech: 0.2, silence: 0.2 },
+      { id: 'window-accounting', threshold: 0.5, speech: 0.168, silence: 0.168 },
+      { id: 'posterior-035', threshold: 0.35, speech: 0.168, silence: 0.168 },
+      { id: 'posterior-020', threshold: 0.2, speech: 0.168, silence: 0.168 },
+      { id: 'shorter-endpoint', threshold: 0.35, speech: 0.168, silence: 0.128 },
+    ];
 assertQuiet();
 await verifyModels();
 const root = asrDataDirectory(),
@@ -42,7 +53,7 @@ for (const config of configs) {
           sileroVad: {
             model: join(cacheDirectory(), 'silero_vad.onnx'),
             threshold: barge ? config.threshold : 0.5,
-            minSilenceDuration: barge ? 0.032 : config.silence,
+            minSilenceDuration: barge ? (gated ? 0 : 0.032) : config.silence,
             minSpeechDuration: barge ? config.speech : 0.032,
             windowSize: 512,
             maxSpeechDuration: 20,
@@ -58,6 +69,7 @@ for (const config of configs) {
       barge = make(true),
       pcm = audio.get(ref.id);
     if (!pcm) throw new Error('Missing PCM');
+    const gate = gated ? new BargeWindowGate(barge) : undefined;
     let detected = false,
       end: number | null = null,
       first: number | null = null;
@@ -65,11 +77,12 @@ for (const config of configs) {
       const block = new Float32Array(320);
       block.set(pcm.subarray(offset, offset + 320));
       vad.acceptWaveform(block);
-      barge.acceptWaveform(block);
+      if (!gate) barge.acceptWaveform(block);
+      const interrupt = gate ? gate.feed(block) : barge.isDetected();
       const now = (offset + 320) / 16,
         next = vad.isDetected();
       if (detected && !next) end = now;
-      if (first === null && barge.isDetected()) first = now;
+      if (first === null && interrupt) first = now;
       detected = next;
       while (!vad.isEmpty()) vad.pop();
       while (!barge.isEmpty()) barge.pop();
@@ -93,13 +106,13 @@ for (const config of configs) {
     rows,
   });
   await writeFile(
-    'reports/P4-01/vad-diagnostic-progress.json',
+    outputPath.replace('.json', '-progress.json'),
     JSON.stringify({ status: 'INCOMPLETE_DIAGNOSTIC_NOT_ACCEPTANCE', configs: output }, null, 2),
   );
   console.log(`Diagnostic ${config.id} complete: 60/60`);
 }
 await writeFile(
-  'reports/P4-01/vad-diagnostic-grid.json',
+  outputPath,
   JSON.stringify(
     {
       status: 'DIAGNOSTIC_ONLY_NOT_ACCEPTANCE',
