@@ -10,17 +10,18 @@ import subprocess
 import sys
 from typing import cast
 import wave
-from align_user import Factory, REVISION, Torch, verify_models
-from import_continuous import CoarseAligner, sentence_lengths
+from align_user import Factory, LANGUAGES, REVISION, Torch, verify_models
+from import_continuous import CoarseAligner
+from segmented_tokens import FixedSegments
 from reference_data import (boundaries_v2, canonicalize_v3, contextual_pcm, file_sha,
                             freeze, inside, number, obj, objects, read_json, recordings, text)
 
 REPO = Path(__file__).resolve().parents[5]
 HERE = Path(__file__).resolve().parent
-PLAN = REPO/'reports/P4-01/alignment-preregistration-v3.json'
-DOC = REPO/'reports/P4-01/ALIGNMENT-PREREGISTRATION-V3.md'
-METHOD = 'P4-01-context-alignment-v3'
-ANNOTATION = 'qwen3-context-alignment-v3'
+PLAN = REPO/'reports/P4-01/alignment-preregistration-v4.json'
+DOC = REPO/'reports/P4-01/ALIGNMENT-PREREGISTRATION-V4.md'
+METHOD = 'P4-01-segmented-context-alignment-v4'
+ANNOTATION = 'qwen3-segmented-context-v4'
 
 def pcm(path: Path) -> bytes:
     with wave.open(str(path),'rb') as w:
@@ -38,7 +39,7 @@ def write_pcm(path: Path, value: bytes) -> None:
 
 def method() -> dict[str,str]:
     files=[PLAN,DOC,Path(__file__),HERE/'reference_data.py',HERE/'import_continuous.py',
-           HERE/'align_user.py',HERE/'manifest.json',HERE/'uv.lock',HERE/'pyproject.toml',
+           HERE/'align_user.py',HERE/'segmented_tokens.py',HERE/'manifest.json',HERE/'uv.lock',HERE/'pyproject.toml',
            REPO/'packages/voice/src/asr/public-data.lock.json']
     paths=[str(p.relative_to(REPO)) for p in files]
     subprocess.run(['git','ls-files','--error-unmatch',*paths],cwd=REPO,capture_output=True,check=True)
@@ -105,10 +106,16 @@ def main() -> None:
         context_wav=raw/(recording.id+'.context.wav')
         write_pcm(context_wav,context_pcm)
         full_text=text(anchor['text'])+'。\n'+recording.transcript
-        per=[aligner.aligner_processor.encode_timestamp(t,'English')[0] for t in [text(anchor['text']),recording.transcript]]
-        joint=aligner.aligner_processor.encode_timestamp(full_text,'English')[0]
-        counts=sentence_lengths(per,joint)
-        batch=aligner.align(audio=str(context_wav),text=full_text,language='English')
+        original_encoder=aligner.aligner_processor
+        per=[original_encoder.encode_timestamp(text(anchor['text']),'Chinese')[0],
+             original_encoder.encode_timestamp(recording.transcript,LANGUAGES[recording.lang])[0]]
+        counts=[len(segment) for segment in per]
+        fixed=FixedSegments(original_encoder,full_text,per)
+        aligner.aligner_processor=fixed
+        try:
+            batch=aligner.align(audio=str(context_wav),text=full_text,language='Japanese')
+        finally:
+            aligner.aligner_processor=original_encoder
         if len(batch)!=1 or len(batch[0].items)!=sum(counts):
             raise ValueError('Context unit count mismatch')
         items=[{'text':i.text,'start_time':i.start_time,'end_time':i.end_time} for i in batch[0].items]

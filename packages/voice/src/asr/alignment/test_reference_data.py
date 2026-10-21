@@ -6,10 +6,27 @@ import tempfile
 import unittest
 import wave
 from import_continuous import candidate_bounds, extract, sentence_lengths
+from segmented_tokens import FixedSegments
 from reference_data import boundaries, boundaries_v2, canonicalize_v2, canonicalize_v3, contextual_pcm, Recording, freeze, inside, recordings
 
 
 class ReferenceTests(unittest.TestCase):
+    def test_segmented_tokens_keep_compounds_and_official_parser(self) -> None:
+        class MockEncoder:
+            marker='original'
+            def encode_timestamp(self, text: str, language: str) -> tuple[list[str],str]:
+                return [text],'HEAD'+text+'TICK'
+        original=MockEncoder()
+        fixed=FixedSegments(original,'字。今日 は',[['字'],['今日','は']])
+        words,encoded=fixed.encode_timestamp('字。今日 は','Japanese')
+        self.assertEqual(words,['字','今日','は'])
+        self.assertEqual(encoded,'HEAD字TICK今日TICKはTICK')
+        self.assertEqual(fixed.marker,'original')
+        with self.assertRaises(ValueError):
+            fixed.encode_timestamp('changed','Japanese')
+        with self.assertRaises(ValueError):
+            FixedSegments(original,'字今日',[['字'],['今']])
+
     def test_fixed_context_preserves_target_samples_and_exact_offset(self) -> None:
         anchor=bytes(range(16))
         target=bytes(range(24))

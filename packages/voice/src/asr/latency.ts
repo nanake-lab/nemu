@@ -159,7 +159,7 @@ try {
   const report = {
     measuredAt: new Date().toISOString(),
     status: passed ? 'PASS' : 'FAIL',
-    method: 'P4-01-context-alignment-v3',
+    method: 'P4-01-segmented-context-alignment-v4',
     referenceResolutionMs: 80,
     referenceUncertainty: 'Model estimates; 80 ms is timestamp grid, not a calibrated error bound',
     referenceSha256: createHash('sha256')

@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { resolve, relative, isAbsolute } from 'node:path';
 import { z } from 'zod';
-import plan from '../../../../reports/P4-01/alignment-preregistration-v3.json' with { type: 'json' };
+import plan from '../../../../reports/P4-01/alignment-preregistration-v4.json' with { type: 'json' };
 const sha = z.string().regex(/^[a-f0-9]{64}$/);
 export const timingReferenceSchema = z
   .strictObject({
@@ -15,7 +15,7 @@ export const timingReferenceSchema = z
     sha256: sha,
     speechStartMs: z.number().nonnegative(),
     speechEndMs: z.number().positive(),
-    annotation: z.literal('qwen3-context-alignment-v3'),
+    annotation: z.literal('qwen3-segmented-context-v4'),
   })
   .refine((row) => row.speechEndMs > row.speechStartMs, 'Non-positive speech interval');
 export type TimingReference = z.infer<typeof timingReferenceSchema>;
@@ -48,7 +48,7 @@ export async function loadTimingReferences(root: string): Promise<TimingReferenc
   const refs = validateTimingReferences(JSON.parse(bytes.toString('utf8')));
   const meta = z
     .object({
-      method: z.literal('P4-01-context-alignment-v3'),
+      method: z.literal('P4-01-segmented-context-alignment-v4'),
       tool: z.literal('qwen-asr'),
       toolVersion: z.literal('0.0.6'),
       modelRevision: z.literal('c7cbfc2048c462b0d63a45797104fc9db3ad62b7'),
@@ -69,13 +69,13 @@ export async function loadTimingReferences(root: string): Promise<TimingReferenc
     [
       meta.planSha256,
       await readFile(
-        new URL('../../../../reports/P4-01/alignment-preregistration-v3.json', import.meta.url),
+        new URL('../../../../reports/P4-01/alignment-preregistration-v4.json', import.meta.url),
       ),
     ],
     [
       meta.methodSha256,
       await readFile(
-        new URL('../../../../reports/P4-01/ALIGNMENT-PREREGISTRATION-V3.md', import.meta.url),
+        new URL('../../../../reports/P4-01/ALIGNMENT-PREREGISTRATION-V4.md', import.meta.url),
       ),
     ],
     [meta.manifestSha256, await readFile(new URL('./alignment/manifest.json', import.meta.url))],
