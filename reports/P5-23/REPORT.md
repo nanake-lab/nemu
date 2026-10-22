@@ -34,6 +34,7 @@ R 只用 IDL 生成的类型：契约卡 P5-32（ADR 0016，#52）合并后，�
     - `world.rs`：带种子的合成世界，按事件生成候选、经历组、后来的成员、EV5 回溯、教导及其重复；
     - `engine.rs`：随机世界上每一步之后的性质；
     - `cases.rs`、`boundaries.rs`：手工构造的场景与边界；
+    - `types.rs`：I10 的签名与源码检查，R 只用生成的类型（黄金规则 2）；
     - `law_props.rs`、`group_props.rs`：LAW-1 至 LAW-10；
     - `ac2_count.rs`、`relations.rs`：其余验收；
     - `pyrandom.rs`：CPython 的 MT19937，使移植的测试与 `check_law.py` 抽到相同的样本；
@@ -160,6 +161,6 @@ P5-32（#52）审查通过并由你合并后，按你 2026-10-22 的条件处理
 
 测试：
 
-- 原先检查临时结构的测试，换成 `law_defines_no_stored_or_cross_process_type`。
+- 原先检查临时结构的测试，换成 `law_defines_no_stored_or_cross_process_type`。它与 I10 的签名检查一起放在新的 `tests/types.rs`，使 `boundaries.rs` 保持在 400 行以内。
 - 其余测试只改类型名，数值结果与换之前逐项相同：5,702 个组、7,498 个分配、1,760 次重复，LAW-1 至 LAW-10 的计数不变。
 - 重跑了 fmt、clippy、全部测试（99 个）和变异检查。教导组错误地进入 r_k 时，现在有 2 个测试失败：多出的一个是审查后加的次正规数边界测试。

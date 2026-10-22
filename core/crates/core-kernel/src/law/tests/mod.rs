@@ -12,4 +12,5 @@ mod mean_vectors;
 mod numeric;
 mod pyrandom;
 mod relations;
+mod types;
 mod world;

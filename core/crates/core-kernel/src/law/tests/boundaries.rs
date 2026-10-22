@@ -1,13 +1,12 @@
 //! G at its boundaries: candidates, ADR 0014 aliases, relation candidates,
-//! the capacity fuse with re-sharing, input validation and the I10 signature check.
+//! the capacity fuse with re-sharing, input validation. The I10 signature
+//! check and the type checks are in `types.rs`.
 
 use std::collections::BTreeMap;
 
 use core_types::generated::{EvidenceGroupV2, PersonRelation, RSnapshotV2, RelationKind};
 
-use crate::law::engine::{Output, g};
-use crate::law::input::RState;
-use crate::law::{Candidate, Law, LawContext, LawError, LawResult, Step, ThetaView, record};
+use crate::law::{Candidate, LawError, record};
 
 use super::cases::{event, experience, find, on};
 use super::engine::{candidate, check_world, run_world, step};
@@ -304,113 +303,4 @@ fn stored_state_is_checked_before_use() {
     let mut r = w.r.clone();
     r.tendencies.reverse();
     assert!(run(&r, &groups).is_err());
-}
-
-#[test]
-fn i10_g_signature_has_no_x_m_g_or_lambda() {
-    // The parameter list is pinned: R, the θ view, the step, the law context.
-    let _pinned: fn(RState<'_>, &ThetaView, &Step<'_>, &LawContext<'_>) -> LawResult<Output> = g;
-    // No law source names the fast state, the modulation, the gains or the
-    // recovery rates (comments excluded); the θ view holds b and σ̂ only.
-    let sources = [
-        ("engine.rs", include_str!("../engine.rs")),
-        ("group.rs", include_str!("../group.rs")),
-        ("input.rs", include_str!("../input.rs")),
-        ("fuse.rs", include_str!("../fuse.rs")),
-        ("num.rs", include_str!("../num.rs")),
-        ("params.rs", include_str!("../params.rs")),
-        ("plan.rs", include_str!("../plan.rs")),
-        ("recurrence.rs", include_str!("../recurrence.rs")),
-        ("relation.rs", include_str!("../relation.rs")),
-        ("replay.rs", include_str!("../replay.rs")),
-        ("shares.rs", include_str!("../shares.rs")),
-        ("support.rs", include_str!("../support.rs")),
-        ("error.rs", include_str!("../error.rs")),
-        ("mod.rs", include_str!("../mod.rs")),
-    ];
-    let forbidden = [
-        "FastStateSnapshot",
-        "LearnedComponent",
-        "ModulationEnvelope",
-        "ThetaValues",
-        "gain",
-        "recovery",
-        "lambda",
-        "fast_state",
-        "modulation",
-    ];
-    for (name, src) in sources {
-        for (n, line) in src.lines().enumerate() {
-            let code = line.split("//").next().unwrap_or("");
-            for word in forbidden {
-                assert!(
-                    !code.contains(word),
-                    "{name}:{}: `{word}` in `{line}`",
-                    n + 1
-                );
-            }
-        }
-    }
-    let input = include_str!("../input.rs");
-    let start = input.find("pub struct ThetaView {").unwrap();
-    let body = &input[start..start + input[start..].find('}').unwrap()];
-    let fields: Vec<&str> = body
-        .lines()
-        .skip(1)
-        .map(str::trim)
-        .filter(|l| !l.is_empty())
-        .collect();
-    assert_eq!(fields, ["baseline: Nature4,", "sigma: Nature4,"]);
-    let _ = Law::new; // the law context is built from the law version only
-}
-
-#[test]
-fn law_defines_no_stored_or_cross_process_type() {
-    // Golden rule 2: R, its group summaries and the L payloads are the IDL
-    // types of core-types (P5-32, ADR 0016); the structs of `law/` bundle them
-    // for one call and never serialize.
-    let sources = [
-        include_str!("../engine.rs"),
-        include_str!("../error.rs"),
-        include_str!("../fuse.rs"),
-        include_str!("../group.rs"),
-        include_str!("../input.rs"),
-        include_str!("../mod.rs"),
-        include_str!("../num.rs"),
-        include_str!("../params.rs"),
-        include_str!("../plan.rs"),
-        include_str!("../recurrence.rs"),
-        include_str!("../relation.rs"),
-        include_str!("../replay.rs"),
-        include_str!("../shares.rs"),
-        include_str!("../support.rs"),
-    ];
-    for src in sources {
-        let code: String = src
-            .lines()
-            .map(|l| l.split("//").next().unwrap_or(""))
-            .collect::<Vec<_>>()
-            .join("\n");
-        for forbidden in [
-            "Serialize",
-            "Deserialize",
-            "serde",
-            "WireMessage",
-            "canonical_bytes",
-            "struct Tendency",
-            "struct EvidenceGroup",
-            "struct EvidenceAllocation",
-            "struct RSnapshot",
-            "struct TendencyChange",
-        ] {
-            assert!(!code.contains(forbidden), "law/ defines `{forbidden}`");
-        }
-    }
-    let engine = include_str!("../engine.rs");
-    assert!(engine.contains(
-        "use core_types::generated::{EvidenceGroupV2, RSnapshotV2, TendencyChange, TendencyV2};"
-    ));
-    let input = include_str!("../input.rs");
-    assert!(input.contains("pub snapshot: &'a RSnapshotV2,"));
-    assert!(input.contains("pub groups: &'a [EvidenceGroupV2],"));
 }
