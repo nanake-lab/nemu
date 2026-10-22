@@ -1,7 +1,7 @@
 # P4-01 语音识别与语言识别 — 报告
 
 ## 结果
-部分完成：用户已验证全部转写，60 条用户录音已登记，完整 150 条识别评测通过；SenseVoice 开发许可方案已决定。已生成 60/60 独立模型参考（其上下文稳定性仍待复核）；执行方已完成 60 条完整实时延迟测量，但 VAD 中位 320.1 ms、59 条打断超限，延迟验收未通过，不再等待用户提供或确认录音。不得据此宣称整卡验收完成。
+部分完成：用户已验证全部转写，60 条用户录音已登记，完整 150 条识别评测通过；SenseVoice 开发许可方案已决定。已生成 60/60 独立模型参考（全量上下文稳定性复核仅 39/60 满足门槛，参考可靠性未通过）；执行方已完成 60 条完整实时延迟测量，但 VAD 中位 320.1 ms、59 条打断超限，延迟验收未通过，不再等待用户提供或确认录音。不得据此宣称整卡验收完成。
 
 ## 同步与认领
 - 从 `origin/main` 创建 `task/P4-01-asr`，独立工作树 `C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu`。
@@ -256,3 +256,38 @@ v4 在 c224bf2 提交后、首次实际延迟之前，按目标原语言分词�
 实现提交：`4d97e30`。Windows CI 与 Claude 审查均针对提交后的 PR，最终状态见 PR 检查。
 已等待 P2-03 Blender 与 P4-02 Electron 重负载结束并复核进程，再串行完成公开集和静音 CPU；最后完成回归后转可审查，交 Claude 审查实现。不合并，不取下一张卡。等待用户录音与模型许可决定。
 
+### 2026-10-22 独立参考全量稳定性复核（已完成，未通过）
+
+继续任务前已 fetch 并 merge 最新 origin/main（bba68cc，合并提交 3ee272f）；规则更新不改变本卡验收。用户明确要求的整卡完成后审查、不合并、不取下一张卡继续执行。
+
+先提交方法和脚本 ac11d72，再执行全部 60 条、每条两个固定同语言锚点，共 120 次 CPU 对齐。工具、模型、参数、输入及 80 ms 一致性门槛见 REFERENCE-STABILITY-PLAN.md / reference-stability-plan.json；实际结果见 reference-stability-20261022T030747Z.json。没有读取 DUT 延迟来选点，没有改转写或跳过重读，没有更换正式参考。
+
+| 语言 | 稳定 / 总数 | 含无效上下文的录音 | 有效双上下文最大起点差 | 最大终点差 |
+| --- | --- | --- | --- | --- |
+| 中文 | 19/20 | 0 | 980 ms | 60 ms |
+| 英文 | 8/20 | 3 | 1000 ms | 1000 ms |
+| 日文 | 12/20 | 0 | 1180 ms | 60 ms |
+
+共 39/60 稳定、21/60 不稳定；120 次中有 3 次边界越界，44 次包含零时长单位警告，均保留。示例：中文 018 两个起点约 980 / 1960 ms；英文 014 两个终点约 5120 / 6120 ms。不能把这种差异解释为单纯 80 ms 量化误差。双上下文一致也不等于真实物理边界准确；本轮已经足以否定该固定上下文方案作为全量可靠验收参考。
+
+完整音频、逐单位原始结果和文字只在 D:/NemuData/asr-evaluation/reference-stability-20261022T030747Z/；仓库只保存编号、时间值、哈希、警告和来源提交。原 timing-references.json SHA-256 仍为 d6889a9d9f2fd7d102e517d914da83f85e96648196579913f5d530a5dae03409，未替换。旧延迟结果保留为相对旧模型参考的实测失败，不能继续当作已验证物理边界下的唯一性能结论；本轮没有重跑或宣告延迟通过。
+
+启动及运行中资源保护未触发冲突，使用 D 盘已有 Qwen 权重和 D 盘环境；没有新增模型权重，没有 GPU 测量。全部数据处理不触及用户正式存储。
+
+### 替代工具文字预检（尚未选用声学模型）
+
+仅用 uroman 1.3.1.1 对已确认文字执行字符覆盖预检，未读取音频或 DUT 时间。见 alignment/mms_text_preflight.py、mms-text-preflight.json：49/60 可直接落入 MMS_FA 字母词表，11/60 罗马化结果仍含 0、1 或 5。uroman 也会把原文中的部分汉字数词转换为数字，因此不能只处理原稿中显式的阿拉伯数字。没有删除数字、未知字符替换、修改已确认稿或声称字符覆盖等于对齐有效。必须先建立可审计的语言相关发音转换和全量覆盖，再考虑下载权重及预登记声学验证。
+
+此处的 uroman 是本机评测候选辅助工具，不是应用依赖；没有改动原 94 包对齐环境或根运行时清单。首次探查 1.3.1 收到 yanked 提示，正式可重跑脚本固定文档修正版 1.3.1.1，结果由该版本产生。缓存和临时环境全部在 D:/NemuData/cache/uv 与 D:/NemuData/tmp。
+
+| 评测辅助工具 | 版本 | 许可证与要求 | 状态 |
+| --- | --- | --- | --- |
+| uroman | 1.3.1.1 | MIT 文本附项目发表致谢要求：This project uses the universal romanizer software 'uroman' written by Ulf Hermjakob, USC Information Sciences Institute (2015-2020) | 仅本机文字预检；未进入应用 |
+
+候选声学模型 MMS_FA 的官方说明为 [CC-BY-NC-4.0](https://docs.pytorch.org/audio/2.7.0/generated/torchaudio.pipelines.MMS_FA.html)，不是宽松模型许可，未下载、未采用、不会随应用分发。官方 TorchAudio 旧 API 另有版本兼容约束，不可直接在现有 torch 2.10 环境中假设可用。另一条可研究路线是 [MFA](https://montreal-forced-aligner.readthedocs.io/en/latest/getting_started.html) 及其音素词典；目前没有安装或声称其能处理全部混合文字，不把研究候选写成通过证据。
+
+本轮回归：lint、typecheck、36 文件 479 项测试通过；新两文件 mypy --strict 通过；辅助测试 12 项通过。证据 reference-stability-lint.log、reference-stability-typecheck.log、reference-stability-tests.log、reference-stability-mypy.log、reference-stability-python-tests.log。首次 mypy 未设置模块搜索路径而报 cache_paths 找不到；修正 MYPYPATH 后同一源文件通过，此为检查配置问题，未添加 ignore 或改类型门槛。
+
+已将这份 SHA 的参考登记为拒用，loadTimingReferences 在启动测量前明确报 QA failed；旧文件和全部历史失败保留。该拒用不允许未知参考绕过已有清单、来源与哈希校验。回归新增两项，最终 37 文件 481 项通过，覆盖已知失败哈希被拒绝及非同一哈希不被误归类。
+
+当前下一步：独立参考方案仍需解决全量发音转换与可靠性验证，之后才能确定 VAD / 打断优化及重跑实际验收。当前不要求用户重录或再次确认转写；不把技术问题转为用户许可或录音等待。PR #44 保持 draft + needs-user，不转可审查。

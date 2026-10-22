@@ -3,6 +3,14 @@ import { createHash } from 'node:crypto';
 import { resolve, relative, isAbsolute } from 'node:path';
 import { z } from 'zod';
 import plan from '../../../../reports/P4-01/alignment-preregistration-v4.json' with { type: 'json' };
+import rejected from '../../../../reports/P4-01/rejected-timing-references.json' with { type: 'json' };
+export function assertReferenceQuality(digest: string): void {
+  const failure = rejected.find((row) => row.referencesSha256 === digest);
+  if (failure)
+    throw new Error(
+      `Timing reference QA failed; preserve prior evidence and establish a new independent method: ${failure.reason}`,
+    );
+}
 const sha = z.string().regex(/^[a-f0-9]{64}$/);
 export const timingReferenceSchema = z
   .strictObject({
@@ -45,6 +53,7 @@ function within(root: string, path: string): string {
 }
 export async function loadTimingReferences(root: string): Promise<TimingReference[]> {
   const bytes = await readFile(within(root, 'timing-references.json'));
+  assertReferenceQuality(hash(bytes));
   const refs = validateTimingReferences(JSON.parse(bytes.toString('utf8')));
   const meta = z
     .object({
