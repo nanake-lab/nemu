@@ -15,7 +15,7 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 let reportRoot = resolve(repoRoot, "reports/P0-08/part2");
 const schemaPath = resolve(repoRoot, "spikes/codex-app-server/semantic-candidate.wire.schema.json");
 const fixturesPath = resolve(repoRoot, "spikes/codex-app-server/fixtures/irl-cases.json");
-const measurementEffort = "max";
+let measurementEffort = "max";
 
 function safeErrorDetail(message) {
   return typeof message === "string" ? message.replace(/https?:\/\/[^\s]+/g, "[url]").replace(/(?:sk-|Bearer\s+)[A-Za-z0-9_.-]+/g, "[redacted]").slice(0, 1200) : null;
@@ -679,12 +679,15 @@ async function main() {
   if (!mode || mode === "help" || mode === "--help" || mode === "-h" || options.help) return printHelp();
   const codeHome = required(options, "code-home");
   const model = options.model;
+  measurementEffort = options.effort ?? "max";
+  if (!["low", "max"].includes(measurementEffort)) throw new Error("--effort must be low or max");
   if (["speech", "speech-all", "irl", "controls"].includes(mode)) required(options, "model");
   const catalogPath = typeof options.catalog === "string" ? resolve(options.catalog) : undefined;
   if (options["report-subdir"] !== undefined) {
-    if (options["report-subdir"] !== "strict-speech") throw new Error("Only --report-subdir strict-speech is supported");
-    reportRoot = resolve(reportRoot, "strict-speech");
+    if (!["strict-speech", "low-effort"].includes(options["report-subdir"])) throw new Error("Unsupported report subdirectory");
+    reportRoot = resolve(reportRoot, options["report-subdir"]);
   }
+  if ((measurementEffort === "low") !== (options["report-subdir"] === "low-effort")) throw new Error("Low-effort runs require their separate low-effort evidence directory");
   if (catalogPath && model && model !== "gpt-6-luna") throw new Error("Strict catalog measurements require gpt-6-luna");
   const server = new AppServer(codeHome, { catalogPath, strictTools: Boolean(catalogPath) });
   if (mode === "controls") {

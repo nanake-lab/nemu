@@ -1,7 +1,7 @@
 {
-  "status": "measured_candidate_pending_claude_and_p0_09",
-  "irlBackend": "local",
-  "irlDeadlineP90Ms": 26168.09769999236,
+  "status": "not_deployable_rule_output_pending_p0_09",
+  "irlBackend": null,
+  "irlDeadlineP90Ms": null,
   "localCarrier": {
     "model": "Qwen/Qwen3-4B-Instruct-2507",
     "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
@@ -35,5 +35,12 @@
     "reports/P0-08/decision.md",
     "reports/P0-08/PART2-METHODS.md"
   ],
-  "note": "Candidate only; no formal deployment configuration changed. P0-09 targets and formal configuration ADR remain pending."
+  "note": "Rule output only, NOT a usable deployment value. User requested max is retained as control; low-effort and local breakdown pending. P0-09 must make an architecture decision.",
+  "ruleOutputs": {
+    "userRequestedMaxControl": {
+      "backend": "local",
+      "deadlineP90Ms": 26168.09769999236
+    },
+    "cardLowEffort": null
+  }
 }
