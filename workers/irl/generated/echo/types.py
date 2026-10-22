@@ -615,6 +615,7 @@ class ThetaModuleSourceBinding:
     source_coupling_revision: str
 @dataclass(frozen=True)
 class EvidenceAllocation:
+    # Superseded (successor EvidenceAllocationV2): P5-32; ADR 0016: adds the ordinal, μ and p_c that G needs to replay a tendency
     schema_version: int
     tendency_id: str
     support: float
@@ -622,6 +623,7 @@ class EvidenceAllocation:
     share: float
 @dataclass(frozen=True)
 class EvidenceGroup:
+    # Superseded (successor EvidenceGroupV2): P5-32; ADR 0016: carries EvidenceAllocationV2
     schema_version: int
     group_id: str
     members: list[str]
@@ -631,6 +633,7 @@ class EvidenceGroup:
     allocations: list[EvidenceAllocation]
 @dataclass(frozen=True)
 class Tendency:
+    # Superseded (successor TendencyV2): P5-32; ADR 0016: adds the sums of the typical-magnitude recurrence
     schema_version: int
     tendency_id: str
     concept: ConceptRef
@@ -648,6 +651,7 @@ class Tendency:
     attachment_prior: float | None
 @dataclass(frozen=True)
 class RSnapshot:
+    # Superseded (successor RSnapshotV2): P5-32; ADR 0016: carries TendencyV2
     schema_version: int
     revision: str
     law_version: ObjectRef
@@ -732,6 +736,50 @@ class GenesisManifestV2:
     fuses: FuseConfig
     boundaries: ObjectRef
     protocol: ObjectRef
+@dataclass(frozen=True)
+class EvidenceAllocationV2:
+    schema_version: int
+    tendency_id: str
+    support: float
+    intensity: float
+    share: float
+    ordinal: int
+    mu: float
+    projection: float | None
+@dataclass(frozen=True)
+class EvidenceGroupV2:
+    schema_version: int
+    group_id: str
+    members: list[str]
+    source_key: str
+    credibility: float
+    verifiability: float
+    allocations: list[EvidenceAllocationV2]
+@dataclass(frozen=True)
+class TendencyV2:
+    schema_version: int
+    tendency_id: str
+    concept: ConceptRef
+    predicate: list[TrilingualText]
+    direction: NatureVector
+    evidence_a: float
+    evidence_b: float
+    h_hat: float
+    group_count: int
+    flip_count: int
+    last_sign: EvidenceSign | None
+    pi: float
+    typical_magnitude: float
+    relation: PersonRelation | None
+    attachment_prior: float | None
+    magnitude_sum: float
+    magnitude_weight: float
+@dataclass(frozen=True)
+class RSnapshotV2:
+    schema_version: int
+    revision: str
+    law_version: ObjectRef
+    tendencies: list[TendencyV2]
 @dataclass(frozen=True)
 class ThetaValues:
     schema_version: int
