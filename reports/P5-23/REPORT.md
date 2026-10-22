@@ -152,7 +152,7 @@ Codex 对 P5-32（#52）的交叉审查用本卡的 G 复现了一个数值边�
 
 P5-32（#52）审查通过并由你合并后，按你 2026-10-22 的条件处理：
 
-- 合并最新 main（含 P5-32）。
+- 合并最新 main（含 P5-32；之后又合并了 #56，只改文档）。
 - `law/` 换成 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2，删去 `law/pending.rs`。
 - G、`Output`、`RState` 从 `law` 导出，供 P5-29 接入。
 - G 读入 R 时，先做 core-types 的 `check_allocation_ordinals`（P5-32 的语义检查），再做本卡的逐位一致检查（`check_pending` 改名为 `check_with_allocations`）。

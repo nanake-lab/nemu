@@ -1,16 +1,4 @@
-   Compiling core-store v0.0.0 (/home/claude/nemu/core/crates/core-store)
-   Compiling core-kernel v0.0.0 (/home/claude/nemu/core/crates/core-kernel)
-   Compiling action-gate v0.0.0 (/home/claude/nemu/core/crates/action-gate)
-   Compiling semantic-core v0.0.0 (/home/claude/nemu/core/crates/semantic-core)
-   Compiling task-layer v0.0.0 (/home/claude/nemu/core/crates/task-layer)
-   Compiling gateway v0.0.0 (/home/claude/nemu/core/crates/gateway)
-   Compiling fact-view v0.0.0 (/home/claude/nemu/core/crates/fact-view)
-   Compiling core-replay v0.0.0 (/home/claude/nemu/core/crates/core-replay)
-   Compiling core-runtime v0.0.0 (/home/claude/nemu/core/crates/core-runtime)
-   Compiling core-policy v0.0.0 (/home/claude/nemu/core/crates/core-policy)
-   Compiling echoctl v0.0.0 (/home/claude/nemu/core/crates/echoctl)
-   Compiling core-types v0.0.0 (/home/claude/nemu/core/crates/core-types)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.57s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
      Running unittests src/lib.rs (target/debug/deps/action_gate-3a45e224aaeb3260)
 
 running 0 tests
@@ -20,27 +8,27 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
      Running unittests src/lib.rs (target/debug/deps/core_kernel-a37ea9ec9e298994)
 
 running 64 tests
-test effects::tests::effects_sum_in_canonical_order_with_receipts ... ok
 test effects::tests::compile_budget_overflow_in_stored_state_is_a_fault ... ok
-test effects::tests::f06_drive_proposal_may_not_reencode_an_r_or_theta_effect ... ok
+test effects::tests::effects_sum_in_canonical_order_with_receipts ... ok
 test effects::tests::evaluate_rejects_missing_inputs_foreign_fields_and_version_mismatch ... ok
-test effects::tests::i07_theta_takeover_suppresses_r_even_after_legal_disable ... ok
+test effects::tests::f06_drive_proposal_may_not_reencode_an_r_or_theta_effect ... ok
 test effects::tests::i06_only_active_r_effects_are_authorised ... ok
-test effects::tests::i08_new_evidence_revision_does_not_release_a_taken_over_responsibility ... ok
+test effects::tests::i07_theta_takeover_suppresses_r_even_after_legal_disable ... ok
 test effects::tests::i07_two_owners_for_one_responsibility_and_domain_is_a_structural_fault ... ok
 test effects::tests::i12_failure_barrier_blocks_effects_immediately ... ok
+test effects::tests::i08_new_evidence_revision_does_not_release_a_taken_over_responsibility ... ok
 test effects::tests::i21_compile_is_pure_and_repeated_reads_do_not_accumulate_decay ... ok
-test effects::tests::integrity_and_time_faults_are_structural ... ok
 test effects::tests::i22_theta_outside_validity_contract_quarantines_instead_of_local_disable ... ok
-test effects::tests::j06_candidate_over_budget_or_cancelling_is_rejected_and_existing_kept ... ok
+test effects::tests::integrity_and_time_faults_are_structural ... ok
 test effects::tests::j06_candidate_with_non_whitelisted_field_is_rejected ... ok
 test effects::tests::j06_out_of_scope_and_unauthorised_effects_contribute_zero ... ok
 test effects::tests::parameter_canonical_bytes_golden_layout ... ok
-test law::num::tests::exact_mean_is_order_and_repetition_invariant ... ok
+test effects::tests::j06_candidate_over_budget_or_cancelling_is_rejected_and_existing_kept ... ok
 test effects::tests::r_certificate_expiry_and_dependency_faults_withhold_authorisation ... ok
+test law::num::tests::exact_mean_is_order_and_repetition_invariant ... ok
 test law::num::tests::exact_mean_rejects_bad_inputs ... ok
-test law::num::tests::exact_mean_rounds_ties_to_even ... ok
 test law::num::tests::exact_mean_of_single_value_is_the_value ... ok
+test law::num::tests::exact_mean_rounds_ties_to_even ... ok
 test law::num::tests::finite_normalises_negative_zero_and_rejects_nonfinite ... ok
 test law::tests::ac2_count::ac2_01_reference_form_lets_old_support_give_way ... ok
 test law::tests::ac2_count::ac2_01_consistent_evidence_raises_pi_and_contrary_lowers_it ... ok
@@ -74,7 +62,7 @@ test law::tests::law_props::law_3_reversal_corollary_3 ... ok
 test law::tests::law_props::law_4_single_group_bound_corollary_4 ... ok
 test law::tests::law_props::law_5_time_and_state_independence_corollary_5 ... ok
 test law::tests::law_props::law_6_memory_bound_corollary_6 ... ok
-test law::tests::engine::ac2_21_capacity_with_resharing_keeps_i25_in_small_worlds ... ok
+test law::tests::law_props::law_7_recurrence_is_canonical ... ok
 test law::tests::numeric::exact_mean_matches_correctly_rounded_reference ... ok
 test law::tests::pyrandom::matches_cpython_reference_draws ... ok
 test law::tests::relations::ac2_13_attachment_resists_ordinary_contrary_experience_but_is_finite ... ok
@@ -83,9 +71,9 @@ test law::tests::relations::ac2_21_single_group_weight_never_exceeds_w_max ... o
 test law::tests::relations::relation_readouts_closeness_weight_and_trust ... ok
 test law::tests::relations::relation_structure_ids_directions_and_r0 ... ok
 test law::tests::relations::teaching_weight_follows_trust_in_the_speaker_and_verifiability ... ok
-test law::tests::law_props::law_7_recurrence_is_canonical ... ok
+test law::tests::engine::ac2_21_capacity_with_resharing_keeps_i25_in_small_worlds ... ok
 
-test result: ok. 64 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.39s
+test result: ok. 64 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.61s
 
      Running unittests src/lib.rs (target/debug/deps/core_policy-eab32f925c1a526e)
 
@@ -96,8 +84,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
      Running tests/overlap_cases.rs (target/debug/deps/overlap_cases-254c9fcefaaf240e)
 
 running 5 tests
-test dnf_limit_reports_unknown_overlap ... ok
 test foreign_catalog_version_is_unknown_not_disjoint ... ok
+test dnf_limit_reports_unknown_overlap ... ok
 test pair_limit_reports_unknown_overlap ... ok
 test product_limit_reports_unknown_overlap ... ok
 test intersection_cases_hold_in_both_directions ... ok
@@ -166,7 +154,7 @@ test teaching_allocation_has_no_projection_and_roundtrips ... ok
 test allocation_ordinals_are_exactly_zero_to_n_minus_one ... ok
 test tendency_v2_semantics_include_the_magnitude_sums ... ok
 
-test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
 
      Running tests/v2_contract.rs (target/debug/deps/v2_contract-97adb2be1820036f)
 
@@ -180,7 +168,7 @@ test genesis_semantics ... ok
 test tendency_order_matches_codec_set_order ... ok
 test tendency_semantics_beyond_the_codec ... ok
 
-test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
 
      Running unittests src/main.rs (target/debug/deps/echoctl-e3448821044a4bdb)
 
