@@ -1,0 +1,91 @@
+{
+  "caseId": "case-0132",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0132",
+    "nodes": [
+      {
+        "id": "ref-meeting",
+        "sourceRefs": [
+          "p0-08-0132"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "会議"
+      },
+      {
+        "id": "ref-lunch",
+        "sourceRefs": [
+          "p0-08-0132"
+        ],
+        "sourceSpan": [
+          8,
+          10
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "昼食"
+      },
+      {
+        "id": "ref-time",
+        "sourceRefs": [
+          "p0-08-0132"
+        ],
+        "sourceSpan": [
+          11,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "44時"
+      },
+      {
+        "id": "claim-change-lunch-time",
+        "sourceRefs": [
+          "p0-08-0132"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "変更する",
+        "roles": [
+          {
+            "role": "対象",
+            "value": "ref-lunch"
+          },
+          {
+            "role": "変更後の時刻",
+            "value": "ref-time"
+          },
+          {
+            "role": "条件",
+            "value": "会議が延びる"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      }
+    ]
+  }
+}

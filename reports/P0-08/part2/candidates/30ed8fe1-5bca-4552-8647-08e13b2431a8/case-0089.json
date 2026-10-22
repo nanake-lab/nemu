@@ -1,0 +1,51 @@
+{
+  "caseId": "case-0089",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0089",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0089"
+        ],
+        "sourceSpan": [
+          8,
+          22
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "unknown",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "song number 30"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0089"
+        ],
+        "sourceSpan": [
+          0,
+          35
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "sounds calm",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "ref1"
+          }
+        ],
+        "value": "calm",
+        "polarity": "positive",
+        "modality": "reported",
+        "time": null
+      }
+    ]
+  }
+}

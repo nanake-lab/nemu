@@ -1,0 +1,47 @@
+{
+  "originalRunId": "76eaab3d-c6c0-4c61-a9e4-8329ce0a9ace",
+  "originalSource": "protocol/remote-speech-source.mjs",
+  "failedIndices": [
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36
+  ],
+  "failures": [
+    {
+      "index": 28,
+      "error": "turn_timeout",
+      "timeoutMs": 120000
+    },
+    {
+      "indices": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "error": "rpc_timeout",
+      "timeoutMs": 30000
+    },
+    {
+      "index": 36,
+      "error": "server_exited",
+      "reason": "Probe owner stopped its verified unresponsive child during pending thread/start"
+    }
+  ],
+  "verifiedProbePid": 45208,
+  "verifiedChildPid": 20884,
+  "verifiedChildCommand": "codex app-server --stdio",
+  "parentProbeExitCode": 1,
+  "rootCause": null,
+  "recovery": "Fresh server; completed thread/unsubscribe; stop on connection timeout; separate original-index continuation and supplemental segments.",
+  "successfulSupplementRunId": "11cad3d6-8868-47e9-8ff4-24b15e3efab4"
+}

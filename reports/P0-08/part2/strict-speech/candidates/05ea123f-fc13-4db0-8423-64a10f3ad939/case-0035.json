@@ -1,0 +1,85 @@
+{
+  "caseId": "case-0035",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0035",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0035"
+        ],
+        "sourceSpan": [
+          0,
+          4
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "This"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0035"
+        ],
+        "sourceSpan": [
+          0,
+          33
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is_hypothesis",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "This"
+          },
+          {
+            "role": "number",
+            "value": "12"
+          },
+          {
+            "role": "qualifier",
+            "value": "only"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-2",
+        "sourceRefs": [
+          "p0-08-0035"
+        ],
+        "sourceSpan": [
+          35,
+          61
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is_event_that_happened",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "This"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

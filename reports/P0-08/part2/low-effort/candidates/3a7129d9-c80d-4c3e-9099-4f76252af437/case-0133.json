@@ -1,0 +1,68 @@
+{
+  "caseId": "case-0133",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0133",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0133"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "小林"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0133"
+        ],
+        "sourceSpan": [
+          4,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "下雪",
+        "roles": [
+          {
+            "role": "time",
+            "value": "下周45号"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "下周45号"
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0133"
+        ],
+        "sourceSpan": [
+          0,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "小林说：「下周45号可能会下雪。」"
+      }
+    ]
+  }
+}

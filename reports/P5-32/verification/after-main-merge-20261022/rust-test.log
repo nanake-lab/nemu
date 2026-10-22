@@ -1,0 +1,220 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.98s
+     Running unittests src/lib.rs (target/debug/deps/action_gate-3a45e224aaeb3260)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/core_kernel-a37ea9ec9e298994)
+
+running 17 tests
+test effects::tests::compile_budget_overflow_in_stored_state_is_a_fault ... ok
+test effects::tests::effects_sum_in_canonical_order_with_receipts ... ok
+test effects::tests::f06_drive_proposal_may_not_reencode_an_r_or_theta_effect ... ok
+test effects::tests::evaluate_rejects_missing_inputs_foreign_fields_and_version_mismatch ... ok
+test effects::tests::i07_theta_takeover_suppresses_r_even_after_legal_disable ... ok
+test effects::tests::i06_only_active_r_effects_are_authorised ... ok
+test effects::tests::i08_new_evidence_revision_does_not_release_a_taken_over_responsibility ... ok
+test effects::tests::i12_failure_barrier_blocks_effects_immediately ... ok
+test effects::tests::i07_two_owners_for_one_responsibility_and_domain_is_a_structural_fault ... ok
+test effects::tests::i21_compile_is_pure_and_repeated_reads_do_not_accumulate_decay ... ok
+test effects::tests::i22_theta_outside_validity_contract_quarantines_instead_of_local_disable ... ok
+test effects::tests::integrity_and_time_faults_are_structural ... ok
+test effects::tests::j06_candidate_over_budget_or_cancelling_is_rejected_and_existing_kept ... ok
+test effects::tests::j06_candidate_with_non_whitelisted_field_is_rejected ... ok
+test effects::tests::parameter_canonical_bytes_golden_layout ... ok
+test effects::tests::j06_out_of_scope_and_unauthorised_effects_contribute_zero ... ok
+test effects::tests::r_certificate_expiry_and_dependency_faults_withhold_authorisation ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/lib.rs (target/debug/deps/core_policy-eab32f925c1a526e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/overlap_cases.rs (target/debug/deps/overlap_cases-254c9fcefaaf240e)
+
+running 5 tests
+test dnf_limit_reports_unknown_overlap ... ok
+test foreign_catalog_version_is_unknown_not_disjoint ... ok
+test pair_limit_reports_unknown_overlap ... ok
+test product_limit_reports_unknown_overlap ... ok
+test intersection_cases_hold_in_both_directions ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/scope_rules.rs (target/debug/deps/scope_rules-977722722bf53e6e)
+
+running 6 tests
+test depth_node_and_set_limits_are_enforced ... ok
+test evaluation_is_closed_interval_and_never_defaults_to_hit ... ok
+test canonical_bytes_are_stable_and_order_independent_for_sets ... ok
+test malformed_scopes_are_rejected ... ok
+test whitelist_rejects_fields_outside_endpoint ... ok
+test scope_digest_golden_vector ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/core_replay-dc639e179a733ca3)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/core_runtime-8fb943355f6d4cde)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/core_store-c6884590a36714d4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/core_types-e3c3ed461ca30f04)
+
+running 7 tests
+test numeric::tests::sys21_finite_values_preserve_binary64_bits ... ok
+test numeric::tests::sys21_count_accepts_boundaries_rejects_limit_and_overflow ... ok
+test numeric::tests::sys21_intervals_are_explicitly_bounded_and_never_wrap ... ok
+test numeric::tests::sys21_normalizes_negative_zero_only ... ok
+test numeric::tests::sys21_rejects_all_nonfinite_categories ... ok
+test semantic::tests::tendency_order_is_canonical_set_order ... ok
+test semantic::tests::unit_directions_pass_and_others_fail ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/canonical_boundaries.rs (target/debug/deps/canonical_boundaries-2c9013aac25be5cb)
+
+running 4 tests
+test frozen_tag_is_independent_of_message_name ... ok
+test optional_nonfinite_is_rejected_before_json_can_erase_it ... ok
+test sys21_canonical_count_overflow_negative_zero_and_bad_presence ... ok
+test nested_encoding_repeats_header_and_vector_order_is_significant ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests/p5_32_contract.rs (target/debug/deps/p5_32_contract-ce4d47d4362f58f2)
+
+running 4 tests
+test successors_are_live_and_predecessors_superseded ... ok
+test teaching_allocation_has_no_projection_and_roundtrips ... ok
+test tendency_v2_semantics_include_the_magnitude_sums ... ok
+test allocation_ordinals_are_exactly_zero_to_n_minus_one ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/v2_contract.rs (target/debug/deps/v2_contract-97adb2be1820036f)
+
+running 8 tests
+test genesis_has_no_free_text_fields ... ok
+test adr_0014_values_are_live ... ok
+test law_parameter_inequalities ... ok
+test superseded_registry ... ok
+test tendency_change_needs_an_endpoint ... ok
+test genesis_semantics ... ok
+test tendency_order_matches_codec_set_order ... ok
+test tendency_semantics_beyond_the_codec ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running unittests src/main.rs (target/debug/deps/echoctl-e3448821044a4bdb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/fact_view-70b0736652ce7c4e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/gateway-a170b7b7b012a95a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/semantic_core-f9c460db25914b24)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/task_layer-7d643501a9207335)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests action_gate
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_kernel
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_policy
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_replay
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_runtime
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_store
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_types
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests fact_view
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests gateway
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests semantic_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests task_layer
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

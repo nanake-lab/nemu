@@ -1,0 +1,68 @@
+{
+  "caseId": "case-0162",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0162",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0162"
+        ],
+        "sourceSpan": [
+          0,
+          8
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "54番目の手順"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0162"
+        ],
+        "sourceSpan": [
+          1,
+          13
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "簡潔である",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "ref1"
+          }
+        ],
+        "value": true,
+        "polarity": "positive",
+        "modality": "reported",
+        "time": null
+      },
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0162"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "「54番目の手順は簡潔に」と引用している"
+      }
+    ]
+  }
+}

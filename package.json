@@ -36,6 +36,13 @@
     "board": "python tools/status/serve_board.py",
     "probe:supplement": "python workers/model-adapter/probe/run_supplement.py",
     "probe:chat": "node workers/model-adapter/probe/launch_chat.mjs",
+    "probe:p0-08": "node spikes/codex-app-server/src/probe.mjs",
+    "probe:p0-08:local": "uv run --project spikes/codex-app-server python spikes/codex-app-server/src/local_irl.py",
+    "probe:p0-08:analyze": "node spikes/codex-app-server/src/analyze.mjs",
+    "probe:p0-08:compare": "node spikes/codex-app-server/src/compare-remote.mjs",
+    "probe:p0-08:timing": "uv run --project spikes/codex-app-server python spikes/codex-app-server/src/local_breakdown.py",
+    "probe:p0-08:timing-summary": "node spikes/codex-app-server/src/summarize-local-breakdown.mjs",
+    "probe:p0-08:resource-audit": "node spikes/codex-app-server/src/resource-surface-audit.mjs",
     "tts:schema": "pnpm --filter @nemu/contracts build && node services/voice-sidecar/export-schema.mjs --check",
     "test:tts": "uv run --project services/voice-sidecar pytest services/voice-sidecar/tests -ra",
     "tts:bench": "node services/voice-sidecar/launch-benchmark.mjs"

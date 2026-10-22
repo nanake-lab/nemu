@@ -1,0 +1,118 @@
+{
+  "caseId": "case-0098",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0098",
+    "nodes": [
+      {
+        "id": "n1",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          0,
+          51
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "Put the blue folder numbered 33 on the desk."
+      },
+      {
+        "id": "n2",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          14,
+          25
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "blue folder"
+      },
+      {
+        "id": "n3",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          34,
+          42
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "the desk"
+      },
+      {
+        "id": "n4",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          14,
+          42
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "put",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "unspecified"
+          },
+          {
+            "role": "object",
+            "value": "blue folder numbered 33"
+          },
+          {
+            "role": "destination",
+            "value": "desk"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "n5",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          14,
+          33
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "has_identifier",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "blue folder"
+          }
+        ],
+        "value": "33",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "calls": 151,
+  "completedCalls": 150,
+  "failedCalls": 1,
+  "segments": [
+    {
+      "lang": "zh",
+      "kind": "original",
+      "runId": "8cb793bc-7a89-45e6-baa3-0d567c3a7e27",
+      "path": "raw/remote-speech-zh-8cb793bc-7a89-45e6-baa3-0d567c3a7e27.jsonl"
+    },
+    {
+      "lang": "en",
+      "kind": "original",
+      "runId": "789f1db4-98c2-4613-9a36-a059685d4144",
+      "path": "raw/remote-speech-en-789f1db4-98c2-4613-9a36-a059685d4144.jsonl"
+    },
+    {
+      "lang": "ja",
+      "kind": "interrupted",
+      "runId": "0ae86d84-4f74-4d04-af90-73ec0864143a",
+      "path": "raw/remote-speech-ja-0ae86d84-4f74-4d04-af90-73ec0864143a.jsonl"
+    },
+    {
+      "lang": "ja",
+      "kind": "continuation",
+      "runId": "6e151913-100a-46f6-9496-2c8f38116137",
+      "path": "raw/remote-speech-ja-6e151913-100a-46f6-9496-2c8f38116137.jsonl"
+    },
+    {
+      "lang": "ja",
+      "kind": "supplement",
+      "runId": "99c98651-1cb9-4f57-b222-abc2c980f723",
+      "path": "raw/remote-speech-ja-99c98651-1cb9-4f57-b222-abc2c980f723.jsonl"
+    }
+  ],
+  "rateLimitsBefore": {
+    "ordinaryUsageAllowed": true,
+    "buckets": [
+      {
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 0,
+          "windowDurationMins": 300,
+          "resetsAt": 1792661110
+        },
+        "secondary": {
+          "usedPercent": 53,
+          "windowDurationMins": 10080,
+          "resetsAt": 1793082973
+        },
+        "credits": {
+          "hasCredits": false,
+          "unlimited": false
+        }
+      }
+    ]
+  },
+  "rateLimitsAfter100": {
+    "ordinaryUsageAllowed": true,
+    "buckets": [
+      {
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 1,
+          "windowDurationMins": 300,
+          "resetsAt": 1792661114
+        },
+        "secondary": {
+          "usedPercent": 53,
+          "windowDurationMins": 10080,
+          "resetsAt": 1793082973
+        },
+        "credits": {
+          "hasCredits": false,
+          "unlimited": false
+        }
+      }
+    ]
+  },
+  "rateLimitsAfter": {
+    "ordinaryUsageAllowed": true,
+    "buckets": [
+      {
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 1,
+          "windowDurationMins": 300,
+          "resetsAt": 1792661114
+        },
+        "secondary": {
+          "usedPercent": 53,
+          "windowDurationMins": 10080,
+          "resetsAt": 1793082973
+        },
+        "credits": {
+          "hasCredits": false,
+          "unlimited": false
+        }
+      }
+    ]
+  },
+  "method": "All attempts retained. One Japanese timeout at index 4; indices 5..50 continued before a separate successful supplemental index 4. Completed-only quantiles exclude timeout; its usage is unknown."
+}

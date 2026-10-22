@@ -1,0 +1,60 @@
+{
+  "caseId": "case-0186",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0186",
+    "nodes": [
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0186"
+        ],
+        "sourceSpan": [
+          0,
+          24
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "remind",
+        "roles": [
+          {
+            "role": "recipient",
+            "value": "speaker"
+          },
+          {
+            "role": "action",
+            "value": "submit report"
+          },
+          {
+            "role": "time",
+            "value": "62日"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0186"
+        ],
+        "sourceSpan": [
+          0,
+          24
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "62日に報告書を提出するよう、私にリマインドしてください。"
+      }
+    ]
+  }
+}

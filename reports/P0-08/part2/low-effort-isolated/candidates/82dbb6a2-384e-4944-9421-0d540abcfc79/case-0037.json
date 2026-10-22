@@ -1,0 +1,140 @@
+{
+  "caseId": "case-0037",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0037",
+    "nodes": [
+      {
+        "id": "n1",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "把第13个蓝色文件夹放到桌面上。"
+      },
+      {
+        "id": "n2",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          3,
+          9
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "第13个蓝色文件夹"
+      },
+      {
+        "id": "n3",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          3,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "ordinal_index",
+        "roles": [
+          {
+            "role": "item",
+            "value": "n2"
+          }
+        ],
+        "value": 13,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "n4",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          6,
+          9
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "color",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "n2"
+          }
+        ],
+        "value": "蓝色",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "n5",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          10,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "桌面"
+      },
+      {
+        "id": "n6",
+        "sourceRefs": [
+          "p0-08-0037"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "place",
+        "roles": [
+          {
+            "role": "theme",
+            "value": "n2"
+          },
+          {
+            "role": "destination",
+            "value": "n5"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      }
+    ]
+  }
+}

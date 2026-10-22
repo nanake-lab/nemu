@@ -1,0 +1,77 @@
+{
+  "caseId": "case-0181",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0181",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0181"
+        ],
+        "sourceSpan": [
+          4,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "61号"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0181"
+        ],
+        "sourceSpan": [
+          9,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "书桌"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0181",
+          "ref-1",
+          "ref-2"
+        ],
+        "sourceSpan": [
+          0,
+          12
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "计划整理",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "我"
+          },
+          {
+            "role": "object",
+            "value": "书桌"
+          },
+          {
+            "role": "setting",
+            "value": "61号"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "reported",
+        "time": null
+      }
+    ]
+  }
+}

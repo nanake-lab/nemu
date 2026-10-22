@@ -1,0 +1,52 @@
+{
+  "caseId": "case-0113",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0113",
+    "nodes": [
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0113"
+        ],
+        "sourceSpan": [
+          21,
+          49
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "list_item_number",
+        "roles": [
+          {
+            "role": "item",
+            "value": "the item"
+          }
+        ],
+        "value": 38,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0113"
+        ],
+        "sourceSpan": [
+          0,
+          50
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "the item should be number 38"
+      }
+    ]
+  }
+}

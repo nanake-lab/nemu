@@ -1,0 +1,60 @@
+{
+  "caseId": "case-0163",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0163",
+    "nodes": [
+      {
+        "id": "p0-08-0163-act-1",
+        "sourceRefs": [
+          "p0-08-0163"
+        ],
+        "sourceSpan": [
+          0,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "other",
+        "content": "我希望在55号之前读完这本书。"
+      },
+      {
+        "id": "p0-08-0163-claim-1",
+        "sourceRefs": [
+          "p0-08-0163"
+        ],
+        "sourceSpan": [
+          0,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "读完",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "我"
+          },
+          {
+            "role": "object",
+            "value": "这本书"
+          },
+          {
+            "role": "deadline",
+            "value": "55号之前"
+          }
+        ],
+        "value": "希望",
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "55号之前"
+      }
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "caseId": "case-0165",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0165",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0165"
+        ],
+        "sourceSpan": [
+          6,
+          9
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "この本"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0165"
+        ],
+        "sourceSpan": [
+          0,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "55日までに"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "r1",
+          "r2"
+        ],
+        "sourceSpan": [
+          0,
+          18
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "read_to_completion",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "speaker"
+          },
+          {
+            "role": "object",
+            "value": "この本"
+          },
+          {
+            "role": "deadline",
+            "value": "55日までに"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+COMMAND: node spikes/codex-app-server/src/probe.mjs --help
+WORKDIR: D:\Dev\nemu-p008-part2
+PREFLIGHT_CIM_UTC: 2026-10-21T20:57:46.5781680+00:00
+PREFLIGHT: CIM query succeeded; no Runner.Worker.exe, blender.exe, or P4-01/P4-02 measurement process detected.
+START_UTC: 2026-10-21T20:57:46.7043633+00:00
+END_UTC: 2026-10-21T20:57:46.8993490+00:00
+EXIT_CODE: 0
+----- STDOUT BEGIN -----
+P0-08 Codex app-server measurement probe
+
+Commands (run from the repository root):
+  node spikes/codex-app-server/src/probe.mjs catalog --code-home <isolated path>
+  node spikes/codex-app-server/src/probe.mjs smoke --code-home <isolated path>
+  node spikes/codex-app-server/src/probe.mjs speech --code-home <path> --model <id> --lang zh|en|ja --runs 50
+  node spikes/codex-app-server/src/probe.mjs speech-all --code-home <path> --model <id> --runs-per-language 50
+  node spikes/codex-app-server/src/probe.mjs irl --code-home <path> --model <id> --runs 200
+  node spikes/codex-app-server/src/probe.mjs controls --code-home <path> --model <id>
+
+Timing JSONL omits response text and credentials; synthetic candidates are separate artifacts.
+----- STDOUT END -----
+----- STDERR BEGIN -----
+
+----- STDERR END -----

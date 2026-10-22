@@ -1,0 +1,71 @@
+{
+  "caseId": "case-0152",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0152",
+    "nodes": [
+      {
+        "id": "ref-speaker",
+        "sourceRefs": [
+          "p0-08-0152"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "I"
+      },
+      {
+        "id": "ref-parcel",
+        "sourceRefs": [
+          "p0-08-0152"
+        ],
+        "sourceSpan": [
+          22,
+          28
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "parcel"
+      },
+      {
+        "id": "claim-receive",
+        "sourceRefs": [
+          "p0-08-0152"
+        ],
+        "sourceSpan": [
+          0,
+          39
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "receive",
+        "roles": [
+          {
+            "role": "recipient",
+            "value": "I"
+          },
+          {
+            "role": "item",
+            "value": "parcel"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": "day 51"
+      }
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "caseId": "case-0014",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0014",
+    "nodes": [
+      {
+        "id": "ref-lin",
+        "sourceRefs": [
+          "p0-08-0014"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "Lin"
+      },
+      {
+        "id": "claim-said",
+        "sourceRefs": [
+          "p0-08-0014"
+        ],
+        "sourceSpan": [
+          0,
+          43
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "said",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "Lin"
+          },
+          {
+            "role": "content",
+            "value": "It may snow on day 5 next week."
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-quotation",
+        "sourceRefs": [
+          "p0-08-0014"
+        ],
+        "sourceSpan": [
+          10,
+          43
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "It may snow on day 5 next week."
+      },
+      {
+        "id": "claim-snow",
+        "sourceRefs": [
+          "p0-08-0014"
+        ],
+        "sourceSpan": [
+          11,
+          42
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "snow",
+        "roles": [
+          {
+            "role": "time",
+            "value": "day 5 next week"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "day 5 next week"
+      }
+    ]
+  }
+}
