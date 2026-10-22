@@ -1,5 +1,5 @@
 import { asrDataDirectory, evaluationDirectory, evaluationEnvironment } from './cache.js';
-import { spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { mkdir, open } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,7 +20,14 @@ const args = [
   '--locked',
   '--',
   'python',
-  join(project, process.argv[2] === 'download' ? 'align_user.py' : 'context_references.py'),
+  join(
+    project,
+    process.argv[2] === 'download'
+      ? 'align_user.py'
+      : process.argv[2] === 'stability'
+        ? 'reference_stability.py'
+        : 'context_references.py',
+  ),
 ];
 if (process.argv[2] === 'download') args.push('--download');
 const child = spawn('uv', args, {
@@ -42,12 +49,29 @@ child.stderr.on('data', (chunk: Buffer) => {
   process.stderr.write(chunk);
   writes.push(log.write(chunk));
 });
+let resourceFailure = false;
+const monitor = setInterval(() => {
+  try {
+    assertQuiet(child.pid);
+  } catch {
+    resourceFailure = true;
+    process.stderr.write('Independent alignment stopped: competing heavy work detected\n');
+    if (process.platform === 'win32' && child.pid !== undefined) {
+      execFileSync('taskkill', ['/PID', String(child.pid), '/T', '/F'], {
+        windowsHide: true,
+        stdio: 'ignore',
+      });
+    } else child.kill();
+  }
+}, 3000);
 try {
   process.exitCode = await new Promise<number>((resolve, reject) => {
     child.on('error', reject);
     child.on('close', (code) => resolve(code ?? 1));
   });
 } finally {
+  clearInterval(monitor);
+  if (resourceFailure) process.exitCode = 1;
   await Promise.all(writes);
   await log.close();
 }

@@ -7,10 +7,19 @@ import unittest
 import wave
 from import_continuous import candidate_bounds, extract, sentence_lengths
 from segmented_tokens import FixedSegments
+from reference_stability import compare_contexts
 from reference_data import boundaries, boundaries_v2, canonicalize_v2, canonicalize_v3, contextual_pcm, Recording, freeze, inside, recordings
 
 
 class ReferenceTests(unittest.TestCase):
+    def test_reference_stability_rejects_missing_invalid_and_over_grid(self) -> None:
+        self.assertTrue(compare_contexts((100,500),(180,580))['stable'])
+        self.assertFalse(compare_contexts((100,500),(180.001,580))['stable'])
+        self.assertFalse(compare_contexts(None,(100,500))['stable'])
+        self.assertFalse(compare_contexts((100,500),None)['stable'])
+        with self.assertRaises(ValueError):
+            compare_contexts((float('nan'),500),(100,500))
+
     def test_segmented_tokens_keep_compounds_and_official_parser(self) -> None:
         class MockEncoder:
             marker='original'

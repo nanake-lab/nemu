@@ -58,6 +58,7 @@ export function busyProcesses(
         'pytest',
         'align_user.py',
         'context_references.py',
+        'reference_stability.py',
         'vad-diagnostic.ts',
         'voice_sidecar.server',
         'mfa align',
