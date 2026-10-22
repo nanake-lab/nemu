@@ -1,0 +1,40 @@
+
+ RUN  v5.0.4 C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu
+
+ ❯ packages/voice/src/asr/measurement-stats.test.ts (2 tests | 1 failed) 11ms
+   × retains early values and interpolates without changing the input 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/voice/src/asr/measurement-stats.test.ts > retains early values and interpolates without changing the input
+AssertionError: expected { count: 4, min: -10, p05: -8.5, …(5) } to match object { count: 4, min: -10, median: 5, …(2) }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "count": 4,
+    "max": 100,
+    "median": 5,
+    "min": -10,
+-   "p95": 86.5,
++   "p95": 86.49999999999997,
+  }
+
+ ❯ packages/voice/src/asr/measurement-stats.test.ts:5:31
+      3| it('retains early values and interpolates without changing the input',…
+      4|   const values = [100, -10, 0, 10];
+      5|   expect(sampleStats(values)).toMatchObject({ count: 4, min: -10, medi…
+       |                               ^
+      6|   expect(values).toEqual([100, -10, 0, 10]);
+      7| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 8 passed (9)
+   Start at  17:24:22
+   Duration  357ms (import 61%, transform 29%, tests 7%, worker 3%)
+

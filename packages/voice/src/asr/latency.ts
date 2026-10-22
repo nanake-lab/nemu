@@ -1,13 +1,13 @@
 import { asrDataDirectory } from './cache.js';
-import { readFile, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import type { ApplicationEvent } from '@nemu/contracts';
 import { assertQuiet, assertQuietAsync } from './quiet.js';
 import { cacheDirectory, verifyModels } from './models.js';
 import { VoiceRuntime, type VoicePort } from './runtime.js';
-import { loadTimingReferences } from './timing-reference.js';
+import { loadHybridReferences } from './hybrid-reference.js';
+import { sampleStats } from './measurement-stats.js';
 import { replayPcm, isFatalVoiceDiagnostic } from './replay.js';
 const root = asrDataDirectory();
 const attempt = `reports/P4-01/latency-attempt-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
@@ -24,7 +24,13 @@ class ReplayPort implements VoicePort {
     this.handler?.({ data });
   }
 }
-type Trace = { type: 'voice.vad' | 'voice.bargeIn'; state?: string; at: number };
+type Trace = {
+  type: 'voice.vad' | 'voice.bargeIn';
+  state?: string;
+  at: number;
+  stampToCallbackMs: number;
+  feedToStampMs: number | null;
+};
 const results: Array<{
   id: string;
   lang: string;
@@ -35,26 +41,42 @@ const results: Array<{
   maximumLatenessMs: number;
   trace: Trace[];
   diagnosticCodes: string[];
+  vadEndReceiptMs: number | null;
+  bargeInReceiptMs: number | null;
+  processing: {
+    feedCallWallMs: ReturnType<typeof sampleStats>;
+    eventStampToLocalCallbackMs: ReturnType<typeof sampleStats>;
+    feedStartToEventStampMs: ReturnType<typeof sampleStats>;
+    isolatedNativeVadMs: null;
+    externalIpcSendMs: null;
+  };
 }> = [];
 let runtime: VoiceRuntime | undefined;
 try {
-  const references = await loadTimingReferences(root);
+  const bundle = await loadHybridReferences(root);
+  const references = bundle.references;
   assertQuiet();
   await verifyModels();
   let trace: Trace[] = [],
     diagnosticCodes: string[] = [],
     collecting = false,
+    currentFeedStart: number | undefined,
     pipelineFailure: string | undefined;
   runtime = new VoiceRuntime(cacheDirectory(), (event: ApplicationEvent) => {
     if (!collecting) return;
+    const at = event.ts - performance.timeOrigin;
+    const timing = {
+      at,
+      stampToCallbackMs: performance.now() - at,
+      feedToStampMs: currentFeedStart === undefined ? null : at - currentFeedStart,
+    };
     if (event.type === 'voice.vad')
       trace.push({
         type: event.type,
         state: event.payload.state,
-        at: event.ts - performance.timeOrigin,
+        ...timing,
       });
-    if (event.type === 'voice.bargeIn')
-      trace.push({ type: event.type, at: event.ts - performance.timeOrigin });
+    if (event.type === 'voice.bargeIn') trace.push({ type: event.type, ...timing });
     if (event.type === 'stage.error') {
       diagnosticCodes.push(event.payload.code);
       if (isFatalVoiceDiagnostic(event.payload.code)) pipelineFailure = event.payload.code;
@@ -109,9 +131,18 @@ try {
     collecting = true;
     let seq = 0;
     const active = runtime;
+    const feedDurations: number[] = [];
     const replay = await replayPcm(
       pcm,
-      (block) => mic.send({ v: 2, seq: seq++, pcm: block }),
+      (block) => {
+        currentFeedStart = performance.now();
+        try {
+          mic.send({ v: 2, seq: seq++, pcm: block });
+        } finally {
+          feedDurations.push(performance.now() - currentFeedStart);
+          currentFeedStart = undefined;
+        }
+      },
       assertQuietAsync,
     );
     collecting = false;
@@ -126,6 +157,21 @@ try {
       bargeInMs: firstBarge ? firstBarge.at - replay.startedAt - ref.speechStartMs : null,
       maximumLatenessMs: replay.maximumLatenessMs,
       diagnosticCodes: [...diagnosticCodes],
+      vadEndReceiptMs: lastEnd
+        ? lastEnd.at + lastEnd.stampToCallbackMs - replay.startedAt - ref.speechEndMs
+        : null,
+      bargeInReceiptMs: firstBarge
+        ? firstBarge.at + firstBarge.stampToCallbackMs - replay.startedAt - ref.speechStartMs
+        : null,
+      processing: {
+        feedCallWallMs: sampleStats(feedDurations),
+        eventStampToLocalCallbackMs: sampleStats(trace.map((e) => e.stampToCallbackMs)),
+        feedStartToEventStampMs: sampleStats(
+          trace.flatMap((e) => (e.feedToStampMs === null ? [] : [e.feedToStampMs])),
+        ),
+        isolatedNativeVadMs: null,
+        externalIpcSendMs: null,
+      },
       trace: trace.map((e) => ({ ...e, at: e.at - replay.startedAt })),
     });
     // Forced close cannot supply a missing speechEnd or barge-in for the measured trace.
@@ -166,12 +212,21 @@ try {
   const report = {
     measuredAt: new Date().toISOString(),
     status: passed ? 'PASS' : 'FAIL',
-    method: 'P4-01-segmented-context-alignment-v4',
-    referenceResolutionMs: 80,
-    referenceUncertainty: 'Model estimates; 80 ms is timestamp grid, not a calibrated error bound',
-    referenceSha256: createHash('sha256')
-      .update(await readFile(resolve(root, 'timing-references.json')))
-      .digest('hex'),
+    method: bundle.method,
+    automaticTimestampGridMs: 80,
+    humanSampleResolutionMs: 0.0625,
+    referenceUncertainty: bundle.referenceUncertainty,
+    automaticReferenceCount: bundle.automaticCount,
+    humanReferenceCount: bundle.humanCount,
+    referenceSha256: bundle.referenceSha256,
+    measurementEndpoint:
+      'event.ts inside publish before schema.parse/emit; local callback receipt also reported; physical microphone and external IPC excluded',
+    timingInstrumentation:
+      'feed wall spans and event stamp to local callback; includes probe overhead, not isolated native inference',
+    vadEndDistributionMs: sampleStats(validEnds),
+    bargeInDistributionMs: sampleStats(
+      results.flatMap((r) => (r.bargeInMs === null ? [] : [r.bargeInMs])),
+    ),
     medianVadEndMs: median,
     passed,
     nearThresholdIds: results
