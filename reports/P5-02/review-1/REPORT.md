@@ -2,7 +2,7 @@
 
 ## 结果
 
-修复及本机完整复验通过；待本轮 Ubuntu/Windows CI 和独立复审。PR #58 保持草稿，未合并。此报告取代初次报告中“全部验收完成”的当前状态；原始日志和结论保留为历史证据。
+修复、本机完整复验与本轮 Ubuntu/Windows CI 均通过；提交独立复审，未合并。此报告取代初次报告的当前状态；原始日志和结论保留为历史证据。本实现会话不签发审查通过结论。
 
 审查基线 `6209401822a1a6cce43708447c6f6d180e93c798`；[阻塞意见](https://github.com/nanake-lab/nemu/pull/58#issuecomment-6341822078)。已先后 merge `origin/main` 的 `47ee2845c4731969242fe0a809ccc7637e1cf55c` 与 `1f7d4734f32a399e9f867427864ddf87691755e9`；后者仅更新其他卡及 P5-13 的依赖，未改变 P5-02 要求。未 rebase、未强推。
 
@@ -15,7 +15,7 @@
 | B2 | 先捕获回执，再固定 SQL 快照，在同一快照核对完整性；测试在 capture 后、SQL 快照后分别追加 | 本机通过；[AT04](AT04/result.json)，保留真正旧备份拒绝 |
 | C1 | 按操作/tag/第 N 次写入选择真实进程退出；D、提交、回执及补写、R 子对象/索引、复用、清单、初始化、GC 分列 | 本机通过；[完整矩阵](final-test-manifest.json) |
 | C2 | 三种谱系都写入可区分记录；各自正向读取、六向对象/打开拒绝，LIFE 事实视图没有 REHEARSAL 记录 | 本机通过；[I29](I29/result.json)、[AC2-22](AC2-22/result.json) |
-| D1 | 保留临时属性清除，加同目录 MoveFileExW WRITE_THROUGH；列明 FlushFileBuffers、目录句柄和证据边界 | 本机 NTFS 原语测试通过；README；本轮 Windows CI 待运行 |
+| D1 | 保留临时属性清除，加同目录 MoveFileExW WRITE_THROUGH；列明 FlushFileBuffers、目录句柄和证据边界 | 本机 NTFS 原语测试及本轮 Windows CI 通过；README |
 | D2 | merge main 后重跑检查，不沿用旧提交 CI 代替 | 本机完整复验通过；结束后再 fetch，main 仍为 1f7d473 且已在本分支中 |
 
 ## 最终本机验收
@@ -33,6 +33,18 @@
 
 82 个场景分为：提交 6、D 入口 7、回执发布/补写 36、R 子对象/索引与第 N 份事务清单 12、对象复用 4、初始化 13、GC 4。回执修复有 18 次先行 SQL 提交后崩溃，因此总实际退出次数为 100。前 65 项是 X03 提交相关矩阵；初始化和 GC 分开列证，不扩大 X03 定义。
 
+## CI 与最终状态
+
+两平台检查的 head 均为 `670c760d2f518703eb2b3a4678b30c4ee4798837`，与实现提交 `1e1cc58` 的 core/ 和相关 CI 文件树一致。此后只追加报告、原始日志和机器可读证据，不改源码。再次 fetch 后最新 main 仍为 `1f7d473`，已包含在任务分支中。
+
+| 检查 | 结果 | 证据 |
+| --- | --- | --- |
+| Ubuntu CI | run 与 job 均 completed/success；Rust 85 项通过，含工作区静态检查和契约一致性 | [run 39796228753](https://github.com/nanake-lab/nemu/actions/runs/39796228753)；../logs/17-review-ci-39796228753.log |
+| Windows CI | run 与 job 均 completed/success；31 + 2 项 W02 测试；82 场景、100 次退出与本机逐项匹配；桌面/隔离/视觉及证据检查通过 | [run 39796248748](https://github.com/nanake-lab/nemu/actions/runs/39796248748)；windows-39796248748/；../logs/17-review-ci-39796248748-direct-job-raw.log |
+| 证据核对 | 源提交、完整日志和文件指纹已保存 | [ci-evidence.json](ci-evidence.json)；../logs/17b-review-ci-final-status.json |
+
+Windows job 运行约 18m53s，保留原 20 分钟上限，没有放宽超时或阈值。早期 GitHub API 的 run/job 终态曾不同步；旧快照原样保留，最终快照确认两层均 success。采集遇到一次网络 EOF、本地查询包装 ParserError，以及 run 尚未完成导致日志读取拒绝；直接 job 日志首次因终端转义序列被 CLI 拒绝，随后只重定向原始字节到文件成功，未在终端解释控制序列。这些是采集诊断，不是测试失败，所有尝试均保留在 logs/17*。没有为此重跑 CI。
+
 ## 证据边界与更正
 
 - 原报告“所有测试只创建 TemporaryRoot”的无条件表述不够精确：父测试确实创建临时根，但旧 worker 可由外部环境变量指定路径，且取得锁/打开数据库后才检查 temporary 标记。B1 是真实入口缺口；现已改为先验证一次性沙箱凭据。复现及修复测试均只使用新建临时目录，没有打开用户排练库或正式库。
@@ -47,7 +59,7 @@
 
 ## 下一步
 
-运行本轮 Ubuntu/Windows CI，回复原审查评论并请求复审；通过前不合并。当前 main 的 tasks/P6-presence.md 追加记录允许本次 Codex 独立审查，且诞生前仍需 Claude 补审崩溃安全与 I29；实现会话不自行签发审查结论。
+最终证据提交后转为可审查，在 PR 中逐项回复阻塞意见并请求复审；请 Claude 交叉审查，通过前不合并。当前 main 的 tasks/P6-presence.md 追加记录允许本次 Codex 独立审查，且诞生前仍需 Claude 补审崩溃安全与 I29；实现会话不自行签发审查结论。不认领下一张卡。
 
 ## 中间检查记录
 
