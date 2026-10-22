@@ -174,6 +174,7 @@ try {
       },
       trace: trace.map((e) => ({ ...e, at: e.at - replay.startedAt })),
     });
+    console.info(`Replayed ${results.length}/60 ${ref.id}`);
     // Forced close cannot supply a missing speechEnd or barge-in for the measured trace.
     active.command({
       v: 2,
