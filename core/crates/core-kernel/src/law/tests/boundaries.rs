@@ -3,11 +3,10 @@
 
 use std::collections::BTreeMap;
 
-use core_types::generated::{PersonRelation, RelationKind};
+use core_types::generated::{EvidenceGroupV2, PersonRelation, RSnapshotV2, RelationKind};
 
 use crate::law::engine::{Output, g};
 use crate::law::input::RState;
-use crate::law::pending::{PendingGroup, PendingTendency};
 use crate::law::{Candidate, Law, LawContext, LawError, LawResult, Step, ThetaView, record};
 
 use super::cases::{event, experience, find, on};
@@ -27,9 +26,12 @@ fn candidate_enters_r_at_pi_zero_with_an_l_entry() {
             &step(&[candidate("rec-1", "c-tidy")], &[], &BTreeMap::new()),
         )
         .unwrap();
-    assert_eq!(out.r.base.revision, "r1");
+    assert_eq!(out.r.revision, "r1");
     let t = &out.r.tendencies[0];
-    assert_eq!((t.id(), t.base.pi, t.base.group_count.0), ("rec-1", 0.0, 0));
+    assert_eq!(
+        (t.tendency_id.as_str(), t.pi, t.group_count.0),
+        ("rec-1", 0.0, 0)
+    );
     assert_eq!(
         (out.changes[0].pi_before, out.changes[0].pi_after),
         (None, Some(0.0))
@@ -44,7 +46,7 @@ fn alias_adr_0014_any_number_of_synonyms_leaves_pi_and_r_unchanged() {
         let present: Vec<String> =
             w.r.tendencies
                 .iter()
-                .map(|t| t.base.concept.concept_id.clone())
+                .map(|t| t.concept.concept_id.clone())
                 .collect();
         let Some(c) = present.iter().find(|c| c.starts_with("c-")) else {
             continue;
@@ -90,7 +92,12 @@ fn alias_adr_0014_any_number_of_synonyms_leaves_pi_and_r_unchanged() {
             ),
         )
         .unwrap();
-    let ids: Vec<&str> = out.r.tendencies.iter().map(|t| t.id()).collect();
+    let ids: Vec<&str> = out
+        .r
+        .tendencies
+        .iter()
+        .map(|t| t.tendency_id.as_str())
+        .collect();
     assert_eq!(ids, ["rec-1"]);
     assert_eq!(out.groups[0].allocations.len(), 1);
     assert_eq!(
@@ -118,9 +125,9 @@ fn relation_candidate_becomes_the_structural_tendency() {
         )
         .unwrap();
     let t = &out.r.tendencies[0];
-    assert_eq!(t.id(), "rel:trust:p7");
+    assert_eq!(t.tendency_id.as_str(), "rel:trust:p7");
     assert_eq!(
-        t.base.concept, f.concepts.trust,
+        t.concept, f.concepts.trust,
         "structure is fixed by the law, not the proposal"
     );
     let again = f
@@ -165,9 +172,8 @@ fn ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups() {
     let shared = w.groups["g1"]
         .allocations
         .iter()
-        .find(|a| a.base.tendency_id == "rec-1")
+        .find(|a| a.tendency_id == "rec-1")
         .unwrap()
-        .base
         .share;
     assert!(shared < 1.0);
     let before = find(&w, "rec-1").clone();
@@ -194,14 +200,18 @@ fn ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups() {
     let out = w
         .apply(&f, &event(vec![candidate("rec-4", "c-d")], vec![g3, g4]))
         .unwrap();
-    assert!(w.r.tendencies.iter().all(|t| t.id() != "rec-2"));
+    assert!(
+        w.r.tendencies
+            .iter()
+            .all(|t| t.tendency_id.as_str() != "rec-2")
+    );
     let g = &w.groups["g1"];
     assert_eq!(g.allocations.len(), 1);
     assert_eq!(
-        g.allocations[0].base.share, 1.0,
+        g.allocations[0].share, 1.0,
         "rec-1 takes back the whole side"
     );
-    assert!(find(&w, "rec-1").base.pi > before.base.pi);
+    assert!(find(&w, "rec-1").pi > before.pi);
     let removed = out
         .changes
         .iter()
@@ -213,7 +223,6 @@ fn ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups() {
     let f0 = Fixture::new(0);
     let mut persona = tendency(&f0.law, "persona", None);
     record(&mut persona, &f0.law, 6.0, 1.0).unwrap();
-    let persona = PendingTendency::fresh(persona);
     let err = f0.run(
         &f0.snapshot(vec![persona]),
         &[],
@@ -224,8 +233,8 @@ fn ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups() {
         matches!(err, Err(LawError::InconsistentState(_))),
         "a tendency with groups needs its allocations"
     );
-    let mut fresh_persona = PendingTendency::fresh(tendency(&f0.law, "persona", Some(60.0)));
-    fresh_persona.base.relation.as_mut().unwrap().person_id = "someone".to_owned();
+    let mut fresh_persona = tendency(&f0.law, "persona", Some(60.0));
+    fresh_persona.relation.as_mut().unwrap().person_id = "someone".to_owned();
     let err = f0
         .run(
             &f0.snapshot(vec![fresh_persona]),
@@ -250,18 +259,18 @@ fn ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups() {
 fn stored_state_is_checked_before_use() {
     let (f, w, _, _) = run_world(2_900, 40, 10);
     let groups = w.group_list();
-    let run = |r: &crate::law::pending::PendingSnapshot, gs: &[PendingGroup]| {
+    let run = |r: &RSnapshotV2, gs: &[EvidenceGroupV2]| {
         f.run(r, gs, &default_theta(), &step(&[], &[], &BTreeMap::new()))
     };
     assert!(run(&w.r, &groups).is_ok());
     let k =
         w.r.tendencies
             .iter()
-            .position(|t| t.base.group_count.0 > 0)
+            .position(|t| t.group_count.0 > 0)
             .unwrap();
     // ĥ differs from the law.
     let mut r = w.r.clone();
-    r.tendencies[k].base.h_hat = 0.5;
+    r.tendencies[k].h_hat = 0.5;
     assert!(matches!(
         run(&r, &groups),
         Err(LawError::InconsistentState(_))
@@ -271,25 +280,25 @@ fn stored_state_is_checked_before_use() {
     r.tendencies[k].magnitude_sum += 0.125;
     assert!(run(&r, &groups).is_err());
     // An ordinal gap.
-    let id = w.r.tendencies[k].id().to_owned();
+    let id = w.r.tendencies[k].tendency_id.as_str().to_owned();
     let mut gs = groups.clone();
     let a = gs
         .iter_mut()
         .flat_map(|g| g.allocations.iter_mut())
-        .find(|a| a.base.tendency_id == id)
+        .find(|a| a.tendency_id == id)
         .unwrap();
-    a.ordinal += 1000;
+    a.ordinal.0 += 1000;
     assert!(matches!(
         run(&w.r, &gs),
         Err(LawError::InconsistentState(_))
     ));
-    // Values in the IDL lists of the pending containers.
+    // A tendency repeats.
     let mut r = w.r.clone();
-    r.base.tendencies.push(r.tendencies[0].base.clone());
+    r.tendencies.push(r.tendencies[0].clone());
     assert!(run(&r, &groups).is_err());
     // Another law version.
     let mut r = w.r.clone();
-    r.base.law_version.resource_version = "other-law".to_owned();
+    r.law_version.resource_version = "other-law".to_owned();
     assert!(matches!(run(&r, &groups), Err(LawError::InvalidInput(_))));
     // Out of canonical order.
     let mut r = w.r.clone();
@@ -310,7 +319,7 @@ fn i10_g_signature_has_no_x_m_g_or_lambda() {
         ("fuse.rs", include_str!("../fuse.rs")),
         ("num.rs", include_str!("../num.rs")),
         ("params.rs", include_str!("../params.rs")),
-        ("pending.rs", include_str!("../pending.rs")),
+        ("plan.rs", include_str!("../plan.rs")),
         ("recurrence.rs", include_str!("../recurrence.rs")),
         ("relation.rs", include_str!("../relation.rs")),
         ("replay.rs", include_str!("../replay.rs")),
@@ -356,38 +365,52 @@ fn i10_g_signature_has_no_x_m_g_or_lambda() {
 }
 
 #[test]
-fn pending_structures_stay_inside_law_until_p5_32() {
-    // User decision 2026-10-22: the temporary R structures are used only inside
-    // `law/`, never exported, persisted or sent across processes.
-    let module = include_str!("../mod.rs");
-    for line in module.lines().filter(|l| l.trim_start().starts_with("pub")) {
-        for private in [
-            "pending", "engine", "replay", "group", "plan", "RState", "Output",
-        ] {
-            assert!(!line.contains(private), "law exports `{private}`: {line}");
-        }
-    }
-    assert!(
-        module.contains("\nmod pending;"),
-        "pending stays a private module"
-    );
-    let pending = include_str!("../pending.rs");
-    assert!(pending.contains("P5-32 合并后换成 IDL 生成的类型"));
-    for forbidden in [
-        "Serialize",
-        "Deserialize",
-        "serde",
-        "WireMessage",
-        "canonical_bytes",
-        "protobuf",
-    ] {
-        let code: String = pending
+fn law_defines_no_stored_or_cross_process_type() {
+    // Golden rule 2: R, its group summaries and the L payloads are the IDL
+    // types of core-types (P5-32, ADR 0016); the structs of `law/` bundle them
+    // for one call and never serialize.
+    let sources = [
+        include_str!("../engine.rs"),
+        include_str!("../error.rs"),
+        include_str!("../fuse.rs"),
+        include_str!("../group.rs"),
+        include_str!("../input.rs"),
+        include_str!("../mod.rs"),
+        include_str!("../num.rs"),
+        include_str!("../params.rs"),
+        include_str!("../plan.rs"),
+        include_str!("../recurrence.rs"),
+        include_str!("../relation.rs"),
+        include_str!("../replay.rs"),
+        include_str!("../shares.rs"),
+        include_str!("../support.rs"),
+    ];
+    for src in sources {
+        let code: String = src
             .lines()
             .map(|l| l.split("//").next().unwrap_or(""))
-            .collect();
-        assert!(
-            !code.contains(forbidden),
-            "pending structures must not serialize: {forbidden}"
-        );
+            .collect::<Vec<_>>()
+            .join("\n");
+        for forbidden in [
+            "Serialize",
+            "Deserialize",
+            "serde",
+            "WireMessage",
+            "canonical_bytes",
+            "struct Tendency",
+            "struct EvidenceGroup",
+            "struct EvidenceAllocation",
+            "struct RSnapshot",
+            "struct TendencyChange",
+        ] {
+            assert!(!code.contains(forbidden), "law/ defines `{forbidden}`");
+        }
     }
+    let engine = include_str!("../engine.rs");
+    assert!(engine.contains(
+        "use core_types::generated::{EvidenceGroupV2, RSnapshotV2, TendencyChange, TendencyV2};"
+    ));
+    let input = include_str!("../input.rs");
+    assert!(input.contains("pub snapshot: &'a RSnapshotV2,"));
+    assert!(input.contains("pub groups: &'a [EvidenceGroupV2],"));
 }

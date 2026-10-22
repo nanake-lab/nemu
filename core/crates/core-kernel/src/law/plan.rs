@@ -10,9 +10,9 @@ use super::engine::Work;
 use super::error::{LawError, LawResult};
 use super::input::{GroupContent, GroupItem, LawContext, MatchTarget, ThetaView};
 use super::num::Nature4;
-use super::pending::{PendingAllocation, PendingGroup};
 use super::relation::{relation_tendency_id, trust};
 use super::support::{deviation, experience, teaching};
+use core_types::generated::{EvidenceAllocationV2, EvidenceGroupV2};
 
 /// An allocation's values before its share is applied.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -23,10 +23,10 @@ pub(super) struct Values {
     pub(super) projection: Option<f64>,
 }
 
-pub(super) fn of(a: &PendingAllocation) -> Values {
+pub(super) fn of(a: &EvidenceAllocationV2) -> Values {
     Values {
-        support: a.base.support,
-        intensity: a.base.intensity,
+        support: a.support,
+        intensity: a.intensity,
         mu: a.mu,
         projection: a.projection,
     }
@@ -40,14 +40,17 @@ pub(super) struct Plan {
     pub(super) values: BTreeMap<String, Values>,
 }
 
-pub(super) fn find<'a>(g: Option<&'a PendingGroup>, id: &str) -> Option<&'a PendingAllocation> {
-    g.and_then(|g| g.allocations.iter().find(|a| a.base.tendency_id == id))
+pub(super) fn find<'a>(
+    g: Option<&'a EvidenceGroupV2>,
+    id: &str,
+) -> Option<&'a EvidenceAllocationV2> {
+    g.and_then(|g| g.allocations.iter().find(|a| a.tendency_id == id))
 }
 
 pub(super) fn experience_plan(
     work: &Work,
     item: &GroupItem,
-    stored: Option<&PendingGroup>,
+    stored: Option<&EvidenceGroupV2>,
     members: &[String],
     theta: &ThetaView,
     remap: &BTreeMap<String, String>,
@@ -78,8 +81,7 @@ pub(super) fn experience_plan(
         deviations.push(deviation(&a, theta.baseline())?);
     }
     let verifiability = if item.verifiable { 1.0 } else { law.v_u };
-    let changed =
-        stored.is_none_or(|g| g.base.members != members || g.base.verifiability != verifiability);
+    let changed = stored.is_none_or(|g| g.members != members || g.verifiability != verifiability);
     // μ per tendency: a direct match wins over an alias mapped onto the same tendency (D10).
     // Priority of a μ source for one tendency: a direct match, then the stored
     // allocation, then a synonym mapped onto it (D10: synonyms add nothing).
@@ -88,7 +90,7 @@ pub(super) fn experience_plan(
     const DIRECT: u8 = 2;
     let mut mus: BTreeMap<String, (f64, u8)> = BTreeMap::new();
     for a in stored.into_iter().flat_map(|g| &g.allocations) {
-        mus.insert(a.base.tendency_id.clone(), (a.mu, STORED));
+        mus.insert(a.tendency_id.clone(), (a.mu, STORED));
     }
     for m in matches {
         if !(m.mu.is_finite() && m.mu > 0.0 && m.mu <= 1.0) {
@@ -128,7 +130,7 @@ pub(super) fn experience_plan(
                 of(a)
             }
             _ => {
-                let t = &work.now[&id].base;
+                let t = &work.now[&id];
                 let r_tilde = t.typical_magnitude.max(law.r_min);
                 let g = experience(
                     &deviations,
@@ -159,7 +161,7 @@ pub(super) fn experience_plan(
 pub(super) fn teaching_plan(
     work: &Work,
     item: &GroupItem,
-    stored: Option<&PendingGroup>,
+    stored: Option<&EvidenceGroupV2>,
     remap: &BTreeMap<String, String>,
     ctx: &LawContext<'_>,
 ) -> LawResult<Plan> {
@@ -178,7 +180,7 @@ pub(super) fn teaching_plan(
     let fresh = teaching(*supports, ctx.law.w_teach);
     // EV7: the group's credibility is fixed when it is first formed; repeats never refresh.
     let (credibility, verifiability) = match stored {
-        Some(g) => (g.base.credibility, g.base.verifiability),
+        Some(g) => (g.credibility, g.verifiability),
         None => (
             trust(&work.bases(), speaker),
             if item.verifiable { 1.0 } else { ctx.law.v_u },
@@ -187,7 +189,7 @@ pub(super) fn teaching_plan(
     let mut values: BTreeMap<String, Values> = stored
         .into_iter()
         .flat_map(|g| &g.allocations)
-        .map(|a| (a.base.tendency_id.clone(), of(a)))
+        .map(|a| (a.tendency_id.clone(), of(a)))
         .collect();
     if values.keys().any(|k| *k != id) {
         return Err(LawError::InconsistentState(format!(

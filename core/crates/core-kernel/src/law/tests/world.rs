@@ -1,18 +1,19 @@
 //! A synthetic world for G: R as G keeps it, and a seeded generator of
 //! committed events (candidates, experience groups, late members, EV5
 //! back-collection, teaching and its repeats). No store is opened (AGENTS.md
-//! golden rule 14). The pending structures are replaced by the P5-32 types
-//! once that card merges.
+//! golden rule 14). R is the P5-32 `RSnapshotV2` with its `EvidenceGroupV2`
+//! summaries.
 
 use std::collections::BTreeMap;
 
-use core_types::generated::{NatureScale, NatureVector, ObjectRef, RSnapshot, RelationKind};
+use core_types::generated::{
+    EvidenceGroupV2, NatureScale, NatureVector, ObjectRef, RSnapshotV2, RelationKind, TendencyV2,
+};
 use core_types::scalar::{DecimalU64, HexBytes};
 use core_types::semantic::tendency_order;
 
 use crate::law::engine::{Output, g};
 use crate::law::input::RState;
-use crate::law::pending::{PendingGroup, PendingSnapshot, PendingTendency};
 use crate::law::{
     Candidate, Caretaker, GroupContent, GroupItem, Law, LawContext, LawResult, Match, MatchTarget,
     RelationConcepts, Step, ThetaView, initial_r,
@@ -71,21 +72,18 @@ impl Fixture {
         }
     }
 
-    pub fn snapshot(&self, mut tendencies: Vec<PendingTendency>) -> PendingSnapshot {
-        tendencies.sort_by(|a, b| tendency_order(a.id(), b.id()));
-        PendingSnapshot {
-            base: RSnapshot {
-                schema_version: 1,
-                revision: "r0".to_owned(),
-                law_version: self.law_ref.clone(),
-                tendencies: Vec::new(),
-            },
+    pub fn snapshot(&self, mut tendencies: Vec<TendencyV2>) -> RSnapshotV2 {
+        tendencies.sort_by(|a, b| tendency_order(a.tendency_id.as_str(), b.tendency_id.as_str()));
+        RSnapshotV2 {
+            schema_version: 1,
+            revision: "r0".to_owned(),
+            law_version: self.law_ref.clone(),
             tendencies,
         }
     }
 
     /// R₀: u*'s attachment and trust.
-    pub fn r0(&self) -> PendingSnapshot {
+    pub fn r0(&self) -> RSnapshotV2 {
         let ts = initial_r(
             &self.law,
             &self.concepts,
@@ -95,13 +93,13 @@ impl Fixture {
             },
         )
         .unwrap();
-        self.snapshot(ts.into_iter().map(PendingTendency::fresh).collect())
+        self.snapshot(ts)
     }
 
     pub fn run(
         &self,
-        r: &PendingSnapshot,
-        groups: &[PendingGroup],
+        r: &RSnapshotV2,
+        groups: &[EvidenceGroupV2],
         theta: &ThetaView,
         step: &Step<'_>,
     ) -> LawResult<Output> {
@@ -159,8 +157,8 @@ impl Event {
 /// R and its evidence groups, advanced one event at a time by G.
 #[derive(Clone)]
 pub struct World {
-    pub r: PendingSnapshot,
-    pub groups: BTreeMap<String, PendingGroup>,
+    pub r: RSnapshotV2,
+    pub groups: BTreeMap<String, EvidenceGroupV2>,
     /// The last version of every group item sent, to send late members and repeats.
     pub items: BTreeMap<String, GroupItem>,
 }
@@ -174,7 +172,7 @@ impl World {
         }
     }
 
-    pub fn group_list(&self) -> Vec<PendingGroup> {
+    pub fn group_list(&self) -> Vec<EvidenceGroupV2> {
         self.groups.values().cloned().collect()
     }
 
@@ -182,7 +180,7 @@ impl World {
         let out = f.run(&self.r, &self.group_list(), &e.theta, &e.step())?;
         self.r = out.r.clone();
         for g in &out.groups {
-            self.groups.insert(g.base.group_id.clone(), g.clone());
+            self.groups.insert(g.group_id.clone(), g.clone());
         }
         for item in &e.groups {
             self.items.insert(item.group_id.clone(), item.clone());
@@ -194,7 +192,7 @@ impl World {
         self.r
             .tendencies
             .iter()
-            .map(|t| t.id().to_owned())
+            .map(|t| t.tendency_id.as_str().to_owned())
             .collect()
     }
 }

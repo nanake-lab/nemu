@@ -131,7 +131,7 @@ pub fn law_10() -> (Option<u32>, Option<u32>, Option<u32>, bool, f64) {
         }
         t
     };
-    let flip_after = |t: &mut core_types::generated::Tendency, pattern: &dyn Fn(u32) -> f64| {
+    let flip_after = |t: &mut core_types::generated::TendencyV2, pattern: &dyn Fn(u32) -> f64| {
         for n in 1..=100_000u32 {
             record(t, &l, 1.0, pattern(n)).unwrap();
             if t.pi < 0.5 {

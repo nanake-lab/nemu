@@ -10,7 +10,7 @@
 use std::cmp::Ordering;
 use std::collections::BTreeSet;
 
-use core_types::generated::{EvidenceAllocation, Tendency};
+use core_types::generated::{EvidenceAllocationV2, TendencyV2};
 use core_types::semantic::tendency_order;
 
 use super::engine::Work;
@@ -23,7 +23,7 @@ use super::shares::{ShareInput, shares};
 /// Index of the tendency to remove next: the candidate with the smallest
 /// evidence amount V_k = (B_k − n₀ − κ_k) + A_att; ties go to the first in
 /// canonical tendency-ID order. `None` when R holds no candidate.
-pub fn eviction_choice(r: &[Tendency], law: &Law) -> LawResult<Option<usize>> {
+pub fn eviction_choice(r: &[TendencyV2], law: &Law) -> LawResult<Option<usize>> {
     let mut best: Option<(usize, f64)> = None;
     for (i, t) in r.iter().enumerate() {
         if is_personality(t.pi) {
@@ -46,7 +46,7 @@ pub fn eviction_choice(r: &[Tendency], law: &Law) -> LawResult<Option<usize>> {
 }
 
 /// The capacity fault when nothing can be removed.
-pub fn exhausted(r: &[Tendency], capacity: u32) -> LawError {
+pub fn exhausted(r: &[TendencyV2], capacity: u32) -> LawError {
     LawError::CapacityExhausted {
         capacity,
         personality: r.iter().filter(|t| is_personality(t.pi)).count(),
@@ -88,22 +88,18 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
         let group_ids: Vec<String> = work.groups.keys().cloned().collect();
         for gid in group_ids {
             let g = work.groups.get_mut(&gid).expect("listed");
-            let Some(pos) = g
-                .allocations
-                .iter()
-                .position(|a| a.base.tendency_id == gone)
-            else {
+            let Some(pos) = g.allocations.iter().position(|a| a.tendency_id == gone) else {
                 continue;
             };
             let removed = g.allocations.remove(pos);
             work.touched.insert(gid.clone());
-            let side = removed.base.support;
+            let side = removed.support;
             if side == 0.0 {
                 continue;
             }
             let same: Vec<usize> = (0..g.allocations.len())
                 .filter(|&k| {
-                    let s = g.allocations[k].base.support;
+                    let s = g.allocations[k].support;
                     s != 0.0 && s.signum() == side.signum()
                 })
                 .collect();
@@ -113,10 +109,10 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
             let inputs: Vec<ShareInput<'_>> = same
                 .iter()
                 .map(|&k| {
-                    let a: &EvidenceAllocation = &g.allocations[k].base;
+                    let a: &EvidenceAllocationV2 = &g.allocations[k];
                     ShareInput {
                         tendency_id: &a.tendency_id,
-                        pi: work.now[&a.tendency_id].base.pi,
+                        pi: work.now[&a.tendency_id].pi,
                         support: a.support,
                     }
                 })
@@ -125,11 +121,11 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
             let mut marked = Vec::with_capacity(same.len());
             for (&k, s) in same.iter().zip(new_shares) {
                 let a = &mut g.allocations[k];
-                if a.base.share.to_bits() != s.to_bits() {
-                    a.base.share = s;
-                    dirty.insert(a.base.tendency_id.clone());
+                if a.share.to_bits() != s.to_bits() {
+                    a.share = s;
+                    dirty.insert(a.tendency_id.clone());
                 }
-                marked.push(a.base.tendency_id.clone());
+                marked.push(a.tendency_id.clone());
             }
             for id in marked {
                 work.mark(&id, &gid);

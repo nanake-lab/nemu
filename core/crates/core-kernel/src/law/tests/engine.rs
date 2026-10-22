@@ -1,15 +1,15 @@
-//! G end to end on random worlds (pending structures until P5-32): I25 and
+//! G end to end on random worlds: I25 and
 //! the replay identity of ADR 0016 after every step, AC2-02, AC2-03 repeats,
 //! AC2-05, AC2-21 with re-sharing, input-order independence. Hand-built
 //! scenarios are in `cases.rs`.
 
 use std::collections::BTreeMap;
 
+use core_types::generated::{EvidenceGroupV2, TendencyV2};
 use core_types::semantic;
 
 use crate::law::engine::Output;
-use crate::law::pending::{PendingGroup, PendingTendency};
-use crate::law::replay::{Stored, check_pending, replay};
+use crate::law::replay::{Stored, check_with_allocations, replay};
 use crate::law::{Candidate, GroupContent, GroupItem, LawError, MatchTarget, Step, weight};
 
 use super::fixture::{concept, text, vector};
@@ -38,18 +38,18 @@ pub(super) fn candidate(record_id: &str, concept_id: &str) -> Candidate {
     }
 }
 
-pub(super) fn stored_of<'a>(groups: &'a [PendingGroup], id: &str) -> Vec<Stored<'a>> {
+pub(super) fn stored_of<'a>(groups: &'a [EvidenceGroupV2], id: &str) -> Vec<Stored<'a>> {
     groups
         .iter()
         .flat_map(|g| {
             g.allocations
                 .iter()
-                .filter(move |a| a.base.tendency_id == id)
+                .filter(move |a| a.tendency_id == id)
                 .map(move |a| Stored {
-                    group_id: &g.base.group_id,
+                    group_id: &g.group_id,
                     allocation: a,
-                    credibility: g.base.credibility,
-                    verifiability: g.base.verifiability,
+                    credibility: g.credibility,
+                    verifiability: g.verifiability,
                 })
         })
         .collect()
@@ -59,42 +59,49 @@ pub(super) fn stored_of<'a>(groups: &'a [PendingGroup], id: &str) -> Vec<Stored<
 pub(super) fn check_world(f: &Fixture, w: &World) {
     let l = &f.law;
     let groups = w.group_list();
-    assert!(w.r.base.tendencies.is_empty());
     assert!(w.r.tendencies.len() <= f.capacity as usize);
+    assert!(
+        w.r.tendencies.windows(2).all(|p| semantic::tendency_order(
+            &p[0].tendency_id,
+            &p[1].tendency_id
+        )
+        .is_lt()),
+        "R in canonical order"
+    );
     for t in &w.r.tendencies {
-        semantic::check_tendency(&t.base).unwrap();
-        check_pending(t, l, stored_of(&groups, t.id())).unwrap();
+        semantic::check_tendency_v2(t).unwrap();
+        semantic::check_allocation_ordinals(t, &groups).unwrap();
+        check_with_allocations(t, l, stored_of(&groups, t.tendency_id.as_str())).unwrap();
         // ADR 0016 §4: replaying the stored allocations reproduces the tendency bit for bit.
-        let again = replay(t, stored_of(&groups, t.id()), l, f.ctx().caretaker).unwrap();
-        assert_eq!(&again, t, "replay identity for {}", t.id());
+        let again = replay(
+            t,
+            stored_of(&groups, t.tendency_id.as_str()),
+            l,
+            f.ctx().caretaker,
+        )
+        .unwrap();
+        assert_eq!(&again, t, "replay identity for {}", t.tendency_id.as_str());
     }
     for g in &groups {
-        assert!(g.base.allocations.is_empty());
         for side in [1.0f64, -1.0] {
             let on: Vec<f64> = g
                 .allocations
                 .iter()
-                .filter(|a| a.base.support != 0.0 && a.base.support.signum() == side)
-                .map(|a| a.base.share)
+                .filter(|a| a.support != 0.0 && a.support.signum() == side)
+                .map(|a| a.share)
                 .collect();
             if !on.is_empty() {
                 let total: f64 = on.iter().sum();
                 assert!(
                     (total - 1.0).abs() <= 1e-12,
                     "I25: {} side {side}: {total}",
-                    g.base.group_id
+                    g.group_id
                 );
             }
         }
         for a in &g.allocations {
-            assert!(a.base.support != 0.0 || a.base.share == 0.0);
-            let w = weight(
-                a.base.intensity,
-                g.base.credibility,
-                g.base.verifiability,
-                a.base.share,
-            )
-            .unwrap();
+            assert!(a.support != 0.0 || a.share == 0.0);
+            let w = weight(a.intensity, g.credibility, g.verifiability, a.share).unwrap();
             assert!(w <= l.w_max, "AC2-21 single-group cap");
             assert!(a.mu > 0.0 && a.mu <= 1.0);
         }
@@ -103,10 +110,18 @@ pub(super) fn check_world(f: &Fixture, w: &World) {
 
 /// L: exactly the tendencies whose value changed, with their π before and after.
 pub(super) fn check_changes(before: &World, after: &World, out: &Output) {
-    let b: BTreeMap<&str, &PendingTendency> =
-        before.r.tendencies.iter().map(|t| (t.id(), t)).collect();
-    let a: BTreeMap<&str, &PendingTendency> =
-        after.r.tendencies.iter().map(|t| (t.id(), t)).collect();
+    let b: BTreeMap<&str, &TendencyV2> = before
+        .r
+        .tendencies
+        .iter()
+        .map(|t| (t.tendency_id.as_str(), t))
+        .collect();
+    let a: BTreeMap<&str, &TendencyV2> = after
+        .r
+        .tendencies
+        .iter()
+        .map(|t| (t.tendency_id.as_str(), t))
+        .collect();
     let mut expected: Vec<&str> = b
         .keys()
         .chain(a.keys())
@@ -118,11 +133,8 @@ pub(super) fn check_changes(before: &World, after: &World, out: &Output) {
     let got: Vec<&str> = out.changes.iter().map(|c| c.tendency_id.as_str()).collect();
     assert_eq!(got, expected);
     for c in &out.changes {
-        assert_eq!(
-            c.pi_before,
-            b.get(c.tendency_id.as_str()).map(|t| t.base.pi)
-        );
-        assert_eq!(c.pi_after, a.get(c.tendency_id.as_str()).map(|t| t.base.pi));
+        assert_eq!(c.pi_before, b.get(c.tendency_id.as_str()).map(|t| t.pi));
+        assert_eq!(c.pi_after, a.get(c.tendency_id.as_str()).map(|t| t.pi));
         semantic::check_tendency_change(c).unwrap();
     }
 }
@@ -189,8 +201,8 @@ fn ac2_03_the_same_group_arriving_again_changes_nothing() {
             // without an allocation here, or a person whose relation tendency left R
             // and would be created again on involvement (D6).
             let g = &w.groups[&item.group_id];
-            let has = |id: &str| g.allocations.iter().any(|a| a.base.tendency_id == id);
-            let in_r = |id: &str| w.r.tendencies.iter().any(|t| t.id() == id);
+            let has = |id: &str| g.allocations.iter().any(|a| a.tendency_id == id);
+            let in_r = |id: &str| w.r.tendencies.iter().any(|t| t.tendency_id.as_str() == id);
             let regains = match &item.content {
                 GroupContent::Experience { matches, .. } => {
                     matches.iter().any(|m| match &m.target {

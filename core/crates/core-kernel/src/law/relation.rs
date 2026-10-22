@@ -11,7 +11,7 @@
 use std::f64::consts::FRAC_1_SQRT_2;
 
 use core_types::generated::{
-    ConceptRef, NatureVector, PersonRelation, RelationKind, Tendency, TrilingualText,
+    ConceptRef, NatureVector, PersonRelation, RelationKind, TendencyV2, TrilingualText,
 };
 
 use super::error::LawResult;
@@ -98,7 +98,7 @@ pub fn relation_tendency(
     caretaker: Caretaker<'_>,
     person_id: &str,
     kind: RelationKind,
-) -> LawResult<Tendency> {
+) -> LawResult<TendencyV2> {
     let is_caretaker = person_id == caretaker.person_id;
     let a_att = finite(caretaker.attachment_prior, "attachment prior")?;
     let (prior, initial_evidence) = match (is_caretaker, kind) {
@@ -135,7 +135,7 @@ pub fn initial_r(
     law: &Law,
     concepts: &RelationConcepts,
     caretaker: Caretaker<'_>,
-) -> LawResult<Vec<Tendency>> {
+) -> LawResult<Vec<TendencyV2>> {
     let mut r = vec![
         relation_tendency(
             law,
@@ -156,7 +156,7 @@ pub fn initial_r(
     Ok(r)
 }
 
-fn relation_pi(r: &[Tendency], person_id: &str, kind: RelationKind) -> f64 {
+fn relation_pi(r: &[TendencyV2], person_id: &str, kind: RelationKind) -> f64 {
     r.iter()
         .find(|t| {
             t.relation
@@ -167,7 +167,7 @@ fn relation_pi(r: &[Tendency], person_id: &str, kind: RelationKind) -> f64 {
 }
 
 /// Closeness weight for F's empathy channel: clip((1 + π)/2, w_min, 1) (v2.0 §6).
-pub fn closeness_weight(r: &[Tendency], person_id: &str, law: &Law) -> f64 {
+pub fn closeness_weight(r: &[TendencyV2], person_id: &str, law: &Law) -> f64 {
     clip(
         (1.0 + relation_pi(r, person_id, RelationKind::CLOSENESS)) / 2.0,
         law.w_min,
@@ -176,6 +176,6 @@ pub fn closeness_weight(r: &[Tendency], person_id: &str, law: &Law) -> f64 {
 }
 
 /// Trust in a speaker, the credibility of their teaching: (1 + π)/2 (v2.0 §5.2, §10).
-pub fn trust(r: &[Tendency], person_id: &str) -> f64 {
+pub fn trust(r: &[TendencyV2], person_id: &str) -> f64 {
     (1.0 + relation_pi(r, person_id, RelationKind::TRUST)) / 2.0
 }

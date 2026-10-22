@@ -4,7 +4,8 @@
 
 use std::collections::BTreeMap;
 
-use crate::law::pending::PendingTendency;
+use core_types::generated::TendencyV2;
+
 use crate::law::{Candidate, GroupContent, GroupItem, Match, MatchTarget};
 
 use super::engine::{candidate, check_world};
@@ -48,8 +49,11 @@ pub(super) fn event(candidates: Vec<Candidate>, groups: Vec<GroupItem>) -> Event
     }
 }
 
-pub(super) fn find<'a>(w: &'a World, id: &str) -> &'a PendingTendency {
-    w.r.tendencies.iter().find(|t| t.id() == id).unwrap()
+pub(super) fn find<'a>(w: &'a World, id: &str) -> &'a TendencyV2 {
+    w.r.tendencies
+        .iter()
+        .find(|t| t.tendency_id.as_str() == id)
+        .unwrap()
 }
 
 #[test]
@@ -69,14 +73,14 @@ fn first_group_records_ordinal_zero_and_the_typical_magnitude() {
     let t = find(&w, "rec-1");
     let a = &w.groups["g1"].allocations[0];
     assert_eq!(
-        (a.ordinal, a.mu, a.projection),
+        (a.ordinal.0, a.mu, a.projection),
         (0, 0.5, Some(0.4 - 0.0f64.max(0.0)))
     );
     assert_eq!((t.magnitude_sum, t.magnitude_weight), (0.5 * 0.4, 0.5));
-    assert_eq!(t.base.typical_magnitude, 0.4);
+    assert_eq!(t.typical_magnitude, 0.4);
     // r̃ = max(0, r_min) = 0.05 before the group: 2·0.4/0.05 − 1 clips to 1, S = μ.
-    assert_eq!(a.base.support, 0.5);
-    assert!(t.base.pi > 0.0);
+    assert_eq!(a.support, 0.5);
+    assert!(t.pi > 0.0);
     check_world(&f, &w);
 }
 
@@ -104,7 +108,7 @@ fn late_member_updates_the_group_without_a_second_count() {
     )
     .unwrap();
     let before = find(&w, "rec-1").clone();
-    assert_eq!(before.base.group_count.0, 2);
+    assert_eq!(before.group_count.0, 2);
     // A later member joins g1: its reaction is the opposite of the prediction.
     let late = experience(
         "g1",
@@ -115,12 +119,12 @@ fn late_member_updates_the_group_without_a_second_count() {
     );
     let out = w.apply(&f, &event(vec![], vec![late])).unwrap();
     let after = find(&w, "rec-1");
-    assert_eq!(after.base.group_count.0, 2, "not a new group");
+    assert_eq!(after.group_count.0, 2, "not a new group");
     assert_eq!(
-        w.groups["g1"].allocations[0].ordinal, 0,
+        w.groups["g1"].allocations[0].ordinal.0, 0,
         "ordinal unchanged"
     );
-    assert!(after.base.pi < before.base.pi, "the group now contradicts");
+    assert!(after.pi < before.pi, "the group now contradicts");
     assert_eq!(out.changes[0].evidence_groups, ["g1"]);
     check_world(&f, &w);
 }
@@ -149,7 +153,7 @@ fn ev5_back_collection_reshares_old_groups_and_keeps_i25() {
     )
     .unwrap();
     let old = find(&w, "rec-1").clone();
-    assert_eq!(w.groups["g1"].allocations[0].base.share, 1.0);
+    assert_eq!(w.groups["g1"].allocations[0].share, 1.0);
     // A new candidate along the same direction explains g1 too (EV5): it shares g1.
     let mut back = g1;
     if let GroupContent::Experience { matches, .. } = &mut back.content {
@@ -160,27 +164,23 @@ fn ev5_back_collection_reshares_old_groups_and_keeps_i25() {
         .unwrap();
     let g = &w.groups["g1"];
     assert_eq!(g.allocations.len(), 2);
-    let share = |id: &str| {
-        g.allocations
-            .iter()
-            .find(|a| a.base.tendency_id == id)
-            .unwrap()
-    };
-    assert!(share("rec-1").base.share < 1.0);
-    assert_eq!(share("rec-1").base.share + share("rec-2").base.share, 1.0);
+    let share = |id: &str| g.allocations.iter().find(|a| a.tendency_id == id).unwrap();
+    assert!(share("rec-1").share < 1.0);
+    assert_eq!(share("rec-1").share + share("rec-2").share, 1.0);
     assert_eq!(
-        share("rec-1").ordinal,
+        share("rec-1").ordinal.0,
         0,
         "the old allocation keeps its ordinal"
     );
-    assert_eq!(share("rec-2").ordinal, 0, "first group of the new tendency");
-    let now = find(&w, "rec-1");
-    assert!(
-        now.base.pi < old.base.pi,
-        "the old tendency gives up part of g1"
-    );
     assert_eq!(
-        now.base.group_count, old.base.group_count,
+        share("rec-2").ordinal.0,
+        0,
+        "first group of the new tendency"
+    );
+    let now = find(&w, "rec-1");
+    assert!(now.pi < old.pi, "the old tendency gives up part of g1");
+    assert_eq!(
+        now.group_count, old.group_count,
         "re-sharing is not a new group"
     );
     let ids: Vec<&str> = out.changes.iter().map(|c| c.tendency_id.as_str()).collect();
@@ -214,13 +214,13 @@ fn teaching_counts_by_trust_and_repeats_do_not_refresh() {
     stranger
         .apply(&f, &event(vec![], vec![teach("t1", "p9", &["e5"])]))
         .unwrap();
-    let pi = |w: &World| find(w, "rec-1").base.pi;
+    let pi = |w: &World| find(w, "rec-1").pi;
     assert!(pi(&parent) > pi(&stranger), "teaching weighs with trust");
     assert_eq!(
-        parent.groups["t1"].base.credibility,
+        parent.groups["t1"].credibility,
         (1.0 + A_ATT / (4.0 + A_ATT)) / 2.0
     );
-    assert_eq!(stranger.groups["t1"].base.credibility, 0.5);
+    assert_eq!(stranger.groups["t1"].credibility, 0.5);
     // Saying the same thing again joins the group and changes nothing (EV7).
     let before = parent.r.clone();
     let out = parent
@@ -231,7 +231,7 @@ fn teaching_counts_by_trust_and_repeats_do_not_refresh() {
         .unwrap();
     assert_eq!(parent.r.tendencies, before.tendencies);
     assert!(out.changes.is_empty());
-    assert_eq!(parent.groups["t1"].base.members, ["e5", "e9"]);
+    assert_eq!(parent.groups["t1"].members, ["e5", "e9"]);
     // Teaching does not enter r_k.
     assert_eq!(find(&parent, "rec-1").magnitude_weight, 0.0);
     check_world(&f, &parent);
@@ -281,13 +281,13 @@ fn subnormal_edge_u_zero_with_m_nonzero_is_carried_and_recovers() {
     };
     w.apply(&f, &event(vec![], vec![teach])).unwrap();
     let t = find(&w, "rec-1").clone();
-    assert_eq!((t.base.group_count.0, t.base.flip_count.0), (2, 0));
+    assert_eq!((t.group_count.0, t.flip_count.0), (2, 0));
     assert_eq!(
         (t.magnitude_sum.to_bits(), t.magnitude_weight.to_bits()),
         (1, 0),
         "the reviewer's bit patterns"
     );
-    assert_eq!(t.base.typical_magnitude, 0.0);
+    assert_eq!(t.typical_magnitude, 0.0);
     check_world(&f, &w);
     // The next step without evidence: R unchanged.
     let before = w.r.clone();
@@ -303,7 +303,7 @@ fn subnormal_edge_u_zero_with_m_nonzero_is_carried_and_recovers() {
         vec![on("rec-1", 1.0)],
     );
     w.apply(&f, &event(vec![], vec![g3])).unwrap();
-    assert_eq!(find(&w, "rec-1").base.group_count.0, 3);
+    assert_eq!(find(&w, "rec-1").group_count.0, 3);
     check_world(&f, &w);
 }
 

@@ -1,13 +1,15 @@
 //! One tendency's evidence count under the v2.0 §5.2 reference form (D4).
 //!
-//! State lives in the IDL `Tendency`: A_k (`evidence_a`), B_k (`evidence_b`,
-//! which includes n₀ + κ_k), ĥ_k, N_k, F_k, the last nonzero sign and π_k.
+//! State lives in the IDL `TendencyV2` (ADR 0016): A_k (`evidence_a`), B_k
+//! (`evidence_b`, which includes n₀ + κ_k), ĥ_k, N_k, F_k, the last nonzero sign
+//! and π_k. The typical-magnitude sums M_k, U_k and r_k are updated with them
+//! in `replay::record_group`.
 //! The recurrence is the canonical definition; the closed form Σ Πρ·W·S is
 //! never used (LAW-7). Time is not an input: without a new group nothing
 //! changes (LP5).
 
 use core_types::generated::{
-    ConceptRef, EvidenceSign, NatureVector, PersonRelation, Tendency, TrilingualText,
+    ConceptRef, EvidenceSign, NatureVector, PersonRelation, TendencyV2, TrilingualText,
 };
 use core_types::scalar::DecimalU64;
 use core_types::semantic;
@@ -35,12 +37,12 @@ pub fn is_personality(pi: f64) -> bool {
 }
 
 /// The prior P_k of a stored tendency.
-pub fn prior(t: &Tendency) -> f64 {
+pub fn prior(t: &TendencyV2) -> f64 {
     t.attachment_prior.unwrap_or(0.0)
 }
 
 /// Evidence amount V_k = (B_k − c₀) + P_k used by the capacity fuse (V2-43).
-pub fn evidence_amount(t: &Tendency, law: &Law) -> LawResult<f64> {
+pub fn evidence_amount(t: &TendencyV2, law: &Law) -> LawResult<f64> {
     finite(
         t.evidence_b - law.base(t.predicate.len())? + prior(t),
         "evidence amount",
@@ -60,7 +62,7 @@ pub struct Origin<'a> {
     pub initial_evidence: f64,
 }
 
-pub fn initial(law: &Law, o: &Origin<'_>) -> LawResult<Tendency> {
+pub fn initial(law: &Law, o: &Origin<'_>) -> LawResult<TendencyV2> {
     semantic::check_direction(o.direction).map_err(|e| LawError::InvalidInput(e.to_string()))?;
     if o.predicate.is_empty() {
         return Err(LawError::InvalidInput(
@@ -83,7 +85,7 @@ pub fn initial(law: &Law, o: &Origin<'_>) -> LawResult<Tendency> {
             o.tendency_id
         )));
     }
-    Ok(Tendency {
+    Ok(TendencyV2 {
         schema_version: 1,
         tendency_id: o.tendency_id.to_owned(),
         concept: o.concept.clone(),
@@ -99,14 +101,16 @@ pub fn initial(law: &Law, o: &Origin<'_>) -> LawResult<Tendency> {
         typical_magnitude: 0.0,
         relation: o.relation.cloned(),
         attachment_prior: o.prior,
+        magnitude_sum: 0.0,
+        magnitude_weight: 0.0,
     })
 }
 
-/// A stored tendency must satisfy the codec-level semantics (V2-32) and agree
+/// A stored tendency must satisfy the semantic checks (V2-32, ADR 0016 §3) and agree
 /// bit for bit with the law: ĥ and π are functions of the counts and sums.
-pub fn check_stored(t: &Tendency, law: &Law) -> LawResult<()> {
+pub fn check_stored(t: &TendencyV2, law: &Law) -> LawResult<()> {
     let bad = |m: &str| LawError::InconsistentState(format!("{}: {m}", t.tendency_id));
-    semantic::check_tendency(t).map_err(|e| bad(&e.to_string()))?;
+    semantic::check_tendency_v2(t).map_err(|e| bad(&e.to_string()))?;
     let (n, f) = (t.group_count.0, t.flip_count.0);
     if n > MAX_GROUPS {
         return Err(bad("group count beyond 2^53"));
@@ -137,22 +141,22 @@ fn sign_of(s: f64) -> Option<EvidenceSign> {
 }
 
 /// ρ_k = 1 − ĥ_k from the counts before the group (D4).
-pub fn rho(t: &Tendency, law: &Law) -> LawResult<f64> {
+pub fn rho(t: &TendencyV2, law: &Law) -> LawResult<f64> {
     finite(1.0 - law.h_hat(t.group_count.0, t.flip_count.0)?, "rho")
 }
 
-/// Record one group with weight W ≥ 0 and support S ∈ [−1, 1] (D4): multiply
-/// the old evidence by the current ρ_k, then add the group. Returns the ρ used.
-/// The typical magnitude r_k is updated by `replay::record_group` (ADR 0016).
-pub fn record(t: &mut Tendency, law: &Law, w: f64, s: f64) -> LawResult<f64> {
-    let r = rho(t, law)?;
-    apply(t, law, r, w, s)?;
-    Ok(r)
+/// Record one group with weight W ≥ 0 and support S ∈ [−1, 1] that brings no
+/// projection (D4): multiply the old evidence by the current ρ_k, then add the
+/// group. M_k and U_k only decay, as for a teaching group (ADR 0016). Returns
+/// the ρ used. Experience groups go through `replay::record_group` with their
+/// μ and p_c.
+pub fn record(t: &mut TendencyV2, law: &Law, w: f64, s: f64) -> LawResult<f64> {
+    super::replay::record_group(t, law, w, s, 0.0, None)
 }
 
 /// The recurrence for a given ρ. The canonical path is `record`; tests call
 /// this with a constant ρ to check the corollaries that assume one.
-pub(super) fn apply(t: &mut Tendency, law: &Law, rho: f64, w: f64, s: f64) -> LawResult<()> {
+pub(super) fn apply(t: &mut TendencyV2, law: &Law, rho: f64, w: f64, s: f64) -> LawResult<()> {
     if !w.is_finite() || w < 0.0 || !s.is_finite() || !(-1.0..=1.0).contains(&s) {
         return Err(LawError::InvalidInput(format!(
             "{}: group needs W >= 0 and S in [-1, 1]",
@@ -195,7 +199,7 @@ pub(super) fn apply(t: &mut Tendency, law: &Law, rho: f64, w: f64, s: f64) -> La
 }
 
 /// E = Σ_{S>0} ω·W·|S| and C = Σ_{S<0} ω·W·|S| (v2.0 §5.3), from the stored sums.
-pub fn consistent_and_contrary(t: &Tendency, law: &Law) -> LawResult<(f64, f64)> {
+pub fn consistent_and_contrary(t: &TendencyV2, law: &Law) -> LawResult<(f64, f64)> {
     let total = t.evidence_b - law.base(t.predicate.len())?;
     Ok(((total + t.evidence_a) / 2.0, (total - t.evidence_a) / 2.0))
 }

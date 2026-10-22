@@ -19,7 +19,7 @@ fn base(l: &Law) -> f64 {
     l.base(1).unwrap()
 }
 
-fn e_c(t: &core_types::generated::Tendency, l: &Law) -> (f64, f64) {
+fn e_c(t: &core_types::generated::TendencyV2, l: &Law) -> (f64, f64) {
     consistent_and_contrary(t, l).unwrap()
 }
 

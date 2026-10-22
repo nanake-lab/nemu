@@ -2,7 +2,8 @@
 //! store is opened (AGENTS.md golden rule 14).
 
 use core_types::generated::{
-    ConceptRef, LawParameters, NatureVector, PersonRelation, RelationKind, Tendency, TrilingualText,
+    ConceptRef, LawParameters, NatureVector, PersonRelation, RelationKind, TendencyV2,
+    TrilingualText,
 };
 
 use crate::law::{Law, Origin, initial};
@@ -68,7 +69,7 @@ pub fn vector(v: [f64; 4]) -> NatureVector {
 }
 
 /// A fresh one-condition tendency along the connection channel.
-pub fn tendency(law: &Law, id: &str, prior: Option<f64>) -> Tendency {
+pub fn tendency(law: &Law, id: &str, prior: Option<f64>) -> TendencyV2 {
     let predicate = [text("situation")];
     let direction = vector([1.0, 0.0, 0.0, 0.0]);
     let concept = concept(id);

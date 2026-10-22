@@ -5,7 +5,7 @@
 //! recency weight (ρ = 1, as in corollary 4), and as the group's own effect
 //! on top of the same decay.
 
-use core_types::generated::Tendency;
+use core_types::generated::TendencyV2;
 
 use crate::law::recurrence::apply;
 use crate::law::shares::{ShareInput, shares};
@@ -15,7 +15,7 @@ use super::fixture::{law, tendency};
 use super::pyrandom::PyRandom;
 
 /// A random history of `n` mixed groups under the learned ρ.
-fn history(rng: &mut PyRandom, l: &Law, n: i64) -> Tendency {
+fn history(rng: &mut PyRandom, l: &Law, n: i64) -> TendencyV2 {
     let mut t = tendency(l, "k", None);
     for _ in 0..n {
         let (w, s) = (rng.uniform(0.0, 3.0), rng.uniform(-1.0, 1.0));
@@ -25,7 +25,7 @@ fn history(rng: &mut PyRandom, l: &Law, n: i64) -> Tendency {
 }
 
 /// π after the decay alone, without the group's own contribution.
-fn decayed_pi(t: &Tendency, l: &Law) -> (f64, f64) {
+fn decayed_pi(t: &TendencyV2, l: &Law) -> (f64, f64) {
     let r = rho(t, l).unwrap();
     let c0 = l.base(t.predicate.len()).unwrap();
     let a = r * t.evidence_a;
