@@ -37,7 +37,7 @@
 | en | 4275.36 | 6023.06 |
 | ja | 5138.41 | 7545.92 |
 
-完整三组分段、token和额度见 review-r1/REMOTE-COMPARISON.md 与 remote-comparison.json。A/B/C缺失项不相加边际百分位填数，待P0-09汇总P4数据。技术修订交Claude复审，#29的unverified不提前去掉；P0-09用户决定仍阻塞合并。
+完整三组分段、token和额度见 review-r1/REMOTE-COMPARISON.md 与 remote-comparison.json。A/B/C缺失项不相加边际百分位填数，待P0-09汇总P4数据。Claude复审已通过（评论6336674655）。架构决定不阻塞本卡，移交 P0-09；PR #50由用户合并，确认合并后再移除#29的unverified。
 
 ---
 

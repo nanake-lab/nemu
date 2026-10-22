@@ -39,7 +39,7 @@ PR #50 继续部分完成后合并的 #29。#29 已加 unverified，第二部分
 | Node 单测 / 语法 / help（合并后） | 7 项通过，10 个 mjs 及 help 退出 0 | checks/final-after-main/04、08、09 日志 |
 | Python CPU / Ruff / strict mypy（合并后） | 10 项通过；Ruff 通过，4 文件 mypy 无问题 | checks/final-python-native/ |
 | CI | 以 PR #50 最新检查为准；草稿阶段 Windows 默认跳过 | GitHub PR checks |
-| P0-09 用户确认 | 未完成，仍为阻塞 | decision.md、BLOCKED.md |
+| P0-09 用户确认 | 不阻塞，移交 P0-09；本卡测量与报告已完成 | decision.md、BLOCKED.md |
 
 ## 规格对照
 
@@ -66,7 +66,7 @@ PR #50 继续部分完成后合并的 #29。#29 已加 unverified，第二部分
 
 ## 待用户确认
 
-- [ ] （阻塞）P0-09 确认后端、截止时间及最终延迟目标；A/B/C 完整链未测，保持 null。
+- [ ] （不阻塞，移交 P0-09）确认后端、截止时间及最终延迟目标；A/B/C 完整链未测，保持 null。
 - [ ] （本次交付审查门槛）Claude 审查第二部分及 #29 历史未核验内容；审查后决定 #29 标签去除。
 - [ ] （正式配置后续门槛）按既有范围请求走 ADR；本 PR 不修改 helpers.json、models.lock.json 或正式部署 profile。
 
