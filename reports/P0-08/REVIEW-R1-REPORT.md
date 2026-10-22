@@ -62,9 +62,9 @@ reasoning为output子集、cached input为input子集。原low超时行的用量
 | 本地100正式行/50对、2预热、来源/Schema/输出SHA、源码绑定 | 通过 | local-breakdown-analysis.log、local-breakdown/summary.json、local-source-archives.json |
 | GPU窗口及P4错开 | 已确认；05:18:12Z前置，05:43:59Z完成，之后通知恢复runner | quiet-window-preflight.json、local-breakdown/quiet-window.json、原始运行日志；逐臂前重复检查 |
 | 控制与审批行为 | 沿用原第二部分证据，未冒充在隔离无工具线程重测 | PART2-REPORT.md及part2控制日志 |
-| 新代码最终静态/测试 | 同步main后重跑，结果另附 | review-r1/final-checks/ |
+| 新代码最终静态/测试 | 通过：lint/typecheck；29文件443项仓库测试；Python13项；Node13项；Ruff及7文件strict mypy；18个JS语法检查 | review-r1/final-checks/（25份原始日志） |
 
-新Node守卫/环境过滤/目录派生的7项预测通过；之前13项Python、9项Node及7文件ruff/mypy通过。初次mypy失败、旧CMD调用失败、协议违规和超时原记录保留，不用重跑覆盖原因。最终合并后检查以 final-checks 为准。
+新Node守卫/环境过滤/目录派生的7项预检通过；之前13项Python、9项Node及7文件ruff/mypy通过。初次mypy失败、旧CMD调用失败、协议违规和超时原记录保留，不用重跑覆盖原因。最终合并后检查以 final-checks 为准。
 
 ## 新增依赖
 
@@ -76,3 +76,10 @@ reasoning为output子集、cached input为input子集。原low超时行的用量
 - 等Claude复审本次三个问题及工具面新发现；#29的unverified在复审通过前保持。
 - （不阻塞，本卡不扩展）A/B/C端到端P50/P90保持null，P0-09汇总P4数据；本地解析失败和来源质量如实记录。
 - 按用户本次明确要求，最终检查完成后转为可审查供Claude复审，不表示P0-09已批准或允许合并。未取下一卡。
+
+## 最终同步与执行证据
+
+- 已merge origin/main bf69c3244f76435ae560c3ba8dff4a2817c5cfa9，检查基线HEAD为84ef0f0e2b13a04c0bde24f815645990c6b37b91。这次主线仅新增P0-09议程，AGENTS与本卡无变化；已全文阅读议程。用户已表态关键路径低推理、后台理解可高推理；“两层”架构仍待决定，本卡未实施。
+- 机械检查由routine_reporter角色执行，固定Luna/max，主代理核对25份日志均退出0；本地TOML自动加载能力未验证。18个JS语法检查针对最终字节。审计脚本EOF空行在lint期间删除，无语义变化；另以lint-final-bytes.log记录最后一次lint。
+- 远程和本地分析器在merge后重算通过，post-merge-remote-analysis.log、post-merge-local-analysis.log保留。范围和凭据模式扫描见final-scope-scan.json：无范围外文件、无凭据模式命中；此扫描不是一般秘密泄漏证明，未打开任何auth文件。原始日志不为消除空白警告而改写。
+- CI状态与最终提交在PR页面跟踪；技术修订开放复审不等于P0-09批准。

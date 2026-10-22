@@ -63,4 +63,3 @@ for (const [disableOrchestratorMcp, isolateAppContext] of isolatedOnly ? [[true,
 }
 const isolated = records.filter(record => record.isolateAppContext);
 if (isolated.length !== 2 || isolated.some(record => record.errorClass || record.rawToolCallNames.length || record.mcpServerCountAfter !== 0 || record.configuredOrchestratorMcpEnabled !== false || record.configuredPluginsEnabled !== false || record.configuredCloudSkillsEnabled !== false)) process.exitCode = 2;
-

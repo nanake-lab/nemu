@@ -30,3 +30,7 @@
 ## 补测完成
 
 新隔离low语音150与IRL200全部完成并通过覆盖、零工具/逐条零MCP核验；IRL完成P50/P90=6524.99/9269.47ms，Schema200/200、来源147/200。最终结果以 REVIEW-R1-REPORT.md、decision.md 和 review-r1/remote-comparison.json 为准。以下进入最新main同步、检查与开放复审。
+
+## 同步后检查完成
+
+已merge最新main bf69c32（P0-09议程）。443项仓库测试、13项Python、13项Node、Ruff、7文件strict mypy、18个JS语法检查全部通过；日志由主代理核对。数据分析在merge后重算通过。等待推送与CI，按用户本次要求开放Claude复审；#29标签仍在。最终状态以PR和REVIEW-R1-REPORT.md为准。
