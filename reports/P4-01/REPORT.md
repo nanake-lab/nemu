@@ -1,7 +1,7 @@
 # P4-01 语音识别与语言识别 — 报告
 
 ## 结果
-当前：混合参考盲标页已准备，等待用户26条final标注（21条待标+随机5条抽检）。工具搜索和延迟优化已按用户要求停止；39条既有数据描述性分析已完成，门限/目标取舍交N0/P0-09，正式60条重测尚未开始。PR保持草稿与needs-user。
+当前：26 条人工标注已接收核验，日文第 013 条按用户明确复听确认采用人工起点；冻结参考为 38 自动＋22 人工。原参数全 60 条正式重放已完成且资源窗口有效：VAD 中位 320.16 ms（目标 ≤300），打断中位 285.26 ms、56/60 超过 250 ms，另 1 条提前 5074.35 ms，延迟验收 FAIL。文字注记修正后，既有 150 条推断重计分仍通过。整卡部分完成，等待 N0/P0-09 决定延迟设计与目标；不再等待用户标注或复核，PR 保持草稿与 needs-user，不合并。详见 FORMAL-LATENCY-HYBRID-V2.md。
 
 此前结果（原记录保留）：
 部分完成：用户已验证全部转写，60 条用户录音已登记，完整 150 条识别评测通过；SenseVoice 开发许可方案已决定。已生成 60/60 独立模型参考（全量上下文稳定性复核仅 39/60 满足门槛，参考可靠性未通过）；执行方已完成 60 条完整实时延迟测量，但 VAD 中位 320.1 ms、59 条打断超限，延迟验收未通过，不再等待用户提供或确认录音。不得据此宣称整卡验收完成。
@@ -38,20 +38,20 @@ pnpm asr:latency      # 使用仓库外 timing-references.json 的独立起止�
 | --- | --- | --- |
 | 模型下载/哈希 | 三文件已校验；SenseVoice int8 239233841 字节 | lock、manifest、model-hashes.json |
 | 公开数据准备 | 90 条，三语各 30，三个 Parquet SHA-256 与官方 LFS 元数据一致 | public-download.log、public-data.lock.json |
-| P4-01 单测 / 整仓 Vitest | 整仓 36 文件、479/479，通过 | final-resume-tests.log |
-| TypeScript 类型检查 | 通过 | final-resume-typecheck.log |
-| ESLint | 通过 | final-resume-lint.log |
-| Python mypy --strict / 辅助测试 | 8 个文件通过；11 项测试通过，使用 D 盘环境 | resume-mypy.log、resume-python-tests.log |
+| P4-01 单测 / 整仓 Vitest | 整仓 40 文件、494/494，通过（最新 main 同步后） | hybrid-v2-after-final-sync-tests.log |
+| TypeScript 类型检查 | 通过（最新 main 同步后） | hybrid-v2-after-final-sync-typecheck.log |
+| ESLint | 通过（最新 main 同步后） | hybrid-v2-after-final-sync-lint.log |
+| Python mypy --strict / 辅助测试 | 本轮 3 文件通过，完整辅助测试 18 项通过；历史工具检查另外保留 | hybrid-v2-final-mypy.log、hybrid-v2-final-python-tests.log |
 | workspace build | 同步 main 并补齐桌面工作区依赖后通过，路径函数已打入主进程包 | final-resume-build.log |
 | 完整 Electron E2E（构建后 Playwright） | 4 通过，专门静音 CPU 测量 1 项按设计跳过且随后单独实测通过；已正确初始化 run.json，含 OS 快照，整体退出 0 | resume-e2e.log、resume-e2e-*/ |
 | 真实麦克风/utility 通道测试 | 通过：50 packets/s、异步关闭，未读取真实用户麦克风，使用 Chromium fake device | voice-e2e-v5.log、e2e-v5/ |
 | Electron 首次测试 | 失败，原始日志保留。与 CI 窗口重叠且临时目录前缀不符合隔离约束；不能据失败推断单一原因 | voice-e2e.log、e2e/ |
 | Electron 第二次测试 | 安静窗口检查把 PowerShell 空列表 null 当成占用，已修正；等待最终复跑 | voice-e2e-v2.log、e2e-v2/ |
-| 各语言 50 条/150 条语言准确率 | 用户录音 60/60 已验证并登记；zh CER 6.29%、en WER 6.69%、ja CER 7.52%，LID 149/150 = 99.33%，通过 | evaluation.json、eval150-user-verified.log、user-verification-20261021.json |
+| 各语言 50 条/150 条语言准确率 | 人工注记修正后的既有推断重计分：zh CER 6.29%、en WER 6.69%、ja CER 7.59%，LID 149/150=99.33%，通过；非新推断 | evaluation-human-reference-v2.json、annotation-text-rescore.log |
 | 公开集 CER/WER 与 LID | 中文 74/989 = 7.48%，英文 54/664 = 8.13%，日文 126/1438 = 8.76%；LID 90/90 = 100% | public90-before-user-verification.json、public-evaluation.log |
-| 独立语音起止参考 | 60/60 数值有效，方法 v4 在测量前提交；上下文敏感性与负延迟样本仍待复核。80 ms 网格是模型分辨率，不代表已经校准的误差上限 | ALIGNMENT-PREREGISTRATION-V4.md、alignment-v4-evidence.json、alignment-v4-diagnostics.json |
-| VAD 中位延迟 ≤300 ms | **FAIL：320.1 ms**；60/60 实时完整，最大重放迟到 17.35 ms，未超过 20 ms 无效门槛；另 1 条结束事件相对参考提前，保留原值 | latency.json、latency-attempt-2026-10-21T15-52-58-219Z.json、resume-latency-v2.log |
-| 打断延迟 ≤250 ms | **FAIL：59/60 超过 250 ms**，最大 1340.5 ms；余下 1 条为 -119.9 ms 提前值，不能当通过。无缺事件 | latency.json、同轮唯一尝试与日志 |
+| 独立语音起止参考 | 当前冻结 38 自动＋22 人工；原抽检 4/5 在 80 ms 内，ja-013 用户确认人工起点，原失败保留；自动其余点未经逐条人工校准 | hybrid-reference-registration-v2.json、MANUAL-AUDIT-RESULT.md |
+| VAD 中位延迟 ≤300 ms | **FAIL：320.16 ms**；有效全 60 条，最大迟包 11.27 ms，0 提前结束/缺事件 | latency-attempt-2026-10-22T09-39-20-062Z.json、FORMAL-LATENCY-HYBRID-V2.md |
+| 打断延迟 ≤250 ms | **FAIL：中位 285.26 ms，56/60 超过 250 ms**，另 1 条提前 5074.35 ms，不能算通过；0 缺事件 | 同轮唯一尝试、formal-hybrid-v2-summary.json |
 | utilityProcess 静音 CPU ≤2% | 迁移后复测 60.73 秒；平均 0.11191%、峰值 0.14086%，通过。此前结果另存，未覆盖历史证据 | idle-cpu.json、resume-idle.log、measurement-*/ |
 
 CER/WER 采用总编辑距离/总参考单位数；NFKC、小写、去 Unicode 标点与符号，中文日文逐 Unicode 字符、英文按空白分词。没有繁简替换、数字语义替换或删除失败样本。公开集和用户集计数分别记录；不足每语 30+20 时状态固定为“待用户录音”，不会返回完整 PASS。
@@ -314,3 +314,20 @@ annotation/index.html为715行独立离线模板，包含可访问的操作控�
 当前下一步：等待用户导出26条final JSON；先导入并报告所有>80 ms抽检偏差，处理后冻结混合参考，在无Blender/Electron/Playwright/GPU测量/Runner.Worker的窗口从头完整测60条。此次39条分析不当作正式结果。PR保持草稿与needs-user，不合并、不取下一张卡。
 
 本轮测试生成的8个已归类logs/*.log保留在工作树，未提交；其D盘只读副本及SHA见manual-generated-test-logs.json。自动审批拒绝了原归档/清理命令，返回理由仅为“blocked by policy”；随后只复制证据，不移动或删除原文件。该情况不影响标注页、分析或PR草稿状态。最终页面字节级校验见manual-page-integrity.json；校验器首次把CRLF文本归一化后重新编码而造成SHA断言失败，改为直接校验原始字节后通过，页面未改动，记录保留于manual-page-integrity-checker-note.log。
+
+
+## 2026-10-22 人工标注与原参数正式测量（当前结论）
+
+- 人工标注及五条抽检已处理：原抽检 4/5 在 80 ms 内，ja-013 自动起点相差 5454.875 ms，用户明确确认人工正确。原失败保留，38 自动＋22 人工冻结后从头测 60 条。详见 MANUAL-AUDIT-RESULT.md、HYBRID-REFERENCE-V2.md。
+- 正式结果与阶段耗时见 FORMAL-LATENCY-HYBRID-V2.md、formal-hybrid-v2-summary.json。有效完整结果 FAIL；首轮被 CI 中断为 INVALID，分开保留。没有改门限、模型、目标、挑选事件或删样本。
+- 当前识别值：zh CER 6.29%、en WER 6.69%、ja CER 7.59%，LID 99.33%；这是人工注记修正后的既有 150 条推断重计分，非新模型运行。新增命令 `pnpm eval:asr:annotations`，来源和音频哈希校验后生成版本化私有 manifest 与公开结果，原文件不覆盖。
+- 静态/单元回归：lint、typecheck、40 文件 494 项 Vitest、18 项 Python 测试、3 文件 mypy strict 通过；同步最新 main 后检查另留 hybrid-v2-after-final-sync-*.log。没有新增依赖或模型。本轮只读核验按 routine_reporter 角色进行，360 个逐条数值一致，不由子代理裁决验收。
+- 与 main 同步到 a5a3091；本卡 AGENTS/契约/架构/任务卡无新变化。9fbc213 合并期间共享 package.json 的本地错误提交与显式修复记录见 MANUAL-AUDIT-RESULT.md；不重写历史。
+
+### 待用户确认（当前）
+- [x] 2026-10-21 已决定：SenseVoice 用于开发，每位用户自行下载，不随应用分发，redistributable=false；保留 FunASR 出处和模型名，P7 正式发布前重评。原许可阻塞记录保留。
+- [x] 2026-10-22 用户完成 26 条标注，并明确确认 ja-013 在 6.695 秒之前无语音、人工起点正确。无需再次标注或重录。
+- [ ] （阻塞）N0/P0-09 决定延迟目标、持续门限与误打断的取舍；当前 300/250 ms 验收未通过，现有实现保持不变。后续完整路径验证与重新验收须依据获批决定，本报告不作通过承诺。
+
+### 下一步（当前）
+等待 N0/P0-09 评审决定；PR #44 保持草稿及 needs-user，不提交 Claude 提前审查、不合并、不取下一卡。用户原始录音、文字及标注保存在 D 盘仓库外；工作树生成的 logs/ 已归类且未提交，不清理原件。

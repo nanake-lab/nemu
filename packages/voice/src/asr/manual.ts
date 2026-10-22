@@ -6,7 +6,8 @@ import { evaluationDirectory, evaluationEnvironment } from './cache.js';
 if (process.env.CI)
   throw new Error('Human audio annotation is local-only; CI does not access recordings');
 const mode = process.argv[2];
-if (mode !== 'prepare' && mode !== 'import') throw new Error('Expected prepare or import');
+if (mode !== 'prepare' && mode !== 'import' && mode !== 'rescore')
+  throw new Error('Expected prepare, import or rescore');
 if (mode === 'import' && !process.argv[3]) throw new Error('Pass the final annotation JSON path');
 const python = join(
   evaluationDirectory(),
@@ -15,7 +16,11 @@ const python = join(
 );
 const script = fileURLToPath(
   new URL(
-    mode === 'prepare' ? './alignment/manual_page.py' : './alignment/manual_import.py',
+    mode === 'prepare'
+      ? './alignment/manual_page.py'
+      : mode === 'rescore'
+        ? './alignment/rescore_annotation.py'
+        : './alignment/manual_import.py',
     import.meta.url,
   ),
 );

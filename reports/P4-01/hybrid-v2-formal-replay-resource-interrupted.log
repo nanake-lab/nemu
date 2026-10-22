@@ -1,0 +1,45 @@
+$ tsx packages/voice/src/asr/latency.ts
+Replayed 1/60 user-zh-001
+Replayed 2/60 user-zh-002
+Replayed 3/60 user-zh-003
+Replayed 4/60 user-zh-004
+Replayed 5/60 user-zh-005
+Replayed 6/60 user-zh-006
+Replayed 7/60 user-zh-007
+Replayed 8/60 user-zh-008
+Replayed 9/60 user-zh-009
+Replayed 10/60 user-zh-010
+Replayed 11/60 user-zh-011
+Replayed 12/60 user-zh-012
+Replayed 13/60 user-zh-013
+Replayed 14/60 user-zh-014
+Replayed 15/60 user-zh-015
+Replayed 16/60 user-zh-016
+Replayed 17/60 user-zh-017
+Replayed 18/60 user-zh-018
+Replayed 19/60 user-zh-019
+Replayed 20/60 user-zh-020
+Replayed 21/60 user-en-001
+Replayed 22/60 user-en-002
+Replayed 23/60 user-en-003
+Replayed 24/60 user-en-004
+Replayed 25/60 user-en-005
+Replayed 26/60 user-en-006
+Replayed 27/60 user-en-007
+Replayed 28/60 user-en-008
+Replayed 29/60 user-en-009
+Replayed 30/60 user-en-010
+Replayed 31/60 user-en-011
+Replayed 32/60 user-en-012
+C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:92
+  if (busy.length) throw new Error(`Quiet window unavailable: ${JSON.stringify(busy)}`);
+                         ^
+
+Error: Quiet window unavailable: [{"Name":"Runner.Worker.exe","ProcessId":37804,"reason":"heavy-process"}]
+    at validateProcesses (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:92:26)
+    at inspectQuietSnapshotAsync (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:104:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async assertQuietAsync (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:121:3)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.
