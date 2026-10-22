@@ -28,6 +28,7 @@ for (const [index, fixture] of fixtures.entries()) {
   if (pair.some((row, i) => row.caseId !== fixture.id || row.arm !== expected[i] || row.index !== index + 1) || pair[0].inputTokens !== pair[1].inputTokens) throw Error("Matched pair order/input mismatch");
 }
 for (const row of rows) {
+  if (!Array.isArray(row.tokenTimesMs) || row.tokenTimesMs.length !== row.outputTokens || row.tokenTimesMs[0] !== row.firstTokenMs || row.tokenTimesMs.at(-1) !== row.lastTokenMs) throw Error("Generated token trace mismatch");
   if ([row.completedMs, row.firstTokenMs, row.lastTokenMs, row.prefillWallMs, row.prefillCudaElapsedMs].some(value => !Number.isFinite(value) || value <= 0) || row.lastTokenMs < row.firstTokenMs || row.completedMs < row.lastTokenMs) throw Error("Local timing boundary invalid");
   const { outputText, candidate } = await readJson(resolve(base, `outputs/${row.caseId}-${row.arm}.json`));
   let parsed = null;
@@ -45,11 +46,14 @@ const arms = Object.fromEntries(["unconstrained", "constrained"].map(arm => {
 const pairs = fixtures.map(fixture => {
   const constrained = rows.find(row => row.caseId === fixture.id && row.arm === "constrained");
   const unconstrained = rows.find(row => row.caseId === fixture.id && row.arm === "unconstrained");
-  return { caseId: fixture.id, completionRatio: constrained.completedMs / unconstrained.completedMs, decodeRateRatio: unconstrained.decodeTokensPerSecond !== null && constrained.decodeTokensPerSecond !== null ? unconstrained.decodeTokensPerSecond / constrained.decodeTokensPerSecond : null, constraintCallbackShare: constrained.constraintCallbackWallMs / constrained.completedMs };
+  const matchedTokens = Math.min(constrained.outputTokens, unconstrained.outputTokens);
+  const constrainedSpan = constrained.tokenTimesMs[matchedTokens - 1] - constrained.firstTokenMs;
+  const unconstrainedSpan = unconstrained.tokenTimesMs[matchedTokens - 1] - unconstrained.firstTokenMs;
+  return { caseId: fixture.id, completionRatio: constrained.completedMs / unconstrained.completedMs, decodeRateRatio: unconstrained.decodeTokensPerSecond !== null && constrained.decodeTokensPerSecond !== null ? unconstrained.decodeTokensPerSecond / constrained.decodeTokensPerSecond : null, matchedTokens, matchedPrefixDecodeRateRatio: matchedTokens > 1 && unconstrainedSpan > 0 ? constrainedSpan / unconstrainedSpan : null, constraintCallbackShare: constrained.constraintCallbackWallMs / constrained.completedMs };
 });
 const original = (await readRows(resolve(root, "reports/P0-08/part2/local-irl-20261022-v2/samples.jsonl"))).filter(row => !row.warmup).slice(0, 50);
 const result = {
-  arms, paired: { completionRatio: summary(pairs.map(pair => pair.completionRatio)), unconstrainedToConstrainedDecodeRateRatio: summary(pairs.map(pair => pair.decodeRateRatio)), constraintCallbackShare: summary(pairs.map(pair => pair.constraintCallbackShare)) }, pairs,
+  arms, paired: { completionRatio: summary(pairs.map(pair => pair.completionRatio)), unconstrainedToConstrainedDecodeRateRatio: summary(pairs.map(pair => pair.decodeRateRatio)), matchedPrefixDecodeRateRatio: summary(pairs.map(pair => pair.matchedPrefixDecodeRateRatio)), constraintCallbackShare: summary(pairs.map(pair => pair.constraintCallbackShare)) }, pairs,
   originalFirst50: { outputTokens: summary(original.map(row => row.outputTokens)), totalTokensPerSecond: summary(original.map(row => row.outputTokens * 1000 / row.completedMs)), constrainedOutputHashMatches: original.filter(row => rows.find(item => item.caseId === row.caseId && item.arm === "constrained").outputSha256 === row.outputSha256).length },
   method: "50 fixed fixtures; 17 zh/17 en/16 ja. Alternating arm order, one warmup per arm excluded. Both arms use the same streamer/first-forward hooks. Prefill CUDA elapsed is a stream span, not a sum of kernel-only compute. First token is a generated token ID, not audible speech. Callback wall time includes its own Python/CPU transfers. Outputs can differ in length, content and cap incidence; rates and paired ratios are descriptive, not a causal decomposition of every millisecond. Original 200-case backend rule population remains unchanged."
 };

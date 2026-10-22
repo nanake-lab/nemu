@@ -1,0 +1,43 @@
+{
+  "caseId": "case-0072",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0072",
+    "nodes": [
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0072"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "昼食の時刻を変更する",
+        "roles": [
+          {
+            "role": "対象",
+            "value": "昼食"
+          },
+          {
+            "role": "変更後の時刻",
+            "value": "24時"
+          },
+          {
+            "role": "条件",
+            "value": "会議が延びる"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      }
+    ]
+  }
+}

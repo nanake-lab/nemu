@@ -1,3 +1,5 @@
+> 复审修订提示（2026-10-22）：下文为原 max 对照与本地 200 条的历史结果。max 是用户明确指定的配置。当前补测与修订口径见 REVIEW-R1-STATUS.md、REVIEW-R1-METHODS.md；部署结论以 decision.md 为准，所有机械后端/P90 输出均不可部署。
+
 # P0-08 Codex app-server 与 IRL 路径验证：第二部分 — 报告
 
 ## 结果

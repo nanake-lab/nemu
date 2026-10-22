@@ -1,0 +1,52 @@
+{
+  "caseId": "case-0017",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0017",
+    "nodes": [
+      {
+        "id": "n1",
+        "sourceRefs": [
+          "p0-08-0017"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "I said Wednesday, not Tuesday."
+      },
+      {
+        "id": "n2",
+        "sourceRefs": [
+          "p0-08-0017"
+        ],
+        "sourceSpan": [
+          22,
+          43
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "date_is_day",
+        "roles": [
+          {
+            "role": "date",
+            "value": "the date"
+          }
+        ],
+        "value": "6",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

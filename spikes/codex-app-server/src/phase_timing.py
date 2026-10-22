@@ -15,6 +15,7 @@ class TokenClock:
         self.first_ms: float | None = None
         self.last_ms: float | None = None
         self.generated = 0
+        self.token_ms: list[float] = []
 
     def put(self, value: object) -> None:
         if not self.prompt_seen:
@@ -25,6 +26,7 @@ class TokenClock:
             self.first_ms = elapsed
         self.last_ms = elapsed
         self.generated += 1
+        self.token_ms.append(elapsed)
 
     def end(self) -> None:
         return

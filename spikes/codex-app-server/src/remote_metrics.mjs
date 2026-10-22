@@ -27,6 +27,8 @@ export function remoteMetrics(rows) {
     schemaValid: rows.some(row => "schemaValid" in row) ? rows.filter(row => row.schemaValid).length : null,
     sourceBindingValid: rows.some(row => "sourceBindingValid" in row) ? rows.filter(row => row.sourceBindingValid).length : null,
     rawToolCallCount: rows.flatMap(row => row.rawToolCallNames ?? []).length,
+    rawCaptureRows: rows.filter(row => Array.isArray(row.rawToolCallNames)).length,
+    rawCaptureUnknownRows: rows.filter(row => !Array.isArray(row.rawToolCallNames)).length,
     modelReroutes: rows.filter(row => row.reroute).length
   };
 }

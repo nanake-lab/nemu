@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 const script = fileURLToPath(new URL("./prepare-talk-catalog.mjs", import.meta.url));
-const invoke = (source, output, report) => spawnSync(process.execPath, [script, "--source", source, "--output", output, "--report", report], { encoding: "utf8" });
+const invoke = (source, output, report, extra = []) => spawnSync(process.execPath, [script, "--source", source, "--output", output, "--report", report, ...extra], { encoding: "utf8" });
 
 test("catalog derivation changes only the four Luna tool fields and refuses overwrite", async () => {
   const dir = await mkdtemp(join(tmpdir(), "nemu-catalog-test-"));
@@ -26,6 +26,12 @@ test("catalog derivation changes only the four Luna tool fields and refuses over
     assert.equal(record.reasoningEffortChanged, false);
     assert.equal(record.derivedSha256.length, 64);
     assert.notEqual(invoke(source, output, report).status, 0);
+    const strictOutput = join(dir, "strict-derived.json");
+    const strictReport = join(dir, "strict-report.json");
+    const strict = invoke(source, strictOutput, strictReport, ["--disable-collaboration"]);
+    assert.equal(strict.status, 0, strict.stderr);
+    const isolated = JSON.parse(await readFile(strictOutput, "utf8"));
+    assert.deepEqual(isolated.models, [{ ...derived.models[0], multi_agent_version: "disabled" }, models[1]]);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
 

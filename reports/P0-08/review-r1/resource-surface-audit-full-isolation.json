@@ -1,0 +1,168 @@
+{
+  "runId": "12b33d90-da1e-415b-b49d-ab06f45d969c",
+  "measuredUtc": "2026-10-22T05:53:38.575Z",
+  "model": "gpt-6-luna",
+  "effort": "low",
+  "records": [
+    {
+      "disableOrchestratorMcp": false,
+      "isolateAppContext": false,
+      "requestedTool": "list_mcp_resources",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": null,
+      "configuredPluginsEnabled": null,
+      "configuredCloudSkillsEnabled": null,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_agents",
+        "list_mcp_resources"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ],
+      "completedToolItems": [
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        },
+        {
+          "tool": "list_mcp_resources",
+          "status": "completed",
+          "hasError": false
+        },
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        }
+      ],
+      "mcpServerCountAfter": 3
+    },
+    {
+      "disableOrchestratorMcp": false,
+      "isolateAppContext": false,
+      "requestedTool": "list_mcp_resource_templates",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": null,
+      "configuredPluginsEnabled": null,
+      "configuredCloudSkillsEnabled": null,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_mcp_resource_templates"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ],
+      "completedToolItems": [
+        {
+          "tool": "list_mcp_resource_templates",
+          "status": "completed",
+          "hasError": false
+        },
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        }
+      ],
+      "mcpServerCountAfter": 3
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "isolateAppContext": false,
+      "requestedTool": "list_mcp_resources",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "configuredPluginsEnabled": null,
+      "configuredCloudSkillsEnabled": null,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [],
+      "observedItemTypes": [
+        "userMessage",
+        "agentMessage"
+      ],
+      "completedToolItems": [],
+      "mcpServerCountAfter": 3
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "isolateAppContext": false,
+      "requestedTool": "list_mcp_resource_templates",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "configuredPluginsEnabled": null,
+      "configuredCloudSkillsEnabled": null,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_mcp_resource_templates"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ],
+      "completedToolItems": [
+        {
+          "tool": "list_mcp_resource_templates",
+          "status": "completed",
+          "hasError": false
+        },
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        }
+      ],
+      "mcpServerCountAfter": 3
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "isolateAppContext": true,
+      "requestedTool": "list_mcp_resources",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "configuredPluginsEnabled": false,
+      "configuredCloudSkillsEnabled": false,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [],
+      "observedItemTypes": [
+        "userMessage",
+        "agentMessage"
+      ],
+      "completedToolItems": [],
+      "mcpServerCountAfter": 0
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "isolateAppContext": true,
+      "requestedTool": "list_mcp_resource_templates",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "configuredPluginsEnabled": false,
+      "configuredCloudSkillsEnabled": false,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_agents"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "agentMessage"
+      ],
+      "completedToolItems": [
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        }
+      ],
+      "mcpServerCountAfter": 0
+    }
+  ],
+  "method": "Capability audit, not a latency sample. No output text, resource entries, or credentials persisted. Arms: baseline; orchestrator MCP disabled only; full app-context isolation (clean inherited CODEX environment plus orchestrator MCP/local plugins/cloud skills/skill MCP installation disabled)."
+}

@@ -1,6 +1,6 @@
-# P0-08 当前结果：第二部分实测（2026-10-22）
+# P0-08 当前结果：复审修订（2026-10-22）
 
-技术测量已完成；整卡仍等待 Claude 审查和 P0-09 用户确认。当前完整报告见 [PART2-REPORT.md](PART2-REPORT.md)，数据见 [benchmark.md](benchmark.md)，候选选型见 [decision.md](decision.md)。本地回退后端候选 P90 截止时间 26168.09769999236 ms；正式配置未改。
+补测与技术修订已完成，整卡仍等待Claude复审及P0-09架构决定。当前完整报告见 [REVIEW-R1-REPORT.md](REVIEW-R1-REPORT.md)，分段/token见 [远程比较](review-r1/REMOTE-COMPARISON.md)，本地拆分见 [本地计时](review-r1/LOCAL-TIMING.md)。机械规则输出远程/P90=9269.47ms，不可部署；正式操作字段仍null。max为用户指定对照，旧low违规与失败记录保留。
 
 ---
 

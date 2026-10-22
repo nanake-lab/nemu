@@ -4,6 +4,7 @@ import { createInterface } from "node:readline";
 import { appendFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { validateSchema } from "./candidate-validation.mjs";
+import { isolatedChildEnvironment } from "./child-environment.mjs";
 import { existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -71,6 +72,11 @@ function tokenSummary(value) {
   };
 }
 
+export function strictToolSurfaceViolation(row, isolated = false) {
+  return !Array.isArray(row?.rawToolCallNames) || row.rawToolCallNames.length > 0 ||
+    (isolated && (row.mcpServerCountAfter !== 0 || row.mcpHasNextPageAfter !== false));
+}
+
 function rateLimitSummary(snapshot) {
   if (!snapshot || typeof snapshot !== "object") return null;
   const windowSummary = (window) => window ? {
@@ -90,9 +96,14 @@ function rateLimitSummary(snapshot) {
 }
 
 export class AppServer {
-  constructor(codeHome, { catalogPath, strictTools = false } = {}) {
+  constructor(codeHome, { catalogPath, strictTools = false, disableOrchestratorMcp = false, isolateAppContext = false } = {}) {
     if (!codeHome) throw new Error("provide an isolated CODEX_HOME with --code-home");
     this.strictTools = strictTools;
+    this.disableOrchestratorMcp = disableOrchestratorMcp;
+    this.isolateAppContext = isolateAppContext;
+    const childEnvironment = isolateAppContext
+      ? isolatedChildEnvironment(process.env, codeHome)
+      : process.env;
     this.approvalPolicy = "untrusted";
     this.serverFailure = null;
     this.pending = new Map();
@@ -111,9 +122,9 @@ export class AppServer {
     this.rateLimitUpdates = [];
     this.tempWorkdirs = new Set();
     this.nonJsonStdoutLines = 0;
-    this.child = spawn("codex", [...(catalogPath ? ["-c", `model_catalog_json=${JSON.stringify(catalogPath)}`] : []), ...(strictTools ? ["-c", "features.apps=false", "-c", "features.remote_plugin=false", "-c", "features.hooks=false"] : []), "app-server", "--stdio"], {
+    this.child = spawn("codex", [...(catalogPath ? ["-c", `model_catalog_json=${JSON.stringify(catalogPath)}`] : []), ...(strictTools ? ["-c", "features.apps=false", "-c", "features.remote_plugin=false", "-c", "features.hooks=false"] : []), ...(disableOrchestratorMcp ? ["-c", "orchestrator.mcp.enabled=false"] : []), ...(isolateAppContext ? ["-c", "features.plugins=false", "-c", "features.skill_mcp_dependency_install=false", "-c", "cloud.skills.enabled=false", "-c", "multi_agent_v2.disable_native_tools=true"] : []), "app-server", "--stdio"], {
       cwd: repoRoot,
-      env: { ...process.env, CODEX_HOME: codeHome },
+      env: { ...childEnvironment, CODEX_HOME: codeHome },
       stdio: ["pipe", "pipe", "pipe"]
     });
     const stdout = createInterface({ input: this.child.stdout });
@@ -307,6 +318,9 @@ export class AppServer {
       ...(readOnly && this.strictTools ? { environments: [], selectedCapabilityRoots: [] } : {}),
       ...((experimentalRawEvents || this.strictTools) ? { experimentalRawEvents: true } : {}),
       config: {
+        ...(this.disableOrchestratorMcp ? { orchestrator: { mcp: { enabled: false } } } : {}),
+        ...(this.isolateAppContext ? { cloud: { skills: { enabled: false } } } : {}),
+        ...(this.isolateAppContext ? { multi_agent_v2: { disable_native_tools: true } } : {}),
         web_search: "disabled",
         ...(readOnly && this.strictTools ? { tools: { update_plan: { enabled: false }, experimental_request_user_input: { enabled: false } } } : {}),
         features: {
@@ -315,6 +329,7 @@ export class AppServer {
           multi_agent: false,
           remote_plugin: false,
           shell_tool: !readOnly,
+          ...(this.isolateAppContext ? { plugins: false, skill_mcp_dependency_install: false } : {}),
           ...(readOnly && this.strictTools ? { multi_agent_v2: false, stable_environment_tools: false, view_image: false, image_generation: false, request_permissions_tool: false, tool_search: false, tool_suggest: false, deferred_executor: false, token_budget: false, sleep_tool: false, current_time_reminder: false, send_message_to_user_async: false, goals: false, code_mode: false, code_mode_host: false } : {})
         }
       }
@@ -387,6 +402,17 @@ export class AppServer {
       text: fullText,
       usage
     };
+    if (this.isolateAppContext) {
+      record.appContextIsolated = true;
+      try {
+        const mcp = await this.request("mcpServerStatus/list", { threadId, limit: 100 });
+        record.mcpServerCountAfter = mcp.data?.length ?? null;
+        record.mcpHasNextPageAfter = Boolean(mcp.nextCursor);
+      } catch {
+        record.mcpServerCountAfter = null;
+        record.mcpHasNextPageAfter = null;
+      }
+    }
     try { await this.request("thread/unsubscribe", { threadId }); }
     catch (error) { record.cleanupError = error.message; }
     return record;
@@ -490,7 +516,7 @@ async function speechBatch(server, model, lang, runs, startIndex = 1) {
         : `Reply in English with one short, natural sentence, at most 20 words: ${sample.text}`;
     try {
       const result = await server.runOne({ model, text: instruction });
-      const row = { index: startIndex + index, caseId: sample.id, lang, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, rawToolCallNames: result.rawToolCallNames, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, usage: result.usage };
+      const row = { index: startIndex + index, caseId: sample.id, lang, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, rawToolCallNames: result.rawToolCallNames, appContextIsolated: result.appContextIsolated ?? false, mcpServerCountAfter: result.mcpServerCountAfter ?? null, mcpHasNextPageAfter: result.mcpHasNextPageAfter ?? null, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, usage: result.usage };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
     } catch (error) {
@@ -502,7 +528,7 @@ async function speechBatch(server, model, lang, runs, startIndex = 1) {
         throw error;
       }
     }
-    if (server.strictTools && rows.at(-1)?.rawToolCallNames?.length) {
+    if (server.strictTools && strictToolSurfaceViolation(rows.at(-1), server.isolateAppContext)) {
       await summarizeRecords(`remote-speech-${lang}-${runId}-partial`, rows, { runId, startIndex, rateLimitsBefore, aborted: true });
       throw new Error("strict_tool_surface_violation");
     }
@@ -557,7 +583,7 @@ async function irlBatch(server, model, runs, schema, startIndex = 1) {
       const schemaValid = schemaResult.valid;
       const sourceBindingValid = schemaValid && validateSemanticCandidate(candidate, sample);
       await writeFile(resolve(outputDir, `${sample.id}.json`), `${JSON.stringify({ caseId: sample.id, candidate }, null, 2)}\n`, "utf8");
-      const row = { index: startIndex + index, caseId: sample.id, lang: sample.lang, category: sample.category, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, rawToolCallNames: result.rawToolCallNames, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, outputSha256: createHash("sha256").update(result.text).digest("hex"), schemaValid, sourceBindingValid, schemaErrors: schemaResult.errors, nodeCount: schemaValid ? candidate.nodes.length : null, usage: result.usage };
+      const row = { index: startIndex + index, caseId: sample.id, lang: sample.lang, category: sample.category, model, effort: measurementEffort, turnStatus: result.turnStatus, errorInfo: result.errorInfo, errorDetail: result.errorDetail, observedItemTypes: result.observedItemTypes, rawToolCallNames: result.rawToolCallNames, appContextIsolated: result.appContextIsolated ?? false, mcpServerCountAfter: result.mcpServerCountAfter ?? null, mcpHasNextPageAfter: result.mcpHasNextPageAfter ?? null, reroute: result.reroute, firstDeltaMs: result.firstDeltaMs, completedMs: result.completedMs, outputChars: result.outputChars, outputSha256: createHash("sha256").update(result.text).digest("hex"), schemaValid, sourceBindingValid, schemaErrors: schemaResult.errors, nodeCount: schemaValid ? candidate.nodes.length : null, usage: result.usage };
       rows.push(row);
       await appendRecord(rawPath, { runId, ...row });
     } catch (error) {
@@ -568,6 +594,10 @@ async function irlBatch(server, model, runs, schema, startIndex = 1) {
         await summarizeRecords(`remote-irl-${runId}-partial`, rows, { runId, rateLimitsBefore, rateLimitsAfter100, aborted: true });
         throw error;
       }
+    }
+    if (server.strictTools && strictToolSurfaceViolation(rows.at(-1), server.isolateAppContext)) {
+      await summarizeRecords(`remote-irl-${runId}-partial`, rows, { runId, startIndex, rateLimitsBefore, rateLimitsAfter100, aborted: true });
+      throw new Error("strict_tool_surface_violation");
     }
     if (startIndex + index === 100) {
       rateLimitsAfter100 = await server.readRateLimits();
@@ -684,12 +714,17 @@ async function main() {
   if (["speech", "speech-all", "irl", "controls"].includes(mode)) required(options, "model");
   const catalogPath = typeof options.catalog === "string" ? resolve(options.catalog) : undefined;
   if (options["report-subdir"] !== undefined) {
-    if (!["strict-speech", "low-effort"].includes(options["report-subdir"])) throw new Error("Unsupported report subdirectory");
+    if (!["strict-speech", "low-effort", "low-effort-isolated"].includes(options["report-subdir"])) throw new Error("Unsupported report subdirectory");
     reportRoot = resolve(reportRoot, options["report-subdir"]);
   }
-  if ((measurementEffort === "low") !== (options["report-subdir"] === "low-effort")) throw new Error("Low-effort runs require their separate low-effort evidence directory");
+  if ((measurementEffort === "low") !== ["low-effort", "low-effort-isolated"].includes(options["report-subdir"])) throw new Error("Low-effort runs require their separate low-effort evidence directory");
+  const disableOrchestratorMcp = options["disable-orchestrator-mcp"] === true;
+  const isolateAppContext = options["isolate-app-context"] === true;
+  if (isolateAppContext !== (options["report-subdir"] === "low-effort-isolated")) throw new Error("Isolated low group requires an isolated app environment");
+  if (isolateAppContext && !disableOrchestratorMcp) throw new Error("App context isolation also requires disabling orchestrator MCP");
+  if (disableOrchestratorMcp !== (options["report-subdir"] === "low-effort-isolated")) throw new Error("Orchestrator isolation requires its separate low-effort-isolated evidence directory");
   if (catalogPath && model && model !== "gpt-6-luna") throw new Error("Strict catalog measurements require gpt-6-luna");
-  const server = new AppServer(codeHome, { catalogPath, strictTools: Boolean(catalogPath) });
+  const server = new AppServer(codeHome, { catalogPath, strictTools: Boolean(catalogPath), disableOrchestratorMcp, isolateAppContext });
   if (mode === "controls") {
     const policy = options["approval-policy"] ?? "untrusted";
     if (!["untrusted", "on-request"].includes(policy)) {

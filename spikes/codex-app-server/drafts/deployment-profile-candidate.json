@@ -12,8 +12,8 @@
   },
   "remoteComparator": {
     "model": "gpt-6-luna",
-    "reasoningEffort": "max",
-    "profile": "strict-tools-v3"
+    "reasoningEffort": "low",
+    "profile": "app-context-isolated-v4"
   },
   "selectionRule": "Both fail p50 <=400 ms; choose lower completed-generation p50. Schema-invalid completed responses remain in latency population.",
   "modes": {
@@ -33,14 +33,26 @@
   "evidence": [
     "reports/P0-08/part2/analysis.json",
     "reports/P0-08/decision.md",
-    "reports/P0-08/PART2-METHODS.md"
+    "reports/P0-08/PART2-METHODS.md",
+    "reports/P0-08/review-r1/remote-comparison.json"
   ],
-  "note": "Rule output only, NOT a usable deployment value. User requested max is retained as control; low-effort and local breakdown pending. P0-09 must make an architecture decision.",
+  "note": "Both rule outputs are nondeployable. Operational backend/deadline remain null pending P0-09 architecture decision. Max is the user-specified control; original low remains rejected diagnostic evidence.",
   "ruleOutputs": {
     "userRequestedMaxControl": {
       "backend": "local",
       "deadlineP90Ms": 26168.09769999236
     },
-    "cardLowEffort": null
+    "cardLowEffort": {
+      "backend": "remote",
+      "deadlineP90Ms": 9269.47,
+      "deployable": false,
+      "localQualifies": false,
+      "remoteQualifies": false
+    }
+  },
+  "userRequestedMaxControl": {
+    "model": "gpt-6-luna",
+    "reasoningEffort": "max",
+    "directory": "part2/strict-speech"
   }
 }

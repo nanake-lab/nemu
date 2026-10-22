@@ -119,3 +119,27 @@ spikes/codex-app-server/.venv/Scripts/python.exe -m unittest discover -s spikes/
 spikes/codex-app-server/.venv/Scripts/python.exe -m ruff check spikes/codex-app-server/src/local_irl.py spikes/codex-app-server/src/decoder_adapter.py spikes/codex-app-server/src/test_local_irl.py spikes/codex-app-server/src/test_decoder_adapter.py
 spikes/codex-app-server/.venv/Scripts/python.exe -m mypy --strict --follow-imports silent spikes/codex-app-server/src/local_irl.py spikes/codex-app-server/src/decoder_adapter.py spikes/codex-app-server/src/test_local_irl.py spikes/codex-app-server/src/test_decoder_adapter.py
 ```
+
+## Review revision: low control and local paired timing
+
+The max group was explicitly requested by the user and remains a control. Add `--effort low --report-subdir low-effort` to the same strict-profile speech/IRL commands for the task-card group; do not overwrite max evidence. A low speech timeout is retained alongside continuation/supplement segments in `part2/low-effort/remote-speech-all-summary.json`. `node spikes/codex-app-server/src/compare-remote.mjs` validates coverage and rebuilds `review-r1/remote-comparison.json`, including per-response phase differences, reported token totals and missing-telemetry counts. No reported API token counter is a billing quote.
+
+After an approved quiet window and process checks, use the pinned spike Python executable to run `src/local_breakdown.py --model-root <pinned-model-cache> --output <new-evidence-directory> --quiet-window-confirmed`. It measures the first 50 fixed fixtures in alternating constrained/unconstrained order with one excluded warmup per arm. `node spikes/codex-app-server/src/summarize-local-breakdown.mjs` validates the exact source archives and raw token timestamps before summarizing. Observer hooks and CPU streamer synchronization add instrumentation overhead; paired measurements diagnose this instrumented path and do not replace the original 200-case selection population. Callback wall time can include device waiting and is not pure parser CPU cost.
+
+Both backend/P90 rule outputs are nondeployable. Deployment fields stay null pending P0-09; the options in `reports/P0-08/review-r1/OPTIONS.md` are not implemented here.
+
+### Corrected app/plugin isolation group
+
+The first review low IRL group exposed two successful resource helper calls at case-0158. Its entire dataset remains diagnostic evidence. A startup MCP inventory of zero did not catch servers initialized during a turn. The original max group has zero observed calls but does not prove that its capability surface was absent.
+
+For the corrected group, derive a fresh catalog with `--disable-collaboration` (also sets Luna `multi_agent_version` to `disabled`), then use both `--disable-orchestrator-mcp --isolate-app-context` and `--report-subdir low-effort-isolated --effort low`. This disables local plugins, cloud skills, skill-triggered MCP installation, orchestrator MCP and native collaboration at startup and thread configuration. It removes inherited CODEX app session variables and OpenAI API overrides from the child while binding the same isolated CODEX_HOME. Model, prompt, schema, fixtures and latency boundaries remain fixed; injected tool context is reduced, so this third group is not an effort-only comparison.
+
+```powershell
+$talkCatalog = Join-Path $env:LOCALAPPDATA 'Nemu\probes\P0-08\derived\no-tools-catalog-NEW.json'
+node spikes/codex-app-server/src/prepare-talk-catalog.mjs --source (Join-Path $probeHome 'models_cache.json') --output $talkCatalog --report <new-catalog-report> --disable-collaboration
+node spikes/codex-app-server/src/resource-surface-audit.mjs --code-home $probeHome --catalog $talkCatalog --output <new-audit-report> --isolated-only
+node spikes/codex-app-server/src/probe.mjs speech-all --code-home $probeHome --model gpt-6-luna --effort low --catalog $talkCatalog --report-subdir low-effort-isolated --disable-orchestrator-mcp --isolate-app-context
+node spikes/codex-app-server/src/probe.mjs irl --code-home $probeHome --model gpt-6-luna --effort low --runs 200 --catalog $talkCatalog --report-subdir low-effort-isolated --disable-orchestrator-mcp --isolate-app-context
+```
+
+Use a fresh evidence checkout. Both speech and IRL now abort after preserving the row if any tool call is observed, or if isolated post-turn MCP inventory is unknown/nonzero/paginated. Post-turn checks happen after captured completion latency. `compare-remote.mjs` requires these fields for every isolated reply and reports max, rejected same-profile low, and corrected low separately. `--diagnostic` reports the rejected original low group without selecting it as a backend. The failure history is in `reports/P0-08/review-r1/audit-run-index.json`; the successful adverse resource audit is `resource-surface-audit-v3.json`.

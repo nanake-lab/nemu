@@ -1,0 +1,71 @@
+{
+  "caseId": "case-0091",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0091",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0091"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0091"
+        ],
+        "sourceSpan": [
+          9,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "包裹"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0091"
+        ],
+        "sourceSpan": [
+          0,
+          11
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "收到",
+        "roles": [
+          {
+            "role": "接收者",
+            "value": "我"
+          },
+          {
+            "role": "对象",
+            "value": "包裹"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": "31号"
+      }
+    ]
+  }
+}

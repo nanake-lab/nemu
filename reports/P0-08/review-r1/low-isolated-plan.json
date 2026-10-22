@@ -1,0 +1,30 @@
+{
+  "createdUtc": "2026-10-22T05:56:50.771Z",
+  "model": "gpt-6-luna",
+  "effort": "low",
+  "speech": {
+    "zh": 50,
+    "en": 50,
+    "ja": 50
+  },
+  "irl": 200,
+  "directory": "part2/low-effort-isolated",
+  "sources": [
+    {
+      "path": "spikes/codex-app-server/src/probe.mjs",
+      "archive": "remote-low-isolated-probe.mjs.gz",
+      "sha256": "a62076e3b4e29fb9cf08095a720e81bc77d1851970f9ad00cb5d0563a91f7179"
+    },
+    {
+      "path": "spikes/codex-app-server/src/child-environment.mjs",
+      "archive": "remote-low-isolated-child-environment.mjs.gz",
+      "sha256": "8420f79bb502d6ccddbb7372ed5abd90aacb7a5d8d74c2c6823b0a7665e50284"
+    }
+  ],
+  "catalogSha256": "3d04df620f96521c315c760a40ed682f0db3089afc4f2d0ea94b470440d2e817",
+  "fixtureSha256": "0163e74d3a034cbb519b526f866c7beabc5d572dc86161100baca098c7e3f3fc",
+  "wireSchemaSha256": "9e07fc5dadcda07b7b068f1ee6a9e9e304572b00b67b65c415240e6fb3a8cf71",
+  "changes": "Retain original max control and rejected same-profile low group. New isolated low group disables local plugins/cloud skills/skill MCP install/orchestrator MCP and native collaboration, strips inherited CODEX app environment. Luna metadata additionally sets multi_agent_version=disabled. Prompt, schema, fixtures, order, thresholds and start/first-delta/completion boundaries unchanged. Post-turn MCP inventory outside latency; abort and preserve on raw tool call or unknown/nonzero MCP inventory.",
+  "audit": "resource-surface-audit-v3.json (2/2 completed, zero calls and zero post-turn MCP servers)",
+  "comparisonLimit": "Isolation changes tool/catalog overhead; three groups reported separately. Not a pure effort-only comparison."
+}

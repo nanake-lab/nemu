@@ -1,0 +1,52 @@
+{
+  "caseId": "case-0014",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0014",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0014"
+        ],
+        "sourceSpan": [
+          0,
+          42
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "Lin said, ‘It may snow on day 5 next week.’"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0014"
+        ],
+        "sourceSpan": [
+          8,
+          34
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "It may snow",
+        "roles": [
+          {
+            "role": "time",
+            "value": "day 5 next week"
+          }
+        ],
+        "value": "It may snow",
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "day 5 next week"
+      }
+    ]
+  },
+  "outputText": "{\n  \"schemaVersion\": \"p0-08-candidate-v1\",\n  \"sourceRef\": \"p0-08-0014\",\n  \"nodes\": [\n    {\n      \"id\": \"ref-1\",\n      \"sourceRefs\": [\"p0-08-0014\"],\n      \"sourceSpan\": [0, 42],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Ref\",\n      \"mention\": \"Lin said, ‘It may snow on day 5 next week.’\"\n    },\n    {\n      \"id\": \"claim-1\",\n      \"sourceRefs\": [\"p0-08-0014\"],\n      \"sourceSpan\": [8, 34],\n      \"derivation\": \"normalized\",\n      \"epistemicType\": \"quotation\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"It may snow\",\n      \"roles\": [\n        {\n          \"role\": \"time\",\n          \"value\": \"day 5 next week\"\n        }\n      ],\n      \"value\": \"It may snow\",\n      \"polarity\": \"positive\",\n      \"modality\": \"possible\",\n      \"time\": \"day 5 next week\"\n    }\n  ]\n}"
+}

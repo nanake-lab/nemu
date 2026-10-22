@@ -222,6 +222,7 @@ def main() -> None:
                 "warmup": index < 0, "arm": arm, "inputTokens": int(input_ids.shape[1]),
                 "outputTokens": count, "completedMs": completed_ms,
                 "firstTokenMs": clock.first_ms, "lastTokenMs": clock.last_ms,
+                "tokenTimesMs": clock.token_ms,
                 "prefillWallMs": prefill_wall, "prefillCudaElapsedMs": first_start.elapsed_time(first_end),
                 "parserBuildMs": parser_ms if arm == "constrained" else None,
                 "constraintCallbackWallMs": callback_ms if arm == "constrained" else None,

@@ -1,0 +1,88 @@
+{
+  "caseId": "case-0018",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0018",
+    "nodes": [
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "day_of_week",
+        "roles": [
+          {
+            "role": "day",
+            "value": "水曜日"
+          }
+        ],
+        "value": "水曜日",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          17,
+          23
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "date",
+        "roles": [
+          {
+            "role": "day",
+            "value": "6日"
+          }
+        ],
+        "value": "6日",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c3",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          24,
+          30
+        ],
+        "derivation": "inferred",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "corrects",
+        "roles": [
+          {
+            "role": "original_day",
+            "value": "火曜日"
+          }
+        ],
+        "value": "火曜日",
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  },
+  "outputText": "{\n  \"schemaVersion\": \"p0-08-candidate-v1\",\n  \"sourceRef\": \"p0-08-0018\",\n  \"nodes\": [\n    {\n      \"id\": \"c1\",\n      \"sourceRefs\": [\"p0-08-0018\"],\n      \"sourceSpan\": [0, 16],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"day_of_week\",\n      \"roles\": [\n        {\n          \"role\": \"day\",\n          \"value\": \"水曜日\"\n        }\n      ],\n      \"value\": \"水曜日\",\n      \"polarity\": \"positive\",\n      \"modality\": \"asserted\",\n      \"time\": null\n    },\n    {\n      \"id\": \"c2\",\n      \"sourceRefs\": [\"p0-08-0018\"],\n      \"sourceSpan\": [17, 23],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"date\",\n      \"roles\": [\n        {\n          \"role\": \"day\",\n          \"value\": \"6日\"\n        }\n      ],\n      \"value\": \"6日\",\n      \"polarity\": \"positive\",\n      \"modality\": \"asserted\",\n      \"time\": null\n    },\n    {\n      \"id\": \"c3\",\n      \"sourceRefs\": [\"p0-08-0018\"],\n      \"sourceSpan\": [24, 30],\n      \"derivation\": \"inferred\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"corrects\",\n      \"roles\": [\n        {\n          \"role\": \"original_day\",\n          \"value\": \"火曜日\"\n        }\n      ],\n      \"value\": \"火曜日\",\n      \"polarity\": \"negative\",\n      \"modality\": \"asserted\",\n      \"time\": null\n    }\n  ]\n}"
+}

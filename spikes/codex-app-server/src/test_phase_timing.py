@@ -14,6 +14,8 @@ class TimingTests(unittest.TestCase):
         clock.put(object())
         clock.end()
         self.assertEqual(clock.generated, 2)
+        self.assertEqual(len(clock.token_ms), 2)
+        self.assertEqual(clock.token_ms, [clock.first_ms, clock.last_ms])
         self.assertAlmostEqual(clock.first_ms or 0, 100)
         self.assertAlmostEqual(clock.last_ms or 0, 300)
         self.assertAlmostEqual(decode_rate(2, clock.first_ms, clock.last_ms) or 0, 5)
