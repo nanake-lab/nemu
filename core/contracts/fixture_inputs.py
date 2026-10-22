@@ -363,6 +363,23 @@ def targeted_legal_p5_22() -> list[dict[str, Any]]:
         request("QueryV2", sample("QueryV2", 0) | {"kind": 4}),
         request("GrowthControl", dict(schema_version=1, action=2)),
         request(
+            "ProactivityBoundaries",
+            dict(
+                schema_version=1,
+                version="2",
+                allowed_kinds=list(range(1, 10)),
+                cooldowns=[],
+                gates=list(range(1, 6)),
+                budgets=dict(
+                    schema_version=1,
+                    min_interval_s=180.0,
+                    speak_per_hour=2,
+                    quiet_day_factor=0.5,
+                    autonomous_helper_per_day=30,
+                ),
+            ),
+        ),
+        request(
             "ReadoutV2",
             dict(
                 schema_version=1,

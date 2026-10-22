@@ -1,5 +1,7 @@
 # P5-22 终端契约变更 — 报告
 
+> 当前修订：Claude 首轮审查的 B1、B2、D1 已修改，完整验收和字节证据见 [REVISION-1.md](REVISION-1.md)。下文保留首轮交付记录；最新数量为 443 合法、457 非法、18 Unicode 向量，三语言各 10,702 例通过。合并最新 origin/main=47ee284 后完成本轮检查，仍等待 Claude 复审及用户批准。
+
 ## 结果
 
 技术交付与自动验收完成；契约候选未合并。PR #57 保留 needs-user，全部本机与 CI 检查完成后转可审查，请 Claude 对契约及配套工具交叉审查，最后由用户批准合并。工作目录为 `D:\Dev\nemu-p522`，分支 `task/P5-22-terminal-contracts-v2`；从 `origin/main=91b31ed2d30aadd8cc1cf8086dd0aad8ffe03821` 新建。2026-10-22 最终检查前再次 fetch、merge，结果 Already up to date。

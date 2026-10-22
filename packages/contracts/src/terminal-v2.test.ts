@@ -1,7 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { expect, test } from 'vitest';
-import { approvalDecisionMatches } from './approval.js';
+import { validateApproval } from './approval.js';
+const approvalIsValid = async (...args: Parameters<typeof validateApproval>) =>
+  (await validateApproval(...args)) !== undefined;
 import {
   appBusPayloads,
   lineageSchema,
@@ -146,40 +148,31 @@ test('I26 approval binds the viewed bytes and executed bytes; mismatches, expiry
     decision: 1,
     payload_digest: digest,
   };
-  expect(await approvalDecisionMatches(request, decision, payload, 9n)).toBe(true);
+  expect(await approvalIsValid(request, decision, payload, 9n)).toBe(true);
   expect(
-    await approvalDecisionMatches(
+    await approvalIsValid(
       request,
       { ...decision, payload_digest: new Uint8Array(32) },
       payload,
       9n,
     ),
   ).toBe(false);
-  expect(await approvalDecisionMatches(request, decision, new Uint8Array([1]), 9n)).toBe(false);
+  expect(await approvalIsValid(request, decision, new Uint8Array([1]), 9n)).toBe(false);
   expect(
-    await approvalDecisionMatches(
+    await approvalIsValid(
       { ...request, action_payload: new Uint8Array([1]) },
       decision,
       new Uint8Array([1]),
       9n,
     ),
   ).toBe(false);
-  expect(
-    await approvalDecisionMatches(request, { ...decision, approval_id: 'b' }, payload, 9n),
-  ).toBe(false);
-  expect(await approvalDecisionMatches(request, decision, payload, 10n)).toBe(false);
-  expect(await approvalDecisionMatches(request, { ...decision, decision: 2 }, payload, 9n)).toBe(
+  expect(await approvalIsValid(request, { ...decision, approval_id: 'b' }, payload, 9n)).toBe(
     false,
   );
-  expect(await approvalDecisionMatches(request, { ...decision, decision: 3 }, payload, 9n)).toBe(
-    false,
-  );
+  expect(await approvalIsValid(request, decision, payload, 10n)).toBe(false);
+  expect(await approvalIsValid(request, { ...decision, decision: 2 }, payload, 9n)).toBe(false);
+  expect(await approvalIsValid(request, { ...decision, decision: 3 }, payload, 9n)).toBe(false);
   expect(
-    await approvalDecisionMatches(
-      { ...request, tier: 3 },
-      { ...decision, decision: 2 },
-      payload,
-      9n,
-    ),
+    await approvalIsValid({ ...request, tier: 3 }, { ...decision, decision: 2 }, payload, 9n),
   ).toBe(true);
 });

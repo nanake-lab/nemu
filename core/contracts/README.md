@@ -116,3 +116,14 @@ an illegal dependency of the new ReadoutV2. P5-19 produces only BodyReadoutV2.
 
 See reports/P5-22/REPORT.md for the paired-codec changes authorized by the user,
 the frozen-byte hash comparison, Claude's P5-01 review and migration boundaries.
+
+P5-22 review revision also defines proactive boundary resources in terminal.proto.
+`@resource`, field `json_name`/`json_map`, and enum `@json-values` are descriptor
+metadata for the existing JSON resource shape; they do not alter wire encoding.
+generate_browser.py derives TypeScript resource interfaces. The generated browser.ts
+uses those descriptors for strict Zod structural validation and resource-to-wire
+projection without importing Node code. Canonical ordering, encoding and byte
+budgets remain the responsibility of the unchanged codecs. Compatibility checks
+freeze JSON projection metadata too. Tests in test_browser_schema.py and the
+contracts package cover projection drift, nonempty growth results and approval
+snapshot consumption; see reports/P5-22/REVISION-1.md for evidence and limits.

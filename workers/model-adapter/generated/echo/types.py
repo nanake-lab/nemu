@@ -288,6 +288,22 @@ class TerminalGrowthAction(IntEnum):
 class SocialActionKind(IntEnum):
     SOCIAL_MESSAGE = 1
     SOCIAL_COMMIT = 2
+class ProactiveKind(IntEnum):
+    PROACTIVE_SPEAK = 1
+    PROACTIVE_MOTION = 2
+    PROACTIVE_GO_TO = 3
+    PROACTIVE_SIT = 4
+    PROACTIVE_SLEEP = 5
+    PROACTIVE_WAKE = 6
+    PROACTIVE_PEEK = 7
+    PROACTIVE_GAZE = 8
+    PROACTIVE_HELPER_ASK = 9
+class ProactiveGate(IntEnum):
+    GATE_DND = 1
+    GATE_QUIET_HOURS = 2
+    GATE_BUDGET = 3
+    GATE_MODE = 4
+    GATE_MIN_INTERVAL = 5
 @dataclass(frozen=True)
 class ObjectRef:
     schema_version: int
@@ -1554,3 +1570,23 @@ class SocialAction:
     schema_version: int
     kind: SocialActionKind
     action_payload: bytes
+@dataclass(frozen=True)
+class ProactivityCooldown:
+    schema_version: int
+    kind: str
+    seconds: float
+@dataclass(frozen=True)
+class ProactivityBudgets:
+    schema_version: int
+    min_interval_s: float
+    speak_per_hour: int
+    quiet_day_factor: float
+    autonomous_helper_per_day: int
+@dataclass(frozen=True)
+class ProactivityBoundaries:
+    schema_version: int
+    version: str
+    allowed_kinds: list[ProactiveKind]
+    cooldowns: list[ProactivityCooldown]
+    gates: list[ProactiveGate]
+    budgets: ProactivityBudgets

@@ -16913,5 +16913,191 @@
         "max_depth": 32
       }
     }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "kind": "A0",
+        "seconds": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "kind": "A0",
+        "seconds": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": "A0",
+        "seconds": 0.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "min_interval_s": 0.0,
+        "speak_per_hour": 0,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "min_interval_s": 0.0,
+        "speak_per_hour": 0,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "min_interval_s": 0.0,
+        "speak_per_hour": 0,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "version": "A0",
+        "allowed_kinds": [],
+        "cooldowns": [],
+        "gates": [],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 0,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "version": "A0",
+        "allowed_kinds": [],
+        "cooldowns": [],
+        "gates": [],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 0,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "allowed_kinds": [],
+        "cooldowns": [],
+        "gates": [],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 0,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 0
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
   }
 ]

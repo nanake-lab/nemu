@@ -39295,5 +39295,445 @@
         }
       }
     }
+  },
+  {
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": "A0",
+        "seconds": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0200000041300000000000000000",
+      "digest": "ce38be54a7319f703b91916cf53b67e7dfe8d2cef05a19b4a5a485c3cbc08982",
+      "ok": true,
+      "protobuf": "080112024130190000000000000000",
+      "value": {
+        "kind": "A0",
+        "schema_version": 1,
+        "seconds": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": "中文🙂1",
+        "seconds": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0b000000e4b8ade69687f09f9982310000000000000000",
+      "digest": "4d4b67e61b6455156d8c63f7698ef2e6e2b271888912aafcd7f6cc0ade64e248",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f998231190000000000000000",
+      "value": {
+        "kind": "中文🙂1",
+        "schema_version": 1,
+        "seconds": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": "﻿zero\u00002",
+        "seconds": 2.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e09000000efbbbf7a65726f00320000000000000440",
+      "digest": "fb4757940a118fc13f28e30e1a7f6158abc62382027cfa14ad1c5a1962666590",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f0032190000000000000440",
+      "value": {
+        "kind": "﻿zero\u00002",
+        "schema_version": 1,
+        "seconds": 2.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "min_interval_s": 0.0,
+        "speak_per_hour": 0,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000000000000000000000000000000000000000000",
+      "digest": "e62c32ea8ec824508f133f7bbcd202c73c239ef852999f0ea1abaa4d2e400d8b",
+      "ok": true,
+      "protobuf": "080111000000000000000018002100000000000000002800",
+      "value": {
+        "autonomous_helper_per_day": 0,
+        "min_interval_s": 0.0,
+        "quiet_day_factor": 0.0,
+        "schema_version": 1,
+        "speak_per_hour": 0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "min_interval_s": 0.0,
+        "speak_per_hour": 4294967295,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 4294967295
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e70726f61637469766974792d627564676574730000000000000000ffffffff0000000000000000ffffffff",
+      "digest": "3fc0b5846a7d31e65672a63f8c9295f760cab221a2ed261aa46818383eb0d1f0",
+      "ok": true,
+      "protobuf": "080111000000000000000018ffffffff0f21000000000000000028ffffffff0f",
+      "value": {
+        "autonomous_helper_per_day": 4294967295,
+        "min_interval_s": 0.0,
+        "quiet_day_factor": 0.0,
+        "schema_version": 1,
+        "speak_per_hour": 4294967295
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "min_interval_s": 2.5,
+        "speak_per_hour": 17,
+        "quiet_day_factor": 1.0,
+        "autonomous_helper_per_day": 17
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000000044011000000000000000000f03f11000000",
+      "digest": "d4132270c2c3873bfbfd16234aff32e6c6e5ae37c00bfce43e215bfba18d72b7",
+      "ok": true,
+      "protobuf": "0801110000000000000440181121000000000000f03f2811",
+      "value": {
+        "autonomous_helper_per_day": 17,
+        "min_interval_s": 2.5,
+        "quiet_day_factor": 1.0,
+        "schema_version": 1,
+        "speak_per_hour": 17
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "allowed_kinds": [],
+        "cooldowns": [],
+        "gates": [],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 0,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e6461726965730200000041300000000000000000000000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000000000000000000000000000000000000000000",
+      "digest": "420bdd9cf663f559bbdd4bf0c7ea9c9e437645b061260fba12ab096f74ae9aee",
+      "ok": true,
+      "protobuf": "0801120241303218080111000000000000000018002100000000000000002800",
+      "value": {
+        "allowed_kinds": [],
+        "budgets": {
+          "autonomous_helper_per_day": 0,
+          "min_interval_s": 0.0,
+          "quiet_day_factor": 0.0,
+          "schema_version": 1,
+          "speak_per_hour": 0
+        },
+        "cooldowns": [],
+        "gates": [],
+        "schema_version": 1,
+        "version": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "中文🙂1",
+        "allowed_kinds": [
+          2
+        ],
+        "cooldowns": [
+          {
+            "schema_version": 1,
+            "kind": "中文🙂1",
+            "seconds": 0.0
+          }
+        ],
+        "gates": [
+          2
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 4294967295,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 4294967295
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e6461726965730b000000e4b8ade69687f09f9982310100000002000000010000003c0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0b000000e4b8ade69687f09f998231000000000000000001000000020000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d627564676574730000000000000000ffffffff0000000000000000ffffffff",
+      "digest": "7dd4e01640ebfca2941bddf173abe9311845f357bae53d5e169aec1eed7ad778",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f998231180222180801120be4b8ade69687f09f99823119000000000000000028023220080111000000000000000018ffffffff0f21000000000000000028ffffffff0f",
+      "value": {
+        "allowed_kinds": [
+          2
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 4294967295,
+          "min_interval_s": 0.0,
+          "quiet_day_factor": 0.0,
+          "schema_version": 1,
+          "speak_per_hour": 4294967295
+        },
+        "cooldowns": [
+          {
+            "kind": "中文🙂1",
+            "schema_version": 1,
+            "seconds": 0.0
+          }
+        ],
+        "gates": [
+          2
+        ],
+        "schema_version": 1,
+        "version": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "﻿zero\u00002",
+        "allowed_kinds": [
+          3,
+          4
+        ],
+        "cooldowns": [
+          {
+            "schema_version": 1,
+            "kind": "﻿zero\u00002",
+            "seconds": 2.5
+          },
+          {
+            "schema_version": 1,
+            "kind": "A3",
+            "seconds": 0.0
+          }
+        ],
+        "gates": [
+          3,
+          4
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 2.5,
+          "speak_per_hour": 17,
+          "quiet_day_factor": 1.0,
+          "autonomous_helper_per_day": 17
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e64617269657309000000efbbbf7a65726f003202000000030000000400000002000000330000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e02000000413300000000000000003a0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e09000000efbbbf7a65726f003200000000000004400200000003000000040000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000000044011000000000000000000f03f11000000",
+      "digest": "090186de954672d6f23456fbcd852e954feafd569a635392fb826f63daa37446",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003218031804220f080112024133190000000000000000221608011209efbbbf7a65726f00321900000000000004402803280432180801110000000000000440181121000000000000f03f2811",
+      "value": {
+        "allowed_kinds": [
+          3,
+          4
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 17,
+          "min_interval_s": 2.5,
+          "quiet_day_factor": 1.0,
+          "schema_version": 1,
+          "speak_per_hour": 17
+        },
+        "cooldowns": [
+          {
+            "kind": "A3",
+            "schema_version": 1,
+            "seconds": 0.0
+          },
+          {
+            "kind": "﻿zero\u00002",
+            "schema_version": 1,
+            "seconds": 2.5
+          }
+        ],
+        "gates": [
+          3,
+          4
+        ],
+        "schema_version": 1,
+        "version": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "2",
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "cooldowns": [],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 180.0,
+          "speak_per_hour": 2,
+          "quiet_day_factor": 0.5,
+          "autonomous_helper_per_day": 30
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e646172696573010000003209000000010000000200000003000000040000000500000006000000070000000800000009000000000000000500000001000000020000000300000004000000050000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000080664002000000000000000000e03f1e000000",
+      "digest": "d6dc023aaa6fad6d5cb9dff5fbf7513e4486f2bbb4fa841d6cde18562683748d",
+      "ok": true,
+      "protobuf": "08011201321801180218031804180518061807180818092801280228032804280532180801110000000000806640180221000000000000e03f281e",
+      "value": {
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 30,
+          "min_interval_s": 180.0,
+          "quiet_day_factor": 0.5,
+          "schema_version": 1,
+          "speak_per_hour": 2
+        },
+        "cooldowns": [],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "schema_version": 1,
+        "version": "2"
+      }
+    }
   }
 ]

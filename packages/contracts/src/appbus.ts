@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { wireInputSchema } from './generated/echo/browser.js';
 import { performanceCueSchema } from './performance.js';
 import { mirroredStagePayloads } from './stage-events.js';
 import {
@@ -145,6 +146,18 @@ export const appBusPayloads = {
     status: queryStatusSchema,
     items: z.array(queryItemSchema),
   }),
+  'core.queryResult.v2': z
+    .strictObject({
+      queryId: z.string().min(1),
+      kind: queryKindSchema,
+      status: queryStatusSchema,
+      items: z.array(queryItemSchema),
+      growthEntries: z.array(wireInputSchema('LedgerEntry')),
+    })
+    .refine(
+      (p) => (p.kind === 'growth' ? p.items.length === 0 : p.growthEntries.length === 0),
+      'Growth results and ordinary query items must be disjoint',
+    ),
   'desktop.dnd': z.strictObject({ state: dndStateSchema }),
   'desktop.idle': z.strictObject({ idleMs: z.number() }),
   'desktop.observation': z.strictObject({

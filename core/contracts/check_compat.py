@@ -65,6 +65,8 @@ def violations(old: Schema, new: Schema) -> list[str]:
                     out.append(f"message {name} field {number} changed")
             if before == after:
                 out.append(f"message {name} field order changed")
+        if m.get("resource") != n.get("resource"):
+            out.append(f"message {name} resource projection changed")
         if n["rules"] != m["rules"]:
             out.append(f"message {name} rules changed")
         if set(m.get("reserved", [])) - set(n.get("reserved", [])):
@@ -92,6 +94,9 @@ def violations(old: Schema, new: Schema) -> list[str]:
         for key in old.get("superseded_values", {}).get(enum, {}):
             if key not in new.get("superseded_values", {}).get(enum, {}):
                 out.append(f"enum {enum}.{key} lost its superseded mark")
+    for enum, aliases in old.get("json_enums", {}).items():
+        if new.get("json_enums", {}).get(enum) != aliases:
+            out.append(f"enum {enum} JSON aliases changed")
     return out + discipline(new)
 
 

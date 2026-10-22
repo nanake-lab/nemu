@@ -15,13 +15,17 @@ export interface Field {
   size?: number;
   set?: string;
   oneof?: string;
+  json_name?: string;
+  json_map?: string;
 }
 export interface Schema {
+  json_enums?: Record<string, Record<string, string>>;
   messages: Record<
     string,
     {
       tag: string;
       source: string;
+      resource?: boolean;
       file: string;
       fields: Field[];
       rules: {

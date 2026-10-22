@@ -506,3 +506,37 @@ message SocialAction {
   optional SocialActionKind kind = 2; // required
   optional bytes action_payload = 3; // required
 }
+
+// @json-values {"PROACTIVE_SPEAK":"speak","PROACTIVE_MOTION":"motion","PROACTIVE_GO_TO":"goTo","PROACTIVE_SIT":"sit","PROACTIVE_SLEEP":"sleep","PROACTIVE_WAKE":"wake","PROACTIVE_PEEK":"peek","PROACTIVE_GAZE":"gaze","PROACTIVE_HELPER_ASK":"helper.ask"}
+enum ProactiveKind { PROACTIVE_UNSPECIFIED = 0; PROACTIVE_SPEAK = 1; PROACTIVE_MOTION = 2; PROACTIVE_GO_TO = 3; PROACTIVE_SIT = 4; PROACTIVE_SLEEP = 5; PROACTIVE_WAKE = 6; PROACTIVE_PEEK = 7; PROACTIVE_GAZE = 8; PROACTIVE_HELPER_ASK = 9; }
+// @json-values {"GATE_DND":"dnd","GATE_QUIET_HOURS":"quietHours","GATE_BUDGET":"budget","GATE_MODE":"mode","GATE_MIN_INTERVAL":"minInterval"}
+enum ProactiveGate { GATE_UNSPECIFIED = 0; GATE_DND = 1; GATE_QUIET_HOURS = 2; GATE_BUDGET = 3; GATE_MODE = 4; GATE_MIN_INTERVAL = 5; }
+
+// @message echo.proactivity-cooldown | CONTRACTS 8; P5-22 D1 revision; per-action cooldown in seconds
+message ProactivityCooldown {
+  optional uint32 schema_version = 1; // required
+  optional string kind = 2; // required,nonempty
+  optional double seconds = 3; // required,min=0
+}
+
+// @message echo.proactivity-budgets | CONTRACTS 8; P5-22 D1 revision
+message ProactivityBudgets {
+  // @resource
+  optional uint32 schema_version = 1; // required
+  optional double min_interval_s = 2; // required,min=0,json_name=minIntervalS
+  optional uint32 speak_per_hour = 3; // required,json_name=speakPerHour
+  optional double quiet_day_factor = 4; // required,min=0,max=1,json_name=quietDayFactor
+  optional uint32 autonomous_helper_per_day = 5; // required,json_name=autonomousHelperPerDay
+}
+
+// @message echo.proactivity-boundaries | CONTRACTS 8; v2.0 9.4; P5-22 D1 revision
+message ProactivityBoundaries {
+  // @resource
+  // JSON spelling and map projection are metadata only, not authority encoding rules.
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  repeated ProactiveKind allowed_kinds = 3 [packed = false]; // required,set=self,json_name=allowedKinds
+  repeated ProactivityCooldown cooldowns = 4; // required,set=kind,json_name=cooldownS,json_map=kind:seconds
+  repeated ProactiveGate gates = 5 [packed = false]; // required,set=self
+  optional ProactivityBudgets budgets = 6; // required
+}

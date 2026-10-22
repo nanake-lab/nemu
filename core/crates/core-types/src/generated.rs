@@ -1046,6 +1046,58 @@ impl SocialActionKind {
     /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
     pub const fn is_superseded(self) -> bool { false }
 }
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum ProactiveKind {
+    PROACTIVE_SPEAK = 1,
+    PROACTIVE_MOTION = 2,
+    PROACTIVE_GO_TO = 3,
+    PROACTIVE_SIT = 4,
+    PROACTIVE_SLEEP = 5,
+    PROACTIVE_WAKE = 6,
+    PROACTIVE_PEEK = 7,
+    PROACTIVE_GAZE = 8,
+    PROACTIVE_HELPER_ASK = 9,
+}
+impl TryFrom<u32> for ProactiveKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::PROACTIVE_SPEAK),
+2 => Ok(Self::PROACTIVE_MOTION),
+3 => Ok(Self::PROACTIVE_GO_TO),
+4 => Ok(Self::PROACTIVE_SIT),
+5 => Ok(Self::PROACTIVE_SLEEP),
+6 => Ok(Self::PROACTIVE_WAKE),
+7 => Ok(Self::PROACTIVE_PEEK),
+8 => Ok(Self::PROACTIVE_GAZE),
+9 => Ok(Self::PROACTIVE_HELPER_ASK),
+_ => Err("unknown enum".into()), }}}
+impl From<ProactiveKind> for u32 {fn from(v:ProactiveKind)->Self{v as u32}}
+impl ProactiveKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum ProactiveGate {
+    GATE_DND = 1,
+    GATE_QUIET_HOURS = 2,
+    GATE_BUDGET = 3,
+    GATE_MODE = 4,
+    GATE_MIN_INTERVAL = 5,
+}
+impl TryFrom<u32> for ProactiveGate { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::GATE_DND),
+2 => Ok(Self::GATE_QUIET_HOURS),
+3 => Ok(Self::GATE_BUDGET),
+4 => Ok(Self::GATE_MODE),
+5 => Ok(Self::GATE_MIN_INTERVAL),
+_ => Err("unknown enum".into()), }}}
+impl From<ProactiveGate> for u32 {fn from(v:ProactiveGate)->Self{v as u32}}
+impl ProactiveGate {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 /// S 5,6,7; D I 7.1; frozen tag `echo.object-ref`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -2985,6 +3037,41 @@ pub r#kind: SocialActionKind,
 pub r#action_payload: HexBytes,
 }
 impl super::WireMessage for SocialAction {const NAME: &'static str = "SocialAction";}
+/// CONTRACTS 8; P5-22 D1 revision; per-action cooldown in seconds; frozen tag `echo.proactivity-cooldown`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ProactivityCooldown {
+pub r#schema_version: u32,
+pub r#kind: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#seconds: f64,
+}
+impl super::WireMessage for ProactivityCooldown {const NAME: &'static str = "ProactivityCooldown";}
+/// CONTRACTS 8; P5-22 D1 revision; frozen tag `echo.proactivity-budgets`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ProactivityBudgets {
+pub r#schema_version: u32,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#min_interval_s: f64,
+pub r#speak_per_hour: u32,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#quiet_day_factor: f64,
+pub r#autonomous_helper_per_day: u32,
+}
+impl super::WireMessage for ProactivityBudgets {const NAME: &'static str = "ProactivityBudgets";}
+/// CONTRACTS 8; v2.0 9.4; P5-22 D1 revision; frozen tag `echo.proactivity-boundaries`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ProactivityBoundaries {
+pub r#schema_version: u32,
+pub r#version: String,
+pub r#allowed_kinds: Vec<ProactiveKind>,
+pub r#cooldowns: Vec<ProactivityCooldown>,
+pub r#gates: Vec<ProactiveGate>,
+pub r#budgets: ProactivityBudgets,
+}
+impl super::WireMessage for ProactivityBoundaries {const NAME: &'static str = "ProactivityBoundaries";}
 /// Conformance dispatch through every generated DTO and both typed codecs.
 pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contract::Limits) -> Result<(), String> {match name {
 "ObjectRef" => super::verify_typed::<ObjectRef>(value, limits),
@@ -3121,6 +3208,9 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "ApprovalRequestV2" => super::verify_typed::<ApprovalRequestV2>(value, limits),
 "ApprovalDecisionV2" => super::verify_typed::<ApprovalDecisionV2>(value, limits),
 "SocialAction" => super::verify_typed::<SocialAction>(value, limits),
+"ProactivityCooldown" => super::verify_typed::<ProactivityCooldown>(value, limits),
+"ProactivityBudgets" => super::verify_typed::<ProactivityBudgets>(value, limits),
+"ProactivityBoundaries" => super::verify_typed::<ProactivityBoundaries>(value, limits),
 _ => Err("unknown message".into()), }}
 /// Message types kept only to read old data and for tests; no runtime path may produce them.
 pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "ApprovalRequest", "RunState", "Readout", "Query", "QueryResult", "ApprovalDecision", "HookCoefficients", "ModulationEnvelope"];

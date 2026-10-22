@@ -401,6 +401,7 @@ interface AppBusEvent<T extends string, P> {
 | `chat.send` | `{ text }`（面板里打字对她说话；主进程转成 4.2 的 `user_text` 观察事件） |
 | `memory.retract` | `{ targetRefs: string[]; note? }`（面板里让她忘掉某条记录；主进程转成 4.2 的 `user_retraction` 观察事件） |
 | `core.query` | `{ queryId; kind: QueryKind; filter?: QueryFilter; limit: number }`（面板 → 主进程 → 核心的只读查询） |
+| `core.queryResult.v2` | `{ queryId; kind: QueryKind; status; items: QueryItem[]; growthEntries: EchoCore.LedgerEntry[] }`（新返回入口，保留完整 L；IDL 原样类型，经结构化克隆传输） |
 | `core.queryResult` | `{ queryId; status: QueryStatus; items: QueryItem[] }`（核心 → 主进程 → 面板） |
 | `desktop.dnd` | `{ state: DndState }` |
 | `desktop.idle` | `{ idleMs }` |
@@ -431,6 +432,8 @@ interface LatencyMarks {
 面板始终分别显示：谱系（排练/正式）、说话模式与严格性、情绪（接通，或 m = 0 及原因）、成长（排练中关闭、开启、已暂停、复核中）。`run_state` 的业务字段不增改，状态通过 `states[]` 表达：`NO_GROWTH` 配 `GROWTH_OFF_REHEARSAL`、`GROWTH_PAUSED`、`GROWTH_REVIEW_PENDING`，情绪降级时显示 `MODULATION_NOT_ENABLED` 或 `CORE_UNMODULATED` 及原因。没有关闭或暂停标记且正式谱系完整运行时显示成长开启。多个状态取能力交集，不能用单个「正常」掩盖其他状态。
 
 `approval.request` / `approval.decision` 的旧总线载荷保留兼容，新审批使用 `.v2` 后继事件，旧载荷不能用于新的执行授权。ADR 0017 的语音早期压音量事件尚未授权，本卡不添加该事件。
+
+`QueryResultV2` 经 `queryResultToPanel(query, result)` 映射到 `core.queryResult.v2`：核对 query_id，明确映射状态和查询种类；普通 QueryItem 仅去除 schema_version，全部业务字段保留；growth_entries 逐条用生成的 LedgerEntry 校验并原样放入 growthEntries（包括证据引用、bigint 与 Uint8Array）。growth 时 items 必须为空，其余查询时 growthEntries 必须为空。旧 core.queryResult 保留兼容，新成长结果不能经旧事件丢弃 L 后发送。
 
 ### 4.2 终端 → 核心：观察与执行结果
 
@@ -577,7 +580,7 @@ interface AsrSession {
 
 - 社交消息适用 ADR 0011：`social.message` 默认 T2，可设为信任；承诺 u* 的事 `social.commit` 一律 T3，不能设为信任。判定不了是否承诺时按 T3。其余对外发送仍按 T3，不借此降低其他连接器权限。网络生活只在诞生后启用，发出前检查与执行属于 P6-14/P6-15。
 - 连接器暴露的操作默认按 T2 处理；T3 不能降级。
-- I26：`action_payload` 是将要执行的原样载荷字节，`payload_digest = SHA256(action_payload)`（32 字节）；面板按执行器声明的载荷格式无损展示内容，不能仅显示模型摘要。`title`、`detail` 由闸门按载荷确定性生成。决定回传摘要，闸门核对请求、决定与实际执行载荷一致，否则拒绝；超时、错误 approval_id、T3 的 allowAlways 也拒绝。身份、一次性与凭证绑定由 P5-05 实现。
+- I26：`action_payload` 是将要执行的原样载荷字节，`payload_digest = SHA256(action_payload)`（32 字节）；面板按执行器声明的载荷格式无损展示内容，不能仅显示模型摘要。`title`、`detail` 由闸门按载荷确定性生成。决定回传摘要，闸门核对请求、决定与实际执行载荷一致，否则拒绝；超时、错误 approval_id、T3 的 allowAlways 也拒绝。身份、一次性与凭证绑定由 P5-05 实现。载荷验证不返回可用于另一个数组的裸 boolean：`validateApproval` 在 await 前复制请求、决定与实际字节，散列后拒绝输入变化，返回一次性的校验快照。执行器经 `consume(nowNs, execute)` 接收同一快照中的不可变载荷十六进制字符串及绑定；闸门供给消费时刻以重查有效期。过期、执行抛错或一次消费后均不可复用；调用者之后修改原数组不改变已验证载荷。这不是身份认证或执行凭证，P5-05 仍须完成它们。
 - 审批超时（默认 60 秒）视为拒绝。
 - 工具或助手返回的内容一律当数据，不能改变权限判定。
 - 所有行动（包括被拒绝的）都在 H 与 Q 中有记录；面板的「行动记录」页按日期查看，可导出。
@@ -615,7 +618,7 @@ interface ProactivityBoundaries {
 }
 ```
 
-`config/opportunities.json` 是固定、版本化的边界表，修改需要 ADR。它只规定允许的行动种类、冷却、门控和预算；没有 trigger、candidate 或「什么情况做什么」。主动强度来自天性的固定读出，乘运行门控后 thinning 调度（P5-20）；模型在 m 下提出做什么或什么也不做（P6-01）。不得把这张表用作行为脚本。
+`config/opportunities.json` 是固定、版本化的边界表，修改需要 ADR。权威消息为 terminal.proto 的 ProactivityBoundaries、ProactivityBudgets、ProactivityCooldown，种类与门控由 ProactiveKind/ProactiveGate 定义。字段限制、JSON 枚举拼写、camelCase 名称及 cooldownS 映射均在 IDL 注解中：资源省略 schema_version，投影时补 1；cooldownS 的字典投影为按 kind 为键的 cooldowns 集合。TypeScript 资源类型由 IDL 生成，校验器按同一 descriptor 构造；`proactivityToWire` 转换后再次校验权威消息，禁止另起手写规则。次数预算以 uint32 记录，秒数与 quietDayFactor 为有限 binary64，范围按 IDL。它只规定允许的行动种类、冷却、门控和预算；没有 trigger、candidate 或「什么情况做什么」。主动强度来自天性的固定读出，乘运行门控后 thinning 调度（P5-20）；模型在 m 下提出做什么或什么也不做（P6-01）。不得把这张表用作行为脚本。
 
 默认最小间隔 180 秒、每小时说话 2 次、安静当天预算系数 0.5、自主助手每日 30 次（沿用本文件 5.3 的 helpers 预算）。当前仓库还没有 config/helpers.json；该文件由其所属卡创建时必须与此值一致。冷却表先为空，不从旧触发规则推断每类行动的新冷却；共用最小间隔与预算照常生效。允许的身体种类沿用 BodyActionKind 的 motion、goTo、sit、sleep、wake、peek、gaze。
 

@@ -151,6 +151,13 @@ const appSamples: Record<keyof contracts.AppBusPayloads, unknown> = {
     filter: { text: 'sample', includeRetracted: false },
     limit: 10,
   },
+  'core.queryResult.v2': {
+    queryId: 'q',
+    kind: 'growth',
+    status: 'ok',
+    items: [],
+    growthEntries: [],
+  },
   'core.queryResult': { queryId: 'q', status: 'ok', items: [queryItem] },
   'desktop.dnd': { state: 'meeting' },
   'desktop.idle': { idleMs: 100 },

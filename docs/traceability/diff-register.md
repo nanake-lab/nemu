@@ -183,3 +183,11 @@ ADR 0007 amendments have been implemented and cross-language checked. 78 source-
 | V2-52 | I26；ADR 0011 §9；P5-22 审批载荷与摘要 | 最小表示：原样执行载荷为 bytes，payload_digest 为 SHA256 该原样字节（32 字节）；请求、决定、实际执行字节必须一致。应用内总线用 approval.request.v2 / approval.decision.v2 后继事件，保留旧事件。SocialAction 只声明种类和原样载荷，载荷解释及发出前检查由 P6-14/P6-15 | 否；重建具体表示 | 重建，待用户批准，P5-22 |
 | V2-53 | P5-22；v2.0 §2.5；V2-36 | QueryResultV2 用额外 growth_entries 返回已有 LedgerEntry；非 growth 的该数组为空，growth 的 items 为空。RunStateV2 用新的终端枚举排除 EXPERIMENT，不改变旧 RunState 的解码语义；Notice.at 沿用终端显示时刻字符串，l_ref 为已有 ObjectRef | 否；具体接口表示 | 待用户批准，P5-22 |
 | V2-54 | P5-22 主动边界；V2-16 | 当前 main 没有 config/opportunities.json 和 helpers.json，预算沿 CONTRACTS §5.3 的 30；不从九条旧触发规则推断每类行动的新冷却，cooldownS 初值为空，最小间隔 180 秒、说话 2/小时、安静因子 0.5 照常生效。helpers.json 将来创建时需一致 | 否；边界候选 | 待用户批准，P5-22 |
+
+### 2026-10-22 追加：P5-22 首轮审查修订
+
+以下补充 V2-52–54 的实现表示，仍随同一 PR #57 等待批准，不改变其状态或新增编码规则。
+
+- V2-52：异步 SHA256 校验前复制请求、决定及实际载荷；等待期间变化拒绝。返回不可变、一次性载荷快照，执行时消费该快照并重新检查有效期，不以裸布尔值授权另一个可变缓冲区。身份认证和权限执行仍属 P5-05。
+- V2-53：应用内用后继 `core.queryResult.v2` 携带 kind、完整 growthEntries 与普通 items；queryResultToPanel 核对 query_id，从 IDL descriptor 校验 LedgerEntry 后传给面板。growth 的 items 必须为空，其他种类的 growthEntries 必须为空。旧 core.queryResult 保留。
+- V2-54：新增 ProactivityBoundaries、ProactivityBudgets、ProactivityCooldown 及 ProactiveKind/Gate 权威 IDL；JSON 字段名、枚举字符串别名和 cooldownS 字典投影以 descriptor 元数据定义，由同一源生成资源类型/校验。既有 JSON 外形和候选值不变；新增 wire 标签，不改旧字段或字节。兼容门禁同时冻结这些 JSON 投影元数据。

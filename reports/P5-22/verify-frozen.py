@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'core/contracts'))
 from verify import probe  # noqa: E402
 
-BASE = '91b31ed'
+BASE = sys.argv[2] if len(sys.argv) > 2 else '91b31ed'
 
 def stable(value: object) -> bytes:
     return json.dumps(value, sort_keys=True, ensure_ascii=True, separators=(',', ':')).encode('ascii')

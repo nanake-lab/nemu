@@ -9340,6 +9340,158 @@
       ],
       "file": "terminal.proto",
       "rules": {}
+    },
+    "ProactivityCooldown": {
+      "tag": "echo.proactivity-cooldown",
+      "source": "CONTRACTS 8; P5-22 D1 revision; per-action cooldown in seconds",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "seconds",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ProactivityBudgets": {
+      "tag": "echo.proactivity-budgets",
+      "source": "CONTRACTS 8; P5-22 D1 revision",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "min_interval_s",
+          "type": "double",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "json_name": "minIntervalS"
+        },
+        {
+          "name": "speak_per_hour",
+          "type": "uint32",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "json_name": "speakPerHour"
+        },
+        {
+          "name": "quiet_day_factor",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0,
+          "json_name": "quietDayFactor"
+        },
+        {
+          "name": "autonomous_helper_per_day",
+          "type": "uint32",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "json_name": "autonomousHelperPerDay"
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "resource": true
+    },
+    "ProactivityBoundaries": {
+      "tag": "echo.proactivity-boundaries",
+      "source": "CONTRACTS 8; v2.0 9.4; P5-22 D1 revision",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "allowed_kinds",
+          "type": "ProactiveKind",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self",
+          "json_name": "allowedKinds"
+        },
+        {
+          "name": "cooldowns",
+          "type": "ProactivityCooldown",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "kind",
+          "json_name": "cooldownS",
+          "json_map": "kind:seconds"
+        },
+        {
+          "name": "gates",
+          "type": "ProactiveGate",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "budgets",
+          "type": "ProactivityBudgets",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "resource": true
     }
   },
   "enums": {
@@ -9710,6 +9862,46 @@
       "SOCIAL_UNSPECIFIED": 0,
       "SOCIAL_MESSAGE": 1,
       "SOCIAL_COMMIT": 2
+    },
+    "ProactiveKind": {
+      "PROACTIVE_UNSPECIFIED": 0,
+      "PROACTIVE_SPEAK": 1,
+      "PROACTIVE_MOTION": 2,
+      "PROACTIVE_GO_TO": 3,
+      "PROACTIVE_SIT": 4,
+      "PROACTIVE_SLEEP": 5,
+      "PROACTIVE_WAKE": 6,
+      "PROACTIVE_PEEK": 7,
+      "PROACTIVE_GAZE": 8,
+      "PROACTIVE_HELPER_ASK": 9
+    },
+    "ProactiveGate": {
+      "GATE_UNSPECIFIED": 0,
+      "GATE_DND": 1,
+      "GATE_QUIET_HOURS": 2,
+      "GATE_BUDGET": 3,
+      "GATE_MODE": 4,
+      "GATE_MIN_INTERVAL": 5
+    }
+  },
+  "json_enums": {
+    "ProactiveKind": {
+      "PROACTIVE_SPEAK": "speak",
+      "PROACTIVE_MOTION": "motion",
+      "PROACTIVE_GO_TO": "goTo",
+      "PROACTIVE_SIT": "sit",
+      "PROACTIVE_SLEEP": "sleep",
+      "PROACTIVE_WAKE": "wake",
+      "PROACTIVE_PEEK": "peek",
+      "PROACTIVE_GAZE": "gaze",
+      "PROACTIVE_HELPER_ASK": "helper.ask"
+    },
+    "ProactiveGate": {
+      "GATE_DND": "dnd",
+      "GATE_QUIET_HOURS": "quietHours",
+      "GATE_BUDGET": "budget",
+      "GATE_MODE": "mode",
+      "GATE_MIN_INTERVAL": "minInterval"
     }
   },
   "superseded_enums": {
