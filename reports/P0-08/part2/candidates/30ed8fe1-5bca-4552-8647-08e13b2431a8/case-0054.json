@@ -1,0 +1,75 @@
+{
+  "caseId": "case-0054",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0054",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0054"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "リスト"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0054"
+        ],
+        "sourceSpan": [
+          10,
+          12
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "項目"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0054"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "項目の順番",
+        "roles": [
+          {
+            "role": "item",
+            "value": "項目"
+          },
+          {
+            "role": "list",
+            "value": "リスト"
+          },
+          {
+            "role": "condition",
+            "value": "リストを訂正すると"
+          }
+        ],
+        "value": "18番目",
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "caseId": "case-0153",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0153",
+    "nodes": [
+      {
+        "id": "ref-time",
+        "sourceRefs": [
+          "p0-08-0153"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "51日"
+      },
+      {
+        "id": "ref-parcel",
+        "sourceRefs": [
+          "p0-08-0153"
+        ],
+        "sourceSpan": [
+          4,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "小包"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0153"
+        ],
+        "sourceSpan": [
+          0,
+          18
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "受け取る",
+        "roles": [
+          {
+            "role": "object",
+            "value": "小包"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": "51日"
+      }
+    ]
+  }
+}

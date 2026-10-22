@@ -1,0 +1,311 @@
+{
+  "model": "gpt-6-luna",
+  "effort": "max",
+  "percentileMethod": "nearest rank; completed generation responses, including schema-invalid responses; transport failures are censored; all attempts remain in the IRL schema-rate denominator. Schema-valid-only latency is separately reported and does not replace the preregistered population.",
+  "speech": {
+    "zh": {
+      "attempts": 50,
+      "completed": 50,
+      "failed": 0,
+      "p50Ms": 6272.1,
+      "p90Ms": 8513.73,
+      "firstDeltaObservedCount": 50,
+      "emptyReplyCount": 0,
+      "firstDeltaP50Ms": 5962,
+      "firstDeltaP90Ms": 8369,
+      "schemaValidCount": null,
+      "schemaValidCompletionP50Ms": null,
+      "schemaValidCompletionP90Ms": null,
+      "schemaValidity": null,
+      "sourceBindingValidCount": 0,
+      "emptyGraphCount": 0,
+      "tokenLimitCount": 0,
+      "reroutes": 0,
+      "toolItemCount": 0,
+      "primaryAttempts": 50,
+      "primaryCompleted": 50,
+      "primaryFailures": 0,
+      "supplementalAttempts": 0
+    },
+    "en": {
+      "attempts": 50,
+      "completed": 50,
+      "failed": 0,
+      "p50Ms": 5563.5,
+      "p90Ms": 7384.39,
+      "firstDeltaObservedCount": 50,
+      "emptyReplyCount": 0,
+      "firstDeltaP50Ms": 5142.76,
+      "firstDeltaP90Ms": 7060.39,
+      "schemaValidCount": null,
+      "schemaValidCompletionP50Ms": null,
+      "schemaValidCompletionP90Ms": null,
+      "schemaValidity": null,
+      "sourceBindingValidCount": 0,
+      "emptyGraphCount": 0,
+      "tokenLimitCount": 0,
+      "reroutes": 0,
+      "toolItemCount": 0,
+      "primaryAttempts": 50,
+      "primaryCompleted": 50,
+      "primaryFailures": 0,
+      "supplementalAttempts": 0
+    },
+    "ja": {
+      "attempts": 59,
+      "completed": 50,
+      "failed": 9,
+      "p50Ms": 5841.55,
+      "p90Ms": 7412.75,
+      "firstDeltaObservedCount": 50,
+      "emptyReplyCount": 0,
+      "firstDeltaP50Ms": 5561.79,
+      "firstDeltaP90Ms": 7212.88,
+      "schemaValidCount": null,
+      "schemaValidCompletionP50Ms": null,
+      "schemaValidCompletionP90Ms": null,
+      "schemaValidity": null,
+      "sourceBindingValidCount": 0,
+      "emptyGraphCount": 0,
+      "tokenLimitCount": 0,
+      "reroutes": 0,
+      "toolItemCount": 0,
+      "primaryAttempts": 50,
+      "primaryCompleted": 41,
+      "primaryFailures": 9,
+      "supplementalAttempts": 9
+    }
+  },
+  "remoteIrl": {
+    "attempts": 200,
+    "completed": 200,
+    "failed": 0,
+    "p50Ms": 15895.76,
+    "p90Ms": 23742.57,
+    "firstDeltaObservedCount": 200,
+    "emptyReplyCount": 0,
+    "firstDeltaP50Ms": 14057.33,
+    "firstDeltaP90Ms": 21282.14,
+    "schemaValidCount": 200,
+    "schemaValidCompletionP50Ms": 15895.76,
+    "schemaValidCompletionP90Ms": 23742.57,
+    "schemaValidity": 1,
+    "sourceBindingValidCount": 193,
+    "emptyGraphCount": 0,
+    "tokenLimitCount": 0,
+    "reroutes": 0,
+    "toolItemCount": 0
+  },
+  "localIrl": {
+    "attempts": 200,
+    "completed": 200,
+    "failed": 0,
+    "p50Ms": 15647.864800004754,
+    "p90Ms": 26168.09769999236,
+    "firstDeltaObservedCount": 0,
+    "emptyReplyCount": 0,
+    "firstDeltaP50Ms": null,
+    "firstDeltaP90Ms": null,
+    "schemaValidCount": 192,
+    "schemaValidCompletionP50Ms": 15704.801000014413,
+    "schemaValidCompletionP90Ms": 26297.81260000891,
+    "schemaValidity": 0.96,
+    "sourceBindingValidCount": 169,
+    "emptyGraphCount": 0,
+    "tokenLimitCount": 0,
+    "reroutes": 0,
+    "toolItemCount": 0
+  },
+  "protocol": {
+    "remoteReroutes": 0,
+    "remoteToolItems": 0,
+    "note": "Configured capability flags and observed item types are recorded; zero tool calls does not independently enumerate every model-visible built-in tool."
+  },
+  "selection": "local",
+  "irlDeadlineP90Ms": 26168.09769999236,
+  "modes": {
+    "A": {
+      "p50Ms": null,
+      "p90Ms": null
+    },
+    "B": {
+      "p50Ms": null,
+      "p90Ms": null
+    },
+    "C": {
+      "p50Ms": null,
+      "p90Ms": null
+    }
+  },
+  "modeEstimateMissing": [
+    "ASR and VAD end-to-end samples",
+    "A/M and core transaction timings",
+    "TTS and audio buffer timings",
+    "mode C draft-to-rewrite timing"
+  ],
+  "quota": {
+    "speechBefore": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 0,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 51,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "speechAfter100": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 1,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 51,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "speechAfterFinalSupplement": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 1,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 51,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "speechAfter150PrimarySlots": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 1,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 51,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "speechQuotaNote": "After100 is the exact completed English-batch boundary. Original all-language process aborted during Japanese. Final snapshot follows 150 successful replies plus 9 failed attempt slots, not an uninterrupted 150-call batch. Failed slots may not have started model turns. Shared account observations cannot isolate other activity.",
+    "irlBefore": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 1,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 51,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "irlAfter100": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 3,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 52,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "irlAfter200": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 5,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 52,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    }
+  },
+  "accountQuotaAttribution": "Shared account; snapshots report observed changes and cannot isolate this spike from other account activity."
+}

@@ -1,0 +1,68 @@
+{
+  "caseId": "case-0172",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0172",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0172"
+        ],
+        "sourceSpan": [
+          5,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "清单"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0172"
+        ],
+        "sourceSpan": [
+          5,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "item_number_on_list",
+        "roles": [
+          {
+            "role": "list",
+            "value": "ref1"
+          }
+        ],
+        "value": 58,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0172"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "清单上应该是第58项。"
+      }
+    ]
+  }
+}

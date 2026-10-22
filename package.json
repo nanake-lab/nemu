@@ -36,6 +36,7 @@
     "board": "python tools/status/serve_board.py",
     "probe:supplement": "python workers/model-adapter/probe/run_supplement.py",
     "probe:chat": "node workers/model-adapter/probe/launch_chat.mjs",
+<<<<<<< HEAD
     "asr:models": "tsx packages/voice/src/asr/models.ts download",
     "asr:public": "tsx packages/voice/src/asr/public-data.ts",
     "eval:asr": "tsx packages/voice/src/asr/evaluate.ts",
@@ -46,6 +47,15 @@
     "asr:align:models": "tsx packages/voice/src/asr/alignment.ts download",
     "asr:annotate": "tsx packages/voice/src/asr/manual.ts prepare",
     "asr:annotations": "tsx packages/voice/src/asr/manual.ts import"
+=======
+    "probe:p0-08": "node spikes/codex-app-server/src/probe.mjs",
+    "probe:p0-08:local": "uv run --project spikes/codex-app-server python spikes/codex-app-server/src/local_irl.py",
+    "probe:p0-08:analyze": "node spikes/codex-app-server/src/analyze.mjs",
+    "probe:p0-08:compare": "node spikes/codex-app-server/src/compare-remote.mjs",
+    "probe:p0-08:timing": "uv run --project spikes/codex-app-server python spikes/codex-app-server/src/local_breakdown.py",
+    "probe:p0-08:timing-summary": "node spikes/codex-app-server/src/summarize-local-breakdown.mjs",
+    "probe:p0-08:resource-audit": "node spikes/codex-app-server/src/resource-surface-audit.mjs"
+>>>>>>> origin/main
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

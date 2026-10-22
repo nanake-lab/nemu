@@ -1,0 +1,82 @@
+{
+  "caseId": "case-0016",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0016",
+    "nodes": [
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0016"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "更正"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0016"
+        ],
+        "sourceSpan": [
+          3,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "说的",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "我"
+          },
+          {
+            "role": "content",
+            "value": "周二"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim2",
+        "sourceRefs": [
+          "p0-08-0016"
+        ],
+        "sourceSpan": [
+          10,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "是",
+        "roles": [
+          {
+            "role": "content",
+            "value": "周6天"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

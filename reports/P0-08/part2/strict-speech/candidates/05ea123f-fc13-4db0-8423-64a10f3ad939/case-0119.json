@@ -1,0 +1,56 @@
+{
+  "caseId": "case-0119",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0119",
+    "nodes": [
+      {
+        "id": "p0-08-0119-ref1",
+        "sourceRefs": [
+          "p0-08-0119"
+        ],
+        "sourceSpan": [
+          31,
+          43
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "checklist 40"
+      },
+      {
+        "id": "p0-08-0119-claim1",
+        "sourceRefs": [
+          "p0-08-0119",
+          "p0-08-0119-ref1"
+        ],
+        "sourceSpan": [
+          0,
+          44
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "forget to update",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "I"
+          },
+          {
+            "role": "object",
+            "value": "checklist 40"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "caseId": "case-0028",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0028",
+    "nodes": [
+      {
+        "id": "ref_speaker",
+        "sourceRefs": [
+          "p0-08-0028"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "resolved",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "ref_song_10",
+        "sourceRefs": [
+          "p0-08-0028"
+        ],
+        "sourceSpan": [
+          3,
+          8
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "第10首歌"
+      },
+      {
+        "id": "claim_1",
+        "sourceRefs": [
+          "p0-08-0028"
+        ],
+        "sourceSpan": [
+          0,
+          14
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "觉得听起来",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "我"
+          },
+          {
+            "role": "subject",
+            "value": "第10首歌"
+          }
+        ],
+        "value": "很安静",
+        "polarity": "positive",
+        "modality": "reported",
+        "time": null
+      }
+    ]
+  }
+}

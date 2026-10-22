@@ -1,0 +1,91 @@
+{
+  "caseId": "case-0151",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0151",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0151"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0151"
+        ],
+        "sourceSpan": [
+          4,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "51号"
+      },
+      {
+        "id": "ref-3",
+        "sourceRefs": [
+          "p0-08-0151"
+        ],
+        "sourceSpan": [
+          9,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "包裹"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0151"
+        ],
+        "sourceSpan": [
+          0,
+          11
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "收到",
+        "roles": [
+          {
+            "role": "接收者",
+            "value": "我"
+          },
+          {
+            "role": "物品",
+            "value": "包裹"
+          },
+          {
+            "role": "地点",
+            "value": "51号"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "reported",
+        "time": null
+      }
+    ]
+  }
+}

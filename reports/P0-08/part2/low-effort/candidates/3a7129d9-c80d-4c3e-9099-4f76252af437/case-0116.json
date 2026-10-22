@@ -1,0 +1,59 @@
+{
+  "caseId": "case-0116",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0116",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0116"
+        ],
+        "sourceSpan": [
+          28,
+          38
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "chapter 39"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0116"
+        ],
+        "sourceSpan": [
+          0,
+          39
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "read",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "I"
+          },
+          {
+            "role": "object",
+            "value": "chapter 39"
+          },
+          {
+            "role": "condition",
+            "value": "I have time"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": "future"
+      }
+    ]
+  }
+}

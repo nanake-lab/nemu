@@ -1,0 +1,31 @@
+{
+  "createdUtc": "2026-10-22T05:55:11.950Z",
+  "generator": "spikes/codex-app-server/src/prepare-talk-catalog.mjs",
+  "source": "Authenticated profile models_cache.json capability metadata; no auth file read",
+  "sourceSha256": "05109e189e6bff02c7f6faad2750a4dfd3647d2f3d75b920a69b90fecd33aa51",
+  "derivedSha256": "3d04df620f96521c315c760a40ed682f0db3089afc4f2d0ea94b470440d2e817",
+  "derivedLocalPath": "C:\\Users\\nanake\\AppData\\Local\\Nemu\\probes\\P0-08\\derived\\no-tools-catalog-v3.json",
+  "before": {
+    "slug": "gpt-6-luna",
+    "tool_mode": "code_mode_only",
+    "apply_patch_tool_type": "freeform",
+    "experimental_supported_tools": [
+      "send_user_message_async",
+      "clock"
+    ],
+    "supports_search_tool": true,
+    "multi_agent_version": "v2"
+  },
+  "after": {
+    "slug": "gpt-6-luna",
+    "tool_mode": "direct",
+    "apply_patch_tool_type": null,
+    "experimental_supported_tools": [],
+    "supports_search_tool": false,
+    "multi_agent_version": "disabled"
+  },
+  "otherModelMetadataChanged": false,
+  "selectedModelIdChanged": false,
+  "reasoningEffortChanged": false,
+  "note": "Supported model_catalog_json configuration narrows client tool declarations. Other model fields remain unchanged; the whole provider catalog stays outside Git. Use with the explicit strict feature profile and empty environments."
+}

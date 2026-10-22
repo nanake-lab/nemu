@@ -1,0 +1,88 @@
+{
+  "caseId": "case-0018",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0018",
+    "nodes": [
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "day_of_week",
+        "roles": [
+          {
+            "role": "day",
+            "value": "水曜日"
+          }
+        ],
+        "value": "水曜日",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          17,
+          23
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "date",
+        "roles": [
+          {
+            "role": "day",
+            "value": "6日"
+          }
+        ],
+        "value": "6日",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c3",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          24,
+          30
+        ],
+        "derivation": "inferred",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "corrects",
+        "roles": [
+          {
+            "role": "original_day",
+            "value": "火曜日"
+          }
+        ],
+        "value": "火曜日",
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  },
+  "unparsedOutput": null
+}

@@ -1,0 +1,72 @@
+{
+  "caseId": "case-0014",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0014",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0014"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "Lin"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0014"
+        ],
+        "sourceSpan": [
+          11,
+          42
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "snow",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "Lin"
+          },
+          {
+            "role": "subject",
+            "value": "it"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "day 5 next week"
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0014"
+        ],
+        "sourceSpan": [
+          0,
+          43
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "It may snow on day 5 next week."
+      }
+    ]
+  }
+}

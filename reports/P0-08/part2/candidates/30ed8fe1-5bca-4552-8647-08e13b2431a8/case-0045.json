@@ -1,0 +1,75 @@
+{
+  "caseId": "case-0045",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0045",
+    "nodes": [
+      {
+        "id": "r_date",
+        "sourceRefs": [
+          "p0-08-0045"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "15日"
+      },
+      {
+        "id": "r_book",
+        "sourceRefs": [
+          "p0-08-0045"
+        ],
+        "sourceSpan": [
+          6,
+          9
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "この本"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0045"
+        ],
+        "sourceSpan": [
+          0,
+          18
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "finish_reading",
+        "roles": [
+          {
+            "role": "reader",
+            "value": "speaker"
+          },
+          {
+            "role": "book",
+            "value": "r_book"
+          },
+          {
+            "role": "deadline",
+            "value": "r_date"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "by 15日"
+      }
+    ]
+  }
+}

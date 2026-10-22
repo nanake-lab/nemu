@@ -1,0 +1,91 @@
+{
+  "measuredAtUtc": "2026-10-21T17:50:56.085Z",
+  "model": "gpt-6-luna",
+  "effort": "max",
+  "approvalPolicy": "untrusted",
+  "approvalsReviewer": "user",
+  "fatalError": null,
+  "serverRequests": [
+    {
+      "method": "item/commandExecution/requestApproval",
+      "at": "2026-10-21T17:50:39.688Z"
+    },
+    {
+      "method": "item/fileChange/requestApproval",
+      "at": "2026-10-21T17:50:53.709Z"
+    }
+  ],
+  "controls": [
+    {
+      "control": "turn/interrupt",
+      "requestAccepted": true,
+      "turnStatus": "interrupted",
+      "firstDeltaSeen": true,
+      "interruptCompletionMs": 1.59,
+      "firstDeltaMs": 8953.96
+    },
+    {
+      "control": "turn/steer",
+      "requestAccepted": true,
+      "firstDeltaSeen": true,
+      "turnStatus": "completed",
+      "outputContainsMarker": true,
+      "outputEndsWithMarker": true,
+      "responseObserved": true
+    },
+    {
+      "control": "command-approval",
+      "turnStatus": "completed",
+      "outputChars": 75,
+      "observedItemTypes": [
+        "userMessage",
+        "reasoning",
+        "commandExecution",
+        "reasoning",
+        "agentMessage"
+      ],
+      "requests": [
+        {
+          "method": "item/commandExecution/requestApproval",
+          "decision": "decline",
+          "at": "2026-10-21T17:50:39.688Z"
+        }
+      ]
+    },
+    {
+      "control": "file-change-approval",
+      "turnStatus": "completed",
+      "outputChars": 85,
+      "observedItemTypes": [
+        "userMessage",
+        "reasoning",
+        "reasoning",
+        "fileChange",
+        "reasoning",
+        "agentMessage"
+      ],
+      "requests": [
+        {
+          "method": "item/fileChange/requestApproval",
+          "decision": "decline",
+          "at": "2026-10-21T17:50:53.709Z"
+        }
+      ]
+    },
+    {
+      "control": "approval-routing",
+      "requests": [
+        {
+          "method": "item/commandExecution/requestApproval",
+          "decision": "decline"
+        },
+        {
+          "method": "item/fileChange/requestApproval",
+          "decision": "decline"
+        }
+      ],
+      "commandFileCreated": false,
+      "testFileCreated": false
+    }
+  ]
+}

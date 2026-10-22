@@ -1,0 +1,66 @@
+{
+  "mode": "remote-speech-zh",
+  "measuredAtUtc": "2026-10-21T16:36:54.115Z",
+  "count": 50,
+  "firstDeltaP50Ms": 5962,
+  "firstDeltaP90Ms": 8369,
+  "completionP50Ms": 6272.1,
+  "completionP90Ms": 8513.73,
+  "successCount": 50,
+  "failures": 0,
+  "usageRows": 50,
+  "usageTotals": {
+    "totalTokens": 591663,
+    "inputTokens": 585715,
+    "cachedInputTokens": 273152,
+    "outputTokens": 5948,
+    "reasoningOutputTokens": 5129
+  },
+  "runId": "4dbc2d76-d217-41d9-b5d1-553619a375bc",
+  "rateLimitsBefore": {
+    "ordinaryUsageAllowed": true,
+    "buckets": [
+      {
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 0,
+          "windowDurationMins": 300,
+          "resetsAt": 1792618138
+        },
+        "secondary": {
+          "usedPercent": 51,
+          "windowDurationMins": 10080,
+          "resetsAt": 1793082973
+        },
+        "credits": {
+          "hasCredits": false,
+          "unlimited": false
+        }
+      }
+    ]
+  },
+  "rateLimitsAfter": {
+    "ordinaryUsageAllowed": true,
+    "buckets": [
+      {
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 1,
+          "windowDurationMins": 300,
+          "resetsAt": 1792618138
+        },
+        "secondary": {
+          "usedPercent": 51,
+          "windowDurationMins": 10080,
+          "resetsAt": 1793082973
+        },
+        "credits": {
+          "hasCredits": false,
+          "unlimited": false
+        }
+      }
+    ]
+  }
+}

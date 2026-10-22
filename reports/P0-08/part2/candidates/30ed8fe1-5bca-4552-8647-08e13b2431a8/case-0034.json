@@ -1,0 +1,77 @@
+{
+  "caseId": "case-0034",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0034",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0034"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "这"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0034"
+        ],
+        "sourceSpan": [
+          0,
+          9
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is_only_the_12th_hypothesis",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "这"
+          }
+        ],
+        "value": "第12个假设",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0034"
+        ],
+        "sourceSpan": [
+          10,
+          17
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "represents_that_it_already_happened",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "这"
+          }
+        ],
+        "value": "已经发生",
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}
