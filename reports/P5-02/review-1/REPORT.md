@@ -2,7 +2,7 @@
 
 ## 结果
 
-修复与补验进行中；PR #58 保持草稿，未合并。此报告取代初次报告中“全部验收完成”的当前状态；原始日志和结论保留为历史证据。
+修复及本机完整复验通过；待本轮 Ubuntu/Windows CI 和独立复审。PR #58 保持草稿，未合并。此报告取代初次报告中“全部验收完成”的当前状态；原始日志和结论保留为历史证据。
 
 审查基线 `6209401822a1a6cce43708447c6f6d180e93c798`；[阻塞意见](https://github.com/nanake-lab/nemu/pull/58#issuecomment-6341822078)。已先后 merge `origin/main` 的 `47ee2845c4731969242fe0a809ccc7637e1cf55c` 与 `1f7d4734f32a399e9f867427864ddf87691755e9`；后者仅更新其他卡及 P5-13 的依赖，未改变 P5-02 要求。未 rebase、未强推。
 
@@ -10,13 +10,28 @@
 
 | 审查项 | 改动 | 证据 |
 | --- | --- | --- |
-| A1 | 抽出只读完整核验，Reader 与 Store 共用；缺失 L、混合 head、对象损坏拒绝打开 | 待最终运行 |
-| B1 | 删除仅凭环境变量路径打开私有 Store 的入口；父进程新建 TemporaryRoot，随机一次性 permit 经 stdin 与根目录文件双重匹配，验证和消费后才开锁/SQL | 待最终运行 |
-| B2 | 先捕获回执，再固定 SQL 快照，在同一快照核对完整性；测试在 capture 后、SQL 快照后分别追加 | 待最终运行 |
-| C1 | 按操作/tag/第 N 次写入选择真实进程退出；D、提交、回执及补写、R 子对象/索引、复用、清单、初始化、GC 分列 | 待最终运行 |
-| C2 | 三种谱系都写入可区分记录；各自正向读取、六向对象/打开拒绝，LIFE 事实视图没有 REHEARSAL 记录 | 待最终运行 |
-| D1 | 保留临时属性清除，加同目录 MoveFileExW WRITE_THROUGH；列明 FlushFileBuffers、目录句柄和证据边界 | README；待最终 Windows CI |
-| D2 | merge main 后重跑检查，不沿用旧提交 CI 代替 | 待最终运行 |
+| A1 | 抽出只读完整核验，Reader 与 Store 共用；缺失 L、混合 head、对象损坏拒绝打开 | 本机通过；[AT02](AT02/result.json) |
+| B1 | 删除仅凭环境变量路径打开私有 Store 的入口；父进程新建 TemporaryRoot，随机一次性 permit 经 stdin 与根目录文件双重匹配，验证和消费后才开锁/SQL | 本机通过；[I29](I29/result.json) 的沙箱负例 |
+| B2 | 先捕获回执，再固定 SQL 快照，在同一快照核对完整性；测试在 capture 后、SQL 快照后分别追加 | 本机通过；[AT04](AT04/result.json)，保留真正旧备份拒绝 |
+| C1 | 按操作/tag/第 N 次写入选择真实进程退出；D、提交、回执及补写、R 子对象/索引、复用、清单、初始化、GC 分列 | 本机通过；[完整矩阵](final-test-manifest.json) |
+| C2 | 三种谱系都写入可区分记录；各自正向读取、六向对象/打开拒绝，LIFE 事实视图没有 REHEARSAL 记录 | 本机通过；[I29](I29/result.json)、[AC2-22](AC2-22/result.json) |
+| D1 | 保留临时属性清除，加同目录 MoveFileExW WRITE_THROUGH；列明 FlushFileBuffers、目录句柄和证据边界 | 本机 NTFS 原语测试通过；README；本轮 Windows CI 待运行 |
+| D2 | merge main 后重跑检查，不沿用旧提交 CI 代替 | 本机完整复验通过；结束后再 fetch，main 仍为 1f7d473 且已在本分支中 |
+
+## 最终本机验收
+
+冻结源码提交：`1e1cc584dba4abaa91be11f2296195a2f320e303`。检查源文件树未变；后续仅补证据。按项目 routine_reporter 角色机械执行，主代理核对退出码、原始输出、逐项场景和来源指纹。重负载独占，未使用 GPU；测试全部使用父进程新建 TemporaryRoot。
+
+| 检查 | 结果 | 原始证据 |
+| --- | --- | --- |
+| cargo fmt --all -- --check | exit 0 | ../logs/13b-review-fmt.log 与 .json |
+| cargo clippy --workspace --all-targets --locked -- -D warnings | exit 0 | ../logs/14-review-clippy.log 与 .json |
+| cargo test --workspace --locked -- --test-threads=1 --nocapture | exit 0；85 passed、0 failed，其中 core-store 31 项运行测试和 2 项 compile-fail doctest | ../logs/16-review-final-workspace.log 与 .json |
+| 日志与验收映射核对 | 13 组编号；82 场景、100 次实际 exit 86 注入，全部匹配预期 | summarize.py、final-test-manifest.json，各编号/result.json |
+
+完整测试用时约 15m57s（2026-10-22 22:11:51–22:27:49 +08）。原始日志 SHA-256 为 `43d72bdfb78581381b23ebcd121841a891973ebc6e4d4813ff48baabb8f8948a`；LF/UTF-8 规范化后为 `22ab190bf118456ca5f047b2aa88223c5d9c2a498874593da6c6850fd3e13f78`。Git 会规范化文本换行，因此复核脚本核对后者，同时保留采集时的原始字节摘要。命令退出码直接采集，不从日志推断。
+
+82 个场景分为：提交 6、D 入口 7、回执发布/补写 36、R 子对象/索引与第 N 份事务清单 12、对象复用 4、初始化 13、GC 4。回执修复有 18 次先行 SQL 提交后崩溃，因此总实际退出次数为 100。前 65 项是 X03 提交相关矩阵；初始化和 GC 分开列证，不扩大 X03 定义。
 
 ## 证据边界与更正
 
@@ -32,7 +47,7 @@
 
 ## 下一步
 
-补齐最终本机检查与 Ubuntu/Windows CI，回复原审查评论并请求复审；通过前不合并。当前 main 的 tasks/P6-presence.md 追加记录允许本次 Codex 独立审查，且诞生前仍需 Claude 补审崩溃安全与 I29；实现会话不自行签发审查结论。
+运行本轮 Ubuntu/Windows CI，回复原审查评论并请求复审；通过前不合并。当前 main 的 tasks/P6-presence.md 追加记录允许本次 Codex 独立审查，且诞生前仍需 Claude 补审崩溃安全与 I29；实现会话不自行签发审查结论。
 
 ## 中间检查记录
 
