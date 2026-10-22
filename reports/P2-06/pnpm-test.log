@@ -1,0 +1,22 @@
+Scope: all 14 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2d ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+Error:   × installing dependencies
+  ╰─▶ Failed to create directory at "D:\\Dev\\nemu-p206\\node_modules":
+      workspace hoist directory is not a real directory
+
+[WARN] The install that runs before scripts failed, so your node_modules may be out of sync with your lockfile. Set "verifyDepsBeforeRun: false" to skip this install.
+$ vitest run
+
+ RUN  v5.0.4 D:/Dev/nemu-p206
+
+
+ Test Files  29 passed (29)
+      Tests  443 passed (443)
+   Start at  19:51:50
+   Duration  4.38s (tests 39%, transform 37%, import 22%, worker 1%)
+
+    Isolate  29 workers spawned · ~309ms startup each (spawn + environment, per file)
+             at least ~289ms faster with isolate: false — reuses workers across files instead of one per file
+

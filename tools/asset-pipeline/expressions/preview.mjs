@@ -1,0 +1,41 @@
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { VRMLoaderPlugin } from '@pixiv/three-vrm';
+const p = new URLSearchParams(location.search);
+const style = p.get('style') || 'standard';
+const scene = new THREE.Scene();
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(1);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.setClearColor(p.get('bg') === 'black' ? '#000000' : '#ffffff', p.get('bg') === 'gradient' ? 0 : 1);
+if (p.get('bg') === 'gradient') document.body.style.background = 'linear-gradient(135deg,#9bc9c0,#9796b9,#dbbfce)';
+document.body.append(renderer.domElement);
+scene.add(new THREE.AmbientLight(0xffffff, .65));
+const key = new THREE.DirectionalLight(0xffffff, 2.1);
+key.position.set(-1, 2, 3); scene.add(key);
+const rim = new THREE.DirectionalLight(0xd0e0ff, .8);
+rim.position.set(2, 2, -2); scene.add(rim);
+const camera = new THREE.PerspectiveCamera(25, innerWidth / innerHeight, .01, 30);
+const full = p.get('framing') === 'upperBody';
+camera.position.set(0, full ? 1.22 : 1.37, full ? 1.65 : .72);
+camera.lookAt(0, full ? 1.22 : 1.37, 0);
+const loader = new GLTFLoader();
+loader.register(parser => new VRMLoaderPlugin(parser));
+const gltf = await loader.loadAsync(`/content/_candidates/P2-06/models/${style}.vrm`);
+const vrm = gltf.userData.vrm;
+scene.add(vrm.scene);
+let bindings = [];
+if (p.has('emo')) {
+ const maps = await (await fetch('/content/_candidates/P2-06/emotionMap.candidates.json')).json();
+ bindings = maps[p.get('emo')][p.get('variant') || 'A'];
+} else if (p.has('expr')) bindings = [{expression:p.get('expr'),weight:Number(p.get('weight') || 1)}];
+for (const bind of bindings) {
+ if (!vrm.expressionManager.getExpression(bind.expression)) throw new Error(`Missing expression ${bind.expression}`);
+ vrm.expressionManager.setValue(bind.expression, bind.weight);
+}
+vrm.update(0);
+renderer.render(scene,camera);
+document.getElementById('label').textContent = `候选 ${p.get('emo') || p.get('expr') || 'neutral'} ${p.get('variant') || ''} / ${style} / ${p.get('bg') || 'white'}`;
+window.__P206_READY__ = true;
+window.__P206_ERRORS__ = renderer.info.render.triangles === 0 ? ['empty render'] : [];
