@@ -5,9 +5,10 @@
 //! changed ones are stored in place and their tendencies replayed (D5).
 //! What is recomputed when (V2-39, V2-40, V2-41):
 //! - a new allocation: S, strength, p_c from this step's b, σ̂ and r̃_k;
-//! - new members (experience group): every allocation's S, strength and p_c;
+//! - new evidence (experience group): every allocation's S, strength and p_c;
+//!   whole-group repetitions only append member IDs, preserving old values;
 //! - a side whose membership changed, or any side of a group whose members
-//!   changed: its shares, from this step's π;
+//!   changed in evidence content: its shares, from this step's π;
 //! - otherwise nothing: the same group arriving again changes nothing (AC2-03).
 
 use std::collections::{BTreeMap, BTreeSet};

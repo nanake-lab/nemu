@@ -85,6 +85,7 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
         let gone = ids[i].clone();
         work.now.remove(&gone);
         let mut dirty = BTreeSet::new();
+        let mut removed_from = Vec::new();
         let group_ids: Vec<String> = work.groups.keys().cloned().collect();
         for gid in group_ids {
             let g = work.groups.get_mut(&gid).expect("listed");
@@ -92,6 +93,7 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
                 continue;
             };
             let removed = g.allocations.remove(pos);
+            removed_from.push(gid.clone());
             work.touched.insert(gid.clone());
             let side = removed.support;
             if side == 0.0 {
@@ -130,6 +132,11 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
             for id in marked {
                 work.mark(&id, &gid);
             }
+        }
+        // Include every deleted allocation, including S = 0 and an empty
+        // remaining side. They are evidence processed for the removed tendency.
+        for gid in removed_from {
+            work.mark(&gone, &gid);
         }
         for id in dirty {
             work.replay(&id, ctx)?;

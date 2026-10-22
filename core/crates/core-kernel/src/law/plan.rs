@@ -2,7 +2,7 @@
 //! applied, for an experience group (S, strength, μ, p_c per tendency) and a
 //! teaching group (EV7, V2-45). See `group.rs` for what is recomputed when.
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use core_types::semantic::nature;
 
@@ -35,7 +35,7 @@ pub(super) fn of(a: &EvidenceAllocationV2) -> Values {
 pub(super) struct Plan {
     pub(super) credibility: f64,
     pub(super) verifiability: f64,
-    /// The members changed: every side is re-shared (V2-39).
+    /// The evidence changed (not just repeated members): re-share every side.
     pub(super) reshare_all: bool,
     pub(super) values: BTreeMap<String, Values>,
 }
@@ -45,6 +45,39 @@ pub(super) fn find<'a>(
     id: &str,
 ) -> Option<&'a EvidenceAllocationV2> {
     g.and_then(|g| g.allocations.iter().find(|a| a.tendency_id == id))
+}
+
+/// Compare the old and current appraisal distributions using the old member
+/// IDs and the immutable appraisals supplied from H. Whole-group repetition
+/// preserves this distribution, for any b, sigma or direction. Comparing the
+/// current support with the stored support would instead refresh old evidence.
+fn repeated_content(item: &GroupItem, stored: &EvidenceGroupV2) -> LawResult<bool> {
+    let GroupContent::Experience { appraisals, .. } = &item.content else {
+        unreachable!("experience members only")
+    };
+    let old: BTreeSet<&str> = stored.members.iter().map(String::as_str).collect();
+    let mut counts: BTreeMap<[u64; 4], (u128, u128)> = BTreeMap::new();
+    let mut retained = 0usize;
+    for (id, a) in item.members.iter().zip(appraisals) {
+        let key = nature(a).map(|v| if v == 0.0 { 0 } else { v.to_bits() });
+        let count = counts.entry(key).or_default();
+        count.1 += 1;
+        if old.contains(id.as_str()) {
+            count.0 += 1;
+            retained += 1;
+        }
+    }
+    if retained != stored.members.len() {
+        return Err(LawError::InconsistentState(format!(
+            "group {} lost old members; reinterpretation is P5-26",
+            item.group_id
+        )));
+    }
+    // Each count is bounded by a Vec length (at most usize::MAX). u128
+    // multiplication is exact even for the largest 64-bit address space.
+    Ok(counts.values().all(|&(before, after)| {
+        before * (item.members.len() as u128) == after * (stored.members.len() as u128)
+    }))
 }
 
 pub(super) fn experience_plan(
@@ -81,7 +114,13 @@ pub(super) fn experience_plan(
         deviations.push(deviation(&a, theta.baseline())?);
     }
     let verifiability = if item.verifiable { 1.0 } else { law.v_u };
-    let changed = stored.is_none_or(|g| g.members != members || g.verifiability != verifiability);
+    let changed = match stored {
+        None => true,
+        Some(g) => {
+            let repeated = repeated_content(item, g)?;
+            g.verifiability != verifiability || (g.members != members && !repeated)
+        }
+    };
     // μ per tendency: a direct match wins over an alias mapped onto the same tendency (D10).
     // Priority of a μ source for one tendency: a direct match, then the stored
     // allocation, then a synonym mapped onto it (D10: synonyms add nothing).

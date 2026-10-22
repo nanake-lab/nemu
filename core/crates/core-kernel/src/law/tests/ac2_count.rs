@@ -1,9 +1,9 @@
 //! AC2-01, AC2-06, AC2-07 on the recurrence; AC2-02 and I25 on the shares.
 //!
-//! With recency weights, a group also lets older evidence give way (LP4), so
-//! LP1 and LP7 are checked in the two senses registered in V2-49: without
-//! recency weight (ρ = 1, as in corollary 4), and as the group's own effect
-//! on top of the same decay.
+//! The marginal checks below describe the reference recurrence; they DO NOT
+//! establish the frozen LP1 / AC2-01 predicate. The counterexample emits its
+//! actual failed acceptance result for reports/P5-23/verify_ac2_01.ps1.
+//! Corollary 4 explicitly excludes recency; its AC2-07 check is separate.
 
 use core_types::generated::TendencyV2;
 
@@ -70,7 +70,7 @@ fn ac2_01_consistent_evidence_raises_pi_and_contrary_lowers_it() {
         });
     }
     println!(
-        "AC2-01: {checked} groups, {bad_plain} violations at rho = 1, {bad_marginal} over the decay"
+        "Reference marginal check (not AC2-01): {checked} groups, {bad_plain} violations at rho = 1, {bad_marginal} over the decay"
     );
     assert!(checked > 3900);
     assert_eq!((bad_plain, bad_marginal), (0, 0));
@@ -79,8 +79,8 @@ fn ac2_01_consistent_evidence_raises_pi_and_contrary_lowers_it() {
 #[test]
 fn ac2_01_reference_form_lets_old_support_give_way() {
     // V2-49: under recency a weak supporting group after strong support can
-    // lower π, because the old evidence decays. This is LP4 at work, and is
-    // reported rather than hidden.
+    // lower π, because the old evidence decays. This violates the frozen LP1;
+    // retaining this diagnostic assertion is not an acceptance pass (ADR 0018).
     let l = law(1.0, 0.0, 0.3, 10.0);
     let mut t = tendency(&l, "k", None);
     for _ in 0..3 {
@@ -88,6 +88,11 @@ fn ac2_01_reference_form_lets_old_support_give_way() {
     }
     let before = t.pi;
     record(&mut t, &l, 0.01, 1.0).unwrap();
+    let status = if t.pi > before { "passed" } else { "failed" };
+    println!(
+        "AC2-01_RESULT={{\"id\":\"AC2-01\",\"status\":\"{status}\",\"predicate\":\"pi_after > pi_before for W > 0 and S = 1\",\"pi_before\":{before:.17},\"pi_after\":{:.17},\"support\":1.0,\"weight\":0.01}}",
+        t.pi
+    );
     assert!(t.pi < before, "{} vs {before}", t.pi);
 }
 

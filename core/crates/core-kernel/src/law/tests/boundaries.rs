@@ -68,7 +68,7 @@ fn alias_adr_0014_any_number_of_synonyms_leaves_pi_and_r_unchanged() {
         assert_eq!(out.r, w.r, "no new tendency, the same pi");
         assert!(out.changes.is_empty());
     }
-    // Synonyms proposed in the same step: only the first in canonical order is created,
+    // Synonyms proposed in the same step: the canonical concept is created first,
     // and a group matching both counts once for it.
     let f = Fixture::new(64);
     let aliases = BTreeMap::from([("c-b".to_owned(), "c-a".to_owned())]);
@@ -217,6 +217,15 @@ fn ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups() {
         .find(|c| c.tendency_id == "rec-2")
         .unwrap();
     assert_eq!(removed.pi_after, None);
+    assert_eq!(removed.evidence_groups, ["g1"]);
+    assert_eq!(
+        out.changes
+            .iter()
+            .find(|c| c.tendency_id == "rec-1")
+            .unwrap()
+            .evidence_groups,
+        ["g1"]
+    );
     check_world(&f, &w);
     // Only personality left: an explicit fault, nothing is removed.
     let f0 = Fixture::new(0);

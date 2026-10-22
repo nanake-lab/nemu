@@ -12,5 +12,7 @@ mod mean_vectors;
 mod numeric;
 mod pyrandom;
 mod relations;
+mod replay_h;
+mod review_regressions;
 mod types;
 mod world;
