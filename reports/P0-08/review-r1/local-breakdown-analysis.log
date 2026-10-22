@@ -1,0 +1,568 @@
+{
+  "arms": {
+    "unconstrained": {
+      "count": 50,
+      "schemaValid": 49,
+      "sourceBindingValid": 43,
+      "tokenLimitCount": 0,
+      "completedMs": {
+        "count": 50,
+        "p50": 9905.255699995905,
+        "p90": 15723.42110000318,
+        "mean": 11053.69536599901
+      },
+      "firstTokenMs": {
+        "count": 50,
+        "p50": 396.6710999957286,
+        "p90": 452.4974999949336,
+        "mean": 398.58776400389615
+      },
+      "prefillWallMs": {
+        "count": 50,
+        "p50": 394.44950001779944,
+        "p90": 450.38550000754185,
+        "mean": 396.4904520014534
+      },
+      "prefillCudaElapsedMs": {
+        "count": 50,
+        "p50": 392.4090881347656,
+        "p90": 448.3379211425781,
+        "mean": 394.63038513183596
+      },
+      "parserBuildMs": {
+        "count": 0,
+        "p50": null,
+        "p90": null,
+        "mean": null
+      },
+      "constraintCallbackWallMs": {
+        "count": 0,
+        "p50": null,
+        "p90": null,
+        "mean": null
+      },
+      "outputTokens": {
+        "count": 50,
+        "p50": 204,
+        "p90": 325,
+        "mean": 226.24
+      },
+      "totalTokensPerSecond": {
+        "count": 50,
+        "p50": 20.421082316964554,
+        "p90": 20.733401333373568,
+        "mean": 20.406269570656665
+      },
+      "decodeTokensPerSecond": {
+        "count": 50,
+        "p50": 21.17776504091222,
+        "p90": 21.27770055263267,
+        "mean": 21.135034905167675
+      }
+    },
+    "constrained": {
+      "count": 50,
+      "schemaValid": 49,
+      "sourceBindingValid": 43,
+      "tokenLimitCount": 0,
+      "completedMs": {
+        "count": 50,
+        "p50": 15389.074299979256,
+        "p90": 25592.71530000842,
+        "mean": 17531.11032799876
+      },
+      "firstTokenMs": {
+        "count": 50,
+        "p50": 421.6008000075817,
+        "p90": 479.5946000085678,
+        "mean": 423.5137960012071
+      },
+      "prefillWallMs": {
+        "count": 50,
+        "p50": 405.598600016674,
+        "p90": 452.72250002017245,
+        "mean": 402.3611980007263
+      },
+      "prefillCudaElapsedMs": {
+        "count": 50,
+        "p50": 403.5051574707031,
+        "p90": 450.8641357421875,
+        "mean": 400.4877185058594
+      },
+      "parserBuildMs": {
+        "count": 50,
+        "p50": 13.119299983372912,
+        "p90": 24.67900002375245,
+        "mean": 15.337860000436194
+      },
+      "constraintCallbackWallMs": {
+        "count": 50,
+        "p50": 4762.436600081855,
+        "p90": 8976.848399935989,
+        "mean": 5802.428056046483
+      },
+      "outputTokens": {
+        "count": 50,
+        "p50": 197,
+        "p90": 325,
+        "mean": 225.74
+      },
+      "totalTokensPerSecond": {
+        "count": 50,
+        "p50": 13.191064269265926,
+        "p90": 13.394365222204883,
+        "mean": 12.945418764366643
+      },
+      "decodeTokensPerSecond": {
+        "count": 50,
+        "p50": 13.54864283287039,
+        "p90": 13.67243829350158,
+        "mean": 13.23478873760957
+      }
+    }
+  },
+  "paired": {
+    "completionRatio": {
+      "count": 50,
+      "p50": 1.5408471113241562,
+      "p90": 1.6268185010910428,
+      "mean": 1.580829705581545
+    },
+    "unconstrainedToConstrainedDecodeRateRatio": {
+      "count": 50,
+      "p50": 1.5614823938756404,
+      "p90": 1.6390177021486236,
+      "mean": 1.6059050160470105
+    },
+    "matchedPrefixDecodeRateRatio": {
+      "count": 50,
+      "p50": 1.5614823938756406,
+      "p90": 1.6405683119325025,
+      "mean": 1.605943514343725
+    },
+    "constraintCallbackShare": {
+      "count": 50,
+      "p50": 0.31148507181647306,
+      "p90": 0.3390970771231014,
+      "mean": 0.3260802113495557
+    }
+  },
+  "pairs": [
+    {
+      "caseId": "case-0001",
+      "completionRatio": 1.5164795091799506,
+      "decodeRateRatio": 1.5370709520577763,
+      "matchedTokens": 207,
+      "matchedPrefixDecodeRateRatio": 1.5370709520577763,
+      "constraintCallbackShare": 0.30884639237362355
+    },
+    {
+      "caseId": "case-0002",
+      "completionRatio": 1.5371551476389926,
+      "decodeRateRatio": 1.5557788147340406,
+      "matchedTokens": 207,
+      "matchedPrefixDecodeRateRatio": 1.5557788147340403,
+      "constraintCallbackShare": 0.30932554272364954
+    },
+    {
+      "caseId": "case-0003",
+      "completionRatio": 1.526683565009607,
+      "decodeRateRatio": 1.5614823938756404,
+      "matchedTokens": 183,
+      "matchedPrefixDecodeRateRatio": 1.5614823938756406,
+      "constraintCallbackShare": 0.3110469471626093
+    },
+    {
+      "caseId": "case-0004",
+      "completionRatio": 1.5103216703938298,
+      "decodeRateRatio": 1.5533092695332769,
+      "matchedTokens": 160,
+      "matchedPrefixDecodeRateRatio": 1.5533092695332766,
+      "constraintCallbackShare": 0.3076560219857465
+    },
+    {
+      "caseId": "case-0005",
+      "completionRatio": 1.5133585954637836,
+      "decodeRateRatio": 1.553980742842521,
+      "matchedTokens": 161,
+      "matchedPrefixDecodeRateRatio": 1.553980742842521,
+      "constraintCallbackShare": 0.30771691518799543
+    },
+    {
+      "caseId": "case-0006",
+      "completionRatio": 1.5825414820267916,
+      "decodeRateRatio": 1.6018581835568357,
+      "matchedTokens": 298,
+      "matchedPrefixDecodeRateRatio": 1.6018581835568357,
+      "constraintCallbackShare": 0.3365610324595055
+    },
+    {
+      "caseId": "case-0007",
+      "completionRatio": 1.480465929755525,
+      "decodeRateRatio": 1.4934593439654171,
+      "matchedTokens": 183,
+      "matchedPrefixDecodeRateRatio": 1.4934593439654171,
+      "constraintCallbackShare": 0.30958720713344523
+    },
+    {
+      "caseId": "case-0008",
+      "completionRatio": 1.523658828819283,
+      "decodeRateRatio": 1.5454478880954423,
+      "matchedTokens": 189,
+      "matchedPrefixDecodeRateRatio": 1.5454478880954423,
+      "constraintCallbackShare": 0.30428391673158983
+    },
+    {
+      "caseId": "case-0009",
+      "completionRatio": 1.5870042620682394,
+      "decodeRateRatio": 1.5984124748978896,
+      "matchedTokens": 326,
+      "matchedPrefixDecodeRateRatio": 1.5984124748978896,
+      "constraintCallbackShare": 0.3364359693680903
+    },
+    {
+      "caseId": "case-0010",
+      "completionRatio": 1.5369806530932308,
+      "decodeRateRatio": 1.5575937394999704,
+      "matchedTokens": 187,
+      "matchedPrefixDecodeRateRatio": 1.5575937394999706,
+      "constraintCallbackShare": 0.3052381865480475
+    },
+    {
+      "caseId": "case-0011",
+      "completionRatio": 1.5359211316614212,
+      "decodeRateRatio": 1.5542114334733215,
+      "matchedTokens": 218,
+      "matchedPrefixDecodeRateRatio": 1.5542114334733215,
+      "constraintCallbackShare": 0.299391246786863
+    },
+    {
+      "caseId": "case-0012",
+      "completionRatio": 1.6228058415640922,
+      "decodeRateRatio": 1.635750749546166,
+      "matchedTokens": 443,
+      "matchedPrefixDecodeRateRatio": 1.635750749546166,
+      "constraintCallbackShare": 0.34579798206144235
+    },
+    {
+      "caseId": "case-0013",
+      "completionRatio": 1.619765486416559,
+      "decodeRateRatio": 1.6319800464103584,
+      "matchedTokens": 319,
+      "matchedPrefixDecodeRateRatio": 1.6319800464103584,
+      "constraintCallbackShare": 0.3390970771231014
+    },
+    {
+      "caseId": "case-0014",
+      "completionRatio": 1.6241985273618331,
+      "decodeRateRatio": 1.6435363542324777,
+      "matchedTokens": 325,
+      "matchedPrefixDecodeRateRatio": 1.6435363542324775,
+      "constraintCallbackShare": 0.3316872360382437
+    },
+    {
+      "caseId": "case-0015",
+      "completionRatio": 1.6521697067998509,
+      "decodeRateRatio": 1.6638250970032065,
+      "matchedTokens": 325,
+      "matchedPrefixDecodeRateRatio": 1.6638250970032065,
+      "constraintCallbackShare": 0.33530391345883304
+    },
+    {
+      "caseId": "case-0016",
+      "completionRatio": 1.5557610928505432,
+      "decodeRateRatio": 1.5622461668934078,
+      "matchedTokens": 182,
+      "matchedPrefixDecodeRateRatio": 1.5622461668934078,
+      "constraintCallbackShare": 0.31108715408410276
+    },
+    {
+      "caseId": "case-0017",
+      "completionRatio": 1.5851067510408932,
+      "decodeRateRatio": 1.613692859732384,
+      "matchedTokens": 157,
+      "matchedPrefixDecodeRateRatio": 1.613692859732384,
+      "constraintCallbackShare": 0.30972276449123026
+    },
+    {
+      "caseId": "case-0018",
+      "completionRatio": 1.6291098921322067,
+      "decodeRateRatio": 1.6381689711530485,
+      "matchedTokens": 528,
+      "matchedPrefixDecodeRateRatio": 1.6381689711530483,
+      "constraintCallbackShare": 0.3412351333235787
+    },
+    {
+      "caseId": "case-0019",
+      "completionRatio": 1.5526066067113635,
+      "decodeRateRatio": 1.5581216024168527,
+      "matchedTokens": 208,
+      "matchedPrefixDecodeRateRatio": 1.5581216024168527,
+      "constraintCallbackShare": 0.3090138882140101
+    },
+    {
+      "caseId": "case-0020",
+      "completionRatio": 1.5196176533546237,
+      "decodeRateRatio": 1.5428972889190424,
+      "matchedTokens": 209,
+      "matchedPrefixDecodeRateRatio": 1.5428972889190424,
+      "constraintCallbackShare": 0.3094742635016785
+    },
+    {
+      "caseId": "case-0021",
+      "completionRatio": 2.007019188000367,
+      "decodeRateRatio": 2.0510262573260944,
+      "matchedTokens": 217,
+      "matchedPrefixDecodeRateRatio": 2.0510262573260944,
+      "constraintCallbackShare": 0.472584506872851
+    },
+    {
+      "caseId": "case-0022",
+      "completionRatio": 1.5266589524757226,
+      "decodeRateRatio": 1.5488610959173057,
+      "matchedTokens": 159,
+      "matchedPrefixDecodeRateRatio": 1.5488610959173057,
+      "constraintCallbackShare": 0.31046747386185236
+    },
+    {
+      "caseId": "case-0023",
+      "completionRatio": 1.5077556700056196,
+      "decodeRateRatio": 1.5348753052517026,
+      "matchedTokens": 182,
+      "matchedPrefixDecodeRateRatio": 1.5348753052517028,
+      "constraintCallbackShare": 0.31554818256522504
+    },
+    {
+      "caseId": "case-0024",
+      "completionRatio": 1.5396087745577411,
+      "decodeRateRatio": 1.5654450302450562,
+      "matchedTokens": 182,
+      "matchedPrefixDecodeRateRatio": 1.565445030245056,
+      "constraintCallbackShare": 0.31237297223773286
+    },
+    {
+      "caseId": "case-0025",
+      "completionRatio": 1.5671851153316678,
+      "decodeRateRatio": 1.5871720419669597,
+      "matchedTokens": 224,
+      "matchedPrefixDecodeRateRatio": 1.5871720419669595,
+      "constraintCallbackShare": 0.31892506902164175
+    },
+    {
+      "caseId": "case-0026",
+      "completionRatio": 1.5566824369619963,
+      "decodeRateRatio": 1.569989810191766,
+      "matchedTokens": 222,
+      "matchedPrefixDecodeRateRatio": 1.5699898101917658,
+      "constraintCallbackShare": 0.3163885918668136
+    },
+    {
+      "caseId": "case-0027",
+      "completionRatio": 2.0597715009402133,
+      "decodeRateRatio": 2.096840183853721,
+      "matchedTokens": 197,
+      "matchedPrefixDecodeRateRatio": 2.096840183853721,
+      "constraintCallbackShare": 0.48445744224054865
+    },
+    {
+      "caseId": "case-0028",
+      "completionRatio": 1.5408471113241562,
+      "decodeRateRatio": 1.5510100002228833,
+      "matchedTokens": 184,
+      "matchedPrefixDecodeRateRatio": 1.551010000222883,
+      "constraintCallbackShare": 0.3096945270041924
+    },
+    {
+      "caseId": "case-0029",
+      "completionRatio": 1.569873385500117,
+      "decodeRateRatio": 1.581496517487348,
+      "matchedTokens": 204,
+      "matchedPrefixDecodeRateRatio": 1.581496517487348,
+      "constraintCallbackShare": 0.3073837961339475
+    },
+    {
+      "caseId": "case-0030",
+      "completionRatio": 1.34882648862854,
+      "decodeRateRatio": 1.5574515528987822,
+      "matchedTokens": 183,
+      "matchedPrefixDecodeRateRatio": 1.5578258579506323,
+      "constraintCallbackShare": 0.32003060497215596
+    },
+    {
+      "caseId": "case-0031",
+      "completionRatio": 1.5316588500516286,
+      "decodeRateRatio": 1.555747992421194,
+      "matchedTokens": 204,
+      "matchedPrefixDecodeRateRatio": 1.555747992421194,
+      "constraintCallbackShare": 0.3114331722891423
+    },
+    {
+      "caseId": "case-0032",
+      "completionRatio": 1.540733982948186,
+      "decodeRateRatio": 1.5577024279948297,
+      "matchedTokens": 204,
+      "matchedPrefixDecodeRateRatio": 1.5577024279948297,
+      "constraintCallbackShare": 0.31148507181647306
+    },
+    {
+      "caseId": "case-0033",
+      "completionRatio": 1.511688035693201,
+      "decodeRateRatio": 1.5345740648735717,
+      "matchedTokens": 205,
+      "matchedPrefixDecodeRateRatio": 1.5345740648735717,
+      "constraintCallbackShare": 0.3119172801758423
+    },
+    {
+      "caseId": "case-0034",
+      "completionRatio": 1.5928697858105398,
+      "decodeRateRatio": 1.6046417763888932,
+      "matchedTokens": 324,
+      "matchedPrefixDecodeRateRatio": 1.6046417763888932,
+      "constraintCallbackShare": 0.3386542677922349
+    },
+    {
+      "caseId": "case-0035",
+      "completionRatio": 1.6020020189313375,
+      "decodeRateRatio": 1.611352315487457,
+      "matchedTokens": 375,
+      "matchedPrefixDecodeRateRatio": 1.6113523154874567,
+      "constraintCallbackShare": 0.3301638032886038
+    },
+    {
+      "caseId": "case-0036",
+      "completionRatio": 1.6028995440949891,
+      "decodeRateRatio": 1.6122054769836176,
+      "matchedTokens": 349,
+      "matchedPrefixDecodeRateRatio": 1.6122054769836176,
+      "constraintCallbackShare": 0.33345857154464714
+    },
+    {
+      "caseId": "case-0037",
+      "completionRatio": 1.5522393462599398,
+      "decodeRateRatio": 1.5663985702761891,
+      "matchedTokens": 164,
+      "matchedPrefixDecodeRateRatio": 1.5663985702761893,
+      "constraintCallbackShare": 0.3022943839877168
+    },
+    {
+      "caseId": "case-0038",
+      "completionRatio": 1.5442863632811992,
+      "decodeRateRatio": 1.5771684513209883,
+      "matchedTokens": 161,
+      "matchedPrefixDecodeRateRatio": 1.5771684513209883,
+      "constraintCallbackShare": 0.3063047009385476
+    },
+    {
+      "caseId": "case-0039",
+      "completionRatio": 1.539436913862823,
+      "decodeRateRatio": 1.575788373172983,
+      "matchedTokens": 167,
+      "matchedPrefixDecodeRateRatio": 1.575788373172983,
+      "constraintCallbackShare": 0.2978160340062988
+    },
+    {
+      "caseId": "case-0040",
+      "completionRatio": 1.557936024902869,
+      "decodeRateRatio": 1.5858534086527873,
+      "matchedTokens": 150,
+      "matchedPrefixDecodeRateRatio": 1.5858534086527871,
+      "constraintCallbackShare": 0.31756784744349
+    },
+    {
+      "caseId": "case-0041",
+      "completionRatio": 1.5186536347048785,
+      "decodeRateRatio": 1.5352194482533654,
+      "matchedTokens": 154,
+      "matchedPrefixDecodeRateRatio": 1.5352194482533652,
+      "constraintCallbackShare": 0.3134936556360871
+    },
+    {
+      "caseId": "case-0042",
+      "completionRatio": 2.1714728390920324,
+      "decodeRateRatio": 2.2448744860406737,
+      "matchedTokens": 166,
+      "matchedPrefixDecodeRateRatio": 2.244874486040674,
+      "constraintCallbackShare": 0.5026058920192638
+    },
+    {
+      "caseId": "case-0043",
+      "completionRatio": 1.513968954828493,
+      "decodeRateRatio": 1.5465283127855265,
+      "matchedTokens": 187,
+      "matchedPrefixDecodeRateRatio": 1.5465283127855265,
+      "constraintCallbackShare": 0.3104139906575243
+    },
+    {
+      "caseId": "case-0044",
+      "completionRatio": 1.526959607264448,
+      "decodeRateRatio": 1.536341661382668,
+      "matchedTokens": 207,
+      "matchedPrefixDecodeRateRatio": 1.536341661382668,
+      "constraintCallbackShare": 0.3087885931982674
+    },
+    {
+      "caseId": "case-0045",
+      "completionRatio": 1.523113739950145,
+      "decodeRateRatio": 1.5505598297166874,
+      "matchedTokens": 195,
+      "matchedPrefixDecodeRateRatio": 1.5505598297166874,
+      "constraintCallbackShare": 0.297921640214468
+    },
+    {
+      "caseId": "case-0046",
+      "completionRatio": 1.5234628746221865,
+      "decodeRateRatio": 1.5462190027435494,
+      "matchedTokens": 181,
+      "matchedPrefixDecodeRateRatio": 1.5462190027435494,
+      "constraintCallbackShare": 0.3140846858201379
+    },
+    {
+      "caseId": "case-0047",
+      "completionRatio": 1.5319534303619555,
+      "decodeRateRatio": 1.5440501897925611,
+      "matchedTokens": 225,
+      "matchedPrefixDecodeRateRatio": 1.544050189792561,
+      "constraintCallbackShare": 0.31482161220244914
+    },
+    {
+      "caseId": "case-0048",
+      "completionRatio": 1.549536319753459,
+      "decodeRateRatio": 1.5599078178765564,
+      "matchedTokens": 197,
+      "matchedPrefixDecodeRateRatio": 1.5599078178765564,
+      "constraintCallbackShare": 0.29643217828941637
+    },
+    {
+      "caseId": "case-0049",
+      "completionRatio": 1.5438535545031424,
+      "decodeRateRatio": 1.5641073258370939,
+      "matchedTokens": 184,
+      "matchedPrefixDecodeRateRatio": 1.5641073258370939,
+      "constraintCallbackShare": 0.3118980527444277
+    },
+    {
+      "caseId": "case-0050",
+      "completionRatio": 1.6268185010910428,
+      "decodeRateRatio": 1.6390177021486236,
+      "matchedTokens": 318,
+      "matchedPrefixDecodeRateRatio": 1.6405683119325025,
+      "constraintCallbackShare": 0.33609317587840204
+    }
+  ],
+  "originalFirst50": {
+    "outputTokens": {
+      "count": 50,
+      "p50": 197,
+      "p90": 325,
+      "mean": 225.74
+    },
+    "totalTokensPerSecond": {
+      "count": 50,
+      "p50": 12.558817547489577,
+      "p90": 13.111862921938512,
+      "mean": 12.415301855354631
+    },
+    "constrainedOutputHashMatches": 50
+  },
+  "method": "50 fixed fixtures; 17 zh/17 en/16 ja. Alternating arm order, one warmup per arm excluded. Both arms use the same streamer/first-forward hooks. Prefill CUDA elapsed is a stream span, not a sum of kernel-only compute. First token is a generated token ID, not audible speech. Callback wall time includes its own Python/CPU transfers. Outputs can differ in length, content and cap incidence; rates and paired ratios are descriptive, not a causal decomposition of every millisecond. Original 200-case backend rule population remains unchanged."
+}

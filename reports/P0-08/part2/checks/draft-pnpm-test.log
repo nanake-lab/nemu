@@ -1,0 +1,21 @@
+COMMAND: pnpm test
+WORKDIR: D:\Dev\nemu-p008-part2
+START_UTC: 2026-10-21T16:56:50.7444785+00:00
+END_UTC: 2026-10-21T16:56:55.0866729+00:00
+EXIT_CODE: 0
+----- STDOUT BEGIN -----
+
+ RUN  v5.0.4 D:/Dev/nemu-p008-part2
+
+
+ Test Files  29 passed (29)
+      Tests  443 passed (443)
+   Start at  00:56:51
+   Duration  3.66s (tests 58%, import 33%, transform 6%, worker 2%)
+
+    Isolate  29 workers spawned · ~313ms startup each (spawn + environment, per file)
+             at least ~292ms faster with isolate: false — reuses workers across files instead of one per file
+----- STDOUT END -----
+----- STDERR BEGIN -----
+$ vitest run
+----- STDERR END -----

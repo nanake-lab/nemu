@@ -1,0 +1,96 @@
+{
+  "caseId": "case-0107",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0107",
+    "nodes": [
+      {
+        "id": "ref_data",
+        "sourceRefs": [
+          "p0-08-0107"
+        ],
+        "sourceSpan": [
+          26,
+          30
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "data"
+      },
+      {
+        "id": "ref_meeting_36",
+        "sourceRefs": [
+          "p0-08-0107"
+        ],
+        "sourceSpan": [
+          35,
+          45
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "meeting 36"
+      },
+      {
+        "id": "claim_check_data",
+        "sourceRefs": [
+          "p0-08-0107"
+        ],
+        "sourceSpan": [
+          0,
+          51
+        ],
+        "derivation": "inferred",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "check",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "we"
+          },
+          {
+            "role": "object",
+            "value": "data"
+          },
+          {
+            "role": "for",
+            "value": "meeting 36"
+          },
+          {
+            "role": "recurrence",
+            "value": "again"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": null
+      },
+      {
+        "id": "act_suggestion",
+        "sourceRefs": [
+          "p0-08-0107"
+        ],
+        "sourceSpan": [
+          0,
+          52
+        ],
+        "derivation": "inferred",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "other",
+        "content": "Maybe we should check the data for meeting 36 again."
+      }
+    ]
+  }
+}

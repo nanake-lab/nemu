@@ -1,0 +1,95 @@
+{
+  "caseId": "case-0010",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0010",
+    "nodes": [
+      {
+        "id": "ref_meeting",
+        "sourceRefs": [
+          "p0-08-0010"
+        ],
+        "sourceSpan": [
+          2,
+          4
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "会议"
+      },
+      {
+        "id": "ref_meal",
+        "sourceRefs": [
+          "p0-08-0010"
+        ],
+        "sourceSpan": [
+          13,
+          15
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "吃饭"
+      },
+      {
+        "id": "ref_time",
+        "sourceRefs": [
+          "p0-08-0010"
+        ],
+        "sourceSpan": [
+          11,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "4点"
+      },
+      {
+        "id": "claim_meal_time_change",
+        "sourceRefs": [
+          "p0-08-0010"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "改动吃饭时间",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "我"
+          },
+          {
+            "role": "activity",
+            "value": "吃饭"
+          },
+          {
+            "role": "condition",
+            "value": "会议延长"
+          },
+          {
+            "role": "target_time",
+            "value": "4点"
+          }
+        ],
+        "value": "改到4点吃饭",
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": "4点"
+      }
+    ]
+  }
+}

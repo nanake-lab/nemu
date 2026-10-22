@@ -1,0 +1,94 @@
+{
+  "caseId": "case-0099",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0099",
+    "nodes": [
+      {
+        "id": "n1",
+        "sourceRefs": [
+          "p0-08-0099"
+        ],
+        "sourceSpan": [
+          0,
+          12
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "番号33の青いフォルダー"
+      },
+      {
+        "id": "n2",
+        "sourceRefs": [
+          "p0-08-0099"
+        ],
+        "sourceSpan": [
+          0,
+          12
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "color",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "番号33の青いフォルダー"
+          }
+        ],
+        "value": "青",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "n3",
+        "sourceRefs": [
+          "p0-08-0099"
+        ],
+        "sourceSpan": [
+          0,
+          5
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "identifier",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "フォルダー"
+          }
+        ],
+        "value": "33",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "n4",
+        "sourceRefs": [
+          "p0-08-0099"
+        ],
+        "sourceSpan": [
+          0,
+          22
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "番号33の青いフォルダーを机に置いてください。"
+      }
+    ]
+  }
+}

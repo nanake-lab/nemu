@@ -1,0 +1,56 @@
+{
+  "caseId": "case-0021",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0021",
+    "nodes": [
+      {
+        "id": "p0-08-0021-act1",
+        "sourceRefs": [
+          "p0-08-0021"
+        ],
+        "sourceSpan": [
+          0,
+          19
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "commitment",
+        "content": "7日までにファイルを送る"
+      },
+      {
+        "id": "p0-08-0021-claim1",
+        "sourceRefs": [
+          "p0-08-0021"
+        ],
+        "sourceSpan": [
+          0,
+          19
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "send",
+        "roles": [
+          {
+            "role": "recipient",
+            "value": "unknown"
+          },
+          {
+            "role": "object",
+            "value": "ファイル"
+          }
+        ],
+        "value": "送る",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": "7日までに"
+      }
+    ]
+  }
+}

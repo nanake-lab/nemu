@@ -1,0 +1,81 @@
+{
+  "caseId": "case-0156",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0156",
+    "nodes": [
+      {
+        "id": "p0-08-0156-r1",
+        "sourceRefs": [
+          "p0-08-0156"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "これ"
+      },
+      {
+        "id": "p0-08-0156-c1",
+        "sourceRefs": [
+          "p0-08-0156"
+        ],
+        "sourceSpan": [
+          0,
+          11
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "has_ordinal_position_within_hypotheses",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "これ"
+          },
+          {
+            "role": "category",
+            "value": "仮説"
+          }
+        ],
+        "value": 52,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "p0-08-0156-c2",
+        "sourceRefs": [
+          "p0-08-0156"
+        ],
+        "sourceSpan": [
+          12,
+          27
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "actually_happened",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "これ"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

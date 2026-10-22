@@ -1,0 +1,72 @@
+{
+  "caseId": "case-0159",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0159",
+    "nodes": [
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0159"
+        ],
+        "sourceSpan": [
+          0,
+          23
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "place",
+        "roles": [
+          {
+            "role": "object",
+            "value": "青いフォルダー"
+          },
+          {
+            "role": "destination",
+            "value": "机"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "a1",
+        "sourceRefs": [
+          "p0-08-0159"
+        ],
+        "sourceSpan": [
+          0,
+          23
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "番号53の青いフォルダーを机に置くよう依頼している。"
+      },
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0159"
+        ],
+        "sourceSpan": [
+          0,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "番号53の青いフォルダー"
+      }
+    ]
+  }
+}

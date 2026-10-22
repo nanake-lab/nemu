@@ -1,0 +1,88 @@
+{
+  "caseId": "case-0039",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0039",
+    "nodes": [
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "Place the blue folder numbered 13 on the desk."
+      },
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          3,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "番号13の青いフォルダー"
+      },
+      {
+        "id": "ref2",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          14,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "机"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "place",
+        "roles": [
+          {
+            "role": "object",
+            "value": "番号13の青いフォルダー"
+          },
+          {
+            "role": "destination",
+            "value": "机"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      }
+    ]
+  }
+}

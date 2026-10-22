@@ -1,0 +1,175 @@
+{
+  "runId": "04b26f7c-ffdc-4553-82da-0d63dcaba55f",
+  "measuredUtc": "2026-10-22T05:49:15.079Z",
+  "model": "gpt-6-luna",
+  "effort": "low",
+  "records": [
+    {
+      "disableOrchestratorMcp": false,
+      "isolateAppContext": false,
+      "requestedTool": "list_mcp_resources",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": null,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_mcp_resources"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ],
+      "completedToolItems": [
+        {
+          "tool": "list_mcp_resources",
+          "status": "completed",
+          "hasError": false
+        },
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        }
+      ],
+      "mcpServerCountAfter": 3
+    },
+    {
+      "disableOrchestratorMcp": false,
+      "isolateAppContext": false,
+      "requestedTool": "list_mcp_resource_templates",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": null,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_mcp_resource_templates"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ],
+      "completedToolItems": [
+        {
+          "tool": "list_mcp_resource_templates",
+          "status": "completed",
+          "hasError": false
+        },
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        }
+      ],
+      "mcpServerCountAfter": 3
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "isolateAppContext": false,
+      "requestedTool": "list_mcp_resources",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_agents",
+        "list_mcp_resources"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ],
+      "completedToolItems": [
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        },
+        {
+          "tool": "list_mcp_resources",
+          "status": "completed",
+          "hasError": false
+        },
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        }
+      ],
+      "mcpServerCountAfter": 3
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "isolateAppContext": false,
+      "requestedTool": "list_mcp_resource_templates",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_mcp_resource_templates"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ],
+      "completedToolItems": [
+        {
+          "tool": "list_mcp_resource_templates",
+          "status": "completed",
+          "hasError": false
+        },
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        }
+      ],
+      "mcpServerCountAfter": 3
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "isolateAppContext": true,
+      "requestedTool": "list_mcp_resources",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [],
+      "observedItemTypes": [
+        "userMessage",
+        "agentMessage"
+      ],
+      "completedToolItems": [],
+      "mcpServerCountAfter": 3
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "isolateAppContext": true,
+      "requestedTool": "list_mcp_resource_templates",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_mcp_resource_templates"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ],
+      "completedToolItems": [
+        {
+          "tool": "list_mcp_resource_templates",
+          "status": "completed",
+          "hasError": false
+        },
+        {
+          "rawOutput": true,
+          "unsupportedToolError": false
+        }
+      ],
+      "mcpServerCountAfter": 3
+    }
+  ],
+  "method": "Capability audit, not a latency sample. No output text, resource entries, or credentials persisted. Only startup/thread orchestrator.mcp.enabled differs between arms."
+}

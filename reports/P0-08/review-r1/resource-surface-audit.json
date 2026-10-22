@@ -1,0 +1,71 @@
+{
+  "runId": "f5bac808-b08e-4bdf-ac82-6dd7974f5920",
+  "measuredUtc": "2026-10-22T05:44:55.082Z",
+  "model": "gpt-6-luna",
+  "effort": "low",
+  "records": [
+    {
+      "disableOrchestratorMcp": false,
+      "requestedTool": "list_mcp_resources",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": null,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_agents",
+        "list_mcp_resources"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ]
+    },
+    {
+      "disableOrchestratorMcp": false,
+      "requestedTool": "list_mcp_resource_templates",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": null,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_mcp_resource_templates"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ]
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "requestedTool": "list_mcp_resources",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [],
+      "observedItemTypes": [
+        "userMessage",
+        "agentMessage"
+      ]
+    },
+    {
+      "disableOrchestratorMcp": true,
+      "requestedTool": "list_mcp_resource_templates",
+      "status": "completed",
+      "errorClass": null,
+      "configuredOrchestratorMcpEnabled": false,
+      "mcpServerCount": 0,
+      "rawToolCallNames": [
+        "list_mcp_resource_templates"
+      ],
+      "observedItemTypes": [
+        "userMessage",
+        "mcpToolCall",
+        "agentMessage"
+      ]
+    }
+  ],
+  "method": "Capability audit, not a latency sample. No output text, resource entries, or credentials persisted. Only startup/thread orchestrator.mcp.enabled differs between arms."
+}

@@ -1,0 +1,56 @@
+{
+  "caseId": "case-0200",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0200",
+    "nodes": [
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0200"
+        ],
+        "sourceSpan": [
+          0,
+          42
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "send",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "I"
+          },
+          {
+            "role": "theme",
+            "value": "the file"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": "before day 67"
+      },
+      {
+        "id": "a1",
+        "sourceRefs": [
+          "p0-08-0200"
+        ],
+        "sourceSpan": [
+          0,
+          42
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "commitment",
+        "content": "I promise to send the file before day 67."
+      }
+    ]
+  }
+}

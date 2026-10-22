@@ -1,0 +1,51 @@
+{
+  "caseId": "case-0087",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0087",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0087"
+        ],
+        "sourceSpan": [
+          0,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "練習の29番目"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0087"
+        ],
+        "sourceSpan": [
+          0,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "finish",
+        "roles": [
+          {
+            "role": "object",
+            "value": "r1"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": "今"
+      }
+    ]
+  }
+}

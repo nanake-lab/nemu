@@ -1,0 +1,49 @@
+{
+  "createdUtc": "2026-10-22T04:25:01.065Z",
+  "reviewComment": 6332417953,
+  "model": "gpt-6-luna",
+  "effort": "low",
+  "userRequestedControl": {
+    "model": "gpt-6-luna",
+    "effort": "max",
+    "directory": "reports/P0-08/part2/strict-speech"
+  },
+  "remoteDirectory": "reports/P0-08/part2/low-effort",
+  "speech": {
+    "zh": 50,
+    "en": 50,
+    "ja": 50
+  },
+  "irl": 200,
+  "sourceSha256": "024a938e6b5e92a4fb5018d4f4df2491a458b234e0bed37224258eb0ae67828c",
+  "fixtureSha256": "0163e74d3a034cbb519b526f866c7beabc5d572dc86161100baca098c7e3f3fc",
+  "wireSchemaSha256": "9e07fc5dadcda07b7b068f1ee6a9e9e304572b00b67b65c415240e6fb3a8cf71",
+  "catalogSha256": "d9241919cb861104299f725c7d125d88f497469786aa7af1cb4511758ea426ba",
+  "otherRemoteSettings": "Same strict tools profile, prompt, schema, order, timing boundaries, isolated CODEX_HOME; no tool calls/reroutes permitted in final analysis",
+  "remotePhases": {
+    "beforeFirstDelta": "firstDeltaMs; client-observed combined queue/network/prefill/reasoning, not isolated server reasoning",
+    "afterFirstDelta": "completedMs - firstDeltaMs, per sample, not difference of marginal percentiles"
+  },
+  "usageFields": [
+    "totalTokens",
+    "inputTokens",
+    "cachedInputTokens",
+    "outputTokens",
+    "reasoningOutputTokens"
+  ],
+  "local": {
+    "indices": "1..50 of the same 200 fixtures",
+    "arms": [
+      "unconstrained",
+      "constrained-v2"
+    ],
+    "order": "alternate which arm runs first by fixture index; one excluded warmup per arm",
+    "timing": "Request starts before parser construction, ends after synchronized generation. CUDA-event first-forward span, forward wall span, streamer first generated token, last generated token; callback wall time separately.",
+    "cap": 2048,
+    "seed": 731,
+    "carrier": "Same pinned Qwen3-4B-Instruct-2507 NF4/bf16/native RMS, m=0 without hook",
+    "window": "User approved after remote; must recheck Listener/Worker/Blender and P4 workloads before and during; cannot start until absent"
+  },
+  "thresholdsUnchanged": true,
+  "deploymentDecision": "All backend/P90 rule outputs nondeployable; formal values null pending P0-09 architecture decision"
+}

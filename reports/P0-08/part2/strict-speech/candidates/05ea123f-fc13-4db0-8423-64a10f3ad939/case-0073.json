@@ -1,0 +1,81 @@
+{
+  "caseId": "case-0073",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0073",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0073"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "小林"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0073"
+        ],
+        "sourceSpan": [
+          0,
+          17
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "说",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "小林"
+          },
+          {
+            "role": "content",
+            "value": "下周25号可能会下雪。"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-2",
+        "sourceRefs": [
+          "p0-08-0073"
+        ],
+        "sourceSpan": [
+          5,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "下雪",
+        "roles": [
+          {
+            "role": "time",
+            "value": "下周25号"
+          }
+        ],
+        "value": true,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "下周25号"
+      }
+    ]
+  }
+}

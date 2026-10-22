@@ -1,0 +1,56 @@
+{
+  "caseId": "case-0139",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0139",
+    "nodes": [
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0139"
+        ],
+        "sourceSpan": [
+          0,
+          13
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "commitment",
+        "content": "我答应在47号前发送文件。"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0139"
+        ],
+        "sourceSpan": [
+          4,
+          13
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "发送",
+        "roles": [
+          {
+            "role": "actor",
+            "value": "我"
+          },
+          {
+            "role": "object",
+            "value": "文件"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": "47号前"
+      }
+    ]
+  }
+}

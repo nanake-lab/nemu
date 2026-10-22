@@ -1,0 +1,88 @@
+{
+  "caseId": "case-0039",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0039",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          0,
+          12
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "番号13の青いフォルダー"
+      },
+      {
+        "id": "ref2",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          13,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "机"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          0,
+          22
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "置く",
+        "roles": [
+          {
+            "role": "theme",
+            "value": "番号13の青いフォルダー"
+          },
+          {
+            "role": "destination",
+            "value": "机"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0039"
+        ],
+        "sourceSpan": [
+          0,
+          23
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "番号13の青いフォルダーを机に置いてください。"
+      }
+    ]
+  }
+}

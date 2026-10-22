@@ -1,0 +1,104 @@
+{
+  "caseId": "case-0049",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0049",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0049"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "小林"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0049"
+        ],
+        "sourceSpan": [
+          5,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "你"
+      },
+      {
+        "id": "ref-3",
+        "sourceRefs": [
+          "p0-08-0049"
+        ],
+        "sourceSpan": [
+          8,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "17点"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0049"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "问",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "小林"
+          },
+          {
+            "role": "content",
+            "value": "你会在17点回来吗？"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0049"
+        ],
+        "sourceSpan": [
+          5,
+          15
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "question",
+        "content": "你会在17点回来吗？"
+      }
+    ]
+  }
+}

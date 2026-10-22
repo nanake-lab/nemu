@@ -1,0 +1,117 @@
+{
+  "caseId": "case-0127",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0127",
+    "nodes": [
+      {
+        "id": "ref-speaker",
+        "sourceRefs": [
+          "p0-08-0127"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "ref-weekend",
+        "sourceRefs": [
+          "p0-08-0127"
+        ],
+        "sourceSpan": [
+          4,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "周末"
+      },
+      {
+        "id": "ref-rain",
+        "sourceRefs": [
+          "p0-08-0127"
+        ],
+        "sourceSpan": [
+          9,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "下雨"
+      },
+      {
+        "id": "claim-uncertainty",
+        "sourceRefs": [
+          "p0-08-0127"
+        ],
+        "sourceSpan": [
+          0,
+          11
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "certainty",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "我"
+          },
+          {
+            "role": "proposition",
+            "value": "周末会不会下雨"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-probability",
+        "sourceRefs": [
+          "p0-08-0127"
+        ],
+        "sourceSpan": [
+          12,
+          20
+        ],
+        "derivation": "resolved",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "probability",
+        "roles": [
+          {
+            "role": "event",
+            "value": "周末会不会下雨"
+          },
+          {
+            "role": "approximation",
+            "value": "大约"
+          }
+        ],
+        "value": "43成",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": "周末"
+      }
+    ]
+  }
+}

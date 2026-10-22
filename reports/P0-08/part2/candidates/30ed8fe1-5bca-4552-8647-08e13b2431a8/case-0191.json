@@ -1,0 +1,112 @@
+{
+  "caseId": "case-0191",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0191",
+    "nodes": [
+      {
+        "id": "ref-meeting",
+        "sourceRefs": [
+          "p0-08-0191"
+        ],
+        "sourceSpan": [
+          7,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "meeting"
+      },
+      {
+        "id": "ref-lunch",
+        "sourceRefs": [
+          "p0-08-0191"
+        ],
+        "sourceSpan": [
+          38,
+          43
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "lunch"
+      },
+      {
+        "id": "ref-time",
+        "sourceRefs": [
+          "p0-08-0191"
+        ],
+        "sourceSpan": [
+          47,
+          57
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "64 o'clock"
+      },
+      {
+        "id": "claim-move-lunch",
+        "sourceRefs": [
+          "p0-08-0191"
+        ],
+        "sourceSpan": [
+          0,
+          58
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "move lunch",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "I"
+          },
+          {
+            "role": "object",
+            "value": "lunch"
+          },
+          {
+            "role": "condition",
+            "value": "meeting runs long"
+          },
+          {
+            "role": "destination_time",
+            "value": "64 o'clock"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": "64 o'clock"
+      },
+      {
+        "id": "act-commitment",
+        "sourceRefs": [
+          "p0-08-0191"
+        ],
+        "sourceSpan": [
+          0,
+          58
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "commitment",
+        "content": "If the meeting runs long, I will move lunch to 64 o'clock."
+      }
+    ]
+  }
+}

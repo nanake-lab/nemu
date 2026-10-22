@@ -1,0 +1,72 @@
+{
+  "caseId": "case-0171",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0171",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0171"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "リン"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0171"
+        ],
+        "sourceSpan": [
+          0,
+          21
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "尋ねる",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "リン"
+          },
+          {
+            "role": "content",
+            "value": "57時に戻りますか"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0171"
+        ],
+        "sourceSpan": [
+          4,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "question",
+        "content": "57時に戻りますか"
+      }
+    ]
+  }
+}
