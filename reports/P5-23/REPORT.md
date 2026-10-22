@@ -226,3 +226,13 @@ M 修复了抽样的三条 LP1，但改变阈值推论和依恋效果，并增�
 继续任务前已 fetch 并 merge `origin/main`，本地 merge 提交 `a7d50b2` 包含 main `47ee284`；更新后 fmt、clippy 与 workspace 107 个测试通过，原始日志在 `lp1-research/evidence/main-sync/`。研究交付发布前再 fetch，main 没有新增提交。Rust 相对上次修复提交 d95f65c 没有变化。新增运行时依赖无，原脚本未变。
 
 后续建议：维持全部要求寻找第三种形式；先请 Claude 交叉审查候选推导、LP1 条件与实验盲点。PR 保持草稿/`needs-user`；未合并，未接入正式成长。P5-23 现有其他待确认项不因本研究解除。
+
+## 2026-10-22 发布研究后的 main 同步（追加）
+
+研究提交 `f1728a3b6227de73cc3b5c3ffcea1e8b5795fe08` 发布后，最后一次 fetch 发现 main 新增 `1f7d4734f32a399e9f867427864ddf87691755e9`（N0 决定及任务卡文档）。已通过 merge 提交 `02073d4f99dd63820f69e9b877ad5b05bcb584fa` 同步。该同步没有改变 P5-23 的规格、Rust、研究程序、实验计划或输入，因此保留原研究结果，不重复抽样。
+
+在同步后的 `02073d4` 上，依次重跑 Python unittest（8 passed）、Rust fmt、clippy（`-D warnings`）、workspace 测试（107 passed、0 failed、0 ignored），均退出 0。全部原始 stdout/stderr、命令、时间及前后 HEAD 在 `lp1-research/evidence/final-main-sync/`。研究提交的 GitHub CI 也已通过：[run 39790937337](https://github.com/nanake-lab/nemu/actions/runs/39790937337)。这些通过不解除 LP1 / AC2-01 与候选公式的性质失败。
+
+已向原 P5-23 Claude 会话发送只读交叉审查请求，对方确认开始核验研究提交 `f1728a3`；本次后续同步没有改变其审查的研究内容。当前等待交叉审查及用户对下一轮研究方向的决定，无公式获批，仍不合并、不接入正式成长。
+
+证据边界补充：研究中的 39 个原式 binary64 撤回违例来自 Python 参考模型，尚未逐一在生产 Rust 上复现，不据此声称 Rust 存在相同位模式的违例。
