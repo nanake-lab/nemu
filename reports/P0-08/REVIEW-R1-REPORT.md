@@ -83,3 +83,5 @@ reasoning为output子集、cached input为input子集。原low超时行的用量
 - 机械检查由routine_reporter角色执行，固定Luna/max，主代理核对25份日志均退出0；本地TOML自动加载能力未验证。18个JS语法检查针对最终字节。审计脚本EOF空行在lint期间删除，无语义变化；另以lint-final-bytes.log记录最后一次lint。
 - 远程和本地分析器在merge后重算通过，post-merge-remote-analysis.log、post-merge-local-analysis.log保留。范围和凭据模式扫描见final-scope-scan.json：无范围外文件、无凭据模式命中；此扫描不是一般秘密泄漏证明，未打开任何auth文件。原始日志不为消除空白警告而改写。
 - CI状态与最终提交在PR页面跟踪；技术修订开放复审不等于P0-09批准。
+
+最终仓库单测在工作树根生成8个仅含HEARTBEAT的supervisor桩进程日志。确认创建时间与测试一致、内容固定后，校验哈希并原样移入final-checks/supervisor-generated-logs；路径与清单见supervisor-log-inventory.json。没有删除或改写原始记录。
