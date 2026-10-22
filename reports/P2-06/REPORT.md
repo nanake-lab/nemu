@@ -56,3 +56,8 @@
 
 ## 下一步
 候选可与 P2-05 一起挑选。等待选择期间保持草稿；用户选定后仅替换 expressions、materials 与本卡 emotionMap 参数，结合 P2-05 的最终 tail/springs 运行正式管线。全部验收完成后 fetch/merge 最新 origin/main、重跑检查、等待 CI 全绿，转为可审查并由用户合并。中难度按本次用户指示不另请审查。
+
+## 交付补充
+内容仓 `task/P2-06-expressions-materials` 已推送至 `0230b011e26514bb6abf669bb5313d5dbde68f21`，三个 LFS 预览模型已上传。默认传输和首次限定超时的重试没有完成；本次进程使用 `GODEBUG=http2client=0` 后上传成功，没有修改全局网络或 Git 配置。最终推送日志为 `content-push-http1.log`；诊断 trace 保留于忽略的 `.cache/`，不提交凭证相关 HTTP 日志。
+
+候选提交 `06fe3bb` 的 Ubuntu CI 已通过；Windows 因草稿规则跳过，证据 `ci-candidate.json`。后续参数来源整理只把相同强度及符号细节从预览代码移到 YAML，所有模型 SHA256 未改变；截图 62 条记录与 YAML 强度核对一致，重复生成 17 个候选文件仍逐字节一致。最终提交的 CI 状态在 PR 查看；这不解除用户选择及正式管线的阻塞。

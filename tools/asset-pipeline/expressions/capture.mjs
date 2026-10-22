@@ -12,9 +12,10 @@ await server.listen();
 const browser = await chromium.launch({args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const output = resolve('reports/P2-06/visual'); await mkdir(output,{recursive:true});
 const maps = JSON.parse(await readFile('content/_candidates/P2-06/emotionMap.candidates.json','utf8'));
+const {customStrengths}=JSON.parse(await readFile('content/_candidates/P2-06/preview-catalog.json','utf8'));
 const jobs = [];
 for(const expr of ['nemuSmug','nemuCatMouth','nemuSparkle','nemuBlush','nemuTeary','nemuSleepy','nemuPout','nemuAngryMark'])
- for(const [variant,weight] of [['A',.55],['B',.8],['C',1]]) jobs.push({expr,variant,weight,style:'standard',bg:'white',framing:'face'});
+ for(const [variant,weight] of Object.entries(customStrengths)) jobs.push({expr,variant,weight,style:'standard',bg:'white',framing:'face'});
 for(const emo of Object.keys(maps)) for(const variant of ['A','B']) jobs.push({emo,variant,style:'standard',bg:'white',framing:'face'});
 for(const style of ['soft','standard','contrast']) for(const bg of ['white','black','gradient']) jobs.push({style,bg,framing:'upperBody'});
 // Edge and overlay visibility on black are explicit supplementary views.

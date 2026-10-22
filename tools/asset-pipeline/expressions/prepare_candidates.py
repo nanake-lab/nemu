@@ -67,11 +67,11 @@ def glyph_triangles(cfg: Json) -> list[list[tuple[float, float]]]:
     """Return unit-space glyph triangles, all dimensions/colours supplied in YAML."""
     kind = cfg['kind']
     if kind in ('star', 'ellipse', 'tear'):
-        count = 8 if kind == 'star' else 32
+        count = int(cfg['segments'])
         points = []
         for i in range(count):
             angle = 2 * math.pi * i / count
-            radius = .28 if kind == 'star' and i % 2 else 1.0
+            radius = float(cfg['innerRadiusFraction']) if kind == 'star' and i % 2 else 1.0
             x, y = radius * math.cos(angle), radius * math.sin(angle)
             if kind == 'tear':
                 x *= (1 - y) * .5
@@ -81,17 +81,15 @@ def glyph_triangles(cfg: Json) -> list[list[tuple[float, float]]]:
     if kind == 'cross':
         for sign in (-1, 1):
             for other in (-1, 1):
-                segments += [((sign * .28, other), (sign * .28, other * .28)),
-                             ((sign, other * .28), (sign * .28, other * .28))]
-    elif kind == 'omega':
-        points = [(x / 24, .5 * math.cos(2 * math.pi * x / 24)) for x in range(-24, 25)]
-        segments = list(zip(points[:-1], points[1:]))
+                gap = cfg['gapFraction']
+                segments += [((sign * gap, other), (sign * gap, other * gap)),
+                             ((sign, other * gap), (sign * gap, other * gap))]
     else:
         raise ValueError(f'Unknown glyph kind: {kind}')
     triangles = []
     for (x1, y1), (x2, y2) in segments:
         length = math.hypot(x2 - x1, y2 - y1)
-        nx, ny = -(y2 - y1) / length * .09, (x2 - x1) / length * .09
+        nx, ny = -(y2 - y1) / length * cfg['halfStrokeFraction'], (x2 - x1) / length * cfg['halfStrokeFraction']
         a, b = (x1 + nx, y1 + ny), (x1 - nx, y1 - ny)
         c, d = (x2 + nx, y2 + ny), (x2 - nx, y2 - ny)
         triangles += [[a, b, c], [b, d, c]]
@@ -228,6 +226,7 @@ def main() -> None:
     (output / 'nemu.profile.json').write_text(json.dumps(profile,indent=2)+'\n')
     (CANDIDATES / 'expressions.build-fragment.yaml').write_text(yaml.safe_dump(dict(expressions=cfg['expressions']),sort_keys=False),encoding='utf-8')
     (CANDIDATES / 'emotionMap.candidates.json').write_text(json.dumps(cfg['emotionMaps'],indent=2)+'\n')
+    (CANDIDATES / 'preview-catalog.json').write_text(json.dumps(dict(customStrengths=cfg['customStrengths']),indent=2)+'\n')
     checks = dict(source=str(source),sourceSha256=before,sourceUnchanged=before == hashlib.sha256(source.read_bytes()).hexdigest(),
         springsUnchanged=original['extensions']['VRMC_springBone'] == gltf['extensions']['VRMC_springBone'],
         originalNonFaceMeshesUnchanged=all(original['meshes'][i] == gltf['meshes'][i] for i in range(len(original['meshes'])) if i != face['mesh']),
