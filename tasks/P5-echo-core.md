@@ -1245,7 +1245,7 @@ P5-23 实现规律引擎 G 时发现，P5-21 的 R 字段（V2-34）缺少典型
   - `EvidenceGroupV2`、`RSnapshotV2`：只因为装着换代的消息而换代，旧字段号保留为 `reserved`；
   - 旧的四种消息标为取代，定义保留；字段号、枚举值、类型标签都不复用。
 - **语义检查**（`core-types/src/semantic.rs`）：
-  - 倾向：原有检查，再加 `magnitude_weight = 0` 时 `magnitude_sum = 0`；
+  - 倾向：原有检查，再加第一组之前 M = U = 0、U = 0 时 r_k = 0（审查后修正，ADR 0016 末节）；
   - 序号：一个倾向在各组里的分配序号正好是 0…N_k − 1，各一次。
 - **黄金向量：** 每种新消息至少 3 个合法、3 个非法；另有新字段的定向向量（越界的 μ、负的 `magnitude_weight`、重复的分配、被保留的旧字段号）。Rust、Python、TypeScript 结果一致。
 - **基线：** 把 P5-21 发布的 `.proto` 与黄金向量摘要冻结为 `baselines/p5-21/`。

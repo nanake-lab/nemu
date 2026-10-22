@@ -119,8 +119,14 @@ pub fn check_tendency(t: &Tendency) -> Result<()> {
     })
 }
 
-/// `check_tendency` for the successor (ADR 0016), plus: an empty typical-magnitude
-/// weight U = Σ ω·μ carries no sum M = Σ ω·μ·p_c.
+/// `check_tendency` for the successor (ADR 0016 §3, as corrected after review), plus two
+/// exact consequences of the recurrence: before the first group the typical-magnitude sums
+/// are M = U = 0, and while U = 0 the typical magnitude is r_k = 0.
+///
+/// There is deliberately no relation between M and U beyond these. They are rounded
+/// separately, so at the subnormal edge a legal recurrence can leave U = 0 with M ≠ 0
+/// (review of PR #52: two groups with μ = 2^-1074 reach M = 2^-1074, U = 0); such a state
+/// is valid and r_k is 0.
 pub fn check_tendency_v2(t: &TendencyV2) -> Result<()> {
     check_counts(&Counts {
         direction: &t.direction,
@@ -134,8 +140,12 @@ pub fn check_tendency_v2(t: &TendencyV2) -> Result<()> {
         relation: t.relation.as_ref(),
     })?;
     require(
-        t.magnitude_weight != 0.0 || t.magnitude_sum == 0.0,
-        "magnitude sum without magnitude weight",
+        t.group_count.0 > 0 || (t.magnitude_sum == 0.0 && t.magnitude_weight == 0.0),
+        "magnitude sums before the first group",
+    )?;
+    require(
+        t.magnitude_weight != 0.0 || t.typical_magnitude == 0.0,
+        "typical magnitude without magnitude weight",
     )
 }
 

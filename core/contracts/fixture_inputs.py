@@ -186,6 +186,17 @@ def targeted_legal_p5_32(tendency: dict[str, Any]) -> list[dict[str, Any]]:
         request("EvidenceAllocationV2", teaching),
         request("EvidenceGroupV2", group),
         request("RSnapshotV2", snapshot),
+        # Review of PR #52: the binary64 recurrence can leave U = 0 with M = 2^-1074 (valid).
+        request(
+            "TendencyV2",
+            v2
+            | dict(
+                group_count="2",
+                magnitude_sum=5e-324,
+                magnitude_weight=0.0,
+                typical_magnitude=0.0,
+            ),
+        ),
     ]
 
 

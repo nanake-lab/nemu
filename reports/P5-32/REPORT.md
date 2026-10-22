@@ -22,7 +22,7 @@ PR #52 标 `needs-user`，按你的要求由你合并。合并前需要 Codex �
   - EvidenceGroupV2 保留 7，RSnapshotV2 保留 4。
 - 生成的代码：`core-types/src/generated.rs`、`core/contracts/generated/schema.json`、`packages/contracts/src/generated/echo/schema.ts`、`workers/{irl,drive,model-adapter}/generated/echo/`。
 - `core/crates/core-types/src/semantic.rs`：
-  - `check_tendency_v2`：原有的计数不变量，再加 U = 0 ⇒ M = 0；
+  - `check_tendency_v2`：原有的计数不变量，再加第一组之前 M = U = 0、U = 0 时 r_k = 0（审查后修正，见文末）；
   - `check_allocation_ordinals`：一个倾向的分配序号正好是 0…N − 1。
 - `core/crates/core-types/tests/p5_32_contract.rs`（新）：后继消息的字段表、两条语义检查的正反例、往返编码。`v2_contract.rs` 的取代登记计数由 32 改为 36。
 - `core/contracts/baselines/p5-21/`（新）：冻结 P5-21 发布的 `.proto`（main `9042c59`）和黄金向量摘要。以后 check_compat 也拿它比较。
@@ -117,3 +117,27 @@ ADR 0016 第 5 节按 P5-23 D5 的三种情况逐一列出：重放读什么、�
 合并最新 main（#51：needs-user 的 PR 由用户合并，提交信息不带跳过 CI 的标记），merge，不 rebase，不强推。没有冲突，变化只在 `AGENTS.md` 与 `tools/status/`。合并后重跑：`verify.py`（三种语言各 9,696 个用例，protoc 395 条，check_compat 0 违例）、cargo fmt、clippy、test（51 个），以及 pnpm lint、typecheck、test、build、test:contracts，全部通过。日志在 `verification/after-main-merge-20261022/`。
 
 按 #51 后的 AGENTS.md 第 6 节：本卡带 `needs-user`，由你合并，合并即批准。按你 2026-10-22 的指示，本卡转为可审查，请 Codex 交叉审查；审查通过后由你合并。
+
+## 2026-10-22 Codex 审查后的修正（追加）
+
+Codex 交叉审查（[PR #52 评论](https://github.com/nanake-lab/nemu/pull/52#issuecomment-6338007429)）提出 1 项阻塞（P2）：语义检查「U = 0 ⇒ M = 0」会拒绝合法递推实际产生的状态。M、U 分别舍入，在次正规数边缘可以得到 U = 0、M = 2⁻¹⁰⁷⁴。审查给出的两步复现成立。
+
+- **决定：** 保留有限 binary64 的递推，不另设下溢归零规则；U = 0 时 r_k = 0 本来就有定义。理由写在 ADR 0016 末节「审查后的修正」。
+- **语义检查：** `check_tendency_v2` 改为两条精确推论：第一组之前 M = U = 0；U = 0 时 r_k = 0。不再检查 M 与 U 的关系。任务卡、对照表、本报告「交付物」一节随之更正。
+- **测试：**
+  - `p5_32_contract::subnormal_edge_u_zero_with_m_nonzero_is_valid` 复现审查的位模式（M `0x1`、U `0x0`），检查它合法，并在 CanonicalV1、Protobuf 中往返；
+  - 新增一个合法黄金向量（TendencyV2，M = 2⁻¹⁰⁷⁴、U = 0），三种语言一致，独立编码器逐字节一致；
+  - 原先的「sum without weight」反例删去，改为「第一组之前有 M 或 U」「U = 0 而 r_k ≠ 0」两类反例。
+- **P5-23（#49）：** 同步去掉 `check_pending` 里的同一条检查，并加入审查给出的两步，以及下一步没有新证据时的恢复测试。
+- 没有提高 μ 的下限，也没有放宽任何验收。
+
+合并最新 main（#50、#54、#55），merge，不 rebase，不强推，没有冲突。修正后重跑：
+
+- `verify.py`：三种语言各 9,744 个用例，protoc 396 条，check_compat 0 违例；
+- 独立向量复核：新增的 18 个合法向量 0 不一致；
+- cargo fmt、clippy、test（52 个）；
+- pnpm lint、typecheck、test、build、test:contracts；
+- 契约工具的 ruff、mypy --strict；
+- 四个 Python 项目。
+
+全部通过。日志在 `verification/review-fix-20261022/`。

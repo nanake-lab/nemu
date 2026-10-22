@@ -109,17 +109,24 @@ fn successors_are_live_and_predecessors_superseded() {
 #[test]
 fn tendency_v2_semantics_include_the_magnitude_sums() {
     assert!(semantic::check_tendency_v2(&tendency(json!({}))).is_ok());
-    // An empty weight is fine with an empty sum (no matching experience group yet).
-    let fresh = tendency(json!({"magnitude_sum":0.0,"magnitude_weight":0.0}));
+    // Before the first group: M = U = 0 (and r_k = 0).
+    let fresh = tendency(
+        json!({"group_count":"0","last_sign":null,"magnitude_sum":0.0,
+        "magnitude_weight":0.0,"typical_magnitude":0.0}),
+    );
     assert!(semantic::check_tendency_v2(&fresh).is_ok());
     for (patch, why) in [
         (
-            json!({"magnitude_sum":0.25,"magnitude_weight":0.0}),
-            "sum without weight",
+            json!({"group_count":"0","last_sign":null,"magnitude_sum":0.0,"magnitude_weight":0.5,"typical_magnitude":0.0}),
+            "weight before the first group",
         ),
         (
-            json!({"magnitude_sum":-1e-300,"magnitude_weight":0.0}),
-            "tiny sum without weight",
+            json!({"group_count":"0","last_sign":null,"magnitude_sum":-0.25,"magnitude_weight":0.0,"typical_magnitude":0.0}),
+            "sum before the first group",
+        ),
+        (
+            json!({"magnitude_weight":0.0,"magnitude_sum":0.0,"typical_magnitude":0.25}),
+            "typical magnitude without weight",
         ),
         (json!({"pi":1.0}), "pi at the closed bound"),
         (json!({"evidence_a":5.0}), "|A| above B"),
@@ -136,6 +143,36 @@ fn tendency_v2_semantics_include_the_magnitude_sums() {
     // A negative sum is legal: p_c can be negative before the clip to [0, r_max].
     let negative = tendency(json!({"magnitude_sum":-0.5}));
     assert!(semantic::check_tendency_v2(&negative).is_ok());
+}
+
+/// Review of PR #52: M and U are rounded separately, so a legal recurrence can leave
+/// U = 0 with M ≠ 0. Two groups: an experience group with μ = 2^-1074 and p_c = 2,
+/// then a teaching group that only multiplies M and U by ρ = 1 − 75/101 (h₀ = 0.75,
+/// n_h = 100, N = 1, F = 0). The state is valid, r_k = 0, and it round-trips.
+#[test]
+fn subnormal_edge_u_zero_with_m_nonzero_is_valid() {
+    let mu = f64::from_bits(1);
+    let (m1, u1) = (mu * 2.0, mu);
+    assert_eq!((m1.to_bits(), u1.to_bits()), (2, 1));
+    let rho = 1.0 - (0.75 * 100.0 + 0.0) / (100.0 + 1.0);
+    let (m2, u2) = (rho * m1, rho * u1);
+    assert_eq!(
+        (m2.to_bits(), u2.to_bits()),
+        (1, 0),
+        "the reviewer's bit patterns"
+    );
+    let t = tendency(
+        json!({"group_count":"2","flip_count":"0","magnitude_sum":m2,
+        "magnitude_weight":u2,"typical_magnitude":0.0}),
+    );
+    assert_eq!(t.magnitude_sum.to_bits(), 1, "serde keeps the subnormal");
+    assert!(semantic::check_tendency_v2(&t).is_ok());
+    let canonical = t.canonical_bytes(limits()).unwrap();
+    let back = TendencyV2::from_canonical(&canonical, limits()).unwrap();
+    assert_eq!(back.magnitude_sum.to_bits(), 1);
+    assert_eq!(back.magnitude_weight.to_bits(), 0);
+    let pb = t.protobuf_bytes(limits()).unwrap();
+    assert_eq!(TendencyV2::from_protobuf(&pb, limits()).unwrap(), t);
 }
 
 #[test]
