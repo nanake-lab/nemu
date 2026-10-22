@@ -131,7 +131,8 @@ pub(crate) fn replay(
 }
 
 /// A stored pending tendency agrees with the law: the IDL-level checks, the
-/// typical magnitude as a function of M and U, and ordinals 0…N_k − 1.
+/// typical magnitude as a function of M and U, and ordinals 0…N_k − 1
+/// (ADR 0016 §3 as corrected after review).
 pub(crate) fn check_pending(
     t: &PendingTendency,
     law: &Law,
@@ -142,8 +143,11 @@ pub(crate) fn check_pending(
     if !t.magnitude_sum.is_finite() || !t.magnitude_weight.is_finite() || t.magnitude_weight < 0.0 {
         return Err(bad("magnitude sums must be finite, weight nonnegative"));
     }
-    if t.magnitude_weight == 0.0 && t.magnitude_sum != 0.0 {
-        return Err(bad("magnitude sum without magnitude weight"));
+    // M and U are rounded separately, so at the subnormal edge U can reach 0 while M
+    // does not (review of PR #52); r_k is then 0. Only exact consequences are checked:
+    // no sums before the first group, and r_k = clip(M/U, 0, r_max) or 0 while U = 0.
+    if t.base.group_count.0 == 0 && (t.magnitude_sum != 0.0 || t.magnitude_weight != 0.0) {
+        return Err(bad("magnitude sums before the first group"));
     }
     let r = typical_magnitude(law, t.magnitude_sum, t.magnitude_weight)?;
     if r.to_bits() != t.base.typical_magnitude.to_bits() {

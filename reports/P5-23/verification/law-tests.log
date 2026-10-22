@@ -1,7 +1,7 @@
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s
      Running unittests src/lib.rs (target/debug/deps/core_kernel-a37ea9ec9e298994)
 
-running 45 tests
+running 47 tests
 test law::num::tests::exact_mean_is_order_and_repetition_invariant ... ok
 test law::num::tests::exact_mean_of_single_value_is_the_value ... ok
 test law::num::tests::exact_mean_rejects_bad_inputs ... ok
@@ -25,6 +25,8 @@ test law::tests::boundaries::stored_state_is_checked_before_use ... ok
 test law::tests::cases::ev5_back_collection_reshares_old_groups_and_keeps_i25 ... ok
 test law::tests::cases::first_group_records_ordinal_zero_and_the_typical_magnitude ... ok
 test law::tests::cases::late_member_updates_the_group_without_a_second_count ... ok
+test law::tests::cases::precision_exhaustion_is_an_explicit_fault_at_the_step ... ok
+test law::tests::cases::subnormal_edge_u_zero_with_m_nonzero_is_carried_and_recovers ... ok
 test law::tests::cases::teaching_counts_by_trust_and_repeats_do_not_refresh ... ok
 test law::tests::engine::ac2_02_i25_and_replay_identity_hold_after_every_step_of_random_worlds ... G worlds: 40 x 120 events, 5702 groups, 7498 allocations; I25 and replay identity hold after every step
 ok
@@ -62,5 +64,5 @@ test law::tests::relations::relation_readouts_closeness_weight_and_trust ... ok
 test law::tests::relations::relation_structure_ids_directions_and_r0 ... ok
 test law::tests::relations::teaching_weight_follows_trust_in_the_speaker_and_verifiability ... ok
 
-test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 17 filtered out; finished in 23.59s
+test result: ok. 47 passed; 0 failed; 0 ignored; 0 measured; 17 filtered out; finished in 15.56s
 

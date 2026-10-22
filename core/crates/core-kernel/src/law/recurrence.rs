@@ -76,6 +76,13 @@ pub fn initial(law: &Law, o: &Origin<'_>) -> LawResult<Tendency> {
     let a = init;
     let b = finite(law.base(o.predicate.len())? + init, "B")?;
     let p = o.prior.unwrap_or(0.0);
+    let start_pi = pi(p, a, b)?;
+    if !(start_pi > -1.0 && start_pi < 1.0) {
+        return Err(LawError::PrecisionExhausted(format!(
+            "{}: starting pi = {start_pi:e}",
+            o.tendency_id
+        )));
+    }
     Ok(Tendency {
         schema_version: 1,
         tendency_id: o.tendency_id.to_owned(),
@@ -88,7 +95,7 @@ pub fn initial(law: &Law, o: &Origin<'_>) -> LawResult<Tendency> {
         group_count: DecimalU64(0),
         flip_count: DecimalU64(0),
         last_sign: None,
-        pi: pi(p, a, b)?,
+        pi: start_pi,
         typical_magnitude: 0.0,
         relation: o.relation.cloned(),
         attachment_prior: o.prior,
@@ -171,6 +178,12 @@ pub(super) fn apply(t: &mut Tendency, law: &Law, rho: f64, w: f64, s: f64) -> La
         return Err(LawError::Overflow("group count"));
     }
     let new_pi = pi(prior(t), a, b)?;
+    if a.abs() > b || !(new_pi > -1.0 && new_pi < 1.0) {
+        return Err(LawError::PrecisionExhausted(format!(
+            "{}: A = {a:e}, B = {b:e}, pi = {new_pi:e}",
+            t.tendency_id
+        )));
+    }
     t.evidence_a = a;
     t.evidence_b = b;
     t.group_count = DecimalU64(groups);

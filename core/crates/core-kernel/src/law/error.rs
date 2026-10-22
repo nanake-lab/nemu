@@ -15,6 +15,10 @@ pub enum LawError {
     NonFinite(&'static str),
     /// A count would overflow.
     Overflow(&'static str),
+    /// Rounding pushed a recorded tendency out of its valid region (|A_k| ≤ B_k,
+    /// π_k ∈ (−1, 1)): n₀ + κ_k has become negligible next to B_k in binary64.
+    /// Reported at the step that would produce it, never stored (D9).
+    PrecisionExhausted(String),
     /// R is over capacity and holds no candidate (π ≤ ½) to remove (v2.0 §12; V2-43).
     CapacityExhausted { capacity: u32, personality: usize },
     /// A single group's weight exceeds w_max (v2.0 §12; D8). Cannot happen
@@ -33,6 +37,7 @@ impl fmt::Display for LawError {
             Self::InconsistentState(m) => write!(f, "inconsistent law state: {m}"),
             Self::NonFinite(m) => write!(f, "nonfinite value: {m}"),
             Self::Overflow(m) => write!(f, "count overflow: {m}"),
+            Self::PrecisionExhausted(m) => write!(f, "binary64 precision exhausted: {m}"),
             Self::CapacityExhausted {
                 capacity,
                 personality,
