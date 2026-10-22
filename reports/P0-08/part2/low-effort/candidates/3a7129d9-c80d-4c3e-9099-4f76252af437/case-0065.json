@@ -1,0 +1,64 @@
+{
+  "caseId": "case-0065",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0065",
+    "nodes": [
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0065"
+        ],
+        "sourceSpan": [
+          0,
+          48
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "Remind the user to submit the report on day 22."
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0065"
+        ],
+        "sourceSpan": [
+          0,
+          48
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "reminder_requested",
+        "roles": [
+          {
+            "role": "recipient",
+            "value": "user"
+          },
+          {
+            "role": "action",
+            "value": "submit"
+          },
+          {
+            "role": "object",
+            "value": "report"
+          },
+          {
+            "role": "time",
+            "value": "day 22"
+          }
+        ],
+        "value": true,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "caseId": "case-0125",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0125",
+    "nodes": [
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0125"
+        ],
+        "sourceSpan": [
+          0,
+          49
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "Please remind me to submit the report on day 42."
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0125"
+        ],
+        "sourceSpan": [
+          20,
+          49
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "submit",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "me"
+          },
+          {
+            "role": "theme",
+            "value": "the report"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "day 42"
+      },
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0125"
+        ],
+        "sourceSpan": [
+          46,
+          48
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "42"
+      }
+    ]
+  }
+}

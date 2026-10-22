@@ -1,0 +1,77 @@
+{
+  "caseId": "case-0036",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0036",
+    "nodes": [
+      {
+        "id": "n1",
+        "sourceRefs": [
+          "p0-08-0036"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "これ"
+      },
+      {
+        "id": "n2",
+        "sourceRefs": [
+          "p0-08-0036"
+        ],
+        "sourceSpan": [
+          0,
+          11
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "hypothesis_ordinal",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "これ"
+          }
+        ],
+        "value": 12,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "n3",
+        "sourceRefs": [
+          "p0-08-0036"
+        ],
+        "sourceSpan": [
+          12,
+          27
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "actually_occurred",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "これ"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

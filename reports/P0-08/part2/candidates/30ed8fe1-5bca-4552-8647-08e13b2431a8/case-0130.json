@@ -1,0 +1,107 @@
+{
+  "caseId": "case-0130",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0130",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0130"
+        ],
+        "sourceSpan": [
+          2,
+          4
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "会议"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0130"
+        ],
+        "sourceSpan": [
+          7,
+          8
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "r3",
+        "sourceRefs": [
+          "p0-08-0130"
+        ],
+        "sourceSpan": [
+          11,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "44点"
+      },
+      {
+        "id": "r4",
+        "sourceRefs": [
+          "p0-08-0130"
+        ],
+        "sourceSpan": [
+          14,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "吃饭"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0130"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "变更吃饭时间",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "我"
+          },
+          {
+            "role": "condition",
+            "value": "会议延长"
+          },
+          {
+            "role": "activity",
+            "value": "吃饭"
+          }
+        ],
+        "value": "改到44点吃饭",
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": "44点"
+      }
+    ]
+  }
+}

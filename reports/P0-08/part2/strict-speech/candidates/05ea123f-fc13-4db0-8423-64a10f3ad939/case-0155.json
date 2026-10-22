@@ -1,0 +1,77 @@
+{
+  "caseId": "case-0155",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0155",
+    "nodes": [
+      {
+        "id": "ref_this",
+        "sourceRefs": [
+          "p0-08-0155"
+        ],
+        "sourceSpan": [
+          0,
+          4
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "unknown",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "This"
+      },
+      {
+        "id": "claim_hypothesis_number",
+        "sourceRefs": [
+          "p0-08-0155"
+        ],
+        "sourceSpan": [
+          0,
+          33
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is_hypothesis_number",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "This"
+          }
+        ],
+        "value": 52,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim_not_event",
+        "sourceRefs": [
+          "p0-08-0155"
+        ],
+        "sourceSpan": [
+          35,
+          61
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is_event_that_happened",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "This"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

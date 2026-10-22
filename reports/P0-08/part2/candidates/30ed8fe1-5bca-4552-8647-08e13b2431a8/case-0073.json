@@ -1,0 +1,63 @@
+{
+  "caseId": "case-0073",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0073",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0073"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "小林"
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0073"
+        ],
+        "sourceSpan": [
+          0,
+          17
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "下周25号可能会下雪。"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0073"
+        ],
+        "sourceSpan": [
+          5,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "下雪",
+        "roles": [],
+        "value": true,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "下周25号"
+      }
+    ]
+  }
+}

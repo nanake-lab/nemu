@@ -1,0 +1,76 @@
+{
+  "caseId": "case-0107",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0107",
+    "nodes": [
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0107"
+        ],
+        "sourceSpan": [
+          0,
+          51
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "Maybe we should check the data for meeting 36 again."
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0107"
+        ],
+        "sourceSpan": [
+          0,
+          51
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "check",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "we"
+          },
+          {
+            "role": "object",
+            "value": "the data"
+          },
+          {
+            "role": "for",
+            "value": "meeting 36"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": null
+      },
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0107"
+        ],
+        "sourceSpan": [
+          34,
+          44
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "meeting 36"
+      }
+    ]
+  }
+}

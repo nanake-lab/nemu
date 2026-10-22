@@ -1,0 +1,60 @@
+{
+  "caseId": "case-0124",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0124",
+    "nodes": [
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0124"
+        ],
+        "sourceSpan": [
+          0,
+          15
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "请在42号提醒我提交报告。"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0124"
+        ],
+        "sourceSpan": [
+          0,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "remind",
+        "roles": [
+          {
+            "role": "recipient",
+            "value": "我"
+          },
+          {
+            "role": "content",
+            "value": "提交报告"
+          },
+          {
+            "role": "time",
+            "value": "42号"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "42号"
+      }
+    ]
+  }
+}

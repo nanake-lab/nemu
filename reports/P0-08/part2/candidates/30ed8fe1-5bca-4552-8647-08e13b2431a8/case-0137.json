@@ -1,0 +1,192 @@
+{
+  "caseId": "case-0137",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0137",
+    "nodes": [
+      {
+        "id": "speaker",
+        "sourceRefs": [
+          "p0-08-0137"
+        ],
+        "sourceSpan": [
+          12,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "I"
+      },
+      {
+        "id": "wednesday",
+        "sourceRefs": [
+          "p0-08-0137"
+        ],
+        "sourceSpan": [
+          19,
+          28
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "Wednesday"
+      },
+      {
+        "id": "tuesday",
+        "sourceRefs": [
+          "p0-08-0137"
+        ],
+        "sourceSpan": [
+          34,
+          41
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "Tuesday"
+      },
+      {
+        "id": "date",
+        "sourceRefs": [
+          "p0-08-0137"
+        ],
+        "sourceSpan": [
+          47,
+          51
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "date"
+      },
+      {
+        "id": "day46",
+        "sourceRefs": [
+          "p0-08-0137"
+        ],
+        "sourceSpan": [
+          55,
+          61
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "day 46"
+      },
+      {
+        "id": "claim_said_wednesday",
+        "sourceRefs": [
+          "p0-08-0137"
+        ],
+        "sourceSpan": [
+          12,
+          28
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "said",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "I"
+          },
+          {
+            "role": "content",
+            "value": "Wednesday"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim_not_tuesday",
+        "sourceRefs": [
+          "p0-08-0137"
+        ],
+        "sourceSpan": [
+          30,
+          41
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "said",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "I"
+          },
+          {
+            "role": "content",
+            "value": "Tuesday"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim_date_day46",
+        "sourceRefs": [
+          "p0-08-0137"
+        ],
+        "sourceSpan": [
+          43,
+          61
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "the date"
+          }
+        ],
+        "value": "day 46",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "correction",
+        "sourceRefs": [
+          "p0-08-0137"
+        ],
+        "sourceSpan": [
+          0,
+          41
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "I said Wednesday, not Tuesday"
+      }
+    ]
+  }
+}

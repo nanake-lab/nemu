@@ -1,0 +1,52 @@
+{
+  "caseId": "case-0112",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0112",
+    "nodes": [
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0112"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "清单上应该是第38项"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0112"
+        ],
+        "sourceSpan": [
+          5,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "should_be_item_number",
+        "roles": [
+          {
+            "role": "context",
+            "value": "清单上"
+          }
+        ],
+        "value": 38,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      }
+    ]
+  }
+}

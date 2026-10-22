@@ -1,0 +1,51 @@
+{
+  "caseId": "case-0150",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0150",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0150"
+        ],
+        "sourceSpan": [
+          0,
+          4
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "50曲目"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0150"
+        ],
+        "sourceSpan": [
+          0,
+          19
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "雰囲気を持つ",
+        "roles": [
+          {
+            "role": "対象",
+            "value": "ref-1"
+          }
+        ],
+        "value": "落ち着いた雰囲気",
+        "polarity": "positive",
+        "modality": "reported",
+        "time": null
+      }
+    ]
+  }
+}

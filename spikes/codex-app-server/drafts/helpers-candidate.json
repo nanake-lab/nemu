@@ -1,22 +1,22 @@
 {
-  "status": "blocked_pending_authenticated_model_catalog",
+  "status": "catalog_and_measurements_recorded_pending_budget_and_adr",
   "source": "docs/adr/0004-codex-helpers.md",
   "tiers": {
     "everyday": {
       "expectedDisplayName": "GPT-6 Luna",
-      "modelId": null,
+      "modelId": "gpt-6-luna",
       "dailyBudget": null
     },
     "work": {
       "expectedDisplayName": "GPT-6.1 Sol",
-      "modelId": null,
+      "modelId": "gpt-6.1-sol",
       "dailyBudget": null
     },
     "hard": {
       "expectedDisplayName": "GPT-6 Astra",
-      "modelId": null,
+      "modelId": "gpt-6-astra",
       "dailyBudget": null
     }
   },
-  "note": "Candidate only. Model IDs and budgets require the account model catalog and user review; no values are inferred."
+  "note": "Candidate only; catalog verified by isolated ChatGPT profile. User selected gpt-6-luna max for P0-08 part 2; daily budgets remain pending user decision and ADR. No formal config changed."
 }

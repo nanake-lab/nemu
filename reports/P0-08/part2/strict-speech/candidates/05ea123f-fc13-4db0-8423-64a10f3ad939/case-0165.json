@@ -1,0 +1,69 @@
+{
+  "caseId": "case-0165",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0165",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0165"
+        ],
+        "sourceSpan": [
+          0,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "55日までに"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0165"
+        ],
+        "sourceSpan": [
+          6,
+          9
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "この本"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0165",
+          "r1",
+          "r2"
+        ],
+        "sourceSpan": [
+          0,
+          19
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "want_to_finish_reading",
+        "roles": [
+          {
+            "role": "object",
+            "value": "この本"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "55日までに"
+      }
+    ]
+  }
+}

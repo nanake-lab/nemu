@@ -1,0 +1,98 @@
+{
+  "caseId": "case-0110",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0110",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0110"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "Lin"
+      },
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0110"
+        ],
+        "sourceSpan": [
+          0,
+          35
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "Will you return at 37 o'clock?"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0110"
+        ],
+        "sourceSpan": [
+          13,
+          45
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "return",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "you"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "37 o'clock"
+      },
+      {
+        "id": "claim2",
+        "sourceRefs": [
+          "p0-08-0110"
+        ],
+        "sourceSpan": [
+          0,
+          45
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "ask",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "Lin"
+          },
+          {
+            "role": "content",
+            "value": "Will you return at 37 o'clock?"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

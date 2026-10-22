@@ -1,0 +1,297 @@
+{
+  "model": "gpt-6-luna",
+  "effort": "max",
+  "percentileMethod": "nearest rank; completed generation responses, including schema-invalid responses; transport failures are censored; all attempts remain in the IRL schema-rate denominator. Schema-valid-only latency is separately reported and does not replace the preregistered population.",
+  "provenance": {
+    "fixturesSha256": "0163e74d3a034cbb519b526f866c7beabc5d572dc86161100baca098c7e3f3fc",
+    "wireSchemaSha256": "9e07fc5dadcda07b7b068f1ee6a9e9e304572b00b67b65c415240e6fb3a8cf71",
+    "remoteSourceSha256": "b36cf76893fa416ced452360c80154910a4537a172502f793a153c703781e977",
+    "catalog": "protocol/no-tools-catalog-strict-speech.json",
+    "localDirectory": "reports/P0-08/part2/local-irl-20261022-v2"
+  },
+  "speech": {
+    "zh": {
+      "attempts": 50,
+      "completed": 50,
+      "failed": 0,
+      "p50Ms": 4998.74,
+      "p90Ms": 6222.3,
+      "firstDeltaObservedCount": 50,
+      "emptyReplyCount": 0,
+      "firstDeltaP50Ms": 4870.75,
+      "firstDeltaP90Ms": 6050.47,
+      "schemaValidCount": null,
+      "schemaValidCompletionP50Ms": null,
+      "schemaValidCompletionP90Ms": null,
+      "schemaValidity": null,
+      "sourceBindingValidCount": null,
+      "emptyGraphCount": null,
+      "tokenLimitCount": null,
+      "reroutes": 0,
+      "toolItemCount": 0,
+      "primaryAttempts": 50,
+      "primaryCompleted": 50,
+      "primaryFailures": 0,
+      "supplementalAttempts": 0
+    },
+    "en": {
+      "attempts": 50,
+      "completed": 50,
+      "failed": 0,
+      "p50Ms": 4816.78,
+      "p90Ms": 7395.31,
+      "firstDeltaObservedCount": 50,
+      "emptyReplyCount": 0,
+      "firstDeltaP50Ms": 4718.89,
+      "firstDeltaP90Ms": 7197.34,
+      "schemaValidCount": null,
+      "schemaValidCompletionP50Ms": null,
+      "schemaValidCompletionP90Ms": null,
+      "schemaValidity": null,
+      "sourceBindingValidCount": null,
+      "emptyGraphCount": null,
+      "tokenLimitCount": null,
+      "reroutes": 0,
+      "toolItemCount": 0,
+      "primaryAttempts": 50,
+      "primaryCompleted": 50,
+      "primaryFailures": 0,
+      "supplementalAttempts": 0
+    },
+    "ja": {
+      "attempts": 50,
+      "completed": 50,
+      "failed": 0,
+      "p50Ms": 5078.4,
+      "p90Ms": 9126.03,
+      "firstDeltaObservedCount": 50,
+      "emptyReplyCount": 0,
+      "firstDeltaP50Ms": 4905.6,
+      "firstDeltaP90Ms": 8843.85,
+      "schemaValidCount": null,
+      "schemaValidCompletionP50Ms": null,
+      "schemaValidCompletionP90Ms": null,
+      "schemaValidity": null,
+      "sourceBindingValidCount": null,
+      "emptyGraphCount": null,
+      "tokenLimitCount": null,
+      "reroutes": 0,
+      "toolItemCount": 0,
+      "primaryAttempts": 50,
+      "primaryCompleted": 50,
+      "primaryFailures": 0,
+      "supplementalAttempts": 0
+    }
+  },
+  "remoteIrl": {
+    "attempts": 200,
+    "completed": 200,
+    "failed": 0,
+    "p50Ms": 15924.6,
+    "p90Ms": 23776.16,
+    "firstDeltaObservedCount": 200,
+    "emptyReplyCount": 0,
+    "firstDeltaP50Ms": 14320.94,
+    "firstDeltaP90Ms": 21808.07,
+    "schemaValidCount": 200,
+    "schemaValidCompletionP50Ms": 15924.6,
+    "schemaValidCompletionP90Ms": 23776.16,
+    "schemaValidity": 1,
+    "sourceBindingValidCount": 195,
+    "emptyGraphCount": 0,
+    "tokenLimitCount": null,
+    "reroutes": 0,
+    "toolItemCount": 0
+  },
+  "localIrl": {
+    "attempts": 200,
+    "completed": 200,
+    "failed": 0,
+    "p50Ms": 15647.864800004754,
+    "p90Ms": 26168.09769999236,
+    "firstDeltaObservedCount": null,
+    "emptyReplyCount": 0,
+    "firstDeltaP50Ms": null,
+    "firstDeltaP90Ms": null,
+    "schemaValidCount": 192,
+    "schemaValidCompletionP50Ms": 15704.801000014413,
+    "schemaValidCompletionP90Ms": 26297.81260000891,
+    "schemaValidity": 0.96,
+    "sourceBindingValidCount": 169,
+    "emptyGraphCount": 0,
+    "tokenLimitCount": 0,
+    "reroutes": null,
+    "toolItemCount": null
+  },
+  "protocol": {
+    "profile": "strict-tools-v3",
+    "remoteDirectory": "strict-speech",
+    "remoteReroutes": 0,
+    "remoteToolItems": 0,
+    "rawToolCallCount": 0,
+    "note": "Supported catalog restriction, startup apps/MCP disabled, empty environments and strict feature flags; adverse probes retained. Every final speech/IRL row has raw tool-call capture with zero observed calls. This is evidence for the measured profile, not a universal sandbox proof."
+  },
+  "selection": "local",
+  "irlDeadlineP90Ms": 26168.09769999236,
+  "modes": {
+    "A": {
+      "p50Ms": null,
+      "p90Ms": null
+    },
+    "B": {
+      "p50Ms": null,
+      "p90Ms": null
+    },
+    "C": {
+      "p50Ms": null,
+      "p90Ms": null
+    }
+  },
+  "modeEstimateMissing": [
+    "ASR and VAD end-to-end samples",
+    "A/M and core transaction timings",
+    "TTS and audio buffer timings",
+    "mode C draft-to-rewrite timing"
+  ],
+  "quota": {
+    "speechBefore": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 5,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 52,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "speechAfter100": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 6,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 52,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "speechAfter150": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 6,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 52,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "irlBefore": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 6,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 52,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "irlAfter100": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 8,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 52,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    },
+    "irlAfter200": {
+      "ordinaryUsageAllowed": true,
+      "buckets": [
+        {
+          "limitId": "codex",
+          "limitName": null,
+          "primary": {
+            "usedPercent": 10,
+            "windowDurationMins": 300,
+            "resetsAt": 1792618138
+          },
+          "secondary": {
+            "usedPercent": 53,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793082973
+          },
+          "credits": {
+            "hasCredits": false,
+            "unlimited": false
+          }
+        }
+      ]
+    }
+  },
+  "accountQuotaAttribution": "Shared account; snapshots report observed changes and cannot isolate this spike from other account activity."
+}

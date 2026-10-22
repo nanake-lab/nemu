@@ -1,0 +1,56 @@
+{
+  "caseId": "case-0110",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0110",
+    "nodes": [
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0110"
+        ],
+        "sourceSpan": [
+          0,
+          43
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "asked",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "Lin"
+          },
+          {
+            "role": "content",
+            "value": "Will you return at 37 o'clock?"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0110"
+        ],
+        "sourceSpan": [
+          12,
+          42
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "question",
+        "content": "Will you return at 37 o'clock?"
+      }
+    ]
+  }
+}

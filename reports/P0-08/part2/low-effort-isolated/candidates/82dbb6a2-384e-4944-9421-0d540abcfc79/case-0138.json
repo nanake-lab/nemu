@@ -1,0 +1,78 @@
+{
+  "caseId": "case-0138",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0138",
+    "nodes": [
+      {
+        "id": "n1",
+        "sourceRefs": [
+          "p0-08-0138"
+        ],
+        "sourceSpan": [
+          0,
+          25
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "火曜日ではなく水曜日で、日付は46日です。"
+      },
+      {
+        "id": "n2",
+        "sourceRefs": [
+          "p0-08-0138"
+        ],
+        "sourceSpan": [
+          6,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "day_of_week",
+        "roles": [
+          {
+            "role": "value",
+            "value": "Wednesday"
+          }
+        ],
+        "value": "Wednesday",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "n3",
+        "sourceRefs": [
+          "p0-08-0138"
+        ],
+        "sourceSpan": [
+          20,
+          25
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "date_day",
+        "roles": [
+          {
+            "role": "value",
+            "value": "46"
+          }
+        ],
+        "value": 46,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

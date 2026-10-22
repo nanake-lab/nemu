@@ -1,0 +1,112 @@
+{
+  "caseId": "case-0077",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0077",
+    "nodes": [
+      {
+        "id": "n1",
+        "sourceRefs": [
+          "p0-08-0077"
+        ],
+        "sourceSpan": [
+          0,
+          63
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "I said Wednesday, not Tuesday; the date is day 26."
+      },
+      {
+        "id": "n2",
+        "sourceRefs": [
+          "p0-08-0077"
+        ],
+        "sourceSpan": [
+          13,
+          63
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "said",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "I"
+          },
+          {
+            "role": "content",
+            "value": "Wednesday"
+          }
+        ],
+        "value": "Wednesday",
+        "polarity": "positive",
+        "modality": "reported",
+        "time": null
+      },
+      {
+        "id": "n3",
+        "sourceRefs": [
+          "p0-08-0077"
+        ],
+        "sourceSpan": [
+          25,
+          33
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "said",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "I"
+          },
+          {
+            "role": "content",
+            "value": "Tuesday"
+          }
+        ],
+        "value": "Tuesday",
+        "polarity": "negative",
+        "modality": "reported",
+        "time": null
+      },
+      {
+        "id": "n4",
+        "sourceRefs": [
+          "p0-08-0077"
+        ],
+        "sourceSpan": [
+          35,
+          62
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "date_is_day_number",
+        "roles": [
+          {
+            "role": "date",
+            "value": "the date"
+          }
+        ],
+        "value": 26,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

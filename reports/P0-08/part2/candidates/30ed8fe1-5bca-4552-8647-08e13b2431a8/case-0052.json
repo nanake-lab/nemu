@@ -1,0 +1,88 @@
+{
+  "caseId": "case-0052",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0052",
+    "nodes": [
+      {
+        "id": "ref-list",
+        "sourceRefs": [
+          "p0-08-0052"
+        ],
+        "sourceSpan": [
+          5,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "清单"
+      },
+      {
+        "id": "ref-item-18",
+        "sourceRefs": [
+          "p0-08-0052"
+        ],
+        "sourceSpan": [
+          11,
+          15
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "第18项"
+      },
+      {
+        "id": "claim-item-18",
+        "sourceRefs": [
+          "p0-08-0052"
+        ],
+        "sourceSpan": [
+          5,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "清单上的项目应为",
+        "roles": [
+          {
+            "role": "清单",
+            "value": "清单"
+          },
+          {
+            "role": "项目",
+            "value": "第18项"
+          }
+        ],
+        "value": "第18项",
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "act-correction",
+        "sourceRefs": [
+          "p0-08-0052"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "纠正一下，清单上应该是第18项。"
+      }
+    ]
+  }
+}

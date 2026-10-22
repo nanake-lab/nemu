@@ -1,0 +1,108 @@
+{
+  "caseId": "case-0126",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0126",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0126"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "42日"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0126"
+        ],
+        "sourceSpan": [
+          4,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "報告書"
+      },
+      {
+        "id": "ref-3",
+        "sourceRefs": [
+          "p0-08-0126"
+        ],
+        "sourceSpan": [
+          15,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "私"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0126"
+        ],
+        "sourceSpan": [
+          0,
+          14
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "提出する",
+        "roles": [
+          {
+            "role": "actor",
+            "value": "私"
+          },
+          {
+            "role": "object",
+            "value": "報告書"
+          },
+          {
+            "role": "time",
+            "value": "42日"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "42日"
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0126"
+        ],
+        "sourceSpan": [
+          0,
+          29
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "42日に報告書を提出するよう、私にリマインドしてください。"
+      }
+    ]
+  }
+}

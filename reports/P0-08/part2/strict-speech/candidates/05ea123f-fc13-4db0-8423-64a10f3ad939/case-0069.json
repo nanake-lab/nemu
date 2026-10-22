@@ -1,0 +1,81 @@
+{
+  "caseId": "case-0069",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0069",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0069"
+        ],
+        "sourceSpan": [
+          0,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "週末に雨が降る"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0069"
+        ],
+        "sourceSpan": [
+          0,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "知っているかどうか",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "話者"
+          },
+          {
+            "role": "proposition",
+            "value": "週末に雨が降る"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim2",
+        "sourceRefs": [
+          "p0-08-0069"
+        ],
+        "sourceSpan": [
+          15,
+          24
+        ],
+        "derivation": "resolved",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "確率",
+        "roles": [
+          {
+            "role": "event",
+            "value": "週末に雨が降る"
+          }
+        ],
+        "value": "約23割",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

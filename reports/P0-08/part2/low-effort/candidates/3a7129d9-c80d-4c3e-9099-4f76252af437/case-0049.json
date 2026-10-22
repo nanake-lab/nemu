@@ -1,0 +1,68 @@
+{
+  "caseId": "case-0049",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0049",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0049"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "小林"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0049"
+        ],
+        "sourceSpan": [
+          3,
+          18
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "回来",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "你"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "17点"
+      },
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0049"
+        ],
+        "sourceSpan": [
+          0,
+          18
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "小林问：「你会在17点回来吗？」"
+      }
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "caseId": "case-0173",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0173",
+    "nodes": [
+      {
+        "id": "r-list",
+        "sourceRefs": [
+          "p0-08-0173"
+        ],
+        "sourceSpan": [
+          15,
+          19
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "list"
+      },
+      {
+        "id": "r-item",
+        "sourceRefs": [
+          "p0-08-0173"
+        ],
+        "sourceSpan": [
+          25,
+          29
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "item"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0173"
+        ],
+        "sourceSpan": [
+          21,
+          49
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "item_number",
+        "roles": [
+          {
+            "role": "item",
+            "value": "r-item"
+          }
+        ],
+        "value": 58,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "a1",
+        "sourceRefs": [
+          "p0-08-0173"
+        ],
+        "sourceSpan": [
+          0,
+          50
+        ],
+        "derivation": "inferred",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "To correct the list, the item should be number 58."
+      }
+    ]
+  }
+}
