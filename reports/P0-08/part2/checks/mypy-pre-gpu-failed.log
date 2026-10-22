@@ -1,0 +1,3 @@
+local_irl.py:199: error: Argument 1 to "Path" has incompatible type "str | None"; expected "str | PathLike[str]" [arg-type]
+Found 1 error in 1 file (checked 2 source files)
+Cause: Python module __file__ is optional; fixed by an explicit missing-source check before hashing.

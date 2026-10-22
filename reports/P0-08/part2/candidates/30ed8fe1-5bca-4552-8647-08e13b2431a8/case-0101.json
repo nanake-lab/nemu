@@ -1,0 +1,56 @@
+{
+  "caseId": "case-0101",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0101",
+    "nodes": [
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0101"
+        ],
+        "sourceSpan": [
+          0,
+          26
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is quoting",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "I"
+          },
+          {
+            "role": "object",
+            "value": "this sentence"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "a1",
+        "sourceRefs": [
+          "p0-08-0101"
+        ],
+        "sourceSpan": [
+          28,
+          50
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "Keep step 34 simple."
+      }
+    ]
+  }
+}

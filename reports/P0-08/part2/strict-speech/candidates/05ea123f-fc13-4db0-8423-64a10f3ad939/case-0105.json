@@ -1,0 +1,55 @@
+{
+  "caseId": "case-0105",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0105",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0105"
+        ],
+        "sourceSpan": [
+          6,
+          9
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "この本"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0105"
+        ],
+        "sourceSpan": [
+          0,
+          18
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "finish_reading",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "speaker"
+          },
+          {
+            "role": "object",
+            "value": "この本"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "35日までに"
+      }
+    ]
+  }
+}

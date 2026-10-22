@@ -1,0 +1,28 @@
+COMMAND: node --test spikes/codex-app-server/src/validation.test.mjs spikes/codex-app-server/src/prepare-talk-catalog.test.mjs
+WORKDIR: D:\Dev\nemu-p008-part2
+PREFLIGHT_CIM_UTC: 2026-10-21T20:57:43.5172722+00:00
+PREFLIGHT: CIM query succeeded; no Runner.Worker.exe, blender.exe, or P4-01/P4-02 measurement process detected.
+START_UTC: 2026-10-21T20:57:43.6465164+00:00
+END_UTC: 2026-10-21T20:57:44.0170424+00:00
+EXIT_CODE: 0
+----- STDOUT BEGIN -----
+✔ catalog derivation changes only the four Luna tool fields and refuses overwrite (116.487ms)
+✔ refuses an authentication filename before opening it (54.0558ms)
+✔ refuses the whole provider catalog inside the repository (53.8488ms)
+✔ original schema accepts the expected metadata and disallows extra fields (2.5262ms)
+✔ source spans use Unicode code points and reject an out of range endpoint (0.3669ms)
+✔ valid schema alone does not establish source binding or unique node identity (0.3557ms)
+✔ the original schema retains unique source references and typed roles (0.3109ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 292.8391
+
+----- STDOUT END -----
+----- STDERR BEGIN -----
+
+----- STDERR END -----

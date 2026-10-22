@@ -1,0 +1,75 @@
+{
+  "caseId": "case-0056",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0056",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0056"
+        ],
+        "sourceSpan": [
+          16,
+          17
+        ],
+        "derivation": "resolved",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "I"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0056"
+        ],
+        "sourceSpan": [
+          28,
+          38
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "chapter 19"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0056"
+        ],
+        "sourceSpan": [
+          0,
+          39
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "read",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "I"
+          },
+          {
+            "role": "object",
+            "value": "chapter 19"
+          },
+          {
+            "role": "condition",
+            "value": "I have time"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": "future"
+      }
+    ]
+  }
+}

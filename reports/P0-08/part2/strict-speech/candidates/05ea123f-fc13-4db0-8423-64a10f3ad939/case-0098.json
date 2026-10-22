@@ -1,0 +1,140 @@
+{
+  "caseId": "case-0098",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0098",
+    "nodes": [
+      {
+        "id": "r-folder",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          11,
+          38
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "the blue folder numbered 33"
+      },
+      {
+        "id": "r-desk",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          42,
+          50
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "the desk"
+      },
+      {
+        "id": "c-color",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          15,
+          19
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "color",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "r-folder"
+          }
+        ],
+        "value": "blue",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c-number",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          27,
+          38
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "numbered",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "r-folder"
+          }
+        ],
+        "value": 33,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c-placement",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          7,
+          50
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "put_on",
+        "roles": [
+          {
+            "role": "theme",
+            "value": "r-folder"
+          },
+          {
+            "role": "destination",
+            "value": "r-desk"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": null
+      },
+      {
+        "id": "a-request",
+        "sourceRefs": [
+          "p0-08-0098"
+        ],
+        "sourceSpan": [
+          0,
+          51
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "Please put the blue folder numbered 33 on the desk."
+      }
+    ]
+  }
+}

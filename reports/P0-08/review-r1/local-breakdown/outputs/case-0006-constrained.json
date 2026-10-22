@@ -1,0 +1,48 @@
+{
+  "caseId": "case-0006",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0006",
+    "nodes": [
+      {
+        "id": "node-1",
+        "sourceRefs": [
+          "p0-08-0006"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "報告書を提出する",
+        "roles": [],
+        "value": "2日",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "node-2",
+        "sourceRefs": [
+          "p0-08-0006"
+        ],
+        "sourceSpan": [
+          17,
+          24
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "リマインドしてください"
+      }
+    ]
+  },
+  "outputText": "{\n  \"schemaVersion\": \"p0-08-candidate-v1\",\n  \"sourceRef\": \"p0-08-0006\",\n  \"nodes\": [\n    {\n      \"id\": \"node-1\",\n      \"sourceRefs\": [\"p0-08-0006\"],\n      \"sourceSpan\": [0, 16],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"報告書を提出する\",\n      \"roles\": [],\n      \"value\": \"2日\",\n      \"polarity\": \"positive\",\n      \"modality\": \"asserted\",\n      \"time\": null\n    },\n    {\n      \"id\": \"node-2\",\n      \"sourceRefs\": [\"p0-08-0006\"],\n      \"sourceSpan\": [17, 24],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Act\",\n      \"actType\": \"request\",\n      \"content\": \"リマインドしてください\"\n    }\n  ]\n}"
+}

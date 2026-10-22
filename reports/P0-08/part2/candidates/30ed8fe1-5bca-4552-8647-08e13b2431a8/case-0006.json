@@ -1,0 +1,110 @@
+{
+  "caseId": "case-0006",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0006",
+    "nodes": [
+      {
+        "id": "ref_me",
+        "sourceRefs": [
+          "p0-08-0006"
+        ],
+        "sourceSpan": [
+          14,
+          15
+        ],
+        "derivation": "resolved",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "私"
+      },
+      {
+        "id": "ref_report",
+        "sourceRefs": [
+          "p0-08-0006"
+        ],
+        "sourceSpan": [
+          3,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "報告書"
+      },
+      {
+        "id": "ref_day2",
+        "sourceRefs": [
+          "p0-08-0006"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "2日"
+      },
+      {
+        "id": "claim_submit",
+        "sourceRefs": [
+          "ref_me",
+          "ref_report",
+          "ref_day2"
+        ],
+        "sourceSpan": [
+          0,
+          13
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "提出する",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "ref_me"
+          },
+          {
+            "role": "object",
+            "value": "ref_report"
+          },
+          {
+            "role": "time",
+            "value": "ref_day2"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "2日"
+      },
+      {
+        "id": "act_request",
+        "sourceRefs": [
+          "claim_submit"
+        ],
+        "sourceSpan": [
+          0,
+          28
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "私に、2日に報告書を提出するようリマインドしてください"
+      }
+    ]
+  }
+}

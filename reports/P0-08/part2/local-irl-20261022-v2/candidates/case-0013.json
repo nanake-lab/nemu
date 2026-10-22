@@ -1,0 +1,52 @@
+{
+  "caseId": "case-0013",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0013",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0013"
+        ],
+        "sourceSpan": [
+          0,
+          10
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "小林说：「下周5号可能会下雪。」"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0013"
+        ],
+        "sourceSpan": [
+          0,
+          10
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "可能会下雪",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "下周5号"
+          }
+        ],
+        "value": "可能",
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "下周5号"
+      }
+    ]
+  },
+  "unparsedOutput": null
+}

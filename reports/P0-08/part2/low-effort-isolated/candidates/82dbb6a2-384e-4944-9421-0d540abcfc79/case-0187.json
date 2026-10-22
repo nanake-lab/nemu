@@ -1,0 +1,65 @@
+{
+  "caseId": "case-0187",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0187",
+    "nodes": [
+      {
+        "id": "n1",
+        "sourceRefs": [
+          "p0-08-0187"
+        ],
+        "sourceSpan": [
+          0,
+          25
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "确定",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "我"
+          },
+          {
+            "role": "topic",
+            "value": "周末会不会下雨"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "n2",
+        "sourceRefs": [
+          "p0-08-0187"
+        ],
+        "sourceSpan": [
+          10,
+          25
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "概率",
+        "roles": [
+          {
+            "role": "event",
+            "value": "周末下雨"
+          }
+        ],
+        "value": "约63成",
+        "polarity": "positive",
+        "modality": "reported",
+        "time": "周末"
+      }
+    ]
+  }
+}

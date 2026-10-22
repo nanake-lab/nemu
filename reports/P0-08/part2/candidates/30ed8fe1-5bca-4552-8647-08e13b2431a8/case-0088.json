@@ -1,0 +1,51 @@
+{
+  "caseId": "case-0088",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0088",
+    "nodes": [
+      {
+        "id": "r_song_30",
+        "sourceRefs": [
+          "p0-08-0088"
+        ],
+        "sourceSpan": [
+          3,
+          8
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "第30首歌"
+      },
+      {
+        "id": "c_sounds_quiet",
+        "sourceRefs": [
+          "r_song_30"
+        ],
+        "sourceSpan": [
+          0,
+          14
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "sounds quiet",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "r_song_30"
+          }
+        ],
+        "value": "very quiet",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

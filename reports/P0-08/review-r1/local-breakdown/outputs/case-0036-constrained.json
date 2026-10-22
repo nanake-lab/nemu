@@ -1,0 +1,57 @@
+{
+  "caseId": "case-0036",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0036",
+    "nodes": [
+      {
+        "id": "node-1",
+        "sourceRefs": [
+          "p0-08-0036"
+        ],
+        "sourceSpan": [
+          0,
+          23
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is_hypothesis",
+        "roles": [
+          {
+            "role": "hypothesis_number",
+            "value": "12"
+          }
+        ],
+        "value": "12",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "node-2",
+        "sourceRefs": [
+          "p0-08-0036"
+        ],
+        "sourceSpan": [
+          24,
+          34
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is_not_actual_event",
+        "roles": [],
+        "value": "true",
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  },
+  "outputText": "{\n  \"schemaVersion\": \"p0-08-candidate-v1\",\n  \"sourceRef\": \"p0-08-0036\",\n  \"nodes\": [\n    {\n      \"id\": \"node-1\",\n      \"sourceRefs\": [\"p0-08-0036\"],\n      \"sourceSpan\": [0, 23],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"is_hypothesis\",\n      \"roles\": [\n        {\n          \"role\": \"hypothesis_number\",\n          \"value\": \"12\"\n        }\n      ],\n      \"value\": \"12\",\n      \"polarity\": \"positive\",\n      \"modality\": \"asserted\",\n      \"time\": null\n    },\n    {\n      \"id\": \"node-2\",\n      \"sourceRefs\": [\"p0-08-0036\"],\n      \"sourceSpan\": [24, 34],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"is_not_actual_event\",\n      \"roles\": [],\n      \"value\": \"true\",\n      \"polarity\": \"negative\",\n      \"modality\": \"asserted\",\n      \"time\": null\n    }\n  ]\n}"
+}

@@ -1,0 +1,104 @@
+{
+  "caseId": "case-0005",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0005",
+    "nodes": [
+      {
+        "id": "ref-me",
+        "sourceRefs": [
+          "p0-08-0005"
+        ],
+        "sourceSpan": [
+          14,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "me"
+      },
+      {
+        "id": "ref-report",
+        "sourceRefs": [
+          "p0-08-0005"
+        ],
+        "sourceSpan": [
+          27,
+          37
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "the report"
+      },
+      {
+        "id": "ref-day-2",
+        "sourceRefs": [
+          "p0-08-0005"
+        ],
+        "sourceSpan": [
+          41,
+          46
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "day 2"
+      },
+      {
+        "id": "claim-submit",
+        "sourceRefs": [
+          "p0-08-0005"
+        ],
+        "sourceSpan": [
+          20,
+          46
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "submit",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "me"
+          },
+          {
+            "role": "object",
+            "value": "the report"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "day 2"
+      },
+      {
+        "id": "act-reminder",
+        "sourceRefs": [
+          "p0-08-0005"
+        ],
+        "sourceSpan": [
+          0,
+          47
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "Please remind me to submit the report on day 2."
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "caseId": "case-0106",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0106",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0106"
+        ],
+        "sourceSpan": [
+          2,
+          8
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "第36场会议"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0106"
+        ],
+        "sourceSpan": [
+          13,
+          15
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "数据"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "ref-1",
+          "ref-2"
+        ],
+        "sourceSpan": [
+          0,
+          16
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "需要再检查",
+        "roles": [
+          {
+            "role": "会议",
+            "value": "ref-1"
+          },
+          {
+            "role": "对象",
+            "value": "ref-2"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": null
+      }
+    ]
+  }
+}

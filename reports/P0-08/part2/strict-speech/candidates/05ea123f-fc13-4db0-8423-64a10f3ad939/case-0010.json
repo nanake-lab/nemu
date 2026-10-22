@@ -1,0 +1,114 @@
+{
+  "caseId": "case-0010",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0010",
+    "nodes": [
+      {
+        "id": "r-speaker",
+        "sourceRefs": [
+          "p0-08-0010"
+        ],
+        "sourceSpan": [
+          7,
+          8
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "r-meeting",
+        "sourceRefs": [
+          "p0-08-0010"
+        ],
+        "sourceSpan": [
+          2,
+          4
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "会议"
+      },
+      {
+        "id": "r-meal",
+        "sourceRefs": [
+          "p0-08-0010"
+        ],
+        "sourceSpan": [
+          13,
+          15
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "吃饭"
+      },
+      {
+        "id": "r-time",
+        "sourceRefs": [
+          "p0-08-0010"
+        ],
+        "sourceSpan": [
+          11,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "4点"
+      },
+      {
+        "id": "c-meal-time",
+        "sourceRefs": [
+          "r-speaker",
+          "r-meeting",
+          "r-meal",
+          "r-time"
+        ],
+        "sourceSpan": [
+          0,
+          15
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "change_meal_time",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "r-speaker"
+          },
+          {
+            "role": "activity",
+            "value": "r-meal"
+          },
+          {
+            "role": "new_time",
+            "value": "r-time"
+          },
+          {
+            "role": "condition",
+            "value": "会议延长"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      }
+    ]
+  }
+}

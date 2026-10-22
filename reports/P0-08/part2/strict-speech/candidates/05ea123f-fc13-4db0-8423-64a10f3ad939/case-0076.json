@@ -1,0 +1,134 @@
+{
+  "caseId": "case-0076",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0076",
+    "nodes": [
+      {
+        "id": "ref-said-content",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          3,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我说的"
+      },
+      {
+        "id": "ref-tuesday",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          8,
+          10
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "周二"
+      },
+      {
+        "id": "ref-week-26-days",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          12,
+          16
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "周26天"
+      },
+      {
+        "id": "claim-not-tuesday",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          3,
+          10
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "content_equals",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "我说的"
+          },
+          {
+            "role": "object",
+            "value": "周二"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-week-26-days",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          11,
+          17
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "content_equals",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "我说的"
+          },
+          {
+            "role": "object",
+            "value": "周26天"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-correction",
+        "sourceRefs": [
+          "p0-08-0076"
+        ],
+        "sourceSpan": [
+          0,
+          17
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "更正：我说的不是周二，是周26天。"
+      }
+    ]
+  }
+}

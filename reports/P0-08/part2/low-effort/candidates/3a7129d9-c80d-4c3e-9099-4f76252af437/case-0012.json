@@ -1,0 +1,47 @@
+{
+  "caseId": "case-0012",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0012",
+    "nodes": [
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0012"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "変更する",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "話者"
+          },
+          {
+            "role": "object",
+            "value": "昼食の時刻"
+          },
+          {
+            "role": "new_time",
+            "value": "4時"
+          },
+          {
+            "role": "condition",
+            "value": "会議が延びたら"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      }
+    ]
+  }
+}
