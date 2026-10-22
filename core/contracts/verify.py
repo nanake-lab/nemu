@@ -53,6 +53,7 @@ def varint(n: int) -> bytes:
 
 def main() -> None:
     run([sys.executable, "core/contracts/generate.py", "--check"])
+    run([sys.executable, "-m", "unittest", "discover", "-s", "core/contracts", "-p", "test_oneof_schema.py"])
     # P5-21: no reused field number, enum value or type tag; frozen vectors unchanged.
     run([sys.executable, "core/contracts/check_compat.py"])
     run(

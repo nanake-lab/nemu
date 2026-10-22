@@ -2,6 +2,7 @@ syntax = "proto3";
 package nemu.echo.v1;
 import "base.proto";
 import "state.proto";
+import "ledger.proto";
 
 enum Lang { LANG_UNSPECIFIED = 0; ZH = 1; EN = 2; JA = 3; }
 enum TouchKind { TOUCH_UNSPECIFIED = 0; CLICK = 1; DOUBLE_CLICK = 2; PAT = 3; DRAG_START = 4; DRAG_END = 5; FLING = 6; }
@@ -172,6 +173,7 @@ message ActionRequest {
 
 // @message echo.approval-request | CONTRACTS 4.3
 message ApprovalRequest {
+  // @superseded ApprovalRequestV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
   optional uint32 schema_version = 1; // required
   optional string approval_id = 2; // required,nonempty
   optional string action_id = 3; // required,nonempty
@@ -183,6 +185,7 @@ message ApprovalRequest {
 
 // @message echo.run-state | CONTRACTS 4.3
 message RunState {
+  // @superseded RunStateV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
   optional uint32 schema_version = 1; // required
   repeated RunStatus states = 2; // required,set=self
   optional SpeechMode speech_mode = 3; // required
@@ -202,6 +205,8 @@ message ExpressionWeight {
 
 // @message echo.body-readout | CONTRACTS 7
 message BodyReadout {
+  // Superseded for production by BodyReadoutV2. Legacy type stays supported as
+  // a compatibility oneof arm until the P3-06 stage migration; no producer after P5-19.
   optional uint32 schema_version = 1; // required
   optional string version = 2; // required,nonempty
   repeated ExpressionWeight expression_baseline = 3; // required,set=emotion
@@ -214,6 +219,7 @@ message BodyReadout {
 
 // @message echo.readout | CONTRACTS 4.3
 message Readout {
+  // @superseded ReadoutV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
   optional uint32 schema_version = 1; // required
   optional BodyReadout readout = 2; // required
   optional string snapshot_id = 3; // required,nonempty
@@ -243,6 +249,7 @@ message QueryItem {
 
 // @message echo.query | CONTRACTS 4.3
 message Query {
+  // @superseded QueryV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
   optional uint32 schema_version = 1; // required
   optional string query_id = 2; // required,nonempty
   optional QueryKind kind = 3; // required
@@ -252,6 +259,7 @@ message Query {
 
 // @message echo.query-result | CONTRACTS 4.3
 message QueryResult {
+  // @superseded QueryResultV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
   optional uint32 schema_version = 1; // required
   optional string query_id = 2; // required,nonempty
   optional QueryStatus status = 3; // required
@@ -260,6 +268,7 @@ message QueryResult {
 
 // @message echo.approval-decision | CONTRACTS 4.3
 message ApprovalDecision {
+  // @superseded ApprovalDecisionV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
   optional uint32 schema_version = 1; // required
   optional string approval_id = 2; // required,nonempty
   optional ApprovalChoice decision = 3; // required
@@ -381,4 +390,119 @@ message ModulationEnvelopeV2 {
   optional ObjectRef direction_set = 13; // required
   optional NatureReal nature_coefficients = 14; // required
   repeated LearnedCoefficient learned_coefficients = 15; // required,set=tendency_id
+}
+
+// ---- P5-22 / ADR 0007, 0009-0011: additive terminal successors. ----
+enum TerminalLineage { TERMINAL_LINEAGE_UNSPECIFIED = 0; TERMINAL_REHEARSAL = 1; TERMINAL_LIFE = 2; }
+enum QueryKindV2 { QUERY_V2_UNSPECIFIED = 0; QUERY_MEMORY = 1; QUERY_ACTIONS = 2; QUERY_RUN_HISTORY = 3; QUERY_GROWTH = 4; }
+enum NoticeKind { NOTICE_UNSPECIFIED = 0; REVIEW_HOLD = 1; SLOW_DRIFT = 2; NOTICE_GROWTH_PAUSED = 3; NOTICE_GROWTH_RESUMED = 4; NOTICE_MIGRATION = 5; NOTICE_LAW_VERSION = 6; }
+enum TerminalGrowthAction { TERMINAL_GROWTH_UNSPECIFIED = 0; TERMINAL_PAUSE = 1; TERMINAL_RESUME = 2; }
+enum SocialActionKind { SOCIAL_UNSPECIFIED = 0; SOCIAL_MESSAGE = 1; SOCIAL_COMMIT = 2; }
+
+// @message echo.body-readout-v2 | CONTRACTS 7; v2.0 §9.3; P5-22
+message BodyReadoutV2 {
+  reserved 3, 4, 5, 6, 7, 8;
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional double facing = 9; // required,min=0,max=1
+  optional double tension = 10; // required,min=-1,max=1
+  optional double energy = 11; // required,min=0,max=1
+}
+
+// @message echo.readout-v2 | CONTRACTS 4.3,7; ADR 0007 §6; P5-22
+message ReadoutV2 {
+  // @supersedes Readout
+  reserved 2;
+  optional uint32 schema_version = 1; // required
+  optional string snapshot_id = 3; // required,nonempty
+  optional uint64 projected_at_ns = 4; // required
+  oneof body { // required
+    BodyReadout v1 = 5; // optional
+    BodyReadoutV2 v2 = 6; // optional
+  }
+}
+
+// @message echo.run-state-v2 | CONTRACTS 4.1,4.3; v2.0 §13; I29
+message RunStateV2 {
+  // @supersedes RunState
+  reserved 5;
+  optional uint32 schema_version = 1; // required
+  repeated RunStatus states = 2; // required,set=self
+  optional SpeechMode speech_mode = 3; // required
+  optional bool strict = 4; // required
+  optional string born_at = 6; // optional
+  optional Autonomy autonomy = 7; // required
+  repeated string reasons = 8; // required
+  optional TerminalLineage lineage = 9; // required
+}
+
+// @message echo.notice | CONTRACTS 4.3; v2.0 §5.4,12; AC2-20
+message Notice {
+  // summary is generated deterministically from L by the core; no response or vote.
+  optional uint32 schema_version = 1; // required
+  optional string notice_id = 2; // required,nonempty
+  optional NoticeKind kind = 3; // required
+  optional string at = 4; // required,nonempty
+  optional string summary = 5; // required
+  optional ObjectRef l_ref = 6; // required
+}
+
+// @message echo.query-v2 | CONTRACTS 4.3; v2.0 §2.5,5.4; user_view only
+message QueryV2 {
+  // @supersedes Query
+  reserved 3;
+  optional uint32 schema_version = 1; // required
+  optional string query_id = 2; // required,nonempty
+  optional QueryFilter filter = 4; // optional
+  optional uint64 limit = 5; // required
+  optional QueryKindV2 kind = 6; // required
+}
+
+// @message echo.query-result-v2 | CONTRACTS 4.3; v2.0 §2.5; L with evidence references
+message QueryResultV2 {
+  // @supersedes QueryResult
+  optional uint32 schema_version = 1; // required
+  optional string query_id = 2; // required,nonempty
+  optional QueryStatus status = 3; // required
+  repeated QueryItem items = 4; // required
+  repeated LedgerEntry growth_entries = 5; // required
+}
+
+// @message echo.growth-control | CONTRACTS 4.3; v2.0 §5.4; ADR 0010 §5
+message GrowthControl {
+  // Panel confirms twice before sending; P5-05 authenticates. Review is echoctl-only.
+  optional uint32 schema_version = 1; // required
+  optional TerminalGrowthAction action = 2; // required
+}
+
+// @message echo.approval-request-v2 | CONTRACTS 4.3,6; I26; ADR 0011 §9
+message ApprovalRequestV2 {
+  // @supersedes ApprovalRequest
+  // Exact execution payload bytes, not an object reference. Digest = SHA256(action_payload).
+  // title/detail are generated by the gate, never by the model.
+  optional uint32 schema_version = 1; // required
+  optional string approval_id = 2; // required,nonempty
+  optional string action_id = 3; // required,nonempty
+  optional ToolTier tier = 4; // required
+  optional string title = 5; // required
+  optional string detail = 6; // required
+  optional sint64 expires_at_ns = 7; // required
+  optional bytes action_payload = 8; // required
+  optional bytes payload_digest = 9; // required,size=32
+}
+
+// @message echo.approval-decision-v2 | CONTRACTS 4.3,6; I26
+message ApprovalDecisionV2 {
+  // @supersedes ApprovalDecision
+  optional uint32 schema_version = 1; // required
+  optional string approval_id = 2; // required,nonempty
+  optional ApprovalChoice decision = 3; // required
+  optional bytes payload_digest = 4; // required,size=32
+}
+
+// @message echo.social-action | CONTRACTS 5.3,6; ADR 0011 §3,9,10; P6-14/P6-15 execute
+message SocialAction {
+  optional uint32 schema_version = 1; // required
+  optional SocialActionKind kind = 2; // required
+  optional bytes action_payload = 3; // required
 }

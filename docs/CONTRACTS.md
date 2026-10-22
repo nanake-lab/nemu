@@ -1,17 +1,18 @@
-# Nemu 核心契约 v2.1
+# Nemu 核心契约 v2.2
 
 本文件定义 Nemu 各进程之间、代码与资产之间的全部接口。
 
 - `packages/contracts`（TypeScript 类型 + zod 校验）逐条实现第 1、2、3、7 节，以及第 4.1 节的应用内总线。
-- 终端与 Echo Core 之间的消息（第 4.2–4.4 节）、生成接口（第 5 节）、行动与权限（第 6 节）、机会规则（第 8 节）的权威定义在 Echo Core 的 IDL（`core/contracts/`，任务卡 P5-01）中。本文件规定 IDL 必须包含的 Nemu 专用消息种类和字段；TypeScript 类型由 IDL 生成，不得手写。
+- 终端与 Echo Core 之间的消息（第 4.2–4.4 节）、生成接口（第 5 节）、行动与权限（第 6 节）、主动边界（第 8 节）的权威定义在 Echo Core 的 IDL（`core/contracts/`，任务卡 P5-01）中。本文件规定 IDL 必须包含的 Nemu 专用消息种类和字段；TypeScript 类型由 IDL 生成，不得手写。
 - Echo Core 本身的合同以 `docs/echo-core/` 为准，本文件不重复、不修改它们。
 
 修改规则：
 
 - **只增不改。** 已有字段、事件名、标记语法不能改名或改语义；需要变化时新增字段或新版本号。
 - 任何修改都要先写 ADR（见 AGENTS.md 第 7 节），由用户批准。
-- 版本号写在每条消息的 `v` 字段（应用内）或 `schema_version`（IDL）里。本文件为 v2.1：
+- 版本号写在每条消息的 `v` 字段（应用内）或 `schema_version`（IDL）里。本文件为 v2.2：
   - v2 相对 v1：删除事件总线中的 Agent 事件和身体情绪模型，新增终端协议、身体读出和机会规则；
+  - v2.2（P5-22，ADR 0007、0009–0011）：新增终端后继消息、三项身体读出、主动边界、成长通知与管理查询、载荷绑定审批及社交行动。旧消息和旧舞台输入保留解码；不静默改写已有字节。
   - v2.1（ADR 0005，只增）：应用内总线新增 `chat.send`、`memory.retract`、`core.query`、`core.queryResult`、`desktop.observation`、`codex.session`；观察事件新增 `user_retraction`；终端协议新增 `query` 与 `query.result`；运行状态新增谱系、诞生时间、自主行动开关；身体读出新增 `posture`（用户确认 E5 时明确包括姿态）。
 
 ---
@@ -390,6 +391,10 @@ interface AppBusEvent<T extends string, P> {
 | `voice.recognized` | `{ utteranceKey; text; lang: Lang; durationMs; confidence? }`（由主进程转成 4.2 的观察事件） |
 | `output.state` | `{ outputId; state: 'streaming' \| 'speaking' \| 'done' \| 'cancelled' }` |
 | `output.chunk` | `{ outputId; chunkIndex; text; cues }`（给面板显示用的镜像） |
+| `core.notice` | `{ noticeId; kind; at; summary; lRef }`（`lRef` 为 L 对象的可解析引用字符串，主进程从 IDL ObjectRef 转换；只通知，无回应字段） |
+| `growth.control` | `{ action: 'pause' \| 'resume' }`（二次确认后交 P5-05 类型化管理入口；不含复核结论） |
+| `approval.request.v2` | `{ approvalId; actionId; tier; title; detail; expiresAt; actionPayload: Uint8Array; payloadDigest: Uint8Array }`（原样载荷和 32 字节摘要，替代新审批的旧总线消息） |
+| `approval.decision.v2` | `{ approvalId; decision; payloadDigest: Uint8Array }`（必须回传所见载荷的摘要） |
 | `core.runState` | `{ states: string[]; speechMode: SpeechMode; strict: boolean; lineage: Lineage; bornAt?: string; autonomy: 'active' \| 'paused'; reasons: string[] }` |
 | `approval.request` | `{ approvalId; actionId; tier: ToolTier; title; detail; expiresAt }`（给面板的审批卡） |
 | `approval.decision` | `{ approvalId; decision: 'allowOnce' \| 'allowAlways' \| 'deny' }`（面板 → 主进程 → 核心） |
@@ -412,7 +417,7 @@ type Lineage = 'REHEARSAL' | 'LIFE';                 // 谱系（ADR 0005）
 type DesktopObservationKind =
   | 'foreground_changed' | 'idle_started' | 'idle_ended' | 'dnd_changed'
   | 'session_locked' | 'session_unlocked' | 'meeting_started' | 'meeting_ended';
-type QueryKind = 'memory' | 'actions' | 'run_history';
+type QueryKind = 'memory' | 'actions' | 'run_history' | 'growth';
 type QueryStatus = 'ok' | 'no_match' | 'index_lagging' | 'denied' | 'object_missing' | 'budget_exhausted';
 interface QueryFilter { text?: string; from?: string; to?: string; kinds?: string[]; includeRetracted?: boolean } // includeRetracted 只用于审计视图
 interface QueryItem { ref: string; at: string; kind: string; summary: string; source: string; retracted: boolean }
@@ -422,6 +427,10 @@ interface LatencyMarks {
   firstChunk?: number; ttsFirstChunk?: number; audioStart?: number;
 }
 ```
+
+面板始终分别显示：谱系（排练/正式）、说话模式与严格性、情绪（接通，或 m = 0 及原因）、成长（排练中关闭、开启、已暂停、复核中）。`run_state` 的业务字段不增改，状态通过 `states[]` 表达：`NO_GROWTH` 配 `GROWTH_OFF_REHEARSAL`、`GROWTH_PAUSED`、`GROWTH_REVIEW_PENDING`，情绪降级时显示 `MODULATION_NOT_ENABLED` 或 `CORE_UNMODULATED` 及原因。没有关闭或暂停标记且正式谱系完整运行时显示成长开启。多个状态取能力交集，不能用单个「正常」掩盖其他状态。
+
+`approval.request` / `approval.decision` 的旧总线载荷保留兼容，新审批使用 `.v2` 后继事件，旧载荷不能用于新的执行授权。ADR 0017 的语音早期压音量事件尚未授权，本卡不添加该事件。
 
 ### 4.2 终端 → 核心：观察与执行结果
 
@@ -449,16 +458,20 @@ interface LatencyMarks {
 | `output.chunk` | `output_id`、`action_id`、`chunk_index`、`text`（含表演标记）、`lang`、`snapshot_id`、`speech_mode`、`strict` | 一次生成的流式输出块；语音进程负责分句与合成 |
 | `output.end` | `output_id`、`reason`（done、cancelled、error） | 输出结束 |
 | `action.request` | `action_id`、`credential`、`action`（BodyAction）、`expires_at` | 身体动作请求；终端执行前检查凭证未过期 |
-| `approval.request` | `approval_id`、`action_id`、`tier`、`title`、`detail`、`expires_at` | 需要用户决定的行动 |
+| `approval.request`（IDL `ApprovalRequestV2`） | `approval_id`、`action_id`、`tier`、`title`、`detail`、`expires_at_ns`、`action_payload`、`payload_digest` | 行动载荷原样显示；后继替代旧 ApprovalRequest，新请求不可省略载荷与摘要 |
 | `run_state` | `states[]`、`speech_mode`、`strict`、`lineage`（REHEARSAL、LIFE）、`born_at?`、`autonomy`（active、paused）、`reasons[]` | 运行状态变化时推送 |
-| `readout` | `readout`（BodyReadout）、`snapshot_id`、`projected_at` | 身体读出（第 7 节） |
-| `query.result` | `query_id`、`status`、`items[]` | 只读查询的结果（`QueryStatus`、`QueryItem` 见 4.1）。`status` 必须区分无命中、索引落后、无权限、对象缺失、预算耗尽，不能都返回空集（SYS05） |
+| `readout`（IDL `ReadoutV2`） | `body` oneof（`v1: BodyReadout` 或 `v2: BodyReadoutV2`）、`snapshot_id`、`projected_at_ns` | 必须且只能选择一项；P5-19 起核心只发 v2，舞台 P3-06 前旧入口保持可用 |
+| `notice` | `notice_id`、`kind`（review_hold、slow_drift、growth_paused、growth_resumed、migration、law_version）、`at`、`summary`、`l_ref: ObjectRef` | 核心按 L 条目确定性生成摘要；只有通知，没有回应或投票字段 |
+| `query.result`（IDL `QueryResultV2`） | `query_id`、`status`、`items[]`、`growth_entries: LedgerEntry[]` | 只读查询的结果（`QueryStatus`、`QueryItem` 见 4.1）。`status` 必须区分无命中、索引落后、无权限、对象缺失、预算耗尽，不能都返回空集（SYS05） |
 
-终端 → 核心另有三条控制消息：
+终端 → 核心另有以下控制消息（旧消息保留解码，新功能使用后继消息）：
 
-- `approval.decision`（`approval_id`、`decision`）；
+- `approval.decision`（IDL `ApprovalDecisionV2`：`approval_id`、`decision`、`payload_digest`）：与请求及实际待执行载荷摘要不一致即拒绝；
 - `output.cancel`（`output_id`）：打断时发送，随后补发 `speech_delivery` 执行结果；
-- `query`（`query_id`、`kind`、`filter?`、`limit`）：类型化的只读管理查询（总方案第 21 节），用途为 `user_view`，留审计，不改变任何状态。`memory` 只返回能进入 c_task 的内容；`actions` 返回 Q 中的行动记录（含被拒绝的）；`run_history` 返回运行状态与模式切换。
+- `growth.control`（`GrowthControl`：`action` 只允许 pause、resume）：面板二次确认后由 P5-05 认证的类型化管理命令执行。复核结论只用 `echoctl growth review`（P5-15），没有按结果投票的面板入口。
+- `query`（IDL `QueryV2`：`query_id`、`kind`、`filter?`、`limit`）：类型化的只读管理查询（总方案第 21 节），用途为 `user_view`，留审计，不改变任何状态。`memory` 只返回能进入 c_task 的内容；`actions` 返回 Q 中的行动记录（含被拒绝的）；`run_history` 返回运行状态与模式切换；`growth` 返回 L 条目（R、θ 变化和证据组引用、重算、迁移、暂停、恢复与复核），不能送入 c_core/c_task。非 growth 查询的 `growth_entries` 为空，growth 查询的 `items` 为空；状态仍需区分错误与无命中。
+
+IDL 兼容：`ReadoutV2`、`RunStateV2`、`QueryV2`、`QueryResultV2`、`ApprovalRequestV2`、`ApprovalDecisionV2` 使用新冻结类型标签，旧字段原号保留或 reserved；新字段号大于前任最大号。`RunStateV2` 改用只含 REHEARSAL/LIFE 的 `TerminalLineage`，不把内部 EXPERIMENT 暴露给终端；旧 RunState 仍可解码历史数据。QueryKindV2 新增 growth，旧 QueryKind 不改。所有 schema_version 仍为 1，新语义由新类型标签区分。
 
 ### 4.4 投递语义
 
@@ -508,13 +521,15 @@ interface ExemplarBank {
 
 纯函数，相同输入得到相同输出；结果写入生成回执。
 
-### 5.3 助手行动
+### 5.3 助手与社交行动
 
 | 行动种类 | 参数 | 默认档位 | 默认权限 |
 | --- | --- | --- | --- |
 | `helper.ask` | `question`、`context_refs[]`、`tier?` | `everyday` | T0（不读个人数据时）或 T1 |
 | `helper.task` | `goal`、`inputs[]`（经授权的文件或文档引用）、`tier?`、`workspace` | `work` | T2；其中的命令执行与对外操作按 T3 逐项审批 |
 | `helper.draft` | 模式 C 内部使用，不作为独立行动 | `everyday` | — |
+| `social.message` | `SocialAction` 的 kind 与原样 action_payload；她以 Nemu 身份发出的消息 | — | T2，可设为信任 |
+| `social.commit` | `SocialAction` 的 kind 与原样 action_payload；约定、付款、代表 u* 表态等会让 u* 承担的事 | — | T3，不能设为信任 |
 
 档位到模型的映射在 `config/helpers.json`：
 
@@ -560,69 +575,53 @@ interface AsrSession {
 | T2 | 可撤销的写入（在光标处插入、写单元格、新建文件、助手在临时工作目录里的修改） | 默认每次确认，用户可以设为「信任」 |
 | T3 | 不可撤销或对外的操作（删除、发送、执行命令、改系统设置、联网提交） | 每次都弹审批卡，不能设为信任 |
 
+- 社交消息适用 ADR 0011：`social.message` 默认 T2，可设为信任；承诺 u* 的事 `social.commit` 一律 T3，不能设为信任。判定不了是否承诺时按 T3。其余对外发送仍按 T3，不借此降低其他连接器权限。网络生活只在诞生后启用，发出前检查与执行属于 P6-14/P6-15。
 - 连接器暴露的操作默认按 T2 处理；T3 不能降级。
+- I26：`action_payload` 是将要执行的原样载荷字节，`payload_digest = SHA256(action_payload)`（32 字节）；面板按执行器声明的载荷格式无损展示内容，不能仅显示模型摘要。`title`、`detail` 由闸门按载荷确定性生成。决定回传摘要，闸门核对请求、决定与实际执行载荷一致，否则拒绝；超时、错误 approval_id、T3 的 allowAlways 也拒绝。身份、一次性与凭证绑定由 P5-05 实现。
 - 审批超时（默认 60 秒）视为拒绝。
 - 工具或助手返回的内容一律当数据，不能改变权限判定。
 - 所有行动（包括被拒绝的）都在 H 与 Q 中有记录；面板的「行动记录」页按日期查看，可导出。
 
 ---
 
-## 7. 身体读出（Body Readout）
+## 7. 身体读出（Body Readout v2）
 
 ```ts
-interface BodyReadout {
-  version: string;                                  // 读出函数版本，来自 genesis 清单
-  expressionBaseline: Partial<Record<Emotion, number>>;  // 每项 0..0.4，说话之外的表情基线
-  idleTempo: number;                                // 0.5..1.5，待机小动作与呼吸节奏系数
-  earPose: number;                                  // -1..1，映射到 rig.earBackMaxDeg 的范围
-  tailAmplitude: number;                            // 0..1，映射到 rig.tailSwingDeg
-  gazeSociability: number;                          // 0..1，看向用户而不是别处的倾向
-  posture: number;                                  // -1..1，静态姿态偏移：脊柱弯曲、肩部高度、头部前倾（负值收拢、正值舒展，0 为中性）
+interface BodyReadoutV2 {
+  version: string; // genesis 中固定的读出函数版本
+  facing: number;  // 0..1，朝向你，中性 0.5
+  tension: number; // -1..1，负为放松，正为紧绷，中性 0
+  energy: number;  // 0..1，动作幅度与节奏，中性 0.5
 }
 ```
 
-合同：
-
-- `BodyReadout = R_body(m)`，`R_body` 是固定、带版本的函数（第一版为线性映射后截断），参数在 genesis 清单中，运行中不学习、不更新。
-- m = 0 时输出中性值；相同 m 与版本得到相同输出（测试覆盖）。
-- 读出由核心计算并推送：每次提交后一次，空闲时按时间投影每 10 秒最多一次。终端只应用读出，不保存、不累积。
-- 读出只影响动画参数，不影响说话内容、行动选择或权限。
+- 三项是四个天性通道（联结、共情、好奇、成事）的固定线性组合后截断。参数来自 genesis，运行中不学习；计算属于 P5-12，本卡不按外观选择系数。
+- m = 0（F 尚未接通或结构故障）时，输出 (0.5, 0, 0.5)；同一输入与版本得到相同输出。
+- 没有表情基线；细致表情和手势来自第 3 节表演提示。
+- 核心每次提交后推送一次；空闲时按时间投影每 10 秒最多一次。终端只应用，不保存、不累积；读出只影响动画，不影响说话内容、行动选择或权限。
+- 旧 BodyReadout 的字段与编码保留，标为生产上被取代；ReadoutV2 的 v1 分支仅为迁移兼容，故旧 BodyReadout 类型暂不加禁止活跃消息引用的机器标记。旧 Readout 已标取代。P5-19 起只生产 v2，P3-06 迁移舞台前，旧舞台契约仍能通过 CI。本卡不把 v2 转成旧表情基线。
 
 ---
 
-## 8. 机会规则（Opportunity Rules）
-
-自主调度只决定**何时**尝试行动（强度来自 m 的固定读出，乘以运行门控）；候选行动来自下表。规则表是固定、带版本的运行配置（`config/opportunities.json`），修改需要 ADR。
+## 8. 主动边界（Proactivity Boundaries）
 
 ```ts
-interface OpportunityRule {
-  id: string;
-  trigger: TriggerPredicate;        // 只引用已提交的有类型事件和 Q 中的待办，有界 DSL
-  candidate: { kind: 'body'; action: BodyAction } | { kind: 'speak'; intent: string };
-  cooldownS: number;
-  gates: Array<'dnd' | 'quietHours' | 'budget' | 'mode'>;
+interface ProactivityBoundaries {
+  version: string;
+  allowedKinds: Array<'speak' | BodyActionKind | 'helper.ask'>;
+  cooldownS: Partial<Record<string, number>>;
+  gates: Array<'dnd' | 'quietHours' | 'budget' | 'mode' | 'minInterval'>;
+  budgets: { minIntervalS: number; speakPerHour: number; quietDayFactor: number; autonomousHelperPerDay: number };
 }
 ```
 
-v1 默认规则：
+`config/opportunities.json` 是固定、版本化的边界表，修改需要 ADR。它只规定允许的行动种类、冷却、门控和预算；没有 trigger、candidate 或「什么情况做什么」。主动强度来自天性的固定读出，乘运行门控后 thinning 调度（P5-20）；模型在 m 下提出做什么或什么也不做（P6-01）。不得把这张表用作行为脚本。
 
-| id | 触发 | 候选行动 | 冷却 |
-| --- | --- | --- | --- |
-| `greet_on_return` | 用户空闲 ≥ 15 分钟后恢复输入 | 说话（打招呼，可提及之前的事） | 60 分钟 |
-| `nap_when_idle` | 用户空闲 ≥ 10 分钟 | 身体：`sleep` | 30 分钟 |
-| `wake_on_activity` | 睡眠中出现输入 | 身体：`wake` | 无 |
-| `peek_from_edge` | 用户空闲 5–10 分钟 | 身体：`peek` | 20 分钟 |
-| `stretch` | 连续活跃 ≥ 45 分钟 | 身体：`fidget_stretch` | 45 分钟 |
-| `check_in_long_focus` | 同一类工作应用在前台 ≥ 90 分钟 | 说话（一句，可建议休息） | 120 分钟 |
-| `helper_done` | 助手任务产生执行结果 | 说话（告诉你结果） | 无 |
-| `codex_needs_you` | 用户的 Codex 会话发出 PermissionRequest（需授权） | 说话（一句提醒） | 10 分钟 |
-| `evening_wind_down` | 本地时间晚于用户设定的时刻且仍在工作 | 说话（一句） | 每天一次 |
+默认最小间隔 180 秒、每小时说话 2 次、安静当天预算系数 0.5、自主助手每日 30 次（沿用本文件 5.3 的 helpers 预算）。当前仓库还没有 config/helpers.json；该文件由其所属卡创建时必须与此值一致。冷却表先为空，不从旧触发规则推断每类行动的新冷却；共用最小间隔与预算照常生效。允许的身体种类沿用 BodyActionKind 的 motion、goTo、sit、sleep、wake、peek、gaze。
 
-门控（全部由运行时决定，不交给模型）：
-
-- 勿扰状态不为 `none` 或处于安静时段时，所有「说话」候选不执行。
-- 自主行动有最小间隔（默认 3 分钟）和每小时上限（默认说话 2 次）。
-- 用户说过「别打扰我」后，当天说话上限减半。
+- 勿扰不为 none 或处于安静时段时，所有主动说话候选拒绝；权限、模式、预算、最小间隔门控仍由运行时执行，不交给模型。
+- 最小间隔内的候选拒绝，不推迟到间隔末尾。
+- 原 helper_done 归助手任务后续（P6-06），说出口时仍受门控；codex_needs_you 产生一次立即主动时机，仍受全部门控（P5-20）；其余七条触发规则删除，由她的主动产生行为。拖拽导致离开睡眠属于物理状态转换（P3-04）。
 
 ---
 
@@ -634,3 +633,11 @@ v1 默认规则：
 - **第 8 节 机会规则：** 改为主动边界表，只写允许的行动种类、冷却、门控与预算，不写「什么情况做什么」（v2.0 第 9.4 节，V2-06）。
 - **4.1、4.3：** 运行状态的显示增加情绪与成长；新增通知 `notice`、查询种类 `growth`、成长的暂停与恢复；审批请求带行动载荷的摘要（I26）。
 - **5.3、第 6 节：** 新增网络生活的社交行动种类，让你承担的事一律按 T3 审批（ADR 0011）。
+
+## 追加（2026-10-22）：P5-22 兼容与迁移说明
+
+上面的 2026-10-20 追加作为历史授权依据保留。v2.2 的契约修订随本 PR 请求用户批准；审批前保持 needs-user，不自行合并。
+
+- 既有 CanonicalV1 字节、类型标签与旧黄金向量不变；无存储被打开、重建或迁移。上线前依 ADR 0007 做备份并选择支持后继消息的双方版本；回退时恢复旧应用和备份，后继字节保留原标签，绝不冒充旧消息解码。
+- `ReadoutV2.body` 按 ADR 0007 §6 编码：选中字段号 u32 小端，再接该值，不写每个成员的 presence 字节；必填缺失、多选、未知字段号、尾随字节拒绝。其余编码规则不变。
+- 后继审批载荷字节与 SHA-256 绑定的具体表示在 PR 的规格对照和差异登记中供 Claude 与用户审查。

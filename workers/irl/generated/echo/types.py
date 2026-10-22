@@ -267,6 +267,27 @@ class ApprovalChoice(IntEnum):
     ALLOW_ONCE = 1
     ALLOW_ALWAYS = 2
     DENY = 3
+class TerminalLineage(IntEnum):
+    TERMINAL_REHEARSAL = 1
+    TERMINAL_LIFE = 2
+class QueryKindV2(IntEnum):
+    QUERY_MEMORY = 1
+    QUERY_ACTIONS = 2
+    QUERY_RUN_HISTORY = 3
+    QUERY_GROWTH = 4
+class NoticeKind(IntEnum):
+    REVIEW_HOLD = 1
+    SLOW_DRIFT = 2
+    NOTICE_GROWTH_PAUSED = 3
+    NOTICE_GROWTH_RESUMED = 4
+    NOTICE_MIGRATION = 5
+    NOTICE_LAW_VERSION = 6
+class TerminalGrowthAction(IntEnum):
+    TERMINAL_PAUSE = 1
+    TERMINAL_RESUME = 2
+class SocialActionKind(IntEnum):
+    SOCIAL_MESSAGE = 1
+    SOCIAL_COMMIT = 2
 @dataclass(frozen=True)
 class ObjectRef:
     schema_version: int
@@ -1291,6 +1312,7 @@ class ActionRequest:
     expires_at_ns: int
 @dataclass(frozen=True)
 class ApprovalRequest:
+    # Superseded (successor ApprovalRequestV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
     schema_version: int
     approval_id: str
     action_id: str
@@ -1300,6 +1322,7 @@ class ApprovalRequest:
     expires_at_ns: int
 @dataclass(frozen=True)
 class RunState:
+    # Superseded (successor RunStateV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
     schema_version: int
     states: list[RunStatus]
     speech_mode: SpeechMode
@@ -1325,6 +1348,7 @@ class BodyReadout:
     posture: float
 @dataclass(frozen=True)
 class Readout:
+    # Superseded (successor ReadoutV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
     schema_version: int
     readout: BodyReadout
     snapshot_id: str
@@ -1348,6 +1372,7 @@ class QueryItem:
     retracted: bool
 @dataclass(frozen=True)
 class Query:
+    # Superseded (successor QueryV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
     schema_version: int
     query_id: str
     kind: QueryKind
@@ -1355,12 +1380,14 @@ class Query:
     limit: int
 @dataclass(frozen=True)
 class QueryResult:
+    # Superseded (successor QueryResultV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
     schema_version: int
     query_id: str
     status: QueryStatus
     items: list[QueryItem]
 @dataclass(frozen=True)
 class ApprovalDecision:
+    # Superseded (successor ApprovalDecisionV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
     schema_version: int
     approval_id: str
     decision: ApprovalChoice
@@ -1455,3 +1482,75 @@ class ModulationEnvelopeV2:
     direction_set: ObjectRef
     nature_coefficients: NatureReal
     learned_coefficients: list[LearnedCoefficient]
+@dataclass(frozen=True)
+class BodyReadoutV2:
+    schema_version: int
+    version: str
+    facing: float
+    tension: float
+    energy: float
+@dataclass(frozen=True)
+class ReadoutV2:
+    schema_version: int
+    snapshot_id: str
+    projected_at_ns: int
+    v1: BodyReadout | None
+    v2: BodyReadoutV2 | None
+@dataclass(frozen=True)
+class RunStateV2:
+    schema_version: int
+    states: list[RunStatus]
+    speech_mode: SpeechMode
+    strict: bool
+    born_at: str | None
+    autonomy: Autonomy
+    reasons: list[str]
+    lineage: TerminalLineage
+@dataclass(frozen=True)
+class Notice:
+    schema_version: int
+    notice_id: str
+    kind: NoticeKind
+    at: str
+    summary: str
+    l_ref: ObjectRef
+@dataclass(frozen=True)
+class QueryV2:
+    schema_version: int
+    query_id: str
+    filter: QueryFilter | None
+    limit: int
+    kind: QueryKindV2
+@dataclass(frozen=True)
+class QueryResultV2:
+    schema_version: int
+    query_id: str
+    status: QueryStatus
+    items: list[QueryItem]
+    growth_entries: list[LedgerEntry]
+@dataclass(frozen=True)
+class GrowthControl:
+    schema_version: int
+    action: TerminalGrowthAction
+@dataclass(frozen=True)
+class ApprovalRequestV2:
+    schema_version: int
+    approval_id: str
+    action_id: str
+    tier: ToolTier
+    title: str
+    detail: str
+    expires_at_ns: int
+    action_payload: bytes
+    payload_digest: bytes
+@dataclass(frozen=True)
+class ApprovalDecisionV2:
+    schema_version: int
+    approval_id: str
+    decision: ApprovalChoice
+    payload_digest: bytes
+@dataclass(frozen=True)
+class SocialAction:
+    schema_version: int
+    kind: SocialActionKind
+    action_payload: bytes

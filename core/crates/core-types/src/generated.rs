@@ -954,6 +954,98 @@ impl ApprovalChoice {
     /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
     pub const fn is_superseded(self) -> bool { false }
 }
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum TerminalLineage {
+    TERMINAL_REHEARSAL = 1,
+    TERMINAL_LIFE = 2,
+}
+impl TryFrom<u32> for TerminalLineage { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::TERMINAL_REHEARSAL),
+2 => Ok(Self::TERMINAL_LIFE),
+_ => Err("unknown enum".into()), }}}
+impl From<TerminalLineage> for u32 {fn from(v:TerminalLineage)->Self{v as u32}}
+impl TerminalLineage {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum QueryKindV2 {
+    QUERY_MEMORY = 1,
+    QUERY_ACTIONS = 2,
+    QUERY_RUN_HISTORY = 3,
+    QUERY_GROWTH = 4,
+}
+impl TryFrom<u32> for QueryKindV2 { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::QUERY_MEMORY),
+2 => Ok(Self::QUERY_ACTIONS),
+3 => Ok(Self::QUERY_RUN_HISTORY),
+4 => Ok(Self::QUERY_GROWTH),
+_ => Err("unknown enum".into()), }}}
+impl From<QueryKindV2> for u32 {fn from(v:QueryKindV2)->Self{v as u32}}
+impl QueryKindV2 {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum NoticeKind {
+    REVIEW_HOLD = 1,
+    SLOW_DRIFT = 2,
+    NOTICE_GROWTH_PAUSED = 3,
+    NOTICE_GROWTH_RESUMED = 4,
+    NOTICE_MIGRATION = 5,
+    NOTICE_LAW_VERSION = 6,
+}
+impl TryFrom<u32> for NoticeKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::REVIEW_HOLD),
+2 => Ok(Self::SLOW_DRIFT),
+3 => Ok(Self::NOTICE_GROWTH_PAUSED),
+4 => Ok(Self::NOTICE_GROWTH_RESUMED),
+5 => Ok(Self::NOTICE_MIGRATION),
+6 => Ok(Self::NOTICE_LAW_VERSION),
+_ => Err("unknown enum".into()), }}}
+impl From<NoticeKind> for u32 {fn from(v:NoticeKind)->Self{v as u32}}
+impl NoticeKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum TerminalGrowthAction {
+    TERMINAL_PAUSE = 1,
+    TERMINAL_RESUME = 2,
+}
+impl TryFrom<u32> for TerminalGrowthAction { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::TERMINAL_PAUSE),
+2 => Ok(Self::TERMINAL_RESUME),
+_ => Err("unknown enum".into()), }}}
+impl From<TerminalGrowthAction> for u32 {fn from(v:TerminalGrowthAction)->Self{v as u32}}
+impl TerminalGrowthAction {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum SocialActionKind {
+    SOCIAL_MESSAGE = 1,
+    SOCIAL_COMMIT = 2,
+}
+impl TryFrom<u32> for SocialActionKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::SOCIAL_MESSAGE),
+2 => Ok(Self::SOCIAL_COMMIT),
+_ => Err("unknown enum".into()), }}}
+impl From<SocialActionKind> for u32 {fn from(v:SocialActionKind)->Self{v as u32}}
+impl SocialActionKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 /// S 5,6,7; D I 7.1; frozen tag `echo.object-ref`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -2512,7 +2604,7 @@ pub r#action: BodyAction,
 pub r#expires_at_ns: DecimalI64,
 }
 impl super::WireMessage for ActionRequest {const NAME: &'static str = "ActionRequest";}
-/// CONTRACTS 4.3; frozen tag `echo.approval-request`.
+/// CONTRACTS 4.3; frozen tag `echo.approval-request`. Superseded (successor ApprovalRequestV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ApprovalRequest {
@@ -2524,8 +2616,8 @@ pub r#title: String,
 pub r#detail: String,
 pub r#expires_at_ns: DecimalI64,
 }
-impl super::WireMessage for ApprovalRequest {const NAME: &'static str = "ApprovalRequest";}
-/// CONTRACTS 4.3; frozen tag `echo.run-state`.
+impl super::WireMessage for ApprovalRequest {const NAME: &'static str = "ApprovalRequest"; const SUPERSEDED: bool = true;}
+/// CONTRACTS 4.3; frozen tag `echo.run-state`. Superseded (successor RunStateV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RunState {
@@ -2539,7 +2631,7 @@ pub r#born_at: Option<String>,
 pub r#autonomy: Autonomy,
 pub r#reasons: Vec<String>,
 }
-impl super::WireMessage for RunState {const NAME: &'static str = "RunState";}
+impl super::WireMessage for RunState {const NAME: &'static str = "RunState"; const SUPERSEDED: bool = true;}
 /// CONTRACTS 7; frozen tag `echo.expression-weight`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -2569,7 +2661,7 @@ pub r#gaze_sociability: f64,
 pub r#posture: f64,
 }
 impl super::WireMessage for BodyReadout {const NAME: &'static str = "BodyReadout";}
-/// CONTRACTS 4.3; frozen tag `echo.readout`.
+/// CONTRACTS 4.3; frozen tag `echo.readout`. Superseded (successor ReadoutV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Readout {
@@ -2578,7 +2670,7 @@ pub r#readout: BodyReadout,
 pub r#snapshot_id: String,
 pub r#projected_at_ns: DecimalU64,
 }
-impl super::WireMessage for Readout {const NAME: &'static str = "Readout";}
+impl super::WireMessage for Readout {const NAME: &'static str = "Readout"; const SUPERSEDED: bool = true;}
 /// CONTRACTS 4.1; frozen tag `echo.query-filter`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -2608,7 +2700,7 @@ pub r#source: String,
 pub r#retracted: bool,
 }
 impl super::WireMessage for QueryItem {const NAME: &'static str = "QueryItem";}
-/// CONTRACTS 4.3; frozen tag `echo.query`.
+/// CONTRACTS 4.3; frozen tag `echo.query`. Superseded (successor QueryV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Query {
@@ -2619,8 +2711,8 @@ pub r#kind: QueryKind,
 pub r#filter: Option<QueryFilter>,
 pub r#limit: DecimalU64,
 }
-impl super::WireMessage for Query {const NAME: &'static str = "Query";}
-/// CONTRACTS 4.3; frozen tag `echo.query-result`.
+impl super::WireMessage for Query {const NAME: &'static str = "Query"; const SUPERSEDED: bool = true;}
+/// CONTRACTS 4.3; frozen tag `echo.query-result`. Superseded (successor QueryResultV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct QueryResult {
@@ -2629,8 +2721,8 @@ pub r#query_id: String,
 pub r#status: QueryStatus,
 pub r#items: Vec<QueryItem>,
 }
-impl super::WireMessage for QueryResult {const NAME: &'static str = "QueryResult";}
-/// CONTRACTS 4.3; frozen tag `echo.approval-decision`.
+impl super::WireMessage for QueryResult {const NAME: &'static str = "QueryResult"; const SUPERSEDED: bool = true;}
+/// CONTRACTS 4.3; frozen tag `echo.approval-decision`. Superseded (successor ApprovalDecisionV2): P5-22; CONTRACTS v2.2 successor, frozen bytes retained
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ApprovalDecision {
@@ -2638,7 +2730,7 @@ pub r#schema_version: u32,
 pub r#approval_id: String,
 pub r#decision: ApprovalChoice,
 }
-impl super::WireMessage for ApprovalDecision {const NAME: &'static str = "ApprovalDecision";}
+impl super::WireMessage for ApprovalDecision {const NAME: &'static str = "ApprovalDecision"; const SUPERSEDED: bool = true;}
 /// CONTRACTS 4.3; frozen tag `echo.output-cancel`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -2774,6 +2866,125 @@ pub r#nature_coefficients: NatureReal,
 pub r#learned_coefficients: Vec<LearnedCoefficient>,
 }
 impl super::WireMessage for ModulationEnvelopeV2 {const NAME: &'static str = "ModulationEnvelopeV2";}
+/// CONTRACTS 7; v2.0 §9.3; P5-22; frozen tag `echo.body-readout-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct BodyReadoutV2 {
+pub r#schema_version: u32,
+pub r#version: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#facing: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#tension: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#energy: f64,
+}
+impl super::WireMessage for BodyReadoutV2 {const NAME: &'static str = "BodyReadoutV2";}
+/// CONTRACTS 4.3,7; ADR 0007 §6; P5-22; frozen tag `echo.readout-v2`. Supersedes [`Readout`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ReadoutV2 {
+pub r#schema_version: u32,
+pub r#snapshot_id: String,
+pub r#projected_at_ns: DecimalU64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#v1: Option<BodyReadout>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#v2: Option<BodyReadoutV2>,
+}
+impl super::WireMessage for ReadoutV2 {const NAME: &'static str = "ReadoutV2";}
+/// CONTRACTS 4.1,4.3; v2.0 §13; I29; frozen tag `echo.run-state-v2`. Supersedes [`RunState`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RunStateV2 {
+pub r#schema_version: u32,
+pub r#states: Vec<RunStatus>,
+pub r#speech_mode: SpeechMode,
+pub r#strict: bool,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#born_at: Option<String>,
+pub r#autonomy: Autonomy,
+pub r#reasons: Vec<String>,
+pub r#lineage: TerminalLineage,
+}
+impl super::WireMessage for RunStateV2 {const NAME: &'static str = "RunStateV2";}
+/// CONTRACTS 4.3; v2.0 §5.4,12; AC2-20; frozen tag `echo.notice`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Notice {
+pub r#schema_version: u32,
+pub r#notice_id: String,
+pub r#kind: NoticeKind,
+pub r#at: String,
+pub r#summary: String,
+pub r#l_ref: ObjectRef,
+}
+impl super::WireMessage for Notice {const NAME: &'static str = "Notice";}
+/// CONTRACTS 4.3; v2.0 §2.5,5.4; user_view only; frozen tag `echo.query-v2`. Supersedes [`Query`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct QueryV2 {
+pub r#schema_version: u32,
+pub r#query_id: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#filter: Option<QueryFilter>,
+pub r#limit: DecimalU64,
+pub r#kind: QueryKindV2,
+}
+impl super::WireMessage for QueryV2 {const NAME: &'static str = "QueryV2";}
+/// CONTRACTS 4.3; v2.0 §2.5; L with evidence references; frozen tag `echo.query-result-v2`. Supersedes [`QueryResult`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct QueryResultV2 {
+pub r#schema_version: u32,
+pub r#query_id: String,
+pub r#status: QueryStatus,
+pub r#items: Vec<QueryItem>,
+pub r#growth_entries: Vec<LedgerEntry>,
+}
+impl super::WireMessage for QueryResultV2 {const NAME: &'static str = "QueryResultV2";}
+/// CONTRACTS 4.3; v2.0 §5.4; ADR 0010 §5; frozen tag `echo.growth-control`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct GrowthControl {
+pub r#schema_version: u32,
+pub r#action: TerminalGrowthAction,
+}
+impl super::WireMessage for GrowthControl {const NAME: &'static str = "GrowthControl";}
+/// CONTRACTS 4.3,6; I26; ADR 0011 §9; frozen tag `echo.approval-request-v2`. Supersedes [`ApprovalRequest`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ApprovalRequestV2 {
+pub r#schema_version: u32,
+pub r#approval_id: String,
+pub r#action_id: String,
+pub r#tier: ToolTier,
+pub r#title: String,
+pub r#detail: String,
+pub r#expires_at_ns: DecimalI64,
+pub r#action_payload: HexBytes,
+pub r#payload_digest: HexBytes,
+}
+impl super::WireMessage for ApprovalRequestV2 {const NAME: &'static str = "ApprovalRequestV2";}
+/// CONTRACTS 4.3,6; I26; frozen tag `echo.approval-decision-v2`. Supersedes [`ApprovalDecision`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ApprovalDecisionV2 {
+pub r#schema_version: u32,
+pub r#approval_id: String,
+pub r#decision: ApprovalChoice,
+pub r#payload_digest: HexBytes,
+}
+impl super::WireMessage for ApprovalDecisionV2 {const NAME: &'static str = "ApprovalDecisionV2";}
+/// CONTRACTS 5.3,6; ADR 0011 §3,9,10; P6-14/P6-15 execute; frozen tag `echo.social-action`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SocialAction {
+pub r#schema_version: u32,
+pub r#kind: SocialActionKind,
+pub r#action_payload: HexBytes,
+}
+impl super::WireMessage for SocialAction {const NAME: &'static str = "SocialAction";}
 /// Conformance dispatch through every generated DTO and both typed codecs.
 pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contract::Limits) -> Result<(), String> {match name {
 "ObjectRef" => super::verify_typed::<ObjectRef>(value, limits),
@@ -2900,6 +3111,16 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "PlanAndCarrierReceipt" => super::verify_typed::<PlanAndCarrierReceipt>(value, limits),
 "LearnedCoefficient" => super::verify_typed::<LearnedCoefficient>(value, limits),
 "ModulationEnvelopeV2" => super::verify_typed::<ModulationEnvelopeV2>(value, limits),
+"BodyReadoutV2" => super::verify_typed::<BodyReadoutV2>(value, limits),
+"ReadoutV2" => super::verify_typed::<ReadoutV2>(value, limits),
+"RunStateV2" => super::verify_typed::<RunStateV2>(value, limits),
+"Notice" => super::verify_typed::<Notice>(value, limits),
+"QueryV2" => super::verify_typed::<QueryV2>(value, limits),
+"QueryResultV2" => super::verify_typed::<QueryResultV2>(value, limits),
+"GrowthControl" => super::verify_typed::<GrowthControl>(value, limits),
+"ApprovalRequestV2" => super::verify_typed::<ApprovalRequestV2>(value, limits),
+"ApprovalDecisionV2" => super::verify_typed::<ApprovalDecisionV2>(value, limits),
+"SocialAction" => super::verify_typed::<SocialAction>(value, limits),
 _ => Err("unknown message".into()), }}
 /// Message types kept only to read old data and for tests; no runtime path may produce them.
-pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "HookCoefficients", "ModulationEnvelope"];
+pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "ApprovalRequest", "RunState", "Readout", "Query", "QueryResult", "ApprovalDecision", "HookCoefficients", "ModulationEnvelope"];

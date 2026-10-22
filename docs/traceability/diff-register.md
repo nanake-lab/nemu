@@ -172,3 +172,14 @@ ADR 0007 amendments have been implemented and cross-language checked. 78 source-
 | ID | 原文位置 | 重建或读法 | 冻结边界 | 状态 |
 | --- | --- | --- | --- | --- |
 | V2-50 | V2-34、V2-48；v2.0 第 5.2 节「典型幅度」「计算次序」；I23、I25 | R 的存储补五个字段：倾向存典型幅度递推的 M = Σω·μ·p_c 与 U = Σω·μ；每个分配存序号、μ_{c,k} 与 p_c（教导组缺省）。以后继消息 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2 实现，旧消息标为取代。改旧分配时，G 只用存下的 S、强度、份额、可信、可核实，以及序号、μ、p_c 重放该倾向的递推，不需要历史的 b、σ̂ 或其他倾向的 π 历史；与整段重算逐位一致。解决 V2-48 | 否；只增，不改已发布字节 | 待用户批准，ADR 0016 |
+
+## 2026-10-22 追加：P5-22 终端契约候选
+
+来源：P5-22 与用户在本聊天授权的 oneof 配套修改。既有条目不改，本 PR needs-user，以下具体表示随用户合并批准。
+
+| ID | 原文位置 | 读法或重建 | 冻结边界 | 状态 |
+| --- | --- | --- | --- | --- |
+| V2-51 | ADR 0007 §2,6；P5-22 的 Readout oneof；V2-35 | 以后继 ReadoutV2 实现 oneof，旧 readout 字段号 2 reserved，v1/v2 用新号 5/6；其他变更使用 RunStateV2、QueryV2、QueryResultV2、ApprovalRequestV2、ApprovalDecisionV2，新标签、旧消息字节不变。BodyReadout v1 只在生产上标取代，迁移期间仍为受支持的兼容类型，避免活跃 oneof 引用机器停用类型；P5-19 只生产 v2。oneof 按 ADR 已规定规则，不增加编码规则 | 否；不改已发布字节 | 待用户批准，P5-22 |
+| V2-52 | I26；ADR 0011 §9；P5-22 审批载荷与摘要 | 最小表示：原样执行载荷为 bytes，payload_digest 为 SHA256 该原样字节（32 字节）；请求、决定、实际执行字节必须一致。应用内总线用 approval.request.v2 / approval.decision.v2 后继事件，保留旧事件。SocialAction 只声明种类和原样载荷，载荷解释及发出前检查由 P6-14/P6-15 | 否；重建具体表示 | 重建，待用户批准，P5-22 |
+| V2-53 | P5-22；v2.0 §2.5；V2-36 | QueryResultV2 用额外 growth_entries 返回已有 LedgerEntry；非 growth 的该数组为空，growth 的 items 为空。RunStateV2 用新的终端枚举排除 EXPERIMENT，不改变旧 RunState 的解码语义；Notice.at 沿用终端显示时刻字符串，l_ref 为已有 ObjectRef | 否；具体接口表示 | 待用户批准，P5-22 |
+| V2-54 | P5-22 主动边界；V2-16 | 当前 main 没有 config/opportunities.json 和 helpers.json，预算沿 CONTRACTS §5.3 的 30；不从九条旧触发规则推断每类行动的新冷却，cooldownS 初值为空，最小间隔 180 秒、说话 2/小时、安静因子 0.5 照常生效。helpers.json 将来创建时需一致 | 否；边界候选 | 待用户批准，P5-22 |
