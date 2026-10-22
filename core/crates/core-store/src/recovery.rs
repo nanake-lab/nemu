@@ -1,22 +1,42 @@
 use crate::{
-    LineageKind, Result, Store,
+    Result,
     error::require,
     ingress::fingerprint,
+    objects::Objects,
     schema::{integer, unsigned},
+    store::{head, references},
 };
 use core_types::{
     WireMessage,
-    generated::{CoreTransactionV2, EventEnvelope, LedgerEntry, ObjectRef},
+    generated::{CoreTransactionV2, EventEnvelope, LedgerEntry, LineageHeaderV2, ObjectRef},
     scalar::hex,
 };
-use rusqlite::params;
+use rusqlite::{Connection, params};
 use std::collections::BTreeMap;
 
 /// SQLite page integrity alone cannot prove that valid pointers form one snapshot.
 /// Reconcile the physical indexes against their canonical transaction manifests.
-pub(crate) fn verify<L: LineageKind>(store: &Store<L>) -> Result<()> {
-    let db = &store.db;
-    let limits = store.objects.config.encoding;
+pub(crate) fn verify(
+    db: &Connection,
+    objects: &Objects,
+    header: &LineageHeaderV2,
+    branch: &str,
+) -> Result<()> {
+    require(
+        db.query_row("PRAGMA integrity_check", [], |r| r.get::<_, String>(0))? == "ok",
+        "database integrity failure",
+    )?;
+    require(
+        db.prepare("PRAGMA foreign_key_check")?
+            .query([])?
+            .next()?
+            .is_none(),
+        "foreign key closure failure",
+    )?;
+    for r in references(db, objects.config)? {
+        objects.closure(&r)?;
+    }
+    let limits = objects.config.encoding;
     let mut input = db.prepare("SELECT position,event FROM raw_ingress ORDER BY position")?;
     let mut rows = input.query([])?;
     let mut count = 0u64;
@@ -45,7 +65,7 @@ pub(crate) fn verify<L: LineageKind>(store: &Store<L>) -> Result<()> {
     let mut accepted = 0i64;
     let mut ledger_count = 0i64;
     let mut seen = BTreeMap::new();
-    let initial = hex(&store.objects.reference(&store.header, "1")?.digest.0);
+    let initial = hex(&objects.reference(header, "1")?.digest.0);
     while let Some(row) = rows.next()? {
         let id: String = row.get(0)?;
         let next_anchor = unsigned(row.get(3)?)?;
@@ -61,7 +81,7 @@ pub(crate) fn verify<L: LineageKind>(store: &Store<L>) -> Result<()> {
             |r| r.get(0),
         )?;
         let event = EventEnvelope::from_canonical(&event_bytes, limits)?;
-        let event_ref = store.objects.reference(&event, "1")?;
+        let event_ref = objects.reference(&event, "1")?;
         let fp = fingerprint(&event, limits)?;
         let key = (event.device.clone(), event.stable_source_key.clone());
         if decision == "accepted" {
@@ -71,12 +91,11 @@ pub(crate) fn verify<L: LineageKind>(store: &Store<L>) -> Result<()> {
                 .as_ref()
                 .ok_or(crate::Error::Rejected("accepted commit lacks snapshot"))?;
             let reference = ObjectRef::from_canonical(bytes, limits)?;
-            let value =
-                CoreTransactionV2::from_canonical(&store.objects.read(&reference)?, limits)?;
+            let value = CoreTransactionV2::from_canonical(&objects.read(&reference)?, limits)?;
             require(
                 hex(&reference.digest.0) == id
                     && value.binding.base_commit == parent.as_ref().unwrap_or(&initial).as_str()
-                    && value.binding.branch_id == store.branch
+                    && value.binding.branch_id == branch
                     && value.binding.event_id == event.id
                     && value.binding.raw_log_position.0 == position
                     && value.binding.anchor_time_ns.0 == anchor,
@@ -109,7 +128,7 @@ pub(crate) fn verify<L: LineageKind>(store: &Store<L>) -> Result<()> {
                 let stored: Vec<u8> = db.query_row("SELECT reference FROM ledger_index WHERE entry_id=?1 AND event_id=?2 AND commit_id=?3", params![entry.entry_id, event.id, id], |r| r.get(0))?;
                 let reference = ObjectRef::from_canonical(&stored, limits)?;
                 require(
-                    LedgerEntry::from_canonical(&store.objects.read(&reference)?, limits)?
+                    LedgerEntry::from_canonical(&objects.read(&reference)?, limits)?
                         .canonical_bytes(limits)?
                         == entry.canonical_bytes(limits)?,
                     "ledger index differs from canonical transaction",
@@ -149,7 +168,7 @@ pub(crate) fn verify<L: LineageKind>(store: &Store<L>) -> Result<()> {
         snapshot = next_snapshot;
         position += 1;
     }
-    let head = store.head()?;
+    let head = head(db)?;
     let head_snapshot: Option<Vec<u8>> = db.query_row(
         "SELECT snapshot FROM branch_head WHERE singleton=1",
         [],

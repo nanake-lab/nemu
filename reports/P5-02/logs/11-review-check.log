@@ -1,0 +1,28 @@
+    Checking core-types v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-types)
+    Checking core-policy v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-policy)
+    Checking core-store v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-store)
+    Checking task-layer v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\task-layer)
+    Checking fact-view v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\fact-view)
+    Checking gateway v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\gateway)
+    Checking core-kernel v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-kernel)
+    Checking semantic-core v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\semantic-core)
+    Checking action-gate v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\action-gate)
+    Checking core-replay v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-replay)
+    Checking core-runtime v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-runtime)
+    Checking echoctl v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\echoctl)
+error[E0716]: temporary value dropped while borrowed
+   --> crates\core-store\src\tests\crash.rs:160:23
+    |
+154 |         run(
+    |         --- borrow later used by call
+...
+160 |                 Some(&tag::<EventEnvelope>())
+    |                       ^^^^^^^^^^^^^^^^^^^^^^- temporary value is freed at the end of this statement
+    |                       |
+    |                       creates a temporary value which is freed while still in use
+    |
+    = note: consider using a `let` binding to create a longer lived value
+
+For more information about this error, try `rustc --explain E0716`.
+error: could not compile `core-store` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

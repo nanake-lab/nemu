@@ -6,8 +6,11 @@ use core_types::{
 };
 use std::{sync::OnceLock, time::Duration};
 mod atomic;
+mod crash;
+mod crash_harness;
 mod isolation;
 mod objects;
+mod reader;
 fn normal() -> DegradedStatus {
     DegradedStatus {
         schema_version: 1,
@@ -78,7 +81,10 @@ fn rehearsal(root: &TemporaryRoot, name: &str) -> Store<Rehearsal> {
     Store::<Rehearsal>::create_temporary(root, name, header::<Rehearsal>(), "test-branch", config())
         .unwrap()
 }
-fn event<L: LineageKind>(store: &mut Store<L>, n: u64) -> EventEnvelope {
+fn unpersisted_event<L: LineageKind>(
+    store: &mut Store<L>,
+    n: u64,
+) -> (EventEnvelope, PreparedObject<L>) {
     let payload = store
         .prepare(
             &UserText {
@@ -93,6 +99,10 @@ fn event<L: LineageKind>(store: &mut Store<L>, n: u64) -> EventEnvelope {
     event.stable_source_key = format!("key-{n}");
     event.raw_log_position = DecimalU64(n);
     event.payload_digest = payload.reference().digest.clone();
+    (event, payload)
+}
+fn event<L: LineageKind>(store: &mut Store<L>, n: u64) -> EventEnvelope {
+    let (event, _payload) = unpersisted_event(store, n);
     store.ingest(&event).unwrap();
     event
 }

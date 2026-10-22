@@ -1,7 +1,9 @@
 //! Redundant durability receipts, not a second state database. Ordinary opening
 //! never deletes them. They live beside the store so replacing an old store backup
 //! cannot silently rewind acknowledged D/commits. W14 must retain/reconcile them.
-use crate::{Error, Result, error::require, objects::Objects, platform, schema::unsigned};
+use crate::{
+    Error, Fault, FaultPoint, Result, error::require, objects::Objects, platform, schema::unsigned,
+};
 use core_types::{
     WireMessage,
     generated::{EventEnvelope, ObjectRef},
@@ -25,22 +27,28 @@ pub(crate) fn path(root: &Path) -> Result<PathBuf> {
         .to_string_lossy();
     Ok(parent.join(format!(".{name}.w02-receipts-v1")))
 }
-pub(crate) fn create(root: &Path) -> Result<()> {
+pub(crate) fn create(root: &Path, fault: &Fault) -> Result<()> {
     let receipts = path(root)?;
     require(
         !receipts.exists(),
         "prior durability receipts exist; explicit recovery required",
     )?;
     fs::create_dir(&receipts)?;
+    fault.hit(FaultPoint::ReceiptRootCreated)?;
     for kind in ["d", "commits"] {
         fs::create_dir(receipts.join(kind))?;
+        fault.hit(FaultPoint::ReceiptKindCreated)?;
+        platform::sync_dir(&receipts.join(kind))?;
+        fault.hit(FaultPoint::ReceiptKindSynced)?;
     }
     platform::sync_dir(&receipts)?;
+    fault.hit(FaultPoint::ReceiptRootSynced)?;
     platform::sync_dir(
         receipts
             .parent()
             .ok_or(Error::Rejected("missing receipt parent"))?,
-    )
+    )?;
+    fault.hit(FaultPoint::ReceiptParentSynced)
 }
 pub(crate) fn record(
     root: &Path,
@@ -48,6 +56,7 @@ pub(crate) fn record(
     position: u64,
     r: &ObjectRef,
     objects: &Objects,
+    fault: &Fault,
 ) -> Result<()> {
     let dir = path(root)?.join(kind);
     platform::no_links(&dir)?;
@@ -58,16 +67,24 @@ pub(crate) fn record(
     } else {
         let mut temp = tempfile::Builder::new().suffix(".tmp").tempfile_in(&dir)?;
         temp.write_all(&bytes)?;
+        fault.hit(FaultPoint::ReceiptWritten)?;
+        fault.hit(FaultPoint::ReceiptFileSyncBefore)?;
         temp.as_file().sync_all()?;
-        temp.persist_noclobber(&target)
-            .map_err(|e| Error::Io(e.error))?;
+        fault.hit(FaultPoint::ReceiptFileSynced)?;
+        fault.hit(FaultPoint::ReceiptRenameBefore)?;
+        platform::persist_noclobber(temp, &target)?;
+        fault.hit(FaultPoint::ReceiptRenamed)?;
     }
+    fault.hit(FaultPoint::ReceiptTargetSyncBefore)?;
     fs::OpenOptions::new()
         .read(true)
         .write(true)
         .open(&target)?
         .sync_all()?;
-    platform::sync_dir(&dir)
+    fault.hit(FaultPoint::ReceiptTargetSynced)?;
+    fault.hit(FaultPoint::ReceiptDirectorySyncBefore)?;
+    platform::sync_dir(&dir)?;
+    fault.hit(FaultPoint::ReceiptDirectorySynced)
 }
 pub(crate) fn expected(
     db: &Connection,
@@ -108,24 +125,22 @@ pub(crate) fn expected(
 /// closure is authoritative. A receipt ahead of DB is an old-backup rollback and
 /// MUST stop. Restoring the entire device/receipt namespace needs W14's external
 /// recovery provenance; no local program can detect rollback of all its evidence.
-pub(crate) fn reconcile(
-    db: &Connection,
-    root: &Path,
-    objects: &Objects,
-    repair_tail: bool,
-) -> Result<()> {
+pub(crate) type Captured = BTreeMap<&'static str, BTreeMap<u64, ObjectRef>>;
+
+pub(crate) fn capture(root: &Path, objects: &Objects) -> Result<Captured> {
+    let mut captured = BTreeMap::new();
     for kind in ["d", "commits"] {
         let dir = path(root)?.join(kind);
         platform::no_links(&dir)?;
-        let expected = expected(db, objects, kind)?;
         let mut found = BTreeMap::new();
         for entry in fs::read_dir(&dir)? {
             let entry = entry?;
-            platform::no_links(&entry.path())?;
             let name = entry.file_name().to_string_lossy().into_owned();
+            // A writer may rename its temp concurrently. Never stat/read it.
             if name.ends_with(".tmp") {
                 continue;
             }
+            platform::no_links(&entry.path())?;
             let number = name
                 .strip_suffix(".ref")
                 .ok_or(Error::Rejected("unknown durability receipt format"))?;
@@ -137,15 +152,42 @@ pub(crate) fn reconcile(
             )?;
             let r = ObjectRef::from_canonical(&fs::read(entry.path())?, objects.config.encoding)?;
             require(
-                expected.get(&position) == Some(&r),
+                found.insert(position, r).is_none(),
+                "duplicate durability receipt position",
+            )?;
+        }
+        captured.insert(kind, found);
+    }
+    Ok(captured)
+}
+
+pub(crate) fn check(db: &Connection, objects: &Objects, captured: &Captured) -> Result<()> {
+    for (kind, found) in captured {
+        let expected = expected(db, objects, kind)?;
+        for (position, r) in found {
+            require(
+                expected.get(position) == Some(r),
                 "database predates acknowledged history; explicit tail recovery or lossy branch required",
             )?;
-            found.insert(position, r);
         }
-        if repair_tail {
-            for (position, r) in expected {
-                if !found.contains_key(&position) {
-                    record(root, kind, position, &r, objects)?;
+    }
+    Ok(())
+}
+
+pub(crate) fn reconcile(
+    db: &Connection,
+    root: &Path,
+    objects: &Objects,
+    repair_tail: bool,
+    fault: &Fault,
+) -> Result<()> {
+    let captured = capture(root, objects)?;
+    check(db, objects, &captured)?;
+    if repair_tail {
+        for kind in ["d", "commits"] {
+            for (position, r) in expected(db, objects, kind)? {
+                if !captured[kind].contains_key(&position) {
+                    record(root, kind, position, &r, objects, fault)?;
                 }
             }
         }

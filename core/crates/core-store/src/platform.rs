@@ -44,6 +44,42 @@ pub(crate) fn sync_dir(path: &Path) -> Result<()> {
     Ok(())
 }
 
+/// Publish a synced file in the same directory without replacing any target.
+/// Windows requests the documented write-through move in addition to subsequent
+/// file/directory flushes. No COPY_ALLOWED or REPLACE_EXISTING fallback is used.
+pub(crate) fn persist_noclobber(temp: tempfile::NamedTempFile, target: &Path) -> Result<()> {
+    require(
+        temp.path().parent() == target.parent(),
+        "object publication must stay in one directory",
+    )?;
+    #[cfg(windows)]
+    {
+        use std::os::windows::ffi::OsStrExt;
+        use windows_sys::Win32::Storage::FileSystem::{
+            FILE_ATTRIBUTE_NORMAL, MOVEFILE_WRITE_THROUGH, MoveFileExW, SetFileAttributesW,
+        };
+        let source = temp.into_temp_path();
+        let from: Vec<u16> = source.as_os_str().encode_wide().chain(Some(0)).collect();
+        let to: Vec<u16> = target.as_os_str().encode_wide().chain(Some(0)).collect();
+        // SAFETY: the live source buffer is NUL-terminated. tempfile creates
+        // FILE_ATTRIBUTE_TEMPORARY files; clear that caching hint before publish,
+        // matching tempfile's own persist/keep behavior. Failure is fatal.
+        if unsafe { SetFileAttributesW(from.as_ptr(), FILE_ATTRIBUTE_NORMAL) } == 0 {
+            return Err(std::io::Error::last_os_error().into());
+        }
+        // SAFETY: both path buffers are live and NUL-terminated for the entire
+        // call. Flags exclude replacement, cross-volume copy and delayed moves.
+        let ok = unsafe { MoveFileExW(from.as_ptr(), to.as_ptr(), MOVEFILE_WRITE_THROUGH) };
+        if ok == 0 {
+            return Err(std::io::Error::last_os_error().into());
+        }
+    }
+    #[cfg(not(windows))]
+    temp.persist_noclobber(target)
+        .map_err(|e| crate::Error::Io(e.error))?;
+    Ok(())
+}
+
 pub(crate) fn writer_lock(root: &Path) -> Result<File> {
     let lock = OpenOptions::new()
         .read(true)

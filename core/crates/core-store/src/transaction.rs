@@ -80,7 +80,7 @@ impl<L: LineageKind> Store<L> {
         let event = self
             .next_raw()?
             .ok_or(Error::Rejected("no durable input"))?;
-        let pinned = self.objects.prepare(&binding, "1", self.fault)?;
+        let pinned = self.objects.prepare(&binding, "1", &self.fault)?;
         Ok(ReadTicket {
             binding,
             pinned,
@@ -152,9 +152,9 @@ impl<L: LineageKind> Store<L> {
                 entry.event_id == ticket.event.id,
                 "ledger entry belongs to another event",
             )?;
-            ledger.push(self.objects.prepare(entry, "1", self.fault)?);
+            ledger.push(self.objects.prepare(entry, "1", &self.fault)?);
         }
-        let snapshot = self.objects.prepare(&value, "1", self.fault)?;
+        let snapshot = self.objects.prepare(&value, "1", &self.fault)?;
         Ok(PreparedTransaction {
             value,
             snapshot,
@@ -269,6 +269,7 @@ impl<L: LineageKind> Store<L> {
             processed,
             &staged.snapshot.reference,
             &self.objects,
+            &self.fault,
         )?;
         self.fault.hit(FaultPoint::AfterPublish)?;
         drop(guard);

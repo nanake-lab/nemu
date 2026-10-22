@@ -3,8 +3,8 @@ use super::*;
 #[test]
 fn i29_all_six_cross_lineage_opens_rejected() {
     let root = TemporaryRoot::new().unwrap();
-    let rehearsal = rehearsal(&root, "rehearsal");
-    let experiment = Store::<Experiment>::create_temporary(
+    let mut rehearsal = rehearsal(&root, "rehearsal");
+    let mut experiment = Store::<Experiment>::create_temporary(
         &root,
         "experiment",
         header::<Experiment>(),
@@ -27,9 +27,61 @@ fn i29_all_six_cross_lineage_opens_rejected() {
         )
         .unwrap(),
     ));
-    let life =
+    let mut life =
         Store::<Life>::create_from_genesis(&root, "life", life_header, &genesis, "life", config())
             .unwrap();
+    fn populate<L: LineageKind>(store: &mut Store<L>, label: &str) -> ObjectRef {
+        let cap = store.take_commit_capability().unwrap();
+        let (mut e, _payload) = unpersisted_event(store, 0);
+        e.id = format!("{label}-event");
+        e.stable_source_key = format!("{label}-source");
+        store.ingest(&e).unwrap();
+        let (ticket, value, _pins) = proposal(store, &e);
+        let staged = store.stage(ticket, value).unwrap();
+        store.commit(&cap, staged, normal()).unwrap();
+        let reader = store.reader().unwrap();
+        assert_eq!(reader.facts(10).unwrap(), vec![e.clone()]);
+        store.objects.reference(&e, "1").unwrap()
+    }
+    let r = populate(&mut rehearsal, "rehearsal");
+    let l = populate(&mut life, "life");
+    let e = populate(&mut experiment, "experiment");
+    for foreign in [&l, &e] {
+        assert!(
+            rehearsal
+                .reader()
+                .unwrap()
+                .read::<EventEnvelope>(foreign)
+                .is_err()
+        );
+    }
+    for foreign in [&r, &e] {
+        assert!(
+            life.reader()
+                .unwrap()
+                .read::<EventEnvelope>(foreign)
+                .is_err()
+        );
+    }
+    for foreign in [&r, &l] {
+        assert!(
+            experiment
+                .reader()
+                .unwrap()
+                .read::<EventEnvelope>(foreign)
+                .is_err()
+        );
+    }
+    assert_eq!(
+        life.reader()
+            .unwrap()
+            .facts(10)
+            .unwrap()
+            .iter()
+            .map(|e| e.id.as_str())
+            .collect::<Vec<_>>(),
+        vec!["life-event"]
+    );
     drop((rehearsal, experiment, life));
     for name in ["life", "experiment"] {
         assert!(Store::<Rehearsal>::open_temporary(&root, name, config()).is_err());

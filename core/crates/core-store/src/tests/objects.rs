@@ -255,3 +255,67 @@ fn object_capacity_and_io_failures_never_acknowledge_d() {
             .is_err()
     );
 }
+
+#[test]
+fn publication_primitive_never_replaces_existing_target() {
+    use std::io::Write;
+    let root = TemporaryRoot::new().unwrap();
+    let target = root.path().join("published");
+    let mut first = tempfile::NamedTempFile::new_in(root.path()).unwrap();
+    first.write_all(b"original").unwrap();
+    first.as_file().sync_all().unwrap();
+    crate::platform::persist_noclobber(first, &target).unwrap();
+    #[cfg(windows)]
+    {
+        use std::os::windows::fs::MetadataExt;
+        assert_eq!(
+            std::fs::metadata(&target).unwrap().file_attributes() & 0x100,
+            0,
+            "published file must not retain FILE_ATTRIBUTE_TEMPORARY"
+        );
+    }
+    let mut second = tempfile::NamedTempFile::new_in(root.path()).unwrap();
+    second.write_all(b"replacement").unwrap();
+    second.as_file().sync_all().unwrap();
+    assert!(crate::platform::persist_noclobber(second, &target).is_err());
+    assert_eq!(std::fs::read(&target).unwrap(), b"original");
+    crate::platform::sync_dir(root.path()).unwrap();
+}
+
+#[test]
+fn segmented_r_commit_retains_both_tendencies_through_reopen_and_gc() {
+    let root = TemporaryRoot::new().unwrap();
+    let mut store = rehearsal(&root, "segmented-commit");
+    let cap = store.take_commit_capability().unwrap();
+    let e = event(&mut store, 0);
+    let (ticket, mut value, _pins) = proposal(&store, &e);
+    let mut r = RSnapshotV2::from_canonical(
+        &store.objects.read(&value.staged_r).unwrap(),
+        config().encoding,
+    )
+    .unwrap();
+    let mut tendency: TendencyV2 = with_refs(&value.staged_q);
+    tendency.tendency_id = "a".into();
+    r.tendencies = vec![tendency.clone()];
+    tendency.tendency_id = "b".into();
+    r.tendencies.push(tendency);
+    let object = store.prepare_r(&r).unwrap();
+    value.staged_r = object.reference().clone();
+    let staged = store.stage(ticket, value).unwrap();
+    store.commit(&cap, staged, normal()).unwrap();
+    let reference = object.reference().clone();
+    drop(object);
+    drop(store);
+    let mut store =
+        Store::<Rehearsal>::open_temporary(&root, "segmented-commit", config()).unwrap();
+    store.collect_garbage().unwrap();
+    assert_eq!(
+        store
+            .reader()
+            .unwrap()
+            .read::<RSnapshotV2>(&reference)
+            .unwrap(),
+        r
+    );
+    store.verify().unwrap();
+}

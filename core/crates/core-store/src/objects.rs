@@ -75,7 +75,7 @@ impl Objects {
         &self,
         value: &T,
         version: &str,
-        fault: Fault,
+        fault: &Fault,
     ) -> Result<PreparedObject<L>> {
         require(
             !T::SUPERSEDED,
@@ -105,7 +105,7 @@ impl Objects {
     pub fn prepare_r<L: LineageKind>(
         &self,
         value: &RSnapshotV2,
-        fault: Fault,
+        fault: &Fault,
     ) -> Result<PreparedObject<L>> {
         let logical = value.canonical_bytes(self.config.encoding)?;
         let canonical = RSnapshotV2::from_canonical(&logical, self.config.encoding)?;
@@ -153,7 +153,7 @@ impl Objects {
             _lineage: PhantomData,
         })
     }
-    fn write(&self, r: &ObjectRef, disk: &[u8], fault: Fault) -> Result<()> {
+    fn write(&self, r: &ObjectRef, disk: &[u8], fault: &Fault) -> Result<()> {
         require(
             r.byte_length.0 <= self.config.max_object_bytes,
             "object capacity exhausted",
@@ -163,12 +163,16 @@ impl Objects {
             self.read(r)?;
             // A previous writer can have died after rename but before directory
             // sync. Reuse must establish durability again before any DB reference.
+            fault.hit_object(FaultPoint::ReuseFileSyncBefore, Some(&r.object_type))?;
             fs::OpenOptions::new()
                 .read(true)
                 .write(true)
                 .open(&path)?
                 .sync_all()?;
+            fault.hit_object(FaultPoint::ReuseFileSynced, Some(&r.object_type))?;
+            fault.hit_object(FaultPoint::ReuseDirectorySyncBefore, Some(&r.object_type))?;
             platform::sync_dir(&self.root)?;
+            fault.hit_object(FaultPoint::ReuseDirectorySynced, Some(&r.object_type))?;
             return Ok(());
         }
         let used = fs::read_dir(&self.root)?.try_fold(0u64, |n, entry| -> Result<u64> {
@@ -182,19 +186,18 @@ impl Objects {
         )?;
         let mut temp = tempfile::NamedTempFile::new_in(&self.root)?;
         temp.write_all(disk)?;
-        fault.hit(FaultPoint::ObjectWritten)?;
+        fault.hit_object(FaultPoint::ObjectWritten, Some(&r.object_type))?;
         // Check bytes read back before making their name visible.
         require(
             fs::read(temp.path())? == disk,
             "object write verification failed",
         )?;
         temp.as_file().sync_all()?;
-        fault.hit(FaultPoint::FileSynced)?;
-        temp.persist_noclobber(&path)
-            .map_err(|e| Error::Io(e.error))?;
-        fault.hit(FaultPoint::Renamed)?;
+        fault.hit_object(FaultPoint::FileSynced, Some(&r.object_type))?;
+        platform::persist_noclobber(temp, &path)?;
+        fault.hit_object(FaultPoint::Renamed, Some(&r.object_type))?;
         platform::sync_dir(&self.root)?;
-        fault.hit(FaultPoint::DirectorySynced)?;
+        fault.hit_object(FaultPoint::DirectorySynced, Some(&r.object_type))?;
         self.read(r)?;
         Ok(())
     }

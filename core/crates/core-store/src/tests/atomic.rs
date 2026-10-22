@@ -138,129 +138,6 @@ fn disk_full_rolls_back_ledger_and_all_state() {
 }
 
 #[test]
-fn crash_worker() {
-    let Ok(path) = std::env::var("NEMU_W02_CHILD_TEMP") else {
-        return;
-    };
-    // This private test entry receives only the parent's freshly owned temp root.
-    let mut store =
-        Store::<Rehearsal>::open(std::path::PathBuf::from(path), config(), true).unwrap();
-    let cap = store.take_commit_capability().unwrap();
-    let point = match std::env::var("NEMU_W02_CRASH").unwrap().as_str() {
-        "G" => FaultPoint::GStaged,
-        "C" => FaultPoint::CStaged,
-        "L" => FaultPoint::LedgerWritten,
-        "before" => FaultPoint::BeforePublish,
-        "sql" => FaultPoint::SqlCommitted,
-        "after" => FaultPoint::AfterPublish,
-        "write" => FaultPoint::ObjectWritten,
-        "file" => FaultPoint::FileSynced,
-        "rename" => FaultPoint::Renamed,
-        "directory" => FaultPoint::DirectorySynced,
-        _ => panic!("unknown fault"),
-    };
-    if matches!(
-        point,
-        FaultPoint::ObjectWritten
-            | FaultPoint::FileSynced
-            | FaultPoint::Renamed
-            | FaultPoint::DirectorySynced
-    ) {
-        store.set_fault(Fault::Crash(point));
-    }
-    let e = event(&mut store, 1);
-    let (ticket, value, _pins) = proposal(&store, &e);
-    store.set_fault(Fault::Crash(point));
-    let staged = store.stage(ticket, value).unwrap();
-    store.commit(&cap, staged, normal()).unwrap();
-    panic!("fault did not fire");
-}
-
-#[test]
-fn x03_real_process_exit_at_every_durability_boundary() {
-    for point in [
-        "G",
-        "C",
-        "L",
-        "before",
-        "sql",
-        "after",
-        "write",
-        "file",
-        "rename",
-        "directory",
-    ] {
-        let root = TemporaryRoot::new().unwrap();
-        let mut store = rehearsal(&root, "crash");
-        let cap = store.take_commit_capability().unwrap();
-        advance(&mut store, &cap, 0);
-        let old = store.current().unwrap();
-        let path = store.path().to_path_buf();
-        drop(store);
-        let child = std::process::Command::new(std::env::current_exe().unwrap())
-            .args(["--exact", "tests::atomic::crash_worker", "--nocapture"])
-            .env("NEMU_W02_CHILD_TEMP", &path)
-            .env("NEMU_W02_CRASH", point)
-            .output()
-            .unwrap();
-        assert_eq!(
-            child.status.code(),
-            Some(86),
-            "{point}: {} {}",
-            String::from_utf8_lossy(&child.stdout),
-            String::from_utf8_lossy(&child.stderr)
-        );
-        let mut recovered = Store::<Rehearsal>::open_temporary(&root, "crash", config()).unwrap();
-        if point == "after" || point == "sql" {
-            assert_eq!(
-                recovered.current().unwrap().unwrap().processed_position.0,
-                2
-            );
-        } else {
-            assert_eq!(recovered.current().unwrap(), old, "{point}");
-        }
-        recovered.verify().unwrap();
-        recovered.collect_garbage().unwrap();
-        recovered.verify().unwrap();
-        let count = if point == "after" || point == "sql" {
-            2
-        } else {
-            1
-        };
-        for table in ["facts", "ledger_index", "accepted_results"] {
-            assert_eq!(
-                recovered
-                    .db
-                    .query_row(&format!("SELECT count(*) FROM {table}"), [], |r| r
-                        .get::<_, i64>(0))
-                    .unwrap(),
-                count,
-                "{point}/{table}"
-            );
-        }
-        assert_eq!(
-            recovered
-                .db
-                .query_row(
-                    "SELECT count(*) FROM snapshot_objects WHERE role='concept'",
-                    [],
-                    |r| r.get::<_, i64>(0)
-                )
-                .unwrap(),
-            count
-        );
-        println!(
-            "X03 {point}: exit=86, recovered all-{}",
-            if point == "after" || point == "sql" {
-                "new"
-            } else {
-                "old"
-            }
-        );
-    }
-}
-
-#[test]
 fn all_binding_fields_are_immutable_after_dispatch() {
     let root = TemporaryRoot::new().unwrap();
     let mut store = rehearsal(&root, "all-fields");
@@ -343,7 +220,7 @@ fn f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge() {
 
 #[test]
 fn recovery_rejects_valid_but_mixed_head_and_missing_ledger() {
-    for damage in ["head", "ledger"] {
+    for damage in ["head", "ledger", "object"] {
         let root = TemporaryRoot::new().unwrap();
         let mut store = rehearsal(&root, "mixed");
         let cap = store.take_commit_capability().unwrap();
@@ -357,13 +234,27 @@ fn recovery_rejects_valid_but_mixed_head_and_missing_ledger() {
                     [first.snapshot.canonical_bytes(config().encoding).unwrap()],
                 )
                 .unwrap();
+        } else if damage == "object" {
+            std::fs::write(store.objects.path(&first.snapshot).unwrap(), b"damaged").unwrap();
         } else {
             // Deliberate valid-SQL corruption, stronger than an accidental partial
             // page: the verifier must compare against the immutable manifest.
             store.db.execute_batch("DROP TRIGGER immutable_ledger_index_DELETE; DELETE FROM ledger_index WHERE entry_id='entry-1';").unwrap();
         }
+        assert_eq!(
+            store
+                .db
+                .query_row("PRAGMA integrity_check", [], |r| r.get::<_, String>(0))
+                .unwrap(),
+            "ok"
+        );
         assert!(store.verify().is_err(), "{damage}");
+        assert!(store.reader().is_err(), "{damage}");
         drop(store);
+        assert!(
+            Reader::<Rehearsal>::open_temporary(&root, "mixed", config()).is_err(),
+            "{damage}"
+        );
         assert!(
             Store::<Rehearsal>::open_temporary(&root, "mixed", config()).is_err(),
             "{damage}"

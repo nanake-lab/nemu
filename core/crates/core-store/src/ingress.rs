@@ -20,7 +20,7 @@ impl<L: LineageKind> Store<L> {
             event.payload_digest == event.payload_ref.digest,
             "payload digest does not match object",
         )?;
-        let prepared = self.objects.prepare::<L, _>(event, "1", self.fault)?;
+        let prepared = self.objects.prepare::<L, _>(event, "1", &self.fault)?;
         let guard = self
             .objects
             .pins
@@ -61,8 +61,18 @@ impl<L: LineageKind> Store<L> {
             "INSERT INTO raw_ingress VALUES(?1,?2,?3)",
             params![integer(count)?, bytes, integer(bytes.len() as u64)?],
         )?;
+        self.fault.hit(FaultPoint::IngressBeforeSql)?;
         tx.commit()?;
-        crate::witness::record(&self.root, "d", count, &prepared.reference, &self.objects)?;
+        self.fault.hit(FaultPoint::IngressSqlCommitted)?;
+        crate::witness::record(
+            &self.root,
+            "d",
+            count,
+            &prepared.reference,
+            &self.objects,
+            &self.fault,
+        )?;
+        self.fault.hit(FaultPoint::IngressAcknowledged)?;
         drop(guard);
         tracing::debug!(position = count, "durable ingress committed");
         Ok(Receipt {
@@ -132,6 +142,7 @@ impl<L: LineageKind> Store<L> {
             processed,
             &self.objects.reference(&event, "1")?,
             &self.objects,
+            &self.fault,
         )?;
         self.fault.hit(FaultPoint::AfterPublish)?;
         Ok(Some(Receipt {

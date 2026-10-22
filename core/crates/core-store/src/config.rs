@@ -35,37 +35,3 @@ impl StoreConfig {
         )
     }
 }
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum FaultPoint {
-    ObjectWritten,
-    FileSynced,
-    Renamed,
-    DirectorySynced,
-    GStaged,
-    CStaged,
-    LedgerWritten,
-    BeforePublish,
-    SqlCommitted,
-    AfterPublish,
-}
-#[derive(Clone, Copy, Debug, Default)]
-pub enum Fault {
-    #[default]
-    None,
-    /// An actual process exit, deliberately bypassing Rust destructors.
-    Crash(FaultPoint),
-    /// Portable ENOSPC-like failure at an object durability boundary.
-    DiskFull(FaultPoint),
-}
-impl Fault {
-    pub(crate) fn hit(self, at: FaultPoint) -> Result<()> {
-        match self {
-            Self::Crash(p) if p == at => std::process::exit(86),
-            Self::DiskFull(p) if p == at => {
-                Err(std::io::Error::from(std::io::ErrorKind::StorageFull).into())
-            }
-            _ => Ok(()),
-        }
-    }
-}

@@ -7,8 +7,14 @@ non-cloneable `CommitCapability<L>` can be taken once per opening. Workers recei
 generated proposals and permitted read views, not `Store`, the capability, or its
 SQLite connection. Worker OS isolation remains the launcher/gateway's responsibility.
 
-All tests use newly owned `TemporaryRoot` directories. This type has no constructor
-from an existing path. Production APIs resolve only the designated local directories;
+The test coordinator creates every sandbox through `TemporaryRoot`, which has no
+public constructor from an existing path. Crash children receive a one-use permit
+via stdin: the coordinator creates a random permit file inside its owned root,
+containing the complete request. Before any lock or SQLite open, the child checks
+the direct system-temp location, root name, absence of links, exact permit contents,
+and consumes the permit. Arbitrary path environment variables are ignored. This
+protects against accidental test invocation; it is not an OS boundary against a
+malicious process with the same user's filesystem permissions. Production APIs resolve only the designated local directories;
 EXPERIMENT has no production path. Initialization refuses existing directories. LIFE
 creation requires the explicit genesis API and the matching generated manifest digest.
 P5-15 must validate the user's authorization, complete resources, and enabled runtime
@@ -18,9 +24,9 @@ stages before invoking birth. W02 does not execute birth in its tests.
 
 The database is `store.sqlite`, with WAL, FULL synchronization, foreign keys, an
 explicit busy timeout and page limit. Production requires a local fixed NTFS volume.
-Windows directory handles include write access and BACKUP_SEMANTICS so a failed
-directory flush is an error. Win32 volume queries are the sole localized unsafe
-boundary; the rest of the crate denies unsafe code. Linux supports temporary tests.
+Windows file publication and volume queries are confined to `platform.rs`, the
+only module allowing documented unsafe calls; the rest denies unsafe code. Linux
+supports temporary tests. Windows primitives and assumptions are detailed below.
 
 The table groups follow S §7, with R/θ/L represented by generated CanonicalV1
 objects, reference indexes and snapshot pointers. SQLite integer conversion is
@@ -91,10 +97,45 @@ independent recovery evidence is outside what local software can detect; externa
 backup provenance and recovery authorization belong to P5-15. No restore/import API
 is silently supplied here.
 
-Crash injection exits the process without destructors at file-write/sync/rename/
-directory-sync, G staging, C staging, ledger insertion, before SQLite commit, after
-SQLite commit/before receipt, and after complete publication. These are process-crash
-and disk-error tests; they do not claim a physical power-cut or drive-firmware test.
+Independent readers capture immutable receipts before pinning a SQLite read
+transaction. They verify the same object closure, canonical commit manifests, head,
+fact/snapshot/ledger indexes and receipt prefix as the writer, within that snapshot.
+SQL publication precedes each receipt: all captured receipts must therefore exist
+in the later SQL snapshot. Receipts appended afterwards are not compared against an
+older snapshot. The read transaction ends before returning the live reader; later
+queries observe append-only publications. A genuinely old backup still fails.
+
+Crash selection identifies an operation, an optional generated object tag and a
+1-based matching occurrence. The matrix separately covers D, transaction manifests,
+R's second tendency and index, existing-object re-sync, receipt publication and
+repeated crashes during tail repair. Initialization and GC have separate assertions:
+partial initialization fails closed; GC can only remove unreferenced orphans.
+Detailed cases and actual exit traces are recorded under `reports/P5-02/review-1/`.
+No finite injection matrix is described as covering every possible I/O or hardware
+failure. Process exits bypass destructors but do not simulate physical power loss.
+
+## Windows publication primitives and evidence boundary
+
+- File contents: `File::sync_all()` invokes `FlushFileBuffers`; the file is open
+  with write access, and a failure propagates. See [FlushFileBuffers](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-flushfilebuffers).
+- Name publication: clear `FILE_ATTRIBUTE_TEMPORARY`, then use same-directory
+  `MoveFileExW(MOVEFILE_WRITE_THROUGH)`. No `REPLACE_EXISTING`, `COPY_ALLOWED` or
+  delayed operation is permitted. Microsoft documents waiting for the move to
+  reach disk with write-through, and separately describes flushing copy/delete
+  moves. This implementation never takes the cross-volume copy/delete path.
+  See [MoveFileExW](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw).
+- Parent directory: obtain a read/write directory handle with
+  `FILE_FLAG_BACKUP_SEMANTICS`, then `FlushFileBuffers`. This flag permits a
+  directory handle; it does not itself prove persistence. See [CreateFileW](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew).
+- Publication ordering relies on the local NTFS move, the explicit write-through
+  request and successful file/directory flushes, not merely a POSIX-like helper
+  name. It assumes the OS/filesystem/device stack honors those operations. Calls
+  that fail stop publication; no weaker filesystem fallback is attempted.
+- Windows/NTFS tests establish successful calls, no-clobber behavior and recovery
+  after process exit. They do not independently establish all namespace persistence
+  premises across sudden power loss, controller write caches or faulty firmware.
+  No physical power-cut certification is claimed. SQLite WAL/FULL has the analogous
+  dependence on the storage stack honoring its sync requests.
 
 ## Checks
 

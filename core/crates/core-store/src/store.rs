@@ -41,6 +41,16 @@ impl<L: LineageKind> Store<L> {
         config: StoreConfig,
         temporary: bool,
     ) -> Result<Self> {
+        Self::create_with_fault(root, header, branch, config, temporary, Fault::None)
+    }
+    pub(crate) fn create_with_fault(
+        root: PathBuf,
+        header: LineageHeaderV2,
+        branch: &str,
+        config: StoreConfig,
+        temporary: bool,
+        fault: Fault,
+    ) -> Result<Self> {
         config.validate()?;
         require(header.lineage == L::KIND, "lineage type mismatch")?;
         let encoded = header.canonical_bytes(config.encoding)?;
@@ -56,11 +66,15 @@ impl<L: LineageKind> Store<L> {
         fs::create_dir_all(parent)?;
         platform::local_volume(parent, temporary)?;
         fs::create_dir(&root)?;
+        fault.hit(crate::FaultPoint::InitRootCreated)?;
         platform::sync_dir(parent)?;
+        fault.hit(crate::FaultPoint::InitRootSynced)?;
         let root = root.canonicalize()?;
         let writer = platform::writer_lock(&root)?;
         fs::create_dir(root.join("objects"))?;
+        fault.hit(crate::FaultPoint::InitObjectsCreated)?;
         platform::sync_dir(&root)?;
+        fault.hit(crate::FaultPoint::InitObjectsSynced)?;
         let mut db = Connection::open(root.join("store.sqlite"))?;
         schema::configure(&db, config, true)?;
         let tx = db.transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)?;
@@ -70,21 +84,31 @@ impl<L: LineageKind> Store<L> {
             params![root.to_string_lossy(), temporary, encoded, branch],
         )?;
         tx.commit()?;
+        fault.hit(crate::FaultPoint::InitSqlCommitted)?;
         platform::sync_dir(&root)?;
-        crate::witness::create(&root)?;
+        fault.hit(crate::FaultPoint::InitDbDirectorySynced)?;
+        crate::witness::create(&root, &fault)?;
         Ok(Self {
             objects: Objects::new(root.join("objects"), config),
             root,
             db,
             branch: branch.into(),
             header,
-            fault: Fault::None,
+            fault,
             capability_issued: false,
             _writer: writer,
             _lineage: PhantomData,
         })
     }
     pub(crate) fn open(root: PathBuf, config: StoreConfig, temporary: bool) -> Result<Self> {
+        Self::open_with_fault(root, config, temporary, Fault::None)
+    }
+    pub(crate) fn open_with_fault(
+        root: PathBuf,
+        config: StoreConfig,
+        temporary: bool,
+        fault: Fault,
+    ) -> Result<Self> {
         platform::no_links(&root)?;
         let root = root.canonicalize()?;
         platform::local_volume(&root, temporary)?;
@@ -102,13 +126,13 @@ impl<L: LineageKind> Store<L> {
             db,
             branch,
             header,
-            fault: Fault::None,
+            fault,
             capability_issued: false,
             _writer: writer,
             _lineage: PhantomData,
         };
         store.verify()?;
-        crate::witness::reconcile(&store.db, &store.root, &store.objects, true)?;
+        crate::witness::reconcile(&store.db, &store.root, &store.objects, true, &store.fault)?;
         Ok(store)
     }
     pub fn path(&self) -> &Path {
@@ -125,13 +149,13 @@ impl<L: LineageKind> Store<L> {
             T::NAME != core_types::generated::RSnapshotV2::NAME,
             "R snapshots must use prepare_r",
         )?;
-        self.objects.prepare(value, version, self.fault)
+        self.objects.prepare(value, version, &self.fault)
     }
     pub fn prepare_r(
         &self,
         value: &core_types::generated::RSnapshotV2,
     ) -> Result<PreparedObject<L>> {
-        self.objects.prepare_r(value, self.fault)
+        self.objects.prepare_r(value, &self.fault)
     }
     pub fn reader(&self) -> Result<Reader<L>> {
         let temporary: bool = self
@@ -146,25 +170,8 @@ impl<L: LineageKind> Store<L> {
         head(&self.db)
     }
     pub fn verify(&self) -> Result<()> {
-        require(
-            self.db
-                .query_row("PRAGMA integrity_check", [], |r| r.get::<_, String>(0))?
-                == "ok",
-            "database integrity failure",
-        )?;
-        require(
-            self.db
-                .prepare("PRAGMA foreign_key_check")?
-                .query([])?
-                .next()?
-                .is_none(),
-            "foreign key closure failure",
-        )?;
-        for r in references(&self.db, self.objects.config)? {
-            self.objects.closure(&r)?;
-        }
-        crate::recovery::verify(self)?;
-        crate::witness::reconcile(&self.db, &self.root, &self.objects, false)
+        crate::recovery::verify(&self.db, &self.objects, &self.header, &self.branch)?;
+        crate::witness::reconcile(&self.db, &self.root, &self.objects, false, &Fault::None)
     }
     /// Pins retained by PreparedObject protect the prepare-to-publish window.
     /// Published history and durable D objects are never garbage collected.
@@ -192,9 +199,12 @@ impl<L: LineageKind> Store<L> {
             if digest.is_none_or(|d| !retained.contains(d) && !pins.contains_key(d)) {
                 fs::remove_file(path)?;
                 removed += 1;
+                self.fault.hit(crate::FaultPoint::GcDeleted)?;
             }
         }
+        self.fault.hit(crate::FaultPoint::GcDirectorySyncBefore)?;
         platform::sync_dir(&self.objects.root)?;
+        self.fault.hit(crate::FaultPoint::GcDirectorySynced)?;
         Ok(removed)
     }
 }
