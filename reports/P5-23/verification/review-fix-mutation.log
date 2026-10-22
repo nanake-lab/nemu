@@ -1,6 +1,6 @@
-== mutation: restore the pre-review rule U = 0 => M = 0 in check_pending
-thread 'law::tests::cases::subnormal_edge_u_zero_with_m_nonzero_is_carried_and_recovers' (3715) panicked at crates/core-kernel/src/law/tests/engine.rs:66:57:
+== mutation: restore the pre-review rule U = 0 => M = 0 in check_with_allocations
+thread 'law::tests::cases::subnormal_edge_u_zero_with_m_nonzero_is_carried_and_recovers' (2709) panicked at crates/core-kernel/src/law/tests/engine.rs:74:82:
 called `Result::unwrap()` on an `Err` value: InconsistentState("rec-1: magnitude sum without magnitude weight")
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 63 filtered out; finished in 0.25s
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 63 filtered out; finished in 0.07s
 == restored
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 63 filtered out; finished in 0.00s

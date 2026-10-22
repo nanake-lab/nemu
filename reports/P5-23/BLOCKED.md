@@ -48,3 +48,13 @@ P5-21 的 IDL 按最小字段集存 R（V2-34）。实现 G 时发现两类状�
   - P5-32 合并之前，本卡保持草稿。
 - **已完成：** `law/pending.rs`（临时结构）、`law/replay.rs`（r_k 的递推与重放）、`law/plan.rs` 与 `law/group.rs`（证据组阶段、回溯分摊、后来的成员、补做解释）、`law/fuse.rs` `capacity`（移出后的重新分摊）。上文「解除阻塞之后要做的」三项都已实现并测试（`reports/P5-23/REPORT.md`）。
 - **剩下的：** 等 P5-32 合并后换成生成的类型。在那之前本卡保持草稿。
+
+## 2026-10-22 解除（追加）
+
+- **状态：** 已解除。P5-32（#52）审查通过，由用户合并。
+- **本卡的处理：**
+  - 合并最新 main；
+  - `law/` 换成 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2，删去 `law/pending.rs`；
+  - G、`Output`、`RState` 从 `law` 导出；
+  - G 读入 R 时另做 core-types 的 `check_allocation_ordinals`；
+  - 重跑全部测试，结果见 `REPORT.md`。

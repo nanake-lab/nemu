@@ -2,7 +2,7 @@
 
 ## 结果
 
-部分完成（见 BLOCKED.md）。G 的全部阶段都已实现并测试，卡片列出的验收都通过：
+完成。G 的全部阶段都已实现并测试，卡片列出的验收都通过：
 
 - 单倾向的递推与典型幅度 r_k；
 - 支持、强度、份额；
@@ -13,15 +13,14 @@
 
 LAW-1 至 LAW-10 的移植 0 违例，状态数与 `results.txt` 逐项一致。
 
-只剩一步：契约卡 P5-32（ADR 0016，PR #52）合并之后，把 `law/pending.rs` 的临时结构换成生成的类型。按你 2026-10-22 的决定，在那之前本卡保持草稿。
+R 只用 IDL 生成的类型：契约卡 P5-32（ADR 0016，#52）合并后，本卡已换成 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2，临时结构 `law/pending.rs` 已删去，G 从 `law` 导出（BLOCKED.md 已解除）。
 
 ## 交付物
 
 - `core/crates/core-kernel/src/law/`（新）；`core-kernel/src/lib.rs` 只追加一行 `pub mod law;`：
-  - `engine.rs`：G 的入口 `g(RState, &ThetaView, &Step, &LawContext)`，阶段按 D2：建立候选并做别名归并，建立第一次涉及的人的关系倾向，按 H 次序处理证据组，执行容量保险丝，生成 L 条目；
+  - `engine.rs`：G 的入口 `g(RState, &ThetaView, &Step, &LawContext) -> Output`（从 `law` 导出），阶段按 D2：建立候选并做别名归并，建立第一次涉及的人的关系倾向，按 H 次序处理证据组，执行容量保险丝，生成 L 条目；
   - `plan.rs`、`group.rs`：一组证据（D3）。先算经历组或教导组对每个倾向的 S、强度、μ、p_c，再分份额；新分配按 D4 记入，已有分配的值变了就原地更新，并重放该倾向；
   - `replay.rs`：r_k 的递推（M、U），从初值按序号重放一个倾向（D5），存储一致性检查；
-  - `pending.rs`：P5-32 合并之前的临时结构（D12）。字段与 P5-32 的后继消息一一对应，只在 `law/` 内部使用，不序列化、不持久化、不跨进程。文件里注明「P5-32 合并后换成 IDL 生成的类型」；
   - `recurrence.rs`：单倾向的计数递推（D4）、初值、s_k 与 R⁺；
   - `support.rs`：支持 S、强度、权重 W，以及教导组；
   - `shares.rs`：两边各按 (1 + π)/2 分配的份额；
@@ -29,7 +28,7 @@ LAW-1 至 LAW-10 的移植 0 违例，状态数与 `results.txt` 逐项一致。
   - `fuse.rs`：容量的移出选择与移出后的重新分摊、单组上限；
   - `num.rs`：精确的组内均值、固定次序的内积、有限性检查；
   - `params.rs`：规律参数的校验；
-  - `input.rs`：进程内的输入；`ThetaView` 只有 b 与 σ̂；
+  - `input.rs`：进程内的输入；`RState` 是生成的 `RSnapshotV2` 与 `EvidenceGroupV2` 列表（D12）；`ThetaView` 只有 b 与 σ̂；
   - `error.rs`：显式故障；
   - `tests/`：
     - `world.rs`：带种子的合成世界，按事件生成候选、经历组、后来的成员、EV5 回溯、教导及其重复；
@@ -41,18 +40,18 @@ LAW-1 至 LAW-10 的移植 0 违例，状态数与 `results.txt` 逐项一致。
     - `mean_vectors.rs`：用 Python `Fraction` 生成的 283 组均值参照。
 - `docs/traceability/P5-23.md`（新）：规范定义 D1–D12、规格对照表、验收编号。
 - `docs/traceability/diff-register.md`：追加 V2-38 至 V2-49。
-- `tasks/requests/P5-23-law-state-idl.md`（新）：契约接口请求，已由 P5-32 落实。
+- `tasks/requests/P5-23-law-state-idl.md`（新）：契约接口请求，已由 P5-32 落实并合并。
 - `reports/P5-23/`：本报告、`BLOCKED.md`、`gen_mean_vectors.py`、`verification/`。
 
 ## 验收
 
-本地工具链：rustc / cargo 1.97.0 stable。`rust-toolchain.toml` 锁定的 1.99.0 下载被代理拒绝，按 AGENTS.md 第 10 节用 `RUSTUP_TOOLCHAIN=stable`；以 CI 按锁定版本运行的结果为准，本分支此前的提交在 CI 上通过。均值参照的生成用系统 Python 3.13.16，脚本的 ruff、mypy --strict 用 `core/contracts` 的 uv 环境。
+本地工具链：rustc / cargo 1.97.0 stable。`rust-toolchain.toml` 锁定的 1.99.0 下载被代理拒绝，按 AGENTS.md 第 10 节用 `RUSTUP_TOOLCHAIN=stable`；以 CI 按锁定版本运行的结果为准。下表是合并最新 main（含 P5-32）、换成生成的类型之后的结果。均值参照的生成用系统 Python 3.13.16，脚本的 ruff、mypy --strict 用 `core/contracts` 的 uv 环境。
 
 | 命令或检查（含 Echo Core 验收编号） | 结果 | 证据 |
 | --- | --- | --- |
 | `cargo fmt --all -- --check` | 通过 | verification/rust-fmt.log |
 | `cargo clippy --workspace --all-targets -- -D warnings` | 通过 | verification/rust-clippy.log |
-| `cargo test --workspace --locked` | 通过，92 个测试，0 失败 | verification/rust-test.log |
+| `cargo test --workspace --locked` | 通过，99 个测试，0 失败（其中 law 47 个） | verification/rust-test.log、verification/law-tests.log |
 | AC2-01（LP1，按 V2-49 的两种意义） | 通过：4,000 组，ρ = 1 时 0 违例，相对同样衰减 0 违例 | verification/law-tests.log |
 | AC2-02、I25（每一边份额之和为 1） | 通过：分配函数 20,000 组；经 G，40 个随机世界各 120 个事件（5,702 个组、7,498 个分配），每一步之后每个组每一边之和为 1，包括回溯分摊、后来的成员、容量移出 | 同上 |
 | AC2-03 重复部分 | 通过：组内成员整体重复 2–9 次，(S, 强度) 逐位不变；1,760 个已有的组在别的 b、σ̂ 下原样再来一次，R 逐位不变；教导的重复不刷新 | 同上 |
@@ -65,8 +64,8 @@ LAW-1 至 LAW-10 的移植 0 违例，状态数与 `results.txt` 逐项一致。
 | I10 签名检查 | 通过：函数指针类型固定了 G 的参数；源码不出现 x、m、g、λ 的类型与字段；`ThetaView` 恰好两个字段。人为加入 `gain` 字段时测试失败 | 同上 |
 | 推论 1–7：LAW-1 至 LAW-10 | 0 违例，见下表 | 同上 |
 | ADR 0016 第 4 节：重放恒等 | 通过：随机世界每一步之后，每个倾向按存下的值重放都与存下的倾向逐位相同 | 同上 |
-| 测试能抓到错 | 把 group.rs 或 fuse.rs 里的重放去掉，9 个、7 个测试失败；教导组错误地进入 r_k 时，1 个测试失败 | verification/mutations.log |
-| 临时结构只在 `law/` 内部 | 通过：`law/mod.rs` 不导出 pending、engine、replay、group、plan；`pending.rs` 不含序列化 | `pending_structures_stay_inside_law_until_p5_32` |
+| 测试能抓到错 | 把 group.rs 或 fuse.rs 里的重放去掉，9 个、7 个测试失败；教导组错误地进入 r_k 时，2 个测试失败；恢复审查前的「U = 0 ⇒ M = 0」时，1 个测试失败 | verification/mutations.log、verification/review-fix-mutation.log |
+| 黄金规则 2：R 只用生成的类型 | 通过：`law/` 不定义 Tendency、EvidenceGroup、EvidenceAllocation、RSnapshot、TendencyChange 一类的结构，不含序列化；G 的签名与 `RState` 固定为生成的 `RSnapshotV2`、`EvidenceGroupV2`；G 读入 R 时做 core-types 的 `check_tendency_v2`、`check_allocation_ordinals` | `law_defines_no_stored_or_cross_process_type`、`stored_state_is_checked_before_use` |
 | 规格对照表 | `docs/traceability/P5-23.md` 第 2 节 | — |
 
 LAW 的移植与参考核验对照。种子、规模与 `check_law.py` 相同，用 CPython 的生成器抽样；被测的是本卡的递推：
@@ -107,12 +106,12 @@ LAW 的移植与参考核验对照。种子、规模与 `check_law.py` 相同，
 - I23 的前提：
   - 递推是规范定义（`law_7`）；
   - 组内均值与次序无关（D9）；
-  - 存下的 ĥ、π、r_k 必须与公式逐位一致（`check_stored`、`check_pending`）；
+  - 存下的 ĥ、π、r_k 必须与公式逐位一致（`check_stored`、`check_with_allocations`）；
   - 重放恒等，同一步的输入换次序结果不变。
 
   整段重算的验收在 P5-26。
 
-IDL：本卡没有改动。需要的五个字段由 P5-32（PR #52）提出。
+IDL：本卡没有改动。需要的五个字段由 P5-32（#52）补上，已合并；本卡只使用生成的类型。
 
 ## 新增依赖
 
@@ -122,7 +121,7 @@ IDL：本卡没有改动。需要的五个字段由 P5-32（PR #52）提出。
 
 - [ ] （阻塞）V2-38 至 V2-47：规范定义里 v2.0 没有写到的地方（组的位置与一步之内的次序、后来的成员、份额取 π 的时刻、补做解释的计入位置、关于人的倾向的写法、容量、数值写法、教导组、别名、L 条目）。卡片把这几处定为「不阻塞」，但按 AGENTS.md 第 6 节，新增「重建」条目要你批准后合并。
 - [ ] （阻塞）V2-49：AC2-01、AC2-07 在有新近权重时的读法。参考形式下，强的旧支持之后来一组弱的支持，π 可以下降。
-- [ ] （阻塞）V2-48：由 P5-32 解决。P5-32 合并后本卡换成生成的类型，然后转为可审查。
+- [x] V2-48：P5-32（#52）已合并，本卡已换成生成的类型。
 - [ ] （不阻塞）信任的预言方向取好奇与成事各半（V2-42），由 P5-30 的实验 3、4 检验。
 - [ ] （不阻塞）A_att = 60、n₀ = 3、κ₁ = 1 时，连续约 30 组冷遇就能让依恋降到 ½ 以下。「极难动摇」要多难，由 P5-30 校准 A_att。
 
@@ -135,14 +134,9 @@ IDL：本卡没有改动。需要的五个字段由 P5-32（PR #52）提出。
 
 ## 下一步
 
-等待 P5-32（#52）的 Codex 交叉审查与你的合并。之后本卡依次：
+本卡已转为可审查，请 Codex 交叉审查。审查通过、你批准 V2-38 至 V2-47 与 V2-49 之后，由你合并。
 
-1. 合并最新 main；
-2. 换成 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2，删去 `pending.rs`；
-3. 重跑全部测试；
-4. 转为可审查，请 Codex 交叉审查。
-
-接下来取的卡：无，本卡未完成。
+接下来取的卡：无。按卡片要求不自行取下一张。
 
 ## 2026-10-22 跟随 P5-32 审查的修正（追加）
 
@@ -153,3 +147,19 @@ Codex 对 P5-32（#52）的交叉审查用本卡的 G 复现了一个数值边�
 - **同类问题：** 我顺着检查了同类的舍入边界。n₀ + κ 相对 B 小到 binary64 分辨不出时（例如 n₀ = 10⁻³⁰⁰），记入一组可以得到 |A| = B、π = 1，落到 v2.0 第 1 节要求的开区间之外，原先要到下一步才被拒绝。现在在产生它的那一步返回显式故障 `PrecisionExhausted`，不存下；初值同样检查（D9、V2-44）。实际参数（n₀ 量级为 1）下 B 要大到约 10¹⁶ 才会发生，所以这只是防护。测试：`precision_exhaustion_is_an_explicit_fault_at_the_step`。
 
 合并最新 main（#50、#54、#55）后重跑：cargo fmt、clippy、test（94 个），law 测试 47 个，全部通过。日志已更新。
+
+## 2026-10-22 换成生成的类型（追加）
+
+P5-32（#52）审查通过并由你合并后，按你 2026-10-22 的条件处理：
+
+- 合并最新 main（含 P5-32）。
+- `law/` 换成 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2，删去 `law/pending.rs`。
+- G、`Output`、`RState` 从 `law` 导出，供 P5-29 接入。
+- G 读入 R 时，先做 core-types 的 `check_allocation_ordinals`（P5-32 的语义检查），再做本卡的逐位一致检查（`check_pending` 改名为 `check_with_allocations`）。
+- `recurrence::record`（不带投影的一组，LAW 移植测试用）改为同时让 M、U 乘 ρ。原先它只更新 A、B；换成 TendencyV2 之后，这会留下与规律不符的 M、U。
+
+测试：
+
+- 原先检查临时结构的测试，换成 `law_defines_no_stored_or_cross_process_type`。
+- 其余测试只改类型名，数值结果与换之前逐项相同：5,702 个组、7,498 个分配、1,760 次重复，LAW-1 至 LAW-10 的计数不变。
+- 重跑了 fmt、clippy、全部测试（99 个）和变异检查。教导组错误地进入 r_k 时，现在有 2 个测试失败：多出的一个是审查后加的次正规数边界测试。

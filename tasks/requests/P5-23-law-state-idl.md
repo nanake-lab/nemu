@@ -43,3 +43,7 @@ P5-23 实现规律引擎 G。v2.0 第 5.2 节和本卡的规范定义（`docs/tr
 ## 本卡的处理
 
 在契约合并之前，本卡实现不依赖这两类状态的部分（单倾向的计数递推、支持与强度、份额、关系倾向的结构、保险丝的选择规则）和 LAW-1 至 LAW-10 的性质测试；被挡住的部分记在 `reports/P5-23/BLOCKED.md`。
+
+## 结果（2026-10-22 追加）
+
+用户同意方案（a）。五个字段由契约卡 P5-32（ADR 0016、V2-50，PR #52）以后继消息 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2 补上，已合并。P5-23 已换成这些生成的类型，删去了临时结构（`docs/traceability/P5-23.md` D12）。
