@@ -1,12 +1,14 @@
 # P4-02 TTS 旁路服务（三种语言）— 报告
 
-## 结果
+## 当前状态
 
-当前优化候选及开发短测已交付，正式重测尚未执行；候选结果与剩余显存边界见文末。PR 仍为草稿及 needs-user。
+部分完成；PR #45 保持 draft / needs-user，不转审、不合并、不取下一卡。已合入 P4-01 #44 / P5-22 #57，并再次同步 main 541be9e（合并 b9128c3）；后一次仅文档、任务和报告变化，已核对生产源码、锁文件、P4-02 卡和必读规则完全相同。ASR/TTS 模型登记、依赖和导出均保留，pnpm 锁已按安装命令重新生成。
 
-部分完成，真实验收未通过。2026-10-21 用户授权 GPU 安静窗口后，已解决 SoX 导入调用，生成纯合成三语参考，分别以新进程串行完成 0.6B 和 1.7B 的三语各 20 句、真实链路取消和至少 30 分钟压力测试。两者首包 p50 均超过 250 ms，1.7B 合计显存超过 8 GB；RSS 仍有上升趋势，不能签发稳定性通过。详见 [BLOCKED.md](BLOCKED.md)。
+主要的每请求原生内存增长已通过持久解码线程降至同步对照附近，另修复 RSS 采样器的 ctypes 类型缓存泄漏（1,000 次采样保留约 7.7 MB→2.4 KB）。真实 512 帧合成的最近 4 分钟仍增 12.191 MiB；新 sampler 下尚未重测。此前正式首包原方案失败、优化后长测显存超线/压力异常退出和原生栈溢出均保留，不能签发正式验收通过。详见 [BLOCKED.md](BLOCKED.md)。
 
-PR [#45](https://github.com/nanake-lab/nemu/pull/45) 保持草稿及 needs-user，不转可审查、不合并、不取下一张卡。已 fetch 并 merge 最新 origin/main，合并提交为 9c986a6；必读规则与 P4-02 卡未变化。下列静态/功能检查在该合并后重跑，GPU 数据来自合并前同一 P4-02 运行实现；main 没有改动这部分实现。
+已按用户批准撤销此前迁移写入的用户级 CARGO_TARGET_DIR：2026-10-23 15:53 UTC 核验 HKCU\\Environment 中该值不存在；新测试仅在进程内指定独立 D 盘 target，旧缓存不删除。既有进程仍持有旧环境；本次撤销未终止既有进程或操作 runner。当前 Runner.Listener PID 30344 实际启动于本机 22:49:41；其作业日志确认使用了旧 P4-02 target，判断已继承，应在当前任务结束后由用户从刷新环境的终端重启 runner。若沿用旧终端，启动前需先在该终端清除进程级 CARGO_TARGET_DIR。撤销原件与核验见 cargo-user-revert-20261023.json、cargo-user-revert-verify-20261023.json；其他持久设置审计见文末。
+
+代码提交 4da6152 的 Ubuntu CI 已通过。本机 Node 546 项、契约 353 项、四项目 Python 检查、Rust workspace 85 项、三语言各 10,766 契约用例、.NET、桌面 e2e（4 过/1 明确跳过）、18 场景视觉回归已通过。隔离 smoke 初次因 D 临时目录缺 WRITE_OWNER 失败，用户批准专用测试 TEMP 后的重跑在等待其他负载结束；串行 core-store 31 项通过，但随后 rustdoc E0463 失败，疑似共享 target 干扰，原失败保留，待独立 target 验证。产品 Low IL launcher 仍为范围外占位，TEMP 隔离失败前置诊断未实现；按用户要求只报告，未改产品代码。
 
 ## 交付物
 
@@ -328,3 +330,50 @@ PR #45 保持 draft + needs-user，不请求审查、不合并。主要线程相
 修复后 Ruff、Windows/Linux 严格 mypy、pytest（50 passed / 1 GPU opt-in skip）通过；额外脚本的首条 mypy 命令误解析到已安装未标注类型的 wheel，原失败日志保留，随后将 src 纳入同次严格检查后通过（16 source files）。见 rss-sampler-checks-20261023.log、rss-sampler-scripts-mypy-20261023.log。合并后的 Node lint/typecheck、546 项测试、构建、353 项契约覆盖测试、transport、TTS schema 与 budget 已通过。完整 Rust/.NET/IDL/Windows 检查仍在执行，完成后补记；不将正在运行的检查写成通过。
 
 三个 worker 的旧 D 盘 .venv 原件已移存 D:\Dev\cache\p4-02\legacy-*-venv，入口 junction 指向已验证的 D 盘 Python 环境；core/target junction 指向本卡独立的 D 盘编译缓存，适配现有 conformance 脚本的路径。没有删除原始测量数据。PR #45 保持草稿与 needs-user；GPU 显存、正式压力、原栈溢出和真实合成残余 RSS 的既有阻塞均继续保留。
+
+### 用户批准的测试 TEMP 权限处理与产品边界
+
+用户仅批准本卡测试使用 D:\Dev\cache\p4-02\isolation-temp，并给当前用户 `(OI)(CI)F`；没有修改产品临时目录逻辑、测试、断言、D:\Dev\cache\tmp 或其他已有目录 ACL。原隔离失败日志保留。旧目录 icacls 原样结果为：
+
+```text
+D:\Dev\cache\tmp BUILTIN\Administrators:(I)(F)
+                 BUILTIN\Administrators:(I)(OI)(CI)(IO)(F)
+                 NT AUTHORITY\SYSTEM:(I)(F)
+                 NT AUTHORITY\SYSTEM:(I)(OI)(CI)(IO)(F)
+                 NT AUTHORITY\Authenticated Users:(I)(M)
+                 NT AUTHORITY\Authenticated Users:(I)(OI)(CI)(IO)(M)
+                 BUILTIN\Users:(I)(RX)
+                 BUILTIN\Users:(I)(OI)(CI)(IO)(GR,GE)
+```
+
+当前进程是 Medium IL，旧目录归当前用户所有，但继承给该用户生效的是 Modify，而非 FullControl。用 `CreateFileW(OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS)` 只请求访问、不改权限的核对：旧 D 临时目录请求 WRITE_OWNER（0x80000）返回 WinError 5，而 WRITE_DAC（0x40000）和写数据成功；默认 `%LOCALAPPDATA%\Temp` 与新专用目录这三项均成功。设置 mandatory integrity label 的所需访问权是 WRITE_OWNER，见 [Microsoft SECURITY_INFORMATION](https://learn.microsoft.com/en-us/windows/win32/secauthz/security-information)。因此失败源于继承的 DACL 缺少有效 WRITE_OWNER，不是令牌已经降为 Low；“目录由当前用户所有”也不等于拥有所有访问权。
+
+默认 TEMP 与新目录的关键条件一致：当前用户所有、当前用户 FullControl、子目录继承该授权；两者完整 ACL 并非逐字相同，新目录仍保留 D 盘父目录的其他继承条目，未给其他主体新增授权。Low IL 写拒绝是否成立由原隔离测试验证，不以权限推断代替测试。详细 Owner、SDDL、icacls 与访问位结果见 temp-acl-diagnosis-20261023.log 和 temp-access-diagnosis-20261023.json；专用 TEMP 的原测试重跑结果随后补记。
+
+**产品源码核对发现：** apps/desktop/src/supervisor/process-config.ts 的 voice-sidecar 是 isWorker=false，supervised-process.ts 使用普通 spawn；services/voice-sidecar/src/main.py 没有 TEMP/Medium IL 前置检查或对应诊断错误。它没有“低完整性启动失败后再回退普通进程”的分支，但当前也没有实现用户要求的 TEMP 隔离失败可诊断保障。另有范围外的现有 worker launcher 占位：low-integrity-launcher.ts 仅设置 NEMU_INTEGRITY_LEVEL=low/NEMU_SANDBOX_WORKER=1，随后普通 spawn，未设置 Windows 令牌、未验证隔离生效或为占位状态发出启动错误。独立 .NET isolation smoke 通过不能证明该产品启动器已实现隔离。按用户要求先报告，未修改这几处代码；未做产品坏 TEMP 故障注入，以上为源码核查结果，实际 Low IL 启动器仍由 P5-05 补齐。
+
+**Windows runner 核对：** main b6eb872 的 Windows run 39973225631 已 SUCCESS；同一原隔离步骤于 2026-10-23 14:54 UTC 通过，日志显示使用默认 C:\Users\nanake\AppData\Local\Temp，输出为令牌降到 Low、Medium 目录写被拒、降权前正对照通过。摘录见 runner-isolation-39973225631.log。本次只改新建 D 专用目录，未改默认 TEMP 的 ACL、持久环境变量或 runner 配置，因此此权限修复不改变 runner 的既有条件。PR #45 本次 Windows job 仍因 draft 被 SKIPPED，不把 main 的通过记作本 PR 的 CI 通过。
+
+## 本卡持久设置审计（2026-10-23）
+
+依据本卡自己的会话执行记录逐条筛查 694 条已完成 CommandExecution，并逐项读取当前 User/Machine 值。2026-10-23 03:10 UTC 迁移命令向 User 写入下表 9 项；该整段命令 exit=1，故不以整段退出码推断变量未生效，而用当前值核验。执行记录审计及当前值见 persistent-settings-audit-20261023.json、persistent-settings-current-20261023.json。
+
+| 设置（全部为 User scope） | 迁移时写入值 | 当前处置 / 是否需撤销 |
+| --- | --- | --- |
+| UV_CACHE_DIR | D:\Dev\cache\uv | 保留，通用 uv 包缓存迁 D |
+| UV_PYTHON_INSTALL_DIR | D:\Dev\cache\uv-python | 保留，通用 Python 解释器安装目录迁 D |
+| npm_config_cache | D:\Dev\cache\npm | 保留，通用 npm 缓存迁 D |
+| PNPM_STORE_DIR | D:\Dev\cache\pnpm | 保留，通用 pnpm store 迁 D |
+| HF_HOME | D:\Dev\cache\huggingface | 保留，模型缓存迁 D |
+| TORCH_HOME | D:\Dev\cache\torch | 保留，通用 Torch 缓存迁 D |
+| TORCHINDUCTOR_CACHE_DIR | D:\Dev\cache\torchinductor | 保留，通用编译缓存迁 D |
+| TRITON_CACHE_DIR | D:\Dev\cache\triton | 保留，通用编译缓存迁 D |
+| CARGO_TARGET_DIR | D:\Dev\cache\p4-02\cargo-target | 已按批准撤销；任务专用编译 target 不应写为用户级设置，后续仅在本卡测试进程内指定独立 D 目录 |
+
+其他用户级/系统级设置、PATH 持久写入、Git 全局/系统配置、执行策略、上述环境项之外的注册表写入：**无（本卡已完成命令记录中未发现）**。上述 User 环境变量本身存于 HKCU\Environment，已计入审计，不把它们误称为“无注册表修改”。核对 9 项 Machine scope 均为空。第一次 SetEnvironmentVariable(null, User) 留下了空值；之后仅删除获准的 HKCU\Environment\CARGO_TARGET_DIR，15:53 UTC 确认值名不存在、User 值为 null。两步原始 JSON 都保留。
+
+本卡此前把专用 Cargo target 写到 User 的做法不合适，会使其他会话和 runner 继承本卡路径；已经撤销。此处纠正前文“本卡独立编译缓存”的描述：目录当时并非对其他会话隔离。串行 core-store 的 31 项在 1057.92 秒完成通过，但末尾 rustdoc 报 E0463；期间另一 Windows CI 和另一个 Cargo 会话使用该目标目录，存在缓存干扰嫌疑，尚不把它断言为唯一根因。原失败不得改写为通过。后续使用仅进程级的独立 target 验证失败部分，不删除旧缓存，不中止任何正在跑的进程。
+
+**runner 继承判断与用户重启：** 当前 Listener PID 30344 实际启动时间是本机 2026-10-23 22:49:41（不是按记忆中的 17:01 推断）；晚于上述 11:10 本机时间的 User 设置。该 Listener 的 main Windows job 于 22:55 输出的 core-store 可执行文件确在 D:\Dev\cache\p4-02\cargo-target 下，工作流没有 --target-dir 参数，未发现本机 Cargo config target-dir 覆盖。可以确认作业使用了本卡路径，并据此判断 Listener 已继承它；未直接读取进程环境块。撤销 User 值不更新已运行 Listener 或旧终端的环境。应在当前任务结束后由用户从刷新环境的终端重启 runner；若复用旧终端，启动前先在该终端 `Remove-Item Env:CARGO_TARGET_DIR -ErrorAction SilentlyContinue`。本代理没有停止、重启或修改 runner。temp-environment-20261023.json 另核对 User TEMP/TMP 仍为原 C 盘默认路径，本卡仅在测试子进程中覆盖为 D。
+
+补充筛查至 700 条完成记录：电源计划、GPU 锁频/功率设置、防火墙/网络、执行策略、git-lfs 全局安装、包管理器持久 config 与直接 Registry API 写入，未发现额外实际变更；唯一候选是审计脚本自身的正则字面量，已人工排除。详见 persistent-settings-supplement-20261023.json。本轮文件系统权限变更仅为用户已批准的新专用 TEMP 当前用户 FullControl，另见上节；未更改已有目录 ACL。
