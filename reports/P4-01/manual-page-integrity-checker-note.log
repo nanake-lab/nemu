@@ -1,0 +1,1 @@
+First final-page checker attempt: AssertionError before media validation. The checker hashed read_text().encode(), which normalizes Windows CRLF to LF. Correct raw-byte SHA-256 matches the build manifest; all 26 media checks then pass. Artifact was unchanged.
