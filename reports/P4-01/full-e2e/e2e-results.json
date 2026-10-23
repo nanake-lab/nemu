@@ -1,0 +1,357 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\nanake\\AppData\\Local\\fnm_multishells\\20996_1792403813689\\node.exe",
+      "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "apps/desktop/playwright.config.ts"
+    ],
+    "configFile": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\playwright.config.ts",
+    "rootDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/apps/desktop/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/reports/P4-01/full-e2e/test-results/electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/apps/desktop/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\reports\\P4-01\\full-e2e\\test-results\\electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests",
+        "snapshotDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {},
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\reports\\P4-01\\full-e2e\\e2e-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "click-through.spec.ts",
+      "file": "click-through.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7971,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[Layout Info] {\n  originX: \u001b[33m100\u001b[39m,\n  originY: \u001b[33m100\u001b[39m,\n  scaleFactor: \u001b[33m1\u001b[39m,\n  transparentPhys: { x: \u001b[33m150\u001b[39m, y: \u001b[33m150\u001b[39m },\n  characterPhys: { x: \u001b[33m375\u001b[39m, y: \u001b[33m375\u001b[39m },\n  stageHwndHex: \u001b[32m'0x21654'\u001b[39m,\n  counterHwndHex: \u001b[32m'0x14e0940'\u001b[39m\n}\n"
+                    },
+                    {
+                      "text": "[NativeMouseMove] (x=150, y=150, isInitial=true) -> out: Window under cursor: 0x7B1710 'Chrome Legacy Window' PID=40836 | SendInputResult: 1 | Moved cursor to (150, 150) | \n"
+                    },
+                    {
+                      "text": "[NativeClicks] (x=150, y=150, count=50) -> out: Window under cursor: 0x7B1710 'Chrome Legacy Window' PID=40836 | SendInputResult: 1 | Clicked 50 times at (150, 150) | \n"
+                    },
+                    {
+                      "text": "Before assert, counterPage state: {\n  count: \u001b[33m50\u001b[39m,\n  events: [\n    \u001b[32m'pointerdown'\u001b[39m, \u001b[32m'mousedown'\u001b[39m,\n    \u001b[32m'pointerup'\u001b[39m,   \u001b[32m'mouseup'\u001b[39m,\n    \u001b[32m'click'\u001b[39m,       \u001b[32m'pointerdown'\u001b[39m,\n    \u001b[32m'mousedown'\u001b[39m,   \u001b[32m'pointerup'\u001b[39m,\n    \u001b[32m'mouseup'\u001b[39m,     \u001b[32m'click'\u001b[39m\n  ]\n}\n"
+                    },
+                    {
+                      "text": "[NativeMouseMove] (x=375, y=375, isInitial=false) -> out: Window under cursor: 0x7B1710 'Chrome Legacy Window' PID=40836 | SendInputResult: 1 | Moved cursor to (375, 375) | \n"
+                    },
+                    {
+                      "text": "[NativeClicks] (x=375, y=375, count=50) -> out: Window under cursor: 0x21650 'Chrome Legacy Window' PID=40836 | SendInputResult: 1 | Clicked 50 times at (375, 375) | \n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T07:26:42.985Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b8a7324e2d84553b9fa-7014cb82d08e6d0ac6ab",
+          "file": "click-through.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "shell.spec.ts",
+      "file": "shell.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "stage window shell properties, channel routing, panel summoning and clean process termination",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4288,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T07:26:50.996Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3420664513cb0bae123e-00ed56d4b78a6cbe0890",
+          "file": "shell.spec.ts",
+          "line": 12,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "two visible isolated windows; transparent stage; no core storage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2118,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": "RXhjZXB0aW9uOiBDOlxVc2Vyc1xuYW5ha2VcLmNvZGV4XHdvcmt0cmVlc1xwNC0wMS1hc3JcbmVtdVx0b29sc1xzY2FmZm9sZFx3aW5kb3dzLWV2aWRlbmNlLnBzMToyOA0K"
+                    },
+                    {
+                      "buffer": "TGluZSB8DQogIDI4IHwgIOKApiAtUGF0aCAkcm9vdCAncnVuLmpzb24nKSkpIHsgdGhyb3cgJ01pc3NpbmcgZXZpZGVuY2UgaW5pdGlhbGl6YXRpb24nIH0NCiAgICAgfCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+DQogICAgIHwgTWlzc2luZyBldmlkZW5jZSBpbml0aWFsaXphdGlvbg0K"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-21T07:26:55.316Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-29212982cc077c56ffc7",
+          "file": "smoke.spec.ts",
+          "line": 9,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "voice-idle.spec.ts",
+      "file": "voice-idle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P4-01 60-second utility CPU with live silent PCM",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Local quiet-window measurement only: pnpm measure:asr",
+                  "location": {
+                    "file": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests\\voice-idle.spec.ts",
+                    "line": 8,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T07:26:57.522Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Local quiet-window measurement only: pnpm measure:asr",
+                      "location": {
+                        "file": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests\\voice-idle.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "b0649a8ce6db43b81878-4ab0073675c98e9263c1",
+          "file": "voice-idle.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "voice.spec.ts",
+      "file": "voice.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P4-01 utility ports, real AudioWorklet capture and disable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4458,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T07:26:57.538Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4f8e77fcf9b309101475-13be142f12cfc4667567",
+          "file": "voice.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-21T07:26:42.274Z",
+    "duration": 19755.521999999997,
+    "expected": 4,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

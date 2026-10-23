@@ -1,0 +1,126 @@
+{
+  "exact_rational": {
+    "seed": 610023,
+    "states": 2000,
+    "append_cf_cases": 4000,
+    "withdrawal_cases": 4000,
+    "failures": 0
+  },
+  "previous_counterfactual_witness": {
+    "cf": {
+      "a": 0.6122448979591837,
+      "b": 0.0
+    },
+    "after": {
+      "a": 0.6122448979591837,
+      "b": 0.4794520547945206
+    }
+  },
+  "previous_underflow_witness": [
+    {
+      "entry": "append",
+      "fault": "UnderflowEvidenceWeight",
+      "unchanged": true
+    },
+    {
+      "entry": "apply",
+      "fault": "UnderflowEvidenceWeight",
+      "unchanged": true
+    }
+  ],
+  "unaffected_side_probes": [
+    {
+      "old_support": 1.0,
+      "competitor_support": 0.0,
+      "product": 0.0,
+      "before_pi": {
+        "a": 0.26717557251908397,
+        "b": 0.1111111111111111
+      },
+      "cf": {
+        "a": 0.26717557251908397,
+        "b": 0.1111111111111111,
+        "z": 0.0
+      },
+      "after_pi": {
+        "a": 0.26717557251908397,
+        "b": 0.1111111111111111,
+        "z": 0.0
+      },
+      "before_shares": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "after_shares": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "expected_existing_side_unchanged": true,
+      "actual_existing_side_unchanged": true,
+      "conserved": true,
+      "changes": []
+    },
+    {
+      "old_support": -1e-200,
+      "competitor_support": 1e-200,
+      "product": -0.0,
+      "before_pi": {
+        "a": 0.2,
+        "b": -1.25e-201
+      },
+      "cf": {
+        "a": 0.2,
+        "b": -1.25e-201,
+        "z": 0.0
+      },
+      "after_pi": {
+        "a": 0.2,
+        "b": -1.25e-201,
+        "z": 2.5e-201
+      },
+      "before_shares": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "after_shares": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "expected_existing_side_unchanged": true,
+      "actual_existing_side_unchanged": true,
+      "conserved": true,
+      "changes": []
+    },
+    {
+      "old_support": -1e-200,
+      "competitor_support": 1.0,
+      "product": -1e-200,
+      "before_pi": {
+        "a": 0.2,
+        "b": -1.25e-201
+      },
+      "cf": {
+        "a": 0.2,
+        "b": -1.25e-201,
+        "z": 0.0
+      },
+      "after_pi": {
+        "a": 0.2,
+        "b": -1.25e-201,
+        "z": 0.2
+      },
+      "before_shares": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "after_shares": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "expected_existing_side_unchanged": true,
+      "actual_existing_side_unchanged": true,
+      "conserved": true,
+      "changes": []
+    }
+  ]
+}

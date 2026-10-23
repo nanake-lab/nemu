@@ -1,0 +1,97 @@
+{
+  "attempt": "latency-attempt-2026-10-22T09-39-20-062Z.json",
+  "sha256": "12b85c7411186e295d78a860a6a195cd29c9c3fae480d9c3c07e5a57ba670377",
+  "status": "FAIL",
+  "count": 60,
+  "referenceSha256": "f039ae6a3faa10c25f4cac6740b79e5931f83364cf1dfe03575b2c0178108f8e",
+  "automaticCount": 38,
+  "humanCount": 22,
+  "vadEndOver300Count": 46,
+  "bargeOver250Count": 56,
+  "earlyVadEndCount": 0,
+  "earlyBargeIds": [
+    "user-ja-013"
+  ],
+  "missingCount": 0,
+  "maximumPacketLatenessMs": 11.272499999999127,
+  "vadEnd": {
+    "count": 60,
+    "min": 221.1662496093777,
+    "p05": 262.2082151562461,
+    "p25": 300.5918749023417,
+    "median": 320.1580705078227,
+    "p75": 340.3364735351345,
+    "p95": 362.2682463476566,
+    "max": 400.8745230468635
+  },
+  "bargeIn": {
+    "count": 60,
+    "min": -5074.346539453138,
+    "p05": 240.72968117193176,
+    "p25": 279.83772080077347,
+    "median": 285.2591166015627,
+    "p75": 315.98977792967344,
+    "p95": 1179.8328121874936,
+    "max": 1300.1410203124974
+  },
+  "histogram": {
+    "<0": {
+      "vadEnd": 0,
+      "bargeIn": 1
+    },
+    "[0,200)": {
+      "vadEnd": 0,
+      "bargeIn": 1
+    },
+    "[200,250)": {
+      "vadEnd": 2,
+      "bargeIn": 2
+    },
+    "[250,300)": {
+      "vadEnd": 12,
+      "bargeIn": 30
+    },
+    "[300,400)": {
+      "vadEnd": 45,
+      "bargeIn": 21
+    },
+    "[400,600)": {
+      "vadEnd": 1,
+      "bargeIn": 0
+    },
+    "[600,1000)": {
+      "vadEnd": 0,
+      "bargeIn": 0
+    },
+    ">=1000": {
+      "vadEnd": 0,
+      "bargeIn": 5
+    }
+  },
+  "processingTwoLevel": {
+    "feedCallWallMs": {
+      "medianOfRowMedians": 0.6088999999956286,
+      "maximumOfRowMaxima": 5.8519999999552965
+    },
+    "eventStampToLocalCallbackMs": {
+      "medianOfRowMedians": 0.029420996084809303,
+      "maximumOfRowMaxima": 0.8780812499999229
+    },
+    "feedStartToEventStampMs": {
+      "medianOfRowMedians": 0.7001923827920109,
+      "maximumOfRowMaxima": 1.1202187500002765
+    }
+  },
+  "independentRoutineCheck": {
+    "rows": 60,
+    "comparedRowValues": 360,
+    "mismatchCount": 0,
+    "missingCount": 0,
+    "sourceAllocationAndReferenceShaMatch": true
+  },
+  "priorInterruptedAttempt": "latency-attempt-2026-10-22T09-27-41-315Z.json",
+  "priorInterruptedStatus": "INVALID",
+  "timingParametersUnchanged": true,
+  "formalReplayCommit": "98fb91d",
+  "physicalMicrophoneOrExternalIpcMeasured": false
+}

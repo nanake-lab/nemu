@@ -1,0 +1,27 @@
+
+Running 1 test using 1 worker
+
+(node:40320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable (657ms)
+
+
+  1) apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable 
+
+    Error: Quiet window unavailable: null
+
+       at ..\..\..\packages\voice\src\asr\quiet.ts:16
+
+      14 |     { encoding: 'utf8', windowsHide: true },
+      15 |   );
+    > 16 |   if (out.trim()) throw new Error(`Quiet window unavailable: ${out.trim()}`);
+         |                         ^
+      17 | }
+      18 |
+        at assertQuiet (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:16:25)
+        at C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\apps\desktop\tests\voice.spec.ts:15:24
+
+    Error Context: reports\P4-01\e2e-v2\test-results\electron\voice-P4-01-utility-ports--f3975-Worklet-capture-and-disable\error-context.md
+
+  1 failed
+    apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable 

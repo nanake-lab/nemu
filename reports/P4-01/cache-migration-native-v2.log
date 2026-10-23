@@ -1,0 +1,10 @@
+C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:84
+  if (busy.length) throw new Error(`Quiet window unavailable: ${JSON.stringify(busy)}`);
+                         ^
+
+Error: Quiet window unavailable: [{"Name":"python.exe","ProcessId":44708,"reason":"active-test-or-model-work"},{"Name":"python.exe","ProcessId":45704,"reason":"active-test-or-model-work"},{"Name":"node.exe","ProcessId":36708,"reason":"active-test-or-model-work"}]
+    at validate (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:84:26)
+    at assertQuiet (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:88:3)
+    at <anonymous> (D:\NemuData\migration\native-check.mts:11:1)
+
+Node.js v24.21.0
