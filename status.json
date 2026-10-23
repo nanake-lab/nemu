@@ -1,0 +1,2567 @@
+{
+ "generated_at": "2026-10-23T08:48:24+00:00",
+ "repo": "nanake-lab/nemu",
+ "milestones": [
+  {
+   "id": "N0",
+   "review_card": "P0-09",
+   "name": "技术验证",
+   "total": 9,
+   "done": 9,
+   "remaining": []
+  },
+  {
+   "id": "N1",
+   "review_card": "P2-07",
+   "name": "认得出是她",
+   "total": 12,
+   "done": 9,
+   "remaining": [
+    "P2-05",
+    "P2-06",
+    "P2-07"
+   ]
+  },
+  {
+   "id": "N2",
+   "review_card": "P6-12",
+   "name": "她在了（排练版）",
+   "total": 26,
+   "done": 7,
+   "remaining": [
+    "P0-10",
+    "P1-05",
+    "P3-02",
+    "P4-01",
+    "P4-02",
+    "P4-03",
+    "P4-05",
+    "P4-06",
+    "P5-03",
+    "P5-04",
+    "P5-05",
+    "P5-07",
+    "P5-08",
+    "P5-14",
+    "P6-01",
+    "P6-02",
+    "P6-04",
+    "P6-10",
+    "P6-12"
+   ]
+  },
+  {
+   "id": "N3",
+   "review_card": "P6-13",
+   "name": "诞生",
+   "total": 34,
+   "done": 2,
+   "remaining": [
+    "P3-05",
+    "P3-06",
+    "P5-06",
+    "P5-10",
+    "P5-11",
+    "P5-12",
+    "P5-13",
+    "P5-15",
+    "P5-16",
+    "P5-17",
+    "P5-18",
+    "P5-19",
+    "P5-20",
+    "P5-22",
+    "P5-23",
+    "P5-24",
+    "P5-25",
+    "P5-26",
+    "P5-27",
+    "P5-28",
+    "P5-29",
+    "P5-30",
+    "P5-31",
+    "P6-03",
+    "P6-05",
+    "P6-06",
+    "P6-07",
+    "P6-08",
+    "P6-09",
+    "P6-11",
+    "P6-13",
+    "P6-16"
+   ]
+  },
+  {
+   "id": "N4",
+   "review_card": "P7-05",
+   "name": "发布",
+   "total": 7,
+   "done": 0,
+   "remaining": [
+    "P6-14",
+    "P6-15",
+    "P7-01",
+    "P7-02",
+    "P7-03",
+    "P7-04",
+    "P7-05"
+   ]
+  }
+ ],
+ "attention": [
+  {
+   "card": "P2-05",
+   "pr": 48,
+   "url": "https://github.com/nanake-lab/nemu/pull/48",
+   "kind": "decide",
+   "text": "PR #48 等你决定（草稿，还不能合并）"
+  },
+  {
+   "card": "P2-06",
+   "pr": 59,
+   "url": "https://github.com/nanake-lab/nemu/pull/59",
+   "kind": "decide",
+   "text": "PR #59 等你决定（草稿，还不能合并）"
+  },
+  {
+   "card": "P4-01",
+   "pr": 44,
+   "url": "https://github.com/nanake-lab/nemu/pull/44",
+   "kind": "merge",
+   "text": "PR #44 等你合并：先看 CI 全绿、没有落后 main"
+  },
+  {
+   "card": "P4-01",
+   "pr": 44,
+   "url": "https://github.com/nanake-lab/nemu/pull/44",
+   "kind": "runner",
+   "text": "PR #44 的 Windows 检查在排队，需要开 runner"
+  },
+  {
+   "card": "P4-02",
+   "pr": 45,
+   "url": "https://github.com/nanake-lab/nemu/pull/45",
+   "kind": "decide",
+   "text": "PR #45 等你决定（草稿，还不能合并）"
+  },
+  {
+   "card": "P5-03",
+   "pr": 64,
+   "url": "https://github.com/nanake-lab/nemu/pull/64",
+   "kind": "decide",
+   "text": "PR #64 等你决定（草稿，还不能合并）"
+  },
+  {
+   "card": "P5-04",
+   "pr": 65,
+   "url": "https://github.com/nanake-lab/nemu/pull/65",
+   "kind": "decide",
+   "text": "PR #65 等你决定（草稿，还不能合并）"
+  },
+  {
+   "card": "P5-22",
+   "pr": 57,
+   "url": "https://github.com/nanake-lab/nemu/pull/57",
+   "kind": "decide",
+   "text": "PR #57 等你决定（草稿，还不能合并）"
+  },
+  {
+   "card": "P5-22",
+   "pr": 57,
+   "url": "https://github.com/nanake-lab/nemu/pull/57",
+   "kind": "runner",
+   "text": "PR #57 的 Windows 检查在排队，需要开 runner"
+  },
+  {
+   "card": "P5-23",
+   "pr": 49,
+   "url": "https://github.com/nanake-lab/nemu/pull/49",
+   "kind": "decide",
+   "text": "PR #49 等你决定（草稿，还不能合并）"
+  }
+ ],
+ "other_attention": [
+  {
+   "card": "",
+   "pr": 61,
+   "url": "https://github.com/nanake-lab/nemu/pull/61",
+   "kind": "merge",
+   "text": "PR #61 等你合并：先看 CI 全绿、没有落后 main：docs(law): 保持 LP1 的参考规律草案与对照实验（ADR 0019）"
+  }
+ ],
+ "next_up": {
+  "Codex": [
+   "P0-10",
+   "P3-02",
+   "P5-05",
+   "P5-07",
+   "P6-08",
+   "P6-11"
+  ],
+  "Claude": [
+   "P5-25",
+   "P5-27"
+  ]
+ },
+ "cards": [
+  {
+   "id": "P0-00",
+   "title": "借鉴清单（参考项目实测）",
+   "phase": "P0",
+   "milestone": "N0",
+   "deps": [],
+   "difficulty": "低",
+   "suggested": "Antigravity",
+   "you": "亲自试用约 30 分钟",
+   "effort": "半天",
+   "status_override": {
+    "status": "done",
+    "note": "直接提交到 main（e9d4972），没有 PR"
+   },
+   "prs": [],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-01",
+   "title": "单仓脚手架与 CI",
+   "phase": "P0",
+   "milestone": "N0",
+   "deps": [],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "prs": [
+    {
+     "number": 7,
+     "url": "https://github.com/nanake-lab/nemu/pull/7",
+     "title": "fix(ci): isolate Windows evidence and diagnose Electron startup",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-01-windows-diagnostics",
+     "labels": [],
+     "updated_at": "2026-10-15T12:30:42Z"
+    },
+    {
+     "number": 1,
+     "url": "https://github.com/nanake-lab/nemu/pull/1",
+     "title": "feat(P0-01): monorepo scaffolding and CI",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-01-monorepo",
+     "labels": [],
+     "updated_at": "2026-10-13T18:12:39Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-02",
+   "title": "应用契约包",
+   "phase": "P0",
+   "milestone": "N1",
+   "deps": [
+    "P0-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "2 天",
+   "prs": [
+    {
+     "number": 2,
+     "url": "https://github.com/nanake-lab/nemu/pull/2",
+     "title": "feat(P0-02): application contracts and streaming parser",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-02-contracts",
+     "labels": [],
+     "updated_at": "2026-10-14T03:02:48Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-03",
+   "title": "透明舞台技术验证",
+   "phase": "P0",
+   "milestone": "N0",
+   "deps": [
+    "P0-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "3 天",
+   "prs": [
+    {
+     "number": 5,
+     "url": "https://github.com/nanake-lab/nemu/pull/5",
+     "title": "feat(stage): transparent stage technical validation and decision (P0-03)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-03-stage-spike",
+     "labels": [],
+     "updated_at": "2026-10-14T11:11:44Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-04",
+   "title": "环境检查脚本",
+   "phase": "P0",
+   "milestone": "N0",
+   "deps": [
+    "P0-01"
+   ],
+   "difficulty": "低",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "1 天",
+   "prs": [
+    {
+     "number": 21,
+     "url": "https://github.com/nanake-lab/nemu/pull/21",
+     "title": "fix(P0-04): detect Blender 5.2 VRM extension",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-04-vrm-addon-fix",
+     "labels": [],
+     "updated_at": "2026-10-18T18:16:29Z"
+    },
+    {
+     "number": 19,
+     "url": "https://github.com/nanake-lab/nemu/pull/19",
+     "title": "feat(P0-04): add Windows environment doctor",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-04-doctor",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-18T18:02:16Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-05",
+   "title": "仓库创建与环境安装",
+   "phase": "P0",
+   "milestone": "N0",
+   "deps": [
+    "P0-04"
+   ],
+   "difficulty": "—",
+   "suggested": "你",
+   "you": "你来做",
+   "effort": "第一部分约 1 小时，第二部分约 2 小时",
+   "note": "第一部分在开工前完成；第二部分依赖 P0-04",
+   "prs": [
+    {
+     "number": 23,
+     "url": "https://github.com/nanake-lab/nemu/pull/23",
+     "title": "chore(P0-05): migrate content to private submodule",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-05-content-submodule",
+     "labels": [],
+     "updated_at": "2026-10-19T02:00:07Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-06",
+   "title": "Echo Core 基线与差异登记（W00）",
+   "phase": "P0",
+   "milestone": "N0",
+   "deps": [
+    "P0-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "2 天",
+   "prs": [
+    {
+     "number": 3,
+     "url": "https://github.com/nanake-lab/nemu/pull/3",
+     "title": "docs(P0-06): Echo Core baseline and conflict review",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-06-echo-baseline",
+     "labels": [],
+     "updated_at": "2026-10-14T10:18:05Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-07",
+   "title": "载体探针（W12 可行性）",
+   "phase": "P0",
+   "milestone": "N0",
+   "deps": [
+    "P0-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "4 天",
+   "prs": [
+    {
+     "number": 27,
+     "url": "https://github.com/nanake-lab/nemu/pull/27",
+     "title": "perf(P0-07): select Instruct-2507 under ADR 0012",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-07-carrier-probe",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-21T02:02:23Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-08",
+   "title": "Codex app-server 与 IRL 路径验证",
+   "phase": "P0",
+   "milestone": "N0",
+   "deps": [
+    "P0-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "2 天",
+   "prs": [
+    {
+     "number": 50,
+     "url": "https://github.com/nanake-lab/nemu/pull/50",
+     "title": "spike(P0-08): 第二部分实测",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-08-part2",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-22T09:32:51Z"
+    },
+    {
+     "number": 29,
+     "url": "https://github.com/nanake-lab/nemu/pull/29",
+     "title": "spike(P0-08): validate Codex app-server and IRL paths",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P0-08-codex-irl-spike",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-22T09:33:44Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-09",
+   "title": "N0 评审：技术验证",
+   "phase": "P0",
+   "milestone": "N0",
+   "deps": [
+    "P0-03",
+    "P0-05",
+    "P0-06",
+    "P0-07",
+    "P0-08"
+   ],
+   "difficulty": "—",
+   "suggested": "你",
+   "you": "你来做",
+   "effort": "约 1 小时",
+   "prs": [
+    {
+     "number": 63,
+     "url": "https://github.com/nanake-lab/nemu/pull/63",
+     "title": "docs(P0-09): N0 评审决定（有条件通过）与新卡 P0-10、P1-05",
+     "state": "merged",
+     "draft": false,
+     "branch": "claude/n0-decision",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-22T13:44:40Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P0-10",
+   "title": "载体推理引擎实测",
+   "phase": "P0",
+   "milestone": "N2",
+   "deps": [
+    "P0-07"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "prs": [],
+   "status": "ready",
+   "waiting_on": [],
+   "status_label": "可开工"
+  },
+  {
+   "id": "P1-01",
+   "title": "舞台渲染器",
+   "phase": "P1",
+   "milestone": "N1",
+   "deps": [
+    "P0-02",
+    "P0-03"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "5 天",
+   "prs": [
+    {
+     "number": 6,
+     "url": "https://github.com/nanake-lab/nemu/pull/6",
+     "title": "feat(stage): implement production stage renderer and visual regression pipeline (P1-01)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P1-01-stage-renderer",
+     "labels": [],
+     "updated_at": "2026-10-15T06:24:51Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P1-02",
+   "title": "桌面窗口外壳与进程守护",
+   "phase": "P1",
+   "milestone": "N1",
+   "deps": [
+    "P0-02",
+    "P0-03"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [
+    {
+     "number": 28,
+     "url": "https://github.com/nanake-lab/nemu/pull/28",
+     "title": "feat(P1-02): desktop window shell and process supervisor",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P1-02-desktop-shell",
+     "labels": [],
+     "updated_at": "2026-10-20T07:41:40Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P1-03",
+   "title": "评审台",
+   "phase": "P1",
+   "milestone": "N1",
+   "deps": [
+    "P1-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "3 天",
+   "prs": [
+    {
+     "number": 10,
+     "url": "https://github.com/nanake-lab/nemu/pull/10",
+     "title": "feat(stage): implement character review bench (P1-03)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P1-03-review-console",
+     "labels": [],
+     "updated_at": "2026-10-16T02:44:09Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P1-04",
+   "title": "调试面板",
+   "phase": "P1",
+   "milestone": "N2",
+   "deps": [
+    "P1-02"
+   ],
+   "difficulty": "低",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "2 天",
+   "prs": [
+    {
+     "number": 37,
+     "url": "https://github.com/nanake-lab/nemu/pull/37",
+     "title": "feat(P1-04): 调试面板",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P1-04-debug-panel",
+     "labels": [],
+     "updated_at": "2026-10-20T08:47:51Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P1-05",
+   "title": "早期对话演示",
+   "phase": "P1",
+   "milestone": "N2",
+   "deps": [
+    "P1-02",
+    "P4-01",
+    "P4-02",
+    "P4-04"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P4-01",
+    "P4-02"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P2-01",
+   "title": "设定集与人设种子（Nemu Bible）",
+   "phase": "P2",
+   "milestone": "N1",
+   "deps": [],
+   "difficulty": "—",
+   "suggested": "你",
+   "you": "你来做",
+   "effort": "3–5 天（你约 5 小时：约 3 小时在图像工具里生成候选并挑选，约 2 小时写人设种子；整理由代理完成）",
+   "prs": [
+    {
+     "number": 16,
+     "url": "https://github.com/nanake-lab/nemu/pull/16",
+     "title": "docs(character): complete persona seed trilingual habits and genesis calibration probes (P2-01)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P2-01-bible-refine",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-17T08:09:53Z"
+    },
+    {
+     "number": 15,
+     "url": "https://github.com/nanake-lab/nemu/pull/15",
+     "title": "feat(character): establish Nemu bible and persona seed (P2-01)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P2-01-bible",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-17T07:01:45Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P2-02",
+   "title": "VRoid 塑形",
+   "phase": "P2",
+   "milestone": "N1",
+   "deps": [
+    "P2-01"
+   ],
+   "difficulty": "—",
+   "suggested": "你",
+   "you": "你来做",
+   "effort": "10–20 小时，建议分 4 次完成",
+   "prs": [
+    {
+     "number": 26,
+     "url": "https://github.com/nanake-lab/nemu/pull/26",
+     "title": "docs(P2-02): record accepted VRoid delivery",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P2-02-vroid",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-19T04:58:09Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P2-03",
+   "title": "Blender 无头资产管线",
+   "phase": "P2",
+   "milestone": "N1",
+   "deps": [
+    "P0-05",
+    "P2-04"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [
+    {
+     "number": 43,
+     "url": "https://github.com/nanake-lab/nemu/pull/43",
+     "title": "feat(P2-03): Blender 无头资产管线",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P2-03-asset-pipeline",
+     "labels": [],
+     "updated_at": "2026-10-21T08:02:03Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P2-04",
+   "title": "资产契约校验器",
+   "phase": "P2",
+   "milestone": "N1",
+   "deps": [
+    "P0-02"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "prs": [
+    {
+     "number": 18,
+     "url": "https://github.com/nanake-lab/nemu/pull/18",
+     "title": "feat(P2-04): add VRM asset contract validator",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P2-04-asset-lint",
+     "labels": [],
+     "updated_at": "2026-10-18T12:20:25Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P2-05",
+   "title": "尾巴、猫耳与弹簧骨调校",
+   "phase": "P2",
+   "milestone": "N1",
+   "deps": [
+    "P1-03",
+    "P2-02",
+    "P2-03"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": "决定外形和手感",
+   "effort": "3 天（你约 2 小时）",
+   "note": "依赖 P2-02 的中期导出版本，不必等塑形全部完成",
+   "prs": [
+    {
+     "number": 48,
+     "url": "https://github.com/nanake-lab/nemu/pull/48",
+     "title": "feat(P2-05): 尾巴、猫耳与弹簧骨调校",
+     "state": "open",
+     "draft": true,
+     "branch": "task/P2-05-tail-springs",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-23T08:24:48Z",
+     "waiting_runner": false
+    }
+   ],
+   "status": "needs_you",
+   "waiting_on": [],
+   "status_label": "等你"
+  },
+  {
+   "id": "P2-06",
+   "title": "自定义表情与材质精修",
+   "phase": "P2",
+   "milestone": "N1",
+   "deps": [
+    "P1-03",
+    "P2-02",
+    "P2-03"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": "评审",
+   "effort": "4 天（你约 2 小时）",
+   "note": "依赖 P2-02 的中期导出版本；可与 P2-05 同时进行",
+   "prs": [
+    {
+     "number": 59,
+     "url": "https://github.com/nanake-lab/nemu/pull/59",
+     "title": "feat(P2-06): 自定义表情与材质精修",
+     "state": "open",
+     "draft": true,
+     "branch": "task/P2-06-expressions-materials",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-23T06:27:32Z",
+     "waiting_runner": false
+    }
+   ],
+   "status": "needs_you",
+   "waiting_on": [],
+   "status_label": "等你"
+  },
+  {
+   "id": "P2-07",
+   "title": "N1 评审：认得出是她",
+   "phase": "P2",
+   "milestone": "N1",
+   "deps": [
+    "P1-01",
+    "P1-02",
+    "P2-02",
+    "P2-05",
+    "P2-06",
+    "P3-01"
+   ],
+   "difficulty": "—",
+   "suggested": "你",
+   "you": "你来做",
+   "effort": "约 1.5 小时",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P2-05",
+    "P2-06"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P3-01",
+   "title": "动画运行时（五层）",
+   "phase": "P3",
+   "milestone": "N1",
+   "deps": [
+    "P1-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "8 天（前 4 天先交付 L2 呼吸与视线、L3 眨眼，供 N1 使用）",
+   "prs": [
+    {
+     "number": 9,
+     "url": "https://github.com/nanake-lab/nemu/pull/9",
+     "title": "feat(avatar-runtime): implement five-layer animation runtime (P3-01)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P3-01-animation-layers",
+     "labels": [],
+     "updated_at": "2026-10-16T01:46:14Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P3-02",
+   "title": "动作资产管线",
+   "phase": "P3",
+   "milestone": "N2",
+   "deps": [
+    "P2-03"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "ready",
+   "waiting_on": [],
+   "status_label": "可开工"
+  },
+  {
+   "id": "P3-03",
+   "title": "身体读出与待机生命",
+   "phase": "P3",
+   "milestone": "N2",
+   "deps": [
+    "P0-02",
+    "P3-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "4 天",
+   "prs": [
+    {
+     "number": 11,
+     "url": "https://github.com/nanake-lab/nemu/pull/11",
+     "title": "feat(body): implement body readout applicator and idle scheduler (P3-03)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P3-03-readout-idle",
+     "labels": [],
+     "updated_at": "2026-10-16T03:04:22Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P3-04",
+   "title": "物理状态机、反射与身体动作",
+   "phase": "P3",
+   "milestone": "N2",
+   "deps": [
+    "P3-03"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "5 天",
+   "prs": [
+    {
+     "number": 13,
+     "url": "https://github.com/nanake-lab/nemu/pull/13",
+     "title": "feat(body): physical state machine, reflexes, and body action executor (P3-04)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P3-04-physical-states",
+     "labels": [],
+     "updated_at": "2026-10-16T04:03:44Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P3-05",
+   "title": "动作库 v1 选定",
+   "phase": "P3",
+   "milestone": "N3",
+   "deps": [
+    "P1-03",
+    "P3-02"
+   ],
+   "difficulty": "低",
+   "suggested": "Codex",
+   "you": "挑选动作",
+   "effort": "5 天（你约 3 小时）",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P3-02"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P3-06",
+   "title": "身体读出 v2（E5 修订）",
+   "phase": "P3",
+   "milestone": "N3",
+   "deps": [
+    "P5-22"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "3 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-22"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P4-01",
+   "title": "语音识别与语言识别",
+   "phase": "P4",
+   "milestone": "N2",
+   "deps": [
+    "P1-02"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [
+    {
+     "number": 44,
+     "url": "https://github.com/nanake-lab/nemu/pull/44",
+     "title": "feat(P4-01): 语音识别与语言识别",
+     "state": "open",
+     "draft": false,
+     "branch": "task/P4-01-asr",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-23T08:28:22Z",
+     "waiting_runner": true,
+     "verdict": null,
+     "guarded": false
+    }
+   ],
+   "status": "needs_you",
+   "waiting_on": [],
+   "status_label": "等你"
+  },
+  {
+   "id": "P4-02",
+   "title": "TTS 旁路服务（三种语言）",
+   "phase": "P4",
+   "milestone": "N2",
+   "deps": [
+    "P0-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [
+    {
+     "number": 45,
+     "url": "https://github.com/nanake-lab/nemu/pull/45",
+     "title": "feat(P4-02): TTS 旁路服务",
+     "state": "open",
+     "draft": true,
+     "branch": "task/P4-02-tts-sidecar",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-23T07:06:56Z",
+     "waiting_runner": false
+    }
+   ],
+   "status": "needs_you",
+   "waiting_on": [],
+   "status_label": "等你"
+  },
+  {
+   "id": "P4-03",
+   "title": "Nemu 声音设计（一个声音，三种语言）",
+   "phase": "P4",
+   "milestone": "N2",
+   "deps": [
+    "P2-01",
+    "P4-02"
+   ],
+   "difficulty": "低",
+   "suggested": "Codex",
+   "you": "挑选声音",
+   "effort": "4 天（你约 2 小时）",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P4-02"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P4-04",
+   "title": "口型同步（运行时）",
+   "phase": "P4",
+   "milestone": "N2",
+   "deps": [
+    "P3-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "3 天",
+   "prs": [
+    {
+     "number": 12,
+     "url": "https://github.com/nanake-lab/nemu/pull/12",
+     "title": "feat(avatar-runtime): implement lipsync runtime and stage audio chain (P4-04)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P4-04-lipsync-runtime",
+     "labels": [],
+     "updated_at": "2026-10-16T03:38:59Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P4-05",
+   "title": "口型校准（三种语言）",
+   "phase": "P4",
+   "milestone": "N2",
+   "deps": [
+    "P4-03"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "2 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P4-03"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P4-06",
+   "title": "语音输出管线",
+   "phase": "P4",
+   "milestone": "N2",
+   "deps": [
+    "P0-02",
+    "P4-01",
+    "P4-02",
+    "P4-04"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P4-01",
+    "P4-02"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-01",
+   "title": "IDL、规范编码与黄金向量（W01）",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P0-02",
+    "P0-06"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "8 天",
+   "prs": [
+    {
+     "number": 4,
+     "url": "https://github.com/nanake-lab/nemu/pull/4",
+     "title": "feat(P5-01): approved IDL, CanonicalV1 and three-language golden vectors",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P5-01-idl",
+     "labels": [],
+     "updated_at": "2026-10-22T03:51:03Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P5-02",
+   "title": "单写事务与对象存储（W02）",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P5-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "8 天",
+   "prs": [
+    {
+     "number": 58,
+     "url": "https://github.com/nanake-lab/nemu/pull/58",
+     "title": "feat(P5-02): 单写事务与对象存储（W02）",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P5-02-store",
+     "labels": [],
+     "updated_at": "2026-10-23T03:15:08Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P5-03",
+   "title": "入口与网关（W18）",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P5-02"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [
+    {
+     "number": 64,
+     "url": "https://github.com/nanake-lab/nemu/pull/64",
+     "title": "feat(P5-03): 入口与网关（W18）",
+     "state": "open",
+     "draft": true,
+     "branch": "task/P5-03-gateway",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-23T06:29:34Z",
+     "waiting_runner": false
+    }
+   ],
+   "status": "needs_you",
+   "waiting_on": [],
+   "status_label": "等你"
+  },
+  {
+   "id": "P5-04",
+   "title": "事实视图（W19）",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P5-02"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [
+    {
+     "number": 65,
+     "url": "https://github.com/nanake-lab/nemu/pull/65",
+     "title": "feat(P5-04): 事实视图（W19）",
+     "state": "open",
+     "draft": true,
+     "branch": "task/P5-04-fact-view",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-23T04:50:57Z",
+     "waiting_runner": false
+    }
+   ],
+   "status": "needs_you",
+   "waiting_on": [],
+   "status_label": "等你"
+  },
+  {
+   "id": "P5-05",
+   "title": "权限、身份与 worker 隔离（W22）",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P5-02",
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "ready",
+   "waiting_on": [],
+   "status_label": "可开工"
+  },
+  {
+   "id": "P5-06",
+   "title": "语义核心：IRL 与解释记录的治理、概念注册表（W20 核心部分）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-04",
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "7 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-04"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-07",
+   "title": "IRL worker 与 codex-bridge 基础层（W20 认知部分）",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P0-08",
+    "P0-09",
+    "P5-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "ready",
+   "waiting_on": [],
+   "status_label": "可开工"
+  },
+  {
+   "id": "P5-08",
+   "title": "编排、阶段接口与时钟（W03）",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P5-03",
+    "P5-04",
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-03",
+    "P5-04"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-09",
+   "title": "作用解析与授权（W04）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "6 天",
+   "prs": [
+    {
+     "number": 22,
+     "url": "https://github.com/nanake-lab/nemu/pull/22",
+     "title": "feat(P5-09): scope DSL, effect compilation and authorisation (W04)",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P5-09-effects",
+     "labels": [],
+     "updated_at": "2026-10-20T04:34:26Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P5-10",
+   "title": "快状态 F（v2.0 第 6 节）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-21",
+    "P5-27"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-27"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-11",
+   "title": "天性评估 worker（原 A_x）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-07",
+    "P5-21"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "4 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-07"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-12",
+   "title": "J 编译与读出（v2.0 第 9 节）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-10"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-10"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-13",
+   "title": "模型载体适配器（W12）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P0-07",
+    "P0-10",
+    "P5-07",
+    "P5-12"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "7 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P0-10",
+    "P5-07",
+    "P5-12"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-14",
+   "title": "行动生命周期与 outbox（W13 基础）",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P5-05",
+    "P5-08"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-05",
+    "P5-08"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-15",
+   "title": "结构重放、整段重算、本机备份与诞生（W14）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-14",
+    "P5-29"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "7 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-14",
+    "P5-29"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-16",
+   "title": "指标与运行手册（W15 基础）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-08",
+    "P5-29"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-08",
+    "P5-29"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-17",
+   "title": "genesis 校准（你参与）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-13",
+    "P5-29",
+    "P5-30",
+    "P5-31",
+    "P6-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": "查看成对样例并签字",
+   "effort": "6 天（你约 1 小时）",
+   "note": "高难度：Claude 与 Codex 协作；你评审并签字",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-13",
+    "P5-29",
+    "P5-30",
+    "P5-31",
+    "P6-01"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-18",
+   "title": "v2.0 验收（N3 阶段门）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-15",
+    "P5-17",
+    "P5-20",
+    "P5-29",
+    "P5-30",
+    "P5-31",
+    "P6-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "8 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-15",
+    "P5-17",
+    "P5-20",
+    "P5-29",
+    "P5-30",
+    "P5-31",
+    "P6-01"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-19",
+   "title": "第一集成里程碑：语义、天性与情绪接入编排",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-06",
+    "P5-07",
+    "P5-08",
+    "P5-10",
+    "P5-11",
+    "P5-12",
+    "P5-22"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-06",
+    "P5-07",
+    "P5-08",
+    "P5-10",
+    "P5-11",
+    "P5-12",
+    "P5-22"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-20",
+   "title": "自主调度与主动（v2.0 第 9.4 节）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-12",
+    "P5-14",
+    "P5-22",
+    "P6-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-12",
+    "P5-14",
+    "P5-22",
+    "P6-01"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-21",
+   "title": "IDL 契约变更：v2.0 的状态与记录",
+   "phase": "P5",
+   "milestone": "N2",
+   "deps": [
+    "P5-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天",
+   "prs": [
+    {
+     "number": 36,
+     "url": "https://github.com/nanake-lab/nemu/pull/36",
+     "title": "feat(P5-21): IDL 契约变更：v2.0 的状态与记录",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P5-21-idl-v2",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-21T08:08:25Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P5-22",
+   "title": "终端契约变更：身体读出、主动边界、成长的查询与通知",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-21"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "4 天",
+   "prs": [
+    {
+     "number": 57,
+     "url": "https://github.com/nanake-lab/nemu/pull/57",
+     "title": "feat(P5-22): 终端契约变更：身体读出、主动边界、成长的查询与通知",
+     "state": "open",
+     "draft": true,
+     "branch": "task/P5-22-terminal-contracts-v2",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-23T08:39:53Z",
+     "waiting_runner": true
+    }
+   ],
+   "status": "needs_you",
+   "waiting_on": [],
+   "status_label": "等你"
+  },
+  {
+   "id": "P5-23",
+   "title": "规律引擎 G：倾向的证据计数",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天",
+   "prs": [
+    {
+     "number": 49,
+     "url": "https://github.com/nanake-lab/nemu/pull/49",
+     "title": "feat(P5-23): 规律引擎 G：倾向的证据计数",
+     "state": "open",
+     "draft": true,
+     "branch": "task/P5-23-law-engine",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-22T14:26:51Z",
+     "waiting_runner": false
+    }
+   ],
+   "status": "needs_you",
+   "waiting_on": [],
+   "status_label": "等你"
+  },
+  {
+   "id": "P5-24",
+   "title": "证据组装：从解释记录到证据组",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-23"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-23"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-25",
+   "title": "动力学 C：θ 的学习与回应回路",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "4 天",
+   "prs": [],
+   "status": "ready",
+   "waiting_on": [],
+   "status_label": "可开工"
+  },
+  {
+   "id": "P5-26",
+   "title": "重算、来源更正、暂停与复核",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-12",
+    "P5-23",
+    "P5-24",
+    "P5-25"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-12",
+    "P5-23",
+    "P5-24",
+    "P5-25"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-27",
+   "title": "作用视图按 v2.0 简化（P5-09 后续）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-09"
+   ],
+   "difficulty": "中",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "2 天",
+   "prs": [],
+   "status": "ready",
+   "waiting_on": [],
+   "status_label": "可开工"
+  },
+  {
+   "id": "P5-28",
+   "title": "情境吻合与候选倾向 worker（M）",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-13",
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-13"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-29",
+   "title": "第二集成里程碑：成长接入编排",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-19",
+    "P5-26",
+    "P5-28",
+    "P5-31"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-19",
+    "P5-26",
+    "P5-28",
+    "P5-31"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-30",
+   "title": "实验谱系：合成世界与规律校准",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-26"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "7 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-26"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-31",
+   "title": "方向提取与验证",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-13"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-13"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P5-32",
+   "title": "契约变更：R 的典型幅度递推与分配重放字段",
+   "phase": "P5",
+   "milestone": "N3",
+   "deps": [
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "2 天",
+   "prs": [
+    {
+     "number": 52,
+     "url": "https://github.com/nanake-lab/nemu/pull/52",
+     "title": "feat(P5-32): 契约变更：R 的典型幅度递推与分配重放字段",
+     "state": "merged",
+     "draft": false,
+     "branch": "task/P5-32-law-replay-idl",
+     "labels": [
+      "needs-user"
+     ],
+     "updated_at": "2026-10-22T10:47:44Z"
+    }
+   ],
+   "status": "done",
+   "waiting_on": [],
+   "status_label": "已完成"
+  },
+  {
+   "id": "P6-01",
+   "title": "任务层与协议 p v0（W21）",
+   "phase": "P6",
+   "milestone": "N2",
+   "deps": [
+    "P2-01",
+    "P5-04",
+    "P5-05",
+    "P5-14"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-04",
+    "P5-05",
+    "P5-14"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-02",
+   "title": "终端客户端与身体接入",
+   "phase": "P6",
+   "milestone": "N2",
+   "deps": [
+    "P3-04",
+    "P4-06",
+    "P5-03",
+    "P6-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P4-06",
+    "P5-03",
+    "P6-01"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-03",
+   "title": "模式 A：本地严格，接通 J",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P5-13",
+    "P6-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-13",
+    "P6-01"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-04",
+   "title": "模式 B：云端投影与 J_text",
+   "phase": "P6",
+   "milestone": "N2",
+   "deps": [
+    "P0-08",
+    "P5-07",
+    "P6-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "5 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-07",
+    "P6-01"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-05",
+   "title": "模式 C：起草改写，三种模式对照",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P5-17",
+    "P6-03",
+    "P6-04"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-17",
+    "P6-03",
+    "P6-04"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-06",
+   "title": "助手：Codex 执行器",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P5-05",
+    "P5-07",
+    "P5-14"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-05",
+    "P5-07",
+    "P5-14"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-07",
+   "title": "Office 连接器",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P5-05",
+    "P5-14"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-05",
+    "P5-14"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-08",
+   "title": "桌面感知",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P1-02"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "ready",
+   "waiting_on": [],
+   "status_label": "可开工"
+  },
+  {
+   "id": "P6-09",
+   "title": "场景行为",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P3-04",
+    "P6-02",
+    "P6-08"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "7 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P6-02",
+    "P6-08"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-10",
+   "title": "面板",
+   "phase": "P6",
+   "milestone": "N2",
+   "deps": [
+    "P1-04",
+    "P5-05",
+    "P6-01"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-05",
+    "P6-01"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-11",
+   "title": "Codex 会话感知（可选功能）",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P1-02"
+   ],
+   "difficulty": "低",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "2 天",
+   "prs": [],
+   "status": "ready",
+   "waiting_on": [],
+   "status_label": "可开工"
+  },
+  {
+   "id": "P6-12",
+   "title": "N2 评审：她在了（排练版）",
+   "phase": "P6",
+   "milestone": "N2",
+   "deps": [
+    "P2-07",
+    "P3-02",
+    "P4-03",
+    "P4-05",
+    "P6-02",
+    "P6-04",
+    "P6-10"
+   ],
+   "difficulty": "—",
+   "suggested": "你",
+   "you": "你来做",
+   "effort": "约 2 小时，之后每天使用",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P2-07",
+    "P3-02",
+    "P4-03",
+    "P4-05",
+    "P6-02",
+    "P6-04",
+    "P6-10"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-13",
+   "title": "N3 评审：诞生",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P3-05",
+    "P3-06",
+    "P5-16",
+    "P5-18",
+    "P5-20",
+    "P6-03",
+    "P6-05",
+    "P6-06",
+    "P6-07",
+    "P6-09",
+    "P6-11",
+    "P6-12",
+    "P6-16"
+   ],
+   "difficulty": "—",
+   "suggested": "你",
+   "you": "你来做",
+   "effort": "约 3 小时，加上诞生后的第一天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P3-05",
+    "P3-06",
+    "P5-16",
+    "P5-18",
+    "P5-20",
+    "P6-03",
+    "P6-05",
+    "P6-06",
+    "P6-07",
+    "P6-09",
+    "P6-11",
+    "P6-12",
+    "P6-16"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-14",
+   "title": "网络生活：边界与隔离",
+   "phase": "P6",
+   "milestone": "N4",
+   "deps": [
+    "P5-29",
+    "P6-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-29",
+    "P6-01"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-15",
+   "title": "网络生活：平台连接器",
+   "phase": "P6",
+   "milestone": "N4",
+   "deps": [
+    "P6-14"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": "指定首批平台与账号",
+   "effort": "6 天（你约 1 小时）",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P6-14"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P6-16",
+   "title": "面板：成长记录、暂停与复核通知",
+   "phase": "P6",
+   "milestone": "N3",
+   "deps": [
+    "P5-22",
+    "P6-10"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "4 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P5-22",
+    "P6-10"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P7-01",
+   "title": "性能与稳定性",
+   "phase": "P7",
+   "milestone": "N4",
+   "deps": [
+    "P6-13"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex + Antigravity",
+   "you": null,
+   "effort": "各 6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P6-13"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P7-02",
+   "title": "安装包与更新",
+   "phase": "P7",
+   "milestone": "N4",
+   "deps": [
+    "P7-01"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P7-01"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P7-03",
+   "title": "视觉与交互打磨",
+   "phase": "P7",
+   "milestone": "N4",
+   "deps": [
+    "P6-13"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": null,
+   "effort": "6 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P6-13"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P7-04",
+   "title": "可公开准备",
+   "phase": "P7",
+   "milestone": "N4",
+   "deps": [
+    "P7-02"
+   ],
+   "difficulty": "低",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P7-02"
+   ],
+   "status_label": "等依赖"
+  },
+  {
+   "id": "P7-05",
+   "title": "N4 发布验收",
+   "phase": "P7",
+   "milestone": "N4",
+   "deps": [
+    "P0-00",
+    "P0-01",
+    "P0-02",
+    "P0-03",
+    "P0-04",
+    "P0-05",
+    "P0-06",
+    "P0-07",
+    "P0-08",
+    "P0-09",
+    "P1-01",
+    "P1-02",
+    "P1-03",
+    "P1-04",
+    "P2-01",
+    "P2-02",
+    "P2-03",
+    "P2-04",
+    "P2-05",
+    "P2-06",
+    "P2-07",
+    "P3-01",
+    "P3-02",
+    "P3-03",
+    "P3-04",
+    "P3-05",
+    "P3-06",
+    "P4-01",
+    "P4-02",
+    "P4-03",
+    "P4-04",
+    "P4-05",
+    "P4-06",
+    "P5-01",
+    "P5-02",
+    "P5-03",
+    "P5-04",
+    "P5-05",
+    "P5-06",
+    "P5-07",
+    "P5-08",
+    "P5-09",
+    "P5-10",
+    "P5-11",
+    "P5-12",
+    "P5-13",
+    "P5-14",
+    "P5-15",
+    "P5-16",
+    "P5-17",
+    "P5-18",
+    "P5-19",
+    "P5-20",
+    "P5-21",
+    "P5-22",
+    "P5-23",
+    "P5-24",
+    "P5-25",
+    "P5-26",
+    "P5-27",
+    "P5-28",
+    "P5-29",
+    "P5-30",
+    "P5-31",
+    "P6-01",
+    "P6-02",
+    "P6-03",
+    "P6-04",
+    "P6-05",
+    "P6-06",
+    "P6-07",
+    "P6-08",
+    "P6-09",
+    "P6-10",
+    "P6-11",
+    "P6-12",
+    "P6-13",
+    "P6-14",
+    "P6-15",
+    "P6-16",
+    "P7-01",
+    "P7-02",
+    "P7-03",
+    "P7-04"
+   ],
+   "difficulty": "—",
+   "suggested": "你",
+   "you": "你来做",
+   "effort": "约 4 小时，加上完整的一天",
+   "prs": [],
+   "status": "blocked",
+   "waiting_on": [
+    "P2-05",
+    "P2-06",
+    "P2-07",
+    "P3-02",
+    "P3-05",
+    "P3-06",
+    "P4-01",
+    "P4-02",
+    "P4-03",
+    "P4-05",
+    "P4-06",
+    "P5-03",
+    "P5-04",
+    "P5-05",
+    "P5-06",
+    "P5-07",
+    "P5-08",
+    "P5-10",
+    "P5-11",
+    "P5-12",
+    "P5-13",
+    "P5-14",
+    "P5-15",
+    "P5-16",
+    "P5-17",
+    "P5-18",
+    "P5-19",
+    "P5-20",
+    "P5-22",
+    "P5-23",
+    "P5-24",
+    "P5-25",
+    "P5-26",
+    "P5-27",
+    "P5-28",
+    "P5-29",
+    "P5-30",
+    "P5-31",
+    "P6-01",
+    "P6-02",
+    "P6-03",
+    "P6-04",
+    "P6-05",
+    "P6-06",
+    "P6-07",
+    "P6-08",
+    "P6-09",
+    "P6-10",
+    "P6-11",
+    "P6-12",
+    "P6-13",
+    "P6-14",
+    "P6-15",
+    "P6-16",
+    "P7-01",
+    "P7-02",
+    "P7-03",
+    "P7-04"
+   ],
+   "status_label": "等依赖"
+  }
+ ]
+}
