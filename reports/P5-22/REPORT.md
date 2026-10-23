@@ -1,6 +1,6 @@
 # P5-22 终端契约变更 — 报告
 
-> 最新修订：针对 0dc5e87 复审的 A1 字典丢键问题见 [REVISION-2.md](REVISION-2.md)。工作区现为 D:\Dev\nemu-wt\P5-22；后续审查由用户转交独立 Codex 会话，本轮只在 PR 写「请审查」，不联系其他执行者。下文及 REVISION-1 保留各次交付的历史事实。
+> 最新修订：A1 已修复并通过本机验收，见 [REVISION-2.md](REVISION-2.md)；整体部分完成（[BLOCKED.md](BLOCKED.md)：Windows runner 离线，用户暂时无法启动）。工作区现为 D:\Dev\nemu-wt\P5-22；PR 保持草稿/needs-user，由用户转交独立 Codex 会话，本轮只在 PR 写「请审查」并停下。下文及 REVISION-1 保留历史事实。
 
 > 当前修订：Claude 首轮审查的 B1、B2、D1 已修改，完整验收和字节证据见 [REVISION-1.md](REVISION-1.md)。下文保留首轮交付记录；最新数量为 443 合法、457 非法、18 Unicode 向量，三语言各 10,702 例通过。合并最新 origin/main=47ee284 后完成本轮检查，仍等待 Claude 复审及用户批准。
 

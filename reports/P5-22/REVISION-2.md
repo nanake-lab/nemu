@@ -2,7 +2,7 @@
 
 ## 结果与位置
 
-修复复审针对 0dc5e87 的唯一新增阻塞 A1。审查意见：https://github.com/nanake-lab/nemu/pull/57#issuecomment-6342345330 。独立会话审查及用户批准仍待完成；保留 needs-user，执行者不合并。
+已修复复审针对 0dc5e87 的唯一新增代码阻塞 A1；本机验收完成，整体交付部分完成（见 BLOCKED.md：Windows runner 离线，用户暂时无法启动）。审查意见：https://github.com/nanake-lab/nemu/pull/57#issuecomment-6342345330 。独立会话审查及用户批准仍待完成；PR 保持草稿及 needs-user，执行者不合并。
 
 工作区已从 D:\Dev\nemu-p522 迁到用户指定的 D:\Dev\nemu-wt\P5-22，保留同一任务分支。已合并最新 origin/main=876cff7211389f7058668dfb2b9592634d517abc（原先落后的 #63、#58 两个提交），合并提交 870ead6。本轮检查在合并后执行。历史证据仍保留当时的原始路径，未改写。
 
@@ -71,6 +71,8 @@
 针对两个新增 A1 向量又独立调用三语言探针，完整 value/规范字节/Protobuf/摘要与冻结预期逐项相同，0 差异；见 revision-2-resource-vectors.json / .log。复现：`python reports/P5-22/verify-resource-vectors.py reports/P5-22/<新文件>.json`。该证据与 TypeScript 资源→wire→冻结字节测试相连，证明实际资源投影保留这些条目，未只验证直接 wire 输入。
 
 CI 的最终 head、结果和链接以 PR 回复记录为准；全部验收完成前保持草稿。
+
+修复代码提交 fc5f6dab4d53dd673b0906844ecb66e5d231eb0c；Windows run 39910022507 因 runner 离线排队，用户明确暂时无法启动，未记为通过。本轮结尾的文档提交只记录这一阻塞，不修改该受测代码。
 
 ## 限制与下一步
 
