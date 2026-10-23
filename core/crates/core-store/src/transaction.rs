@@ -11,7 +11,7 @@ use core_types::{
     contract::Schema,
     generated::{
         CoreCommitResultV2, CoreTransactionV2, DegradedStatus, EventEnvelope, FastStateSnapshotV2,
-        ObjectRef, ProposalBindingV2, RSnapshotV2, ThetaSnapshot,
+        ObjectRef, ProposalBindingV2, ThetaSnapshot,
     },
     scalar::hex,
 };
@@ -110,6 +110,14 @@ impl<L: LineageKind> Store<L> {
         ticket: ReadTicket<L>,
         value: CoreTransactionV2,
     ) -> Result<PreparedTransaction<L>> {
+        self.stage_with_replay(ticket, value, false)
+    }
+    pub(crate) fn stage_with_replay(
+        &self,
+        ticket: ReadTicket<L>,
+        value: CoreTransactionV2,
+        rebuilt_from_h: bool,
+    ) -> Result<PreparedTransaction<L>> {
         let limits = self.objects.config.encoding;
         require(
             Arc::ptr_eq(&ticket.pinned.pins, &self.objects.pins),
@@ -142,7 +150,17 @@ impl<L: LineageKind> Store<L> {
             x.anchor_time_ns == value.anchor_time_ns,
             "staged x has wrong anchor",
         )?;
-        RSnapshotV2::from_canonical(&self.objects.read(&value.staged_r)?, limits)?;
+        if let Some(old) = self.current()? {
+            require(
+                rebuilt_from_h
+                    || matches!(
+                        crate::r_state::StoredR::read(&self.objects, &old.staged_r)?,
+                        crate::r_state::StoredR::V3(_)
+                    ),
+                "V2 to V3 requires full H replay",
+            )?;
+        }
+        crate::r_validation::validate_new(&self.db, &self.objects, &value)?;
         self.fault.hit(FaultPoint::GStaged)?;
         ThetaSnapshot::from_canonical(&self.objects.read(&value.staged_theta)?, limits)?;
         self.fault.hit(FaultPoint::CStaged)?;
@@ -181,6 +199,7 @@ impl<L: LineageKind> Store<L> {
             .lock()
             .map_err(|_| Error::Rejected("retention lock poisoned"))?;
         self.check_binding(&staged.ticket.binding)?;
+        crate::r_validation::validate_new(&self.db, &self.objects, &staged.value)?;
         // Re-read every byte in the retained closure immediately before publish.
         // No other writer/GC can interleave while this store owns the writer lock.
         let mut refs = self.objects.closure(&staged.snapshot.reference)?;
@@ -290,7 +309,7 @@ impl<L: LineageKind> Store<L> {
                 .collect(),
         })
     }
-    fn check_binding(&self, binding: &ProposalBindingV2) -> Result<()> {
+    pub(crate) fn check_binding(&self, binding: &ProposalBindingV2) -> Result<()> {
         let limits = self.objects.config.encoding;
         binding.canonical_bytes(limits)?;
         let (_, processed, anchor) = self.head()?;
@@ -321,12 +340,12 @@ impl<L: LineageKind> Store<L> {
         if let Some(old) = self.current()? {
             let x =
                 FastStateSnapshotV2::from_canonical(&self.objects.read(&old.staged_x)?, limits)?;
-            let r = RSnapshotV2::from_canonical(&self.objects.read(&old.staged_r)?, limits)?;
+            let r = crate::r_state::StoredR::read(&self.objects, &old.staged_r)?;
             let theta =
                 ThetaSnapshot::from_canonical(&self.objects.read(&old.staged_theta)?, limits)?;
             require(
                 binding.x_revision == x.revision
-                    && binding.r_revision == r.revision
+                    && binding.r_revision == r.revision()
                     && binding.theta_revision == theta.revision,
                 "stale state revisions",
             )?;
