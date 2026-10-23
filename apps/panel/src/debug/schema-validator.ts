@@ -9,6 +9,7 @@ export interface ValidationResult {
 }
 
 export const STAGE_COMMAND_PRESETS: Record<StageCommandType, Record<string, unknown>> = {
+  'stage.readout.v2': { readout: { version: 'readout-v2-preview', facing: 0.5, tension: 0, energy: 0.5 } },
   'stage.perform': {
     cue: {
       kind: 'emo',
