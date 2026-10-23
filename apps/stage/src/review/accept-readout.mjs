@@ -7,9 +7,10 @@ import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 
-const videoMode = process.argv.includes('--videos');
+const probeMode = process.argv.includes('--probe-video');
+const videoMode = process.argv.includes('--videos') || probeMode;
 const root = resolve('reports/P3-06');
-const run = videoMode ? 'videos' : 'preview-final';
+const run = probeMode ? 'video-probe' : videoMode ? 'videos-final' : 'preview-final';
 const directory = resolve(root, run);
 await mkdir(directory, { recursive: true });
 const vrmPath = process.env.NEMU_P306_VRM;
@@ -38,7 +39,9 @@ const server = await createServer({
 let browser;
 const evidence = { mode: run, startedAt: new Date().toISOString(), assetHashes, profileIdleSet: profile.idleSet,
   groups, results: [], browserErrors: [],
-  basePose: 'capture-only synthetic neutral-arm fixture; source profile idleSet is unchanged; not motion-library acceptance' };
+  basePose: 'capture-only synthetic neutral-arm fixture; source profile idleSet is unchanged; not motion-library acceptance',
+  recordingWallSeconds: probeMode ? 4 : videoMode ? 181 : 0,
+  recordingBackground: 'opaque #f4f3f5 canvas composite' };
 function assertRunnerIdle() {
   const result = execFileSync('powershell.exe', ['-NoProfile', '-Command',
     "@(Get-Process Runner.Worker -ErrorAction SilentlyContinue).Count"], { encoding: 'utf8', windowsHide: true });
@@ -111,10 +114,20 @@ try {
         return window.__reviewApp.readoutApplicator.getCurrentReadout(); });
       assert.equal(reset.facing, 0.5); assert.equal(reset.tension, 0); assert.equal(reset.energy, 0.5);
     } else {
-      await page.evaluate(() => {
+      await page.evaluate(recordingMs => {
         const app = window.__reviewApp; app.setBackgroundPreset('gradient'); app.start();
         const canvas = document.getElementById('review-canvas');
-        const stream = canvas.captureStream(15);
+        // Encode an opaque 2D composite; direct transparent WebGL capture can corrupt VP8 edges.
+        const capture = document.createElement('canvas');
+        capture.width = canvas.width; capture.height = canvas.height;
+        const context = capture.getContext('2d', { alpha: false });
+        let drawFrame;
+        const draw = () => {
+          context.fillStyle = '#f4f3f5'; context.fillRect(0, 0, capture.width, capture.height);
+          context.drawImage(canvas, 0, 0); drawFrame = requestAnimationFrame(draw);
+        };
+        draw();
+        const stream = capture.captureStream(15);
         const recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp8', videoBitsPerSecond: 1500000 });
         const chunks = [];
         window.__p306Recording = new Promise((resolveVideo, reject) => {
@@ -125,11 +138,14 @@ try {
             const reader = new FileReader();
             reader.onload = () => resolveVideo(String(reader.result).split(',')[1]);
             reader.readAsDataURL(blob); stream.getTracks().forEach(track => track.stop());
+            cancelAnimationFrame(drawFrame);
           };
         });
-        recorder.start(1000); setTimeout(() => recorder.stop(), 180000);
-      });
-      for (let second = 30; second <= 180; second += 30) {
+        // Keep a one-second capture buffer: the first encoded frame can start after recorder.start.
+        recorder.start(1000); setTimeout(() => recorder.stop(), recordingMs);
+      }, probeMode ? 4000 : 181000);
+      if (probeMode) await new Promise(resolveTick => setTimeout(resolveTick, 4000));
+      for (let second = 30; !probeMode && second <= 180; second += 30) {
         await new Promise(resolveTick => setTimeout(resolveTick, 30000));
         assertRunnerIdle(); console.log(`Group ${group.id}: ${second}/180 wall-clock seconds`);
       }
