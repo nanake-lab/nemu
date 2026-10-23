@@ -3513,6 +3513,10 @@
       ],
       "file": "law.proto",
       "rules": {},
+      "superseded": {
+        "by": "EvidenceAllocationV3",
+        "reason": "P5-34 (ADR 0021): explicit actual retention and absolute evidence"
+      },
       "supersedes": "EvidenceAllocation"
     },
     "EvidenceGroupV2": {
@@ -3584,6 +3588,10 @@
       ],
       "file": "law.proto",
       "rules": {},
+      "superseded": {
+        "by": "EvidenceGroupV3",
+        "reason": "P5-34 (ADR 0021): explicit actual retention and absolute evidence"
+      },
       "supersedes": "EvidenceGroup",
       "reserved": [
         7
@@ -3740,6 +3748,10 @@
       ],
       "file": "law.proto",
       "rules": {},
+      "superseded": {
+        "by": "TendencyV3",
+        "reason": "P5-34 (ADR 0021): explicit actual retention and absolute evidence"
+      },
       "supersedes": "Tendency"
     },
     "RSnapshotV2": {
@@ -3782,9 +3794,394 @@
       ],
       "file": "law.proto",
       "rules": {},
+      "superseded": {
+        "by": "RSnapshotV3",
+        "reason": "P5-34 (ADR 0021): explicit actual retention and absolute evidence"
+      },
       "supersedes": "RSnapshot",
       "reserved": [
         4
+      ]
+    },
+    "EvidenceAllocationV3": {
+      "tag": "echo.evidence-allocation-v3",
+      "source": "v2.0 §5.2 S_{c,k}, weight factors, shares, r_k; LP2, I25; ADR 0019, ADR 0021",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "support",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "intensity",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "share",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "ordinal",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "mu",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "projection",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "actual_retention",
+          "type": "double",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        }
+      ],
+      "file": "law.proto",
+      "rules": {
+        "positive": [
+          "actual_retention"
+        ]
+      },
+      "supersedes": "EvidenceAllocationV2"
+    },
+    "EvidenceGroupV3": {
+      "tag": "echo.evidence-group-v3",
+      "source": "v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; ADR 0019, ADR 0021",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "group_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "members",
+          "type": "string",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "source_key",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "credibility",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "verifiability",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "allocations",
+          "type": "EvidenceAllocationV3",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "tendency_id"
+        }
+      ],
+      "file": "law.proto",
+      "rules": {},
+      "supersedes": "EvidenceGroupV2",
+      "reserved": [
+        7,
+        8
+      ]
+    },
+    "TendencyV3": {
+      "tag": "echo.tendency-v3",
+      "source": "v2.0 §5.2, §5.3 corollary 7, §7, §10; ADR 0019, ADR 0021",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "concept",
+          "type": "ConceptRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "predicate",
+          "type": "TrilingualText",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "direction",
+          "type": "NatureVector",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "evidence_a",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "evidence_b",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "h_hat",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "group_count",
+          "type": "uint64",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "flip_count",
+          "type": "uint64",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "last_sign",
+          "type": "EvidenceSign",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "pi",
+          "type": "double",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "typical_magnitude",
+          "type": "double",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "relation",
+          "type": "PersonRelation",
+          "number": 14,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "attachment_prior",
+          "type": "double",
+          "number": 15,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "magnitude_sum",
+          "type": "double",
+          "number": 16,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "magnitude_weight",
+          "type": "double",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "evidence_absolute",
+          "type": "double",
+          "number": 18,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "law.proto",
+      "rules": {
+        "at_least_abs": {
+          "evidence_absolute": "evidence_a"
+        }
+      },
+      "supersedes": "TendencyV2"
+    },
+    "RSnapshotV3": {
+      "tag": "echo.r-snapshot-v3",
+      "source": "v2.0 §2.1, §2.2, §7; ADR 0019, ADR 0021",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendencies",
+          "type": "TendencyV3",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "tendency_id"
+        }
+      ],
+      "file": "law.proto",
+      "rules": {},
+      "supersedes": "RSnapshotV2",
+      "reserved": [
+        4,
+        5
       ]
     },
     "ThetaValues": {

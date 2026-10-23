@@ -7,9 +7,10 @@
 //! v2.0 states between law parameters. They read nothing but their argument.
 use crate::contract::{Result, require};
 use crate::generated::{
-    EvidenceGroupV2, EvidenceSign, GenesisManifestV2, LawParameters, NatureScale, NatureVector,
-    PersonRelation, RelationKind, SituationMatchRecord, Tendency, TendencyCandidateRecord,
-    TendencyChange, TendencyV2, ThetaSnapshot, ThetaValues,
+    EvidenceAllocationV3, EvidenceGroupV2, EvidenceGroupV3, EvidenceSign, GenesisManifestV2,
+    LawParameters, NatureScale, NatureVector, PersonRelation, RelationKind, SituationMatchRecord,
+    Tendency, TendencyCandidateRecord, TendencyChange, TendencyV2, TendencyV3, ThetaSnapshot,
+    ThetaValues,
 };
 use std::cmp::Ordering;
 
@@ -158,6 +159,131 @@ pub fn check_allocation_ordinals(t: &TendencyV2, groups: &[EvidenceGroupV2]) -> 
         .filter(|a| a.tendency_id == t.tendency_id)
         .map(|a| a.ordinal.0)
         .collect();
+    ordinals.sort_unstable();
+    require(
+        u64::try_from(ordinals.len()).is_ok_and(|n| n == t.group_count.0),
+        "allocation count differs from the group count",
+    )?;
+    require(
+        ordinals.iter().zip(0u64..).all(|(o, i)| *o == i),
+        "allocation ordinals are not 0..N-1 exactly once",
+    )
+}
+
+/// P5-34 / ADR 0021: q is the historical multiplier, never inferred from current support.
+pub fn check_allocation_v3(a: &EvidenceAllocationV3) -> Result<()> {
+    require(
+        a.actual_retention.is_finite() && a.actual_retention > 0.0 && a.actual_retention <= 1.0,
+        "actual retention must lie in (0, 1]",
+    )
+}
+
+/// Local V3 invariants. Context-dependent B/pi/r consistency is checked separately
+/// with the bound law parameters, never by recovering c from rounded B-V.
+pub fn check_tendency_v3(t: &TendencyV3) -> Result<()> {
+    require(
+        [
+            t.evidence_a,
+            t.evidence_b,
+            t.evidence_absolute,
+            t.h_hat,
+            t.pi,
+            t.typical_magnitude,
+            t.magnitude_sum,
+            t.magnitude_weight,
+        ]
+        .iter()
+        .all(|v| v.is_finite())
+            && t.attachment_prior.is_none_or(|p| p.is_finite() && p >= 0.0),
+        "nonfinite or invalid tendency scalar",
+    )?;
+    check_counts(&Counts {
+        direction: &t.direction,
+        pi: t.pi,
+        a: t.evidence_a,
+        b: t.evidence_b,
+        groups: t.group_count.0,
+        flips: t.flip_count.0,
+        last_sign: t.last_sign,
+        prior: t.attachment_prior,
+        relation: t.relation.as_ref(),
+    })?;
+    require(
+        t.evidence_absolute >= t.evidence_a.abs(),
+        "V must not be below |A|",
+    )?;
+    require((0.0..1.0).contains(&t.h_hat), "h must lie in [0, 1)")?;
+    require(
+        t.group_count.0 < (1u64 << 53) && t.flip_count.0 < (1u64 << 53),
+        "count precision exhausted",
+    )?;
+    require(
+        t.magnitude_weight >= 0.0 && t.typical_magnitude >= 0.0,
+        "negative magnitude weight or magnitude",
+    )?;
+    require(
+        t.group_count.0 > 0 || (t.magnitude_sum == 0.0 && t.magnitude_weight == 0.0),
+        "magnitude sums before the first group",
+    )?;
+    require(
+        t.magnitude_weight != 0.0 || t.typical_magnitude == 0.0,
+        "typical magnitude without magnitude weight",
+    )
+}
+
+/// ADR 0019 §8: exact binary64 grouping; P+B is not a substitute for (P+c)+V.
+/// The caller must bind p to the tendency's law resource before calling this pure check.
+pub fn check_tendency_v3_with_parameters(t: &TendencyV3, p: &LawParameters) -> Result<()> {
+    check_tendency_v3(t)?;
+    check_law_parameters(p)?;
+    require(
+        p.kappa1.is_finite() && p.kappa1 >= 0.0 && p.r_max.is_finite() && p.r_max >= 0.0,
+        "invalid contextual law parameter",
+    )?;
+    let conditions = u32::try_from(t.predicate.len()).map_err(|_| "predicate count overflow")?;
+    let kappa = p.kappa1 * f64::from(conditions);
+    let c = p.n0 + kappa;
+    let prior = t.attachment_prior.unwrap_or(0.0);
+    let anchor = prior + c;
+    let denominator = anchor + t.evidence_absolute;
+    let numerator = prior + t.evidence_a;
+    let b = c + t.evidence_absolute;
+    require(
+        [kappa, c, anchor, denominator, numerator, b]
+            .iter()
+            .all(|v| v.is_finite())
+            && c > 0.0,
+        "nonfinite contextual evidence",
+    )?;
+    require(t.evidence_b == b, "B differs from c+V")?;
+    require(
+        t.pi == numerator / denominator,
+        "pi differs from (P+A)/((P+c)+V)",
+    )?;
+    let r = if t.magnitude_weight == 0.0 {
+        0.0
+    } else {
+        let mean = t.magnitude_sum / t.magnitude_weight;
+        require(mean.is_finite(), "nonfinite magnitude mean")?;
+        mean.clamp(0.0, p.r_max)
+    };
+    require(
+        t.typical_magnitude == r,
+        "typical magnitude differs from clipped M/U",
+    )
+}
+
+/// V3 replay order is still exactly 0..N-1, retaining P5-32's check for old bytes.
+pub fn check_allocation_ordinals_v3(t: &TendencyV3, groups: &[EvidenceGroupV3]) -> Result<()> {
+    let mut ordinals = Vec::new();
+    for a in groups
+        .iter()
+        .flat_map(|g| &g.allocations)
+        .filter(|a| a.tendency_id == t.tendency_id)
+    {
+        check_allocation_v3(a)?;
+        ordinals.push(a.ordinal.0);
+    }
     ordinals.sort_unstable();
     require(
         u64::try_from(ordinals.len()).is_ok_and(|n| n == t.group_count.0),
