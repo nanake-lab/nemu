@@ -225,3 +225,16 @@ Trace 的引擎时钟从参考 prompt 准备完成后开始，开发表是热 pr
 验收后 CPU/桌面检查：`pnpm lint`、`pnpm typecheck`、`pnpm test`（454 项）、`pnpm tts:schema`、`pnpm test:contracts`（315 项，100% statements）、`pnpm test:tts`（42 项通过、1 个 GPU smoke 按默认策略跳过）、严格 mypy（34 文件）、Ruff、`pnpm test:e2e`（3 项，包括 shell 守护检查）均通过。e2e 证据在 `optimized-e2e-20261023/`。GPU smoke 的跳过原因为未设置 `NEMU_RUN_TTS_GPU_TESTS=1`，CI 不下载模型/分配 CUDA；真实 GPU 正式测量另由上表记录。
 
 PR #45 保持 draft 和 needs-user，不转可审查、不合并。待下一次独占安静窗口重测两个变体：三语各 20 句、取消、ADR 显存、30 分钟/必要时两小时压力；旧失败数据不覆盖。云端延迟仍不测。
+## 2026-10-23 CI 修复与 D 盘迁移
+
+`25e3d74` 的 Ubuntu Python step 因 Linux typeshed 不提供 Windows 专用 ctypes 属性及 CREATE_NO_WINDOW 失败。修复提交 `dc07044` 使用 sys.platform 平台守卫与受保护的启动标志；没有忽略 mypy 错误、修改验收阈值或删除测试。Ubuntu run 39893501347 已成功（ci-dc07044.json）。
+
+迁移前修复已提交推送，之后用 git worktree add 创建 `D:\Dev\nemu-wt\P4-02`，原任务分支在此继续。sidecar .venv 用 D 盘 Python 3.12.14 重建；uv/npm/pnpm/Hugging Face/Torch/Inductor/Triton 和本卡 Cargo target 的用户级缓存路径设为 D:\Dev\cache 下。模型在新工作树 services/voice-sidecar/.cache/models；既有推理 probe 位于 D:\Dev\nemu-p007，未运行 GPU 推理。旧环境备份在 D:\Dev\cache\p4-02 下。
+
+模型、本卡缓存及原报告共 5,064 文件、19,072,548,377 字节逐文件 SHA-256 一致，见 migration-byte-verification-20261023.json。原始报告字节额外保存在 D:\Dev\cache\p4-02\original-reports；D:\Dev\p4-02-gpu-evidence-20261023 原始测量目录未删除。迁移不改变此前失败的测量结论。
+
+迁移后四项目依次完成 uv sync --locked、ruff、严格 mypy、额外 Linux 平台 mypy、pytest、uv build；前三项目各 1 项通过，sidecar 42 通过/1 个 opt-in GPU smoke 跳过。migration-python-checks.log 保存完整输出。D 盘 pnpm frozen-lockfile 安装、lint/typecheck 和 454 项测试通过（migration-*.log）。本次没有运行 GPU 测量或请求其他执行者审查。
+
+旧工作树已从 Git 注销，但残余依赖链接使 Git 删除目录失败；本卡模型和数据已迁移。共享旧 uv cache 的占用文件禁止整体移动/重命名，逐文件迁移结果另见迁移状态补记。新的工作和缓存只使用 D 盘。PR #45 保持 draft/needs-user，GPU 压力和显存阻塞继续保留；正式重测须先另约安静窗口，最多预留两变体各两小时。
+
+迁移状态补记：旧工作树已注销且数据搬迁完毕，残余 2 个占用文件共 6,100,992 B；旧 uv cache 剩余 75 文件共 77,926,912 B（主要为已加载动态库/锁），完整缓存副本和旧缓存原件均在 D 盘保留。未终止其他进程以强制解锁，旧 C 目录因此仍存在，不声称物理文件已完全清零。逐文件移动日志为 migration-uv-move.log / migration-old-worktree-move.log。C 盘可用空间由约 16.4 GiB 升至 49.6 GiB。所有新环境和缓存使用 D 盘；sidecar sys.executable/base_prefix/import 路径均已核对为 D，原生 RSS API 返回有效值。迁移后的 Windows/Electron e2e 本次未重跑（前一轮已通过），本次完成用户要求的四项目 Python CI 检查和 TS 静态/单元验证。
