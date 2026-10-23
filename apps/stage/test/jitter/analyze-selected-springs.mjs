@@ -1,10 +1,12 @@
 // Diagnostic frequency bands only: no acceptance threshold is defined here.
 import { readFile, writeFile } from 'node:fs/promises';
 import { gunzipSync } from 'node:zlib';
-const directory = 'reports/P2-05/selected-B';
-const raw = JSON.parse(gunzipSync(await readFile(`${directory}/jitter-B.json.gz`)).toString('utf8'));
+const directory = process.argv[2] ?? 'reports/P2-05/selected-B';
+const trace = process.argv[3] ?? 'jitter-B.json.gz';
+const raw = JSON.parse(gunzipSync(await readFile(`${directory}/${trace}`)).toString('utf8'));
 const result = { reportingBandHz: 15, bandIsAcceptanceThreshold: false, regions: {} };
 for (const region of ['hair', 'tail', 'ear', 'skirt']) {
+  if (!raw.regions[region]) continue;
   const peak = raw.regions[region].peak;
   const index = raw.jointNames.indexOf(peak.bone), n = 240;
   const start = Math.max(120, Math.min(peak.frame - n / 2, 3600 - n));
