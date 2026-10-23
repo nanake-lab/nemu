@@ -1,0 +1,281 @@
+$ pnpm build && playwright test --config apps/desktop/playwright.config.ts
+$ pnpm -r build
+executors/codex-bridge build$ tsc -p tsconfig.json
+packages/log build$ tsc -p tsconfig.json
+packages/contracts build$ tsc -p tsconfig.json
+packages/desktop-sense build$ tsc -p tsconfig.json
+packages/desktop-sense build: Done
+packages/terminal build$ tsc -p tsconfig.json
+packages/log build: Done
+spikes/stage-overlay build$ electron-vite build
+executors/codex-bridge build: Done
+spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+spikes/stage-overlay build: transforming...
+spikes/stage-overlay build: ✓ 1 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+packages/terminal build: Done
+spikes/stage-overlay build: out/main/index.js  8.46 kB
+spikes/stage-overlay build: ✓ built in 116ms
+spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+spikes/stage-overlay build: transforming...
+spikes/stage-overlay build: ✓ 1 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: out/preload/index.cjs  1.33 kB
+spikes/stage-overlay build: ✓ built in 13ms
+spikes/stage-overlay build: vite v7.3.7 building client environment for production...
+spikes/stage-overlay build: transforming...
+packages/contracts build: Done
+packages/avatar-runtime build$ tsc -p tsconfig.json
+apps/panel build$ vite build
+packages/body build$ tsc -p tsconfig.json
+apps/panel build: vite v7.3.7 building client environment for production...
+apps/panel build: transforming...
+spikes/stage-overlay build: ✓ 8 modules transformed.
+apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/panel build: 
+apps/panel build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/panel build: 
+apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/panel build: 
+apps/panel build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/panel build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/panel build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/panel build: 
+apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: ../../out/renderer/index.html                    6.52 kB
+spikes/stage-overlay build: ../../out/renderer/assets/index-P4FdMocT.js  1,448.72 kB
+spikes/stage-overlay build: ✓ built in 1.97s
+spikes/stage-overlay build: Done
+packages/voice build$ tsc -p tsconfig.json
+apps/panel build: ✓ 153 modules transformed.
+apps/panel build: rendering chunks...
+apps/panel build: computing gzip size...
+apps/panel build: dist/index.html                   0.64 kB │ gzip:   0.39 kB
+apps/panel build: dist/assets/index-ibGTfxG7.css    8.91 kB │ gzip:   2.32 kB
+apps/panel build: dist/assets/index-5_Z9JtZW.js   473.33 kB │ gzip: 125.63 kB
+apps/panel build: ✓ built in 2.28s
+apps/panel build: Done
+tools/asset-lint build$ pnpm --filter @nemu/contracts build && tsc -p tsconfig.json
+packages/body build: Done
+tools/asset-lint build: $ tsc -p tsconfig.json
+packages/avatar-runtime build: Done
+apps/stage build$ vite build
+apps/stage build: vite v7.3.7 building client environment for production...
+apps/stage build: transforming...
+packages/voice build: Done
+apps/desktop build$ electron-vite build
+apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/stage build: 
+apps/stage build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/stage build: 
+apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/stage build: 
+apps/stage build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/stage build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/stage build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/stage build: 
+apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: vite v7.3.7 building ssr environment for production...
+apps/desktop build: transforming...
+apps/desktop build: ✓ 51 modules transformed.
+apps/desktop build: rendering chunks...
+apps/desktop build: out/main/voice.js                   21.39 kB
+apps/desktop build: out/main/index.js                   58.43 kB
+apps/desktop build: out/main/chunks/cache-DIqV0g3_.js  170.68 kB
+apps/desktop build: ✓ built in 506ms
+apps/desktop build: vite v7.3.7 building ssr environment for production...
+apps/desktop build: transforming...
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/desktop build: 
+apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/desktop build: 
+apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/stage build: ✓ 182 modules transformed.
+apps/desktop build: ✓ 116 modules transformed.
+apps/desktop build: rendering chunks...
+apps/stage build: rendering chunks...
+apps/desktop build: out/preload/panel.cjs    0.31 kB
+apps/desktop build: out/preload/stage.cjs  376.12 kB
+apps/desktop build: ✓ built in 662ms
+apps/desktop build: vite v7.3.7 building client environment for production...
+apps/desktop build: transforming...
+apps/stage build: computing gzip size...
+apps/stage build: dist/index.html                     0.76 kB │ gzip:   0.43 kB
+apps/stage build: dist/review.html                   15.07 kB │ gzip:   3.34 kB
+apps/stage build: dist/assets/stage-j6owz3Q9.css      0.50 kB │ gzip:   0.29 kB
+apps/stage build: dist/assets/review-CW6rIG6O.css     5.07 kB │ gzip:   1.60 kB
+apps/stage build: dist/assets/stage-DDKNgBrI.js      13.14 kB │ gzip:   4.42 kB
+apps/stage build: dist/assets/review-aX1i9fjA.js     26.48 kB │ gzip:   7.99 kB
+apps/stage build: dist/assets/profiles-C9dOUGIT.js  983.33 kB │ gzip: 241.05 kB
+apps/stage build: 
+apps/stage build: (!) Some chunks are larger than 500 kB after minification. Consider:
+apps/stage build: - Using dynamic import() to code-split the application
+apps/stage build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+apps/stage build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+apps/stage build: ✓ built in 2.71s
+apps/stage build: Done
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/desktop build: 
+apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/desktop build: 
+apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+tools/asset-lint build: Done
+apps/desktop build: ✓ 187 modules transformed.
+apps/desktop build: rendering chunks...
+apps/desktop build: desktop/out/renderer/panel/index.html                    0.72 kB
+apps/desktop build: desktop/out/renderer/stage/index.html                    0.77 kB
+apps/desktop build: desktop/out/renderer/stage/asr-mic-worklet.js            1.37 kB
+apps/desktop build: desktop/out/renderer/assets/stage-DABzvroO.css           0.66 kB
+apps/desktop build: desktop/out/renderer/assets/panel-Bf-HAcZX.css          11.36 kB
+apps/desktop build: desktop/out/renderer/assets/proactivity-Dcg9s8G8.js    371.58 kB
+apps/desktop build: desktop/out/renderer/assets/panel-cPzMqcDv.js          698.28 kB
+apps/desktop build: desktop/out/renderer/assets/stage-DBSznvI4.js        1,557.39 kB
+apps/desktop build: ✓ built in 2.55s
+apps/desktop build: Done
+
+Running 5 tests using 1 worker
+
+(node:55860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  pw:browser <launching> "D:\Dev\nemu-wt\P4-02\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist\electron.exe" "-r" "D:\Dev\nemu-wt\P4-02\node_modules\.pnpm\playwright-core@1.64.0\node_modules\playwright-core\lib\server\electron\loader.js" "--inspect=0" "--remote-debugging-port=0" "D:\Dev\nemu-wt\P4-02\apps\desktop" "--use-gl=angle" "--use-angle=swiftshader" "--enable-unsafe-swiftshader"  +0ms
+  pw:browser <launched> pid=55936 +10ms
+  pw:browser [pid=55936][out]  +1s
+  pw:browser [pid=55936][err] Debugger listening on ws://127.0.0.1:64086/23ee6db0-0669-4719-9f49-aff474824e89 +45ms
+  pw:browser [pid=55936][err] For help, see: https://nodejs.org/learn/getting-started/debugging +1ms
+  pw:browser <ws connecting> ws://127.0.0.1:64086/23ee6db0-0669-4719-9f49-aff474824e89 +0ms
+  pw:browser <ws connected> ws://127.0.0.1:64086/23ee6db0-0669-4719-9f49-aff474824e89 +22ms
+  pw:browser [pid=55936][err] Debugger attached. +0ms
+  pw:browser [pid=55936][err]  +199ms
+  pw:browser [pid=55936][err] DevTools listening on ws://127.0.0.1:64088/devtools/browser/f829346e-1fb9-44c5-9f04-16a458dd6a5f +1ms
+  pw:browser <ws connecting> ws://127.0.0.1:64088/devtools/browser/f829346e-1fb9-44c5-9f04-16a458dd6a5f +0ms
+  pw:browser <ws connected> ws://127.0.0.1:64088/devtools/browser/f829346e-1fb9-44c5-9f04-16a458dd6a5f +6ms
+  pw:browser [pid=55936][out] [Stage HWND]: 0x1ac0b2a, bounds: { x: 100, y: 100, width: 400, height: 400 } +463ms
+  pw:browser [pid=55936][out] [Counter HWND]: 0xab1248, bounds: { x: 100, y: 100, width: 400, height: 400 } +1ms
+  pw:browser [pid=55936][err] (node:55956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set. +1ms
+  pw:browser [pid=55936][err] (Use `electron --trace-warnings ...` to show where the warning was created) +0ms
+[Layout Info] {
+  originX: 100,
+  originY: 100,
+  scaleFactor: 1,
+  transparentPhys: { x: 150, y: 150 },
+  characterPhys: { x: 375, y: 375 },
+  stageHwndHex: '0x1ac0b2a',
+  counterHwndHex: '0xab1248'
+}
+[NativeMouseMove] (x=150, y=150, isInitial=true) -> out: Window under cursor: 0x15705C6 'Chrome Legacy Window' PID=55956 | SendInputResult: 1 | Moved cursor to (150, 150) | 
+[NativeClicks] (x=150, y=150, count=50) -> out: Window under cursor: 0x15705C6 'Chrome Legacy Window' PID=55956 | SendInputResult: 1 | Clicked 50 times at (150, 150) | 
+Before assert, counterPage state: {
+  count: 50,
+  events: [
+    'pointerdown', 'mousedown',
+    'pointerup',   'mouseup',
+    'click',       'pointerdown',
+    'mousedown',   'pointerup',
+    'mouseup',     'click'
+  ]
+}
+[NativeMouseMove] (x=375, y=375, isInitial=false) -> out: Window under cursor: 0x15705C6 'Chrome Legacy Window' PID=55956 | SendInputResult: 1 | Moved cursor to (375, 375) | 
+[NativeClicks] (x=375, y=375, count=50) -> out: Window under cursor: 0x280FD4 'Chrome Legacy Window' PID=55956 | SendInputResult: 1 | Clicked 50 times at (375, 375) | 
+  pw:browser <ws disconnecting> ws://127.0.0.1:64086/23ee6db0-0669-4719-9f49-aff474824e89 +7s
+  pw:browser [pid=55936][err] Debugger ending on ws://127.0.0.1:64086/23ee6db0-0669-4719-9f49-aff474824e89 +1ms
+  pw:browser [pid=55936][err] For help, see: https://nodejs.org/learn/getting-started/debugging +1ms
+  pw:browser <ws disconnected> ws://127.0.0.1:64086/23ee6db0-0669-4719-9f49-aff474824e89 code=1005 reason= +1ms
+  pw:browser [pid=55936][err] [Desktop] Voice utility exited { code: 0 } +0ms
+  pw:browser <ws disconnected> ws://127.0.0.1:64088/devtools/browser/f829346e-1fb9-44c5-9f04-16a458dd6a5f code=1006 reason= +504ms
+  pw:browser [pid=55936] <process did exit: exitCode=0, signal=null> +11ms
+  pw:browser [pid=55936] starting temporary directories cleanup +0ms
+  pw:browser [pid=55936] finished temporary directories cleanup +1ms
+  ok 1 apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures (9.6s)
+  pw:browser <launching> "D:\Dev\nemu-wt\P4-02\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist\electron.exe" "-r" "D:\Dev\nemu-wt\P4-02\node_modules\.pnpm\playwright-core@1.64.0\node_modules\playwright-core\lib\server\electron\loader.js" "--inspect=0" "--remote-debugging-port=0" "D:\Dev\nemu-wt\P4-02\apps\desktop" "--use-gl=angle" "--use-angle=swiftshader" "--enable-unsafe-swiftshader"  +31ms
+  pw:browser <launched> pid=47944 +3ms
+  pw:browser [pid=47944][out]  +33ms
+  pw:browser [pid=47944][err] Debugger listening on ws://127.0.0.1:64108/b9880ef4-daa6-46a9-ab62-880576ecc97f +16ms
+  pw:browser [pid=47944][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms
+  pw:browser <ws connecting> ws://127.0.0.1:64108/b9880ef4-daa6-46a9-ab62-880576ecc97f +0ms
+  pw:browser <ws connected> ws://127.0.0.1:64108/b9880ef4-daa6-46a9-ab62-880576ecc97f +2ms
+  pw:browser [pid=47944][err] Debugger attached. +0ms
+  pw:browser [pid=47944][err]  +142ms
+  pw:browser [pid=47944][err] DevTools listening on ws://127.0.0.1:64110/devtools/browser/c6d7d1b6-fcc6-459d-9d72-c0345eda6c2f +0ms
+  pw:browser <ws connecting> ws://127.0.0.1:64110/devtools/browser/c6d7d1b6-fcc6-459d-9d72-c0345eda6c2f +0ms
+  pw:browser <ws connected> ws://127.0.0.1:64110/devtools/browser/c6d7d1b6-fcc6-459d-9d72-c0345eda6c2f +4ms
+  pw:browser <ws disconnecting> ws://127.0.0.1:64108/b9880ef4-daa6-46a9-ab62-880576ecc97f +1s
+  pw:browser <ws disconnected> ws://127.0.0.1:64108/b9880ef4-daa6-46a9-ab62-880576ecc97f code=1005 reason= +1ms
+  pw:browser [pid=47944][err] Debugger ending on ws://127.0.0.1:64108/b9880ef4-daa6-46a9-ab62-880576ecc97f +0ms
+  pw:browser [pid=47944][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms
+  pw:browser [pid=47944][err] [Desktop] Voice utility exited { code: 0 } +3ms
+  pw:browser [pid=47944][err] (node:37472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set. +1ms
+  pw:browser [pid=47944][err] (Use `electron --trace-warnings ...` to show where the warning was created) +0ms
+  pw:browser <ws disconnected> ws://127.0.0.1:64110/devtools/browser/c6d7d1b6-fcc6-459d-9d72-c0345eda6c2f code=1006 reason= +397ms
+  pw:browser [pid=47944] <process did exit: exitCode=0, signal=null> +10ms
+  pw:browser [pid=47944] starting temporary directories cleanup +0ms
+  pw:browser [pid=47944] finished temporary directories cleanup +1ms
+  ok 2 apps\desktop\tests\shell.spec.ts:12:1 › stage window shell properties, channel routing, panel summoning and clean process termination (4.1s)
+  pw:browser <launching> "D:\Dev\nemu-wt\P4-02\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist\electron.exe" "-r" "D:\Dev\nemu-wt\P4-02\node_modules\.pnpm\playwright-core@1.64.0\node_modules\playwright-core\lib\server\electron\loader.js" "--inspect=0" "--remote-debugging-port=0" "D:\Dev\nemu-wt\P4-02\apps\desktop" "--use-gl=angle" "--use-angle=swiftshader" "--enable-unsafe-swiftshader"  +2s
+  pw:browser <launched> pid=55552 +3ms
+  pw:browser [pid=55552][out]  +25ms
+  pw:browser [pid=55552][err] Debugger listening on ws://127.0.0.1:64119/a892794d-a81d-4142-b6c8-e50a51502f3e +14ms
+  pw:browser [pid=55552][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms
+  pw:browser <ws connecting> ws://127.0.0.1:64119/a892794d-a81d-4142-b6c8-e50a51502f3e +0ms
+  pw:browser <ws connected> ws://127.0.0.1:64119/a892794d-a81d-4142-b6c8-e50a51502f3e +2ms
+  pw:browser [pid=55552][err] Debugger attached. +0ms
+  pw:browser [pid=55552][err]  +133ms
+  pw:browser [pid=55552][err] DevTools listening on ws://127.0.0.1:64121/devtools/browser/77fb526b-19a8-40b8-ac86-627624e6a4b9 +0ms
+  pw:browser <ws connecting> ws://127.0.0.1:64121/devtools/browser/77fb526b-19a8-40b8-ac86-627624e6a4b9 +1ms
+  pw:browser <ws connected> ws://127.0.0.1:64121/devtools/browser/77fb526b-19a8-40b8-ac86-627624e6a4b9 +3ms
+  pw:browser <ws disconnecting> ws://127.0.0.1:64119/a892794d-a81d-4142-b6c8-e50a51502f3e +3s
+  pw:browser <ws disconnected> ws://127.0.0.1:64119/a892794d-a81d-4142-b6c8-e50a51502f3e code=1005 reason= +1ms
+  pw:browser [pid=55552][err] Debugger ending on ws://127.0.0.1:64119/a892794d-a81d-4142-b6c8-e50a51502f3e +0ms
+  pw:browser [pid=55552][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms
+  pw:browser [pid=55552][err] [Desktop] Voice utility exited { code: 0 } +2ms
+  pw:browser [pid=55552][err] (node:55556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set. +0ms
+  pw:browser [pid=55552][err] (Use `electron --trace-warnings ...` to show where the warning was created) +0ms
+  pw:browser <ws disconnected> ws://127.0.0.1:64121/devtools/browser/77fb526b-19a8-40b8-ac86-627624e6a4b9 code=1006 reason= +389ms
+  pw:browser [pid=55552] <process did exit: exitCode=0, signal=null> +11ms
+  pw:browser [pid=55552] starting temporary directories cleanup +0ms
+  pw:browser [pid=55552] finished temporary directories cleanup +1ms
+  ok 3 apps\desktop\tests\smoke.spec.ts:9:1 › two visible isolated windows; transparent stage; no core storage (3.1s)
+  -  4 apps\desktop\tests\voice-idle.spec.ts:8:1 › P4-01 60-second utility CPU with live silent PCM
+  pw:browser <launching> "D:\Dev\nemu-wt\P4-02\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist\electron.exe" "-r" "D:\Dev\nemu-wt\P4-02\node_modules\.pnpm\playwright-core@1.64.0\node_modules\playwright-core\lib\server\electron\loader.js" "--inspect=0" "--remote-debugging-port=0" "D:\Dev\nemu-wt\P4-02\apps\desktop" "--use-fake-device-for-media-stream" "--use-gl=angle" "--use-angle=swiftshader" "--enable-unsafe-swiftshader"  +956ms
+  pw:browser <launched> pid=17216 +9ms
+  pw:browser [pid=17216][out]  +23ms
+  pw:browser [pid=17216][err] Debugger listening on ws://127.0.0.1:64133/d338c5d3-23bc-4359-be4d-2fa4f41184ee +15ms
+  pw:browser [pid=17216][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms
+  pw:browser <ws connecting> ws://127.0.0.1:64133/d338c5d3-23bc-4359-be4d-2fa4f41184ee +0ms
+  pw:browser <ws connected> ws://127.0.0.1:64133/d338c5d3-23bc-4359-be4d-2fa4f41184ee +1ms
+  pw:browser [pid=17216][err] Debugger attached. +0ms
+  pw:browser [pid=17216][err]  +134ms
+  pw:browser [pid=17216][err] DevTools listening on ws://127.0.0.1:64135/devtools/browser/5f3cd561-c81a-49a0-a288-66d40ac7bc0c +0ms
+  pw:browser <ws connecting> ws://127.0.0.1:64135/devtools/browser/5f3cd561-c81a-49a0-a288-66d40ac7bc0c +0ms
+  pw:browser <ws connected> ws://127.0.0.1:64135/devtools/browser/5f3cd561-c81a-49a0-a288-66d40ac7bc0c +5ms
+  pw:browser <ws disconnecting> ws://127.0.0.1:64133/d338c5d3-23bc-4359-be4d-2fa4f41184ee +3s
+  pw:browser <ws disconnected> ws://127.0.0.1:64133/d338c5d3-23bc-4359-be4d-2fa4f41184ee code=1005 reason= +1ms
+  pw:browser [pid=17216][err] Debugger ending on ws://127.0.0.1:64133/d338c5d3-23bc-4359-be4d-2fa4f41184ee +0ms
+  pw:browser [pid=17216][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms
+  pw:browser [pid=17216][err] [Desktop] Voice utility exited { code: 0 } +12ms
+  pw:browser [pid=17216][err] (node:47020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set. +1ms
+  pw:browser [pid=17216][err] (Use `electron --trace-warnings ...` to show where the warning was created) +0ms
+  pw:browser <ws disconnected> ws://127.0.0.1:64135/devtools/browser/5f3cd561-c81a-49a0-a288-66d40ac7bc0c code=1006 reason= +53ms
+  pw:browser [pid=17216] <process did exit: exitCode=0, signal=null> +10ms
+  pw:browser [pid=17216] starting temporary directories cleanup +0ms
+  pw:browser [pid=17216] finished temporary directories cleanup +0ms
+  ok 5 apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable (4.2s)
+
+  1 skipped
+  4 passed (22.7s)
