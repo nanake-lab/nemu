@@ -42,13 +42,16 @@ export class IdlePreview {
     this.vrm.springBoneManager.reset();
   }
 
-  step(dt, turning) {
+  step(dt, turning, drive = {}) {
     this.elapsed += dt;
     this.basePose();
     // Optional fixture motion: +/-20 degrees, 16 s period. Ease toggle changes.
     this.turnBlend += ((turning ? 1 : 0) - this.turnBlend) * (1 - Math.exp(-dt * 3));
-    this.vrm.humanoid.getNormalizedBoneNode('hips').rotation.y =
-      this.turnBlend * Math.PI / 9 * Math.sin(this.elapsed * Math.PI / 8);
+    const hips = this.vrm.humanoid.getNormalizedBoneNode('hips');
+    hips.rotation.y = drive.yaw ?? this.turnBlend * Math.PI / 9 * Math.sin(this.elapsed * Math.PI / 8);
+    if (drive.x !== undefined) hips.position.x += drive.x;
+    if (drive.y !== undefined) hips.position.y += drive.y;
+    if (drive.headRoll !== undefined) this.vrm.humanoid.getNormalizedBoneNode('head').rotation.z = drive.headRoll;
     this.vrm.humanoid.update();
     this.vrm.scene.updateMatrixWorld(true);
     this.body.setGazeTarget(this.gaze);

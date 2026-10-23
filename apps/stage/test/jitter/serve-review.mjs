@@ -18,9 +18,9 @@ const fixture = {
   name: 'p205-candidate-review',
   configureServer(server) {
     server.middlewares.use(async (req, res, next) => {
-      const files = { '/p205/data': resolve(root, 'reports/P2-05/preview-data.json'), '/p205/nemu.vrm': resolve(data.modelDirectory, 'nemu.vrm'), '/p205/nemu.profile.json': resolve(data.modelDirectory, 'nemu.profile.json') };
+      const files = { '/p205/data': resolve(root, 'reports/P2-05/preview-data.json'), '/p205/nemu.vrm': resolve(data.modelDirectory, 'nemu.vrm'), '/p205/nemu.profile.json': resolve(data.modelDirectory, 'nemu.profile.json'), '/p205/heavy-comparison.mp4': resolve(root, 'reports/P2-05/heavy-comparison/A-B-C_same-motion_24s_30fps.mp4') };
       if (files[req.url] && req.method === 'GET') {
-        res.setHeader('Content-Type', req.url.endsWith('.vrm') ? 'application/octet-stream' : 'application/json');
+        res.setHeader('Content-Type', req.url.endsWith('.mp4') ? 'video/mp4' : req.url.endsWith('.vrm') ? 'application/octet-stream' : 'application/json');
         res.end(await readFile(files[req.url])); return;
       }
       if (req.url !== '/p205/save') return next();
@@ -57,7 +57,7 @@ const fixture = {
     });
   },
 };
-const server = await createServer({ root: resolve(root, 'apps/stage'), configFile: resolve(root, 'apps/stage/vite.config.ts'), plugins: [fixture], server: { host: '127.0.0.1', port: 5186, strictPort: true } });
+const server = await createServer({ root: resolve(root, 'apps/stage'), configFile: resolve(root, 'apps/stage/vite.config.ts'), plugins: [fixture], server: { host: '127.0.0.1', port: 5186, strictPort: true, hmr: false } });
 await server.listen();
 console.log('P2-05 review: http://127.0.0.1:5186/test/jitter/review.html');
 console.log('Paused by default. Diagnostic playback uses the GPU for 35 seconds; do not overlap a P4 quiet window.');

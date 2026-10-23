@@ -1,5 +1,6 @@
 import { ReviewApp } from '../../src/review/review-app.ts';
 import { IdlePreview } from './idle-preview.mjs';
+import { applySpringSettings } from './spring-settings.mjs';
 const data = await (await fetch('/p205/data')).json();
 const canvas = document.getElementById('review-canvas');
 const app = new ReviewApp(canvas, document.getElementById('viewport-container'));
@@ -9,7 +10,7 @@ app.stop();
 const vrm = app.currentVrm;
 if (vrm.meta.version !== 'P2-05-candidate-short-thick-standard') throw new Error(`Unexpected avatar ${vrm.meta.version}`);
 const labels = { hair: '头发', ear: '猫耳', tail: '尾巴', skirt: '裙摆' };
-let parameters = structuredClone(data.presets.standard);
+let parameters = structuredClone(data.presets.calm);
 let playing = false;
 let black = false;
 let animationId;
@@ -18,13 +19,6 @@ const idleToggle = document.getElementById('idle');
 const turnToggle = document.getElementById('slow-turn');
 window.__p205Idle = idle;
 const status = document.getElementById('status');
-function category(name) {
-  if (name.startsWith('NemuTail')) return 'tail';
-  if (name.startsWith('J_Sec_Hair') && (name.endsWith('_23') || name.endsWith('_24'))) return 'ear';
-  if (name.includes('Hair')) return 'hair';
-  if (name.includes('Skirt')) return 'skirt';
-  return null;
-}
 function render() { app.render(); }
 function reset() {
   playing = false;
@@ -35,16 +29,7 @@ function reset() {
 }
 function apply() {
   const resumeIdle = idleToggle.checked;
-  for (const joint of vrm.springBoneManager.joints) {
-    const kind = category(joint.bone.name);
-    if (!kind) continue;
-    const p = parameters[kind];
-    joint.settings.stiffness = p.stiffness;
-    joint.settings.dragForce = p.dragForce;
-    joint.settings.gravityPower = p.gravityPower;
-    // Config vectors use Blender axes; runtime vectors use glTF axes.
-    joint.settings.gravityDir.set(p.gravityDir[0], p.gravityDir[2], -p.gravityDir[1]);
-  }
+  applySpringSettings(vrm, parameters);
   reset();
   if (resumeIdle) startIdle();
 }

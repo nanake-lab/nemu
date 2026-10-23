@@ -16,7 +16,7 @@
       "ear": {
         "stiffness": 1.275,
         "dragForce": 0.35,
-        "gravityPower": 0.0,
+        "gravityPower": 0,
         "gravityDir": [
           0,
           0,
@@ -62,7 +62,7 @@
       "ear": {
         "stiffness": 1.7,
         "dragForce": 0.55,
-        "gravityPower": 0.0,
+        "gravityPower": 0,
         "gravityDir": [
           0,
           0,
@@ -82,7 +82,7 @@
         "hitRadiusM": 0.018
       },
       "skirt": {
-        "stiffness": 1.0,
+        "stiffness": 1,
         "dragForce": 0.55,
         "gravityPower": 0.04,
         "gravityDir": [
@@ -108,7 +108,7 @@
       "ear": {
         "stiffness": 2.295,
         "dragForce": 0.75,
-        "gravityPower": 0.0,
+        "gravityPower": 0,
         "gravityDir": [
           0,
           0,
@@ -131,6 +131,98 @@
         "stiffness": 1.35,
         "dragForce": 0.75,
         "gravityPower": 0.04,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      }
+    },
+    "heavyBalanced": {
+      "hair": {
+        "stiffness": 0.95,
+        "dragForce": 0.84,
+        "gravityPower": 0.045,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.014
+      },
+      "ear": {
+        "stiffness": 2.1,
+        "dragForce": 0.88,
+        "gravityPower": 0.006,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.007
+      },
+      "tail": {
+        "stiffness": 1.2,
+        "dragForce": 0.83,
+        "gravityPower": 0.09,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      },
+      "skirt": {
+        "stiffness": 0.95,
+        "dragForce": 0.86,
+        "gravityPower": 0.085,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      }
+    },
+    "heavyDamped": {
+      "hair": {
+        "stiffness": 0.85,
+        "dragForce": 0.89,
+        "gravityPower": 0.065,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.014
+      },
+      "ear": {
+        "stiffness": 2,
+        "dragForce": 0.92,
+        "gravityPower": 0.01,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.007
+      },
+      "tail": {
+        "stiffness": 0.95,
+        "dragForce": 0.88,
+        "gravityPower": 0.14,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      },
+      "skirt": {
+        "stiffness": 0.8,
+        "dragForce": 0.9,
+        "gravityPower": 0.12,
         "gravityDir": [
           0,
           0,
@@ -369,7 +461,7 @@
             "J_Sec_L_CoatSkirtBack_end_01_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -387,7 +479,7 @@
             "J_Sec_L_CoatSkirtFront_end_01_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -406,7 +498,7 @@
             "J_Sec_L_CoatSkirtSide2_end_01_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -424,7 +516,7 @@
             "J_Sec_R_CoatSkirtBack_end_01_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -442,7 +534,7 @@
             "J_Sec_R_CoatSkirtFront_end_01_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -461,7 +553,7 @@
             "J_Sec_R_CoatSkirtSide2_end_01_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -479,7 +571,7 @@
             "J_Sec_L_CoatSkirtBack_end_02_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -497,7 +589,7 @@
             "J_Sec_L_CoatSkirtFront_end_02_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -516,7 +608,7 @@
             "J_Sec_L_CoatSkirtSide2_end_02_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -534,7 +626,7 @@
             "J_Sec_R_CoatSkirtBack_end_02_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -552,7 +644,7 @@
             "J_Sec_R_CoatSkirtFront_end_02_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -571,7 +663,7 @@
             "J_Sec_R_CoatSkirtSide2_end_02_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -589,7 +681,7 @@
             "J_Sec_L_CoatSkirtBack_end_03_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -607,7 +699,7 @@
             "J_Sec_L_CoatSkirtFront_end_03_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -626,7 +718,7 @@
             "J_Sec_L_CoatSkirtSide2_end_03_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -644,7 +736,7 @@
             "J_Sec_R_CoatSkirtBack_end_03_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -662,7 +754,7 @@
             "J_Sec_R_CoatSkirtFront_end_03_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -681,7 +773,7 @@
             "J_Sec_R_CoatSkirtSide2_end_03_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -699,7 +791,7 @@
             "J_Sec_L_CoatSkirtBack_end_04_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -717,7 +809,7 @@
             "J_Sec_L_CoatSkirtFront_end_04_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -736,7 +828,7 @@
             "J_Sec_L_CoatSkirtSide2_end_04_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -754,7 +846,7 @@
             "J_Sec_R_CoatSkirtBack_end_04_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -772,7 +864,7 @@
             "J_Sec_R_CoatSkirtFront_end_04_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -791,7 +883,7 @@
             "J_Sec_R_CoatSkirtSide2_end_04_end"
           ],
           "centerBone": "Root",
-          "stiffness": 1.0,
+          "stiffness": 1,
           "dragForce": 0.55,
           "gravityPower": 0.04,
           "gravityDir": [
@@ -1259,7 +1351,7 @@
           "centerBone": "Root",
           "stiffness": 1.7,
           "dragForce": 0.55,
-          "gravityPower": 0.0,
+          "gravityPower": 0,
           "gravityDir": [
             0,
             0,
@@ -1277,7 +1369,7 @@
           "centerBone": "Root",
           "stiffness": 1.7,
           "dragForce": 0.55,
-          "gravityPower": 0.0,
+          "gravityPower": 0,
           "gravityDir": [
             0,
             0,
@@ -1445,9 +1537,9 @@
       ],
       "curve": [
         [
-          0.0,
-          0.0,
-          0.0
+          0,
+          0,
+          0
         ],
         [
           0.00302734,
@@ -1812,5 +1904,25 @@
       ]
     }
   },
-  "modelDirectory": "D:/Dev/nemu/content/_candidates/P2-05/models/short-thick-standard"
+  "modelDirectory": "D:/Dev/nemu/content/_candidates/P2-05/models/short-thick-standard",
+  "heavyComparison": [
+    {
+      "id": "calm",
+      "label": "A 原沉稳",
+      "intent": "原始参照",
+      "file": "springs/heavy-review-original-calm.yaml"
+    },
+    {
+      "id": "heavyBalanced",
+      "label": "B 加重·留惯性",
+      "intent": "适度降低刚度，增加重力与阻尼",
+      "file": "springs/heavy-review-balanced.yaml"
+    },
+    {
+      "id": "heavyDamped",
+      "label": "C 加重·快收稳",
+      "intent": "更高重力与阻尼，更低刚度",
+      "file": "springs/heavy-review-damped.yaml"
+    }
+  ]
 }
