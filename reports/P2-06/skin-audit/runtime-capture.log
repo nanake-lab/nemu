@@ -1,0 +1,211 @@
+legacy-no-tone
+legacy-linear
+stage-standard
+review-standard
+stage-source
+stage-source-no-matcap
+stage-standard-no-matcap
+source-base-unlit
+{
+  "swatches": [
+    {
+      "input": "#808080",
+      "expected": [
+        128,
+        128,
+        128
+      ],
+      "actual": [
+        128,
+        128,
+        128
+      ]
+    },
+    {
+      "input": [
+        0.25,
+        0.25,
+        0.25
+      ],
+      "expected": [
+        137,
+        137,
+        137
+      ],
+      "actual": [
+        137,
+        137,
+        137
+      ]
+    },
+    {
+      "input": "#804020",
+      "expected": [
+        128,
+        64,
+        32
+      ],
+      "actual": [
+        128,
+        64,
+        32
+      ]
+    }
+  ],
+  "comparisons": {
+    "toneMappingSameLight": {
+      "differentPixels": 0,
+      "maxChannelDifference": 0
+    },
+    "legacyVsStage": {
+      "differentPixels": 219346,
+      "maxChannelDifference": 74
+    },
+    "stageVsReview": {
+      "differentPixels": 217869,
+      "maxChannelDifference": 11
+    }
+  },
+  "actualApps": [
+    {
+      "kind": "stage",
+      "runtime": {
+        "toneMapping": 1,
+        "exposure": 1,
+        "outputColorSpace": "srgb",
+        "lights": {
+          "keyLight": {
+            "color": 16777215,
+            "intensity": 1.1,
+            "position": [
+              1.2,
+              2,
+              2
+            ]
+          },
+          "rimLight": {
+            "color": 15266047,
+            "intensity": 0.7,
+            "position": [
+              -1.5,
+              1.8,
+              -2
+            ]
+          },
+          "ambientLight": {
+            "color": 16777215,
+            "intensity": 0.45
+          }
+        },
+        "materials": [
+          {
+            "name": "N00_000_00_Body_00_SKIN (Instance)",
+            "toneMapped": true,
+            "map": "srgb",
+            "shade": "srgb",
+            "normal": "",
+            "matcap": "srgb",
+            "emissive": "srgb"
+          },
+          {
+            "name": "N00_000_00_Body_00_SKIN (Instance) (Outline)",
+            "toneMapped": true,
+            "map": "srgb",
+            "shade": "srgb",
+            "normal": "",
+            "matcap": "srgb",
+            "emissive": "srgb"
+          },
+          {
+            "name": "N00_000_00_Face_00_SKIN (Instance)",
+            "toneMapped": true,
+            "map": "srgb",
+            "shade": "srgb",
+            "normal": "",
+            "matcap": "srgb",
+            "emissive": "srgb"
+          },
+          {
+            "name": "N00_000_00_Face_00_SKIN (Instance) (Outline)",
+            "toneMapped": true,
+            "map": "srgb",
+            "shade": "srgb",
+            "normal": "",
+            "matcap": "srgb",
+            "emissive": "srgb"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "review",
+      "runtime": {
+        "toneMapping": 1,
+        "exposure": 1,
+        "outputColorSpace": "srgb",
+        "lights": {
+          "keyLight": {
+            "color": 16777215,
+            "intensity": 1.2,
+            "position": [
+              1.5,
+              2,
+              2.5
+            ]
+          },
+          "rimLight": {
+            "color": 13689087,
+            "intensity": 0.8,
+            "position": [
+              -2,
+              2.5,
+              -2
+            ]
+          },
+          "ambientLight": {
+            "color": 16777215,
+            "intensity": 0.4
+          }
+        },
+        "materials": [
+          {
+            "name": "N00_000_00_Body_00_SKIN (Instance)",
+            "toneMapped": true,
+            "map": "srgb",
+            "shade": "srgb",
+            "normal": "",
+            "matcap": "srgb",
+            "emissive": "srgb"
+          },
+          {
+            "name": "N00_000_00_Body_00_SKIN (Instance) (Outline)",
+            "toneMapped": true,
+            "map": "srgb",
+            "shade": "srgb",
+            "normal": "",
+            "matcap": "srgb",
+            "emissive": "srgb"
+          },
+          {
+            "name": "N00_000_00_Face_00_SKIN (Instance)",
+            "toneMapped": true,
+            "map": "srgb",
+            "shade": "srgb",
+            "normal": "",
+            "matcap": "srgb",
+            "emissive": "srgb"
+          },
+          {
+            "name": "N00_000_00_Face_00_SKIN (Instance) (Outline)",
+            "toneMapped": true,
+            "map": "srgb",
+            "shade": "srgb",
+            "normal": "",
+            "matcap": "srgb",
+            "emissive": "srgb"
+          }
+        ]
+      }
+    }
+  ]
+}

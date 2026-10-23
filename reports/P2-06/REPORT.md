@@ -61,3 +61,10 @@
 内容仓 `task/P2-06-expressions-materials` 已推送至 `0230b011e26514bb6abf669bb5313d5dbde68f21`，三个 LFS 预览模型已上传。默认传输和首次限定超时的重试没有完成；本次进程使用 `GODEBUG=http2client=0` 后上传成功，没有修改全局网络或 Git 配置。最终推送日志为 `content-push-http1.log`；诊断 trace 保留于忽略的 `.cache/`，不提交凭证相关 HTTP 日志。
 
 候选提交 `06fe3bb` 的 Ubuntu CI 已通过；Windows 因草稿规则跳过，证据 `ci-candidate.json`。后续参数来源整理只把相同强度及符号细节从预览代码移到 YAML，所有模型 SHA256 未改变；截图 62 条记录与 YAML 强度核对一致，重复生成 17 个候选文件仍逐字节一致。最终提交的 CI 状态在 PR 查看；这不解除用户选择及正式管线的阻塞。
+
+
+## 2026-10-23 肤色补充
+已合并最新 origin/main（876cff7）到本分支，追加色彩管理实测与 3 组独立皮肤候选。详见 [SKIN-COLOR-AUDIT.md](SKIN-COLOR-AUDIT.md) 和 [肤色挑选页](skin-audit/review.html)。三背景、双光向、双机位的 48 张截图及 12 张对照页已完成；三候选全规则 asset-lint 0 错误。源底色和贴图未修改；VRoid / texture-fix 两条底色路线待用户选，正式 build.yaml 仍未定稿。可与 P2-05 一起挑选。
+
+
+补充检查：合并 main 后的 `pnpm lint`、`pnpm typecheck`、`pnpm test`（443/443）、Python pytest（21/21）、新增脚本 mypy strict / ruff 均通过，证据在 `skin-audit/`。pnpm 运行前的依赖自动校验提示本地 hoist 元数据警告，但随后实际 eslint/tsc/vitest 命令退出 0；没有修改锁文件或跳过测试。Python 初次用检查环境缺 jsonschema 的失败保留在 pytest.log，复用本机已有管线依赖后通过，未联网安装。

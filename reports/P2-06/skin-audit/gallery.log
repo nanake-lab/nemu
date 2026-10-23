@@ -1,0 +1,25 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.screenshot: Error: strict mode violation: locator('section') resolved to 12 elements:
+    1) <section id="face-left-white">…</section> aka getByText('脸部近景 · 主光在画面左侧 · white对照 · 原')
+    2) <section id="face-left-black">…</section> aka getByText('脸部近景 · 主光在画面左侧 · black对照 · 原')
+    3) <section id="face-left-gradient">…</section> aka getByText('脸部近景 · 主光在画面左侧 · gradient对照 · 原 standardA 暖杏 · 弱轮廓光B 蜜桃 · 中轮廓光C 暖金 · 强轮廓光')
+    4) <section id="face-right-white">…</section> aka getByText('脸部近景 · 主光在画面右侧 · white对照 · 原')
+    5) <section id="face-right-black">…</section> aka getByText('脸部近景 · 主光在画面右侧 · black对照 · 原')
+    6) <section id="face-right-gradient">…</section> aka getByText('脸部近景 · 主光在画面右侧 · gradient对照 · 原 standardA 暖杏 · 弱轮廓光B 蜜桃 · 中轮廓光C 暖金 · 强轮廓光')
+    7) <section id="upperBody-left-white">…</section> aka getByText('上半身 · 主光在画面左侧 · white对照 · 原')
+    8) <section id="upperBody-left-black">…</section> aka getByText('上半身 · 主光在画面左侧 · black对照 · 原')
+    9) <section id="upperBody-left-gradient">…</section> aka getByText('上半身 · 主光在画面左侧 · gradient对照 · 原 standardA 暖杏 · 弱轮廓光B 蜜桃 · 中轮廓光C 暖金 · 强轮廓光')
+    10) <section id="upperBody-right-white">…</section> aka getByText('上半身 · 主光在画面右侧 · white对照 · 原')
+    ...
+
+Call log:
+  - waiting for locator('section')
+
+    at D:\Dev\nemu-p206\tools\asset-pipeline\materials\skin-gallery.mjs:54:39 {
+  log: [ "  - waiting for locator('section')" ]
+}
+
+Node.js v24.21.0
