@@ -38,9 +38,9 @@ pnpm asr:latency      # 使用仓库外 timing-references.json 的独立起止�
 | --- | --- | --- |
 | 模型下载/哈希 | 三文件已校验；SenseVoice int8 239233841 字节 | lock、manifest、model-hashes.json |
 | 公开数据准备 | 90 条，三语各 30，三个 Parquet SHA-256 与官方 LFS 元数据一致 | public-download.log、public-data.lock.json |
-| P4-01 单测 / 整仓 Vitest | 整仓 40 文件、494/494，通过（最新 main 同步后） | hybrid-v2-after-final-sync-tests.log |
-| TypeScript 类型检查 | 通过（最新 main 同步后） | hybrid-v2-after-final-sync-typecheck.log |
-| ESLint | 通过（最新 main 同步后） | hybrid-v2-after-final-sync-lint.log |
+| P4-01 单测 / 整仓 Vitest | 整仓 41 文件、497/497，通过（ADR 0017/最新 main 同步后） | adr0017-tests.log |
+| TypeScript 类型检查 | 通过（最新 main 同步后） | adr0017-typecheck.log |
+| ESLint | 通过（最新 main 同步后） | adr0017-lint.log |
 | Python mypy --strict / 辅助测试 | 本轮 3 文件通过，完整辅助测试 18 项通过；历史工具检查另外保留 | hybrid-v2-final-mypy.log、hybrid-v2-final-python-tests.log |
 | workspace build | 同步 main 并补齐桌面工作区依赖后通过，路径函数已打入主进程包 | final-resume-build.log |
 | 完整 Electron E2E（构建后 Playwright） | 4 通过，专门静音 CPU 测量 1 项按设计跳过且随后单独实测通过；已正确初始化 run.json，含 OS 快照，整体退出 0 | resume-e2e.log、resume-e2e-*/ |
@@ -354,3 +354,11 @@ annotation/index.html为715行独立离线模板，包含可访问的操作控�
 原许可、用户录音、人工时标、等待 N0 的阻塞均已解决；不需要用户再次录音/标注。SenseVoice 保持 redistributable=false、用户自行下载、不随应用分发、保留 FunASR 模型名与出处，P7 许可复评作为后续发布工作。本轮无新增运行时依赖、模型或下载。物理麦克风、跨进程传输和扬声器停止的完整延迟仍未由本次重放测得；保留原报告边界，不把它冒充 ADR 第 3 项的扬声器停止验收（后续语音输出卡负责）。
 
 检查证据：adr0017-lint.log、adr0017-typecheck.log、adr0017-tests.log、adr0017-build.log；Python 与 Electron 检查另存 adr0017-*.log/e2e。中难度无需审查；PR 转为可审查后等待 CI，全部绿色后由用户合并，执行方不合并、不取下一卡。needs-user 仅标记由用户合并，不再代表待补录音或待决定延迟目标。
+
+### 2026-10-23 最新 main 后检查结果
+
+- lint、typecheck、41 文件 497 项 Vitest、workspace build 通过，18 项 Python 辅助测试通过；证据 adr0017-{lint,typecheck,tests,build,python-tests}.log。没有改动 Python 辅助源码，先前 mypy strict 结果保留。
+- Electron 第一次完整回归：3 通过、1 跳过、1 失败；穿透测试预期 50 点击，实际 51。测前/测后未发现 Runner.Worker/Blender/并发 Electron，未确定额外点击来源；不能归因于 CI 或用户操作。原日志与快照保留在 adr0017-e2e.log、adr0017-e2e/.../1/windows。
+- 按相同源码和断言、独立证据目录完整重跑：**4 通过、1 跳过，退出 0**。语音 utility/AudioWorklet 通过，穿透 50/50 通过。跳过的是仅显式 `pnpm measure:asr` 启动的 60 秒静音 CPU 项；本轮不重新测量 CPU，沿用先前有效结果，不因模型缺失跳过语音通道测试。证据 adr0017-e2e-retry.log、adr0017-e2e/.../2/windows/run.json、e2e-result.json。
+- 提交/转可审查前再次 fetch，origin/main 没有新提交。原始测量和重判来源哈希匹配；未重跑 60 条或 150 次模型推断。
+- 所有本机卡片验收满足，可转为可审查。CI 由转可审查触发，最终状态以 PR 检查为准；用户合并前必须全绿。本卡无需 Claude/Codex 审查，执行方不合并、不取下一卡。
