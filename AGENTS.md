@@ -37,7 +37,7 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 - **工作区清单与锁文件：** 根目录 `package.json`、`pnpm-workspace.yaml`、`pnpm-lock.yaml`，`core/Cargo.toml`、`core/Cargo.lock`，各 `pyproject.toml` 与 `uv.lock`。锁文件冲突时重新生成，不手工合并。
 - **模块登记行：** 所在包入口文件（`lib.rs`、`mod.rs`、`index.ts`、`__init__.py`）里登记新模块的一两行。只追加；冲突时保留双方。
 - **根目录脚本与 CI 配置：** 只追加，不改别人加的条目。
-- **只追加的记录：** `docs/traceability/diff-register.md`、`reports/`（`REPORT.md` 顶部的「当前状态」除外，见第 6 节）。
+- **只追加的记录：** `docs/traceability/diff-register.md`。`reports/` 的规则见第 6 节。
 
 下表是各目录通常由谁做，以及特别规则。执行者一栏是建议；括号里的特别规则对所有执行者都有效。
 
@@ -125,7 +125,7 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 - [ ] 任务卡列出的全部验收命令通过；
 - [ ] 所涉及语言的静态检查和测试全部通过（`pnpm lint`、`pnpm typecheck`、`pnpm test`、`cargo test`、`uv run pytest`）；
 - [ ] 报告写好，放在 `reports/<任务号>/REPORT.md`；
-- [ ] 证据放在 `reports/<任务号>/` 下，涉及 Echo Core 验收编号的按编号建子目录。证据要适量：Echo Core、契约和正式验收测量的原始数据全部保留（含失败）；其余只放关键日志和结果摘要，不提交大批过程日志；
+- [ ] 证据放在 `reports/<任务号>/` 下，涉及 Echo Core 验收编号的按编号建子目录。证据要适量：Echo Core、契约和正式验收测量的原始数据全部保留（含失败）；其余只放关键日志和结果摘要，不提交大批过程日志。报告随时可以改写，保持简洁、只写当前状态，历史靠 git；原始证据文件不得删改，失败结果必须在报告里写明；
 - [ ] 需要人工评审的项目，已在报告里列成待用户确认的清单。
 
 报告模板：
@@ -134,7 +134,7 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 # <任务号> <标题> — 报告
 
 ## 当前状态
-一段话，每次更新时整段覆盖：完成 / 部分完成（见 BLOCKED.md）；在等什么；接下来取的卡。旧状态移到同目录的 HISTORY.md（只追加）。
+一段话：完成 / 部分完成（见 BLOCKED.md）；在等什么；接下来取的卡。
 
 ## 交付物
 - 文件或目录：作用
