@@ -15537,5 +15537,627 @@
         "max_depth": 32
       }
     }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "EvidenceAllocationV2",
+      "op": "encode",
+      "value": {
+        "tendency_id": "A0",
+        "support": 0.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "0",
+        "mu": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "EvidenceAllocationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "tendency_id": "A0",
+        "support": 0.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "0",
+        "mu": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "EvidenceAllocationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "support": 0.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "0",
+        "mu": 0.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "EvidenceGroupV2",
+      "op": "encode",
+      "value": {
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "EvidenceGroupV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "EvidenceGroupV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "TendencyV2",
+      "op": "encode",
+      "value": {
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "TendencyV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "TendencyV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "RSnapshotV2",
+      "op": "encode",
+      "value": {
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "RSnapshotV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "RSnapshotV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": [],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "allocation mu above 1",
+    "request": {
+      "name": "EvidenceAllocationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": -0.5,
+        "intensity": 1.25,
+        "share": 0.6,
+        "ordinal": "0",
+        "mu": 1.5,
+        "projection": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "allocation mu below 0",
+    "request": {
+      "name": "EvidenceAllocationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": -0.5,
+        "intensity": 1.25,
+        "share": 0.6,
+        "ordinal": "0",
+        "mu": -0.1,
+        "projection": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "allocation without ordinal",
+    "request": {
+      "name": "EvidenceAllocationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": -0.5,
+        "intensity": 1.25,
+        "share": 0.6,
+        "mu": 0.75,
+        "projection": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "ordinal above u64",
+    "request": {
+      "name": "EvidenceAllocationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": -0.5,
+        "intensity": 1.25,
+        "share": 0.6,
+        "ordinal": "18446744073709551616",
+        "mu": 0.75,
+        "projection": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "magnitude weight below 0",
+    "request": {
+      "name": "TendencyV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": -1.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "tendency v2 without magnitude sum",
+    "request": {
+      "name": "TendencyV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_weight": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "duplicate allocation in group v2",
+    "request": {
+      "name": "EvidenceGroupV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "support": -0.5,
+            "intensity": 1.25,
+            "share": 0.6,
+            "ordinal": "0",
+            "mu": 0.75,
+            "projection": 0.5
+          },
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "support": -0.5,
+            "intensity": 1.25,
+            "share": 0.6,
+            "ordinal": "0",
+            "mu": 0.75,
+            "projection": 0.5
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "duplicate tendency in R v2",
+    "request": {
+      "name": "RSnapshotV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": [
+          {
+            "schema_version": 1,
+            "tendency_id": "A0",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "A0",
+              "registry_version": "A0"
+            },
+            "predicate": [],
+            "direction": {
+              "schema_version": 1,
+              "connection": 0.0,
+              "empathy": 0.0,
+              "curiosity": 0.0,
+              "achievement": 0.0
+            },
+            "evidence_a": 0.0,
+            "evidence_b": 0.0,
+            "h_hat": 0.0,
+            "group_count": "0",
+            "flip_count": "0",
+            "pi": 0.0,
+            "typical_magnitude": 0.0,
+            "magnitude_sum": 0.0,
+            "magnitude_weight": 0.0
+          },
+          {
+            "schema_version": 1,
+            "tendency_id": "A0",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "A0",
+              "registry_version": "A0"
+            },
+            "predicate": [],
+            "direction": {
+              "schema_version": 1,
+              "connection": 0.0,
+              "empathy": 0.0,
+              "curiosity": 0.0,
+              "achievement": 0.0
+            },
+            "evidence_a": 0.0,
+            "evidence_b": 0.0,
+            "h_hat": 0.0,
+            "group_count": "0",
+            "flip_count": "0",
+            "pi": 0.0,
+            "typical_magnitude": 0.0,
+            "magnitude_sum": 0.0,
+            "magnitude_weight": 0.0
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "superseded allocation in group v2",
+    "request": {
+      "name": "EvidenceGroupV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "A0",
+            "support": 0.0,
+            "intensity": 0.0,
+            "share": 0.0
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
   }
 ]

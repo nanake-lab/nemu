@@ -1,0 +1,75 @@
+{
+  "caseId": "case-0175",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0175",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0175"
+        ],
+        "sourceSpan": [
+          5,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0175"
+        ],
+        "sourceSpan": [
+          8,
+          12
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "第59章"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0175"
+        ],
+        "sourceSpan": [
+          0,
+          13
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "读",
+        "roles": [
+          {
+            "role": "reader",
+            "value": "我"
+          },
+          {
+            "role": "object",
+            "value": "第59章"
+          },
+          {
+            "role": "condition",
+            "value": "有空"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      }
+    ]
+  }
+}

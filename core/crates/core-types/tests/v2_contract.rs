@@ -224,12 +224,14 @@ fn genesis_semantics() {
 #[test]
 fn superseded_registry() {
     const { assert!(EffectContract::SUPERSEDED) };
-    const { assert!(!Tendency::SUPERSEDED) };
+    // P5-32 (ADR 0016) superseded Tendency by TendencyV2; see tests/p5_32_contract.rs.
+    const { assert!(Tendency::SUPERSEDED) };
     let marked: BTreeSet<&str> = core_types::generated::SUPERSEDED_MESSAGES
         .iter()
         .copied()
         .collect();
-    assert_eq!(marked.len(), 32);
+    // 32 at P5-21; P5-32 adds Tendency, EvidenceAllocation, EvidenceGroup, RSnapshot.
+    assert_eq!(marked.len(), 36);
     for name in [
         "EffectContract",
         "ThetaModule",

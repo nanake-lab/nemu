@@ -1,0 +1,108 @@
+{
+  "caseId": "case-0012",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0012",
+    "nodes": [
+      {
+        "id": "ref-meeting",
+        "sourceRefs": [
+          "p0-08-0012"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "会議"
+      },
+      {
+        "id": "ref-lunch",
+        "sourceRefs": [
+          "p0-08-0012"
+        ],
+        "sourceSpan": [
+          8,
+          10
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "昼食"
+      },
+      {
+        "id": "ref-time",
+        "sourceRefs": [
+          "p0-08-0012"
+        ],
+        "sourceSpan": [
+          11,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "4時"
+      },
+      {
+        "id": "claim-lunch-time-change",
+        "sourceRefs": [
+          "p0-08-0012"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "昼食の時刻を変更する",
+        "roles": [
+          {
+            "role": "対象",
+            "value": "昼食"
+          },
+          {
+            "role": "変更後の時刻",
+            "value": "4時"
+          },
+          {
+            "role": "条件",
+            "value": "会議が延びたら"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "conditional",
+        "time": null
+      },
+      {
+        "id": "act-commitment",
+        "sourceRefs": [
+          "p0-08-0012"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "commitment",
+        "content": "会議が延びたら、昼食を4時に変更します。"
+      }
+    ]
+  }
+}

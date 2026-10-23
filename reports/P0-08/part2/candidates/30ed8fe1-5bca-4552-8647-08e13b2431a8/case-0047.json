@@ -1,0 +1,95 @@
+{
+  "caseId": "case-0047",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0047",
+    "nodes": [
+      {
+        "id": "ref-we",
+        "sourceRefs": [
+          "p0-08-0047"
+        ],
+        "sourceSpan": [
+          6,
+          8
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "we"
+      },
+      {
+        "id": "ref-data",
+        "sourceRefs": [
+          "p0-08-0047"
+        ],
+        "sourceSpan": [
+          22,
+          30
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "the data"
+      },
+      {
+        "id": "ref-meeting-16",
+        "sourceRefs": [
+          "p0-08-0047"
+        ],
+        "sourceSpan": [
+          35,
+          45
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "meeting 16"
+      },
+      {
+        "id": "claim-check",
+        "sourceRefs": [
+          "p0-08-0047"
+        ],
+        "sourceSpan": [
+          0,
+          52
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "check",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "we"
+          },
+          {
+            "role": "object",
+            "value": "the data"
+          },
+          {
+            "role": "context",
+            "value": "meeting 16"
+          },
+          {
+            "role": "recurrence",
+            "value": "again"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": null
+      }
+    ]
+  }
+}

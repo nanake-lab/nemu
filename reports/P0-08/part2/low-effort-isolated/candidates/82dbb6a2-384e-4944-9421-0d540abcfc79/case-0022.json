@@ -1,0 +1,72 @@
+{
+  "caseId": "case-0022",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0022",
+    "nodes": [
+      {
+        "id": "p0-08-0022-act-1",
+        "sourceRefs": [
+          "p0-08-0022"
+        ],
+        "sourceSpan": [
+          0,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "question",
+        "content": "询问8乘二是多少"
+      },
+      {
+        "id": "p0-08-0022-ref-1",
+        "sourceRefs": [
+          "p0-08-0022"
+        ],
+        "sourceSpan": [
+          4,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "8乘二"
+      },
+      {
+        "id": "p0-08-0022-claim-1",
+        "sourceRefs": [
+          "p0-08-0022"
+        ],
+        "sourceSpan": [
+          4,
+          7
+        ],
+        "derivation": "normalized",
+        "epistemicType": "model_inference",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "乘法运算结果",
+        "roles": [
+          {
+            "role": "被乘数",
+            "value": "8"
+          },
+          {
+            "role": "乘数",
+            "value": "二"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "unknown",
+        "time": null
+      }
+    ]
+  }
+}

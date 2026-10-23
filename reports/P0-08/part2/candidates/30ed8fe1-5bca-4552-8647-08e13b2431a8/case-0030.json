@@ -1,0 +1,52 @@
+{
+  "caseId": "case-0030",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0030",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0030"
+        ],
+        "sourceSpan": [
+          0,
+          4
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "10曲目"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0030",
+          "r1"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "has_atmosphere",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "r1"
+          }
+        ],
+        "value": "落ち着いた雰囲気",
+        "polarity": "positive",
+        "modality": "reported",
+        "time": null
+      }
+    ]
+  }
+}

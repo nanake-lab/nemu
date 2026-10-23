@@ -1,0 +1,110 @@
+{
+  "caseId": "case-0038",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0038",
+    "nodes": [
+      {
+        "id": "ref-folder",
+        "sourceRefs": [
+          "p0-08-0038"
+        ],
+        "sourceSpan": [
+          11,
+          38
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "the blue folder numbered 13"
+      },
+      {
+        "id": "ref-desk",
+        "sourceRefs": [
+          "p0-08-0038"
+        ],
+        "sourceSpan": [
+          42,
+          50
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "the desk"
+      },
+      {
+        "id": "claim-folder-color",
+        "sourceRefs": [
+          "p0-08-0038"
+        ],
+        "sourceSpan": [
+          15,
+          19
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "color",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "ref-folder"
+          }
+        ],
+        "value": "blue",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-folder-number",
+        "sourceRefs": [
+          "p0-08-0038"
+        ],
+        "sourceSpan": [
+          27,
+          38
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "number",
+        "roles": [
+          {
+            "role": "entity",
+            "value": "ref-folder"
+          }
+        ],
+        "value": 13,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-request",
+        "sourceRefs": [
+          "p0-08-0038"
+        ],
+        "sourceSpan": [
+          0,
+          51
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "request",
+        "content": "Please put the blue folder numbered 13 on the desk."
+      }
+    ]
+  }
+}

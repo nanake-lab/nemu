@@ -1,0 +1,88 @@
+{
+  "caseId": "case-0170",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0170",
+    "nodes": [
+      {
+        "id": "ref-lin",
+        "sourceRefs": [
+          "p0-08-0170"
+        ],
+        "sourceSpan": [
+          0,
+          3
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "Lin"
+      },
+      {
+        "id": "ref-you",
+        "sourceRefs": [
+          "p0-08-0170"
+        ],
+        "sourceSpan": [
+          17,
+          20
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "you"
+      },
+      {
+        "id": "claim-lin-asked",
+        "sourceRefs": [
+          "p0-08-0170"
+        ],
+        "sourceSpan": [
+          0,
+          43
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "asked",
+        "roles": [
+          {
+            "role": "asker",
+            "value": "Lin"
+          },
+          {
+            "role": "content",
+            "value": "Will you return at 57 o'clock?"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-question",
+        "sourceRefs": [
+          "p0-08-0170"
+        ],
+        "sourceSpan": [
+          11,
+          43
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "question",
+        "content": "Will you return at 57 o'clock?"
+      }
+    ]
+  }
+}

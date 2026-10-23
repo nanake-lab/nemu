@@ -1,0 +1,16 @@
+== mutation: EvidenceGroupV2 drops reserved 7 and reuses 7
+VIOLATION [p5-01] EvidenceGroupV2 field 7 reuses EvidenceGroup.allocations differently
+VIOLATION [p5-21] EvidenceGroupV2 field 7 reuses EvidenceGroup.allocations differently
+VIOLATION [current] EvidenceGroupV2 field 7 reuses EvidenceGroup.allocations differently
+Compatibility against p5-01, p5-21, current: 3 violations; 124 messages (36 superseded), 44 enums
+== mutation: TendencyV2 field 13 changed
+VIOLATION [p5-01] TendencyV2 field 13 reuses Tendency.typical_magnitude differently
+VIOLATION [p5-21] TendencyV2 field 13 reuses Tendency.typical_magnitude differently
+VIOLATION [current] TendencyV2 field 13 reuses Tendency.typical_magnitude differently
+== restored
+Compatibility against p5-01, p5-21, current: 0 violations; 124 messages (36 superseded), 44 enums
+== mutation: published Tendency (P5-21) field 13 changed — only the new p5-21 baseline sees it
+VIOLATION [p5-01] TendencyV2 field 13 reuses Tendency.typical_magnitude differently
+VIOLATION [p5-21] message Tendency field 13 changed
+VIOLATION [p5-21] TendencyV2 field 13 reuses Tendency.typical_magnitude differently
+VIOLATION [current] TendencyV2 field 13 reuses Tendency.typical_magnitude differently

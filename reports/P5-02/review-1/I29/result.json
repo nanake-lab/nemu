@@ -1,0 +1,14 @@
+{
+  "id": "I29",
+  "result": "passed",
+  "scope": "storage subset",
+  "sourceRevision": "1e1cc584dba4abaa91be11f2296195a2f320e303",
+  "tests": [
+    "i29_all_six_cross_lineage_opens_rejected",
+    "reader_and_capabilities_cannot_cross_stores_even_same_kind",
+    "malformed_headers_and_existing_directories_never_initialize",
+    "stray_environment_or_missing_permit_never_touches_target"
+  ],
+  "evidence": "../../logs/16-review-final-workspace.log",
+  "manifest": "../final-test-manifest.json"
+}

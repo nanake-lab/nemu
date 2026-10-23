@@ -1,0 +1,69 @@
+{
+  "runId": "844febb4-deba-497d-b5dd-458d563318e6",
+  "measuredAtUtc": "2026-10-21T19:28:55.019Z",
+  "model": "gpt-6-luna",
+  "effort": "max",
+  "catalogRestriction": "derived empty-tools catalog + strict feature flags",
+  "scope": "Same read-only/never speech capability flags; only base instructions and raw-event reporting changed to request harmless capability tests. Does not count as a latency sample.",
+  "records": [
+    {
+      "test": "clock",
+      "status": "completed",
+      "observedItemTypes": [
+        "userMessage",
+        "reasoning",
+        "agentMessage"
+      ],
+      "approvalRequests": [],
+      "fileCreated": false,
+      "notificationMethods": [
+        "thread/started",
+        "thread/settings/updated",
+        "thread/status/changed",
+        "turn/started",
+        "account/updated",
+        "mcpServer/startupStatus/updated",
+        "rawResponseItem/completed",
+        "item/started",
+        "item/completed",
+        "item/agentMessage/delta",
+        "turn/moderationMetadata",
+        "rawResponse/completed",
+        "thread/tokenUsage/updated",
+        "account/rateLimits/updated",
+        "turn/completed"
+      ],
+      "rawToolCallNames": [],
+      "clockIdentifierSeen": false
+    },
+    {
+      "test": "file-change",
+      "status": "completed",
+      "observedItemTypes": [
+        "userMessage",
+        "reasoning",
+        "agentMessage"
+      ],
+      "approvalRequests": [],
+      "fileCreated": false,
+      "notificationMethods": [
+        "thread/started",
+        "mcpServer/startupStatus/updated",
+        "thread/settings/updated",
+        "thread/status/changed",
+        "turn/started",
+        "rawResponseItem/completed",
+        "item/started",
+        "item/completed",
+        "item/agentMessage/delta",
+        "turn/moderationMetadata",
+        "rawResponse/completed",
+        "thread/tokenUsage/updated",
+        "account/rateLimits/updated",
+        "turn/completed"
+      ],
+      "rawToolCallNames": [],
+      "clockIdentifierSeen": false
+    }
+  ]
+}

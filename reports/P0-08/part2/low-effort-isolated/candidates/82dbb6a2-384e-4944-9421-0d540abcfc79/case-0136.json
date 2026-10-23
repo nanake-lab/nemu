@@ -1,0 +1,86 @@
+{
+  "caseId": "case-0136",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0136",
+    "nodes": [
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0136"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "我说的不是周二，是周46天。"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0136"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "所说的时间",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "我"
+          },
+          {
+            "role": "value",
+            "value": "周46天"
+          }
+        ],
+        "value": "周46天",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim2",
+        "sourceRefs": [
+          "p0-08-0136"
+        ],
+        "sourceSpan": [
+          0,
+          20
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "所说的时间",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "我"
+          },
+          {
+            "role": "value",
+            "value": "周二"
+          }
+        ],
+        "value": "周二",
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

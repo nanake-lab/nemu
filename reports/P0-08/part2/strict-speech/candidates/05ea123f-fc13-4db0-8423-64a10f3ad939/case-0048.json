@@ -1,0 +1,71 @@
+{
+  "caseId": "case-0048",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0048",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0048"
+        ],
+        "sourceSpan": [
+          0,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "16回目の会議"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0048"
+        ],
+        "sourceSpan": [
+          8,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "データ"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0048"
+        ],
+        "sourceSpan": [
+          0,
+          32
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "もう一度確認する方がよい",
+        "roles": [
+          {
+            "role": "対象",
+            "value": "データ"
+          },
+          {
+            "role": "会議",
+            "value": "16回目の会議"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": null
+      }
+    ]
+  }
+}

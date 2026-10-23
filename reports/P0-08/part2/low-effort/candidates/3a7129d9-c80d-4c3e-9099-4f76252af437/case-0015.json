@@ -1,0 +1,68 @@
+{
+  "caseId": "case-0015",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0015",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0015"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "リン"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0015"
+        ],
+        "sourceSpan": [
+          3,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "snow_fall",
+        "roles": [
+          {
+            "role": "time",
+            "value": "来週の5日"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "来週の5日"
+      },
+      {
+        "id": "act1",
+        "sourceRefs": [
+          "p0-08-0015"
+        ],
+        "sourceSpan": [
+          0,
+          25
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "other",
+        "content": "リンが「来週の5日に雪が降るかもしれない」と言った"
+      }
+    ]
+  }
+}

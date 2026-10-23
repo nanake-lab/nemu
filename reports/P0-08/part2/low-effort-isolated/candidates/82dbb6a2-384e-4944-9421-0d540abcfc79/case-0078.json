@@ -1,0 +1,82 @@
+{
+  "caseId": "case-0078",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0078",
+    "nodes": [
+      {
+        "id": "n1",
+        "sourceRefs": [
+          "p0-08-0078"
+        ],
+        "sourceSpan": [
+          0,
+          5
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "訂正します。"
+      },
+      {
+        "id": "n2",
+        "sourceRefs": [
+          "p0-08-0078"
+        ],
+        "sourceSpan": [
+          6,
+          18
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "weekday",
+        "roles": [
+          {
+            "role": "value",
+            "value": "水曜日"
+          },
+          {
+            "role": "replaces",
+            "value": "火曜日"
+          }
+        ],
+        "value": "水曜日",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "n3",
+        "sourceRefs": [
+          "p0-08-0078"
+        ],
+        "sourceSpan": [
+          19,
+          26
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "date_day",
+        "roles": [
+          {
+            "role": "value",
+            "value": "26日"
+          }
+        ],
+        "value": "26",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

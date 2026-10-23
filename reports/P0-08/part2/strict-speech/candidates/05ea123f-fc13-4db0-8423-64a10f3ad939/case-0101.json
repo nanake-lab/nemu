@@ -1,0 +1,72 @@
+{
+  "caseId": "case-0101",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0101",
+    "nodes": [
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0101"
+        ],
+        "sourceSpan": [
+          0,
+          27
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "quotes",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "I"
+          },
+          {
+            "role": "content",
+            "value": "this sentence"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0101"
+        ],
+        "sourceSpan": [
+          28,
+          50
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "quotation",
+        "content": "Keep step 34 simple."
+      },
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0101"
+        ],
+        "sourceSpan": [
+          34,
+          41
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "step 34"
+      }
+    ]
+  }
+}

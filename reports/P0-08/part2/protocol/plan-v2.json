@@ -1,0 +1,91 @@
+{
+  "version": "p0-08-part2-v2-local-decoder",
+  "model": "gpt-6-luna",
+  "reasoningEffort": "max",
+  "effortSource": "User instruction on 2026-10-22 overrides card low effort",
+  "speechCalls": {
+    "zh": 50,
+    "en": 50,
+    "ja": 50
+  },
+  "irlCalls": 200,
+  "preflightExcluded": true,
+  "percentileMethod": "nearest rank, ceil(p*n)-1; successful completed samples only in final analysis",
+  "quotaBoundary": "before batch, after 100 calls, after batch; account shared with other activity",
+  "localModel": "Qwen/Qwen3-4B-Instruct-2507",
+  "localRevision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "localNumerics": "NF4, bf16 compute, no double quantization, eager, native RMS aten::_fused_rms_norm",
+  "localModulation": "m=0; same carrier without hook, ADR 0012 zero reference",
+  "localDecoding": "greedy, JSON-schema-constrained; max_new_tokens 2048; warmup excluded",
+  "decisionThresholds": {
+    "p50Ms": 400,
+    "schemaValidity": 0.95
+  },
+  "missingValues": null,
+  "localDecoderAdapter": "strict-json-controls-v2",
+  "priorRun": {
+    "status": "aborted_implementation_defect",
+    "formalCount": 10,
+    "valid": 4,
+    "invalid": 6,
+    "warmupExcluded": true,
+    "sourceArchiveHashVerified": true,
+    "invalidOutputHashesVerified": true,
+    "errors": [
+      {
+        "index": 0,
+        "warmup": true,
+        "caseId": "case-0001",
+        "error": "Invalid control character at",
+        "position": 393
+      },
+      {
+        "index": 1,
+        "warmup": false,
+        "caseId": "case-0001",
+        "error": "Invalid control character at",
+        "position": 393
+      },
+      {
+        "index": 3,
+        "warmup": false,
+        "caseId": "case-0003",
+        "error": "Invalid control character at",
+        "position": 394
+      },
+      {
+        "index": 6,
+        "warmup": false,
+        "caseId": "case-0006",
+        "error": "Invalid control character at",
+        "position": 395
+      },
+      {
+        "index": 7,
+        "warmup": false,
+        "caseId": "case-0007",
+        "error": "Invalid control character at",
+        "position": 397
+      },
+      {
+        "index": 9,
+        "warmup": false,
+        "caseId": "case-0009",
+        "error": "Invalid control character at",
+        "position": 397
+      },
+      {
+        "index": 10,
+        "warmup": false,
+        "caseId": "case-0010",
+        "error": "Invalid control character at",
+        "position": 391
+      }
+    ],
+    "rootCause": "Pinned LMFE admits literal control characters through tokenizer alphabet and free-string token cache; CPU regression reproduces raw TAB admission.",
+    "disposition": "Keep every v1 record; new implementation version v2 restarts all 200 fixtures. No postprocessing or replacement of these outputs."
+  },
+  "generationSchemaChanged": false,
+  "validationSchemaChanged": false,
+  "decisionThresholdsChanged": false
+}

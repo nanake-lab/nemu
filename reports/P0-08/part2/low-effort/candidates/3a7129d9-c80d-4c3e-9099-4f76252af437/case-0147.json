@@ -1,0 +1,51 @@
+{
+  "caseId": "case-0147",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0147",
+    "nodes": [
+      {
+        "id": "ref1",
+        "sourceRefs": [
+          "p0-08-0147"
+        ],
+        "sourceSpan": [
+          0,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "練習の49番目"
+      },
+      {
+        "id": "claim1",
+        "sourceRefs": [
+          "p0-08-0147"
+        ],
+        "sourceSpan": [
+          0,
+          13
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "completed",
+        "roles": [
+          {
+            "role": "object",
+            "value": "ref1"
+          }
+        ],
+        "value": true,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": "今"
+      }
+    ]
+  }
+}

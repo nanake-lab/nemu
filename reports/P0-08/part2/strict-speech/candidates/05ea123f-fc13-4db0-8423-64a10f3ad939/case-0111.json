@@ -1,0 +1,72 @@
+{
+  "caseId": "case-0111",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0111",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0111"
+        ],
+        "sourceSpan": [
+          0,
+          2
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "リン"
+      },
+      {
+        "id": "a1",
+        "sourceRefs": [
+          "p0-08-0111"
+        ],
+        "sourceSpan": [
+          4,
+          13
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "quotation",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "question",
+        "content": "37時に戻りますか"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0111"
+        ],
+        "sourceSpan": [
+          0,
+          21
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "尋ねた",
+        "roles": [
+          {
+            "role": "asker",
+            "value": "r1"
+          },
+          {
+            "role": "question",
+            "value": "a1"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

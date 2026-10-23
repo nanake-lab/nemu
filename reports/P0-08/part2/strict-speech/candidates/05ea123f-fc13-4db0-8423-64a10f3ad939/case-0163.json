@@ -1,0 +1,91 @@
+{
+  "caseId": "case-0163",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0163",
+    "nodes": [
+      {
+        "id": "ref-1",
+        "sourceRefs": [
+          "p0-08-0163"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "ref-2",
+        "sourceRefs": [
+          "p0-08-0163"
+        ],
+        "sourceSpan": [
+          4,
+          7
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "55号"
+      },
+      {
+        "id": "ref-3",
+        "sourceRefs": [
+          "p0-08-0163"
+        ],
+        "sourceSpan": [
+          11,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "这本书"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0163"
+        ],
+        "sourceSpan": [
+          0,
+          14
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "finish_reading",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "我"
+          },
+          {
+            "role": "object",
+            "value": "这本书"
+          },
+          {
+            "role": "deadline",
+            "value": "55号之前"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "55号之前"
+      }
+    ]
+  }
+}

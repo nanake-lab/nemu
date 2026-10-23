@@ -16,6 +16,7 @@ on:
       - 'packages/**'
       - 'tools/**'
       - 'spikes/**'
+      - 'core/**'
       - 'executors/codex-bridge/**'
       - 'workers/*/src/**'
       - 'services/*/src/**'
@@ -37,6 +38,7 @@ on:
       - 'packages/**'
       - 'tools/**'
       - 'spikes/**'
+      - 'core/**'
       - 'executors/codex-bridge/**'
       - 'workers/*/src/**'
       - 'services/*/src/**'
@@ -119,4 +121,22 @@ jobs:
         with:
           name: windows-P0-01-evidence-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ env.NEMU_EVIDENCE_DIR }}/
+          if-no-files-found: error
+      - name: W02 NTFS storage checks
+        working-directory: core
+        run: |
+          $evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          New-Item -ItemType Directory -Path $evidence -Force | Out-Null
+          "NEMU_W02_EVIDENCE=$evidence" >> $env:GITHUB_ENV
+          rustup show 2>&1 | Tee-Object (Join-Path $evidence 'toolchain.log')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo clippy -p core-store --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
+          exit $LASTEXITCODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always() && env.NEMU_W02_EVIDENCE != ''
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
           if-no-files-found: error

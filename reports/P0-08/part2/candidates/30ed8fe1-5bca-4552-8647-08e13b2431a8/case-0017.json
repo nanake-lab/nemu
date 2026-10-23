@@ -1,0 +1,160 @@
+{
+  "caseId": "case-0017",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0017",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0017"
+        ],
+        "sourceSpan": [
+          19,
+          28
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "Wednesday"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0017"
+        ],
+        "sourceSpan": [
+          34,
+          41
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "Tuesday"
+      },
+      {
+        "id": "r3",
+        "sourceRefs": [
+          "p0-08-0017"
+        ],
+        "sourceSpan": [
+          55,
+          60
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "day 6"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0017"
+        ],
+        "sourceSpan": [
+          12,
+          28
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "said",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "I"
+          },
+          {
+            "role": "content",
+            "value": "Wednesday"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "reported",
+        "time": null
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0017"
+        ],
+        "sourceSpan": [
+          30,
+          41
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "said",
+        "roles": [
+          {
+            "role": "speaker",
+            "value": "I"
+          },
+          {
+            "role": "content",
+            "value": "Tuesday"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "reported",
+        "time": null
+      },
+      {
+        "id": "c3",
+        "sourceRefs": [
+          "p0-08-0017"
+        ],
+        "sourceSpan": [
+          43,
+          60
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "date_is",
+        "roles": [
+          {
+            "role": "subject",
+            "value": "the date"
+          }
+        ],
+        "value": "day 6",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "a1",
+        "sourceRefs": [
+          "p0-08-0017"
+        ],
+        "sourceSpan": [
+          0,
+          61
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "Correction: I said Wednesday, not Tuesday; the date is day 6."
+      }
+    ]
+  }
+}

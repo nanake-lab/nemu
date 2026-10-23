@@ -1,0 +1,99 @@
+{
+  "caseId": "case-0018",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0018",
+    "nodes": [
+      {
+        "id": "act-1",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          0,
+          26
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "correction",
+        "content": "訂正します。火曜日ではなく水曜日で、日付は6日です。"
+      },
+      {
+        "id": "claim-1",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          6,
+          13
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "day_of_week",
+        "roles": [
+          {
+            "role": "day",
+            "value": "火曜日"
+          }
+        ],
+        "value": null,
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-2",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          14,
+          17
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "day_of_week",
+        "roles": [
+          {
+            "role": "day",
+            "value": "水曜日"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "claim-3",
+        "sourceRefs": [
+          "p0-08-0018"
+        ],
+        "sourceSpan": [
+          19,
+          26
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "date_day_of_month",
+        "roles": [],
+        "value": 6,
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

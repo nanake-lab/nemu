@@ -1,0 +1,62 @@
+{
+  "status": "aborted_implementation_defect",
+  "formalCount": 10,
+  "valid": 4,
+  "invalid": 6,
+  "warmupExcluded": true,
+  "sourceArchiveHashVerified": true,
+  "invalidOutputHashesVerified": true,
+  "errors": [
+    {
+      "index": 0,
+      "warmup": true,
+      "caseId": "case-0001",
+      "error": "Invalid control character at",
+      "position": 393
+    },
+    {
+      "index": 1,
+      "warmup": false,
+      "caseId": "case-0001",
+      "error": "Invalid control character at",
+      "position": 393
+    },
+    {
+      "index": 3,
+      "warmup": false,
+      "caseId": "case-0003",
+      "error": "Invalid control character at",
+      "position": 394
+    },
+    {
+      "index": 6,
+      "warmup": false,
+      "caseId": "case-0006",
+      "error": "Invalid control character at",
+      "position": 395
+    },
+    {
+      "index": 7,
+      "warmup": false,
+      "caseId": "case-0007",
+      "error": "Invalid control character at",
+      "position": 397
+    },
+    {
+      "index": 9,
+      "warmup": false,
+      "caseId": "case-0009",
+      "error": "Invalid control character at",
+      "position": 397
+    },
+    {
+      "index": 10,
+      "warmup": false,
+      "caseId": "case-0010",
+      "error": "Invalid control character at",
+      "position": 391
+    }
+  ],
+  "rootCause": "Pinned LMFE admits literal control characters through tokenizer alphabet and free-string token cache; CPU regression reproduces raw TAB admission.",
+  "disposition": "Keep every v1 record; new implementation version v2 restarts all 200 fixtures. No postprocessing or replacement of these outputs."
+}

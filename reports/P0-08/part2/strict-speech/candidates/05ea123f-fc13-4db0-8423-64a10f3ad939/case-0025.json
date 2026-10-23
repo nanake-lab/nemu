@@ -1,0 +1,71 @@
+{
+  "caseId": "case-0025",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0025",
+    "nodes": [
+      {
+        "id": "ref_speaker",
+        "sourceRefs": [
+          "p0-08-0025"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "ref_exercise_9",
+        "sourceRefs": [
+          "p0-08-0025"
+        ],
+        "sourceSpan": [
+          6,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "第9个练习"
+      },
+      {
+        "id": "claim_completed",
+        "sourceRefs": [
+          "p0-08-0025"
+        ],
+        "sourceSpan": [
+          0,
+          12
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "完成",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "我"
+          },
+          {
+            "role": "object",
+            "value": "第9个练习"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "reported",
+        "time": "刚刚"
+      }
+    ]
+  }
+}

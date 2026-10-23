@@ -1,0 +1,53 @@
+{
+  "caseId": "case-0050",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0050",
+    "nodes": [
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0050"
+        ],
+        "sourceSpan": [
+          0,
+          38
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "return",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "you"
+          }
+        ],
+        "value": "true",
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "17 o'clock"
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0050"
+        ],
+        "sourceSpan": [
+          0,
+          38
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Act",
+        "actType": "question",
+        "content": "Will you return at 17 o'clock?"
+      }
+    ]
+  },
+  "outputText": "{\n  \"schemaVersion\": \"p0-08-candidate-v1\",\n  \"sourceRef\": \"p0-08-0050\",\n  \"nodes\": [\n    {\n      \"id\": \"c1\",\n      \"sourceRefs\": [\"p0-08-0050\"],\n      \"sourceSpan\": [0, 38],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"return\",\n      \"roles\": [\n        {\n          \"role\": \"agent\",\n          \"value\": \"you\"\n        }\n      ],\n      \"value\": \"true\",\n      \"polarity\": \"positive\",\n      \"modality\": \"possible\",\n      \"time\": \"17 o'clock\"\n    },\n    {\n      \"id\": \"c2\",\n      \"sourceRefs\": [\"p0-08-0050\"],\n      \"sourceSpan\": [0, 38],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Act\",\n      \"actType\": \"question\",\n      \"content\": \"Will you return at 17 o'clock?\"\n    }\n  ]\n}"
+}

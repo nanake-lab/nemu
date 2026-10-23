@@ -1,0 +1,121 @@
+{
+  "caseId": "case-0187",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0187",
+    "nodes": [
+      {
+        "id": "r1",
+        "sourceRefs": [
+          "p0-08-0187"
+        ],
+        "sourceSpan": [
+          0,
+          1
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "我"
+      },
+      {
+        "id": "r2",
+        "sourceRefs": [
+          "p0-08-0187"
+        ],
+        "sourceSpan": [
+          4,
+          6
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "周末"
+      },
+      {
+        "id": "r3",
+        "sourceRefs": [
+          "p0-08-0187"
+        ],
+        "sourceSpan": [
+          9,
+          11
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "下雨"
+      },
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0187"
+        ],
+        "sourceSpan": [
+          0,
+          11
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "uncertain_about",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "r1"
+          },
+          {
+            "role": "event",
+            "value": "r3"
+          },
+          {
+            "role": "time",
+            "value": "r2"
+          }
+        ],
+        "value": "是否会下雨",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0187"
+        ],
+        "sourceSpan": [
+          12,
+          20
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "estimated_probability",
+        "roles": [
+          {
+            "role": "event",
+            "value": "r3"
+          },
+          {
+            "role": "time",
+            "value": "r2"
+          }
+        ],
+        "value": "大约是63成",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  }
+}

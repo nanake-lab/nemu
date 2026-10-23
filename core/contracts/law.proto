@@ -13,6 +13,7 @@ enum GrowthCommandKind { GROWTH_COMMAND_UNSPECIFIED = 0; GROWTH_PAUSE = 1; GROWT
 
 // @message echo.evidence-allocation | v2.0 §5.2 S_{c,k}, weight factors, shares; LP2, I25
 message EvidenceAllocation {
+  // @superseded EvidenceAllocationV2 | P5-32; ADR 0016: adds the ordinal, μ and p_c that G needs to replay a tendency
   // support is S_{c,k}; intensity is the strength factor (≤ w_max); share is the explanation share.
   optional uint32 schema_version = 1; // required
   optional string tendency_id = 2; // required,nonempty
@@ -23,6 +24,7 @@ message EvidenceAllocation {
 
 // @message echo.evidence-group | v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share
 message EvidenceGroup {
+  // @superseded EvidenceGroupV2 | P5-32; ADR 0016: carries EvidenceAllocationV2
   // members: committed H events of the group; source_key: the same-source key (EV2).
   optional uint32 schema_version = 1; // required
   optional string group_id = 2; // required,nonempty
@@ -35,6 +37,7 @@ message EvidenceGroup {
 
 // @message echo.tendency | v2.0 §5.2, §5.3 corollary 7, §7, §10
 message Tendency {
+  // @superseded TendencyV2 | P5-32; ADR 0016: adds the sums of the typical-magnitude recurrence
   // evidence_a is A_k = Σ ω·W·S; evidence_b is B_k = n₀ + κ_k + Σ ω·W·|S| (v2.0 §5.2).
   // attachment_prior is A_att, present only on the caretaker closeness tendency (corollary 7).
   // predicate is the ordered list of situation conditions; π_k ∈ (−1, 1) is checked in core-types.
@@ -57,6 +60,7 @@ message Tendency {
 
 // @message echo.r-snapshot | v2.0 §2.1, §2.2, §7
 message RSnapshot {
+  // @superseded RSnapshotV2 | P5-32; ADR 0016: carries TendencyV2
   optional uint32 schema_version = 1; // required
   optional string revision = 2; // required,nonempty
   optional ObjectRef law_version = 3; // required
@@ -169,4 +173,74 @@ message GenesisManifestV2 {
   optional FuseConfig fuses = 15; // required
   optional ObjectRef boundaries = 16; // required
   optional ObjectRef protocol = 17; // required
+}
+
+// P5-32 (ADR 0016): successors that add the R state the law engine G needs (V2-48). The typical
+// magnitude r_k = clip(M/U, 0, r_max) is a recency-weighted average, so a tendency keeps its sums
+// M = Σ ω·μ·p_c and U = Σ ω·μ like A and B; each allocation keeps its ordinal, μ and p_c so that G
+// can replay a tendency's recurrence when an earlier allocation changes (EV5 back-collection, a
+// late member, re-sharing after a capacity removal).
+
+// @message echo.evidence-allocation-v2 | v2.0 §5.2 S_{c,k}, weight factors, shares, r_k; LP2, I25; ADR 0016
+message EvidenceAllocationV2 {
+  // @supersedes EvidenceAllocation
+  // ordinal: index of this group among the tendency's groups, from 0, fixed once assigned (P5-23 D1);
+  // mu is μ_{c,k}; projection is p_c = ⟨Δ_c, d_k⟩, absent for teaching groups (not part of r_k).
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double support = 3; // required,min=-1,max=1
+  optional double intensity = 4; // required,min=0
+  optional double share = 5; // required,min=0,max=1
+  optional uint64 ordinal = 6; // required
+  optional double mu = 7; // required,min=0,max=1
+  optional double projection = 8; // optional
+}
+
+// @message echo.evidence-group-v2 | v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; ADR 0016
+message EvidenceGroupV2 {
+  // @supersedes EvidenceGroup
+  // Field 7 (allocations of the superseded EvidenceAllocation) is reserved; field 8 carries the successors.
+  reserved 7;
+  optional uint32 schema_version = 1; // required
+  optional string group_id = 2; // required,nonempty
+  repeated string members = 3; // required,set=self
+  optional string source_key = 4; // required,nonempty
+  optional double credibility = 5; // required,min=0,max=1
+  optional double verifiability = 6; // required,min=0,max=1
+  repeated EvidenceAllocationV2 allocations = 8; // required,set=tendency_id
+}
+
+// @message echo.tendency-v2 | v2.0 §5.2, §5.3 corollary 7, §7, §10; ADR 0016
+message TendencyV2 {
+  // @supersedes Tendency
+  // magnitude_sum is M_k = Σ ω·μ·p_c and magnitude_weight is U_k = Σ ω·μ over the matching
+  // experience groups; typical_magnitude = clip(M/U, 0, r_max), 0 while U = 0 (v2.0 §5.2).
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional ConceptRef concept = 3; // required
+  repeated TrilingualText predicate = 4; // required
+  optional NatureVector direction = 5; // required
+  optional double evidence_a = 6; // required
+  optional double evidence_b = 7; // required,min=0
+  optional double h_hat = 8; // required,min=0,max=1
+  optional uint64 group_count = 9; // required
+  optional uint64 flip_count = 10; // required
+  optional EvidenceSign last_sign = 11; // optional
+  optional double pi = 12; // required,min=-1,max=1
+  optional double typical_magnitude = 13; // required,min=0
+  optional PersonRelation relation = 14; // optional
+  optional double attachment_prior = 15; // optional,min=0
+  optional double magnitude_sum = 16; // required
+  optional double magnitude_weight = 17; // required,min=0
+}
+
+// @message echo.r-snapshot-v2 | v2.0 §2.1, §2.2, §7; ADR 0016
+message RSnapshotV2 {
+  // @supersedes RSnapshot
+  // Field 4 (tendencies of the superseded Tendency) is reserved; field 5 carries TendencyV2.
+  reserved 4;
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional ObjectRef law_version = 3; // required
+  repeated TendencyV2 tendencies = 5; // required,set=tendency_id
 }

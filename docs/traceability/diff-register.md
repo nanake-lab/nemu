@@ -164,3 +164,11 @@ ADR 0007 amendments have been implemented and cross-language checked. 78 source-
 | V2-35 | ADR 0007 第 2、11 条；P5-21 卡「VersionedEnvironment 增加…」等 | 改动的消息一律以带新类型标签的后继消息实现，旧消息原样保留并标为取代，已发布的字节与摘要不变：VersionedEnvironmentV2、ProposalBindingV2、FastStateSnapshotV2、CoreTransactionV2、CoreCommitResultV2、ModulationEnvelopeV2、LineageHeaderV2。后继消息沿用前任的字段号，被取代的号用 `reserved`，新字段号都大于前任的最大号。ProposalBinding 换代后，携带它的 SemanticCandidate、ConceptProposal 也有后继（卡里没有写到）。VersionedEnvironmentV2 中天性评估器、情境吻合器、方向集、规律版本四项可缺省，使尚未接通的阶段如实显示为缺省；正式谱系与实验谱系启动时要求四项都在（P5-08）。ModulationEnvelopeV2 去掉 HookCoefficients，保留 effect_receipt_digest；HookCoefficients 随之标为取代 | 否；不改任何已发布字节 | 待用户确认（阻塞，随本卡） |
 | V2-36 | v2.0 第 2.4、5.4、12、13、15 节；V2-17 | 原因码与状态的判定：`GROWTH_PAUSED`、`GROWTH_REVIEW_PENDING`、`A_DEGRADED`、`M_DEGRADED` 是 RunStatus 的状态，本身说明原因，不另设 FailureCode；`GROWTH_OFF_REHEARSAL` 是 FailureCode，配 NO_GROWTH；A、M 失败的原因用既有的通用码（DEPENDENCY_FAULT、VERSION_MISMATCH、NUMERIC_INVALID 等）。取代：CORE_QUARANTINED（第 12 节不再整体隔离）、AX_DEGRADED、GROWTH_NOT_ENABLED_V1、AX_UNAVAILABLE、EVIDENCE_INCOMPLETE（C 的凝固查询计划已取代）、UNSUPPORTED_SLICE、UNKNOWN_OVERLAP。`Lineage` 增加 EXPERIMENT 后，终端的 RunState 在编解码层也能带 EXPERIMENT；按 P5-22 卡「终端的 Lineage 不含 EXPERIMENT」，由 P5-22 收紧 | 否 | 待用户确认 |
 | V2-37 | v2.0 第 2.3、13 节；I28 | genesis v2 的读法：她的名字不在 genesis 里（它是 H 的第一条事实）；没有 x 的初值（x 从静息点 (b₀, 0) 开始）；载体只列 carrier（模型由载体条目确定）；天性结构以一个结构版本标识表示；边界配置、两个读出函数和协议 p 都以对象引用给出，不内嵌任何文本。I28 的类型检查：genesis 可达的字符串只有 5 个标识字段，字节只有 32 字节摘要，三语文本类型不可达 | 否 | 待用户确认 |
+
+## 2026-10-22 追加：P5-32 契约变更
+
+来源：ADR 0016 与任务卡 P5-32（用户 2026-10-22 同意方案 a）。V2-48 在 P5-23（PR #49）中登记。
+
+| ID | 原文位置 | 重建或读法 | 冻结边界 | 状态 |
+| --- | --- | --- | --- | --- |
+| V2-50 | V2-34、V2-48；v2.0 第 5.2 节「典型幅度」「计算次序」；I23、I25 | R 的存储补五个字段：倾向存典型幅度递推的 M = Σω·μ·p_c 与 U = Σω·μ；每个分配存序号、μ_{c,k} 与 p_c（教导组缺省）。以后继消息 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2 实现，旧消息标为取代。改旧分配时，G 只用存下的 S、强度、份额、可信、可核实，以及序号、μ、p_c 重放该倾向的递推，不需要历史的 b、σ̂ 或其他倾向的 π 历史；与整段重算逐位一致。解决 V2-48 | 否；只增，不改已发布字节 | 待用户批准，ADR 0016 |

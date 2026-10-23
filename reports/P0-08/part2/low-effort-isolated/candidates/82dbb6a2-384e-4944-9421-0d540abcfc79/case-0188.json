@@ -1,0 +1,65 @@
+{
+  "caseId": "case-0188",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0188",
+    "nodes": [
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0188"
+        ],
+        "sourceSpan": [
+          0,
+          73
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "certainty",
+        "roles": [
+          {
+            "role": "experiencer",
+            "value": "speaker"
+          },
+          {
+            "role": "proposition",
+            "value": "it will rain this weekend"
+          }
+        ],
+        "value": "not sure whether it will rain this weekend",
+        "polarity": "negative",
+        "modality": "reported",
+        "time": null
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0188"
+        ],
+        "sourceSpan": [
+          75,
+          111
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_assertion",
+        "resolutionState": "provisional",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "chance",
+        "roles": [
+          {
+            "role": "event",
+            "value": "it will rain this weekend"
+          }
+        ],
+        "value": "63 in ten",
+        "polarity": "positive",
+        "modality": "possible",
+        "time": "this weekend"
+      }
+    ]
+  }
+}

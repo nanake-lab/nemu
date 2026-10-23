@@ -1,0 +1,62 @@
+{
+  "caseId": "case-0035",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0035",
+    "nodes": [
+      {
+        "id": "c1",
+        "sourceRefs": [
+          "p0-08-0035"
+        ],
+        "sourceSpan": [
+          0,
+          50
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is hypothesis",
+        "roles": [
+          {
+            "role": "hypothesis",
+            "value": "number 12"
+          }
+        ],
+        "value": "hypothesis number 12",
+        "polarity": "positive",
+        "modality": "asserted",
+        "time": null
+      },
+      {
+        "id": "c2",
+        "sourceRefs": [
+          "p0-08-0035"
+        ],
+        "sourceSpan": [
+          51,
+          58
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_assertion",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "is not an event",
+        "roles": [
+          {
+            "role": "event",
+            "value": "happened"
+          }
+        ],
+        "value": "not an event",
+        "polarity": "negative",
+        "modality": "asserted",
+        "time": null
+      }
+    ]
+  },
+  "outputText": "{\n  \"schemaVersion\": \"p0-08-candidate-v1\",\n  \"sourceRef\": \"p0-08-0035\",\n  \"nodes\": [\n    {\n      \"id\": \"c1\",\n      \"sourceRefs\": [\"p0-08-0035\"],\n      \"sourceSpan\": [0, 50],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"is hypothesis\",\n      \"roles\": [\n        {\n          \"role\": \"hypothesis\",\n          \"value\": \"number 12\"\n        }\n      ],\n      \"value\": \"hypothesis number 12\",\n      \"polarity\": \"positive\",\n      \"modality\": \"asserted\",\n      \"time\": null\n    },\n    {\n      \"id\": \"c2\",\n      \"sourceRefs\": [\"p0-08-0035\"],\n      \"sourceSpan\": [51, 58],\n      \"derivation\": \"verbatim\",\n      \"epistemicType\": \"user_assertion\",\n      \"resolutionState\": \"unresolved\",\n      \"representationVersion\": \"p0-08-candidate-v1\",\n      \"kind\": \"Claim\",\n      \"predicateLabel\": \"is not an event\",\n      \"roles\": [\n        {\n          \"role\": \"event\",\n          \"value\": \"happened\"\n        }\n      ],\n      \"value\": \"not an event\",\n      \"polarity\": \"negative\",\n      \"modality\": \"asserted\",\n      \"time\": null\n    }\n  ]\n}"
+}

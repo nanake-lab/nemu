@@ -1,0 +1,1380 @@
+{
+  "capturedAt": "2026-10-22T14:54:38.0981167Z",
+  "expectedHeadSha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+  "sources": {
+    "ubuntu": {
+      "run": {
+        "queryStamp": "1792680869",
+        "startedAt": "2026-10-22T14:54:29.5573573Z",
+        "endedAt": "2026-10-22T14:54:30.9241721Z",
+        "exitCode": 0,
+        "route": "repos/nanake-lab/nemu/actions/runs/39796228753",
+        "response": {
+          "id": 39796228753,
+          "name": "CI",
+          "node_id": "WFR_kwLOVHy5y88AAAAJRApCkQ",
+          "head_branch": "task/P5-02-store",
+          "head_sha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+          "path": ".github/workflows/ci.yml",
+          "display_title": "feat(P5-02): 单写事务与对象存储（W02）",
+          "run_number": 186,
+          "event": "pull_request",
+          "status": "completed",
+          "conclusion": "success",
+          "workflow_id": 383480231,
+          "check_suite_id": 107856940822,
+          "check_suite_node_id": "CS_kwDOVHy5y88AAAAZHMZPFg",
+          "url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796228753",
+          "html_url": "https://github.com/nanake-lab/nemu/actions/runs/39796228753",
+          "pull_requests": [
+            {
+              "url": "https://api.github.com/repos/nanake-lab/nemu/pulls/58",
+              "id": 4966688974,
+              "number": 58,
+              "head": {
+                "ref": "task/P5-02-store",
+                "sha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+                "repo": {
+                  "id": 1417460171,
+                  "url": "https://api.github.com/repos/nanake-lab/nemu",
+                  "name": "nemu"
+                }
+              },
+              "base": {
+                "ref": "main",
+                "sha": "1f7d4734f32a399e9f867427864ddf87691755e9",
+                "repo": {
+                  "id": 1417460171,
+                  "url": "https://api.github.com/repos/nanake-lab/nemu",
+                  "name": "nemu"
+                }
+              }
+            }
+          ],
+          "created_at": "2026-10-22T14:30:26Z",
+          "updated_at": "2026-10-22T14:42:38Z",
+          "actor": {
+            "login": "nanake-lab",
+            "id": 236205385,
+            "node_id": "U_kgDODhQ1SQ",
+            "avatar_url": "https://avatars.githubusercontent.com/u/236205385?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/nanake-lab",
+            "html_url": "https://github.com/nanake-lab",
+            "followers_url": "https://api.github.com/users/nanake-lab/followers",
+            "following_url": "https://api.github.com/users/nanake-lab/following{/other_user}",
+            "gists_url": "https://api.github.com/users/nanake-lab/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/nanake-lab/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/nanake-lab/subscriptions",
+            "organizations_url": "https://api.github.com/users/nanake-lab/orgs",
+            "repos_url": "https://api.github.com/users/nanake-lab/repos",
+            "events_url": "https://api.github.com/users/nanake-lab/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/nanake-lab/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "run_attempt": 1,
+          "referenced_workflows": [],
+          "run_started_at": "2026-10-22T14:30:26Z",
+          "triggering_actor": {
+            "login": "nanake-lab",
+            "id": 236205385,
+            "node_id": "U_kgDODhQ1SQ",
+            "avatar_url": "https://avatars.githubusercontent.com/u/236205385?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/nanake-lab",
+            "html_url": "https://github.com/nanake-lab",
+            "followers_url": "https://api.github.com/users/nanake-lab/followers",
+            "following_url": "https://api.github.com/users/nanake-lab/following{/other_user}",
+            "gists_url": "https://api.github.com/users/nanake-lab/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/nanake-lab/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/nanake-lab/subscriptions",
+            "organizations_url": "https://api.github.com/users/nanake-lab/orgs",
+            "repos_url": "https://api.github.com/users/nanake-lab/repos",
+            "events_url": "https://api.github.com/users/nanake-lab/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/nanake-lab/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "jobs_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796228753/jobs",
+          "logs_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796228753/logs",
+          "check_suite_url": "https://api.github.com/repos/nanake-lab/nemu/check-suites/107856940822",
+          "artifacts_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796228753/artifacts",
+          "cancel_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796228753/cancel",
+          "rerun_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796228753/rerun",
+          "previous_attempt_url": null,
+          "workflow_url": "https://api.github.com/repos/nanake-lab/nemu/actions/workflows/383480231",
+          "head_commit": {
+            "id": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+            "tree_id": "fea6c3e4be9e50d7e8854aff3c82e03b846fc245",
+            "message": "test(P5-02): record full review regression evidence",
+            "timestamp": "2026-10-22T14:30:04Z",
+            "author": {
+              "name": "nanake",
+              "email": "qizhu7553@gmail.com"
+            },
+            "committer": {
+              "name": "nanake",
+              "email": "qizhu7553@gmail.com"
+            }
+          },
+          "repository": {
+            "id": 1417460171,
+            "node_id": "R_kgDOVHy5yw",
+            "name": "nemu",
+            "full_name": "nanake-lab/nemu",
+            "private": true,
+            "owner": {
+              "login": "nanake-lab",
+              "id": 236205385,
+              "node_id": "U_kgDODhQ1SQ",
+              "avatar_url": "https://avatars.githubusercontent.com/u/236205385?v=4",
+              "gravatar_id": "",
+              "url": "https://api.github.com/users/nanake-lab",
+              "html_url": "https://github.com/nanake-lab",
+              "followers_url": "https://api.github.com/users/nanake-lab/followers",
+              "following_url": "https://api.github.com/users/nanake-lab/following{/other_user}",
+              "gists_url": "https://api.github.com/users/nanake-lab/gists{/gist_id}",
+              "starred_url": "https://api.github.com/users/nanake-lab/starred{/owner}{/repo}",
+              "subscriptions_url": "https://api.github.com/users/nanake-lab/subscriptions",
+              "organizations_url": "https://api.github.com/users/nanake-lab/orgs",
+              "repos_url": "https://api.github.com/users/nanake-lab/repos",
+              "events_url": "https://api.github.com/users/nanake-lab/events{/privacy}",
+              "received_events_url": "https://api.github.com/users/nanake-lab/received_events",
+              "type": "User",
+              "user_view_type": "public",
+              "site_admin": false
+            },
+            "html_url": "https://github.com/nanake-lab/nemu",
+            "description": null,
+            "fork": false,
+            "url": "https://api.github.com/repos/nanake-lab/nemu",
+            "forks_url": "https://api.github.com/repos/nanake-lab/nemu/forks",
+            "keys_url": "https://api.github.com/repos/nanake-lab/nemu/keys{/key_id}",
+            "collaborators_url": "https://api.github.com/repos/nanake-lab/nemu/collaborators{/collaborator}",
+            "teams_url": "https://api.github.com/repos/nanake-lab/nemu/teams",
+            "hooks_url": "https://api.github.com/repos/nanake-lab/nemu/hooks",
+            "issue_events_url": "https://api.github.com/repos/nanake-lab/nemu/issues/events{/number}",
+            "events_url": "https://api.github.com/repos/nanake-lab/nemu/events",
+            "assignees_url": "https://api.github.com/repos/nanake-lab/nemu/assignees{/user}",
+            "branches_url": "https://api.github.com/repos/nanake-lab/nemu/branches{/branch}",
+            "tags_url": "https://api.github.com/repos/nanake-lab/nemu/tags",
+            "blobs_url": "https://api.github.com/repos/nanake-lab/nemu/git/blobs{/sha}",
+            "git_tags_url": "https://api.github.com/repos/nanake-lab/nemu/git/tags{/sha}",
+            "git_refs_url": "https://api.github.com/repos/nanake-lab/nemu/git/refs{/sha}",
+            "trees_url": "https://api.github.com/repos/nanake-lab/nemu/git/trees{/sha}",
+            "statuses_url": "https://api.github.com/repos/nanake-lab/nemu/statuses/{sha}",
+            "languages_url": "https://api.github.com/repos/nanake-lab/nemu/languages",
+            "stargazers_url": "https://api.github.com/repos/nanake-lab/nemu/stargazers",
+            "contributors_url": "https://api.github.com/repos/nanake-lab/nemu/contributors",
+            "subscribers_url": "https://api.github.com/repos/nanake-lab/nemu/subscribers",
+            "subscription_url": "https://api.github.com/repos/nanake-lab/nemu/subscription",
+            "commits_url": "https://api.github.com/repos/nanake-lab/nemu/commits{/sha}",
+            "git_commits_url": "https://api.github.com/repos/nanake-lab/nemu/git/commits{/sha}",
+            "comments_url": "https://api.github.com/repos/nanake-lab/nemu/comments{/number}",
+            "issue_comment_url": "https://api.github.com/repos/nanake-lab/nemu/issues/comments{/number}",
+            "contents_url": "https://api.github.com/repos/nanake-lab/nemu/contents/{+path}",
+            "compare_url": "https://api.github.com/repos/nanake-lab/nemu/compare/{base}...{head}",
+            "merges_url": "https://api.github.com/repos/nanake-lab/nemu/merges",
+            "archive_url": "https://api.github.com/repos/nanake-lab/nemu/{archive_format}{/ref}",
+            "downloads_url": "https://api.github.com/repos/nanake-lab/nemu/downloads",
+            "issues_url": "https://api.github.com/repos/nanake-lab/nemu/issues{/number}",
+            "pulls_url": "https://api.github.com/repos/nanake-lab/nemu/pulls{/number}",
+            "milestones_url": "https://api.github.com/repos/nanake-lab/nemu/milestones{/number}",
+            "notifications_url": "https://api.github.com/repos/nanake-lab/nemu/notifications{?since,all,participating}",
+            "labels_url": "https://api.github.com/repos/nanake-lab/nemu/labels{/name}",
+            "releases_url": "https://api.github.com/repos/nanake-lab/nemu/releases{/id}",
+            "deployments_url": "https://api.github.com/repos/nanake-lab/nemu/deployments"
+          },
+          "head_repository": {
+            "id": 1417460171,
+            "node_id": "R_kgDOVHy5yw",
+            "name": "nemu",
+            "full_name": "nanake-lab/nemu",
+            "private": true,
+            "owner": {
+              "login": "nanake-lab",
+              "id": 236205385,
+              "node_id": "U_kgDODhQ1SQ",
+              "avatar_url": "https://avatars.githubusercontent.com/u/236205385?v=4",
+              "gravatar_id": "",
+              "url": "https://api.github.com/users/nanake-lab",
+              "html_url": "https://github.com/nanake-lab",
+              "followers_url": "https://api.github.com/users/nanake-lab/followers",
+              "following_url": "https://api.github.com/users/nanake-lab/following{/other_user}",
+              "gists_url": "https://api.github.com/users/nanake-lab/gists{/gist_id}",
+              "starred_url": "https://api.github.com/users/nanake-lab/starred{/owner}{/repo}",
+              "subscriptions_url": "https://api.github.com/users/nanake-lab/subscriptions",
+              "organizations_url": "https://api.github.com/users/nanake-lab/orgs",
+              "repos_url": "https://api.github.com/users/nanake-lab/repos",
+              "events_url": "https://api.github.com/users/nanake-lab/events{/privacy}",
+              "received_events_url": "https://api.github.com/users/nanake-lab/received_events",
+              "type": "User",
+              "user_view_type": "public",
+              "site_admin": false
+            },
+            "html_url": "https://github.com/nanake-lab/nemu",
+            "description": null,
+            "fork": false,
+            "url": "https://api.github.com/repos/nanake-lab/nemu",
+            "forks_url": "https://api.github.com/repos/nanake-lab/nemu/forks",
+            "keys_url": "https://api.github.com/repos/nanake-lab/nemu/keys{/key_id}",
+            "collaborators_url": "https://api.github.com/repos/nanake-lab/nemu/collaborators{/collaborator}",
+            "teams_url": "https://api.github.com/repos/nanake-lab/nemu/teams",
+            "hooks_url": "https://api.github.com/repos/nanake-lab/nemu/hooks",
+            "issue_events_url": "https://api.github.com/repos/nanake-lab/nemu/issues/events{/number}",
+            "events_url": "https://api.github.com/repos/nanake-lab/nemu/events",
+            "assignees_url": "https://api.github.com/repos/nanake-lab/nemu/assignees{/user}",
+            "branches_url": "https://api.github.com/repos/nanake-lab/nemu/branches{/branch}",
+            "tags_url": "https://api.github.com/repos/nanake-lab/nemu/tags",
+            "blobs_url": "https://api.github.com/repos/nanake-lab/nemu/git/blobs{/sha}",
+            "git_tags_url": "https://api.github.com/repos/nanake-lab/nemu/git/tags{/sha}",
+            "git_refs_url": "https://api.github.com/repos/nanake-lab/nemu/git/refs{/sha}",
+            "trees_url": "https://api.github.com/repos/nanake-lab/nemu/git/trees{/sha}",
+            "statuses_url": "https://api.github.com/repos/nanake-lab/nemu/statuses/{sha}",
+            "languages_url": "https://api.github.com/repos/nanake-lab/nemu/languages",
+            "stargazers_url": "https://api.github.com/repos/nanake-lab/nemu/stargazers",
+            "contributors_url": "https://api.github.com/repos/nanake-lab/nemu/contributors",
+            "subscribers_url": "https://api.github.com/repos/nanake-lab/nemu/subscribers",
+            "subscription_url": "https://api.github.com/repos/nanake-lab/nemu/subscription",
+            "commits_url": "https://api.github.com/repos/nanake-lab/nemu/commits{/sha}",
+            "git_commits_url": "https://api.github.com/repos/nanake-lab/nemu/git/commits{/sha}",
+            "comments_url": "https://api.github.com/repos/nanake-lab/nemu/comments{/number}",
+            "issue_comment_url": "https://api.github.com/repos/nanake-lab/nemu/issues/comments{/number}",
+            "contents_url": "https://api.github.com/repos/nanake-lab/nemu/contents/{+path}",
+            "compare_url": "https://api.github.com/repos/nanake-lab/nemu/compare/{base}...{head}",
+            "merges_url": "https://api.github.com/repos/nanake-lab/nemu/merges",
+            "archive_url": "https://api.github.com/repos/nanake-lab/nemu/{archive_format}{/ref}",
+            "downloads_url": "https://api.github.com/repos/nanake-lab/nemu/downloads",
+            "issues_url": "https://api.github.com/repos/nanake-lab/nemu/issues{/number}",
+            "pulls_url": "https://api.github.com/repos/nanake-lab/nemu/pulls{/number}",
+            "milestones_url": "https://api.github.com/repos/nanake-lab/nemu/milestones{/number}",
+            "notifications_url": "https://api.github.com/repos/nanake-lab/nemu/notifications{?since,all,participating}",
+            "labels_url": "https://api.github.com/repos/nanake-lab/nemu/labels{/name}",
+            "releases_url": "https://api.github.com/repos/nanake-lab/nemu/releases{/id}",
+            "deployments_url": "https://api.github.com/repos/nanake-lab/nemu/deployments"
+          }
+        }
+      },
+      "jobs": {
+        "queryStamp": "1792680870",
+        "startedAt": "2026-10-22T14:54:30.9329122Z",
+        "endedAt": "2026-10-22T14:54:32.2490446Z",
+        "exitCode": 0,
+        "route": "repos/nanake-lab/nemu/actions/runs/39796228753/jobs?per_page=100",
+        "response": {
+          "total_count": 1,
+          "jobs": [
+            {
+              "id": 119884011125,
+              "run_id": 39796228753,
+              "workflow_name": "CI",
+              "head_branch": "task/P5-02-store",
+              "run_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796228753",
+              "run_attempt": 1,
+              "node_id": "CR_kwDOVHy5y88AAAAb6aTWdQ",
+              "head_sha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+              "url": "https://api.github.com/repos/nanake-lab/nemu/actions/jobs/119884011125",
+              "html_url": "https://github.com/nanake-lab/nemu/actions/runs/39796228753/job/119884011125",
+              "status": "completed",
+              "conclusion": "success",
+              "created_at": "2026-10-22T14:30:26Z",
+              "started_at": "2026-10-22T14:30:29Z",
+              "completed_at": "2026-10-22T14:41:42Z",
+              "name": "Ubuntu static checks and unit tests",
+              "steps": [
+                {
+                  "name": "Set up job",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 1,
+                  "started_at": "2026-10-22T14:30:30Z",
+                  "completed_at": "2026-10-22T14:30:33Z"
+                },
+                {
+                  "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 2,
+                  "started_at": "2026-10-22T14:30:33Z",
+                  "completed_at": "2026-10-22T14:30:40Z"
+                },
+                {
+                  "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 3,
+                  "started_at": "2026-10-22T14:30:40Z",
+                  "completed_at": "2026-10-22T14:30:40Z"
+                },
+                {
+                  "name": "Run npm install --global pnpm@12.11.2",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 4,
+                  "started_at": "2026-10-22T14:30:40Z",
+                  "completed_at": "2026-10-22T14:30:43Z"
+                },
+                {
+                  "name": "Run pnpm install --frozen-lockfile",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 5,
+                  "started_at": "2026-10-22T14:30:43Z",
+                  "completed_at": "2026-10-22T14:30:46Z"
+                },
+                {
+                  "name": "Run pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 6,
+                  "started_at": "2026-10-22T14:30:46Z",
+                  "completed_at": "2026-10-22T14:31:32Z"
+                },
+                {
+                  "name": "Run pnpm test:contracts",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 7,
+                  "started_at": "2026-10-22T14:31:32Z",
+                  "completed_at": "2026-10-22T14:31:33Z"
+                },
+                {
+                  "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 8,
+                  "started_at": "2026-10-22T14:31:33Z",
+                  "completed_at": "2026-10-22T14:31:34Z"
+                },
+                {
+                  "name": "Run pnpm test:transport",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 9,
+                  "started_at": "2026-10-22T14:31:34Z",
+                  "completed_at": "2026-10-22T14:31:34Z"
+                },
+                {
+                  "name": "Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 10,
+                  "started_at": "2026-10-22T14:31:34Z",
+                  "completed_at": "2026-10-22T14:31:43Z"
+                },
+                {
+                  "name": "Python checks (all four projects)",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 11,
+                  "started_at": "2026-10-22T14:31:43Z",
+                  "completed_at": "2026-10-22T14:32:01Z"
+                },
+                {
+                  "name": "Rust checks",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 12,
+                  "started_at": "2026-10-22T14:32:01Z",
+                  "completed_at": "2026-10-22T14:40:25Z"
+                },
+                {
+                  "name": "Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 13,
+                  "started_at": "2026-10-22T14:40:25Z",
+                  "completed_at": "2026-10-22T14:40:27Z"
+                },
+                {
+                  "name": "Run dotnet build executors/office-connector/OfficeConnector.csproj --configuration Release",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 14,
+                  "started_at": "2026-10-22T14:40:27Z",
+                  "completed_at": "2026-10-22T14:40:33Z"
+                },
+                {
+                  "name": "Hosted minutes estimate",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 15,
+                  "started_at": "2026-10-22T14:40:33Z",
+                  "completed_at": "2026-10-22T14:40:33Z"
+                },
+                {
+                  "name": "P5-01 IDL and three-language conformance (D10.8 / SYS21)",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 16,
+                  "started_at": "2026-10-22T14:40:33Z",
+                  "completed_at": "2026-10-22T14:41:39Z"
+                },
+                {
+                  "name": "P5-21 contract compatibility tooling (no reuse; checked by test:core-contracts)",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 17,
+                  "started_at": "2026-10-22T14:41:39Z",
+                  "completed_at": "2026-10-22T14:41:39Z"
+                },
+                {
+                  "name": "Post Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 31,
+                  "started_at": "2026-10-22T14:41:39Z",
+                  "completed_at": "2026-10-22T14:41:39Z"
+                },
+                {
+                  "name": "Post Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 32,
+                  "started_at": "2026-10-22T14:41:39Z",
+                  "completed_at": "2026-10-22T14:41:39Z"
+                },
+                {
+                  "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 33,
+                  "started_at": "2026-10-22T14:41:39Z",
+                  "completed_at": "2026-10-22T14:41:40Z"
+                },
+                {
+                  "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 34,
+                  "started_at": "2026-10-22T14:41:40Z",
+                  "completed_at": "2026-10-22T14:41:40Z"
+                },
+                {
+                  "name": "Complete job",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 35,
+                  "started_at": "2026-10-22T14:41:40Z",
+                  "completed_at": "2026-10-22T14:41:40Z"
+                }
+              ],
+              "check_run_url": "https://api.github.com/repos/nanake-lab/nemu/check-runs/119884011125",
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 1000000227,
+              "runner_name": "GitHub Actions 1000000227",
+              "runner_group_id": 0,
+              "runner_group_name": "GitHub Actions"
+            }
+          ]
+        }
+      },
+      "directJob": {
+        "queryStamp": "1792680872",
+        "startedAt": "2026-10-22T14:54:32.2500485Z",
+        "endedAt": "2026-10-22T14:54:33.7894764Z",
+        "exitCode": 0,
+        "route": "repos/nanake-lab/nemu/actions/jobs/119884011125",
+        "response": {
+          "id": 119884011125,
+          "run_id": 39796228753,
+          "workflow_name": "CI",
+          "head_branch": "task/P5-02-store",
+          "run_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796228753",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVHy5y88AAAAb6aTWdQ",
+          "head_sha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+          "url": "https://api.github.com/repos/nanake-lab/nemu/actions/jobs/119884011125",
+          "html_url": "https://github.com/nanake-lab/nemu/actions/runs/39796228753/job/119884011125",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-10-22T14:30:26Z",
+          "started_at": "2026-10-22T14:30:29Z",
+          "completed_at": "2026-10-22T14:41:42Z",
+          "name": "Ubuntu static checks and unit tests",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-10-22T14:30:30Z",
+              "completed_at": "2026-10-22T14:30:33Z"
+            },
+            {
+              "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-10-22T14:30:33Z",
+              "completed_at": "2026-10-22T14:30:40Z"
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-10-22T14:30:40Z",
+              "completed_at": "2026-10-22T14:30:40Z"
+            },
+            {
+              "name": "Run npm install --global pnpm@12.11.2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-10-22T14:30:40Z",
+              "completed_at": "2026-10-22T14:30:43Z"
+            },
+            {
+              "name": "Run pnpm install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-10-22T14:30:43Z",
+              "completed_at": "2026-10-22T14:30:46Z"
+            },
+            {
+              "name": "Run pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-10-22T14:30:46Z",
+              "completed_at": "2026-10-22T14:31:32Z"
+            },
+            {
+              "name": "Run pnpm test:contracts",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-10-22T14:31:32Z",
+              "completed_at": "2026-10-22T14:31:33Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-10-22T14:31:33Z",
+              "completed_at": "2026-10-22T14:31:34Z"
+            },
+            {
+              "name": "Run pnpm test:transport",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9,
+              "started_at": "2026-10-22T14:31:34Z",
+              "completed_at": "2026-10-22T14:31:34Z"
+            },
+            {
+              "name": "Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10,
+              "started_at": "2026-10-22T14:31:34Z",
+              "completed_at": "2026-10-22T14:31:43Z"
+            },
+            {
+              "name": "Python checks (all four projects)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-10-22T14:31:43Z",
+              "completed_at": "2026-10-22T14:32:01Z"
+            },
+            {
+              "name": "Rust checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-10-22T14:32:01Z",
+              "completed_at": "2026-10-22T14:40:25Z"
+            },
+            {
+              "name": "Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-10-22T14:40:25Z",
+              "completed_at": "2026-10-22T14:40:27Z"
+            },
+            {
+              "name": "Run dotnet build executors/office-connector/OfficeConnector.csproj --configuration Release",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-10-22T14:40:27Z",
+              "completed_at": "2026-10-22T14:40:33Z"
+            },
+            {
+              "name": "Hosted minutes estimate",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-10-22T14:40:33Z",
+              "completed_at": "2026-10-22T14:40:33Z"
+            },
+            {
+              "name": "P5-01 IDL and three-language conformance (D10.8 / SYS21)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16,
+              "started_at": "2026-10-22T14:40:33Z",
+              "completed_at": "2026-10-22T14:41:39Z"
+            },
+            {
+              "name": "P5-21 contract compatibility tooling (no reuse; checked by test:core-contracts)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17,
+              "started_at": "2026-10-22T14:41:39Z",
+              "completed_at": "2026-10-22T14:41:39Z"
+            },
+            {
+              "name": "Post Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31,
+              "started_at": "2026-10-22T14:41:39Z",
+              "completed_at": "2026-10-22T14:41:39Z"
+            },
+            {
+              "name": "Post Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 32,
+              "started_at": "2026-10-22T14:41:39Z",
+              "completed_at": "2026-10-22T14:41:39Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 33,
+              "started_at": "2026-10-22T14:41:39Z",
+              "completed_at": "2026-10-22T14:41:40Z"
+            },
+            {
+              "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 34,
+              "started_at": "2026-10-22T14:41:40Z",
+              "completed_at": "2026-10-22T14:41:40Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 35,
+              "started_at": "2026-10-22T14:41:40Z",
+              "completed_at": "2026-10-22T14:41:40Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/nanake-lab/nemu/check-runs/119884011125",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000000227,
+          "runner_name": "GitHub Actions 1000000227",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        }
+      }
+    },
+    "windows": {
+      "run": {
+        "queryStamp": "1792680873",
+        "startedAt": "2026-10-22T14:54:33.7899933Z",
+        "endedAt": "2026-10-22T14:54:34.9054049Z",
+        "exitCode": 0,
+        "route": "repos/nanake-lab/nemu/actions/runs/39796248748",
+        "response": {
+          "id": 39796248748,
+          "name": "Windows",
+          "node_id": "WFR_kwLOVHy5y88AAAAJRAqQrA",
+          "head_branch": "task/P5-02-store",
+          "head_sha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+          "path": ".github/workflows/windows.yml",
+          "display_title": "Windows",
+          "run_number": 71,
+          "event": "workflow_dispatch",
+          "status": "in_progress",
+          "conclusion": null,
+          "workflow_id": 390724148,
+          "check_suite_id": 107856995184,
+          "check_suite_node_id": "CS_kwDOVHy5y88AAAAZHMcjcA",
+          "url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796248748",
+          "html_url": "https://github.com/nanake-lab/nemu/actions/runs/39796248748",
+          "pull_requests": [
+            {
+              "url": "https://api.github.com/repos/nanake-lab/nemu/pulls/58",
+              "id": 4966688974,
+              "number": 58,
+              "head": {
+                "ref": "task/P5-02-store",
+                "sha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+                "repo": {
+                  "id": 1417460171,
+                  "url": "https://api.github.com/repos/nanake-lab/nemu",
+                  "name": "nemu"
+                }
+              },
+              "base": {
+                "ref": "main",
+                "sha": "1f7d4734f32a399e9f867427864ddf87691755e9",
+                "repo": {
+                  "id": 1417460171,
+                  "url": "https://api.github.com/repos/nanake-lab/nemu",
+                  "name": "nemu"
+                }
+              }
+            }
+          ],
+          "created_at": "2026-10-22T14:30:34Z",
+          "updated_at": "2026-10-22T14:35:06Z",
+          "actor": {
+            "login": "nanake-lab",
+            "id": 236205385,
+            "node_id": "U_kgDODhQ1SQ",
+            "avatar_url": "https://avatars.githubusercontent.com/u/236205385?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/nanake-lab",
+            "html_url": "https://github.com/nanake-lab",
+            "followers_url": "https://api.github.com/users/nanake-lab/followers",
+            "following_url": "https://api.github.com/users/nanake-lab/following{/other_user}",
+            "gists_url": "https://api.github.com/users/nanake-lab/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/nanake-lab/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/nanake-lab/subscriptions",
+            "organizations_url": "https://api.github.com/users/nanake-lab/orgs",
+            "repos_url": "https://api.github.com/users/nanake-lab/repos",
+            "events_url": "https://api.github.com/users/nanake-lab/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/nanake-lab/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "run_attempt": 1,
+          "referenced_workflows": [],
+          "run_started_at": "2026-10-22T14:30:34Z",
+          "triggering_actor": {
+            "login": "nanake-lab",
+            "id": 236205385,
+            "node_id": "U_kgDODhQ1SQ",
+            "avatar_url": "https://avatars.githubusercontent.com/u/236205385?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/nanake-lab",
+            "html_url": "https://github.com/nanake-lab",
+            "followers_url": "https://api.github.com/users/nanake-lab/followers",
+            "following_url": "https://api.github.com/users/nanake-lab/following{/other_user}",
+            "gists_url": "https://api.github.com/users/nanake-lab/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/nanake-lab/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/nanake-lab/subscriptions",
+            "organizations_url": "https://api.github.com/users/nanake-lab/orgs",
+            "repos_url": "https://api.github.com/users/nanake-lab/repos",
+            "events_url": "https://api.github.com/users/nanake-lab/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/nanake-lab/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "jobs_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796248748/jobs",
+          "logs_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796248748/logs",
+          "check_suite_url": "https://api.github.com/repos/nanake-lab/nemu/check-suites/107856995184",
+          "artifacts_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796248748/artifacts",
+          "cancel_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796248748/cancel",
+          "rerun_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796248748/rerun",
+          "previous_attempt_url": null,
+          "workflow_url": "https://api.github.com/repos/nanake-lab/nemu/actions/workflows/390724148",
+          "head_commit": {
+            "id": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+            "tree_id": "fea6c3e4be9e50d7e8854aff3c82e03b846fc245",
+            "message": "test(P5-02): record full review regression evidence",
+            "timestamp": "2026-10-22T14:30:04Z",
+            "author": {
+              "name": "nanake",
+              "email": "qizhu7553@gmail.com"
+            },
+            "committer": {
+              "name": "nanake",
+              "email": "qizhu7553@gmail.com"
+            }
+          },
+          "repository": {
+            "id": 1417460171,
+            "node_id": "R_kgDOVHy5yw",
+            "name": "nemu",
+            "full_name": "nanake-lab/nemu",
+            "private": true,
+            "owner": {
+              "login": "nanake-lab",
+              "id": 236205385,
+              "node_id": "U_kgDODhQ1SQ",
+              "avatar_url": "https://avatars.githubusercontent.com/u/236205385?v=4",
+              "gravatar_id": "",
+              "url": "https://api.github.com/users/nanake-lab",
+              "html_url": "https://github.com/nanake-lab",
+              "followers_url": "https://api.github.com/users/nanake-lab/followers",
+              "following_url": "https://api.github.com/users/nanake-lab/following{/other_user}",
+              "gists_url": "https://api.github.com/users/nanake-lab/gists{/gist_id}",
+              "starred_url": "https://api.github.com/users/nanake-lab/starred{/owner}{/repo}",
+              "subscriptions_url": "https://api.github.com/users/nanake-lab/subscriptions",
+              "organizations_url": "https://api.github.com/users/nanake-lab/orgs",
+              "repos_url": "https://api.github.com/users/nanake-lab/repos",
+              "events_url": "https://api.github.com/users/nanake-lab/events{/privacy}",
+              "received_events_url": "https://api.github.com/users/nanake-lab/received_events",
+              "type": "User",
+              "user_view_type": "public",
+              "site_admin": false
+            },
+            "html_url": "https://github.com/nanake-lab/nemu",
+            "description": null,
+            "fork": false,
+            "url": "https://api.github.com/repos/nanake-lab/nemu",
+            "forks_url": "https://api.github.com/repos/nanake-lab/nemu/forks",
+            "keys_url": "https://api.github.com/repos/nanake-lab/nemu/keys{/key_id}",
+            "collaborators_url": "https://api.github.com/repos/nanake-lab/nemu/collaborators{/collaborator}",
+            "teams_url": "https://api.github.com/repos/nanake-lab/nemu/teams",
+            "hooks_url": "https://api.github.com/repos/nanake-lab/nemu/hooks",
+            "issue_events_url": "https://api.github.com/repos/nanake-lab/nemu/issues/events{/number}",
+            "events_url": "https://api.github.com/repos/nanake-lab/nemu/events",
+            "assignees_url": "https://api.github.com/repos/nanake-lab/nemu/assignees{/user}",
+            "branches_url": "https://api.github.com/repos/nanake-lab/nemu/branches{/branch}",
+            "tags_url": "https://api.github.com/repos/nanake-lab/nemu/tags",
+            "blobs_url": "https://api.github.com/repos/nanake-lab/nemu/git/blobs{/sha}",
+            "git_tags_url": "https://api.github.com/repos/nanake-lab/nemu/git/tags{/sha}",
+            "git_refs_url": "https://api.github.com/repos/nanake-lab/nemu/git/refs{/sha}",
+            "trees_url": "https://api.github.com/repos/nanake-lab/nemu/git/trees{/sha}",
+            "statuses_url": "https://api.github.com/repos/nanake-lab/nemu/statuses/{sha}",
+            "languages_url": "https://api.github.com/repos/nanake-lab/nemu/languages",
+            "stargazers_url": "https://api.github.com/repos/nanake-lab/nemu/stargazers",
+            "contributors_url": "https://api.github.com/repos/nanake-lab/nemu/contributors",
+            "subscribers_url": "https://api.github.com/repos/nanake-lab/nemu/subscribers",
+            "subscription_url": "https://api.github.com/repos/nanake-lab/nemu/subscription",
+            "commits_url": "https://api.github.com/repos/nanake-lab/nemu/commits{/sha}",
+            "git_commits_url": "https://api.github.com/repos/nanake-lab/nemu/git/commits{/sha}",
+            "comments_url": "https://api.github.com/repos/nanake-lab/nemu/comments{/number}",
+            "issue_comment_url": "https://api.github.com/repos/nanake-lab/nemu/issues/comments{/number}",
+            "contents_url": "https://api.github.com/repos/nanake-lab/nemu/contents/{+path}",
+            "compare_url": "https://api.github.com/repos/nanake-lab/nemu/compare/{base}...{head}",
+            "merges_url": "https://api.github.com/repos/nanake-lab/nemu/merges",
+            "archive_url": "https://api.github.com/repos/nanake-lab/nemu/{archive_format}{/ref}",
+            "downloads_url": "https://api.github.com/repos/nanake-lab/nemu/downloads",
+            "issues_url": "https://api.github.com/repos/nanake-lab/nemu/issues{/number}",
+            "pulls_url": "https://api.github.com/repos/nanake-lab/nemu/pulls{/number}",
+            "milestones_url": "https://api.github.com/repos/nanake-lab/nemu/milestones{/number}",
+            "notifications_url": "https://api.github.com/repos/nanake-lab/nemu/notifications{?since,all,participating}",
+            "labels_url": "https://api.github.com/repos/nanake-lab/nemu/labels{/name}",
+            "releases_url": "https://api.github.com/repos/nanake-lab/nemu/releases{/id}",
+            "deployments_url": "https://api.github.com/repos/nanake-lab/nemu/deployments"
+          },
+          "head_repository": {
+            "id": 1417460171,
+            "node_id": "R_kgDOVHy5yw",
+            "name": "nemu",
+            "full_name": "nanake-lab/nemu",
+            "private": true,
+            "owner": {
+              "login": "nanake-lab",
+              "id": 236205385,
+              "node_id": "U_kgDODhQ1SQ",
+              "avatar_url": "https://avatars.githubusercontent.com/u/236205385?v=4",
+              "gravatar_id": "",
+              "url": "https://api.github.com/users/nanake-lab",
+              "html_url": "https://github.com/nanake-lab",
+              "followers_url": "https://api.github.com/users/nanake-lab/followers",
+              "following_url": "https://api.github.com/users/nanake-lab/following{/other_user}",
+              "gists_url": "https://api.github.com/users/nanake-lab/gists{/gist_id}",
+              "starred_url": "https://api.github.com/users/nanake-lab/starred{/owner}{/repo}",
+              "subscriptions_url": "https://api.github.com/users/nanake-lab/subscriptions",
+              "organizations_url": "https://api.github.com/users/nanake-lab/orgs",
+              "repos_url": "https://api.github.com/users/nanake-lab/repos",
+              "events_url": "https://api.github.com/users/nanake-lab/events{/privacy}",
+              "received_events_url": "https://api.github.com/users/nanake-lab/received_events",
+              "type": "User",
+              "user_view_type": "public",
+              "site_admin": false
+            },
+            "html_url": "https://github.com/nanake-lab/nemu",
+            "description": null,
+            "fork": false,
+            "url": "https://api.github.com/repos/nanake-lab/nemu",
+            "forks_url": "https://api.github.com/repos/nanake-lab/nemu/forks",
+            "keys_url": "https://api.github.com/repos/nanake-lab/nemu/keys{/key_id}",
+            "collaborators_url": "https://api.github.com/repos/nanake-lab/nemu/collaborators{/collaborator}",
+            "teams_url": "https://api.github.com/repos/nanake-lab/nemu/teams",
+            "hooks_url": "https://api.github.com/repos/nanake-lab/nemu/hooks",
+            "issue_events_url": "https://api.github.com/repos/nanake-lab/nemu/issues/events{/number}",
+            "events_url": "https://api.github.com/repos/nanake-lab/nemu/events",
+            "assignees_url": "https://api.github.com/repos/nanake-lab/nemu/assignees{/user}",
+            "branches_url": "https://api.github.com/repos/nanake-lab/nemu/branches{/branch}",
+            "tags_url": "https://api.github.com/repos/nanake-lab/nemu/tags",
+            "blobs_url": "https://api.github.com/repos/nanake-lab/nemu/git/blobs{/sha}",
+            "git_tags_url": "https://api.github.com/repos/nanake-lab/nemu/git/tags{/sha}",
+            "git_refs_url": "https://api.github.com/repos/nanake-lab/nemu/git/refs{/sha}",
+            "trees_url": "https://api.github.com/repos/nanake-lab/nemu/git/trees{/sha}",
+            "statuses_url": "https://api.github.com/repos/nanake-lab/nemu/statuses/{sha}",
+            "languages_url": "https://api.github.com/repos/nanake-lab/nemu/languages",
+            "stargazers_url": "https://api.github.com/repos/nanake-lab/nemu/stargazers",
+            "contributors_url": "https://api.github.com/repos/nanake-lab/nemu/contributors",
+            "subscribers_url": "https://api.github.com/repos/nanake-lab/nemu/subscribers",
+            "subscription_url": "https://api.github.com/repos/nanake-lab/nemu/subscription",
+            "commits_url": "https://api.github.com/repos/nanake-lab/nemu/commits{/sha}",
+            "git_commits_url": "https://api.github.com/repos/nanake-lab/nemu/git/commits{/sha}",
+            "comments_url": "https://api.github.com/repos/nanake-lab/nemu/comments{/number}",
+            "issue_comment_url": "https://api.github.com/repos/nanake-lab/nemu/issues/comments{/number}",
+            "contents_url": "https://api.github.com/repos/nanake-lab/nemu/contents/{+path}",
+            "compare_url": "https://api.github.com/repos/nanake-lab/nemu/compare/{base}...{head}",
+            "merges_url": "https://api.github.com/repos/nanake-lab/nemu/merges",
+            "archive_url": "https://api.github.com/repos/nanake-lab/nemu/{archive_format}{/ref}",
+            "downloads_url": "https://api.github.com/repos/nanake-lab/nemu/downloads",
+            "issues_url": "https://api.github.com/repos/nanake-lab/nemu/issues{/number}",
+            "pulls_url": "https://api.github.com/repos/nanake-lab/nemu/pulls{/number}",
+            "milestones_url": "https://api.github.com/repos/nanake-lab/nemu/milestones{/number}",
+            "notifications_url": "https://api.github.com/repos/nanake-lab/nemu/notifications{?since,all,participating}",
+            "labels_url": "https://api.github.com/repos/nanake-lab/nemu/labels{/name}",
+            "releases_url": "https://api.github.com/repos/nanake-lab/nemu/releases{/id}",
+            "deployments_url": "https://api.github.com/repos/nanake-lab/nemu/deployments"
+          }
+        }
+      },
+      "jobs": {
+        "queryStamp": "1792680874",
+        "startedAt": "2026-10-22T14:54:34.9059033Z",
+        "endedAt": "2026-10-22T14:54:36.2708551Z",
+        "exitCode": 0,
+        "route": "repos/nanake-lab/nemu/actions/runs/39796248748/jobs?per_page=100",
+        "response": {
+          "total_count": 1,
+          "jobs": [
+            {
+              "id": 119884073194,
+              "run_id": 39796248748,
+              "workflow_name": "Windows",
+              "head_branch": "task/P5-02-store",
+              "run_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796248748",
+              "run_attempt": 1,
+              "node_id": "CR_kwDOVHy5y88AAAAb6aXI6g",
+              "head_sha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+              "url": "https://api.github.com/repos/nanake-lab/nemu/actions/jobs/119884073194",
+              "html_url": "https://github.com/nanake-lab/nemu/actions/runs/39796248748/job/119884073194",
+              "status": "completed",
+              "conclusion": "success",
+              "created_at": "2026-10-22T14:30:36Z",
+              "started_at": "2026-10-22T14:30:42Z",
+              "completed_at": "2026-10-22T14:49:35Z",
+              "name": "Windows desktop and isolation",
+              "steps": [
+                {
+                  "name": "Set up job",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 1,
+                  "started_at": "2026-10-22T14:30:43Z",
+                  "completed_at": "2026-10-22T14:31:10Z"
+                },
+                {
+                  "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 2,
+                  "started_at": "2026-10-22T14:31:10Z",
+                  "completed_at": "2026-10-22T14:31:27Z"
+                },
+                {
+                  "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 3,
+                  "started_at": "2026-10-22T14:31:27Z",
+                  "completed_at": "2026-10-22T14:31:28Z"
+                },
+                {
+                  "name": "Run npm install --global pnpm@12.11.2",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 4,
+                  "started_at": "2026-10-22T14:31:28Z",
+                  "completed_at": "2026-10-22T14:31:42Z"
+                },
+                {
+                  "name": "Run pnpm install --frozen-lockfile",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 5,
+                  "started_at": "2026-10-22T14:31:42Z",
+                  "completed_at": "2026-10-22T14:31:47Z"
+                },
+                {
+                  "name": "Detect installed .NET SDK",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 6,
+                  "started_at": "2026-10-22T14:31:47Z",
+                  "completed_at": "2026-10-22T14:31:48Z"
+                },
+                {
+                  "name": "Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+                  "status": "completed",
+                  "conclusion": "skipped",
+                  "number": 7,
+                  "started_at": "2026-10-22T14:31:48Z",
+                  "completed_at": "2026-10-22T14:31:48Z"
+                },
+                {
+                  "name": "Run pnpm exec playwright install chromium",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 8,
+                  "started_at": "2026-10-22T14:31:48Z",
+                  "completed_at": "2026-10-22T14:31:49Z"
+                },
+                {
+                  "name": "Initialize current-run Windows evidence",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 9,
+                  "started_at": "2026-10-22T14:31:49Z",
+                  "completed_at": "2026-10-22T14:31:50Z"
+                },
+                {
+                  "name": "Evidence provenance regression tests",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 10,
+                  "started_at": "2026-10-22T14:31:50Z",
+                  "completed_at": "2026-10-22T14:31:54Z"
+                },
+                {
+                  "name": "Snapshot timing and repository filtering checks",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 11,
+                  "started_at": "2026-10-22T14:31:54Z",
+                  "completed_at": "2026-10-22T14:31:55Z"
+                },
+                {
+                  "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 12,
+                  "started_at": "2026-10-22T14:31:55Z",
+                  "completed_at": "2026-10-22T14:31:58Z"
+                },
+                {
+                  "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 13,
+                  "started_at": "2026-10-22T14:31:58Z",
+                  "completed_at": "2026-10-22T14:32:04Z"
+                },
+                {
+                  "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 14,
+                  "started_at": "2026-10-22T14:32:04Z",
+                  "completed_at": "2026-10-22T14:32:28Z"
+                },
+                {
+                  "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 15,
+                  "started_at": "2026-10-22T14:32:28Z",
+                  "completed_at": "2026-10-22T14:33:00Z"
+                },
+                {
+                  "name": "Verify Windows evidence provenance",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 16,
+                  "started_at": "2026-10-22T14:33:00Z",
+                  "completed_at": "2026-10-22T14:33:01Z"
+                },
+                {
+                  "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 17,
+                  "started_at": "2026-10-22T14:33:01Z",
+                  "completed_at": "2026-10-22T14:33:12Z"
+                },
+                {
+                  "name": "W02 NTFS storage checks",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 18,
+                  "started_at": "2026-10-22T14:33:12Z",
+                  "completed_at": "2026-10-22T14:49:16Z"
+                },
+                {
+                  "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 19,
+                  "started_at": "2026-10-22T14:49:16Z",
+                  "completed_at": "2026-10-22T14:49:21Z"
+                },
+                {
+                  "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 37,
+                  "started_at": "2026-10-22T14:49:21Z",
+                  "completed_at": "2026-10-22T14:49:22Z"
+                },
+                {
+                  "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 38,
+                  "started_at": "2026-10-22T14:49:22Z",
+                  "completed_at": "2026-10-22T14:49:23Z"
+                },
+                {
+                  "name": "Complete job",
+                  "status": "completed",
+                  "conclusion": "success",
+                  "number": 39,
+                  "started_at": "2026-10-22T14:49:23Z",
+                  "completed_at": "2026-10-22T14:49:24Z"
+                }
+              ],
+              "check_run_url": "https://api.github.com/repos/nanake-lab/nemu/check-runs/119884073194",
+              "labels": [
+                "self-hosted",
+                "Windows",
+                "X64",
+                "nemu"
+              ],
+              "runner_id": 42,
+              "runner_name": "DESKTOP-8LBF84O",
+              "runner_group_id": 1,
+              "runner_group_name": "Default"
+            }
+          ]
+        }
+      },
+      "directJob": {
+        "queryStamp": "1792680876",
+        "startedAt": "2026-10-22T14:54:36.2712460Z",
+        "endedAt": "2026-10-22T14:54:38.0977945Z",
+        "exitCode": 0,
+        "route": "repos/nanake-lab/nemu/actions/jobs/119884073194",
+        "response": {
+          "id": 119884073194,
+          "run_id": 39796248748,
+          "workflow_name": "Windows",
+          "head_branch": "task/P5-02-store",
+          "run_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796248748",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVHy5y88AAAAb6aXI6g",
+          "head_sha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+          "url": "https://api.github.com/repos/nanake-lab/nemu/actions/jobs/119884073194",
+          "html_url": "https://github.com/nanake-lab/nemu/actions/runs/39796248748/job/119884073194",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-10-22T14:30:36Z",
+          "started_at": "2026-10-22T14:30:42Z",
+          "completed_at": "2026-10-22T14:49:35Z",
+          "name": "Windows desktop and isolation",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-10-22T14:30:43Z",
+              "completed_at": "2026-10-22T14:31:10Z"
+            },
+            {
+              "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-10-22T14:31:10Z",
+              "completed_at": "2026-10-22T14:31:27Z"
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-10-22T14:31:27Z",
+              "completed_at": "2026-10-22T14:31:28Z"
+            },
+            {
+              "name": "Run npm install --global pnpm@12.11.2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-10-22T14:31:28Z",
+              "completed_at": "2026-10-22T14:31:42Z"
+            },
+            {
+              "name": "Run pnpm install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-10-22T14:31:42Z",
+              "completed_at": "2026-10-22T14:31:47Z"
+            },
+            {
+              "name": "Detect installed .NET SDK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-10-22T14:31:47Z",
+              "completed_at": "2026-10-22T14:31:48Z"
+            },
+            {
+              "name": "Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 7,
+              "started_at": "2026-10-22T14:31:48Z",
+              "completed_at": "2026-10-22T14:31:48Z"
+            },
+            {
+              "name": "Run pnpm exec playwright install chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-10-22T14:31:48Z",
+              "completed_at": "2026-10-22T14:31:49Z"
+            },
+            {
+              "name": "Initialize current-run Windows evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9,
+              "started_at": "2026-10-22T14:31:49Z",
+              "completed_at": "2026-10-22T14:31:50Z"
+            },
+            {
+              "name": "Evidence provenance regression tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10,
+              "started_at": "2026-10-22T14:31:50Z",
+              "completed_at": "2026-10-22T14:31:54Z"
+            },
+            {
+              "name": "Snapshot timing and repository filtering checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-10-22T14:31:54Z",
+              "completed_at": "2026-10-22T14:31:55Z"
+            },
+            {
+              "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-10-22T14:31:55Z",
+              "completed_at": "2026-10-22T14:31:58Z"
+            },
+            {
+              "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-10-22T14:31:58Z",
+              "completed_at": "2026-10-22T14:32:04Z"
+            },
+            {
+              "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-10-22T14:32:04Z",
+              "completed_at": "2026-10-22T14:32:28Z"
+            },
+            {
+              "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-10-22T14:32:28Z",
+              "completed_at": "2026-10-22T14:33:00Z"
+            },
+            {
+              "name": "Verify Windows evidence provenance",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16,
+              "started_at": "2026-10-22T14:33:00Z",
+              "completed_at": "2026-10-22T14:33:01Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17,
+              "started_at": "2026-10-22T14:33:01Z",
+              "completed_at": "2026-10-22T14:33:12Z"
+            },
+            {
+              "name": "W02 NTFS storage checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18,
+              "started_at": "2026-10-22T14:33:12Z",
+              "completed_at": "2026-10-22T14:49:16Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19,
+              "started_at": "2026-10-22T14:49:16Z",
+              "completed_at": "2026-10-22T14:49:21Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 37,
+              "started_at": "2026-10-22T14:49:21Z",
+              "completed_at": "2026-10-22T14:49:22Z"
+            },
+            {
+              "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 38,
+              "started_at": "2026-10-22T14:49:22Z",
+              "completed_at": "2026-10-22T14:49:23Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 39,
+              "started_at": "2026-10-22T14:49:23Z",
+              "completed_at": "2026-10-22T14:49:24Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/nanake-lab/nemu/check-runs/119884073194",
+          "labels": [
+            "self-hosted",
+            "Windows",
+            "X64",
+            "nemu"
+          ],
+          "runner_id": 42,
+          "runner_name": "DESKTOP-8LBF84O",
+          "runner_group_id": 1,
+          "runner_group_name": "Default"
+        }
+      }
+    }
+  }
+}

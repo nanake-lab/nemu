@@ -1,0 +1,55 @@
+{
+  "caseId": "case-0043",
+  "candidate": {
+    "schemaVersion": "p0-08-candidate-v1",
+    "sourceRef": "p0-08-0043",
+    "nodes": [
+      {
+        "id": "p0-08-0043-ref-1",
+        "sourceRefs": [
+          "p0-08-0043"
+        ],
+        "sourceSpan": [
+          11,
+          14
+        ],
+        "derivation": "verbatim",
+        "epistemicType": "user_self_report",
+        "resolutionState": "unresolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Ref",
+        "mention": "这本书"
+      },
+      {
+        "id": "p0-08-0043-claim-1",
+        "sourceRefs": [
+          "p0-08-0043"
+        ],
+        "sourceSpan": [
+          0,
+          14
+        ],
+        "derivation": "normalized",
+        "epistemicType": "user_self_report",
+        "resolutionState": "resolved",
+        "representationVersion": "p0-08-candidate-v1",
+        "kind": "Claim",
+        "predicateLabel": "读完",
+        "roles": [
+          {
+            "role": "agent",
+            "value": "我"
+          },
+          {
+            "role": "object",
+            "value": "这本书"
+          }
+        ],
+        "value": null,
+        "polarity": "positive",
+        "modality": "desired",
+        "time": "15号之前"
+      }
+    ]
+  }
+}
