@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { wireInputSchema } from './generated/echo/browser.js';
 import { performanceCueSchema } from './performance.js';
 import { mirroredStagePayloads } from './stage-events.js';
 import {
@@ -20,7 +21,7 @@ export const desktopObservationKindSchema = z.enum([
   'meeting_ended',
 ]);
 export type DesktopObservationKind = z.infer<typeof desktopObservationKindSchema>;
-export const queryKindSchema = z.enum(['memory', 'actions', 'run_history']);
+export const queryKindSchema = z.enum(['memory', 'actions', 'run_history', 'growth']);
 export type QueryKind = z.infer<typeof queryKindSchema>;
 export const queryStatusSchema = z.enum([
   'ok',
@@ -99,6 +100,36 @@ export const appBusPayloads = {
     approvalId: z.string(),
     decision: z.enum(['allowOnce', 'allowAlways', 'deny']),
   }),
+  'core.notice': z.strictObject({
+    noticeId: z.string().min(1),
+    kind: z.enum([
+      'review_hold',
+      'slow_drift',
+      'growth_paused',
+      'growth_resumed',
+      'migration',
+      'law_version',
+    ]),
+    at: z.string().min(1),
+    summary: z.string(),
+    lRef: z.string().min(1),
+  }),
+  'growth.control': z.strictObject({ action: z.enum(['pause', 'resume']) }),
+  'approval.request.v2': z.strictObject({
+    approvalId: z.string().min(1),
+    actionId: z.string().min(1),
+    tier: toolTierSchema,
+    title: z.string(),
+    detail: z.string(),
+    expiresAt: z.number(),
+    actionPayload: z.instanceof(Uint8Array),
+    payloadDigest: z.instanceof(Uint8Array).refine((v) => v.length === 32),
+  }),
+  'approval.decision.v2': z.strictObject({
+    approvalId: z.string().min(1),
+    decision: z.enum(['allowOnce', 'allowAlways', 'deny']),
+    payloadDigest: z.instanceof(Uint8Array).refine((v) => v.length === 32),
+  }),
   'chat.send': z.strictObject({ text: z.string() }),
   'memory.retract': z.strictObject({
     targetRefs: z.array(z.string()),
@@ -115,6 +146,18 @@ export const appBusPayloads = {
     status: queryStatusSchema,
     items: z.array(queryItemSchema),
   }),
+  'core.queryResult.v2': z
+    .strictObject({
+      queryId: z.string().min(1),
+      kind: queryKindSchema,
+      status: queryStatusSchema,
+      items: z.array(queryItemSchema),
+      growthEntries: z.array(wireInputSchema('LedgerEntry')),
+    })
+    .refine(
+      (p) => (p.kind === 'growth' ? p.items.length === 0 : p.growthEntries.length === 0),
+      'Growth results and ordinary query items must be disjoint',
+    ),
   'desktop.dnd': z.strictObject({ state: dndStateSchema }),
   'desktop.idle': z.strictObject({ idleMs: z.number() }),
   'desktop.observation': z.strictObject({
