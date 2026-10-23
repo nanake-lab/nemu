@@ -712,8 +712,14 @@ export async function lintVrm(options: LintOptions): Promise<LintResult> {
   }
 
   const metadata = object(vrm.meta) ?? {};
-  if (metadata.name !== 'Nemu' || !string(metadata.licenseUrl)?.trim() || array(metadata.authors).length === 0) {
-    add(diagnostics, 'A1.5-vrm-metadata', 'error', 'VRM meta must use name "Nemu" and include authors and licenseUrl.', 'Set meta.name to Nemu, add at least one author, and point licenseUrl to the content license file.');
+  if (metadata.name !== 'Nemu' || array(metadata.authors).length === 0) {
+    add(diagnostics, 'A1.5-vrm-metadata', 'error', 'VRM meta must use name "Nemu" and include authors.', 'Set meta.name to Nemu and add at least one author.');
+  }
+  if (metadata.licenseUrl !== 'https://vrm.dev/licenses/1.0/') {
+    add(diagnostics, 'A1.5-vrm-license-url', 'error', 'VRM 1.0 licenseUrl must equal https://vrm.dev/licenses/1.0/.', 'Keep licenseUrl at the VRM public license URL; put the content license in otherLicenseUrl (ADR 0015).');
+  }
+  if (!string(metadata.otherLicenseUrl)?.trim()) {
+    add(diagnostics, 'A1.5-vrm-content-license', 'error', 'VRM meta.otherLicenseUrl must contain the content license.', 'Set otherLicenseUrl to LICENSE.md relative to the content package root, or its public license URL (ADR 0015).');
   }
   await validateManifest(file, options.manifest, diagnostics);
   const metrics: LintMetrics = {
