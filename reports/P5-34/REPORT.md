@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-部分完成。草稿 [PR #72](https://github.com/nanake-lab/nemu/pull/72) 已标 `needs-user`。基于 origin/main `541be9e`，之后已 merge 同步 `0b5412e`（无冲突），ADR 0021、V2-62/63 仍未占用。IDL、生成类型、语义检查、定向输入与测试源码已完成，静态检查通过；Rust 编译、黄金向量冻结及完整三语言验收尚未启动。**用户2026-10-24明确要求等其告知空闲时间：已终止自动等待后启动构建的脚本，不自动恢复。** 另有 core-store V3 消费者迁移的卡外范围请求。保持草稿，不取下一张卡、不合并；补齐验收之后再提交完整审查请求。
+部分完成。草稿 [PR #72](https://github.com/nanake-lab/nemu/pull/72) 保持 `needs-user`。基于 origin/main `541be9e`，之后已 merge 同步 `0b5412e`（无冲突）；2026-10-24 本轮再次 fetch，main 仍为 `0b5412e`，没有缺少的 main 提交，ADR 0021、V2-62/63 没有撞号。IDL、生成类型、语义检查、定向输入与测试源码已有实现，现有静态检查日志通过；Rust 编译、黄金向量冻结及完整三语言验收尚未启动。**用户2026-10-24本轮再次明确「继续等待空闲通知」：不启动编译，不自动恢复。** 另有 core-store V3 消费者迁移的卡外范围请求。本轮将现有实现和阻塞说明提交到草稿 PR，写「请审查」供初步审查；全部验收尚未完成，不能合并。不取下一张卡。
 
 ## 交付物
 
@@ -33,6 +33,8 @@
 保留了两项命令/环境问题的原输出：直接把整个 core/contracts 交给 mypy，模板目录没有包上下文，返回2（mypy.log）；按既有 CI 指定文件及生成包运行则通过（mypy-ci-scope.log）。首次 pnpm lint 的自动依赖同步拒绝复用的 node_modules junction，脚本最终退出0但日志有安装警告（pnpm-lint.log），不把该记录用作验收。随后仅移除本工作区的两处 junction，以现有 D盘 store 离线安装锁定依赖，再正式运行 lint/typecheck 通过（pnpm-install.log、pnpm-lint-after-install.log）。安装未新增依赖，忽略依赖安装脚本；没有跳过测试或断言。
 
 同步 main `0b5412e` 后重跑生成、兼容、12个schema测试、lint、typecheck，退出码全0，证据在 `verification/after-main-0b5412e/`。工具链：Node24.21.0、pnpm12.11.2、Python3.12.10、uv0.12.15；契约锁定环境为CPython3.12.14。Rust工具链尚未实际用于本卡编译，不报告其验收结论。
+
+2026-10-24 本轮交接只复核已有日志、提交、范围和编号，`git diff --check origin/main...HEAD` 无输出；没有重跑测试，也没有改实现或黄金文件。机械性日志/路径/编号核验按角色名调用 `routine_reporter`（配置为 gpt-6-luna/max），主代理核对返回证据；不将其当成交叉审查。Windows 工作流对草稿 PR 跳过自托管作业，本轮不手动触发 CI。Cargo target 没有作用户级配置；未来获准编译时仍只在启动命令的进程环境中指向 D 盘。
 
 ## 规格对照
 
