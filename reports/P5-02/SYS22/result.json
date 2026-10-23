@@ -1,0 +1,13 @@
+{
+  "id": "SYS22",
+  "result": "passed",
+  "scope": "storage subset",
+  "source_revision": "5cc3b540f3b7b33b611a4c590cac91c9406df80a",
+  "tests": [
+    "sys22_capacity_and_busy_wait_are_bounded",
+    "object_capacity_and_io_failures_never_acknowledge_d",
+    "disk_full_rolls_back_ledger_and_all_state"
+  ],
+  "evidence": "../logs/10-final-workspace-tests.log",
+  "manifest": "../final-test-manifest.json"
+}

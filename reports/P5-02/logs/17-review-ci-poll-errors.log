@@ -1,0 +1,18 @@
+Observed CI status-poll diagnostic (console output; stderr was not separately redirected or byte-captured at the time):
+Time: 2026-10-22T22:33:01.7294866+08:00
+Command: gh run view 39796248748 --json databaseId,status,conclusion,headSha,event,createdAt,updatedAt,url,workflowName,displayTitle,headBranch,jobs
+Exit code: 1
+Known diagnostic line:
+failed to get run: Get "https://api.github.com/repos/nanake-lab/nemu/actions/runs/39796248748?exclude_pull_requests=true": EOF
+Unrecoverable from the original invocation: a byte-for-byte stderr stream and any output not surfaced in the captured console result.
+Additional polling wrapper failure (local PowerShell only; not a CI failure):
+Failure time: not recorded by the wrapper; occurred after the 2026-10-22T22:44:08+08:00 status query and before the corrected query whose query_stamp was 1792680324 (2026-10-22T14:45:24Z).
+No gh command ran in this failed wrapper invocation.
+Observed parser diagnostic:
+ParserError:
+Line |
+   2 |  ... /jobs/<job_id> with query_stamp'}|ConvertTo-Json -Depth 5 -Compress}}
+     |                                                                        ~
+     | Unexpected token '}' in expression or statement.
+Wrapper exit code: 1.
+Follow-up: corrected the PowerShell script into separate lines; subsequent gh api requests returned exit code 0. Original wrapper stderr bytes were not separately persisted, so this section records only the visible tool output and the fact that the original byte stream cannot be reconstructed.
