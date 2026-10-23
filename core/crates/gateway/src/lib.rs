@@ -6,6 +6,7 @@ pub mod framing;
 mod ingress;
 #[cfg(windows)]
 pub mod pipe;
+pub mod terminal;
 mod validation;
 #[cfg(windows)]
 #[allow(unsafe_code)]

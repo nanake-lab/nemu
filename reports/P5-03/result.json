@@ -2,12 +2,12 @@
   "schema_version": 1,
   "task": "P5-03",
   "status": "not_run",
-  "scope": "full task acceptance blocked; components and SYS01 structural pipe/store subset tested",
+  "scope": "partial task: B1 and B2 resolved; full gateway/SYS01 blocked by B3 interfaces assigned to a new contract card",
   "components": {
     "gateway_final": {
       "status": "passed",
-      "tests": 16,
-      "log": "continuation-1/test-final.log"
+      "tests": 21,
+      "log": "post-P5-22/workspace-checks.log"
     },
     "workspace_before_final_gateway_hardening": {
       "status": "passed",
@@ -17,16 +17,38 @@
     "workspace_fmt_clippy_final": {
       "status": "passed",
       "logs": [
-        "continuation-1/fmt-final.log",
-        "continuation-1/clippy-final.log"
+        "post-P5-22/workspace-checks.log"
       ]
     },
     "SYS01_structural_pipe_store": {
       "status": "passed",
       "profile": "synthetic rehearsal fixture",
       "tests": 2,
-      "log": "continuation-1/test-final.log",
+      "log": "post-P5-22/workspace-checks.log",
       "scope": "real pipe + generated EventEnvelope/Receipt + public core-store commit/dedup; reverse delayed receipts across reconnect; orderly close/reopen; not full auth/upload/runtime or physical power cut"
+    },
+    "workspace_post_P522": {
+      "status": "passed",
+      "tests": 106,
+      "compile_fail_tests": 2,
+      "core_store_tests": 31,
+      "core_store_seconds": 1008.67,
+      "log": "post-P5-22/workspace-checks.log"
+    },
+    "terminal_and_IDL_contracts": {
+      "status": "passed",
+      "terminal_tests": 350,
+      "cases_per_language": 10766,
+      "languages": [
+        "Rust",
+        "Python",
+        "TypeScript"
+      ],
+      "official_protoc_vectors": 445,
+      "schema_tests": 8,
+      "stale_generated": 0,
+      "compatibility_violations": 0,
+      "log": "post-P5-22/contract-checks-final.log"
     }
   },
   "acceptance": {
@@ -47,10 +69,16 @@
       "log": "test-final.log"
     },
     "P5-22_successor_integration": {
-      "status": "not_run",
-      "reason": "PR 57 remains open"
+      "status": "passed",
+      "PR": 57,
+      "merge_commit": "b6eb8721b420b4aa168e0c27789f63307959f84c",
+      "scope": "generated message boundary components; 31 golden variants across 8 messages plus query/approval context checks; no dispatch/auth/runtime claim",
+      "log": "post-P5-22/workspace-checks.log",
+      "report": "post-P5-22/REPORT.md"
     }
   },
   "storage": "core-store only; TemporaryRoot/tempfile under D-drive TEMP",
-  "credentials": "no token/ciphertext saved in repository or logs"
+  "credentials": "no token/ciphertext saved in repository or logs",
+  "latest_main": "0b5412e95caab447c70148c473e544dbab28c57c",
+  "remaining_blocker": "B3: new contract card owns auth/upload dispatch, authoritative D tail, persistent reject audit and typed backpressure; keep draft and stop after report"
 }

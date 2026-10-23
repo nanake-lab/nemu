@@ -1,95 +1,76 @@
 # P5-03 入口与网关（W18）—报告
 
-## 结果
-部分完成，保持草稿。基线 origin/main 876cff7（P5-02 / #58 已合并）。
-**当前交付是经过测试的边界组件，不是可运行的完整认证网关。** 阻塞见 BLOCKED.md。
+## 当前状态
+
+**部分完成，保持 draft / needs-user。** 已 fetch 并合并 origin/main
+`0b5412e95caab447c70148c473e544dbab28c57c`（最终合并提交 `d934850`）。
+P5-22 / #57 已合并，后继消息校验及本轮本卡全部检查通过，B2 已解除，结果见下表。
+B1 第二账户检查已通过；B3 的公开接口由新的契约卡处理，本卡不扩大范围。
+当前交付是边界组件，完整认证网关、完整 SYS01 和真实断电验收尚未完成。
+更新报告后按用户要求停下，不转为可审查、不请求最终审查、不合并。
 
 ## 交付物
-- `core/crates/gateway/`：限长/限时帧、九类终端事件验证、安装令牌/认证能力、管道与 core-store 接收适配。
-- `examples/acl_probe.rs`、SECOND-ACCOUNT.md：用户安排第二账户后的合成拒绝连接检查，无需新建账户或设置更改。
-- `tasks/requests/P5-03-gateway-interfaces.md`：公开 D 尾位置、拒绝审计、终端认证/对象上传 IDL、稳定背压状态的最小请求。
-- `.github/workflows/windows.yml`：只追加 W18 Windows 组件检查与证据上传；已有 core 路径触发范围覆盖本卡。
-- `check.ps1`：本地检查时将 Cargo / UV / npm / pnpm / HF / Torch 缓存与临时目录统一指向 D 盘。
+
+- `core/crates/gateway/`：限长/限时帧、CONTRACTS 4.2 九类事件验证、DPAPI 安装令牌、当前用户管道、core-store 接收适配。
+- `terminal.rs`：P5-22 生成类型的查询关联与成长内容隔离、审批原样载荷/SHA256/ID/有效期/T3 约束；没有新线协议。
+- `tests/terminal.rs`：八种新消息的全部合法黄金变体及冻结 protobuf 字节、旧六类型的历史解码/live 拒绝、非法消息与上下文正反例。
+- 实际 Windows 管道到 core-store 的 SYS01 结构集成：重投/冲突不改变快照、锚点和账本；跨重连 e2/e1 逆序延迟回执；未提交关闭重开。
+- `examples/acl_probe.rs`、`second-account/`：用户的实际跨账户结果原文、来源边界及手工合成探针。
+- `check.ps1`、`post-P5-22/check-contracts.ps1`：本卡完整 Rust 与契约复验；缓存、临时目录、venv 均指向 D 盘。
+- Windows CI 仅追加 W18 检查和证据上传；草稿时自动跳过。接口请求 `tasks/requests/P5-03-gateway-interfaces.md` 本轮未修改。
 
 ## 认证、ACL 与权限（必审）
 
-- DPAPI **当前用户**范围，未使用 LOCAL_MACHINE；Windows CSPRNG 生成 32 字节安装令牌。
-- 仅保存密文；CREATE_NEW 不覆盖现有/损坏令牌；受保护 DACL 只含当前 SID，句柄不继承。
-- 令牌与认证能力无 Debug / Serialize；明文字节使用 zeroize；认证内容比较使用 subtle；错误输出脱敏。
-- 管道拒绝远程，DACL 只含当前 SID；初次创建使用 first-instance。断开时先创建同 ACL 的后继实例，
-  再关闭旧句柄，连续持有名称；最多两个内核实例轮换，借用规则保证逐会话处理。
-  本轮结构集成发现复用旧句柄读到 Win32 233，已改为新句柄，20 次双向重连逐次复核实际 DACL/抢占拒绝。
-- 实测当前用户连接/重连、名称抢占拒绝、管道与令牌文件实际 DACL 精确匹配。
-  **第二账户测试由用户在 Windows 10 执行并报告通过**（nanake 服务端 / nemu 客户端，错误 5，exit 0），
-  原样用户消息与证据来源说明见 `second-account/`；消息未附两个窗口的完整逐行输出，不补造日志。
-  该用户结果来自此前探针；本轮轮换修复后没有代理代跑跨账户测试，ACL 构造不变，每个新句柄均有本机 DACL 断言。
-- title / Codex 会话字段需要可信行动闸门的 T1 授权；每条事件重新传入当前判定，会话不缓存授权。
-  同一会话撤权后的拒绝已有正反例。会话身份和授权不能取自未认证的客户端字段。
-- 完整认证线协议、实例绑定、来源/父引用/结果权限解析、拒绝审计仍需接入请求中的接口。
-  不把局部 token 验证当作完整终端认证验收。没有执行任何外部行动或开放正式服务。
+- DPAPI 当前用户范围、Windows CSPRNG 32 字节令牌、只保存密文；CREATE_NEW 不覆盖既有或损坏文件；令牌无 Debug/Serialize，零化缓冲、常量时间比较，日志不含凭据。
+- 管道和令牌文件 DACL 只含当前 SID、保护继承；管道拒绝远程、初次 first-instance。断开时先建相同 ACL 的新句柄再关旧句柄，保持名称连续占用；最多两个内核实例轮换、逐会话处理。20 次双向重连逐次检查实际 DACL 和名称抢占拒绝。
+- 第二账户：用户在 Windows 10 用 nanake 服务端/nemu 客户端，收到 ERROR_ACCESS_DENIED (5)，exit 0；原文见 second-account/user-message.txt。未附完整窗口逐行输出，不补造。结果来自轮换修复前；本轮未代跑跨账户测试，ACL 构造不变。
+- T1 标题/Codex 会话权限逐事件传入，不在会话中缓存；撤权反例持续保留。
+- `CheckedApproval` 是私有持有原样载荷的一次性本地校验快照；无 Clone/Debug/Serialize。核对实际待执行载荷、SHA256、approval/action ID、有效期，拒绝 DENY/T3 信任；消费时重查有效期与时钟回退，回调失败也消耗快照。
+  **这不是身份认证、权限授予或执行凭证。** P5-05 的真实行动权威/一次性凭证/审计仍需接入。未来可信分派层必须调用查询和审批上下文校验；单独 Framed 解码不提供关联认证。
+- 后继查询保留完整 L 与所有状态，growth/items 互斥；仅用于 user_view，不能送进 c_core/c_task。Notice 无投票字段，GrowthControl 仅 pause/resume；都不执行任何管理命令。
 
-## 验收
+## 验收（本轮）
 
 | 命令 / 检查 | 当前结果 | 证据 |
 | --- | --- | --- |
-| `cargo test -p gateway --locked -- --test-threads=1 --nocapture`（本轮源文件） | 16 passed，0 failed | continuation-1/test-final.log |
-| `cargo clippy -p gateway --all-targets --locked -- -D warnings`（含手工探针） | 通过 | clippy-components.log |
-| `cargo fmt --all -- --check`、`cargo clippy --workspace --all-targets --locked -- -D warnings`（本轮源文件） | 通过 | continuation-1/fmt-final.log、clippy-final.log |
-| `cargo test --workspace --locked -- --test-threads=1` | 98 passed，0 failed；core-store 31 项用时 967.91 秒 | checks.log |
-| SYS01：端到端重投/冲突/乱序提交回执/未提交断电恢复 | not_run；组件持久接收/重连有证据，不能替代完整服务 | BLOCKED.md B3 |
-| SYS01 结构集成子集：真实管道 + core-store | passed；重投/冲突不变状态、逆序延迟回执、未提交关闭重开；非真实断电 | continuation-1/REPORT.md、test-final.log |
-| 其他账户拒绝连接 | passed（用户提供的实际跨账户结果，ERROR_ACCESS_DENIED (5)，exit 0） | second-account/user-message.txt、README.md |
-| 实验谱系无终端管道/不能接收终端数据 | 组件测试通过；完整 runtime 以后复测 | test-components.log |
-| #57 后继消息衔接 | not_run；#57 尚未合并 | BLOCKED.md B2 |
+| cargo fmt、workspace all-targets clippy -D warnings、完整 workspace test（串行） | 通过；106 passed、0 failed（含两项 compile-fail）；core-store 31 项用时 1008.67 秒 | post-P5-22/workspace-checks.log |
+| pnpm test:contracts | 350 passed，0 failed | post-P5-22/contract-checks-final.log |
+| pnpm test:core-contracts、compat --ref origin/main | Rust/Python/TypeScript 各 10,766 例通过；protoc 445；8 schema 回归；0 stale；全部基线/current/main 0 违例 | post-P5-22/contract-checks-final.log |
+| 八种新消息全部黄金变体、旧类型 live 拒绝、查询/审批上下文 | 31 个合法黄金变体全部通过；新增五项回归随 gateway 21 项全部通过 | post-P5-22/workspace-checks.log、successor-vector-counts.json |
+| 第二 Windows 账户拒绝连接 | passed（用户提供的实际结果） | second-account/ |
+| SYS01 真实管道/存储结构子集 | 本轮复验通过；不代替完整服务/真实断电 | post-P5-22/workspace-checks.log |
+| 完整 SYS01、真实断电、完整认证/上传/持久非法审计 | not_run，B3 阻塞 | BLOCKED.md |
 
-初始失败日志全部保留：九类正例里用了空撤回夹具；重连最初错误地 drop/rebind 后立即开客户端，
-随后改为保留同一个 first-instance 句柄并先进入 accept；clippy 发现测试借用对象的无效 drop，已改用
-作用域结束借用。没有删断言、跳过测试或调整门槛。
-上述同句柄方案是历史中间态；本轮更强的集成测试暴露其重连读取失败，现已替换为连续持名的双实例轮换。
-编译夹具失败和重连 Win32 233 原始日志均保存在 continuation-1/，修复过程与验收边界见其 REPORT.md。
+首轮新黄金回读测试失败：把集合输入原顺序当成回读预期。已使用冻结黄金的规范化 expected.value，
+并核对 expected.protobuf 字节；未改黄金、编码或集合规则，原始失败保留 post-P5-22/gateway-initial.log。
+此前的重连 Win32 233、夹具和其他失败仍原样保留在 continuation-1/ 与原日志，不用成功覆盖失败。
+契约复验首次停在 pnpm 不支持 `--cache-dir` 命令行参数（contract-checks.log）；改为环境配置并保留
+相同版本/冻结锁文件后，整组脚本重跑通过（contract-checks-final.log）。工具、venv 和缓存全部在 D 盘。
+完整矩阵针对合并 541be9e 后的源文件；末次同步又合并 P2-05。两版主线间 core/、packages/contracts/
+和 pnpm-lock.yaml 无变化，受测输入相同；合并后再核对静态检查、gateway 与 main 兼容，见 post-P5-22/REPORT.md。
+本轮不跑 GPU、外观或性能测量，不声称安静测量；所有测试仅用 D 盘 TemporaryRoot/tempfile 合成库。
 
-全量测试完成后，最后收紧了每事件权限参数、增加撤权用例和 DPAPI 异常输出检查；对改变的 gateway
-重跑最终 14 项，并重跑全工作区静态检查，未重复无改动的 16 分钟存储矩阵。手工第二账户探针经过
-all-targets 编译检查，未伪造第二账户运行结果。首次全量矩阵期间有一次短暂的 gateway clippy 编译重叠，
-因此不声称该次全量运行具有严格独占测量条件；本卡没有做性能/GPU测量，测试无失败。
-本轮未改 core-store/契约；新增两项 Windows 结构集成测试并修复管道，重跑 gateway 16 项和全工作区
-fmt/clippy；没有重跑无改动的全量存储矩阵。先前提交 9367149 的 Ubuntu CI 已确认通过
-（run 39897522947，continuation-1/ci-9367149.json），不将其当作本轮新提交的 CI 结果。
+## 规格对照与依赖
 
-## 规格对照
+规格映射见 docs/traceability/P5-03.md。I01/I04 由 core-store 去重与断言验证；I02/I03/I18/I21
+保持唯一存储和写能力；I26 由生成类型与审批快照边界验证（完整行动闸门未完成）；I29 由谱系类型、
+实际实验 bind/ingress 拒绝和 RunStateV2 的 TerminalLineage 检查。
 
-见 `docs/traceability/P5-03.md`。本卡未修改 IDL、已发布编码、黄金向量、core-store 格式、规律或阈值，
-未新建第二套存储/接收计数。卡外接口使用任务请求登记，不代为补写协议。
-测试使用 D 盘 TEMP 下的新建 TemporaryRoot / tempfile 和合成字段，不打开任何已有排练库或正式库。
-Rust 1.99.0 / Cargo 1.99.0，Windows 本机验证。
+P5-22 合并带入既有契约及生成产物，本卡没有自行修改 IDL、编解码、黄金向量、core-store、规律或阈值；
+无新差异登记。ReadoutV2 的 v1/v2 oneof 都按获批迁移契约解码；旧独立 Readout 等仍可由 core-types
+解码历史数据，但不能经 live Framed 收发。没有自造上传/认证 envelope 或第二套 D 计数/去重。
 
-## 新增依赖
+现有依赖：tokio 1.54.1（MIT）、zeroize 1.8.2（Apache-2.0 OR MIT）、subtle 2.6.1（BSD-3-Clause）、
+windows-sys 0.61.2（MIT OR Apache-2.0）、serde_json 1.0.154（MIT OR Apache-2.0）、工作区 core-types/core-store。
+本轮直接引用已锁定的 sha2 0.11.1（MIT OR Apache-2.0），用于 CONTRACTS §6 的原样载荷 SHA256；
+没有新增版本或传递依赖。测试使用已锁定 tempfile 3.27.0。完整原始依赖/许可证登记可从本报告历史版本追溯。
+初始新传递依赖为 bytes 1.12.1、mio 1.2.4、tokio-macros 2.7.2（MIT）、socket2 0.6.5
+（MIT OR Apache-2.0）与 wasi 0.11.1+wasi-snapshot-preview1（Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT）。
 
-| 名称 | 版本 | 许可证 | 用途 |
-| --- | --- | --- | --- |
-| tokio | 1.54.1 | MIT | 管道、异步 IO、时限；架构指定技术 |
-| zeroize | 1.8.2 | Apache-2.0 OR MIT | 令牌缓冲擦除 |
-| subtle | 2.6.1 | BSD-3-Clause | 认证内容比较 |
-| windows-sys（已有锁定版本，新增 gateway 使用） | 0.61.2 | MIT OR Apache-2.0 | SID、DACL、DPAPI、随机源 |
-| core-store / core-types / serde_json（已有） | 工作区 / 1.0.154 | 仓库 / MIT OR Apache-2.0 | 唯一存储、生成契约、契约哈希 |
+## 待用户安排与下一步
 
-新传递依赖：bytes 1.12.1、mio 1.2.4、tokio-macros 2.7.2（MIT）；socket2 0.6.5
-（MIT OR Apache-2.0）；wasi 0.11.1+wasi-snapshot-preview1
-（Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT）。许可证从下载的 Cargo.toml 逐项核对。
-测试另用已锁定的 tempfile 3.27.0。依赖/编译缓存均在 D 盘。
+- [x] B1：实际第二账户拒绝连接通过，按用户提供证据登记。
+- [x] B2：#57 已合并，后继校验及本轮本卡全部检查通过。
+- [ ] B3：新的契约卡处理认证/上传分派、D 尾位置、持久拒绝审计、有类型背压接口。
 
-## 待用户确认 / 安排
-- [x] 第二 Windows 账户拒绝连接实测通过（用户提供证据）；完整窗口日志未附，非代理执行记录。
-- [ ] （阻塞）#57 合并后合并主线，补后继消息校验，再验收。
-- [ ] （阻塞）解决接口请求中的跨卡接口缺口，之后完成服务和端到端验收。
-  用户最新指示：等 #57 合并后由用户另行安排；此前不自行修改契约或扩展到其他卡目录。
-
-## 后续建议（不在本次实现范围内）
-当前用户 ACL / 安装令牌不是对同账户恶意进程或取得所有权管理员的隔离边界；worker 的低完整性
-启动和完整 action-gate 权限接入仍由其拥有卡负责。具体未完成项以接口请求和 BLOCKED 为准。
-
-## 下一步
-保持草稿 / needs-user，等待上述阻塞消解；未申请最终审查，不取下一张卡、不合并。
-本轮结束前再次 fetch / merge origin/main，仍为 876cff7，分支已包含最新主线；#57 仍为 OPEN。
-本轮查询的 #57 head 为 a57c8b13e774a4470f0e1529c200d9fce6567323，未取其未合并契约。
-全部验收完成后再次同步并重跑检查，才转为可审查、提交审查请求并停下。
+B3 接口可用前保持草稿；本轮报告后停下，等待用户安排，不自行跨卡补协议或权威存储。

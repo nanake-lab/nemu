@@ -26,6 +26,17 @@ This crate is **partial**, not a runnable authenticated gateway daemon. See
   their references, then uses its durable ingress and quotas. It emits only the
   store's `RECEIVED_DURABLE`; this does not mean a core transaction committed.
   Object closure/lineage/durability checks remain W02's responsibility.
+- P5-22 successors: generated `ReadoutV2` (both approved oneof branches),
+  `RunStateV2`, `QueryV2`/`QueryResultV2`, `ApprovalRequestV2`/`ApprovalDecisionV2`,
+  `Notice` and `GrowthControl` use the same bounded frame codec. Superseded types
+  are rejected on live read/write; core-types still decodes historical bytes.
+  `terminal::validate_query_result` checks correlation and growth/items isolation,
+  preserving full L entries and every status. `terminal::validate_approval`
+  checks exact payload/SHA256, request/decision/action binding, expiry and T3 trust
+  exclusion, returning an immutable one-use payload snapshot with a fresh time
+  check on consumption. This is not a P5-05 identity or execution credential.
+  The future trusted dispatch adapter must call these context checks; generic
+  frame decoding alone cannot establish query or approval correlation.
 - Windows `pipe::Listener`: binds `\\.\pipe\nemu-core-<current SID>`, protected
   DACL with exactly the current SID, remote-client rejection, first-instance name
   protection and at most two kernel instances during rotation. Session processing

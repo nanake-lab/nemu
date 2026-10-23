@@ -43,6 +43,10 @@ impl<S: AsyncRead + AsyncWrite + Unpin> Framed<S> {
             return Err(Error::Rejected("connection is closed"));
         }
         self.failed = true; // Cancellation by the caller is also fail-closed.
+        // Historical decoding belongs to core-types, never a live terminal.
+        if T::SUPERSEDED {
+            return Err(Error::Rejected("superseded inbound message"));
+        }
         let limits = self.config.encoding;
         let result = tokio::time::timeout(self.config.deadline, async {
             let mut header = [0; 4];

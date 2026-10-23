@@ -12,6 +12,7 @@ mod ingress;
 mod runtime_fixture;
 #[cfg(windows)]
 mod sys01_pipe;
+mod terminal;
 mod validation;
 #[cfg(windows)]
 mod windows;
