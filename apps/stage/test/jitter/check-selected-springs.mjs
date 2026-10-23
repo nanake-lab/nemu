@@ -10,15 +10,19 @@ const { chromium } = createRequire(import.meta.resolve('@playwright/test'))('pla
 const sourceControl = process.argv.includes('--source');
 const sourceBParameters = process.argv.includes('--b-parameters');
 const noColliders = process.argv.includes('--no-colliders');
+const presetArgument = process.argv.find(a => a.startsWith('--preset='));
+const comparisonPreset = presetArgument?.slice('--preset='.length);
 const product = resolve('D:/Dev/cache/P2-05/selected-B-build');
 const variant = sourceBParameters ? 'diagnosis-source-B-params' : noColliders ? 'diagnosis-B-no-colliders' : sourceControl ? 'source-control' : 'selected-B';
-const output = resolve('reports/P2-05', variant);
+const output = comparisonPreset ? resolve('reports/P2-05/four-review', comparisonPreset) : resolve('reports/P2-05', variant);
 await mkdir(output, { recursive: true });
 const input = sourceControl ? 'D:/Dev/nemu/content/nemu/source/nemu-vroid-export.vrm' : resolve(product, 'nemu.vrm');
 const bytes = await readFile(input);
 const inputJson = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)).toString('utf8'));
 const profile = await readFile(resolve(product, 'nemu.profile.json'));
 const data = JSON.parse(await readFile('reports/P2-05/preview-data.json', 'utf8'));
+if (comparisonPreset && !data.fourComparison.some(c => c.id === comparisonPreset)) throw new Error('Unknown comparison preset');
+const parameters = data.presets[comparisonPreset ?? 'heavyBalanced'];
 process.env.TEMP = 'D:/Dev/cache/tmp'; process.env.TMP = process.env.TEMP;
 const browser = await chromium.launch({ headless: true, args: ['--ignore-gpu-blocklist', '--use-gl=angle'] });
 try {
@@ -28,7 +32,7 @@ try {
   await page.route('**/selected-B.profile.json', route => route.fulfill({ contentType: 'application/json', body: profile }));
   await page.goto('http://127.0.0.1:5186/test/jitter/review.html');
   await page.waitForFunction(() => window.__P205_READY__ === true);
-  const result = await page.evaluate(async ({ parameters, sourceControl, sourceBParameters, noColliders, expectedVersion }) => {
+  const result = await page.evaluate(async ({ parameters, sourceControl, sourceBParameters, noColliders, comparisonPreset, expectedVersion }) => {
     const app = window.__p205Review;
     await app.loadModel('/selected-B.vrm', '/selected-B.profile.json'); app.stop();
     const vrm = app.currentVrm, manager = vrm.springBoneManager;
@@ -41,7 +45,7 @@ try {
       if (name.includes('Skirt')) return 'skirt';
       return 'other';
     }
-    if (sourceBParameters) for (const joint of joints) {
+    if (sourceBParameters || comparisonPreset) for (const joint of joints) {
       const p = parameters[category(joint.bone.name)]; if (!p) continue;
       for (const key of ['stiffness', 'dragForce', 'gravityPower']) joint.settings[key] = p[key];
       joint.settings.gravityDir.set(p.gravityDir[0], p.gravityDir[2], -p.gravityDir[1]);
@@ -130,13 +134,15 @@ try {
         gravityPower: j.settings.gravityPower, gravityDir: j.settings.gravityDir.toArray() })),
       angularSpeedSamples: samples, angularVelocityVectors: vectors,
       acceptance: 'Pending high-frequency and divergence assessment; finite values alone do not pass.', finite: true };
-  }, { parameters: data.presets.heavyBalanced, sourceControl, sourceBParameters, noColliders, expectedVersion: inputJson.extensions.VRMC_vrm.meta.version });
+  }, { parameters, sourceControl, sourceBParameters, noColliders, comparisonPreset, expectedVersion: inputJson.extensions.VRMC_vrm.meta.version });
   assert.deepEqual(errors, []); assert.equal(result.finite, true);
   const raw = Buffer.from(JSON.stringify(result) + '\n');
-  await writeFile(resolve(output, sourceControl ? 'jitter-source.json.gz' : 'jitter-B.json.gz'), gzipSync(raw, { mtime: 0 }));
+  await writeFile(resolve(output, comparisonPreset ? 'jitter.json.gz' : sourceControl ? 'jitter-source.json.gz' : 'jitter-B.json.gz'), gzipSync(raw, { mtime: 0 }), { flag: 'wx' });
   const summary = { ...result, angularSpeedSamples: undefined, angularVelocityVectors: undefined,
     modelSha256: createHash('sha256').update(bytes).digest('hex'), rawSha256: createHash('sha256').update(raw).digest('hex'), errors,
-    sourceControl, sourceBParameters, noColliders, variant, input,
+    sourceControl, sourceBParameters, noColliders, variant, input, comparisonPreset,
+    parameterApplication: comparisonPreset ? 'Review-only K/D/G and gravityDir override on the identical rebuilt B model; topology, colliders and radii unchanged.' : null,
+    maximumHairFrameDegrees: result.regions.hair.peak.speed / result.hz * 180 / Math.PI,
     profileUse: sourceBParameters ? 'Rebuilt profile only frames the camera; K/D/G overridden with B, native collider/radius/topology preserved.' : sourceControl ? 'Rebuilt profile only frames the camera; animation compositor remains stopped; authored source springs/settings/colliders unchanged.' : 'Rebuilt profile',
     hasGeneratedTail: result.jointNames.some(name => name.startsWith('NemuTail')) };
   if (sourceControl) assert.equal(summary.hasGeneratedTail, false);

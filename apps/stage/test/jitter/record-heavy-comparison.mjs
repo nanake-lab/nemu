@@ -7,7 +7,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 const { chromium } = createRequire(import.meta.resolve('@playwright/test'))('playwright');
-const output = resolve('reports/P2-05/heavy-comparison');
+const four = process.argv.includes('--four');
+const output = resolve(four ? 'reports/P2-05/four-review/video' : 'reports/P2-05/heavy-comparison');
 await mkdir(output, { recursive: true });
 process.env.TEMP = 'D:/Dev/cache/tmp'; process.env.TMP = process.env.TEMP;
 await mkdir(process.env.TEMP, { recursive: true });
@@ -15,9 +16,14 @@ const browser = await chromium.launch({ headless: true, args: ['--ignore-gpu-blo
 const errors = [], samples = [];
 let encoder;
 try {
-  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({ viewport: { width: four ? 2560 : 1920, height: 1080 }, deviceScaleFactor: 1 });
+  if (four) {
+    const product = resolve('D:/Dev/cache/P2-05/selected-B-build');
+    await page.route('**/p205/four.vrm', route => route.fulfill({ contentType: 'application/octet-stream', path: resolve(product, 'nemu.vrm') }));
+    await page.route('**/p205/four.profile.json', route => route.fulfill({ contentType: 'application/json', path: resolve(product, 'nemu.profile.json') }));
+  }
   page.on('pageerror', e => errors.push(e.message));
-  await page.goto('http://127.0.0.1:5186/test/jitter/heavy-comparison.html');
+  await page.goto(`http://127.0.0.1:5186/test/jitter/heavy-comparison.html${four ? '?four=1' : ''}`);
   await page.waitForFunction(() => window.__HEAVY_READY__ === true, { timeout: 60000 });
   await page.evaluate(() => document.body.classList.add('capture'));
   const meta = await page.evaluate(() => {
@@ -37,7 +43,7 @@ try {
     assert.deepEqual(errors, []);
     console.log(JSON.stringify(meta, null, 2));
   } else {
-    const destination = resolve(output, 'A-B-C_same-motion_24s_30fps.mp4');
+    const destination = resolve(output, four ? 'calm-B-C-D_same-motion_24s_30fps.mp4' : 'A-B-C_same-motion_24s_30fps.mp4');
     encoder = spawn('D:/Tools/ffmpeg/bin/ffmpeg.exe', ['-y', '-hide_banner', '-loglevel', 'warning',
       '-f', 'image2pipe', '-framerate', String(meta.fps), '-vcodec', 'png', '-i', 'pipe:0',
       '-an', '-c:v', 'libx264', '-preset', 'fast', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', destination],

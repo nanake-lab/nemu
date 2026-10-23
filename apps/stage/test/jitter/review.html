@@ -3,8 +3,8 @@
 <header><b id="model-badge">正在加载 P2-05 候选…</b>　<span class="hint">仅候选调校；不会写入正式目录</span></header><main><section id="viewport-container"><canvas id="review-canvas"></canvas></section><aside>
 <h3>A 偏粗短尾巴</h3><p>55.3 cm，最宽约 19.0 cm。使用实际 VRM 弹簧关节参数；以下控制为本卡评审夹具。</p>
 <div><button data-view="front">正面</button><button data-view="threeQuarter">3/4</button><button data-view="back">背面</button><button id="background">黑/白背景</button></div>
-<label>预设 <select id="preset"><option value="light">轻盈</option><option value="standard">标准</option><option value="calm">A 原沉稳</option><option value="heavyBalanced" selected>B 加重·留惯性（已选）</option><option value="heavyDamped">C 加重·快收稳</option></select></label>
-<p><a href="./heavy-comparison.html" style="color:#f4d87a">三组同动作并排对比／视频</a></p>
+<label>预设 <select id="preset"><option value="light">轻盈</option><option value="standard">标准</option><option value="calm" selected>沉稳（参照，尚未定稿）</option><option value="heavyBalanced">B 加重·留惯性（历史对照）</option><option value="calmHeavy1">新 C · 适度加重</option><option value="calmHeavy2">新 D · 加重快稳</option><option value="heavyDamped">旧三组 C（历史候选）</option></select></label>
+<p><a href="./heavy-comparison.html?four=1" style="color:#f4d87a">四组同动作并排对比／视频</a></p>
 <fieldset><legend>日常动态预览</legend><label><input id="idle" type="checkbox" style="width:auto"> 开启待机（呼吸、重心、视线、眨眼）</label><label><input id="slow-turn" type="checkbox" style="width:auto"> 加入缓慢转身</label><p class="hint">开启后在角色画面移动鼠标，观察眼睛、头和颈的跟随。可边播放边切换轻盈／标准／沉稳。关闭待机或点击停止可归零。</p></fieldset>
 <div id="parameters"></div><button id="play">快速拖动诊断（30 秒＋5 秒回稳）</button><button id="stop">停止／归零</button><button id="save">保存候选参数到 D 盘</button>
 <p class="hint">待机复用 P3-01，缓慢转身仅用于候选预览。日常预览与快速诊断独立播放。所有修改仅在当前预览和候选配置中，不能替代抖动验收。</p><p id="status"></p></aside></main>

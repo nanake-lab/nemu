@@ -19,6 +19,9 @@ const fixture = {
   configureServer(server) {
     server.middlewares.use(async (req, res, next) => {
       const files = { '/p205/data': resolve(root, 'reports/P2-05/preview-data.json'), '/p205/nemu.vrm': resolve(data.modelDirectory, 'nemu.vrm'), '/p205/nemu.profile.json': resolve(data.modelDirectory, 'nemu.profile.json'), '/p205/heavy-comparison.mp4': resolve(root, 'reports/P2-05/heavy-comparison/A-B-C_same-motion_24s_30fps.mp4') };
+      files['/p205/four.vrm'] = 'D:/Dev/cache/P2-05/selected-B-build/nemu.vrm';
+      files['/p205/four.profile.json'] = 'D:/Dev/cache/P2-05/selected-B-build/nemu.profile.json';
+      files['/p205/four-comparison.mp4'] = resolve(root, 'reports/P2-05/four-review/video/calm-B-C-D_same-motion_24s_30fps.mp4');
       if (files[req.url] && req.method === 'GET') {
         res.setHeader('Content-Type', req.url.endsWith('.mp4') ? 'video/mp4' : req.url.endsWith('.vrm') ? 'application/octet-stream' : 'application/json');
         res.end(await readFile(files[req.url])); return;

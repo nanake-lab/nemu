@@ -230,6 +230,98 @@
         ],
         "hitRadiusM": 0.018
       }
+    },
+    "calmHeavy1": {
+      "hair": {
+        "stiffness": 1.08,
+        "dragForce": 0.8,
+        "gravityPower": 0.024,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.014
+      },
+      "ear": {
+        "stiffness": 2.295,
+        "dragForce": 0.82,
+        "gravityPower": 0.002,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.007
+      },
+      "tail": {
+        "stiffness": 1.6,
+        "dragForce": 0.82,
+        "gravityPower": 0.05,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      },
+      "skirt": {
+        "stiffness": 1.3,
+        "dragForce": 0.82,
+        "gravityPower": 0.055,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      }
+    },
+    "calmHeavy2": {
+      "hair": {
+        "stiffness": 1.05,
+        "dragForce": 0.84,
+        "gravityPower": 0.028,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.014
+      },
+      "ear": {
+        "stiffness": 2.25,
+        "dragForce": 0.87,
+        "gravityPower": 0.003,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.007
+      },
+      "tail": {
+        "stiffness": 1.5,
+        "dragForce": 0.87,
+        "gravityPower": 0.065,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      },
+      "skirt": {
+        "stiffness": 1.25,
+        "dragForce": 0.87,
+        "gravityPower": 0.07,
+        "gravityDir": [
+          0,
+          0,
+          -1
+        ],
+        "hitRadiusM": 0.018
+      }
     }
   },
   "build": {
@@ -1925,5 +2017,35 @@
       "file": "springs/heavy-review-damped.yaml"
     }
   ],
-  "selectedSpringPreset": "heavyBalanced"
+  "selectedSpringPreset": null,
+  "fourComparison": [
+    {
+      "id": "calm",
+      "label": "沉稳 · 原始参照",
+      "intent": "原始参数",
+      "file": "springs/heavy-review-original-calm.yaml",
+      "maximumHairFrameDegrees": 174.59949289580746
+    },
+    {
+      "id": "heavyBalanced",
+      "label": "B · 历史对照",
+      "intent": "保留数值，不作为最终参数",
+      "file": "springs/heavy-review-balanced.yaml",
+      "maximumHairFrameDegrees": 179.85086950139856
+    },
+    {
+      "id": "calmHeavy1",
+      "label": "新 C · 适度加重",
+      "intent": "沿用沉稳刚度，略增重力与阻尼",
+      "file": "springs/calm-heavy-1.yaml",
+      "maximumHairFrameDegrees": 122.95363217722519
+    },
+    {
+      "id": "calmHeavy2",
+      "label": "新 D · 加重快稳",
+      "intent": "刚度接近沉稳，重力与阻尼再增加",
+      "file": "springs/calm-heavy-2.yaml",
+      "maximumHairFrameDegrees": 176.7516141314611
+    }
+  ]
 }

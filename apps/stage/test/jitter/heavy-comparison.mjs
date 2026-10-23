@@ -3,16 +3,24 @@ import { IdlePreview } from './idle-preview.mjs';
 import { applySpringSettings, springCategory } from './spring-settings.mjs';
 
 const data = await (await fetch('/p205/data')).json();
+const four = new URLSearchParams(location.search).has('four');
+if (four) {
+  document.documentElement.style.setProperty('--columns', '4');
+  document.title = 'P2-05 四组弹簧对比';
+  document.querySelector('header b').textContent = 'P2-05 · 偏粗短尾巴 · 沉稳 / B 对照 / 新 C / 新 D（均未定稿）';
+  document.querySelector('a').href = '/p205/four-comparison.mp4';
+}
 const labels = { tail: '尾巴', ear: '猫耳', hair: '头发', skirt: '裙摆' };
 const rigs = [];
 const fps = 30, duration = 24, dt = 1 / 120;
 let frameIndex = 0, playing = false, animationId;
 const timeline = document.getElementById('timeline');
-for (const candidate of data.heavyComparison) {
+for (const candidate of four ? data.fourComparison : data.heavyComparison) {
   const panel = document.createElement('section'); panel.className = 'panel';
   const heading = document.createElement('div'); heading.className = 'heading';
   const title = document.createElement('b'); title.textContent = candidate.label;
   const note = document.createElement('small'); note.textContent = candidate.intent;
+  if (four) note.textContent += ` · 诊断峰值 ${candidate.maximumHairFrameDegrees.toFixed(2)}°/帧`;
   heading.append(title, note);
   const viewport = document.createElement('div'); viewport.className = 'viewport';
   const canvas = document.createElement('canvas'); viewport.append(canvas);
@@ -28,7 +36,7 @@ for (const candidate of data.heavyComparison) {
   }
   panel.append(heading, viewport, parameters); document.getElementById('panels').append(panel);
   const app = new ReviewApp(canvas, viewport);
-  await app.loadModel('/p205/nemu.vrm', '/p205/nemu.profile.json'); app.stop();
+  await app.loadModel(four ? '/p205/four.vrm' : '/p205/nemu.vrm', four ? '/p205/four.profile.json' : '/p205/nemu.profile.json'); app.stop();
   if (!app.currentVrm || app.currentVrm.meta.version !== 'P2-05-candidate-short-thick-standard') throw new Error('Unexpected comparison model');
   const counts = applySpringSettings(app.currentVrm, data.presets[candidate.id]);
   const idle = new IdlePreview(app.currentVrm, app.currentProfile);
@@ -60,7 +68,7 @@ function phase(t) {
 }
 function render() {
   for (const { app } of rigs) app.render();
-  timeline.textContent = `${phase(frameIndex / fps)}　｜　${(frameIndex / fps).toFixed(2)} / ${duration} 秒　｜　三列同动作、原速、仅弹簧参数不同`;
+  timeline.textContent = `${phase(frameIndex / fps)}　｜　${(frameIndex / fps).toFixed(2)} / ${duration} 秒　｜　${four ? '四' : '三'}列同动作、原速、仅弹簧参数不同`;
 }
 function pause() { playing = false; cancelAnimationFrame(animationId); }
 function reset() {
