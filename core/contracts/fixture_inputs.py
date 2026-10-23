@@ -357,7 +357,7 @@ def targeted_illegal_existing() -> list[dict[str, Any]]:
 
 
 def targeted_legal_p5_22() -> list[dict[str, Any]]:
-    return [
+    vectors = [
         request("Notice", sample("Notice", 0) | {"kind": kind}) for kind in range(1, 7)
     ] + [
         request("QueryV2", sample("QueryV2", 0) | {"kind": 4}),
@@ -391,6 +391,30 @@ def targeted_legal_p5_22() -> list[dict[str, Any]]:
             ),
         ),
     ]
+
+    boundary = next(v["value"] for v in vectors if v["name"] == "ProactivityBoundaries")
+    for entries in [
+        [("__proto__", 17.0)],
+        [
+            ("__proto__", 17.0),
+            ("constructor", 0.0),
+            ("prototype", 2.5),
+            ("toString", 3.0),
+            ("冷却", 4.0),
+        ],
+    ]:
+        vectors.append(
+            request(
+                "ProactivityBoundaries",
+                boundary
+                | dict(
+                    cooldowns=[
+                        dict(schema_version=1, kind=k, seconds=v) for k, v in entries
+                    ]
+                ),
+            )
+        )
+    return vectors
 
 
 def targeted_illegal() -> list[dict[str, Any]]:

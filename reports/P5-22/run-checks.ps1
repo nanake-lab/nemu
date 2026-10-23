@@ -1,4 +1,4 @@
-param([string]$Evidence = 'reports/P5-22/checks')
+param([string]$Evidence = 'reports/P5-22/checks', [string[]]$Only = @())
 $ErrorActionPreference = 'Stop'
 $env:PYTHONUTF8 = '1'
 $env:UV_LINK_MODE = 'copy'
@@ -8,6 +8,7 @@ $output = [IO.Path]::GetFullPath((Join-Path $root $Evidence))
 New-Item -ItemType Directory -Force -Path $output | Out-Null
 $results = [Collections.Generic.List[object]]::new()
 function Check([string]$Name, [string]$Directory, [string]$Exe, [string[]]$Arguments) {
+  if ($Only.Count -gt 0 -and $Name -notin $Only) { return }
   $log = Join-Path $output ($Name + '.log')
   if (Test-Path -LiteralPath $log) { throw "Evidence already exists: $log" }
   $start = [DateTimeOffset]::UtcNow.ToString('o')

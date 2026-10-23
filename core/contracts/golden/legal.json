@@ -39735,5 +39735,223 @@
         "version": "2"
       }
     }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "2",
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "cooldowns": [
+          {
+            "schema_version": 1,
+            "kind": "__proto__",
+            "seconds": 17.0
+          }
+        ],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 180.0,
+          "speak_per_hour": 2,
+          "quiet_day_factor": 0.5,
+          "autonomous_helper_per_day": 30
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e646172696573010000003209000000010000000200000003000000040000000500000006000000070000000800000009000000010000003a0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e090000005f5f70726f746f5f5f00000000000031400500000001000000020000000300000004000000050000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000080664002000000000000000000e03f1e000000",
+      "digest": "b46fb3719dc49a58bde3f243c19f116ab294bf5a495f9d76fe5e446c5cec431d",
+      "ok": true,
+      "protobuf": "08011201321801180218031804180518061807180818092216080112095f5f70726f746f5f5f1900000000000031402801280228032804280532180801110000000000806640180221000000000000e03f281e",
+      "value": {
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 30,
+          "min_interval_s": 180.0,
+          "quiet_day_factor": 0.5,
+          "schema_version": 1,
+          "speak_per_hour": 2
+        },
+        "cooldowns": [
+          {
+            "kind": "__proto__",
+            "schema_version": 1,
+            "seconds": 17.0
+          }
+        ],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "schema_version": 1,
+        "version": "2"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "2",
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "cooldowns": [
+          {
+            "schema_version": 1,
+            "kind": "__proto__",
+            "seconds": 17.0
+          },
+          {
+            "schema_version": 1,
+            "kind": "constructor",
+            "seconds": 0.0
+          },
+          {
+            "schema_version": 1,
+            "kind": "prototype",
+            "seconds": 2.5
+          },
+          {
+            "schema_version": 1,
+            "kind": "toString",
+            "seconds": 3.0
+          },
+          {
+            "schema_version": 1,
+            "kind": "冷却",
+            "seconds": 4.0
+          }
+        ],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 180.0,
+          "speak_per_hour": 2,
+          "quiet_day_factor": 0.5,
+          "autonomous_helper_per_day": 30
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e64617269657301000000320900000001000000020000000300000004000000050000000600000007000000080000000900000005000000370000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e06000000e586b7e58db40000000000001040390000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e08000000746f537472696e6700000000000008403a0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e090000005f5f70726f746f5f5f00000000000031403a0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0900000070726f746f7479706500000000000004403c0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0b000000636f6e7374727563746f7200000000000000000500000001000000020000000300000004000000050000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000080664002000000000000000000e03f1e000000",
+      "digest": "9880ce00dc61e0cdafc97c9c39e619871443f6e108616de33bec2063ac2294c6",
+      "ok": true,
+      "protobuf": "0801120132180118021803180418051806180718081809221308011206e586b7e58db4190000000000001040221508011208746f537472696e671900000000000008402216080112095f5f70726f746f5f5f19000000000000314022160801120970726f746f7479706519000000000000044022180801120b636f6e7374727563746f721900000000000000002801280228032804280532180801110000000000806640180221000000000000e03f281e",
+      "value": {
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 30,
+          "min_interval_s": 180.0,
+          "quiet_day_factor": 0.5,
+          "schema_version": 1,
+          "speak_per_hour": 2
+        },
+        "cooldowns": [
+          {
+            "kind": "冷却",
+            "schema_version": 1,
+            "seconds": 4.0
+          },
+          {
+            "kind": "toString",
+            "schema_version": 1,
+            "seconds": 3.0
+          },
+          {
+            "kind": "__proto__",
+            "schema_version": 1,
+            "seconds": 17.0
+          },
+          {
+            "kind": "prototype",
+            "schema_version": 1,
+            "seconds": 2.5
+          },
+          {
+            "kind": "constructor",
+            "schema_version": 1,
+            "seconds": 0.0
+          }
+        ],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "schema_version": 1,
+        "version": "2"
+      }
+    }
   }
 ]

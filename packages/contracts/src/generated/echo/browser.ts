@@ -14,6 +14,30 @@ function key(v: unknown): string {
     typeof x === 'bigint' ? x.toString() : x instanceof Uint8Array ? [...x] : x,
   );
 }
+// z.record filters __proto__; validate every JSON own entry before rebuilding safely.
+function dictionary(keySchema: z.ZodType, valueSchema: z.ZodType): z.ZodType {
+  return z
+    .custom<Record<string, unknown>>(
+      (v) =>
+        v !== null &&
+        typeof v === 'object' &&
+        (Object.getPrototypeOf(v) === Object.prototype || Object.getPrototypeOf(v) === null),
+    )
+    .transform((input, ctx) => {
+      const entries: Array<[string, unknown]> = [];
+      for (const [name, item] of Object.entries(input)) {
+        const k = keySchema.safeParse(name);
+        const v = valueSchema.safeParse(item);
+        for (const result of [k, v])
+          if (!result.success)
+            for (const issue of result.error.issues)
+              ctx.addIssue({ ...issue, path: [name, ...issue.path] });
+        if (k.success && v.success) entries.push([name, v.data]);
+      }
+      // fromEntries defines data properties, including __proto__, without invoking setters.
+      return Object.fromEntries(entries);
+    });
+}
 function atom(f: Field, resource: boolean): z.ZodType {
   if (schema.messages[f.type]) return build(f.type, resource);
   if (schema.enums[f.type]) {
@@ -74,7 +98,7 @@ function build(name: string, resource = false): z.ZodType {
         const child = schema.messages[f.type]!;
         const keyField = child.fields.find((x) => x.name === k)!;
         const valueField = child.fields.find((x) => x.name === v)!;
-        value = z.record(atom(keyField, true) as z.ZodString, atom(valueField, true));
+        value = dictionary(atom(keyField, true), atom(valueField, true));
       } else {
         value = f.name === 'schema_version' ? z.literal(1) : atom(f, resource);
         if (f.repeated) {
