@@ -90,3 +90,40 @@ two carriers of the new binding); every published message keeps its exact bytes.
   vectors in `fixture_inputs.py`.
 - Semantic checks the codec cannot express (unit d_k, μ > 0, π ∈ (−1, 1), law parameter
   inequalities, genesis consistency) are in `core_types::semantic`.
+
+## P5-22 terminal successors and required oneof
+
+The ReadoutV2.body Protobuf oneof is also a CanonicalV1 oneof under ADR 0007 §6:
+ascending field position, selected member number (u32 LE), then that value. No
+per-member presence markers are written. The generator currently accepts only
+required, annotated, contiguous oneof members and fails closed on unsupported
+syntax. All prior fields follow their unchanged encoding paths.
+
+The descriptor records member ownership and the required group. Validators reject
+missing/multiple arms; canonical decoders reject unknown member numbers and
+trailing data. The strict Protobuf decoder retains both distinct arms until
+validation, then rejects multiple selection instead of last-value-wins.
+check_compat compares membership in both field metadata and rules and its targeted
+self-tests exercise number reuse and changed membership. Text-level regressions
+in test_oneof_schema.py are run by verify.py. P5-32's published schema/golden prefix
+is now frozen in baselines/p5-32/; --ref origin/main additionally covers published
+content since that baseline.
+
+Readout/RunState/Query/QueryResult/ApprovalRequest/ApprovalDecision have successors;
+old bytes and decoders remain. BodyReadout v1 remains a supported compatibility arm
+with a production-superseded comment, so it is intentionally not machine-marked as
+an illegal dependency of the new ReadoutV2. P5-19 produces only BodyReadoutV2.
+
+See reports/P5-22/REPORT.md for the paired-codec changes authorized by the user,
+the frozen-byte hash comparison, Claude's P5-01 review and migration boundaries.
+
+P5-22 review revision also defines proactive boundary resources in terminal.proto.
+`@resource`, field `json_name`/`json_map`, and enum `@json-values` are descriptor
+metadata for the existing JSON resource shape; they do not alter wire encoding.
+generate_browser.py derives TypeScript resource interfaces. The generated browser.ts
+uses those descriptors for strict Zod structural validation and resource-to-wire
+projection without importing Node code. Canonical ordering, encoding and byte
+budgets remain the responsibility of the unchanged codecs. Compatibility checks
+freeze JSON projection metadata too. Tests in test_browser_schema.py and the
+contracts package cover projection drift, nonempty growth results and approval
+snapshot consumption; see reports/P5-22/REVISION-1.md for evidence and limits.

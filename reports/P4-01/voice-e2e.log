@@ -1,0 +1,33 @@
+
+Running 1 test using 1 worker
+
+(node:29492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Downloading Electron binary...
+(node:19920) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 apps\desktop\tests\voice.spec.ts:8:1 › P4-01 utility ports, real AudioWorklet capture and disable (11.8s)
+
+
+  1) apps\desktop\tests\voice.spec.ts:8:1 › P4-01 utility ports, real AudioWorklet capture and disable 
+
+    Error: expect(received).toBeDefined()
+
+    Received: undefined
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      11 |   const application = await electron.launch({ args: [resolve('apps/desktop'), '--use-fake-device-for-media-stream', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'], env: { ...process.env, NEMU_SCAFFOLD_USER_DATA: scratch, NEMU_DISABLE_SUPERVISOR: '1', NEMU_ASR_MODELS: modelDir } });
+      12 |   try {
+    > 13 |     await expect.poll(() => application.windows().find(p => p.url().includes('/stage/'))).toBeDefined();
+         |                                                                                           ^
+      14 |     await expect.poll(() => application.evaluate(({ app }) => {
+      15 |       const g = app as unknown as { __nemu_voice__?: { isReady(): boolean } };
+      16 |       return g.__nemu_voice__?.isReady();
+        at C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\apps\desktop\tests\voice.spec.ts:13:91
+
+    Error Context: reports\P4-01\e2e\test-results\electron\voice-P4-01-utility-ports--f3975-Worklet-capture-and-disable\error-context.md
+
+  1 failed
+    apps\desktop\tests\voice.spec.ts:8:1 › P4-01 utility ports, real AudioWorklet capture and disable 

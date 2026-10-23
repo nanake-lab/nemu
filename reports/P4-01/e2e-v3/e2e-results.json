@@ -1,0 +1,174 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\nanake\\AppData\\Local\\fnm_multishells\\20996_1792403813689\\node.exe",
+      "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "apps/desktop/playwright.config.ts",
+      "apps/desktop/tests/voice.spec.ts"
+    ],
+    "configFile": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\playwright.config.ts",
+    "rootDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/apps/desktop/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/reports/P4-01/e2e-v3/test-results/electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/apps/desktop/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\reports\\P4-01\\e2e-v3\\test-results\\electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests",
+        "snapshotDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {},
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\reports\\P4-01\\e2e-v3\\e2e-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "voice.spec.ts",
+      "file": "voice.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P4-01 utility ports, real AudioWorklet capture and disable",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7921,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m10\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m10\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests\\voice.spec.ts:82:8",
+                    "location": {
+                      "file": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests\\voice.spec.ts",
+                      "column": 8,
+                      "line": 82
+                    },
+                    "snippet": "  80 |         }),\n  81 |       )\n> 82 |       .toBeGreaterThan(10);\n     |        ^\n  83 |     await application.evaluate(({ app }) => {\n  84 |       const g = app as unknown as {\n  85 |         __nemu_channels__: { sendStageCommand(type: string, payload: unknown): void };"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests\\voice.spec.ts",
+                        "column": 8,
+                        "line": 82
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m10\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  80 |         }),\n  81 |       )\n> 82 |       .toBeGreaterThan(10);\n     |        ^\n  83 |     await application.evaluate(({ app }) => {\n  84 |       const g = app as unknown as {\n  85 |         __nemu_channels__: { sendStageCommand(type: string, payload: unknown): void };\n    at C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests\\voice.spec.ts:82:8"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T07:15:43.409Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\reports\\P4-01\\e2e-v3\\test-results\\electron\\voice-P4-01-utility-ports--f3975-Worklet-capture-and-disable\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests\\voice.spec.ts",
+                    "column": 8,
+                    "line": 82
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4f8e77fcf9b309101475-13be142f12cfc4667567",
+          "file": "voice.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-21T07:15:42.710Z",
+    "duration": 8667.06,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

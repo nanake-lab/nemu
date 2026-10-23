@@ -1,0 +1,1618 @@
+{
+  "method": "P4-01-reference-stability-v1",
+  "commit": "ac11d72cf4e139f41bd41b364d98b11c7c6a3dfe",
+  "filesSha256": {
+    "reports\\P4-01\\reference-stability-plan.json": "6001eb88d557f19f28975508afb41b90e3723c648ab76d6aa3776f17ce1e3984",
+    "reports\\P4-01\\REFERENCE-STABILITY-PLAN.md": "1c814bd635d3838554d60c0418fda4f7d98c9a3146fad82a3ebb60c6f56e793b",
+    "packages\\voice\\src\\asr\\alignment\\reference_stability.py": "68deb2e3c9a581e5f4ecff35643ebf397eb523cff49fb62042508494ee75a86e",
+    "packages\\voice\\src\\asr\\alignment\\context_references.py": "9c2e6fb3c71f1807f7d8f3eb9805170b074aba5819d0a17abaf67cb10eb7bfb8",
+    "packages\\voice\\src\\asr\\alignment\\reference_data.py": "1967da04582b2d6b3792eb34d87b433f321864971e77ec09c671f05a63224313",
+    "packages\\voice\\src\\asr\\alignment\\segmented_tokens.py": "d044e593fb778b683061db34d51e8cc55b4671267b820964bdbb080fb86990dd",
+    "packages\\voice\\src\\asr\\alignment\\align_user.py": "cbedb55a49023c3355cda1abb6f87d75d7e4f04c7871d4227a1f63c190203d0f",
+    "packages\\voice\\src\\asr\\alignment\\manifest.json": "b12a867dd60e06e0c6429fe60cb4ed5b57453f715a4cdf7d487651bc82ebf4e6",
+    "packages\\voice\\src\\asr\\alignment\\uv.lock": "b0be5f764a2530882b40352609d35a68a3cbb1246c884a672589f65dd8765517"
+  },
+  "rawDirectory": "D:\\NemuData\\asr-evaluation\\reference-stability-20261022T030747Z",
+  "count": 60,
+  "stableCount": 39,
+  "allStable": false,
+  "timestampGridMs": 80,
+  "replacementPublished": false,
+  "samples": [
+    {
+      "id": "user-zh-001",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "9859a6968df979c7b3dd86fbe138a914db4990d58faf738a23a995566b86d2ed",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4260.0
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "c95af539c9d13b1948a0a06c29c8599db713674a7bdd15fb41d134a9add9f4fd",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4279.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 60.000000000000455,
+      "endDifferenceMs": 19.99999999999909
+    },
+    {
+      "id": "user-zh-002",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "155de3a342261675930eea088777e7030f70602024685a9c495d1795ed2cb298",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 3859.9999999999995
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "e17c2aefad470bc098a1478ee884b9378130e025e468b82a97f3144fa66e4d8c",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 3880.000000000001
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 20.000000000001364
+    },
+    {
+      "id": "user-zh-003",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "28a35269e694bb9c6a88330ced899ecc703c370e9486618e1fb0e1acb742f247",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 3859.9999999999995
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "162b7a901c429e00419b5b829d9476ae31104e10174501d7e01a045f7101ee01",
+          "zeroUnitIndices": [
+            1
+          ],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 3880.000000000001
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 60.000000000000455,
+      "endDifferenceMs": 20.000000000001364
+    },
+    {
+      "id": "user-zh-004",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "692d8430e0c230a17c6f55aa5fd13ad0d807b65c6db6d4ec00587bdb085ac61a",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1939.9999999999995,
+          "speechEndMs": 3700.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "ff71024910a3255e40c2afa29944b7d0b8f477d4f9d09f8002e33e6278b1bf73",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 3720.0000000000005
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.999999999999545
+    },
+    {
+      "id": "user-zh-005",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "ae4b33f6a89e00e140883044624cf6c7d74ad0ebef4aff9ba5a81df53af386eb",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4260.0
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "636daa4d0704033ffe4a0181ad540d1be78847542853b41a50fa1cb60afa7282",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4279.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.99999999999909
+    },
+    {
+      "id": "user-zh-006",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "2fa2a95c11475a27c4836e2c42e7d656216bdb318e9b9c889a75e107cdc2d179",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1460.000000000001,
+          "speechEndMs": 3300.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "090824cd4a75ffc1558371a7f0f10c4f263d7ec89181708d76648265822160d0",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1400.0000000000005,
+          "speechEndMs": 3320.0000000000005
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 60.000000000000455,
+      "endDifferenceMs": 19.999999999999545
+    },
+    {
+      "id": "user-zh-007",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "7b52515f5bb806053be8254fdd51c2410d3871f809fea1f057a595cb6a5dcf1d",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 3700.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "dbd0956dbb7269e6dfa04f2da9a45d78f4540d9430cac0789c176c5875451460",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 3720.0000000000005
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.999999999999545
+    },
+    {
+      "id": "user-zh-008",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "9b62628c4269113b8f2ffa20ed15938b3e5466dc00638bd85dd10b487ce26536",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 5780.000000000001,
+          "speechEndMs": 7620.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "355b02938e729254ad650f11b6a55de3060e24de6e9cecbb7732a4d3e1701c8f",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 5720.000000000001,
+          "speechEndMs": 7639.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 60.0,
+      "endDifferenceMs": 19.99999999999818
+    },
+    {
+      "id": "user-zh-009",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "e4b6ec975f68e78ebab2515dc330db54990eab40d8a9982e30bfd5a64763e8dd",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 3780.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "39f35f088ad066b52d9bb578ea684225e364a78613442a0dae866e60d7b4255d",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 3720.0000000000005
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 60.000000000000455
+    },
+    {
+      "id": "user-zh-010",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "7e5bb00622dce6bd485f639c18bccece2d3bfac882e150fa11fa2bcb14996a50",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 1780.0000000000011,
+          "speechEndMs": 4100.0
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "d38f9ac42ab8b7df8d61c6be7ab4ac6f3cb49c46faeb46d495f31b38aab1d1e3",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 1720.0000000000007,
+          "speechEndMs": 4119.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 60.000000000000455,
+      "endDifferenceMs": 19.99999999999909
+    },
+    {
+      "id": "user-zh-011",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "ce8d41662396182edac690b6b6eed1a048dfd8c5ab03a39cf60c844b4cda612e",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4180.0
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "6cb9e2228c535c2b95c975ff112d167c0a52035fbdc4799ccca1218e5f14c4e6",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4199.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 60.000000000000455,
+      "endDifferenceMs": 19.99999999999909
+    },
+    {
+      "id": "user-zh-012",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "204c39e86d39d7e77c34a6cf8c0a8cda2fcfad9deda658ad62bbab59d05f25bc",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 3700.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "2bb31e8fa56d7134fefcce29977c2262cef1e272fb55801919d6ed778dffbc00",
+          "zeroUnitIndices": [
+            0,
+            1
+          ],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 3720.0000000000005
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.999999999999545
+    },
+    {
+      "id": "user-zh-013",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "81804cd4e9bac7f2df224f70adaa8918cc3bef16f90e4ceba89d68698084f855",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 8340.0
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "dd834ef29497357c6a7b2bb9305ddf842efcea46f7494df214f6e2d025caa20d",
+          "zeroUnitIndices": [
+            1
+          ],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 8360.000000000002
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 20.00000000000182
+    },
+    {
+      "id": "user-zh-014",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "e4c738f7f9b27ad8540d497dcc3746269909a96b92acd75d37cb34c0f126b3d9",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1939.9999999999995,
+          "speechEndMs": 3700.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "366175f27319f9ea7c713ba4b1900314caeb9c41f9267ab7ef3daa7e357e82be",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 3720.0000000000005
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.999999999999545
+    },
+    {
+      "id": "user-zh-015",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "bee3da604ecb3f74869b365c5f2b2a60ae4b7a3636e3d70d54ada925915cefa4",
+          "zeroUnitIndices": [
+            3
+          ],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4180.0
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "9a6f87c0bdc14db078df6f3a8e572668ebf7bca7521761ee98924abc11e548a3",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4199.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.99999999999909
+    },
+    {
+      "id": "user-zh-016",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "911f46db2b08b24e468c1bfa777d22e59ee30d3ca27781c2d2b900f9068be56d",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1859.9999999999995,
+          "speechEndMs": 3460.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "a2b4eb4ef351d195f1df68630dbdf4fc62831828b57223eddd4ec77d733c1897",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1880.0000000000007,
+          "speechEndMs": 3480.0000000000005
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 20.000000000001137,
+      "endDifferenceMs": 19.999999999999545
+    },
+    {
+      "id": "user-zh-017",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "5c03df2b9d13cc16e097801b5d6e93fa96bd87e7aeba4f661f61141c4ac17ed6",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 4019.9999999999995
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "6a277c9a83b06493feb533a63e2380d05d6e40e11925fd45f89f89b202daed87",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 4039.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.999999999999545
+    },
+    {
+      "id": "user-zh-018",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "80ae6e3a61d47578acae5ebb07e433b12952b8ab593f676402bdd833956512fb",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 3540.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "a2ff579a6872e2a27b5fb524f18a5dc3908ff7edf77a3e50e9effea536ab6b7f",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 3560.0000000000005
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 979.9999999999986,
+      "endDifferenceMs": 19.999999999999545
+    },
+    {
+      "id": "user-zh-019",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "f6f9b50d1ef1f676115d344a1f23732260fc1a4521eedb2dd043aacb25abef49",
+          "zeroUnitIndices": [
+            5
+          ],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 7140.000000000001
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "8a6d8ca5616f3466427ccfd0caa1a0b2c816b8bfe0ae2df09ffc5fd52e9c9667",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 7159.999999999998
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.99999999999727
+    },
+    {
+      "id": "user-zh-020",
+      "lang": "zh",
+      "attempts": [
+        {
+          "anchorId": "public-zh-001",
+          "rawSha256": "2399c389b20f1827a59ba06328156c1c2c565ac7d5cbb062f32ffbb31fee87e4",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1939.9999999999995,
+          "speechEndMs": 3859.9999999999995
+        },
+        {
+          "anchorId": "public-zh-002",
+          "rawSha256": "5bf74f60917e86ee43b66e0b402d8eb9151c6ccf13d9eb86937650c287158ee3",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 3880.000000000001
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 20.000000000001364
+    },
+    {
+      "id": "user-en-001",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "6a111dc275908bae079430199156b491dae9d447192695b53a9ec55e70e4d108",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 960.0000000000009,
+          "speechEndMs": 4000.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "2f7841a314d7f7d87c645cc5d165ccddcad6daff7d449090591794b953b8185c",
+          "zeroUnitIndices": [],
+          "status": "invalid",
+          "reason": "Invalid/out-of-range V2 points; no clamping"
+        }
+      ],
+      "stable": false,
+      "reason": "invalid-context"
+    },
+    {
+      "id": "user-en-002",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "9f2f40c8229930e7ed870271900c437fb6691e7e24986e6fabe6578fe12cf0c9",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 3840.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "e56b6f93baad1572046d4719163e535b120b0dfb872de08c76328f413e4dd2f4",
+          "zeroUnitIndices": [],
+          "status": "invalid",
+          "reason": "Invalid/out-of-range V2 points; no clamping"
+        }
+      ],
+      "stable": false,
+      "reason": "invalid-context"
+    },
+    {
+      "id": "user-en-003",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "10411c62a40cc9a83ef79883aa5e11a6a411d13abb9240ce51c4c096db5237ae",
+          "zeroUnitIndices": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 960.0000000000009,
+          "speechEndMs": 3920.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "3ac5c28036a44b9a62e83e762a8b6c61e06a3c46ef8114062f4bfda43bf5821b",
+          "zeroUnitIndices": [
+            0,
+            2,
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 4039.999999999999
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 39.99999999999909,
+      "endDifferenceMs": 119.99999999999909
+    },
+    {
+      "id": "user-en-004",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "468713cee3c29e61548740076b76d5e72d8b4c7d10bd73864df85875cbd152e2",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 2080.0,
+          "speechEndMs": 4160.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "3b43a6f2ef3d4212a447468d632ce4d7eee7b7b2da17efed9100f444b3125074",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4119.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 40.00000000000091,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-en-005",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "8380756b0bf37abaabc35cb83f64818b98c2308663bef6a8607d108abd7e978a",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 960.0000000000009,
+          "speechEndMs": 4560.000000000001
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "f157e4181fb99f1ff4a4582dee5b7ce89540f06737cf121cd1287dbeff36c720",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4600.0
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 999.9999999999982,
+      "endDifferenceMs": 39.99999999999909
+    },
+    {
+      "id": "user-en-006",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "457c35d07d81d34a50836d57f05f19ff82f71ac8da9caeb6b7ad5df3a430f346",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 4320.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "1bf95ccca4b30561237ac3c211be1235a1571634df902b266b7aa474343c71ef",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "invalid",
+          "reason": "Invalid/out-of-range V2 points; no clamping"
+        }
+      ],
+      "stable": false,
+      "reason": "invalid-context"
+    },
+    {
+      "id": "user-en-007",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "08daf6e30741669d24bdc458dcec6b4f065838c988c7cb9b3540b91aa9d5fc87",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1920.0,
+          "speechEndMs": 4400.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "fac73be7f8b54ac020bfcf0669169438204279b9c489f35918149160a20422f9",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4439.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 39.99999999999909,
+      "endDifferenceMs": 39.99999999999909
+    },
+    {
+      "id": "user-en-008",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "4084fa52e7147943f9c41bd822c5662cc9fa1d8aad0fc854f6842c87b331985f",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 6320.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "fe182ad96bcd598139c054663a2a1420627eb332a7478b36ee3cc19a22fb2eac",
+          "zeroUnitIndices": [
+            5
+          ],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 6279.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 39.99999999999909,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-en-009",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "906926df3b2e4324c9df9857850b6e2c3c994d6ca292097bc78cde91df16c55d",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 4960.000000000001
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "38df92ba02e33e4e9802919905da8c91960d6e027f3771651b8df1683a715079",
+          "zeroUnitIndices": [
+            2
+          ],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4920.0
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 39.99999999999909,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-en-010",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "a4706840172146bf4fb2fe71b682c2f09c29c3b3cdc8914342cb066aba915387",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 960.0000000000009,
+          "speechEndMs": 4640.000000000001
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "75414bb4c6be0804bd02d00df8734565462a0359593b35039ef7a1ef291d6c17",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4680.0
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 999.9999999999982,
+      "endDifferenceMs": 39.99999999999909
+    },
+    {
+      "id": "user-en-011",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "43d7dae922193eef95475813674c3dab7319ae8026fcc393aa31b6c105a8b24c",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 960.0000000000009,
+          "speechEndMs": 4719.999999999999
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "482ab5c1e3dd58e5d17a12582bb8af3dc42b102f884001735b7a9af2e24bb1c1",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4760.0
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 999.9999999999982,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-en-012",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "7a88eb69b3bb72dec3d9ee6f2e709909a706908a720ba95c913fad7fbae37d4f",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 4080.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "8059025775f738c89b0fe6981d1fda981251ffd973c5fe83b92d8e87fae9441e",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4039.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 40.00000000000091,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-en-013",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "016883c8b94963720fa37b0dbbe596a06a01e32e01edd905e9c50f4443bb0ed6",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 5359.999999999999
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "ad5fc138d09322e3782919d0cc704dce916a17be43f7c0bb6752154e9b6f1b85",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 5320.0
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 40.00000000000091,
+      "endDifferenceMs": 39.99999999999909
+    },
+    {
+      "id": "user-en-014",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "a1080e33064fbcd6c3c268a0fe744024f2864ffce3a805bfe46a77fcc6e640fb",
+          "zeroUnitIndices": [
+            4,
+            6
+          ],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 5120.000000000001
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "594095cbf220bdb66730b1e010d9e38f5d91eb19f80a030ffd53c3218bfb2627",
+          "zeroUnitIndices": [
+            2,
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 6119.999999999999
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 40.00000000000091,
+      "endDifferenceMs": 999.9999999999982
+    },
+    {
+      "id": "user-en-015",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "1459757103295e77f61826e84993835ce643864059662d5a08316bcad2cc01b3",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 4719.999999999999
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "4de200d7814f65264779d30e78bd71f6d5880268d08e72d4823f82d25fcc6d9d",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4760.0
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 40.00000000000091,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-en-016",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "d793fb84e635e11938b1035dcaa60ae946ea38f02bd12e7787a32b36bb461560",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 5520.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "e335a5df3c7e43d6f0dce5f7bd13d248909ee0c9eb7835412bbd4a676ab30288",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 6519.999999999998
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 40.00000000000091,
+      "endDifferenceMs": 999.9999999999982
+    },
+    {
+      "id": "user-en-017",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "c0c68e0e704fa020fb117b32a619a64a2652071e665af3f24de4fbd42a6ab152",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 960.0000000000009,
+          "speechEndMs": 4320.0
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "f445701cae8ef887ce32210d9c2ce6654212aad4811e779cba57e2bd67ef8f76",
+          "zeroUnitIndices": [
+            1
+          ],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4279.999999999999
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 999.9999999999982,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-en-018",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "9e20d09235405021b6f43470f1c8454340600453c3d454602423561b6712ef65",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 960.0000000000009,
+          "speechEndMs": 4640.000000000001
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "d7db8842a1706bdf5bb8014d7eda995cffbbccacd53a60320034859ca1dcff17",
+          "zeroUnitIndices": [
+            6
+          ],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4600.0
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 999.9999999999982,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-en-019",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "6f63130cd9fbc087bb778156d8f432919463166a8c39b7fdd2a46ba31cf64f81",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 960.0000000000009,
+          "speechEndMs": 5120.000000000001
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "effb4e8e42332c02dda4cc1c368dd43830cec218a2abe2945940664bf1c03435",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 5080.0
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 999.9999999999982,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-en-020",
+      "lang": "en",
+      "attempts": [
+        {
+          "anchorId": "public-en-001",
+          "rawSha256": "17df702e91713a5fc026892cfd1a4401f9cee1a4fb89b596842daf9714d0d33d",
+          "zeroUnitIndices": [
+            6
+          ],
+          "status": "valid",
+          "speechStartMs": 2000.0,
+          "speechEndMs": 5120.000000000001
+        },
+        {
+          "anchorId": "public-en-002",
+          "rawSha256": "f608cb88f47f33b46c2c043ffb8c4255c0e45f9ead88202e3f16a9a10569e40f",
+          "zeroUnitIndices": [
+            6
+          ],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 5080.0
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 40.00000000000091,
+      "endDifferenceMs": 40.00000000000091
+    },
+    {
+      "id": "user-ja-001",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "7ed8986590d1e5fbfc1304be61dad6b7dd188ea94db1408c4ff43664903ce3d0",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4839.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "e3d1b33aa60c3502f88c9acde05eb89a9123ea2298ba6b76aa9b26ec46469716",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2100.0000000000014,
+          "speechEndMs": 4820.0
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 140.00000000000227,
+      "endDifferenceMs": 19.99999999999818
+    },
+    {
+      "id": "user-ja-002",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "6c7cb149e5883ba9cebabb7c2f44b52a8bd7b92cb252398cfce568bc07a151c7",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4999.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "6fa24fca180f20b4d48a94844d18bf26f284509b557753efbd4c541cca1b7197",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 4980.0
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 979.9999999999986,
+      "endDifferenceMs": 19.99999999999818
+    },
+    {
+      "id": "user-ja-003",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "ad3935651356225adf771742113e25ff7b25b0e1a8c24f110c891351ff5280dc",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4760.0
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "8545983ade24c45443ae919bef52d3148187dc3278c72d947e872ef2fb5219fb",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 1940.0000000000014,
+          "speechEndMs": 4820.0
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999997726,
+      "endDifferenceMs": 60.0
+    },
+    {
+      "id": "user-ja-004",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "e7bfe8f1c0aa3bb1e47c227031e9f2e6728975772286400783e3d02bb7e41186",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4279.999999999999
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "1e68f8efa8447d14c7ddccb81651dacb4b142bc43171c34171e3331235f9cfcc",
+          "zeroUnitIndices": [
+            6
+          ],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4260.000000000002
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.99999999999727
+    },
+    {
+      "id": "user-ja-005",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "132eb26132dc5b8efe7921df4593741359a57f31af5cd875e2b4a28f0b3a5ed3",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4839.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "46dda2ed615c0dca74cc1ec31746b148e17201d072287e98af42fac025216bf8",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4820.0
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 60.000000000000455,
+      "endDifferenceMs": 19.99999999999818
+    },
+    {
+      "id": "user-ja-006",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "56c9ef2e2fed60d04b1ac057b65051b4f44ea344a0836bd0c9c51c12c7540146",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 5159.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "3096c5a5de69b7cf405774e9fe38d277b54898c2bee9aaa06115e924abba023a",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 5140.000000000001
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.99999999999727
+    },
+    {
+      "id": "user-ja-007",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "d14ede5f82bfe54df140efcefa9efb8c90a7c9823521f61c527643aa2c9c6b4f",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 4359.999999999999
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "85884b94716160f0ad315d6a88dfe00bcb90b530eaf75af8ac4a7289b5741bae",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4340.0
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 1019.9999999999995,
+      "endDifferenceMs": 19.99999999999909
+    },
+    {
+      "id": "user-ja-008",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "f232d79b253b967aa3f175bbad703cc79a3ca07eaa03c5cbc6f5300f37e1d898",
+          "zeroUnitIndices": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "status": "valid",
+          "speechStartMs": 1000.0,
+          "speechEndMs": 15639.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "a388f330e3e12e982b682baa27e9fcaa4285da70b0301cdab1a1a84dde92efbf",
+          "zeroUnitIndices": [
+            6,
+            7
+          ],
+          "status": "valid",
+          "speechStartMs": 1059.9999999999986,
+          "speechEndMs": 15620.000000000002
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 59.999999999998636,
+      "endDifferenceMs": 19.999999999996362
+    },
+    {
+      "id": "user-ja-009",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "417e44a8492902706ebf71d959c517f2e113b2a6fbe4eed86509f11072fd55c9",
+          "zeroUnitIndices": [
+            2
+          ],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4999.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "47ba4bbd3744b35ba97196cffdbd99b6a2adcf066dd958321b23da71430ae4b6",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1059.9999999999986,
+          "speechEndMs": 4980.0
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 900.0000000000005,
+      "endDifferenceMs": 19.99999999999818
+    },
+    {
+      "id": "user-ja-010",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "39d36882756e453cd6502bfde7d65cc5412e4a2140338c22a3021248f7caaca9",
+          "zeroUnitIndices": [
+            4
+          ],
+          "status": "valid",
+          "speechStartMs": 919.9999999999999,
+          "speechEndMs": 4760.0
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "ee1bb660e9c0220d30e0e6a41049cf2845237426bd2f1030ecb495606c8b50f3",
+          "zeroUnitIndices": [
+            0,
+            2
+          ],
+          "status": "valid",
+          "speechStartMs": 2100.0000000000014,
+          "speechEndMs": 4740.000000000002
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 1180.0000000000014,
+      "endDifferenceMs": 19.99999999999818
+    },
+    {
+      "id": "user-ja-011",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "334f21e849cbf2eea5df5eda44357456eb96a6ab31aa1646ebdad00abb2bd849",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4520.0
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "238f49ff5c14c5ad92022ac5d9180aa5d566cdc763dbd1133c268c3e9baa5a07",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4580.000000000002
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 60.00000000000182
+    },
+    {
+      "id": "user-ja-012",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "438779a4b89ce89b4c8093808fe5675c8116ab70d1ceca6d0fa6c01ae6c34f7f",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4520.0
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "8fdf3e747bfbf5c1375b1cbba3d17544f43b751c14e48e565617429082ffd70b",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4500.0
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 20.0
+    },
+    {
+      "id": "user-ja-013",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "d88a295aa2fb3784bf61691aea8a7ed85b23e1980416f45330bed5cf3ca5b06e",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1240.0000000000002,
+          "speechEndMs": 9959.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "a1a98a0fe1bff150665dbd91243531104f4d82ecfe56e902c506ab2a9aae2ab8",
+          "zeroUnitIndices": [
+            6
+          ],
+          "status": "valid",
+          "speechStartMs": 1300.0000000000007,
+          "speechEndMs": 9940.000000000002
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 60.000000000000455,
+      "endDifferenceMs": 19.999999999996362
+    },
+    {
+      "id": "user-ja-014",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "7a426351df5f6bef08b4d6ed611e4bda17f62c6c3531f3c216b39df16b8a55d2",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2199.999999999999,
+          "speechEndMs": 4199.999999999999
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "0b1d44d522d42ef0e5b69fa20036c60f096d67e2dd44d046aba7b631c55132ad",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2179.9999999999995,
+          "speechEndMs": 4180.0
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 19.99999999999909
+    },
+    {
+      "id": "user-ja-015",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "2d197c858f67fd2cd2ddb0f89290d8dee0850686c757c5602358ac32bfa606dc",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4999.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "d810f19b5947865018cd4bfda3aaa71424fd3b82c294efca8ab9dd23ad612189",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 5059.999999999999
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 60.00000000000091
+    },
+    {
+      "id": "user-ja-016",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "237fc905cfb9b5205b9b935bd9392a687c3eadcd7d578228ca0d1034cab08bd2",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 4039.999999999999
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "626b615b1e0a273fadf2517ad7668e0676d80db2e2a91edf953bf6633f123227",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 980.0000000000005,
+          "speechEndMs": 4019.9999999999995
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 979.9999999999986,
+      "endDifferenceMs": 19.999999999999545
+    },
+    {
+      "id": "user-ja-017",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "d98d5e28157fbca24db4b72ff7f04b343254bfa8aaf644e8fd99432476587b6d",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 6760.0
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "b2720266796685a1d335214e1661756f0539e7e34cf5d4c8969b846c04f27390",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 6820.0
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 60.0
+    },
+    {
+      "id": "user-ja-018",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "feb3b6db60c6431f711b4cadb95edd56f2a623364b1e9eb390f45aac901f2cbd",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4839.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "20a0b2343340a62861bce3d030ea7f0c73c72fb5042e1e3dddaae62c885d1a06",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 2019.9999999999995,
+          "speechEndMs": 4900.000000000002
+        }
+      ],
+      "stable": true,
+      "startDifferenceMs": 19.999999999999545,
+      "endDifferenceMs": 60.00000000000364
+    },
+    {
+      "id": "user-ja-019",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "5948b8e6bd12cac8ec0bf0b0de66397a366ad0baa75bb2eb36bf0d4d765a393e",
+          "zeroUnitIndices": [
+            1
+          ],
+          "status": "valid",
+          "speechStartMs": 2039.999999999999,
+          "speechEndMs": 4839.999999999998
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "927a57c38f2201226c9f021179cde9c4ad958a6651e1f808d527ec906a5ab8fd",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1940.0000000000014,
+          "speechEndMs": 4900.000000000002
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 99.99999999999773,
+      "endDifferenceMs": 60.00000000000364
+    },
+    {
+      "id": "user-ja-020",
+      "lang": "ja",
+      "attempts": [
+        {
+          "anchorId": "public-ja-001",
+          "rawSha256": "37bdfe8d6793959bd384dda2736871b0036e40f967aae205dd3ed469768dc57e",
+          "zeroUnitIndices": [],
+          "status": "valid",
+          "speechStartMs": 1959.999999999999,
+          "speechEndMs": 5560.000000000001
+        },
+        {
+          "anchorId": "public-ja-002",
+          "rawSha256": "c27e726f88e40bb756cf17a0d92523d4bb99cdfb805e8e6d413aab6231569a03",
+          "zeroUnitIndices": [
+            0
+          ],
+          "status": "valid",
+          "speechStartMs": 1059.9999999999986,
+          "speechEndMs": 5620.000000000001
+        }
+      ],
+      "stable": false,
+      "startDifferenceMs": 900.0000000000005,
+      "endDifferenceMs": 60.0
+    }
+  ]
+}

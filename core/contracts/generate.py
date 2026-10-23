@@ -30,6 +30,7 @@ def schema(directory: Path = HERE) -> dict[str, Any]:
     enums: dict[str, Any] = {}
     superseded_enums: dict[str, Any] = {}
     superseded_values: dict[str, Any] = {}
+    json_enums: dict[str, Any] = {}
     for path in sorted(directory.glob("*.proto")):
         text = path.read_text(encoding="utf-8")
         for comments, name, body in re.findall(
@@ -38,6 +39,12 @@ def schema(directory: Path = HERE) -> dict[str, Any]:
             assert name not in enums, name
             code = re.sub(r"//[^\n]*", "", body)
             enums[name] = {k: int(v) for k, v in re.findall(r"(\w+)\s*=\s*(\d+)", code)}
+            aliases = re.findall(r"// @json-values ([^\n]+)", comments)
+            if aliases:
+                mapping = json.loads(aliases[0])
+                assert set(mapping) == {k for k, v in enums[name].items() if v}
+                assert len(set(mapping.values())) == len(mapping)
+                json_enums[name] = mapping
             for line in comments.splitlines():
                 found = re.fullmatch(r"// " + SUPERSEDED, line)
                 if found:
@@ -50,6 +57,50 @@ def schema(directory: Path = HERE) -> dict[str, Any]:
         for tag, source, name, body in re.findall(
             r"// @message (\S+) \| ([^\n]+)\nmessage (\w+) \{(.*?)\n\}", text, re.DOTALL
         ):
+            # ADR 0007 §6: explicit oneof membership; no change to existing fields.
+            groups: dict[str, Any] = {}
+
+            def expand_oneof(match: re.Match[str]) -> str:
+                group, requirement, members = match.groups()
+                assert requirement == "required", "only required oneofs are used"
+                names = re.findall(r"^\s*\w+ (\w+) = ", members, re.MULTILINE)
+                assert names, group
+                groups[group] = dict(fields=names, required=True)
+                return re.sub(
+                    r"^(\s*)(\w+ \w+ = \d+; // optional[^\n]*)$",
+                    lambda m: m[1] + "optional " + m[2] + ",oneof=" + group,
+                    members,
+                    flags=re.MULTILINE,
+                )
+
+            body = re.sub(
+                r"oneof (\w+) \{ // (required)\n(.*?)^  \}",
+                expand_oneof,
+                body,
+                flags=re.DOTALL | re.MULTILINE,
+            )
+            # P5-01 retrospective C1(b,c): fail closed instead of silently dropping
+            # a valid Protobuf declaration from the authority descriptor.
+            for line in body.splitlines():
+                code = line.strip()
+                if not code or code.startswith("//"):
+                    continue
+                if "=" in code:
+                    assert re.fullmatch(
+                        r"(?:optional|repeated) \w+ \w+ = \d+(?: \[[^\]]+\])?; // [^\n]+",
+                        code,
+                    ), (name, "unparsed declaration", code)
+                if code.startswith("reserved"):
+                    assert re.fullmatch(r"reserved [\d, ]+;", code), (
+                        name,
+                        "unparsed reserved",
+                        code,
+                    )
+                assert not code.startswith(("oneof", "map<")), (
+                    name,
+                    "unparsed syntax",
+                    code,
+                )
             fields = []
             for label, typ, field, number, annotation in re.findall(
                 r"(optional|repeated) (\w+) (\w+) = (\d+)(?: \[[^\]]+\])?; // ([^\n]+)",
@@ -69,13 +120,16 @@ def schema(directory: Path = HERE) -> dict[str, Any]:
                         key, value = item.split("=", 1)
                         f[key] = (
                             value
-                            if key == "set"
+                            if key in ("set", "oneof", "json_name", "json_map")
                             else float(value)
                             if key in ("min", "max")
                             else int(value)
                         )
                 fields.append(f)
             assert fields and fields[0]["name"] == "schema_version"
+            assert [f["number"] for f in fields] == sorted(
+                f["number"] for f in fields
+            ), (name, "field number order")
             assert len({f["number"] for f in fields}) == len(fields)
             assert name not in messages
             rules = re.findall(r"// @rules ([^\n]+)", body)
@@ -86,6 +140,21 @@ def schema(directory: Path = HERE) -> dict[str, Any]:
                 file=path.name,
                 rules=json.loads(rules[0]) if rules else {},
             )
+            if re.search(r"// @resource\s*$", body, re.MULTILINE):
+                messages[name]["resource"] = True
+            if messages[name]["rules"].get("cases"):
+                discriminator = messages[name]["rules"].get("discriminator", "kind")
+                assert any(
+                    f["name"] == discriminator and f["required"] and not f["repeated"]
+                    for f in fields
+                )
+            if groups:
+                messages[name]["rules"]["oneofs"] = groups
+                for group in groups.values():
+                    positions = [
+                        i for i, f in enumerate(fields) if f["name"] in group["fields"]
+                    ]
+                    assert positions == list(range(min(positions), max(positions) + 1))
             # Lifecycle metadata (P5-21). Keys are added only when present, so
             # unchanged messages keep byte-identical descriptors.
             reserved = sorted(
@@ -117,6 +186,8 @@ def schema(directory: Path = HERE) -> dict[str, Any]:
         for value, by in values.items():
             assert by["by"] == "-" or by["by"] in enums[enum], (enum, value, by)
     result: dict[str, Any] = dict(messages=messages, enums=enums)
+    if json_enums:
+        result["json_enums"] = json_enums
     if superseded_enums:
         result["superseded_enums"] = superseded_enums
     if superseded_values:
@@ -316,6 +387,11 @@ def outputs(s: dict[str, Any]) -> dict[Path, str]:
         result[ROOT / "packages/contracts/src/generated/echo" / template.name] = (
             template.read_text(encoding="utf-8")
         )
+    from generate_browser import resource_types
+
+    result[ROOT / "packages/contracts/src/generated/echo/resources.ts"] = (
+        resource_types(s)
+    )
     return result
 
 

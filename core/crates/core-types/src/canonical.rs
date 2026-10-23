@@ -48,7 +48,19 @@ impl Schema {
         append_blob(&mut out, m.tag.as_bytes())?;
         for f in &m.fields[1..] {
             let value = v.get(&f.name);
-            if f.repeated {
+            if let Some(group_name) = &f.oneof {
+                let group = &m.rules.oneofs[group_name].fields;
+                if group.first() != Some(&f.name) {
+                    continue;
+                }
+                let chosen = m
+                    .fields
+                    .iter()
+                    .find(|x| group.contains(&x.name) && v.get(&x.name).is_some())
+                    .ok_or("required oneof")?;
+                out.extend(chosen.number.to_le_bytes());
+                out.extend(self.canonical_scalar(&chosen.r#type, &v[&chosen.name], l)?);
+            } else if f.repeated {
                 let a = value.and_then(Value::as_array).ok_or("array")?;
                 out.extend(u32::try_from(a.len()).map_err(|_| "count")?.to_le_bytes());
                 for item in a {
@@ -77,7 +89,22 @@ impl Schema {
         let mut v = Map::new();
         v.insert("schema_version".into(), 1.into());
         for f in &m.fields[1..] {
-            if f.repeated {
+            if let Some(group_name) = &f.oneof {
+                let group = &m.rules.oneofs[group_name].fields;
+                if group.first() != Some(&f.name) {
+                    continue;
+                }
+                let number = r.u32()?;
+                let chosen = m
+                    .fields
+                    .iter()
+                    .find(|x| x.number == number && group.contains(&x.name))
+                    .ok_or("unknown oneof field")?;
+                v.insert(
+                    chosen.name.clone(),
+                    self.read_canonical_atom(&chosen.r#type, &mut r, l, depth)?,
+                );
+            } else if f.repeated {
                 let count = r.u32()? as usize;
                 require(count <= l.max_items, "count limit")?;
                 let mut a = Vec::new();

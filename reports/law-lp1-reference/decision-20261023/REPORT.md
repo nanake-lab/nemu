@@ -2,14 +2,14 @@
 
 ## 当前状态
 
-用户已确认（2026-10-23）方案 A：保留候选 B，接受失去固定名义 ρ 下的 E/C 总量上界。ADR 0019 §11 已勾选、写明当前版本的替代保证和证明条件，V2-56 追加登记。仅确认这一差异，ADR 整体仍为提议，PR #61 保持 `needs-user`，未合并。
+用户已确认（2026-10-23）方案 A：保留候选 B，接受失去固定名义 ρ 下的 E/C 总量上界。ADR 0019 §11 已勾选、写明当前版本的替代保证和证明条件，V2-60 追加登记。仅确认这一差异，ADR 整体仍为提议，PR #61 保持 `needs-user`，未合并。
 
 本次工作区 `D:\Dev\nemu-wt\law-lp1-reference`，所有临时/uv/mypy缓存在 `D:\Dev\cache`。开始先 fetch，合并 main `382c0e7`（`07fe936`）；随后合并 main #68 `9f69648`（`5080c90`）后复跑；最后 fetch 合并仅P5-20卡追加5行的 main #69 `49069e17864a7667ac9684308da78b9601d4a9b4`（`5326077`）后再复跑；未使用 C 盘旧工作区。开始前读取第三轮[审查通过结论](https://github.com/nanake-lab/nemu/pull/61#issuecomment-6360876090)。本次没有改规律公式、现有八个 Python 模块、原 check_law.py、Rust、IDL、原规格或 PR #49 分支，没有浏览器、其他应用或 GPU 操作。
 
 ## 交付物
 
 - [ADR 0019 §11.5](../../../docs/adr/0019-law-lp1-reference.md)：固定旧组权重趋零的充分条件、固定 h 的越线时间证明、当前版本范围与 P5-30 后续。
-- [差异登记 V2-56](../../../docs/traceability/diff-register.md)：用户确认的保证变化；原推论6、LAW-6原文保留。
+- [差异登记 V2-60](../../../docs/traceability/diff-register.md)：用户确认的保证变化；原推论6、LAW-6原文保留。
 - [compare_law_v2_long_history.py](../../echo-core-v2-draft/compare_law_v2_long_history.py)：调用原/新参考实现逐组更新，无闭式捷径或随机采样。
 - [counts.csv](long-history/counts.csv)、[端点](long-history/endpoints.json)、[summary](long-history/summary.json)：20组实验、参数、首次越线前后状态（含 binary64 hex）、Python版本、源SHA256及[源快照](long-history/source/)。
 - [原始 stdout](long-history.stdout.txt)、[stderr](long-history.stderr.txt)、[命令/时间/退出码](long-history.meta.json)：exit0，无数值故障，失败记录没有覆盖。
@@ -60,7 +60,7 @@ Claude 提供的 N=100/1,000/10,000 固定 h 新11/28/49、旧3，自适应新21
 
 | 条款 / 用户指示 | 位置 | 证据 |
 | --- | --- | --- |
-| 推论6方案A、版本范围、原LAW-6失败保留 | ADR§7/10/11，V2-56 | legacy原始失败与新旧脚本字节核对 |
+| 推论6方案A、版本范围、原LAW-6失败保留 | ADR§7/10/11，V2-60 | legacy原始失败与新旧脚本字节核对 |
 | 固定旧组让位、长历史适应边界 | ADR§11.5实数证明 | 20组参考递推及端点 |
 | 整步LP1、反事实、新候选首次分配、分侧修复、I23/I25 | 既有8模块不变 | extra原始输出；同上轮逐字节一致 |
 | P5-30含变点检测的对照 | ADR§11.5已知不足 | 后续工作，本次未实施、未声称验收 |

@@ -37606,5 +37606,2352 @@
         "typical_magnitude": 0.0
       }
     }
+  },
+  {
+    "request": {
+      "name": "BodyReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "facing": 0.0,
+        "tension": 0.0,
+        "energy": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e626f64792d726561646f75742d7632020000004130000000000000000000000000000000000000000000000000",
+      "digest": "e068f6d7141b7d4cc049da0af404cc24ca7a4d82dc15fdb134fc8d84c5c694a0",
+      "ok": true,
+      "protobuf": "080112024130490000000000000000510000000000000000590000000000000000",
+      "value": {
+        "energy": 0.0,
+        "facing": 0.0,
+        "schema_version": 1,
+        "tension": 0.0,
+        "version": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "BodyReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "中文🙂1",
+        "facing": 0.0,
+        "tension": -1.0,
+        "energy": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e626f64792d726561646f75742d76320b000000e4b8ade69687f09f9982310000000000000000000000000000f0bf0000000000000000",
+      "digest": "277f00d82ff13094f692f67acb72280fabb1a006f1dba7c7d5df65cb23be941c",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823149000000000000000051000000000000f0bf590000000000000000",
+      "value": {
+        "energy": 0.0,
+        "facing": 0.0,
+        "schema_version": 1,
+        "tension": -1.0,
+        "version": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "BodyReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "﻿zero\u00002",
+        "facing": 1.0,
+        "tension": 1.0,
+        "energy": 1.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e626f64792d726561646f75742d763209000000efbbbf7a65726f0032000000000000f03f000000000000f03f000000000000f03f",
+      "digest": "a081c30bc5d4e84226f17bda17bbfcc595fb15506678bcb66ecf5415aa853513",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003249000000000000f03f51000000000000f03f59000000000000f03f",
+      "value": {
+        "energy": 1.0,
+        "facing": 1.0,
+        "schema_version": 1,
+        "tension": 1.0,
+        "version": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "A0",
+        "projected_at_ns": "0",
+        "v1": {
+          "schema_version": 1,
+          "version": "A0",
+          "expression_baseline": [],
+          "idle_tempo": 0.5,
+          "ear_pose": 0.0,
+          "tail_amplitude": 0.0,
+          "gaze_sociability": 0.0,
+          "posture": 0.0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726561646f75742d76320200000041300000000000000000050000004f0000004e43563101000000110000006563686f2e626f64792d726561646f757402000000413000000000000000000000e03f0000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "50fe79c86daaff4ca9aa171ac00e73e3dadbc381ab9929f319852b354fd52d7c",
+      "ok": true,
+      "protobuf": "08011a02413020002a3308011202413021000000000000e03f290000000000000000310000000000000000390000000000000000410000000000000000",
+      "value": {
+        "projected_at_ns": "0",
+        "schema_version": 1,
+        "snapshot_id": "A0",
+        "v1": {
+          "ear_pose": 0.0,
+          "expression_baseline": [],
+          "gaze_sociability": 0.0,
+          "idle_tempo": 0.5,
+          "posture": 0.0,
+          "schema_version": 1,
+          "tail_amplitude": 0.0,
+          "version": "A0"
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "中文🙂1",
+        "projected_at_ns": "18446744073709551615",
+        "v2": {
+          "schema_version": 1,
+          "version": "中文🙂1",
+          "facing": 0.0,
+          "tension": -1.0,
+          "energy": 0.0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726561646f75742d76320b000000e4b8ade69687f09f998231ffffffffffffffff06000000470000004e43563101000000140000006563686f2e626f64792d726561646f75742d76320b000000e4b8ade69687f09f9982310000000000000000000000000000f0bf0000000000000000",
+      "digest": "d40ba2d0dcf1d569523d9ad33fd3e4949ecacff6517652d1fd53c93d5364ae9c",
+      "ok": true,
+      "protobuf": "08011a0be4b8ade69687f09f99823120ffffffffffffffffff01322a0801120be4b8ade69687f09f99823149000000000000000051000000000000f0bf590000000000000000",
+      "value": {
+        "projected_at_ns": "18446744073709551615",
+        "schema_version": 1,
+        "snapshot_id": "中文🙂1",
+        "v2": {
+          "energy": 0.0,
+          "facing": 0.0,
+          "schema_version": 1,
+          "tension": -1.0,
+          "version": "中文🙂1"
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "﻿zero\u00002",
+        "projected_at_ns": "9007199254740993",
+        "v1": {
+          "schema_version": 1,
+          "version": "﻿zero\u00002",
+          "expression_baseline": [
+            {
+              "schema_version": 1,
+              "emotion": 3,
+              "weight": 0.4
+            },
+            {
+              "schema_version": 1,
+              "emotion": 4,
+              "weight": 0.0
+            }
+          ],
+          "idle_tempo": 1.5,
+          "ear_pose": 1.0,
+          "tail_amplitude": 1.0,
+          "gaze_sociability": 1.0,
+          "posture": 1.0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726561646f75742d763209000000efbbbf7a65726f0032010000000000200005000000ba0000004e43563101000000110000006563686f2e626f64792d726561646f757409000000efbbbf7a65726f0032020000002e0000004e43563101000000160000006563686f2e65787072657373696f6e2d776569676874030000009a9999999999d93f2e0000004e43563101000000160000006563686f2e65787072657373696f6e2d776569676874040000000000000000000000000000000000f83f000000000000f03f000000000000f03f000000000000f03f000000000000f03f",
+      "digest": "6f30aaac4997a73a9f51b2018320d71e0e1f9d7851158c93d9c7d049a9c80d6b",
+      "ok": true,
+      "protobuf": "08011a09efbbbf7a65726f00322081808080808080102a5808011209efbbbf7a65726f00321a0d08011003199a9999999999d93f1a0d0801100419000000000000000021000000000000f83f29000000000000f03f31000000000000f03f39000000000000f03f41000000000000f03f",
+      "value": {
+        "projected_at_ns": "9007199254740993",
+        "schema_version": 1,
+        "snapshot_id": "﻿zero\u00002",
+        "v1": {
+          "ear_pose": 1.0,
+          "expression_baseline": [
+            {
+              "emotion": 3,
+              "schema_version": 1,
+              "weight": 0.4
+            },
+            {
+              "emotion": 4,
+              "schema_version": 1,
+              "weight": 0.0
+            }
+          ],
+          "gaze_sociability": 1.0,
+          "idle_tempo": 1.5,
+          "posture": 1.0,
+          "schema_version": 1,
+          "tail_amplitude": 1.0,
+          "version": "﻿zero\u00002"
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RunStateV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "states": [],
+        "speech_mode": 1,
+        "strict": true,
+        "autonomy": 1,
+        "reasons": [],
+        "lineage": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000110000006563686f2e72756e2d73746174652d763200000000010000000100010000000000000001000000",
+      "digest": "305cac379a28bf6c9cec071179f8eb0bfcded028ad5257abf89921b7d210f91a",
+      "ok": true,
+      "protobuf": "08011801200138014801",
+      "value": {
+        "autonomy": 1,
+        "lineage": 1,
+        "reasons": [],
+        "schema_version": 1,
+        "speech_mode": 1,
+        "states": [],
+        "strict": true
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RunStateV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "states": [
+          2
+        ],
+        "speech_mode": 2,
+        "strict": false,
+        "born_at": "中文🙂1",
+        "autonomy": 2,
+        "reasons": [
+          "中文🙂1"
+        ],
+        "lineage": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000110000006563686f2e72756e2d73746174652d763201000000020000000200000000010b000000e4b8ade69687f09f99823102000000010000000b000000e4b8ade69687f09f99823102000000",
+      "digest": "5ffb3fd3363a1511e7a7b223109183c55a269ae0ae8878d6ffda745133ae9fd6",
+      "ok": true,
+      "protobuf": "0801100218022000320be4b8ade69687f09f9982313802420be4b8ade69687f09f9982314802",
+      "value": {
+        "autonomy": 2,
+        "born_at": "中文🙂1",
+        "lineage": 2,
+        "reasons": [
+          "中文🙂1"
+        ],
+        "schema_version": 1,
+        "speech_mode": 2,
+        "states": [
+          2
+        ],
+        "strict": false
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RunStateV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "states": [
+          3,
+          4
+        ],
+        "speech_mode": 3,
+        "strict": true,
+        "born_at": "﻿zero\u00002",
+        "autonomy": 1,
+        "reasons": [
+          "﻿zero\u00002",
+          "A3"
+        ],
+        "lineage": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000110000006563686f2e72756e2d73746174652d763202000000030000000400000003000000010109000000efbbbf7a65726f0032010000000200000009000000efbbbf7a65726f003202000000413301000000",
+      "digest": "08858f80531255271aca66f354f1c2ac1fd74c5b645b8dbe89e334018834edc7",
+      "ok": true,
+      "protobuf": "080110031004180320013209efbbbf7a65726f003238014209efbbbf7a65726f0032420241334801",
+      "value": {
+        "autonomy": 1,
+        "born_at": "﻿zero\u00002",
+        "lineage": 1,
+        "reasons": [
+          "﻿zero\u00002",
+          "A3"
+        ],
+        "schema_version": 1,
+        "speech_mode": 3,
+        "states": [
+          3,
+          4
+        ],
+        "strict": true
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "notice_id": "A0",
+        "kind": 1,
+        "at": "A0",
+        "summary": "A0",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000b0000006563686f2e6e6f7469636502000000413001000000020000004130020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000",
+      "digest": "205f3c9f62f14c956ad51423fd26d78f54d871aa6c0fa55367cb9eba4f5d8b84",
+      "ok": true,
+      "protobuf": "0801120241301801220241302a024130322e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800",
+      "value": {
+        "at": "A0",
+        "kind": 1,
+        "l_ref": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "notice_id": "A0",
+        "schema_version": 1,
+        "summary": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "notice_id": "中文🙂1",
+        "kind": 2,
+        "at": "中文🙂1",
+        "summary": "中文🙂1",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000b0000006563686f2e6e6f746963650b000000e4b8ade69687f09f998231020000000b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffff",
+      "digest": "75740f58de4817949a540bd5376deb9f0226c13ff5fb04593aa3bafaf24485ed",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311802220be4b8ade69687f09f9982312a0be4b8ade69687f09f99823132490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff01",
+      "value": {
+        "at": "中文🙂1",
+        "kind": 2,
+        "l_ref": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "notice_id": "中文🙂1",
+        "schema_version": 1,
+        "summary": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "notice_id": "﻿zero\u00002",
+        "kind": 3,
+        "at": "﻿zero\u00002",
+        "summary": "﻿zero\u00002",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000b0000006563686f2e6e6f7469636509000000efbbbf7a65726f00320300000009000000efbbbf7a65726f003209000000efbbbf7a65726f0032610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f00320100000000002000",
+      "digest": "9e2629697f3c1437d20836e77549d7cd646f412bae978533c961f3f91d43fbcb",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003218032209efbbbf7a65726f00322a09efbbbf7a65726f003232430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f0032288180808080808010",
+      "value": {
+        "at": "﻿zero\u00002",
+        "kind": 3,
+        "l_ref": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "notice_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "summary": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "QueryV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "query_id": "A0",
+        "limit": "0",
+        "kind": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e71756572792d763202000000413000000000000000000001000000",
+      "digest": "fd2202db255b368ff131dc8198bfe77221b29b15e53ec1fd9332801f36e93504",
+      "ok": true,
+      "protobuf": "08011202413028003001",
+      "value": {
+        "kind": 1,
+        "limit": "0",
+        "query_id": "A0",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "QueryV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "query_id": "中文🙂1",
+        "filter": {
+          "schema_version": 1,
+          "text": "中文🙂1",
+          "from": "中文🙂1",
+          "to": "中文🙂1",
+          "kinds": [
+            "中文🙂1"
+          ],
+          "include_retracted": false
+        },
+        "limit": "18446744073709551615",
+        "kind": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e71756572792d76320b000000e4b8ade69687f09f99823101620000004e43563101000000110000006563686f2e71756572792d66696c746572010b000000e4b8ade69687f09f998231010b000000e4b8ade69687f09f998231010b000000e4b8ade69687f09f998231010000000b000000e4b8ade69687f09f9982310100ffffffffffffffff02000000",
+      "digest": "ea06d88e6f69e26e324e37b16d9193dcb0ee5ea1426f1feb7a98f492df090ca6",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823122380801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231220be4b8ade69687f09f9982312a0be4b8ade69687f09f998231300028ffffffffffffffffff013002",
+      "value": {
+        "filter": {
+          "from": "中文🙂1",
+          "include_retracted": false,
+          "kinds": [
+            "中文🙂1"
+          ],
+          "schema_version": 1,
+          "text": "中文🙂1",
+          "to": "中文🙂1"
+        },
+        "kind": 2,
+        "limit": "18446744073709551615",
+        "query_id": "中文🙂1",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "QueryV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "query_id": "﻿zero\u00002",
+        "filter": {
+          "schema_version": 1,
+          "text": "﻿zero\u00002",
+          "from": "﻿zero\u00002",
+          "to": "﻿zero\u00002",
+          "kinds": [
+            "﻿zero\u00002",
+            "A3"
+          ],
+          "include_retracted": true
+        },
+        "limit": "9007199254740993",
+        "kind": 3
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e71756572792d763209000000efbbbf7a65726f003201600000004e43563101000000110000006563686f2e71756572792d66696c7465720109000000efbbbf7a65726f00320109000000efbbbf7a65726f00320109000000efbbbf7a65726f00320200000002000000413309000000efbbbf7a65726f00320101010000000000200003000000",
+      "digest": "033b5a3d25cdc28aabcf7a25f8834481cfd0b21745f5240202d1f21a7b19a343",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f0032223408011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f00322a0241332a09efbbbf7a65726f003230012881808080808080103003",
+      "value": {
+        "filter": {
+          "from": "﻿zero\u00002",
+          "include_retracted": true,
+          "kinds": [
+            "A3",
+            "﻿zero\u00002"
+          ],
+          "schema_version": 1,
+          "text": "﻿zero\u00002",
+          "to": "﻿zero\u00002"
+        },
+        "kind": 3,
+        "limit": "9007199254740993",
+        "query_id": "﻿zero\u00002",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "QueryResultV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "query_id": "A0",
+        "status": 1,
+        "items": [],
+        "growth_entries": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e71756572792d726573756c742d7632020000004130010000000000000000000000",
+      "digest": "ad9af5e3ca2e4326c04161be0aef4dcfce9a4fd20db20be40d9639222efa6fc0",
+      "ok": true,
+      "protobuf": "0801120241301801",
+      "value": {
+        "growth_entries": [],
+        "items": [],
+        "query_id": "A0",
+        "schema_version": 1,
+        "status": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "QueryResultV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "query_id": "中文🙂1",
+        "status": 2,
+        "items": [
+          {
+            "schema_version": 1,
+            "ref": "中文🙂1",
+            "at": "中文🙂1",
+            "kind": "中文🙂1",
+            "summary": "中文🙂1",
+            "source": "中文🙂1",
+            "retracted": false
+          }
+        ],
+        "growth_entries": [
+          {
+            "schema_version": 1,
+            "entry_id": "中文🙂1",
+            "event_id": "中文🙂1",
+            "kind": 2,
+            "theta_change": {
+              "schema_version": 1,
+              "before": {
+                "schema_version": 1,
+                "baseline": {
+                  "schema_version": 1,
+                  "connection": -1.0,
+                  "empathy": -1.0,
+                  "curiosity": -1.0,
+                  "achievement": -1.0
+                },
+                "gain": {
+                  "schema_version": 1,
+                  "connection": 0.0,
+                  "empathy": 0.0,
+                  "curiosity": 0.0,
+                  "achievement": 0.0
+                },
+                "recovery_per_s": {
+                  "schema_version": 1,
+                  "connection": 0.0,
+                  "empathy": 0.0,
+                  "curiosity": 0.0,
+                  "achievement": 0.0
+                }
+              },
+              "after": {
+                "schema_version": 1,
+                "baseline": {
+                  "schema_version": 1,
+                  "connection": -1.0,
+                  "empathy": -1.0,
+                  "curiosity": -1.0,
+                  "achievement": -1.0
+                },
+                "gain": {
+                  "schema_version": 1,
+                  "connection": 0.0,
+                  "empathy": 0.0,
+                  "curiosity": 0.0,
+                  "achievement": 0.0
+                },
+                "recovery_per_s": {
+                  "schema_version": 1,
+                  "connection": 0.0,
+                  "empathy": 0.0,
+                  "curiosity": 0.0,
+                  "achievement": 0.0
+                }
+              },
+              "events": []
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e71756572792d726573756c742d76320b000000e4b8ade69687f09f9982310200000001000000670000004e435631010000000f0000006563686f2e71756572792d6974656d0b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310001000000350200004e43563101000000110000006563686f2e6c65646765722d656e7472790b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231020000000001eb0100004e43563101000000110000006563686f2e74686574612d6368616e6765e10000004e43563101000000110000006563686f2e74686574612d76616c7565733e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f0bf000000000000f0bf000000000000f0bf000000000000f0bf3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c6500000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650000000000000000000000000000000000000000000000000000000000000000e10000004e43563101000000110000006563686f2e74686574612d76616c7565733e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f0bf000000000000f0bf000000000000f0bf000000000000f0bf3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c6500000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "4e8de027a87034082ddd11595d14902c90c7fada46f5ae8797a0cd83c8c130c1",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f998231180222450801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231220be4b8ade69687f09f9982312a0be4b8ade69687f09f998231320be4b8ade69687f09f99823138002a9b020801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231200232fa010801127a08011226080111000000000000f0bf19000000000000f0bf21000000000000f0bf29000000000000f0bf1a260801110000000000000000190000000000000000210000000000000000290000000000000000222608011100000000000000001900000000000000002100000000000000002900000000000000001a7a08011226080111000000000000f0bf19000000000000f0bf21000000000000f0bf29000000000000f0bf1a26080111000000000000000019000000000000000021000000000000000029000000000000000022260801110000000000000000190000000000000000210000000000000000290000000000000000",
+      "value": {
+        "growth_entries": [
+          {
+            "entry_id": "中文🙂1",
+            "event_id": "中文🙂1",
+            "kind": 2,
+            "schema_version": 1,
+            "theta_change": {
+              "after": {
+                "baseline": {
+                  "achievement": -1.0,
+                  "connection": -1.0,
+                  "curiosity": -1.0,
+                  "empathy": -1.0,
+                  "schema_version": 1
+                },
+                "gain": {
+                  "achievement": 0.0,
+                  "connection": 0.0,
+                  "curiosity": 0.0,
+                  "empathy": 0.0,
+                  "schema_version": 1
+                },
+                "recovery_per_s": {
+                  "achievement": 0.0,
+                  "connection": 0.0,
+                  "curiosity": 0.0,
+                  "empathy": 0.0,
+                  "schema_version": 1
+                },
+                "schema_version": 1
+              },
+              "before": {
+                "baseline": {
+                  "achievement": -1.0,
+                  "connection": -1.0,
+                  "curiosity": -1.0,
+                  "empathy": -1.0,
+                  "schema_version": 1
+                },
+                "gain": {
+                  "achievement": 0.0,
+                  "connection": 0.0,
+                  "curiosity": 0.0,
+                  "empathy": 0.0,
+                  "schema_version": 1
+                },
+                "recovery_per_s": {
+                  "achievement": 0.0,
+                  "connection": 0.0,
+                  "curiosity": 0.0,
+                  "empathy": 0.0,
+                  "schema_version": 1
+                },
+                "schema_version": 1
+              },
+              "events": [],
+              "schema_version": 1
+            }
+          }
+        ],
+        "items": [
+          {
+            "at": "中文🙂1",
+            "kind": "中文🙂1",
+            "ref": "中文🙂1",
+            "retracted": false,
+            "schema_version": 1,
+            "source": "中文🙂1",
+            "summary": "中文🙂1"
+          }
+        ],
+        "query_id": "中文🙂1",
+        "schema_version": 1,
+        "status": 2
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "QueryResultV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "query_id": "﻿zero\u00002",
+        "status": 3,
+        "items": [
+          {
+            "schema_version": 1,
+            "ref": "﻿zero\u00002",
+            "at": "﻿zero\u00002",
+            "kind": "﻿zero\u00002",
+            "summary": "﻿zero\u00002",
+            "source": "﻿zero\u00002",
+            "retracted": true
+          },
+          {
+            "schema_version": 1,
+            "ref": "A3",
+            "at": "A3",
+            "kind": "A3",
+            "summary": "A3",
+            "source": "A3",
+            "retracted": false
+          }
+        ],
+        "growth_entries": [
+          {
+            "schema_version": 1,
+            "entry_id": "﻿zero\u00002",
+            "event_id": "﻿zero\u00002",
+            "kind": 3,
+            "recompute": {
+              "schema_version": 1,
+              "cause": 3,
+              "law_version": {
+                "schema_version": 1,
+                "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                "object_type": "﻿zero\u00002",
+                "resource_version": "﻿zero\u00002",
+                "byte_length": "9007199254740993"
+              },
+              "previous_law_version": {
+                "schema_version": 1,
+                "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                "object_type": "﻿zero\u00002",
+                "resource_version": "﻿zero\u00002",
+                "byte_length": "9007199254740993"
+              },
+              "r_revision_before": "﻿zero\u00002",
+              "r_revision_after": "﻿zero\u00002",
+              "theta_revision_before": "﻿zero\u00002",
+              "theta_revision_after": "﻿zero\u00002",
+              "changed_tendencies": [],
+              "theta_changed": true
+            }
+          },
+          {
+            "schema_version": 1,
+            "entry_id": "A3",
+            "event_id": "A3",
+            "kind": 4,
+            "migration": {
+              "schema_version": 1,
+              "previous_environment": {
+                "schema_version": 1,
+                "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                "object_type": "A3",
+                "resource_version": "A3",
+                "byte_length": "0"
+              },
+              "environment": {
+                "schema_version": 1,
+                "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                "object_type": "A3",
+                "resource_version": "A3",
+                "byte_length": "0"
+              },
+              "validation": {
+                "schema_version": 1,
+                "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                "object_type": "A3",
+                "resource_version": "A3",
+                "byte_length": "0"
+              }
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e71756572792d726573756c742d763209000000efbbbf7a65726f003203000000020000005d0000004e435631010000000f0000006563686f2e71756572792d6974656d09000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f0032013a0000004e435631010000000f0000006563686f2e71756572792d6974656d02000000413302000000413302000000413302000000413302000000413300020000006f0100004e43563101000000110000006563686f2e6c65646765722d656e74727909000000efbbbf7a65726f003209000000efbbbf7a65726f003203000000000001290100004e43563101000000150000006563686f2e7265636f6d707574652d7265636f726403000000610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000000200001610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000000200009000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f00320000000001000000005e0100004e43563101000000110000006563686f2e6c65646765722d656e7472790200000041330200000041330400000000000001260100004e43563101000000150000006563686f2e6d6967726174696f6e2d7265636f7264530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000003030303030303030303030303030303030303030303030303030303030303030200000041330200000041330000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000003030303030303030303030303030303030303030303030303030303030303030200000041330200000041330000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000003030303030303030303030303030303030303030303030303030303030303030200000041330200000041330000000000000000000000",
+      "digest": "52dc681655b0538d8178e55f805e8fbace47be35ddf54da172f008f752f95175",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321803223b08011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f00322a09efbbbf7a65726f00323209efbbbf7a65726f0032380122180801120241331a024133220241332a0241333202413338002ad90108011209efbbbf7a65726f00321a09efbbbf7a65726f003220033abc01080110031a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f003228818080808080801022430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080102a09efbbbf7a65726f00323209efbbbf7a65726f00323a09efbbbf7a65726f00324209efbbbf7a65726f003250012aa1010801120241331a02413320044292010801122e0801122003030303030303030303030303030303030303030303030303030303030303031a0241332202413328001a2e0801122003030303030303030303030303030303030303030303030303030303030303031a024133220241332800222e0801122003030303030303030303030303030303030303030303030303030303030303031a024133220241332800",
+      "value": {
+        "growth_entries": [
+          {
+            "entry_id": "﻿zero\u00002",
+            "event_id": "﻿zero\u00002",
+            "kind": 3,
+            "recompute": {
+              "cause": 3,
+              "changed_tendencies": [],
+              "law_version": {
+                "byte_length": "9007199254740993",
+                "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                "object_type": "﻿zero\u00002",
+                "resource_version": "﻿zero\u00002",
+                "schema_version": 1
+              },
+              "previous_law_version": {
+                "byte_length": "9007199254740993",
+                "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                "object_type": "﻿zero\u00002",
+                "resource_version": "﻿zero\u00002",
+                "schema_version": 1
+              },
+              "r_revision_after": "﻿zero\u00002",
+              "r_revision_before": "﻿zero\u00002",
+              "schema_version": 1,
+              "theta_changed": true,
+              "theta_revision_after": "﻿zero\u00002",
+              "theta_revision_before": "﻿zero\u00002"
+            },
+            "schema_version": 1
+          },
+          {
+            "entry_id": "A3",
+            "event_id": "A3",
+            "kind": 4,
+            "migration": {
+              "environment": {
+                "byte_length": "0",
+                "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                "object_type": "A3",
+                "resource_version": "A3",
+                "schema_version": 1
+              },
+              "previous_environment": {
+                "byte_length": "0",
+                "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                "object_type": "A3",
+                "resource_version": "A3",
+                "schema_version": 1
+              },
+              "schema_version": 1,
+              "validation": {
+                "byte_length": "0",
+                "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                "object_type": "A3",
+                "resource_version": "A3",
+                "schema_version": 1
+              }
+            },
+            "schema_version": 1
+          }
+        ],
+        "items": [
+          {
+            "at": "﻿zero\u00002",
+            "kind": "﻿zero\u00002",
+            "ref": "﻿zero\u00002",
+            "retracted": true,
+            "schema_version": 1,
+            "source": "﻿zero\u00002",
+            "summary": "﻿zero\u00002"
+          },
+          {
+            "at": "A3",
+            "kind": "A3",
+            "ref": "A3",
+            "retracted": false,
+            "schema_version": 1,
+            "source": "A3",
+            "summary": "A3"
+          }
+        ],
+        "query_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "status": 3
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "GrowthControl",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "action": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e67726f7774682d636f6e74726f6c01000000",
+      "digest": "bde4a07d2e13ced4bc82a795cc2a329b1208682c6b08a9dff67b4f602226b457",
+      "ok": true,
+      "protobuf": "08011001",
+      "value": {
+        "action": 1,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "GrowthControl",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "action": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e67726f7774682d636f6e74726f6c02000000",
+      "digest": "2751ce7e342917ab20e468f1e913dc4444da6a2bcaa2e611fe94d1dd2bc175fd",
+      "ok": true,
+      "protobuf": "08011002",
+      "value": {
+        "action": 2,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "GrowthControl",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "action": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e67726f7774682d636f6e74726f6c01000000",
+      "digest": "bde4a07d2e13ced4bc82a795cc2a329b1208682c6b08a9dff67b4f602226b457",
+      "ok": true,
+      "protobuf": "08011001",
+      "value": {
+        "action": 1,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ApprovalRequestV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "approval_id": "A0",
+        "action_id": "A0",
+        "tier": 1,
+        "title": "A0",
+        "detail": "A0",
+        "expires_at_ns": "0",
+        "action_payload": "",
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e617070726f76616c2d726571756573742d763202000000413002000000413001000000020000004130020000004130000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "255df0fd448d9f7535eadc0577ba913236e802456345662a82448eab80760e29",
+      "ok": true,
+      "protobuf": "0801120241301a02413020012a02413032024130380042004a200000000000000000000000000000000000000000000000000000000000000000",
+      "value": {
+        "action_id": "A0",
+        "action_payload": "",
+        "approval_id": "A0",
+        "detail": "A0",
+        "expires_at_ns": "0",
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "schema_version": 1,
+        "tier": 1,
+        "title": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ApprovalRequestV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "approval_id": "中文🙂1",
+        "action_id": "中文🙂1",
+        "tier": 2,
+        "title": "中文🙂1",
+        "detail": "中文🙂1",
+        "expires_at_ns": "-9223372036854775808",
+        "action_payload": "01",
+        "payload_digest": "0101010101010101010101010101010101010101010101010101010101010101"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e617070726f76616c2d726571756573742d76320b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231020000000b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f99823100000000000000800100000001200000000101010101010101010101010101010101010101010101010101010101010101",
+      "digest": "24b1a56f33e445d81b2ccc61d03dcde3da5005df20cad7730134d247d938b94f",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f99823120022a0be4b8ade69687f09f998231320be4b8ade69687f09f99823138ffffffffffffffffff014201014a200101010101010101010101010101010101010101010101010101010101010101",
+      "value": {
+        "action_id": "中文🙂1",
+        "action_payload": "01",
+        "approval_id": "中文🙂1",
+        "detail": "中文🙂1",
+        "expires_at_ns": "-9223372036854775808",
+        "payload_digest": "0101010101010101010101010101010101010101010101010101010101010101",
+        "schema_version": 1,
+        "tier": 2,
+        "title": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ApprovalRequestV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "approval_id": "﻿zero\u00002",
+        "action_id": "﻿zero\u00002",
+        "tier": 3,
+        "title": "﻿zero\u00002",
+        "detail": "﻿zero\u00002",
+        "expires_at_ns": "9223372036854775807",
+        "action_payload": "0202",
+        "payload_digest": "0202020202020202020202020202020202020202020202020202020202020202"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e617070726f76616c2d726571756573742d763209000000efbbbf7a65726f003209000000efbbbf7a65726f00320300000009000000efbbbf7a65726f003209000000efbbbf7a65726f0032ffffffffffffff7f020000000202200000000202020202020202020202020202020202020202020202020202020202020202",
+      "digest": "e88bda308ef61f818f89d187f34c837ea02d8f6844fbe3e2a32c3ede8ef54d31",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f003220032a09efbbbf7a65726f00323209efbbbf7a65726f003238feffffffffffffffff01420202024a200202020202020202020202020202020202020202020202020202020202020202",
+      "value": {
+        "action_id": "﻿zero\u00002",
+        "action_payload": "0202",
+        "approval_id": "﻿zero\u00002",
+        "detail": "﻿zero\u00002",
+        "expires_at_ns": "9223372036854775807",
+        "payload_digest": "0202020202020202020202020202020202020202020202020202020202020202",
+        "schema_version": 1,
+        "tier": 3,
+        "title": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ApprovalDecisionV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "approval_id": "A0",
+        "decision": 1,
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e617070726f76616c2d6465636973696f6e2d763202000000413001000000200000000000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "5b781c90f0e160a07817c54067fd194f2b810b60bf3a79eba534697e3f8020cc",
+      "ok": true,
+      "protobuf": "080112024130180122200000000000000000000000000000000000000000000000000000000000000000",
+      "value": {
+        "approval_id": "A0",
+        "decision": 1,
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ApprovalDecisionV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "approval_id": "中文🙂1",
+        "decision": 2,
+        "payload_digest": "0101010101010101010101010101010101010101010101010101010101010101"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e617070726f76616c2d6465636973696f6e2d76320b000000e4b8ade69687f09f99823102000000200000000101010101010101010101010101010101010101010101010101010101010101",
+      "digest": "f09b467c4f744e3a6a6b0edd32820e1b27c251164f3ce42c1709d4336c0668b1",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f998231180222200101010101010101010101010101010101010101010101010101010101010101",
+      "value": {
+        "approval_id": "中文🙂1",
+        "decision": 2,
+        "payload_digest": "0101010101010101010101010101010101010101010101010101010101010101",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ApprovalDecisionV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "approval_id": "﻿zero\u00002",
+        "decision": 3,
+        "payload_digest": "0202020202020202020202020202020202020202020202020202020202020202"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e617070726f76616c2d6465636973696f6e2d763209000000efbbbf7a65726f003203000000200000000202020202020202020202020202020202020202020202020202020202020202",
+      "digest": "3a05076eaaf2bd99dfdb496c4b8137cab8fd39c8a47a283971f4dcc564beb2e1",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f0032180322200202020202020202020202020202020202020202020202020202020202020202",
+      "value": {
+        "approval_id": "﻿zero\u00002",
+        "decision": 3,
+        "payload_digest": "0202020202020202020202020202020202020202020202020202020202020202",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "SocialAction",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1,
+        "action_payload": ""
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e736f6369616c2d616374696f6e0100000000000000",
+      "digest": "b88292005b06eede7027c2ae68e098b06b1705bef7afadc439b8643a07839d63",
+      "ok": true,
+      "protobuf": "080110011a00",
+      "value": {
+        "action_payload": "",
+        "kind": 1,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "SocialAction",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 2,
+        "action_payload": "01"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e736f6369616c2d616374696f6e020000000100000001",
+      "digest": "988cdfd7b5de7560aac34d0f31d9623e31db5b2cb95a47e19ddfb64cf9776d4c",
+      "ok": true,
+      "protobuf": "080110021a0101",
+      "value": {
+        "action_payload": "01",
+        "kind": 2,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "SocialAction",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1,
+        "action_payload": "0202"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e736f6369616c2d616374696f6e01000000020000000202",
+      "digest": "1e0bb5c8e546ea89b201deff06088274aa89c8c865169afba81bd02b812de51a",
+      "ok": true,
+      "protobuf": "080110011a020202",
+      "value": {
+        "action_payload": "0202",
+        "kind": 1,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "notice_id": "A0",
+        "kind": 2,
+        "at": "A0",
+        "summary": "A0",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000b0000006563686f2e6e6f7469636502000000413002000000020000004130020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000",
+      "digest": "b99f6733c46daaca3380fe5a0b0ba8320ddd6b03daba3e7b1dfa81be8d8de75c",
+      "ok": true,
+      "protobuf": "0801120241301802220241302a024130322e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800",
+      "value": {
+        "at": "A0",
+        "kind": 2,
+        "l_ref": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "notice_id": "A0",
+        "schema_version": 1,
+        "summary": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "notice_id": "A0",
+        "kind": 3,
+        "at": "A0",
+        "summary": "A0",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000b0000006563686f2e6e6f7469636502000000413003000000020000004130020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000",
+      "digest": "c0bfaa97821a32a0d1ff969f5cc5ef323918ba73472fee77d433dca3dfa5d181",
+      "ok": true,
+      "protobuf": "0801120241301803220241302a024130322e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800",
+      "value": {
+        "at": "A0",
+        "kind": 3,
+        "l_ref": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "notice_id": "A0",
+        "schema_version": 1,
+        "summary": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "notice_id": "A0",
+        "kind": 4,
+        "at": "A0",
+        "summary": "A0",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000b0000006563686f2e6e6f7469636502000000413004000000020000004130020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000",
+      "digest": "9578b4468da5dea37a3bc4e4b6cf4332132071c9bc288df079cb2444a5294018",
+      "ok": true,
+      "protobuf": "0801120241301804220241302a024130322e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800",
+      "value": {
+        "at": "A0",
+        "kind": 4,
+        "l_ref": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "notice_id": "A0",
+        "schema_version": 1,
+        "summary": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "notice_id": "A0",
+        "kind": 5,
+        "at": "A0",
+        "summary": "A0",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000b0000006563686f2e6e6f7469636502000000413005000000020000004130020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000",
+      "digest": "e12e3d526d556ab8984d56163c1e7c6daa87baa147bb42deafddc131027e058e",
+      "ok": true,
+      "protobuf": "0801120241301805220241302a024130322e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800",
+      "value": {
+        "at": "A0",
+        "kind": 5,
+        "l_ref": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "notice_id": "A0",
+        "schema_version": 1,
+        "summary": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "notice_id": "A0",
+        "kind": 6,
+        "at": "A0",
+        "summary": "A0",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000b0000006563686f2e6e6f7469636502000000413006000000020000004130020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000",
+      "digest": "7b39066b2dc91ec82107ef2af1eca32270df8fcaa8d0690a7f85ff379a2448be",
+      "ok": true,
+      "protobuf": "0801120241301806220241302a024130322e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800",
+      "value": {
+        "at": "A0",
+        "kind": 6,
+        "l_ref": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "notice_id": "A0",
+        "schema_version": 1,
+        "summary": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "QueryV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "query_id": "A0",
+        "limit": "0",
+        "kind": 4
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e71756572792d763202000000413000000000000000000004000000",
+      "digest": "fd85eaaf14278500558d4b776b5cf6cda8d7486fe044cd67fc8fdf0db3df550f",
+      "ok": true,
+      "protobuf": "08011202413028003004",
+      "value": {
+        "kind": 4,
+        "limit": "0",
+        "query_id": "A0",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "A",
+        "projected_at_ns": "0",
+        "v2": {
+          "schema_version": 1,
+          "version": "V",
+          "facing": 0.5,
+          "tension": 0.0,
+          "energy": 0.5
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726561646f75742d763201000000410000000000000000060000003d0000004e43563101000000140000006563686f2e626f64792d726561646f75742d76320100000056000000000000e03f0000000000000000000000000000e03f",
+      "digest": "410c0207fc8519123f35733f64ce7ab2fa98c610fc56ec0b6341b376296f66ed",
+      "ok": true,
+      "protobuf": "08011a014120003220080112015649000000000000e03f51000000000000000059000000000000e03f",
+      "value": {
+        "projected_at_ns": "0",
+        "schema_version": 1,
+        "snapshot_id": "A",
+        "v2": {
+          "energy": 0.5,
+          "facing": 0.5,
+          "schema_version": 1,
+          "tension": 0.0,
+          "version": "V"
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": "A0",
+        "seconds": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0200000041300000000000000000",
+      "digest": "ce38be54a7319f703b91916cf53b67e7dfe8d2cef05a19b4a5a485c3cbc08982",
+      "ok": true,
+      "protobuf": "080112024130190000000000000000",
+      "value": {
+        "kind": "A0",
+        "schema_version": 1,
+        "seconds": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": "中文🙂1",
+        "seconds": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0b000000e4b8ade69687f09f9982310000000000000000",
+      "digest": "4d4b67e61b6455156d8c63f7698ef2e6e2b271888912aafcd7f6cc0ade64e248",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f998231190000000000000000",
+      "value": {
+        "kind": "中文🙂1",
+        "schema_version": 1,
+        "seconds": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": "﻿zero\u00002",
+        "seconds": 2.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e09000000efbbbf7a65726f00320000000000000440",
+      "digest": "fb4757940a118fc13f28e30e1a7f6158abc62382027cfa14ad1c5a1962666590",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f0032190000000000000440",
+      "value": {
+        "kind": "﻿zero\u00002",
+        "schema_version": 1,
+        "seconds": 2.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "min_interval_s": 0.0,
+        "speak_per_hour": 0,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000000000000000000000000000000000000000000",
+      "digest": "e62c32ea8ec824508f133f7bbcd202c73c239ef852999f0ea1abaa4d2e400d8b",
+      "ok": true,
+      "protobuf": "080111000000000000000018002100000000000000002800",
+      "value": {
+        "autonomous_helper_per_day": 0,
+        "min_interval_s": 0.0,
+        "quiet_day_factor": 0.0,
+        "schema_version": 1,
+        "speak_per_hour": 0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "min_interval_s": 0.0,
+        "speak_per_hour": 4294967295,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 4294967295
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e70726f61637469766974792d627564676574730000000000000000ffffffff0000000000000000ffffffff",
+      "digest": "3fc0b5846a7d31e65672a63f8c9295f760cab221a2ed261aa46818383eb0d1f0",
+      "ok": true,
+      "protobuf": "080111000000000000000018ffffffff0f21000000000000000028ffffffff0f",
+      "value": {
+        "autonomous_helper_per_day": 4294967295,
+        "min_interval_s": 0.0,
+        "quiet_day_factor": 0.0,
+        "schema_version": 1,
+        "speak_per_hour": 4294967295
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "min_interval_s": 2.5,
+        "speak_per_hour": 17,
+        "quiet_day_factor": 1.0,
+        "autonomous_helper_per_day": 17
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000000044011000000000000000000f03f11000000",
+      "digest": "d4132270c2c3873bfbfd16234aff32e6c6e5ae37c00bfce43e215bfba18d72b7",
+      "ok": true,
+      "protobuf": "0801110000000000000440181121000000000000f03f2811",
+      "value": {
+        "autonomous_helper_per_day": 17,
+        "min_interval_s": 2.5,
+        "quiet_day_factor": 1.0,
+        "schema_version": 1,
+        "speak_per_hour": 17
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "allowed_kinds": [],
+        "cooldowns": [],
+        "gates": [],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 0,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e6461726965730200000041300000000000000000000000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000000000000000000000000000000000000000000",
+      "digest": "420bdd9cf663f559bbdd4bf0c7ea9c9e437645b061260fba12ab096f74ae9aee",
+      "ok": true,
+      "protobuf": "0801120241303218080111000000000000000018002100000000000000002800",
+      "value": {
+        "allowed_kinds": [],
+        "budgets": {
+          "autonomous_helper_per_day": 0,
+          "min_interval_s": 0.0,
+          "quiet_day_factor": 0.0,
+          "schema_version": 1,
+          "speak_per_hour": 0
+        },
+        "cooldowns": [],
+        "gates": [],
+        "schema_version": 1,
+        "version": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "中文🙂1",
+        "allowed_kinds": [
+          2
+        ],
+        "cooldowns": [
+          {
+            "schema_version": 1,
+            "kind": "中文🙂1",
+            "seconds": 0.0
+          }
+        ],
+        "gates": [
+          2
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 4294967295,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 4294967295
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e6461726965730b000000e4b8ade69687f09f9982310100000002000000010000003c0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0b000000e4b8ade69687f09f998231000000000000000001000000020000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d627564676574730000000000000000ffffffff0000000000000000ffffffff",
+      "digest": "7dd4e01640ebfca2941bddf173abe9311845f357bae53d5e169aec1eed7ad778",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f998231180222180801120be4b8ade69687f09f99823119000000000000000028023220080111000000000000000018ffffffff0f21000000000000000028ffffffff0f",
+      "value": {
+        "allowed_kinds": [
+          2
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 4294967295,
+          "min_interval_s": 0.0,
+          "quiet_day_factor": 0.0,
+          "schema_version": 1,
+          "speak_per_hour": 4294967295
+        },
+        "cooldowns": [
+          {
+            "kind": "中文🙂1",
+            "schema_version": 1,
+            "seconds": 0.0
+          }
+        ],
+        "gates": [
+          2
+        ],
+        "schema_version": 1,
+        "version": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "﻿zero\u00002",
+        "allowed_kinds": [
+          3,
+          4
+        ],
+        "cooldowns": [
+          {
+            "schema_version": 1,
+            "kind": "﻿zero\u00002",
+            "seconds": 2.5
+          },
+          {
+            "schema_version": 1,
+            "kind": "A3",
+            "seconds": 0.0
+          }
+        ],
+        "gates": [
+          3,
+          4
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 2.5,
+          "speak_per_hour": 17,
+          "quiet_day_factor": 1.0,
+          "autonomous_helper_per_day": 17
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e64617269657309000000efbbbf7a65726f003202000000030000000400000002000000330000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e02000000413300000000000000003a0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e09000000efbbbf7a65726f003200000000000004400200000003000000040000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000000044011000000000000000000f03f11000000",
+      "digest": "090186de954672d6f23456fbcd852e954feafd569a635392fb826f63daa37446",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003218031804220f080112024133190000000000000000221608011209efbbbf7a65726f00321900000000000004402803280432180801110000000000000440181121000000000000f03f2811",
+      "value": {
+        "allowed_kinds": [
+          3,
+          4
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 17,
+          "min_interval_s": 2.5,
+          "quiet_day_factor": 1.0,
+          "schema_version": 1,
+          "speak_per_hour": 17
+        },
+        "cooldowns": [
+          {
+            "kind": "A3",
+            "schema_version": 1,
+            "seconds": 0.0
+          },
+          {
+            "kind": "﻿zero\u00002",
+            "schema_version": 1,
+            "seconds": 2.5
+          }
+        ],
+        "gates": [
+          3,
+          4
+        ],
+        "schema_version": 1,
+        "version": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "2",
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "cooldowns": [],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 180.0,
+          "speak_per_hour": 2,
+          "quiet_day_factor": 0.5,
+          "autonomous_helper_per_day": 30
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e646172696573010000003209000000010000000200000003000000040000000500000006000000070000000800000009000000000000000500000001000000020000000300000004000000050000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000080664002000000000000000000e03f1e000000",
+      "digest": "d6dc023aaa6fad6d5cb9dff5fbf7513e4486f2bbb4fa841d6cde18562683748d",
+      "ok": true,
+      "protobuf": "08011201321801180218031804180518061807180818092801280228032804280532180801110000000000806640180221000000000000e03f281e",
+      "value": {
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 30,
+          "min_interval_s": 180.0,
+          "quiet_day_factor": 0.5,
+          "schema_version": 1,
+          "speak_per_hour": 2
+        },
+        "cooldowns": [],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "schema_version": 1,
+        "version": "2"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "2",
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "cooldowns": [
+          {
+            "schema_version": 1,
+            "kind": "__proto__",
+            "seconds": 17.0
+          }
+        ],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 180.0,
+          "speak_per_hour": 2,
+          "quiet_day_factor": 0.5,
+          "autonomous_helper_per_day": 30
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e646172696573010000003209000000010000000200000003000000040000000500000006000000070000000800000009000000010000003a0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e090000005f5f70726f746f5f5f00000000000031400500000001000000020000000300000004000000050000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000080664002000000000000000000e03f1e000000",
+      "digest": "b46fb3719dc49a58bde3f243c19f116ab294bf5a495f9d76fe5e446c5cec431d",
+      "ok": true,
+      "protobuf": "08011201321801180218031804180518061807180818092216080112095f5f70726f746f5f5f1900000000000031402801280228032804280532180801110000000000806640180221000000000000e03f281e",
+      "value": {
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 30,
+          "min_interval_s": 180.0,
+          "quiet_day_factor": 0.5,
+          "schema_version": 1,
+          "speak_per_hour": 2
+        },
+        "cooldowns": [
+          {
+            "kind": "__proto__",
+            "schema_version": 1,
+            "seconds": 17.0
+          }
+        ],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "schema_version": 1,
+        "version": "2"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "2",
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "cooldowns": [
+          {
+            "schema_version": 1,
+            "kind": "__proto__",
+            "seconds": 17.0
+          },
+          {
+            "schema_version": 1,
+            "kind": "constructor",
+            "seconds": 0.0
+          },
+          {
+            "schema_version": 1,
+            "kind": "prototype",
+            "seconds": 2.5
+          },
+          {
+            "schema_version": 1,
+            "kind": "toString",
+            "seconds": 3.0
+          },
+          {
+            "schema_version": 1,
+            "kind": "冷却",
+            "seconds": 4.0
+          }
+        ],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 180.0,
+          "speak_per_hour": 2,
+          "quiet_day_factor": 0.5,
+          "autonomous_helper_per_day": 30
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e70726f61637469766974792d626f756e64617269657301000000320900000001000000020000000300000004000000050000000600000007000000080000000900000005000000370000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e06000000e586b7e58db40000000000001040390000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e08000000746f537472696e6700000000000008403a0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e090000005f5f70726f746f5f5f00000000000031403a0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0900000070726f746f7479706500000000000004403c0000004e43563101000000190000006563686f2e70726f61637469766974792d636f6f6c646f776e0b000000636f6e7374727563746f7200000000000000000500000001000000020000000300000004000000050000003c0000004e43563101000000180000006563686f2e70726f61637469766974792d62756467657473000000000080664002000000000000000000e03f1e000000",
+      "digest": "9880ce00dc61e0cdafc97c9c39e619871443f6e108616de33bec2063ac2294c6",
+      "ok": true,
+      "protobuf": "0801120132180118021803180418051806180718081809221308011206e586b7e58db4190000000000001040221508011208746f537472696e671900000000000008402216080112095f5f70726f746f5f5f19000000000000314022160801120970726f746f7479706519000000000000044022180801120b636f6e7374727563746f721900000000000000002801280228032804280532180801110000000000806640180221000000000000e03f281e",
+      "value": {
+        "allowed_kinds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "budgets": {
+          "autonomous_helper_per_day": 30,
+          "min_interval_s": 180.0,
+          "quiet_day_factor": 0.5,
+          "schema_version": 1,
+          "speak_per_hour": 2
+        },
+        "cooldowns": [
+          {
+            "kind": "冷却",
+            "schema_version": 1,
+            "seconds": 4.0
+          },
+          {
+            "kind": "toString",
+            "schema_version": 1,
+            "seconds": 3.0
+          },
+          {
+            "kind": "__proto__",
+            "schema_version": 1,
+            "seconds": 17.0
+          },
+          {
+            "kind": "prototype",
+            "schema_version": 1,
+            "seconds": 2.5
+          },
+          {
+            "kind": "constructor",
+            "schema_version": 1,
+            "seconds": 0.0
+          }
+        ],
+        "gates": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "schema_version": 1,
+        "version": "2"
+      }
+    }
   }
 ]
