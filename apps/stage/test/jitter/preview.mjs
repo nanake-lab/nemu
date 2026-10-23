@@ -1,4 +1,5 @@
 import { ReviewApp } from '../../src/review/review-app.ts';
+import { IdlePreview } from './idle-preview.mjs';
 const data = await (await fetch('/p205/data')).json();
 const canvas = document.getElementById('review-canvas');
 const app = new ReviewApp(canvas, document.getElementById('viewport-container'));
@@ -12,6 +13,10 @@ let parameters = structuredClone(data.presets.standard);
 let playing = false;
 let black = false;
 let animationId;
+const idle = new IdlePreview(vrm, app.currentProfile);
+const idleToggle = document.getElementById('idle');
+const turnToggle = document.getElementById('slow-turn');
+window.__p205Idle = idle;
 const status = document.getElementById('status');
 function category(name) {
   if (name.startsWith('NemuTail')) return 'tail';
@@ -24,15 +29,12 @@ function render() { app.render(); }
 function reset() {
   playing = false;
   cancelAnimationFrame(animationId);
-  vrm.humanoid.resetNormalizedPose();
-  vrm.humanoid.getNormalizedBoneNode('leftUpperArm').rotation.z = -1.05;
-  vrm.humanoid.getNormalizedBoneNode('rightUpperArm').rotation.z = 1.05;
-  vrm.humanoid.update();
-  vrm.scene.updateMatrixWorld(true);
-  vrm.springBoneManager.reset();
+  idleToggle.checked = false;
+  idle.reset();
   render();
 }
 function apply() {
+  const resumeIdle = idleToggle.checked;
   for (const joint of vrm.springBoneManager.joints) {
     const kind = category(joint.bone.name);
     if (!kind) continue;
@@ -44,7 +46,39 @@ function apply() {
     joint.settings.gravityDir.set(p.gravityDir[0], p.gravityDir[2], -p.gravityDir[1]);
   }
   reset();
+  if (resumeIdle) startIdle();
 }
+function startIdle() {
+  reset();
+  idleToggle.checked = true;
+  playing = true;
+  let previous = performance.now();
+  function frame(now) {
+    if (!playing) return;
+    const dt = Math.min((now - previous) / 1000, 1 / 30);
+    previous = now;
+    idle.step(dt, turnToggle.checked);
+    render();
+    status.textContent = `日常待机 ${idle.elapsed.toFixed(1)} 秒${turnToggle.checked ? ' · 缓慢转身' : ''}；可直接切换弹簧预设。`;
+    animationId = requestAnimationFrame(frame);
+  }
+  animationId = requestAnimationFrame(frame);
+}
+idleToggle.onchange = () => {
+  if (idleToggle.checked) startIdle();
+  else { reset(); status.textContent = '待机已关闭，已归零。'; }
+};
+canvas.addEventListener('pointermove', (event) => {
+  const rect = canvas.getBoundingClientRect();
+  idle.gaze = {
+    x: Math.max(-1, Math.min(1, (event.clientX - rect.left) / rect.width * 2 - 1)),
+    y: Math.max(-1, Math.min(1, 1 - (event.clientY - rect.top) / rect.height * 2)),
+  };
+});
+canvas.addEventListener('pointerleave', () => { idle.gaze = { x: 0, y: 0 }; });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { reset(); status.textContent = '页面已隐藏，播放已停止。'; }
+});
 function controls() {
   const parent = document.getElementById('parameters');
   parent.replaceChildren();
@@ -66,7 +100,6 @@ for (const button of document.querySelectorAll('[data-view]')) button.onclick = 
 document.getElementById('background').onclick = () => { black = !black; app.renderer.renderer.setClearColor(black ? 0x0a0b0e : 0xffffff, 1); render(); };
 document.getElementById('stop').onclick = () => { reset(); status.textContent = '已停止并归零。'; };
 document.getElementById('play').onclick = () => {
-  if (playing) return;
   reset(); playing = true;
   const hips = vrm.humanoid.getNormalizedBoneNode('hips');
   const origin = hips.position.clone();
