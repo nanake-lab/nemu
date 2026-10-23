@@ -169,7 +169,13 @@ fn adr0019_python_events_review_and_side_tapes_match_g_phase_machine() {
             values.insert(
                 competitor.clone(),
                 Values {
-                    support: competitor_support,
+                    // Python Engine._revise calls finite() on this input;
+                    // unlike _append, it stores normalized positive zero.
+                    support: if competitor_support == 0.0 {
+                        0.0
+                    } else {
+                        competitor_support
+                    },
                     intensity,
                     mu: 0.0,
                     projection: None,

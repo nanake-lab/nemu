@@ -84,7 +84,11 @@ pub(super) fn check_world(f: &Fixture, w: &World) {
             f.ctx().caretaker,
         )
         .unwrap();
-        assert_eq!(&again, t, "replay identity for {}", t.tendency_id.as_str());
+        assert!(
+            super::state_bits::tendency_bits_eq(&again, t),
+            "replay identity for {}",
+            t.tendency_id.as_str()
+        );
     }
     for g in &groups {
         for side in [1.0f64, -1.0] {

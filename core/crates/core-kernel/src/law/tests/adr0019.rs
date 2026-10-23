@@ -195,34 +195,37 @@ fn zero_and_tiny_opposite_backfills_do_not_touch_the_other_side() {
 
 #[test]
 fn late_insertion_fault_discards_candidates_revisions_and_earlier_additions() {
-    let mut f = Fixture::new(20);
-    f.law.w_max = 1.;
-    let mut w = World::new(&f);
-    let old = experience("old", 1, &["e1"], &[[0., 0.6, 0., 0.]], vec![on("a", 1.)]);
-    w.apply(&f, &event(vec![candidate("a", "ca")], vec![old.clone()]))
-        .unwrap();
-    let before = w.clone();
-    let mut back = old;
-    if let GroupContent::Experience { matches, .. } = &mut back.content {
-        matches.push(on("z", 1.));
-    }
-    let tiny = experience(
-        "tiny",
-        2,
-        &["e2"],
-        &[[0., 0.6, 0., 0.]],
-        vec![on("a", f64::from_bits(1)), on("z", f64::from_bits(1))],
-    );
-    // W times S, after the nonzero dyadic share, is below the subnormal range.
-    let result = w.apply(&f, &event(vec![candidate("z", "cz")], vec![back, tiny]));
-    assert!(matches!(
-        result,
-        Err(LawError::NumericFault("UnderflowEvidence"))
-    ));
-    assert!(super::state_bits::snapshot_bits_eq(&w.r, &before.r));
-    assert_eq!(w.groups.len(), before.groups.len());
-    for (id, group) in &w.groups {
-        assert!(super::state_bits::group_bits_eq(group, &before.groups[id]));
+    for (cap, expected) in [(1., "PrecisionExhaustedLP1"), (0.25, "UnderflowEvidence")] {
+        let mut f = Fixture::new(20);
+        f.law.w_max = cap;
+        let mut w = World::new(&f);
+        let old = experience("old", 1, &["e1"], &[[0., 0.6, 0., 0.]], vec![on("a", 1.)]);
+        w.apply(&f, &event(vec![candidate("a", "ca")], vec![old.clone()]))
+            .unwrap();
+        let before = w.clone();
+        let mut back = old;
+        if let GroupContent::Experience { matches, .. } = &mut back.content {
+            matches.push(on("z", 1.));
+        }
+        let tiny = experience(
+            "tiny",
+            2,
+            &["e2"],
+            &[[0., 0.6, 0., 0.]],
+            vec![on("a", f64::from_bits(1)), on("z", f64::from_bits(1))],
+        );
+        // At cap=1 the first signal survives but cannot move pi. At cap=.25
+        // W*S itself underflows. Both faults occur AFTER revision and backfill.
+        let result = w.apply(&f, &event(vec![candidate("z", "cz")], vec![back, tiny]));
+        assert!(
+            matches!(&result, Err(LawError::NumericFault(code)) if *code == expected),
+            "late insertion returned {result:?}, expected {expected}"
+        );
+        assert!(super::state_bits::snapshot_bits_eq(&w.r, &before.r));
+        assert_eq!(w.groups.len(), before.groups.len());
+        for (id, group) in &w.groups {
+            assert!(super::state_bits::group_bits_eq(group, &before.groups[id]));
+        }
     }
 }
 

@@ -298,5 +298,8 @@ fn law_7_recurrence_is_canonical() {
     assert!(max_rel < 1e-12);
     // A_k follows the same operations as the script's `a`, so the closed form
     // differs in exactly the same trials.
-    assert!(closed_differs > 0);
+    assert_eq!(
+        closed_differs, 488,
+        "same trials as ADR 0019 Python reference"
+    );
 }
