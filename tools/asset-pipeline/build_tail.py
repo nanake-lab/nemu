@@ -13,6 +13,7 @@ from mathutils import Vector
 from blender_common import Json, armature, require_material, resolve_bone, run
 from errors import fail
 from geometry import chain_points, radius_at, weights_at
+from tail.material import configure_generated_tail
 
 
 def execute(config: Json, args: argparse.Namespace) -> None:
@@ -101,6 +102,7 @@ def execute(config: Json, args: argparse.Namespace) -> None:
     material.vrm_addon_extension.mtoon1.pbr_metallic_roughness.base_color_factor = cfg["color"]
     mesh.materials.append(material)
     arm["nemu_tail_bones"] = names
+    configure_generated_tail(config)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,24 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
+    0,
+    -1,
++   -0
+-   0
+  ]
+
+    at file:///D:/Dev/nemu-p205/apps/stage/test/jitter/measure-selected-c.mjs:26:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [ 0, -1, -0 ],
+  expected: [ 0, -1, 0 ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

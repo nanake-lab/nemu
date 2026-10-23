@@ -100,3 +100,5 @@ jobs:
       - name: W19 optional CPU runtime compile checks (no model download)
         working-directory: core
         run: cargo clippy -p fact-view --all-targets --features cpu-embedding --locked -- -D warnings
+      - name: P2-05 residual signal metrics (no browser or private assets)
+        run: pnpm test:p205:metrics

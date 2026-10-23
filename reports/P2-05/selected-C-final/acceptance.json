@@ -1,0 +1,156 @@
+{
+  "scope": "P2-05 selected C, user instruction 2026-10-23 and merged PR #67 (382c0e730c433f02b3fef24acb9a88f88c54e71a)",
+  "verdict": "The requested fixed-input non-divergence and non-sustained-high-frequency settling checks pass on this one exported C run.",
+  "a14a15Errors": 0,
+  "completePipelineRawExit": 1,
+  "remainingErrorsOwnedBy": "P2-06 A1.3",
+  "runs": 1,
+  "measurementModelSha256": "55d01adb03209706493d15c328bfd174c2b9d37d7c8292eeee493844a3497d6e",
+  "divergence": {
+    "observed": false,
+    "allJointsFinite": true,
+    "joints": 171,
+    "endpointMaximumMatchedSecondThirdCycleBinDifference": 3.375077994860476e-14,
+    "note": "All per-joint one-second series and local-angular spikes retained; stable forced-cycle repetition plus decay, not merely a monotonicity test."
+  },
+  "settling": {
+    "sustainedPhysicalHighFrequencyObserved": false,
+    "regions": {
+      "hair": {
+        "count": 96,
+        "full5sEndpointPeakToPeakM": 0.5929186441024946,
+        "full5sPeakBone": "J_Sec_Hair7_15",
+        "full5sPeakBoneDominantHz": 0.2,
+        "final1sEndpointPeakToPeakM": 0.00024569537269051916,
+        "final1sPeakBone": "J_Sec_Hair5_19",
+        "final1sPeakBoneDominantHz": 1,
+        "maxFinal1sDirectionPeakToPeakDeg": 0.13297779127837686,
+        "maxFinal1sEndpointSpeedRms": 0.0003422012887544562,
+        "maxFinal1sLocalAngularSpeedRms": 0.005142657321652087,
+        "maxFinal1sEndpointAbove15HzWindowedRmsM": 2.0042943516465248e-08,
+        "maxSecondThirdCycleEndpointRmsDifference": 1.8207657603852567e-14,
+        "monotonicallyIncreasingEndpointJoints": [],
+        "maximumEndpointIncreasingRunSeconds": 4,
+        "maxRotationPeak": {
+          "bone": "J_Sec_Hair2_06",
+          "part": "hair",
+          "maximumFrameDegrees": 122.95365116615417,
+          "frame": 2664,
+          "timeSeconds": 22.2
+        }
+      },
+      "ear": {
+        "count": 4,
+        "full5sEndpointPeakToPeakM": 0.056455845904850276,
+        "full5sPeakBone": "J_Sec_Hair2_24",
+        "full5sPeakBoneDominantHz": 0.2,
+        "final1sEndpointPeakToPeakM": 2.6766507790745728e-16,
+        "final1sPeakBone": "J_Sec_Hair2_23",
+        "final1sPeakBoneDominantHz": 48,
+        "maxFinal1sDirectionPeakToPeakDeg": 1.2314706146300837e-13,
+        "maxFinal1sEndpointSpeedRms": 1.8401758245937843e-14,
+        "maxFinal1sLocalAngularSpeedRms": 5.767696699359704e-13,
+        "maxFinal1sEndpointAbove15HzWindowedRmsM": 9.646061442310351e-17,
+        "maxSecondThirdCycleEndpointRmsDifference": 8.215650382226158e-15,
+        "monotonicallyIncreasingEndpointJoints": [],
+        "maximumEndpointIncreasingRunSeconds": 3,
+        "maxRotationPeak": {
+          "bone": "J_Sec_Hair1_24",
+          "part": "ear",
+          "maximumFrameDegrees": 9.738747115009579,
+          "frame": 1,
+          "timeSeconds": 0.008333333333333333
+        }
+      },
+      "tail": {
+        "count": 11,
+        "full5sEndpointPeakToPeakM": 0.5813279777400496,
+        "full5sPeakBone": "NemuTail10",
+        "full5sPeakBoneDominantHz": 0.2,
+        "final1sEndpointPeakToPeakM": 0,
+        "final1sPeakBone": "NemuTail00",
+        "final1sPeakBoneDominantHz": null,
+        "maxFinal1sDirectionPeakToPeakDeg": 0,
+        "maxFinal1sEndpointSpeedRms": 0,
+        "maxFinal1sLocalAngularSpeedRms": 0,
+        "maxFinal1sEndpointAbove15HzWindowedRmsM": 0,
+        "maxSecondThirdCycleEndpointRmsDifference": 3.375077994860476e-14,
+        "monotonicallyIncreasingEndpointJoints": [],
+        "maximumEndpointIncreasingRunSeconds": 3,
+        "maxRotationPeak": {
+          "bone": "NemuTail04",
+          "part": "tail",
+          "maximumFrameDegrees": 32.04218755372313,
+          "frame": 456,
+          "timeSeconds": 3.8
+        }
+      },
+      "skirt": {
+        "count": 56,
+        "full5sEndpointPeakToPeakM": 0.10546427805635222,
+        "full5sPeakBone": "J_Sec_L_CoatSkirtBack_end_01",
+        "full5sPeakBoneDominantHz": 0.2,
+        "final1sEndpointPeakToPeakM": 2.7755575615628914e-17,
+        "final1sPeakBone": "J_Sec_L_CoatSkirtBack_01",
+        "final1sPeakBoneDominantHz": 60,
+        "maxFinal1sDirectionPeakToPeakDeg": 3.2799470152592518e-15,
+        "maxFinal1sEndpointSpeedRms": 3.3306690738754696e-15,
+        "maxFinal1sLocalAngularSpeedRms": 2.3315253464942385e-14,
+        "maxFinal1sEndpointAbove15HzWindowedRmsM": 1.3877787807496797e-17,
+        "maxSecondThirdCycleEndpointRmsDifference": 1.2434497875801753e-14,
+        "monotonicallyIncreasingEndpointJoints": [],
+        "maximumEndpointIncreasingRunSeconds": 4,
+        "maxRotationPeak": {
+          "bone": "J_Sec_R_CoatSkirtFront_end_01",
+          "part": "skirt",
+          "maximumFrameDegrees": 12.143555830374293,
+          "frame": 2444,
+          "timeSeconds": 20.366666666666667
+        }
+      },
+      "other": {
+        "count": 4,
+        "full5sEndpointPeakToPeakM": 0.1073812884578258,
+        "full5sPeakBone": "J_Sec_L_Bust2",
+        "full5sPeakBoneDominantHz": 0.2,
+        "final1sEndpointPeakToPeakM": 2.815139273314739e-15,
+        "final1sPeakBone": "J_Sec_R_Bust2",
+        "final1sPeakBoneDominantHz": 5,
+        "maxFinal1sDirectionPeakToPeakDeg": 2.3029725276212458e-12,
+        "maxFinal1sEndpointSpeedRms": 2.0139534410903145e-14,
+        "maxFinal1sLocalAngularSpeedRms": 5.521002728641595e-13,
+        "maxFinal1sEndpointAbove15HzWindowedRmsM": 2.971628291698404e-17,
+        "maxSecondThirdCycleEndpointRmsDifference": 1.1546319456101628e-14,
+        "monotonicallyIncreasingEndpointJoints": [],
+        "maximumEndpointIncreasingRunSeconds": 3,
+        "maxRotationPeak": {
+          "bone": "J_Sec_L_Bust2",
+          "part": "other",
+          "maximumFrameDegrees": 36.50840651527868,
+          "frame": 0,
+          "timeSeconds": 0
+        }
+      }
+    },
+    "note": "Amplitudes and DFT bins interpreted jointly. 15 Hz is a reporting band only; floating-point-scale peaks are not called physical vibration. Full 5 s transient and final 1 s separately reported."
+  },
+  "singleFrameRotation": {
+    "excludedFromP205VerdictByUser": true,
+    "assignedTo": "P3-01 L4",
+    "request": "tasks/requests/P2-05-spring-runtime-stability.md",
+    "peak": {
+      "bone": "J_Sec_Hair2_06",
+      "part": "hair",
+      "maximumFrameDegrees": 122.95365116615417,
+      "frame": 2664,
+      "timeSeconds": 22.2
+    },
+    "rawPreserved": true
+  },
+  "limitations": [
+    "No browser/renderer/OS mouse path was exercised.",
+    "No new amplitude/frequency pass threshold was introduced.",
+    "No runtime fix or spring-parameter change was applied.",
+    "PR #67 merged during closeout; merged into the task branch and static/unit/build checks rerun. Physics code/parameters unchanged; the single C measurement was not repeated."
+  ]
+}

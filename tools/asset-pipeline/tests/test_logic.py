@@ -117,3 +117,35 @@ def test_palette_and_despeckle_preserve_alpha() -> None:
     pixels[4] = (0, 0, 255, 128)
     assert despeckle(pixels, 3, 3, 6)[4] == (255, 0, 0, 128)
     assert pixels[4] == (0, 0, 255, 128)
+
+
+@pytest.mark.parametrize("public", [None, "", "LICENSE.md", "https://vrm.dev/licenses/1.0"])
+def test_export_rejects_wrong_public_license(public: str | None) -> None:
+    from export_vrm import validate_export_metadata
+    with pytest.raises(BuildError, match="meta.licenseUrl"):
+        validate_export_metadata({"licenseUrl": public, "otherLicenseUrl": "LICENSE.md"}, "LICENSE.md")
+
+
+@pytest.mark.parametrize("content", [None, "", " ", "wrong.md"])
+def test_export_rejects_missing_or_mismatched_content_license(content: str | None) -> None:
+    from export_vrm import validate_export_metadata
+    with pytest.raises(BuildError, match="meta.otherLicenseUrl"):
+        validate_export_metadata({"licenseUrl": "https://vrm.dev/licenses/1.0/", "otherLicenseUrl": content}, "LICENSE.md")
+
+
+def test_export_accepts_distinct_content_license_and_rejects_empty_config() -> None:
+    from export_vrm import validate_export_metadata
+    metadata = {"licenseUrl": "https://vrm.dev/licenses/1.0/", "otherLicenseUrl": "LICENSE.md"}
+    validate_export_metadata(metadata, "LICENSE.md")
+    with pytest.raises(BuildError, match="meta.otherLicenseUrl"):
+        validate_export_metadata({**metadata, "otherLicenseUrl": " "}, " ")
+
+
+def test_example_requires_content_license(tmp_path: Path) -> None:
+    cfg = load_config(BASE / "build.example.yaml")
+    assert cfg["meta"]["contentLicenseUrl"] == "LICENSE.md"
+    cfg["meta"]["contentLicenseUrl"] = ""
+    path = tmp_path / "empty-license.yaml"
+    path.write_text(json.dumps(cfg), encoding="utf-8")
+    with pytest.raises(BuildError, match="contentLicenseUrl"):
+        load_config(path)
