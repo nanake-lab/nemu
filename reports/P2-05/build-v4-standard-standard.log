@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "D:\Dev\nemu-p205\tools\asset-pipeline\tail\run_candidate.py", line 16, in <module>
+    pipeline.main()
+  File "D:\Dev\nemu-p205\tools\asset-pipeline\pipeline.py", line 60, in main
+    config = load_config(args.config.resolve())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu-p205\tools\asset-pipeline\config.py", line 56, in load_config
+    fail("config", ".".join(map(str, errors[0].absolute_path)) or "build", "build.schema.json", errors[0].message)
+  File "D:\Dev\nemu-p205\tools\asset-pipeline\errors.py", line 9, in fail
+    raise BuildError(f"step={step} object={obj} expected={expected} actual={actual}")
+errors.BuildError: step=config object=materials.NemuTailCandidateMaterial.mtoon expected=build.schema.json actual='shading_shift_factor' is a required property

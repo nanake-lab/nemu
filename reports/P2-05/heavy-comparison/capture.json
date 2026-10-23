@@ -1,0 +1,64 @@
+{
+  "fps": 30,
+  "duration": 24,
+  "viewport": [
+    1920,
+    1080
+  ],
+  "renderers": [
+    {
+      "id": "calm",
+      "counts": {
+        "hair": 96,
+        "ear": 4,
+        "tail": 11,
+        "skirt": 56
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "id": "heavyBalanced",
+      "counts": {
+        "hair": 96,
+        "ear": 4,
+        "tail": 11,
+        "skirt": 56
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "id": "heavyDamped",
+      "counts": {
+        "hair": 96,
+        "ear": 4,
+        "tail": 11,
+        "skirt": 56
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3080 (0x00002206) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ],
+  "frames": 720,
+  "warmupSeconds": 4,
+  "physicsHz": 120,
+  "phases": {
+    "idle": [
+      0,
+      4
+    ],
+    "turn": [
+      4,
+      12
+    ],
+    "drag": [
+      12,
+      15
+    ],
+    "settle": [
+      15,
+      24
+    ]
+  },
+  "sha256": "89b0a6d678a3d0b0c46a5087f31baf8a9ede110aab8f97af3d7798662dc50ae4",
+  "errors": [],
+  "limitation": "Candidate comparison only; no explicit mass/delay parameter, no jitter acceptance or aesthetic approval."
+}

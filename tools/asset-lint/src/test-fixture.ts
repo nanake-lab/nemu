@@ -164,7 +164,7 @@ export async function createFixture(directory: string, options: FixtureOptions =
     extensions: {
       VRMC_vrm: {
         specVersion: '1.0',
-        meta: { name: 'Nemu', authors: ['Nemu Team'], licenseUrl: '../LICENSE.md' },
+        meta: { name: 'Nemu', authors: ['Nemu Team'], licenseUrl: 'https://vrm.dev/licenses/1.0/', otherLicenseUrl: 'LICENSE.md' },
         humanoid: { humanBones: humanBoneMap },
         expressions: { preset, custom },
         lookAt: { type: 'bone', rangeMapHorizontalInner: { inputMaxValue: 90, outputScale: 1 } },

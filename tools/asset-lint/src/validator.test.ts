@@ -246,3 +246,30 @@ test('CLI --json emits parseable JSON for a valid model', async (t) => {
   const result: unknown = JSON.parse(child.stdout);
   assert.equal((result as { errors: number }).errors, 0);
 });
+
+
+for (const licenseUrl of [undefined, '', 'LICENSE.md', 'https://vrm.dev/licenses/1.0']) {
+  test(`rejects invalid VRM public license URL: ${String(licenseUrl)}`, async (t) => {
+    const fixture = await withFixture('public-license', { mutate: (json) => {
+      const ext = json.extensions as Record<string, Record<string, unknown>>;
+      const meta = ext.VRMC_vrm!.meta as Record<string, unknown>;
+      if (licenseUrl === undefined) delete meta.licenseUrl;
+      else meta.licenseUrl = licenseUrl;
+    } });
+    t.after(() => rm(fixture.directory, { recursive: true, force: true }));
+    assert.deepEqual(fixture.result.diagnostics.filter((item) => item.severity === 'error').map((item) => item.rule), ['A1.5-vrm-license-url']);
+  });
+}
+
+for (const otherLicenseUrl of [undefined, '', '   ', 42]) {
+  test(`rejects missing content license: ${String(otherLicenseUrl)}`, async (t) => {
+    const fixture = await withFixture('content-license', { mutate: (json) => {
+      const ext = json.extensions as Record<string, Record<string, unknown>>;
+      const meta = ext.VRMC_vrm!.meta as Record<string, unknown>;
+      if (otherLicenseUrl === undefined) delete meta.otherLicenseUrl;
+      else meta.otherLicenseUrl = otherLicenseUrl;
+    } });
+    t.after(() => rm(fixture.directory, { recursive: true, force: true }));
+    assert.deepEqual(fixture.result.diagnostics.filter((item) => item.severity === 'error').map((item) => item.rule), ['A1.5-vrm-content-license']);
+  });
+}

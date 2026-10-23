@@ -1,0 +1,126 @@
+{
+  "loaded": {
+    "metaVersion": "1",
+    "name": "Nemu",
+    "authors": [
+      "nanake"
+    ],
+    "licenseUrl": "https://vrm.dev/licenses/1.0/",
+    "avatarPermission": "onlySeparatelyLicensedPerson",
+    "allowExcessivelyViolentUsage": false,
+    "allowExcessivelySexualUsage": false,
+    "commercialUsage": "personalNonProfit",
+    "allowPoliticalOrReligiousUsage": false,
+    "allowAntisocialOrHateUsage": false,
+    "creditNotation": "required",
+    "allowRedistribution": false,
+    "modification": "allowModification"
+  },
+  "profile": {
+    "version": 2,
+    "model": "sample.vrm",
+    "heightM": 1.5842378516542999,
+    "headTopOffsetM": 0.29106894110894443,
+    "hitRegions": [
+      {
+        "id": "head",
+        "bone": "head",
+        "shape": "sphere",
+        "radiusM": 0.15,
+        "offsetM": [
+          0,
+          0.05,
+          0
+        ]
+      },
+      {
+        "id": "body",
+        "bone": "spine",
+        "shape": "capsule",
+        "radiusM": 0.18,
+        "lengthM": 0.35,
+        "offsetM": [
+          0,
+          0.1,
+          0
+        ]
+      },
+      {
+        "id": "handL",
+        "bone": "leftHand",
+        "shape": "sphere",
+        "radiusM": 0.08
+      },
+      {
+        "id": "handR",
+        "bone": "rightHand",
+        "shape": "sphere",
+        "radiusM": 0.08
+      }
+    ],
+    "gazeLimits": {
+      "yawDeg": 45,
+      "pitchUpDeg": 25,
+      "pitchDownDeg": 30
+    },
+    "framing": {
+      "fullBody": {
+        "fovDeg": 20,
+        "distanceM": 3.8,
+        "targetBone": "hips",
+        "offsetM": [
+          0,
+          0.1,
+          0
+        ]
+      },
+      "upperBody": {
+        "fovDeg": 20,
+        "distanceM": 1.6,
+        "targetBone": "chest",
+        "offsetM": [
+          0,
+          0.1,
+          0
+        ]
+      }
+    },
+    "rig": {
+      "earBonesL": [],
+      "earBonesR": [],
+      "tailBones": [],
+      "earBackMaxDeg": 30,
+      "tailSwingDeg": [
+        -20,
+        20
+      ]
+    },
+    "emotionMap": {
+      "neutral": [],
+      "happy": [],
+      "angry": [],
+      "sad": [],
+      "relaxed": [],
+      "surprised": [],
+      "smug": [],
+      "shy": [],
+      "sleepy": [],
+      "pout": [],
+      "excited": [],
+      "worried": []
+    },
+    "visemeMap": {
+      "A": "aa",
+      "I": "ih",
+      "U": "ou",
+      "E": "ee",
+      "O": "oh"
+    },
+    "lipSyncProfiles": {
+      "zh": "lipsync/zh.json",
+      "en": "lipsync/en.json",
+      "ja": "lipsync/ja.json"
+    },
+    "idleSet": []
+  }
+}
