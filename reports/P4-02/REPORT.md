@@ -191,3 +191,37 @@ Trace 的引擎时钟从参考 prompt 准备完成后开始，开发表是热 pr
 受测提交 1beae189796ba8439cf07af954c898179021fb27 的 [Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/39620971993) 已成功，完整状态见 CI-ubuntu-optimization.json，包含 TS/Python/Rust/.NET/契约检查。同提交 [Windows CI](https://github.com/nanake-lab/nemu/actions/runs/39620971933) 因草稿规则跳过，未冒充通过；本机合并后的原样 e2e 已通过。此后仅追加分段分析、检查归档和报告，未改变受测实现。
 
 优化执行后，Qwen/SoX/音频库的既有静态源码摘要仍与此前一致，见 optimization-third-party-source-audit.json；未修改第三方源码或打包/调用 SoX 程序。LGPL 的 P7 分发复核义务继续保留。
+
+## 2026-10-23 优化后正式重测（未完成，保留失败）
+
+使用同一 P0-07 RTX 3080 carrier、真实渲染负载、固定 VoiceDesign 合成参考，启用 CUDA graph、异步 decode 和 2 帧首块。每种变体使用新 Python 进程，未回退。三语各 20 句及每语 5 次真实 WebSocket 取消都完成；压力运行未达到批准的两小时结束点，因此不得视为压力验收通过。
+
+| 变体 | 三语首包 p50（中/英/日，ms） | 取消后末块最大值 | WDDM 专用峰值 + 共享峰值（部分采样） | torch allocated 首→末 | RSS 20–30 分钟 OLS（MiB/h） | 压力时长/请求 | 结束状态 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 0.6B | 209.224 / 215.497 / 209.500（本组样本均 ≤250） | 0/15 均未见新块，最大 0 ms | 8,604,368,896 + 288,280,576 = 8,892,649,472 B（超过 8,000,000,000；watcher 后续收到 CIM「调用已取消」） | 5,129,826,304 → 5,129,826,304 B | 13,103.03（超 12） | 4,295.528 s / 2,639 | Windows 进程以 `-1073741571`（`0xC00000FD`，STATUS_STACK_OVERFLOW）退出；未完成延长 |
+| 1.7B | 225.787 / 225.165 / 227.418（本组样本均 ≤250） | 0/15 均未见新块，最大 0 ms | 9,780,871,168 + 276,910,080 = 10,057,781,248 B（超过 8,000,000,000；为部分峰值，watcher 发生 CIM 资源/内存错误） | 7,159,662,592 → 7,159,662,592 B | 12,704.46（超 12） | 4,004.946 s / 2,445 | sidecar 记录 `MemoryError`，WebSocket 1011；未完成延长 |
+
+两轮的 20–30 分钟 RSS 斜率均触发 2026-10-21 用户批准的两小时延长；没有 110–120 分钟斜率，不能判定趋平。0.6B 压力段 RSS 末值低于首值，但这不抵消其 20–30 分钟 OLS 超线；1.7B 的部分 WDDM 峰值和进程 RSS 都继续升高。torch 当前 allocated 首末相同不代表稳定性通过。torch 峰值 allocated/reserved 分别为 0.6B 5,934,155,264 / 7,277,117,440 B，1.7B 7,626,955,264 / 8,455,718,464 B；它们与 ADR 0012 的 WDDM 指标分开报告。
+
+已完成样本的分段计时如下。CUDA 时间是逐调用事件区间；talker、predictor、异步 decode、整句生成区间会重叠，不能相加为端到端延迟。详细逐句分位数、调用数、首末引擎发出时刻和原始跨度见 `optimized-formal-partial-summary-20261023.json` 及下方两个原始压缩包中的 `traces.jsonl`。实时率仅作报告指标。
+
+| 变体 | 语言 | client 首包 p50 ms | 引擎首/末发出 p50 ms | prefill CUDA p50 ms | talker 单调用 host/CUDA p50 ms | predictor 单调用 host/CUDA p50 ms | decode 单调用 host/CUDA p50 ms | 实时率 p50（倍） |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.6B | 中 | 209.224 | 205.7 / 1,258.7 | 42.1 | 0.350 / 5.52 | 0.089 / 0.873 | 81.1 / 82.7 | 1.704 |
+| 0.6B | 英 | 215.497 | 212.0 / 1,596.6 | 47.5 | 0.444 / 5.70 | 0.088 / 0.871 | 80.2 / 82.9 | 1.544 |
+| 0.6B | 日 | 209.500 | 206.0 / 1,901.3 | 41.2 | 0.515 / 6.03 | 0.088 / 0.866 | 79.5 / 82.5 | 1.491 |
+| 1.7B | 中 | 225.787 | 222.0 / 1,272.6 | 46.0 | 0.356 / 8.71 | 0.089 / 0.876 | 82.1 / 86.4 | 1.642 |
+| 1.7B | 英 | 225.165 | 221.6 / 1,631.6 | 46.8 | 0.435 / 9.01 | 0.088 / 0.880 | 80.4 / 85.4 | 1.497 |
+| 1.7B | 日 | 227.418 | 223.9 / 1,817.0 | 44.0 | 0.458 / 9.18 | 0.088 / 0.880 | 79.9 / 85.0 | 1.468 |
+
+0.6B 与 1.7B 的 p50 分别较旧 eager 基线约 0.85 s 明显降低，但本轮压力、显存并未通过。0.6B 不能以延迟通过替代显存/压力门槛；1.7B 的 WDDM 部分峰值也已明显超线。按用户要求未测真实云端延迟；云端 adapter 仍只有接口与模拟数据，不能提供实测对比。
+
+失败原始数据保留在 `gpu-optimized-0.6B-formal-retry4-bounded-raw.zip` 和 `gpu-optimized-1.7B-formal-run1-raw.zip`；逐文件字节数/SHA-256 与压缩包 SHA 见 `gpu-optimized-formal-partial-archive-manifest-20261023.json`。VoiceDesign 来源/许可证/cloneAllowed 与哈希仍由既有 fixture/manifest 登记，没有使用 P4-01 录音或真实人物声音。
+
+### 本轮测量器修正及本机检查
+
+观察到正式压力把逐帧和 predictor 的 CUDA-event 计时用于全部数千压力请求，且 Windows CIM 进程树查询频繁失败。已将 benchmark 调整为只在 warmup 和三语延迟样本启用逐步事件；压力每句仍保存 client 首末块、音频时长、实时率、RSS 与 torch allocator。`bounded_memory_watch.ps1` 使用同一 WDDM CIM 计数器、每 5 秒刷新活动进程树，并对短暂 CIM 失败最多重试 3 次；RSS 改为 Windows `GetProcessMemoryInfo` 原生读取，避免每句新建 PowerShell 进程。此改动降低诊断开销但尚未实测证明消除了 RSS 增长，因而需要新窗口重测。
+
+验收后 CPU/桌面检查：`pnpm lint`、`pnpm typecheck`、`pnpm test`（454 项）、`pnpm tts:schema`、`pnpm test:contracts`（315 项，100% statements）、`pnpm test:tts`（42 项通过、1 个 GPU smoke 按默认策略跳过）、严格 mypy（34 文件）、Ruff、`pnpm test:e2e`（3 项，包括 shell 守护检查）均通过。e2e 证据在 `optimized-e2e-20261023/`。GPU smoke 的跳过原因为未设置 `NEMU_RUN_TTS_GPU_TESTS=1`，CI 不下载模型/分配 CUDA；真实 GPU 正式测量另由上表记录。
+
+PR #45 保持 draft 和 needs-user，不转可审查、不合并。待下一次独占安静窗口重测两个变体：三语各 20 句、取消、ADR 显存、30 分钟/必要时两小时压力；旧失败数据不覆盖。云端延迟仍不测。

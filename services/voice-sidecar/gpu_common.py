@@ -10,20 +10,37 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import time
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
+_QUIET_GATE_INTERVAL_SECONDS = 60.0
+_QUIET_GATE_RETRY_DELAY_SECONDS = 0.1
+_last_quiet_gate_check: float | None = None
 
 
 def quiet_gate() -> None:
+    global _last_quiet_gate_check
     if os.name != "nt" or os.getenv("NEMU_P4_02_QUIET_WINDOW") != "user-confirmed":
         raise RuntimeError("GPU run requires Windows and explicit user-confirmed quiet window")
+    now = time.monotonic()
+    if (_last_quiet_gate_check is not None
+            and now - _last_quiet_gate_check < _QUIET_GATE_INTERVAL_SECONDS):
+        return
     forbidden = {"runner.listener.exe", "runner.worker.exe", "blender.exe"}
-    output = subprocess.run(["tasklist", "/FO", "CSV", "/NH"], check=True,
-                            capture_output=True, text=True)
+    for attempt in range(2):
+        try:
+            output = subprocess.run(["tasklist", "/FO", "CSV", "/NH"], check=True,
+                                    capture_output=True, text=True)
+            break
+        except subprocess.CalledProcessError as exc:
+            if attempt == 1:
+                raise RuntimeError("Quiet-window process enumeration failed") from exc
+            time.sleep(_QUIET_GATE_RETRY_DELAY_SECONDS)
     running = {row[0].casefold() for row in csv.reader(output.stdout.splitlines()) if row}
     if forbidden & running:
         raise RuntimeError("Quiet window unavailable: " + ", ".join(sorted(forbidden & running)))
+    _last_quiet_gate_check = time.monotonic()
 
 
 def add_service_packages() -> None:

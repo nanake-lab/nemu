@@ -7,6 +7,8 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import ctypes
+from ctypes import wintypes
 from datetime import datetime, timezone
 import importlib
 import json
@@ -17,7 +19,8 @@ import statistics
 import subprocess
 import time
 from typing import Any, cast
-from collections.abc import Callable, Coroutine
+from collections.abc import Callable, Coroutine, Iterator
+from contextlib import contextmanager
 
 from pressure import assess, slope_mib_hour
 from gpu_common import add_service_packages, load_carrier, quiet_gate
@@ -39,12 +42,61 @@ BASE = {
 
 
 def rss() -> int:
-    # OS physical working set; no psutil runtime dependency.
-    result = subprocess.run(["powershell.exe", "-NoProfile", "-Command",
-                             f"(Get-Process -Id {os.getpid()}).WorkingSet64"],
-                            capture_output=True, text=True, check=True,
-                            creationflags=subprocess.CREATE_NO_WINDOW)
-    return int(result.stdout.strip())
+    """Read this process' physical working set without spawning PowerShell."""
+    if os.name != "nt":
+        raise RuntimeError("formal RSS measurement requires Windows")
+
+    class ProcessMemoryCountersEx(ctypes.Structure):
+        _fields_ = [
+            ("cb", wintypes.DWORD),
+            ("PageFaultCount", wintypes.DWORD),
+            ("PeakWorkingSetSize", ctypes.c_size_t),
+            ("WorkingSetSize", ctypes.c_size_t),
+            ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
+            ("QuotaPagedPoolUsage", ctypes.c_size_t),
+            ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+            ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+            ("PagefileUsage", ctypes.c_size_t),
+            ("PeakPagefileUsage", ctypes.c_size_t),
+            ("PrivateUsage", ctypes.c_size_t),
+        ]
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    psapi = ctypes.WinDLL("psapi", use_last_error=True)
+    open_process = kernel32.OpenProcess
+    open_process.argtypes = (wintypes.DWORD, wintypes.BOOL, wintypes.DWORD)
+    open_process.restype = wintypes.HANDLE
+    close_handle = kernel32.CloseHandle
+    close_handle.argtypes = (wintypes.HANDLE,)
+    close_handle.restype = wintypes.BOOL
+    get_memory = psapi.GetProcessMemoryInfo
+    get_memory.argtypes = (wintypes.HANDLE, ctypes.POINTER(ProcessMemoryCountersEx), wintypes.DWORD)
+    get_memory.restype = wintypes.BOOL
+
+    handle = open_process(0x0400 | 0x0010, False, os.getpid())
+    if not handle:
+        raise ctypes.WinError(ctypes.get_last_error())
+    try:
+        counters = ProcessMemoryCountersEx()
+        counters.cb = ctypes.sizeof(counters)
+        if not get_memory(handle, ctypes.byref(counters), counters.cb):
+            raise ctypes.WinError(ctypes.get_last_error())
+        return int(counters.WorkingSetSize)
+    finally:
+        close_handle(handle)
+
+
+@contextmanager
+def trace_phase(phase: str) -> Iterator[None]:
+    """Collect step-level CUDA events for latency samples, not long stress runs."""
+    configured = os.environ.get("NEMU_TTS_TRACE_DIR")
+    if configured and phase not in {"warmup", "latency"}:
+        os.environ.pop("NEMU_TTS_TRACE_DIR", None)
+    try:
+        yield
+    finally:
+        if configured is not None:
+            os.environ["NEMU_TTS_TRACE_DIR"] = configured
 
 
 async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> dict[str, object]:
@@ -76,30 +128,31 @@ async def measure(args: argparse.Namespace, engine: Any, destination: Path) -> d
         last = 0.0
         cancel_at: float | None = None
         last_after_cancel = 0.0
-        async with connect(f"ws://127.0.0.1:{args.port}/synthesize", max_queue=8,
-                           open_timeout=10, close_timeout=5, proxy=None) as socket:
-            await socket.send(json.dumps({"text": text, "lang": lang, "style": "neutral",
-                                          "voiceId": "p4-02-synthetic-test", "sampleRate": 24000}))
-            async for block in socket:
-                if not isinstance(block, bytes) or len(block) % 4:
-                    raise RuntimeError("INVALID_PCM")
-                now = time.perf_counter()
-                if first is None:
-                    first = (now - started) * 1000
-                last = now-started
-                total += len(block)
-                if cancel_test and cancel_at is None:
-                    cancel_at = time.perf_counter()
-                    await socket.send('{"cancel":true}')
-                elif cancel_at is not None:
-                    last_after_cancel = (now - cancel_at) * 1000
-        # Await actual generation termination before starting the next sample.
-        async with httpx.AsyncClient(trust_env=False) as client:
-            deadline = time.monotonic() + 120
-            while (await client.get(f"http://127.0.0.1:{args.port}/health")).json()["busy"]:
-                if time.monotonic() > deadline:
-                    raise RuntimeError("INFERENCE_DID_NOT_STOP")
-                await asyncio.sleep(.01)
+        with trace_phase(phase):
+            async with connect(f"ws://127.0.0.1:{args.port}/synthesize", max_queue=8,
+                               open_timeout=10, close_timeout=5, proxy=None) as socket:
+                await socket.send(json.dumps({"text": text, "lang": lang, "style": "neutral",
+                                              "voiceId": "p4-02-synthetic-test", "sampleRate": 24000}))
+                async for block in socket:
+                    if not isinstance(block, bytes) or len(block) % 4:
+                        raise RuntimeError("INVALID_PCM")
+                    now = time.perf_counter()
+                    if first is None:
+                        first = (now - started) * 1000
+                    last = now-started
+                    total += len(block)
+                    if cancel_test and cancel_at is None:
+                        cancel_at = time.perf_counter()
+                        await socket.send('{"cancel":true}')
+                    elif cancel_at is not None:
+                        last_after_cancel = (now - cancel_at) * 1000
+            # Await actual generation termination before starting the next sample.
+            async with httpx.AsyncClient(trust_env=False) as client:
+                deadline = time.monotonic() + 120
+                while (await client.get(f"http://127.0.0.1:{args.port}/health")).json()["busy"]:
+                    if time.monotonic() > deadline:
+                        raise RuntimeError("INFERENCE_DID_NOT_STOP")
+                    await asyncio.sleep(.01)
         if first is None or total == 0:
             raise RuntimeError("NO_AUDIO")
         row = {"phase": phase, "lang": lang, "index": index, "first_packet_ms": first,
@@ -191,7 +244,8 @@ def main(measurement: Callable[[argparse.Namespace, Any, Path], Coroutine[Any, A
     ready = destination / "render.json"
     with (destination / "render.log").open("x", encoding="utf-8") as rlog, \
          (destination / "memory-watch.log").open("x", encoding="utf-8") as mlog:
-        watcher = subprocess.Popen(["powershell.exe", "-NoProfile", "-File", str(args.probe / "memory_watch.ps1"),
+        watcher = subprocess.Popen(["powershell.exe", "-NoProfile", "-File",
+                                    str(Path(__file__).with_name("bounded_memory_watch.ps1")),
                                     "-OutputPath", str(destination / "memory.jsonl"),
                                     "-StopPath", str(memory_stop), "-RootProcessIds", str(os.getpid())],
                                    stdout=mlog, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)

@@ -90,6 +90,8 @@ pnpm tts:bench --variant 1.7B --cache services/voice-sidecar/.cache/models --voi
 
 两个变体在新进程中顺序运行；各有三语 warmup、每语言 20 句、每语言 5 次取消、固定至少 1800 秒压力测试。全程保留载体、P0-07 的真实 GPU 渲染夹具，记录 WDDM 专用和共享显存、torch allocator、进程 RSS 与每次请求原始数据。已有证据目录不得覆盖；失败也保留。显存判定按 ADR 0012：两项观测峰值之和 ≤ 8 GB（9 GB 内保留 1 GB）；渲染夹具不是完整 Nemu 正式资产的最终整机验收。测完通知用户可恢复 runner。
 
+RSS 通过 Windows `GetProcessMemoryInfo` 读取当前 Python 进程，不为每句生成启动 PowerShell 子进程。P4-02 自有 `bounded_memory_watch.ps1` 使用同一组 WDDM CIM 计数器和 JSONL 字段，逐次重建活动进程树，避免两小时重测累计已退出的瞬时 PID；P0-07 probe 文件保持只读。该采样仍是 WDDM provider 的离散观测，不代表连续峰值。
+
 ## 2026-10-21 实测状态与 SoX 边界
 
 双变体串行测量已完成：首包均约 852–863 ms，未满足 250 ms；0.6B 合计显存 7.188 GB，1.7B 9.214 GB（超 8 GB）；取消停止出块通过。30 分钟均跑完，但 RSS 分箱中位数仍上升，不接受稳定性通过。原始数据与复算工具见 reports/P4-02/REPORT.md；已有结果目录不得覆盖。纯合成参考已归档 tests/fixtures/voice-design-v1，不是正式角色音色。
@@ -104,7 +106,7 @@ pnpm tts:bench --variant 1.7B --cache services/voice-sidecar/.cache/models --voi
 $env:NEMU_TTS_CUDA_GRAPH = '1'
 $env:NEMU_TTS_ASYNC_DECODE = '1'
 $env:NEMU_TTS_FIRST_FRAMES = '2'
-# 可选分段计时：不记录文本；每请求单独 JSON，GPU event 不逐步同步。
+# 可选分段计时：不记录文本；每请求追加一行 JSONL，GPU event 不逐步同步。
 $env:NEMU_TTS_TRACE_DIR = (Join-Path $PWD 'reports/P4-02/new-acceptance-traces')
 # 随后按上节原命令、独占窗口、载体/渲染驻留正式测两个变体。
 ```
@@ -113,6 +115,8 @@ $env:NEMU_TTS_TRACE_DIR = (Join-Path $PWD 'reports/P4-02/new-acceptance-traces')
 
 tokenizer.decode 移到有界队列的独立线程/持久 CUDA stream，按 producer event 等待 codec 就绪；首块 2 帧，其余 4 帧，仍只保留 25 帧左上下文。取消期间停止投递，推理 lane 等生成与解码均退出后释放。上游末尾整句解码仍保留，单独记录耗时。
 
-Trace 记录 prefill、talker 每帧、predictor 每步、每次解码的 CUDA/host 时间、帧完成、引擎投递首末块和音频秒数；wire/ 子目录记录实际 ws.send_bytes 完成时刻，benchmark 另记客户端首末包。实时率为音频时长除以首块到末块间隔，仅为报告指标，不新增门槛。冷图准备单独计时，不能把冷请求结果称为热身后延迟。
+`traces.jsonl` 记录 prefill、talker 每帧、predictor 每步、每次解码的 CUDA/host 时间、帧完成、引擎投递首末块和音频秒数；`wire/wire.jsonl` 记录实际 `ws.send_bytes` 完成时刻，benchmark 另记客户端首末包。每条请求各占一行，避免压力测试为每次请求创建独立文件。实时率为音频时长除以首块到末块间隔，仅为报告指标，不新增门槛。冷图准备单独计时，不能把冷请求结果称为热身后延迟。
+
+正式 benchmark 仅对 warmup 与每语种 20 个 latency 样本启用逐步 CUDA-event 计时；取消和压力阶段保留客户端首末包、音频时长、实时率、RSS 和 allocator 样本，不创建每帧/每 predictor CUDA event，避免诊断仪器本身成为长测的资源增长源。
 
 后续压力重测：torch allocated 首末相同，20–30 分钟 RSS OLS 斜率 ≤12 MiB/小时。失败自动延长该轮到总计 2 小时，报告 110–120 分钟斜率，交用户判断；不追溯旧结果。正式窗口请为两变体可能各 2 小时预留时间。短探针 optimization_probe.py 的相同 64-token 贪心限制仅用于开发 codec 对照，不能替代正式各语言 20 句或压力测试；正式 benchmark 强制 generation_limit==512。

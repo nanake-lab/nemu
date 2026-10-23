@@ -2,13 +2,13 @@
 from __future__ import annotations
 from collections.abc import Iterator
 from contextlib import contextmanager
-import json
 import os
 from pathlib import Path
 from threading import Lock
 import time
 from typing import Any
-import uuid
+
+from .trace_writer import append_jsonl
 
 
 class Trace:
@@ -65,7 +65,5 @@ class Trace:
         if self.codecs:
             data["codec_frames"] = self.torch.stack(self.codecs).cpu().tolist()
         folder = Path(self.folder)
-        folder.mkdir(parents=True, exist_ok=True)
-        file = folder / (uuid.uuid4().hex + ".json")
-        file.write_text(json.dumps(data, indent=2)+"\n", encoding="utf-8")
+        append_jsonl(folder / "traces.jsonl", data)
         return data

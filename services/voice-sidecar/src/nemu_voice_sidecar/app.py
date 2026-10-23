@@ -6,7 +6,6 @@ from contextlib import suppress
 import json
 import os
 import time
-import uuid
 from pathlib import Path
 from threading import Event
 from typing import cast
@@ -17,6 +16,7 @@ import structlog
 
 from .backend import Engine, Lane, Request
 from .qwen import QwenEngine
+from .trace_writer import append_jsonl
 from .voices import VoiceBank
 
 SCHEMA = json.loads(Path(__file__).with_name("tts-request.schema.json").read_text(encoding="utf-8"))
@@ -107,10 +107,10 @@ def create_app(engine: Engine | None = None, bank: VoiceBank | None = None) -> F
         finally:
             if os.getenv("NEMU_TTS_TRACE_DIR"):
                 folder = Path(os.environ["NEMU_TTS_TRACE_DIR"]) / "wire"
-                folder.mkdir(parents=True, exist_ok=True)
-                (folder / (uuid.uuid4().hex+".json")).write_text(
-                    json.dumps({"emissions": wire, "clock": "perf_counter; after ws.send_bytes completes"})+"\n",
-                    encoding="utf-8")
+                append_jsonl(folder / "wire.jsonl", {
+                    "emissions": wire,
+                    "clock": "perf_counter; after ws.send_bytes completes",
+                })
             cancelled.set()
             for task in (receive, chunk):
                 if task is not None:

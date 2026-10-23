@@ -1,0 +1,10 @@
+$ node services/voice-sidecar/launch-benchmark.mjs --variant 0.6B --cache 'C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\.cache\models' --voice 'C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\.cache\test-voice-optimized-20261023\voice.json' --output 'D:\Dev\p4-02-gpu-evidence-20261023\gpu-optimized-0.6B-formal-retry2'
+Traceback (most recent call last):
+  File "C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\benchmark.py", line 239, in <module>
+    main()
+  File "C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\benchmark.py", line 183, in main
+    quiet_gate()
+  File "C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\gpu_common.py", line 20, in quiet_gate
+    raise RuntimeError("GPU run requires Windows and explicit user-confirmed quiet window")
+RuntimeError: GPU run requires Windows and explicit user-confirmed quiet window
+[ELIFECYCLE] Command failed with exit code 1.
