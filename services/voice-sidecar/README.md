@@ -92,6 +92,8 @@ pnpm tts:bench --variant 1.7B --cache services/voice-sidecar/.cache/models --voi
 
 RSS 通过 Windows `GetProcessMemoryInfo` 读取当前 Python 进程，不为每句生成启动 PowerShell 子进程。P4-02 自有 `bounded_memory_watch.ps1` 使用同一组 WDDM CIM 计数器和 JSONL 字段，逐次重建活动进程树，避免两小时重测累计已退出的瞬时 PID；P0-07 probe 文件保持只读。该采样仍是 WDDM provider 的离散观测，不代表连续峰值。
 
+2026-10-23 修复了 RSS 采样器每次创建 ctypes 结构/指针类型导致的自身内存累积；现在只绑定一次类型和 API，每次仍读取当前 WorkingSetSize。新结果标注 `rss_sampler=GetProcessMemoryInfo-cached-types-v2`。旧测量原件保留，不减去估算开销或追溯改判；真实合成剩余 RSS 趋势仍需重测。
+
 ## 2026-10-21 实测状态与 SoX 边界
 
 双变体串行测量已完成：首包均约 852–863 ms，未满足 250 ms；0.6B 合计显存 7.188 GB，1.7B 9.214 GB（超 8 GB）；取消停止出块通过。30 分钟均跑完，但 RSS 分箱中位数仍上升，不接受稳定性通过。原始数据与复算工具见 reports/P4-02/REPORT.md；已有结果目录不得覆盖。纯合成参考已归档 tests/fixtures/voice-design-v1，不是正式角色音色。

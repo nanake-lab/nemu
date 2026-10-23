@@ -10,6 +10,7 @@ import asyncio
 import ctypes
 from ctypes import wintypes
 from datetime import datetime, timezone
+from functools import cache
 import importlib
 import json
 import os
@@ -42,8 +43,9 @@ BASE = {
 }
 
 
-def rss() -> int:
-    """Read this process' physical working set without spawning PowerShell."""
+@cache
+def _rss_reader() -> Callable[[], int]:
+    """Bind the Windows API and its ctypes types once per measurement process."""
     if sys.platform != "win32":
         raise RuntimeError("formal RSS measurement requires Windows")
 
@@ -74,17 +76,27 @@ def rss() -> int:
     get_memory.argtypes = (wintypes.HANDLE, ctypes.POINTER(ProcessMemoryCountersEx), wintypes.DWORD)
     get_memory.restype = wintypes.BOOL
 
-    handle = open_process(0x0400 | 0x0010, False, os.getpid())
-    if not handle:
-        raise ctypes.WinError(ctypes.get_last_error())
-    try:
-        counters = ProcessMemoryCountersEx()
-        counters.cb = ctypes.sizeof(counters)
-        if not get_memory(handle, ctypes.byref(counters), counters.cb):
+    def read() -> int:
+        handle = open_process(0x0400 | 0x0010, False, os.getpid())
+        if not handle:
             raise ctypes.WinError(ctypes.get_last_error())
-        return int(counters.WorkingSetSize)
-    finally:
-        close_handle(handle)
+        try:
+            counters = ProcessMemoryCountersEx()
+            counters.cb = ctypes.sizeof(counters)
+            if not get_memory(handle, ctypes.byref(counters), counters.cb):
+                raise ctypes.WinError(ctypes.get_last_error())
+            return int(counters.WorkingSetSize)
+        finally:
+            close_handle(handle)
+
+    return read
+
+
+def rss() -> int:
+    """Read physical working set without retaining a new ctypes type per sample."""
+    if sys.platform != "win32":
+        raise RuntimeError("formal RSS measurement requires Windows")
+    return _rss_reader()()
 
 
 @contextmanager
@@ -253,7 +265,8 @@ def main(measurement: Callable[[argparse.Namespace, Any, Path], Coroutine[Any, A
         render = subprocess.Popen([shutil.which("node") or "node", str(args.probe / "render_load.mjs"),
                                    str(ready), str(render_stop)], stdout=rlog, stderr=subprocess.STDOUT,
                                   creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
-        result: dict[str, object] = {"variant": args.variant, "status": "failed"}
+        result: dict[str, object] = {"variant": args.variant, "status": "failed",
+                                     "rss_sampler": "GetProcessMemoryInfo-cached-types-v2"}
         try:
             deadline = time.monotonic() + 90
             while not ready.is_file():

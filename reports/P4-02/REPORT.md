@@ -318,3 +318,13 @@ PR #45 保持 draft 和 needs-user，不转可审查、不合并。待下一次�
 四项目的 uv sync --locked、Ruff、Windows/Linux 严格 mypy、pytest、uv build 均通过；sidecar 49 通过/1 个 opt-in GPU smoke 明确跳过，诊断脚本另做严格 mypy。TS lint/typecheck、454 项测试通过，见 resource-fix-*.log。没有新增依赖，LGPL/P7 分发复核义务沿用既有决定。GPU 进程已全部结束，并通知可恢复 runner。
 
 PR #45 保持 draft + needs-user，不请求审查、不合并。主要线程相关增量已压到同步对照附近；残余 RSS 仍上升，不能提前承诺长期稳定。下一轮正式 30 分钟及必要时两小时压力需另约安静窗口（载体/渲染照常驻留，两变体串行，最多预留 4–4.5 小时），按原 20–30 分钟 ≤12 MiB/h 判据和 8 GB 上限记录，不放宽阈值。
+
+## 2026-10-23 同步 P4-01 与 RSS 采样器修复
+
+已 merge origin/main b6eb872（含 P4-01 #44、P5-22 #57），合并提交 cc64414。7 处冲突已解决：models.lock/schema 保留 ASR 与 TTS，两边脚本、依赖和模块导出均保留；pnpm-lock.yaml 删除冲突版本后由 pnpm 12.11.2 install 重新生成，随后 frozen-lockfile 检查通过。P4-01 utilityProcess/通道文件由 Git 自动合并，没有另改。逐项源内容核对见 merge-main-source-check-20261023.json。
+
+继续检查残余 RSS 时，确认 benchmark.rss 每次定义一个 ctypes Structure，并构造 POINTER(Structure)，会被 CPython 的进程级指针类型缓存保留。CPU 独立对照（不导入模型、不使用 GPU、1,000 次采样、末尾 GC）：修复前缓存 21→1,021 项，tracemalloc 当前保留 7,672,364 B；修复后缓存 21→21 项，保留 2,368 B。原件为 rss-reader-before/after-20261023.json。现在只绑定一次结构类型和 Windows API，每次仍读取当前 WorkingSetSize 并关闭进程句柄；新基准结果增加 rss_sampler 标识。没有新增依赖或修改阈值。这个采样器错误只能解释部分残余增长，不能据此把真实合成的剩余 RSS 判成稳定，也不追溯扣除旧数据的估计开销。
+
+修复后 Ruff、Windows/Linux 严格 mypy、pytest（50 passed / 1 GPU opt-in skip）通过；额外脚本的首条 mypy 命令误解析到已安装未标注类型的 wheel，原失败日志保留，随后将 src 纳入同次严格检查后通过（16 source files）。见 rss-sampler-checks-20261023.log、rss-sampler-scripts-mypy-20261023.log。合并后的 Node lint/typecheck、546 项测试、构建、353 项契约覆盖测试、transport、TTS schema 与 budget 已通过。完整 Rust/.NET/IDL/Windows 检查仍在执行，完成后补记；不将正在运行的检查写成通过。
+
+三个 worker 的旧 D 盘 .venv 原件已移存 D:\Dev\cache\p4-02\legacy-*-venv，入口 junction 指向已验证的 D 盘 Python 环境；core/target junction 指向本卡独立的 D 盘编译缓存，适配现有 conformance 脚本的路径。没有删除原始测量数据。PR #45 保持草稿与 needs-user；GPU 显存、正式压力、原栈溢出和真实合成残余 RSS 的既有阻塞均继续保留。
