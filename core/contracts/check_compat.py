@@ -65,6 +65,8 @@ def violations(old: Schema, new: Schema) -> list[str]:
                     out.append(f"message {name} field {number} changed")
             if before == after:
                 out.append(f"message {name} field order changed")
+        if m.get("resource") != n.get("resource"):
+            out.append(f"message {name} resource projection changed")
         if n["rules"] != m["rules"]:
             out.append(f"message {name} rules changed")
         if set(m.get("reserved", [])) - set(n.get("reserved", [])):
@@ -92,6 +94,9 @@ def violations(old: Schema, new: Schema) -> list[str]:
         for key in old.get("superseded_values", {}).get(enum, {}):
             if key not in new.get("superseded_values", {}).get(enum, {}):
                 out.append(f"enum {enum}.{key} lost its superseded mark")
+    for enum, aliases in old.get("json_enums", {}).items():
+        if new.get("json_enums", {}).get(enum) != aliases:
+            out.append(f"enum {enum} JSON aliases changed")
     return out + discipline(new)
 
 
@@ -100,6 +105,20 @@ def discipline(s: Schema) -> list[str]:
     out: list[str] = []
     messages = s["messages"]
     for name, m in messages.items():
+        field_numbers = [f["number"] for f in m["fields"]]
+        if len(field_numbers) != len(set(field_numbers)):
+            out.append(f"{name} reuses a field number")
+        groups = m["rules"].get("oneofs", {})
+        for group_name, group in groups.items():
+            members = [f for f in m["fields"] if f.get("oneof") == group_name]
+            if (
+                [f["name"] for f in members] != group["fields"]
+                or not members
+                or any(f["required"] or f["repeated"] for f in members)
+            ):
+                out.append(f"{name} invalid oneof {group_name}")
+        if any(f.get("oneof") not in groups for f in m["fields"] if "oneof" in f):
+            out.append(f"{name} orphan oneof member")
         predecessor = m.get("supersedes")
         if predecessor:
             p = messages.get(predecessor, {})
@@ -321,8 +340,20 @@ def self_test(old: Schema, new: Schema) -> list[str]:
     def reuse_own_reserved(s: Schema) -> None:
         s["messages"]["SelfTestV3"]["fields"].append(_field("e", "double", 5))
 
+    def oneof_members(s: Schema) -> None:
+        s["messages"]["ReadoutV2"]["rules"]["oneofs"]["body"]["fields"].pop()
+
+    def oneof_number(s: Schema) -> None:
+        field(s, "ReadoutV2", "v2")["number"] = 5
+
+    def oneof_move(s: Schema) -> None:
+        field(s, "ReadoutV2", "v2")["oneof"] = "other"
+
     # (mutation, compare against the current schema instead of the baseline, expected)
     mutations = (
+        (oneof_members, True, "message ReadoutV2 rules changed"),
+        (oneof_number, True, "ReadoutV2 reuses a field number"),
+        (oneof_move, True, "message ReadoutV2 field 6 changed"),
         (renumber, False, "message EventEnvelope field 2 changed"),
         (retype, False, "message OutputEnd field 3 changed"),
         (recycle_enum, False, "enum RunStatus.RECYCLED reuses published value 4"),

@@ -1,0 +1,12 @@
+Diagnostic gated-effective-050 complete: 60/60
+Diagnostic gated-effective-035 complete: 60/60
+C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:84
+  if (busy.length) throw new Error(`Quiet window unavailable: ${JSON.stringify(busy)}`);
+                         ^
+
+Error: Quiet window unavailable: [{"Name":"python.exe","ProcessId":2964,"reason":"cannot-inspect-worker"},{"Name":"python.exe","ProcessId":45240,"reason":"cannot-inspect-worker"}]
+    at validate (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:84:26)
+    at assertQuiet (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:88:3)
+    at <anonymous> (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\vad-diagnostic.ts:49:5)
+
+Node.js v24.21.0

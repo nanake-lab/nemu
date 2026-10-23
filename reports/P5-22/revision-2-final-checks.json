@@ -1,0 +1,236 @@
+[
+  {
+    "name": "build",
+    "cwd": ".",
+    "command": "pnpm.cmd build",
+    "started": "2026-10-23T13:54:28.8610613+08:00",
+    "ended": "2026-10-23T13:54:41.4912814+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\build.log"
+  },
+  {
+    "name": "compat",
+    "cwd": ".",
+    "command": "python core/contracts/check_compat.py --ref origin/main",
+    "started": "2026-10-23T13:52:39.3556839+08:00",
+    "ended": "2026-10-23T13:52:40.8592395+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\compat.log"
+  },
+  {
+    "name": "contract-mypy",
+    "cwd": ".",
+    "command": "uv run --project core/contracts --locked mypy --strict core/contracts/generate.py core/contracts/generate_browser.py core/contracts/fixture_inputs.py core/contracts/adversarial.py core/contracts/verify.py core/contracts/check_compat.py core/contracts/freeze_vectors.py core/contracts/test_oneof_schema.py core/contracts/test_browser_schema.py workers/irl/generated/echo",
+    "started": "2026-10-23T14:08:05.3560827+08:00",
+    "ended": "2026-10-23T14:08:10.2859152+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\contract-mypy.log"
+  },
+  {
+    "name": "contract-ruff",
+    "cwd": ".",
+    "command": "uv run --project core/contracts --locked ruff check core/contracts workers/irl/generated/echo",
+    "started": "2026-10-23T14:08:04.9783722+08:00",
+    "ended": "2026-10-23T14:08:05.3286381+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\contract-ruff.log"
+  },
+  {
+    "name": "contracts",
+    "cwd": ".",
+    "command": "pnpm.cmd test:contracts --coverage.reportsDirectory=reports/P5-22/revision-2-checks/coverage",
+    "started": "2026-10-23T13:54:26.4472466+08:00",
+    "ended": "2026-10-23T13:54:28.8591529+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\contracts.log"
+  },
+  {
+    "name": "core-contracts",
+    "cwd": ".",
+    "command": "pnpm.cmd test:core-contracts",
+    "started": "2026-10-23T14:04:11.9351401+08:00",
+    "ended": "2026-10-23T14:06:25.5887661+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\core-contracts.log"
+  },
+  {
+    "name": "drive-mypy",
+    "cwd": "workers/drive",
+    "command": "uv run --locked mypy --strict src tests",
+    "started": "2026-10-23T14:08:17.9371455+08:00",
+    "ended": "2026-10-23T14:08:18.8814356+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\drive-mypy.log"
+  },
+  {
+    "name": "drive-pytest",
+    "cwd": "workers/drive",
+    "command": "uv run --locked pytest",
+    "started": "2026-10-23T14:08:18.8829871+08:00",
+    "ended": "2026-10-23T14:08:20.3057484+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\drive-pytest.log"
+  },
+  {
+    "name": "drive-ruff",
+    "cwd": "workers/drive",
+    "command": "uv run --locked ruff check .",
+    "started": "2026-10-23T14:08:17.5969989+08:00",
+    "ended": "2026-10-23T14:08:17.9354863+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\drive-ruff.log"
+  },
+  {
+    "name": "drive-sync",
+    "cwd": "workers/drive",
+    "command": "uv sync --locked",
+    "started": "2026-10-23T14:08:15.9308254+08:00",
+    "ended": "2026-10-23T14:08:17.5953796+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\drive-sync.log"
+  },
+  {
+    "name": "generate",
+    "cwd": ".",
+    "command": "python core/contracts/generate.py --check",
+    "started": "2026-10-23T13:52:39.1510684+08:00",
+    "ended": "2026-10-23T13:52:39.3330052+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\generate.log"
+  },
+  {
+    "name": "irl-mypy",
+    "cwd": "workers/irl",
+    "command": "uv run --locked mypy --strict src tests",
+    "started": "2026-10-23T14:08:12.2649761+08:00",
+    "ended": "2026-10-23T14:08:13.2161263+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\irl-mypy.log"
+  },
+  {
+    "name": "irl-pytest",
+    "cwd": "workers/irl",
+    "command": "uv run --locked pytest",
+    "started": "2026-10-23T14:08:13.2177131+08:00",
+    "ended": "2026-10-23T14:08:15.9292167+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\irl-pytest.log"
+  },
+  {
+    "name": "irl-ruff",
+    "cwd": "workers/irl",
+    "command": "uv run --locked ruff check .",
+    "started": "2026-10-23T14:08:11.907893+08:00",
+    "ended": "2026-10-23T14:08:12.2634677+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\irl-ruff.log"
+  },
+  {
+    "name": "irl-sync",
+    "cwd": "workers/irl",
+    "command": "uv sync --locked",
+    "started": "2026-10-23T14:08:10.2885081+08:00",
+    "ended": "2026-10-23T14:08:11.9057+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\irl-sync.log"
+  },
+  {
+    "name": "lint",
+    "cwd": ".",
+    "command": "pnpm.cmd lint",
+    "started": "2026-10-23T13:52:41.9687202+08:00",
+    "ended": "2026-10-23T13:52:48.9933094+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\lint.log"
+  },
+  {
+    "name": "model-adapter-mypy",
+    "cwd": "workers/model-adapter",
+    "command": "uv run --locked mypy --strict src tests",
+    "started": "2026-10-23T14:08:22.2996351+08:00",
+    "ended": "2026-10-23T14:08:23.2090932+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\model-adapter-mypy.log"
+  },
+  {
+    "name": "model-adapter-pytest",
+    "cwd": "workers/model-adapter",
+    "command": "uv run --locked pytest",
+    "started": "2026-10-23T14:08:23.210801+08:00",
+    "ended": "2026-10-23T14:08:24.6205092+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\model-adapter-pytest.log"
+  },
+  {
+    "name": "model-adapter-ruff",
+    "cwd": "workers/model-adapter",
+    "command": "uv run --locked ruff check .",
+    "started": "2026-10-23T14:08:21.9583697+08:00",
+    "ended": "2026-10-23T14:08:22.2981305+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\model-adapter-ruff.log"
+  },
+  {
+    "name": "model-adapter-sync",
+    "cwd": "workers/model-adapter",
+    "command": "uv sync --locked",
+    "started": "2026-10-23T14:08:20.3092891+08:00",
+    "ended": "2026-10-23T14:08:21.956701+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-python-checks\\model-adapter-sync.log"
+  },
+  {
+    "name": "parser",
+    "cwd": ".",
+    "command": "python -m unittest discover -s core/contracts -p test_*schema.py",
+    "started": "2026-10-23T13:52:40.8624353+08:00",
+    "ended": "2026-10-23T13:52:41.9670523+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\parser.log"
+  },
+  {
+    "name": "rust-clippy",
+    "cwd": "core",
+    "command": "cargo clippy --workspace --all-targets -- -D warnings",
+    "started": "2026-10-23T13:54:42.8699248+08:00",
+    "ended": "2026-10-23T13:54:58.1137071+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\rust-clippy.log"
+  },
+  {
+    "name": "rust-fmt",
+    "cwd": "core",
+    "command": "cargo fmt --all -- --check",
+    "started": "2026-10-23T13:54:41.4929134+08:00",
+    "ended": "2026-10-23T13:54:42.8678919+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\rust-fmt.log"
+  },
+  {
+    "name": "rust-test",
+    "cwd": "core",
+    "command": "cargo test --workspace --locked",
+    "started": "2026-10-23T13:54:58.115416+08:00",
+    "ended": "2026-10-23T14:04:11.9335339+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\rust-test.log"
+  },
+  {
+    "name": "typecheck",
+    "cwd": ".",
+    "command": "pnpm.cmd typecheck",
+    "started": "2026-10-23T13:52:48.9952405+08:00",
+    "ended": "2026-10-23T13:52:54.3784058+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\typecheck.log"
+  },
+  {
+    "name": "unit",
+    "cwd": ".",
+    "command": "pnpm.cmd test",
+    "started": "2026-10-23T13:52:54.3799206+08:00",
+    "ended": "2026-10-23T13:54:26.44334+08:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-wt\\P5-22\\reports\\P5-22\\revision-2-checks\\unit.log"
+  }
+]

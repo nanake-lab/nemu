@@ -77,6 +77,13 @@ def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
                 )
         for k, values in case.get("values", {}).items():
             out[k] = values[seed % len(values)]
+    for group in message["rules"].get("oneofs", {}).values():
+        chosen = group["fields"][seed % len(group["fields"])]
+        for key in group["fields"]:
+            out.pop(key, None)
+        out[chosen] = atom(
+            next(f for f in message["fields"] if f["name"] == chosen), seed
+        )
     return out
 
 
@@ -133,32 +140,38 @@ def targeted_legal() -> list[dict[str, Any]]:
             dict(schema_version=1, tendency_id="t-2", mu=1.0),
         ]
     )
-    return [
-        request("FailureReason", reason),
-        request(
-            "DegradedStatus",
-            dict(schema_version=1, states=[rs["NO_GROWTH"]], reasons=[reason]),
-        ),
-        request(
-            "DegradedStatus",
-            dict(
-                schema_version=1,
-                states=[
-                    rs["GROWTH_PAUSED"],
-                    rs["GROWTH_REVIEW_PENDING"],
-                    rs["A_DEGRADED"],
-                    rs["M_DEGRADED"],
-                ],
-                reasons=[],
+    return (
+        [
+            request("FailureReason", reason),
+            request(
+                "DegradedStatus",
+                dict(schema_version=1, states=[rs["NO_GROWTH"]], reasons=[reason]),
             ),
-        ),
-        request("Tendency", tendency),
-        request("NatureAppraisalRecord", appraisal),
-        request("SituationMatchRecord", match),
-    ] + targeted_legal_p5_32(tendency)
+            request(
+                "DegradedStatus",
+                dict(
+                    schema_version=1,
+                    states=[
+                        rs["GROWTH_PAUSED"],
+                        rs["GROWTH_REVIEW_PENDING"],
+                        rs["A_DEGRADED"],
+                        rs["M_DEGRADED"],
+                    ],
+                    reasons=[],
+                ),
+            ),
+            request("Tendency", tendency),
+            request("NatureAppraisalRecord", appraisal),
+            request("SituationMatchRecord", match),
+        ]
+        + targeted_legal_p5_32(tendency)
+        + targeted_legal_p5_22()
+    )
 
 
-def p5_32_allocation(tendency_id: str, ordinal: str, projection: float | None) -> dict[str, Any]:
+def p5_32_allocation(
+    tendency_id: str, ordinal: str, projection: float | None
+) -> dict[str, Any]:
     out: dict[str, Any] = dict(
         schema_version=1,
         tendency_id=tendency_id,
@@ -200,7 +213,7 @@ def targeted_legal_p5_32(tendency: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
-def targeted_illegal() -> list[dict[str, Any]]:
+def targeted_illegal_existing() -> list[dict[str, Any]]:
     """P5-21 frozen rejections: out-of-range a(e), μ, π; lineage and ledger variants;
     duplicate set keys; removed fields. Each is labelled with the rule it breaks."""
     e = SCHEMA["enums"]
@@ -312,7 +325,11 @@ def targeted_illegal() -> list[dict[str, Any]]:
         "EvidenceAllocationV2",
         {k: v for k, v in allocation.items() if k != "ordinal"},
     )
-    bad("ordinal above u64", "EvidenceAllocationV2", allocation | dict(ordinal=str(2**64)))
+    bad(
+        "ordinal above u64",
+        "EvidenceAllocationV2",
+        allocation | dict(ordinal=str(2**64)),
+    )
     v2 = sample("TendencyV2", 0)
     bad("magnitude weight below 0", "TendencyV2", v2 | dict(magnitude_weight=-1.0))
     bad(
@@ -333,6 +350,163 @@ def targeted_illegal() -> list[dict[str, Any]]:
     bad(
         "superseded allocation in group v2",
         "EvidenceGroupV2",
-        sample("EvidenceGroupV2", 0) | dict(allocations=[sample("EvidenceAllocation", 0)]),
+        sample("EvidenceGroupV2", 0)
+        | dict(allocations=[sample("EvidenceAllocation", 0)]),
     )
     return [dict(label=label, request=request(n, v)) for label, n, v in cases]
+
+
+def targeted_legal_p5_22() -> list[dict[str, Any]]:
+    vectors = [
+        request("Notice", sample("Notice", 0) | {"kind": kind}) for kind in range(1, 7)
+    ] + [
+        request("QueryV2", sample("QueryV2", 0) | {"kind": 4}),
+        request("GrowthControl", dict(schema_version=1, action=2)),
+        request(
+            "ProactivityBoundaries",
+            dict(
+                schema_version=1,
+                version="2",
+                allowed_kinds=list(range(1, 10)),
+                cooldowns=[],
+                gates=list(range(1, 6)),
+                budgets=dict(
+                    schema_version=1,
+                    min_interval_s=180.0,
+                    speak_per_hour=2,
+                    quiet_day_factor=0.5,
+                    autonomous_helper_per_day=30,
+                ),
+            ),
+        ),
+        request(
+            "ReadoutV2",
+            dict(
+                schema_version=1,
+                snapshot_id="A",
+                projected_at_ns="0",
+                v2=dict(
+                    schema_version=1, version="V", facing=0.5, tension=0.0, energy=0.5
+                ),
+            ),
+        ),
+    ]
+
+    boundary = next(v["value"] for v in vectors if v["name"] == "ProactivityBoundaries")
+    for entries in [
+        [("__proto__", 17.0)],
+        [
+            ("__proto__", 17.0),
+            ("constructor", 0.0),
+            ("prototype", 2.5),
+            ("toString", 3.0),
+            ("冷却", 4.0),
+        ],
+    ]:
+        vectors.append(
+            request(
+                "ProactivityBoundaries",
+                boundary
+                | dict(
+                    cooldowns=[
+                        dict(schema_version=1, kind=k, seconds=v) for k, v in entries
+                    ]
+                ),
+            )
+        )
+    return vectors
+
+
+def targeted_illegal() -> list[dict[str, Any]]:
+    import copy
+    import struct
+
+    base = sample("ReadoutV2", 0)
+    both = copy.deepcopy(base)
+    both["v2"] = sample("BodyReadoutV2", 0)
+    missing = {k: v for k, v in base.items() if k not in ("v1", "v2")}
+
+    # Independent ADR 0007 oracle. Explicit little-endian fields, no codec calls.
+    def blob(raw: bytes) -> bytes:
+        return struct.pack("<I", len(raw)) + raw
+
+    inner = (
+        b"NCV1"
+        + struct.pack("<I", 1)
+        + blob(b"echo.body-readout-v2")
+        + blob(b"V")
+        + struct.pack("<ddd", 0.5, 0.0, 0.5)
+    )
+    prefix = (
+        b"NCV1"
+        + struct.pack("<I", 1)
+        + blob(b"echo.readout-v2")
+        + blob(b"A")
+        + struct.pack("<Q", 0)
+    )
+    good = prefix + struct.pack("<I", 6) + blob(inner)
+    out = [
+        dict(label=label, request=request("ReadoutV2", value))
+        for label, value in [("oneof-missing", missing), ("oneof-multiple", both)]
+    ]
+    for label, raw in [
+        ("oneof-unknown-field", prefix + struct.pack("<I", 99) + blob(inner)),
+        ("oneof-trailing", good + b"\0"),
+        ("oneof-missing-wire", prefix),
+        ("oneof-two-wire", good + struct.pack("<I", 5) + blob(inner)),
+    ]:
+        out.append(
+            dict(
+                label=label,
+                request=dict(
+                    name="ReadoutV2", op="canonical", hex=raw.hex(), limits=LIMITS
+                ),
+            )
+        )
+
+    # Strict Protobuf rejects both arms instead of adopting last-value-wins.
+    def varint(n: int) -> bytes:
+        raw = bytearray()
+        while n >= 128:
+            raw.append((n & 127) | 128)
+            n >>= 7
+        return bytes(raw + bytes([n]))
+
+    # Nested payload validation is performed too; valid arms obtained from frozen vectors.
+    frozen = json.loads(
+        (Path(__file__).parent / "golden/legal.json").read_text(encoding="utf-8")
+    )
+    v1 = next(
+        v["expected"]["protobuf"]
+        for v in frozen
+        if v["request"]["name"] == "BodyReadout"
+    )
+    v2 = next(
+        v["expected"]["protobuf"]
+        for v in frozen
+        if v["request"]["name"] == "BodyReadoutV2"
+    )
+    pb = b"\x08\x01\x1a\x01A\x20\x00"
+    for label, raw in [
+        ("oneof-protobuf-missing", pb),
+        (
+            "oneof-protobuf-multiple",
+            pb
+            + b"\x2a"
+            + varint(len(bytes.fromhex(v1)))
+            + bytes.fromhex(v1)
+            + b"\x32"
+            + varint(len(bytes.fromhex(v2)))
+            + bytes.fromhex(v2),
+        ),
+        ("oneof-protobuf-unknown", pb + varint(99 << 3) + b"\0"),
+    ]:
+        out.append(
+            dict(
+                label=label,
+                request=dict(
+                    name="ReadoutV2", op="protobuf", hex=raw.hex(), limits=LIMITS
+                ),
+            )
+        )
+    return targeted_illegal_existing() + out

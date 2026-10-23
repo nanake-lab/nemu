@@ -1,0 +1,9 @@
+实现中英日 SenseVoice/Silero ASR、web 麦克风采集、desktop utilityProcess 与 AppBus 转发；Echo Core 网关留后续卡。模型与全部评测素材在 D 盘仓库外，SenseVoice 用户自行下载、不随应用分发，FunASR 出处与模型名保留，P7 重评许可。
+
+已同步最新 main，按已合并 ADR 0017 重判同一组有效全 60 条测量：VAD 中位 320.16 ms ≤350 ms，开口至 voice.bargeIn 中位 285.26 ms ≤300 ms，均通过；200 ms 持续门限与模型、概率阈值不变。提前误触发 1/60（1.67%），为 ja-013 用户确认非语音段被 Silero 误检后触发，具体声音原因不能确定。负值、长尾和旧目标 FAIL 原始证据保留，不是重新测量。
+
+人工文字注记修正后的既有 150 条推断重计分：zh CER 6.29%、en WER 6.69%、ja CER 7.59%、LID 99.33%，通过；静音 CPU 均值 0.11191% 通过。最终参考为 38 自动＋22 人工，原抽检异常和参考质量边界如实保留。
+
+当前全部卡片验收通过，旧阻塞已解决。新评测判定覆盖中位边界、提前打断只报告、缺失/重复/非法值。检查证据与限制见 reports/P4-01/REPORT.md、latency-acceptance-adr0017.json。本卡中难度无需审查，CI 全绿后由用户合并；needs-user 保留作为用户合并入口，执行方不合并、不取下一卡。
+
+最新 main 后 lint/typecheck、497 项 Vitest、构建、18 项 Python 辅助测试通过。完整 Electron 原断言重跑 4 通过/1 按设计跳过；首轮穿透点击 51/50 失败日志保留，额外点击原因未定。CI 最终状态以本 PR 检查为准。

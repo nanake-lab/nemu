@@ -1,0 +1,636 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\nanake\\AppData\\Local\\fnm_multishells\\20996_1792403813689\\node.exe",
+      "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "apps/desktop/playwright.config.ts"
+    ],
+    "configFile": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\playwright.config.ts",
+    "rootDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/apps/desktop/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/reports/P4-01/resume-e2e-20261021T233633/test-results/electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/apps/desktop/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\reports\\P4-01\\resume-e2e-20261021T233633\\test-results\\electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests",
+        "snapshotDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {},
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\reports\\P4-01\\resume-e2e-20261021T233633\\e2e-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "click-through.spec.ts",
+      "file": "click-through.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9149,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[Layout Info] {\n  originX: \u001b[33m100\u001b[39m,\n  originY: \u001b[33m100\u001b[39m,\n  scaleFactor: \u001b[33m1\u001b[39m,\n  transparentPhys: { x: \u001b[33m150\u001b[39m, y: \u001b[33m150\u001b[39m },\n  characterPhys: { x: \u001b[33m375\u001b[39m, y: \u001b[33m375\u001b[39m },\n  stageHwndHex: \u001b[32m'0x71b24'\u001b[39m,\n  counterHwndHex: \u001b[32m'0xb1b02'\u001b[39m\n}\n"
+                    },
+                    {
+                      "text": "[NativeMouseMove] (x=150, y=150, isInitial=true) -> out: Window under cursor: 0x390D68 'Chrome Legacy Window' PID=5556 | SendInputResult: 1 | Moved cursor to (150, 150) | \n"
+                    },
+                    {
+                      "text": "[NativeClicks] (x=150, y=150, count=50) -> out: Window under cursor: 0x390D68 'Chrome Legacy Window' PID=5556 | SendInputResult: 1 | Clicked 50 times at (150, 150) | \n"
+                    },
+                    {
+                      "text": "Before assert, counterPage state: {\n  count: \u001b[33m50\u001b[39m,\n  events: [\n    \u001b[32m'pointerdown'\u001b[39m, \u001b[32m'mousedown'\u001b[39m,\n    \u001b[32m'pointerup'\u001b[39m,   \u001b[32m'mouseup'\u001b[39m,\n    \u001b[32m'click'\u001b[39m,       \u001b[32m'pointerdown'\u001b[39m,\n    \u001b[32m'mousedown'\u001b[39m,   \u001b[32m'pointerup'\u001b[39m,\n    \u001b[32m'mouseup'\u001b[39m,     \u001b[32m'click'\u001b[39m\n  ]\n}\n"
+                    },
+                    {
+                      "text": "[NativeMouseMove] (x=375, y=375, isInitial=false) -> out: Window under cursor: 0x390D68 'Chrome Legacy Window' PID=5556 | SendInputResult: 1 | Moved cursor to (375, 375) | \n"
+                    },
+                    {
+                      "text": "[NativeClicks] (x=375, y=375, count=50) -> out: Window under cursor: 0xB1A78 'Chrome Legacy Window' PID=5556 | SendInputResult: 1 | Clicked 50 times at (375, 375) | \n"
+                    }
+                  ],
+                  "stderr": [
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launching> \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\.pnpm\\electron@44.7.0\\node_modules\\electron\\dist\\electron.exe\" \"-r\" \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\.pnpm\\playwright-core@1.64.0\\node_modules\\playwright-core\\lib\\server\\electron\\loader.js\" \"--inspect=0\" \"--remote-debugging-port=0\" \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\" \"--use-gl=angle\" \"--use-angle=swiftshader\" \"--enable-unsafe-swiftshader\"  \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launched> pid=39920 \u001b[30m+12ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][out]  \u001b[30m+255ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err] Debugger listening on ws://127.0.0.1:50509/a8426b4b-f948-4d6b-b319-74586c97dc0d \u001b[30m+151ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:50509/a8426b4b-f948-4d6b-b319-74586c97dc0d \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:50509/a8426b4b-f948-4d6b-b319-74586c97dc0d \u001b[30m+9ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err] Debugger attached. \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err]  \u001b[30m+312ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err] DevTools listening on ws://127.0.0.1:50511/devtools/browser/cd5944cd-9884-452f-82a6-69f272728a02 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:50511/devtools/browser/cd5944cd-9884-452f-82a6-69f272728a02 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:50511/devtools/browser/cd5944cd-9884-452f-82a6-69f272728a02 \u001b[30m+20ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][out] [Stage HWND]: 0x71b24, bounds: { x: \u001b[33m100\u001b[39m, y: \u001b[33m100\u001b[39m, width: \u001b[33m400\u001b[39m, height: \u001b[33m400\u001b[39m } \u001b[30m+525ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][out] [Counter HWND]: 0xb1b02, bounds: { x: \u001b[33m100\u001b[39m, y: \u001b[33m100\u001b[39m, width: \u001b[33m400\u001b[39m, height: \u001b[33m400\u001b[39m } \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err] (node:5556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set. \u001b[30m+6ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err] (Use `electron --trace-warnings ...` to show where the warning was created) \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnecting> ws://127.0.0.1:50509/a8426b4b-f948-4d6b-b319-74586c97dc0d \u001b[30m+7s\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err] Debugger ending on ws://127.0.0.1:50509/a8426b4b-f948-4d6b-b319-74586c97dc0d \u001b[30m+2ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:50509/a8426b4b-f948-4d6b-b319-74586c97dc0d code=1005 reason= \u001b[30m+2ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920][err] [Desktop] Voice utility exited { code: \u001b[33m0\u001b[39m } \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:50511/devtools/browser/cd5944cd-9884-452f-82a6-69f272728a02 code=1006 reason= \u001b[30m+409ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920] <process did exit: exitCode=0, signal=null> \u001b[30m+10ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920] starting temporary directories cleanup \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=39920] finished temporary directories cleanup \u001b[30m+0ms\u001b[0m\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-21T15:36:35.411Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b8a7324e2d84553b9fa-7014cb82d08e6d0ac6ab",
+          "file": "click-through.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "shell.spec.ts",
+      "file": "shell.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "stage window shell properties, channel routing, panel summoning and clean process termination",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4365,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launching> \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\.pnpm\\electron@44.7.0\\node_modules\\electron\\dist\\electron.exe\" \"-r\" \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\.pnpm\\playwright-core@1.64.0\\node_modules\\playwright-core\\lib\\server\\electron\\loader.js\" \"--inspect=0\" \"--remote-debugging-port=0\" \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\" \"--use-gl=angle\" \"--use-angle=swiftshader\" \"--enable-unsafe-swiftshader\"  \u001b[30m+33ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launched> pid=15336 \u001b[30m+3ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][out]  \u001b[30m+32ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err] Debugger listening on ws://127.0.0.1:50525/07b3508f-86a4-4229-9251-765482d5f049 \u001b[30m+18ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:50525/07b3508f-86a4-4229-9251-765482d5f049 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:50525/07b3508f-86a4-4229-9251-765482d5f049 \u001b[30m+2ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err] Debugger attached. \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err]  \u001b[30m+132ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err] DevTools listening on ws://127.0.0.1:50527/devtools/browser/72c9bd9f-fa33-4dee-904b-745e111d9306 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:50527/devtools/browser/72c9bd9f-fa33-4dee-904b-745e111d9306 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:50527/devtools/browser/72c9bd9f-fa33-4dee-904b-745e111d9306 \u001b[30m+5ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnecting> ws://127.0.0.1:50525/07b3508f-86a4-4229-9251-765482d5f049 \u001b[30m+2s\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:50525/07b3508f-86a4-4229-9251-765482d5f049 code=1005 reason= \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err] Debugger ending on ws://127.0.0.1:50525/07b3508f-86a4-4229-9251-765482d5f049 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err] [Desktop] Voice utility exited { code: \u001b[33m0\u001b[39m } \u001b[30m+5ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err] (node:43984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set. \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336][err] (Use `electron --trace-warnings ...` to show where the warning was created) \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:50527/devtools/browser/72c9bd9f-fa33-4dee-904b-745e111d9306 code=1006 reason= \u001b[30m+383ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336] <process did exit: exitCode=0, signal=null> \u001b[30m+11ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336] starting temporary directories cleanup \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=15336] finished temporary directories cleanup \u001b[30m+1ms\u001b[0m\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-21T15:36:44.600Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3420664513cb0bae123e-00ed56d4b78a6cbe0890",
+          "file": "shell.spec.ts",
+          "line": 12,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "two visible isolated windows; transparent stage; no core storage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4290,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launching> \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\.pnpm\\electron@44.7.0\\node_modules\\electron\\dist\\electron.exe\" \"-r\" \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\.pnpm\\playwright-core@1.64.0\\node_modules\\playwright-core\\lib\\server\\electron\\loader.js\" \"--inspect=0\" \"--remote-debugging-port=0\" \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\" \"--use-gl=angle\" \"--use-angle=swiftshader\" \"--enable-unsafe-swiftshader\"  \u001b[30m+2s\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launched> pid=24860 \u001b[30m+2ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][out]  \u001b[30m+30ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err] Debugger listening on ws://127.0.0.1:50540/500f3fbe-f5b7-4abb-ad99-63433674fe5b \u001b[30m+15ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:50540/500f3fbe-f5b7-4abb-ad99-63433674fe5b \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:50540/500f3fbe-f5b7-4abb-ad99-63433674fe5b \u001b[30m+2ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err] Debugger attached. \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err]  \u001b[30m+127ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err] DevTools listening on ws://127.0.0.1:50542/devtools/browser/ce0e0caa-04e4-4a94-90ec-bbfdf86fc941 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:50542/devtools/browser/ce0e0caa-04e4-4a94-90ec-bbfdf86fc941 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:50542/devtools/browser/ce0e0caa-04e4-4a94-90ec-bbfdf86fc941 \u001b[30m+4ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnecting> ws://127.0.0.1:50540/500f3fbe-f5b7-4abb-ad99-63433674fe5b \u001b[30m+4s\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:50540/500f3fbe-f5b7-4abb-ad99-63433674fe5b code=1005 reason= \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err] Debugger ending on ws://127.0.0.1:50540/500f3fbe-f5b7-4abb-ad99-63433674fe5b \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err] [Desktop] Voice utility exited { code: \u001b[33m0\u001b[39m } \u001b[30m+2ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err] (node:6560) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set. \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860][err] (Use `electron --trace-warnings ...` to show where the warning was created) \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:50542/devtools/browser/ce0e0caa-04e4-4a94-90ec-bbfdf86fc941 code=1006 reason= \u001b[30m+358ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860] <process did exit: exitCode=0, signal=null> \u001b[30m+10ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860] starting temporary directories cleanup \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=24860] finished temporary directories cleanup \u001b[30m+1ms\u001b[0m\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-21T15:36:48.994Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-29212982cc077c56ffc7",
+          "file": "smoke.spec.ts",
+          "line": 9,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "voice-idle.spec.ts",
+      "file": "voice-idle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P4-01 60-second utility CPU with live silent PCM",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Local quiet-window measurement only: pnpm measure:asr",
+                  "location": {
+                    "file": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests\\voice-idle.spec.ts",
+                    "line": 9,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 1,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T15:36:53.389Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Local quiet-window measurement only: pnpm measure:asr",
+                      "location": {
+                        "file": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests\\voice-idle.spec.ts",
+                        "line": 9,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "b0649a8ce6db43b81878-4ab0073675c98e9263c1",
+          "file": "voice-idle.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "voice.spec.ts",
+      "file": "voice.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P4-01 utility ports, real AudioWorklet capture and disable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3996,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launching> \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\.pnpm\\electron@44.7.0\\node_modules\\electron\\dist\\electron.exe\" \"-r\" \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\.pnpm\\playwright-core@1.64.0\\node_modules\\playwright-core\\lib\\server\\electron\\loader.js\" \"--inspect=0\" \"--remote-debugging-port=0\" \"C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\" \"--use-fake-device-for-media-stream\" \"--use-gl=angle\" \"--use-angle=swiftshader\" \"--enable-unsafe-swiftshader\"  \u001b[30m+864ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<launched> pid=37984 \u001b[30m+10ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][out]  \u001b[30m+31ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err] Debugger listening on ws://127.0.0.1:50551/ad9f0197-da5c-4c47-987a-37346a6ee65c \u001b[30m+17ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:50551/ad9f0197-da5c-4c47-987a-37346a6ee65c \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:50551/ad9f0197-da5c-4c47-987a-37346a6ee65c \u001b[30m+1ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err] Debugger attached. \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err]  \u001b[30m+135ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err] DevTools listening on ws://127.0.0.1:50553/devtools/browser/076554d2-a650-4592-b117-d5d24e684f24 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connecting> ws://127.0.0.1:50553/devtools/browser/076554d2-a650-4592-b117-d5d24e684f24 \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws connected> ws://127.0.0.1:50553/devtools/browser/076554d2-a650-4592-b117-d5d24e684f24 \u001b[30m+6ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnecting> ws://127.0.0.1:50551/ad9f0197-da5c-4c47-987a-37346a6ee65c \u001b[30m+3s\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:50551/ad9f0197-da5c-4c47-987a-37346a6ee65c code=1005 reason= \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err] Debugger ending on ws://127.0.0.1:50551/ad9f0197-da5c-4c47-987a-37346a6ee65c \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err] For help, see: https://nodejs.org/learn/getting-started/debugging \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err] [Desktop] Voice utility exited { code: \u001b[33m0\u001b[39m } \u001b[30m+22ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err] (node:15880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set. \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984][err] (Use `electron --trace-warnings ...` to show where the warning was created) \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m<ws disconnected> ws://127.0.0.1:50553/devtools/browser/076554d2-a650-4592-b117-d5d24e684f24 code=1006 reason= \u001b[30m+82ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984] <process did exit: exitCode=0, signal=null> \u001b[30m+15ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984] starting temporary directories cleanup \u001b[30m+0ms\u001b[0m\n"
+                    },
+                    {
+                      "text": "  \u001b[30;1mpw:browser \u001b[0m[pid=37984] finished temporary directories cleanup \u001b[30m+1ms\u001b[0m\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-21T15:36:53.406Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4f8e77fcf9b309101475-13be142f12cfc4667567",
+          "file": "voice.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-21T15:36:34.585Z",
+    "duration": 22862.945000000003,
+    "expected": 4,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

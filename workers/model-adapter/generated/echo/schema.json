@@ -7638,7 +7638,11 @@
         }
       ],
       "file": "terminal.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "ApprovalRequestV2",
+        "reason": "P5-22; CONTRACTS v2.2 successor, frozen bytes retained"
+      }
     },
     "RunState": {
       "tag": "echo.run-state",
@@ -7711,7 +7715,11 @@
         }
       ],
       "file": "terminal.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "RunStateV2",
+        "reason": "P5-22; CONTRACTS v2.2 successor, frozen bytes retained"
+      }
     },
     "ExpressionWeight": {
       "tag": "echo.expression-weight",
@@ -7868,7 +7876,11 @@
         }
       ],
       "file": "terminal.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "ReadoutV2",
+        "reason": "P5-22; CONTRACTS v2.2 successor, frozen bytes retained"
+      }
     },
     "QueryFilter": {
       "tag": "echo.query-filter",
@@ -8037,7 +8049,11 @@
         }
       ],
       "file": "terminal.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "QueryV2",
+        "reason": "P5-22; CONTRACTS v2.2 successor, frozen bytes retained"
+      }
     },
     "QueryResult": {
       "tag": "echo.query-result",
@@ -8077,7 +8093,11 @@
         }
       ],
       "file": "terminal.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "QueryResultV2",
+        "reason": "P5-22; CONTRACTS v2.2 successor, frozen bytes retained"
+      }
     },
     "ApprovalDecision": {
       "tag": "echo.approval-decision",
@@ -8109,7 +8129,11 @@
         }
       ],
       "file": "terminal.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "ApprovalDecisionV2",
+        "reason": "P5-22; CONTRACTS v2.2 successor, frozen bytes retained"
+      }
     },
     "OutputCancel": {
       "tag": "echo.output-cancel",
@@ -8776,6 +8800,698 @@
       "reserved": [
         10
       ]
+    },
+    "BodyReadoutV2": {
+      "tag": "echo.body-readout-v2",
+      "source": "CONTRACTS 7; v2.0 §9.3; P5-22",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "facing",
+          "type": "double",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "tension",
+          "type": "double",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "energy",
+          "type": "double",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "reserved": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "ReadoutV2": {
+      "tag": "echo.readout-v2",
+      "source": "CONTRACTS 4.3,7; ADR 0007 §6; P5-22",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "projected_at_ns",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "v1",
+          "type": "BodyReadout",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "body"
+        },
+        {
+          "name": "v2",
+          "type": "BodyReadoutV2",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "body"
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {
+        "oneofs": {
+          "body": {
+            "fields": [
+              "v1",
+              "v2"
+            ],
+            "required": true
+          }
+        }
+      },
+      "supersedes": "Readout",
+      "reserved": [
+        2
+      ]
+    },
+    "RunStateV2": {
+      "tag": "echo.run-state-v2",
+      "source": "CONTRACTS 4.1,4.3; v2.0 §13; I29",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "states",
+          "type": "RunStatus",
+          "number": 2,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "speech_mode",
+          "type": "SpeechMode",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "strict",
+          "type": "bool",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "born_at",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "autonomy",
+          "type": "Autonomy",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "reasons",
+          "type": "string",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "lineage",
+          "type": "TerminalLineage",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "supersedes": "RunState",
+      "reserved": [
+        5
+      ]
+    },
+    "Notice": {
+      "tag": "echo.notice",
+      "source": "CONTRACTS 4.3; v2.0 §5.4,12; AC2-20",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "notice_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "NoticeKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "at",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "l_ref",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "QueryV2": {
+      "tag": "echo.query-v2",
+      "source": "CONTRACTS 4.3; v2.0 §2.5,5.4; user_view only",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "query_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "filter",
+          "type": "QueryFilter",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "limit",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "QueryKindV2",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "supersedes": "Query",
+      "reserved": [
+        3
+      ]
+    },
+    "QueryResultV2": {
+      "tag": "echo.query-result-v2",
+      "source": "CONTRACTS 4.3; v2.0 §2.5; L with evidence references",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "query_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "status",
+          "type": "QueryStatus",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "items",
+          "type": "QueryItem",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "growth_entries",
+          "type": "LedgerEntry",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "supersedes": "QueryResult"
+    },
+    "GrowthControl": {
+      "tag": "echo.growth-control",
+      "source": "CONTRACTS 4.3; v2.0 §5.4; ADR 0010 §5",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action",
+          "type": "TerminalGrowthAction",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ApprovalRequestV2": {
+      "tag": "echo.approval-request-v2",
+      "source": "CONTRACTS 4.3,6; I26; ADR 0011 §9",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "approval_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "tier",
+          "type": "ToolTier",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "expires_at_ns",
+          "type": "sint64",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_payload",
+          "type": "bytes",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "payload_digest",
+          "type": "bytes",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "supersedes": "ApprovalRequest"
+    },
+    "ApprovalDecisionV2": {
+      "tag": "echo.approval-decision-v2",
+      "source": "CONTRACTS 4.3,6; I26",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "approval_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "decision",
+          "type": "ApprovalChoice",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "payload_digest",
+          "type": "bytes",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "supersedes": "ApprovalDecision"
+    },
+    "SocialAction": {
+      "tag": "echo.social-action",
+      "source": "CONTRACTS 5.3,6; ADR 0011 §3,9,10; P6-14/P6-15 execute",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "SocialActionKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_payload",
+          "type": "bytes",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ProactivityCooldown": {
+      "tag": "echo.proactivity-cooldown",
+      "source": "CONTRACTS 8; P5-22 D1 revision; per-action cooldown in seconds",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "seconds",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {}
+    },
+    "ProactivityBudgets": {
+      "tag": "echo.proactivity-budgets",
+      "source": "CONTRACTS 8; P5-22 D1 revision",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "min_interval_s",
+          "type": "double",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "json_name": "minIntervalS"
+        },
+        {
+          "name": "speak_per_hour",
+          "type": "uint32",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "json_name": "speakPerHour"
+        },
+        {
+          "name": "quiet_day_factor",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0,
+          "json_name": "quietDayFactor"
+        },
+        {
+          "name": "autonomous_helper_per_day",
+          "type": "uint32",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "json_name": "autonomousHelperPerDay"
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "resource": true
+    },
+    "ProactivityBoundaries": {
+      "tag": "echo.proactivity-boundaries",
+      "source": "CONTRACTS 8; v2.0 9.4; P5-22 D1 revision",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "allowed_kinds",
+          "type": "ProactiveKind",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self",
+          "json_name": "allowedKinds"
+        },
+        {
+          "name": "cooldowns",
+          "type": "ProactivityCooldown",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "kind",
+          "json_name": "cooldownS",
+          "json_map": "kind:seconds"
+        },
+        {
+          "name": "gates",
+          "type": "ProactiveGate",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "budgets",
+          "type": "ProactivityBudgets",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {},
+      "resource": true
     }
   },
   "enums": {
@@ -9115,6 +9831,77 @@
       "ALLOW_ONCE": 1,
       "ALLOW_ALWAYS": 2,
       "DENY": 3
+    },
+    "TerminalLineage": {
+      "TERMINAL_LINEAGE_UNSPECIFIED": 0,
+      "TERMINAL_REHEARSAL": 1,
+      "TERMINAL_LIFE": 2
+    },
+    "QueryKindV2": {
+      "QUERY_V2_UNSPECIFIED": 0,
+      "QUERY_MEMORY": 1,
+      "QUERY_ACTIONS": 2,
+      "QUERY_RUN_HISTORY": 3,
+      "QUERY_GROWTH": 4
+    },
+    "NoticeKind": {
+      "NOTICE_UNSPECIFIED": 0,
+      "REVIEW_HOLD": 1,
+      "SLOW_DRIFT": 2,
+      "NOTICE_GROWTH_PAUSED": 3,
+      "NOTICE_GROWTH_RESUMED": 4,
+      "NOTICE_MIGRATION": 5,
+      "NOTICE_LAW_VERSION": 6
+    },
+    "TerminalGrowthAction": {
+      "TERMINAL_GROWTH_UNSPECIFIED": 0,
+      "TERMINAL_PAUSE": 1,
+      "TERMINAL_RESUME": 2
+    },
+    "SocialActionKind": {
+      "SOCIAL_UNSPECIFIED": 0,
+      "SOCIAL_MESSAGE": 1,
+      "SOCIAL_COMMIT": 2
+    },
+    "ProactiveKind": {
+      "PROACTIVE_UNSPECIFIED": 0,
+      "PROACTIVE_SPEAK": 1,
+      "PROACTIVE_MOTION": 2,
+      "PROACTIVE_GO_TO": 3,
+      "PROACTIVE_SIT": 4,
+      "PROACTIVE_SLEEP": 5,
+      "PROACTIVE_WAKE": 6,
+      "PROACTIVE_PEEK": 7,
+      "PROACTIVE_GAZE": 8,
+      "PROACTIVE_HELPER_ASK": 9
+    },
+    "ProactiveGate": {
+      "GATE_UNSPECIFIED": 0,
+      "GATE_DND": 1,
+      "GATE_QUIET_HOURS": 2,
+      "GATE_BUDGET": 3,
+      "GATE_MODE": 4,
+      "GATE_MIN_INTERVAL": 5
+    }
+  },
+  "json_enums": {
+    "ProactiveKind": {
+      "PROACTIVE_SPEAK": "speak",
+      "PROACTIVE_MOTION": "motion",
+      "PROACTIVE_GO_TO": "goTo",
+      "PROACTIVE_SIT": "sit",
+      "PROACTIVE_SLEEP": "sleep",
+      "PROACTIVE_WAKE": "wake",
+      "PROACTIVE_PEEK": "peek",
+      "PROACTIVE_GAZE": "gaze",
+      "PROACTIVE_HELPER_ASK": "helper.ask"
+    },
+    "ProactiveGate": {
+      "GATE_DND": "dnd",
+      "GATE_QUIET_HOURS": "quietHours",
+      "GATE_BUDGET": "budget",
+      "GATE_MODE": "mode",
+      "GATE_MIN_INTERVAL": "minInterval"
     }
   },
   "superseded_enums": {
