@@ -1,0 +1,18 @@
+# Large prior diagnostics remain on D disk; final compressed raw evidence is versioned.
+visual/
+visual-v3/
+head-source-trial/
+visual-v4/jitter-*.json
+!visual-v4/jitter-summary.json
+
+# Diagnostic controls are retained locally on D with SHA-256 inventory, not duplicated in Git.
+source-control/*.json.gz
+diagnosis-source-B-params/*.json.gz
+diagnosis-B-no-colliders/*.json.gz
+source-control.log
+diagnosis-source-B-params.log
+diagnosis-B-no-colliders.log
+selected-B-frequency.log
+formal-hook-mypy.log
+formal-hook-pytest.log
+formal-hook-ruff.log

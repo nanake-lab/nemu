@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "avg_frame_rate": "30/1",
+        "nb_read_frames": "720"
+      }
+    ],
+    "format": {
+      "duration": "24.000000"
+    }
+  },
+  "settings": [
+    {
+      "id": "calm",
+      "stiffness": 1.755,
+      "drag": 0.75,
+      "gravity": 0.035
+    },
+    {
+      "id": "heavyBalanced",
+      "stiffness": 1.2,
+      "drag": 0.83,
+      "gravity": 0.09
+    },
+    {
+      "id": "heavyDamped",
+      "stiffness": 0.95,
+      "drag": 0.88,
+      "gravity": 0.14
+    }
+  ],
+  "tailTips": [
+    [
+      0.21934132974151882,
+      0.9089962339345666,
+      -0.33101462428393913
+    ],
+    [
+      0.01275257776027474,
+      0.924475015229933,
+      -0.3293050986176273
+    ],
+    [
+      -0.06633711916854011,
+      0.9128403556581685,
+      -0.33805080414351973
+    ]
+  ],
+  "playback": {
+    "duration": 24,
+    "width": 1920,
+    "height": 1080
+  },
+  "checks": [
+    "all 720 encoded frames decoded by ffprobe",
+    "three actual tail settings",
+    "different tail responses under identical motion",
+    "live comparison play/pause/reset",
+    "single preview default calm and both new presets",
+    "served MP4 MIME",
+    "browser H264 playback"
+  ],
+  "errors": []
+}

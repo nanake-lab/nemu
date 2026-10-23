@@ -1,0 +1,67 @@
+$ node tools/asset-pipeline/launch.mjs build -Config D:/Dev/nemu/content/_candidates/P2-05/springs/heavy-review-balanced.yaml -Output D:/Dev/cache/P2-05/formal-B-final
+step=import exit=0 log=D:\Dev\cache\P2-05\formal-B-final\01-import.log
+step=validate exit=0 log=D:\Dev\cache\P2-05\formal-B-final\02-validate.log
+step=tail exit=0 log=D:\Dev\cache\P2-05\formal-B-final\03-tail.log
+step=springs exit=0 log=D:\Dev\cache\P2-05\formal-B-final\04-springs.log
+step=expressions exit=0 log=D:\Dev\cache\P2-05\formal-B-final\05-expressions.log
+step=materials exit=0 log=D:\Dev\cache\P2-05\formal-B-final\06-materials.log
+step=textures exit=0 log=D:\Dev\cache\P2-05\formal-B-final\07-textures.log
+step=export exit=0 log=D:\Dev\cache\P2-05\formal-B-final\08-export.log
+step=profile exit=0 log=D:\Dev\cache\P2-05\formal-B-final\09-profile.log
+step=lint exit=1 log=D:\Dev\cache\P2-05\formal-B-final\10-lint.log
+{"step": "lint", "command": ["C:\\Users\\nanake\\AppData\\Local\\fnm_multishells\\7728_1792722673628\\pnpm.cmd", "asset:lint", "D:\\Dev\\cache\\P2-05\\formal-B-final\\nemu.vrm", "--profile", "D:\\Dev\\cache\\P2-05\\formal-B-final\\nemu.profile.json", "--manifest", "D:\\Dev\\cache\\P2-05\\formal-B-final\\manifest.json", "--json"]}
+$ node tools/asset-lint/launch.mjs 'D:\Dev\cache\P2-05\formal-B-final\nemu.vrm' --profile 'D:\Dev\cache\P2-05\formal-B-final\nemu.profile.json' --manifest 'D:\Dev\cache\P2-05\formal-B-final\manifest.json' --json
+{
+  "file": "D:\\Dev\\cache\\P2-05\\formal-B-final\\nemu.vrm",
+  "errors": 4,
+  "warnings": 1,
+  "diagnostics": [
+    {
+      "rule": "A1.1-bone-count",
+      "severity": "warning",
+      "message": "277 skin joints exceed the 250-bone target.",
+      "repair": "Remove unused skin joints and preserve the required humanoid rig."
+    },
+    {
+      "rule": "A1.3-happy-override",
+      "severity": "error",
+      "message": "happy must set overrideBlink to \"blend\".",
+      "repair": "Set overrideBlink to \"blend\"."
+    },
+    {
+      "rule": "A1.3-relaxed-override",
+      "severity": "error",
+      "message": "relaxed must set overrideBlink to \"blend\".",
+      "repair": "Set overrideBlink to \"blend\"."
+    },
+    {
+      "rule": "A1.3-surprised-override",
+      "severity": "error",
+      "message": "surprised must set overrideBlink to \"block\".",
+      "repair": "Set overrideBlink to \"block\"."
+    },
+    {
+      "rule": "A1.3-custom-expressions",
+      "severity": "error",
+      "message": "Required Nemu expressions are missing: nemuSmug, nemuCatMouth, nemuSparkle, nemuBlush, nemuTeary, nemuSleepy, nemuPout, nemuAngryMark.",
+      "repair": "Add the eight custom expressions listed in CONTRACTS.md 1.3."
+    }
+  ],
+  "metrics": {
+    "nodeCount": 281,
+    "meshCount": 4,
+    "triangleCount": 54587,
+    "textureCount": 12,
+    "imageCount": 13,
+    "materialCount": 9,
+    "estimatedTextureBytes": 134917461,
+    "skinJointCount": 277,
+    "maximumMeshMorphTargetCount": 57,
+    "accessorBoundsHeightM": 1.5842380561352911,
+    "fileBytes": 12160840
+  }
+}
+[ELIFECYCLE] Command failed with exit code 1.
+
+step=lint object=nemu.vrm expected=asset-lint 0 errors actual=exit 1; see raw diagnostics (sample exceptions are reviewed separately)
+[ELIFECYCLE] Command failed with exit code 1.
