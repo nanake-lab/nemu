@@ -1,5 +1,7 @@
-//! Full same-input event states; only the precomputed support evaluator is adapted.
+//! Same-input phase-machine states with prepared tendencies and W/S plans.
 use super::fixture::tendency;
+use super::reference_support::{ReferenceChild, fault_code};
+use super::state_bits::{group_bits_eq, snapshot_bits_eq};
 use super::world::{Fixture, default_theta};
 use crate::law::pending::{Allocation, EvidenceGroup, Tendency};
 use crate::law::plan::{Plan, Values};
@@ -31,10 +33,12 @@ impl Input<'_> {
             let mut t = tendency(&f.law, &id, if p == 0.0 { None } else { Some(p) });
             t.evidence_a = self.float();
             t.evidence_v = self.float();
-            t.evidence_b = 4.0 + t.evidence_v;
             t.magnitude_sum = self.float();
             t.magnitude_weight = self.float();
             t.pi = self.float();
+            t.evidence_b = self.float();
+            t.h_hat = self.float();
+            t.typical_magnitude = self.float();
             t.group_count = DecimalU64(self.number() as u64);
             t.flip_count = DecimalU64(self.number() as u64);
             t.last_sign = match self.token() {
@@ -43,7 +47,6 @@ impl Input<'_> {
                 "0" => None,
                 s => panic!("{s}"),
             };
-            t.h_hat = f.law.h_hat(t.group_count.0, t.flip_count.0).unwrap();
             out.push(t);
         }
         out
@@ -90,20 +93,22 @@ impl Input<'_> {
 
 #[test]
 fn adr0019_python_events_review_and_side_tapes_match_g_phase_machine() {
-    let mut child = Command::new(std::env::var("P523_PYTHON").unwrap_or_else(|_| "python".into()))
-        .arg("-B")
-        .arg(
-            std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-                .join("src/law/tests/reference_event_vectors.py"),
-        )
-        .env("PYTHONUTF8", "1")
-        .stdout(Stdio::piped())
-        .stderr(Stdio::inherit())
-        .spawn()
-        .unwrap();
+    let mut child = ReferenceChild(
+        Command::new(std::env::var("P523_PYTHON").unwrap_or_else(|_| "python".into()))
+            .arg("-B")
+            .arg(
+                std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+                    .join("src/law/tests/reference_event_vectors.py"),
+            )
+            .env("PYTHONUTF8", "1")
+            .stdout(Stdio::piped())
+            .stderr(Stdio::inherit())
+            .spawn()
+            .unwrap(),
+    );
     let mut checked = 0;
     let mut faults = 0;
-    for (line_number, line) in BufReader::new(child.stdout.take().unwrap())
+    for (line_number, line) in BufReader::new(child.0.stdout.take().unwrap())
         .lines()
         .enumerate()
     {
@@ -227,6 +232,8 @@ fn adr0019_python_events_review_and_side_tapes_match_g_phase_machine() {
             });
         }
         let group_list: Vec<_> = groups.values().cloned().collect();
+        let before_snapshot = snapshot.clone();
+        let before_groups = group_list.clone();
         let aliases = BTreeMap::new();
         let step = Step {
             revision: "r",
@@ -255,16 +262,39 @@ fn adr0019_python_events_review_and_side_tapes_match_g_phase_machine() {
                 )
             },
         );
-        if input.token() == "fault" {
+        assert!(
+            snapshot_bits_eq(&snapshot, &before_snapshot),
+            "input R changed at {line_number}"
+        );
+        assert_eq!(group_list.len(), before_groups.len());
+        assert!(
+            group_list
+                .iter()
+                .zip(&before_groups)
+                .all(|(a, b)| group_bits_eq(a, b)),
+            "input groups changed at {line_number}"
+        );
+        let status = input.token().to_owned();
+        if status == "fault" {
+            let error = result.expect_err("reference event fault accepted");
+            assert_eq!(
+                fault_code(&error),
+                input.token(),
+                "fault event {line_number}: {error}; {line}"
+            );
             assert!(
-                result.is_err(),
-                "expected fault at event {line_number}: {line}"
+                input.0.next().is_none(),
+                "extra fault data at {line_number}"
             );
             faults += 1;
             continue;
         }
+        assert_eq!(status, "ok");
         let out = result.unwrap_or_else(|e| panic!("event {line_number}: {e}; {line}"));
+        let changed = input.number();
+        assert!(changed <= 1);
         let n = input.number();
+        assert_eq!(out.counterfactual.len(), n, "cf count at {line_number}");
         for _ in 0..n {
             let id = input.id();
             let pi = input.float();
@@ -274,22 +304,32 @@ fn adr0019_python_events_review_and_side_tapes_match_g_phase_machine() {
                 "cf event {line_number}: {id}"
             );
         }
-        let expected = f.snapshot(input.states(&f, prior));
-        for (actual, want) in out.r.tendencies.iter().zip(&expected.tendencies) {
-            assert_eq!(actual, want, "state event {line_number}: {line}");
+        let mut expected = f.snapshot(input.states(&f, prior));
+        if changed == 1 {
+            expected.revision = step.revision.to_owned();
         }
-        assert_eq!(out.r.tendencies.len(), expected.tendencies.len());
+        assert!(
+            snapshot_bits_eq(&out.r, &expected),
+            "state bits at event {line_number}: {line}"
+        );
         for group in out.groups {
             groups.insert(group.group_id.clone(), group);
         }
         let expected_groups = input.groups();
-        assert_eq!(
-            groups, expected_groups,
-            "allocations event {line_number}: {line}"
+        assert_eq!(groups.len(), expected_groups.len());
+        for (id, want) in expected_groups {
+            assert!(
+                group_bits_eq(&groups[&id], &want),
+                "allocation bits at event {line_number}: {line}"
+            );
+        }
+        assert!(
+            input.0.next().is_none(),
+            "extra event data at {line_number}"
         );
         checked += 1;
     }
-    assert!(child.wait().unwrap().success());
+    assert!(child.0.wait().unwrap().success());
     assert!(checked > 6000 && faults > 0);
     println!(
         "Full event parity: {checked} unique events, {faults} atomic faults; zero R, allocation or cf mismatches"

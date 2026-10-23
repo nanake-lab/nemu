@@ -140,7 +140,6 @@ pub(super) fn store_plan(
     let mut ids: Vec<&String> = plan.values.keys().collect();
     ids.sort_by(|a, b| tendency_order(a, b));
     let mut allocations = Vec::with_capacity(ids.len());
-    let mut dirty = Vec::new();
     let mut first = Vec::new();
     for id in ids {
         let v = plan.values[id];
@@ -167,7 +166,7 @@ pub(super) fn store_plan(
             Some(old) => {
                 let new = allocation(old.ordinal.0, old.actual_retention);
                 if new != *old || factors_changed {
-                    dirty.push(id.clone());
+                    work.revised.insert(id.clone());
                     work.mark(id, &item.group_id);
                 }
                 allocations.push(new);
@@ -187,7 +186,6 @@ pub(super) fn store_plan(
         work.touched.insert(item.group_id.clone());
     }
     work.groups.insert(item.group_id.clone(), group);
-    let _ = dirty; // all old revisions are replayed by the event phase boundary
     Ok(first)
 }
 

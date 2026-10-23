@@ -269,7 +269,7 @@ pub fn law_7() -> (u64, u64, f64) {
             .collect();
         let l = law(3.0, 1.0, 0.1, 10.0);
         let mut t = tendency(&l, "k", None);
-        let rhos: Vec<f64> = groups
+        let retentions: Vec<f64> = groups
             .iter()
             .map(|&(w, s)| record(&mut t, &l, w, s).unwrap())
             .collect();
@@ -277,10 +277,10 @@ pub fn law_7() -> (u64, u64, f64) {
         for &(w, s) in &groups {
             record(&mut replay, &l, w, s).unwrap();
         }
-        bitwise_bad += u64::from(replay != t);
+        bitwise_bad += u64::from(!super::state_bits::tendency_bits_eq(&replay, &t));
         let mut closed = 0.0;
         for (i, &(w, s)) in groups.iter().enumerate() {
-            closed += rhos[i + 1..].iter().fold(1.0, |p, r| p * r) * w * s;
+            closed += retentions[i + 1..].iter().fold(1.0, |p, q| p * q) * w * s;
         }
         closed_differs += u64::from(closed != t.evidence_a);
         max_rel = max_rel.max((closed - t.evidence_a).abs() / t.evidence_a.abs().max(1.0));

@@ -22,7 +22,7 @@ pub(crate) fn typical_magnitude(law: &Law, sum: f64, weight: f64) -> LawResult<f
 }
 
 /// One group with weight W, support S, μ and p_c (None for teaching) recorded
-/// into k (D4). Returns the ρ_k used.
+/// into k (D4). Returns the actual q_k saved for historical replay.
 pub(crate) fn record_group(
     t: &mut Tendency,
     law: &Law,
@@ -53,7 +53,11 @@ pub(crate) fn fold_group(
     projection: Option<f64>,
     strict: bool,
 ) -> LawResult<()> {
-    if !mu.is_finite() || !(0.0..=1.0).contains(&mu) || projection.is_some_and(|p| !p.is_finite()) {
+    let mu = finite(mu, "magnitude input")?;
+    let projection = projection
+        .map(|p| finite(p, "projection input"))
+        .transpose()?;
+    if !(0.0..=1.0).contains(&mu) {
         return Err(LawError::InvalidInput("invalid magnitude input".into()));
     }
     let mut next = t.clone();

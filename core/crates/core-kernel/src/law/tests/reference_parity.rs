@@ -1,5 +1,7 @@
 //! Every scalar addition and share operation of legacy+extra, same input bits.
 use super::fixture::{law, tendency};
+use super::reference_support::{ReferenceChild, fault_code};
+use super::state_bits::tendency_bits_eq;
 use crate::law::recurrence::actual_retention;
 use crate::law::replay::fold_group;
 use crate::law::{LawError, ShareInput, shares};
@@ -25,15 +27,17 @@ fn adr0019_python_legacy_and_extra_same_input_all_scalar_bits() {
     let python = std::env::var("P523_PYTHON").unwrap_or_else(|_| "python".into());
     let script =
         std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("src/law/tests/reference_vectors.py");
-    let mut child = Command::new(python)
-        .arg("-B")
-        .arg(script)
-        .env("PYTHONUTF8", "1")
-        .stdout(Stdio::piped())
-        .stderr(Stdio::inherit())
-        .spawn()
-        .unwrap();
-    let stdout = child.stdout.take().unwrap();
+    let mut child = ReferenceChild(
+        Command::new(python)
+            .arg("-B")
+            .arg(script)
+            .env("PYTHONUTF8", "1")
+            .stdout(Stdio::piped())
+            .stderr(Stdio::inherit())
+            .spawn()
+            .unwrap(),
+    );
+    let stdout = child.0.stdout.take().unwrap();
     let mut scalar = 0u64;
     let mut share_count = 0u64;
     let mut faults = 0u64;
@@ -81,13 +85,20 @@ fn adr0019_python_legacy_and_extra_same_input_all_scalar_bits() {
                 })();
                 if v[18] == "fault" {
                     faults += 1;
-                    assert!(
-                        result.is_err(),
-                        "reference fault {} accepted at vector {line_number}",
-                        v[19]
+                    assert_eq!(v.len(), 20, "fault vector {line_number}");
+                    let error = result.expect_err("reference fault accepted");
+                    assert_eq!(
+                        fault_code(&error),
+                        v[19],
+                        "fault category at vector {line_number}: {error}; {line}"
                     );
-                    assert_eq!(t, before, "fault changed state at {line_number}");
+                    assert!(
+                        tendency_bits_eq(&t, &before),
+                        "fault changed state at {line_number}"
+                    );
                 } else {
+                    assert_eq!(v[18], "ok");
+                    assert_eq!(v.len(), 31, "scalar vector {line_number}");
                     let q =
                         result.unwrap_or_else(|err| panic!("vector {line_number}: {err}; {line}"));
                     let got = [
@@ -98,17 +109,32 @@ fn adr0019_python_legacy_and_extra_same_input_all_scalar_bits() {
                         t.magnitude_sum,
                         t.magnitude_weight,
                         t.h_hat,
+                        t.evidence_b,
+                        t.typical_magnitude,
                     ];
-                    for (field, (got, want)) in got.iter().zip(&v[19..26]).enumerate() {
+                    for (field, (got, want)) in got.iter().zip(&v[19..28]).enumerate() {
                         assert_eq!(
                             got.to_bits(),
                             float(want).to_bits(),
                             "vector {line_number} field {field}: {line}"
                         );
                     }
-                    assert_eq!(t.group_count.0, v[26].parse::<u64>().unwrap());
-                    assert_eq!(t.flip_count.0, v[27].parse::<u64>().unwrap());
-                    assert_eq!(t.last_sign, sign(v[28]));
+                    let mut expected = before;
+                    expected.evidence_a = float(v[20]);
+                    expected.evidence_v = float(v[21]);
+                    expected.pi = float(v[22]);
+                    expected.magnitude_sum = float(v[23]);
+                    expected.magnitude_weight = float(v[24]);
+                    expected.h_hat = float(v[25]);
+                    expected.evidence_b = float(v[26]);
+                    expected.typical_magnitude = float(v[27]);
+                    expected.group_count = DecimalU64(v[28].parse().unwrap());
+                    expected.flip_count = DecimalU64(v[29].parse().unwrap());
+                    expected.last_sign = sign(v[30]);
+                    assert!(
+                        tendency_bits_eq(&t, &expected),
+                        "full scalar state at {line_number}: {line}"
+                    );
                     scalar += 1;
                 }
             }
@@ -124,10 +150,19 @@ fn adr0019_python_legacy_and_extra_same_input_all_scalar_bits() {
                     .collect();
                 let result = shares(&input);
                 if v[2 + 2 * n] == "fault" {
-                    assert!(result.is_err());
+                    assert_eq!(v.len(), 4 + 2 * n, "share fault {line_number}");
+                    let error = result.expect_err("reference share fault accepted");
+                    assert_eq!(
+                        fault_code(&error),
+                        v[3 + 2 * n],
+                        "share fault {line_number}: {error}"
+                    );
                     faults += 1;
                 } else {
+                    assert_eq!(v[2 + 2 * n], "ok");
+                    assert_eq!(v.len(), 3 + 3 * n, "share vector {line_number}");
                     let got = result.unwrap();
+                    assert_eq!(got.len(), n);
                     for (got, want) in got.iter().zip(&v[3 + 2 * n..]) {
                         assert_eq!(
                             got.to_bits(),
@@ -141,7 +176,7 @@ fn adr0019_python_legacy_and_extra_same_input_all_scalar_bits() {
             _ => panic!("unexpected reference output {line}"),
         }
     }
-    assert!(child.wait().unwrap().success());
+    assert!(child.0.wait().unwrap().success());
     assert!(scalar > 1_000_000 && share_count > 20_000 && faults > 0);
     println!(
         "Same-input parity: {scalar} scalar states, {share_count} share vectors, {faults} explicit faults; zero bit mismatches"

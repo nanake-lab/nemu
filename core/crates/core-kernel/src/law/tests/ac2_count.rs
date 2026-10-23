@@ -46,7 +46,7 @@ fn ac2_01_consistent_evidence_raises_pi_and_contrary_lowers_it() {
         } else {
             plain.pi >= t.pi
         });
-        // With the learned ρ: the group's own effect over the same decay.
+        // Learned nominal rho selects q; compare the complete committed step.
         let base = t.pi;
         let mut learned = t.clone();
         record(&mut learned, &l, w, s).unwrap();

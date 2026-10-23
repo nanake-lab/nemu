@@ -165,8 +165,14 @@ fn zero_and_tiny_opposite_backfills_do_not_touch_the_other_side() {
         let mut e = event(vec![candidate("z", "cz")], vec![back]);
         e.theta = theta([0., if support_zero { -0.5 } else { -1. }, 0., 0.], [1.; 4]);
         let out = w.apply(&f, &e).unwrap();
-        assert_eq!(find(&w, "a"), find(&before, "a"));
-        assert_eq!(find(&w, "b"), find(&before, "b"));
+        assert!(super::state_bits::tendency_bits_eq(
+            find(&w, "a"),
+            find(&before, "a")
+        ));
+        assert!(super::state_bits::tendency_bits_eq(
+            find(&w, "b"),
+            find(&before, "b")
+        ));
         assert_eq!(
             out.counterfactual["a"].to_bits(),
             find(&before, "a").pi.to_bits()
@@ -213,8 +219,11 @@ fn late_insertion_fault_discards_candidates_revisions_and_earlier_additions() {
         result,
         Err(LawError::NumericFault("UnderflowEvidence"))
     ));
-    assert_eq!(w.r, before.r);
-    assert_eq!(w.groups, before.groups);
+    assert!(super::state_bits::snapshot_bits_eq(&w.r, &before.r));
+    assert_eq!(w.groups.len(), before.groups.len());
+    for (id, group) in &w.groups {
+        assert!(super::state_bits::group_bits_eq(group, &before.groups[id]));
+    }
 }
 
 #[test]

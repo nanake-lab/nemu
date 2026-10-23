@@ -21,7 +21,7 @@ use super::recurrence::{evidence_amount, is_personality};
 use super::shares::{ShareInput, shares};
 
 /// Index of the tendency to remove next: the candidate with the smallest
-/// evidence amount V_k = (B_k − n₀ − κ_k) + A_att; ties go to the first in
+/// evidence score V_k + P_k; ties go to the first in
 /// canonical tendency-ID order. `None` when R holds no candidate.
 pub fn eviction_choice(r: &[Tendency], law: &Law) -> LawResult<Option<usize>> {
     let mut best: Option<(usize, f64)> = None;
@@ -139,7 +139,7 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
         for gid in removed_from {
             work.mark(&gone, &gid);
         }
-        super::audit::revisions(&before_revision, work, ctx)?;
+        super::audit::revisions(&before_revision, work, &dirty, ctx)?;
         for id in dirty {
             work.replay(&id, ctx)?;
         }

@@ -1,7 +1,8 @@
 """Replay the original event/review/side tapes, emit each distinct full input.
 
-The Rust adapter bypasses appraisal evaluation only; event ordering, share
-planning, stored-q revision, first insertion, cf and atomic publication are G.
+The Rust adapter supplies prepared tendencies and W/S plans. Event ordering,
+share planning, stored-q revision, first insertion, cf and publication use G.
+Candidate/alias construction, appraisals, relations and capacity need G tests.
 """
 from __future__ import annotations
 
@@ -17,7 +18,7 @@ from dataclasses import asdict
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[6] / "reports/echo-core-v2-draft"))
 from law_v2_events import Change, Engine, Event  # noqa: E402
-from law_v2_model import NumericFault  # noqa: E402
+from law_v2_model import NumericFault, finite  # noqa: E402
 from law_v2_event_checks import event_checks  # noqa: E402
 from law_v2_review_checks import review_checks  # noqa: E402
 from law_v2_side_checks import side_checks  # noqa: E402
@@ -37,7 +38,10 @@ def f(value: float) -> str:
 def states(engine: Engine) -> list[str]:
     out = [str(len(engine.tendencies))]
     for name, t in sorted(engine.tendencies.items()):
-        out += [name, *map(f, (t.a, t.b, t.magnitude_sum, t.magnitude_weight, t.pi())),
+        magnitude = 0.0 if t.magnitude_weight == 0.0 else finite(max(0.0, min(1.0, t.magnitude_sum / t.magnitude_weight)))
+        out += [name, *map(f, (t.a, t.b, t.magnitude_sum, t.magnitude_weight, t.pi(),
+                              finite(finite(t.n0 + t.kappa) + t.b),
+                              (t.h0*t.nh+t.flips)/(t.nh+t.groups), magnitude)),
                 str(t.groups), str(t.flips), str(t.last_sign)]
     return out
 
@@ -63,11 +67,12 @@ def emit(before: Engine, event: Event, after: Engine, cf: dict[str, float], faul
         parts += [name, f(support)]
     parts += states(before) + allocations(before)
     if fault:
+        assert before.snapshot() == after.snapshot(), f"reference event fault changed state: {fault}"
         faults += 1
         parts += ["fault", fault]
     else:
         successes += 1
-        parts += ["ok", str(len(cf))]
+        parts += ["ok", str(int(before.snapshot() != after.snapshot())), str(len(cf))]
         for name, pi in sorted(cf.items()):
             parts += [name, f(pi)]
         parts += states(after) + allocations(after)

@@ -32,6 +32,8 @@ pub fn shares(inputs: &[ShareInput<'_>]) -> LawResult<Vec<f64>> {
         ));
     }
     for x in inputs {
+        finite(x.pi, "share pi")?;
+        finite(x.support, "share support")?;
         if !(x.pi > -1.0 && x.pi < 1.0) || !(-1.0..=1.0).contains(&x.support) {
             return Err(LawError::InvalidInput(format!(
                 "{}: share needs pi in (-1, 1) and S in [-1, 1]",

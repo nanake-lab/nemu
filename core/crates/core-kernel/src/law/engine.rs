@@ -83,9 +83,11 @@ where
             first.extend(prepare(&mut work, item, &remap)?);
         }
     }
-    super::audit::revisions(&initial, &work, ctx)?;
+    super::audit::revisions(&initial, &work, &work.revised, ctx)?;
     for id in work.ordered_ids() {
-        work.replay(&id, ctx)?;
+        if work.revised.contains(&id) {
+            work.replay(&id, ctx)?;
+        }
     }
     let counterfactual = work.now.iter().map(|(id, t)| (id.clone(), t.pi)).collect();
     // These allocations are appended at this committed event, not their
@@ -155,6 +157,8 @@ pub(super) struct Work {
     groups_before: BTreeMap<String, EvidenceGroup>,
     pub(super) groups: BTreeMap<String, EvidenceGroup>,
     pub(super) touched: BTreeSet<String>,
+    /// Old allocations changed in phase one. Unchanged sides are not replayed.
+    pub(super) revised: BTreeSet<String>,
     processed: BTreeMap<String, BTreeSet<String>>,
     pub(super) capacity_audits: Vec<CapacityAudit>,
 }
@@ -178,6 +182,7 @@ impl Work {
             groups_before: groups.clone(),
             groups,
             touched: BTreeSet::new(),
+            revised: BTreeSet::new(),
             processed: BTreeMap::new(),
             capacity_audits: Vec::new(),
         }

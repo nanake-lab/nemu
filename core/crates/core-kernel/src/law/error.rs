@@ -16,8 +16,8 @@ pub enum LawError {
     NonFinite(&'static str),
     /// A count would overflow.
     Overflow(&'static str),
-    /// Rounding pushed a recorded tendency out of its valid region (|A_k| ≤ B_k,
-    /// π_k ∈ (−1, 1)): n₀ + κ_k has become negligible next to B_k in binary64.
+    /// Rounding pushed π_k out of (−1, 1): the fixed anchor has become
+    /// negligible next to V_k in binary64 (ADR 0019).
     /// Reported at the step that would produce it, never stored (D9).
     PrecisionExhausted(String),
     /// R is over capacity and holds no candidate (π ≤ ½) to remove (v2.0 §12; V2-43).

@@ -49,15 +49,22 @@ def add(self: model.Tendency, w: float, s: float, mu: float = 0., projection: fl
     head = ["A", *map(f, pre), str(self.groups), str(self.flips), str(self.last_sign),
             "none" if self.fixed_rho is None else f(self.fixed_rho), f(w), f(s), f(mu),
             "none" if projection is None else f(projection)]
+    before = model.bits(self)
     try:
         q = original_add(self, w, s, mu, projection)
     except model.NumericFault as exc:
+        assert model.bits(self) == before, f"reference scalar fault changed state: {exc}"
         counts["fault"] += 1
         emit([*head, "fault", str(exc)])
         raise
     counts["scalar"] += 1
     expected = [q, self.a, self.b, self.pi(), self.magnitude_sum, self.magnitude_weight,
-                (self.h0*self.nh+self.flips)/(self.nh+self.groups)]
+                (self.h0*self.nh+self.flips)/(self.nh+self.groups),
+                model.finite(model.finite(self.n0 + self.kappa) + self.b),
+                0.0 if self.magnitude_weight == 0.0 else
+                model.finite(max(0.0, min(1.0, self.magnitude_sum / self.magnitude_weight)))]
+    assert list(map(f, pre[:5])) == list(map(f, (self.n0, self.kappa, self.prior, self.h0, self.nh)))
+    assert head[13] == ("none" if self.fixed_rho is None else f(self.fixed_rho))
     emit([*head, "ok", *map(f, expected), str(self.groups), str(self.flips), str(self.last_sign)])
     return q
 

@@ -38,7 +38,7 @@ pub fn prior(t: &Tendency) -> f64 {
     t.attachment_prior.unwrap_or(0.0)
 }
 
-/// Evidence amount V_k = (B_k − c₀) + P_k used by the capacity fuse (V2-43).
+/// Capacity score V_k + P_k (V2-43); V itself excludes the fixed prior.
 pub fn evidence_amount(t: &Tendency, _law: &Law) -> LawResult<f64> {
     finite(t.evidence_v + prior(t), "evidence amount")
 }
@@ -50,7 +50,7 @@ pub struct Origin<'a> {
     pub predicate: &'a [TrilingualText],
     pub direction: &'a NatureVector,
     pub relation: Option<&'a PersonRelation>,
-    /// A_att on the caretaker's closeness; never multiplied by ρ.
+    /// A_att on the caretaker's closeness; never multiplied by q.
     pub prior: Option<f64>,
     /// Initial evidence that decays like any other (the caretaker's trust, D6).
     pub initial_evidence: f64,
@@ -148,9 +148,9 @@ pub fn rho(t: &Tendency, law: &Law) -> LawResult<f64> {
 }
 
 /// Record one group with weight W ≥ 0 and support S ∈ [−1, 1] that brings no
-/// projection (D4): multiply the old evidence by the current ρ_k, then add the
+/// projection (D4): multiply the old evidence by the actual q_k, then add the
 /// group. M_k and U_k only decay, as for a teaching group (ADR 0016). Returns
-/// the ρ used. Experience groups go through `replay::record_group` with their
+/// q used. Experience groups go through `replay::record_group` with their
 /// μ and p_c.
 pub fn record(t: &mut Tendency, law: &Law, w: f64, s: f64) -> LawResult<f64> {
     super::replay::record_group(t, law, w, s, 0.0, None)
@@ -175,7 +175,9 @@ pub(super) fn actual_retention(
     if !(rho > 0.0 && rho <= 1.0) {
         return Err(LawError::NumericFault("PrecisionExhaustedRetention"));
     }
-    if !w.is_finite() || w < 0.0 || !s.is_finite() || !(-1.0..=1.0).contains(&s) {
+    let w = finite(w, "evidence weight")?;
+    let s = finite(s, "evidence support")?;
+    if w < 0.0 || !(-1.0..=1.0).contains(&s) {
         return Err(LawError::InvalidInput("invalid evidence".into()));
     }
     let before = pi(
@@ -233,7 +235,9 @@ pub(super) fn fold(
     s: f64,
     strict: bool,
 ) -> LawResult<()> {
-    if !w.is_finite() || w < 0.0 || !s.is_finite() || !(-1.0..=1.0).contains(&s) {
+    let w = finite(w, "evidence weight")?;
+    let s = finite(s, "evidence support")?;
+    if w < 0.0 || !(-1.0..=1.0).contains(&s) {
         return Err(LawError::InvalidInput(format!(
             "{}: group needs W >= 0 and S in [-1, 1]",
             t.tendency_id
@@ -264,8 +268,11 @@ pub(super) fn fold(
     if groups >= MAX_GROUPS {
         return Err(LawError::Overflow("group count"));
     }
+    if a.abs() > v {
+        return Err(LawError::NumericFault("PrecisionExhaustedEvidence"));
+    }
     let new_pi = pi(prior(t), a, c0, v)?;
-    if a.abs() > v || !(new_pi > -1.0 && new_pi < 1.0) {
+    if !(new_pi > -1.0 && new_pi < 1.0) {
         return Err(LawError::PrecisionExhausted(format!(
             "{}: A = {a:e}, B = {b:e}, pi = {new_pi:e}",
             t.tendency_id
