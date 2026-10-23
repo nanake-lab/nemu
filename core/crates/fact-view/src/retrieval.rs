@@ -333,15 +333,15 @@ impl<L: LineageKind> FactView<'_, L> {
         Ok(())
     }
 
-    /// Existing main IDL adapter. P5-22's successor will be aligned after merge.
+    /// P5-22's active generated IDL adapter; no superseded query writes.
     /// Retractions are always hidden from MEMORY, regardless of include_retracted.
     pub fn user_view(
         &self,
-        request: &Query,
+        request: &QueryV2,
         access: &Access,
         budgets: &Budgets,
         embedder: Option<&mut dyn Embedder>,
-    ) -> Result<(QueryResult, Execution)> {
+    ) -> Result<(QueryResultV2, Execution)> {
         request.canonical_bytes(crate::query::LIMITS)?;
         let mut q = FactQuery::new(&self.prefix, Purpose::UserView, "", budgets);
         q.budget.items = q
@@ -352,7 +352,7 @@ impl<L: LineageKind> FactView<'_, L> {
             q.filter(filter)?;
         }
         let mut grant = access.clone();
-        grant.allowed &= request.kind == QueryKind::MEMORY;
+        grant.allowed &= request.kind == QueryKindV2::QUERY_MEMORY;
         let mut execution = self.execute(&q, &grant, embedder)?;
         let items = execution
             .projection
@@ -376,11 +376,12 @@ impl<L: LineageKind> FactView<'_, L> {
                 }
             })
             .collect();
-        let mut response = QueryResult {
+        let mut response = QueryResultV2 {
             schema_version: 1,
             query_id: request.query_id.clone(),
             status: execution.projection.status,
             items,
+            growth_entries: vec![],
         };
         while response.canonical_bytes(crate::query::LIMITS)?.len() > q.budget.bytes
             && !response.items.is_empty()

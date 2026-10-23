@@ -2,7 +2,7 @@
 
 `FactView<'a, L>` borrows `core_store::Reader<L>`. It opens no authority database or production path. `rebuild(reader, commit, limit, embedder)` obtains a verified complete committed transaction prefix; a fresh private in-memory SQLite index is built from that prefix. Index rebuilding does not change H/x/R/theta/L/Q. A borrowed Reader and the lineage type prevent cross-lineage calls.
 
-`FactQuery` / `Budget` / `Access` / `RetrievalTrace` are in-process Rust plans, not IPC messages. IPC adapters use generated IDL `Query`, `QueryResult`, `FactProjection`, `FactItem` and `UserRetraction`. No IDL or existing bytes are changed. `user_view` currently serves `MEMORY`; actions/run_history/growth remain their owning services. The P5-22 successor adapter is aligned only after #57 reaches main.
+`FactQuery` / `Budget` / `Access` / `RetrievalTrace` are in-process Rust plans, not IPC messages. IPC adapters use generated IDL `QueryV2`, `QueryResultV2`, `FactProjection`, `FactItem` and `UserRetraction`, aligned with merged P5-22 (#57). No IDL or existing bytes are changed. `user_view` serves `QUERY_MEMORY` and always returns empty growth_entries; actions/run_history/growth remain their owning services and are denied here.
 
 ## Query and permissions
 

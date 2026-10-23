@@ -1,6 +1,47 @@
 use super::*;
 
 #[test]
+fn p522_active_memory_messages_never_emit_growth_or_serve_other_services() {
+    let mut w = World::new();
+    w.text("synthetic memory control");
+    let reader = w.store.reader().unwrap();
+    let view = FactView::rebuild(&reader, &w.prefix(), 100, None).unwrap();
+    let mut request = QueryV2 {
+        schema_version: 1,
+        query_id: "p522-memory".into(),
+        kind: QueryKindV2::QUERY_MEMORY,
+        filter: None,
+        limit: DecimalU64(10),
+    };
+    let (response, _) = view
+        .user_view(&request, &access(), &Budgets::default(), None)
+        .unwrap();
+    assert_eq!(response.status, QueryStatus::OK);
+    assert_eq!(response.items.len(), 1);
+    assert!(response.growth_entries.is_empty());
+    assert_eq!(
+        QueryResultV2::from_canonical(
+            &response.canonical_bytes(crate::query::LIMITS).unwrap(),
+            crate::query::LIMITS
+        )
+        .unwrap(),
+        response
+    );
+    for kind in [
+        QueryKindV2::QUERY_ACTIONS,
+        QueryKindV2::QUERY_RUN_HISTORY,
+        QueryKindV2::QUERY_GROWTH,
+    ] {
+        request.kind = kind;
+        let (denied, _) = view
+            .user_view(&request, &access(), &Budgets::default(), None)
+            .unwrap();
+        assert_eq!(denied.status, QueryStatus::DENIED);
+        assert!(denied.items.is_empty() && denied.growth_entries.is_empty());
+    }
+}
+
+#[test]
 fn panel_time_and_payload_filters_are_compatible_and_invalid_dates_fail() {
     let mut q = query("prefix", Purpose::UserView, "");
     let mut filter = QueryFilter {

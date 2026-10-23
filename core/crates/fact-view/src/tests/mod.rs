@@ -28,10 +28,10 @@ fn sys05_five_distinct_results_and_real_positive_control() {
         view.execute(&q, &access(), None).unwrap().projection.status,
         QueryStatus::OK
     );
-    let mut request = Query {
+    let mut request = QueryV2 {
         schema_version: 1,
         query_id: "panel".into(),
-        kind: QueryKind::MEMORY,
+        kind: QueryKindV2::QUERY_MEMORY,
         filter: Some(QueryFilter {
             schema_version: 1,
             text: Some("absent".into()),
@@ -166,10 +166,10 @@ fn retraction_zero_in_one_hundred_task_queries_and_audit_preserves_original() {
             .len(),
         1
     );
-    let request = Query {
+    let request = QueryV2 {
         schema_version: 1,
         query_id: "memory".into(),
-        kind: QueryKind::MEMORY,
+        kind: QueryKindV2::QUERY_MEMORY,
         filter: Some(QueryFilter {
             schema_version: 1,
             text: Some("bicycle".into()),
