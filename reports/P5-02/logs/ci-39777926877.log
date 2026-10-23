@@ -1,0 +1,800 @@
+Windows desktop and isolation	Set up job	﻿2026-10-22T12:23:27.0414953Z Current runner version: '2.338.0'
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0422510Z Runner name: 'DESKTOP-8LBF84O'
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0423069Z Runner group name: 'Default'
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0423691Z Machine name: 'DESKTOP-8LBF84O'
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0425899Z ##[group]GITHUB_TOKEN Permissions
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0427556Z Contents: read
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0427957Z Metadata: read
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0428349Z ##[endgroup]
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0429779Z Secret source: Actions
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0430398Z Cache mode: write
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.0430871Z Prepare workflow directory
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.1221932Z Prepare all required actions
+Windows desktop and isolation	Set up job	2026-10-22T12:23:27.1261176Z Getting action download info
+Windows desktop and isolation	Set up job	2026-10-22T12:23:30.6584347Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Windows desktop and isolation	Set up job	2026-10-22T12:23:35.0335964Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+Windows desktop and isolation	Set up job	2026-10-22T12:23:39.5407791Z Download action repository 'actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+Windows desktop and isolation	Set up job	2026-10-22T12:23:46.2540577Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Windows desktop and isolation	Set up job	2026-10-22T12:23:54.4555984Z Complete job name: Windows desktop and isolation
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-10-22T12:23:54.5930300Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5931175Z with:
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5931410Z   lfs: true
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5931644Z   persist-credentials: false
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5931961Z   repository: nanake-lab/nemu
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5934894Z   token: ***
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5935115Z   ssh-strict: true
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5935385Z   ssh-user: git
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5935625Z   clean: true
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5935864Z   sparse-checkout-cone-mode: true
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5936199Z   fetch-depth: 1
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5936462Z   fetch-tags: false
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5936723Z   show-progress: true
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5937077Z   submodules: false
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5937338Z   set-safe-directory: true
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5937658Z   allow-unsafe-pr-checkout: false
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5938295Z env:
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5938532Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5938818Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.5939059Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.8584133Z Syncing repository: nanake-lab/nemu
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.8585639Z ##[group]Getting Git version info
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.8586056Z Working directory is 'D:\actions-runner\_work\nemu\nemu'
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.8967008Z [command]"C:\Program Files\Git\cmd\git.exe" version
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.9242973Z git version 2.54.0.windows.1
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:54.9714982Z [command]"C:\Program Files\Git\cmd\git.exe" lfs version
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1099518Z git-lfs/3.7.1 (GitHub; windows amd64; go 1.25.1; git b84b3384)
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1147709Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1159075Z Copying 'C:\Users\nanake\.gitconfig' to 'D:\actions-runner\_work\_temp\b6f600c1-bf2e-4800-bb1d-9713acee1c20\.gitconfig'
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1177636Z Temporarily overriding HOME='D:\actions-runner\_work\_temp\b6f600c1-bf2e-4800-bb1d-9713acee1c20' before making global git config changes
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1178462Z Adding repository directory to the temporary git global config as a safe directory
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1189485Z [command]"C:\Program Files\Git\cmd\git.exe" config --global --add safe.directory D:\actions-runner\_work\nemu\nemu
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1524104Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --get remote.origin.url
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1780880Z https://github.com/nanake-lab/nemu
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1824516Z ##[group]Removing previously created refs, to avoid conflicts
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.1834874Z [command]"C:\Program Files\Git\cmd\git.exe" rev-parse --symbolic-full-name --verify --quiet HEAD
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.2088607Z HEAD
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.2783382Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.2792230Z [command]"C:\Program Files\Git\cmd\git.exe" submodule status
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.7543173Z -513df15175673c1ac06b57d485f7986562e0aa31 content
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.7618796Z ##[group]Cleaning the repository
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:23:55.7628332Z [command]"C:\Program Files\Git\cmd\git.exe" clean -ffdx
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9777674Z Removing apps/desktop/node_modules/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9778067Z Removing apps/desktop/out/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9778425Z Removing apps/panel/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9778732Z Removing apps/panel/node_modules/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9779013Z Removing apps/stage/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9779289Z Removing apps/stage/node_modules/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9779589Z Removing executors/codex-bridge/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9780394Z Removing node_modules/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9780944Z Removing packages/avatar-runtime/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9781351Z Removing packages/avatar-runtime/node_modules/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9781687Z Removing packages/body/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9782012Z Removing packages/body/node_modules/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9782465Z Removing packages/contracts/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9782776Z Removing packages/contracts/node_modules/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9783106Z Removing packages/desktop-sense/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9783408Z Removing packages/log/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9783689Z Removing packages/terminal/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9783976Z Removing packages/voice/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9785645Z Removing spikes/stage-overlay/node_modules/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9785986Z Removing spikes/stage-overlay/out/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9808563Z Removing tools/asset-lint/dist/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9809059Z Removing tools/asset-lint/node_modules/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9809423Z Removing tools/scaffold/windows-isolation/bin/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9809803Z Removing tools/scaffold/windows-isolation/obj/
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:01.9833608Z [command]"C:\Program Files\Git\cmd\git.exe" reset --hard HEAD
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.0562876Z HEAD is now at 8be6f36 Merge 16711b0da9e839d98d4e80a790363391b28248fa into 91b31ed2d30aadd8cc1cf8086dd0aad8ffe03821
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.0600528Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.0605908Z ##[group]Disabling automatic garbage collection
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.0615847Z [command]"C:\Program Files\Git\cmd\git.exe" config --local gc.auto 0
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.0899109Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.0899518Z ##[group]Setting up auth
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.0911294Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.1206646Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.5738734Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:02.6039249Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:03.0582637Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:03.0922506Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:03.5522271Z [command]"C:\Program Files\Git\cmd\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:03.5868355Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:03.5881690Z [command]"C:\Program Files\Git\cmd\git.exe" lfs install --local
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:03.9240034Z Updated Git hooks.
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:03.9240321Z Git LFS initialized.
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:03.9295997Z ##[group]Fetching the repository
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:03.9309570Z [command]"C:\Program Files\Git\cmd\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +5cc3b540f3b7b33b611a4c590cac91c9406df80a:refs/remotes/origin/task/P5-02-store
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:08.5143727Z From https://github.com/nanake-lab/nemu
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:08.5144384Z  * [new ref]         5cc3b540f3b7b33b611a4c590cac91c9406df80a -> origin/task/P5-02-store
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:08.5432562Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:08.5433006Z ##[group]Determining the checkout info
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:08.5434176Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:08.5434577Z ##[group]Fetching LFS objects
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:08.5444570Z [command]"C:\Program Files\Git\cmd\git.exe" lfs fetch origin refs/remotes/origin/task/P5-02-store
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:08.8266917Z Fetching reference refs/remotes/origin/task/P5-02-store
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.3173311Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.3186147Z [command]"C:\Program Files\Git\cmd\git.exe" sparse-checkout disable
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.3738756Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --unset-all extensions.worktreeConfig
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.4136474Z ##[group]Checking out the ref
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.4148550Z [command]"C:\Program Files\Git\cmd\git.exe" checkout --progress --force -B task/P5-02-store refs/remotes/origin/task/P5-02-store
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.5351252Z Previous HEAD position was 8be6f36 Merge 16711b0da9e839d98d4e80a790363391b28248fa into 91b31ed2d30aadd8cc1cf8086dd0aad8ffe03821
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.5445996Z Switched to a new branch 'task/P5-02-store'
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.5488565Z branch 'task/P5-02-store' set up to track 'origin/task/P5-02-store'.
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.9486674Z ##[endgroup]
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:09.9906252Z [command]"C:\Program Files\Git\cmd\git.exe" log -1 --format=%H
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:10.0223439Z 5cc3b540f3b7b33b611a4c590cac91c9406df80a
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:10.0267685Z ##[group]Removing auth
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:10.0277538Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:10.0595347Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:10.5352388Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:10.5584469Z http.https://github.com/.extraheader
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:10.5629245Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --unset-all http.https://github.com/.extraheader
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:10.5958102Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:11.0352332Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:11.0625972Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Windows desktop and isolation	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:24:11.5032247Z ##[endgroup]
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	﻿2026-10-22T12:24:11.5355658Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:11.5356107Z with:
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:11.5356288Z   node-version-file: .nvmrc
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:11.5356499Z   always-auth: false
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:11.5356683Z   check-latest: false
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:11.5359348Z   token: ***
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:11.5359504Z env:
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:11.5359667Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:11.5359884Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:11.5360057Z ##[endgroup]
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.0149508Z Resolved .nvmrc as 24
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.0183519Z Found in cache @ D:\actions-runner\_work\_tool\node\24.21.0\x64
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.0191774Z (node:38412) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.0192716Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.0194291Z ##[group]Environment details
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.2350321Z [warning]This project is configured to use pnpm because D:\actions-runner\_work\nemu\nemu\package.json has a "packageManager" field
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.2351062Z 
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.4004549Z node: v24.21.0
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.4004953Z npm: 11.19.0
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.4005230Z yarn: 
+Windows desktop and isolation	Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:24:12.4005866Z ##[endgroup]
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	﻿2026-10-22T12:24:12.4242539Z ##[group]Run npm install --global pnpm@12.11.2
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:12.4242895Z ^[[36;1mnpm install --global pnpm@12.11.2^[[0m
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:12.4302109Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:12.4302612Z env:
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:12.4302789Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:12.4303008Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:12.4303196Z ##[endgroup]
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:23.9373726Z 
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:23.9378585Z changed 2 packages in 11s
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:23.9390356Z npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:23.9391204Z npm warn install-scripts   pnpm@12.11.2 (preinstall: node install.js; postinstall: node install.js)
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:23.9391706Z npm warn install-scripts
+Windows desktop and isolation	Run npm install --global pnpm@12.11.2	2026-10-22T12:24:23.9392703Z npm warn install-scripts Run `npm install -g --allow-scripts=pnpm` to allow these scripts once, or `npm config set allow-scripts=pnpm --location=user` to allow them for all global installs.
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	﻿2026-10-22T12:24:24.0505080Z ##[group]Run pnpm install --frozen-lockfile
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:24.0505454Z ^[[36;1mpnpm install --frozen-lockfile^[[0m
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:24.0554054Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:24.0554448Z env:
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:24.0554621Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:24.0554834Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:24.0555009Z ##[endgroup]
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:25.2666516Z Scope: all 14 workspace projects
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:25.3032047Z ✓ Lockfile passes supply-chain policies (verified 2d ago)
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:25.3032603Z Lockfile is up to date, resolution step is skipped
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:25.4499933Z Packages are hard linked from the content-addressable store to the virtual store.
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:25.4500840Z   Content-addressable store is at: D:\.pnpm-store\v11
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:25.4501466Z   Virtual store is at:             node_modules/.pnpm
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:26.7370212Z Progress: resolved 133, reused 132, downloaded 0, added 116
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:27.7870567Z Progress: resolved 224, reused 224, downloaded 0, added 216
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:28.7227125Z Packages: +230
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:28.7227610Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.0478128Z Progress: resolved 230, reused 230, downloaded 0, added 230, done
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.0541744Z .../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.0542384Z .../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.1993789Z .../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.1994338Z .../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2348822Z 
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2349450Z devDependencies:
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2349761Z + @eslint/js 10.0.1
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2350066Z + @playwright/test 1.64.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2350473Z + @types/node 24.19.2
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2350841Z + @types/pixelmatch 7.1.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2351120Z + @types/pngjs 6.0.5
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2351415Z + @types/react 19.3.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2351673Z + @types/react-dom 19.3.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2354134Z + @vitest/coverage-v8 5.0.4
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2354912Z + ajv 8.20.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2355544Z + electron 44.7.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2356003Z + electron-vite 5.0.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2356366Z + eslint 10.12.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2357026Z + pixelmatch 8.0.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2357418Z + pngjs 7.0.0
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2357760Z + prettier 3.9.10
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2358105Z + typescript 6.0.3
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2358483Z + typescript-eslint 8.71.2
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2358853Z + vite 7.3.7
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2359155Z + vitest 5.0.4
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2359318Z 
+Windows desktop and isolation	Run pnpm install --frozen-lockfile	2026-10-22T12:24:29.2359608Z Done in 4s using pnpm v12.11.2
+Windows desktop and isolation	Detect installed .NET SDK	﻿2026-10-22T12:24:29.3130490Z ##[group]Run $required = (Get-Content global.json | ConvertFrom-Json).sdk.version
+Windows desktop and isolation	Detect installed .NET SDK	2026-10-22T12:24:29.3131067Z ^[[36;1m$required = (Get-Content global.json | ConvertFrom-Json).sdk.version^[[0m
+Windows desktop and isolation	Detect installed .NET SDK	2026-10-22T12:24:29.3131578Z ^[[36;1m$available = (dotnet --list-sdks) -match ("^" + [regex]::Escape($required) + " ")^[[0m
+Windows desktop and isolation	Detect installed .NET SDK	2026-10-22T12:24:29.3132073Z ^[[36;1m"available=$([bool]$available)".ToLowerInvariant() >> $env:GITHUB_OUTPUT^[[0m
+Windows desktop and isolation	Detect installed .NET SDK	2026-10-22T12:24:29.3188012Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Detect installed .NET SDK	2026-10-22T12:24:29.3188627Z env:
+Windows desktop and isolation	Detect installed .NET SDK	2026-10-22T12:24:29.3188905Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Detect installed .NET SDK	2026-10-22T12:24:29.3189232Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Detect installed .NET SDK	2026-10-22T12:24:29.3189487Z ##[endgroup]
+Windows desktop and isolation	Run pnpm exec playwright install chromium	﻿2026-10-22T12:24:29.9260992Z ##[group]Run pnpm exec playwright install chromium
+Windows desktop and isolation	Run pnpm exec playwright install chromium	2026-10-22T12:24:29.9261362Z ^[[36;1mpnpm exec playwright install chromium^[[0m
+Windows desktop and isolation	Run pnpm exec playwright install chromium	2026-10-22T12:24:29.9307748Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Run pnpm exec playwright install chromium	2026-10-22T12:24:29.9308146Z env:
+Windows desktop and isolation	Run pnpm exec playwright install chromium	2026-10-22T12:24:29.9308325Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run pnpm exec playwright install chromium	2026-10-22T12:24:29.9308543Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run pnpm exec playwright install chromium	2026-10-22T12:24:29.9308720Z ##[endgroup]
+Windows desktop and isolation	Initialize current-run Windows evidence	﻿2026-10-22T12:24:31.0846608Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Init
+Windows desktop and isolation	Initialize current-run Windows evidence	2026-10-22T12:24:31.0847047Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Init^[[0m
+Windows desktop and isolation	Initialize current-run Windows evidence	2026-10-22T12:24:31.0894142Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Initialize current-run Windows evidence	2026-10-22T12:24:31.0894691Z env:
+Windows desktop and isolation	Initialize current-run Windows evidence	2026-10-22T12:24:31.0894954Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Initialize current-run Windows evidence	2026-10-22T12:24:31.0895204Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Initialize current-run Windows evidence	2026-10-22T12:24:31.0895376Z ##[endgroup]
+Windows desktop and isolation	Initialize current-run Windows evidence	2026-10-22T12:24:31.6448534Z D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Evidence provenance regression tests	﻿2026-10-22T12:24:31.7266036Z ##[group]Run pwsh -NoProfile -File tools/scaffold/windows-evidence.tests.ps1
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:31.7266847Z ^[[36;1mpwsh -NoProfile -File tools/scaffold/windows-evidence.tests.ps1^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:31.7318025Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:31.7318413Z env:
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:31.7318583Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:31.7318800Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:31.7319112Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:31.7319470Z ##[endgroup]
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:33.0603909Z C:\Users\nanake\AppData\Local\Temp\nemu-evidence-tests-730996f4-81a2-4433-b9e8-a44643ef34f5\nemu-evidence\fixture\1\windows
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:33.6616707Z ^[[31;1mException: ^[[0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\windows-evidence.ps1:14^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:33.6617279Z ^[[31;1m^[[0m^[[36;1mLine |^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:33.6617936Z ^[[31;1m^[[0m^[[36;1m^[[36;1m  14 | ^[[0m … teralPath $root) { ^[[36;1mthrow "Evidence directory already exists: $root"^[[0m }^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:33.6618785Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m     | ^[[31;1m                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:33.6619520Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m^[[31;1m^[[31;1m^[[36;1m     | ^[[31;1mEvidence directory already exists:^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:33.6620787Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m^[[31;1m^[[31;1m^[[36;1m^[[31;1m^[[36;1m     | ^[[31;1mC:\Users\nanake\AppData\Local\Temp\nemu-evidence-tests-730996f4-81a2-4433-b9e8-a44643ef34f5\nemu-evidence\fixture\1\windows^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:34.2671670Z Verified 2 current-attempt evidence files
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:34.9596188Z ^[[31;1mException: ^[[0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\windows-evidence.ps1:112^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:34.9598112Z ^[[31;1m^[[0m^[[36;1mLine |^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:34.9599090Z ^[[31;1m^[[0m^[[36;1m^[[36;1m 112 | ^[[0m $manifest = @(^[[36;1mGet-ChildItem -LiteralPath $root -Recurse -File^[[0m | Where …^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:34.9600295Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m     | ^[[31;1m               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:34.9601404Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m^[[31;1m^[[31;1m^[[36;1m     | ^[[31;1mNot generated in this attempt: fixture.txt^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:35.5574534Z ^[[31;1mException: ^[[0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\windows-evidence.ps1:108^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:35.5575076Z ^[[31;1m^[[0m^[[36;1mLine |^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:35.5575732Z ^[[31;1m^[[0m^[[36;1m^[[36;1m 108 | ^[[0m … .sha -ne (git rev-parse HEAD)) { ^[[36;1mthrow 'Evidence identity mismatch'^[[0m }^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:35.5576539Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m     | ^[[31;1m                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:35.5577302Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m^[[31;1m^[[31;1m^[[36;1m     | ^[[31;1mEvidence identity mismatch^[[0m
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:36.1703415Z Verified 2 current-attempt evidence files
+Windows desktop and isolation	Evidence provenance regression tests	2026-10-22T12:24:36.2637264Z PASS: fresh evidence accepted; duplicate directory, stale timestamp and wrong attempt rejected.
+Windows desktop and isolation	Snapshot timing and repository filtering checks	﻿2026-10-22T12:24:36.4200043Z ##[group]Run node --test tools/scaffold/window-wait-diagnostics.test.mjs
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:36.4200750Z ^[[36;1mnode --test tools/scaffold/window-wait-diagnostics.test.mjs^[[0m
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:36.4247454Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:36.4247839Z env:
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:36.4248017Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:36.4248235Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:36.4248547Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:36.4248907Z ##[endgroup]
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2115568Z ✔ snapshot starts after window wait settles (success) (2.2391ms)
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2117844Z ✔ snapshot starts after window wait settles (failure) (1.0895ms)
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2119322Z ✔ repository snapshots contain only related processes and matching derivative hashes (5.1569ms)
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2245407Z ℹ tests 3
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2245679Z ℹ suites 0
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2246038Z ℹ pass 3
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2246237Z ℹ fail 0
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2246443Z ℹ cancelled 0
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2246727Z ℹ skipped 0
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2246930Z ℹ todo 0
+Windows desktop and isolation	Snapshot timing and repository filtering checks	2026-10-22T12:24:37.2247167Z ℹ duration_ms 333.3664
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	﻿2026-10-22T12:24:37.3229341Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:37.3230209Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:37.3283901Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:37.3284288Z env:
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:37.3284482Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:37.3284697Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:37.3285020Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:37.3285425Z ##[endgroup]
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:38.9674479Z ^[[31;1m$ node --test tools/scaffold/transport.test.mjs^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:39.0379870Z ✔ local byte transport: Windows named pipe / Unix socket (8.2367ms)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:39.0461534Z ℹ tests 1
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:39.0462103Z ℹ suites 0
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:39.0463387Z ℹ pass 1
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:39.0465069Z ℹ fail 0
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:39.0465973Z ℹ cancelled 0
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:39.0467028Z ℹ skipped 0
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:39.0468157Z ℹ todo 0
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport	2026-10-22T12:24:39.0469566Z ℹ duration_ms 77.3216
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	﻿2026-10-22T12:24:39.6688139Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:39.6688695Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:39.6737015Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:39.6737426Z env:
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:39.6737606Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:39.6737824Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:39.6738142Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:39.6738515Z ##[endgroup]
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:41.6630287Z processed file: C:\Users\nanake\AppData\Local\Temp\nemu-isolation-8855bd7f-4c6b-4725-b520-0979a60beac2
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:41.6632194Z Successfully processed 1 files; Failed processing 0 files
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation	2026-10-22T12:24:45.2952178Z PASS: process token lowered to Low; medium-directory write denied; positive write control passed.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	﻿2026-10-22T12:24:45.9910501Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:45.9911017Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:45.9957772Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:45.9958174Z env:
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:45.9958345Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:45.9958558Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:45.9958870Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:45.9959228Z ##[endgroup]
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:47.5856614Z ^[[31;1m$ pnpm build && playwright test --config apps/desktop/playwright.config.ts^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:47.5878277Z ^[[31;1m$ pnpm -r build^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:47.6503345Z executors/codex-bridge build$ tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:47.6504399Z packages/log build$ tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:47.6504883Z packages/desktop-sense build$ tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:47.6506144Z packages/contracts build$ tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:48.7422152Z packages/desktop-sense build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:48.7426901Z packages/terminal build$ tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:48.7480187Z executors/codex-bridge build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:48.7487061Z packages/voice build$ tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:48.7566285Z packages/log build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:48.7571313Z spikes/stage-overlay build$ electron-vite build
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.7390781Z spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.8033767Z packages/terminal build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.8142701Z packages/voice build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.8293784Z spikes/stage-overlay build: transforming...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.8714836Z spikes/stage-overlay build: ✓ 1 modules transformed.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.8933251Z spikes/stage-overlay build: rendering chunks...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.8979194Z spikes/stage-overlay build: out/main/index.js  8.46 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.8979745Z spikes/stage-overlay build: ✓ built in 125ms
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.9035326Z spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.9088498Z spikes/stage-overlay build: transforming...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.9113185Z spikes/stage-overlay build: ✓ 1 modules transformed.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.9154205Z spikes/stage-overlay build: rendering chunks...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.9164336Z spikes/stage-overlay build: out/preload/index.cjs  1.33 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.9164861Z spikes/stage-overlay build: ✓ built in 13ms
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.9223198Z spikes/stage-overlay build: vite v7.3.7 building client environment for production...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:49.9552737Z spikes/stage-overlay build: transforming...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:50.3586668Z packages/contracts build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:50.3597041Z apps/panel build$ vite build
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:50.3598915Z packages/avatar-runtime build$ tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:50.3599562Z apps/desktop build$ electron-vite build
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:50.8345378Z apps/panel build: vite v7.3.7 building client environment for production...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:50.9039154Z apps/panel build: transforming...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.2569731Z apps/desktop build: vite v7.3.7 building ssr environment for production...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.3477466Z apps/desktop build: transforming...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.4026528Z spikes/stage-overlay build: ✓ 8 modules transformed.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6363425Z apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6364293Z apps/panel build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6365506Z apps/panel build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6366283Z apps/panel build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6367428Z apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6383998Z apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6384840Z apps/panel build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6385823Z apps/panel build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6387240Z apps/panel build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6388683Z apps/panel build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6389515Z apps/panel build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6391461Z apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6471136Z apps/desktop build: ✓ 34 modules transformed.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6858339Z apps/desktop build: rendering chunks...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6910837Z apps/desktop build: out/main/index.js  68.74 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6911650Z apps/desktop build: ✓ built in 398ms
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.6988186Z apps/desktop build: vite v7.3.7 building ssr environment for production...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.7042942Z apps/desktop build: transforming...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.7099367Z apps/desktop build: ✓ 2 modules transformed.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.7152873Z apps/desktop build: rendering chunks...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.7176251Z apps/desktop build: out/preload/panel.cjs  0.31 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.7179760Z apps/desktop build: out/preload/stage.cjs  1.46 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.7180526Z apps/desktop build: ✓ built in 18ms
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.7247763Z apps/desktop build: vite v7.3.7 building client environment for production...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:51.7510483Z apps/desktop build: transforming...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.2241472Z spikes/stage-overlay build: rendering chunks...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.2347494Z spikes/stage-overlay build: ../../out/renderer/index.html                    6.52 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.2348582Z spikes/stage-overlay build: ../../out/renderer/assets/index-P4FdMocT.js  1,448.72 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.2349461Z spikes/stage-overlay build: ✓ built in 2.31s
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.2909161Z spikes/stage-overlay build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.2918164Z packages/body build$ tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.5330635Z apps/panel build: ✓ 148 modules transformed.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.7495165Z apps/panel build: rendering chunks...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.7606291Z apps/panel build: computing gzip size...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.7869146Z apps/panel build: dist/index.html                   0.64 kB │ gzip:   0.39 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.7870207Z apps/panel build: dist/assets/index-ibGTfxG7.css    8.91 kB │ gzip:   2.32 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.7871441Z apps/panel build: dist/assets/index-B_WOGkzu.js   358.32 kB │ gzip: 109.09 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.7872337Z apps/panel build: ✓ built in 1.93s
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.8565144Z apps/panel build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.8571009Z tools/asset-lint build$ pnpm --filter @nemu/contracts build && tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9513943Z tools/asset-lint build: $ tsc -p tsconfig.json
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9586560Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9587374Z apps/desktop build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9588889Z apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9590025Z apps/desktop build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9591707Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9621789Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9627241Z apps/desktop build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9629296Z apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9631886Z apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9633438Z apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9634301Z apps/desktop build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:52.9636311Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:53.9722069Z packages/avatar-runtime build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:54.7832722Z apps/desktop build: ✓ 182 modules transformed.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:54.9683088Z apps/desktop build: rendering chunks...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.4545770Z packages/body build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.4552296Z apps/stage build$ vite build
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.5228479Z apps/desktop build: desktop/out/renderer/panel/index.html               0.72 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.5229560Z apps/desktop build: desktop/out/renderer/stage/index.html               0.76 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.5230465Z apps/desktop build: desktop/out/renderer/assets/stage-DABzvroO.css      0.66 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.5231415Z apps/desktop build: desktop/out/renderer/assets/panel-Bf-HAcZX.css     11.36 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.5232545Z apps/desktop build: desktop/out/renderer/assets/stage-d-QzxjZ7.js     211.50 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.5233505Z apps/desktop build: desktop/out/renderer/assets/panel-BJXt_0sI.js     698.27 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.5234359Z apps/desktop build: desktop/out/renderer/assets/stage-BoTnbDLl.js   1,557.39 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.5235065Z apps/desktop build: ✓ built in 3.80s
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.5872635Z apps/desktop build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.9162468Z apps/stage build: vite v7.3.7 building client environment for production...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:55.9848202Z apps/stage build: transforming...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7558476Z apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7559018Z apps/stage build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7559661Z apps/stage build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7560534Z apps/stage build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7561394Z apps/stage build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7561885Z apps/stage build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7563067Z apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7708745Z apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7709290Z apps/stage build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7710321Z apps/stage build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7711081Z apps/stage build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:56.7712204Z apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:57.6340691Z tools/asset-lint build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:57.9090449Z apps/stage build: ✓ 177 modules transformed.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.0256427Z apps/stage build: rendering chunks...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3750814Z apps/stage build: computing gzip size...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3951041Z apps/stage build: dist/index.html                     0.76 kB │ gzip:   0.42 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3951748Z apps/stage build: dist/review.html                   15.07 kB │ gzip:   3.34 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3952674Z apps/stage build: dist/assets/stage-j6owz3Q9.css      0.50 kB │ gzip:   0.29 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3953367Z apps/stage build: dist/assets/review-CW6rIG6O.css     5.07 kB │ gzip:   1.60 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3954019Z apps/stage build: dist/assets/stage-nau3J8JJ.js      13.14 kB │ gzip:   4.42 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3954895Z apps/stage build: dist/assets/review-CDDmsqWz.js     26.48 kB │ gzip:   7.99 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3955953Z apps/stage build: dist/assets/profiles-Dtk_ysI3.js  868.29 kB │ gzip: 224.34 kB
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3956382Z apps/stage build: 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3956900Z apps/stage build: (!) Some chunks are larger than 500 kB after minification. Consider:
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3957518Z apps/stage build: - Using dynamic import() to code-split the application
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3958519Z apps/stage build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3959510Z apps/stage build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.3960155Z apps/stage build: ✓ built in 2.46s
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:58.4419534Z apps/stage build: Done
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:59.1765877Z 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:59.1766730Z Running 3 tests using 1 worker
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:59.1766928Z 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:59.6478978Z   -  1 apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:24:59.6719613Z Downloading Electron binary...
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:01.5444935Z ^[[31;1m  pw:browser <launching> "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist\electron.exe" "-r" "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\playwright-core@1.64.0\node_modules\playwright-core\lib\server\electron\loader.js" "--inspect=0" "--remote-debugging-port=0" "D:\actions-runner\_work\nemu\nemu\apps\desktop" "--use-gl=angle" "--use-angle=swiftshader" "--enable-unsafe-swiftshader"  +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:01.5537244Z ^[[31;1m  pw:browser <launched> pid=46340 +9ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:01.8904599Z ^[[31;1m  pw:browser [pid=46340][out]  +337ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:01.9060570Z ^[[31;1m  pw:browser [pid=46340][err] Debugger listening on ws://127.0.0.1:50903/2a61bc7e-f935-47ee-961d-82d0e3b6a40b +16ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:01.9064967Z ^[[31;1m  pw:browser [pid=46340][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:01.9069840Z ^[[31;1m  pw:browser <ws connecting> ws://127.0.0.1:50903/2a61bc7e-f935-47ee-961d-82d0e3b6a40b +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:01.9127864Z ^[[31;1m  pw:browser <ws connected> ws://127.0.0.1:50903/2a61bc7e-f935-47ee-961d-82d0e3b6a40b +7ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:01.9135323Z ^[[31;1m  pw:browser [pid=46340][err] Debugger attached. +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:02.0474163Z ^[[31;1m  pw:browser [pid=46340][err]  +134ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:02.0479731Z ^[[31;1m  pw:browser [pid=46340][err] DevTools listening on ws://127.0.0.1:50906/devtools/browser/a537a2ce-fca6-4d28-b7df-56e588183e7e +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:02.0485791Z ^[[31;1m  pw:browser <ws connecting> ws://127.0.0.1:50906/devtools/browser/a537a2ce-fca6-4d28-b7df-56e588183e7e +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:02.0522361Z ^[[31;1m  pw:browser <ws connected> ws://127.0.0.1:50906/devtools/browser/a537a2ce-fca6-4d28-b7df-56e588183e7e +5ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:03.7556793Z ^[[31;1m  pw:browser <ws disconnecting> ws://127.0.0.1:50903/2a61bc7e-f935-47ee-961d-82d0e3b6a40b +2s^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:03.7559610Z ^[[31;1m  pw:browser [pid=46340][err] Debugger ending on ws://127.0.0.1:50903/2a61bc7e-f935-47ee-961d-82d0e3b6a40b +2ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:03.7563382Z ^[[31;1m  pw:browser [pid=46340][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:03.7570492Z ^[[31;1m  pw:browser <ws disconnected> ws://127.0.0.1:50903/2a61bc7e-f935-47ee-961d-82d0e3b6a40b code=1005 reason= +1ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:04.2516488Z ^[[31;1m  pw:browser <ws disconnected> ws://127.0.0.1:50906/devtools/browser/a537a2ce-fca6-4d28-b7df-56e588183e7e code=1006 reason= +495ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:04.2648840Z ^[[31;1m  pw:browser [pid=46340] <process did exit: exitCode=0, signal=null> +13ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:04.2652236Z ^[[31;1m  pw:browser [pid=46340] starting temporary directories cleanup +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:04.2657975Z ^[[31;1m  pw:browser [pid=46340] finished temporary directories cleanup +1ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.2803649Z   ✓  2 apps\desktop\tests\shell.spec.ts:12:1 › stage window shell properties, channel routing, panel summoning and clean process termination (6.6s)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.3108613Z ^[[31;1m  pw:browser <launching> "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist\electron.exe" "-r" "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\playwright-core@1.64.0\node_modules\playwright-core\lib\server\electron\loader.js" "--inspect=0" "--remote-debugging-port=0" "D:\actions-runner\_work\nemu\nemu\apps\desktop" "--use-gl=angle" "--use-angle=swiftshader" "--enable-unsafe-swiftshader"  +2s^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.3129368Z ^[[31;1m  pw:browser <launched> pid=48568 +2ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.3372901Z ^[[31;1m  pw:browser [pid=48568][out]  +24ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.3523535Z ^[[31;1m  pw:browser [pid=48568][err] Debugger listening on ws://127.0.0.1:50916/41724c6d-6209-4427-8f7a-9d3da7b2f916 +16ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.3524982Z ^[[31;1m  pw:browser [pid=48568][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.3527334Z ^[[31;1m  pw:browser <ws connecting> ws://127.0.0.1:50916/41724c6d-6209-4427-8f7a-9d3da7b2f916 +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.3537243Z ^[[31;1m  pw:browser <ws connected> ws://127.0.0.1:50916/41724c6d-6209-4427-8f7a-9d3da7b2f916 +1ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.3540091Z ^[[31;1m  pw:browser [pid=48568][err] Debugger attached. +1ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.4971621Z ^[[31;1m  pw:browser [pid=48568][err]  +142ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.4977237Z ^[[31;1m  pw:browser [pid=48568][err] DevTools listening on ws://127.0.0.1:50918/devtools/browser/158bcca4-e888-4ad6-92a2-a44e62f7b3b8 +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.4987435Z ^[[31;1m  pw:browser <ws connecting> ws://127.0.0.1:50918/devtools/browser/158bcca4-e888-4ad6-92a2-a44e62f7b3b8 +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:06.5021382Z ^[[31;1m  pw:browser <ws connected> ws://127.0.0.1:50918/devtools/browser/158bcca4-e888-4ad6-92a2-a44e62f7b3b8 +5ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.1342373Z ^[[31;1m  pw:browser <ws disconnecting> ws://127.0.0.1:50916/41724c6d-6209-4427-8f7a-9d3da7b2f916 +3s^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.1344410Z ^[[31;1m  pw:browser <ws disconnected> ws://127.0.0.1:50916/41724c6d-6209-4427-8f7a-9d3da7b2f916 code=1005 reason= +1ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.1345802Z ^[[31;1m  pw:browser [pid=48568][err] Debugger ending on ws://127.0.0.1:50916/41724c6d-6209-4427-8f7a-9d3da7b2f916 +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.1348171Z ^[[31;1m  pw:browser [pid=48568][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.6692974Z ^[[31;1m  pw:browser <ws disconnected> ws://127.0.0.1:50918/devtools/browser/158bcca4-e888-4ad6-92a2-a44e62f7b3b8 code=1006 reason= +535ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.6797237Z ^[[31;1m  pw:browser [pid=48568] <process did exit: exitCode=0, signal=null> +10ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.6799727Z ^[[31;1m  pw:browser [pid=48568] starting temporary directories cleanup +0ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.6806470Z ^[[31;1m  pw:browser [pid=48568] finished temporary directories cleanup +1ms^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.6930895Z   ✓  3 apps\desktop\tests\smoke.spec.ts:9:1 › two visible isolated windows; transparent stage; no core storage (3.4s)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.7150672Z 
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.7153753Z   1 skipped
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e	2026-10-22T12:25:09.7154017Z   2 passed (10.7s)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	﻿2026-10-22T12:25:10.2977146Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:10.2977690Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:10.3030520Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:10.3030986Z env:
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:10.3031168Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:10.3031385Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:10.3031701Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:10.3032067Z ##[endgroup]
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:12.0075104Z ^[[31;1m$ node apps/stage/tests/visual/runner.mjs^[[0m
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:15.2728574Z [PASSED] deterministic-1_bg-white_framing-fullBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:16.8134699Z [PASSED] deterministic-1_bg-white_framing-fullBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:18.3227674Z [PASSED] deterministic-1_bg-white_framing-fullBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:19.8901975Z [PASSED] deterministic-1_bg-white_framing-upperBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:21.5088774Z [PASSED] deterministic-1_bg-white_framing-upperBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:22.9603751Z [PASSED] deterministic-1_bg-white_framing-upperBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:24.5431598Z [PASSED] deterministic-1_bg-black_framing-fullBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:25.9714166Z [PASSED] deterministic-1_bg-black_framing-fullBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:27.5066770Z [PASSED] deterministic-1_bg-black_framing-fullBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:29.0910747Z [PASSED] deterministic-1_bg-black_framing-upperBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:30.6900356Z [PASSED] deterministic-1_bg-black_framing-upperBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:32.1741740Z [PASSED] deterministic-1_bg-black_framing-upperBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:33.7125806Z [PASSED] deterministic-1_bg-gradient_framing-fullBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:35.2127310Z [PASSED] deterministic-1_bg-gradient_framing-fullBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:36.7324592Z [PASSED] deterministic-1_bg-gradient_framing-fullBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:38.3026168Z [PASSED] deterministic-1_bg-gradient_framing-upperBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:39.8996354Z [PASSED] deterministic-1_bg-gradient_framing-upperBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:41.4029821Z [PASSED] deterministic-1_bg-gradient_framing-upperBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+Windows desktop and isolation	Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual	2026-10-22T12:25:41.4041926Z All 18 visual regression cases completed successfully!
+Windows desktop and isolation	Verify Windows evidence provenance	﻿2026-10-22T12:25:42.0726812Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Verify
+Windows desktop and isolation	Verify Windows evidence provenance	2026-10-22T12:25:42.0727472Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Verify^[[0m
+Windows desktop and isolation	Verify Windows evidence provenance	2026-10-22T12:25:42.0777883Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	Verify Windows evidence provenance	2026-10-22T12:25:42.0778280Z env:
+Windows desktop and isolation	Verify Windows evidence provenance	2026-10-22T12:25:42.0778453Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Verify Windows evidence provenance	2026-10-22T12:25:42.0778669Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Verify Windows evidence provenance	2026-10-22T12:25:42.0779002Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Verify Windows evidence provenance	2026-10-22T12:25:42.0779372Z ##[endgroup]
+Windows desktop and isolation	Verify Windows evidence provenance	2026-10-22T12:25:42.8800969Z Verified 27 current-attempt evidence files
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	﻿2026-10-22T12:25:42.9590086Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9590474Z with:
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9590696Z   name: windows-P0-01-evidence-39777926877-1
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9591046Z   path: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows/
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9591400Z   if-no-files-found: error
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9591614Z   compression-level: 6
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9591803Z   overwrite: false
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9591996Z   include-hidden-files: false
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9592197Z env:
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9592360Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9592576Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9592880Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:42.9593237Z ##[endgroup]
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:43.5095272Z (node:49744) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:43.5096121Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:43.5233610Z With the provided path, there will be 27 files uploaded
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:43.5240129Z Artifact name is valid!
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:43.5242663Z Root directory input is valid!
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:45.0442012Z Beginning upload of artifact content to blob storage
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:45.0993329Z (node:49744) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:47.6991765Z Uploaded bytes 74964
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:48.0652117Z Finished uploading artifact content to blob storage!
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:48.0652883Z SHA256 digest of uploaded artifact zip is 7bd10d64c7f994d204d3241e521c5c1066ad92e2099d0a4adcbda46f7b446aa2
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:48.0653839Z Finalizing artifact upload
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:48.8962181Z Artifact windows-P0-01-evidence-39777926877-1.zip successfully finalized. Artifact ID 12425691941
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:48.8963257Z Artifact windows-P0-01-evidence-39777926877-1 has been successfully uploaded! Final size is 74964 bytes. Artifact ID is 12425691941
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:25:48.8971957Z Artifact download URL: https://github.com/nanake-lab/nemu/actions/runs/39777926877/artifacts/12425691941
+Windows desktop and isolation	W02 NTFS storage checks	﻿2026-10-22T12:25:48.9209571Z ##[group]Run $evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9210239Z ^[[36;1m$evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9210793Z ^[[36;1mNew-Item -ItemType Directory -Path $evidence -Force | Out-Null^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9211184Z ^[[36;1m"NEMU_W02_EVIDENCE=$evidence" >> $env:GITHUB_ENV^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9211584Z ^[[36;1mrustup show 2>&1 | Tee-Object (Join-Path $evidence 'toolchain.log')^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9211974Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9212512Z ^[[36;1mcargo clippy -p core-store --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9213056Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9213596Z ^[[36;1mcargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9214297Z ^[[36;1mexit $LASTEXITCODE^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9264417Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9264805Z env:
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9264986Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9265203Z   UV_LINK_MODE: copy
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9265514Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:48.9265874Z ##[endgroup]
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.4994653Z Default host: x86_64-pc-windows-msvc
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.4996780Z rustup home:  C:\Users\nanake\.rustup
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.4997177Z 
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5233318Z installed toolchains
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5233630Z --------------------
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5234482Z stable-x86_64-pc-windows-msvc (default)
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5235000Z 1.99.0-x86_64-pc-windows-msvc (active)
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5343417Z 
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5344733Z active toolchain
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5345278Z ----------------
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5346266Z name: 1.99.0-x86_64-pc-windows-msvc
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5347178Z active because: overridden by 'D:\actions-runner\_work\nemu\nemu\core\rust-toolchain.toml'
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5347668Z installed targets:
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:49.5450513Z   x86_64-pc-windows-msvc
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0514503Z ^[[31;1m   Compiling proc-macro2 v1.0.107^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0544681Z ^[[31;1m   Compiling quote v1.0.47^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0552939Z ^[[31;1m   Compiling unicode-ident v1.0.27^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0560760Z ^[[31;1m    Checking typenum v1.20.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0573945Z ^[[31;1m   Compiling shlex v2.0.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0582456Z ^[[31;1m   Compiling find-msvc-tools v0.1.15^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0589292Z ^[[31;1m   Compiling serde_core v1.0.229^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0602828Z ^[[31;1m   Compiling pkg-config v0.3.34^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0614652Z ^[[31;1m    Checking cfg-if v1.0.5^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0622071Z ^[[31;1m   Compiling vcpkg v0.2.15^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0629298Z ^[[31;1m   Compiling zmij v1.0.23^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0639906Z ^[[31;1m   Compiling serde v1.0.229^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0650469Z ^[[31;1m    Checking once_cell v1.21.4^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0668295Z ^[[31;1m   Compiling getrandom v0.4.3^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0683190Z ^[[31;1m   Compiling serde_json v1.0.154^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.0703471Z ^[[31;1m    Checking const-oid v0.10.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.1544899Z ^[[31;1m    Checking windows-link v0.2.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.1970124Z ^[[31;1m    Checking itoa v1.0.18^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.2527606Z ^[[31;1m    Checking memchr v2.8.3^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.2866053Z ^[[31;1m    Checking cpufeatures v0.3.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.2877178Z ^[[31;1m    Checking windows-sys v0.61.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.3154437Z ^[[31;1m    Checking tracing-core v0.1.36^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.4539078Z ^[[31;1m    Checking fastrand v2.5.0^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.4797989Z ^[[31;1m    Checking pin-project-lite v0.2.17^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.6055262Z ^[[31;1m    Checking fallible-iterator v0.3.0^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.7412064Z ^[[31;1m   Compiling cc v1.9.0^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.7668557Z ^[[31;1m    Checking bitflags v2.13.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.8206600Z ^[[31;1m    Checking smallvec v1.16.3^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:50.8519752Z ^[[31;1m    Checking fallible-streaming-iterator v0.1.9^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:51.2347410Z ^[[31;1m    Checking hybrid-array v0.4.15^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:51.5045476Z ^[[31;1m    Checking tempfile v3.27.0^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:51.9731977Z ^[[31;1m   Compiling syn v3.0.9^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:51.9738254Z ^[[31;1m   Compiling syn v2.0.119^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:52.0203539Z ^[[31;1m    Checking crypto-common v0.2.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:52.0210024Z ^[[31;1m    Checking block-buffer v0.12.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:52.6552136Z ^[[31;1m    Checking digest v0.11.3^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:52.7657407Z ^[[31;1m   Compiling libsqlite3-sys v0.38.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:52.7729512Z ^[[31;1m    Checking sha2 v0.11.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:53.8202769Z ^[[31;1m   Compiling serde_derive v1.0.229^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:55.3088131Z ^[[31;1m   Compiling tracing-attributes v0.1.31^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:55.6952040Z ^[[31;1m    Checking rusqlite v0.40.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:56.0863654Z ^[[31;1m    Checking tracing v0.1.44^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:56.2101622Z ^[[31;1m    Checking core-types v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-types)^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:25:59.9842455Z ^[[31;1m    Checking core-store v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-store)^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.5887008Z ^[[31;1m    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.94s^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8197621Z ^[[31;1m   Compiling typenum v1.20.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8202359Z ^[[31;1m   Compiling cfg-if v1.0.5^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8205411Z ^[[31;1m   Compiling const-oid v0.10.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8208236Z ^[[31;1m   Compiling once_cell v1.21.4^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8211362Z ^[[31;1m   Compiling itoa v1.0.18^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8213974Z ^[[31;1m   Compiling memchr v2.8.3^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8216866Z ^[[31;1m   Compiling windows-link v0.2.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8219593Z ^[[31;1m   Compiling cpufeatures v0.3.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8222429Z ^[[31;1m   Compiling serde_core v1.0.229^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8225347Z ^[[31;1m   Compiling zmij v1.0.23^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8230366Z ^[[31;1m   Compiling smallvec v1.16.3^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8235329Z ^[[31;1m   Compiling fallible-streaming-iterator v0.1.9^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8240724Z ^[[31;1m   Compiling bitflags v2.13.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8245910Z ^[[31;1m   Compiling fallible-iterator v0.3.0^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8249153Z ^[[31;1m   Compiling libsqlite3-sys v0.38.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8253385Z ^[[31;1m   Compiling pin-project-lite v0.2.17^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.8773141Z ^[[31;1m   Compiling windows-sys v0.61.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.9395208Z ^[[31;1m   Compiling getrandom v0.4.3^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:00.9636255Z ^[[31;1m   Compiling fastrand v2.5.0^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:01.0044227Z ^[[31;1m   Compiling tracing-core v0.1.36^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:01.2196400Z ^[[31;1m   Compiling rusqlite v0.40.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:01.4392675Z ^[[31;1m   Compiling tracing v0.1.44^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:01.9236890Z ^[[31;1m   Compiling hybrid-array v0.4.15^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:01.9563800Z ^[[31;1m   Compiling tempfile v3.27.0^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:02.3867704Z ^[[31;1m   Compiling block-buffer v0.12.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:02.3869419Z ^[[31;1m   Compiling crypto-common v0.2.2^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:02.9418687Z ^[[31;1m   Compiling digest v0.11.3^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:02.9711650Z ^[[31;1m   Compiling serde v1.0.229^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:02.9712416Z ^[[31;1m   Compiling serde_json v1.0.154^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:03.0477387Z ^[[31;1m   Compiling sha2 v0.11.1^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:03.6759388Z ^[[31;1m   Compiling core-types v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-types)^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:07.7571955Z ^[[31;1m   Compiling core-store v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-store)^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:12.9657556Z ^[[31;1m    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.31s^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:12.9745966Z ^[[31;1m     Running unittests src\lib.rs (target\debug\deps\core_store-f05f8324f6962b3c.exe)^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:13.3544301Z 
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:13.3545623Z running 23 tests
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:17.3710070Z test tests::atomic::all_binding_fields_are_immutable_after_dispatch ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:20.5905533Z test tests::atomic::atomic_publication_and_append_only_history ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:20.5906204Z test tests::atomic::crash_worker ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:32.2786019Z test tests::atomic::d101_d102_stale_and_mutated_bindings_rejected ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:38.9757154Z test tests::atomic::disk_full_rolls_back_ledger_and_all_state ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:42.7127788Z test tests::atomic::duplicate_and_conflict_only_advance_processed_frontier ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:51.1061944Z test tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:26:52.2738127Z test tests::atomic::later_ingress_cannot_overtake_uncommitted_input ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:27:10.3445176Z test tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:27:18.0488412Z test tests::atomic::x03_real_process_exit_at_every_durability_boundary ... X03 G: exit=86, recovered all-old
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:27:26.0862697Z X03 C: exit=86, recovered all-old
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:27:35.5503897Z X03 L: exit=86, recovered all-old
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:27:44.9999960Z X03 before: exit=86, recovered all-old
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:27:56.8611938Z X03 sql: exit=86, recovered all-new
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:08.6474784Z X03 after: exit=86, recovered all-new
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:14.0697783Z X03 write: exit=86, recovered all-old
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:19.4016495Z X03 file: exit=86, recovered all-old
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:24.7722738Z X03 rename: exit=86, recovered all-old
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:30.0922495Z X03 directory: exit=86, recovered all-old
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:30.0959059Z ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:37.3471152Z test tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:40.9475347Z test tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:41.1225222Z test tests::isolation::i29_all_six_cross_lineage_opens_rejected ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:41.1625763Z test tests::isolation::malformed_headers_and_existing_directories_never_initialize ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:47.0320636Z test tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:47.2014607Z test tests::objects::at01_canonical_identity_and_superseded_writes ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:48.8006004Z test tests::objects::at02_corrupt_or_missing_object_never_publishes ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:51.8065016Z test tests::objects::at03_pins_close_prepare_gc_publish_race ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:52.0751715Z test tests::objects::object_capacity_and_io_failures_never_acknowledge_d ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:28:58.1438245Z test tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:00.5474271Z test tests::objects::published_closure_damage_refuses_recovery ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.3135977Z test tests::objects::r_index_reassembles_canonical_and_reuses_unchanged_tendencies ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.8236709Z test tests::objects::sys22_capacity_and_busy_wait_are_bounded ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.8237023Z 
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.8237482Z test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 168.47s
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.8237822Z 
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.8260991Z ^[[31;1m   Doc-tests core_store^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9058711Z 
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9059720Z running 2 tests
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9775575Z ^[[31;1merror: cannot construct `CommitCapability<Rehearsal>` with struct literal syntax due to private fields^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9776935Z ^[[31;1m  --> crates\core-store\src\transaction.rs:28:14^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9784320Z ^[[31;1m   |^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9785957Z ^[[31;1m28 | let forged = CommitCapability::<Rehearsal> {};^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9786989Z ^[[31;1m   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9788059Z ^[[31;1m^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9789509Z ^[[31;1merror: aborting due to 1 previous error^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9790702Z ^[[31;1m^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:01.9792334Z test crates\core-store\src\transaction.rs - transaction::CommitCapability (line 25) - compile fail ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0465042Z ^[[31;1merror[E0308]: mismatched types^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0466099Z ^[[31;1m   --> crates\core-store\src\transaction.rs:50:17^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0467238Z ^[[31;1m    |^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0469857Z ^[[31;1m 50 |     s.commit(c, t, status);^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0471938Z ^[[31;1m    |       ------    ^ expected `PreparedTransaction<Life>`, found `PreparedTransaction<Rehearsal>`^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0472617Z ^[[31;1m    |       |^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0474467Z ^[[31;1m    |       arguments to this method are incorrect^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0475685Z ^[[31;1m    |^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0476952Z ^[[31;1m    = note: expected struct `PreparedTransaction<Life>`^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0478129Z ^[[31;1m               found struct `PreparedTransaction<Rehearsal>`^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0479178Z ^[[31;1mnote: method defined here^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0480366Z ^[[31;1m   --> crates\core-store\src\transaction.rs:165:12^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0481605Z ^[[31;1m    |^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0482707Z ^[[31;1m165 |     pub fn commit(^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0483948Z ^[[31;1m    |            ^^^^^^^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0485356Z ^[[31;1m^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0487353Z ^[[31;1merror: aborting due to 1 previous error^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0488573Z ^[[31;1m^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0490071Z ^[[31;1mFor more information about this error, try `rustc --explain E0308`.^[[0m
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0491053Z test crates\core-store\src\transaction.rs - transaction::PreparedTransaction (line 44) - compile fail ... ok
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0491471Z 
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0491970Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+Windows desktop and isolation	W02 NTFS storage checks	2026-10-22T12:29:02.0492285Z 
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	﻿2026-10-22T12:29:02.0959788Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0960182Z with:
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0960350Z   name: windows-P5-02-39777926877-1
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0960621Z   path: D:\actions-runner\_work\_temp\w02-39777926877-1/
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0960896Z   if-no-files-found: error
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0961100Z   compression-level: 6
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0961277Z   overwrite: false
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0961457Z   include-hidden-files: false
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0961651Z env:
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0961813Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0962021Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0962327Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39777926877\1\windows
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0962777Z   NEMU_W02_EVIDENCE: D:\actions-runner\_work\_temp\w02-39777926877-1
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.0963076Z ##[endgroup]
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.2536382Z (node:52300) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.2537276Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.2582866Z With the provided path, there will be 3 files uploaded
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.2586673Z Artifact name is valid!
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:02.2588678Z Root directory input is valid!
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:03.5839860Z Beginning upload of artifact content to blob storage
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:03.6205270Z (node:52300) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:06.2784253Z Uploaded bytes 2932
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:07.1912813Z Finished uploading artifact content to blob storage!
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:07.1913612Z SHA256 digest of uploaded artifact zip is e9e91f2d862821ab29c67203a7b40a77ff51bb7e849ee0b2e36d434b4f4d1f22
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:07.1914285Z Finalizing artifact upload
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:07.9517848Z Artifact windows-P5-02-39777926877-1.zip successfully finalized. Artifact ID 12425307757
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:07.9518841Z Artifact windows-P5-02-39777926877-1 has been successfully uploaded! Final size is 2932 bytes. Artifact ID is 12425307757
+Windows desktop and isolation	Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02	2026-10-22T12:29:07.9527443Z Artifact download URL: https://github.com/nanake-lab/nemu/actions/runs/39777926877/artifacts/12425307757
+Windows desktop and isolation	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	﻿2026-10-22T12:29:07.9798416Z Post job cleanup.
+Windows desktop and isolation	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:29:08.3970112Z (node:31256) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Windows desktop and isolation	Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020	2026-10-22T12:29:08.3970929Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-10-22T12:29:08.4215429Z Post job cleanup.
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:08.5505191Z [command]"C:\Program Files\Git\cmd\git.exe" version
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:08.5740236Z git version 2.54.0.windows.1
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:08.5787586Z Copying 'C:\Users\nanake\.gitconfig' to 'D:\actions-runner\_work\_temp\55304f09-4d35-49f0-af53-2dccd7f0e88e\.gitconfig'
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:08.5807250Z Temporarily overriding HOME='D:\actions-runner\_work\_temp\55304f09-4d35-49f0-af53-2dccd7f0e88e' before making global git config changes
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:08.5808401Z Adding repository directory to the temporary git global config as a safe directory
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:08.5819294Z [command]"C:\Program Files\Git\cmd\git.exe" config --global --add safe.directory D:\actions-runner\_work\nemu\nemu
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:08.6125691Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:08.6418020Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:09.0703050Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:09.1015361Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:09.6167148Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+Windows desktop and isolation	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-10-22T12:29:09.6540924Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Windows desktop and isolation	Complete job	﻿2026-10-22T12:29:10.1550758Z Cleaning up orphan processes
+Windows desktop and isolation	Complete job	2026-10-22T12:29:10.2154996Z Terminate orphan process: pid (43252) (VBCSCompiler)
+Windows desktop and isolation	Complete job	2026-10-22T12:29:10.2246701Z Terminate orphan process: pid (25072) (conhost)
+Windows desktop and isolation	Complete job	2026-10-22T12:29:10.3941444Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

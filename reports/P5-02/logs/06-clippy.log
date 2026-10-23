@@ -1,0 +1,37 @@
+   Compiling libm v0.2.16
+    Checking core-types v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-types)
+    Checking core-policy v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-policy)
+    Checking core-store v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-store)
+    Checking task-layer v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\task-layer)
+    Checking fact-view v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\fact-view)
+    Checking gateway v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\gateway)
+    Checking core-kernel v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-kernel)
+    Checking semantic-core v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\semantic-core)
+    Checking action-gate v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\action-gate)
+error: this `if` statement can be collapsed
+   --> crates\core-store\src\objects.rs:311:9
+    |
+311 | /         if schema.messages.contains_key(&field.r#type) {
+312 | |             if let Some(v) = value.get(&field.name) {
+313 | |                 if let Some(values) = v.as_array() {
+314 | |                     for v in values {
+...   |
+321 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+311 ~         if schema.messages.contains_key(&field.r#type)
+312 ~             && let Some(v) = value.get(&field.name) {
+313 |                 if let Some(values) = v.as_array() {
+...
+319 |                 }
+320 ~             }
+    |
+
+error: could not compile `core-store` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `core-store` (lib test) due to 1 previous error

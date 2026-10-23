@@ -1,0 +1,111 @@
+{
+  "recordedAt": "2026-10-22T14:55:42.4964443Z",
+  "runId": 39796248748,
+  "jobId": 119884073194,
+  "expectedHeadSha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+  "statusSnapshotPath": "reports/P5-02/logs/17-review-ci-final-status.json",
+  "runStatus": "in_progress",
+  "runConclusion": null,
+  "runHeadSha": "670c760d2f518703eb2b3a4678b30c4ee4798837",
+  "jobStatus": "completed",
+  "jobConclusion": "success",
+  "jobStartedAt": "2026-10-22T14:30:42Z",
+  "jobCompletedAt": "2026-10-22T14:49:35Z",
+  "successfulEvidence": {
+    "artifactDownload": {
+      "command": "gh run download 39796248748 --name windows-P5-02-39796248748-1 --dir reports/P5-02/review-1/windows-39796248748",
+      "startedAt": "2026-10-22T14:53:33.7099283Z",
+      "endedAt": "2026-10-22T14:53:38.5449557Z",
+      "exitCode": 0,
+      "files": [
+        {
+          "path": "C:\\Users\\nanake\\.codex\\worktrees\\p5-02-store\\nemu\\reports\\P5-02\\review-1\\windows-39796248748\\clippy.log",
+          "length": 1611,
+          "sha256": "BB0AC31662774FD454A2A04D3BB6ED443B218B838591F63C9C9ABF7924927B83"
+        },
+        {
+          "path": "C:\\Users\\nanake\\.codex\\worktrees\\p5-02-store\\nemu\\reports\\P5-02\\review-1\\windows-39796248748\\tests.log",
+          "length": 30169,
+          "sha256": "1C321A44C1BDF62EBCBA80A5D1AC447891051F48DC897CEDDC65B2426AAD9A1C"
+        },
+        {
+          "path": "C:\\Users\\nanake\\.codex\\worktrees\\p5-02-store\\nemu\\reports\\P5-02\\review-1\\windows-39796248748\\toolchain.log",
+          "length": 417,
+          "sha256": "213A592786B59EBF99FB7B913469D56FF91C8A7EAD5831C779D45FFACFDEB4D2"
+        }
+      ]
+    },
+    "artifactFiles": [
+      {
+        "path": "C:\\Users\\nanake\\.codex\\worktrees\\p5-02-store\\nemu\\reports\\P5-02\\review-1\\windows-39796248748\\clippy.log",
+        "length": 1611,
+        "sha256": "BB0AC31662774FD454A2A04D3BB6ED443B218B838591F63C9C9ABF7924927B83"
+      },
+      {
+        "path": "C:\\Users\\nanake\\.codex\\worktrees\\p5-02-store\\nemu\\reports\\P5-02\\review-1\\windows-39796248748\\tests.log",
+        "length": 30169,
+        "sha256": "1C321A44C1BDF62EBCBA80A5D1AC447891051F48DC897CEDDC65B2426AAD9A1C"
+      },
+      {
+        "path": "C:\\Users\\nanake\\.codex\\worktrees\\p5-02-store\\nemu\\reports\\P5-02\\review-1\\windows-39796248748\\toolchain.log",
+        "length": 417,
+        "sha256": "213A592786B59EBF99FB7B913469D56FF91C8A7EAD5831C779D45FFACFDEB4D2"
+      }
+    ],
+    "directJobLogsEndpoint": {
+      "command": "gh api --allow-escape-sequences --method GET repos/nanake-lab/nemu/actions/jobs/119884073194/logs",
+      "startedAt": "2026-10-22T14:55:21.7930645Z",
+      "endedAt": "2026-10-22T14:55:28.0926196Z",
+      "exitCode": 0,
+      "stdout": {
+        "path": "reports/P5-02/logs/17-review-ci-39796248748-direct-job-raw.log",
+        "length": 105660,
+        "sha256": "366028E2A41EC4B067AB20D8A380703A5DF53EA1B8A1F34178D9E0203E9E7F6A"
+      },
+      "stderr": {
+        "path": "reports/P5-02/logs/17-review-ci-39796248748-direct-job-raw.stderr.txt",
+        "length": 0,
+        "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+      }
+    }
+  },
+  "failedAttempts": [
+    {
+      "command": "gh run view 39796248748 --log",
+      "exitCode": 1,
+      "evidence": {
+        "path": "reports/P5-02/logs/17-review-ci-39796248748.log",
+        "length": 82,
+        "sha256": "3EEFBC339AEA2BEFF877F5D28F56F8A9642CA3092DBF111B8BA0C6930D0518EE"
+      },
+      "observed": "run still in progress; logs will be available when complete"
+    },
+    {
+      "command": "gh run view 39796248748 --job 119884073194 --log",
+      "exitCode": 1,
+      "evidence": {
+        "path": "reports/P5-02/logs/17-review-ci-39796248748-job-119884073194.log",
+        "length": 82,
+        "sha256": "3EEFBC339AEA2BEFF877F5D28F56F8A9642CA3092DBF111B8BA0C6930D0518EE"
+      },
+      "observed": "run still in progress; logs will be available when complete"
+    },
+    {
+      "command": "gh api --method GET repos/nanake-lab/nemu/actions/jobs/119884073194/logs",
+      "exitCode": 1,
+      "evidence": {
+        "path": "reports/P5-02/logs/17-review-ci-39796248748-direct-job.log",
+        "length": 0,
+        "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+      },
+      "stderr": "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway\n",
+      "observed": "gh refused output containing terminal escape sequences; subsequent authorized retry used --allow-escape-sequences"
+    },
+    {
+      "path": "reports/P5-02/logs/17-review-ci-poll-errors.log",
+      "length": 1508,
+      "sha256": "11C4455D0682F4A8196908859D213E43C65D1848A7E0DF87D12A0CBD36A7AA44",
+      "observed": "poll diagnostics include one API EOF and a PowerShell wrapper ParserError before gh invocation"
+    }
+  ]
+}
