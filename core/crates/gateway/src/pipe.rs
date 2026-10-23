@@ -10,6 +10,7 @@ use tokio::net::windows::named_pipe::NamedPipeServer;
 
 pub struct Listener {
     server: NamedPipeServer,
+    name: String,
     config: FrameConfig,
 }
 pub fn current_pipe_name() -> Result<String> {
@@ -31,7 +32,8 @@ impl Listener {
             crate::windows::current_sid()?
         );
         Ok(Self {
-            server: crate::windows::create_pipe(&name, config)?,
+            server: crate::windows::create_pipe(&name, config, true)?,
+            name,
             config,
         })
     }
@@ -44,10 +46,14 @@ impl Listener {
             .map_err(|_| Error::Timeout)??;
         Framed::new(&mut self.server, self.config)
     }
-    /// End an authenticated or failed session, discarding unread bytes, while
-    /// retaining the first-instance handle and its ACL for the next connection.
+    /// End an authenticated or failed session. Create the next ACL-protected
+    /// instance before closing this one, so ownership of the pipe name never
+    /// lapses. Fresh handles prevent stale overlapped reads crossing sessions.
     pub fn disconnect(&mut self) -> Result<()> {
-        Ok(self.server.disconnect()?)
+        let next = crate::windows::create_pipe(&self.name, self.config, false)?;
+        self.server.disconnect()?;
+        self.server = next;
+        Ok(())
     }
     #[cfg(test)]
     pub(crate) fn raw_handle(&self) -> std::os::windows::io::RawHandle {

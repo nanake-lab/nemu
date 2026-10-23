@@ -280,6 +280,7 @@ pub(crate) fn read_secret_file(path: &Path) -> Result<Zeroizing<Vec<u8>>> {
 pub(crate) fn create_pipe(
     name: &str,
     config: crate::framing::FrameConfig,
+    first: bool,
 ) -> Result<tokio::net::windows::named_pipe::NamedPipeServer> {
     config.validate()?;
     let descriptor = Descriptor::current_user()?;
@@ -288,9 +289,11 @@ pub(crate) fn create_pipe(
     // both it and the descriptor remain alive. No default/NULL DACL is used.
     Ok(unsafe {
         tokio::net::windows::named_pipe::ServerOptions::new()
-            .first_pipe_instance(true)
+            .first_pipe_instance(first)
             .reject_remote_clients(true)
-            .max_instances(1)
+            // One session and its replacement can overlap during rotation.
+            // Listener's mutable borrow still serializes session processing.
+            .max_instances(2)
             .in_buffer_size(4096)
             .out_buffer_size(4096)
             .create_with_security_attributes_raw(

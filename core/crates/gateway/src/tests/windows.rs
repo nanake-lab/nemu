@@ -66,15 +66,26 @@ async fn actual_pipe_acl_current_user_connects_squatting_and_experiment_refused(
         client.write(&value).await.unwrap();
         assert_eq!(server.read::<UserText>().await.unwrap(), value);
     }
-    // Keep the first-instance handle across reconnects. Tokio's overlapped I/O
-    // can retain handles briefly after drop; rebinding would also open a name gap.
-    listener.disconnect().unwrap();
-    // After DisconnectNamedPipe, ConnectNamedPipe must start listening before
-    // another client opens. Poll the server first, as a real accept loop does.
-    let (server, client) = tokio::join!(listener.accept(), async {
-        ClientOptions::new().open(&name)
-    });
-    let _server = server.unwrap();
-    let client = client.unwrap();
-    drop(client);
+    // Exercise actual reads AND writes on every replacement, including after
+    // abandoned unread bytes. A successful connect alone missed stale I/O.
+    for attempt in 0..20 {
+        listener.disconnect().unwrap();
+        assert_eq!(
+            crate::windows::dacl(listener.raw_handle()).unwrap(),
+            format!("D:P(A;;FA;;;{sid})")
+        );
+        assert!(Listener::for_lineage(Lineage::REHEARSAL, frame_config(), &suffix).is_err());
+        let client = ClientOptions::new().open(&name).unwrap();
+        let mut client = crate::framing::Framed::new(client, frame_config()).unwrap();
+        let mut server = listener.accept().await.unwrap();
+        let value = UserText {
+            schema_version: 1,
+            text: format!("synthetic session {attempt}"),
+        };
+        client.write(&value).await.unwrap();
+        assert_eq!(server.read::<UserText>().await.unwrap(), value);
+        server.write(&value).await.unwrap();
+        assert_eq!(client.read::<UserText>().await.unwrap(), value);
+        client.write(&value).await.unwrap();
+    }
 }

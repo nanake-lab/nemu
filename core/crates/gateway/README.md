@@ -28,8 +28,10 @@ This crate is **partial**, not a runnable authenticated gateway daemon. See
   Object closure/lineage/durability checks remain W02's responsibility.
 - Windows `pipe::Listener`: binds `\\.\pipe\nemu-core-<current SID>`, protected
   DACL with exactly the current SID, remote-client rejection, first-instance name
-  protection and one instance. It retains that handle across disconnect/reconnect;
-  dropping/rebinding at every session would open a pipe-name ownership gap.
+  protection and at most two kernel instances during rotation. Session processing
+  is sequential through a mutable borrow. Disconnect creates the replacement with
+  the same explicit ACL before closing the old handle, keeping name ownership
+  continuous and preventing stale overlapped reads from crossing sessions.
   EXPERIMENT is rejected before creating a handle. There is no production bootstrap.
 
 Only `windows.rs` permits unsafe code, with ownership/lifetime notes at each Win32
@@ -51,6 +53,14 @@ Checks (Windows, D-drive temporary roots/caches):
 & ./reports/P5-03/check.ps1
 ```
 
-Second-account denial still requires a real second Windows account arranged by
-the user. An exact live-handle DACL inspection is supporting evidence, not a
-substitute for that acceptance test. The suite never opens user stores.
+The user has supplied a successful real second-account denial result on Windows
+10 (Win32 error 5, exit 0); the original user message and evidence provenance are
+saved under `reports/P5-03/second-account/`. Full window transcripts were not
+attached. This evidence is separate from the automated same-account tests.
+The suite never opens user stores.
+
+Windows SYS01 structural tests connect real pipes to public core-store APIs:
+durable receive, delayed/interleaved commit receipts, retransmission/conflict with
+unchanged H/state/anchor, and uncommitted close/reopen. A test-only coordinator
+preloads synthetic payload/provenance and authenticates locally; it is not a wire
+authentication/upload protocol or a full runtime. Close/reopen is not power loss.

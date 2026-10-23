@@ -8,6 +8,10 @@ use core_types::{
 use std::{sync::OnceLock, time::Duration};
 mod frames;
 mod ingress;
+#[cfg(windows)]
+mod runtime_fixture;
+#[cfg(windows)]
+mod sys01_pipe;
 mod validation;
 #[cfg(windows)]
 mod windows;

@@ -2,12 +2,12 @@
   "schema_version": 1,
   "task": "P5-03",
   "status": "not_run",
-  "scope": "full task acceptance is blocked; individual components are tested",
+  "scope": "full task acceptance blocked; components and SYS01 structural pipe/store subset tested",
   "components": {
     "gateway_final": {
       "status": "passed",
-      "tests": 14,
-      "log": "test-final.log"
+      "tests": 16,
+      "log": "continuation-1/test-final.log"
     },
     "workspace_before_final_gateway_hardening": {
       "status": "passed",
@@ -17,9 +17,16 @@
     "workspace_fmt_clippy_final": {
       "status": "passed",
       "logs": [
-        "fmt-final.log",
-        "clippy-final.log"
+        "continuation-1/fmt-final.log",
+        "continuation-1/clippy-final.log"
       ]
+    },
+    "SYS01_structural_pipe_store": {
+      "status": "passed",
+      "profile": "synthetic rehearsal fixture",
+      "tests": 2,
+      "log": "continuation-1/test-final.log",
+      "scope": "real pipe + generated EventEnvelope/Receipt + public core-store commit/dedup; reverse delayed receipts across reconnect; orderly close/reopen; not full auth/upload/runtime or physical power cut"
     }
   },
   "acceptance": {
@@ -28,8 +35,12 @@
       "reason": "full gateway service requires requested IDL/store interfaces"
     },
     "second_windows_account": {
-      "status": "not_run",
-      "reason": "user must arrange existing second account"
+      "status": "passed",
+      "provenance": "user supplied Windows 10 result; full window transcripts not attached; result predates pipe rotation fix",
+      "result": "ERROR_ACCESS_DENIED (5)",
+      "exit_code": 0,
+      "original": "second-account/user-message.txt",
+      "notes": "ACL construction unchanged; automated actual-DACL assertions on each new instance"
     },
     "EXPERIMENT_pipe_and_ingress_components": {
       "status": "passed",
