@@ -1,0 +1,42 @@
+{
+  "exact_rational": {
+    "seed": 610023,
+    "states": 2000,
+    "append_and_counterfactual_cases": 4000,
+    "withdrawal_comparisons": 4000,
+    "identity_and_direction_failures": 0
+  },
+  "positive_weight_silently_underflows": {
+    "a": {
+      "pi": 0.0,
+      "groups": 1,
+      "a": 0.0,
+      "v": 0.0,
+      "original_weight_hex": "0x0.0000000000001p-1022",
+      "share": 0.5,
+      "actual_q": 1.0
+    },
+    "b": {
+      "pi": 0.0,
+      "groups": 1,
+      "a": 0.0,
+      "v": 0.0,
+      "original_weight_hex": "0x0.0000000000001p-1022",
+      "share": 0.5,
+      "actual_q": 1.0
+    }
+  },
+  "backfill_counterfactual_includes_new_evidence": {
+    "reported_cf": {
+      "a": 0.6122448979591837,
+      "b": 0.4794520547945206
+    },
+    "after": {
+      "a": 0.6122448979591837,
+      "b": 0.4794520547945206
+    },
+    "expected_cf_b": 0.0,
+    "expected_cf_a": 0.6122448979591837,
+    "new_b_weight": 3.68421052631579
+  }
+}

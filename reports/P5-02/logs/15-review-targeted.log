@@ -1,0 +1,57 @@
+   Compiling core-store v0.0.0 (C:\Users\nanake\.codex\worktrees\p5-02-store\nemu\core\crates\core-store)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.49s
+     Running unittests src\lib.rs (target\debug\deps\core_store-21ccc9f44377ddf9.exe)
+
+running 1 test
+test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects ... running 1 test
+W02_INJECT ObjectWritten object=Some("echo.tendency-v2") plan=Nth(NthFault { point: ObjectWritten, occurrence: 2, object_type: Some("echo.tendency-v2"), seen: 2 })
+X03 r/echo.tendency-v2/2/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ObjectWritten object=Some("echo.r-snapshot-v2") plan=Nth(NthFault { point: ObjectWritten, occurrence: 1, object_type: Some("echo.r-snapshot-v2"), seen: 1 })
+X03 r/echo.r-snapshot-v2/1/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ObjectWritten object=Some("echo.transaction-v2") plan=Nth(NthFault { point: ObjectWritten, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.tendency-v2") plan=Nth(NthFault { point: FileSynced, occurrence: 2, object_type: Some("echo.tendency-v2"), seen: 2 })
+X03 r/echo.tendency-v2/2/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.r-snapshot-v2") plan=Nth(NthFault { point: FileSynced, occurrence: 1, object_type: Some("echo.r-snapshot-v2"), seen: 1 })
+X03 r/echo.r-snapshot-v2/1/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.transaction-v2") plan=Nth(NthFault { point: FileSynced, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.tendency-v2") plan=Nth(NthFault { point: Renamed, occurrence: 2, object_type: Some("echo.tendency-v2"), seen: 2 })
+X03 r/echo.tendency-v2/2/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.r-snapshot-v2") plan=Nth(NthFault { point: Renamed, occurrence: 1, object_type: Some("echo.r-snapshot-v2"), seen: 1 })
+X03 r/echo.r-snapshot-v2/1/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.transaction-v2") plan=Nth(NthFault { point: Renamed, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.tendency-v2") plan=Nth(NthFault { point: DirectorySynced, occurrence: 2, object_type: Some("echo.tendency-v2"), seen: 2 })
+X03 r/echo.tendency-v2/2/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.r-snapshot-v2") plan=Nth(NthFault { point: DirectorySynced, occurrence: 1, object_type: Some("echo.r-snapshot-v2"), seen: 1 })
+X03 r/echo.r-snapshot-v2/1/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.transaction-v2") plan=Nth(NthFault { point: DirectorySynced, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseFileSyncBefore object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseFileSyncBefore, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseFileSyncBefore: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseFileSynced object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseFileSynced, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseFileSynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseDirectorySyncBefore object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseDirectorySyncBefore, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseDirectorySyncBefore: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseDirectorySynced object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseDirectorySynced, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseDirectorySynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 30 filtered out; finished in 156.55s
+

@@ -1,0 +1,21 @@
+$ tsx packages/voice/src/asr/alignment.ts
+Traceback (most recent call last):
+  File "C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\alignment\context_references.py", line 145, in <module>
+    main()
+  File "C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\alignment\context_references.py", line 70, in main
+    anchor_pcm=pcm(anchor_path)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\alignment\context_references.py", line 26, in pcm
+    with wave.open(str(path),'rb') as w:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\wave.py", line 649, in open
+    return Wave_read(f)
+           ^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\wave.py", line 286, in __init__
+    self.initfp(f)
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\wave.py", line 266, in initfp
+    self._read_fmt_chunk(chunk)
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\wave.py", line 383, in _read_fmt_chunk
+    raise Error('unknown format: %r' % (wFormatTag,))
+wave.Error: unknown format: 3
+[ELIFECYCLE] Command failed with exit code 1.

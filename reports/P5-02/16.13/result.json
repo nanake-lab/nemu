@@ -1,0 +1,13 @@
+{
+  "id": "16.13",
+  "result": "passed",
+  "scope": "storage subset",
+  "source_revision": "5cc3b540f3b7b33b611a4c590cac91c9406df80a",
+  "tests": [
+    "atomic_publication_and_append_only_history",
+    "disk_full_rolls_back_ledger_and_all_state",
+    "recovery_rejects_valid_but_mixed_head_and_missing_ledger"
+  ],
+  "evidence": "../logs/10-final-workspace-tests.log",
+  "manifest": "../final-test-manifest.json"
+}

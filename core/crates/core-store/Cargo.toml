@@ -6,3 +6,10 @@ publish.workspace = true
 
 [dependencies]
 core-types.workspace = true
+rusqlite = { version = "=0.40.2", default-features = false, features = ["bundled", "limits"] }
+serde_json = "=1.0.154"
+tempfile = "=3.27.0"
+tracing = "=0.1.44"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "=0.61.2", features = ["Win32_Storage_FileSystem", "Win32_Foundation"] }
