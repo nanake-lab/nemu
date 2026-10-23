@@ -13,6 +13,7 @@ import { ChannelManager } from './channels.js';
 import { TrayManager } from './tray.js';
 import { ShortcutManager } from './shortcuts.js';
 import { DesktopLogger } from './logger.js';
+import { registerCodexSession } from '../codex-session/index.js';
 
 app.setName('Nemu');
 
@@ -63,6 +64,7 @@ if (!gotSingleInstanceLock) {
       ringCapacity: 5000,
       enableValidation: process.env.NODE_ENV !== 'production',
     });
+    registerCodexSession(appBus, app);
 
     const stagePreloadPath = join(import.meta.dirname, '../preload/stage.cjs');
     const panelPreloadPath = join(import.meta.dirname, '../preload/panel.cjs');
