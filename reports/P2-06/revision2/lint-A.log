@@ -1,0 +1,33 @@
+$ node tools/asset-lint/launch.mjs content/_candidates/P2-06/revision2/models/A.vrm --profile content/_candidates/P2-06/revision2/models/A.profile.json --manifest content/_candidates/P2-06/revision2/manifest.json --json
+{
+  "file": "D:\\Dev\\nemu-p206\\content\\_candidates\\P2-06\\revision2\\models\\A.vrm",
+  "errors": 0,
+  "warnings": 2,
+  "diagnostics": [
+    {
+      "rule": "A1.1-material-count",
+      "severity": "warning",
+      "message": "13 materials exceed the 12-material target.",
+      "repair": "Combine compatible materials where the appearance is preserved."
+    },
+    {
+      "rule": "A1.1-bone-count",
+      "severity": "warning",
+      "message": "277 skin joints exceed the 250-bone target.",
+      "repair": "Remove unused skin joints and preserve the required humanoid rig."
+    }
+  ],
+  "metrics": {
+    "nodeCount": 285,
+    "meshCount": 8,
+    "triangleCount": 56171,
+    "textureCount": 12,
+    "imageCount": 13,
+    "materialCount": 13,
+    "estimatedTextureBytes": 134917461,
+    "skinJointCount": 277,
+    "maximumMeshMorphTargetCount": 61,
+    "accessorBoundsHeightM": 1.5842380561352911,
+    "fileBytes": 12765068
+  }
+}

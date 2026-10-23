@@ -1,0 +1,21 @@
+node:internal/errors:986
+  const err = new Error(message);
+              ^
+
+Error: Command failed: powershell.exe -NoProfile -Command $busy=@(Get-Process blender,electron,Runner.Worker -ErrorAction SilentlyContinue);if($busy.Count){$busy|Select-Object ProcessName,Id|ConvertTo-Json -Compress;exit 1};exit 0
+    at genericNodeError (node:internal/errors:986:15)
+    at wrappedFn (node:internal/errors:540:14)
+    at checkExecSyncError (node:child_process:942:11)
+    at execFileSync (node:child_process:978:15)
+    at assertQuiet (file:///D:/Dev/nemu-p206/tools/asset-pipeline/materials/audit-capture.mjs:9:3)
+    at serverAndBrowser (file:///D:/Dev/nemu-p206/tools/asset-pipeline/materials/audit-capture.mjs:33:3)
+    at file:///D:/Dev/nemu-p206/tools/asset-pipeline/expressions/capture_revision2.mjs:22:35 {
+  status: 1,
+  signal: null,
+  output: [ null, '{"ProcessName":"Runner.Worker","Id":9228}\r\n', '' ],
+  pid: 57496,
+  stdout: '{"ProcessName":"Runner.Worker","Id":9228}\r\n',
+  stderr: ''
+}
+
+Node.js v24.21.0

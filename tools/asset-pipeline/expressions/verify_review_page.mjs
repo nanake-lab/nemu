@@ -1,0 +1,46 @@
+import { chromium } from '@playwright/test';
+import { writeFile } from 'node:fs/promises';
+import { assertQuiet } from '../materials/audit-capture.mjs';
+assertQuiet();
+const browser = await chromium.launch({ args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+const errors = [];
+const result = {};
+try {
+  const context = await browser.newContext({ viewport:{width:1400,height:950}, deviceScaleFactor:1 });
+  const page = await context.newPage();
+  page.on('pageerror', e => errors.push(String(e)));
+  let sent, reject = false;
+  await page.route('**/api/p206/selections', async route => {
+    sent = route.request().postDataJSON();
+    await route.fulfill({ status:reject ? 400 : 201, contentType:'application/json', body:JSON.stringify(reject ? {error:'TEST REJECTED'} : {saved:true, receiptId:'TEST-ONLY-RECEIPT'}) });
+  });
+  const url = 'http://127.0.0.1:5187/reports/P2-06/revision2/review.html';
+  await page.goto(url);
+  await page.locator('select[name="nemuSmug"]').selectOption('B');
+  await page.locator('#notes').fill('TEST ONLY - no production selection is submitted');
+  await page.reload();
+  if (await page.locator('select[name="nemuSmug"]').inputValue() !== 'B') throw Error('Draft selection lost on reload');
+  if (!(await page.locator('#notes').inputValue()).includes('TEST ONLY')) throw Error('Draft notes lost on reload');
+  result.reloadRestoresDraft = true;
+  await page.locator('#submit').click();
+  await page.waitForFunction(() => document.getElementById('save-status').textContent.includes('TEST-ONLY-RECEIPT'));
+  if (sent.choices.nemuSmug !== 'B' || !sent.fingerprint) throw Error('Wrong submitted payload');
+  result.submitPayloadAndReceipt = true;
+  reject = true;
+  await page.locator('select[name="nemuSmug"]').selectOption('C');
+  await page.locator('#submit').click();
+  await page.waitForFunction(() => document.getElementById('save-status').textContent.includes('提交未完成'));
+  if (await page.locator('#save-status').getAttribute('data-receipt')) throw Error('Stale success receipt remains');
+  result.failureIsVisibleAndDraftRetained = true;
+  await context.close();
+  const proof = await browser.newContext({ viewport:{width:1400,height:950}, deviceScaleFactor:1 });
+  const proofPage = await proof.newPage();
+  await proofPage.goto(url);
+  await proofPage.locator('#nemuTeary').scrollIntoViewIfNeeded();
+  await proofPage.waitForFunction(() => [...document.images].every(i => i.complete && i.naturalWidth > 0));
+  await proofPage.screenshot({ path:'reports/P2-06/revision2/review-submit.png' });
+  result.productionSelectionsWritten = false;
+  if (errors.length) throw Error(errors.join('\n'));
+  assertQuiet();
+  await writeFile('reports/P2-06/revision2/page-verification.json', JSON.stringify({...result,errors},null,2));
+} finally { await browser.close(); }

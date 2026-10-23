@@ -1,0 +1,34 @@
+$ tsc --noEmit
+apps/desktop/src/voice/process.ts(1,35): error TS2307: Cannot find module '@nemu/voice' or its corresponding type declarations.
+apps/desktop/tests/voice-idle.spec.ts(1,35): error TS2307: Cannot find module '@nemu/voice' or its corresponding type declarations.
+apps/desktop/tests/voice.spec.ts(1,35): error TS2307: Cannot find module '@nemu/voice' or its corresponding type declarations.
+packages/voice/src/asr/evaluate.ts(7,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+packages/voice/src/asr/evaluate.ts(8,39): error TS2307: Cannot find module '@nemu/contracts' or its corresponding type declarations.
+packages/voice/src/asr/hybrid-reference.ts(5,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+packages/voice/src/asr/hybrid-reference.ts(44,12): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/voice/src/asr/hybrid-reference.ts(49,47): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/voice/src/asr/hybrid-reference.ts(64,20): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/voice/src/asr/latency.ts(5,39): error TS2307: Cannot find module '@nemu/contracts' or its corresponding type declarations.
+packages/voice/src/asr/models.test.ts(13,35): error TS7006: Parameter 'f' implicitly has an 'any' type.
+packages/voice/src/asr/models.test.ts(25,49): error TS7006: Parameter 'f' implicitly has an 'any' type.
+packages/voice/src/asr/models.ts(7,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+packages/voice/src/asr/models.ts(28,14): error TS7006: Parameter 'files' implicitly has an 'any' type.
+packages/voice/src/asr/models.ts(28,43): error TS7006: Parameter 'f' implicitly has an 'any' type.
+packages/voice/src/asr/provider.ts(1,43): error TS2307: Cannot find module '@nemu/contracts' or its corresponding type declarations.
+packages/voice/src/asr/quiet.ts(3,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+packages/voice/src/asr/reassess-latency.ts(4,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+packages/voice/src/asr/review-candidates.ts(6,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+packages/voice/src/asr/review-candidates.ts(32,35): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/voice/src/asr/runtime.test.ts(2,58): error TS2307: Cannot find module '@nemu/contracts' or its corresponding type declarations.
+packages/voice/src/asr/runtime.ts(9,8): error TS2307: Cannot find module '@nemu/contracts' or its corresponding type declarations.
+packages/voice/src/asr/scoring.ts(1,27): error TS2307: Cannot find module '@nemu/contracts' or its corresponding type declarations.
+packages/voice/src/asr/sensevoice.ts(6,27): error TS2307: Cannot find module '@nemu/contracts' or its corresponding type declarations.
+packages/voice/src/asr/sensevoice.ts(70,5): error TS2322: Type '{ text: string; lang: Lang; }' is not assignable to type 'AsrResult'.
+  Property 'confidence' is missing in type '{ text: string; lang: Lang; }' but required in type 'Pick<AppBusPayloads, "lang" | "text" | "confidence">'.
+packages/voice/src/asr/timing-reference.ts(4,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+packages/voice/src/asr/timing-reference.ts(28,12): error TS7006: Parameter 'row' implicitly has an 'any' type.
+packages/voice/src/asr/timing-reference.ts(32,25): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/voice/src/asr/user-data.ts(5,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+packages/voice/src/asr/user-data.ts(6,28): error TS2307: Cannot find module '@nemu/contracts' or its corresponding type declarations.
+packages/voice/web/mic.ts(5,8): error TS2307: Cannot find module '@nemu/contracts' or its corresponding type declarations.
+[ELIFECYCLE] Command failed with exit code 2.

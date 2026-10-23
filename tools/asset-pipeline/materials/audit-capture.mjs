@@ -33,6 +33,7 @@ export async function serverAndBrowser() {
   assertQuiet();
   const server = await createServer({
     root: process.cwd(),
+    cacheDir: 'D:/Dev/cache/P2-06/vite',
     configFile: false,
     optimizeDeps: { noDiscovery: true, include: [] },
     resolve: { alias: aliases },
