@@ -1,0 +1,1887 @@
+{
+  "status": "DIAGNOSTIC_ONLY_NOT_ACCEPTANCE",
+  "method": "Fixed global grid; sample clock without realtime delivery, ASR load or IPC; no tuning of references or sample selection",
+  "referenceSha256": "d6889a9d9f2fd7d102e517d914da83f85e96648196579913f5d530a5dae03409",
+  "configs": [
+    {
+      "config": {
+        "id": "baseline",
+        "threshold": 0.5,
+        "speech": 0.2,
+        "silence": 0.2
+      },
+      "count": 60,
+      "medianVadEndMs": 319.9999999999991,
+      "bargeOver250": 59,
+      "prematureBarge": 1,
+      "prematureEnd": 1,
+      "maximumBargeMs": 1339.9999999999995,
+      "rows": [
+        {
+          "id": "user-zh-001",
+          "lang": "zh",
+          "vadEndMs": 360,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-002",
+          "lang": "zh",
+          "vadEndMs": 340.00000000000045,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-zh-003",
+          "lang": "zh",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-zh-004",
+          "lang": "zh",
+          "vadEndMs": 379.9999999999991,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-zh-005",
+          "lang": "zh",
+          "vadEndMs": 300,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-zh-006",
+          "lang": "zh",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 279.9999999999991
+        },
+        {
+          "id": "user-zh-007",
+          "lang": "zh",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1139.9999999999995
+        },
+        {
+          "id": "user-zh-008",
+          "lang": "zh",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 279.9999999999991
+        },
+        {
+          "id": "user-zh-009",
+          "lang": "zh",
+          "vadEndMs": 259.9999999999991,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-zh-010",
+          "lang": "zh",
+          "vadEndMs": 240,
+          "bargeInMs": 279.99999999999886
+        },
+        {
+          "id": "user-zh-011",
+          "lang": "zh",
+          "vadEndMs": 340,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-zh-012",
+          "lang": "zh",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 1179.9999999999995
+        },
+        {
+          "id": "user-zh-013",
+          "lang": "zh",
+          "vadEndMs": 320,
+          "bargeInMs": 279.99999999999955
+        },
+        {
+          "id": "user-zh-014",
+          "lang": "zh",
+          "vadEndMs": 379.9999999999991,
+          "bargeInMs": 380.00000000000045
+        },
+        {
+          "id": "user-zh-015",
+          "lang": "zh",
+          "vadEndMs": 320,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-zh-016",
+          "lang": "zh",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-zh-017",
+          "lang": "zh",
+          "vadEndMs": 400.00000000000045,
+          "bargeInMs": 1179.9999999999995
+        },
+        {
+          "id": "user-zh-018",
+          "lang": "zh",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-zh-019",
+          "lang": "zh",
+          "vadEndMs": 359.9999999999991,
+          "bargeInMs": 279.99999999999955
+        },
+        {
+          "id": "user-zh-020",
+          "lang": "zh",
+          "vadEndMs": 340.00000000000045,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-en-001",
+          "lang": "en",
+          "vadEndMs": 280.00000000000045,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-002",
+          "lang": "en",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 1339.9999999999995
+        },
+        {
+          "id": "user-en-003",
+          "lang": "en",
+          "vadEndMs": 660.0000000000005,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-004",
+          "lang": "en",
+          "vadEndMs": 320,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-en-005",
+          "lang": "en",
+          "vadEndMs": 320,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-en-006",
+          "lang": "en",
+          "vadEndMs": 280,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-en-007",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-en-008",
+          "lang": "en",
+          "vadEndMs": 300,
+          "bargeInMs": 1339.9999999999995
+        },
+        {
+          "id": "user-en-009",
+          "lang": "en",
+          "vadEndMs": 320.0000000000018,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-en-010",
+          "lang": "en",
+          "vadEndMs": 340,
+          "bargeInMs": 1339.9999999999995
+        },
+        {
+          "id": "user-en-011",
+          "lang": "en",
+          "vadEndMs": 300,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-012",
+          "lang": "en",
+          "vadEndMs": 340.00000000000045,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-en-013",
+          "lang": "en",
+          "vadEndMs": 260.0000000000009,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-014",
+          "lang": "en",
+          "vadEndMs": -640.0000000000018,
+          "bargeInMs": 1339.9999999999995
+        },
+        {
+          "id": "user-en-015",
+          "lang": "en",
+          "vadEndMs": 300,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-en-016",
+          "lang": "en",
+          "vadEndMs": 320.0000000000009,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-en-017",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-en-018",
+          "lang": "en",
+          "vadEndMs": 280,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-019",
+          "lang": "en",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-020",
+          "lang": "en",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-ja-001",
+          "lang": "ja",
+          "vadEndMs": 320,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-ja-002",
+          "lang": "ja",
+          "vadEndMs": 320,
+          "bargeInMs": 380.00000000000045
+        },
+        {
+          "id": "user-ja-003",
+          "lang": "ja",
+          "vadEndMs": 320,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-ja-004",
+          "lang": "ja",
+          "vadEndMs": 320,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-ja-005",
+          "lang": "ja",
+          "vadEndMs": 320,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-ja-006",
+          "lang": "ja",
+          "vadEndMs": 379.9999999999991,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-ja-007",
+          "lang": "ja",
+          "vadEndMs": 260,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-ja-008",
+          "lang": "ja",
+          "vadEndMs": 299.9999999999982,
+          "bargeInMs": 339.99999999999955
+        },
+        {
+          "id": "user-ja-009",
+          "lang": "ja",
+          "vadEndMs": 320,
+          "bargeInMs": 1339.9999999999995
+        },
+        {
+          "id": "user-ja-010",
+          "lang": "ja",
+          "vadEndMs": 260,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-011",
+          "lang": "ja",
+          "vadEndMs": 300,
+          "bargeInMs": 1339.9999999999995
+        },
+        {
+          "id": "user-ja-012",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-ja-013",
+          "lang": "ja",
+          "vadEndMs": 339.9999999999982,
+          "bargeInMs": 319.9999999999993
+        },
+        {
+          "id": "user-ja-014",
+          "lang": "ja",
+          "vadEndMs": 320,
+          "bargeInMs": -120
+        },
+        {
+          "id": "user-ja-015",
+          "lang": "ja",
+          "vadEndMs": 300.0000000000009,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-016",
+          "lang": "ja",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-ja-017",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-018",
+          "lang": "ja",
+          "vadEndMs": 260.0000000000018,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-ja-019",
+          "lang": "ja",
+          "vadEndMs": 260.0000000000018,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-ja-020",
+          "lang": "ja",
+          "vadEndMs": 320.0000000000009,
+          "bargeInMs": 260.00000000000045
+        }
+      ]
+    },
+    {
+      "config": {
+        "id": "window-accounting",
+        "threshold": 0.5,
+        "speech": 0.168,
+        "silence": 0.168
+      },
+      "count": 60,
+      "medianVadEndMs": 280,
+      "bargeOver250": 47,
+      "prematureBarge": 1,
+      "prematureEnd": 1,
+      "maximumBargeMs": 1299.9999999999995,
+      "rows": [
+        {
+          "id": "user-zh-001",
+          "lang": "zh",
+          "vadEndMs": 320,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-zh-002",
+          "lang": "zh",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-zh-003",
+          "lang": "zh",
+          "vadEndMs": 280.00000000000045,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-004",
+          "lang": "zh",
+          "vadEndMs": 339.9999999999991,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-zh-005",
+          "lang": "zh",
+          "vadEndMs": 260,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-zh-006",
+          "lang": "zh",
+          "vadEndMs": 259.9999999999991,
+          "bargeInMs": 239.9999999999991
+        },
+        {
+          "id": "user-zh-007",
+          "lang": "zh",
+          "vadEndMs": 239.9999999999991,
+          "bargeInMs": 1119.9999999999995
+        },
+        {
+          "id": "user-zh-008",
+          "lang": "zh",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 239.9999999999991
+        },
+        {
+          "id": "user-zh-009",
+          "lang": "zh",
+          "vadEndMs": 239.9999999999991,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-zh-010",
+          "lang": "zh",
+          "vadEndMs": 200,
+          "bargeInMs": 239.99999999999886
+        },
+        {
+          "id": "user-zh-011",
+          "lang": "zh",
+          "vadEndMs": 320,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-012",
+          "lang": "zh",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1139.9999999999995
+        },
+        {
+          "id": "user-zh-013",
+          "lang": "zh",
+          "vadEndMs": 280,
+          "bargeInMs": 239.99999999999955
+        },
+        {
+          "id": "user-zh-014",
+          "lang": "zh",
+          "vadEndMs": 339.9999999999991,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-zh-015",
+          "lang": "zh",
+          "vadEndMs": 280,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-zh-016",
+          "lang": "zh",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-017",
+          "lang": "zh",
+          "vadEndMs": 380.00000000000045,
+          "bargeInMs": 1139.9999999999995
+        },
+        {
+          "id": "user-zh-018",
+          "lang": "zh",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-zh-019",
+          "lang": "zh",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 239.99999999999955
+        },
+        {
+          "id": "user-zh-020",
+          "lang": "zh",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-en-001",
+          "lang": "en",
+          "vadEndMs": 240.00000000000045,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-002",
+          "lang": "en",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-003",
+          "lang": "en",
+          "vadEndMs": 640.0000000000005,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-004",
+          "lang": "en",
+          "vadEndMs": 280,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-en-005",
+          "lang": "en",
+          "vadEndMs": 300,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-en-006",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-en-007",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-008",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-009",
+          "lang": "en",
+          "vadEndMs": 300.0000000000018,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-en-010",
+          "lang": "en",
+          "vadEndMs": 320,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-011",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-012",
+          "lang": "en",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-013",
+          "lang": "en",
+          "vadEndMs": 240.0000000000009,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-014",
+          "lang": "en",
+          "vadEndMs": -680.0000000000018,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-015",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-en-016",
+          "lang": "en",
+          "vadEndMs": 300.0000000000009,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-en-017",
+          "lang": "en",
+          "vadEndMs": 220,
+          "bargeInMs": 1199.9999999999995
+        },
+        {
+          "id": "user-en-018",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-en-019",
+          "lang": "en",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-020",
+          "lang": "en",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-ja-001",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-ja-002",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-ja-003",
+          "lang": "ja",
+          "vadEndMs": 300,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-004",
+          "lang": "ja",
+          "vadEndMs": 300,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-005",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-006",
+          "lang": "ja",
+          "vadEndMs": 339.9999999999991,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-007",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-008",
+          "lang": "ja",
+          "vadEndMs": 259.9999999999982,
+          "bargeInMs": 319.99999999999955
+        },
+        {
+          "id": "user-ja-009",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-ja-010",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-011",
+          "lang": "ja",
+          "vadEndMs": 260,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-ja-012",
+          "lang": "ja",
+          "vadEndMs": 220,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-013",
+          "lang": "ja",
+          "vadEndMs": 319.9999999999982,
+          "bargeInMs": 279.9999999999993
+        },
+        {
+          "id": "user-ja-014",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": -160
+        },
+        {
+          "id": "user-ja-015",
+          "lang": "ja",
+          "vadEndMs": 260.0000000000009,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-016",
+          "lang": "ja",
+          "vadEndMs": 280.00000000000045,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-ja-017",
+          "lang": "ja",
+          "vadEndMs": 200,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-018",
+          "lang": "ja",
+          "vadEndMs": 240.00000000000182,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-019",
+          "lang": "ja",
+          "vadEndMs": 240.00000000000182,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-ja-020",
+          "lang": "ja",
+          "vadEndMs": 300.0000000000009,
+          "bargeInMs": 240.00000000000045
+        }
+      ]
+    },
+    {
+      "config": {
+        "id": "posterior-035",
+        "threshold": 0.35,
+        "speech": 0.168,
+        "silence": 0.168
+      },
+      "count": 60,
+      "medianVadEndMs": 280,
+      "bargeOver250": 45,
+      "prematureBarge": 1,
+      "prematureEnd": 1,
+      "maximumBargeMs": 1299.9999999999995,
+      "rows": [
+        {
+          "id": "user-zh-001",
+          "lang": "zh",
+          "vadEndMs": 320,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-zh-002",
+          "lang": "zh",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-zh-003",
+          "lang": "zh",
+          "vadEndMs": 280.00000000000045,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-004",
+          "lang": "zh",
+          "vadEndMs": 339.9999999999991,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-zh-005",
+          "lang": "zh",
+          "vadEndMs": 260,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-006",
+          "lang": "zh",
+          "vadEndMs": 259.9999999999991,
+          "bargeInMs": 239.9999999999991
+        },
+        {
+          "id": "user-zh-007",
+          "lang": "zh",
+          "vadEndMs": 239.9999999999991,
+          "bargeInMs": 1119.9999999999995
+        },
+        {
+          "id": "user-zh-008",
+          "lang": "zh",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 239.9999999999991
+        },
+        {
+          "id": "user-zh-009",
+          "lang": "zh",
+          "vadEndMs": 239.9999999999991,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-zh-010",
+          "lang": "zh",
+          "vadEndMs": 200,
+          "bargeInMs": 239.99999999999886
+        },
+        {
+          "id": "user-zh-011",
+          "lang": "zh",
+          "vadEndMs": 320,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-012",
+          "lang": "zh",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1139.9999999999995
+        },
+        {
+          "id": "user-zh-013",
+          "lang": "zh",
+          "vadEndMs": 280,
+          "bargeInMs": 239.99999999999955
+        },
+        {
+          "id": "user-zh-014",
+          "lang": "zh",
+          "vadEndMs": 339.9999999999991,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-zh-015",
+          "lang": "zh",
+          "vadEndMs": 280,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-zh-016",
+          "lang": "zh",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-017",
+          "lang": "zh",
+          "vadEndMs": 380.00000000000045,
+          "bargeInMs": 1139.9999999999995
+        },
+        {
+          "id": "user-zh-018",
+          "lang": "zh",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-zh-019",
+          "lang": "zh",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 239.99999999999955
+        },
+        {
+          "id": "user-zh-020",
+          "lang": "zh",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-en-001",
+          "lang": "en",
+          "vadEndMs": 240.00000000000045,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-002",
+          "lang": "en",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-003",
+          "lang": "en",
+          "vadEndMs": 640.0000000000005,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-004",
+          "lang": "en",
+          "vadEndMs": 280,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-en-005",
+          "lang": "en",
+          "vadEndMs": 300,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-006",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-en-007",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-008",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-009",
+          "lang": "en",
+          "vadEndMs": 300.0000000000018,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-en-010",
+          "lang": "en",
+          "vadEndMs": 320,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-011",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-012",
+          "lang": "en",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-013",
+          "lang": "en",
+          "vadEndMs": 240.0000000000009,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-014",
+          "lang": "en",
+          "vadEndMs": -680.0000000000018,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-015",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-en-016",
+          "lang": "en",
+          "vadEndMs": 300.0000000000009,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-en-017",
+          "lang": "en",
+          "vadEndMs": 220,
+          "bargeInMs": 1199.9999999999995
+        },
+        {
+          "id": "user-en-018",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-en-019",
+          "lang": "en",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-020",
+          "lang": "en",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-001",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-002",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-ja-003",
+          "lang": "ja",
+          "vadEndMs": 300,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-004",
+          "lang": "ja",
+          "vadEndMs": 300,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-005",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-006",
+          "lang": "ja",
+          "vadEndMs": 339.9999999999991,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-007",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-008",
+          "lang": "ja",
+          "vadEndMs": 259.9999999999982,
+          "bargeInMs": 319.99999999999955
+        },
+        {
+          "id": "user-ja-009",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-ja-010",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-011",
+          "lang": "ja",
+          "vadEndMs": 260,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-ja-012",
+          "lang": "ja",
+          "vadEndMs": 220,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-013",
+          "lang": "ja",
+          "vadEndMs": 319.9999999999982,
+          "bargeInMs": 279.9999999999993
+        },
+        {
+          "id": "user-ja-014",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": -160
+        },
+        {
+          "id": "user-ja-015",
+          "lang": "ja",
+          "vadEndMs": 260.0000000000009,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-016",
+          "lang": "ja",
+          "vadEndMs": 280.00000000000045,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-ja-017",
+          "lang": "ja",
+          "vadEndMs": 200,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-018",
+          "lang": "ja",
+          "vadEndMs": 240.00000000000182,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-019",
+          "lang": "ja",
+          "vadEndMs": 240.00000000000182,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-020",
+          "lang": "ja",
+          "vadEndMs": 300.0000000000009,
+          "bargeInMs": 240.00000000000045
+        }
+      ]
+    },
+    {
+      "config": {
+        "id": "posterior-020",
+        "threshold": 0.2,
+        "speech": 0.168,
+        "silence": 0.168
+      },
+      "count": 60,
+      "medianVadEndMs": 280,
+      "bargeOver250": 42,
+      "prematureBarge": 1,
+      "prematureEnd": 1,
+      "maximumBargeMs": 1299.9999999999995,
+      "rows": [
+        {
+          "id": "user-zh-001",
+          "lang": "zh",
+          "vadEndMs": 320,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-zh-002",
+          "lang": "zh",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-zh-003",
+          "lang": "zh",
+          "vadEndMs": 280.00000000000045,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-zh-004",
+          "lang": "zh",
+          "vadEndMs": 339.9999999999991,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-zh-005",
+          "lang": "zh",
+          "vadEndMs": 260,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-006",
+          "lang": "zh",
+          "vadEndMs": 259.9999999999991,
+          "bargeInMs": 219.9999999999991
+        },
+        {
+          "id": "user-zh-007",
+          "lang": "zh",
+          "vadEndMs": 239.9999999999991,
+          "bargeInMs": 1119.9999999999995
+        },
+        {
+          "id": "user-zh-008",
+          "lang": "zh",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 239.9999999999991
+        },
+        {
+          "id": "user-zh-009",
+          "lang": "zh",
+          "vadEndMs": 239.9999999999991,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-zh-010",
+          "lang": "zh",
+          "vadEndMs": 200,
+          "bargeInMs": 219.99999999999886
+        },
+        {
+          "id": "user-zh-011",
+          "lang": "zh",
+          "vadEndMs": 320,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-012",
+          "lang": "zh",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1119.9999999999995
+        },
+        {
+          "id": "user-zh-013",
+          "lang": "zh",
+          "vadEndMs": 280,
+          "bargeInMs": 239.99999999999955
+        },
+        {
+          "id": "user-zh-014",
+          "lang": "zh",
+          "vadEndMs": 339.9999999999991,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-zh-015",
+          "lang": "zh",
+          "vadEndMs": 280,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-016",
+          "lang": "zh",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-017",
+          "lang": "zh",
+          "vadEndMs": 380.00000000000045,
+          "bargeInMs": 1139.9999999999995
+        },
+        {
+          "id": "user-zh-018",
+          "lang": "zh",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-zh-019",
+          "lang": "zh",
+          "vadEndMs": 319.9999999999991,
+          "bargeInMs": 239.99999999999955
+        },
+        {
+          "id": "user-zh-020",
+          "lang": "zh",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-001",
+          "lang": "en",
+          "vadEndMs": 240.00000000000045,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-en-002",
+          "lang": "en",
+          "vadEndMs": 299.9999999999991,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-003",
+          "lang": "en",
+          "vadEndMs": 640.0000000000005,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-004",
+          "lang": "en",
+          "vadEndMs": 280,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-en-005",
+          "lang": "en",
+          "vadEndMs": 300,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-006",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-en-007",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-008",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-009",
+          "lang": "en",
+          "vadEndMs": 300.0000000000018,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-en-010",
+          "lang": "en",
+          "vadEndMs": 320,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-011",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-en-012",
+          "lang": "en",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-013",
+          "lang": "en",
+          "vadEndMs": 240.0000000000009,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-014",
+          "lang": "en",
+          "vadEndMs": -680.0000000000018,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-015",
+          "lang": "en",
+          "vadEndMs": 260,
+          "bargeInMs": 200.00000000000045
+        },
+        {
+          "id": "user-en-016",
+          "lang": "en",
+          "vadEndMs": 300.0000000000009,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-en-017",
+          "lang": "en",
+          "vadEndMs": 220,
+          "bargeInMs": 1199.9999999999995
+        },
+        {
+          "id": "user-en-018",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-en-019",
+          "lang": "en",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-en-020",
+          "lang": "en",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-001",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-002",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-003",
+          "lang": "ja",
+          "vadEndMs": 300,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-004",
+          "lang": "ja",
+          "vadEndMs": 300,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-005",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-006",
+          "lang": "ja",
+          "vadEndMs": 339.9999999999991,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-007",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-008",
+          "lang": "ja",
+          "vadEndMs": 259.9999999999982,
+          "bargeInMs": 279.99999999999955
+        },
+        {
+          "id": "user-ja-009",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-ja-010",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-011",
+          "lang": "ja",
+          "vadEndMs": 260,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-ja-012",
+          "lang": "ja",
+          "vadEndMs": 220,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-013",
+          "lang": "ja",
+          "vadEndMs": 319.9999999999982,
+          "bargeInMs": 219.99999999999932
+        },
+        {
+          "id": "user-ja-014",
+          "lang": "ja",
+          "vadEndMs": 280,
+          "bargeInMs": -160
+        },
+        {
+          "id": "user-ja-015",
+          "lang": "ja",
+          "vadEndMs": 260.0000000000009,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-016",
+          "lang": "ja",
+          "vadEndMs": 280.00000000000045,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-017",
+          "lang": "ja",
+          "vadEndMs": 200,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-018",
+          "lang": "ja",
+          "vadEndMs": 240.00000000000182,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-019",
+          "lang": "ja",
+          "vadEndMs": 240.00000000000182,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-020",
+          "lang": "ja",
+          "vadEndMs": 300.0000000000009,
+          "bargeInMs": 200.00000000000045
+        }
+      ]
+    },
+    {
+      "config": {
+        "id": "shorter-endpoint",
+        "threshold": 0.35,
+        "speech": 0.168,
+        "silence": 0.128
+      },
+      "count": 60,
+      "medianVadEndMs": 220,
+      "bargeOver250": 45,
+      "prematureBarge": 1,
+      "prematureEnd": 1,
+      "maximumBargeMs": 1299.9999999999995,
+      "rows": [
+        {
+          "id": "user-zh-001",
+          "lang": "zh",
+          "vadEndMs": 260,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-zh-002",
+          "lang": "zh",
+          "vadEndMs": 240.00000000000045,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-zh-003",
+          "lang": "zh",
+          "vadEndMs": 220.00000000000045,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-004",
+          "lang": "zh",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-zh-005",
+          "lang": "zh",
+          "vadEndMs": 200,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-006",
+          "lang": "zh",
+          "vadEndMs": 199.9999999999991,
+          "bargeInMs": 239.9999999999991
+        },
+        {
+          "id": "user-zh-007",
+          "lang": "zh",
+          "vadEndMs": 179.9999999999991,
+          "bargeInMs": 1119.9999999999995
+        },
+        {
+          "id": "user-zh-008",
+          "lang": "zh",
+          "vadEndMs": 239.9999999999991,
+          "bargeInMs": 239.9999999999991
+        },
+        {
+          "id": "user-zh-009",
+          "lang": "zh",
+          "vadEndMs": 159.9999999999991,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-zh-010",
+          "lang": "zh",
+          "vadEndMs": 140,
+          "bargeInMs": 239.99999999999886
+        },
+        {
+          "id": "user-zh-011",
+          "lang": "zh",
+          "vadEndMs": 240,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-012",
+          "lang": "zh",
+          "vadEndMs": 219.9999999999991,
+          "bargeInMs": 1139.9999999999995
+        },
+        {
+          "id": "user-zh-013",
+          "lang": "zh",
+          "vadEndMs": 220,
+          "bargeInMs": 239.99999999999955
+        },
+        {
+          "id": "user-zh-014",
+          "lang": "zh",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-zh-015",
+          "lang": "zh",
+          "vadEndMs": 220,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-zh-016",
+          "lang": "zh",
+          "vadEndMs": 239.9999999999991,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-zh-017",
+          "lang": "zh",
+          "vadEndMs": 320.00000000000045,
+          "bargeInMs": 1139.9999999999995
+        },
+        {
+          "id": "user-zh-018",
+          "lang": "zh",
+          "vadEndMs": 219.9999999999991,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-zh-019",
+          "lang": "zh",
+          "vadEndMs": 259.9999999999991,
+          "bargeInMs": 239.99999999999955
+        },
+        {
+          "id": "user-zh-020",
+          "lang": "zh",
+          "vadEndMs": 240.00000000000045,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-en-001",
+          "lang": "en",
+          "vadEndMs": 180.00000000000045,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-002",
+          "lang": "en",
+          "vadEndMs": 239.9999999999991,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-003",
+          "lang": "en",
+          "vadEndMs": 560.0000000000005,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-004",
+          "lang": "en",
+          "vadEndMs": 220,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-en-005",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-006",
+          "lang": "en",
+          "vadEndMs": 180,
+          "bargeInMs": 300.00000000000045
+        },
+        {
+          "id": "user-en-007",
+          "lang": "en",
+          "vadEndMs": 160,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-008",
+          "lang": "en",
+          "vadEndMs": 200,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-009",
+          "lang": "en",
+          "vadEndMs": 240.00000000000182,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-en-010",
+          "lang": "en",
+          "vadEndMs": 240,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-011",
+          "lang": "en",
+          "vadEndMs": 200,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-012",
+          "lang": "en",
+          "vadEndMs": 240.00000000000045,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-en-013",
+          "lang": "en",
+          "vadEndMs": 160.0000000000009,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-014",
+          "lang": "en",
+          "vadEndMs": -740.0000000000018,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-en-015",
+          "lang": "en",
+          "vadEndMs": 200,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-en-016",
+          "lang": "en",
+          "vadEndMs": 240.0000000000009,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-en-017",
+          "lang": "en",
+          "vadEndMs": 160,
+          "bargeInMs": 1199.9999999999995
+        },
+        {
+          "id": "user-en-018",
+          "lang": "en",
+          "vadEndMs": 180,
+          "bargeInMs": 1239.9999999999995
+        },
+        {
+          "id": "user-en-019",
+          "lang": "en",
+          "vadEndMs": 219.9999999999991,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-en-020",
+          "lang": "en",
+          "vadEndMs": 219.9999999999991,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-001",
+          "lang": "ja",
+          "vadEndMs": 220,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-002",
+          "lang": "ja",
+          "vadEndMs": 220,
+          "bargeInMs": 340.00000000000045
+        },
+        {
+          "id": "user-ja-003",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-004",
+          "lang": "ja",
+          "vadEndMs": 240,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-005",
+          "lang": "ja",
+          "vadEndMs": 220,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-006",
+          "lang": "ja",
+          "vadEndMs": 279.9999999999991,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-007",
+          "lang": "ja",
+          "vadEndMs": 160,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-008",
+          "lang": "ja",
+          "vadEndMs": 199.99999999999818,
+          "bargeInMs": 319.99999999999955
+        },
+        {
+          "id": "user-ja-009",
+          "lang": "ja",
+          "vadEndMs": 220,
+          "bargeInMs": 1279.9999999999995
+        },
+        {
+          "id": "user-ja-010",
+          "lang": "ja",
+          "vadEndMs": 160,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-011",
+          "lang": "ja",
+          "vadEndMs": 200,
+          "bargeInMs": 1299.9999999999995
+        },
+        {
+          "id": "user-ja-012",
+          "lang": "ja",
+          "vadEndMs": 160,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-013",
+          "lang": "ja",
+          "vadEndMs": 239.99999999999818,
+          "bargeInMs": 279.9999999999993
+        },
+        {
+          "id": "user-ja-014",
+          "lang": "ja",
+          "vadEndMs": 220,
+          "bargeInMs": -160
+        },
+        {
+          "id": "user-ja-015",
+          "lang": "ja",
+          "vadEndMs": 200.0000000000009,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-016",
+          "lang": "ja",
+          "vadEndMs": 220.00000000000045,
+          "bargeInMs": 320.00000000000045
+        },
+        {
+          "id": "user-ja-017",
+          "lang": "ja",
+          "vadEndMs": 140,
+          "bargeInMs": 240.00000000000045
+        },
+        {
+          "id": "user-ja-018",
+          "lang": "ja",
+          "vadEndMs": 160.00000000000182,
+          "bargeInMs": 260.00000000000045
+        },
+        {
+          "id": "user-ja-019",
+          "lang": "ja",
+          "vadEndMs": 160.00000000000182,
+          "bargeInMs": 280.00000000000045
+        },
+        {
+          "id": "user-ja-020",
+          "lang": "ja",
+          "vadEndMs": 240.0000000000009,
+          "bargeInMs": 240.00000000000045
+        }
+      ]
+    }
+  ]
+}

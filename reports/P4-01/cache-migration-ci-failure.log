@@ -1,0 +1,283 @@
+Ubuntu static checks and unit tests	UNKNOWN STEP	﻿2026-10-21T14:25:03.7446549Z Current runner version: '2.338.0'
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7489421Z ##[group]Runner Image Provisioner
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7490922Z Hosted Compute Agent
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7492021Z Version: 20261015.610
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7493215Z Commit: 267fdb4e8bbec4ab5ea31367f3a00d5c480c7656
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7495105Z Build Date: 2026-10-14T17:06:54Z
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7496379Z Worker ID: {a5216ba2-3ee8-4bcc-80a3-02cacae4a3c6}
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7497765Z Region: eastus
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7498762Z Cloud: Azure
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7499821Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7502678Z ##[group]Operating System
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7504123Z Ubuntu
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7505202Z 24.04.5
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7506140Z LTS
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7507092Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7508127Z ##[group]Runner Image
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7509226Z Image: ubuntu-24.04
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7510368Z Version: 20261018.339.1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7512582Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261018.339/images/ubuntu/Ubuntu2404-Readme.md
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7515900Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261018.339
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7517737Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7519783Z ##[group]GITHUB_TOKEN Permissions
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7522783Z Contents: read
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7524175Z Metadata: read
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7525239Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7528451Z Secret source: Actions
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7530073Z Cache mode: write
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.7531356Z Prepare workflow directory
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.8133423Z Prepare all required actions
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:03.8207975Z Getting action download info
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.0618975Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.1589823Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.2750595Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.3939570Z Download action repository 'astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff' (SHA:d0d8abe699bfb85fec6de9f7adb5ae17292296ff)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.6111449Z Download action repository 'actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.8941537Z Complete job name: Ubuntu static checks and unit tests
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9867205Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9868332Z with:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9868775Z   lfs: true
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9869228Z   persist-credentials: false
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9869782Z   repository: nanake-lab/nemu
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9873541Z   token: ***
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9874216Z   ssh-strict: true
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9874680Z   ssh-user: git
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9875123Z   clean: true
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9875597Z   sparse-checkout-cone-mode: true
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9876137Z   fetch-depth: 1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9876664Z   fetch-tags: false
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9877465Z   show-progress: true
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9878247Z   submodules: false
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9878987Z   set-safe-directory: true
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9879782Z   allow-unsafe-pr-checkout: false
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9881212Z env:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9882009Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9882971Z   UV_LINK_MODE: copy
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:04.9884066Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.1093154Z Syncing repository: nanake-lab/nemu
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.1096135Z ##[group]Getting Git version info
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.1097222Z Working directory is '/home/runner/work/nemu/nemu'
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.1098791Z [command]/usr/bin/git version
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.1295510Z git version 2.55.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.1350695Z [command]/usr/bin/git lfs version
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.1980465Z git-lfs/3.8.0 (GitHub; linux amd64; go 1.27.0)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2055421Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2087552Z Temporarily overriding HOME='/home/runner/work/_temp/9dbfa2e0-aa97-43ef-8c1a-03c5553c58ad' before making global git config changes
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2104967Z Adding repository directory to the temporary git global config as a safe directory
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2107301Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nemu/nemu
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2185620Z Deleting the contents of '/home/runner/work/nemu/nemu'
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2189922Z ##[group]Initializing the repository
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2191340Z [command]/usr/bin/git init /home/runner/work/nemu/nemu
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2297944Z hint: Using 'master' as the name for the initial branch. This default branch name
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2302930Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2304635Z hint: to use in all of your new repositories, which will suppress this warning,
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2305776Z hint: call:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2306587Z hint:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2307512Z hint: 	git config --global init.defaultBranch <name>
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2308484Z hint:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2309468Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2310785Z hint: 'development'. The just-created branch can be renamed via this command:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2313013Z hint:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2314420Z hint: 	git branch -m <name>
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2315616Z hint:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2316740Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2318693Z Initialized empty Git repository in /home/runner/work/nemu/nemu/.git/
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2330501Z [command]/usr/bin/git remote add origin https://github.com/nanake-lab/nemu
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2406161Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2407603Z ##[group]Disabling automatic garbage collection
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2408968Z [command]/usr/bin/git config --local gc.auto 0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2447367Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2449196Z ##[group]Setting up auth
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2458779Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2506116Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2806888Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.2867391Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.3148868Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.3195496Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.3457185Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.3512195Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.3525003Z [command]/usr/bin/git lfs install --local
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.3970769Z Updated Git hooks.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.3972472Z Git LFS initialized.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.3990764Z ##[group]Fetching the repository
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:05.4003329Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f2a48acf3697d83d219a68e117662802b0d626d4:refs/remotes/pull/44/merge
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:07.4506120Z From https://github.com/nanake-lab/nemu
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:07.4510796Z  * [new ref]         f2a48acf3697d83d219a68e117662802b0d626d4 -> pull/44/merge
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:07.4516729Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:07.4518623Z ##[group]Determining the checkout info
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:07.4520608Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:07.4522381Z ##[group]Fetching LFS objects
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:07.4525048Z [command]/usr/bin/git lfs fetch origin refs/remotes/pull/44/merge
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:07.4815605Z Fetching reference refs/remotes/pull/44/merge
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.1939259Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.1944051Z [command]/usr/bin/git sparse-checkout disable
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.2065459Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.2101723Z ##[group]Checking out the ref
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.2107267Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/44/merge
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9313531Z Note: switching to 'refs/remotes/pull/44/merge'.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9314613Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9315079Z You are in 'detached HEAD' state. You can look around, make experimental
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9316134Z changes and commit them, and you can discard any commits you make in this
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9342274Z state without impacting any branches by switching back to a branch.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9343129Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9365174Z If you want to create a new branch to retain commits you create, you may
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9368299Z do so (now or later) by using -c with the switch command. Example:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9384420Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9404609Z   git switch -c <new-branch-name>
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9420182Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9444315Z Or undo this operation with:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9445161Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9446724Z   git switch -
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9464273Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9479432Z Turn off this advice by setting config variable advice.detachedHead to false
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9487688Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9513577Z HEAD is now at f2a48ac Merge 2be47bb83ab606b376f780134170a7646292d824 into 806e09b180ddbea015bd34f0bb868657980fbf4d
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9936082Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:09.9994422Z [command]/usr/bin/git log -1 --format=%H
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0027761Z f2a48acf3697d83d219a68e117662802b0d626d4
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0039015Z ##[group]Removing auth
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0059659Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0109816Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0395688Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0442779Z http.https://github.com/.extraheader
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0477730Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0525475Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0778743Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.0826778Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1111218Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1388145Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1388601Z with:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1388832Z   node-version-file: .nvmrc
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1389090Z   always-auth: false
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1389317Z   check-latest: false
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1391700Z   token: ***
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1391915Z env:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1392129Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1392393Z   UV_LINK_MODE: copy
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.1392659Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.3223505Z Resolved .nvmrc as 24
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.3283244Z (node:2268) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.3286682Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.3299852Z Found in cache @ /opt/hostedtoolcache/node/24.22.0/x64
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.3301560Z ##[group]Environment details
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9427341Z node: v24.22.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9428540Z npm: 11.19.1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9429246Z yarn: 1.22.22
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9430239Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9597178Z ##[group]Run npm install --global pnpm@12.11.2
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9597655Z ^[[36;1mnpm install --global pnpm@12.11.2^[[0m
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9798991Z shell: /usr/bin/bash -e {0}
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9799347Z env:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9799657Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9799959Z   UV_LINK_MODE: copy
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:10.9800214Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:13.9445946Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:13.9456216Z added 2 packages in 3s
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:13.9481725Z npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:13.9483507Z npm warn install-scripts   pnpm@12.11.2 (preinstall: node install.js; postinstall: node install.js)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:13.9485059Z npm warn install-scripts
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:13.9486992Z npm warn install-scripts Run `npm install -g --allow-scripts=pnpm` to allow these scripts once, or `npm config set allow-scripts=pnpm --location=user` to allow them for all global installs.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:13.9981688Z ##[group]Run pnpm install --frozen-lockfile
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:13.9982114Z ^[[36;1mpnpm install --frozen-lockfile^[[0m
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.0033575Z shell: /usr/bin/bash -e {0}
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.0034100Z env:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.0034321Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.0034589Z   UV_LINK_MODE: copy
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.0034839Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.0285179Z Scope: all 14 workspace projects
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.0554978Z ? Verifying lockfile against supply-chain policies (342 entries)...
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.3220852Z Packages are hard linked from the content-addressable store to the virtual store.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.3222803Z   Content-addressable store is at: /home/runner/.local/share/pnpm/store/v11
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.3224813Z   Virtual store is at:             node_modules/.pnpm
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.3546859Z Downloading sherpa-onnx-linux-x64@1.13.8: 0.00 B/11.08 MB
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:14.9420527Z Downloading three@0.174.0: 0.00 B/7.29 MB
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:15.9485419Z Progress: resolved 237, reused 0, downloaded 206, added 192
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:16.6695572Z ✓ Lockfile passes supply-chain policies (342 entries in 2.6s)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:16.6714249Z Lockfile is up to date, resolution step is skipped
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.2134515Z Packages: +237
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.2135494Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.2977776Z Progress: resolved 237, reused 0, downloaded 237, added 237, done
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.3065040Z .../esbuild@0.27.7/node_modules/esbuild postinstall$ node install.js
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.3084754Z .../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.3174523Z .../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.4514995Z .../esbuild@0.27.7/node_modules/esbuild postinstall: Done
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.4715686Z .../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.5125375Z .../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6038390Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6039516Z devDependencies:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6040108Z + @eslint/js 10.0.1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6040659Z + @playwright/test 1.64.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6041188Z + @types/node 24.19.2
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6041706Z + @types/pixelmatch 7.1.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6042246Z + @types/pngjs 6.0.5
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6042728Z + @types/react 19.3.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6043216Z + @types/react-dom 19.3.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6044089Z + @vitest/coverage-v8 5.0.4
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6044639Z + ajv 8.20.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6045084Z + electron 44.7.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6045551Z + electron-vite 5.0.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6046093Z + eslint 10.12.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6046576Z + pixelmatch 8.0.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6047031Z + pngjs 7.0.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6047827Z + prettier 3.9.10
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6048249Z + tsx 4.21.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6048680Z + typescript 6.0.3
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6049190Z + typescript-eslint 8.71.2
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6049680Z + vite 7.3.7
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6050094Z + vitest 5.0.4
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6050388Z 
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6082508Z Done in 3.6s using pnpm v12.11.2
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6490954Z ##[group]Run pnpm lint && pnpm typecheck && pnpm test && pnpm build
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6491487Z ^[[36;1mpnpm lint && pnpm typecheck && pnpm test && pnpm build^[[0m
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6541539Z shell: /usr/bin/bash -e {0}
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6541808Z env:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6542024Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6542289Z   UV_LINK_MODE: copy
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6542506Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:17.6757538Z $ eslint .
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:25.7984981Z $ tsc --noEmit
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.0840007Z ##[error]apps/desktop/src/voice/process.ts(1,35): error TS2307: Cannot find module '@nemu/voice' or its corresponding type declarations.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.0857166Z ##[error]apps/desktop/tests/voice-idle.spec.ts(1,35): error TS2307: Cannot find module '@nemu/voice' or its corresponding type declarations.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.0865800Z ##[error]apps/desktop/tests/voice.spec.ts(1,35): error TS2307: Cannot find module '@nemu/voice' or its corresponding type declarations.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1461548Z [ELIFECYCLE] Command failed with exit code 2.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1492768Z ##[error]Process completed with exit code 2.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1585625Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1586055Z with:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1586282Z   name: contracts-coverage
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1586542Z   path: reports/P0-02/coverage/
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1586807Z   if-no-files-found: warn
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1587050Z   compression-level: 6
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1587272Z   overwrite: false
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1587489Z   include-hidden-files: false
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1587722Z env:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1587948Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1588200Z   UV_LINK_MODE: copy
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.1588406Z ##[endgroup]
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.3765303Z (node:2504) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.3767467Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.3963053Z With the provided path, there will be 1 file uploaded
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.4024826Z Artifact name is valid!
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.4039984Z Root directory input is valid!
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.5959325Z Beginning upload of artifact content to blob storage
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.6188785Z (node:2504) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.6629035Z Uploaded bytes 539
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.6836794Z Finished uploading artifact content to blob storage!
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.6852628Z SHA256 digest of uploaded artifact zip is 2e8fa4774e4b2e89cb58d04a20a3ce9f197adb22e75429d9f51f3aad5cf14b5a
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.6860927Z Finalizing artifact upload
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.9328255Z Artifact contracts-coverage.zip successfully finalized. Artifact ID 12353240769
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.9330431Z Artifact contracts-coverage has been successfully uploaded! Final size is 539 bytes. Artifact ID is 12353240769
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.9337790Z Artifact download URL: https://github.com/nanake-lab/nemu/actions/runs/39616619157/artifacts/12353240769
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:34.9629070Z Post job cleanup.
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.0591915Z [command]/usr/bin/git version
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.0671753Z git version 2.55.0
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.0756647Z Temporarily overriding HOME='/home/runner/work/_temp/a25cd31c-5bf0-43bf-b29c-f8bdbd8e3709' before making global git config changes
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.0758399Z Adding repository directory to the temporary git global config as a safe directory
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.0760064Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nemu/nemu
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.0816519Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.0887613Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.1295248Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.1368951Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.2054513Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.2187294Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.3364023Z Cleaning up orphan processes
+Ubuntu static checks and unit tests	UNKNOWN STEP	2026-10-21T14:25:35.3629632Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

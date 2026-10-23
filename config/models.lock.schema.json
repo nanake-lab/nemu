@@ -263,6 +263,65 @@
         }
       ]
     },
+    "asr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "files"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "files": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "url",
+              "sha256",
+              "revision",
+              "source",
+              "license",
+              "redistributable"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "revision": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "license": {
+                "type": "string",
+                "minLength": 1
+              },
+              "redistributable": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
     "tts": {
       "type": "object",
       "additionalProperties": false,

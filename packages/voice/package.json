@@ -5,12 +5,15 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./web": "./web/mic.ts",
     "./tts": "./src/tts/index.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@nemu/contracts": "workspace:*"
+    "@nemu/contracts": "workspace:*",
+    "sherpa-onnx-node": "1.13.8",
+    "zod": "4.6.7"
   }
 }
