@@ -76,6 +76,9 @@ def test_requests_reuse_one_native_thread_and_release_request_callbacks() -> Non
             worker.finish()
             assert worker.future is not None and worker.future.done()
             del callback, worker
+        # A completed Future may wake us before the executor releases its work
+        # item. A queue barrier distinguishes that race from retained callbacks.
+        executor.submit(lambda: None).result()
         gc.collect()
         assert len(threads) == 1
         assert all(ref() is None for ref in refs)
