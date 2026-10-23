@@ -2,6 +2,7 @@
 //! applied, for an experience group (S, strength, μ, p_c per tendency) and a
 //! teaching group (EV7, V2-45). See `group.rs` for what is recomputed when.
 
+use crate::law::pending::{Allocation, EvidenceGroup};
 use std::collections::{BTreeMap, BTreeSet};
 
 use core_types::semantic::nature;
@@ -12,7 +13,6 @@ use super::input::{GroupContent, GroupItem, LawContext, MatchTarget, ThetaView};
 use super::num::Nature4;
 use super::relation::{relation_tendency_id, trust};
 use super::support::{deviation, experience, teaching};
-use core_types::generated::{EvidenceAllocationV2, EvidenceGroupV2};
 
 /// An allocation's values before its share is applied.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -23,7 +23,7 @@ pub(super) struct Values {
     pub(super) projection: Option<f64>,
 }
 
-pub(super) fn of(a: &EvidenceAllocationV2) -> Values {
+pub(super) fn of(a: &Allocation) -> Values {
     Values {
         support: a.support,
         intensity: a.intensity,
@@ -40,10 +40,7 @@ pub(super) struct Plan {
     pub(super) values: BTreeMap<String, Values>,
 }
 
-pub(super) fn find<'a>(
-    g: Option<&'a EvidenceGroupV2>,
-    id: &str,
-) -> Option<&'a EvidenceAllocationV2> {
+pub(super) fn find<'a>(g: Option<&'a EvidenceGroup>, id: &str) -> Option<&'a Allocation> {
     g.and_then(|g| g.allocations.iter().find(|a| a.tendency_id == id))
 }
 
@@ -51,7 +48,7 @@ pub(super) fn find<'a>(
 /// IDs and the immutable appraisals supplied from H. Whole-group repetition
 /// preserves this distribution, for any b, sigma or direction. Comparing the
 /// current support with the stored support would instead refresh old evidence.
-fn repeated_content(item: &GroupItem, stored: &EvidenceGroupV2) -> LawResult<bool> {
+fn repeated_content(item: &GroupItem, stored: &EvidenceGroup) -> LawResult<bool> {
     let GroupContent::Experience { appraisals, .. } = &item.content else {
         unreachable!("experience members only")
     };
@@ -83,7 +80,7 @@ fn repeated_content(item: &GroupItem, stored: &EvidenceGroupV2) -> LawResult<boo
 pub(super) fn experience_plan(
     work: &Work,
     item: &GroupItem,
-    stored: Option<&EvidenceGroupV2>,
+    stored: Option<&EvidenceGroup>,
     members: &[String],
     theta: &ThetaView,
     remap: &BTreeMap<String, String>,
@@ -200,7 +197,7 @@ pub(super) fn experience_plan(
 pub(super) fn teaching_plan(
     work: &Work,
     item: &GroupItem,
-    stored: Option<&EvidenceGroupV2>,
+    stored: Option<&EvidenceGroup>,
     remap: &BTreeMap<String, String>,
     ctx: &LawContext<'_>,
 ) -> LawResult<Plan> {

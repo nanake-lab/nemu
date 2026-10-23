@@ -5,6 +5,7 @@ use std::fmt;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum LawError {
+    NumericFault(&'static str),
     /// A law parameter is outside what G can compute with (v2.0 §16).
     InvalidParameter(&'static str),
     /// An input value is outside its domain (a(e), μ, b, σ̂, d_k, …).
@@ -20,7 +21,10 @@ pub enum LawError {
     /// Reported at the step that would produce it, never stored (D9).
     PrecisionExhausted(String),
     /// R is over capacity and holds no candidate (π ≤ ½) to remove (v2.0 §12; V2-43).
-    CapacityExhausted { capacity: u32, personality: usize },
+    CapacityExhausted {
+        capacity: u32,
+        personality: usize,
+    },
     /// A single group's weight exceeds w_max (v2.0 §12; D8). Cannot happen
     /// with checked parameters; reported if it ever does.
     WeightAboveCap {
@@ -32,6 +36,7 @@ pub enum LawError {
 impl fmt::Display for LawError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            Self::NumericFault(m) => write!(f, "numeric fault: {m}"),
             Self::InvalidParameter(m) => write!(f, "invalid law parameter: {m}"),
             Self::InvalidInput(m) => write!(f, "invalid law input: {m}"),
             Self::InconsistentState(m) => write!(f, "inconsistent law state: {m}"),

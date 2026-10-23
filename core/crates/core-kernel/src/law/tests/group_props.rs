@@ -131,7 +131,7 @@ pub fn law_10() -> (Option<u32>, Option<u32>, Option<u32>, bool, f64) {
         }
         t
     };
-    let flip_after = |t: &mut core_types::generated::TendencyV2, pattern: &dyn Fn(u32) -> f64| {
+    let flip_after = |t: &mut crate::law::pending::Tendency, pattern: &dyn Fn(u32) -> f64| {
         for n in 1..=100_000u32 {
             record(t, &l, 1.0, pattern(n)).unwrap();
             if t.pi < 0.5 {
@@ -170,7 +170,7 @@ fn law_10_attachment_corollary_7() {
     );
     let (o, a, b) = (ordinary.unwrap(), att.unwrap(), att_big.unwrap());
     assert!(o < a && a < b);
-    assert_eq!((o, a, b), (29, 51, 421), "same scenario as check_law.py");
+    assert_eq!((o, a, b), (39, 61, 298), "same scenario as check_law.py");
     assert!(exact);
     assert!(lowest > 0.5);
 }

@@ -3,9 +3,9 @@
 //! AC2-05, AC2-21 with re-sharing, input-order independence. Hand-built
 //! scenarios are in `cases.rs`.
 
+use crate::law::pending::{EvidenceGroup, Tendency};
 use std::collections::BTreeMap;
 
-use core_types::generated::{EvidenceGroupV2, TendencyV2};
 use core_types::semantic;
 
 use crate::law::engine::Output;
@@ -38,7 +38,7 @@ pub(super) fn candidate(record_id: &str, concept_id: &str) -> Candidate {
     }
 }
 
-pub(super) fn stored_of<'a>(groups: &'a [EvidenceGroupV2], id: &str) -> Vec<Stored<'a>> {
+pub(super) fn stored_of<'a>(groups: &'a [EvidenceGroup], id: &str) -> Vec<Stored<'a>> {
     groups
         .iter()
         .flat_map(|g| {
@@ -69,8 +69,12 @@ pub(super) fn check_world(f: &Fixture, w: &World) {
         "R in canonical order"
     );
     for t in &w.r.tendencies {
-        semantic::check_tendency_v2(t).unwrap();
-        semantic::check_allocation_ordinals(t, &groups).unwrap();
+        semantic::check_tendency_v2(&t.legacy()).unwrap();
+        semantic::check_allocation_ordinals(
+            &t.legacy(),
+            &groups.iter().map(|g| g.legacy()).collect::<Vec<_>>(),
+        )
+        .unwrap();
         check_with_allocations(t, l, stored_of(&groups, t.tendency_id.as_str())).unwrap();
         // ADR 0016 §4: replaying the stored allocations reproduces the tendency bit for bit.
         let again = replay(
@@ -92,11 +96,7 @@ pub(super) fn check_world(f: &Fixture, w: &World) {
                 .collect();
             if !on.is_empty() {
                 let total: f64 = on.iter().sum();
-                assert!(
-                    (total - 1.0).abs() <= 1e-12,
-                    "I25: {} side {side}: {total}",
-                    g.group_id
-                );
+                assert!(total == 1.0, "I25: {} side {side}: {total}", g.group_id);
             }
         }
         for a in &g.allocations {
@@ -110,13 +110,13 @@ pub(super) fn check_world(f: &Fixture, w: &World) {
 
 /// L: exactly the tendencies whose value changed, with their π before and after.
 pub(super) fn check_changes(before: &World, after: &World, out: &Output) {
-    let b: BTreeMap<&str, &TendencyV2> = before
+    let b: BTreeMap<&str, &Tendency> = before
         .r
         .tendencies
         .iter()
         .map(|t| (t.tendency_id.as_str(), t))
         .collect();
-    let a: BTreeMap<&str, &TendencyV2> = after
+    let a: BTreeMap<&str, &Tendency> = after
         .r
         .tendencies
         .iter()

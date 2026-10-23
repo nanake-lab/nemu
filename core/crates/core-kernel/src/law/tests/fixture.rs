@@ -1,9 +1,9 @@
 //! Test fixtures: law parameters and tendencies. Synthetic values only; no
 //! store is opened (AGENTS.md golden rule 14).
 
+use crate::law::pending::Tendency;
 use core_types::generated::{
-    ConceptRef, LawParameters, NatureVector, PersonRelation, RelationKind, TendencyV2,
-    TrilingualText,
+    ConceptRef, LawParameters, NatureVector, PersonRelation, RelationKind, TrilingualText,
 };
 
 use crate::law::{Law, Origin, initial};
@@ -69,7 +69,7 @@ pub fn vector(v: [f64; 4]) -> NatureVector {
 }
 
 /// A fresh one-condition tendency along the connection channel.
-pub fn tendency(law: &Law, id: &str, prior: Option<f64>) -> TendencyV2 {
+pub fn tendency(law: &Law, id: &str, prior: Option<f64>) -> Tendency {
     let predicate = [text("situation")];
     let direction = vector([1.0, 0.0, 0.0, 0.0]);
     let concept = concept(id);

@@ -1,15 +1,12 @@
-//! What G reads, as in-process values (D2). Cross-process and stored values
-//! are the IDL types from `core-types`; the structs here only bundle them for
-//! one call and are never serialized.
-//!
-//! LP8, I10: nothing here can carry x, m, the gains g or the recovery rates λ.
-//! `ThetaView` holds b and σ̂ and nothing else of θ.
+//! In-process G inputs, including temporary explicit V/q state (P5-34 pending).
+//! ThetaView contains only b and sigma; no fast state or modulation is readable.
 
+use crate::law::pending::{EvidenceGroup, Snapshot};
 use std::collections::BTreeMap;
 
 use core_types::generated::{
-    ConceptRef, EvidenceGroupV2, FuseConfig, GenesisManifestV2, NatureScale, NatureVector,
-    ObjectRef, PersonRelation, RSnapshotV2, RelationKind, ThetaSnapshot, TrilingualText,
+    ConceptRef, FuseConfig, GenesisManifestV2, NatureScale, NatureVector, ObjectRef,
+    PersonRelation, RelationKind, ThetaSnapshot, TrilingualText,
 };
 use core_types::semantic::{nature, scale};
 
@@ -69,6 +66,12 @@ pub struct LawContext<'a> {
 }
 
 impl<'a> LawContext<'a> {
+    /// The estimator is selected by the same law resource as the recurrence.
+    pub fn change_rate_version(&self) -> (&ObjectRef, &'static str) {
+        use super::change_rate::ChangeRateEstimator;
+        (self.law_version, self.law.estimator().version())
+    }
+
     pub fn new(
         genesis: &'a GenesisManifestV2,
         law_version: &'a ObjectRef,
@@ -92,8 +95,8 @@ impl<'a> LawContext<'a> {
 /// the evidence groups (both part of R, v2.0 §7; P5-21, ADR 0016).
 #[derive(Clone, Copy, Debug)]
 pub struct RState<'a> {
-    pub snapshot: &'a RSnapshotV2,
-    pub groups: &'a [EvidenceGroupV2],
+    pub snapshot: &'a Snapshot,
+    pub groups: &'a [EvidenceGroup],
 }
 
 /// A candidate tendency proposed with this event (TendencyCandidateRecord),

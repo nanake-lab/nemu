@@ -2,9 +2,8 @@
 //! EV5 back-collection, teaching. Candidates, aliases, relations, the capacity
 //! fuse, input validation and I10 are in `boundaries.rs`.
 
+use crate::law::pending::Tendency;
 use std::collections::BTreeMap;
-
-use core_types::generated::TendencyV2;
 
 use crate::law::{Candidate, GroupContent, GroupItem, Match, MatchTarget};
 
@@ -49,7 +48,7 @@ pub(super) fn event(candidates: Vec<Candidate>, groups: Vec<GroupItem>) -> Event
     }
 }
 
-pub(super) fn find<'a>(w: &'a World, id: &str) -> &'a TendencyV2 {
+pub(super) fn find<'a>(w: &'a World, id: &str) -> &'a Tendency {
     w.r.tendencies
         .iter()
         .find(|t| t.tendency_id.as_str() == id)

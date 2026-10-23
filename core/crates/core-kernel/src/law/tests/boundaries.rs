@@ -2,9 +2,10 @@
 //! the capacity fuse with re-sharing, input validation. The I10 signature
 //! check and the type checks are in `types.rs`.
 
+use crate::law::pending::{EvidenceGroup, Snapshot};
 use std::collections::BTreeMap;
 
-use core_types::generated::{EvidenceGroupV2, PersonRelation, RSnapshotV2, RelationKind};
+use core_types::generated::{PersonRelation, RelationKind};
 
 use crate::law::{Candidate, LawError, record};
 
@@ -267,7 +268,7 @@ fn ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups() {
 fn stored_state_is_checked_before_use() {
     let (f, w, _, _) = run_world(2_900, 40, 10);
     let groups = w.group_list();
-    let run = |r: &RSnapshotV2, gs: &[EvidenceGroupV2]| {
+    let run = |r: &Snapshot, gs: &[EvidenceGroup]| {
         f.run(r, gs, &default_theta(), &step(&[], &[], &BTreeMap::new()))
     };
     assert!(run(&w.r, &groups).is_ok());

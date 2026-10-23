@@ -1,9 +1,9 @@
 //! I23: persisted incremental G versus all accepted events in H order.
 //! D5 additionally reconstructs each tendency using only stored allocations.
 
-use core_types::WireMessage;
+use crate::law::pending::{EvidenceGroup, Snapshot, Tendency};
+
 use core_types::contract::Limits;
-use core_types::generated::{EvidenceGroupV2, RSnapshotV2, TendencyV2};
 
 use crate::law::replay::replay;
 use crate::law::{GroupContent, LawError};
@@ -18,10 +18,11 @@ const LIMITS: Limits = Limits {
     max_depth: 64,
 };
 
-fn bits(t: &TendencyV2) -> [u64; 7] {
+fn bits(t: &Tendency) -> [u64; 8] {
     [
         t.evidence_a,
         t.evidence_b,
+        t.evidence_v,
         t.h_hat,
         t.pi,
         t.typical_magnitude,
@@ -32,9 +33,12 @@ fn bits(t: &TendencyV2) -> [u64; 7] {
 }
 
 fn reload(w: &mut World) {
-    w.r = RSnapshotV2::from_canonical(&w.r.canonical_bytes(LIMITS).unwrap(), LIMITS).unwrap();
+    w.r = Snapshot::from_canonical(&w.r.canonical_bytes(LIMITS).unwrap(), LIMITS).unwrap();
+    for t in &mut w.r.tendencies {
+        *t = Tendency::from_canonical(&t.canonical_bytes(LIMITS).unwrap(), LIMITS).unwrap();
+    }
     for g in w.groups.values_mut() {
-        *g = EvidenceGroupV2::from_canonical(&g.canonical_bytes(LIMITS).unwrap(), LIMITS).unwrap();
+        *g = EvidenceGroup::from_canonical(&g.canonical_bytes(LIMITS).unwrap(), LIMITS).unwrap();
     }
 }
 
@@ -194,6 +198,6 @@ fn i23_random_h_prefixes_survive_canonical_reload_and_full_recomputation() {
     }
     assert_eq!((accepted, capacity_faults), (125, 0));
     println!(
-        "I23: {accepted} H prefixes; persisted incremental, full H and D5 canonical bytes and seven scalar bit patterns equal"
+        "I23: {accepted} H prefixes; persisted incremental, full H and D5 test envelope bytes (legacy fields plus raw V/q) and eight scalar bit patterns equal"
     );
 }

@@ -2,6 +2,7 @@
 //! LAW-1…LAW-10 for corollaries 1–7). Synthetic data only; no store is opened.
 
 mod ac2_count;
+mod adr0019;
 mod boundaries;
 mod cases;
 mod engine;
@@ -16,3 +17,7 @@ mod replay_h;
 mod review_regressions;
 mod types;
 mod world;
+
+mod pending_codec;
+mod reference_events;
+mod reference_parity;

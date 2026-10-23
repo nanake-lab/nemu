@@ -7,10 +7,10 @@
 //!
 //! Single-group cap: one group's weight never exceeds w_max.
 
+use crate::law::pending::{Allocation, Tendency};
 use std::cmp::Ordering;
 use std::collections::BTreeSet;
 
-use core_types::generated::{EvidenceAllocationV2, TendencyV2};
 use core_types::semantic::tendency_order;
 
 use super::engine::Work;
@@ -23,7 +23,7 @@ use super::shares::{ShareInput, shares};
 /// Index of the tendency to remove next: the candidate with the smallest
 /// evidence amount V_k = (B_k − n₀ − κ_k) + A_att; ties go to the first in
 /// canonical tendency-ID order. `None` when R holds no candidate.
-pub fn eviction_choice(r: &[TendencyV2], law: &Law) -> LawResult<Option<usize>> {
+pub fn eviction_choice(r: &[Tendency], law: &Law) -> LawResult<Option<usize>> {
     let mut best: Option<(usize, f64)> = None;
     for (i, t) in r.iter().enumerate() {
         if is_personality(t.pi) {
@@ -46,7 +46,7 @@ pub fn eviction_choice(r: &[TendencyV2], law: &Law) -> LawResult<Option<usize>> 
 }
 
 /// The capacity fault when nothing can be removed.
-pub fn exhausted(r: &[TendencyV2], capacity: u32) -> LawError {
+pub fn exhausted(r: &[Tendency], capacity: u32) -> LawError {
     LawError::CapacityExhausted {
         capacity,
         personality: r.iter().filter(|t| is_personality(t.pi)).count(),
@@ -77,6 +77,7 @@ pub fn check_weight_cap(w: f64, law: &Law, group_id: &str, tendency_id: &str) ->
 pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
     let cap = usize::try_from(ctx.r_capacity).map_err(|_| LawError::Overflow("capacity"))?;
     while work.now.len() > cap {
+        let before_revision = work.clone();
         let ids = work.ordered_ids();
         let bases = work.bases();
         let Some(i) = eviction_choice(&bases, &ctx.law)? else {
@@ -111,7 +112,7 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
             let inputs: Vec<ShareInput<'_>> = same
                 .iter()
                 .map(|&k| {
-                    let a: &EvidenceAllocationV2 = &g.allocations[k];
+                    let a: &Allocation = &g.allocations[k];
                     ShareInput {
                         tendency_id: &a.tendency_id,
                         pi: work.now[&a.tendency_id].pi,
@@ -138,9 +139,19 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
         for gid in removed_from {
             work.mark(&gone, &gid);
         }
+        super::audit::revisions(&before_revision, work, ctx)?;
         for id in dirty {
             work.replay(&id, ctx)?;
         }
+        work.capacity_audits.push(super::engine::CapacityAudit {
+            removed: gone,
+            before: before_revision
+                .now
+                .iter()
+                .map(|(id, t)| (id.clone(), t.pi))
+                .collect(),
+            after: work.now.iter().map(|(id, t)| (id.clone(), t.pi)).collect(),
+        });
     }
     Ok(())
 }

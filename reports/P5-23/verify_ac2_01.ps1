@@ -1,7 +1,7 @@
 param([Parameter(Mandatory = $true)][string]$EvidenceDirectory)
 
 # Run the Rust recurrence itself; do not substitute a second implementation.
-# The Rust test confirms the reference counterexample. This acceptance command
+# The Rust test evaluates ADR 0018's inputs under ADR 0019. This acceptance command
 # separately applies the frozen LP1 predicate and exits 1 on the violation.
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
@@ -13,10 +13,10 @@ $rootPath = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 $started = [DateTime]::UtcNow.ToString('o')
 Push-Location (Join-Path $rootPath 'core')
 try {
-    & cargo test -p core-kernel --locked ac2_01_reference_form_lets_old_support_give_way -- --nocapture 1> (Join-Path $evidencePath 'stdout.log') 2> (Join-Path $evidencePath 'stderr.log')
+    & cargo test -p core-kernel --locked ac2_01_signal_limited_form_keeps_weak_support_monotone -- --nocapture 1> (Join-Path $evidencePath 'stdout.log') 2> (Join-Path $evidencePath 'stderr.log')
     $cargoExit = $LASTEXITCODE
 } finally { Pop-Location }
-@{ command = 'cargo test -p core-kernel --locked ac2_01_reference_form_lets_old_support_give_way -- --nocapture'; started_utc = $started; ended_utc = [DateTime]::UtcNow.ToString('o'); exit_code = $cargoExit } |
+@{ command = 'cargo test -p core-kernel --locked ac2_01_signal_limited_form_keeps_weak_support_monotone -- --nocapture'; started_utc = $started; ended_utc = [DateTime]::UtcNow.ToString('o'); exit_code = $cargoExit } |
     ConvertTo-Json | Set-Content -LiteralPath (Join-Path $evidencePath 'cargo-meta.json') -Encoding utf8
 if ($cargoExit -ne 0) { exit $cargoExit }
 $lines = @(Get-Content -LiteralPath (Join-Path $evidencePath 'stdout.log') | Where-Object { $_.StartsWith('AC2-01_RESULT=') })

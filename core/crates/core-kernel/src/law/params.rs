@@ -45,13 +45,13 @@ impl Law {
         if p.r_min <= 0.0 {
             return Err(LawError::InvalidParameter("r_min must be positive"));
         }
-        if p.h0 > 1.0 || p.v_u > 1.0 || p.w_min > 1.0 {
+        if p.h0 >= 1.0 || p.v_u > 1.0 || p.w_min > 1.0 {
             return Err(LawError::InvalidParameter(
                 "h0, v_u and w_min lie in [0, 1]",
             ));
         }
         if let Some(m) = p.h_hat_min
-            && (!m.is_finite() || !(0.0..=1.0).contains(&m))
+            && (!m.is_finite() || !(0.0..1.0).contains(&m))
         {
             return Err(LawError::InvalidParameter("h_hat_min lies in [0, 1]"));
         }
@@ -83,11 +83,16 @@ impl Law {
 
     /// ĥ_k = (h₀·n_h + F_k)/(n_h + N_k), floored at ĥ_min when the law sets one.
     pub fn h_hat(&self, groups: u64, flips: u64) -> LawResult<f64> {
-        let h = (self.h0 * self.n_h + flips as f64) / (self.n_h + groups as f64);
-        let h = match self.h_hat_min {
-            Some(m) => h.max(m),
-            None => h,
-        };
-        super::num::finite(h, "h_hat")
+        use super::change_rate::ChangeRateEstimator;
+        self.estimator()
+            .before_group(super::change_rate::EvidenceCounts { groups, flips })
+    }
+
+    pub fn estimator(&self) -> super::change_rate::FlipFrequency {
+        super::change_rate::FlipFrequency {
+            h0: self.h0,
+            n_h: self.n_h,
+            minimum: self.h_hat_min,
+        }
     }
 }

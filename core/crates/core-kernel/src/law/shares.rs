@@ -39,7 +39,6 @@ pub fn shares(inputs: &[ShareInput<'_>]) -> LawResult<Vec<f64>> {
             )));
         }
     }
-    let q = |x: &ShareInput<'_>| (1.0 + x.pi) / 2.0;
     let mut out = vec![0.0; inputs.len()];
     for positive in [true, false] {
         let side: Vec<usize> = order
@@ -50,9 +49,35 @@ pub fn shares(inputs: &[ShareInput<'_>]) -> LawResult<Vec<f64>> {
                 if positive { s > 0.0 } else { s < 0.0 }
             })
             .collect();
-        let total = side.iter().fold(0.0, |acc, &i| acc + q(&inputs[i]));
-        for &i in &side {
-            out[i] = finite(q(&inputs[i]) / total, "share")?;
+        // For -1 < pi < 1, rounded (1+pi)/2 is an integer multiple
+        // of 2^-54. The smallest is 2^-54 (pi = nextafter(-1,0)).
+        // Thus u128 holds the exact sum for any addressable Vec (<=2^64
+        // entries), and each numerator is <= 2^106. No rational state.
+        let weights: Vec<u128> = side
+            .iter()
+            .map(|&i| (((1.0 + inputs[i].pi) / 2.0) * ((1u64 << 54) as f64)) as u128)
+            .collect();
+        let total: u128 = weights.iter().sum();
+        if side.is_empty() {
+            continue;
+        }
+        let units = 1u128 << 52;
+        let mut counts: Vec<u128> = weights.iter().map(|w| w * units / total).collect();
+        let mut remainder_order: Vec<usize> = (0..side.len()).collect();
+        remainder_order.sort_by(|&a, &b| {
+            (weights[b] * units % total)
+                .cmp(&(weights[a] * units % total))
+                .then(a.cmp(&b))
+        });
+        let left = units - counts.iter().sum::<u128>();
+        for &j in remainder_order.iter().take(left as usize) {
+            counts[j] += 1;
+        }
+        for (&i, count) in side.iter().zip(counts) {
+            if count == 0 {
+                return Err(LawError::NumericFault("PrecisionExhaustedShare"));
+            }
+            out[i] = finite(count as f64 / units as f64, "share")?;
         }
     }
     Ok(out)

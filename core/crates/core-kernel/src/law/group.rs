@@ -11,9 +11,9 @@
 //!   changed in evidence content: its shares, from this step's π;
 //! - otherwise nothing: the same group arriving again changes nothing (AC2-03).
 
+use crate::law::pending::{Allocation, EvidenceGroup};
 use std::collections::{BTreeMap, BTreeSet};
 
-use core_types::generated::{EvidenceAllocationV2, EvidenceGroupV2};
 use core_types::scalar::DecimalU64;
 use core_types::semantic::tendency_order;
 
@@ -27,10 +27,10 @@ use super::shares::{ShareInput, shares};
 use super::support::weight;
 
 /// Shares of every allocation of the planned group (V2-40).
-fn plan_shares(
+pub(super) fn plan_shares(
     work: &Work,
     plan: &Plan,
-    stored: Option<&EvidenceGroupV2>,
+    stored: Option<&EvidenceGroup>,
 ) -> LawResult<BTreeMap<String, f64>> {
     let side_of = |s: f64| {
         if s > 0.0 {
@@ -79,14 +79,13 @@ fn plan_shares(
 
 /// Process one group (D3). New allocations are recorded; changed ones are
 /// stored and their tendencies replayed before the next group.
-pub(super) fn process(
+pub(super) fn prepare(
     work: &mut Work,
     item: &GroupItem,
     theta: &ThetaView,
     remap: &BTreeMap<String, String>,
     ctx: &LawContext<'_>,
-) -> LawResult<()> {
-    let law = &ctx.law;
+) -> LawResult<Vec<FirstAllocation>> {
     let mut members = item.members.clone();
     members.sort_by(|a, b| tendency_order(a, b));
     if members.is_empty() || members.windows(2).any(|p| p[0] == p[1]) {
@@ -122,6 +121,18 @@ pub(super) fn process(
         }
         GroupContent::Teaching { .. } => teaching_plan(work, item, stored.as_ref(), remap, ctx)?,
     };
+    store_plan(work, item, stored, members, plan, ctx)
+}
+
+pub(super) fn store_plan(
+    work: &mut Work,
+    item: &GroupItem,
+    stored: Option<EvidenceGroup>,
+    members: Vec<String>,
+    plan: Plan,
+    ctx: &LawContext<'_>,
+) -> LawResult<Vec<FirstAllocation>> {
+    let law = &ctx.law;
     let share = plan_shares(work, &plan, stored.as_ref())?;
     let factors_changed = stored.as_ref().is_some_and(|g| {
         g.credibility != plan.credibility || g.verifiability != plan.verifiability
@@ -130,10 +141,11 @@ pub(super) fn process(
     ids.sort_by(|a, b| tendency_order(a, b));
     let mut allocations = Vec::with_capacity(ids.len());
     let mut dirty = Vec::new();
+    let mut first = Vec::new();
     for id in ids {
         let v = plan.values[id];
         let w = weight(v.intensity, plan.credibility, plan.verifiability, share[id])?;
-        let allocation = |ordinal: u64| EvidenceAllocationV2 {
+        let allocation = |ordinal: u64, q: f64| Allocation {
             schema_version: 1,
             tendency_id: id.clone(),
             support: v.support,
@@ -142,18 +154,18 @@ pub(super) fn process(
             ordinal: DecimalU64(ordinal),
             mu: v.mu,
             projection: v.projection,
+            actual_retention: q,
         };
         check_weight_cap(w, law, &item.group_id, id)?;
         match find(stored.as_ref(), id) {
             None => {
-                let t = work.now.get_mut(id).expect("planned tendencies are in R");
-                let ordinal = t.group_count.0;
-                record_group(t, law, w, v.support, v.mu, v.projection)?;
-                allocations.push(allocation(ordinal));
-                work.mark(id, &item.group_id);
+                first.push(FirstAllocation {
+                    group_id: item.group_id.clone(),
+                    allocation: allocation(0, 1.0),
+                });
             }
             Some(old) => {
-                let new = allocation(old.ordinal.0);
+                let new = allocation(old.ordinal.0, old.actual_retention);
                 if new != *old || factors_changed {
                     dirty.push(id.clone());
                     work.mark(id, &item.group_id);
@@ -162,7 +174,7 @@ pub(super) fn process(
             }
         }
     }
-    let group = EvidenceGroupV2 {
+    let group = EvidenceGroup {
         schema_version: 1,
         group_id: item.group_id.clone(),
         members,
@@ -175,8 +187,33 @@ pub(super) fn process(
         work.touched.insert(item.group_id.clone());
     }
     work.groups.insert(item.group_id.clone(), group);
-    for id in dirty {
-        work.replay(&id, ctx)?;
-    }
+    let _ = dirty; // all old revisions are replayed by the event phase boundary
+    Ok(first)
+}
+
+/// New evidence, including first allocations into a historical group.
+pub(super) struct FirstAllocation {
+    pub(super) group_id: String,
+    pub(super) allocation: Allocation,
+}
+
+pub(super) fn insert(
+    work: &mut Work,
+    mut row: FirstAllocation,
+    ctx: &LawContext<'_>,
+) -> LawResult<()> {
+    let id = row.allocation.tendency_id.clone();
+    let g = &work.groups[&row.group_id];
+    let a = &mut row.allocation;
+    let w = weight(a.intensity, g.credibility, g.verifiability, a.share)?;
+    let t = work.now.get_mut(&id).expect("planned tendency");
+    a.ordinal = DecimalU64(t.group_count.0);
+    a.actual_retention = record_group(t, &ctx.law, w, a.support, a.mu, a.projection)?;
+    let g = work.groups.get_mut(&row.group_id).expect("planned group");
+    g.allocations.push(row.allocation);
+    g.allocations
+        .sort_by(|a, b| tendency_order(&a.tendency_id, &b.tendency_id));
+    work.mark(&id, &row.group_id);
+    work.touched.insert(row.group_id);
     Ok(())
 }

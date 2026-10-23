@@ -95,5 +95,8 @@ pub fn teaching(supports: bool, w_teach: f64) -> GroupSupport {
 
 /// W = strength × credibility × verifiability × share, multiplied in this order.
 pub fn weight(intensity: f64, credibility: f64, verifiability: f64, share: f64) -> LawResult<f64> {
-    finite(((intensity * credibility) * verifiability) * share, "W")
+    use super::num::nonnegative_product as product;
+    let first = product(intensity, credibility, "UnderflowEvidenceWeight")?;
+    let second = product(first, verifiability, "UnderflowEvidenceWeight")?;
+    product(second, share, "UnderflowEvidenceWeight")
 }

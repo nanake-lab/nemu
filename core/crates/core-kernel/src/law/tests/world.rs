@@ -1,14 +1,13 @@
 //! A synthetic world for G: R as G keeps it, and a seeded generator of
 //! committed events (candidates, experience groups, late members, EV5
 //! back-collection, teaching and its repeats). No store is opened (AGENTS.md
-//! golden rule 14). R is the P5-32 `RSnapshotV2` with its `EvidenceGroupV2`
+//! golden rule 14). R is the P5-32 `Snapshot` with its `EvidenceGroup`
 //! summaries.
 
+use crate::law::pending::{EvidenceGroup, Snapshot, Tendency};
 use std::collections::BTreeMap;
 
-use core_types::generated::{
-    EvidenceGroupV2, NatureScale, NatureVector, ObjectRef, RSnapshotV2, RelationKind, TendencyV2,
-};
+use core_types::generated::{NatureScale, NatureVector, ObjectRef, RelationKind};
 use core_types::scalar::{DecimalU64, HexBytes};
 use core_types::semantic::tendency_order;
 
@@ -72,9 +71,9 @@ impl Fixture {
         }
     }
 
-    pub fn snapshot(&self, mut tendencies: Vec<TendencyV2>) -> RSnapshotV2 {
+    pub fn snapshot(&self, mut tendencies: Vec<Tendency>) -> Snapshot {
         tendencies.sort_by(|a, b| tendency_order(a.tendency_id.as_str(), b.tendency_id.as_str()));
-        RSnapshotV2 {
+        Snapshot {
             schema_version: 1,
             revision: "r0".to_owned(),
             law_version: self.law_ref.clone(),
@@ -83,7 +82,7 @@ impl Fixture {
     }
 
     /// R₀: u*'s attachment and trust.
-    pub fn r0(&self) -> RSnapshotV2 {
+    pub fn r0(&self) -> Snapshot {
         let ts = initial_r(
             &self.law,
             &self.concepts,
@@ -98,8 +97,8 @@ impl Fixture {
 
     pub fn run(
         &self,
-        r: &RSnapshotV2,
-        groups: &[EvidenceGroupV2],
+        r: &Snapshot,
+        groups: &[EvidenceGroup],
         theta: &ThetaView,
         step: &Step<'_>,
     ) -> LawResult<Output> {
@@ -157,8 +156,8 @@ impl Event {
 /// R and its evidence groups, advanced one event at a time by G.
 #[derive(Clone)]
 pub struct World {
-    pub r: RSnapshotV2,
-    pub groups: BTreeMap<String, EvidenceGroupV2>,
+    pub r: Snapshot,
+    pub groups: BTreeMap<String, EvidenceGroup>,
     /// The last version of every group item sent, to send late members and repeats.
     pub items: BTreeMap<String, GroupItem>,
 }
@@ -172,7 +171,7 @@ impl World {
         }
     }
 
-    pub fn group_list(&self) -> Vec<EvidenceGroupV2> {
+    pub fn group_list(&self) -> Vec<EvidenceGroup> {
         self.groups.values().cloned().collect()
     }
 

@@ -1,5 +1,5 @@
 //! What G may read and which types R uses: the I10 signature check (no x, m,
-//! g or λ) and golden rule 2 (R only in the IDL types of core-types).
+//! g or λ), plus the explicitly authorized temporary-state boundary for P5-34.
 
 use crate::law::{Law, LawContext, LawResult, Output, RState, Step, ThetaView, g};
 
@@ -11,6 +11,11 @@ fn i10_g_signature_has_no_x_m_g_or_lambda() {
     // recovery rates (comments excluded); the θ view holds b and σ̂ only.
     let sources = [
         ("engine.rs", include_str!("../engine.rs")),
+        ("candidates.rs", include_str!("../candidates.rs")),
+        ("audit.rs", include_str!("../audit.rs")),
+        ("change_rate.rs", include_str!("../change_rate.rs")),
+        ("pending.rs", include_str!("../pending.rs")),
+        ("validation.rs", include_str!("../validation.rs")),
         ("group.rs", include_str!("../group.rs")),
         ("input.rs", include_str!("../input.rs")),
         ("fuse.rs", include_str!("../fuse.rs")),
@@ -62,12 +67,15 @@ fn i10_g_signature_has_no_x_m_g_or_lambda() {
 }
 
 #[test]
-fn law_defines_no_stored_or_cross_process_type() {
-    // Golden rule 2: R, its group summaries and the L payloads are the IDL
-    // types of core-types (P5-32, ADR 0016); the structs of `law/` bundle them
-    // for one call and never serialize.
+fn temporary_v_q_state_has_no_production_wire_until_p534() {
+    // The card authorizes only pending.rs to carry temporary V/q state.
+    // Other modules define no competing R schema or wire implementation.
     let sources = [
         include_str!("../engine.rs"),
+        include_str!("../candidates.rs"),
+        include_str!("../validation.rs"),
+        include_str!("../audit.rs"),
+        include_str!("../change_rate.rs"),
         include_str!("../error.rs"),
         include_str!("../fuse.rs"),
         include_str!("../group.rs"),
@@ -103,11 +111,9 @@ fn law_defines_no_stored_or_cross_process_type() {
             assert!(!code.contains(forbidden), "law/ defines `{forbidden}`");
         }
     }
-    let engine = include_str!("../engine.rs");
-    assert!(engine.contains(
-        "use core_types::generated::{EvidenceGroupV2, RSnapshotV2, TendencyChange, TendencyV2};"
-    ));
-    let input = include_str!("../input.rs");
-    assert!(input.contains("pub snapshot: &'a RSnapshotV2,"));
-    assert!(input.contains("pub groups: &'a [EvidenceGroupV2],"));
+    let pending = include_str!("../pending.rs");
+    assert!(pending.contains("pub evidence_v: f64"));
+    assert!(pending.contains("pub actual_retention: f64"));
+    assert!(!pending.contains("impl core_types::WireMessage"));
+    assert!(!pending.contains("serde"));
 }

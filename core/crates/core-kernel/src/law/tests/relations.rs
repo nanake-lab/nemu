@@ -1,7 +1,8 @@
 //! Tendencies about people (D6, V2-42), AC2-13's property part, and the
 //! capacity fuse's choice (D7, V2-43).
 
-use core_types::generated::{RelationKind, TendencyV2};
+use crate::law::pending::Tendency;
+use core_types::generated::RelationKind;
 use core_types::semantic::{check_direction, check_tendency_v2};
 
 use crate::law::{
@@ -23,11 +24,11 @@ const U_STAR: Caretaker<'static> = Caretaker {
     attachment_prior: 60.0,
 };
 
-fn caretaker_r(l: &Law) -> Vec<TendencyV2> {
+fn caretaker_r(l: &Law) -> Vec<Tendency> {
     initial_r(l, &concepts(), U_STAR).unwrap()
 }
 
-fn closeness(r: &[TendencyV2]) -> &TendencyV2 {
+fn closeness(r: &[Tendency]) -> &Tendency {
     r.iter()
         .find(|t| t.tendency_id == "rel:closeness:u-star")
         .unwrap()
@@ -49,7 +50,7 @@ fn relation_structure_ids_directions_and_r0() {
     );
     for t in &r {
         check_direction(&t.direction).unwrap();
-        check_tendency_v2(t).unwrap();
+        check_tendency_v2(&t.legacy()).unwrap();
         check_stored(t, &l).unwrap();
         assert_eq!(t.predicate.len(), 1);
         assert_eq!(t.group_count.0, 0);
@@ -126,7 +127,7 @@ fn ac2_13_attachment_resists_ordinary_contrary_experience_but_is_finite() {
     }
     // Long, consistent contrary experience changes it in finitely many groups,
     // and an ordinary tendency changes sooner.
-    let flip = |mut t: TendencyV2| {
+    let flip = |mut t: Tendency| {
         (1..=100_000u32).find(|_| {
             record(&mut t, &l, 1.0, -1.0).unwrap();
             t.pi <= 0.5

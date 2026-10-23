@@ -19,6 +19,18 @@ pub fn finite(value: f64, what: &'static str) -> LawResult<f64> {
     Ok(if value == 0.0 { 0.0 } else { value })
 }
 
+/// Incoming evidence retains positive-factor information; old state and M/U do not.
+pub fn nonnegative_product(left: f64, right: f64, fault: &'static str) -> LawResult<f64> {
+    if finite(left, "product input")? < 0.0 || finite(right, "product input")? < 0.0 {
+        return Err(LawError::InvalidInput("negative evidence factor".into()));
+    }
+    let value = finite(left * right, "evidence product")?;
+    if left > 0.0 && right > 0.0 && value == 0.0 {
+        return Err(LawError::NumericFault(fault));
+    }
+    Ok(value)
+}
+
 /// ⟨x, d⟩ accumulated left to right in channel order.
 pub fn dot(x: &Nature4, d: &Nature4) -> f64 {
     ((x[0] * d[0] + x[1] * d[1]) + x[2] * d[2]) + x[3] * d[3]
