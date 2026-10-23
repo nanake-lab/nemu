@@ -116,8 +116,16 @@ class Engine:
         if not found or event.competitor in found:
             raise NumericFault("InvalidRevisionFixtureInput")
         first = next(iter(found.values()))
-        before = {name: self.tendencies[name].pi() for name in found}
-        participants = sorted([*found, event.competitor])
+        candidate_support = finite(event.competitor_support)
+        candidate_side = (candidate_support > 0) - (candidate_support < 0)
+        # Zero has no side. Decide membership before invoking the quantizer;
+        # even unused recalculated shares can fault on an unchanged side.
+        affected = sorted(name for name, row in found.items() if candidate_side != 0
+                          and (row.support > 0) - (row.support < 0) == candidate_side)
+        if candidate_side == 0:
+            return [], [FirstAllocation(group, event.competitor, first.weight, candidate_support, 0.)]
+        before = {name: self.tendencies[name].pi() for name in affected}
+        participants = sorted([*affected, event.competitor])
         supports = [found[k].support if k in found else event.competitor_support for k in participants]
         shares = exact_shares([self.tendencies[k].pi() for k in participants], supports)
         changed: list[Change] = []
@@ -125,14 +133,12 @@ class Engine:
         for name, support, share in zip(participants, supports, shares, strict=True):
             if name in found:
                 row = found[name]
-                if support * event.competitor_support < 0:
-                    share = row.share
                 changed.append((name, row.share, share, support))
                 row.share = share  # q, ordinal, S and base weight stay fixed
             else:
                 # NEW evidence, even though its source group is old.
                 pending.append(FirstAllocation(group, name, first.weight, support, share))
-        for name in sorted(found):
+        for name in affected:
             self.replay_tendency(name)
         for name, old_share, share, support in changed:
             delta = self.tendencies[name].pi() - before[name]
