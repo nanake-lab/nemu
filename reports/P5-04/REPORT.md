@@ -1,95 +1,96 @@
 # P5-04 事实视图（W19）— 报告
 
-## 结果
+## 当前状态
 
-实现、本地验收与最终代码 Ubuntu CI 完成；Windows CI 尚未完成，当前外部阻塞见 BLOCKED.md，PR #65 保持草稿。从 origin/main 876cff7 创建 D:\Dev\nemu-wt\P5-04，分支 task/P5-04-fact-view；最终代码为 954918fae3f9db245fc9a92ca646c090d655510f。已再次 fetch 并 merge main（无新提交），在此之后重跑以下验收。
+部分完成，PR #65 保持草稿 + needs-user。本轮本机及 Ubuntu 验收全通过，手动 Windows 39986857254 失败于隔离测试设置临时目录完整性标签（Access denied），未进入 W02/W19。当前代码 785a1bb 已合并 origin/main 0b5412e（含 #57、#61、#48），MEMORY 已对齐 QueryV2/QueryResultV2。按用户指示自动等主机空闲后完成本机检查，再手动触发 Windows；修复权限的最小方案见 BLOCKED.md，等待用户选择。验收通过后才转可审查、写「请审查」，由用户安排新 Codex 会话；不合并、不取下一张卡。
 
-## 已有证据
+## 交付物
 
-- 事实视图正向白名单、四路召回、固定 RRF、独立用途预算、五种非成功状态、纠错与撤回链已经实现。
-- 最终事实视图 7/7 测试通过，包含 SYS05 五种状态、解释记录结构白名单、纠错链、权限与预算、短 Unicode/FTS 字面量、旧索引阻断。谱系编译失败用例通过。SYS05 首次路径比较遗漏 Windows 规范化前缀的失败日志保留。
-- 真实官方 FP32 CPU：9 条合成事实，重启临时 EXPERIMENT 后，三语 9/9 查询的正确事实均为向量与合并排名第 1；向量启用后撤回事实在 100 次相关查询中 0 次进入 c_task 或任何召回通道。见 recall/result.json、cpu-eval-acceptance.log。
-- 原目标 50 ms 未改：最终 release 九个完整查询中位 43.33 ms、最大 45.18 ms，九个均小于 50 ms；模型加载/核验 1.676 s，索引重建 0.889 s。CPU Ryzen 7 3700X、显式 CPU 4 线程；查询包含原始 H 与载荷重读核验。此为固定小规模观测，不代表多年规模/完整回答 90% 验收或任意负载 SLO。
-- 优化前同一 FP32 对照中位 91.13 ms，embedding 多数仅 5–6 ms。用户授权的纯描述符缓存后，固定问题、条数、预算、四线程和撤回次数不变。本次选择最终复测 43.33 ms，而非挑选较快的初步 42.16 ms。更早 debug 346.60 ms/release 87.12 ms 与量化候选失败日志一并保留；量化入口已移除。
-- Rust 全工作区、全部目标、可选 CPU 特性 clippy -D warnings 和完整 release 工作区回归通过；core-store 32/32。全部合法/非法黄金向量冷/热缓存相同，三语言各 9,744 例通过、兼容 0 违规，312 项契约单测通过。
-- 所有开发测试库来自 TemporaryRoot；模型、Cargo/ORT/uv/npm/pnpm/临时与编译缓存在 D 盘。未打开排练库或正式库。
-- 首轮 Ubuntu CI 和本地完整回归均为 core-store 31/32。唯一失败是新增测试的损坏注入先违反外键约束；修复为删除临时库 snapshots 索引行，不关闭外键、不改生产代码。修复后全部通过，失败日志 ci-first-failure.log、workspace-tests-final.log 保留。
+- core/crates/fact-view/：只读事实视图，精确实体/时间、FTS5 trigram、本地多语言向量四路召回，固定 RRF；正向白名单排除解释记录，分用途预算，五种非成功状态，纠错与撤回链，完整查询审计。
+- core-store 的两文件只读历史前缀扩展与 core-types 的两文件不可变内置 codec 缓存：用户专项授权，均须审查，详见下文。
+- docs/traceability/P5-04.md、ADR 0020、两份 tasks/requests/P5-04-* 请求：规格、依赖、授权边界。
+- 模型 manifest、下载脚本及 reports/P5-04/：固定版本与 SHA-256、临时库测试、召回/撤回/耗时及 CI 原始证据。旧证据不覆盖。
 
 ## 验收
 
-| 命令或检查 | 结果 | 证据 |
+以下本机结果与 Ubuntu CI 均对应代码 785a1bb；目录 main-sync-20261024/ 记录本轮。旧原始证据另行保留，没有覆盖。
+
+| 命令或检查 | 当前结果 | 证据 |
 | --- | --- | --- |
-| cargo fmt --all -- --check | 通过 | fmt-acceptance.log |
-| cargo clippy --workspace --all-targets --features fact-view/cpu-embedding --locked -- -D warnings | 通过 | clippy-acceptance.log |
-| cargo test --workspace --release --locked -- --test-threads=1 | 通过；含完整故障注入矩阵、32 项 core-store、7 项 fact-view、谱系 compile_fail | workspace-tests-acceptance.log |
-| SYS05 面板五种不同结果及成功正向例 | 通过 | SYS05/result.json |
-| c_core/c_task 解释记录结构检查 | 通过 | structural_allowlist_excludes_all_explanations_even_when_wrapped_as_event_payload |
-| 真实 CPU 模型、三语召回骨架、100 次撤回 | 9/9 第 1；0/100 泄漏；九查询均 <50 ms | recall/result.json、recall/latency.json |
-| core-types 全部黄金向量冷/热/无缓存 | 合法 396、非法 409；结果/规范字节/摘要/Err(String) 逐项相同 | core-types-cache-tests.log |
-| pnpm test:core-contracts | Rust/Python/TypeScript 各 9,744 通过；0 stale、0 compatibility violations；官方 protoc 396 通过 | core-contracts-acceptance-2.log |
-| pnpm test:contracts | 312 通过；语句/行覆盖 100%，分支 97.1% | contracts-acceptance.log、coverage-summary.json |
-| git diff origin/main -- core/contracts packages/contracts/src/generated workers/irl/generated/echo | 0 差异 | 生成资源与黄金字节未改；schema SHA-256 为 4fd66832d88181b45262912dbdee6925a63328a778491645a03995fe2a13bc9a |
-| Ubuntu CI，最终代码 | 全部通过 | ci/ubuntu-954918f.json；https://github.com/nanake-lab/nemu/actions/runs/39901232250 |
-| Windows CI，最终代码 | 排队；runner 当前离线 | https://github.com/nanake-lab/nemu/actions/runs/39901710241 |
+| cargo fmt --all -- --check；cargo clippy --workspace --all-targets --features fact-view/cpu-embedding --locked -- -D warnings | 通过 | main-sync-20261024/fmt.log、clippy.log |
+| cargo test --workspace --release --locked -- --test-threads=1 | 通过；core-store 32/32、fact-view 8/8、谱系 compile_fail；SYS05 五状态与成功例、结构隔离、100 次撤回、新 V2 面板用例 | main-sync-20261024/workspace-tests.log；SYS05/result-main-sync-20261024.json |
+| cargo test -p fact-view --release --features cpu-embedding real_cpu_multilingual --locked -- --ignored --nocapture --test-threads=1 | 通过；真实临时库重启、三语 9/9 向量与合并排名第 1，100 次撤回 0 泄漏 | main-sync-20261024/cpu-model.log、cpu-result.json |
+| 第一轮检索 50 ms 目标 | 完整九查询 p50 44.50 ms、max 45.91 ms；9/9 小于 50 ms；模型加载 2.220 s、索引重建 0.894 s | main-sync-20261024/cpu-result.json |
+| core-types 全部合法/非法黄金向量冷/热/无缓存等价 | 445 合法、457 非法逐项相同；首次/后续公开接口、并发、独立可变 Schema 测试通过 | main-sync-20261024/workspace-tests.log |
+| pnpm lint / typecheck / test | 通过；535 项测试 | main-sync-20261024/lint.log、typecheck.log、node-tests.log |
+| pnpm test:contracts | 350 通过；语句/行/函数 100%，分支 97.46% | main-sync-20261024/contracts.log、coverage-summary.json |
+| pnpm test:core-contracts | Rust/Python/TypeScript 各 10,766 例通过；0 stale、0 compatibility violations；官方 protoc 445 条通过 | main-sync-20261024/core-contracts.log |
+| IDL / 生成文件 / 冻结字节相对 origin/main | 0 差异；schema SHA-256 c24393b63665dde9c29e9da2278430f7a45c0a75c0cb4d65ce350149c1933a88 | git diff origin/main -- core/contracts packages/contracts/src/generated workers/irl/generated/echo |
+| Ubuntu CI | 785a1bb 全部成功 | main-sync-20261024/ubuntu-785a1bb.json；https://github.com/nanake-lab/nemu/actions/runs/39983818418 |
+| Windows CI | 失败：隔离测试的临时目录完整性标签设置 Access denied；W02/W19 未运行，草稿自动跳过不算通过 | main-sync-20261024/windows-785a1bb.json、windows-39986857254-failure.log、windows-evidence/；https://github.com/nanake-lab/nemu/actions/runs/39986857254 |
 
-本地三语言首次运行的验证器固定寻找 core/target，而编译产物在 D:\Dev\cache\cargo-target\P5-04，导致 FileNotFoundError。失败日志 core-contracts-acceptance.log 保留；只在本工作区创建 D 盘目录联接 core/target 指向该缓存，未改验证器，随后重跑通过。没有生成或改写冻结预期值。
+旧 Windows 39901710241 与本轮 39986857254 均在隔离测试的 icacls 临时目录完整性标签设置处 Access denied。现场只读检查显示 D:\Dev\cache\tmp 继承 Authenticated Users 的 Modify，当前用户为该目录 owner，但没有当前用户的显式 FullControl；这是最小 ACL 修复方案的依据，尚未改 ACL 或验证该方案。没有切回 C 盘、跳过隔离测试或重试相同失败。
 
-## core-store 扩展（用户专项授权，必审）
+此前其他失败也保留：量化候选未通过固定正向召回；首次存储损坏夹具先触发外键错误，改为删除临时 snapshots 索引行后通过；本地契约验证器固定 core/target 与 D 盘编译路径不一致，创建本工作区 D→D 目录联接后通过。没有放宽阈值、修改冻结预期值或删除失败日志。
 
-仅追加 core/crates/core-store/src/queries.rs 的 Reader::transactions_at 与 src/tests/reader.rs 测试。不改格式、表、写路径或已有接口行为。捕获持久化回执后建立固定只读快照，先按现有 Reader 路径做谱系头、恢复、索引与回执核验，再读取完整已知前缀；未知前缀、缺失索引和预算不足明确失败。Reader<L> 的谱系类型保留。P5-03 PR #64 的并行情况已先在 #65 PR 正文说明。
+## core-store 扩展（必审）
 
-## core-types 扩展（用户专项授权，必审）
+仅 core/crates/core-store/src/queries.rs 与 src/tests/reader.rs，追加 Reader::transactions_at 及 TemporaryRoot 测试。不改格式、表、写路径或已有接口行为。捕获持久化回执后建立固定只读快照，先走现有谱系头、恢复、索引与回执核验，再取完整已知前缀；未知前缀、缺失索引、预算不足明确失败。Reader<L> 保留打开时的谱系类型，不能跨谱系调用。
 
-仅 src/lib.rs 与 tests/canonical_boundaries.rs。public Schema 可复用，但 Reader::read 没有注入解码器的接口，fact-view 内持有描述符不能覆盖它内部的 ObjectRef 编码/对象核验/typed 解码；因此按用户条件采用两文件扩展。100 次原 WireMessage 编码 60.14 ms，复用原始描述符 0.16 ms；缓存后 WireMessage 1.14 ms，见 descriptor-profile-before/after.log。
+必须取得旧事务的 ACCEPTED SemanticGraph 才能重建有来源的实体索引；fact-view 不能绕过 core-store 直接打开权威 SQLite。P5-03 PR #64 并行情况已在实现前写入 #65；2026-10-23 检查其 diff 未涉及这两个文件。专项授权见 tasks/requests/P5-04-core-store-prefix.md。
 
-OnceLock 一次性建立不可变描述符图，键为类型标签、支持的 schema_version=1、生成 schema 的 SHA-256。所有 encode/decode/normalize、未知版本、尺寸/深度/条数限制照常执行；不缓存对象、原文、权限或核验结果，除初始化外没有可变缓存状态。Schema::builtin 的公开签名与独立可变实例行为保留，外部修改不影响 codec。
+## core-types 扩展（必审）
 
-逐条新建局部 OnceLock 走同一个生产 accessor，测全部 396 合法/409 非法黄金向量的冷缓存、热缓存、无缓存结果；值、规范字节、摘要和 String 错误完全相同。另有独立子进程的公开接口首次/后续等价测试及并发、预算和可变实例隔离。未改 #57 当前 diff 中的文件；后合并者 merge main 后重跑全部契约检查。详见 tasks/requests/P5-04-core-types-codec-cache.md。
+仅 src/lib.rs、tests/canonical_boundaries.rs。先确认了公开 Schema 可复用，但 Reader::read 无解码器注入接口，上层持有描述符不能覆盖 Reader 内部 ObjectRef 编码、对象核验和 typed 解码，故采用授权的最小扩展。100 次原 WireMessage 编码 60.14 ms，复用描述符 0.16 ms，缓存后 WireMessage 1.14 ms，见 descriptor-profile-before/after.log。
 
-## 文档与模型
+OnceLock 一次初始化内置不可变描述符，键含类型标签、schema_version=1、生成 schema.json 的 SHA-256；初始化后无可变状态。全部 encode/decode/normalize、原文核验、限制、错误顺序照常执行，不缓存对象或核验结果。公开 Schema::builtin 仍返回独立可变实例。测试逐项比较全部合法/非法黄金向量在冷、热、无缓存下的结果、规范字节、摘要、String 错误；另测独立子进程公开接口第一次/后续等价、并发及外部可变实例隔离。
 
-规格对照见 docs/traceability/P5-04.md。使用方法、预算、审计对象与运行时接入边界见 core/crates/fact-view/README.md。
+合并前同一 FP32 九查询 p50 91.13 → 43.33 ms；合并最新 main 后本轮 p50 44.50 ms、max 45.91 ms。召回条数、预算、模型、四线程和撤回次数未改。#57 已合并，本卡未修改其 contract.rs、生成文件或冻结字节，全部契约检查已重跑通过。专项授权见 tasks/requests/P5-04-core-types-codec-cache.md。
 
-官方 intfloat/multilingual-e5-small，MIT，固定修订 614241f622f53c4eeff9890bdc4f31cfecc418b3，SHA-256 清单见 fact-view/models/manifest.json。模型位于 D:\Dev\models\multilingual-e5-small\614241f622f53c4eeff9890bdc4f31cfecc418b3；所有文件已实际下载并核验。加载只读本地文件，无 GPU provider、无运行时网络或 Python 子进程。
+## 参数、模型与边界
 
-新增 ADR 0020 登记可选 fastembed/ONNX CPU 运行时与集中 sqlite-vec FFI；新 ADR 按规则 needs-user，由用户合并批准，不自动合并。
+计划 w19-rrf-v1、索引 w19-trigram-vec-v1；RRF k=60、每路前 64，固定实体/时间/FTS/向量通道次序和 source_id 平局规则。不按 p、m、倾向强度或过去评估重排。c_core 默认 16 条/16 KiB/100k 步，c_task 32/32 KiB/200k，user_view 50/64 KiB/300k；步骤含 Rust 工作和 SQLite VM，字节含投影与原始载荷。默认拒绝权限，各路在排序前过滤。
 
-## 查询参数与交付物
+官方 intfloat/multilingual-e5-small，MIT，固定修订 614241f622f53c4eeff9890bdc4f31cfecc418b3，FP32、384 维、512 token、mean/L2、query:/passage:、显式 CPU 4 线程。逐文件 SHA-256 见 fact-view/models/manifest.json；模型在 D:\Dev\models\multilingual-e5-small\614241f622f53c4eeff9890bdc4f31cfecc418b3。模型、uv/npm/pnpm/Cargo/ORT/临时和编译缓存均在 D 盘，无 GPU provider、运行时网络或 Python 子进程。全部开发库来自 TemporaryRoot，未打开排练或正式库。
 
-- core/crates/fact-view/：仅经 Reader 读取已提交历史；私有内存 SQLite 派生索引，不开权威数据库路径。Rust 谱系类型贯穿 FactView 与 Reader。
-- 计划 w19-rrf-v1，索引 w19-trigram-vec-v1；实体、时间、FTS5 trigram、sqlite-vec cosine 四路，固定 RRF k=60、每路前 64，固定通道次序与 source_id 平局规则。不用 p、m、倾向强度或过去评估重排。
-- c_core 默认 16 条/16 KiB/100k 步；c_task 32 条/32 KiB/200k 步；user_view 50 条/64 KiB/300k 步。步骤覆盖 Rust 检索工作与 SQLite VM；字节包含投影及原始载荷，面板另核验响应字节。拒绝权限为默认值。
-- 解释记录用正向载荷白名单隔离；已接受语义图只提取有来源的身份。撤回控制事件及 note 不索引；c_task/MEMORY 排除撤回，c_core 保留经历，审计可读原文。旧索引遇新提交明确 INDEX_LAGGING。
-- 每次执行返回原 IDL FactProjection 与实际查询、许可范围、模型、向量位模式、各路排名、结果的 RetrievalTrace；audit_record 产出生成的 AuditExtension。外层运行时负责 stage/pin 与写入 audit_refs，见 README；本 crate 没有提交能力。编排接入属于 P5-08/P5-19/P5-29。
-- 不启用可选小模型重排和抽象段落摘要；保留可重建的原始段落与 H 来源。P6-13 的多年规模/完整回答 90% 验收未运行，本卡仅交付评测骨架。
+每次返回重读并核验 H 与原始载荷。撤回控制事件及 note 不索引；c_task/MEMORY 排除撤回，c_core 保留经历，审计可看原文；旧索引遇新提交返回 INDEX_LAGGING。实际查询、权限范围、模型、向量位模式、各路排名和结果产出生成的 AuditExtension，由外层运行时 stage/pin 至 audit_refs；本 crate 无提交能力。接入编排属于 P5-08/P5-19/P5-29。
 
-## 规格对照与静态边界
+不启用可选小模型重排或抽象摘要；原始段落及 H 为来源。九事实/九查询是 P6-13 前评测骨架，不代表多年规模、完整回答 90% 或任意负载的 50 ms SLO。retrieval.rs 约 406 行，预算进度钩子、统一退出清理、四路查询与面板适配共用执行路径，故保留在一个模块；唯一 unsafe 为 sqlite_vec.rs 静态 FFI 注册，其余模块 deny unsafe。
 
-完整映射见 docs/traceability/P5-04.md：SYS05、E10/V2-07、EV5/EV6/V2-14、ADR 0012 §7、I29、PR #58 A1/B2。I18 通过可丢弃重建索引与显式审计资源版本保证；I23 不在重放时重跑模型；I02/I29 由借用只读 Reader、谱系类型和临时库测试约束。IDL 与黄金向量没有改动，没有新增差异登记条目。
+## 规格对照
 
-retrieval.rs 为 405 行：预算进度钩子、统一退出清理和四路检索紧邻，面板适配复用同一执行路径；其余 Rust 模块均小于 400 行。唯一 unsafe 在 sqlite_vec.rs 的静态 FFI 注册，每处有说明；其他模块 deny unsafe。
+完整映射见 docs/traceability/P5-04.md。
 
-## 新增直接依赖
+| 规格条款 | 实现位置 | 测试 |
+| --- | --- | --- |
+| W19 / SYS05；CONTRACTS v2.2 §4.3 | query.rs、retrieval.rs；生成 QueryV2/QueryResultV2，仅 MEMORY、growth_entries 恒空 | SYS05 五状态及成功例、V2 边界回归 |
+| EV5/EV6 / V2-14 | source.rs 正向白名单、仅接受图的身份及原文 span | 解释载荷包装为事件仍被排除 |
+| E10 / V2-07 | source.rs 撤回与纠错链 | Task 100 次零泄漏、Core/Audit 保留经历 |
+| ADR 0012 §7 | index.rs、retrieval.rs、embedding/cpu.rs | 固定 RRF、三语真实 CPU 正向召回 |
+| I02/I29、黄金规则 14、#58 A1/B2 | 只读 Reader<L>、固定快照完整前缀、TemporaryRoot | 正常/损坏前缀、谱系 compile_fail |
+| I18/I23 | 可重建版本化索引、查询/返回审计 | trace 确定性；重放不重跑模型 |
+
+未新增或修改 IDL、黄金向量、权威编码、状态算子或差异登记；只继承最新 main 的契约。
+
+## 新增依赖
 
 | 名称 | 版本 | 许可证 | 用途 |
 | --- | --- | --- | --- |
-| sqlite-vec | 0.1.9 | MIT / Apache-2.0 | 静态 SQLite 向量距离 |
-| fastembed（可选） | 7.3.0 | Apache-2.0 | CPU embedding、tokenizer、pooling |
-| ort（可选）/ ONNX Runtime | 2.0.0-rc.15 / 1.31.0，git 402979a | MIT | 显式 CPUExecutionProvider；完整构建标识见评测 JSON |
-| rusqlite（工作区已有，启用 hooks/limits） | 0.40.2 | MIT | FTS5/内存索引/步骤预算 |
-| serde / serde_json | 1.0.229 / 1.0.154 | MIT / Apache-2.0 | 版本化审计编码 |
-| sha2 | 0.11.1 | MIT / Apache-2.0 | 模型 SHA-256 核验 |
-| time | 0.3.44 | MIT / Apache-2.0 | 面板 UTC 日期与 RFC3339 过滤 |
-| tempfile（仅测试） | 3.27.0 | MIT / Apache-2.0 | 损坏模型的临时夹具 |
-
-核心本地依赖仍为 core-types、core-store。传递依赖锁在 core/Cargo.lock；tokenizers 0.23.2 为 Apache-2.0。模型 MIT、可分发，来源、修订、长度与逐文件 SHA-256 全部见 manifest。
+| sqlite-vec | 0.1.9 | MIT / Apache-2.0 | SQLite 向量距离 |
+| fastembed（可选） | 7.3.0 | Apache-2.0 | CPU tokenizer/pooling/embedding |
+| ort（可选）/ ONNX Runtime | 2.0.0-rc.15 / 1.31.0，git 402979a | MIT | CPU provider |
+| rusqlite（已有，增 hooks/limits） | 0.40.2 | MIT | FTS/步骤预算 |
+| serde / serde_json | 1.0.229 / 1.0.154 | MIT / Apache-2.0 | 审计编码 |
+| sha2 | 0.11.1 | MIT / Apache-2.0 | 模型核验 |
+| time | 0.3.44 | MIT / Apache-2.0 | 面板日期过滤 |
+| tempfile（测试） | 3.27.0 | MIT / Apache-2.0 | 损坏模型临时夹具 |
 
 ## 待用户确认
 
-- [ ] （阻塞）新增重量级 CPU 依赖 ADR 0020，由用户合并批准。
-- [ ] （阻塞）core-store 与 core-types 两处授权扩展均属于必审范围，由用户安排新 Codex 会话一并审查。
-- [ ] （阻塞）最终 Windows CI 尚未运行完成；当前 runner 离线，等待用户恢复。Ubuntu CI 全通过。机械验收全通过前保持草稿。
+- [ ] （阻塞）ADR 0020 新增重量级 CPU 依赖，由用户合并批准，保留 needs-user。
+- [ ] （阻塞）core-store、core-types 扩展须由用户安排新 Codex 会话一并审查。
+- [ ] （阻塞）最终手动 Windows CI 的 D 盘临时目录权限失败；等待用户选择任务独占目录 ACL 最小修复或自行修复 runner 环境，见 BLOCKED.md、tasks/requests/P5-04-windows-temp-acl.md。通过前保持草稿。
 
-## 下一步
+## 后续建议（不在本任务范围内）
 
-等待最终 CI；#57 仍未合并，目前使用 main 的生成 Query/QueryResult，如 #57 合并则 merge main 后对齐。先前 main Windows 作业成功后 runner 再次离线，#65 最终手动作业 39901710241 排队中；已通知用户。仅在全部机械验收通过、最终 main 核对后转为可审查并在 PR 写「请审查」，由用户安排新 Codex 会话审查与合并，不认领下一张卡。
+- P5-08/P5-19/P5-29 接入运行时审计与纠错；P6-13 运行多年规模/完整回答评测。
