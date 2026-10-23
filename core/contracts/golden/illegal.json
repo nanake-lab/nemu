@@ -17099,5 +17099,950 @@
         "max_depth": 32
       }
     }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "tendency_id": "A0",
+        "support": 0.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "0",
+        "mu": 0.0,
+        "actual_retention": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "tendency_id": "A0",
+        "support": 0.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "0",
+        "mu": 0.0,
+        "actual_retention": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "support": 0.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "0",
+        "mu": 0.0,
+        "actual_retention": 0.5,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0,
+        "evidence_absolute": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0,
+        "evidence_absolute": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0,
+        "evidence_absolute": 0.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": [],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 q outside (0,1]: 0.0",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.5,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "projection": 0.25,
+        "actual_retention": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 q outside (0,1]: -0.1",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.5,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "projection": 0.25,
+        "actual_retention": -0.1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 q outside (0,1]: 1.0000000000000002",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.5,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "projection": 0.25,
+        "actual_retention": 1.0000000000000002
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 missing q",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.5,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "projection": 0.25
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 V below |A|: -1.0, -1.0",
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "c",
+          "registry_version": "v"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": -1.0,
+        "evidence_b": 5.0,
+        "evidence_absolute": -1.0,
+        "h_hat": 0.1,
+        "group_count": "2",
+        "flip_count": "0",
+        "last_sign": 1,
+        "pi": -0.2,
+        "typical_magnitude": 0.25,
+        "magnitude_sum": 0.5,
+        "magnitude_weight": 2.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 V below |A|: -1.0, 1.0",
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "c",
+          "registry_version": "v"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 1.0,
+        "evidence_b": 5.0,
+        "evidence_absolute": -1.0,
+        "h_hat": 0.1,
+        "group_count": "2",
+        "flip_count": "0",
+        "last_sign": 1,
+        "pi": -0.2,
+        "typical_magnitude": 0.25,
+        "magnitude_sum": 0.5,
+        "magnitude_weight": 2.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 V below |A|: 0.9999999999999999, -1.0",
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "c",
+          "registry_version": "v"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": -1.0,
+        "evidence_b": 5.0,
+        "evidence_absolute": 0.9999999999999999,
+        "h_hat": 0.1,
+        "group_count": "2",
+        "flip_count": "0",
+        "last_sign": 1,
+        "pi": -0.2,
+        "typical_magnitude": 0.25,
+        "magnitude_sum": 0.5,
+        "magnitude_weight": 2.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 V below |A|: 0.9999999999999999, 1.0",
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "c",
+          "registry_version": "v"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 1.0,
+        "evidence_b": 5.0,
+        "evidence_absolute": 0.9999999999999999,
+        "h_hat": 0.1,
+        "group_count": "2",
+        "flip_count": "0",
+        "last_sign": 1,
+        "pi": -0.2,
+        "typical_magnitude": 0.25,
+        "magnitude_sum": 0.5,
+        "magnitude_weight": 2.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 missing V",
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "c",
+          "registry_version": "v"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": -1.0,
+        "evidence_b": 5.0,
+        "h_hat": 0.1,
+        "group_count": "2",
+        "flip_count": "0",
+        "last_sign": 1,
+        "pi": -0.2,
+        "typical_magnitude": 0.25,
+        "magnitude_sum": 0.5,
+        "magnitude_weight": 2.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 duplicate V3 allocations",
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "support": 0.5,
+            "intensity": 1.0,
+            "share": 1.0,
+            "ordinal": "0",
+            "mu": 0.75,
+            "projection": 0.25,
+            "actual_retention": 0.75
+          },
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "support": 0.5,
+            "intensity": 1.0,
+            "share": 1.0,
+            "ordinal": "0",
+            "mu": 0.75,
+            "projection": 0.25,
+            "actual_retention": 0.75
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 duplicate V3 tendencies",
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": [
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "c",
+              "registry_version": "v"
+            },
+            "predicate": [],
+            "direction": {
+              "schema_version": 1,
+              "connection": 1.0,
+              "empathy": 0.0,
+              "curiosity": 0.0,
+              "achievement": 0.0
+            },
+            "evidence_a": -1.0,
+            "evidence_b": 5.0,
+            "evidence_absolute": 1.0,
+            "h_hat": 0.1,
+            "group_count": "2",
+            "flip_count": "0",
+            "last_sign": 1,
+            "pi": -0.2,
+            "typical_magnitude": 0.25,
+            "magnitude_sum": 0.5,
+            "magnitude_weight": 2.0
+          },
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "c",
+              "registry_version": "v"
+            },
+            "predicate": [],
+            "direction": {
+              "schema_version": 1,
+              "connection": 1.0,
+              "empathy": 0.0,
+              "curiosity": 0.0,
+              "achievement": 0.0
+            },
+            "evidence_a": -1.0,
+            "evidence_b": 5.0,
+            "evidence_absolute": 1.0,
+            "h_hat": 0.1,
+            "group_count": "2",
+            "flip_count": "0",
+            "last_sign": 1,
+            "pi": -0.2,
+            "typical_magnitude": 0.25,
+            "magnitude_sum": 0.5,
+            "magnitude_weight": 2.0
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 superseded nested payload",
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "A0",
+            "support": 0.0,
+            "intensity": 0.0,
+            "share": 0.0,
+            "ordinal": "0",
+            "mu": 0.0
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 superseded nested payload",
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": [
+          {
+            "schema_version": 1,
+            "tendency_id": "A0",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "A0",
+              "registry_version": "A0"
+            },
+            "predicate": [],
+            "direction": {
+              "schema_version": 1,
+              "connection": 0.0,
+              "empathy": 0.0,
+              "curiosity": 0.0,
+              "achievement": 0.0
+            },
+            "evidence_a": 0.0,
+            "evidence_b": 0.0,
+            "h_hat": 0.0,
+            "group_count": "0",
+            "flip_count": "0",
+            "pi": 0.0,
+            "typical_magnitude": 0.0,
+            "magnitude_sum": 0.0,
+            "magnitude_weight": 0.0
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 reserved EvidenceGroupV3.7",
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "protobuf",
+      "hex": "08013a00",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 reserved EvidenceGroupV3.8",
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "protobuf",
+      "hex": "08014200",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 reserved RSnapshotV3.4",
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "protobuf",
+      "hex": "08012200",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 reserved RSnapshotV3.5",
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "protobuf",
+      "hex": "08012a00",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 nonfinite q 7ff8000000000001",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "protobuf",
+      "hex": "080112017419000000000000e03f21000000000000f03f29000000000000f03f300039000000000000e83f41000000000000d03f49010000000000f87f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 nonfinite q 7ff0000000000000",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "protobuf",
+      "hex": "080112017419000000000000e03f21000000000000f03f29000000000000f03f300039000000000000e83f41000000000000d03f49000000000000f07f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 nonfinite q fff0000000000000",
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "protobuf",
+      "hex": "080112017419000000000000e03f21000000000000f03f29000000000000f03f300039000000000000e83f41000000000000d03f49000000000000f0ff",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 nonfinite V 7ff8000000000001",
+    "request": {
+      "name": "TendencyV3",
+      "op": "protobuf",
+      "hex": "08011201741a0808011201631a01762a26080111000000000000f03f19000000000000000021000000000000000029000000000000000031000000000000f0bf390000000000001440419a9999999999b93f480250005801619a9999999999c9bf69000000000000d03f8101000000000000e03f890100000000000000409101010000000000f87f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 nonfinite V 7ff0000000000000",
+    "request": {
+      "name": "TendencyV3",
+      "op": "protobuf",
+      "hex": "08011201741a0808011201631a01762a26080111000000000000f03f19000000000000000021000000000000000029000000000000000031000000000000f0bf390000000000001440419a9999999999b93f480250005801619a9999999999c9bf69000000000000d03f8101000000000000e03f890100000000000000409101000000000000f07f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-34 nonfinite V fff0000000000000",
+    "request": {
+      "name": "TendencyV3",
+      "op": "protobuf",
+      "hex": "08011201741a0808011201631a01762a26080111000000000000f03f19000000000000000021000000000000000029000000000000000031000000000000f0bf390000000000001440419a9999999999b93f480250005801619a9999999999c9bf69000000000000d03f8101000000000000e03f890100000000000000409101000000000000f0ff",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
   }
 ]

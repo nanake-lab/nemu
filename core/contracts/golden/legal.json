@@ -39953,5 +39953,1360 @@
         "version": "2"
       }
     }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "support": 0.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "0",
+        "mu": 0.0,
+        "actual_retention": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330200000041300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e03f",
+      "digest": "b28c9c5357c4071167260dcfe1fcb851e60c475bf80982dff719549a4fc1ebae",
+      "ok": true,
+      "protobuf": "080112024130190000000000000000210000000000000000290000000000000000300039000000000000000049000000000000e03f",
+      "value": {
+        "actual_retention": 0.5,
+        "intensity": 0.0,
+        "mu": 0.0,
+        "ordinal": "0",
+        "schema_version": 1,
+        "share": 0.0,
+        "support": 0.0,
+        "tendency_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "中文🙂1",
+        "support": -1.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "18446744073709551615",
+        "mu": 0.0,
+        "projection": -1.25,
+        "actual_retention": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330b000000e4b8ade69687f09f998231000000000000f0bf00000000000000000000000000000000ffffffffffffffff000000000000000001000000000000f4bf000000000000e03f",
+      "digest": "39e99b6c4a07ed9220b87552096db5546e259b53329633b4c27ae2a5cd41b627",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823119000000000000f0bf21000000000000000029000000000000000030ffffffffffffffffff0139000000000000000041000000000000f4bf49000000000000e03f",
+      "value": {
+        "actual_retention": 0.5,
+        "intensity": 0.0,
+        "mu": 0.0,
+        "ordinal": "18446744073709551615",
+        "projection": -1.25,
+        "schema_version": 1,
+        "share": 0.0,
+        "support": -1.0,
+        "tendency_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "﻿zero\u00002",
+        "support": 1.0,
+        "intensity": 2.5,
+        "share": 1.0,
+        "ordinal": "9007199254740993",
+        "mu": 1.0,
+        "projection": 2.5,
+        "actual_retention": 1.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d763309000000efbbbf7a65726f0032000000000000f03f0000000000000440000000000000f03f0100000000002000000000000000f03f010000000000000440000000000000f03f",
+      "digest": "1e94b0cc5cb163852f228031e4c2709266a6a1020ea63f5d887fc19c281e640d",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003219000000000000f03f21000000000000044029000000000000f03f30818080808080801039000000000000f03f41000000000000044049000000000000f03f",
+      "value": {
+        "actual_retention": 1.0,
+        "intensity": 2.5,
+        "mu": 1.0,
+        "ordinal": "9007199254740993",
+        "projection": 2.5,
+        "schema_version": 1,
+        "share": 1.0,
+        "support": 1.0,
+        "tendency_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e65766964656e63652d67726f75702d7633020000004130000000000200000041300000000000000000000000000000000000000000",
+      "digest": "75fb20729bc98045a099266bd90d2ad8ae6bbec454da58ac0661093e65a0369c",
+      "ok": true,
+      "protobuf": "08011202413022024130290000000000000000310000000000000000",
+      "value": {
+        "allocations": [],
+        "credibility": 0.0,
+        "group_id": "A0",
+        "members": [],
+        "schema_version": 1,
+        "source_key": "A0",
+        "verifiability": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "中文🙂1",
+        "members": [
+          "中文🙂1"
+        ],
+        "source_key": "中文🙂1",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "中文🙂1",
+            "support": -1.0,
+            "intensity": 0.0,
+            "share": 0.0,
+            "ordinal": "18446744073709551615",
+            "mu": 0.0,
+            "projection": -1.25,
+            "actual_retention": 0.5
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e65766964656e63652d67726f75702d76330b000000e4b8ade69687f09f998231010000000b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f99823100000000000000000000000000000000010000006f0000004e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330b000000e4b8ade69687f09f998231000000000000f0bf00000000000000000000000000000000ffffffffffffffff000000000000000001000000000000f4bf000000000000e03f",
+      "digest": "75b98af2a5c5be4d3e91aa5a9d08503413687a9a69ea6c41bb4e725ca327cac5",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231220be4b8ade69687f09f9982312900000000000000003100000000000000004a500801120be4b8ade69687f09f99823119000000000000f0bf21000000000000000029000000000000000030ffffffffffffffffff0139000000000000000041000000000000f4bf49000000000000e03f",
+      "value": {
+        "allocations": [
+          {
+            "actual_retention": 0.5,
+            "intensity": 0.0,
+            "mu": 0.0,
+            "ordinal": "18446744073709551615",
+            "projection": -1.25,
+            "schema_version": 1,
+            "share": 0.0,
+            "support": -1.0,
+            "tendency_id": "中文🙂1"
+          }
+        ],
+        "credibility": 0.0,
+        "group_id": "中文🙂1",
+        "members": [
+          "中文🙂1"
+        ],
+        "schema_version": 1,
+        "source_key": "中文🙂1",
+        "verifiability": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "﻿zero\u00002",
+        "members": [
+          "﻿zero\u00002",
+          "A3"
+        ],
+        "source_key": "﻿zero\u00002",
+        "credibility": 1.0,
+        "verifiability": 1.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "﻿zero\u00002",
+            "support": 1.0,
+            "intensity": 2.5,
+            "share": 1.0,
+            "ordinal": "9007199254740993",
+            "mu": 1.0,
+            "projection": 2.5,
+            "actual_retention": 1.0
+          },
+          {
+            "schema_version": 1,
+            "tendency_id": "A3",
+            "support": 0.0,
+            "intensity": 0.0,
+            "share": 0.0,
+            "ordinal": "0",
+            "mu": 0.0,
+            "actual_retention": 0.5
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e65766964656e63652d67726f75702d763309000000efbbbf7a65726f00320200000002000000413309000000efbbbf7a65726f003209000000efbbbf7a65726f0032000000000000f03f000000000000f03f020000005e0000004e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330200000041330000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e03f6d0000004e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d763309000000efbbbf7a65726f0032000000000000f03f0000000000000440000000000000f03f0100000000002000000000000000f03f010000000000000440000000000000f03f",
+      "digest": "a1794dde07d421c0cbe82ca415a64243dab853fd95417a2553aeffd58ffd9e4e",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a0241331a09efbbbf7a65726f00322209efbbbf7a65726f003229000000000000f03f31000000000000f03f4a35080112024133190000000000000000210000000000000000290000000000000000300039000000000000000049000000000000e03f4a4c08011209efbbbf7a65726f003219000000000000f03f21000000000000044029000000000000f03f30818080808080801039000000000000f03f41000000000000044049000000000000f03f",
+      "value": {
+        "allocations": [
+          {
+            "actual_retention": 0.5,
+            "intensity": 0.0,
+            "mu": 0.0,
+            "ordinal": "0",
+            "schema_version": 1,
+            "share": 0.0,
+            "support": 0.0,
+            "tendency_id": "A3"
+          },
+          {
+            "actual_retention": 1.0,
+            "intensity": 2.5,
+            "mu": 1.0,
+            "ordinal": "9007199254740993",
+            "projection": 2.5,
+            "schema_version": 1,
+            "share": 1.0,
+            "support": 1.0,
+            "tendency_id": "﻿zero\u00002"
+          }
+        ],
+        "credibility": 1.0,
+        "group_id": "﻿zero\u00002",
+        "members": [
+          "A3",
+          "﻿zero\u00002"
+        ],
+        "schema_version": 1,
+        "source_key": "﻿zero\u00002",
+        "verifiability": 1.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0,
+        "evidence_absolute": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d7633020000004130280000004e43563101000000100000006563686f2e636f6e636570742d726566020000004130020000004130000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f7200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "93d754bee2684833cdf8f6e6008a81f375877862f5b7dc3de0fcaa1a8bc10649",
+      "ok": true,
+      "protobuf": "0801120241301a0a0801120241301a0241302a26080111000000000000000019000000000000000021000000000000000029000000000000000031000000000000000039000000000000000041000000000000000048005000610000000000000000690000000000000000810100000000000000008901000000000000000091010000000000000000",
+      "value": {
+        "concept": {
+          "concept_id": "A0",
+          "registry_version": "A0",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": 0.0,
+          "connection": 0.0,
+          "curiosity": 0.0,
+          "empathy": 0.0,
+          "schema_version": 1
+        },
+        "evidence_a": 0.0,
+        "evidence_absolute": 0.0,
+        "evidence_b": 0.0,
+        "flip_count": "0",
+        "group_count": "0",
+        "h_hat": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0,
+        "pi": 0.0,
+        "predicate": [],
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "typical_magnitude": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "中文🙂1",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "中文🙂1",
+          "registry_version": "中文🙂1"
+        },
+        "predicate": [
+          {
+            "schema_version": 1,
+            "zh": "中文🙂1",
+            "en": "中文🙂1",
+            "ja": "中文🙂1"
+          }
+        ],
+        "direction": {
+          "schema_version": 1,
+          "connection": -1.0,
+          "empathy": -1.0,
+          "curiosity": -1.0,
+          "achievement": -1.0
+        },
+        "evidence_a": -1.25,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "18446744073709551615",
+        "flip_count": "18446744073709551615",
+        "last_sign": 2,
+        "pi": -1.0,
+        "typical_magnitude": 0.0,
+        "relation": {
+          "schema_version": 1,
+          "person_id": "中文🙂1",
+          "kind": 2
+        },
+        "attachment_prior": 0.0,
+        "magnitude_sum": -1.25,
+        "magnitude_weight": 0.0,
+        "evidence_absolute": 1.25
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d76330b000000e4b8ade69687f09f9982313a0000004e43563101000000100000006563686f2e636f6e636570742d7265660b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231010000004d0000004e43563101000000140000006563686f2e7472696c696e6775616c2d746578740b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982313e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f0bf000000000000f0bf000000000000f0bf000000000000f0bf000000000000f4bf00000000000000000000000000000000ffffffffffffffffffffffffffffffff0102000000000000000000f0bf000000000000000001330000004e43563101000000140000006563686f2e706572736f6e2d72656c6174696f6e0b000000e4b8ade69687f09f99823102000000010000000000000000000000000000f4bf0000000000000000000000000000f43f",
+      "digest": "0f443656705bedba46299cb1bdeeb9f81c05d839007af4f3b160689ec73a7f6e",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a1c0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f99823122290801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231220be4b8ade69687f09f9982312a26080111000000000000f0bf19000000000000f0bf21000000000000f0bf29000000000000f0bf31000000000000f4bf39000000000000000041000000000000000048ffffffffffffffffff0150ffffffffffffffffff01580261000000000000f0bf69000000000000000072110801120be4b8ade69687f09f99823118027900000000000000008101000000000000f4bf890100000000000000009101000000000000f43f",
+      "value": {
+        "attachment_prior": 0.0,
+        "concept": {
+          "concept_id": "中文🙂1",
+          "registry_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": -1.0,
+          "connection": -1.0,
+          "curiosity": -1.0,
+          "empathy": -1.0,
+          "schema_version": 1
+        },
+        "evidence_a": -1.25,
+        "evidence_absolute": 1.25,
+        "evidence_b": 0.0,
+        "flip_count": "18446744073709551615",
+        "group_count": "18446744073709551615",
+        "h_hat": 0.0,
+        "last_sign": 2,
+        "magnitude_sum": -1.25,
+        "magnitude_weight": 0.0,
+        "pi": -1.0,
+        "predicate": [
+          {
+            "en": "中文🙂1",
+            "ja": "中文🙂1",
+            "schema_version": 1,
+            "zh": "中文🙂1"
+          }
+        ],
+        "relation": {
+          "kind": 2,
+          "person_id": "中文🙂1",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "tendency_id": "中文🙂1",
+        "typical_magnitude": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "﻿zero\u00002",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "﻿zero\u00002",
+          "registry_version": "﻿zero\u00002"
+        },
+        "predicate": [
+          {
+            "schema_version": 1,
+            "zh": "﻿zero\u00002",
+            "en": "﻿zero\u00002",
+            "ja": "﻿zero\u00002"
+          },
+          {
+            "schema_version": 1,
+            "zh": "A3",
+            "en": "A3",
+            "ja": "A3"
+          }
+        ],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 1.0,
+          "curiosity": 1.0,
+          "achievement": 1.0
+        },
+        "evidence_a": 2.5,
+        "evidence_b": 2.5,
+        "h_hat": 1.0,
+        "group_count": "9007199254740993",
+        "flip_count": "9007199254740993",
+        "last_sign": 1,
+        "pi": 1.0,
+        "typical_magnitude": 2.5,
+        "relation": {
+          "schema_version": 1,
+          "person_id": "﻿zero\u00002",
+          "kind": 1
+        },
+        "attachment_prior": 2.5,
+        "magnitude_sum": 2.5,
+        "magnitude_weight": 2.5,
+        "evidence_absolute": 2.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d763309000000efbbbf7a65726f0032360000004e43563101000000100000006563686f2e636f6e636570742d72656609000000efbbbf7a65726f003209000000efbbbf7a65726f003202000000470000004e43563101000000140000006563686f2e7472696c696e6775616c2d7465787409000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f0032320000004e43563101000000140000006563686f2e7472696c696e6775616c2d746578740200000041330200000041330200000041333e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000f03f000000000000f03f000000000000f03f00000000000004400000000000000440000000000000f03f010000000000200001000000000020000101000000000000000000f03f000000000000044001310000004e43563101000000140000006563686f2e706572736f6e2d72656c6174696f6e09000000efbbbf7a65726f003201000000010000000000000440000000000000044000000000000004400000000000000440",
+      "digest": "3193d186d6a96838c9616934ba6cae317719e534064239a9460bada4dca4e552",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a1808011209efbbbf7a65726f00321a09efbbbf7a65726f0032222308011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f0032220e0801120241331a024133220241332a26080111000000000000f03f19000000000000f03f21000000000000f03f29000000000000f03f31000000000000044039000000000000044041000000000000f03f488180808080808010508180808080808010580161000000000000f03f690000000000000440720f08011209efbbbf7a65726f00321801790000000000000440810100000000000004408901000000000000044091010000000000000440",
+      "value": {
+        "attachment_prior": 2.5,
+        "concept": {
+          "concept_id": "﻿zero\u00002",
+          "registry_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": 1.0,
+          "connection": 1.0,
+          "curiosity": 1.0,
+          "empathy": 1.0,
+          "schema_version": 1
+        },
+        "evidence_a": 2.5,
+        "evidence_absolute": 2.5,
+        "evidence_b": 2.5,
+        "flip_count": "9007199254740993",
+        "group_count": "9007199254740993",
+        "h_hat": 1.0,
+        "last_sign": 1,
+        "magnitude_sum": 2.5,
+        "magnitude_weight": 2.5,
+        "pi": 1.0,
+        "predicate": [
+          {
+            "en": "﻿zero\u00002",
+            "ja": "﻿zero\u00002",
+            "schema_version": 1,
+            "zh": "﻿zero\u00002"
+          },
+          {
+            "en": "A3",
+            "ja": "A3",
+            "schema_version": 1,
+            "zh": "A3"
+          }
+        ],
+        "relation": {
+          "kind": 1,
+          "person_id": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "tendency_id": "﻿zero\u00002",
+        "typical_magnitude": 2.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e722d736e617073686f742d7633020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000000000000000000000000000000000000000000000000000000000000000000020000004130020000004130000000000000000000000000",
+      "digest": "e8b2179a26774efcf9f8f887218e4644d33c681437f497fa0e48a0a6cced72a5",
+      "ok": true,
+      "protobuf": "0801120241301a2e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800",
+      "value": {
+        "law_version": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "revision": "A0",
+        "schema_version": 1,
+        "tendencies": []
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "中文🙂1",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "tendencies": [
+          {
+            "schema_version": 1,
+            "tendency_id": "中文🙂1",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "中文🙂1",
+              "registry_version": "中文🙂1"
+            },
+            "predicate": [
+              {
+                "schema_version": 1,
+                "zh": "中文🙂1",
+                "en": "中文🙂1",
+                "ja": "中文🙂1"
+              }
+            ],
+            "direction": {
+              "schema_version": 1,
+              "connection": -1.0,
+              "empathy": -1.0,
+              "curiosity": -1.0,
+              "achievement": -1.0
+            },
+            "evidence_a": -1.25,
+            "evidence_b": 0.0,
+            "h_hat": 0.0,
+            "group_count": "18446744073709551615",
+            "flip_count": "18446744073709551615",
+            "last_sign": 2,
+            "pi": -1.0,
+            "typical_magnitude": 0.0,
+            "relation": {
+              "schema_version": 1,
+              "person_id": "中文🙂1",
+              "kind": 2
+            },
+            "attachment_prior": 0.0,
+            "magnitude_sum": -1.25,
+            "magnitude_weight": 0.0,
+            "evidence_absolute": 1.25
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e722d736e617073686f742d76330b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffff01000000960100004e43563101000000100000006563686f2e74656e64656e63792d76330b000000e4b8ade69687f09f9982313a0000004e43563101000000100000006563686f2e636f6e636570742d7265660b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231010000004d0000004e43563101000000140000006563686f2e7472696c696e6775616c2d746578740b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982313e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f0bf000000000000f0bf000000000000f0bf000000000000f0bf000000000000f4bf00000000000000000000000000000000ffffffffffffffffffffffffffffffff0102000000000000000000f0bf000000000000000001330000004e43563101000000140000006563686f2e706572736f6e2d72656c6174696f6e0b000000e4b8ade69687f09f99823102000000010000000000000000000000000000f4bf0000000000000000000000000000f43f",
+      "digest": "28662abccbda8ca9990deeda7e3905453278800214b3e8dfce6262b37c2140de",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0132ff010801120be4b8ade69687f09f9982311a1c0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f99823122290801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231220be4b8ade69687f09f9982312a26080111000000000000f0bf19000000000000f0bf21000000000000f0bf29000000000000f0bf31000000000000f4bf39000000000000000041000000000000000048ffffffffffffffffff0150ffffffffffffffffff01580261000000000000f0bf69000000000000000072110801120be4b8ade69687f09f99823118027900000000000000008101000000000000f4bf890100000000000000009101000000000000f43f",
+      "value": {
+        "law_version": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "revision": "中文🙂1",
+        "schema_version": 1,
+        "tendencies": [
+          {
+            "attachment_prior": 0.0,
+            "concept": {
+              "concept_id": "中文🙂1",
+              "registry_version": "中文🙂1",
+              "schema_version": 1
+            },
+            "direction": {
+              "achievement": -1.0,
+              "connection": -1.0,
+              "curiosity": -1.0,
+              "empathy": -1.0,
+              "schema_version": 1
+            },
+            "evidence_a": -1.25,
+            "evidence_absolute": 1.25,
+            "evidence_b": 0.0,
+            "flip_count": "18446744073709551615",
+            "group_count": "18446744073709551615",
+            "h_hat": 0.0,
+            "last_sign": 2,
+            "magnitude_sum": -1.25,
+            "magnitude_weight": 0.0,
+            "pi": -1.0,
+            "predicate": [
+              {
+                "en": "中文🙂1",
+                "ja": "中文🙂1",
+                "schema_version": 1,
+                "zh": "中文🙂1"
+              }
+            ],
+            "relation": {
+              "kind": 2,
+              "person_id": "中文🙂1",
+              "schema_version": 1
+            },
+            "schema_version": 1,
+            "tendency_id": "中文🙂1",
+            "typical_magnitude": 0.0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "﻿zero\u00002",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "tendencies": [
+          {
+            "schema_version": 1,
+            "tendency_id": "﻿zero\u00002",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "﻿zero\u00002",
+              "registry_version": "﻿zero\u00002"
+            },
+            "predicate": [
+              {
+                "schema_version": 1,
+                "zh": "﻿zero\u00002",
+                "en": "﻿zero\u00002",
+                "ja": "﻿zero\u00002"
+              },
+              {
+                "schema_version": 1,
+                "zh": "A3",
+                "en": "A3",
+                "ja": "A3"
+              }
+            ],
+            "direction": {
+              "schema_version": 1,
+              "connection": 1.0,
+              "empathy": 1.0,
+              "curiosity": 1.0,
+              "achievement": 1.0
+            },
+            "evidence_a": 2.5,
+            "evidence_b": 2.5,
+            "h_hat": 1.0,
+            "group_count": "9007199254740993",
+            "flip_count": "9007199254740993",
+            "last_sign": 1,
+            "pi": 1.0,
+            "typical_magnitude": 2.5,
+            "relation": {
+              "schema_version": 1,
+              "person_id": "﻿zero\u00002",
+              "kind": 1
+            },
+            "attachment_prior": 2.5,
+            "magnitude_sum": 2.5,
+            "magnitude_weight": 2.5,
+            "evidence_absolute": 2.5
+          },
+          {
+            "schema_version": 1,
+            "tendency_id": "A3",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "A3",
+              "registry_version": "A3"
+            },
+            "predicate": [],
+            "direction": {
+              "schema_version": 1,
+              "connection": 0.0,
+              "empathy": 0.0,
+              "curiosity": 0.0,
+              "achievement": 0.0
+            },
+            "evidence_a": 0.0,
+            "evidence_b": 0.0,
+            "h_hat": 0.0,
+            "group_count": "0",
+            "flip_count": "0",
+            "pi": 0.0,
+            "typical_magnitude": 0.0,
+            "magnitude_sum": 0.0,
+            "magnitude_weight": 0.0,
+            "evidence_absolute": 0.0
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e722d736e617073686f742d763309000000efbbbf7a65726f0032610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000000200002000000e70000004e43563101000000100000006563686f2e74656e64656e63792d7633020000004133280000004e43563101000000100000006563686f2e636f6e636570742d726566020000004133020000004133000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f7200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000be0100004e43563101000000100000006563686f2e74656e64656e63792d763309000000efbbbf7a65726f0032360000004e43563101000000100000006563686f2e636f6e636570742d72656609000000efbbbf7a65726f003209000000efbbbf7a65726f003202000000470000004e43563101000000140000006563686f2e7472696c696e6775616c2d7465787409000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f0032320000004e43563101000000140000006563686f2e7472696c696e6775616c2d746578740200000041330200000041330200000041333e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000f03f000000000000f03f000000000000f03f00000000000004400000000000000440000000000000f03f010000000000200001000000000020000101000000000000000000f03f000000000000044001310000004e43563101000000140000006563686f2e706572736f6e2d72656c6174696f6e09000000efbbbf7a65726f003201000000010000000000000440000000000000044000000000000004400000000000000440",
+      "digest": "fe4b7e20463e408d2ca0eb6b7de6e1047bda3b1c18168c2471e71dddce7e348a",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080103289010801120241331a0a0801120241331a0241332a2608011100000000000000001900000000000000002100000000000000002900000000000000003100000000000000003900000000000000004100000000000000004800500061000000000000000069000000000000000081010000000000000000890100000000000000009101000000000000000032fd0108011209efbbbf7a65726f00321a1808011209efbbbf7a65726f00321a09efbbbf7a65726f0032222308011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f0032220e0801120241331a024133220241332a26080111000000000000f03f19000000000000f03f21000000000000f03f29000000000000f03f31000000000000044039000000000000044041000000000000f03f488180808080808010508180808080808010580161000000000000f03f690000000000000440720f08011209efbbbf7a65726f00321801790000000000000440810100000000000004408901000000000000044091010000000000000440",
+      "value": {
+        "law_version": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "revision": "﻿zero\u00002",
+        "schema_version": 1,
+        "tendencies": [
+          {
+            "concept": {
+              "concept_id": "A3",
+              "registry_version": "A3",
+              "schema_version": 1
+            },
+            "direction": {
+              "achievement": 0.0,
+              "connection": 0.0,
+              "curiosity": 0.0,
+              "empathy": 0.0,
+              "schema_version": 1
+            },
+            "evidence_a": 0.0,
+            "evidence_absolute": 0.0,
+            "evidence_b": 0.0,
+            "flip_count": "0",
+            "group_count": "0",
+            "h_hat": 0.0,
+            "magnitude_sum": 0.0,
+            "magnitude_weight": 0.0,
+            "pi": 0.0,
+            "predicate": [],
+            "schema_version": 1,
+            "tendency_id": "A3",
+            "typical_magnitude": 0.0
+          },
+          {
+            "attachment_prior": 2.5,
+            "concept": {
+              "concept_id": "﻿zero\u00002",
+              "registry_version": "﻿zero\u00002",
+              "schema_version": 1
+            },
+            "direction": {
+              "achievement": 1.0,
+              "connection": 1.0,
+              "curiosity": 1.0,
+              "empathy": 1.0,
+              "schema_version": 1
+            },
+            "evidence_a": 2.5,
+            "evidence_absolute": 2.5,
+            "evidence_b": 2.5,
+            "flip_count": "9007199254740993",
+            "group_count": "9007199254740993",
+            "h_hat": 1.0,
+            "last_sign": 1,
+            "magnitude_sum": 2.5,
+            "magnitude_weight": 2.5,
+            "pi": 1.0,
+            "predicate": [
+              {
+                "en": "﻿zero\u00002",
+                "ja": "﻿zero\u00002",
+                "schema_version": 1,
+                "zh": "﻿zero\u00002"
+              },
+              {
+                "en": "A3",
+                "ja": "A3",
+                "schema_version": 1,
+                "zh": "A3"
+              }
+            ],
+            "relation": {
+              "kind": 1,
+              "person_id": "﻿zero\u00002",
+              "schema_version": 1
+            },
+            "schema_version": 1,
+            "tendency_id": "﻿zero\u00002",
+            "typical_magnitude": 2.5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.5,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "projection": 0.25,
+        "actual_retention": 0.75
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330100000074000000000000e03f000000000000f03f000000000000f03f0000000000000000000000000000e83f01000000000000d03f000000000000e83f",
+      "digest": "cbd9b0291ba30ceaa5772d336bf435bd7e8bbf9e963352b8a637bc76d695b15c",
+      "ok": true,
+      "protobuf": "080112017419000000000000e03f21000000000000f03f29000000000000f03f300039000000000000e83f41000000000000d03f49000000000000e83f",
+      "value": {
+        "actual_retention": 0.75,
+        "intensity": 1.0,
+        "mu": 0.75,
+        "ordinal": "0",
+        "projection": 0.25,
+        "schema_version": 1,
+        "share": 1.0,
+        "support": 0.5,
+        "tendency_id": "t"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.0,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "actual_retention": 1.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d763301000000740000000000000000000000000000f03f000000000000f03f0000000000000000000000000000e83f00000000000000f03f",
+      "digest": "bdcaa4f1e1c0d50118d7a2dbb67246ec4dbda23296ca6e002fcb72622554914f",
+      "ok": true,
+      "protobuf": "080112017419000000000000000021000000000000f03f29000000000000f03f300039000000000000e83f49000000000000f03f",
+      "value": {
+        "actual_retention": 1.0,
+        "intensity": 1.0,
+        "mu": 0.75,
+        "ordinal": "0",
+        "schema_version": 1,
+        "share": 1.0,
+        "support": 0.0,
+        "tendency_id": "t"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.5,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "projection": 0.25,
+        "actual_retention": 5e-324
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330100000074000000000000e03f000000000000f03f000000000000f03f0000000000000000000000000000e83f01000000000000d03f0100000000000000",
+      "digest": "ff310a339c86c598ba38276e7cc1da73e46b848dcefa86de23e6610baa738c3e",
+      "ok": true,
+      "protobuf": "080112017419000000000000e03f21000000000000f03f29000000000000f03f300039000000000000e83f41000000000000d03f490100000000000000",
+      "value": {
+        "actual_retention": 5e-324,
+        "intensity": 1.0,
+        "mu": 0.75,
+        "ordinal": "0",
+        "projection": 0.25,
+        "schema_version": 1,
+        "share": 1.0,
+        "support": 0.5,
+        "tendency_id": "t"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "c",
+          "registry_version": "v"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": -1.0,
+        "evidence_b": 5.0,
+        "evidence_absolute": 1.0,
+        "h_hat": 0.1,
+        "group_count": "2",
+        "flip_count": "0",
+        "last_sign": 1,
+        "pi": -0.2,
+        "typical_magnitude": 0.25,
+        "magnitude_sum": 0.5,
+        "magnitude_weight": 2.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d76330100000074260000004e43563101000000100000006563686f2e636f6e636570742d72656601000000630100000076000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000000000000000000000000000000000000000000000000000f0bf00000000000014409a9999999999b93f0200000000000000000000000000000001010000009a9999999999c9bf000000000000d03f0000000000000000e03f0000000000000040000000000000f03f",
+      "digest": "b6488bab614f10a0c4e0e4d29dc4b01ab16a9fb6b5ba0f39562243413dd2e80c",
+      "ok": true,
+      "protobuf": "08011201741a0808011201631a01762a26080111000000000000f03f19000000000000000021000000000000000029000000000000000031000000000000f0bf390000000000001440419a9999999999b93f480250005801619a9999999999c9bf69000000000000d03f8101000000000000e03f890100000000000000409101000000000000f03f",
+      "value": {
+        "concept": {
+          "concept_id": "c",
+          "registry_version": "v",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": 0.0,
+          "connection": 1.0,
+          "curiosity": 0.0,
+          "empathy": 0.0,
+          "schema_version": 1
+        },
+        "evidence_a": -1.0,
+        "evidence_absolute": 1.0,
+        "evidence_b": 5.0,
+        "flip_count": "0",
+        "group_count": "2",
+        "h_hat": 0.1,
+        "last_sign": 1,
+        "magnitude_sum": 0.5,
+        "magnitude_weight": 2.0,
+        "pi": -0.2,
+        "predicate": [],
+        "schema_version": 1,
+        "tendency_id": "t",
+        "typical_magnitude": 0.25
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "c",
+          "registry_version": "v"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 1.1102230246251565e-16,
+        "evidence_b": 4.0,
+        "evidence_absolute": 1.1102230246251565e-16,
+        "h_hat": 0.1,
+        "group_count": "2",
+        "flip_count": "0",
+        "last_sign": 1,
+        "pi": 2.7755575615628914e-17,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 5e-324,
+        "magnitude_weight": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d76330100000074260000004e43563101000000100000006563686f2e636f6e636570742d72656601000000630100000076000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000000000000000000000000000000000000000000000000000a03c00000000000010409a9999999999b93f020000000000000000000000000000000101000000000000000000803c0000000000000000000001000000000000000000000000000000000000000000a03c",
+      "digest": "3d728936b0212094bfd9c861a6ae135f4915548ee3694ad43c323136996f43b6",
+      "ok": true,
+      "protobuf": "08011201741a0808011201631a01762a26080111000000000000f03f19000000000000000021000000000000000029000000000000000031000000000000a03c390000000000001040419a9999999999b93f48025000580161000000000000803c69000000000000000081010100000000000000890100000000000000009101000000000000a03c",
+      "value": {
+        "concept": {
+          "concept_id": "c",
+          "registry_version": "v",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": 0.0,
+          "connection": 1.0,
+          "curiosity": 0.0,
+          "empathy": 0.0,
+          "schema_version": 1
+        },
+        "evidence_a": 1.1102230246251565e-16,
+        "evidence_absolute": 1.1102230246251565e-16,
+        "evidence_b": 4.0,
+        "flip_count": "0",
+        "group_count": "2",
+        "h_hat": 0.1,
+        "last_sign": 1,
+        "magnitude_sum": 5e-324,
+        "magnitude_weight": 0.0,
+        "pi": 2.7755575615628914e-17,
+        "predicate": [],
+        "schema_version": 1,
+        "tendency_id": "t",
+        "typical_magnitude": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "support": 0.5,
+            "intensity": 1.0,
+            "share": 1.0,
+            "ordinal": "0",
+            "mu": 0.75,
+            "projection": 0.25,
+            "actual_retention": 0.75
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e65766964656e63652d67726f75702d7633020000004130000000000200000041300000000000000000000000000000000001000000650000004e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330100000074000000000000e03f000000000000f03f000000000000f03f0000000000000000000000000000e83f01000000000000d03f000000000000e83f",
+      "digest": "81eefb66cb61fc0a8b57fa95f6138f12d2106d3003e8be35f41656572eb883d9",
+      "ok": true,
+      "protobuf": "080112024130220241302900000000000000003100000000000000004a3d080112017419000000000000e03f21000000000000f03f29000000000000f03f300039000000000000e83f41000000000000d03f49000000000000e83f",
+      "value": {
+        "allocations": [
+          {
+            "actual_retention": 0.75,
+            "intensity": 1.0,
+            "mu": 0.75,
+            "ordinal": "0",
+            "projection": 0.25,
+            "schema_version": 1,
+            "share": 1.0,
+            "support": 0.5,
+            "tendency_id": "t"
+          }
+        ],
+        "credibility": 0.0,
+        "group_id": "A0",
+        "members": [],
+        "schema_version": 1,
+        "source_key": "A0",
+        "verifiability": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": [
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "c",
+              "registry_version": "v"
+            },
+            "predicate": [],
+            "direction": {
+              "schema_version": 1,
+              "connection": 1.0,
+              "empathy": 0.0,
+              "curiosity": 0.0,
+              "achievement": 0.0
+            },
+            "evidence_a": -1.0,
+            "evidence_b": 5.0,
+            "evidence_absolute": 1.0,
+            "h_hat": 0.1,
+            "group_count": "2",
+            "flip_count": "0",
+            "last_sign": 1,
+            "pi": -0.2,
+            "typical_magnitude": 0.25,
+            "magnitude_sum": 0.5,
+            "magnitude_weight": 2.0
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e722d736e617073686f742d7633020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000000000000000000000000000000000000000000000000000000000000000000020000004130020000004130000000000000000001000000e80000004e43563101000000100000006563686f2e74656e64656e63792d76330100000074260000004e43563101000000100000006563686f2e636f6e636570742d72656601000000630100000076000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000000000000000000000000000000000000000000000000000f0bf00000000000014409a9999999999b93f0200000000000000000000000000000001010000009a9999999999c9bf000000000000d03f0000000000000000e03f0000000000000040000000000000f03f",
+      "digest": "272fca1469736f6bd6bd6f4390f28a5aa56fa749a3b8c7db840d9752c0bc3012",
+      "ok": true,
+      "protobuf": "0801120241301a2e0801122000000000000000000000000000000000000000000000000000000000000000001a02413022024130280032880108011201741a0808011201631a01762a26080111000000000000f03f19000000000000000021000000000000000029000000000000000031000000000000f0bf390000000000001440419a9999999999b93f480250005801619a9999999999c9bf69000000000000d03f8101000000000000e03f890100000000000000409101000000000000f03f",
+      "value": {
+        "law_version": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "revision": "A0",
+        "schema_version": 1,
+        "tendencies": [
+          {
+            "concept": {
+              "concept_id": "c",
+              "registry_version": "v",
+              "schema_version": 1
+            },
+            "direction": {
+              "achievement": 0.0,
+              "connection": 1.0,
+              "curiosity": 0.0,
+              "empathy": 0.0,
+              "schema_version": 1
+            },
+            "evidence_a": -1.0,
+            "evidence_absolute": 1.0,
+            "evidence_b": 5.0,
+            "flip_count": "0",
+            "group_count": "2",
+            "h_hat": 0.1,
+            "last_sign": 1,
+            "magnitude_sum": 0.5,
+            "magnitude_weight": 2.0,
+            "pi": -0.2,
+            "predicate": [],
+            "schema_version": 1,
+            "tendency_id": "t",
+            "typical_magnitude": 0.25
+          }
+        ]
+      }
+    }
   }
 ]

@@ -119,6 +119,32 @@ fn q_boundaries_and_current_support_do_not_redefine_historical_q() {
 }
 
 #[test]
+fn json_roundtrip_preserves_adjacent_q_v_values() {
+    let below_one = f64::from_bits(1.0f64.to_bits() - 1);
+    for value in [f64::from_bits(1), below_one, 1.0] {
+        let json = serde_json::to_string(&allocation(value, 0)).unwrap();
+        let decoded: EvidenceAllocationV3 = serde_json::from_str(&json).unwrap();
+        assert_eq!(decoded.actual_retention.to_bits(), value.to_bits());
+        roundtrip(&decoded);
+    }
+    for signed in [-1.0, 1.0] {
+        let original = tendency(json!({"evidence_a":signed,"evidence_absolute":below_one}));
+        let json = serde_json::to_string(&original).unwrap();
+        let decoded: TendencyV3 = serde_json::from_str(&json).unwrap();
+        assert_eq!(decoded.evidence_absolute.to_bits(), below_one.to_bits());
+        assert!(semantic::check_tendency_v3(&decoded).is_err());
+        assert!(decoded.canonical_bytes(limits()).is_err());
+        let value: Value = serde_json::from_str(&json).unwrap();
+        assert!(
+            Schema::builtin()
+                .unwrap()
+                .normalize("TendencyV3", &value, limits(), 0)
+                .is_err()
+        );
+    }
+}
+
+#[test]
 fn v_semantics_reject_both_signs_and_nonfinite_native_values() {
     let p = parameters(4.0);
     let t = tendency(json!({}));
