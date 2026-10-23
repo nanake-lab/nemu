@@ -68,3 +68,11 @@
 
 
 补充检查：合并 main 后的 `pnpm lint`、`pnpm typecheck`、`pnpm test`（443/443）、Python pytest（21/21）、新增脚本 mypy strict / ruff 均通过，证据在 `skin-audit/`。pnpm 运行前的依赖自动校验提示本地 hoist 元数据警告，但随后实际 eslint/tsc/vitest 命令退出 0；没有修改锁文件或跳过测试。Python 初次用检查环境缺 jsonschema 的失败保留在 pytest.log，复用本机已有管线依赖后通过，未联网安装。
+
+
+## 2026-10-23 用户决定与 Blender 预检查
+用户原话：「原版就挺好的，问题看来不出在这里，出在模型上，先继续推进」。按本轮上下文，保留肤色页原 standard 对照，不采用皮肤 A/B/C，不执行 VRoid 或 texture-fix 底色修改。决定保存在 `content/_candidates/P2-06/user-selection.json`；该决定不替代 8 个自定义表情、12 种 emo 组合及整体 MToon 风格的选择与签字。模型本体观感留在 P2-02/N1 后续评审，未自行修改源文件。
+
+继续完成了 Blender 5.2.2 / VRM Add-on 4.10.2 的技术预检查：通过正式 `asset:step` 串行导入现有 standard 预览、应用 expressions 片段、应用 materials 片段，保存后重新打开核验。8 个自定义表情全部 morph/color/transform 绑定及覆盖规则、10 组预设规则、9 个实际被场景使用的 MToon 材质值均匹配配置；源模型 SHA256 不变。未运行 tail/springs 步骤，未写任何正式内容。
+
+证据为 `pipeline-preflight/` 的原始步骤日志、resolved-build.json、输入哈希、readback.json / log。此次标准材质及 emo A 仅作未定稿技术夹具，不作为审美选择。未进行完整 Blender 导出或据此宣称整卡验收：最新 main 尚未包含 P2-05 PR #48 的 ADR 0015 导出器修正。PR #59 上一代码提交的 Ubuntu CI 已通过，草稿 Windows 检查按规则跳过。
