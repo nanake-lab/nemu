@@ -1,6 +1,53 @@
 use super::*;
 use std::{path::PathBuf, time::Instant};
 
+#[test]
+#[ignore = "explicit diagnostic; immutable descriptor only, no stores"]
+fn profile_builtin_codec_descriptor_construction() {
+    use core_types::contract::Schema;
+    let value = UserText {
+        schema_version: 1,
+        text: "synthetic descriptor profile".into(),
+    };
+    let json = serde_json::to_value(&value).unwrap();
+    let schema = Schema::builtin().unwrap();
+    let expected = schema
+        .encode_canonical(UserText::NAME, &json, crate::query::LIMITS)
+        .unwrap();
+    let start = Instant::now();
+    for _ in 0..100 {
+        assert_eq!(
+            Schema::builtin()
+                .unwrap()
+                .encode_canonical(UserText::NAME, &json, crate::query::LIMITS)
+                .unwrap(),
+            expected
+        );
+    }
+    let fresh_ms = start.elapsed().as_secs_f64() * 1000.0;
+    let start = Instant::now();
+    for _ in 0..100 {
+        assert_eq!(
+            schema
+                .encode_canonical(UserText::NAME, &json, crate::query::LIMITS)
+                .unwrap(),
+            expected
+        );
+    }
+    let reused_ms = start.elapsed().as_secs_f64() * 1000.0;
+    let start = Instant::now();
+    for _ in 0..100 {
+        assert_eq!(
+            value.canonical_bytes(crate::query::LIMITS).unwrap(),
+            expected
+        );
+    }
+    let wire_codec_ms = start.elapsed().as_secs_f64() * 1000.0;
+    println!(
+        "W19_DESCRIPTOR_PROFILE={{\"rounds\":100,\"fresh_descriptor_ms\":{fresh_ms},\"reused_descriptor_ms\":{reused_ms},\"wire_codec_ms\":{wire_codec_ms}}}"
+    );
+}
+
 struct TimedModel {
     inner: CpuEmbedder,
     query_ms: f64,
@@ -27,12 +74,7 @@ impl Embedder for TimedModel {
 fn real_cpu_multilingual_restart_recall_and_100_retractions() {
     let directory = PathBuf::from(std::env::var_os("NEMU_W19_MODEL").expect("explicit model path"));
     let start = Instant::now();
-    let model = if std::env::var("NEMU_W19_WEIGHT").as_deref() == Ok("qint8") {
-        CpuEmbedder::load_quantized(&directory)
-    } else {
-        CpuEmbedder::load(&directory)
-    }
-    .unwrap();
+    let model = CpuEmbedder::load(&directory).unwrap();
     let mut model = TimedModel {
         inner: model,
         query_ms: 0.0,
@@ -92,7 +134,7 @@ fn real_cpu_multilingual_restart_recall_and_100_retractions() {
         assert_eq!(
             vector_rank,
             Some(1),
-            "a constant embedding/retriever must fail the multilingual positive controls"
+            "query={text}, expected={expected}; a constant embedding/retriever must fail the multilingual positive controls"
         );
         assert_eq!(
             rank,

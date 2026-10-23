@@ -22,7 +22,7 @@
 
 ## Pinned CPU model
 
-See models/manifest.json and ADR 0020. `cpu-embedding` uses offline, hash-verified official intfloat/multilingual-e5-small, revision 614241f622f53c4eeff9890bdc4f31cfecc418b3, MIT, 384 dimensions, FP32 ONNX, masked mean/L2 pooling, query:/passage: prefixes, 512 tokens and CPU 4 threads. No CUDA/DirectML feature is enabled, no runtime model download or Python subprocess exists. Optional feature compilation fetches ORT CPU build artifacts, so set ORT_CACHE_DIR as well as CARGO_HOME/CARGO_TARGET_DIR before building.
+See models/manifest.json and ADR 0020. `cpu-embedding` uses offline, hash-verified official intfloat/multilingual-e5-small, revision 614241f622f53c4eeff9890bdc4f31cfecc418b3, MIT, 384 dimensions, masked mean/L2 pooling, query:/passage: prefixes, 512 tokens and CPU 4 threads. `CpuEmbedder::load` selects FP32. The manifest retains a rejected official quantized candidate's provenance and SHA-256; it failed the fixed positive controls, has no runtime loader and is skipped by the download script. No CUDA/DirectML feature is enabled, no runtime model download or Python subprocess exists. Optional feature compilation fetches ORT CPU build artifacts, so set ORT_CACHE_DIR as well as CARGO_HOME/CARGO_TARGET_DIR before building.
 
 ```powershell
 $env:CARGO_HOME='D:\Dev\cache\cargo'
@@ -37,7 +37,7 @@ cd core
 cargo test --workspace --locked -- --test-threads=1
 cargo clippy --workspace --all-targets --locked -- -D warnings
 cargo clippy -p fact-view --all-targets --features cpu-embedding --locked -- -D warnings
-cargo test -p fact-view --features cpu-embedding real_cpu_multilingual -- --ignored --nocapture --test-threads=1
+cargo test -p fact-view --release --features cpu-embedding real_cpu_multilingual --locked -- --ignored --nocapture --test-threads=1
 ```
 
 The explicit real-model test uses only a new TemporaryRoot EXPERIMENT store, restarts it, measures a small three-language recall skeleton and runs 100 vector-enabled withdrawal queries. Ordinary CI does not download model weights. The full multi-year/load/full-answer acceptance (completion criterion #15) remains P6-13; the small skeleton does not certify 90% full-answer accuracy or a 50 ms workload SLO.

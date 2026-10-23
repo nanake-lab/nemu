@@ -5,6 +5,7 @@ if($manifest.license -ne 'MIT') {throw 'Model license requires explicit user app
 if($IsWindows -and [IO.Path]::GetPathRoot([IO.Path]::GetFullPath($Destination)) -ne 'D:\') {throw 'P5-04 model files must be on D:'}
 New-Item -ItemType Directory -Force $Destination | Out-Null
 foreach($asset in $manifest.files) {
+ if($asset.status -eq 'rejected_candidate') {Write-Output "$($asset.path): rejected candidate, not downloaded"; continue}
  if($asset.path -ne [IO.Path]::GetFileName($asset.path)) {throw 'Invalid manifest filename'}
  if(-not $asset.source.StartsWith("https://huggingface.co/intfloat/multilingual-e5-small/resolve/$($manifest.revision)/")) {throw 'Non-official or unpinned model source'}
  $target=Join-Path $Destination $asset.path
