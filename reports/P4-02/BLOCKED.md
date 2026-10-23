@@ -72,4 +72,12 @@ origin/main 已合入，ASR/TTS 模型条目、脚本/依赖/导出均保留，p
 
 voice-sidecar 当前按普通进程启动，没有 TEMP/Medium IL 前置诊断；现有 worker Low IL launcher 仍只是环境标记占位，并不改变令牌。独立隔离 smoke 不是产品启动器隔离的证明。当前没有给出用户所要求的 TEMP 隔离失败可诊断保障；按用户指示不扩范围、不改产品代码，待用户决定是否由 P5-05 或另行授权处理。测试专用 D 临时目录修复已获授权，旧目录有效 WRITE_OWNER 缺失已确认；现有目录 ACL/持久环境/runner 不变，重跑结果另记。
 
-用户级 CARGO_TARGET_DIR 已按批准撤销，核验 HKCU 值名不存在；其余 8 项通用 D 盘缓存设置保留，PATH/Git 全局/其他系统或注册表改动审计为无。当前 Listener 的作业日志证明使用了旧 P4-02 target，判断已继承；需用户在当前任务完成后从刷新环境的终端重启，代理未操作 runner。串行 core-store 31 项通过，但 rustdoc E0463 仍待独立进程级 target 验证，旧失败保留；正在运行的其他 Cargo 进程未中止。详见 REPORT.md 当前状态与持久设置审计。
+用户级 CARGO_TARGET_DIR 已按批准撤销，核验 HKCU 值名不存在；其余 8 项通用 D 盘缓存设置保留，PATH/Git 全局/其他系统或上述环境项以外的注册表改动审计为无。当前 Listener 的作业日志证明使用了旧 P4-02 target，判断已继承；需用户在当前任务完成后从刷新环境的终端重启，代理未操作 runner。串行 core-store 31 项通过但末尾 rustdoc E0463 的旧失败保留；等已有负载自然结束后，仅进程级独立 D target 的 2 项 rustdoc 已通过，旧缓存保留。详见 REPORT.md 当前状态与持久设置审计。
+
+## 2026-10-24 本轮 CPU/环境检查结果
+
+已同步 main 0b5412e（P2-05 #48），保留双方根脚本；TTS/ASR、模型锁和依赖锁未变。最新合并后 Node 546 项、契约 353 项、P2-05 指标 4 项、四项目 Python（sidecar 50 过/1 GPU 跳过）、桌面 e2e 4 过/1 既有 P4-01 本地测量跳过、18 场景 0 像素差均通过。专用测试 TEMP 隔离重跑通过，原 D 共享 TEMP 与默认 C TEMP 的 SDDL 前后未变；最新 main 的 Windows CI 也成功。上述检查没有修改断言、阈值、基准、产品 TEMP/隔离逻辑或 runner。
+
+修复采样器后，真实 WebSocket 的 CPU 替身诊断 1,000 请求/47.703 秒：RSS 末尾 +14.938 MiB、额外 GC 后 +3.051 MiB；Python 堆增量从 17,574,238 B 降至 868,257 B，任务数 9/9/8，未发现不可回收 GC 对象。额外 GC 仅用于诊断，不作为压力验收或产品改动。此结果不能证明真实 Qwen 合成长时稳定；新 sampler 下的真实 4 分钟复测、正式 30 分钟/必要时两小时仍未做，本轮未运行 GPU。
+
+已完成的 User Cargo 撤销、8 项缓存设置处置和其他持久修改审计写入 REPORT.md 当前状态；使用独立 target 的 rustdoc 补测成功，不抹去原整条命令失败。ed1ca19 的 Ubuntu CI run 39986276937 已全部 SUCCESS，Windows 因 draft 跳过。产品隔离诊断缺口仍按用户要求只报告，未扩范围修复。全部原始数据保留。PR #45 继续 draft / needs-user；下一步等用户安排两个变体短测约 20–30 分钟安静窗口，正式长测另约，阈值不变。

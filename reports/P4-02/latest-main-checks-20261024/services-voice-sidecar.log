@@ -1,0 +1,36 @@
+Resolved 124 packages in 4ms
+Checked 35 packages in 80ms
+All checks passed!
+Success: no issues found in 24 source files
+Success: no issues found in 24 source files
+============================= test session starts =============================
+platform win32 -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0
+rootdir: D:\Dev\nemu-wt\P4-02\services\voice-sidecar
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.15.1
+collected 51 items
+
+tests\test_benchmark_rss.py ....                                         [  7%]
+tests\test_decode_worker.py ............                                 [ 31%]
+tests\test_gpu.py s                                                      [ 33%]
+tests\test_gpu_common.py ...                                             [ 39%]
+tests\test_models.py ..                                                  [ 43%]
+tests\test_pressure.py ..                                                [ 47%]
+tests\test_qwen_adapter.py .......                                       [ 60%]
+tests\test_qwen_import.py ..                                             [ 64%]
+tests\test_scaffold.py .                                                 [ 66%]
+tests\test_service.py ................                                   [ 98%]
+tests\test_trace_writer.py .                                             [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\starlette\testclient.py:37
+  D:\Dev\nemu-wt\P4-02\services\voice-sidecar\.venv\Lib\site-packages\starlette\testclient.py:37: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================== 50 passed, 1 skipped, 1 warning in 1.75s ===================
+Building source distribution...
+Building wheel from source distribution...
+Successfully built dist\nemu_voice_sidecar-0.0.0.tar.gz
+Successfully built dist\nemu_voice_sidecar-0.0.0-py3-none-any.whl

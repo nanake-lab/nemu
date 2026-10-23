@@ -2,13 +2,15 @@
 
 ## 当前状态
 
-部分完成；PR #45 保持 draft / needs-user，不转审、不合并、不取下一卡。已合入 P4-01 #44 / P5-22 #57，并再次同步 main 541be9e（合并 b9128c3）；后一次仅文档、任务和报告变化，已核对生产源码、锁文件、P4-02 卡和必读规则完全相同。ASR/TTS 模型登记、依赖和导出均保留，pnpm 锁已按安装命令重新生成。
+部分完成；PR #45 保持 draft / needs-user，不转审、不合并、不取下一卡。已合入 P4-01 #44 / P5-22 #57，并同步到 main 0b5412e（含 P2-05 #48，合并 ed1ca19）。ASR/TTS 模型登记、依赖和导出均保留，P4-01 合并时的 pnpm 锁已按安装命令重新生成；P2-05 仅有根脚本追加冲突，保留双方，没有依赖或锁变更。源码与规则逐项核对见 merge-main-latest-check-20261024.json。
 
 主要的每请求原生内存增长已通过持久解码线程降至同步对照附近，另修复 RSS 采样器的 ctypes 类型缓存泄漏（1,000 次采样保留约 7.7 MB→2.4 KB）。真实 512 帧合成的最近 4 分钟仍增 12.191 MiB；新 sampler 下尚未重测。此前正式首包原方案失败、优化后长测显存超线/压力异常退出和原生栈溢出均保留，不能签发正式验收通过。详见 [BLOCKED.md](BLOCKED.md)。
 
-已按用户批准撤销此前迁移写入的用户级 CARGO_TARGET_DIR：2026-10-23 15:53 UTC 核验 HKCU\\Environment 中该值不存在；新测试仅在进程内指定独立 D 盘 target，旧缓存不删除。既有进程仍持有旧环境；本次撤销未终止既有进程或操作 runner。当前 Runner.Listener PID 30344 实际启动于本机 22:49:41；其作业日志确认使用了旧 P4-02 target，判断已继承，应在当前任务结束后由用户从刷新环境的终端重启 runner。若沿用旧终端，启动前需先在该终端清除进程级 CARGO_TARGET_DIR。撤销原件与核验见 cargo-user-revert-20261023.json、cargo-user-revert-verify-20261023.json；其他持久设置审计见文末。
+已按用户批准撤销此前迁移写入的用户级 CARGO_TARGET_DIR：2026-10-23 15:53 UTC 核验 HKCU\\Environment 中该值不存在，16:27 UTC 再次核验仍不存在。等既有负载自然结束后，仅在测试进程内使用 D:\Dev\cache\p4-02\cargo-private-20261023，原 rustdoc 失败部分 2 项通过；core/target 本地 junction 已改指新目录，旧缓存保留。当前工具父进程和 Runner.Listener PID 30344（本机 22:49:41 启动）仍持旧环境，runner 作业实际使用了旧 P4-02 target，判断已继承。用户应在当前任务结束后从刷新环境的终端重启 runner；若沿用旧终端，启动前先清除该终端的进程级 CARGO_TARGET_DIR。本次撤销与验证没有中止既有进程或操作 runner。其余 8 项通用 D 盘缓存设置保留，其他持久设置改动审计为无；完整表及证据边界见文末。
 
-代码提交 4da6152 的 Ubuntu CI 已通过。本机 Node 546 项、契约 353 项、四项目 Python 检查、Rust workspace 85 项、三语言各 10,766 契约用例、.NET、桌面 e2e（4 过/1 明确跳过）、18 场景视觉回归已通过。隔离 smoke 初次因 D 临时目录缺 WRITE_OWNER 失败，用户批准专用测试 TEMP 后的重跑在等待其他负载结束；串行 core-store 31 项通过，但随后 rustdoc E0463 失败，疑似共享 target 干扰，原失败保留，待独立 target 验证。产品 Low IL launcher 仍为范围外占位，TEMP 隔离失败前置诊断未实现；按用户要求只报告，未改产品代码。
+本机最新 main 合并后：Node 546 项、契约 353 项、四项目 Python 检查（sidecar 50 过/1 GPU 跳过）、P2-05 指标 4 项、桌面 e2e（4 过/1 明确跳过）、18 场景视觉回归均通过。此前完整检查中的 Rust workspace 85 项、三语言各 10,766 契约用例和 .NET 通过，相关源码在后两次 main 合并中未变。隔离 smoke 初次因 D 临时目录缺 WRITE_OWNER 失败，专用测试 TEMP 重跑通过且原有目录 ACL 未变；串行 core-store 31 项通过但末尾 rustdoc E0463 失败，独立 target 的 2 项 rustdoc 重跑通过，原整条命令失败仍保留。ed1ca19 的 Ubuntu CI 全部通过（run 39986276937，16:41:43 UTC 结束），Windows 因 draft 跳过；随后仅报告/证据提交不改变受测代码。产品 Low IL launcher 仍为范围外占位，TEMP 隔离失败前置诊断未实现；按用户要求只报告，未改产品代码。
+
+CPU 真实 WebSocket 诊断完成 1,000 请求/47.703 秒，RSS 末尾较初始 +14.938 MiB，额外 GC 后 +3.051 MiB；Python 堆增量由 17,574,238 B 降为 868,257 B，任务数 9→9→8。大部分为可回收对象，不能据此判定真实模型长期稳定。本轮没有运行 GPU；下一步先约 20–30 分钟安静窗口，在新采样器下串行重测两变体的真实 4 分钟合成，再安排正式 30 分钟/必要时两小时验收。
 
 ## 交付物
 
@@ -327,7 +329,7 @@ PR #45 保持 draft + needs-user，不请求审查、不合并。主要线程相
 
 继续检查残余 RSS 时，确认 benchmark.rss 每次定义一个 ctypes Structure，并构造 POINTER(Structure)，会被 CPython 的进程级指针类型缓存保留。CPU 独立对照（不导入模型、不使用 GPU、1,000 次采样、末尾 GC）：修复前缓存 21→1,021 项，tracemalloc 当前保留 7,672,364 B；修复后缓存 21→21 项，保留 2,368 B。原件为 rss-reader-before/after-20261023.json。现在只绑定一次结构类型和 Windows API，每次仍读取当前 WorkingSetSize 并关闭进程句柄；新基准结果增加 rss_sampler 标识。没有新增依赖或修改阈值。这个采样器错误只能解释部分残余增长，不能据此把真实合成的剩余 RSS 判成稳定，也不追溯扣除旧数据的估计开销。
 
-修复后 Ruff、Windows/Linux 严格 mypy、pytest（50 passed / 1 GPU opt-in skip）通过；额外脚本的首条 mypy 命令误解析到已安装未标注类型的 wheel，原失败日志保留，随后将 src 纳入同次严格检查后通过（16 source files）。见 rss-sampler-checks-20261023.log、rss-sampler-scripts-mypy-20261023.log。合并后的 Node lint/typecheck、546 项测试、构建、353 项契约覆盖测试、transport、TTS schema 与 budget 已通过。完整 Rust/.NET/IDL/Windows 检查仍在执行，完成后补记；不将正在运行的检查写成通过。
+修复后 Ruff、Windows/Linux 严格 mypy、pytest（50 passed / 1 GPU opt-in skip）通过；额外脚本的首条 mypy 命令误解析到已安装未标注类型的 wheel，原失败日志保留，随后将 src 纳入同次严格检查后通过（16 source files）。见 rss-sampler-checks-20261023.log、rss-sampler-scripts-mypy-20261023.log。完整合并检查结果与两个首轮失败的重跑结果分列于下文，不覆盖原始失败。
 
 三个 worker 的旧 D 盘 .venv 原件已移存 D:\Dev\cache\p4-02\legacy-*-venv，入口 junction 指向已验证的 D 盘 Python 环境；core/target junction 指向本卡独立的 D 盘编译缓存，适配现有 conformance 脚本的路径。没有删除原始测量数据。PR #45 保持草稿与 needs-user；GPU 显存、正式压力、原栈溢出和真实合成残余 RSS 的既有阻塞均继续保留。
 
@@ -348,7 +350,7 @@ D:\Dev\cache\tmp BUILTIN\Administrators:(I)(F)
 
 当前进程是 Medium IL，旧目录归当前用户所有，但继承给该用户生效的是 Modify，而非 FullControl。用 `CreateFileW(OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS)` 只请求访问、不改权限的核对：旧 D 临时目录请求 WRITE_OWNER（0x80000）返回 WinError 5，而 WRITE_DAC（0x40000）和写数据成功；默认 `%LOCALAPPDATA%\Temp` 与新专用目录这三项均成功。设置 mandatory integrity label 的所需访问权是 WRITE_OWNER，见 [Microsoft SECURITY_INFORMATION](https://learn.microsoft.com/en-us/windows/win32/secauthz/security-information)。因此失败源于继承的 DACL 缺少有效 WRITE_OWNER，不是令牌已经降为 Low；“目录由当前用户所有”也不等于拥有所有访问权。
 
-默认 TEMP 与新目录的关键条件一致：当前用户所有、当前用户 FullControl、子目录继承该授权；两者完整 ACL 并非逐字相同，新目录仍保留 D 盘父目录的其他继承条目，未给其他主体新增授权。Low IL 写拒绝是否成立由原隔离测试验证，不以权限推断代替测试。详细 Owner、SDDL、icacls 与访问位结果见 temp-acl-diagnosis-20261023.log 和 temp-access-diagnosis-20261023.json；专用 TEMP 的原测试重跑结果随后补记。
+默认 TEMP 与新目录的关键条件一致：当前用户所有、当前用户 FullControl、子目录继承该授权；两者完整 ACL 并非逐字相同，新目录仍保留 D 盘父目录的其他继承条目，未给其他主体新增授权。Low IL 写拒绝是否成立由原隔离测试验证，不以权限推断代替测试。详细 Owner、SDDL、icacls 与访问位结果见 temp-acl-diagnosis-20261023.log 和 temp-access-diagnosis-20261023.json。原测试在专用 TEMP 下于 16:26 UTC 通过：Low token、Medium 目录拒写、降权前正对照均成功；既有 D 共享 TEMP 与默认 C TEMP 的 SDDL 前后完全一致，证据在 post-merge-rechecks-20261024/isolation-retest-20261023-run1/。
 
 **产品源码核对发现：** apps/desktop/src/supervisor/process-config.ts 的 voice-sidecar 是 isWorker=false，supervised-process.ts 使用普通 spawn；services/voice-sidecar/src/main.py 没有 TEMP/Medium IL 前置检查或对应诊断错误。它没有“低完整性启动失败后再回退普通进程”的分支，但当前也没有实现用户要求的 TEMP 隔离失败可诊断保障。另有范围外的现有 worker launcher 占位：low-integrity-launcher.ts 仅设置 NEMU_INTEGRITY_LEVEL=low/NEMU_SANDBOX_WORKER=1，随后普通 spawn，未设置 Windows 令牌、未验证隔离生效或为占位状态发出启动错误。独立 .NET isolation smoke 通过不能证明该产品启动器已实现隔离。按用户要求先报告，未修改这几处代码；未做产品坏 TEMP 故障注入，以上为源码核查结果，实际 Low IL 启动器仍由 P5-05 补齐。
 
@@ -372,8 +374,35 @@ D:\Dev\cache\tmp BUILTIN\Administrators:(I)(F)
 
 其他用户级/系统级设置、PATH 持久写入、Git 全局/系统配置、执行策略、上述环境项之外的注册表写入：**无（本卡已完成命令记录中未发现）**。上述 User 环境变量本身存于 HKCU\Environment，已计入审计，不把它们误称为“无注册表修改”。核对 9 项 Machine scope 均为空。第一次 SetEnvironmentVariable(null, User) 留下了空值；之后仅删除获准的 HKCU\Environment\CARGO_TARGET_DIR，15:53 UTC 确认值名不存在、User 值为 null。两步原始 JSON 都保留。
 
-本卡此前把专用 Cargo target 写到 User 的做法不合适，会使其他会话和 runner 继承本卡路径；已经撤销。此处纠正前文“本卡独立编译缓存”的描述：目录当时并非对其他会话隔离。串行 core-store 的 31 项在 1057.92 秒完成通过，但末尾 rustdoc 报 E0463；期间另一 Windows CI 和另一个 Cargo 会话使用该目标目录，存在缓存干扰嫌疑，尚不把它断言为唯一根因。原失败不得改写为通过。后续使用仅进程级的独立 target 验证失败部分，不删除旧缓存，不中止任何正在跑的进程。
+本卡此前把专用 Cargo target 写到 User 的做法不合适，会使其他会话和 runner 继承本卡路径；已经撤销。此处纠正前文“本卡独立编译缓存”的描述：目录当时并非对其他会话隔离。串行 core-store 的 31 项在 1057.92 秒完成通过，但末尾 rustdoc 报 E0463；期间另一 Windows CI 和另一个 Cargo 会话使用该目标目录，存在缓存干扰嫌疑，尚不把它断言为唯一根因。原失败不得改写为通过。等原有负载自然结束后，独立进程级 target 下的 2 项 rustdoc 于 16:26 UTC 通过，User 变量仍不存在、旧缓存仍在；没有删除旧缓存或中止其他进程。见 post-merge-rechecks-20261024/storage-doc-private-target-20261023.{json,log} 与 cargo-user-final-verification-20261024.json。
 
 **runner 继承判断与用户重启：** 当前 Listener PID 30344 实际启动时间是本机 2026-10-23 22:49:41（不是按记忆中的 17:01 推断）；晚于上述 11:10 本机时间的 User 设置。该 Listener 的 main Windows job 于 22:55 输出的 core-store 可执行文件确在 D:\Dev\cache\p4-02\cargo-target 下，工作流没有 --target-dir 参数，未发现本机 Cargo config target-dir 覆盖。可以确认作业使用了本卡路径，并据此判断 Listener 已继承它；未直接读取进程环境块。撤销 User 值不更新已运行 Listener 或旧终端的环境。应在当前任务结束后由用户从刷新环境的终端重启 runner；若复用旧终端，启动前先在该终端 `Remove-Item Env:CARGO_TARGET_DIR -ErrorAction SilentlyContinue`。本代理没有停止、重启或修改 runner。temp-environment-20261023.json 另核对 User TEMP/TMP 仍为原 C 盘默认路径，本卡仅在测试子进程中覆盖为 D。
 
 补充筛查至 700 条完成记录：电源计划、GPU 锁频/功率设置、防火墙/网络、执行策略、git-lfs 全局安装、包管理器持久 config 与直接 Registry API 写入，未发现额外实际变更；唯一候选是审计脚本自身的正则字面量，已人工排除。详见 persistent-settings-supplement-20261023.json。本轮文件系统权限变更仅为用户已批准的新专用 TEMP 当前用户 FullControl，另见上节；未更改已有目录 ACL。
+
+## 2026-10-24 本轮检查与 CPU 诊断收尾
+
+下表保留首轮检查的真实退出状态，并单独登记补测。最新 main 更新没有改变 core、worker、office、IDL/scaffold 源码，见 merge-main-followup-check-20261023.json 和 merge-main-latest-check-20261024.json；Node、四项目 Python 和桌面检查在 ed1ca19 上又跑了一轮。全部命令和原始起止时间在各目录的 results.json 中。
+
+| 检查 | 结果 | 证据 |
+| --- | --- | --- |
+| frozen pnpm install、lint、typecheck、workspace build | 最新合并后通过 | latest-main-checks-20261024/node.log |
+| pnpm test / test:contracts | 546 / 353 项通过；契约 lines/functions/statements 100%，branches 192/197 | 同上、coverage-summary.json |
+| transport / tts:schema / ci:budget / test:p205:metrics | 通过；新增 P2-05 指标 4 项通过 | 同上 |
+| 四项目 uv sync --locked、Ruff、mypy --strict（Windows/Linux）、pytest、uv build | 全通过；3 个 worker 各 1 项，sidecar 50 过/1 跳过 | latest-main-checks-20261024/{workers-*,services-voice-sidecar}.log |
+| Rust fmt / clippy -D warnings / workspace test | 通过，85 项、0 失败 | merge-main-checks-20261023/rust.log |
+| office .NET Release build | 通过 | merge-main-checks-20261023/office.log |
+| IDL 兼容、生成及三语言一致性 | 137 messages（42 superseded）、51 enums；445 官方 protoc 向量；Rust/Python/TS 各 10,766 用例通过 | merge-main-checks-20261023/idl.log |
+| Windows evidence/诊断单测、命名管道 transport | 通过 | merge-main-checks-20261023/windows-{unit,transport}.log |
+| 隔离 smoke | 首轮 exit=1（缺 WRITE_OWNER）；专用测试 TEMP 重跑 exit=0，provenance=0，现有两处 TEMP ACL 未变 | 原 windows-isolation.log；post-merge-rechecks-20261024/isolation-retest-20261023-run1/ |
+| core-store 串行完整命令 | 原 exit=1：31 runtime 项通过后 rustdoc E0463；失败保留 | merge-main-checks-20261023/storage-serial.log |
+| core-store rustdoc 独立 target 补测 | 2 项通过，exit=0；不是重写原完整命令的退出码 | post-merge-rechecks-20261024/storage-doc-private-target-20261023.{json,log} |
+| 桌面 e2e / visual / evidence Verify | 4 过/1 跳过；18 场景全部 0 diff pixels；Verify 20 文件通过 | latest-main-checks-20261024/nemu-evidence/ |
+
+GPU pytest 的跳过条件是未显式启用 NEMU_RUN_TTS_GPU_TESTS；本轮没有 GPU 窗口，没有下载模型。e2e 唯一跳过项是既有 P4-01 的 60 秒 live silent PCM CPU 测量，原注释为“Local quiet-window measurement only: pnpm measure:asr”，没有删除断言。shell 的 7 进程/0 重启、真实 utility ASR 链路和点击穿透用例通过。没有更新视觉基准。测试生成的 P0-02 覆盖 JSON 和 P4-01 stderr 已先复制到本卡证据，再按 HEAD 原始字节恢复；未夹带卡外修改。
+
+CPU 诊断走真实 FastAPI/WebSocket、64 个 PCM 块/请求，但引擎为明确的 CPU 测试替身，不加载 Qwen/载体/渲染。10 次预热、GC 后开始 tracer，连续 1,000 请求，50 个采样写入 JSONL；请求之间没有强制 GC。47.703 秒内 RSS 增加 14.9375 MiB，Python 当前堆增加 17,574,238 B，快照主要指向 WebSocket deflate 和 asyncio Proactor 缓冲；结束时另做 GC，RSS 相对初始剩 +3.0508 MiB、Python 当前堆剩 +868,257 B。任务数初/末/额外 GC 后是 9/9/8，uncollectable 为 0。多数增量可回收，但此短诊断不能证明真实合成不增长，也不能把额外 GC 后的值冒充正常压力端点。原始结果、脚本和 SHA-256 清单在 post-merge-rechecks-20261024/，未在产品或正式验收中新增强制 GC。
+
+原始首轮失败、原 GPU 数据、全部 D 盘源证据都保留。新证据目录的局部 .gitattributes 禁止文本换行归一化；85 个文件已核对原件与副本，其中 83 个 Git blob 字节直接一致，2 张截图的 LFS SHA-256/长度及还原字节一致，详见 evidence-byte-verification-20261024.json。代码 ed1ca19 的 Ubuntu [run 39986276937](https://github.com/nanake-lab/nemu/actions/runs/39986276937) 全部成功，原始 JSON/只读查询日志归档于 post-merge-rechecks-20261024/。runner 的最新 main 0b5412e Windows run [39983348868](https://github.com/nanake-lab/nemu/actions/runs/39983348868) 也已 SUCCESS；这是 runner 条件核对，不算 PR #45 自身的 Windows CI 通过。
+
+下一步仍是用户安排 GPU 安静窗口：先为两个变体各做真实 4 分钟短测（连加载约 20–30 分钟），使用修复后的 RSS 采样器、载体和渲染驻留；确认结果后再约正式 30 分钟及必要时两小时压力。新窗口开始前重新检查 Listener、Worker、Blender/其他负载，所有阈值和 1.7B 已有超线结论保留。本轮不请求审查、不转审、不合并。
