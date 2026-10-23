@@ -1,22 +1,13 @@
-# P5-22 当前阻塞：Windows CI runner 离线
+# P5-22 阻塞已解除
 
-日期：2026-10-23（Australia/Perth）。A1 代码修复及本机验收已完成；未合并。
+## 当前状态
 
-## 问题与实测
+**已解除（2026-10-23）。** 原 Windows runner 离线仅是当时的验收阻塞；最终 [Windows CI 39928691322](https://github.com/nanake-lab/nemu/actions/runs/39928691322) 已 success，[Ubuntu CI 39910674806](https://github.com/nanake-lab/nemu/actions/runs/39910674806) 亦 success，二者受测 head 均为 `a57c8b13e774a4470f0e1529c200d9fce6567323`。不能将此解除解释为 runner 当前在线状态的保证。
 
-- 修复提交：fc5f6dab4d53dd673b0906844ecb66e5d231eb0c。
-- 首次复核时 Windows run 39910022507 为 queued，目标为该修复提交；GitHub runner API 返回 DESKTOP-8LBF84O status=offline、busy=false。最终文档提交对应的排队作业以 PR 回复中的链接为准。
-- 用户明确回复「暂时无法启动」。执行者不操作浏览器/其他应用、不代用户启动 runner 或联系其他执行者。
-- 本机 26 项检查均有成功结果（含迁移后重建环境的 Python 复跑）；全仓 481 测试、契约 350 测试、三语言各 10,766 用例通过。旧向量每语言 1,816 查询，0 字节/摘要差异。完整证据见 REVISION-2.md。
-- 首次 Ubuntu run 39909990529 与 Windows 均针对上述修复提交；文档提交后 CI 的最终状态在 PR 交付回复记录。没有把 Windows 排队记作通过。
+A1 已经用户另开的 Codex 新会话[复审通过](https://github.com/nanake-lab/nemu/pull/57#issuecomment-6360980179)，按 2026-10-23 规则代替 Claude 审查要求。用户于 2026-10-23 合并 [PR #57](https://github.com/nanake-lab/nemu/pull/57)，合并提交 `b6eb8721b420b4aa168e0c27789f63307959f84c`；合并即批准契约、主动边界候选和 V2-51–54。本卡无待处理的合并阻塞。
 
-## 已做的处理
+## 原阻塞及证据
 
-已检查 runner 状态、保留现有排队作业并通知用户；PR 恢复草稿，保留 needs-user。未跳过检查、改阈值或自动合并。
+修复提交为 `fc5f6da`，其后的 `a57c8b1` 仅补报告。当时 runner API 返回 offline，早期 Windows 作业排队，用户暂时无法启动，因此未将排队记作通过。最终通过的 Windows run 是上述 39928691322，而不是早期排队/取消作业。
 
-## 可选后续
-
-1. 用户可以安排 runner 上线，让已有排队的 Windows 作业执行；全部 CI 与独立审查通过后，才转为可审查并等待用户批准合并。
-2. 目前先由用户转交独立 Codex 会话审查代码，PR 保持草稿；runner 可用后补齐 Windows CI。本轮按用户指示在 PR 回复「请审查」后停下。
-
-仅文档的后继提交不会改变 fc5f6da 的受测代码。继续任务时仍须重新 fetch；如 main 有更新则 merge 并按变化重验。
+原始验收、失败日志及修复记录均保留，见 REPORT.md、REVISION-2.md、revision-2-final-checks.json。本次只更新报告，不改代码、不删除或覆盖原始证据。
