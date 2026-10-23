@@ -17,7 +17,8 @@ from fractions import Fraction
 
 import check_law as legacy
 from law_v2_model import NumericFault, Tendency, bits, exact_shares
-from law_v2_events import event_checks
+from law_v2_event_checks import event_checks
+from law_v2_review_checks import review_checks
 from law_v2_properties import property_checks
 
 
@@ -191,7 +192,7 @@ def main() -> int:
     if args.suite == "legacy":
         return original_checks()
     results = [whole_steps(), counterexamples(), replay_and_shares(), numerical_edges(), event_checks(),
-               property_checks()]
+               property_checks(), review_checks()]
     for row in results:
         print(json.dumps(row, ensure_ascii=False, allow_nan=False))
     # This exit code is not a waiver of the separately recorded old LAW-6 failure,
@@ -199,9 +200,10 @@ def main() -> int:
     ok = (results[0]["violations"] == 0 and results[0]["faults"] == 0
           and results[1]["ok"] is True and results[3]["ok"] is True
           and results[2]["bitwise_mismatches"] == 0 and results[2]["exact_share_failures"] == 0
-          and results[5]["ok"] is True and all(results[4][key] == 0 for key in (
+          and results[5]["ok"] is True and results[6]["ok"] is True
+          and all(results[4][key] == 0 for key in (
               "append_violations", "marginal_violations", "withdrawal_violations",
-              "replay_mismatches", "conservation_failures", "faults")))
+              "replay_mismatches", "conservation_failures", "oracle_mismatches", "faults")))
     return int(not ok)
 
 

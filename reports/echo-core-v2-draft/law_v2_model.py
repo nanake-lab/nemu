@@ -24,6 +24,20 @@ def finite(value: float) -> float:
     return 0.0 if value == 0.0 else value
 
 
+def nonnegative_product(left: float, right: float, fault: str = "UnderflowEvidenceWeight") -> float:
+    """Preserve positive-factor information until incoming weight is checked.
+
+    A genuine zero is legal. Old-state forgetting and the separately rounded M/U
+    statistics have different underflow semantics and do not use this helper.
+    """
+    if finite(left) < 0 or finite(right) < 0:
+        raise NumericFault("InvalidEvidenceWeight")
+    result = finite(left * right)
+    if left > 0 and right > 0 and result == 0:
+        raise NumericFault(fault)
+    return result
+
+
 @dataclass
 class Tendency(LegacyTendency):
     """a = discounted signed evidence; b = discounted absolute evidence, excludes c.
@@ -87,11 +101,9 @@ class Tendency(LegacyTendency):
         c = finite(self.n0 + self.kappa)
         anchor = finite(self.prior + c)
         drift = finite(self.prior - finite(before * anchor))
-        signal = finite(w * abs(s))
+        signal = nonnegative_product(w, abs(s), "UnderflowEvidence")
         signed = finite(w * s)
         sign = (s > 0) - (s < 0)
-        if w > 0 and s != 0 and signal == 0:
-            raise NumericFault("UnderflowEvidence")
         q = rho
         if signal == 0:
             q = 1.0
