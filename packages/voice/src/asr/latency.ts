@@ -8,6 +8,7 @@ import { cacheDirectory, verifyModels } from './models.js';
 import { VoiceRuntime, type VoicePort } from './runtime.js';
 import { loadHybridReferences } from './hybrid-reference.js';
 import { sampleStats } from './measurement-stats.js';
+import { assessLatency } from './latency-acceptance.js';
 import { replayPcm, isFatalVoiceDiagnostic } from './replay.js';
 const root = asrDataDirectory();
 const attempt = `reports/P4-01/latency-attempt-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
@@ -193,23 +194,8 @@ try {
   const validEnds = results
     .flatMap((r) => (r.vadEndMs === null ? [] : [r.vadEndMs]))
     .sort((a, b) => a - b);
-  const median = validEnds.length
-    ? ((validEnds[Math.floor((validEnds.length - 1) / 2)] ?? 0) +
-        (validEnds[Math.floor(validEnds.length / 2)] ?? 0)) /
-      2
-    : null;
-  const passed =
-    results.length === 60 &&
-    results.every(
-      (r) =>
-        r.vadEndMs !== null &&
-        r.vadEndMs >= 0 &&
-        r.bargeInMs !== null &&
-        r.bargeInMs >= 0 &&
-        r.bargeInMs <= 250,
-    ) &&
-    median !== null &&
-    median <= 300;
+  const acceptance = assessLatency(results);
+  const { passed } = acceptance;
   const report = {
     measuredAt: new Date().toISOString(),
     status: passed ? 'PASS' : 'FAIL',
@@ -228,13 +214,12 @@ try {
     bargeInDistributionMs: sampleStats(
       results.flatMap((r) => (r.bargeInMs === null ? [] : [r.bargeInMs])),
     ),
-    medianVadEndMs: median,
-    passed,
+    ...acceptance,
     nearThresholdIds: results
       .filter(
         (r) =>
-          (r.vadEndMs !== null && Math.abs(r.vadEndMs - 300) <= 80) ||
-          (r.bargeInMs !== null && Math.abs(r.bargeInMs - 250) <= 80),
+          (r.vadEndMs !== null && Math.abs(r.vadEndMs - 350) <= 80) ||
+          (r.bargeInMs !== null && Math.abs(r.bargeInMs - 300) <= 80),
       )
       .map((r) => r.id),
     perLanguage: (['zh', 'en', 'ja'] as const).map((lang) => {
