@@ -1,4 +1,4 @@
-use crate::{Error, Grants, Result};
+use crate::{Error, Result};
 use subtle::ConstantTimeEq;
 use zeroize::Zeroizing;
 
@@ -9,7 +9,6 @@ pub struct TerminalToken(Zeroizing<[u8; 32]>);
 pub struct AuthenticatedSession {
     pub(crate) device: String,
     pub(crate) session: String,
-    pub(crate) grants: Grants,
 }
 impl TerminalToken {
     #[cfg(windows)]
@@ -34,14 +33,13 @@ impl TerminalToken {
         Ok(token)
     }
     /// The IDL adapter must obtain candidate from the approved authentication
-    /// message. Identity/grants come from trusted installation configuration,
+    /// message. Identity comes from trusted installation configuration,
     /// never fields claimed by an unauthenticated connection.
     pub fn authenticate(
         &self,
         candidate: &[u8],
         device: &str,
         session: &str,
-        grants: Grants,
     ) -> Result<AuthenticatedSession> {
         if candidate.len() != 32 || !bool::from(self.0.as_ref().ct_eq(candidate)) {
             return Err(Error::Rejected("terminal authentication failed"));
@@ -52,7 +50,6 @@ impl TerminalToken {
         Ok(AuthenticatedSession {
             device: device.into(),
             session: session.into(),
-            grants,
         })
     }
     #[cfg(test)]

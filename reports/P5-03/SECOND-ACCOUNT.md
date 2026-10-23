@@ -2,10 +2,10 @@
 
 本步骤尚未执行，不能算通过。无需创建账户或修改系统设置。
 
-用户准备：现有第二账户，能读取本任务的代码及运行 Rust 构建结果；两个账户同时登录或可切换，
+用户准备：现有第二账户，能读取并运行下列 D 盘探针可执行文件；两个账户同时登录或可切换，
 第一账户的探针保持运行。不要给第二账户授予管道权限或分享终端令牌。
 
-两边的 PowerShell 都先指定各自可写的 **D 盘**临时目录/缓存（下面可按用户安排调整为另一个 D 盘目录）：
+第一账户的 PowerShell 先指定 **D 盘**临时目录/缓存：
 
 ```powershell
 $env:CARGO_HOME = 'D:\Dev\cache\cargo'
@@ -24,10 +24,10 @@ cargo run -p gateway --example acl_probe --locked -- serve
 它只用新建临时库绑定真实 ACL 的管道，显示 `\\.\pipe\nemu-core-<SID>`，窗口为 120 秒。
 若已有核心占用管道，探针拒绝启动；不要停止或替换正在运行的用户核心来强行测试，改由用户安排窗口。
 
-第二账户在窗口内运行（替换第一账户显示的 SID）：
+第二账户在窗口内直接运行第一账户编译好的探针（替换第一账户显示的 SID），不需要安装依赖或写入缓存：
 
 ```powershell
-cargo run -p gateway --example acl_probe --locked -- deny <第一账户SID>
+& 'D:\Dev\cache\cargo-target\P5-03\debug\examples\acl_probe.exe' deny <第一账户SID>
 ```
 
 必须报告 `passed: different Windows SID received ERROR_ACCESS_DENIED (5)` 且退出码 0。

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "task": "P5-03",
+  "status": "not_run",
+  "scope": "full task acceptance is blocked; individual components are tested",
+  "components": {
+    "gateway_final": {
+      "status": "passed",
+      "tests": 14,
+      "log": "test-final.log"
+    },
+    "workspace_before_final_gateway_hardening": {
+      "status": "passed",
+      "tests": 98,
+      "log": "checks.log"
+    },
+    "workspace_fmt_clippy_final": {
+      "status": "passed",
+      "logs": [
+        "fmt-final.log",
+        "clippy-final.log"
+      ]
+    }
+  },
+  "acceptance": {
+    "SYS01": {
+      "status": "not_run",
+      "reason": "full gateway service requires requested IDL/store interfaces"
+    },
+    "second_windows_account": {
+      "status": "not_run",
+      "reason": "user must arrange existing second account"
+    },
+    "EXPERIMENT_pipe_and_ingress_components": {
+      "status": "passed",
+      "log": "test-final.log"
+    },
+    "P5-22_successor_integration": {
+      "status": "not_run",
+      "reason": "PR 57 remains open"
+    }
+  },
+  "storage": "core-store only; TemporaryRoot/tempfile under D-drive TEMP",
+  "credentials": "no token/ciphertext saved in repository or logs"
+}

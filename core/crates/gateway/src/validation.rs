@@ -5,7 +5,8 @@ use core_types::{
     generated::*,
 };
 
-/// Trusted, process-local T1 decisions supplied by the action gate. No serde.
+/// Current process-local T1 decisions supplied by the action gate for this
+/// request. Never retained in a connection or deserialized from a peer.
 #[derive(Clone, Copy, Default)]
 pub struct Grants {
     pub desktop_titles: bool,
@@ -123,6 +124,7 @@ pub struct ValidatedEvent {
 /// resolved provenance. This function does not allocate a source/root identity.
 pub fn validate_event(
     auth: &AuthenticatedSession,
+    grants: Grants,
     event: EventEnvelope,
     payload: TerminalPayload,
     provenance: SourceMetadata,
@@ -180,7 +182,7 @@ pub fn validate_event(
             )
         }
         TerminalPayload::Desktop(p) => {
-            if p.title.is_some() && !auth.grants.desktop_titles {
+            if p.title.is_some() && !grants.desktop_titles {
                 return Err(Error::Rejected("desktop title permission required"));
             }
             (
@@ -189,7 +191,7 @@ pub fn validate_event(
             )
         }
         TerminalPayload::Codex(_) => {
-            if !auth.grants.codex_sessions {
+            if !grants.codex_sessions {
                 return Err(Error::Rejected("Codex session permission required"));
             }
             (

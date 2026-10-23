@@ -32,9 +32,9 @@ fn fixture<T: WireMessage>() -> T {
         .unwrap();
     serde_json::from_value(value["request"]["value"].clone()).unwrap()
 }
-fn session(grants: Grants) -> AuthenticatedSession {
+fn session() -> AuthenticatedSession {
     TerminalToken::synthetic()
-        .authenticate(&[0xA5; 32], "device", "session", grants)
+        .authenticate(&[0xA5; 32], "device", "session")
         .unwrap()
 }
 fn config() -> core_store::StoreConfig {

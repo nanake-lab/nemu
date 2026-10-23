@@ -15,7 +15,8 @@ fn received_durable_survives_reopen_without_claiming_core_commit() {
     let payload = text();
     let (e, source) = event(&payload, 0);
     let validated = validate_event(
-        &session(Grants::default()),
+        &session(),
+        Grants::default(),
         e.clone(),
         payload,
         source,
@@ -55,8 +56,8 @@ fn queue_and_byte_limits_reject_before_success() {
         for n in 0..attempts {
             let payload = text();
             let (e, source) = event(&payload, n);
-            let value =
-                validate_event(&session(Grants::default()), e, payload, source, limits()).unwrap();
+            let value = validate_event(&session(), Grants::default(), e, payload, source, limits())
+                .unwrap();
             let result = ingest_validated(&mut store, value);
             if bytes || n == 1 {
                 assert!(result.is_err());
@@ -82,7 +83,8 @@ fn experiment_cannot_ingest_terminal_data() {
     .unwrap();
     let payload = text();
     let (e, source) = event(&payload, 0);
-    let value = validate_event(&session(Grants::default()), e, payload, source, limits()).unwrap();
+    let value =
+        validate_event(&session(), Grants::default(), e, payload, source, limits()).unwrap();
     assert!(matches!(
         ingest_validated(&mut store, value),
         Err(Error::Rejected(

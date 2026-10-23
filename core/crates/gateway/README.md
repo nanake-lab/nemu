@@ -13,9 +13,10 @@ This crate is **partial**, not a runnable authenticated gateway daemon. See
   `subtle`. Secrets are zeroizing and have no Debug/Serialize implementation.
   No raw authentication wire format is invented here. Installation configuration
   owns the credential path; tests create credentials only in temporary directories.
-- `AuthenticatedSession`: a process-local source/grant capability minted after
-  token verification. Device/session/grants must come from trusted installation
-  and permission configuration. It is not a deserializable peer claim.
+- `AuthenticatedSession`: a process-local source capability minted after token
+  verification. Device/session come from trusted installation configuration.
+  It is not a deserializable peer claim. Current T1 permission decisions are
+  supplied separately for each event, never cached in the authenticated session.
 - `validate_event`: validates nine CONTRACTS 4.2 generated payloads and their
   canonical reference/digest bindings, ULID stable key, source identity, event kind,
   provenance type/derivation, result action ID and T1 fields. The local enum is

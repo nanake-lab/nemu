@@ -16,7 +16,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().skip(1).collect();
     if args.first().is_some_and(|s| s == "deny") {
         let sid = args.get(1).ok_or("usage: acl_probe deny <owner SID>")?;
-        if !sid.starts_with("S-1-5-21-")
+        if !sid.starts_with("S-1-")
             || !sid
                 .bytes()
                 .all(|b| b.is_ascii_digit() || b == b'-' || b == b'S')

@@ -18,7 +18,8 @@
 - 令牌与认证能力无 Debug / Serialize；明文字节使用 zeroize；认证内容比较使用 subtle；错误输出脱敏。
 - 管道拒绝远程，DACL 只含当前 SID，保留 first-instance 句柄跨连接，避免重新绑定造成名称空窗。
 - 实测当前用户连接/重连、名称抢占拒绝、管道与令牌文件实际 DACL 精确匹配；**第二账户测试未执行**。
-- title / Codex 会话字段需要可信行动闸门的 T1 授权；会话身份和授权不能取自未认证的客户端字段。
+- title / Codex 会话字段需要可信行动闸门的 T1 授权；每条事件重新传入当前判定，会话不缓存授权。
+  同一会话撤权后的拒绝已有正反例。会话身份和授权不能取自未认证的客户端字段。
 - 完整认证线协议、实例绑定、来源/父引用/结果权限解析、拒绝审计仍需接入请求中的接口。
   不把局部 token 验证当作完整终端认证验收。没有执行任何外部行动或开放正式服务。
 
@@ -26,10 +27,10 @@
 
 | 命令 / 检查 | 当前结果 | 证据 |
 | --- | --- | --- |
-| `cargo test -p gateway --locked -- --test-threads=1` | 13 passed，0 failed | test-components.log |
+| `cargo test -p gateway --locked -- --test-threads=1`（最终源文件） | 14 passed，0 failed | test-final.log |
 | `cargo clippy -p gateway --all-targets --locked -- -D warnings`（含手工探针） | 通过 | clippy-components.log |
-| `cargo fmt --all -- --check`、工作区 clippy | 通过 | checks.log |
-| `cargo test --workspace --locked -- --test-threads=1` | 运行中，待补最终结果 | checks.log |
+| `cargo fmt --all -- --check`、`cargo clippy --workspace --all-targets --locked -- -D warnings`（最终源文件） | 通过 | fmt-final.log、clippy-final.log |
+| `cargo test --workspace --locked -- --test-threads=1` | 98 passed，0 failed；core-store 31 项用时 967.91 秒 | checks.log |
 | SYS01：端到端重投/冲突/乱序提交回执/未提交断电恢复 | not_run；组件持久接收/重连有证据，不能替代完整服务 | BLOCKED.md B3 |
 | 其他账户拒绝连接 | not_run；实际 ACL 是支持证据 | SECOND-ACCOUNT.md |
 | 实验谱系无终端管道/不能接收终端数据 | 组件测试通过；完整 runtime 以后复测 | test-components.log |
@@ -38,6 +39,11 @@
 初始失败日志全部保留：九类正例里用了空撤回夹具；重连最初错误地 drop/rebind 后立即开客户端，
 随后改为保留同一个 first-instance 句柄并先进入 accept；clippy 发现测试借用对象的无效 drop，已改用
 作用域结束借用。没有删断言、跳过测试或调整门槛。
+
+全量测试完成后，最后收紧了每事件权限参数、增加撤权用例和 DPAPI 异常输出检查；对改变的 gateway
+重跑最终 14 项，并重跑全工作区静态检查，未重复无改动的 16 分钟存储矩阵。手工第二账户探针经过
+all-targets 编译检查，未伪造第二账户运行结果。首次全量矩阵期间有一次短暂的 gateway clippy 编译重叠，
+因此不声称该次全量运行具有严格独占测量条件；本卡没有做性能/GPU测量，测试无失败。
 
 ## 规格对照
 
@@ -72,4 +78,5 @@ Rust 1.99.0 / Cargo 1.99.0，Windows 本机验证。
 
 ## 下一步
 保持草稿 / needs-user，等待上述阻塞消解；未申请最终审查，不取下一张卡、不合并。
-全部验收完成后再次 fetch / merge 最新 origin/main、重跑检查、转为可审查，再在 PR 写「请审查」并停下。
+本轮结束前再次 fetch / merge origin/main，仍为 876cff7，分支已包含最新主线；#57 仍为 OPEN。
+全部验收完成后再次同步并重跑检查，才转为可审查、提交审查请求并停下。

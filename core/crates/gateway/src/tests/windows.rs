@@ -18,7 +18,7 @@ fn dpapi_create_reload_reject_corruption_and_protect_actual_file_acl() {
     assert!(!encrypted.windows(32).any(|w| w == first.test_bytes()));
     let second = TerminalToken::load_protected(&path).unwrap();
     second
-        .authenticate(first.test_bytes(), "device", "session", Grants::default())
+        .authenticate(first.test_bytes(), "device", "session")
         .unwrap();
     assert!(TerminalToken::create_protected(&path).is_err());
     assert_eq!(encrypted, std::fs::read(&path).unwrap());
@@ -31,6 +31,11 @@ fn dpapi_create_reload_reject_corruption_and_protect_actual_file_acl() {
     drop(file);
     std::fs::write(&path, [0; 64]).unwrap();
     assert!(TerminalToken::load_protected(&path).is_err());
+    for size in [0, 31, 33] {
+        let encrypted = crate::windows::protect(&vec![0; size], false).unwrap();
+        std::fs::write(&path, encrypted.as_slice()).unwrap();
+        assert!(TerminalToken::load_protected(&path).is_err());
+    }
     std::fs::write(&path, vec![0; 16385]).unwrap();
     assert!(TerminalToken::load_protected(&path).is_err());
 }

@@ -190,6 +190,9 @@ pub(crate) fn protect(bytes: &[u8], decrypt: bool) -> Result<Zeroizing<Vec<u8>>>
     if success == 0 {
         return Err(last_error());
     }
+    if out.pbData.is_null() {
+        return Err(Error::Rejected("invalid DPAPI output"));
+    }
     let allocated = Local(out.pbData.cast());
     // SAFETY: successful DPAPI returns an allocation of cbData bytes.
     let buffer = unsafe { std::slice::from_raw_parts_mut(out.pbData, out.cbData as usize) };

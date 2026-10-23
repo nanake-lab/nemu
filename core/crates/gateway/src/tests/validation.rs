@@ -22,51 +22,110 @@ fn all_nine_terminal_payloads_validate_and_bind_generated_objects() {
         TerminalPayload::Body(body),
         TerminalPayload::Maintenance(fixture()),
     ];
-    let auth = session(Grants {
+    let auth = session();
+    let grants = Grants {
         desktop_titles: true,
         codex_sessions: true,
-    });
+    };
     for payload in payloads {
         let (e, source) = event(&payload, 0);
-        validate_event(&auth, e.clone(), payload.clone(), source.clone(), limits()).unwrap();
+        validate_event(
+            &auth,
+            grants,
+            e.clone(),
+            payload.clone(),
+            source.clone(),
+            limits(),
+        )
+        .unwrap();
         let mut wrong = e.clone();
         wrong.kind = EventKind::CONSEQUENCE;
-        assert!(validate_event(&auth, wrong, payload.clone(), source.clone(), limits()).is_err());
+        assert!(
+            validate_event(
+                &auth,
+                grants,
+                wrong,
+                payload.clone(),
+                source.clone(),
+                limits()
+            )
+            .is_err()
+        );
         let mut wrong = e;
         wrong.payload_ref.byte_length.0 += 1;
-        assert!(validate_event(&auth, wrong, payload, source, limits()).is_err());
+        assert!(validate_event(&auth, grants, wrong, payload, source, limits()).is_err());
     }
 }
 #[test]
 fn rejects_source_spoofing_payload_changes_and_privilege_claims() {
-    let auth = session(Grants::default());
+    let auth = session();
     let payload = text();
     let (e, source) = event(&payload, 0);
     let mut wrong = e.clone();
     wrong.device = "attacker".into();
-    assert!(validate_event(&auth, wrong, payload.clone(), source.clone(), limits()).is_err());
+    assert!(
+        validate_event(
+            &auth,
+            Grants::default(),
+            wrong,
+            payload.clone(),
+            source.clone(),
+            limits()
+        )
+        .is_err()
+    );
     let mut wrong = e.clone();
     wrong.session = "other".into();
-    assert!(validate_event(&auth, wrong, payload.clone(), source.clone(), limits()).is_err());
+    assert!(
+        validate_event(
+            &auth,
+            Grants::default(),
+            wrong,
+            payload.clone(),
+            source.clone(),
+            limits()
+        )
+        .is_err()
+    );
     let changed = TerminalPayload::Text(UserText {
         schema_version: 1,
         text: "different".into(),
     });
-    assert!(validate_event(&auth, e.clone(), changed, source.clone(), limits()).is_err());
+    assert!(
+        validate_event(
+            &auth,
+            Grants::default(),
+            e.clone(),
+            changed,
+            source.clone(),
+            limits()
+        )
+        .is_err()
+    );
     let mut wrong = e.clone();
     wrong.payload_digest.0[0] ^= 1;
-    assert!(validate_event(&auth, wrong, payload.clone(), source.clone(), limits()).is_err());
+    assert!(
+        validate_event(
+            &auth,
+            Grants::default(),
+            wrong,
+            payload.clone(),
+            source.clone(),
+            limits()
+        )
+        .is_err()
+    );
     let mut wrong = e;
     wrong.stable_source_key = "same-text-is-not-an-id".into();
-    assert!(validate_event(&auth, wrong, payload, source, limits()).is_err());
+    assert!(validate_event(&auth, Grants::default(), wrong, payload, source, limits()).is_err());
     let mut desktop: DesktopObservation = fixture();
     desktop.title = Some("synthetic-title".into());
     let payload = TerminalPayload::Desktop(desktop);
     let (e, source) = event(&payload, 0);
-    assert!(validate_event(&auth, e, payload, source, limits()).is_err());
+    assert!(validate_event(&auth, Grants::default(), e, payload, source, limits()).is_err());
     let payload = TerminalPayload::Codex(fixture());
     let (e, source) = event(&payload, 0);
-    assert!(validate_event(&auth, e, payload, source, limits()).is_err());
+    assert!(validate_event(&auth, Grants::default(), e, payload, source, limits()).is_err());
 }
 #[test]
 fn rejects_bad_fields_unknown_protobuf_and_nonfinite_values() {
@@ -96,28 +155,47 @@ fn rejects_bad_fields_unknown_protobuf_and_nonfinite_values() {
     body.status = ActionStatus::PLANNED;
     let payload = TerminalPayload::Body(body);
     let (e, source) = event(&payload, 0);
-    assert!(validate_event(&session(Grants::default()), e, payload, source, limits()).is_err());
+    assert!(validate_event(&session(), Grants::default(), e, payload, source, limits()).is_err());
     let payload = TerminalPayload::Retraction(UserRetraction {
         schema_version: 1,
         target_refs: vec![],
         note: None,
     });
     let (e, source) = event(&payload, 0);
-    assert!(validate_event(&session(Grants::default()), e, payload, source, limits()).is_err());
+    assert!(validate_event(&session(), Grants::default(), e, payload, source, limits()).is_err());
 }
 #[test]
 fn authentication_never_accepts_short_wrong_or_empty_identity() {
     let token = TerminalToken::synthetic();
     for bytes in [&[][..], &[0xA5; 31][..], &[0; 32][..], &[0xA5; 33][..]] {
-        assert!(
-            token
-                .authenticate(bytes, "device", "session", Grants::default())
-                .is_err()
-        );
+        assert!(token.authenticate(bytes, "device", "session").is_err());
     }
-    assert!(
-        token
-            .authenticate(&[0xA5; 32], "", "session", Grants::default())
-            .is_err()
-    );
+    assert!(token.authenticate(&[0xA5; 32], "", "session").is_err());
+}
+
+#[test]
+fn permissions_are_checked_per_event_after_revocation_on_same_session() {
+    let auth = session();
+    let mut desktop: DesktopObservation = fixture();
+    desktop.title = Some("synthetic private title".into());
+    for payload in [
+        TerminalPayload::Desktop(desktop),
+        TerminalPayload::Codex(fixture()),
+    ] {
+        let (e, source) = event(&payload, 0);
+        let allowed = Grants {
+            desktop_titles: true,
+            codex_sessions: true,
+        };
+        validate_event(
+            &auth,
+            allowed,
+            e.clone(),
+            payload.clone(),
+            source.clone(),
+            limits(),
+        )
+        .unwrap();
+        assert!(validate_event(&auth, Grants::default(), e, payload, source, limits()).is_err());
+    }
 }
