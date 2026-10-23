@@ -10,3 +10,4 @@ change to a frozen golden vector. Baselines are append-only: never edit one.
 | --- | --- |
 | `p5-01/` | P5-01 (PR #4), `core/contracts/*.proto` and `golden/` at main `cfd635f` |
 | `p5-21/` | P5-21 (PR #36), `core/contracts/*.proto` and `golden/` at main `9042c59` |
+| `p5-32/` | P5-32 (PR #52), published IDL/golden unchanged through main `91b31ed`; frozen by P5-22 before edits |

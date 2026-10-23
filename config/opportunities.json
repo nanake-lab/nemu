@@ -1,0 +1,12 @@
+{
+  "version": "2",
+  "allowedKinds": ["speak", "motion", "goTo", "sit", "sleep", "wake", "peek", "gaze", "helper.ask"],
+  "cooldownS": {},
+  "gates": ["dnd", "quietHours", "budget", "mode", "minInterval"],
+  "budgets": {
+    "minIntervalS": 180,
+    "speakPerHour": 2,
+    "quietDayFactor": 0.5,
+    "autonomousHelperPerDay": 30
+  }
+}

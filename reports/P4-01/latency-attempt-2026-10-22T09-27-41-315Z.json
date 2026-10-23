@@ -1,0 +1,2343 @@
+{
+  "status": "INVALID",
+  "passed": false,
+  "reason": "Quiet window unavailable: [{\"Name\":\"Runner.Worker.exe\",\"ProcessId\":37804,\"reason\":\"heavy-process\"}]",
+  "results": [
+    {
+      "id": "user-zh-001",
+      "lang": "zh",
+      "sha256": "fc10711dd262f9d824e8b75c5287127c9c15f111e3902d7f88887fff9a322db4",
+      "sourceSha256": "22ecc4e2d2c5f931812691f6365aeaff0d8d9afdfeef190d4442b119af7d02c9",
+      "vadEndMs": 359.97766757812497,
+      "bargeInMs": 260.3978335937504,
+      "maximumLatenessMs": 13.501299999999901,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 360.0463,
+      "bargeInReceiptMs": 261.3953999999999,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 362,
+          "min": 0.054500000000189175,
+          "p05": 0.07260499999952116,
+          "p25": 0.0824749999994765,
+          "median": 0.6390000000001237,
+          "p75": 0.6713500000003023,
+          "p95": 0.9108200000006945,
+          "max": 4.778899999999339
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.06863242187500873,
+          "p05": 0.16012777343748896,
+          "p25": 0.5261091796874098,
+          "median": 0.9835859374998108,
+          "p75": 0.9905761718746362,
+          "p95": 0.9961683593744965,
+          "max": 0.9975664062494616
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.8270675781241152,
+          "p05": 0.8569922265616696,
+          "p25": 0.9766908203118874,
+          "median": 1.1263140624996595,
+          "p75": 1.1392738281247148,
+          "p95": 1.149641640624759,
+          "max": 1.15223359374977
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2100.6903140625,
+          "stampToCallbackMs": 0.9835859374998108,
+          "feedToStampMs": 1.1263140624996595
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2280.39783359375,
+          "stampToCallbackMs": 0.9975664062494616,
+          "feedToStampMs": 1.15223359374977
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4619.977667578125,
+          "stampToCallbackMs": 0.06863242187500873,
+          "feedToStampMs": 0.8270675781241152
+        }
+      ]
+    },
+    {
+      "id": "user-zh-002",
+      "lang": "zh",
+      "sha256": "fc7bf82b76e1edcd28fe33d11d974627e8cd5825d08ca48b46f4ca5fbd3f5e98",
+      "sourceSha256": "092f7198cd85dc3f41a9de1c5df28ca48e4083c26484bc1c7f9f4f63b541576c",
+      "vadEndMs": 341.28602187499973,
+      "bargeInMs": 1301.3328968749988,
+      "maximumLatenessMs": 7.855999999999767,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 341.3499000000015,
+      "bargeInReceiptMs": 1301.4318999999991,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 346,
+          "min": 0.049299999998766,
+          "p05": 0.06459999999879074,
+          "p25": 0.07312500000170985,
+          "median": 0.6111000000018976,
+          "p75": 0.6513749999994616,
+          "p95": 0.8359000000009473,
+          "max": 2.9724999999998545
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.06040820312409778,
+          "p05": 0.06075519531186728,
+          "p25": 0.06214316406294529,
+          "median": 0.0638781250017928,
+          "p75": 0.08144062500105065,
+          "p95": 0.09549062500045694,
+          "max": 0.0990031250003085
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.7010218750001513,
+          "p05": 0.7024688671877811,
+          "p25": 0.7082568359383004,
+          "median": 0.7154917968764494,
+          "p75": 0.7398443359379598,
+          "p95": 0.7593263671871682,
+          "max": 0.7641968749994703
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2099.7476917968743,
+          "stampToCallbackMs": 0.06040820312409778,
+          "feedToStampMs": 0.7154917968764494
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2281.3328968749993,
+          "stampToCallbackMs": 0.0990031250003085,
+          "feedToStampMs": 0.7641968749994703
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4201.286021874999,
+          "stampToCallbackMs": 0.0638781250017928,
+          "feedToStampMs": 0.7010218750001513
+        }
+      ]
+    },
+    {
+      "id": "user-zh-003",
+      "lang": "zh",
+      "sha256": "3cfa2e4b41fb1b7f70185fe3ba185c4b43a84084e5ff452bf5b7a02ae7964a88",
+      "sourceSha256": "f1c512d5a59da8084eabd9eb9280c0a6cd8121735d5dac64acf85bd4c795951e",
+      "vadEndMs": 320.7667875000011,
+      "bargeInMs": 300.5429105468761,
+      "maximumLatenessMs": 6.441999999999098,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 320.80949999999984,
+      "bargeInReceiptMs": 300.60930000000053,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 342,
+          "min": 0.042699999998148996,
+          "p05": 0.0639999999986685,
+          "p25": 0.07199999999738793,
+          "median": 0.6216499999991356,
+          "p75": 0.6721500000021479,
+          "p95": 0.870080000001144,
+          "max": 2.8685000000004948
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.042712499998742715,
+          "p05": 0.04368957031147147,
+          "p25": 0.047597851562386495,
+          "median": 0.052483203126030276,
+          "p75": 0.05943632812522992,
+          "p95": 0.06499882812458964,
+          "max": 0.06638945312442956
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6959105468740745,
+          "p05": 0.6966682421865699,
+          "p25": 0.6996990234365512,
+          "median": 0.7034874999990279,
+          "p75": 0.7150021484376339,
+          "p95": 0.7242138671885187,
+          "max": 0.7265167968762398
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2119.8593167968756,
+          "stampToCallbackMs": 0.052483203126030276,
+          "feedToStampMs": 0.7265167968762398
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2320.5429105468756,
+          "stampToCallbackMs": 0.06638945312442956,
+          "feedToStampMs": 0.6959105468740745
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4180.766787500001,
+          "stampToCallbackMs": 0.042712499998742715,
+          "feedToStampMs": 0.7034874999990279
+        }
+      ]
+    },
+    {
+      "id": "user-zh-004",
+      "lang": "zh",
+      "sha256": "40a2ab548e3fd2c0fc56dfe159228164c751c198dab073c83f412efb5ba48737",
+      "sourceSha256": "d976d4f0bb5d218f3a5cf89f4674efd4bfaf5831e4a4e1809fea07f691e49041",
+      "vadEndMs": 380.5436261718705,
+      "bargeInMs": 341.7792218749969,
+      "maximumLatenessMs": 3.8057999999946333,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 380.581799999999,
+      "bargeInReceiptMs": 341.82289999999966,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 322,
+          "min": 0.055999999996856786,
+          "p05": 0.06490500000436442,
+          "p25": 0.07285000000229047,
+          "median": 0.6181999999971595,
+          "p75": 0.6612249999998312,
+          "p95": 0.8446499999965453,
+          "max": 3.1323000000047614
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.02063906250259606,
+          "p05": 0.0223925390651857,
+          "p25": 0.02940644531554426,
+          "median": 0.03817382812849246,
+          "p75": 0.04092597656563157,
+          "p95": 0.043127695315342864,
+          "max": 0.043678125002770685
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6714218749984866,
+          "p05": 0.6714857812483388,
+          "p25": 0.6717414062477474,
+          "median": 0.6720609374970081,
+          "p75": 0.7967935546876106,
+          "p95": 0.8965796484400925,
+          "max": 0.9215261718782131
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2101.3817609374964,
+          "stampToCallbackMs": 0.02063906250259606,
+          "feedToStampMs": 0.6720609374970081
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2281.7792218749964,
+          "stampToCallbackMs": 0.043678125002770685,
+          "feedToStampMs": 0.6714218749984866
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4080.5436261718714,
+          "stampToCallbackMs": 0.03817382812849246,
+          "feedToStampMs": 0.9215261718782131
+        }
+      ]
+    },
+    {
+      "id": "user-zh-005",
+      "lang": "zh",
+      "sha256": "c19df8e4b14dae59e3d65765800be8b752d0c72e396f4a6e0b1a92292164ef53",
+      "sourceSha256": "4f5da742275ef0a60eab8f1c51d3043532bfb6d6d89f380bcf6c427faa940e7e",
+      "vadEndMs": 299.8695570312484,
+      "bargeInMs": 321.70769179687386,
+      "maximumLatenessMs": 6.878499999998894,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 299.8944999999949,
+      "bargeInReceiptMs": 321.77149999999574,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 362,
+          "min": 0.03930000000400469,
+          "p05": 0.05783500000216009,
+          "p25": 0.06430000000000291,
+          "median": 0.6105999999999767,
+          "p75": 0.644575000000259,
+          "p95": 0.7364699999990989,
+          "max": 3.270299999996496
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.024942968746472616,
+          "p05": 0.027017382809572155,
+          "p25": 0.03531503906197031,
+          "median": 0.045687109377468005,
+          "p75": 0.05474765624967404,
+          "p95": 0.06199609374743886,
+          "max": 0.06380820312188007
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6774917968723457,
+          "p05": 0.6777339062478859,
+          "p25": 0.6787023437500466,
+          "median": 0.6799128906277474,
+          "p75": 0.6998349609384604,
+          "p95": 0.7157726171870309,
+          "max": 0.7197570312491735
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2160.1818128906234,
+          "stampToCallbackMs": 0.045687109377468005,
+          "feedToStampMs": 0.6799128906277474
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2341.7076917968734,
+          "stampToCallbackMs": 0.06380820312188007,
+          "feedToStampMs": 0.6774917968723457
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4559.869557031248,
+          "stampToCallbackMs": 0.024942968746472616,
+          "feedToStampMs": 0.7197570312491735
+        }
+      ]
+    },
+    {
+      "id": "user-zh-006",
+      "lang": "zh",
+      "sha256": "940db7de3633049f1c6f4a622ed120bc54c9590539d268129fe1f47878a03b93",
+      "sourceSha256": "6a010e5e87c98f5a2bd932e5bcf0f2abfa15dce81493ee88c0f94e3e91b6c380",
+      "vadEndMs": 303.2878617187516,
+      "bargeInMs": 280.9853714843766,
+      "maximumLatenessMs": 6.937300000005052,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 303.31140000000505,
+      "bargeInReceiptMs": 281.0702999999985,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 314,
+          "min": 0.04010000000562286,
+          "p05": 0.06146499999704247,
+          "p25": 0.07225000000107684,
+          "median": 0.627649999998539,
+          "p75": 0.6952000000001135,
+          "p95": 0.9828099999995173,
+          "max": 2.964700000004086
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.02353828125342261,
+          "p05": 0.026140078128082677,
+          "p25": 0.03654726562672295,
+          "median": 0.04955625000002328,
+          "p75": 0.06724238281094586,
+          "p95": 0.0813912890596839,
+          "max": 0.08492851562186843
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.758443749997241,
+          "p05": 0.758675546872837,
+          "p25": 0.7596027343752212,
+          "median": 0.7607617187532014,
+          "p75": 0.8836166015644267,
+          "p95": 0.9819005078134069,
+          "max": 1.006471484375652
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 1539.8469437500025,
+          "stampToCallbackMs": 0.04955625000002328,
+          "feedToStampMs": 0.758443749997241
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 1740.9853714843775,
+          "stampToCallbackMs": 0.08492851562186843,
+          "feedToStampMs": 1.006471484375652
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 3603.2878617187525,
+          "stampToCallbackMs": 0.02353828125342261,
+          "feedToStampMs": 0.7607617187532014
+        }
+      ]
+    },
+    {
+      "id": "user-zh-007",
+      "lang": "zh",
+      "sha256": "d517b11f1effb5f8842546df3222a15466fe05ca1a56dd1b098497d5e90190ac",
+      "sourceSha256": "6265f885033898fdf5d84eaf3908985b01fee701e393be34bb9849c8f73feb62",
+      "vadEndMs": 279.75768085937216,
+      "bargeInMs": 1141.5919093749976,
+      "maximumLatenessMs": 2.566099999996368,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 279.783899999994,
+      "bargeInReceiptMs": 1141.6307999999985,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 322,
+          "min": 0.05559999999968568,
+          "p05": 0.06251000000011117,
+          "p25": 0.07124999999905413,
+          "median": 0.6157999999995809,
+          "p75": 0.6591750000025058,
+          "p95": 0.8467750000036176,
+          "max": 2.846000000005006
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.024675000000570435,
+          "p05": 0.02482941406269674,
+          "p25": 0.02544707031120197,
+          "median": 0.026219140621833503,
+          "p75": 0.03255488281138241,
+          "p95": 0.03762347656302154,
+          "max": 0.03889062500093132
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6839249999975436,
+          "p05": 0.6865605859355128,
+          "p25": 0.6971029296873894,
+          "median": 0.7102808593772352,
+          "p75": 0.728245117188635,
+          "p95": 0.742616523437755,
+          "max": 0.7462093750000349
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 1940.757924999998,
+          "stampToCallbackMs": 0.024675000000570435,
+          "feedToStampMs": 0.6839249999975436
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2121.591909374998,
+          "stampToCallbackMs": 0.03889062500093132,
+          "feedToStampMs": 0.7462093750000349
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 3979.757680859373,
+          "stampToCallbackMs": 0.026219140621833503,
+          "feedToStampMs": 0.7102808593772352
+        }
+      ]
+    },
+    {
+      "id": "user-zh-008",
+      "lang": "zh",
+      "sha256": "463bd1caae6900bedecbd7cd149a45f1aab55998412d3f4cfbd66a481ea13b0e",
+      "sourceSha256": "15d5eeeb9af706059cdc2c1d152caf64b9e545b65ff8448267a49bbf0fc5d52e",
+      "vadEndMs": 319.9526855468712,
+      "bargeInMs": 280.5872070312462,
+      "maximumLatenessMs": 15.724499999996624,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 319.9942999999903,
+      "bargeInReceiptMs": 280.65050000000247,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 532,
+          "min": 0.04619999999704305,
+          "p05": 0.06130000000121072,
+          "p25": 0.0711749999973108,
+          "median": 0.624100000000908,
+          "p75": 0.6824749999977939,
+          "p95": 0.929925000003277,
+          "max": 2.9694000000017695
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.041614453119109385,
+          "p05": 0.04303335937001975,
+          "p25": 0.048708984373661224,
+          "median": 0.05580351562821306,
+          "p75": 0.059548242192249745,
+          "p95": 0.06254402344347909,
+          "max": 0.06329296875628643
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6685070312523749,
+          "p05": 0.670504882815294,
+          "p25": 0.6784962890669703,
+          "median": 0.6884855468815658,
+          "p75": 0.7290910156298196,
+          "p95": 0.7615753906284226,
+          "max": 0.7696964843780734
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 5860.256396484372,
+          "stampToCallbackMs": 0.05580351562821306,
+          "feedToStampMs": 0.7696964843780734
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 6060.587207031247,
+          "stampToCallbackMs": 0.06329296875628643,
+          "feedToStampMs": 0.6685070312523749
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 7939.952685546872,
+          "stampToCallbackMs": 0.041614453119109385,
+          "feedToStampMs": 0.6884855468815658
+        }
+      ]
+    },
+    {
+      "id": "user-zh-009",
+      "lang": "zh",
+      "sha256": "bc0af59f26b9d41acd2123f144ee314c6d4facb8a29e404403e9c00d2ae6742a",
+      "sourceSha256": "1b6528993d9b56c2237b1cf3229ec6cf7ddfb07e38c07f1f171bb963b5baa33b",
+      "vadEndMs": 261.1965015625019,
+      "bargeInMs": 1301.0009449218774,
+      "maximumLatenessMs": 4.212599999998929,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 261.2198000000053,
+      "bargeInReceiptMs": 1301.0345999999986,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 322,
+          "min": 0.04830000000947621,
+          "p05": 0.06010000000242144,
+          "p25": 0.06782499999098945,
+          "median": 0.6228999999948428,
+          "p75": 0.6709499999924446,
+          "p95": 0.9083950000000186,
+          "max": 2.768400000000838
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.023298437503399327,
+          "p05": 0.024090156253078022,
+          "p25": 0.027257031251792796,
+          "median": 0.031215625000186265,
+          "p75": 0.032435351560707204,
+          "p95": 0.03341113280912396,
+          "max": 0.033655078121228144
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6716449218802154,
+          "p05": 0.6732005859419588,
+          "p25": 0.6794232421889319,
+          "median": 0.6872015624976484,
+          "p75": 0.8314929687476251,
+          "p95": 0.9469260937476065,
+          "max": 0.9757843749976018
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2100.513884375003,
+          "stampToCallbackMs": 0.031215625000186265,
+          "feedToStampMs": 0.9757843749976018
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2281.000944921878,
+          "stampToCallbackMs": 0.033655078121228144,
+          "feedToStampMs": 0.6716449218802154
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4041.196501562503,
+          "stampToCallbackMs": 0.023298437503399327,
+          "feedToStampMs": 0.6872015624976484
+        }
+      ]
+    },
+    {
+      "id": "user-zh-010",
+      "lang": "zh",
+      "sha256": "d1b5ee3564807bfbe031532c9a3c711f42d13652b700713dfaf8220fc5164ad0",
+      "sourceSha256": "0d94f0884536029d280ad9ea4dbbb715ee8c6eb6a170d706466bccd4d6d3ed88",
+      "vadEndMs": 240.99873437499627,
+      "bargeInMs": 280.42573632812014,
+      "maximumLatenessMs": 6.750899999999092,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 241.02880000000005,
+      "bargeInReceiptMs": 280.48499999999945,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 354,
+          "min": 0.05400000000372529,
+          "p05": 0.06040000000211876,
+          "p25": 0.06539999999586144,
+          "median": 0.6222999999954482,
+          "p75": 0.6760750000030384,
+          "p95": 0.8733950000001641,
+          "max": 2.417300000000978
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 6,
+          "min": 0.023671484377700835,
+          "p05": 0.024448242191283498,
+          "p25": 0.027600292974966578,
+          "median": 0.03283222656318685,
+          "p75": 0.053347460940130986,
+          "p95": 0.060160742184962146,
+          "max": 0.060459765620180406
+        },
+        "feedStartToEventStampMs": {
+          "count": 6,
+          "min": 0.6735285156319151,
+          "p05": 0.6763304687556229,
+          "p25": 0.688702539064252,
+          "median": 0.7151707031225669,
+          "p75": 0.7532761718757683,
+          "p95": 1.0466561523426208,
+          "max": 1.1418343749974156
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 1860.0297402343713,
+          "stampToCallbackMs": 0.060459765620180406,
+          "feedToStampMs": 0.7297402343683643
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2060.4257363281213,
+          "stampToCallbackMs": 0.05926367187930737,
+          "feedToStampMs": 0.6847363281267462
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 2959.8305214843713,
+          "stampToCallbackMs": 0.026778515632031485,
+          "feedToStampMs": 0.7611214843782363
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 3280.5302285156213,
+          "stampToCallbackMs": 0.023671484377700835,
+          "feedToStampMs": 0.6735285156319151
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 3461.8022011718713,
+          "stampToCallbackMs": 0.035598828122601844,
+          "feedToStampMs": 0.7006011718767695
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4340.998734374996,
+          "stampToCallbackMs": 0.030065625003771856,
+          "feedToStampMs": 1.1418343749974156
+        }
+      ]
+    },
+    {
+      "id": "user-zh-011",
+      "lang": "zh",
+      "sha256": "4ef2f884975b653843e7f77d5a9549f102efe30ceb8fa867f6eeacd1149eb430",
+      "sourceSha256": "7b4b8cd7b8300f1b70fe2afd13de73d93a805868159b0da7506415c2f30e9f40",
+      "vadEndMs": 340.90119999999297,
+      "bargeInMs": 300.3975378906184,
+      "maximumLatenessMs": 4.083899999997811,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 340.9280999999901,
+      "bargeInReceiptMs": 300.4672999999898,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 362,
+          "min": 0.05039999999280553,
+          "p05": 0.06040000000211876,
+          "p25": 0.0702999999957683,
+          "median": 0.6298000000024331,
+          "p75": 0.7016249999978754,
+          "p95": 0.9803300000043235,
+          "max": 3.3268000000098255
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.0268999999971129,
+          "p05": 0.029471406247466803,
+          "p25": 0.03975703124888241,
+          "median": 0.052614062500651926,
+          "p75": 0.061188085936009884,
+          "p95": 0.06804730468429625,
+          "max": 0.06976210937136784
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.7009859374957159,
+          "p05": 0.7045711328086327,
+          "p25": 0.7189119140602998,
+          "median": 0.7368378906248836,
+          "p75": 0.7517189453137689,
+          "p95": 0.7636237890648772,
+          "max": 0.7666000000026543
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2120.064285937493,
+          "stampToCallbackMs": 0.052614062500651926,
+          "feedToStampMs": 0.7009859374957159
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2320.397537890618,
+          "stampToCallbackMs": 0.06976210937136784,
+          "feedToStampMs": 0.7368378906248836
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4520.901199999993,
+          "stampToCallbackMs": 0.0268999999971129,
+          "feedToStampMs": 0.7666000000026543
+        }
+      ]
+    },
+    {
+      "id": "user-zh-012",
+      "lang": "zh",
+      "sha256": "a80fdbc6a20247d4e28afd43946fe481b33b3cd95f30494166e17f89eef41b5a",
+      "sourceSha256": "f210b44c08a1ce933257f7c28ea859d00d29e9648b528c64b7a3a34d9da4b940",
+      "vadEndMs": 319.876614062493,
+      "bargeInMs": 1180.0575222656184,
+      "maximumLatenessMs": 6.123099999997066,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 319.90449999998873,
+      "bargeInReceiptMs": 1180.0932999999927,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 326,
+          "min": 0.05969999999797437,
+          "p05": 0.06249999999636202,
+          "p25": 0.0766250000015134,
+          "median": 0.6375999999945634,
+          "p75": 0.6990999999907217,
+          "p95": 0.9319000000068627,
+          "max": 2.937000000005355
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.024549218753236346,
+          "p05": 0.02488289062748663,
+          "p25": 0.026217578124487773,
+          "median": 0.0278859374957392,
+          "p75": 0.03183183593500871,
+          "p95": 0.034988554686424325,
+          "max": 0.035777734374278225
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6621507812524214,
+          "p05": 0.6674579296901356,
+          "p25": 0.6886865234409925,
+          "median": 0.7152222656295635,
+          "p75": 0.7522181640670169,
+          "p95": 0.7818148828169796,
+          "max": 0.7892140625044703
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 1961.391750781244,
+          "stampToCallbackMs": 0.024549218753236346,
+          "feedToStampMs": 0.6621507812524214
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2160.057522265619,
+          "stampToCallbackMs": 0.035777734374278225,
+          "feedToStampMs": 0.7152222656295635
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4019.876614062494,
+          "stampToCallbackMs": 0.0278859374957392,
+          "feedToStampMs": 0.7892140625044703
+        }
+      ]
+    },
+    {
+      "id": "user-zh-013",
+      "lang": "zh",
+      "sha256": "e86354e40f4473f70e3fb51cb96a2aefd1196dc56176262364a81cffbe2b9ffb",
+      "sourceSha256": "11845666f245b8cd3ae14f9c21bca02613f9d8e0f35c78a612ee76da42af9848",
+      "vadEndMs": 320.3162730468757,
+      "bargeInMs": 280.48424179687527,
+      "maximumLatenessMs": 7.279500000004191,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 320.3460999999952,
+      "bargeInReceiptMs": 280.52800000000525,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 556,
+          "min": 0.05709999999089632,
+          "p05": 0.0608749999992142,
+          "p25": 0.06967500000610016,
+          "median": 0.6206999999994878,
+          "p75": 0.6787750000039523,
+          "p95": 0.945175000004383,
+          "max": 5.402900000000955
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 6,
+          "min": 0.029826953119481914,
+          "p05": 0.02988300780998543,
+          "p25": 0.03242978516209405,
+          "median": 0.041661914066935424,
+          "p75": 0.04945703125486034,
+          "p95": 0.06373251952754799,
+          "max": 0.06785781249345746
+        },
+        "feedStartToEventStampMs": {
+          "count": 6,
+          "min": 0.6852433593739988,
+          "p05": 0.6902679687482305,
+          "p25": 0.7202418945271347,
+          "median": 0.8173076171879075,
+          "p75": 0.8835298828089435,
+          "p95": 1.1104379882817739,
+          "max": 1.1845343750028405
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 1059.9339488281257,
+          "stampToCallbackMs": 0.030051171881495975,
+          "feedToStampMs": 0.8881488281185739
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 1260.4842417968757,
+          "stampToCallbackMs": 0.043758203129982576,
+          "feedToStampMs": 0.7053417968709255
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 1620.6241343750007,
+          "stampToCallbackMs": 0.03956562500388827,
+          "feedToStampMs": 1.1845343750028405
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 6740.375843359376,
+          "stampToCallbackMs": 0.051356640629819594,
+          "feedToStampMs": 0.6852433593739988
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 6920.832142187501,
+          "stampToCallbackMs": 0.06785781249345746,
+          "feedToStampMs": 0.7649421874957625
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 8660.316273046876,
+          "stampToCallbackMs": 0.029826953119481914,
+          "feedToStampMs": 0.8696730468800524
+        }
+      ]
+    },
+    {
+      "id": "user-zh-014",
+      "lang": "zh",
+      "sha256": "c19c3c05289b4878ae6e70c705370da5c021e27adfd960a4a018f68a98645ae1",
+      "sourceSha256": "20362d4b50f9406f54cf96ad09985f48ebfaf5ccaa492b106b09f5265d66df39",
+      "vadEndMs": 380.3231601562575,
+      "bargeInMs": 380.54728125000884,
+      "maximumLatenessMs": 6.197299999999814,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 380.3569000000125,
+      "bargeInReceiptMs": 380.5880000000184,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 318,
+          "min": 0.046600000001490116,
+          "p05": 0.05708500000473578,
+          "p25": 0.06472500001109438,
+          "median": 0.6125000000029104,
+          "p75": 0.6533250000065891,
+          "p95": 0.894204999983776,
+          "max": 3.55370000001858
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.028442187496693805,
+          "p05": 0.028971953122527337,
+          "p25": 0.031091015625861473,
+          "median": 0.03373984375502914,
+          "p75": 0.0372292968822876,
+          "p95": 0.040020859384094366,
+          "max": 0.040718750009546056
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.7393812499940395,
+          "p05": 0.7420189062453574,
+          "p25": 0.7525695312506286,
+          "median": 0.7657578125072177,
+          "p75": 0.8720089843845926,
+          "p95": 0.9570099218864925,
+          "max": 0.9782601562619675
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2119.9232578125084,
+          "stampToCallbackMs": 0.028442187496693805,
+          "feedToStampMs": 0.7657578125072177
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2320.5472812500084,
+          "stampToCallbackMs": 0.040718750009546056,
+          "feedToStampMs": 0.7393812499940395
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4080.3231601562584,
+          "stampToCallbackMs": 0.03373984375502914,
+          "feedToStampMs": 0.9782601562619675
+        }
+      ]
+    },
+    {
+      "id": "user-zh-015",
+      "lang": "zh",
+      "sha256": "b67fc1f9f23775afa462325adf6ba70d93238bd49a8e387a23cb3f2ef4f792e6",
+      "sourceSha256": "bb10890397dccdd923a9c4015db3ca88d51f249a77125b9a9b535434f1f0bf71",
+      "vadEndMs": 320.752366406261,
+      "bargeInMs": 319.27995429688644,
+      "maximumLatenessMs": 8.813800000003539,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 320.78390000000945,
+      "bargeInReceiptMs": 319.3496000000164,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 358,
+          "min": 0.04980000000796281,
+          "p05": 0.0602999999828171,
+          "p25": 0.07254999998258427,
+          "median": 0.6297500000073342,
+          "p75": 0.6950500000020838,
+          "p95": 1.0042499999894061,
+          "max": 2.887300000002142
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 6,
+          "min": 0.022472656244644895,
+          "p05": 0.022525781248987187,
+          "p25": 0.024897265633626375,
+          "median": 0.034526367191574536,
+          "p75": 0.061614062506123446,
+          "p95": 0.07737949218426365,
+          "max": 0.07995742186903954
+        },
+        "feedStartToEventStampMs": {
+          "count": 6,
+          "min": 0.670014843752142,
+          "p05": 0.6739813476597192,
+          "p25": 0.6924424804747105,
+          "median": 0.7289908203092637,
+          "p75": 0.822288378905796,
+          "p95": 0.8763235351652838,
+          "max": 0.8858425781363621
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2160.717942578136,
+          "stampToCallbackMs": 0.07995742186903954,
+          "feedToStampMs": 0.8858425781363621
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2339.279954296886,
+          "stampToCallbackMs": 0.06964570312993601,
+          "feedToStampMs": 0.7458542968670372
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 2960.712327343761,
+          "stampToCallbackMs": 0.022472656244644895,
+          "feedToStampMs": 0.7121273437514901
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 3021.579514843761,
+          "stampToCallbackMs": 0.02268515626201406,
+          "feedToStampMs": 0.670014843752142
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 3221.187180859386,
+          "stampToCallbackMs": 0.037519140634685755,
+          "feedToStampMs": 0.6858808593824506
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4500.752366406261,
+          "stampToCallbackMs": 0.03153359374846332,
+          "feedToStampMs": 0.8477664062520489
+        }
+      ]
+    },
+    {
+      "id": "user-zh-016",
+      "lang": "zh",
+      "sha256": "dac5451ac5b07be6a49b857494c4cfcf4f298a65727fee61d38cea6818e71114",
+      "sourceSha256": "3cd5e06af336cb799a78c5d3a38a11ece5b23377f33a16a6925bc5b6ba0422f6",
+      "vadEndMs": 320.0873992187544,
+      "bargeInMs": 299.79369804688076,
+      "maximumLatenessMs": 3.8263999999908265,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 320.1151999999993,
+      "bargeInReceiptMs": 299.8325000000191,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 322,
+          "min": 0.04970000000321306,
+          "p05": 0.0625,
+          "p25": 0.06827500000508735,
+          "median": 0.6295500000123866,
+          "p75": 0.6622250000000349,
+          "p95": 0.8514800000179094,
+          "max": 2.7503000000142492
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.023850390629377216,
+          "p05": 0.024245429690927266,
+          "p25": 0.02582558593712747,
+          "median": 0.027800781244877726,
+          "p75": 0.03330136719159782,
+          "p95": 0.037701835948973896,
+          "max": 0.03880195313831791
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6995980468636844,
+          "p05": 0.708598164052819,
+          "p25": 0.7445986328093568,
+          "median": 0.7895992187550291,
+          "p75": 0.8511744140705559,
+          "p95": 0.9004345703229774,
+          "max": 0.9127496093860827
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 1960.9665496093803,
+          "stampToCallbackMs": 0.023850390629377216,
+          "feedToStampMs": 0.9127496093860827
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2159.7936980468803,
+          "stampToCallbackMs": 0.03880195313831791,
+          "feedToStampMs": 0.6995980468636844
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 3780.0873992187553,
+          "stampToCallbackMs": 0.027800781244877726,
+          "feedToStampMs": 0.7895992187550291
+        }
+      ]
+    },
+    {
+      "id": "user-zh-017",
+      "lang": "zh",
+      "sha256": "79b9bb711be5f2a7997690d86daaf19a2458f0ea2ac54fbd024dda93661f93dc",
+      "sourceSha256": "4db4169ac3ff5c6a956a99afb93d0d4838eea1b0c58abc1a6a9256a6c872ed4e",
+      "vadEndMs": 400.90274726561665,
+      "bargeInMs": 1180.5309210937407,
+      "maximumLatenessMs": 6.712599999998929,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 400.9355999999975,
+      "bargeInReceiptMs": 1180.6174999999926,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 354,
+          "min": 0.050900000002002344,
+          "p05": 0.06152499999298016,
+          "p25": 0.06722499999887077,
+          "median": 0.6245000000053551,
+          "p75": 0.673800000018673,
+          "p95": 0.8540199999988543,
+          "max": 4.028399999981048
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.03285273438086733,
+          "p05": 0.03480703125533182,
+          "p25": 0.04262421875318978,
+          "median": 0.05239570312551223,
+          "p75": 0.06948730468866415,
+          "p95": 0.08316058593918568,
+          "max": 0.08657890625181608
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6406042968737893,
+          "p05": 0.6696059765614336,
+          "p25": 0.7856126953120111,
+          "median": 0.9306210937502328,
+          "p75": 0.9960341796831926,
+          "p95": 1.0483646484295606,
+          "max": 1.0614472656161524
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 1959.3837042968662,
+          "stampToCallbackMs": 0.05239570312551223,
+          "feedToStampMs": 0.6406042968737893
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2160.530921093741,
+          "stampToCallbackMs": 0.08657890625181608,
+          "feedToStampMs": 0.9306210937502328
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4420.902747265616,
+          "stampToCallbackMs": 0.03285273438086733,
+          "feedToStampMs": 1.0614472656161524
+        }
+      ]
+    },
+    {
+      "id": "user-zh-018",
+      "lang": "zh",
+      "sha256": "5df25f82c0c69210d809e713b6518eb1aac247ec0b9fea6449f51daaba8c9b58",
+      "sourceSha256": "b0d9924e1a1f06c8ecd95c45f773c22180778f58d7dcb314c0d67cbf9deec46f",
+      "vadEndMs": 305.966721875011,
+      "bargeInMs": 284.004563671886,
+      "maximumLatenessMs": 4.929900000017369,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 305.9915000000037,
+      "bargeInReceiptMs": 284.04020000001765,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 330,
+          "min": 0.04920000000856817,
+          "p05": 0.06308999998582294,
+          "p25": 0.06965000001218868,
+          "median": 0.6341499999980442,
+          "p75": 0.7151250000169966,
+          "p95": 0.9587549999923796,
+          "max": 2.60999999998603
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.02447929687332362,
+          "p05": 0.024509179685264827,
+          "p25": 0.02462871093302965,
+          "median": 0.024778124992735684,
+          "p75": 0.03020722656219732,
+          "p95": 0.034550507817766626,
+          "max": 0.035636328131658956
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.7309218749869615,
+          "p05": 0.7310317577997921,
+          "p25": 0.7314712890511146,
+          "median": 0.7320207031152677,
+          "p75": 0.7326921874919208,
+          "p95": 0.7332293749932433,
+          "max": 0.7333636718685739
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2059.923020703136,
+          "stampToCallbackMs": 0.02447929687332362,
+          "feedToStampMs": 0.7320207031152677
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2260.504563671886,
+          "stampToCallbackMs": 0.035636328131658956,
+          "feedToStampMs": 0.7333636718685739
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 3860.404221875011,
+          "stampToCallbackMs": 0.024778124992735684,
+          "feedToStampMs": 0.7309218749869615
+        }
+      ]
+    },
+    {
+      "id": "user-zh-019",
+      "lang": "zh",
+      "sha256": "e9faec88942595e522d3356fb3ef2f01d447e7c1ba4c162f50768ca58af392bd",
+      "sourceSha256": "969a7305e83bd5109904ff685540fb2bc2726c251f9a4ddc995cead69e948c5c",
+      "vadEndMs": 360.6580886718866,
+      "bargeInMs": 279.69129179688707,
+      "maximumLatenessMs": 5.03859999999986,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 360.6819999999998,
+      "bargeInReceiptMs": 279.72350000002143,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 508,
+          "min": 0.055500000016763806,
+          "p05": 0.06343500000511995,
+          "p25": 0.07064999998692656,
+          "median": 0.6230499999946915,
+          "p75": 0.6775249999845983,
+          "p95": 0.9024749999996855,
+          "max": 2.794099999999162
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 6,
+          "min": 0.023095703130820766,
+          "p05": 0.023299609376408625,
+          "p25": 0.0259855468684691,
+          "median": 0.033257031260291114,
+          "p75": 0.04522890625958098,
+          "p95": 0.06074365235690493,
+          "max": 0.06470156251452863
+        },
+        "feedStartToEventStampMs": {
+          "count": 6,
+          "min": 0.6598917968804017,
+          "p05": 0.6673199218785157,
+          "p25": 0.6942003906224272,
+          "median": 0.7344093749998137,
+          "p75": 0.7673313476552721,
+          "p95": 0.9943452148363576,
+          "max": 1.0692941406159662
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 1060.2786941406375,
+          "stampToCallbackMs": 0.03430585938622244,
+          "feedToStampMs": 1.0692941406159662
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 1259.6912917968875,
+          "stampToCallbackMs": 0.03220820313435979,
+          "feedToStampMs": 0.6598917968804017
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 1640.1991042968875,
+          "stampToCallbackMs": 0.023095703130820766,
+          "feedToStampMs": 0.689604296872858
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 5540.4730300781375,
+          "stampToCallbackMs": 0.04886992188403383,
+          "feedToStampMs": 0.7608300781284925
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 5741.4180984375125,
+          "stampToCallbackMs": 0.06470156251452863,
+          "feedToStampMs": 0.769498437497532
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 7500.6580886718875,
+          "stampToCallbackMs": 0.023911328113172203,
+          "feedToStampMs": 0.707988671871135
+        }
+      ]
+    },
+    {
+      "id": "user-zh-020",
+      "lang": "zh",
+      "sha256": "2df9a880c5085e93397b5451fcace6b12d7712064f9371f353143beb3300f2df",
+      "sourceSha256": "fae2cb4bf292868bf5a3cc7b8c5f69e705b5a531607c0a0e14292deb27da2d45",
+      "vadEndMs": 340.39307031250837,
+      "bargeInMs": 340.19043359375837,
+      "maximumLatenessMs": 2.9501000000163913,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 340.4147999999991,
+      "bargeInReceiptMs": 340.22310000000334,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 318,
+          "min": 0.0565000000060536,
+          "p05": 0.06330000000889413,
+          "p25": 0.07024999998975545,
+          "median": 0.6276500000094529,
+          "p75": 0.6912750000119559,
+          "p95": 0.9433349999933852,
+          "max": 3.1212999999988824
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.021623437496600673,
+          "p05": 0.02163406249601394,
+          "p25": 0.021676562493667006,
+          "median": 0.02172968749073334,
+          "p75": 0.0271980468678521,
+          "p95": 0.031572734369547106,
+          "max": 0.03266640624497086
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.681876562506659,
+          "p05": 0.683765937507269,
+          "p25": 0.691323437509709,
+          "median": 0.7007703125127591,
+          "p75": 0.7370519531250466,
+          "p95": 0.7660772656148765,
+          "max": 0.773333593737334
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2101.021976562508,
+          "stampToCallbackMs": 0.021623437496600673,
+          "feedToStampMs": 0.681876562506659
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2280.190433593758,
+          "stampToCallbackMs": 0.03266640624497086,
+          "feedToStampMs": 0.773333593737334
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4200.393070312508,
+          "stampToCallbackMs": 0.02172968749073334,
+          "feedToStampMs": 0.7007703125127591
+        }
+      ]
+    },
+    {
+      "id": "user-en-001",
+      "lang": "en",
+      "sha256": "0a70c2d45c3f99fbdebb9bb4ef09471a6c66b477e175607ea0cc0938e32a38a0",
+      "sourceSha256": "4939ddd58449f2b1b0215d1923547140a8d047d7660b98fb6ef24e2ecbcc062b",
+      "vadEndMs": 338.7974175781128,
+      "bargeInMs": 281.1367730468628,
+      "maximumLatenessMs": 7.612399999983609,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 338.819599999988,
+      "bargeInReceiptMs": 281.2055999999866,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 350,
+          "min": 0.061199999996460974,
+          "p05": 0.06288999998942017,
+          "p25": 0.06909999999334104,
+          "median": 0.6227499999949941,
+          "p75": 0.6842749999996158,
+          "p95": 0.9135899999935646,
+          "max": 1.989899999985937
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 6,
+          "min": 0.02194960936321877,
+          "p05": 0.022007812491210643,
+          "p25": 0.02266308593971189,
+          "median": 0.029996289071277715,
+          "p75": 0.060592089845158625,
+          "p95": 0.09821318359900033,
+          "max": 0.10800859375740401
+        },
+        "feedStartToEventStampMs": {
+          "count": 6,
+          "min": 0.6872124999936204,
+          "p05": 0.6899719726498006,
+          "p25": 0.7063921874942025,
+          "median": 0.733656249998603,
+          "p75": 0.7675285156219616,
+          "p95": 0.7923618164059008,
+          "max": 0.7971914062509313
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2100.425591406238,
+          "stampToCallbackMs": 0.10800859375740401,
+          "feedToStampMs": 0.7971914062509313
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2279.261773046863,
+          "stampToCallbackMs": 0.06882695312378928,
+          "feedToStampMs": 0.777873046870809
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 3060.869194921863,
+          "stampToCallbackMs": 0.02410507813328877,
+          "feedToStampMs": 0.7364949218754191
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 3220.208550390613,
+          "stampToCallbackMs": 0.02194960936321877,
+          "feedToStampMs": 0.698250390618341
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 3400.774712499988,
+          "stampToCallbackMs": 0.03588750000926666,
+          "feedToStampMs": 0.6872124999936204
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4300.859917578113,
+          "stampToCallbackMs": 0.022182421875186265,
+          "feedToStampMs": 0.7308175781217869
+        }
+      ]
+    },
+    {
+      "id": "user-en-002",
+      "lang": "en",
+      "sha256": "16f3d02f7b2ddc0b9d490b2850e98a33447747a83ba65c67b1caac8995909c1c",
+      "sourceSha256": "64f0d033825274c5cb99a5e666396ebe9b417f5c278b07b67db69f58b00f7e3f",
+      "vadEndMs": 291.24371484376024,
+      "bargeInMs": 287.37750390626024,
+      "maximumLatenessMs": 5.881699999998091,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 291.26940000001923,
+      "bargeInReceiptMs": 287.40950000000885,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 338,
+          "min": 0.0565000000060536,
+          "p05": 0.06128500000049826,
+          "p25": 0.06622500000230502,
+          "median": 0.6262500000011642,
+          "p75": 0.6613000000070315,
+          "p95": 0.8650049999851034,
+          "max": 2.752299999992829
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.023800781258614734,
+          "p05": 0.023989218758651988,
+          "p25": 0.024742968758801,
+          "median": 0.025685156258987263,
+          "p75": 0.02884062500379514,
+          "p95": 0.031364999999641444,
+          "max": 0.031996093748603016
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.680499218753539,
+          "p05": 0.6830107812536881,
+          "p25": 0.6930570312542841,
+          "median": 0.7056148437550291,
+          "p75": 0.7753593750094296,
+          "p95": 0.8311550000129501,
+          "max": 0.8451039062638301
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2120.3901992187602,
+          "stampToCallbackMs": 0.023800781258614734,
+          "feedToStampMs": 0.680499218753539
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2320.3150039062602,
+          "stampToCallbackMs": 0.031996093748603016,
+          "feedToStampMs": 0.8451039062638301
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4100.30621484376,
+          "stampToCallbackMs": 0.025685156258987263,
+          "feedToStampMs": 0.7056148437550291
+        }
+      ]
+    },
+    {
+      "id": "user-en-003",
+      "lang": "en",
+      "sha256": "b8cc50aebc7471ade7e2a651b33180c689a1a5fe8397196dfdd505781cad578f",
+      "sourceSha256": "49bece5090495556502c9e70d3138d807b5534e2ef9aaad20666f0c2632602de",
+      "vadEndMs": 320.82251757811173,
+      "bargeInMs": 276.86426562498673,
+      "maximumLatenessMs": 7.522099999972852,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 320.8696999999811,
+      "bargeInReceiptMs": 276.90320000000065,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 366,
+          "min": 0.056299999996554106,
+          "p05": 0.06244999999762513,
+          "p25": 0.06982499999867287,
+          "median": 0.6154999999998836,
+          "p75": 0.682474999994156,
+          "p95": 0.8780000000115251,
+          "max": 3.396199999988312
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.021768359380075708,
+          "p05": 0.023484960943460465,
+          "p25": 0.03035136719699949,
+          "median": 0.03893437501392327,
+          "p75": 0.043058398441644385,
+          "p95": 0.046357617183821274,
+          "max": 0.0471824218693655
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6878316406218801,
+          "p05": 0.6882802343723597,
+          "p25": 0.6900746093742782,
+          "median": 0.6923175781266764,
+          "p75": 0.7247416015597992,
+          "p95": 0.7506808203062973,
+          "max": 0.757165624992922
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2101.9094316406117,
+          "stampToCallbackMs": 0.021768359380075708,
+          "feedToStampMs": 0.6878316406218801
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2279.6142656249867,
+          "stampToCallbackMs": 0.03893437501392327,
+          "feedToStampMs": 0.757165624992922
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4680.072517578112,
+          "stampToCallbackMs": 0.0471824218693655,
+          "feedToStampMs": 0.6923175781266764
+        }
+      ]
+    },
+    {
+      "id": "user-en-004",
+      "lang": "en",
+      "sha256": "75643544ae2a20f0e44752f4ce61649a79ba4996d69a9a153bd772a8548d1692",
+      "sourceSha256": "bd79894519646f6d226051214e890e0b476a9b9ed628dd332aaeefda062b4351",
+      "vadEndMs": 340.57459999999264,
+      "bargeInMs": 261.25892617186764,
+      "maximumLatenessMs": 5.3519999999844,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 340.60559999998077,
+      "bargeInReceiptMs": 261.30409999997937,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 350,
+          "min": 0.05830000000423752,
+          "p05": 0.06274500001163688,
+          "p25": 0.06802499999321299,
+          "median": 0.6317500000004657,
+          "p75": 0.6924249999865424,
+          "p95": 0.9517350000038279,
+          "max": 3.196700000000419
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.030999999988125637,
+          "p05": 0.032069101551314816,
+          "p25": 0.03634550780407153,
+          "median": 0.041691015620017424,
+          "p75": 0.04343242186587304,
+          "p95": 0.04482554686255753,
+          "max": 0.04517382811172865
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.7819000000017695,
+          "p05": 0.7845526171877282,
+          "p25": 0.7951630859315628,
+          "median": 0.8084261718613561,
+          "p75": 0.867217578124837,
+          "p95": 0.9142507031356217,
+          "max": 0.9260089843883179
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2160.5763089843676,
+          "stampToCallbackMs": 0.041691015620017424,
+          "feedToStampMs": 0.9260089843883179
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2341.2589261718676,
+          "stampToCallbackMs": 0.04517382811172865,
+          "feedToStampMs": 0.8084261718613561
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4500.574599999993,
+          "stampToCallbackMs": 0.030999999988125637,
+          "feedToStampMs": 0.7819000000017695
+        }
+      ]
+    },
+    {
+      "id": "user-en-005",
+      "lang": "en",
+      "sha256": "c9dbfed10f6809ac92411d0f7749cd45d7d8f89e0fe5325d2f3ce5532db59c95",
+      "sourceSha256": "d012a0543eaa9c54c28ebcfcef710d7fec0fc3cc19745fa1211ea08697330e3c",
+      "vadEndMs": 300.2629425781197,
+      "bargeInMs": 281.9519074218697,
+      "maximumLatenessMs": 4.614600000000792,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 300.309500000003,
+      "bargeInReceiptMs": 281.98519999999553,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 378,
+          "min": 0.05749999999534339,
+          "p05": 0.06269999998039566,
+          "p25": 0.07164999999804422,
+          "median": 0.623250000004191,
+          "p75": 0.6790000000037253,
+          "p95": 0.9015750000064144,
+          "max": 2.922900000005029
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 6,
+          "min": 0.021412109374068677,
+          "p05": 0.021817187502165325,
+          "p25": 0.023328906259848736,
+          "median": 0.028755468752933666,
+          "p75": 0.04324121094396105,
+          "p95": 0.08563886719639413,
+          "max": 0.0986660156340804
+        },
+        "feedStartToEventStampMs": {
+          "count": 6,
+          "min": 0.6653425781114493,
+          "p05": 0.6679087890515802,
+          "p25": 0.6770525390602415,
+          "median": 0.6935277343727648,
+          "p75": 0.7304281249962514,
+          "p95": 0.7840208984343917,
+          "max": 0.7991339843720198
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2100.0568878906197,
+          "stampToCallbackMs": 0.021412109374068677,
+          "feedToStampMs": 0.6813878906250466
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2279.8269074218697,
+          "stampToCallbackMs": 0.03329257812583819,
+          "feedToStampMs": 0.6756074218719732
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4200.92798164062,
+          "stampToCallbackMs": 0.024218359380029142,
+          "feedToStampMs": 0.7386816406215075
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 4362.46606757812,
+          "stampToCallbackMs": 0.023032421886455268,
+          "feedToStampMs": 0.7056675781204831
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 4560.10913398437,
+          "stampToCallbackMs": 0.0986660156340804,
+          "feedToStampMs": 0.7991339843720198
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4899.70044257812,
+          "stampToCallbackMs": 0.04655742188333534,
+          "feedToStampMs": 0.6653425781114493
+        }
+      ]
+    },
+    {
+      "id": "user-en-006",
+      "lang": "en",
+      "sha256": "965fc24cca795b42191854cac8d2b5747958ab0c144790dfc851631a562622ed",
+      "sourceSha256": "0c5e73b3fd6c11143bbe2c868ba5923c3b8058432d6b3539377399294d385310",
+      "vadEndMs": 344.74620351562044,
+      "bargeInMs": 314.66783437499544,
+      "maximumLatenessMs": 3.7119999999995343,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 344.7688999999955,
+      "bargeInReceiptMs": 314.70040000000154,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 366,
+          "min": 0.06130000000121072,
+          "p05": 0.06400000001303852,
+          "p25": 0.06947500000387663,
+          "median": 0.6345000000001164,
+          "p75": 0.6754999999975553,
+          "p95": 0.827049999992596,
+          "max": 3.4024999999965075
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.022696484375046566,
+          "p05": 0.02358871093892958,
+          "p25": 0.027157617194461636,
+          "median": 0.031618750013876706,
+          "p75": 0.032092187509988435,
+          "p95": 0.032470937506877816,
+          "max": 0.03256562500610016
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6855343749921303,
+          "p05": 0.6871412890555803,
+          "p25": 0.6935689453093801,
+          "median": 0.7016035156266298,
+          "p75": 0.865592382819159,
+          "p95": 0.9967834765731822,
+          "max": 1.029581250011688
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2160.5408812499954,
+          "stampToCallbackMs": 0.031618750013876706,
+          "feedToStampMs": 1.029581250011688
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2341.3553343749954,
+          "stampToCallbackMs": 0.03256562500610016,
+          "feedToStampMs": 0.6855343749921303
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4620.05870351562,
+          "stampToCallbackMs": 0.022696484375046566,
+          "feedToStampMs": 0.7016035156266298
+        }
+      ]
+    },
+    {
+      "id": "user-en-007",
+      "lang": "en",
+      "sha256": "cb7cc5e74d1b5dc506fb6d17c126ce9aefd5c843124bd422e5fbc2735d3080e3",
+      "sourceSha256": "271d297bd2782fe256f5925845b018642bb6bb8402c32320da1b2521b629c780",
+      "vadEndMs": 281.56923632812686,
+      "bargeInMs": 339.85390429687686,
+      "maximumLatenessMs": 8.520099999994272,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 281.65140000000247,
+      "bargeInReceiptMs": 339.8882000000158,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 370,
+          "min": 0.05850000001373701,
+          "p05": 0.06320000000414439,
+          "p25": 0.06937499999912689,
+          "median": 0.6181500000093365,
+          "p75": 0.6693500000110362,
+          "p95": 0.83209499999939,
+          "max": 4.429000000003725
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.022335546877002344,
+          "p05": 0.023531562503194436,
+          "p25": 0.028315625007962808,
+          "median": 0.03429570313892327,
+          "p75": 0.058229687507264316,
+          "p95": 0.07737687500193716,
+          "max": 0.08216367187560536
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.656164453132078,
+          "p05": 0.6562484375055646,
+          "p25": 0.6565843749995111,
+          "median": 0.6570042968669441,
+          "p75": 0.7898703124956228,
+          "p95": 0.8961631249985658,
+          "max": 0.9227363281243015
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2060.430564453127,
+          "stampToCallbackMs": 0.022335546877002344,
+          "feedToStampMs": 0.656164453132078
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2259.853904296877,
+          "stampToCallbackMs": 0.03429570313892327,
+          "feedToStampMs": 0.6570042968669441
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4681.569236328127,
+          "stampToCallbackMs": 0.08216367187560536,
+          "feedToStampMs": 0.9227363281243015
+        }
+      ]
+    },
+    {
+      "id": "user-en-008",
+      "lang": "en",
+      "sha256": "411cc451576a9986c5808676b8c0beb04dfa9bae231b347d91ccffe0905870af",
+      "sourceSha256": "1c4bb7f1cd01defbe4b85e9ff9bd83ae4189d09f6ed3865a78a23f9e1eca9a5e",
+      "vadEndMs": 319.24861445312854,
+      "bargeInMs": 320.25422968750354,
+      "maximumLatenessMs": 4.804200000013225,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 319.27130000002217,
+      "bargeInReceiptMs": 320.28919999999925,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 416,
+          "min": 0.05939999996917322,
+          "p05": 0.0644750000355998,
+          "p25": 0.0754249999881722,
+          "median": 0.645650000020396,
+          "p75": 0.7247499999648426,
+          "p95": 0.9263000000064494,
+          "max": 2.6075999999884516
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 9,
+          "min": 0.022120312496554106,
+          "p05": 0.022346406255383044,
+          "p25": 0.02421328122727573,
+          "median": 0.028156640648376197,
+          "p75": 0.034970312495715916,
+          "p95": 0.04378585938829928,
+          "max": 0.0494644531281665
+        },
+        "feedStartToEventStampMs": {
+          "count": 9,
+          "min": 0.6910144531284459,
+          "p05": 0.6923814843758009,
+          "p25": 0.699229687510524,
+          "median": 0.729643359372858,
+          "p75": 0.7517796874744818,
+          "p95": 0.9014972656266763,
+          "max": 0.9962355468887836
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2120.2976867187535,
+          "stampToCallbackMs": 0.02421328122727573,
+          "feedToStampMs": 0.7369867187226191
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2320.2542296875035,
+          "stampToCallbackMs": 0.034970312495715916,
+          "feedToStampMs": 0.699229687510524
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 3660.4932433593785,
+          "stampToCallbackMs": 0.028156640648376197,
+          "feedToStampMs": 0.729643359372858
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 3780.9729796875035,
+          "stampToCallbackMs": 0.022120312496554106,
+          "feedToStampMs": 0.7517796874744818
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 3980.0808898437535,
+          "stampToCallbackMs": 0.034810156270395964,
+          "feedToStampMs": 0.7593898437335156
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 5220.4727355468785,
+          "stampToCallbackMs": 0.0494644531281665,
+          "feedToStampMs": 0.9962355468887836
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 6100.9346496093785,
+          "stampToCallbackMs": 0.024850390618667006,
+          "feedToStampMs": 0.712849609379191
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 6280.9666320312535,
+          "stampToCallbackMs": 0.03526796877849847,
+          "feedToStampMs": 0.6944320312468335
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 6639.2486144531285,
+          "stampToCallbackMs": 0.02268554689362645,
+          "feedToStampMs": 0.6910144531284459
+        }
+      ]
+    },
+    {
+      "id": "user-en-009",
+      "lang": "en",
+      "sha256": "e0fe012c633521896e0ab0fbe51c811cc4cf578df5d5575e35e49adc96a96938",
+      "sourceSha256": "3f3d06963d690672e833e7a47efb326dfd59d58238e6820ce1724f4569ca015a",
+      "vadEndMs": 262.18694960937046,
+      "bargeInMs": 320.05828749999637,
+      "maximumLatenessMs": 5.220399999991059,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 262.2457999999742,
+      "bargeInReceiptMs": 320.09090000001015,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 398,
+          "min": 0.060600000026170164,
+          "p05": 0.0636700000060955,
+          "p25": 0.07232500000100117,
+          "median": 0.6244000000006054,
+          "p75": 0.688174999988405,
+          "p95": 0.9113200000108918,
+          "max": 4.047900000005029
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.021210156264714897,
+          "p05": 0.022350390639621763,
+          "p25": 0.026911328139249235,
+          "median": 0.032612500013783574,
+          "p75": 0.04573144530877471,
+          "p95": 0.05622660154476762,
+          "max": 0.058850390603765845
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6562874999945052,
+          "p05": 0.6566977343696635,
+          "p25": 0.6583386718702968,
+          "median": 0.6603898437460884,
+          "p75": 0.73266972656711,
+          "p95": 0.7904936328239274,
+          "max": 0.8049496093881316
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2120.6456898437464,
+          "stampToCallbackMs": 0.021210156264714897,
+          "feedToStampMs": 0.6603898437460884
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2320.0582874999964,
+          "stampToCallbackMs": 0.032612500013783574,
+          "feedToStampMs": 0.6562874999945052
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 5222.186949609371,
+          "stampToCallbackMs": 0.058850390603765845,
+          "feedToStampMs": 0.8049496093881316
+        }
+      ]
+    },
+    {
+      "id": "user-en-010",
+      "lang": "en",
+      "sha256": "760d9d5ea8f346772c06770729a3d90c2b13795d3ac213d7680782a80a4be89a",
+      "sourceSha256": "80727ff574afc0c010a339243c9ddf6d3934b046f9fb52b5df046ea241d9efd8",
+      "vadEndMs": 327.8132937499904,
+      "bargeInMs": 297.9180300781154,
+      "maximumLatenessMs": 7.760299999965355,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 327.836100000015,
+      "bargeInReceiptMs": 297.95250000001397,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 382,
+          "min": 0.04790000000502914,
+          "p05": 0.061199999996460974,
+          "p25": 0.06829999998444691,
+          "median": 0.6198999999905936,
+          "p75": 0.6742000000085682,
+          "p95": 0.8630549999594223,
+          "max": 3.692299999995157
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.022806250024586916,
+          "p05": 0.0229754687694367,
+          "p25": 0.023652343748835847,
+          "median": 0.024498437473084778,
+          "p75": 0.02948417968582362,
+          "p95": 0.033472773456014696,
+          "max": 0.03446992189856246
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.7166937500005588,
+          "p05": 0.718184531253064,
+          "p25": 0.7241476562630851,
+          "median": 0.7316015625256114,
+          "p75": 0.7520658203284256,
+          "p95": 0.768437226570677,
+          "max": 0.7725300781312399
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2119.7088015624904,
+          "stampToCallbackMs": 0.024498437473084778,
+          "feedToStampMs": 0.7316015625256114
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2320.1680300781154,
+          "stampToCallbackMs": 0.03446992189856246,
+          "feedToStampMs": 0.7725300781312399
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 5002.25079374999,
+          "stampToCallbackMs": 0.022806250024586916,
+          "feedToStampMs": 0.7166937500005588
+        }
+      ]
+    },
+    {
+      "id": "user-en-011",
+      "lang": "en",
+      "sha256": "94d0325ef34c7780ff58640ae930a310958c3cf84c612317222a650d1dad7823",
+      "sourceSha256": "8518f73f92b24affbe8f5c29f973fded384fdff3e3fd4084df84c57524f22db1",
+      "vadEndMs": 334.71849062497495,
+      "bargeInMs": 311.77244570309995,
+      "maximumLatenessMs": 7.461999999999534,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 334.7662999999593,
+      "bargeInReceiptMs": 311.80469999997877,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 386,
+          "min": 0.053100000019185245,
+          "p05": 0.060625000012805685,
+          "p25": 0.06724999999278225,
+          "median": 0.6262499999720603,
+          "p75": 0.6846749999967869,
+          "p95": 0.8788750000239816,
+          "max": 3.8466999999945983
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.0261460937326774,
+          "p05": 0.026756914047291504,
+          "p25": 0.02920019530574791,
+          "median": 0.03225429687881842,
+          "p75": 0.0400318359315861,
+          "p95": 0.04625386717380024,
+          "max": 0.04780937498435378
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.652845703123603,
+          "p05": 0.6574901953106747,
+          "p25": 0.676068164058961,
+          "median": 0.6992906249943189,
+          "p75": 0.7408722656255122,
+          "p95": 0.7741375781304669,
+          "max": 0.7824539062567055
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2100.640853906225,
+          "stampToCallbackMs": 0.0261460937326774,
+          "feedToStampMs": 0.7824539062567055
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2281.8974457031,
+          "stampToCallbackMs": 0.03225429687881842,
+          "feedToStampMs": 0.652845703123603
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 5039.968490624975,
+          "stampToCallbackMs": 0.04780937498435378,
+          "feedToStampMs": 0.6992906249943189
+        }
+      ]
+    },
+    {
+      "id": "user-en-012",
+      "lang": "en",
+      "sha256": "dd324c63200a06ef84d013b4540ca77df8a725e78613276d4eedf3619a5dbb39",
+      "sourceSha256": "7aad14d130984f0449ef7478d6bf87139d95491dc587ad2cf0c714bee3ded411",
+      "vadEndMs": 281.91568124998594,
+      "bargeInMs": 261.10171640623594,
+      "maximumLatenessMs": 6.676799999957439,
+      "diagnosticCodes": [],
+      "vadEndReceiptMs": 281.9401000000071,
+      "bargeInReceiptMs": 261.1379999999772,
+      "processing": {
+        "feedCallWallMs": {
+          "count": 354,
+          "min": 0.04529999999795109,
+          "p05": 0.05709999997634441,
+          "p25": 0.06542499997885898,
+          "median": 0.625,
+          "p75": 0.6955500000185566,
+          "p95": 0.9217499999795105,
+          "max": 3.033199999947101
+        },
+        "eventStampToLocalCallbackMs": {
+          "count": 3,
+          "min": 0.024418750021141022,
+          "p05": 0.02533148439251818,
+          "p25": 0.0289824218780268,
+          "median": 0.033546093734912574,
+          "p75": 0.03491484373807907,
+          "p95": 0.036009843740612266,
+          "max": 0.03628359374124557
+        },
+        "feedStartToEventStampMs": {
+          "count": 3,
+          "min": 0.6813812499749474,
+          "p05": 0.6958047656051349,
+          "p25": 0.7534988281258848,
+          "median": 0.8256164062768221,
+          "p75": 0.8425351562618744,
+          "p95": 0.8560701562499162,
+          "max": 0.8594539062469266
+        },
+        "isolatedNativeVadMs": null,
+        "externalIpcSendMs": null
+      },
+      "trace": [
+        {
+          "type": "voice.vad",
+          "state": "speechStart",
+          "at": 2060.375153906236,
+          "stampToCallbackMs": 0.033546093734912574,
+          "feedToStampMs": 0.8594539062469266
+        },
+        {
+          "type": "voice.bargeIn",
+          "at": 2261.101716406236,
+          "stampToCallbackMs": 0.03628359374124557,
+          "feedToStampMs": 0.8256164062768221
+        },
+        {
+          "type": "voice.vad",
+          "state": "speechEnd",
+          "at": 4361.915681249986,
+          "stampToCallbackMs": 0.024418750021141022,
+          "feedToStampMs": 0.6813812499749474
+        }
+      ]
+    }
+  ]
+}

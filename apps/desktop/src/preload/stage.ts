@@ -1,3 +1,5 @@
+import { MicController } from '../../../../packages/voice/web/mic.js';
+let microphone: MicController | undefined;
 import { ipcRenderer, contextBridge } from 'electron';
 
 let controlPort: MessagePort | null = null;
@@ -27,6 +29,17 @@ ipcRenderer.on('nemu:channel:control', (event) => {
 
   // Forward incoming control messages (e.g. stage.event, stage.* commands) to the stage window page
   controlPort.onmessage = (msgEvent) => {
+    void microphone?.command(msgEvent.data).catch(() => {
+      controlPort?.postMessage({
+        v: 2,
+        id: 'mic-error',
+        type: 'stage.error',
+        payload: {
+          code: 'MIC_CAPTURE_FAILED',
+          message: 'Microphone permission or device unavailable',
+        },
+      });
+    });
     window.postMessage(msgEvent.data, '*');
   };
 
@@ -40,7 +53,10 @@ ipcRenderer.on('nemu:channel:control', (event) => {
 // Also forward audio, mic, bus ports to the page if needed
 for (const channel of ['nemu:channel:audio', 'nemu:channel:mic', 'nemu:channel:bus']) {
   ipcRenderer.on(channel, (event) => {
-    window.postMessage({ type: channel }, '*', event.ports);
+    if (channel === 'nemu:channel:mic' && event.ports[0]) {
+      void microphone?.set(false);
+      microphone = new MicController(event.ports[0]);
+    } else window.postMessage({ type: channel }, '*', event.ports);
   });
 }
 
@@ -64,4 +80,9 @@ contextBridge.exposeInMainWorld('nemuDesktop', {
   isElectron: true,
   platform: process.platform,
   role: 'stage',
+  microphoneStatus: () => microphone?.status() ?? { active: false, frames: 0 },
+});
+
+window.addEventListener('beforeunload', () => {
+  void microphone?.set(false);
 });

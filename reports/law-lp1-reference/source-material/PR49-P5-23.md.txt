@@ -1,0 +1,221 @@
+# P5-23 规格对照：规律引擎 G（倾向的证据计数）
+
+任务卡：`tasks/P5-echo-core.md` P5-23（含 ADR 0014 的追加说明与更正）。规格：`docs/echo-core/echo-core-v2.0-first-principles.md`（下称 v2.0）第 2.2、4、5、6、7、10、12、13、16 节；ADR 0009、0014；参考核验 `reports/echo-core-v2-draft/check_law.py`。实现目录：`core/crates/core-kernel/src/law/`。类型只用 `core-types` 中由 IDL 生成的类型（黄金规则 2）；G 的输入是进程内的 DTO，不跨进程、不持久化。
+
+本卡写定的读法与重建登记在 `diff-register.md` 的 V2-38 至 V2-49。IDL 缺少的五个字段（V2-48）由契约卡 P5-32（ADR 0016、V2-50，PR #52）补上；P5-32 已合并，R 由生成的 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2 承载（D12）。
+
+## 1. 规范定义
+
+v2.0 第 5.2 节说「计算次序是规范定义」。下面把它写完整，包括 v2.0 没有写到的几处（标出登记号）。同一段 H、同一组解释记录，任何实现都必须按这里的次序和写法得到逐位相同的 R。
+
+### D1 组与它的位置（V2-38）
+
+- 一个证据组在 H 中的位置是它第一个成员的提交位置（`raw_log_position`）。教导组同样取第一次出现（EV7）。
+- 一个组对一个倾向 k 的分配 (c, k) 在第一次建立时得到序号：它是 k 的第几组（从 0 起，等于建立前的 N_k）。序号此后不变：成员增加、份额调整、内容重算都不改变它，重复也不「刷新」它（EV7）。
+
+### D2 一步：一个已提交事件
+
+G 每次处理一个已提交事件 e：R′ = G(R, b, σ̂, e 带来的证据项; 𝔏_v)。b、σ̂ 取 e 之前的 θ。e 带来的证据项包括：
+
+1. e 提出的新候选（记录与 e 同事务提交）；
+2. e 使之变化的证据组：由 e 新形成的组、e 加入的已有组（后来的成员）、e 的候选按 EV5 回溯收集到的旧组、在 e 处追加的补做解释（M 降级后补做的 μ）所涉的旧组。
+
+一步之内的次序：
+
+1. 新建倾向：候选（先做别名归并，D10）与第一次涉及的人的关系倾向（D6），按倾向 ID 的规范次序，各自以初值建立（D4.0）；
+2. 证据组：按组的位置升序，位置相同按 group_id 的规范次序，逐组处理（D3）；
+3. 容量保险丝（D7）；
+4. 生成 L 条目（D11）。
+
+没有证据项的一步，R′ 与 R 逐位相同，不产生 L 条目（LP5、AC2-05）。
+
+### D3 处理一组 c
+
+- **吻合的倾向：** K = c 中 μ > 0、且在 R 中（第 1 步之后）的倾向。指向不在 R 中的倾向 ID 的吻合项忽略（例如已被容量移出的候选）。
+- **经历组的支持与强度**（v2.0 第 5.2 节；b、σ̂ 取本事件之前的 θ；r̃_k 取处理 c 之前的 r_k）：
+  - Δ_c = mean_{e∈c}(a(e) − b)，均值按 D9 精确计算；
+  - p_c = ⟨Δ_c, d_k⟩；S = μ_{c,k} · clip(2p_c/r̃_k − 1, −1, 1)，r̃_k = max(r_k, r_min)；
+  - 强度 = min(w_max, max(r̃_k, max_{e∈c} |⟨a(e) − b, d_k⟩|)/σ̂_k)，σ̂_k = √(Σ_i d_{k,i}² σ̂_i²)，按 √(Σ_i (d_{k,i} σ̂_i)²) 依通道次序计算。
+- **教导组**（V2-45）：只分给被教的倾向 k；S = +1（「正」）或 −1（「反」），μ 视为 1；强度 w_teach；可信 = 她对说话人的信任 (1 + π)/2，取处理 c 之前的值，此人还没有信任倾向时为 ½（第 10 节「从中性开始」）。教导组不进入 r_k。
+- **可信与可核实：** 经历组可信为 1；可核实取 1，组被标为无法核实时取 v_u（EV9；属性由 P5-06 给出，P5-24 汇总到组）。
+- **份额**（V2-40）：S > 0 的一边与 S < 0 的一边分别分配，share_k = q_k / Σ_{j∈同一边} q_j，q_j = (1 + π_j)/2；π_j 取本步处理 c 之前的值（同一步中先处理的组已经计入）；求和按倾向 ID 的规范次序。S = 0 的倾向份额为 0。
+- **权重：** W = 强度 × 可信 × 可核实 × 份额，按这个次序相乘。
+- **记入：** 按倾向 ID 的规范次序处理 K 中的每个倾向：
+  - (c, k) 是新的分配：按 D4 记入一组；
+  - (c, k) 已有且值逐位相同：不变（同一组重复到来不改变结果，AC2-03）；
+  - (c, k) 已有但值变了：原地更新这个分配，序号不变，然后按 D5 重放 k。
+- **什么时候重算已有的分配：**
+  - 组的内容变了（后来的成员，V2-39）：重算 c 的 Δ_c、峰值，以及每个已有分配的 S、p_c、强度，用的是本步的 b、σ̂、r̃；不算新的一组，不使 k 的旧证据再衰减一次；
+  - 组的内容没变、只有吻合的倾向变了（新候选加入、补做解释、容量移出）：已有分配只改份额，S、强度、p_c、μ 保持原值（V2-40、V2-41）；只有成员组成变了的那一边重新分摊，另一边的份额照旧；
+  - 组的内容变了时，两边都按本步的 π 重新分摊；
+  - 教导组的重复（同一个人反复说同一件事）只加入成员，不改变组的任何值；可信在组第一次形成时取定（EV7「重复不刷新」）；
+  - 成员没变、而某个已有分配的 μ 变了：这是重新解释，返回显式故障（重新解释与重算在 P5-26）。
+- **一个倾向的 μ 从哪里来：** 直接的吻合项优先，其次是已存的分配，最后是映射到它的别名（D10）。同一来源有多项时取第一项。
+
+### D4 一个倾向记入一组（递推）
+
+记 c₀ = n₀ + κ_k，κ_k = κ₁ × |谓词的条件数|。按这个次序计算：
+
+```
+ĥ_k  = (h₀ · n_h + F_k) / (n_h + N_k)，有下限 ĥ_min 时取 max(ĥ_k, ĥ_min)    # 用记入之前的 N、F
+ρ    = 1 − ĥ_k
+A_k  ← ρ · A_k + W · S
+B_k  ← c₀ + ρ · (B_k − c₀) + W · |S|                                      # B_k 含 n₀ + κ_k，先验部分不衰减
+M_k  ← ρ · M_k + μ · p_c ；U_k ← ρ · U_k + μ                              # 经历组；教导组只乘 ρ（ADR 0016）
+符号 σ = sgn(S)；σ ≠ 0 时：上一组符号存在且不同则 F_k += 1；上一组符号 ← σ
+N_k  += 1
+ĥ_k  ← (h₀ · n_h + F_k) / (n_h + N_k)（同样取下限）
+π_k  = (P_k + A_k) / (P_k + B_k)，P_k 是依恋先验 A_att（只在 u* 的亲近上），其余为 0
+r_k  = clip(M_k / U_k, 0, r_max)；U_k = 0 时 r_k = 0
+```
+
+- S = 0 的组照常记入：旧证据乘 ρ，N 加一，符号不变（与 `check_law.py` 相同）。
+- D4.0 初值：A = 0，B = c₀，N = F = 0，没有上一组符号，M = U = 0，π = P/(P + c₀)，r = 0，ĥ = h₀（取下限）。u* 的信任另有初始证据（D6）。
+- 以递推为准，不用闭式（LAW-7）。
+
+### D5 重放一个倾向（V2-39、V2-41、V2-43）
+
+已有分配的值变了时，从 D4.0 的初值出发，按序号升序对 k 的全部分配逐个执行 D4，W 由存下的因子按 D3 的次序重算。值没变时，重放得到与原值逐位相同的结果。重放只读存下的 S、强度、份额、可信、可核实、序号、μ、p_c，不读 b、σ̂，也不读任何倾向的 π 历史（ADR 0016 第 4、5 节）。
+
+### D6 关于人的倾向（V2-42）
+
+- 每个人至多一个亲近、一个信任，都是结构上的倾向。ID：`rel:closeness:<person_id>`、`rel:trust:<person_id>`。
+- 第一次涉及此人时（某一组的吻合项指向此人的关系倾向而它不在 R 中）以 D4.0 的初值建立，π = 0。吻合度由 P5-24 按参与者确定性给出。
+- 概念：两个结构概念的 ConceptRef 由调用方按概念注册表给出（P5-06），G 不登记概念；谓词各一条（κ = κ₁），文本是代码里的固定常量，随规律的参考形式版本化。
+- 预言方向：
+  - 亲近 d = (1, 0, 0, 0)：和此人在一起时，联结高于平常；
+  - 信任 d = (0, 0, 1/√2, 1/√2)：依靠此人说的话、做的事，能学到东西、能把事做成。
+- u*：两个倾向在 R₀ 中，由 genesis 给出：
+  - 亲近就是依恋，带先验 P = A_att，先验不乘新近权重（推论 7）；
+  - 信任没有先验，以初始证据 A_att 起步（A = A_att，B = c₀ + A_att），初值 π = A_att/(c₀ + A_att)。这份初始证据像普通证据一样随新近权重让位，所以信任是「先验给的很高的初值」，之后由相处长出来（第 10 节）。
+  - 被移出后再次涉及 u* 时，以同样的初值重建。
+- 读出（供 P5-10、教导的可信）：亲近度 = clip((1 + π)/2, w_min, 1)；信任 = (1 + π)/2；此人没有对应倾向时按 π = 0。
+- 带关系的候选记录（TendencyCandidateRecord.relation）归并到此人的结构倾向：已有则不新建，没有则按上面的结构定义建立，记录里的概念、谓词、方向不用。
+
+### D7 容量（V2-43）
+
+一步的证据组处理完后，只要 |R| 超过 `FuseConfig.r_capacity`：
+
+1. 在候选（π ≤ ½）中选证据量最小的一个移出 R。证据量 V_k = (B_k − c₀) + P_k。平局按倾向 ID 的规范次序，排在前面的先移出；
+2. 删除它在各组中的分配；同一边还有其他倾向的组，按 D3 的份额规则（取此刻的 π）重新分摊，受影响的倾向按 D5 重放；
+3. 重复，直到不超过容量。已成为性格的倾向（π > ½）不移出；候选移完仍超过容量时，返回显式故障 `CapacityExhausted`。
+
+移出的倾向的证据仍在 H 中，规则确定，重算得到相同的结果（第 12 节）。
+
+### D8 单组上限
+
+强度 ≤ w_max 由公式保证，w_teach ≤ w_max 由参数检查保证，所以 W ≤ w_max。G 在每个分配上断言这一点，违反即显式故障。
+
+### D9 数值（V2-44）
+
+- 只用有限 binary64；每个计算出的状态值都检查有限性，NaN、±Inf 是显式故障 `NonFinite`；计数用检查过的加法，溢出是显式故障 `Overflow`。
+- 舍入使记入后的倾向越出有效区域（\|A_k\| > B_k，或 π_k 不在开区间 (−1, 1)）时，是显式故障 `PrecisionExhausted`，在产生它的那一步报告，不存下。只在 n₀ + κ_k 相对 B_k 小到 binary64 分辨不出时发生（例如 n₀ = 10⁻³⁰⁰）。
+- M、U 分别舍入，在次正规数边缘可以得到 U = 0 而 M ≠ 0；这是合法状态，r_k = 0（PR #52 审查，ADR 0016 末节）。
+- 组内均值：先在 binary64 里算每个成员的 a(e) − b，再精确求和（与次序无关），除以成员数后正确舍入到最近的 binary64（平局取偶）。同一组成员整体重复任意次，均值逐位不变；朴素的 Σ/n 在随机试验里约 22% 的情况下不满足这一点。
+- 内积按通道次序（联结、共情、好奇、成事）从左到右累加；跨倾向的求和按倾向 ID 的规范次序。
+- 存下的值中 −0 归一为 +0（与 CanonicalV1 一致）。
+- 不读墙钟，不用随机数，不访问存储、网络、模型。
+
+### D10 别名（V2-46，ADR 0014 第 4 条）
+
+- 候选的概念先映射到规范代表（输入给出「概念 → 规范代表」，没有映射时就是它自己）。
+- 规范代表与 R 中某个倾向的规范代表相同，或与本步先建立的候选相同（按倾向 ID 的规范次序），就不建立新倾向：这个候选的 ID 在本步的吻合项里换成那个倾向的 ID。组里已经有那个倾向的直接吻合项或已存的分配时，别名项不起作用（D3「μ 从哪里来」）。
+- 新候选的倾向 ID 取它的记录 ID（`record_id`）。
+
+### D11 L 条目（V2-47）
+
+本步中值有任何变化的倾向各一条 TendencyChange：π 的前值（新建的缺省）、后值（移出的缺省）、本步为它处理过的证据组（集合）。按倾向 ID 的规范次序排列。entry_id、event_id 由外层事务填写（P5-29）。
+
+### D12 R 的存储类型
+
+R 与证据组摘要只用 core-types 中由 IDL 生成的 TendencyV2、EvidenceAllocationV2、EvidenceGroupV2、RSnapshotV2（P5-32、ADR 0016；黄金规则 2）。G 读入 R 时先做契约层的检查（`check_tendency_v2`、`check_allocation_ordinals`），再检查与规律逐位一致（`check_stored`、`check_with_allocations`）。L 的载荷是生成的 TendencyChange。`law/` 里的结构体（`RState`、`Step`、`Output` 等）只在一次调用里把这些值捆在一起，不序列化。
+
+P5-32 合并之前，本卡曾按用户 2026-10-22 的决定在 `law/pending.rs` 用字段一一对应的临时结构承载 R，G 暂不导出。P5-32 合并后已换成上述生成的类型，临时结构已删去，G、`Output`、`RState` 从 `law` 导出。`recurrence::record`（不带投影的一组）同时让 M、U 乘 ρ，使任何存下的 TendencyV2 都与规律一致。
+
+## 2. 规格对照表
+
+实现位置相对于 `core/crates/core-kernel/src/law/`；测试都在 `core/crates/core-kernel/src/law/tests/` 下，以测试函数名标出（`cargo test -p core-kernel law::`）。R 是 P5-32 生成的类型（D12）。随机世界（`tests/world.rs`）每一步之后都检查 I25 与重放恒等（`check_world`）。
+
+| 规格条款 | 原文要点（一句话） | 实现位置 | 测试（含验收编号） |
+| --- | --- | --- | --- |
+| v2.0 §5.1 LP1 | 一致累积，相反抵消 | `recurrence.rs` `record`、`apply` | `ac2_01_consistent_evidence_raises_pi_and_contrary_lowers_it`、`ac2_01_reference_form_lets_old_support_give_way`（V2-49） |
+| v2.0 §5.1 LP2 | 一组被几个倾向同时解释时分享，份额之和为 1，不重复计数 | `shares.rs` `shares` | `ac2_02_i25_each_side_sums_to_one_and_zero_support_gets_nothing`、`law_8_shares_sum_to_one_per_side_i25`；经 G：`ac2_02_i25_and_replay_identity_hold_after_every_step_of_random_worlds`、`ev5_back_collection_reshares_old_groups_and_keeps_i25` |
+| v2.0 §5.1 LP3 | 同一组内的重复不增加权重 | `support.rs` `experience`、`num.rs` `exact_mean` | `law_9_repeats_add_nothing_and_missing_reaction_counts`（逐位）、`exact_mean_is_order_and_repetition_invariant` |
+| v2.0 §5.1 LP4 | 旧证据让位的快慢跟随学到的 ĥ，ĥ 有弱先验 h₀ | `params.rs` `h_hat`；`recurrence.rs` `rho` | `law_3_reversal_corollary_3`、`law_7_recurrence_is_canonical` |
+| v2.0 §5.1 LP5 | 没有新证据时 R 不变；不设计时器与次数门槛 | `engine.rs` `g`（没有时间输入，空步返回原 R） | `ac2_05_without_new_evidence_r_is_bitwise_unchanged`、`law_5_time_and_state_independence_corollary_5` |
+| v2.0 §5.1 LP6 | 越复杂越需要更多证据；醒目的一次就够 | `params.rs` `kappa`、`base`；`support.rs` 强度 | `ac2_06_complex_tendencies_need_more_and_one_salient_group_suffices`、`law_2_one_shot_and_occam_corollary_2` |
+| v2.0 §5.1 LP7 | 已有证据越多，一组新证据的影响越小 | `recurrence.rs` | `ac2_07_one_group_moves_pi_at_most_by_corollary_4`、`law_4_single_group_bound_corollary_4` |
+| v2.0 §5.1 LP8 | 计数只读证据与 b、σ̂、π，不读 x、m、g、λ | `input.rs` `ThetaView`（只有 b、σ̂）；`engine.rs` `g` 的签名 | `i10_g_signature_has_no_x_m_g_or_lambda` |
+| v2.0 §5.2 π、A、B | π = A/B，A = Σ ω·W·S，B = n₀ + κ + Σ ω·W·\|S\| | `recurrence.rs` `apply`、`pi` | `law_1_threshold_corollary_1`、`law_3_reversal_corollary_3` |
+| v2.0 §5.2 预言与支持 | S = μ·clip(2p/r̃ − 1, −1, 1)，没出现的反应也是证据 | `support.rs` `experience` | `law_9_repeats_add_nothing_and_missing_reaction_counts` |
+| v2.0 §5.2 强度 | min(w_max, max(r̃, 峰值)/σ̂_k)；教导取 w_teach | `support.rs` `experience`、`fluctuation`、`teaching` | `law_9_*`、`ac2_21_single_group_weight_never_exceeds_w_max` |
+| v2.0 §5.2 可信、可核实 | 经历为 1，教导取信任；可核实 1 或 v_u | `support.rs` `weight`；`relation.rs` `trust` | `teaching_weight_follows_trust_in_the_speaker_and_verifiability` |
+| v2.0 §5.2 份额 | 两边各按 (1 + π)/2 分配，和为 1，π 取组之前的值 | `shares.rs` | `ac2_02_*`、`law_8_*`、`shares_reject_duplicates_and_out_of_range_values` |
+| v2.0 §5.2 新近权重 | 每来一组，旧证据乘当时的 ρ；与时间无关 | `recurrence.rs` `record` | `law_5_*`、`law_6_memory_bound_corollary_6`、`law_7_*` |
+| v2.0 §5.2 变化率 | ĥ = (h₀n_h + F)/(n_h + N)，ρ = 1 − ĥ | `params.rs` `h_hat`；`recurrence.rs` 翻转计数 | `law_3_*`；`stored_state_is_checked_before_use`（存下的 ĥ 必须与公式逐位一致） |
+| v2.0 §5.2 复杂度代价 | κ_k = κ₁ × 条件数 | `params.rs` `kappa` | `ac2_06_*` |
+| v2.0 §5.2 典型幅度 | r_k 是吻合组 p_c 的加权平均（ω·μ），截断到 [0, r_max] | `replay.rs` `record_group`、`typical_magnitude` | `first_group_records_ordinal_zero_and_the_typical_magnitude`；`check_world`（存下的 r_k 必须等于 clip(M/U)） |
+| v2.0 §5.2 作用强度 | s = max(0, 2π − 1)；π > ½ 进入 R⁺，≤ ½ 留在 R | `recurrence.rs` `strength`、`is_personality` | `ac2_21_capacity_choice_*`（π > ½ 不被移出） |
+| v2.0 §5.2 计算次序 | 按 H 次序逐组，先乘 ρ 再加入；递推为准 | `recurrence.rs`；`engine.rs` 的阶段次序（D2） | `law_7_recurrence_is_canonical`；`step_order_of_inputs_does_not_matter` |
+| v2.0 §5.3 推论 1 | 只有一致证据时 π > ½ ⟺ E > n₀ + κ | `recurrence.rs` | `law_1_threshold_corollary_1` |
+| v2.0 §5.3 推论 2 | 单组 W > n₀ + κ 一次成为性格；平常的事要累积 | 同上 | `law_2_*`、`ac2_06_*` |
+| v2.0 §5.3 推论 3 | π < ½ ⟺ C > (E − n₀ − κ)/3 | 同上 | `law_3_reversal_corollary_3` |
+| v2.0 §5.3 推论 4 | 单组影响 ≤ 2w/(B + w)（不计新近权重） | 同上 | `law_4_*`、`ac2_07_*` |
+| v2.0 §5.3 推论 5 | 时间不改变任何东西 | 同上；`engine.rs` | `law_5_*`、`ac2_05_*` |
+| v2.0 §5.3 推论 6 | ρ 不变时 E、C ≤ w_max/(1 − ρ) | 同上 | `law_6_memory_bound_corollary_6` |
+| v2.0 §5.3 推论 7 | 依恋先验不衰减；一致的反向证据终能改变，交替的不能 | `relation.rs` `relation_tendency`、`initial_r` | `law_10_attachment_corollary_7`、`ac2_13_attachment_resists_ordinary_contrary_experience_but_is_finite` |
+| v2.0 §2.2 | 增量与整段重算逐位一致；有限 binary64 | `num.rs`；D9；`recurrence.rs` `check_stored`、`apply`；`replay.rs`（ADR 0016 第 4 节） | `law_7_*`、`exact_mean_matches_correctly_rounded_reference`、`finite_normalises_negative_zero_and_rejects_nonfinite`、`check_world` 的重放恒等、`subnormal_edge_u_zero_with_m_nonzero_is_carried_and_recovers`、`precision_exhaustion_is_an_explicit_fault_at_the_step` |
+| v2.0 §4 EV2、EV7 | 同源只计一次；教导按信任加权，重复归组 | `group.rs`、`plan.rs`（D3）；组装在 P5-24 | `law_9_*`、`ac2_03_the_same_group_arriving_again_changes_nothing`、`teaching_counts_by_trust_and_repeats_do_not_refresh` |
+| v2.0 §4 EV5 | 旧组按同一规则收集与分摊 | `plan.rs`、`group.rs` `plan_shares`；`replay.rs`（D5） | `ev5_back_collection_reshares_old_groups_and_keeps_i25`、`late_member_updates_the_group_without_a_second_count` |
+| v2.0 §4 EV10 | 学习只用 a(e)，不用 x | `engine.rs` `g` 的签名 | `i10_*` |
+| v2.0 §7 | 候选是假设，以 π = 0 进入 R；π > ½ 进入 R⁺ | `engine.rs` `new_candidates` | `candidate_enters_r_at_pi_zero_with_an_l_entry` |
+| v2.0 §6、§10 | 亲近与信任是关于人的倾向；u* 的依恋与信任初值；亲近度供共情加权 | `relation.rs` | `relation_structure_ids_directions_and_r0`、`relation_readouts_closeness_weight_and_trust`、`relation_candidate_becomes_the_structural_tendency` |
+| v2.0 §12 容量 | 满时证据量最小的候选先移出，证据仍在 H | `fuse.rs` `eviction_choice`、`capacity` | `ac2_21_capacity_choice_takes_the_weakest_candidate_never_personality`、`ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups`、`ac2_21_capacity_with_resharing_keeps_i25_in_small_worlds` |
+| v2.0 §12 单组上限 | 单组强度不超过 w_max | `support.rs`；`fuse.rs` `check_weight_cap` | `ac2_21_single_group_weight_never_exceeds_w_max` |
+| v2.0 §2.5 | L 记 R 的每次变化：倾向、π 前后值、证据组 | `engine.rs` `Work::finish`（D11） | `candidate_enters_r_*`、`ac2_21_capacity_removes_*`；`check_changes`（每一步的 L 条目正好是值变了的倾向） |
+| ADR 0014 第 4 条 | 同义概念不增加证据或先验 | `engine.rs` `new_candidates`（D10） | `alias_adr_0014_any_number_of_synonyms_leaves_pi_and_r_unchanged` |
+| v2.0 §16 | 参数来自规律版本与 genesis | `params.rs` `Law::new`；`input.rs` `LawContext::new` | `stored_state_is_checked_before_use` |
+
+## 3. 验收编号
+
+| 编号 | 本卡覆盖范围 | 测试 | 状态 |
+| --- | --- | --- | --- |
+| AC2-01 | LP1：一致的证据使 π 增大，相反的使 π 减小（两种意义，V2-49） | `ac2_01_*` | 通过 |
+| AC2-02 | LP2、I25：每一边份额之和为 1 | `ac2_02_*`、`law_8_*`、`ev5_*` | 通过：分配函数，以及经 G 的每一步（含回溯分摊、后来的成员、容量移出） |
+| AC2-03 | 重复部分：组内成员整体重复 n 次与 1 次结果相同；同一组重复到来不改变结果 | `law_9_*`（逐位）、`ac2_03_*`、`teaching_*` | 通过 |
+| AC2-05 | R 部分：没有新证据时，不论经过多久，R 逐位不变 | `ac2_05_*`、`law_5_*` | 通过 |
+| AC2-06 | LP6 | `ac2_06_*`、`law_2_*` | 通过 |
+| AC2-07 | LP7、推论 4 | `ac2_07_*`、`law_4_*` | 通过 |
+| AC2-13 | 性质部分：普通的反向经历动不了依恋；长期一致的反向经历最终能改变 | `ac2_13_*`、`law_10_*` | 通过 |
+| AC2-21 | 容量与单组上限 | `ac2_21_*`；`check_world`（每个分配 W ≤ w_max） | 通过 |
+| I25 | 同源只计一次；每一边份额之和为 1 | `ac2_02_*`、`ac2_03_*`、`law_8_*`、`law_9_*` | 通过 |
+| I10 | 计数不读 x、m、g、λ（签名检查） | `i10_*` | 通过 |
+| 推论 1–7 | LAW-1 至 LAW-10，相同的种子与规模，0 违例 | `law_1_*` … `law_10_*` | 通过；状态数与 `results.txt` 一致 |
+
+## 2026-10-22 PR #49 审查后更正（追加，以本节为准）
+
+### D3 / D9：后来加入的纯重复成员
+
+「成员 ID 增加」不等于「证据内容变化」。调用方每次提供完整成员及 H 中不可变的 a(e)。按已存成员 ID 从本次输入取出旧成员；对每种四通道 a(e) 的位模式（−0 归为 +0），分别计数 old_count 与 new_count。若对所有模式都有 `old_count × new_size = new_count × old_size`，就是相同经验分布，包括整个组任意次重复；比较在整数中精确完成。
+
+这种重复只增加成员 ID，不刷新已有分配的 S、强度、p_c、μ、份额或序号，也不因当前 b、σ̂、r_k 已变而重算它。新的倾向仍按 D3 建立新分配、只重新分摊成员变化的一边。可核实属性发生变化另按原有规则处理。成员分布确实变了时仍执行 D3 原有内容重算；不擅自去重不同事件或改变 mean 公式。缺少任意旧成员时显式拒绝，因为不能从不完整输入证明重复关系。
+
+本判定只需现有成员 ID 和本次从 H 取得的 a(e)，没有增加 IDL 字段或持久缓存。D5 仍只读存下的分配，不读历史 b、σ̂、π。测试 `ac2_03_late_repetition_*` 覆盖单值/混合组、两边分配、不同重复次数和 theta 变化；原 `late_member_updates_*` 保留新信息导致变化的正向用例。
+
+### D10：首次建倾向的代表与 μ 优先级
+
+同一步先处理概念本身就是规范代表的候选，再处理别名，各层内部按倾向 ID 的规范次序。因此增加排序更靠前、μ 不同的别名不会夺取已有规范候选的结构和直接 μ。已存在的倾向仍优先复用。
+
+只有一个别名候选且 R 无对应倾向时，沿用其唯一的结构/记录 ID，但 ConceptRef 存规范 concept_id。若同一步只有多个竞争别名、没有规范候选或既有倾向，则显式 `InvalidInput`，不让记录 ID 任意决定结构或 μ；调用方应提供规范候选。这是对未定义歧义的保守拒绝，随 V2-46 待确认。正向/拒绝用例均在 `review_regressions.rs`；1、2、20 个附加别名、等长且排序更早的 ID、两种输入次序均有覆盖。
+
+### D7 / D11：一次移出与账本
+
+一次移出中，先删除该倾向的各组分配；所有相关组的份额都取这一次移出开始时的同一组剩余 π，全部份额写好后才重放受影响倾向，再选择下一次移出的候选。不会逐组重放并把更新后的 π 用于同一次移出的下一组。
+
+移出倾向的 L 条目列出所有被删除分配的组，包括 S = 0、同一边不再有其他倾向的组。保留的倾向继续记录它重新分摊的组。测试覆盖共享组、零支持、空边；原有容量与 I25 检查保留。
+
+### AC2-01 与其余证据的边界
+
+上表 AC2-01「通过」撤回，实际为 **failed**。相对同样衰减的基线通过不符合冻结的 LP1；原反例仍存在，见 ADR 0018 和 `reports/P5-23/verification/review-fixes-20261022/ac2-01-acceptance/result.json`。LP7 / 推论 4 单独处理，不用它的「不计新近权重」限定来改写 LP1。
+
+I23 新增 `replay_h.rs`：每一步先把 R 与组用 CanonicalV1 编码再解码，之后执行增量 G，与从 R₀ 按完整 H 前缀重做 G 比较规范字节及七个浮点字段的位模式；D5 另从存下分配重放比较。覆盖回溯分摊、内容改变的后来成员、纯重复后来成员、容量移出四个场景，以及 125 个随机 H 前缀。这里只验证本卡合成输入上的 G；P5-26 的真实存储/重算编排仍未验收。

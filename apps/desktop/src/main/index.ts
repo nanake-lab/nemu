@@ -1,3 +1,4 @@
+import { VoiceProcess } from '../voice/process.js';
 import { app, session } from 'electron';
 import { join, resolve, relative, isAbsolute, basename } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -23,7 +24,9 @@ if (scratch) {
     !basename(scratch).startsWith('nemu-scaffold-') ||
     relative(resolve(tmpdir()), resolve(scratch)).startsWith('..')
   ) {
-    throw new Error('Start through pnpm dev or the smoke test with an isolated temporary directory.');
+    throw new Error(
+      'Start through pnpm dev or the smoke test with an isolated temporary directory.',
+    );
   }
   app.setPath('userData', scratch);
 } else if (!app.isPackaged) {
@@ -45,6 +48,7 @@ if (!gotSingleInstanceLock) {
   let shortcutManager: ShortcutManager | null = null;
   let supervisor: ProcessSupervisor | null = null;
   let logger: DesktopLogger | null = null;
+  let voice: VoiceProcess | null = null;
   let appBus: AppBus | null = null;
   let settingsStore: SettingsStore | null = null;
 
@@ -77,12 +81,19 @@ if (!gotSingleInstanceLock) {
 
     displayManager.bindStageWindow(stageWin);
 
+    voice = new VoiceProcess(appBus, logger);
+    voice.start();
     channelManager = new ChannelManager({
+      voice,
       appBus,
       stageWindowManager,
       displayManager,
     });
 
+    voice.onUnexpectedExit(() => {
+      channelManager?.sendStageCommand('stage.mic.set', { enabled: false, mode: 'pushToTalk' });
+      channelManager?.setupStageChannels(stageWin);
+    });
     channelManager.establishChannels(stageWin, panelWin);
 
     trayManager = new TrayManager({
@@ -136,6 +147,7 @@ if (!gotSingleInstanceLock) {
     appGlobals.__nemu_stage_window__ = stageWindowManager;
     appGlobals.__nemu_panel_window__ = panelWindowManager;
     appGlobals.__nemu_bus__ = appBus;
+    appGlobals.__nemu_voice__ = voice;
     appGlobals.__nemu_channels__ = channelManager;
     appGlobals.__nemu_display__ = displayManager;
 
@@ -156,8 +168,22 @@ if (!gotSingleInstanceLock) {
   app
     .whenReady()
     .then(async () => {
-      session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) =>
-        callback(false),
+      session.defaultSession.setPermissionRequestHandler(
+        (contents, permission, callback, details) => {
+          callback(
+            permission === 'media' &&
+              contents === stageWindowManager?.getWindow()?.webContents &&
+              'mediaTypes' in details &&
+              details.mediaTypes.length > 0 &&
+              details.mediaTypes.every((type) => type === 'audio'),
+          );
+        },
+      );
+      session.defaultSession.setPermissionCheckHandler(
+        (contents, permission, _origin, details) =>
+          permission === 'media' &&
+          contents === stageWindowManager?.getWindow()?.webContents &&
+          details.mediaType === 'audio',
       );
       await bootstrap();
     })
@@ -177,6 +203,7 @@ if (!gotSingleInstanceLock) {
       logger?.info('Cleaning up Nemu desktop shell and child processes...');
       shortcutManager?.unregisterAll();
       trayManager?.destroy();
+      voice?.stop();
       channelManager?.destroy();
       panelWindowManager?.prepareQuit();
 

@@ -118,6 +118,8 @@ def normalize(name: str, value: Any, limits: Limits, depth: int = 0) -> dict[str
         fail(set(required) <= out.keys() and out.keys() <= allowed, "variant fields")
         for key, values in case.get("values", {}).items():
             fail(out[key] in values, "variant enum")
+    for group in SCHEMA["messages"][name]["rules"].get("oneofs", {}).values():
+        fail(sum(k in out for k in group["fields"]) == 1, "required oneof")
     return out
 
 
@@ -152,7 +154,14 @@ def encode_canonical(name: str, value: dict[str, Any], limits: Limits) -> bytes:
     out = bytearray(b"NCV1" + u32(1) + blob(message["tag"].encode("utf-8")))
     for f in message["fields"][1:]:
         key = f["name"]
-        if f["repeated"]:
+        if "oneof" in f:
+            group = message["rules"]["oneofs"][f["oneof"]]["fields"]
+            if key != group[0]:
+                continue
+            chosen = next(x for x in message["fields"] if x["name"] in group and x["name"] in v)
+            out.extend(u32(chosen["number"]))
+            out.extend(canonical_scalar(chosen["type"], v[chosen["name"]], limits))
+        elif f["repeated"]:
             out.extend(u32(len(v[key])))
             for item in v[key]:
                 out.extend(canonical_scalar(f["type"], item, limits))
@@ -216,7 +225,16 @@ def decode_canonical(
 
     value: dict[str, Any] = {"schema_version": 1}
     for f in m["fields"][1:]:
-        if f["repeated"]:
+        if "oneof" in f:
+            group = m["rules"]["oneofs"][f["oneof"]]["fields"]
+            if f["name"] != group[0]:
+                continue
+            number = r.uint()
+            chosen = next((x for x in m["fields"] if x["number"] == number and x["name"] in group), None)
+            fail(chosen is not None, "unknown oneof field")
+            assert chosen is not None
+            value[chosen["name"]] = atom(chosen["type"])
+        elif f["repeated"]:
             count = r.uint()
             fail(count <= limits.max_items, "count limit")
             value[f["name"]] = [atom(f["type"]) for _ in range(count)]

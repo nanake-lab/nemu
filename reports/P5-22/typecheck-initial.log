@@ -1,0 +1,5 @@
+$ tsc --noEmit
+packages/contracts/src/generated/echo/runtime.ts(248,21): error TS2532: Object is possibly 'undefined'.
+packages/contracts/src/generated/echo/runtime.ts(321,21): error TS2532: Object is possibly 'undefined'.
+packages/contracts/src/schemas.test.ts(104,7): error TS2739: Type '{ 'voice.vad': { state: string; }; 'voice.bargeIn': {}; 'voice.recognized': { utteranceKey: string; text: string; lang: string; durationMs: number; confidence: number; }; 'output.state': { outputId: string; state: string; }; ... 17 more ...; 'stage.error': unknown; }' is missing the following properties from type 'Record<"stage.ready" | "stage.hit" | "stage.drag" | "stage.frameStats" | "stage.error" | "voice.vad" | "voice.bargeIn" | "voice.recognized" | "output.state" | "output.chunk" | ... 15 more ... | "metrics.latency", unknown>': "core.notice", "growth.control", "approval.request.v2", "approval.decision.v2"
+[ELIFECYCLE] Command failed with exit code 2.

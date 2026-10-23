@@ -1,3 +1,5 @@
+import type { VoiceProcess } from '../voice/process.js';
+import { controlCommandSchema } from '@nemu/contracts';
 import { MessageChannelMain, type BrowserWindow } from 'electron';
 import {
   type ApplicationEvent,
@@ -12,6 +14,7 @@ import type { StageWindowManager } from './stage-window.js';
 import type { DisplayManager } from './display.js';
 
 export interface ChannelManagerOptions {
+  voice?: VoiceProcess;
   appBus: AppBus;
   stageWindowManager: StageWindowManager;
   displayManager?: DisplayManager | undefined;
@@ -28,6 +31,7 @@ const MIRRORED_STAGE_TYPES = [
 type MirroredType = (typeof MIRRORED_STAGE_TYPES)[number];
 
 export class ChannelManager {
+  private voice: VoiceProcess | undefined;
   private appBus: AppBus;
   private stageWindowManager: StageWindowManager;
   private displayManager?: DisplayManager | undefined;
@@ -39,6 +43,7 @@ export class ChannelManager {
   private micPortVoice: Electron.MessagePortMain | null = null;
 
   constructor(options: ChannelManagerOptions) {
+    this.voice = options.voice;
     this.appBus = options.appBus;
     this.stageWindowManager = options.stageWindowManager;
     this.displayManager = options.displayManager;
@@ -95,6 +100,8 @@ export class ChannelManager {
     const micChannel = new MessageChannelMain();
     this.micPortVoice = micChannel.port2;
 
+    this.voice?.attach(this.micPortVoice, this.audioPortVoice);
+
     // Transfer ports to Stage window
     try {
       stageWindow.webContents.postMessage('nemu:channel:control', null, [controlChannel.port2]);
@@ -117,6 +124,22 @@ export class ChannelManager {
   }
 
   public sendStageCommand<T extends string, P>(type: T, payload: P): void {
+    const command = controlCommandSchema.safeParse({ v: 2, id: generateUlid(), type, payload });
+    if (
+      command.success &&
+      command.data.type === 'stage.mic.set' &&
+      command.data.payload.enabled &&
+      !this.voice?.isReady()
+    ) {
+      this.appBus.publish(
+        this.appBus.createEvent('voice', 'stage.error', {
+          code: 'ASR_UNAVAILABLE',
+          message: 'Voice process is not ready; microphone remains disabled',
+        }),
+      );
+      return;
+    }
+    if (command.success && command.data.type === 'stage.mic.set') this.voice?.send(command.data);
     if (!this.controlPortMain) return;
     try {
       this.controlPortMain.postMessage({
@@ -176,7 +199,9 @@ export class ChannelManager {
         this.stageWindowManager.handleHitTest(payload.overCharacter);
       }
     } else if (wireMsg.type === 'stage.bounds') {
-      const payload = wireMsg.payload as { screenRect?: { x: number; y: number; w: number; h: number } };
+      const payload = wireMsg.payload as {
+        screenRect?: { x: number; y: number; w: number; h: number };
+      };
       if (payload?.screenRect) {
         this.displayManager?.handleCharacterBounds(payload.screenRect);
       }
@@ -197,27 +222,47 @@ export class ChannelManager {
       switch (wireMsg.type as MirroredType) {
         case 'stage.ready':
           this.appBus.publish(
-            this.appBus.createEvent('stage', 'stage.ready', wireMsg.payload as AppBusPayloads['stage.ready']),
+            this.appBus.createEvent(
+              'stage',
+              'stage.ready',
+              wireMsg.payload as AppBusPayloads['stage.ready'],
+            ),
           );
           break;
         case 'stage.hit':
           this.appBus.publish(
-            this.appBus.createEvent('stage', 'stage.hit', wireMsg.payload as AppBusPayloads['stage.hit']),
+            this.appBus.createEvent(
+              'stage',
+              'stage.hit',
+              wireMsg.payload as AppBusPayloads['stage.hit'],
+            ),
           );
           break;
         case 'stage.drag':
           this.appBus.publish(
-            this.appBus.createEvent('stage', 'stage.drag', wireMsg.payload as AppBusPayloads['stage.drag']),
+            this.appBus.createEvent(
+              'stage',
+              'stage.drag',
+              wireMsg.payload as AppBusPayloads['stage.drag'],
+            ),
           );
           break;
         case 'stage.frameStats':
           this.appBus.publish(
-            this.appBus.createEvent('stage', 'stage.frameStats', wireMsg.payload as AppBusPayloads['stage.frameStats']),
+            this.appBus.createEvent(
+              'stage',
+              'stage.frameStats',
+              wireMsg.payload as AppBusPayloads['stage.frameStats'],
+            ),
           );
           break;
         case 'stage.error':
           this.appBus.publish(
-            this.appBus.createEvent('stage', 'stage.error', wireMsg.payload as AppBusPayloads['stage.error']),
+            this.appBus.createEvent(
+              'stage',
+              'stage.error',
+              wireMsg.payload as AppBusPayloads['stage.error'],
+            ),
           );
           break;
       }
