@@ -7,3 +7,7 @@ W19 must rebuild entity recall only from ACCEPTED SemanticGraph references in ea
 Required semantics: explicit known commit; ordered complete prefix, bounded and reject rather than truncate on insufficient budget; generated IDL messages; no write API, schema/format change, or new production-path access. Existing Reader::read remains the object visibility/integrity boundary.
 
 P5-04 implementation can continue independently, but full store-backed rebuilding requires this small API addition. Awaiting user authorization for the two paths outside the task card.
+
+## Authorization received (2026-10-23)
+
+The user approved exactly queries.rs and tests/reader.rs for this read-only addition, with: no schema/format/write/existing-API changes; recovery plus receipt verification in a fixed read snapshot; explicit failure on incomplete prefixes; Reader<L> lineage isolation; TemporaryRoot-only positive/missing-index/type-negative tests; and a separate mandatory-review core-store section in the PR. P5-03 PR #64 currently changes gateway plus shared workflow/lock files, not these core-store files. No other executor was contacted.

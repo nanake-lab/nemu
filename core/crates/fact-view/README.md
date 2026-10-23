@@ -18,7 +18,7 @@
 
 ## Audit and integration boundary
 
-`Execution` contains a generated projection and its complete actual query/permission/model/vector/rank/result trace. `trace.audit_record(&projection)` creates a generated UserText object containing versioned audit data, never a fact event. The outer trusted runtime must stage/pin this object and record its reference in that event transaction's audit_refs; user_view must likewise retain it in its read-only audit channel. This crate owns no CommitCapability and cannot publish it itself. Do not turn the returned audit object into a staged_h payload. Structural replay consumes recorded projections/results and never calls the embedder again. Runtime orchestration is P5-08/P5-19/P5-29, not this card.
+`Execution` contains a generated projection and its complete actual query/permission/model/vector/rank/result trace. `trace.audit_record(&projection)` creates a generated AuditExtension object containing versioned audit data, never a fact event. The outer trusted runtime must stage/pin this object and record its reference in that event transaction's audit_refs; user_view must likewise retain it in its read-only audit channel. This crate owns no CommitCapability and cannot publish it itself. Do not turn the returned audit object into a staged_h payload. Structural replay consumes recorded projections/results and never calls the embedder again. Runtime orchestration is P5-08/P5-19/P5-29, not this card.
 
 ## Pinned CPU model
 

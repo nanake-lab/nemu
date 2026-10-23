@@ -1,5 +1,6 @@
 #[cfg(feature = "cpu-embedding")]
 mod cpu_eval;
+mod edge_cases;
 mod fixture;
 use super::*;
 use core_types::{WireMessage, generated::*, scalar::DecimalU64};
@@ -289,7 +290,8 @@ fn deterministic_rrf_filters_corrections_and_budgets() {
             .trace
             .audit_record(&first.projection)
             .unwrap()
-            .text
+            .payload
+            .0
             .is_empty()
     );
     let mut tiny = q.clone();
@@ -335,26 +337,20 @@ fn trigram_and_short_unicode_literal_queries_are_not_fts_syntax() {
             "{text}"
         );
     }
-}
-
-#[test]
-fn panel_time_and_payload_filters_are_compatible_and_invalid_dates_fail() {
-    let mut q = query("prefix", Purpose::UserView, "");
-    let mut filter = QueryFilter {
-        schema_version: 1,
-        text: None,
-        from: Some("1970-01-01".into()),
-        to: Some("1970-01-01".into()),
-        kinds: vec!["user_text".into()],
-        include_retracted: None,
-    };
-    q.filter(&filter).unwrap();
-    assert_eq!(q.from_ns, Some(0));
-    assert_eq!(q.to_ns, Some(86_400_000_000_000 - 1));
-    assert_eq!(q.payload_types.len(), 1);
-    filter.from = Some("1970-01-01T08:00:00+08:00".into());
-    q.filter(&filter).unwrap();
-    assert_eq!(q.from_ns, Some(0));
-    filter.to = Some("invalid-date".into());
-    assert!(q.filter(&filter).is_err());
+    let mut limited = query(&p, Purpose::Task, "coffee");
+    limited.budget.steps = 8;
+    assert_eq!(
+        view.execute(&limited, &access(), None)
+            .unwrap()
+            .projection
+            .status,
+        QueryStatus::BUDGET_EXHAUSTED
+    );
+    assert_eq!(
+        view.execute(&query(&p, Purpose::Task, "coffee"), &access(), None)
+            .unwrap()
+            .projection
+            .status,
+        QueryStatus::OK
+    );
 }

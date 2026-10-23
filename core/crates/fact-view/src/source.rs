@@ -3,6 +3,7 @@ use crate::{Error, Result};
 use core_store::{LineageKind, Reader};
 use core_types::{WireMessage, contract::Schema, generated::*, scalar::hex};
 use std::collections::{BTreeMap, BTreeSet};
+use std::sync::OnceLock;
 
 #[derive(Clone)]
 pub(crate) struct Record {
@@ -16,7 +17,14 @@ pub(crate) struct Record {
 }
 
 pub(crate) fn tag<T: WireMessage>() -> Result<String> {
-    Ok(Schema::builtin()?.message(T::NAME)?.tag.clone())
+    // Built-in descriptors are immutable for this binary. This cache cannot
+    // change the query plan or substitute for authority-object verification.
+    static SCHEMA: OnceLock<std::result::Result<Schema, String>> = OnceLock::new();
+    let schema = SCHEMA
+        .get_or_init(Schema::builtin)
+        .as_ref()
+        .map_err(|e| Error::Invalid(e.clone()))?;
+    Ok(schema.message(T::NAME)?.tag.clone())
 }
 
 pub(crate) fn payload_tag(name: &str) -> Result<Option<String>> {

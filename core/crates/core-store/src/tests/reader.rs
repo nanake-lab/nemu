@@ -20,9 +20,11 @@ fn complete_transaction_prefix_is_verified_and_bounded() {
     // fixed query snapshot, rather than presenting an incomplete history.
     store
         .db
-        .execute_batch(
-            "DROP TRIGGER immutable_facts_DELETE; DELETE FROM facts WHERE event_id='event-0';",
-        )
+        .execute_batch("DROP TRIGGER immutable_snapshots_DELETE;")
+        .unwrap();
+    store
+        .db
+        .execute("DELETE FROM snapshots WHERE commit_id=?1", [&first])
         .unwrap();
     assert!(reader.transactions_at(&head, 10).is_err());
     assert!(Reader::<Life>::open_temporary(&root, "prefix", config()).is_err());

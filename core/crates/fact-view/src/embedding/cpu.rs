@@ -1,6 +1,7 @@
 use crate::{Embedder, Error, Result};
 use fastembed::{
-    InitOptionsUserDefined, Pooling, TextEmbedding, TokenizerFiles, UserDefinedEmbeddingModel,
+    InitOptionsUserDefined, Pooling, QuantizationMode, TextEmbedding, TokenizerFiles,
+    UserDefinedEmbeddingModel,
 };
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
@@ -28,12 +29,28 @@ impl CpuEmbedder {
     /// Offline only. Each file is verified against the repository-pinned
     /// manifest before loading. Default build has no GPU provider features.
     pub fn load(directory: &Path) -> Result<Self> {
+        Self::load_variant(directory, "model.onnx", "fp32", false)
+    }
+    /// Official dynamically quantized artifact from the same pinned MIT model.
+    /// ORT chooses the CPU kernel supported by the host; no accelerator provider.
+    pub fn load_quantized(directory: &Path) -> Result<Self> {
+        Self::load_variant(
+            directory,
+            "model_qint8_avx512_vnni.onnx",
+            "qint8-avx512-vnni",
+            true,
+        )
+    }
+    fn load_variant(directory: &Path, weight: &str, format: &str, quantized: bool) -> Result<Self> {
         let manifest: Manifest = serde_json::from_str(include_str!("../../models/manifest.json"))?;
         if manifest.license != "MIT" {
             return Err(Error::Invalid("unapproved model license".into()));
         }
         let mut files = BTreeMap::new();
         for asset in manifest.files {
+            if asset.path.ends_with(".onnx") && asset.path != weight {
+                continue;
+            }
             let bytes = std::fs::read(directory.join(&asset.path))?;
             if bytes.len() as u64 != asset.bytes
                 || core_types::scalar::hex(&Sha256::digest(&bytes)) != asset.sha256
@@ -53,10 +70,15 @@ impl CpuEmbedder {
             special_tokens_map_file: take("special_tokens_map.json")?,
             tokenizer_config_file: take("tokenizer_config.json")?,
         };
-        let model = UserDefinedEmbeddingModel::new(take("model.onnx")?, tokenizer)
-            .with_pooling(Pooling::Mean);
+        let mut model =
+            UserDefinedEmbeddingModel::new(take(weight)?, tokenizer).with_pooling(Pooling::Mean);
+        if quantized {
+            model = model.with_quantization(QuantizationMode::Dynamic);
+        }
         let options = InitOptionsUserDefined::new()
-            .with_execution_providers(vec![])
+            .with_execution_providers(vec![
+                ort::ep::CPU::default().with_arena_allocator(true).build(),
+            ])
             .with_intra_threads(4)
             .with_max_length(512);
         let model = TextEmbedding::try_new_from_user_defined(model, options)
@@ -64,8 +86,8 @@ impl CpuEmbedder {
         Ok(Self {
             model,
             version: format!(
-                "{}@{};fp32;mean-l2;512;cpu4",
-                manifest.model, manifest.revision
+                "{}@{};{};mean-l2;512;cpu4",
+                manifest.model, manifest.revision, format
             ),
         })
     }

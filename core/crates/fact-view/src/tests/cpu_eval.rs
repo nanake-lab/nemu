@@ -1,6 +1,25 @@
 use super::*;
 use std::{path::PathBuf, time::Instant};
 
+struct TimedModel {
+    inner: CpuEmbedder,
+    query_ms: f64,
+}
+impl Embedder for TimedModel {
+    fn version(&self) -> &str {
+        self.inner.version()
+    }
+    fn passages(&mut self, texts: &[String]) -> Result<Vec<Vec<f32>>> {
+        self.inner.passages(texts)
+    }
+    fn query(&mut self, text: &str) -> Result<Vec<f32>> {
+        let start = Instant::now();
+        let result = self.inner.query(text);
+        self.query_ms = start.elapsed().as_secs_f64() * 1000.0;
+        result
+    }
+}
+
 /// Explicit real-model acceptance. Unit/CI defaults never download a model or
 /// open any user store. Run with the documented D: model directory and --ignored.
 #[test]
@@ -8,7 +27,16 @@ use std::{path::PathBuf, time::Instant};
 fn real_cpu_multilingual_restart_recall_and_100_retractions() {
     let directory = PathBuf::from(std::env::var_os("NEMU_W19_MODEL").expect("explicit model path"));
     let start = Instant::now();
-    let mut model = CpuEmbedder::load(&directory).unwrap();
+    let model = if std::env::var("NEMU_W19_WEIGHT").as_deref() == Ok("qint8") {
+        CpuEmbedder::load_quantized(&directory)
+    } else {
+        CpuEmbedder::load(&directory)
+    }
+    .unwrap();
+    let mut model = TimedModel {
+        inner: model,
+        query_ms: 0.0,
+    };
     let load_ms = start.elapsed().as_secs_f64() * 1000.0;
     let mut w = World::new();
     let withdrawn = w.text("合成角色阿岚最爱喝茉莉花茶。");
@@ -61,7 +89,17 @@ fn real_cpu_multilingual_restart_recall_and_100_retractions() {
             .iter()
             .position(|id| id == expected)
             .map(|n| n + 1);
-        rows.push(serde_json::json!({"query":text,"expected":expected,"rank":rank,"vector_rank":vector_rank,"ms":ms,"steps":result.trace.steps_used}));
+        assert_eq!(
+            vector_rank,
+            Some(1),
+            "a constant embedding/retriever must fail the multilingual positive controls"
+        );
+        assert_eq!(
+            rank,
+            Some(1),
+            "RRF must preserve these distinct positive controls"
+        );
+        rows.push(serde_json::json!({"query":text,"expected":expected,"rank":rank,"vector_rank":vector_rank,"ms":ms,"embedding_ms":model.query_ms,"steps":result.trace.steps_used}));
         assert!(
             result
                 .trace
@@ -69,14 +107,18 @@ fn real_cpu_multilingual_restart_recall_and_100_retractions() {
                 .as_ref()
                 .is_some_and(|v| v.len() == 384)
         );
-        assert!(
-            result
-                .trace
-                .audit_record(&result.projection)
-                .unwrap()
-                .text
-                .contains("query_vector_bits")
-        );
+        let norm = result
+            .trace
+            .query_vector
+            .as_ref()
+            .unwrap()
+            .iter()
+            .map(|v| (*v as f64).powi(2))
+            .sum::<f64>();
+        assert!((norm - 1.0).abs() < 0.0001, "E5 normalization");
+        let audit = result.trace.audit_record(&result.projection).unwrap();
+        let payload = String::from_utf8(audit.payload.0).unwrap();
+        assert!(payload.contains("query_vector_bits"));
     }
     let hits = rows
         .iter()
@@ -126,7 +168,7 @@ fn real_cpu_multilingual_restart_recall_and_100_retractions() {
         );
     }
     latencies.sort_by(f64::total_cmp);
-    let report = serde_json::json!({"version":"w19-eval-skeleton-v1","status":"passed","synthetic_facts":9,"languages":["zh","en","ja"],"model":model.version(),"load_ms":load_ms,"rebuild_ms":rebuild_ms,"recall_at_3":{"hits":hits,"queries":rows.len()},"query_p50_ms":latencies[latencies.len()/2],"query_max_ms":latencies.last(),"withdrawal_queries":100,"withdrawal_leaks":leaks,"cases":rows,"limits":"Small synthetic restart skeleton, not the P6-13 multi-year/full-answer 90% acceptance. Latencies are observational on this host, not an exclusive CPU benchmark."});
+    let report = serde_json::json!({"version":"w19-eval-skeleton-v1","status":"passed","synthetic_facts":9,"languages":["zh","en","ja"],"model":model.version(),"ort_build":ort::info(),"load_ms":load_ms,"rebuild_ms":rebuild_ms,"recall_at_3":{"hits":hits,"queries":rows.len()},"query_p50_ms":latencies[latencies.len()/2],"query_max_ms":latencies.last(),"withdrawal_queries":100,"withdrawal_leaks":leaks,"cases":rows,"limits":"Small synthetic restart skeleton, not the P6-13 multi-year/full-answer 90% acceptance. Latencies are observational on this host, not an exclusive CPU benchmark."});
     println!("W19_EVAL_JSON={report}");
     assert_eq!(leaks, 0);
     assert_eq!(

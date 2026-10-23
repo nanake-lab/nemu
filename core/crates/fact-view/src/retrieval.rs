@@ -27,10 +27,12 @@ pub struct RetrievalTrace {
 impl RetrievalTrace {
     /// Persist through the outer transaction as a generated audit object before
     /// using the projection. No private index state is an implicit replay input.
-    pub fn audit_record(&self, projection: &FactProjection) -> Result<UserText> {
-        Ok(UserText {
+    pub fn audit_record(&self, projection: &FactProjection) -> Result<AuditExtension> {
+        Ok(AuditExtension {
             schema_version: 1,
-            text: serde_json::to_string(&serde_json::json!({
+            audit_schema_tag: "echo.fact-query-trace".into(),
+            audit_schema_version: 1,
+            payload: core_types::scalar::HexBytes(serde_json::to_vec(&serde_json::json!({
                 "version": QUERY_VERSION,"prefix":self.query.history_prefix,"purpose":format!("{:?}",self.query.purpose),
                 "text":self.query.text,"entities":self.query.entities,"kinds":self.query.kinds,"payload_types":self.query.payload_types,"sources":self.query.sources,
                 "from_ns":self.query.from_ns.map(|n|n.to_string()),"to_ns":self.query.to_ns.map(|n|n.to_string()),
@@ -38,7 +40,7 @@ impl RetrievalTrace {
                 "access":{"allowed":self.access.allowed,"audit":self.access.audit,"sources":self.access.sources},
                 "model":self.model_version,"query_vector_bits":self.query_vector.as_ref().map(|v|v.iter().map(|f|f.to_bits()).collect::<Vec<_>>()),
                 "channels":self.channels,"returned":self.returned,"steps_used":self.steps_used,"projection":projection
-            }))?,
+            }))?),
         })
     }
 }
