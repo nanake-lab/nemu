@@ -7,6 +7,8 @@ import { springCategory } from './spring-settings.mjs';
 const candidateRoot = resolve('D:/Dev/nemu/content/_candidates/P2-05');
 const dataPath = resolve('reports/P2-05/preview-data.json');
 const data = JSON.parse(await readFile(dataPath, 'utf8'));
+const selection = JSON.parse(await readFile(resolve(candidateRoot, 'user-selection.json'), 'utf8'));
+data.selectedSpringPreset = selection.springPreset ?? 'calm';
 const values = {
   heavyBalanced: { hair: [.95, .84, .045], ear: [2.1, .88, .006], tail: [1.2, .83, .09], skirt: [.95, .86, .085] },
   heavyDamped: { hair: [.85, .89, .065], ear: [2.0, .92, .01], tail: [.95, .88, .14], skirt: [.8, .90, .12] },
@@ -47,7 +49,7 @@ for (const candidate of data.heavyComparison) {
 await writeFile(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 await writeFile(dataPath, JSON.stringify(data, null, 2) + '\n');
 await writeFile(resolve(candidateRoot, 'springs/heavy-review-parameters.json'), JSON.stringify({
-  status: 'candidate-only', tail: 'A short-thick selected', base: 'calm selected as starting point; heavier variants not selected',
+  status: 'candidate-only', tail: 'A short-thick selected', base: 'calm starting point', selectedSpringPreset: selection.springPreset,
   candidates: data.heavyComparison.map(item => ({ ...item, parameters: data.presets[item.id] })),
 }, null, 2) + '\n');
 const summaryPath = 'springs/heavy-review-parameters.json';

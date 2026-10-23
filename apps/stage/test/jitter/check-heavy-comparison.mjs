@@ -41,7 +41,7 @@ try {
   assert.equal(await page.evaluate(() => window.__heavyCompare.rigs[0].idle.elapsed), paused);
   await page.goto('http://127.0.0.1:5186/test/jitter/review.html');
   await page.waitForFunction(() => window.__P205_READY__ === true);
-  assert.equal(await page.locator('#preset').inputValue(), 'calm');
+  assert.equal(await page.locator('#preset').inputValue(), 'heavyBalanced');
   for (const [id, stiffness] of [['heavyBalanced', 1.2], ['heavyDamped', .95]]) {
     await page.locator('#preset').selectOption(id);
     assert.equal(await page.evaluate(() => [...window.__p205Review.currentVrm.springBoneManager.joints].find(j => j.bone.name.startsWith('NemuTail')).settings.stiffness), stiffness);
@@ -59,7 +59,7 @@ try {
   assert.deepEqual(errors, []);
   await writeFile(resolve(output, 'verification.json'), JSON.stringify({ passed: true, probe, settings, tailTips, playback,
     checks: ['all 720 encoded frames decoded by ffprobe', 'three actual tail settings', 'different tail responses under identical motion',
-      'live comparison play/pause/reset', 'single preview default calm and both new presets', 'served MP4 MIME', 'browser H264 playback'], errors,
+      'live comparison play/pause/reset', 'single preview default selected B and both new presets', 'served MP4 MIME', 'browser H264 playback'], errors,
   }, null, 2) + '\n');
   console.log('Heavy comparison and browser video playback passed.');
 } finally { await browser.close(); }

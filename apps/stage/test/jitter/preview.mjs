@@ -10,7 +10,7 @@ app.stop();
 const vrm = app.currentVrm;
 if (vrm.meta.version !== 'P2-05-candidate-short-thick-standard') throw new Error(`Unexpected avatar ${vrm.meta.version}`);
 const labels = { hair: '头发', ear: '猫耳', tail: '尾巴', skirt: '裙摆' };
-let parameters = structuredClone(data.presets.calm);
+let parameters = structuredClone(data.presets[data.selectedSpringPreset ?? 'calm']);
 let playing = false;
 let black = false;
 let animationId;
