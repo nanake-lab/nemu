@@ -2,70 +2,95 @@
 
 ## 当前状态
 
-**部分完成，PR #48 保持 draft + needs-user。** 尾形 A 偏粗短已选；用户于 2026-10-23 明确撤回 B 作为最终弹簧参数，B 仅保留为历史对照。按最新要求在「沉稳」基础上新增 C、D 两组，每组连同沉稳、B 各跑一次相同快速拖动诊断，并录好四列同动作视频。暂无可以确认稳定通过的组；等待用户评审，运行时稳定性另交请求，不在本卡修复，不再追加参数试验。
+**用户指定的本轮工作和本地验收已完成。** 2026-10-23 用户确认由 Claude 代选 **C（calmHeavy1）** 作为头发、猫耳、尾巴、裙摆的最终手感，尾形仍为 A 偏粗短。C 的原始 K/D/G 已正式写入 content/nemu/build.yaml 的 springs，小节值与候选逐项一致，没有调参或重新做四组对比。完整管线已重导出；A1.4/A1.5 错误为 **0**。用本次 C 导出版本仅运行一次 120 Hz、30 秒驱动＋5 秒回稳测试：**未见速度持续增大或持续高频残余抖动**；单帧旋转跳变按用户直接授权及 Claude PR #67 的划分，单列交 P3-01 L4，不计入本卡这两项结论。全部原始数据保留。
 
-工作树 D:/Dev/nemu-p205；新缓存 D:/Dev/cache/P2-05。已合并最新 origin/main 2333c23；继续工作前 fetch 无新提交，PR 无评论/审查。源 VRM 保持只读。全部验收之前不转为可审查、不合并、不取下一卡。
+工作树 D:/Dev/nemu-p205，缓存/中间构建 D:/Dev/cache/P2-05/selected-C-final/。本轮收尾时 PR #67 已合入 origin/main（382c0e730c433f02b3fef24acb9a88f88c54e71a）；已 merge 进任务分支，并在合并后重跑 lint/typecheck、443 项单测、33 项资产校验、4 项度量测试及 workspace build。main 只追加两张任务卡的验收划分，物理实现与 C 参数未变，因此保留唯一一次导出物理测量，不重跑四组或 C。推送后 CI 结果以 PR #48 最新提交的 checks 为准；按要求 CI 结束即停止，保持草稿，不转可审查、不合并、不取下一卡。本轮没有操作浏览器或其他应用。
 
-## 交付物
+## 正式交付物
 
-- content/_candidates/P2-05/：尾形 A（55.3 cm，最宽约 19 cm）、原有预设、新候选 springs/calm-heavy-{1,2}.yaml、four-review-parameters.json、来源清单与更新的选择记录。没有移入正式目录。
-- apps/stage/test/jitter/：独立评审夹具；四组页 heavy-comparison.html?four=1，单组页默认沉稳参照，不再显示 B 已定稿。复用 P3-01 呼吸、重心、视线、眨眼；生产评审台和动画运行时未修改。
-- four-review/video/calm-B-C-D_same-motion_24s_30fps.mp4：2560×1080、24 秒、30 fps、四列同动作原速，K/D/G 全程显示；白黑背景关键帧同目录。
-- four-review/comparison.json：四组峰值、关节、参数、模型及逐帧 gzip 哈希索引；逐帧原始数据留在对应 D 盘报告路径，不删改、不重复上传大文件。
-- tasks/requests/P2-05-spring-runtime-stability.md：交 P3-01 L4 / P3-04 的复现条件、参数、速度、关节、角度及保护建议。
-- FORMAL-TAIL-HOOK.md：此前已获批准并完成的最小正式入口挂接，单列验证及对 P2-03/P2-06 的边界。
+- content/nemu/build.yaml：A 尾形、C 的四类弹簧 K/D/G；非本卡 expressions/materials/profile 小节沿用 ADR 0015 临时最小配置，没有替 P2-06 定稿。
+- content/nemu/nemu.vrm、nemu.profile.json、manifest.json：本次完整管线生成的正式产物、来源与许可登记。源文件的既有本地修改保持只读、未提交。
+- content/_candidates/P2-05/user-selection.json：更新为用户批准 C；历史候选与四组失败数据不改写。
+- selected-C-final/：完整构建日志、配置/产物审计、唯一一次逐帧原始 gzip、171 个关节的 per-joint.csv、settling-analysis.json、measurement.json、测试日志。
+- apps/stage/test/jitter/ 的 CLI 加载、测量、离线分析和信号度量测试：不创建浏览器/WebGL，使用现有 three 0.174.0、three-vrm 3.5.5 的原始求解器；不改生产运行时。
+- tasks/requests/P2-05-spring-runtime-stability.md：既有 L4 请求保留；单帧旋转连续性由 P3-01 处理。
 
-## 四组诊断（每组只跑一次）
+## C 的正式参数
 
-| 组 | 头发链最大单步角度 | 关节 | 时间 | 观察 |
-| --- | --- | --- | --- | --- |
-| 沉稳 | 174.59949° | J_Sec_Hair2_06 | 22.21667 s | 接近 180° |
-| B 历史对照 | 179.85087° | J_Sec_Hair1_07 | 26.06667 s | 接近 180°，与既有 B 一致 |
-| 新 C 适度加重 | 122.95363° | J_Sec_Hair2_06 | 22.20000 s | 未出现同样近 180° 峰值，但仍有大幅单步变化，不能称稳定通过 |
-| 新 D 加重快稳 | 176.75161° | J_Sec_Hair2_06 | 18.42500 s | 接近 180° |
+| 部位 | K 刚度 | D 阻尼 | G 重力强度 |
+| --- | --- | --- | --- |
+| 头发 | 1.08 | .80 | .024 |
+| 猫耳 | 2.295 | .82 | .002 |
+| 尾巴 | 1.60 | .82 | .050 |
+| 裙摆 | 1.30 | .82 | .055 |
 
-新 C 的头发/猫耳/尾巴/裙摆 K/D/G 分别为 1.08/.80/.024、2.295/.82/.002、1.60/.82/.050、1.30/.82/.055；新 D 为 1.05/.84/.028、2.25/.87/.003、1.50/.87/.065、1.25/.87/.070。两组以沉稳为基础，略增重力与阻尼，刚度接近原值；无质量或人工延迟参数。B 文件哈希未变。
+重力向下：配置 Blender 轴 [0,0,-1]，glTF 运行时 [0,-1,0]。正式 springs 与 calm-heavy-1.yaml 完全一致；没有覆盖加载后的参数。正式配置使用项目相对源路径，任务工作树的 content 子模块未初始化，因此缓存解析副本只将 source 换成 D 盘实际文件绝对路径，其他字段不改，见 config-audit.json。产物版本标记 P2-05-C-calmHeavy1。
 
-四组加载同一重建 VRM，只在评审内存中应用配置 K/D/G 和向下重力，保留拓扑、碰撞体与关节半径。新配置已通过 schema，但本轮未分别重导出两份新 VRM；用户选型后仍需重跑正式管线。完整参数及一次运行原始记录见 comparison.json 和各组 jitter-summary.json。
+## 指定抖动验收
 
-诊断为 **120 Hz，30 秒驱动＋5 秒回稳**：hips x=.24 sin(2π·1.3t) m、y=.12 sin(2π·2.1t) m；head roll=.18 sin(2π·1.7t)、spine roll=.10 sin(2π·1.3t) rad。相邻局部四元数最短旋转，处理 q/-q 等价。不是 OS 拖拽全路径，也不能直接等同可见屏幕位移，未新增角度门限。
+### 输入与测量方法
 
-视频为不同用途的 **24 秒日常动作比较**：4 秒呼吸、8 秒慢转身、3 秒拖动、9 秒回稳，物理仍 120 Hz，输出 30 fps。与旧版同一动作，各列一致；视频中诊断数字指上表 120 Hz 单步，而不是 30 fps 编码帧。不能因视频日常动作看不出差异或翻转而覆盖 30 秒诊断结果。
+120 Hz，驱动 30 秒、回稳 5 秒。hips x=.24 sin(2π·1.3t) m、y=.12 sin(2π·2.1t) m，head roll=.18 sin(2π·1.7t) rad，spine roll=.10 sin(2π·1.3t) rad；30 秒后归零，未降低刺激。初始手臂姿态与此前夹具一致，无待机层/预热。每步先 humanoid、矩阵更新，再一次 springBoneManager.update；全部 4200 帧有限。171 个关节均记录，四类为头发 96、猫耳 4、尾巴 11、裙摆 56，另有原生 4 个其他关节也报告。
 
-## 验收与检查
+CLI 通过原 GLTFLoader/VRMLoaderPlugin 加载本次导出 VRM，只跳过与物理无关的纹理像素解码（占位 Texture）；节点、蒙皮、变换、碰撞体及弹簧数据不改。预检首次遇到 +0/-0 的严格对象比较差异，在任何模拟帧之前退出；修正为数值比较，原日志 preflight-signed-zero.log 保留。完整驱动模拟实际只执行一次。离线分析可以重算，不会重跑物理。
 
-| 检查 | 当前结果 | 证据 |
+### (1) 是否发散：未见持续增大，回稳后速度明显回落
+
+逐关节报告局部角速度（保留所有单帧跳变）、世界端点速度、骨段方向角速度；未裁峰、未丢弃异常帧。发散评估同时查看实际骨段/端点，避免将已划给 L4 的局部扭转跳变当持续发散。每关节有完整 35 个一秒 RMS、驱动趋势斜率、首末 5 秒 RMS、最长连续上升段、末 1 秒 RMS。
+
+- 171 个关节均未出现驱动 30 秒速度持续增大；端点速度最长连续上升只有 3–4 个一秒区间。不能仅凭“不是严格单调”判定，另比较相同驱动的稳态重复周期。
+- 输入共同周期为 10 秒。第二、第三个 10 秒周期对应的一秒端点速度 RMS 最大差仅 **3.38×10^-14 m/s**，已形成重复响应，没有随驱动继续累积。
+- 回稳最后 1 秒，头发端点速度 RMS 最大 **0.0003422 m/s**，相对各关节自身驱动末 5 秒 RMS，最大剩余比例 **0.0002658**；猫耳约 1.84×10^-14 m/s、尾巴 0、裙摆约 3.33×10^-15 m/s。头发局部角速度 RMS 最大 0.005143 rad/s；其余四类接近数值静止。
+- 局部角速度原始峰值仍完整保留在 measurement.json 与原始数据中；单帧跳变另列，不以其裁剪后的曲线代替真实数据。
+
+### (2) 是否高频抖动：本次回稳段未见持续的物理高频残余
+
+振幅采用关节模拟端点的三维峰峰距离、骨段方向峰峰角度，不把局部扭转跳变直接当持续可见抖动。每个关节的 **整个回稳 5 秒** 和 **最后 1 秒** 均报告；前者包含从甩动姿态垂回的过渡范围，不是持续振荡幅度。
+
+| 部位 | 停止后 0–5 s 最大端点总范围 | 同一关节 5 s 最强频点 | 最后 1 s 最大端点峰峰值 | 同一关节末 1 s 最强频点 | 末 1 s 最大方向峰峰角 |
+| --- | --- | --- | --- | --- | --- |
+| 头发 | 592.919 mm | 0.2 Hz | **0.245695 mm** | **1 Hz** | 0.132978° |
+| 猫耳 | 56.456 mm | 0.2 Hz | 2.68×10^-13 mm | 48 Hz（浮点量级，不是可观测物理振动） | 1.23×10^-13° |
+| 尾巴 | 581.328 mm | 0.2 Hz | **0 mm** | 无（完全静止） | 0° |
+| 裙摆 | 105.464 mm | 0.2 Hz | 2.78×10^-14 mm | 60 Hz（浮点量级） | 3.28×10^-15° |
+
+这些“最强频点”是去均值、Hann 加窗的 xyz 合计 DFT，5 秒分辨率 0.2 Hz、末 1 秒分辨率 1 Hz。衰减/垂回过程的最低频点不代表出现持续周期；浮点量级的非零序列也会有频率峰，不把 48/60 Hz 的数值噪声说成实际耳朵/裙摆抖动。头发末 1 秒的 >15 Hz 窗功率折算位移 RMS 最大 **2.00×10^-8 m（0.0000200 mm）**，其主要残余为低频垂回。15 Hz 仅沿用诊断分带，未设成新的验收门限，也没有用新幅度阈值放宽原卡。
+
+完整逐关节振幅、主频、局部角速度频谱及速度趋势见 per-joint.csv / settling-analysis.json。结论仅适用于这一次固定输入下的原卡两项检查，不泛化为任意实际帧率或 OS 拖拽已验收。
+
+## 单帧大角度旋转（另列，交 P3-01 L4）
+
+本次 C 导出：头发 J_Sec_Hair2_06，第 2664 帧、22.2 秒，最大单步 **122.953651°**。此前内存应用 C 的四组诊断为 122.953632°，关节/帧相同；本轮没有重新运行四组。所有帧角度按最短四元数旋转测量并处理 q/-q 等价。此现象没有被修复或隐藏；按用户本轮指示、PR #67 的验收划分，**不计入 P2-05 的不发散/不高频抖动结论**。复现及保护建议见运行时请求，生产 L4 未修改。
+
+## 验收与证据
+
+| 项目 | 结果 | 证据 |
 | --- | --- | --- |
-| 原始源模型 asset-lint 基线 | 原始结果保留 | baseline-original.log |
-| A1.4/A1.5 | 既有正式 B 产物错误 0；未修改本轮模型或许可 | selected-B-product-audit.json |
-| 全量 asset-lint | 4 个 A1.3 错误留给 P2-06；骨数警告 277，原始非零退出保留 | formal-B-final.log |
-| 最小正式尾巴入口 | 已批准完成；B VRM/profile 与候选逐字节一致，P2-03 样例验收保持通过 | FORMAL-TAIL-HOOK.md、formal-hook-equivalence.json、formal-hook-sample.json |
-| 四组快速拖动 | 每组一次，全部有限；存在上表大幅旋转变化，未签发稳定通过 | four-review/comparison.json、各组 jitter-summary.json |
-| 四组视频 | 720 帧全部解码、四组所有关节 K/D/G 核对、诊断峰值显示、MP4 服务与浏览器播放通过 | four-review/verification.json、video/capture.json |
-| TS 检查 | 本轮 lint、typecheck、29 文件 443 项单测通过 | four-review/{lint,typecheck,tests}.log |
-| Python / 资产契约回归 | 此前挂接后 31 项 Python、ruff、mypy strict 24 文件、33 项资产校验通过；本轮未改这些实现 | formal-hook-final-*.log |
+| C 手感与正式 K/D/G | 用户批准，候选数值不变 | content/nemu/build.yaml、config-audit.json、measurement.json |
+| 完整管线生成 | import 至 profile 全部退出 0；最终 lint 按原逻辑因 A1.3 退出 1 | build.log、缓存各阶段日志、build-exit.log |
+| A1.4 / A1.5 | **0 错误**，含正式 manifest 再校验 | product-audit.json、formal-lint.json |
+| A1.3 | 4 个错误留给 P2-06；277 骨警告原样保留 | 同上；不吞原始退出码 |
+| 不发散 / 不持续高频抖动 | 本次指定输入下通过；单帧跳变分列给 L4 | measurement.json、settling-analysis.json、per-joint.csv、jitter-raw.json.gz |
+| TS/工作区 | lint、typecheck、29 文件 443 项单测及 workspace build 通过 | selected-C-final/{lint,typecheck,tests,build-workspace}.log |
+| 资产校验负向回归 | 33/33 通过 | asset-lint-tests.log |
+| 残余度量测试 | 4/4：常量、已知低/高频、微小角度/位移；新增 test:p205:metrics 并追加 CI 步骤 | metrics-tests.log |
+| CI | 推送后以 PR #48 当前提交 checks 的完成结果为准；草稿 Windows 作业按规则跳过，本轮不启动其他应用 | PR #48 checks |
 
 ## 契约相关修改（ADR 0015，单列）
 
-- export_vrm.py：验证 licenseUrl=https://vrm.dev/licenses/1.0/，otherLicenseUrl 等于非空 contentLicenseUrl，保留源权限。
-- asset-lint A1.5：拒绝错误公共许可 URL、缺失/空白/非字符串内容许可；夹具、build.example.yaml、Python/TS 负向测试已补齐。
-- expressions/materials 等其他卡小节仍为候选临时最小配置。A1.3 属 P2-06，不吞原始退出码。
+export_vrm.py 验证公共 licenseUrl=https://vrm.dev/licenses/1.0/、otherLicenseUrl 等于非空内容许可；asset-lint A1.5、夹具、build.example.yaml、Python/TS 负向测试已补齐。正式 C 的权限字段与源相同，基础表情 override 和自定义名称未改。此轮没有新增契约修改或绕过 A1.3。
 
-## 正式入口挂接（单列）
+## 最小正式入口挂接（单列）
 
-用户此前明确批准：build_tail.py 只增加 import 与调用，原候选处理提取到 tail/material.py，兼容入口复用。只处理新尾巴材质，未修改 pipeline.py、springs.py、expressions.py、materials.py、schema 或运行时。三份 B VRM/profile 逐字节一致；原 P2-03 样例验收器 inspect 通过。此变更未用来修复或掩盖弹簧跳变。
+此前已获用户批准并完成：build_tail.py 仅 import + 调用；候选材质处理提取至 tail/material.py，兼容入口复用。只处理新尾巴材质，不改变 P2-03 其他阶段或 P2-06。此前 B 的三份输出逐字节一致、原 P2-03 样例 inspect 通过，详见 FORMAL-TAIL-HOOK.md。本轮未再改这些实现。
 
-## 证据边界与资源
+## 来源、依赖与下一步
 
-原始 VRoid 未复现同样近 180° 跳变；原始模型只套 B K/D/G 约 170.66°，B 关闭碰撞仍约 179.85°，无零长头发骨。新尾巴/碰撞体不是必要条件，具体运行时根因未确认，见 SOURCE-CONTROL.md。旧失败原始数据和标签纠正说明均保留。
+正式 C VRM SHA-256：55d01adb03209706493d15c328bfd174c2b9d37d7c8292eeee493844a3497d6e。源 VRM SHA-256：d3f4799c37ecfdd1806ef93264b06f5d979b697a592d4422884046b594e1cb2b，仍只读。原始逐帧 gzip 通过 LFS 入库，压缩/原始 SHA-256 在 measurement.json；旧失败证据不删改。
 
-源 VRM SHA-256：d3f4799c37ecfdd1806ef93264b06f5d979b697a592d4422884046b594e1cb2b；共用重建 VRM：42ee5201dd8af34b6fbfbb864d14763db681dd64fcca58c035a0140976361c79；B 配置：db829f9231fb7b61d3d9a16645b7bc692271f5eb8c47d254f84dda0e49c16099。
+运行前通过 D 盘 P4-02 及 P4-01 的当前报告确认测量已结束/待后续，本机未见 Runner、Blender、Electron 或活动测量 Python；管线无头串行，随后 CLI 物理与分析串行。无新增依赖，无浏览器、Electron、录屏或其他应用操作。用户禁止操作其他应用，本轮不额外触发会启动 Electron 的手动 Windows 工作流；草稿自动跳过状态如实列出。
 
-本轮运行前读取 P4-01/P4-02 最新状态均空闲且测量已结束，未见 Runner.Listener、Runner.Worker、Blender、Electron 或活动测量进程；诊断、录制、浏览器核验串行。视频为真实 RTX 3080 渲染。GPU 工作已结束；未新增依赖、下载模型、联系其他执行者或修改动画运行时。
-
-## 待用户确认
-
-- [x] A 偏粗短尾形和最小正式入口挂接已批准。
-- [ ] （阻塞）四类弹簧最终手感待选；B 仅历史对照。
-- [ ] （阻塞）本轮四组均不能确认无跳变通过；运行时问题交 P3-01 L4 / P3-04 按请求处理，P2-05 不自行修复。
-- [ ] 全部验收完成后再同步最新 main、重跑检查，才能转为可审查。
+- [x] A 尾形、C 四类手感已批准并正式写入。
+- [x] 指定 C 导出、A1.4/A1.5 及本轮原卡两项诊断已完成。
+- [ ] CI 完成后按用户要求停止；不自行转可审查或合并。
+- 后续：P3-01 L4 承接旋转连续性；P2-06 处理 A1.3 与临时小节。未自动开始其他卡。
