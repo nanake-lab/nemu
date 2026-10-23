@@ -231,8 +231,15 @@ fn superseded_registry() {
         .copied()
         .collect();
     // 32 at P5-21; P5-32 adds Tendency, EvidenceAllocation, EvidenceGroup, RSnapshot.
-    assert_eq!(marked.len(), 36);
+    // P5-22 adds six terminal predecessors, all kept readable with frozen bytes.
+    assert_eq!(marked.len(), 42);
     for name in [
+        "Readout",
+        "RunState",
+        "Query",
+        "QueryResult",
+        "ApprovalRequest",
+        "ApprovalDecision",
         "EffectContract",
         "ThetaModule",
         "SingleRootLedger",

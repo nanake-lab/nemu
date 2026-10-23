@@ -23,6 +23,7 @@ pub struct Field {
     pub max: Option<f64>,
     pub size: Option<usize>,
     pub set: Option<String>,
+    pub oneof: Option<String>,
 }
 #[derive(Deserialize)]
 pub struct Message {
@@ -31,7 +32,13 @@ pub struct Message {
     pub rules: Rules,
 }
 #[derive(Deserialize)]
+pub struct Oneof {
+    pub fields: Vec<String>,
+}
+#[derive(Deserialize)]
 pub struct Rules {
+    #[serde(default)]
+    pub oneofs: BTreeMap<String, Oneof>,
     pub discriminator: Option<String>,
     #[serde(default)]
     pub common: Vec<String>,
@@ -153,6 +160,12 @@ impl Schema {
                     "variant enum",
                 )?;
             }
+        }
+        for group in m.rules.oneofs.values() {
+            require(
+                group.fields.iter().filter(|k| out.contains_key(*k)).count() == 1,
+                "required oneof",
+            )?;
         }
         Ok(Value::Object(out))
     }

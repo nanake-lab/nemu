@@ -1,0 +1,236 @@
+[
+  {
+    "name": "generate",
+    "cwd": ".",
+    "command": "python core/contracts/generate.py --check",
+    "started": "2026-10-22T11:55:02.0771116+00:00",
+    "ended": "2026-10-22T11:55:02.2264435+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\generate.log"
+  },
+  {
+    "name": "compat",
+    "cwd": ".",
+    "command": "python core/contracts/check_compat.py --ref origin/main",
+    "started": "2026-10-22T11:55:02.2353326+00:00",
+    "ended": "2026-10-22T11:55:03.2979523+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\compat.log"
+  },
+  {
+    "name": "parser",
+    "cwd": ".",
+    "command": "python -m unittest discover -s core/contracts -p test_oneof_schema.py",
+    "started": "2026-10-22T11:55:03.3106909+00:00",
+    "ended": "2026-10-22T11:55:03.9398122+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\parser.log"
+  },
+  {
+    "name": "lint",
+    "cwd": ".",
+    "command": "pnpm.cmd lint",
+    "started": "2026-10-22T11:55:03.9425748+00:00",
+    "ended": "2026-10-22T11:55:08.2579752+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\lint.log"
+  },
+  {
+    "name": "typecheck",
+    "cwd": ".",
+    "command": "pnpm.cmd typecheck",
+    "started": "2026-10-22T11:55:08.2603110+00:00",
+    "ended": "2026-10-22T11:55:12.9767318+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\typecheck.log"
+  },
+  {
+    "name": "unit",
+    "cwd": ".",
+    "command": "pnpm.cmd test",
+    "started": "2026-10-22T11:55:12.9790372+00:00",
+    "ended": "2026-10-22T11:55:17.3256601+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\unit.log"
+  },
+  {
+    "name": "contracts",
+    "cwd": ".",
+    "command": "pnpm.cmd test:contracts --coverage.reportsDirectory=reports/P5-22/coverage",
+    "started": "2026-10-22T11:55:17.3272135+00:00",
+    "ended": "2026-10-22T11:55:18.6069047+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\contracts.log"
+  },
+  {
+    "name": "build",
+    "cwd": ".",
+    "command": "pnpm.cmd build",
+    "started": "2026-10-22T11:55:18.6091158+00:00",
+    "ended": "2026-10-22T11:55:28.6882950+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\build.log"
+  },
+  {
+    "name": "rust-fmt",
+    "cwd": "core",
+    "command": "cargo fmt --all -- --check",
+    "started": "2026-10-22T11:55:28.6903902+00:00",
+    "ended": "2026-10-22T11:55:28.9413053+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\rust-fmt.log"
+  },
+  {
+    "name": "rust-clippy",
+    "cwd": "core",
+    "command": "cargo clippy --workspace --all-targets -- -D warnings",
+    "started": "2026-10-22T11:55:28.9434514+00:00",
+    "ended": "2026-10-22T11:55:29.3099024+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\rust-clippy.log"
+  },
+  {
+    "name": "rust-test",
+    "cwd": "core",
+    "command": "cargo test --workspace --locked",
+    "started": "2026-10-22T11:55:29.3120717+00:00",
+    "ended": "2026-10-22T11:55:32.5729524+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\rust-test.log"
+  },
+  {
+    "name": "core-contracts",
+    "cwd": ".",
+    "command": "pnpm.cmd test:core-contracts",
+    "started": "2026-10-22T11:55:32.5749466+00:00",
+    "ended": "2026-10-22T11:57:21.1375815+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\core-contracts.log"
+  },
+  {
+    "name": "contract-ruff",
+    "cwd": ".",
+    "command": "uv run --project core/contracts --locked ruff check core/contracts workers/irl/generated/echo",
+    "started": "2026-10-22T11:57:21.1395848+00:00",
+    "ended": "2026-10-22T11:57:21.2092873+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\contract-ruff.log"
+  },
+  {
+    "name": "contract-mypy",
+    "cwd": ".",
+    "command": "uv run --project core/contracts --locked mypy --strict core/contracts/generate.py core/contracts/fixture_inputs.py core/contracts/adversarial.py core/contracts/verify.py core/contracts/check_compat.py core/contracts/freeze_vectors.py core/contracts/test_oneof_schema.py workers/irl/generated/echo",
+    "started": "2026-10-22T11:57:21.2114002+00:00",
+    "ended": "2026-10-22T11:57:21.5793158+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\contract-mypy.log"
+  },
+  {
+    "name": "irl-sync",
+    "cwd": "workers/irl",
+    "command": "uv sync --locked",
+    "started": "2026-10-22T11:57:21.5813029+00:00",
+    "ended": "2026-10-22T11:57:21.6142106+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\irl-sync.log"
+  },
+  {
+    "name": "irl-ruff",
+    "cwd": "workers/irl",
+    "command": "uv run --locked ruff check .",
+    "started": "2026-10-22T11:57:21.6162066+00:00",
+    "ended": "2026-10-22T11:57:21.6742121+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\irl-ruff.log"
+  },
+  {
+    "name": "irl-mypy",
+    "cwd": "workers/irl",
+    "command": "uv run --locked mypy --strict src tests",
+    "started": "2026-10-22T11:57:21.6764420+00:00",
+    "ended": "2026-10-22T11:57:21.9809408+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\irl-mypy.log"
+  },
+  {
+    "name": "irl-pytest",
+    "cwd": "workers/irl",
+    "command": "uv run --locked pytest",
+    "started": "2026-10-22T11:57:21.9831115+00:00",
+    "ended": "2026-10-22T11:57:22.4332520+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\irl-pytest.log"
+  },
+  {
+    "name": "drive-sync",
+    "cwd": "workers/drive",
+    "command": "uv sync --locked",
+    "started": "2026-10-22T11:57:22.4352113+00:00",
+    "ended": "2026-10-22T11:57:22.4649180+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\drive-sync.log"
+  },
+  {
+    "name": "drive-ruff",
+    "cwd": "workers/drive",
+    "command": "uv run --locked ruff check .",
+    "started": "2026-10-22T11:57:22.4663680+00:00",
+    "ended": "2026-10-22T11:57:22.5278526+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\drive-ruff.log"
+  },
+  {
+    "name": "drive-mypy",
+    "cwd": "workers/drive",
+    "command": "uv run --locked mypy --strict src tests",
+    "started": "2026-10-22T11:57:22.5309034+00:00",
+    "ended": "2026-10-22T11:57:22.8250668+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\drive-mypy.log"
+  },
+  {
+    "name": "drive-pytest",
+    "cwd": "workers/drive",
+    "command": "uv run --locked pytest",
+    "started": "2026-10-22T11:57:22.8266554+00:00",
+    "ended": "2026-10-22T11:57:23.2874642+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\drive-pytest.log"
+  },
+  {
+    "name": "model-adapter-sync",
+    "cwd": "workers/model-adapter",
+    "command": "uv sync --locked",
+    "started": "2026-10-22T11:57:23.2894132+00:00",
+    "ended": "2026-10-22T11:57:23.3182801+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\model-adapter-sync.log"
+  },
+  {
+    "name": "model-adapter-ruff",
+    "cwd": "workers/model-adapter",
+    "command": "uv run --locked ruff check .",
+    "started": "2026-10-22T11:57:23.3202483+00:00",
+    "ended": "2026-10-22T11:57:23.3827095+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\model-adapter-ruff.log"
+  },
+  {
+    "name": "model-adapter-mypy",
+    "cwd": "workers/model-adapter",
+    "command": "uv run --locked mypy --strict src tests",
+    "started": "2026-10-22T11:57:23.3846802+00:00",
+    "ended": "2026-10-22T11:57:23.6845130+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\model-adapter-mypy.log"
+  },
+  {
+    "name": "model-adapter-pytest",
+    "cwd": "workers/model-adapter",
+    "command": "uv run --locked pytest",
+    "started": "2026-10-22T11:57:23.6865827+00:00",
+    "ended": "2026-10-22T11:57:24.1301799+00:00",
+    "exit_code": 0,
+    "log": "D:\\Dev\\nemu-p522\\reports\\P5-22\\final-checks\\model-adapter-pytest.log"
+  }
+]

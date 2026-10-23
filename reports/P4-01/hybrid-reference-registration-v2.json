@@ -1,0 +1,61 @@
+{
+  "method": "P4-01-hybrid-audible-reference-v2",
+  "count": 60,
+  "referencesPath": "timing-references-hybrid-v2.json",
+  "referencesSha256": "f039ae6a3faa10c25f4cac6740b79e5931f83364cf1dfe03575b2c0178108f8e",
+  "annotationsPath": "manual-labels/annotations-final-2026-10-22T09-11-45-820Z.json",
+  "annotationsSha256": "c4c77c8a2ecc0f76e869c72561eaf750ec86f6ab6faa9528c8f33085d7cdc558",
+  "inputsPath": "alignment-inputs-v3.json",
+  "inputsSha256": "eb37abfc9baf0340e4229f500445cb978d66eb16e2c38908c03c09ee0713772a",
+  "manualIds": [
+    "user-zh-018",
+    "user-en-001",
+    "user-en-002",
+    "user-en-003",
+    "user-en-005",
+    "user-en-006",
+    "user-en-010",
+    "user-en-011",
+    "user-en-014",
+    "user-en-016",
+    "user-en-017",
+    "user-en-018",
+    "user-en-019",
+    "user-ja-001",
+    "user-ja-002",
+    "user-ja-007",
+    "user-ja-009",
+    "user-ja-010",
+    "user-ja-013",
+    "user-ja-016",
+    "user-ja-019",
+    "user-ja-020"
+  ],
+  "automaticCount": 38,
+  "manualCount": 22,
+  "originalAuditPassed": false,
+  "auditResolution": "user-confirmed human override user-ja-013; old audit failure retained",
+  "sourceFiles": [
+    {
+      "path": "reports/P4-01/manual-reference-plan.json",
+      "sha256": "4dfadb01b507b2006806e1a77858c56021292f900f4a8faa264c096af413e680"
+    },
+    {
+      "path": "reports/P4-01/MANUAL-REFERENCE-PREREGISTRATION.md",
+      "sha256": "fc5eaafd557b1bbbaeca45f24c96e6030dd11e3ef81933f8b49a3268e2092c85"
+    },
+    {
+      "path": "reports/P4-01/HYBRID-REFERENCE-V2.md",
+      "sha256": "056cd128050d411df8dce1484f24cbf82f556b88e4099d632b1e2aa60c654fe6"
+    },
+    {
+      "path": "reports/P4-01/reference-stability-20261022T030747Z.json",
+      "sha256": "434c4ac832a342d26e602f6731a15f524e055b81588bb91239d2ae32b9b08fcf"
+    },
+    {
+      "path": "reports/P4-01/manual-audit-c4c77c8a2ecc0f76.json",
+      "sha256": "c09ef83433893984b116a69ed655c0d4a199489be4e418b9f430890902d9e7a5"
+    }
+  ],
+  "referenceUncertainty": "38 model-derived points are context-consistent, not individually human calibrated; 22 human intervals; original 5-way audit 4/5 within80ms and one user-confirmed correction"
+}

@@ -1,0 +1,12 @@
+$ tsx packages/voice/src/asr/latency.ts
+C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:84
+  if (busy.length) throw new Error(`Quiet window unavailable: ${JSON.stringify(busy)}`);
+                         ^
+
+Error: Quiet window unavailable: [{"Name":"uv.exe","ProcessId":1832,"reason":"active-test-or-model-work"},{"Name":"python.exe","ProcessId":23880,"reason":"active-test-or-model-work"},{"Name":"python.exe","ProcessId":8252,"reason":"active-test-or-model-work"}]
+    at validate (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:84:26)
+    at assertQuietAsync (C:\Users\nanake\.codex\worktrees\p4-01-asr\nemu\packages\voice\src\asr\quiet.ts:100:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+[ELIFECYCLE] Command failed with exit code 1.

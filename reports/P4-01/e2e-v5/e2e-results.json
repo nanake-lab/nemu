@@ -1,0 +1,144 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\nanake\\AppData\\Local\\fnm_multishells\\20996_1792403813689\\node.exe",
+      "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "apps/desktop/playwright.config.ts",
+      "apps/desktop/tests/voice.spec.ts"
+    ],
+    "configFile": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\playwright.config.ts",
+    "rootDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/apps/desktop/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/reports/P4-01/e2e-v5/test-results/electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/nanake/.codex/worktrees/p4-01-asr/nemu/apps/desktop/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\reports\\P4-01\\e2e-v5\\test-results\\electron",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests",
+        "snapshotDir": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\apps\\desktop\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {},
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\nanake\\.codex\\worktrees\\p4-01-asr\\nemu\\reports\\P4-01\\e2e-v5\\e2e-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "voice.spec.ts",
+      "file": "voice.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P4-01 utility ports, real AudioWorklet capture and disable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3797,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T07:19:07.679Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4f8e77fcf9b309101475-13be142f12cfc4667567",
+          "file": "voice.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-21T07:19:06.881Z",
+    "duration": 4646.979,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

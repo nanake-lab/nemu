@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; media-src blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+  />
+  <title>P4-01 本机录音盲标</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #101723;
+      color: #e8edf5;
+      font:
+        15px/1.5 system-ui,
+        'Microsoft YaHei',
+        sans-serif;
+    }
+    main {
+      max-width: 1240px;
+      margin: auto;
+      padding: 24px;
+    }
+    h1 {
+      font-size: 24px;
+      margin: 0 0 8px;
+    }
+    p {
+      margin: 8px 0;
+    }
+    .muted {
+      color: #abb8cc;
+    }
+    .card {
+      background: #1a2434;
+      border: 1px solid #34435b;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    button,
+    select,
+    input,
+    textarea {
+      font: inherit;
+      color: inherit;
+      background: #243249;
+      border: 1px solid #667991;
+      border-radius: 6px;
+      padding: 8px;
+    }
+    button {
+      cursor: pointer;
+    }
+    button:hover {
+      background: #344761;
+    }
+    button:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+    button.primary {
+      background: #226a94;
+    }
+    button.active {
+      outline: 2px solid #63d1ee;
+    }
+    input[type='number'] {
+      width: 125px;
+    }
+    input[type='range'] {
+      padding: 0;
+      width: min(640px, 90vw);
+    }
+    textarea {
+      width: 100%;
+      height: 60px;
+      resize: vertical;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 150px;
+      background: #0d1420;
+      touch-action: none;
+      cursor: crosshair;
+    }
+    #spectrum {
+      height: 230px;
+    }
+    .axis {
+      position: relative;
+      margin: 8px 0 8px 52px;
+    }
+    .freq {
+      position: absolute;
+      left: -48px;
+      height: 100%;
+      font: 12px monospace;
+      color: #b5c9df;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .caption {
+      font-size: 13px;
+      color: #b5c9df;
+    }
+    #status {
+      min-height: 24px;
+      color: #75d6eb;
+      white-space: pre-wrap;
+    }
+    audio {
+      width: min(650px, 100%);
+    }
+    .time {
+      font-variant-numeric: tabular-nums;
+    }
+    #transcript {
+      padding: 10px;
+      background: #101a2a;
+      border-radius: 6px;
+      user-select: text;
+    }
+    label {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+    #help {
+      font-size: 14px;
+    }
+    #progress {
+      margin-left: auto;
+      color: #8de0a9;
+    }
+    .note {
+      border-left: 3px solid #d4a757;
+      padding-left: 10px;
+    }
+    details {
+      margin-top: 10px;
+    }
+    a {
+      color: #88d8f0;
+    }
+  </style>
+  <main>
+    <h1>P4-01 本机录音盲标</h1>
+    <p class="muted">26 条录音 · 完全离线 · 不显示自动参考或检测结果 · 点位只由你选择</p>
+    <div class="card" id="help">
+      <p>
+        <strong>起点：</strong
+        >第一个能听到的语音音，包括清辅音。<strong>终点：</strong>最后一个能听到的语音音。重读全部保留，取最后一次读音的末音。
+      </p>
+      <p>
+        排除无关的环境声、点击声和单独呼吸；不要只凭波形大小判断。听不准时放慢、放大，并写备注。
+      </p>
+      <p>
+        先选下方“起点”或“终点”，再点波形 / 频谱。放大以光标为中心；← / → 移动 1 ms，Shift + ← / →
+        移动 10 ms；空格播放 / 暂停，S / E 用光标设起点 / 终点。
+      </p>
+      <p class="note">
+        关闭前导出 JSON。请用 Chrome / Edge 打开本地文件，将文件保存在
+        <strong>D:\NemuData\asr-evaluation\manual-labels\</strong
+        >。未完成时可导出草稿，再次打开后导入继续。
+      </p>
+    </div>
+    <div class="card">
+      <div class="row">
+        <button id="previous">上一条</button
+        ><select id="choose" aria-label="选择录音"></select
+        ><button id="next">下一条</button><span id="progress"></span>
+      </div>
+      <p id="identity" class="muted time"></p>
+      <p id="transcript"></p>
+      <audio
+        id="audio"
+        controls
+        preload="auto"
+        disableremoteplayback
+        controlslist="nodownload noremoteplayback"
+      ></audio>
+      <div class="row">
+        <label
+          >速度
+          <select id="speed">
+            <option value="1">1×</option>
+            <option value="0.75">0.75×</option>
+            <option value="0.5">0.5×</option>
+            <option value="0.25">0.25×</option>
+          </select></label
+        ><button id="playView">播放可见范围</button><button id="playSelection">播放已标区间</button
+        ><button id="playNear">播放光标前后 300 ms</button><button id="stop">暂停</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row">
+        <button id="modeStart" class="active">点选起点 S</button
+        ><button id="modeEnd">点选终点 E</button
+        ><label
+          >起点 ms
+          <input id="start" type="number" min="0" step="0.0625" placeholder="未标" /></label
+        ><label
+          >终点 ms <input id="end" type="number" min="0" step="0.0625" placeholder="未标" /></label
+        ><button id="undo">撤销本条上次修改</button><button id="clear">清空本条</button>
+      </div>
+      <p class="caption">
+        波形：蓝线为你选的起点，橙线为你选的终点，白线为播放 / 编辑光标。原始幅度显示，不自动裁剪。
+      </p>
+      <div class="axis">
+        <canvas tabindex="0" id="waveform" aria-label="波形，可点选时间"></canvas>
+      </div>
+      <p class="caption">
+        频谱：固定 −90 至 −15 dBFS 色标；32 ms Hann 窗、5 ms 步长。亮度仅辅助听辨，不生成边界。
+      </p>
+      <div class="axis">
+        <div class="freq">
+          <span>8 kHz</span><span>6 kHz</span><span>4 kHz</span><span>2 kHz</span><span>0 Hz</span>
+        </div>
+        <canvas tabindex="0" id="spectrum" aria-label="频谱，可点选时间"></canvas>
+      </div>
+      <div class="row">
+        <button id="zoomIn">放大 ＋</button><button id="zoomOut">缩小 −</button
+        ><button id="fit">显示全段</button
+        ><label>平移 <input id="pan" type="range" min="0" max="10000" value="0" /></label
+        ><span id="view" class="time caption"></span>
+      </div>
+      <p class="time">光标：<span id="cursorTime">0.000</span> ms</p>
+      <label for="note">本条备注（可选，尤其是听不准的位置）</label
+      ><textarea id="note" placeholder="例如：尾辅音较轻，反复听辨后选定"></textarea>
+    </div>
+    <div class="card">
+      <div class="row">
+        <button id="export" class="primary">导出 JSON（未完成则保存草稿）</button
+        ><button id="import">导入已保存 JSON</button
+        ><input id="importFile" type="file" accept="application/json,.json" hidden />
+      </div>
+      <p id="status" role="status" aria-live="polite">
+        尚未设置任何点位。没有自动选点，也不会联网。
+      </p>
+    </div>
+  </main>
+  <script id="payload" type="application/json">
+    __ANNOTATION_PAYLOAD__
+  </script>
+  <script type="module">
+    'use strict';
+    const data = JSON.parse(document.getElementById('payload').textContent);
+    const $ = (id) => document.getElementById(id),
+      audio = $('audio');
+    const labels = new Map(
+      data.tasks.map((t) => [t.id, { startSample: null, endSample: null, note: '' }]),
+    );
+    let context,
+      activeSource = null,
+      animation = null;
+    let index = 0,
+      mode = 'start',
+      samples,
+      picture,
+      url,
+      cursor = 0,
+      left = 0,
+      width = 0,
+      stopAt = null,
+      dirty = false,
+      previousLabel = null;
+    const current = () => data.tasks[index],
+      label = () => labels.get(current().id),
+      duration = () => current().frameCount / 16000;
+    const valid = (l) =>
+      Number.isInteger(l.startSample) &&
+      Number.isInteger(l.endSample) &&
+      l.startSample >= 0 &&
+      l.endSample > l.startSample;
+    function message(s) {
+      $('status').textContent = s;
+    }
+    function complete() {
+      return data.tasks.filter((t) => {
+        const l = labels.get(t.id);
+        return valid(l) && l.endSample <= t.frameCount;
+      }).length;
+    }
+    function refresh() {
+      const l = label();
+      $('start').value = l.startSample === null ? '' : l.startSample / 16;
+      $('end').value = l.endSample === null ? '' : l.endSample / 16;
+      $('note').value = l.note;
+      $('progress').textContent = `已完成 ${complete()} / 26`;
+      [...$('choose').options].forEach((o, i) => {
+        o.textContent = `${i + 1}. ${data.tasks[i].id}${valid(labels.get(data.tasks[i].id)) ? ' ✓' : ''}`;
+      });
+      $('previous').disabled = index === 0;
+      $('next').disabled = index === data.tasks.length - 1;
+      $('playSelection').disabled = !valid(l);
+      draw();
+    }
+    function remember() {
+      previousLabel = { ...label() };
+      dirty = true;
+    }
+    function setPoint(seconds) {
+      const n = Math.max(0, Math.min(current().frameCount, Math.round(seconds * 16000)));
+      remember();
+      label()[mode === 'start' ? 'startSample' : 'endSample'] = n;
+      cursor = n / 16000;
+      refresh();
+      if (label().startSample !== null && label().endSample !== null && !valid(label()))
+        message('起点必须早于终点；请修正后再保存最终结果。');
+      else message('已设置你的点位；关闭前请导出。');
+    }
+    function pcm(bytes) {
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      let pos = 12;
+      while (pos + 8 <= bytes.length) {
+        const name = String.fromCharCode(...bytes.slice(pos, pos + 4)),
+          size = view.getUint32(pos + 4, true);
+        if (name === 'data') {
+          const result = new Int16Array(size / 2);
+          for (let i = 0; i < result.length; i++) result[i] = view.getInt16(pos + 8 + i * 2, true);
+          return result;
+        }
+        pos += 8 + size + (size % 2);
+      }
+      throw Error('WAV data chunk missing');
+    }
+    function load(i) {
+      stopPlayback();
+      stopAt = null;
+      index = i;
+      previousLabel = null;
+      cursor = 0;
+      left = 0;
+      width = duration();
+      const t = current(),
+        bytes = Uint8Array.from(atob(t.wav), (c) => c.charCodeAt(0));
+      samples = pcm(bytes);
+      if (samples.length !== t.frameCount) throw Error('音频长度不匹配');
+      if (url) URL.revokeObjectURL(url);
+      url = URL.createObjectURL(new Blob([bytes], { type: 'audio/wav' }));
+      audio.src = url;
+      audio.playbackRate = Number($('speed').value);
+      picture = new Image();
+      picture.onload = draw;
+      picture.src = 'data:image/png;base64,' + t.spectrum;
+      $('choose').value = String(i);
+      $('identity').textContent =
+        `${t.id} · ${t.lang} · ${(t.frameCount / 16).toFixed(3)} ms · 16 kHz 单声道`;
+      $('transcript').textContent = t.transcript;
+      refresh();
+    }
+    function setup(canvas) {
+      const ratio = devicePixelRatio || 1,
+        w = canvas.clientWidth,
+        h = canvas.clientHeight;
+      canvas.width = Math.round(w * ratio);
+      canvas.height = Math.round(h * ratio);
+      const c = canvas.getContext('2d');
+      c.scale(ratio, ratio);
+      c.clearRect(0, 0, w, h);
+      return { c, w, h };
+    }
+    function overlay(c, w, h) {
+      c.font = '12px monospace';
+      c.fillStyle = '#c6d4e8';
+      for (let i = 0; i <= 4; i++) {
+        const x = (i * w) / 4;
+        c.fillText(
+          ((left + (i * width) / 4) * 1000).toFixed(width < 1 ? 1 : 0) + ' ms',
+          Math.min(x, w - 75),
+          h - 5,
+        );
+      }
+      const l = label();
+      for (const [sample, color, name] of [
+        [l.startSample, '#6ad9ff', '起'],
+        [l.endSample, '#ffc078', '终'],
+        [cursor * 16000, '#ffffff', ''],
+      ]) {
+        if (sample === null) continue;
+        const x = ((sample / 16000 - left) / width) * w;
+        if (x < 0 || x > w) continue;
+        c.strokeStyle = color;
+        c.beginPath();
+        c.moveTo(x, 0);
+        c.lineTo(x, h - 18);
+        c.stroke();
+        c.fillStyle = color;
+        c.fillText(name, x + 3, 14);
+      }
+    }
+    function draw() {
+      if (!samples) return;
+      const { c, w, h } = setup($('waveform'));
+      c.strokeStyle = '#84b5d6';
+      c.beginPath();
+      for (let x = 0; x < w; x++) {
+        let a = Math.max(0, Math.floor((left + (x / w) * width) * 16000)),
+          b = Math.min(samples.length, Math.ceil((left + ((x + 1) / w) * width) * 16000));
+        let min = 0,
+          max = 0;
+        for (let k = a; k < b; k++) {
+          const v = samples[k] / 32768;
+          min = Math.min(min, v);
+          max = Math.max(max, v);
+        }
+        c.moveTo(x, h / 2 - (max * (h - 28)) / 2);
+        c.lineTo(x, h / 2 - (min * (h - 28)) / 2);
+      }
+      c.stroke();
+      overlay(c, w, h);
+      const spec = setup($('spectrum'));
+      if (picture && picture.complete && picture.naturalWidth) {
+        const start = (left / duration()) * picture.naturalWidth,
+          span = (width / duration()) * picture.naturalWidth;
+        spec.c.drawImage(picture, start, 0, span, picture.naturalHeight, 0, 0, spec.w, spec.h - 20);
+      }
+      overlay(spec.c, spec.w, spec.h);
+      $('view').textContent =
+        `${(left * 1000).toFixed(1)}–${((left + width) * 1000).toFixed(1)} ms`;
+      $('cursorTime').textContent = (cursor * 1000).toFixed(3);
+      $('pan').value = String(
+        duration() === width ? 0 : Math.round((left / (duration() - width)) * 10000),
+      );
+    }
+    function zoom(factor) {
+      const next = Math.max(0.05, Math.min(duration(), width * factor));
+      left = Math.max(0, Math.min(duration() - next, cursor - next / 2));
+      width = next;
+      draw();
+    }
+    function stopPlayback() {
+      audio.pause();
+      if (activeSource) {
+        activeSource.onended = null;
+        activeSource.stop();
+        activeSource = null;
+      }
+      if (animation !== null) {
+        cancelAnimationFrame(animation);
+        animation = null;
+      }
+    }
+    async function play(a, b) {
+      stopPlayback();
+      a = Math.max(0, Math.min(duration(), a));
+      b = b === null ? duration() : Math.max(a, Math.min(duration(), b));
+      if (b <= a) return;
+      try {
+        context = context || new AudioContext();
+        await context.resume();
+        const buffer = context.createBuffer(1, samples.length, 16000);
+        const channel = buffer.getChannelData(0);
+        for (let i = 0; i < samples.length; i++) channel[i] = samples[i] / 32768;
+        const source = context.createBufferSource();
+        source.buffer = buffer;
+        const rate = Number($('speed').value);
+        source.playbackRate.value = rate;
+        source.connect(context.destination);
+        activeSource = source;
+        const began = context.currentTime;
+        source.onended = () => {
+          activeSource = null;
+          cancelAnimationFrame(animation);
+          animation = null;
+          cursor = b;
+          draw();
+        };
+        source.start(0, a, b - a);
+        const tick = () => {
+          if (activeSource !== source) return;
+          cursor = Math.min(b, a + (context.currentTime - began) * rate);
+          draw();
+          animation = requestAnimationFrame(tick);
+        };
+        tick();
+      } catch (e) {
+        message('精确区间播放失败：' + e.message + '；可使用原生播放器试听。');
+      }
+    }
+    for (const id of ['waveform', 'spectrum']) {
+      $(id).addEventListener('pointerdown', (e) => {
+        e.currentTarget.focus();
+        const r = e.currentTarget.getBoundingClientRect();
+        setPoint(left + ((e.clientX - r.left) / r.width) * width);
+      });
+      $(id).addEventListener(
+        'wheel',
+        (e) => {
+          if (!e.ctrlKey) return;
+          e.preventDefault();
+          zoom(e.deltaY < 0 ? 0.5 : 2);
+        },
+        { passive: false },
+      );
+    }
+    $('modeStart').onclick = () => {
+      mode = 'start';
+      $('modeStart').classList.add('active');
+      $('modeEnd').classList.remove('active');
+    };
+    $('modeEnd').onclick = () => {
+      mode = 'end';
+      $('modeEnd').classList.add('active');
+      $('modeStart').classList.remove('active');
+    };
+    for (const kind of ['start', 'end'])
+      $(kind).onchange = () => {
+        remember();
+        const value = $(kind).value;
+        const n = value === '' ? null : Math.round(Number(value) * 16);
+        if (n !== null && (!Number.isFinite(n) || n < 0 || n > current().frameCount)) {
+          message('点位超出音频范围。');
+          refresh();
+          return;
+        }
+        label()[kind + 'Sample'] = n;
+        refresh();
+      };
+    $('note').oninput = () => {
+      label().note = $('note').value;
+      dirty = true;
+    };
+    $('undo').onclick = () => {
+      if (previousLabel) {
+        const temp = { ...label() };
+        labels.set(current().id, previousLabel);
+        previousLabel = temp;
+        dirty = true;
+        refresh();
+      }
+    };
+    $('clear').onclick = () => {
+      remember();
+      labels.set(current().id, { startSample: null, endSample: null, note: label().note });
+      refresh();
+    };
+    $('previous').onclick = () => load(index - 1);
+    $('next').onclick = () => load(index + 1);
+    $('choose').onchange = () => load(Number($('choose').value));
+    $('speed').onchange = () => (audio.playbackRate = Number($('speed').value));
+    $('playView').onclick = () => play(left, left + width);
+    $('playSelection').onclick = () => play(label().startSample / 16000, label().endSample / 16000);
+    $('playNear').onclick = () => play(cursor - 0.3, Math.min(duration(), cursor + 0.3));
+    $('stop').onclick = stopPlayback;
+    $('zoomIn').onclick = () => zoom(0.5);
+    $('zoomOut').onclick = () => zoom(2);
+    $('fit').onclick = () => {
+      left = 0;
+      width = duration();
+      draw();
+    };
+    $('pan').oninput = () => {
+      left = (Number($('pan').value) / 10000) * (duration() - width);
+      draw();
+    };
+    audio.onplay = () => {
+      if (activeSource) {
+        activeSource.onended = null;
+        activeSource.stop();
+        activeSource = null;
+        cancelAnimationFrame(animation);
+        animation = null;
+      }
+    };
+    audio.ontimeupdate = () => {
+      if (activeSource) return;
+      if (stopAt !== null && audio.currentTime >= stopAt) {
+        audio.pause();
+        stopAt = null;
+      }
+      cursor = audio.currentTime;
+      draw();
+    };
+    window.addEventListener('keydown', (e) => {
+      if (['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(e.target.tagName)) return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (audio.paused && !activeSource) play(cursor, null);
+        else stopPlayback();
+      }
+      if (e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
+        e.preventDefault();
+        cursor = Math.max(
+          0,
+          Math.min(
+            duration(),
+            cursor + (e.code === 'ArrowRight' ? 1 : -1) * (e.shiftKey ? 0.01 : 0.001),
+          ),
+        );
+        stopPlayback();
+        audio.currentTime = cursor;
+        if (cursor < left || cursor > left + width)
+          left = Math.max(0, Math.min(duration() - width, cursor - width / 2));
+        draw();
+      }
+      if (e.code === 'KeyS') {
+        $('modeStart').click();
+        setPoint(cursor);
+      }
+      if (e.code === 'KeyE') {
+        $('modeEnd').click();
+        setPoint(cursor);
+      }
+    });
+    $('export').onclick = async () => {
+      if (!window.showSaveFilePicker) {
+        message(
+          '此浏览器不支持本机文件选择器。请用 Chrome / Edge 打开本文件；不会自动下载到 C 盘。',
+        );
+        return;
+      }
+      const final = complete() === 26;
+      const result = {
+        method: data.method,
+        planSha256: data.planSha256,
+        sampleRate: 16000,
+        status: final ? 'final' : 'draft',
+        annotator: 'human-user',
+        createdAt: new Date().toISOString(),
+        samples: data.tasks.map((t) => ({
+          id: t.id,
+          sha256: t.sha256,
+          frameCount: t.frameCount,
+          ...labels.get(t.id),
+        })),
+      };
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: `annotations-${final ? 'final' : 'draft'}-${new Date().toISOString().replace(/[:.]/g, '-')}.json`,
+          types: [{ description: '标注 JSON', accept: { 'application/json': ['.json'] } }],
+        });
+        const writable = await handle.createWritable();
+        await writable.write(JSON.stringify(result, null, 2) + '\n');
+        await writable.close();
+        dirty = false;
+        message(
+          `已保存 ${handle.name}（${final ? '最终文件' : '草稿'}，${complete()}/26）。请保存于 D 盘仓库外目录。`,
+        );
+      } catch (e) {
+        message(
+          e.name === 'AbortError' ? '已取消保存；点位仍在当前页面。' : `保存失败：${e.message}`,
+        );
+      }
+    };
+    $('import').onclick = () => $('importFile').click();
+    $('importFile').onchange = async () => {
+      const file = $('importFile').files[0];
+      if (!file) return;
+      try {
+        const incoming = JSON.parse(await file.text());
+        if (
+          incoming.method !== data.method ||
+          incoming.planSha256 !== data.planSha256 ||
+          incoming.sampleRate !== 16000 ||
+          !Array.isArray(incoming.samples) ||
+          incoming.samples.length !== 26
+        )
+          throw Error('方法、样本或计划版本不匹配');
+        const fresh = new Map();
+        for (const r of incoming.samples) {
+          const t = data.tasks.find((t) => t.id === r.id);
+          if (!t || fresh.has(r.id) || r.sha256 !== t.sha256 || r.frameCount !== t.frameCount)
+            throw Error('录音身份不匹配或重复');
+          for (const v of [r.startSample, r.endSample])
+            if (v !== null && (!Number.isInteger(v) || v < 0 || v > t.frameCount))
+              throw Error('边界无效');
+          if (r.startSample !== null && r.endSample !== null && r.endSample <= r.startSample)
+            throw Error('结束必须晚于开始');
+          fresh.set(r.id, {
+            startSample: r.startSample,
+            endSample: r.endSample,
+            note: typeof r.note === 'string' ? r.note : '',
+          });
+        }
+        for (const [id, value] of fresh) labels.set(id, value);
+        previousLabel = null;
+        dirty = false;
+        refresh();
+        message(`已导入 ${file.name}，完成 ${complete()}/26。`);
+      } catch (e) {
+        message(`导入失败，原标注保留：${e.message}`);
+      } finally {
+        $('importFile').value = '';
+      }
+    };
+    window.addEventListener('beforeunload', (e) => {
+      if (dirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+    window.addEventListener('resize', draw);
+    data.tasks.forEach((t, i) => {
+      const o = document.createElement('option');
+      o.value = String(i);
+      o.textContent = t.id;
+      $('choose').append(o);
+    });
+    load(0);
+  </script>
+</html>

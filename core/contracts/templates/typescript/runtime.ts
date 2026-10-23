@@ -14,16 +14,22 @@ export interface Field {
   max?: number;
   size?: number;
   set?: string;
+  oneof?: string;
+  json_name?: string;
+  json_map?: string;
 }
 export interface Schema {
+  json_enums?: Record<string, Record<string, string>>;
   messages: Record<
     string,
     {
       tag: string;
       source: string;
+      resource?: boolean;
       file: string;
       fields: Field[];
       rules: {
+        oneofs?: Record<string, { fields: string[]; required: boolean }>;
         discriminator?: string;
         common?: string[];
         lengths?: Record<string, string>;
@@ -193,6 +199,9 @@ export function normalize(
     for (const [k, values] of Object.entries(c.values ?? {}))
       requireValue(values.includes(out[k] as number), 'variant enum');
   }
+  for (const group of Object.values(m.rules.oneofs ?? {})) {
+    requireValue(group.fields.filter(k => out[k] !== undefined).length === 1, 'required oneof');
+  }
   return out;
 }
 
@@ -239,7 +248,13 @@ export function encodeCanonicalData(name: string, value: unknown, l: Limits): Bu
   };
   for (const f of m.fields.slice(1)) {
     const item = v[f.name];
-    if (f.repeated) {
+    if (f.oneof) {
+      const group = m.rules.oneofs![f.oneof]!.fields;
+      if (f.name !== group[0]) continue;
+      const chosen = m.fields.find(x => group.includes(x.name) && v[x.name] !== undefined)!;
+      push(u32(chosen.number));
+      push(canonicalScalar(chosen.type, v[chosen.name], l));
+    } else if (f.repeated) {
       const a = item as unknown[];
       push(u32(a.length));
       for (const x of a) push(canonicalScalar(f.type, x, l));
@@ -306,7 +321,14 @@ export function decodeCanonicalData(
   };
   const value: Record<string, unknown> = { schema_version: 1 };
   for (const f of m.fields.slice(1)) {
-    if (f.repeated) {
+    if (f.oneof) {
+      const group = m.rules.oneofs![f.oneof]!.fields;
+      if (f.name !== group[0]) continue;
+      const number = r.uint();
+      const chosen = m.fields.find(x => x.number === number && group.includes(x.name));
+      requireValue(chosen, 'unknown oneof field');
+      value[chosen.name] = atom(chosen.type);
+    } else if (f.repeated) {
       const count = r.uint();
       requireValue(count <= l.max_items, 'count limit');
       value[f.name] = Array.from({ length: count }, () => atom(f.type));

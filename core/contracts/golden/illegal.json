@@ -16159,5 +16159,945 @@
         "max_depth": 32
       }
     }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "BodyReadoutV2",
+      "op": "encode",
+      "value": {
+        "version": "A0",
+        "facing": 0.0,
+        "tension": 0.0,
+        "energy": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "BodyReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "version": "A0",
+        "facing": 0.0,
+        "tension": 0.0,
+        "energy": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "BodyReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "facing": 0.0,
+        "tension": 0.0,
+        "energy": 0.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "encode",
+      "value": {
+        "snapshot_id": "A0",
+        "projected_at_ns": "0",
+        "v1": {
+          "schema_version": 1,
+          "version": "A0",
+          "expression_baseline": [],
+          "idle_tempo": 0.5,
+          "ear_pose": 0.0,
+          "tail_amplitude": 0.0,
+          "gaze_sociability": 0.0,
+          "posture": 0.0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "snapshot_id": "A0",
+        "projected_at_ns": "0",
+        "v1": {
+          "schema_version": 1,
+          "version": "A0",
+          "expression_baseline": [],
+          "idle_tempo": 0.5,
+          "ear_pose": 0.0,
+          "tail_amplitude": 0.0,
+          "gaze_sociability": 0.0,
+          "posture": 0.0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "A0",
+        "projected_at_ns": "0",
+        "v1": {
+          "schema_version": 1,
+          "version": "A0",
+          "expression_baseline": [],
+          "idle_tempo": 0.5,
+          "ear_pose": 0.0,
+          "tail_amplitude": 0.0,
+          "gaze_sociability": 0.0,
+          "posture": 0.0
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "RunStateV2",
+      "op": "encode",
+      "value": {
+        "states": [],
+        "speech_mode": 1,
+        "strict": true,
+        "autonomy": 1,
+        "reasons": [],
+        "lineage": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "RunStateV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "states": [],
+        "speech_mode": 1,
+        "strict": true,
+        "autonomy": 1,
+        "reasons": [],
+        "lineage": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "RunStateV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "states": [],
+        "speech_mode": 1,
+        "strict": true,
+        "autonomy": 1,
+        "reasons": [],
+        "lineage": 1,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "notice_id": "A0",
+        "kind": 1,
+        "at": "A0",
+        "summary": "A0",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "notice_id": "A0",
+        "kind": 1,
+        "at": "A0",
+        "summary": "A0",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "Notice",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "notice_id": "A0",
+        "kind": 1,
+        "at": "A0",
+        "summary": "A0",
+        "l_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "QueryV2",
+      "op": "encode",
+      "value": {
+        "query_id": "A0",
+        "limit": "0",
+        "kind": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "QueryV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "query_id": "A0",
+        "limit": "0",
+        "kind": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "QueryV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "query_id": "A0",
+        "limit": "0",
+        "kind": 1,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "QueryResultV2",
+      "op": "encode",
+      "value": {
+        "query_id": "A0",
+        "status": 1,
+        "items": [],
+        "growth_entries": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "QueryResultV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "query_id": "A0",
+        "status": 1,
+        "items": [],
+        "growth_entries": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "QueryResultV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "query_id": "A0",
+        "status": 1,
+        "items": [],
+        "growth_entries": [],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "GrowthControl",
+      "op": "encode",
+      "value": {
+        "action": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "GrowthControl",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "action": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "GrowthControl",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "action": 1,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ApprovalRequestV2",
+      "op": "encode",
+      "value": {
+        "approval_id": "A0",
+        "action_id": "A0",
+        "tier": 1,
+        "title": "A0",
+        "detail": "A0",
+        "expires_at_ns": "0",
+        "action_payload": "",
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ApprovalRequestV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "approval_id": "A0",
+        "action_id": "A0",
+        "tier": 1,
+        "title": "A0",
+        "detail": "A0",
+        "expires_at_ns": "0",
+        "action_payload": "",
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ApprovalRequestV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "approval_id": "A0",
+        "action_id": "A0",
+        "tier": 1,
+        "title": "A0",
+        "detail": "A0",
+        "expires_at_ns": "0",
+        "action_payload": "",
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ApprovalDecisionV2",
+      "op": "encode",
+      "value": {
+        "approval_id": "A0",
+        "decision": 1,
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ApprovalDecisionV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "approval_id": "A0",
+        "decision": 1,
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ApprovalDecisionV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "approval_id": "A0",
+        "decision": 1,
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "SocialAction",
+      "op": "encode",
+      "value": {
+        "kind": 1,
+        "action_payload": ""
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "SocialAction",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "kind": 1,
+        "action_payload": ""
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "SocialAction",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1,
+        "action_payload": "",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "oneof-missing",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "A0",
+        "projected_at_ns": "0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "oneof-multiple",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "A0",
+        "projected_at_ns": "0",
+        "v1": {
+          "schema_version": 1,
+          "version": "A0",
+          "expression_baseline": [],
+          "idle_tempo": 0.5,
+          "ear_pose": 0.0,
+          "tail_amplitude": 0.0,
+          "gaze_sociability": 0.0,
+          "posture": 0.0
+        },
+        "v2": {
+          "schema_version": 1,
+          "version": "A0",
+          "facing": 0.0,
+          "tension": 0.0,
+          "energy": 0.0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "oneof-unknown-field",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "canonical",
+      "hex": "4e435631010000000f0000006563686f2e726561646f75742d763201000000410000000000000000630000003d0000004e43563101000000140000006563686f2e626f64792d726561646f75742d76320100000056000000000000e03f0000000000000000000000000000e03f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "oneof-trailing",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "canonical",
+      "hex": "4e435631010000000f0000006563686f2e726561646f75742d763201000000410000000000000000060000003d0000004e43563101000000140000006563686f2e626f64792d726561646f75742d76320100000056000000000000e03f0000000000000000000000000000e03f00",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "oneof-missing-wire",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "canonical",
+      "hex": "4e435631010000000f0000006563686f2e726561646f75742d763201000000410000000000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "oneof-two-wire",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "canonical",
+      "hex": "4e435631010000000f0000006563686f2e726561646f75742d763201000000410000000000000000060000003d0000004e43563101000000140000006563686f2e626f64792d726561646f75742d76320100000056000000000000e03f0000000000000000000000000000e03f050000003d0000004e43563101000000140000006563686f2e626f64792d726561646f75742d76320100000056000000000000e03f0000000000000000000000000000e03f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "oneof-protobuf-missing",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "protobuf",
+      "hex": "08011a01412000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "oneof-protobuf-multiple",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "protobuf",
+      "hex": "08011a014120002a3308011202413021000000000000e03f2900000000000000003100000000000000003900000000000000004100000000000000003221080112024130490000000000000000510000000000000000590000000000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "oneof-protobuf-unknown",
+    "request": {
+      "name": "ReadoutV2",
+      "op": "protobuf",
+      "hex": "08011a01412000980600",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "kind": "A0",
+        "seconds": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "kind": "A0",
+        "seconds": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ProactivityCooldown",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": "A0",
+        "seconds": 0.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "min_interval_s": 0.0,
+        "speak_per_hour": 0,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "min_interval_s": 0.0,
+        "speak_per_hour": 0,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ProactivityBudgets",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "min_interval_s": 0.0,
+        "speak_per_hour": 0,
+        "quiet_day_factor": 0.0,
+        "autonomous_helper_per_day": 0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "version": "A0",
+        "allowed_kinds": [],
+        "cooldowns": [],
+        "gates": [],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 0,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "version": "A0",
+        "allowed_kinds": [],
+        "cooldowns": [],
+        "gates": [],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 0,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 0
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ProactivityBoundaries",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "allowed_kinds": [],
+        "cooldowns": [],
+        "gates": [],
+        "budgets": {
+          "schema_version": 1,
+          "min_interval_s": 0.0,
+          "speak_per_hour": 0,
+          "quiet_day_factor": 0.0,
+          "autonomous_helper_per_day": 0
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
   }
 ]

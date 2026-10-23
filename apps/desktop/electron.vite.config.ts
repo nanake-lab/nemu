@@ -1,11 +1,22 @@
+import { workletSource } from '../../packages/voice/web/mic-worklet.js';
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite';
 import { resolve } from 'node:path';
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts'] })],
+    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts', '@nemu/voice'] })],
+    build: {
+      rollupOptions: {
+        external: ['sherpa-onnx-node'],
+        input: {
+          index: resolve(import.meta.dirname, 'src/main/index.ts'),
+          voice: resolve(import.meta.dirname, 'src/voice/utility.ts'),
+        },
+      },
+    },
   },
   preload: {
+    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts', 'zod'] })],
     build: {
       rollupOptions: {
         input: {
@@ -17,6 +28,24 @@ export default defineConfig({
     },
   },
   renderer: {
+    plugins: [
+      {
+        name: 'nemu-mic-worklet',
+        configureServer(server) {
+          server.middlewares.use('/stage/asr-mic-worklet.js', (_request, response) => {
+            response.setHeader('Content-Type', 'text/javascript');
+            response.end(workletSource());
+          });
+        },
+        generateBundle() {
+          this.emitFile({
+            type: 'asset',
+            fileName: 'stage/asr-mic-worklet.js',
+            source: workletSource(),
+          });
+        },
+      },
+    ],
     root: resolve(import.meta.dirname, '..'),
     base: './',
     build: {
