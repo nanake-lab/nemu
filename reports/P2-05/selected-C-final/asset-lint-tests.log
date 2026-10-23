@@ -1,0 +1,44 @@
+$ pnpm build && node --test dist/*.test.js
+$ pnpm --filter @nemu/contracts build && tsc -p tsconfig.json
+$ tsc -p tsconfig.json
+✔ valid VRM 1.0, profile, spring rig, and manifest have no errors (185.4982ms)
+✔ rejects a non-VRM 1.0 model (12.6951ms)
+✔ rejects soles that do not land at y=0 (11.4112ms)
+✔ rejects an avatar root that faces away from +Z (10.9561ms)
+✔ rejects a profile height outside the 2 cm tolerance (12.2103ms)
+✔ rejects geometry above the triangle hard limit (19.5602ms)
+✔ warns when geometry exceeds the 70,000 triangle target (13.817ms)
+✔ rejects a texture edge over 2048 pixels (11.7045ms)
+✔ rejects RGBA8 plus mipmaps over 256 MiB (11.4655ms)
+✔ rejects missing required humanoid bones (11.9412ms)
+✔ rejects missing required preset expressions (12.5905ms)
+✔ rejects an expression with a wrong mouth override (11.4178ms)
+✔ rejects binary viseme expressions (10.4494ms)
+✔ rejects missing Nemu custom expressions (10.145ms)
+✔ rejects materials without MToon or unlit (10.9105ms)
+✔ rejects ear spring chains with fewer than two joints (11.8467ms)
+✔ rejects a tail rig shorter than eight joints (11.1475ms)
+✔ rejects missing required collider groups (10.0993ms)
+✔ rejects a profile that references an absent bone (10.4879ms)
+✔ accepts VRM humanoid semantic names when profile nodes use exporter-specific names (13.3597ms)
+✔ does not require body collider groups for unrelated spring chains (13.5424ms)
+✔ checks hair spring count when a profile is supplied (11.9404ms)
+✔ rejects manifest entries without required license data (10.8621ms)
+✔ returns machine-readable results without profile or manifest (10.9234ms)
+✔ CLI --json emits parseable JSON for a valid model (215.718ms)
+✔ rejects invalid VRM public license URL: undefined (12.842ms)
+✔ rejects invalid VRM public license URL:  (9.8869ms)
+✔ rejects invalid VRM public license URL: LICENSE.md (10.3367ms)
+✔ rejects invalid VRM public license URL: https://vrm.dev/licenses/1.0 (10.4387ms)
+✔ rejects missing content license: undefined (9.8992ms)
+✔ rejects missing content license:  (10.4281ms)
+✔ rejects missing content license:     (10.081ms)
+✔ rejects missing content license: 42 (11.0941ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 852.5984

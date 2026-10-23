@@ -1,0 +1,96 @@
+{
+  "round": "one bounded diagnosis; B K/D/G unchanged",
+  "runs": [
+    {
+      "run": "selected-B",
+      "inputSha256": "42ee5201dd8af34b6fbfbb864d14763db681dd64fcca58c035a0140976361c79",
+      "rawPath": "D:\\Dev\\nemu-p205\\reports\\P2-05\\selected-B\\jitter-B.json.gz",
+      "rawCompressedSha256": "c75b5791cd3470a1f081dfe3d4d1bc3326b09654d30c10160cc0ef6e3d84332c",
+      "rawUncompressedSha256": "53f7558d5e0eef8e3c46669afd4abf402d60a12d0061ffa6b3aab2df3e7f0998",
+      "rawBytes": 19101102,
+      "hairPeak": {
+        "speed": 376.6787197739523,
+        "frame": 3128,
+        "bone": "J_Sec_Hair1_07"
+      },
+      "hairPeakDegreesPerFrame": 179.85084062865414
+    },
+    {
+      "run": "source-control",
+      "inputSha256": "d3f4799c37ecfdd1806ef93264b06f5d979b697a592d4422884046b594e1cb2b",
+      "rawPath": "D:\\Dev\\nemu-p205\\reports\\P2-05\\source-control\\jitter-source.json.gz",
+      "rawCompressedSha256": "c0edb2e3b3c296e9cccb2474181bdcd2b833e9b9de744016a3db4425cb5a010a",
+      "rawUncompressedSha256": "13418b46a7099c23abd4c45e6bb0781f4611461b0079da228563f0aad01c8cec",
+      "rawBytes": 17557184,
+      "hairPeak": {
+        "speed": 131.18748849358315,
+        "frame": 2210,
+        "bone": "J_Sec_Hair3_04"
+      },
+      "hairPeakDegreesPerFrame": 62.6374117966947
+    },
+    {
+      "run": "diagnosis-source-B-params",
+      "inputSha256": "d3f4799c37ecfdd1806ef93264b06f5d979b697a592d4422884046b594e1cb2b",
+      "rawPath": "D:\\Dev\\nemu-p205\\reports\\P2-05\\diagnosis-source-B-params\\jitter-source.json.gz",
+      "rawCompressedSha256": "76869a711a37a30565e7ccff4a1cfa8ef47390ea51e046b519063a5fe6bcbcdb",
+      "rawUncompressedSha256": "3ed0ab13e3ba1f95444cb39a3196583c586dc67a429aef2d7ebd17bc91018cad",
+      "rawBytes": 17545247,
+      "hairPeak": {
+        "speed": 357.4347848377041,
+        "frame": 1695,
+        "bone": "J_Sec_Hair1_04"
+      },
+      "hairPeakDegreesPerFrame": 170.66253851972598,
+      "minimumHairBoneLengthM": 0.03732840145365955,
+      "zeroLengthHairBones": [],
+      "peakGeometry": {
+        "frame": 1695,
+        "bone": "J_Sec_Hair1_04",
+        "speed": 357.4347848377041,
+        "boneLength": 0.037554674381382665,
+        "localChild": [
+          6.893277e-05,
+          0.03755462,
+          7.450581e-09
+        ],
+        "restAxisGravityDot": 0.9987305640302955,
+        "restAxisSolvedDirectionDot": -0.9642984652130698
+      }
+    },
+    {
+      "run": "diagnosis-B-no-colliders",
+      "inputSha256": "42ee5201dd8af34b6fbfbb864d14763db681dd64fcca58c035a0140976361c79",
+      "rawPath": "D:\\Dev\\nemu-p205\\reports\\P2-05\\diagnosis-B-no-colliders\\jitter-B.json.gz",
+      "rawCompressedSha256": "7718f1590b4ab39dd8d47c4a754d2f67967b3cdaa2fa03f113e97b97c868a7bb",
+      "rawUncompressedSha256": "65dec8322c9008e232d5af74415f9426ed2ae9a41e9bdfbd3aebfd833fa1cc16",
+      "rawBytes": 19058331,
+      "hairPeak": {
+        "speed": 376.6787197739523,
+        "frame": 3128,
+        "bone": "J_Sec_Hair1_07"
+      },
+      "hairPeakDegreesPerFrame": 179.85084062865414,
+      "minimumHairBoneLengthM": 0.03732858023520273,
+      "zeroLengthHairBones": [],
+      "peakGeometry": {
+        "frame": 3128,
+        "bone": "J_Sec_Hair1_07",
+        "speed": 376.6787197739523,
+        "boneLength": 0.03904925137764682,
+        "localChild": [
+          -1.2741434147756081e-06,
+          0.03904924541711807,
+          -7.501139265286838e-09
+        ],
+        "restAxisGravityDot": 0.9946321737754616,
+        "restAxisSolvedDirectionDot": -0.9710182998557321
+      }
+    }
+  ],
+  "correction": {
+    "file": "diagnosis-source-B-params/jitter-summary.json",
+    "field": "profileUse",
+    "note": "The descriptive label incorrectly says settings unchanged; sourceBParameters=true and settings explicitly record B K/D/G overrides. Native colliders, hit radii and topology were preserved. Raw evidence retained unchanged; script label corrected for future runs."
+  }
+}

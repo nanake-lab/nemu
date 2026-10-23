@@ -1,0 +1,125 @@
+{
+  "loaded": {
+    "metaVersion": "1",
+    "name": "Nemu",
+    "version": "P2-05-candidate-standard-standard",
+    "authors": [
+      "nanake"
+    ],
+    "licenseUrl": "https://vrm.dev/licenses/1.0/",
+    "avatarPermission": "onlySeparatelyLicensedPerson",
+    "allowExcessivelyViolentUsage": false,
+    "allowExcessivelySexualUsage": false,
+    "commercialUsage": "personalNonProfit",
+    "allowPoliticalOrReligiousUsage": false,
+    "allowAntisocialOrHateUsage": false,
+    "creditNotation": "required",
+    "allowRedistribution": false,
+    "modification": "allowModification",
+    "otherLicenseUrl": "LICENSE.md"
+  },
+  "profile": {
+    "version": 2,
+    "model": "nemu.vrm",
+    "heightM": 1.5842380561352911,
+    "headTopOffsetM": 0.29106915065486283,
+    "hitRegions": [
+      {
+        "id": "head",
+        "bone": "head",
+        "shape": "sphere",
+        "radiusM": 0.14
+      },
+      {
+        "id": "body",
+        "bone": "spine",
+        "shape": "capsule",
+        "radiusM": 0.16,
+        "lengthM": 0.3
+      }
+    ],
+    "gazeLimits": {
+      "yawDeg": 45,
+      "pitchUpDeg": 25,
+      "pitchDownDeg": 30
+    },
+    "framing": {
+      "fullBody": {
+        "fovDeg": 20,
+        "distanceM": 5.3,
+        "targetBone": "hips",
+        "offsetM": [
+          0,
+          0.1,
+          0
+        ]
+      },
+      "upperBody": {
+        "fovDeg": 20,
+        "distanceM": 1.6,
+        "targetBone": "chest",
+        "offsetM": [
+          0,
+          0.1,
+          0
+        ]
+      }
+    },
+    "rig": {
+      "earBonesL": [
+        "J_Sec_Hair1_24",
+        "J_Sec_Hair2_24"
+      ],
+      "earBonesR": [
+        "J_Sec_Hair1_23",
+        "J_Sec_Hair2_23"
+      ],
+      "tailBones": [
+        "NemuTail00",
+        "NemuTail01",
+        "NemuTail02",
+        "NemuTail03",
+        "NemuTail04",
+        "NemuTail05",
+        "NemuTail06",
+        "NemuTail07",
+        "NemuTail08",
+        "NemuTail09",
+        "NemuTail10",
+        "NemuTail11"
+      ],
+      "earBackMaxDeg": 30,
+      "tailSwingDeg": [
+        -20,
+        20
+      ]
+    },
+    "emotionMap": {
+      "neutral": [],
+      "happy": [],
+      "angry": [],
+      "sad": [],
+      "relaxed": [],
+      "surprised": [],
+      "smug": [],
+      "shy": [],
+      "sleepy": [],
+      "pout": [],
+      "excited": [],
+      "worried": []
+    },
+    "visemeMap": {
+      "A": "aa",
+      "I": "ih",
+      "U": "ou",
+      "E": "ee",
+      "O": "oh"
+    },
+    "lipSyncProfiles": {
+      "zh": "lipsync/zh.json",
+      "en": "lipsync/en.json",
+      "ja": "lipsync/ja.json"
+    },
+    "idleSet": []
+  }
+}
