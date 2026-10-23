@@ -2,21 +2,49 @@
 
 ## 结果
 
-实现与验收进行中，尚不能记完成；PR #65 保持草稿。已从 origin/main 876cff7 创建 D:\Dev\nemu-wt\P5-04，分支 task/P5-04-fact-view。
+实现、本地验收与最终代码 Ubuntu CI 完成；Windows CI 尚未完成，当前外部阻塞见 BLOCKED.md，PR #65 保持草稿。从 origin/main 876cff7 创建 D:\Dev\nemu-wt\P5-04，分支 task/P5-04-fact-view；最终代码为 954918fae3f9db245fc9a92ca646c090d655510f。已再次 fetch 并 merge main（无新提交），在此之后重跑以下验收。
 
 ## 已有证据
 
 - 事实视图正向白名单、四路召回、固定 RRF、独立用途预算、五种非成功状态、纠错与撤回链已经实现。
-- 首轮临时库测试 4/5 通过；SYS05 首次失败是测试路径比较遗漏 Windows 规范化前缀，修正后定向复测通过。原始失败日志保留。
-- 真实官方模型 CPU 初测：9 条合成事实，重启临时 EXPERIMENT 存储后，三种语言 9/9 查询的正确事实均为向量与合并排名第 1；向量启用后撤回的事实在 100 次相关查询中 0 次进入 c_task 或任何召回通道。cpu-eval-2.log。此为评测骨架，不是 P6-13 多年规模/完整回答的 90% 验收。
-- FP32 初测 debug 查询中位 346.60 ms；release 中位 87.12 ms、最大 103.60 ms，仍未达到 50 ms 原目标。正在核对同一官方修订的量化权重；固定事实、问题、预算、四线程与撤回次数不变。原数据保留，不改目标。
-- Rust 全工作区、全部目标、可选 CPU 特性 clippy -D warnings 通过（clippy-2.log）。全部本地回归与最终 main 合并后的检查尚待完成。
+- 最终事实视图 7/7 测试通过，包含 SYS05 五种状态、解释记录结构白名单、纠错链、权限与预算、短 Unicode/FTS 字面量、旧索引阻断。谱系编译失败用例通过。SYS05 首次路径比较遗漏 Windows 规范化前缀的失败日志保留。
+- 真实官方 FP32 CPU：9 条合成事实，重启临时 EXPERIMENT 后，三语 9/9 查询的正确事实均为向量与合并排名第 1；向量启用后撤回事实在 100 次相关查询中 0 次进入 c_task 或任何召回通道。见 recall/result.json、cpu-eval-acceptance.log。
+- 原目标 50 ms 未改：最终 release 九个完整查询中位 43.33 ms、最大 45.18 ms，九个均小于 50 ms；模型加载/核验 1.676 s，索引重建 0.889 s。CPU Ryzen 7 3700X、显式 CPU 4 线程；查询包含原始 H 与载荷重读核验。此为固定小规模观测，不代表多年规模/完整回答 90% 验收或任意负载 SLO。
+- 优化前同一 FP32 对照中位 91.13 ms，embedding 多数仅 5–6 ms。用户授权的纯描述符缓存后，固定问题、条数、预算、四线程和撤回次数不变。本次选择最终复测 43.33 ms，而非挑选较快的初步 42.16 ms。更早 debug 346.60 ms/release 87.12 ms 与量化候选失败日志一并保留；量化入口已移除。
+- Rust 全工作区、全部目标、可选 CPU 特性 clippy -D warnings 和完整 release 工作区回归通过；core-store 32/32。全部合法/非法黄金向量冷/热缓存相同，三语言各 9,744 例通过、兼容 0 违规，312 项契约单测通过。
 - 所有开发测试库来自 TemporaryRoot；模型、Cargo/ORT/uv/npm/pnpm/临时与编译缓存在 D 盘。未打开排练库或正式库。
-- 首轮 Ubuntu CI 和本地完整回归均为 core-store 31/32 通过。唯一失败是新增测试的损坏注入先违反外键约束，未进入预期的恢复核验断言；修复为删除临时库的 snapshots 索引行，不关闭外键、不改生产代码。失败日志 ci-first-failure.log、workspace-tests-final.log 保留，最新提交等待完整复测。
+- 首轮 Ubuntu CI 和本地完整回归均为 core-store 31/32。唯一失败是新增测试的损坏注入先违反外键约束；修复为删除临时库 snapshots 索引行，不关闭外键、不改生产代码。修复后全部通过，失败日志 ci-first-failure.log、workspace-tests-final.log 保留。
+
+## 验收
+
+| 命令或检查 | 结果 | 证据 |
+| --- | --- | --- |
+| cargo fmt --all -- --check | 通过 | fmt-acceptance.log |
+| cargo clippy --workspace --all-targets --features fact-view/cpu-embedding --locked -- -D warnings | 通过 | clippy-acceptance.log |
+| cargo test --workspace --release --locked -- --test-threads=1 | 通过；含完整故障注入矩阵、32 项 core-store、7 项 fact-view、谱系 compile_fail | workspace-tests-acceptance.log |
+| SYS05 面板五种不同结果及成功正向例 | 通过 | SYS05/result.json |
+| c_core/c_task 解释记录结构检查 | 通过 | structural_allowlist_excludes_all_explanations_even_when_wrapped_as_event_payload |
+| 真实 CPU 模型、三语召回骨架、100 次撤回 | 9/9 第 1；0/100 泄漏；九查询均 <50 ms | recall/result.json、recall/latency.json |
+| core-types 全部黄金向量冷/热/无缓存 | 合法 396、非法 409；结果/规范字节/摘要/Err(String) 逐项相同 | core-types-cache-tests.log |
+| pnpm test:core-contracts | Rust/Python/TypeScript 各 9,744 通过；0 stale、0 compatibility violations；官方 protoc 396 通过 | core-contracts-acceptance-2.log |
+| pnpm test:contracts | 312 通过；语句/行覆盖 100%，分支 97.1% | contracts-acceptance.log、coverage-summary.json |
+| git diff origin/main -- core/contracts packages/contracts/src/generated workers/irl/generated/echo | 0 差异 | 生成资源与黄金字节未改；schema SHA-256 为 4fd66832d88181b45262912dbdee6925a63328a778491645a03995fe2a13bc9a |
+| Ubuntu CI，最终代码 | 全部通过 | ci/ubuntu-954918f.json；https://github.com/nanake-lab/nemu/actions/runs/39901232250 |
+| Windows CI，最终代码 | 排队；runner 当前离线 | https://github.com/nanake-lab/nemu/actions/runs/39901710241 |
+
+本地三语言首次运行的验证器固定寻找 core/target，而编译产物在 D:\Dev\cache\cargo-target\P5-04，导致 FileNotFoundError。失败日志 core-contracts-acceptance.log 保留；只在本工作区创建 D 盘目录联接 core/target 指向该缓存，未改验证器，随后重跑通过。没有生成或改写冻结预期值。
 
 ## core-store 扩展（用户专项授权，必审）
 
 仅追加 core/crates/core-store/src/queries.rs 的 Reader::transactions_at 与 src/tests/reader.rs 测试。不改格式、表、写路径或已有接口行为。捕获持久化回执后建立固定只读快照，先按现有 Reader 路径做谱系头、恢复、索引与回执核验，再读取完整已知前缀；未知前缀、缺失索引和预算不足明确失败。Reader<L> 的谱系类型保留。P5-03 PR #64 的并行情况已先在 #65 PR 正文说明。
+
+## core-types 扩展（用户专项授权，必审）
+
+仅 src/lib.rs 与 tests/canonical_boundaries.rs。public Schema 可复用，但 Reader::read 没有注入解码器的接口，fact-view 内持有描述符不能覆盖它内部的 ObjectRef 编码/对象核验/typed 解码；因此按用户条件采用两文件扩展。100 次原 WireMessage 编码 60.14 ms，复用原始描述符 0.16 ms；缓存后 WireMessage 1.14 ms，见 descriptor-profile-before/after.log。
+
+OnceLock 一次性建立不可变描述符图，键为类型标签、支持的 schema_version=1、生成 schema 的 SHA-256。所有 encode/decode/normalize、未知版本、尺寸/深度/条数限制照常执行；不缓存对象、原文、权限或核验结果，除初始化外没有可变缓存状态。Schema::builtin 的公开签名与独立可变实例行为保留，外部修改不影响 codec。
+
+逐条新建局部 OnceLock 走同一个生产 accessor，测全部 396 合法/409 非法黄金向量的冷缓存、热缓存、无缓存结果；值、规范字节、摘要和 String 错误完全相同。另有独立子进程的公开接口首次/后续等价测试及并发、预算和可变实例隔离。未改 #57 当前 diff 中的文件；后合并者 merge main 后重跑全部契约检查。详见 tasks/requests/P5-04-core-types-codec-cache.md。
 
 ## 文档与模型
 
@@ -47,7 +75,7 @@ retrieval.rs 为 405 行：预算进度钩子、统一退出清理和四路检�
 | --- | --- | --- | --- |
 | sqlite-vec | 0.1.9 | MIT / Apache-2.0 | 静态 SQLite 向量距离 |
 | fastembed（可选） | 7.3.0 | Apache-2.0 | CPU embedding、tokenizer、pooling |
-| ort（可选）/ ONNX Runtime | 2.0.0-rc.15 / 运行时构建见评测 JSON | MIT | 显式 CPUExecutionProvider |
+| ort（可选）/ ONNX Runtime | 2.0.0-rc.15 / 1.31.0，git 402979a | MIT | 显式 CPUExecutionProvider；完整构建标识见评测 JSON |
 | rusqlite（工作区已有，启用 hooks/limits） | 0.40.2 | MIT | FTS5/内存索引/步骤预算 |
 | serde / serde_json | 1.0.229 / 1.0.154 | MIT / Apache-2.0 | 版本化审计编码 |
 | sha2 | 0.11.1 | MIT / Apache-2.0 | 模型 SHA-256 核验 |
@@ -59,9 +87,9 @@ retrieval.rs 为 405 行：预算进度钩子、统一退出清理和四路检�
 ## 待用户确认
 
 - [ ] （阻塞）新增重量级 CPU 依赖 ADR 0020，由用户合并批准。
-- [ ] （阻塞）core-store 两文件扩展按用户授权属于必审存储范围，由用户安排新 Codex 会话一并审查。
-- [ ] （阻塞）当前 50 ms 目标尚未满足；量化与完整复测结束前不改阈值、不转 ready。
+- [ ] （阻塞）core-store 与 core-types 两处授权扩展均属于必审范围，由用户安排新 Codex 会话一并审查。
+- [ ] （阻塞）最终 Windows CI 尚未运行完成；当前 runner 离线，等待用户恢复。Ubuntu CI 全通过。机械验收全通过前保持草稿。
 
 ## 下一步
 
-完成量化核对、全部临时库回归、最新 main 合并与重跑、CI。PR #57 尚未合并，目前使用 main 的生成 Query/QueryResult；如 #57 合并则 merge main 后对齐。用户已启动 Windows runner；当前先执行 main 的 W02，#65 最新手动作业 39898374730 排队中。仅在验收完成后转为可审查并在 PR 写「请审查」，由用户安排审查与合并，不认领下一张卡。
+等待最终 CI；#57 仍未合并，目前使用 main 的生成 Query/QueryResult，如 #57 合并则 merge main 后对齐。先前 main Windows 作业成功后 runner 再次离线，#65 最终手动作业 39901710241 排队中；已通知用户。仅在全部机械验收通过、最终 main 核对后转为可审查并在 PR 写「请审查」，由用户安排新 Codex 会话审查与合并，不认领下一张卡。
