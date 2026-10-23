@@ -1,0 +1,14 @@
+{
+  "id": "AT04",
+  "result": "passed",
+  "scope": "storage subset",
+  "sourceRevision": "1e1cc584dba4abaa91be11f2296195a2f320e303",
+  "tests": [
+    "at04_single_writer_and_copy_cannot_resume_as_same_branch",
+    "at04_old_database_in_original_location_cannot_refund_ledger",
+    "reader_receipts_precede_sql_snapshot_under_controlled_appends",
+    "live_readers_open_during_ingress_without_false_rollback"
+  ],
+  "evidence": "../../logs/16-review-final-workspace.log",
+  "manifest": "../final-test-manifest.json"
+}

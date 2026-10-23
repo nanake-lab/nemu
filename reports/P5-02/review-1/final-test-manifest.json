@@ -1,0 +1,537 @@
+{
+  "sourceRevision": "1e1cc584dba4abaa91be11f2296195a2f320e303",
+  "sourceTreeEntries": [
+    "100644 blob 8b29fcc3580da22f155009fdc4d309c7f4164ffc\t.github/workflows/ci.yml",
+    "100644 blob 2f63ee02f8b44d9d3aed5094a16bd0be1eef6a83\t.github/workflows/windows.yml",
+    "100644 blob 8268d74cc0dd766ce8cd91c64c27019a483e7b8b\tcore/Cargo.lock",
+    "100644 blob 7ed79c5168f6529e5be718f2be1e241fc3cd2b49\tcore/Cargo.toml",
+    "100644 blob ed1cf6f5f62b09b5b19a0d1d5a1976bedd2f1ca5\tcore/contracts/.gitignore",
+    "100644 blob d28303544f4d003f7732a164262859f527f5b17b\tcore/contracts/README.md",
+    "100644 blob 4070a37bf72ece6a846dbe56b239fe5fd2f08e9c\tcore/contracts/adversarial.py",
+    "100644 blob 3d90d5f424c1de1c3dd4d52663b229af79849673\tcore/contracts/base.proto",
+    "100644 blob b5757fd3af3e1b051e4a5cd5be0477707c30cc6a\tcore/contracts/baselines/README.md",
+    "100644 blob 6caf78ff174cfb8f3394474e6fd11afbdd565d09\tcore/contracts/baselines/p5-01/base.proto",
+    "100644 blob e418e67fba84b55d22c866323f63063fe5632ad4\tcore/contracts/baselines/p5-01/golden.json",
+    "100644 blob 819163945c799734fe8e80ffedfd46ed3ef42420\tcore/contracts/baselines/p5-01/growth.proto",
+    "100644 blob 45cc8522a57a187a0d6bde760f7a3209598acfde\tcore/contracts/baselines/p5-01/state.proto",
+    "100644 blob a60f163cbe201ce269a09c2ffb7ee1735c0616c1\tcore/contracts/baselines/p5-01/terminal.proto",
+    "100644 blob 3d90d5f424c1de1c3dd4d52663b229af79849673\tcore/contracts/baselines/p5-21/base.proto",
+    "100644 blob c315d44bd0e0aae304354b5adcc4de9b6892f282\tcore/contracts/baselines/p5-21/golden.json",
+    "100644 blob d8323f33e7f04b4381d058b977ad15b2e5a1d51e\tcore/contracts/baselines/p5-21/growth.proto",
+    "100644 blob 5ebc251bfb27b2c863cdafc14b1bf2ef5061a0d5\tcore/contracts/baselines/p5-21/law.proto",
+    "100644 blob 9fae35bb6d44faa89113563972002fc0f42f7755\tcore/contracts/baselines/p5-21/ledger.proto",
+    "100644 blob 0d277dd348d8f55d2ea6be7a34b7970fdf94d9de\tcore/contracts/baselines/p5-21/records.proto",
+    "100644 blob 023a9d965c2f94064162460f0666e1815fe644e0\tcore/contracts/baselines/p5-21/state.proto",
+    "100644 blob 01856e939c2db22c2b3c53a70155b7b4aec15d55\tcore/contracts/baselines/p5-21/terminal.proto",
+    "100644 blob 8cb13ecb1e205a71b0b2968e6a3cab8a33b8608f\tcore/contracts/check_compat.py",
+    "100644 blob 876ede04b51bf3b679aedda986af2bcad7322ec0\tcore/contracts/fixture_inputs.py",
+    "100644 blob 4a51edb89253df2298065b387257a04f6aaef35d\tcore/contracts/freeze_vectors.py",
+    "100644 blob 16913c5fe36d7e284f18c1c07b2e401fd0933732\tcore/contracts/generate.py",
+    "100644 blob 6b758f44cde1a39bd1dbc0faf52144dfed99f46e\tcore/contracts/generated/schema.json",
+    "100644 blob 2b1d17951408fc9df49b02775eeb029489704287\tcore/contracts/golden/illegal.json",
+    "100644 blob 2c7f6fa489f207c2832c694649e091e4e90ffef3\tcore/contracts/golden/legal.json",
+    "100644 blob 9ca470bd46b31fd81ffffeaae1debf473f5aba3c\tcore/contracts/golden/unicode.json",
+    "100644 blob d8323f33e7f04b4381d058b977ad15b2e5a1d51e\tcore/contracts/growth.proto",
+    "100644 blob 616dde068f218df277616e7d9a49f2e662ca38aa\tcore/contracts/law.proto",
+    "100644 blob 9fae35bb6d44faa89113563972002fc0f42f7755\tcore/contracts/ledger.proto",
+    "100644 blob 2c35c2f89d06b515d8bdf44510011f5b49e969f9\tcore/contracts/probe.ts",
+    "100644 blob 95b63fa806b76433e4fe44a679f28339ebec1436\tcore/contracts/pyproject.toml",
+    "100644 blob 041b1cbe77a52b1f196b31ac9c1f2015964dc20b\tcore/contracts/python_probe.py",
+    "100644 blob 0d277dd348d8f55d2ea6be7a34b7970fdf94d9de\tcore/contracts/records.proto",
+    "100644 blob 023a9d965c2f94064162460f0666e1815fe644e0\tcore/contracts/state.proto",
+    "100644 blob 662033b4bc4eb041d37b2a6caebac7f243a4acc4\tcore/contracts/templates/python/bridge.py",
+    "100644 blob 2873845a967580dd13580e663ef0039a3901afb5\tcore/contracts/templates/python/runtime.py",
+    "100644 blob aa6e2fe46d537178e431028b3a86e1e4e81650a7\tcore/contracts/templates/python/typed_api.py",
+    "100644 blob 2e0c7f3f4ce7c2293ba324371616404a29da0510\tcore/contracts/templates/typescript/bridge.ts",
+    "100644 blob cf1b992cf19cdbd49841cb4d39f386dec3fa0488\tcore/contracts/templates/typescript/index.ts",
+    "100644 blob 84c8e4731ae65c1f02f6075c0a85ff45f879663c\tcore/contracts/templates/typescript/runtime.ts",
+    "100644 blob 01856e939c2db22c2b3c53a70155b7b4aec15d55\tcore/contracts/terminal.proto",
+    "100644 blob 6e73489258baa1c8f7287efe423a89a1c2b16afb\tcore/contracts/uv.lock",
+    "100644 blob 897a4efee6382736cec5679cfe4e4f14e877df70\tcore/contracts/verify.py",
+    "100644 blob 31388e45669e12580a2cd28a8d7357c5ff758e6c\tcore/contracts/verify_protoc.py",
+    "100644 blob 79bd872fe62431dd106e561601af5bed12f93875\tcore/crates/action-gate/Cargo.toml",
+    "100644 blob e2122f4f9d0d450049b144f497a7992f95059050\tcore/crates/action-gate/src/lib.rs",
+    "100644 blob f90cae43501fd200d054191380e643b8df6bbc51\tcore/crates/core-kernel/Cargo.toml",
+    "100644 blob 2114949ea60e795ccc335b4e822be970823d8806\tcore/crates/core-kernel/src/effects/admission.rs",
+    "100644 blob 743dba9b1d44e4c948a88f7444a523a47026d549\tcore/crates/core-kernel/src/effects/compile.rs",
+    "100644 blob b13586e8a32815b05257439d60a5446ddc243b9f\tcore/crates/core-kernel/src/effects/dag.rs",
+    "100644 blob 52c68506d46dcd8ccdcc65f83e7533dfa5576061\tcore/crates/core-kernel/src/effects/evaluate.rs",
+    "100644 blob ff36357daa7e716ddc091322de1c6b05c451f4e4\tcore/crates/core-kernel/src/effects/mod.rs",
+    "100644 blob 23d7924f255d9bec90197b3a830e24479d27da0b\tcore/crates/core-kernel/src/effects/params.rs",
+    "100644 blob a39deb01bc3c8918702f09b380066b88ca9039eb\tcore/crates/core-kernel/src/effects/tests.rs",
+    "100644 blob ee4aa2db419e68b43d4957b925068437c7d7dc38\tcore/crates/core-kernel/src/effects/tests/fixture.rs",
+    "100644 blob e2c8ee124494c8104f20a3530093ce60c48a32f2\tcore/crates/core-kernel/src/effects/types.rs",
+    "100644 blob e16877aaf7edbdb4d3cece936fe6dd01a9dc138e\tcore/crates/core-kernel/src/lib.rs",
+    "100644 blob 1af86cc86c21b5fd724868ed9a9ab251a5abb08c\tcore/crates/core-policy/Cargo.toml",
+    "100644 blob 6c1343d035235a0fe5c993dee55bcc24f2e05bcd\tcore/crates/core-policy/src/canonical.rs",
+    "100644 blob 175dfd19c7980d2ba639b97e1a34ff41df2c982b\tcore/crates/core-policy/src/catalog.rs",
+    "100644 blob 5e8495e891104eb5ca42ea8a7c761f0ae49899a4\tcore/crates/core-policy/src/endpoint.rs",
+    "100644 blob ad5097ac1c553cf6bd30ec3a6b0c973ae2ffab56\tcore/crates/core-policy/src/error.rs",
+    "100644 blob bb75b7207fdad5f11de73c28c43509ba916bc26d\tcore/crates/core-policy/src/lib.rs",
+    "100644 blob 5133f5dfed47e48ea9b2a93686e8c75a9eaedee4\tcore/crates/core-policy/src/overlap.rs",
+    "100644 blob 515dab62404fda345058fad0bcbbb5d704ef22ab\tcore/crates/core-policy/src/scope.rs",
+    "100644 blob dd6c3dc7a0eaf2670ccb0f334538d032b3a1f17c\tcore/crates/core-policy/tests/overlap_cases.rs",
+    "100644 blob b7a74961f61aea37498d63c5203bb5f74557417e\tcore/crates/core-policy/tests/scope_rules.rs",
+    "100644 blob 8eb5ef1e665418e4fb9104911b2d5a99a26e24da\tcore/crates/core-policy/tests/support/mod.rs",
+    "100644 blob d9d7249ead4d33dcb790d94ebf38d1aadc45eb61\tcore/crates/core-replay/Cargo.toml",
+    "100644 blob e2122f4f9d0d450049b144f497a7992f95059050\tcore/crates/core-replay/src/lib.rs",
+    "100644 blob a1a9093e60ca42b25edc791c37c13b85c5622091\tcore/crates/core-runtime/Cargo.toml",
+    "100644 blob e2122f4f9d0d450049b144f497a7992f95059050\tcore/crates/core-runtime/src/lib.rs",
+    "100644 blob 72fd281af3add14a4f4ab06145d4204e0f9a8097\tcore/crates/core-store/Cargo.toml",
+    "100644 blob 15c3c8a24dde686063c6869c4eb14f0dc0a12c81\tcore/crates/core-store/README.md",
+    "100644 blob d7fe6f9d37c8131398fa01603db9490302be6a9d\tcore/crates/core-store/src/config.rs",
+    "100644 blob 4eb90a5b022aa5ccf2dc9ae4557ab8a01bb357bf\tcore/crates/core-store/src/error.rs",
+    "100644 blob 9b805db713126083b9581d5fc1475cc385142090\tcore/crates/core-store/src/fault.rs",
+    "100644 blob 9af8ed926290fd9749a723d3563f7a18d0afeeba\tcore/crates/core-store/src/ingress.rs",
+    "100644 blob 5fdc58c8b043cd20ec33cc3ee02ac9a0c81fd115\tcore/crates/core-store/src/lib.rs",
+    "100644 blob 04a03b6f4cf392c5aa43f45167267e5513b36485\tcore/crates/core-store/src/lineage.rs",
+    "100644 blob 6337b3dc8cac01b8d3fc2d7eab1d95e666662db0\tcore/crates/core-store/src/objects.rs",
+    "100644 blob a3e8d996911143ee9b34083dc1cae0e86f30c7c5\tcore/crates/core-store/src/platform.rs",
+    "100644 blob 7b76445176dc3a4b89fb4c44bdfb85db4c73853c\tcore/crates/core-store/src/publication.rs",
+    "100644 blob de2d4945580bcc372f46472eb4afa89ac14ada38\tcore/crates/core-store/src/queries.rs",
+    "100644 blob c081385868120ece8517119fff52027e9ec91ed7\tcore/crates/core-store/src/reader.rs",
+    "100644 blob 02bad1b16fcd0a1426c8ff641493d41446ad2a9d\tcore/crates/core-store/src/recovery.rs",
+    "100644 blob 33606073b4ff839e73937aae01f234780287c751\tcore/crates/core-store/src/schema.rs",
+    "100644 blob 0a39a290d5066574ff21d042eec113f229c4e4b1\tcore/crates/core-store/src/store.rs",
+    "100644 blob 9153a0af684447b6a0dba6c72025513bed5a6655\tcore/crates/core-store/src/tests/atomic.rs",
+    "100644 blob 043014936a23049843c1480ccd93059518134ac4\tcore/crates/core-store/src/tests/crash.rs",
+    "100644 blob 58fff4423c4cd29b4f5dbd863067a69b7b22f124\tcore/crates/core-store/src/tests/crash_harness.rs",
+    "100644 blob a88c2675495afa2364f490365f618aa01ebc6c0c\tcore/crates/core-store/src/tests/isolation.rs",
+    "100644 blob b7420ed061b3b54be89c309f3c32749aa2df4722\tcore/crates/core-store/src/tests/mod.rs",
+    "100644 blob 29028668f22901d28710f863c15acf7e3db6c085\tcore/crates/core-store/src/tests/objects.rs",
+    "100644 blob 1d71e1b34427f8530f796a9305c15041459e3541\tcore/crates/core-store/src/tests/reader.rs",
+    "100644 blob 9c15abeb1b10f5bb43eddddfd71c5a3c7475311f\tcore/crates/core-store/src/transaction.rs",
+    "100644 blob 3559848eb7d28a4065b5de58cb0a962f6404d489\tcore/crates/core-store/src/witness.rs",
+    "100644 blob 574a132934b4e3ef67dc443488099fcd479acbb2\tcore/crates/core-types/Cargo.toml",
+    "100644 blob d08441f1f45723164940737026bb1d1bbb9b6fae\tcore/crates/core-types/examples/contract_probe.rs",
+    "100644 blob 40df721d51bc4d76ec0c897712e323eaaf81044c\tcore/crates/core-types/src/canonical.rs",
+    "100644 blob 5b8a9a78103b3bcc23bb8d019939d7999b025cdc\tcore/crates/core-types/src/contract.rs",
+    "100644 blob 2e03a964d4d65326549e9716766e2717260aa866\tcore/crates/core-types/src/generated.rs",
+    "100644 blob f3e915f0fc06c752fcc8e17be360f91cb1d90038\tcore/crates/core-types/src/lib.rs",
+    "100644 blob 3750a0391aadca13b86cdbecb6f6a5e6e58b4857\tcore/crates/core-types/src/numeric.rs",
+    "100644 blob 9e41a93dee40e125e2181fa20c8931dd611ea5c4\tcore/crates/core-types/src/protobuf.rs",
+    "100644 blob 72fc910ec3cac6b4ca9316294dd01f3147066b99\tcore/crates/core-types/src/scalar.rs",
+    "100644 blob 208e7f7a628c786b9f0ae19ce80edecb1c7429e1\tcore/crates/core-types/src/semantic.rs",
+    "100644 blob 4a58e80ad60e12e9f3d2b447bf806cc28d07532c\tcore/crates/core-types/tests/canonical_boundaries.rs",
+    "100644 blob 76c3b7a51e695d6ab4dd9f359c0251f5999468e2\tcore/crates/core-types/tests/p5_32_contract.rs",
+    "100644 blob 804b2e613cc39487060547e9c623ead704a7b1b0\tcore/crates/core-types/tests/v2_contract.rs",
+    "100644 blob 5f20bd7ae2cefcac07499d395fdd94a1bb6c07fe\tcore/crates/echoctl/Cargo.toml",
+    "100644 blob 069e4403f93b44ec9a7139e7dfe97558a27574fc\tcore/crates/echoctl/src/main.rs",
+    "100644 blob d19bd632b20d5d610594b0693b1162dad9fd9cba\tcore/crates/fact-view/Cargo.toml",
+    "100644 blob e2122f4f9d0d450049b144f497a7992f95059050\tcore/crates/fact-view/src/lib.rs",
+    "100644 blob 2283e565faad70ff530a47dc564ddd8ea2622264\tcore/crates/gateway/Cargo.toml",
+    "100644 blob e2122f4f9d0d450049b144f497a7992f95059050\tcore/crates/gateway/src/lib.rs",
+    "100644 blob c5e2c82136e320ba472c79b5ebcbdfbf6e88cc7b\tcore/crates/semantic-core/Cargo.toml",
+    "100644 blob e2122f4f9d0d450049b144f497a7992f95059050\tcore/crates/semantic-core/src/lib.rs",
+    "100644 blob cca4f620814b8385439ee37f16c86a19d4f0dc5f\tcore/crates/task-layer/Cargo.toml",
+    "100644 blob e2122f4f9d0d450049b144f497a7992f95059050\tcore/crates/task-layer/src/lib.rs",
+    "100644 blob b432996f101609389fcd631582395680520eb494\tcore/rust-toolchain.toml",
+    "100644 blob 64796c1c3ce5f1d45048f9427f8edfd1cd3213d8\tcore/tests/acceptance/README.md"
+  ],
+  "sourceTreeSha256": "e91f835cab4236399637f513af9ff9c12f6539e4116ee72bc2c82edfb2c3e578",
+  "log": "../logs/16-review-final-workspace.log",
+  "metadata": "../logs/16-review-final-workspace.json",
+  "rawLogSha256AtCollection": "43d72bdfb78581381b23ebcd121841a891973ebc6e4d4813ff48baabb8f8948a",
+  "lfUtf8LogSha256": "22ab190bf118456ca5f047b2aa88223c5d9c2a498874593da6c6850fd3e13f78",
+  "command": "cargo test --workspace --locked -- --test-threads=1 --nocapture",
+  "exitCode": 0,
+  "startTime": "2026-10-22T22:11:51.8424264+08:00",
+  "endTime": "2026-10-22T22:27:49.2607033+08:00",
+  "passed": 85,
+  "storeUnitTests": 31,
+  "storeCompileFailDoctests": 2,
+  "recoveryCases": [
+    {
+      "case": "gc/GcDeleted/1",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "gc/GcDeleted/2",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "gc/GcDirectorySyncBefore/1",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "gc/GcDirectorySynced/1",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "commit/GStaged",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/CStaged",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/LedgerWritten",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/BeforePublish",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/SqlCommitted",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/AfterPublish",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/ObjectWritten",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "ingress/FileSynced",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "ingress/Renamed",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "ingress/DirectorySynced",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "ingress/IngressBeforeSql",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "ingress/IngressSqlCommitted",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/IngressAcknowledged",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=false/ReceiptWritten",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=false/ReceiptFileSyncBefore",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=false/ReceiptFileSynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=false/ReceiptRenameBefore",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=false/ReceiptRenamed",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=false/ReceiptTargetSyncBefore",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=false/ReceiptTargetSynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=false/ReceiptDirectorySyncBefore",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=false/ReceiptDirectorySynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=true/ReceiptWritten",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=true/ReceiptFileSyncBefore",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=true/ReceiptFileSynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=true/ReceiptRenameBefore",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=true/ReceiptRenamed",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=true/ReceiptTargetSyncBefore",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=true/ReceiptTargetSynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=true/ReceiptDirectorySyncBefore",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "ingress/repair=true/ReceiptDirectorySynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=false/ReceiptWritten",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=false/ReceiptFileSyncBefore",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=false/ReceiptFileSynced",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=false/ReceiptRenameBefore",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=false/ReceiptRenamed",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=false/ReceiptTargetSyncBefore",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=false/ReceiptTargetSynced",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=false/ReceiptDirectorySyncBefore",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=false/ReceiptDirectorySynced",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=true/ReceiptWritten",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=true/ReceiptFileSyncBefore",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=true/ReceiptFileSynced",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=true/ReceiptRenameBefore",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=true/ReceiptRenamed",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=true/ReceiptTargetSyncBefore",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=true/ReceiptTargetSynced",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=true/ReceiptDirectorySyncBefore",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "commit/repair=true/ReceiptDirectorySynced",
+      "state": 2,
+      "rawIngress": 2
+    },
+    {
+      "case": "r/echo.tendency-v2/2/ObjectWritten",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "r/echo.r-snapshot-v2/1/ObjectWritten",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "manifest-second/echo.transaction-v2/2/ObjectWritten",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "r/echo.tendency-v2/2/FileSynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "r/echo.r-snapshot-v2/1/FileSynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "manifest-second/echo.transaction-v2/2/FileSynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "r/echo.tendency-v2/2/Renamed",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "r/echo.r-snapshot-v2/1/Renamed",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "manifest-second/echo.transaction-v2/2/Renamed",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "r/echo.tendency-v2/2/DirectorySynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "r/echo.r-snapshot-v2/1/DirectorySynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "manifest-second/echo.transaction-v2/2/DirectorySynced",
+      "state": 1,
+      "rawIngress": 2
+    },
+    {
+      "case": "reuse/FastStateSnapshotV2/2/ReuseFileSyncBefore",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "reuse/FastStateSnapshotV2/2/ReuseFileSynced",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "reuse/FastStateSnapshotV2/2/ReuseDirectorySyncBefore",
+      "state": 1,
+      "rawIngress": 1
+    },
+    {
+      "case": "reuse/FastStateSnapshotV2/2/ReuseDirectorySynced",
+      "state": 1,
+      "rawIngress": 1
+    }
+  ],
+  "initializationCases": {
+    "InitRootCreated/1": "partial initialization refused",
+    "InitRootSynced/1": "partial initialization refused",
+    "InitObjectsCreated/1": "partial initialization refused",
+    "InitObjectsSynced/1": "partial initialization refused",
+    "InitSqlCommitted/1": "partial initialization refused",
+    "InitDbDirectorySynced/1": "partial initialization refused",
+    "ReceiptRootCreated/1": "partial initialization refused",
+    "ReceiptKindCreated/1": "partial initialization refused",
+    "ReceiptKindCreated/2": "verified empty store",
+    "ReceiptKindSynced/1": "partial initialization refused",
+    "ReceiptKindSynced/2": "verified empty store",
+    "ReceiptRootSynced/1": "verified empty store",
+    "ReceiptParentSynced/1": "verified empty store"
+  },
+  "injectionCount": 100,
+  "suiteSummaries": [
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 952.89s",
+    "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s",
+    "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s",
+    "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+  ],
+  "scope": "W02 synthetic TemporaryRoot only; process exit, not physical power-cut or device certification"
+}

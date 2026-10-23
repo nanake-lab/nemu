@@ -1,0 +1,13 @@
+{
+  "id": "D10.1",
+  "result": "passed",
+  "scope": "storage subset",
+  "source_revision": "5cc3b540f3b7b33b611a4c590cac91c9406df80a",
+  "tests": [
+    "d101_d102_stale_and_mutated_bindings_rejected",
+    "all_binding_fields_are_immutable_after_dispatch",
+    "later_ingress_cannot_overtake_uncommitted_input"
+  ],
+  "evidence": "../logs/10-final-workspace-tests.log",
+  "manifest": "../final-test-manifest.json"
+}

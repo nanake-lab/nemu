@@ -1,0 +1,14 @@
+{
+  "id": "AT02",
+  "result": "passed",
+  "scope": "storage subset",
+  "sourceRevision": "1e1cc584dba4abaa91be11f2296195a2f320e303",
+  "tests": [
+    "at02_corrupt_or_missing_object_never_publishes",
+    "published_closure_damage_refuses_recovery",
+    "recovery_rejects_valid_but_mixed_head_and_missing_ledger",
+    "publication_primitive_never_replaces_existing_target"
+  ],
+  "evidence": "../../logs/16-review-final-workspace.log",
+  "manifest": "../final-test-manifest.json"
+}
