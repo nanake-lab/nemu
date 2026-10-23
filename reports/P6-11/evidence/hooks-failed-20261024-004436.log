@@ -1,0 +1,80 @@
+$ vitest run apps/desktop/src/codex-session
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P6-11
+
+ ❯ apps/desktop/src/codex-session/receiver.test.ts (9 tests | 2 failed) 1294ms
+   ❯ P6-11 install and privacy (6)
+     × requires explicit CLI targets even with a fake CODEX_HOME 72ms
+     × runs the installed hook command with quoting and emits only minimal bytes 302ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/desktop/src/codex-session/receiver.test.ts > P6-11 install and privacy > requires explicit CLI targets even with a fake CODEX_HOME
+AssertionError: expected 'node:internal/modules/esm/load:193\r\…' to contain 'explicit paths'
+
+- Expected
++ Received
+
+- explicit paths
++ node:internal/modules/esm/load:193
++     throw new ERR_UNSUPPORTED_ESM_URL_SCHEME(parsed, schemes);
++           ^
++ 
++ Error [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'd:'
++     at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:193:11)
++     at defaultLoadSync (node:internal/modules/esm/load:146:3)
++     at #loadAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:806:12)
++     at #loadSync (node:internal/modules/esm/loader:838:53)
++     at ModuleLoader.load (node:internal/modules/esm/loader:787:26)
++     at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:498:31)
++     at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
++     at afterResolve (node:internal/modules/esm/loader:611:52)
++     at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)
++     at node:internal/modules/esm/loader:636:32 {
++   code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'
++ }
++ 
++ Node.js v24.21.0
++
+
+ ❯ apps/desktop/src/codex-session/receiver.test.ts:142:27
+    140|     expect(result.code).toBe(1);
+    141|     expect(result.stdout).toBe('');
+    142|     expect(result.stderr).toContain('explicit paths');
+       |                           ^
+    143|     expect(await readFile(sentinel, 'utf8')).toBe('DO_NOT_CHANGE');
+    144|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  apps/desktop/src/codex-session/receiver.test.ts > P6-11 install and privacy > runs the installed hook command with quoting and emits only minimal bytes
+Error: Command failed: powershell.exe -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand JgAgACcAQwA6AFwAVQBzAGUAcgBzAFwAbgBhAG4AYQBrAGUAXABBAHAAcABEAGEAdABhAFwATABvAGMAYQBsAFwAZgBuAG0AXwBtAHUAbAB0AGkAcwBoAGUAbABsAHMAXAAxADEANwA5ADIAXwAxADcAOQAyADcANgA2ADgANAA5ADcAOAAxAFwAbgBvAGQAZQAuAGUAeABlACcAIAAnAC0ALQBpAG0AcABvAHIAdAAnACAAJwBEADoAXABEAGUAdgBcAG4AZQBtAHUALQB3AHQAXABQADYALQAxADEAXABuAG8AZABlAF8AbQBvAGQAdQBsAGUAcwBcAC4AcABuAHAAbQBcAHQAcwB4AEAANAAuADIAMQAuADAAXABuAG8AZABlAF8AbQBvAGQAdQBsAGUAcwBcAHQAcwB4AFwAZABpAHMAdABcAGwAbwBhAGQAZQByAC4AbQBqAHMAJwAgACcARAA6AFwARABlAHYAXABuAGUAbQB1AC0AdwB0AFwAUAA2AC0AMQAxAFwAdABvAG8AbABzAFwAYwBvAGQAZQB4AC0AaABvAG8AawBzAFwAcwBlAG4AZAAuAHQAcwAnACAAJwBEADoAXABEAGUAdgBcAGMAYQBjAGgAZQBcAFAANgAtADEAMQBcAHIAdQBuAC0AMgAwADIANgAxADAAMgA0AFQAMAAwADQANAAzADYAMgA3ADEALQA5ADgAMQBjADMAMQAxADUAMAAyAGYAMgA0ADMANABhADkAYwBkADIAOAA5AGEANwBkAGIANwAyADEANABhADEAXAB0AGUAbQBwAFwAbgBlAG0AdQAtAGMAbwBkAGUAeAAtAGgAbwBvAGsAcwAtADcAUwAxADgANQBCAFwAZgBhAGsAZQAgAE4AZQBtAHUAIAB6ejxoIAAkAHgAIAAnACcAcQB1AG8AdABlACcAJwBcAHMAdABhAHQAZQAuAGoAcwBvAG4AJwA7ACAAZQB4AGkAdAAgACQATABBAFMAVABFAFgASQBUAEMATwBEAEUA
+node:internal/modules/esm/load:193
+    throw new ERR_UNSUPPORTED_ESM_URL_SCHEME(parsed, schemes);
+          ^
+
+Error [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'd:'
+    at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:193:11)
+    at defaultLoadSync (node:internal/modules/esm/load:146:3)
+    at #loadAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:806:12)
+    at #loadSync (node:internal/modules/esm/loader:838:53)
+    at ModuleLoader.load (node:internal/modules/esm/loader:787:26)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:498:31)
+    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
+    at afterResolve (node:internal/modules/esm/loader:611:52)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)
+    at node:internal/modules/esm/loader:636:32 {
+  code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'
+}
+
+Node.js v24.21.0
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 7 passed (9)
+   Start at  00:44:36
+   Duration  2.17s (tests 64%, import 21%, transform 15%)
+
+[ELIFECYCLE] Command failed with exit code 1.
