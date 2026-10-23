@@ -140,3 +140,23 @@ jobs:
           name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ env.NEMU_W02_EVIDENCE }}/
           if-no-files-found: error
+      - name: W18 gateway Windows components (temporary stores only)
+        working-directory: core
+        run: |
+          $env:CARGO_HOME = 'D:\Dev\cache\cargo'
+          $env:CARGO_TARGET_DIR = 'D:\Dev\cache\cargo-target\ci-gateway'
+          $env:TEMP = 'D:\Dev\cache\tmp\gateway-ci'
+          $env:TMP = $env:TEMP
+          $evidence = Join-Path $env:TEMP "w18-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          New-Item -ItemType Directory -Path $evidence -Force | Out-Null
+          "NEMU_W18_EVIDENCE=$evidence" >> $env:GITHUB_ENV
+          cargo clippy -p gateway --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo test -p gateway --locked -- --test-threads=1 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
+          exit $LASTEXITCODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always() && env.NEMU_W18_EVIDENCE != ''
+        with:
+          name: windows-P5-03-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.NEMU_W18_EVIDENCE }}/
+          if-no-files-found: error

@@ -1,0 +1,91 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling typenum v1.20.1
+   Compiling serde_core v1.0.229
+   Compiling find-msvc-tools v0.1.15
+   Compiling shlex v2.0.1
+   Compiling windows-link v0.2.1
+   Compiling zmij v1.0.23
+   Compiling pkg-config v0.3.34
+   Compiling vcpkg v0.2.15
+   Compiling cfg-if v1.0.5
+   Compiling once_cell v1.21.4
+   Compiling serde v1.0.229
+   Compiling const-oid v0.10.2
+   Compiling getrandom v0.4.3
+   Compiling windows-sys v0.61.2
+   Compiling serde_json v1.0.154
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling cpufeatures v0.3.1
+   Compiling pin-project-lite v0.2.17
+   Compiling tracing-core v0.1.36
+   Compiling cc v1.9.0
+   Compiling fastrand v2.5.0
+   Compiling smallvec v1.16.3
+   Compiling fallible-iterator v0.3.0
+   Compiling hybrid-array v0.4.15
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling bitflags v2.13.2
+   Compiling bytes v1.12.1
+   Compiling zeroize v1.8.2
+   Compiling subtle v2.6.1
+   Compiling syn v3.0.9
+   Compiling syn v2.0.119
+   Compiling block-buffer v0.12.1
+   Compiling crypto-common v0.2.2
+   Compiling libsqlite3-sys v0.38.2
+   Compiling digest v0.11.3
+   Compiling sha2 v0.11.1
+   Compiling serde_derive v1.0.229
+   Compiling tokio-macros v2.7.2
+   Compiling tempfile v3.27.0
+   Compiling socket2 v0.6.5
+   Compiling mio v1.2.4
+   Compiling tracing-attributes v0.1.31
+   Compiling rusqlite v0.40.2
+   Compiling tokio v1.54.1
+   Compiling tracing v0.1.44
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-types)
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-store)
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.02s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-03\debug\deps\gateway-a9c22f17bb74d235.exe)
+
+running 13 tests
+test tests::frames::fragmented_frames_roundtrip_and_preserve_receipt_stages ... ok
+test tests::frames::oversize_empty_truncated_and_invalid_messages_poison_connection ... ok
+test tests::frames::slow_header_body_writer_and_cancelled_read_are_bounded ... ok
+test tests::frames::wire_bytes_are_length_prefixed_protobuf ... ok
+test tests::ingress::experiment_cannot_ingest_terminal_data ... ok
+test tests::ingress::queue_and_byte_limits_reject_before_success ... ok
+test tests::ingress::received_durable_survives_reopen_without_claiming_core_commit ... ok
+test tests::validation::all_nine_terminal_payloads_validate_and_bind_generated_objects ... FAILED
+test tests::validation::authentication_never_accepts_short_wrong_or_empty_identity ... ok
+test tests::validation::rejects_bad_fields_unknown_protobuf_and_nonfinite_values ... ok
+test tests::validation::rejects_source_spoofing_payload_changes_and_privilege_claims ... ok
+test tests::windows::actual_pipe_acl_current_user_connects_squatting_and_experiment_refused ... FAILED
+test tests::windows::dpapi_create_reload_reject_corruption_and_protect_actual_file_acl ... ok
+
+failures:
+
+---- tests::validation::all_nine_terminal_payloads_validate_and_bind_generated_objects stdout ----
+
+thread 'tests::validation::all_nine_terminal_payloads_validate_and_bind_generated_objects' (44860) panicked at crates\gateway\src\tests\validation.rs:26:85:
+called `Result::unwrap()` on an `Err` value: empty retraction
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- tests::windows::actual_pipe_acl_current_user_connects_squatting_and_experiment_refused stdout ----
+
+thread 'tests::windows::actual_pipe_acl_current_user_connects_squatting_and_experiment_refused' (33124) panicked at crates\gateway\src\tests\windows.rs:65:87:
+called `Result::unwrap()` on an `Err` value: gateway I/O failed
+
+
+failures:
+    tests::validation::all_nine_terminal_payloads_validate_and_bind_generated_objects
+    tests::windows::actual_pipe_acl_current_user_connects_squatting_and_experiment_refused
+
+test result: FAILED. 11 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.99s
+
+error: test failed, to rerun pass `-p gateway --lib`
