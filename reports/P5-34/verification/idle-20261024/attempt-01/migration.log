@@ -1,0 +1,42 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling shlex v2.0.1
+   Compiling find-msvc-tools v0.1.15
+   Compiling cc v1.9.0
+   Compiling pkg-config v0.3.34
+   Compiling vcpkg v0.2.15
+   Compiling libsqlite3-sys v0.38.2
+   Compiling syn v3.0.9
+   Compiling getrandom v0.4.3
+   Compiling once_cell v1.21.4
+   Compiling serde_derive v1.0.229
+   Compiling syn v2.0.119
+   Compiling windows-link v0.2.1
+   Compiling windows-sys v0.61.2
+   Compiling tracing-attributes v0.1.31
+   Compiling serde v1.0.229
+   Compiling tracing-core v0.1.36
+   Compiling fallible-iterator v0.3.0
+   Compiling fastrand v2.5.0
+   Compiling smallvec v1.16.3
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling pin-project-lite v0.2.17
+   Compiling bitflags v2.13.2
+   Compiling rusqlite v0.40.2
+   Compiling tracing v0.1.44
+   Compiling tempfile v3.27.0
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-types)
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-store)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 45.83s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-34\target\debug\deps\core_store-a8329e3b1dbabe6a.exe)
+
+running 6 tests
+test tests::r_migration::bound_law_and_genesis_are_required_for_replay ... ok
+test tests::r_migration::canonical_v2_and_v3_evidence_indexes_are_checked_on_recovery ... ok
+test tests::r_migration::full_h_replay_preserves_q_v_and_historical_versions_or_removes_association ... ok
+test tests::r_migration::historical_v2_is_readable_and_cannot_be_newly_published ... ok
+test tests::r_migration::replay_budget_kernel_and_publication_failures_leave_old_head ... ok
+test tests::r_migration::v3_law_semantics_and_ordinals_are_checked_before_publication ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 31 filtered out; finished in 113.13s
+
