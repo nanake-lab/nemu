@@ -62,6 +62,21 @@ concurrency:
 env:
   DOTNET_CLI_TELEMETRY_OPTOUT: '1'
   UV_LINK_MODE: copy
+  # P5-04: keep self-hosted dependency/model/build caches on D:.
+  UV_CACHE_DIR: 'D:\Dev\cache\uv'
+  UV_PYTHON_INSTALL_DIR: 'D:\Dev\cache\uv-python'
+  npm_config_cache: 'D:\Dev\cache\npm'
+  PNPM_STORE_DIR: 'D:\Dev\cache\pnpm'
+  CARGO_HOME: 'D:\Dev\cache\cargo'
+  CARGO_TARGET_DIR: 'D:\Dev\cache\cargo-target\ci'
+  HF_HOME: 'D:\Dev\cache\huggingface'
+  ORT_CACHE_DIR: 'D:\Dev\cache\ort'
+  TEMP: 'D:\Dev\cache\tmp'
+  TMP: 'D:\Dev\cache\tmp'
+  PLAYWRIGHT_BROWSERS_PATH: 'D:\Dev\cache\playwright'
+  ELECTRON_CACHE: 'D:\Dev\cache\electron'
+  ELECTRON_BUILDER_CACHE: 'D:\Dev\cache\electron-builder'
+  NUGET_PACKAGES: 'D:\Dev\cache\nuget'
 jobs:
   windows:
     name: Windows desktop and isolation
@@ -140,3 +155,10 @@ jobs:
           name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ env.NEMU_W02_EVIDENCE }}/
           if-no-files-found: error
+      - name: W19 fact view checks (temporary stores, CPU runtime compilation)
+        working-directory: core
+        run: |
+          cargo clippy -p fact-view --all-targets --features cpu-embedding --locked -- -D warnings
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo test -p fact-view --locked -- --test-threads=1
+          exit $LASTEXITCODE

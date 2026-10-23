@@ -1,6 +1,34 @@
 use super::*;
 
 #[test]
+fn complete_transaction_prefix_is_verified_and_bounded() {
+    let root = TemporaryRoot::new().unwrap();
+    let mut store = rehearsal(&root, "prefix");
+    let cap = store.take_commit_capability().unwrap();
+    advance(&mut store, &cap, 0);
+    let first = store.base_commit().unwrap();
+    advance(&mut store, &cap, 1);
+    let head = store.base_commit().unwrap();
+    let reader = store.reader().unwrap();
+    let prefix = reader.transactions_at(&first, 1).unwrap();
+    assert_eq!(prefix.len(), 1);
+    assert_eq!(prefix[0].binding.event_id, "event-0");
+    assert_eq!(reader.transactions_at(&head, 2).unwrap().len(), 2);
+    assert!(reader.transactions_at(&head, 1).is_err());
+    assert!(reader.transactions_at("unknown", 10).is_err());
+    // Even damage introduced after Reader::open must fail recovery in the
+    // fixed query snapshot, rather than presenting an incomplete history.
+    store
+        .db
+        .execute_batch(
+            "DROP TRIGGER immutable_facts_DELETE; DELETE FROM facts WHERE event_id='event-0';",
+        )
+        .unwrap();
+    assert!(reader.transactions_at(&head, 10).is_err());
+    assert!(Reader::<Life>::open_temporary(&root, "prefix", config()).is_err());
+}
+
+#[test]
 fn reader_receipts_precede_sql_snapshot_under_controlled_appends() {
     for after_snapshot in [false, true] {
         let root = TemporaryRoot::new().unwrap();
