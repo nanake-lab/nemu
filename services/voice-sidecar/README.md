@@ -120,3 +120,11 @@ tokenizer.decode 移到有界队列的独立线程/持久 CUDA stream，按 prod
 正式 benchmark 仅对 warmup 与每语种 20 个 latency 样本启用逐步 CUDA-event 计时；取消和压力阶段保留客户端首末包、音频时长、实时率、RSS 和 allocator 样本，不创建每帧/每 predictor CUDA event，避免诊断仪器本身成为长测的资源增长源。
 
 后续压力重测：torch allocated 首末相同，20–30 分钟 RSS OLS 斜率 ≤12 MiB/小时。失败自动延长该轮到总计 2 小时，报告 110–120 分钟斜率，交用户判断；不追溯旧结果。正式窗口请为两变体可能各 2 小时预留时间。短探针 optimization_probe.py 的相同 64-token 贪心限制仅用于开发 codec 对照，不能替代正式各语言 20 句或压力测试；正式 benchmark 强制 generation_limit==512。
+
+### 线程资源与捕获范围诊断（2026-10-23）
+
+异步解码现在由 engine 级单线程 executor 执行所有请求；每条请求仍有独立的有界队列、取消标记与 producer events，但不重建原生线程。executor 与 CUDA stream 都跨请求复用；OOM 重建模型前先关闭 executor，等待解码退出。默认 graph 捕获范围仍为 16，可显式设置 `$env:NEMU_TTS_GRAPH_FRAMES='4'`（支持 4/8/16）评估较小范围；只减少加速覆盖，超范围仍按原上限 eager 生成，最大 48 个 talker 位置图和共享池不变。
+
+`resource_probe.py` 仅用于组件对照：设置 `NEMU_TTS_RESOURCE_CASE` 为 `graph` / `async` / `first2` / `eager` / `combined` 后使用 benchmark 的 `--variant --probe --cache --voice --output` 参数。每次用新进程；统一 64 帧贪心输入、240 秒观察，记录 tracemalloc、RSS、host allocator、pool/stream、捕获数、包装深度和 hook 数，明确 `acceptance=false`。tracemalloc 会降低吞吐，斜率同时结合每请求增量解释；不得用它签发正式 20–30 分钟压力通过。
+
+`graph_memory_probe.py` 比较 `NEMU_TTS_PROBE_GRAPH_FRAMES=16/8/4`、`NEMU_TTS_PROBE_POOL=shared/separate`，固定三语 64 帧输入并保存 codec/PCM 哈希。独立池仅用于反事实对照，不是服务默认配置。正式 benchmark 仍使用 512 帧上限和原 1800/7200 秒压力规则。本轮原始数据、首次渲染启动失败和 Blender 门禁中止均保留在 reports/P4-02 的资源诊断归档；详见 REPORT.md。

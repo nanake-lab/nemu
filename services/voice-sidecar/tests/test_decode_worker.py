@@ -1,11 +1,13 @@
 """Concurrency, bounded cancellation, failure propagation and graph restoration."""
 from contextlib import nullcontext
+from concurrent.futures import ThreadPoolExecutor
 from threading import Event
 from types import SimpleNamespace
 from typing import Any
 import pytest
 from nemu_voice_sidecar.decode_worker import DecodeWorker
 from nemu_voice_sidecar.cuda_graph import ForwardGraphs
+from nemu_voice_sidecar.profiling import profile_forwards
 
 
 class Stream:
@@ -41,7 +43,7 @@ def test_producer_can_continue_while_decode_waits_and_cancel_discards_queue() ->
     cancel.set()
     release.set()
     worker.finish()
-    assert calls == [1] and not worker.thread.is_alive()
+    assert calls == [1] and worker.thread is not None and not worker.thread.is_alive()
 
 
 def test_worker_failure_is_not_reported_as_success() -> None:
@@ -51,6 +53,52 @@ def test_worker_failure_is_not_reported_as_success() -> None:
     worker.submit(1)
     with pytest.raises(RuntimeError, match="decoder failed"):
         worker.finish()
+
+
+def test_requests_reuse_one_native_thread_and_release_request_callbacks() -> None:
+    import gc
+    import weakref
+    from threading import get_ident
+
+    threads: set[int] = set()
+
+    class Callback:
+        def __call__(self, job: object) -> None:
+            threads.add(get_ident())
+
+    refs = []
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        for _ in range(100):
+            callback = Callback()
+            refs.append(weakref.ref(callback))
+            worker = DecodeWorker(fake_torch(), callback, Event(), stream=Stream(), executor=executor)
+            worker.submit(1)
+            worker.finish()
+            assert worker.future is not None and worker.future.done()
+            del callback, worker
+        gc.collect()
+        assert len(threads) == 1
+        assert all(ref() is None for ref in refs)
+
+
+def test_persistent_thread_recovers_after_cancel_and_decoder_failure() -> None:
+    calls: list[object] = []
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        cancel = Event()
+        cancel.set()
+        worker = DecodeWorker(fake_torch(), calls.append, cancel, executor=executor)
+        worker.submit(1)
+        worker.finish()
+        def fail(job: object) -> None:
+            raise ValueError("decode failure")
+        worker = DecodeWorker(fake_torch(), fail, Event(), executor=executor)
+        worker.submit(1)
+        with pytest.raises(ValueError, match="decode failure"):
+            worker.finish()
+        worker = DecodeWorker(fake_torch(), calls.append, Event(), executor=executor)
+        worker.submit(2)
+        worker.finish()
+    assert calls == [2]
 
 
 def test_graph_model_patch_is_scoped_even_on_generation_failure() -> None:
@@ -64,6 +112,36 @@ def test_graph_model_patch_is_scoped_even_on_generation_failure() -> None:
             raise ValueError("request failed")
     assert graphs.inner.forward == "upstream talker"
     assert graphs.predictor.forward == "upstream predictor"
+
+
+def test_repeated_graph_and_profile_contexts_do_not_chain_callbacks() -> None:
+    def forward(**kwargs: Any) -> str:
+        return "upstream"
+    graphs = object.__new__(ForwardGraphs)
+    graphs.inner = SimpleNamespace(forward=forward)
+    graphs.predictor = SimpleNamespace(forward=forward)
+    graphs.original_talker = graphs.original_predictor = forward
+    # A CPU stand-in for a graph replay; exercise the real install/restore logic.
+    graphs.talker_forward = forward  # type: ignore[method-assign]
+    graphs.predictor_forward = forward  # type: ignore[method-assign]
+    tokenizer = SimpleNamespace(decode=forward)
+    model = SimpleNamespace(model=SimpleNamespace(talker=SimpleNamespace(
+        model=graphs.inner, code_predictor=graphs.predictor), speech_tokenizer=tokenizer))
+    trace: Any = SimpleNamespace(folder="enabled", span=lambda *a: nullcontext())
+    for _ in range(1000):
+        with graphs.installed(), profile_forwards(model, trace):
+            assert graphs.inner.forward(inputs_embeds=None) == "upstream"
+            assert graphs.predictor.forward() == "upstream"
+            assert tokenizer.decode() == "upstream"
+        assert graphs.inner.forward is forward
+        assert graphs.predictor.forward is forward
+        assert tokenizer.decode is forward
+
+
+@pytest.mark.parametrize("frames", [0, 1, 17, 48])
+def test_graph_capture_budget_rejects_unsupported_counts(frames: int) -> None:
+    with pytest.raises(ValueError, match="INVALID_GRAPH_FRAME_BUDGET"):
+        ForwardGraphs(None, None, frames_per_request=frames)
 
 
 @pytest.mark.parametrize("position", [125, 256])

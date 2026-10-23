@@ -1,0 +1,4047 @@
+{
+  "acceptance": false,
+  "ablation": {
+    "p4-02-resource-ablation-v2-20261023/async": {
+      "requests": 9,
+      "seconds": 261.71899999998277,
+      "rss_slope_mib_hour": 858.8990783499484,
+      "python_slope_mib_hour": -36.462311830154086,
+      "initial": {
+        "rss": 2346274816,
+        "python_current": 856,
+        "python_peak": 856,
+        "tracer_metadata_bytes": 11024,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": 2738029196064,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 8550,
+          "active_bytes.current": 8550,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 8550,
+          "active_requests.allocated": 3893,
+          "active_requests.current": 3893,
+          "active_requests.freed": 0,
+          "active_requests.peak": 3893,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 129,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 363,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 389,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5091162112,
+          "reservedBytes": 5834276864,
+          "peakAllocatedBytes": 5491006976,
+          "peakReservedBytes": 5834276864
+        }
+      },
+      "final": {
+        "index": 8,
+        "first_ms": 1950.5729000084102,
+        "last_ms": 28635.762799996883,
+        "bytes": 483840,
+        "elapsed": 28.675825499987695,
+        "seconds": 261.71899999998277,
+        "rss": 2415448064,
+        "python_current": 1255315,
+        "python_peak": 8041363,
+        "tracer_metadata_bytes": 1446272,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": 2738029196064,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33453,
+          "active_bytes.current": 33453,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33453,
+          "active_requests.allocated": 15476,
+          "active_requests.current": 15476,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15476,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 129,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 363,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 389,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5091162112,
+          "reservedBytes": 5834276864,
+          "peakAllocatedBytes": 5491006976,
+          "peakReservedBytes": 5834276864
+        }
+      },
+      "pre_gc": {
+        "rss": 2415460352,
+        "python_current": 1194531,
+        "python_peak": 8041363,
+        "tracer_metadata_bytes": 1456768,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": 2738029196064,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33453,
+          "active_bytes.current": 33453,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33453,
+          "active_requests.allocated": 15476,
+          "active_requests.current": 15476,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15476,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 129,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 363,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 389,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5091162112,
+          "reservedBytes": 5834276864,
+          "peakAllocatedBytes": 5491006976,
+          "peakReservedBytes": 5834276864
+        }
+      },
+      "post_gc": {
+        "rss": 2415669248,
+        "python_current": 557460,
+        "python_peak": 8041363,
+        "tracer_metadata_bytes": 1069760,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": 2738029196064,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33453,
+          "active_bytes.current": 33453,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33453,
+          "active_requests.allocated": 15476,
+          "active_requests.current": 15476,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15476,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 129,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 363,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 389,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5091162112,
+          "reservedBytes": 5834276864,
+          "peakAllocatedBytes": 5491006976,
+          "peakReservedBytes": 5834276864
+        }
+      },
+      "tracemalloc_differences": [
+        {
+          "bytes": 196779,
+          "count": 6,
+          "traceback": "C:\\Users\\nanake\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\asyncio\\proactor_events.py:191"
+        },
+        {
+          "bytes": 164192,
+          "count": 333,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:502"
+        },
+        {
+          "bytes": 161048,
+          "count": 337,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:340"
+        },
+        {
+          "bytes": 77792,
+          "count": 14,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:72"
+        },
+        {
+          "bytes": 49744,
+          "count": 871,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:379"
+        },
+        {
+          "bytes": 40040,
+          "count": 230,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\benchmark.py:50"
+        },
+        {
+          "bytes": 30768,
+          "count": 461,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1429"
+        },
+        {
+          "bytes": 28126,
+          "count": 133,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\benchmark.py:74"
+        },
+        {
+          "bytes": 23040,
+          "count": 310,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:501"
+        },
+        {
+          "bytes": 15870,
+          "count": 260,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:493"
+        },
+        {
+          "bytes": 15336,
+          "count": 306,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\transformers\\masking_utils.py:54"
+        },
+        {
+          "bytes": 14720,
+          "count": 6,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:69"
+        },
+        {
+          "bytes": 13483,
+          "count": 272,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\vmap.py:132"
+        },
+        {
+          "bytes": 11680,
+          "count": 117,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:399"
+        },
+        {
+          "bytes": 11120,
+          "count": 102,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:472"
+        },
+        {
+          "bytes": 11120,
+          "count": 102,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:408"
+        },
+        {
+          "bytes": 11040,
+          "count": 101,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:449"
+        },
+        {
+          "bytes": 9409,
+          "count": 185,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\vmap.py:58"
+        },
+        {
+          "bytes": 8192,
+          "count": 2,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:140"
+        },
+        {
+          "bytes": 8037,
+          "count": 116,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:377"
+        },
+        {
+          "bytes": 8010,
+          "count": 153,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:583"
+        },
+        {
+          "bytes": 7680,
+          "count": 26,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\resource_probe.py:122"
+        },
+        {
+          "bytes": 7400,
+          "count": 185,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:380"
+        },
+        {
+          "bytes": 7021,
+          "count": 119,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_ops.py:504"
+        },
+        {
+          "bytes": 6544,
+          "count": 167,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:393"
+        }
+      ],
+      "rss_delta_mib": 65.96875
+    },
+    "p4-02-resource-ablation-v2-20261023/eager": {
+      "requests": 9,
+      "seconds": 256.81300000002375,
+      "rss_slope_mib_hour": 79.02026771811063,
+      "python_slope_mib_hour": 21.568210242764327,
+      "initial": {
+        "rss": 2347208704,
+        "python_current": 856,
+        "python_peak": 856,
+        "tracer_metadata_bytes": 11024,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 8550,
+          "active_bytes.current": 8550,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 8550,
+          "active_requests.allocated": 3893,
+          "active_requests.current": 3893,
+          "active_requests.freed": 0,
+          "active_requests.peak": 3893,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 115,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 319,
+          "host_alloc_time.min": 11,
+          "host_alloc_time.total": 345,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5081593856,
+          "reservedBytes": 5718933504,
+          "peakAllocatedBytes": 5481438720,
+          "peakReservedBytes": 5718933504
+        }
+      },
+      "final": {
+        "index": 8,
+        "first_ms": 1740.305699990131,
+        "last_ms": 27334.29480000632,
+        "bytes": 483840,
+        "audio_sha256": "1500f2e29f04ab6391e9af1a31a6df3f93d101a816d3ebd5fe4fbe7a748ec3dc",
+        "elapsed": 27.373169999977108,
+        "seconds": 256.81300000002375,
+        "rss": 2357157888,
+        "python_current": 6350292,
+        "python_peak": 8225088,
+        "tracer_metadata_bytes": 3152384,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33453,
+          "active_bytes.current": 33453,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33453,
+          "active_requests.allocated": 15476,
+          "active_requests.current": 15476,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15476,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 115,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 319,
+          "host_alloc_time.min": 11,
+          "host_alloc_time.total": 345,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5081593856,
+          "reservedBytes": 5718933504,
+          "peakAllocatedBytes": 5481438720,
+          "peakReservedBytes": 5718933504
+        }
+      },
+      "pre_gc": {
+        "rss": 2359144448,
+        "python_current": 6264571,
+        "python_peak": 8225088,
+        "tracer_metadata_bytes": 3146912,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33453,
+          "active_bytes.current": 33453,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33453,
+          "active_requests.allocated": 15476,
+          "active_requests.current": 15476,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15476,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 115,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 319,
+          "host_alloc_time.min": 11,
+          "host_alloc_time.total": 345,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5081593856,
+          "reservedBytes": 5718933504,
+          "peakAllocatedBytes": 5481438720,
+          "peakReservedBytes": 5718933504
+        }
+      },
+      "post_gc": {
+        "rss": 2358435840,
+        "python_current": 650752,
+        "python_peak": 8225088,
+        "tracer_metadata_bytes": 1093088,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33453,
+          "active_bytes.current": 33453,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33453,
+          "active_requests.allocated": 15476,
+          "active_requests.current": 15476,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15476,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 115,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 319,
+          "host_alloc_time.min": 11,
+          "host_alloc_time.total": 345,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5081593856,
+          "reservedBytes": 5718933504,
+          "peakAllocatedBytes": 5481438720,
+          "peakReservedBytes": 5718933504
+        }
+      },
+      "tracemalloc_differences": [
+        {
+          "bytes": 1647392,
+          "count": 5392,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:502"
+        },
+        {
+          "bytes": 1628216,
+          "count": 5906,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:340"
+        },
+        {
+          "bytes": 393558,
+          "count": 12,
+          "traceback": "C:\\Users\\nanake\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\asyncio\\proactor_events.py:191"
+        },
+        {
+          "bytes": 228160,
+          "count": 2350,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:399"
+        },
+        {
+          "bytes": 162880,
+          "count": 1366,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:472"
+        },
+        {
+          "bytes": 162880,
+          "count": 1366,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:449"
+        },
+        {
+          "bytes": 162800,
+          "count": 1365,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:408"
+        },
+        {
+          "bytes": 157056,
+          "count": 1939,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1429"
+        },
+        {
+          "bytes": 155584,
+          "count": 28,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:72"
+        },
+        {
+          "bytes": 134000,
+          "count": 3350,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:380"
+        },
+        {
+          "bytes": 117920,
+          "count": 2010,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:509"
+        },
+        {
+          "bytes": 117920,
+          "count": 2010,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:508"
+        },
+        {
+          "bytes": 117920,
+          "count": 2010,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:507"
+        },
+        {
+          "bytes": 117920,
+          "count": 2010,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:506"
+        },
+        {
+          "bytes": 82785,
+          "count": 1358,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:341"
+        },
+        {
+          "bytes": 82200,
+          "count": 685,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1644"
+        },
+        {
+          "bytes": 64296,
+          "count": 928,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:377"
+        },
+        {
+          "bytes": 63120,
+          "count": 526,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\apis.py:213"
+        },
+        {
+          "bytes": 62848,
+          "count": 984,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:379"
+        },
+        {
+          "bytes": 59088,
+          "count": 1048,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:784"
+        },
+        {
+          "bytes": 48240,
+          "count": 1340,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:798"
+        },
+        {
+          "bytes": 44401,
+          "count": 670,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:501"
+        },
+        {
+          "bytes": 40040,
+          "count": 230,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\benchmark.py:50"
+        },
+        {
+          "bytes": 33072,
+          "count": 689,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:504"
+        },
+        {
+          "bytes": 29440,
+          "count": 12,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:69"
+        }
+      ],
+      "rss_delta_mib": 9.48828125
+    },
+    "p4-02-resource-ablation-v2-20261023/first2": {
+      "requests": 9,
+      "seconds": 261.60899999999674,
+      "rss_slope_mib_hour": 65.52606843403092,
+      "python_slope_mib_hour": 21.660847558348497,
+      "initial": {
+        "rss": 2313551872,
+        "python_current": 856,
+        "python_peak": 856,
+        "tracer_metadata_bytes": 11024,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 8574,
+          "active_bytes.current": 8574,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 8574,
+          "active_requests.allocated": 3896,
+          "active_requests.current": 3896,
+          "active_requests.freed": 0,
+          "active_requests.peak": 3896,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 139,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 392,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 418,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5081593856,
+          "reservedBytes": 5718933504,
+          "peakAllocatedBytes": 5481438720,
+          "peakReservedBytes": 5718933504
+        }
+      },
+      "final": {
+        "index": 8,
+        "first_ms": 945.5670000170358,
+        "last_ms": 28717.077400011476,
+        "bytes": 483840,
+        "elapsed": 28.75643130001845,
+        "seconds": 261.60899999999674,
+        "rss": 2322530304,
+        "python_current": 6532991,
+        "python_peak": 8198497,
+        "tracer_metadata_bytes": 3194816,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33549,
+          "active_bytes.current": 33549,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33549,
+          "active_requests.allocated": 15488,
+          "active_requests.current": 15488,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15488,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 139,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 392,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 418,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5081593856,
+          "reservedBytes": 5718933504,
+          "peakAllocatedBytes": 5481438720,
+          "peakReservedBytes": 5718933504
+        }
+      },
+      "pre_gc": {
+        "rss": 2325004288,
+        "python_current": 707684,
+        "python_peak": 8198497,
+        "tracer_metadata_bytes": 1385280,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33549,
+          "active_bytes.current": 33549,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33549,
+          "active_requests.allocated": 15488,
+          "active_requests.current": 15488,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15488,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 139,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 392,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 418,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5081593856,
+          "reservedBytes": 5718933504,
+          "peakAllocatedBytes": 5481438720,
+          "peakReservedBytes": 5718933504
+        }
+      },
+      "post_gc": {
+        "rss": 2325016576,
+        "python_current": 654825,
+        "python_peak": 8198497,
+        "tracer_metadata_bytes": 1094880,
+        "threads": 3,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33549,
+          "active_bytes.current": 33549,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33549,
+          "active_requests.allocated": 15488,
+          "active_requests.current": 15488,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15488,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 139,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 392,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 418,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5081593856,
+          "reservedBytes": 5718933504,
+          "peakAllocatedBytes": 5481438720,
+          "peakReservedBytes": 5718933504
+        }
+      },
+      "tracemalloc_differences": [
+        {
+          "bytes": 1705816,
+          "count": 5575,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:502"
+        },
+        {
+          "bytes": 1687256,
+          "count": 6120,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:340"
+        },
+        {
+          "bytes": 393558,
+          "count": 12,
+          "traceback": "C:\\Users\\nanake\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\asyncio\\proactor_events.py:191"
+        },
+        {
+          "bytes": 235272,
+          "count": 2417,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:399"
+        },
+        {
+          "bytes": 167520,
+          "count": 1398,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:472"
+        },
+        {
+          "bytes": 167440,
+          "count": 1397,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:449"
+        },
+        {
+          "bytes": 167440,
+          "count": 1397,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:408"
+        },
+        {
+          "bytes": 157288,
+          "count": 1954,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1429"
+        },
+        {
+          "bytes": 155584,
+          "count": 28,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:72"
+        },
+        {
+          "bytes": 139200,
+          "count": 3480,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:380"
+        },
+        {
+          "bytes": 122496,
+          "count": 2088,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:509"
+        },
+        {
+          "bytes": 122496,
+          "count": 2088,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:508"
+        },
+        {
+          "bytes": 122496,
+          "count": 2088,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:507"
+        },
+        {
+          "bytes": 122496,
+          "count": 2088,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:506"
+        },
+        {
+          "bytes": 85440,
+          "count": 712,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1644"
+        },
+        {
+          "bytes": 85078,
+          "count": 1392,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:341"
+        },
+        {
+          "bytes": 66120,
+          "count": 551,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\apis.py:213"
+        },
+        {
+          "bytes": 64296,
+          "count": 928,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:377"
+        },
+        {
+          "bytes": 62848,
+          "count": 984,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:379"
+        },
+        {
+          "bytes": 62016,
+          "count": 1102,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:784"
+        },
+        {
+          "bytes": 50112,
+          "count": 1392,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:798"
+        },
+        {
+          "bytes": 46102,
+          "count": 696,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:501"
+        },
+        {
+          "bytes": 40040,
+          "count": 230,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\benchmark.py:50"
+        },
+        {
+          "bytes": 33408,
+          "count": 696,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:504"
+        },
+        {
+          "bytes": 29440,
+          "count": 12,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:69"
+        }
+      ],
+      "rss_delta_mib": 8.5625
+    },
+    "p4-02-resource-ablation-v2-20261023/graph": {
+      "requests": 36,
+      "seconds": 246.23399999999674,
+      "rss_slope_mib_hour": 165.40736858034273,
+      "python_slope_mib_hour": 20.296689261080083,
+      "initial": {
+        "rss": 2640830464,
+        "python_current": 856,
+        "python_peak": 856,
+        "tracer_metadata_bytes": 11024,
+        "threads": 3,
+        "captures": 31,
+        "talker_graphs": 16,
+        "predictor_graphs": 15,
+        "pool": "(0, 1)",
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 8550,
+          "active_bytes.current": 8550,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 8550,
+          "active_requests.allocated": 3893,
+          "active_requests.current": 3893,
+          "active_requests.freed": 0,
+          "active_requests.peak": 3893,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 149,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 416,
+          "host_alloc_time.min": 16,
+          "host_alloc_time.total": 449,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5120145920,
+          "reservedBytes": 5777653760,
+          "peakAllocatedBytes": 5519990784,
+          "peakReservedBytes": 5777653760
+        }
+      },
+      "final": {
+        "index": 35,
+        "first_ms": 332.3268999811262,
+        "last_ms": 6579.199699976016,
+        "bytes": 483840,
+        "elapsed": 6.616597499989439,
+        "seconds": 246.23399999999674,
+        "rss": 2655281152,
+        "python_current": 4496481,
+        "python_peak": 10715597,
+        "tracer_metadata_bytes": 2023776,
+        "threads": 3,
+        "captures": 31,
+        "talker_graphs": 16,
+        "predictor_graphs": 15,
+        "pool": "(0, 1)",
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 108162,
+          "active_bytes.current": 108162,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 108162,
+          "active_requests.allocated": 50225,
+          "active_requests.current": 50225,
+          "active_requests.freed": 0,
+          "active_requests.peak": 50225,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 149,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 416,
+          "host_alloc_time.min": 16,
+          "host_alloc_time.total": 449,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5120145920,
+          "reservedBytes": 5777653760,
+          "peakAllocatedBytes": 5519990784,
+          "peakReservedBytes": 5777653760
+        }
+      },
+      "pre_gc": {
+        "rss": 2655956992,
+        "python_current": 4411388,
+        "python_peak": 10715597,
+        "tracer_metadata_bytes": 2017344,
+        "threads": 3,
+        "captures": 31,
+        "talker_graphs": 16,
+        "predictor_graphs": 15,
+        "pool": "(0, 1)",
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 108162,
+          "active_bytes.current": 108162,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 108162,
+          "active_requests.allocated": 50225,
+          "active_requests.current": 50225,
+          "active_requests.freed": 0,
+          "active_requests.peak": 50225,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 149,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 416,
+          "host_alloc_time.min": 16,
+          "host_alloc_time.total": 449,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5120145920,
+          "reservedBytes": 5777653760,
+          "peakAllocatedBytes": 5519990784,
+          "peakReservedBytes": 5777653760
+        }
+      },
+      "post_gc": {
+        "rss": 2655956992,
+        "python_current": 852135,
+        "python_peak": 10715597,
+        "tracer_metadata_bytes": 1435264,
+        "threads": 3,
+        "captures": 31,
+        "talker_graphs": 16,
+        "predictor_graphs": 15,
+        "pool": "(0, 1)",
+        "decode_stream": null,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 108162,
+          "active_bytes.current": 108162,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 108162,
+          "active_requests.allocated": 50225,
+          "active_requests.current": 50225,
+          "active_requests.freed": 0,
+          "active_requests.peak": 50225,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 149,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 416,
+          "host_alloc_time.min": 16,
+          "host_alloc_time.total": 449,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5120145920,
+          "reservedBytes": 5777653760,
+          "peakAllocatedBytes": 5519990784,
+          "peakReservedBytes": 5777653760
+        }
+      },
+      "tracemalloc_differences": [
+        {
+          "bytes": 918302,
+          "count": 28,
+          "traceback": "C:\\Users\\nanake\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\asyncio\\proactor_events.py:191"
+        },
+        {
+          "bytes": 622024,
+          "count": 2033,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:502"
+        },
+        {
+          "bytes": 601464,
+          "count": 2072,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:340"
+        },
+        {
+          "bytes": 466752,
+          "count": 84,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:72"
+        },
+        {
+          "bytes": 152772,
+          "count": 852,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\benchmark.py:50"
+        },
+        {
+          "bytes": 112867,
+          "count": 493,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\benchmark.py:74"
+        },
+        {
+          "bytes": 103728,
+          "count": 1714,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:379"
+        },
+        {
+          "bytes": 88320,
+          "count": 36,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:69"
+        },
+        {
+          "bytes": 85248,
+          "count": 1147,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:501"
+        },
+        {
+          "bytes": 65080,
+          "count": 602,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:399"
+        },
+        {
+          "bytes": 64296,
+          "count": 928,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:377"
+        },
+        {
+          "bytes": 61360,
+          "count": 520,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:472"
+        },
+        {
+          "bytes": 61360,
+          "count": 520,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:449"
+        },
+        {
+          "bytes": 61280,
+          "count": 519,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:408"
+        },
+        {
+          "bytes": 58719,
+          "count": 962,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:493"
+        },
+        {
+          "bytes": 57672,
+          "count": 757,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1429"
+        },
+        {
+          "bytes": 49400,
+          "count": 1235,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:380"
+        },
+        {
+          "bytes": 49152,
+          "count": 12,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:140"
+        },
+        {
+          "bytes": 43472,
+          "count": 741,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:509"
+        },
+        {
+          "bytes": 43472,
+          "count": 741,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:508"
+        },
+        {
+          "bytes": 43472,
+          "count": 741,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:507"
+        },
+        {
+          "bytes": 43472,
+          "count": 741,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:506"
+        },
+        {
+          "bytes": 32960,
+          "count": 957,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:393"
+        },
+        {
+          "bytes": 31529,
+          "count": 521,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:341"
+        },
+        {
+          "bytes": 30768,
+          "count": 106,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\resource_probe.py:122"
+        }
+      ],
+      "rss_delta_mib": 13.78125
+    },
+    "p4-02-resource-fixed-20261023/async-retry1": {
+      "requests": 9,
+      "seconds": 247.01600000000326,
+      "rss_slope_mib_hour": 78.06673354474552,
+      "python_slope_mib_hour": 12.105684326244624,
+      "initial": {
+        "rss": 2329681920,
+        "python_current": 856,
+        "python_peak": 856,
+        "tracer_metadata_bytes": 11024,
+        "threads": 4,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": 2147356175504,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 8550,
+          "active_bytes.current": 8550,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 8550,
+          "active_requests.allocated": 3893,
+          "active_requests.current": 3893,
+          "active_requests.freed": 0,
+          "active_requests.peak": 3893,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 98,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 269,
+          "host_alloc_time.min": 13,
+          "host_alloc_time.total": 295,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5091162112,
+          "reservedBytes": 5834276864,
+          "peakAllocatedBytes": 5491006976,
+          "peakReservedBytes": 5834276864
+        }
+      },
+      "final": {
+        "index": 8,
+        "first_ms": 1747.0410000532866,
+        "last_ms": 27251.389500044752,
+        "bytes": 483840,
+        "audio_sha256": "1500f2e29f04ab6391e9af1a31a6df3f93d101a816d3ebd5fe4fbe7a748ec3dc",
+        "elapsed": 27.289384000003338,
+        "seconds": 247.01600000000326,
+        "rss": 2339930112,
+        "python_current": 7603860,
+        "python_peak": 8018818,
+        "tracer_metadata_bytes": 3408800,
+        "threads": 4,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": 2147356175504,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33453,
+          "active_bytes.current": 33453,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33453,
+          "active_requests.allocated": 15476,
+          "active_requests.current": 15476,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15476,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 98,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 269,
+          "host_alloc_time.min": 13,
+          "host_alloc_time.total": 295,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5091162112,
+          "reservedBytes": 5834276864,
+          "peakAllocatedBytes": 5491006976,
+          "peakReservedBytes": 5834276864
+        }
+      },
+      "pre_gc": {
+        "rss": 2346565632,
+        "python_current": 7508842,
+        "python_peak": 8018818,
+        "tracer_metadata_bytes": 3399232,
+        "threads": 4,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": 2147356175504,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33453,
+          "active_bytes.current": 33453,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33453,
+          "active_requests.allocated": 15476,
+          "active_requests.current": 15476,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15476,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 98,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 269,
+          "host_alloc_time.min": 13,
+          "host_alloc_time.total": 295,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5091162112,
+          "reservedBytes": 5834276864,
+          "peakAllocatedBytes": 5491006976,
+          "peakReservedBytes": 5834276864
+        }
+      },
+      "post_gc": {
+        "rss": 2345541632,
+        "python_current": 654585,
+        "python_peak": 8018818,
+        "tracer_metadata_bytes": 1100416,
+        "threads": 4,
+        "captures": 0,
+        "talker_graphs": 0,
+        "predictor_graphs": 0,
+        "pool": null,
+        "decode_stream": 2147356175504,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 33453,
+          "active_bytes.current": 33453,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 33453,
+          "active_requests.allocated": 15476,
+          "active_requests.current": 15476,
+          "active_requests.freed": 0,
+          "active_requests.peak": 15476,
+          "allocated_bytes.allocated": 13,
+          "allocated_bytes.current": 13,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 13,
+          "allocations.allocated": 3,
+          "allocations.current": 3,
+          "allocations.freed": 0,
+          "allocations.peak": 3,
+          "host_alloc_time.avg": 98,
+          "host_alloc_time.count": 3,
+          "host_alloc_time.max": 269,
+          "host_alloc_time.min": 13,
+          "host_alloc_time.total": 295,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 3,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5091162112,
+          "reservedBytes": 5834276864,
+          "peakAllocatedBytes": 5491006976,
+          "peakReservedBytes": 5834276864
+        }
+      },
+      "tracemalloc_differences": [
+        {
+          "bytes": 1956848,
+          "count": 6449,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:502"
+        },
+        {
+          "bytes": 1932088,
+          "count": 7042,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:340"
+        },
+        {
+          "bytes": 524744,
+          "count": 16,
+          "traceback": "C:\\Users\\nanake\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\asyncio\\proactor_events.py:191"
+        },
+        {
+          "bytes": 267856,
+          "count": 2740,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:399"
+        },
+        {
+          "bytes": 233376,
+          "count": 42,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:72"
+        },
+        {
+          "bytes": 194800,
+          "count": 1633,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:472"
+        },
+        {
+          "bytes": 194720,
+          "count": 1632,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:449"
+        },
+        {
+          "bytes": 194720,
+          "count": 1632,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:408"
+        },
+        {
+          "bytes": 174344,
+          "count": 2070,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1429"
+        },
+        {
+          "bytes": 160400,
+          "count": 4010,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:380"
+        },
+        {
+          "bytes": 141152,
+          "count": 2406,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:509"
+        },
+        {
+          "bytes": 141152,
+          "count": 2406,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:508"
+        },
+        {
+          "bytes": 141152,
+          "count": 2406,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:507"
+        },
+        {
+          "bytes": 141152,
+          "count": 2406,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:506"
+        },
+        {
+          "bytes": 100312,
+          "count": 1653,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:379"
+        },
+        {
+          "bytes": 99238,
+          "count": 1626,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:341"
+        },
+        {
+          "bytes": 97920,
+          "count": 816,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1644"
+        },
+        {
+          "bytes": 72000,
+          "count": 600,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\apis.py:213"
+        },
+        {
+          "bytes": 64296,
+          "count": 928,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:377"
+        },
+        {
+          "bytes": 57744,
+          "count": 1604,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:798"
+        },
+        {
+          "bytes": 53270,
+          "count": 802,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:501"
+        },
+        {
+          "bytes": 49544,
+          "count": 875,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:784"
+        },
+        {
+          "bytes": 44160,
+          "count": 18,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:69"
+        },
+        {
+          "bytes": 40040,
+          "count": 230,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\benchmark.py:50"
+        },
+        {
+          "bytes": 39552,
+          "count": 824,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:504"
+        }
+      ],
+      "rss_delta_mib": 9.7734375
+    },
+    "p4-02-resource-fixed-20261023/combined-retry1": {
+      "requests": 36,
+      "seconds": 241.85899999999674,
+      "rss_slope_mib_hour": 155.4424370202311,
+      "python_slope_mib_hour": 18.807507859643884,
+      "initial": {
+        "rss": 2596392960,
+        "python_current": 856,
+        "python_peak": 856,
+        "tracer_metadata_bytes": 11024,
+        "threads": 4,
+        "captures": 31,
+        "talker_graphs": 16,
+        "predictor_graphs": 15,
+        "pool": "(0, 1)",
+        "decode_stream": 2100837481072,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 8574,
+          "active_bytes.current": 8574,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 8574,
+          "active_requests.allocated": 3896,
+          "active_requests.current": 3896,
+          "active_requests.freed": 0,
+          "active_requests.peak": 3896,
+          "allocated_bytes.allocated": 21,
+          "allocated_bytes.current": 21,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 21,
+          "allocations.allocated": 4,
+          "allocations.current": 4,
+          "allocations.freed": 0,
+          "allocations.peak": 4,
+          "host_alloc_time.avg": 86,
+          "host_alloc_time.count": 4,
+          "host_alloc_time.max": 292,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 345,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 4,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5129714176,
+          "reservedBytes": 5890899968,
+          "peakAllocatedBytes": 5529559040,
+          "peakReservedBytes": 5890899968
+        }
+      },
+      "final": {
+        "index": 35,
+        "first_ms": 308.7618999998085,
+        "last_ms": 6922.761800000444,
+        "bytes": 483840,
+        "audio_sha256": "93d4b1014b8fd3177e3af25617853befc4227763073d83166b987bd68762b730",
+        "elapsed": 6.960799599997699,
+        "seconds": 241.85899999999674,
+        "rss": 2611712000,
+        "python_current": 5076064,
+        "python_peak": 10501338,
+        "tracer_metadata_bytes": 2624512,
+        "threads": 4,
+        "captures": 31,
+        "talker_graphs": 16,
+        "predictor_graphs": 15,
+        "pool": "(0, 1)",
+        "decode_stream": 2100837481072,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 108474,
+          "active_bytes.current": 108474,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 108474,
+          "active_requests.allocated": 50264,
+          "active_requests.current": 50264,
+          "active_requests.freed": 0,
+          "active_requests.peak": 50264,
+          "allocated_bytes.allocated": 21,
+          "allocated_bytes.current": 21,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 21,
+          "allocations.allocated": 4,
+          "allocations.current": 4,
+          "allocations.freed": 0,
+          "allocations.peak": 4,
+          "host_alloc_time.avg": 86,
+          "host_alloc_time.count": 4,
+          "host_alloc_time.max": 292,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 345,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 4,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5129714176,
+          "reservedBytes": 5890899968,
+          "peakAllocatedBytes": 5529559040,
+          "peakReservedBytes": 5890899968
+        }
+      },
+      "pre_gc": {
+        "rss": 2612899840,
+        "python_current": 4992625,
+        "python_peak": 10501338,
+        "tracer_metadata_bytes": 2618816,
+        "threads": 4,
+        "captures": 31,
+        "talker_graphs": 16,
+        "predictor_graphs": 15,
+        "pool": "(0, 1)",
+        "decode_stream": 2100837481072,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 108474,
+          "active_bytes.current": 108474,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 108474,
+          "active_requests.allocated": 50264,
+          "active_requests.current": 50264,
+          "active_requests.freed": 0,
+          "active_requests.peak": 50264,
+          "allocated_bytes.allocated": 21,
+          "allocated_bytes.current": 21,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 21,
+          "allocations.allocated": 4,
+          "allocations.current": 4,
+          "allocations.freed": 0,
+          "allocations.peak": 4,
+          "host_alloc_time.avg": 86,
+          "host_alloc_time.count": 4,
+          "host_alloc_time.max": 292,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 345,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 4,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5129714176,
+          "reservedBytes": 5890899968,
+          "peakAllocatedBytes": 5529559040,
+          "peakReservedBytes": 5890899968
+        }
+      },
+      "post_gc": {
+        "rss": 2611855360,
+        "python_current": 861476,
+        "python_peak": 10501338,
+        "tracer_metadata_bytes": 1427680,
+        "threads": 4,
+        "captures": 31,
+        "talker_graphs": 16,
+        "predictor_graphs": 15,
+        "pool": "(0, 1)",
+        "decode_stream": 2100837481072,
+        "talker_depth": 2,
+        "predictor_depth": 2,
+        "decode_depth": 1,
+        "hooks": 0,
+        "host_allocator": {
+          "active_bytes.allocated": 108474,
+          "active_bytes.current": 108474,
+          "active_bytes.freed": 0,
+          "active_bytes.peak": 108474,
+          "active_requests.allocated": 50264,
+          "active_requests.current": 50264,
+          "active_requests.freed": 0,
+          "active_requests.peak": 50264,
+          "allocated_bytes.allocated": 21,
+          "allocated_bytes.current": 21,
+          "allocated_bytes.freed": 0,
+          "allocated_bytes.peak": 21,
+          "allocations.allocated": 4,
+          "allocations.current": 4,
+          "allocations.freed": 0,
+          "allocations.peak": 4,
+          "host_alloc_time.avg": 86,
+          "host_alloc_time.count": 4,
+          "host_alloc_time.max": 292,
+          "host_alloc_time.min": 12,
+          "host_alloc_time.total": 345,
+          "host_free_time.avg": 0,
+          "host_free_time.count": 0,
+          "host_free_time.max": 0,
+          "host_free_time.min": 0,
+          "host_free_time.total": 0,
+          "num_host_alloc": 4,
+          "num_host_free": 0
+        },
+        "torch": {
+          "allocatedBytes": 5129714176,
+          "reservedBytes": 5890899968,
+          "peakAllocatedBytes": 5529559040,
+          "peakReservedBytes": 5890899968
+        }
+      },
+      "tracemalloc_differences": [
+        {
+          "bytes": 1049488,
+          "count": 32,
+          "traceback": "C:\\Users\\nanake\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\asyncio\\proactor_events.py:191"
+        },
+        {
+          "bytes": 715288,
+          "count": 2325,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:502"
+        },
+        {
+          "bytes": 689848,
+          "count": 2350,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:340"
+        },
+        {
+          "bytes": 544544,
+          "count": 98,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:72"
+        },
+        {
+          "bytes": 152772,
+          "count": 852,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\benchmark.py:50"
+        },
+        {
+          "bytes": 112819,
+          "count": 492,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\benchmark.py:74"
+        },
+        {
+          "bytes": 103952,
+          "count": 1718,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:379"
+        },
+        {
+          "bytes": 103040,
+          "count": 42,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:69"
+        },
+        {
+          "bytes": 85248,
+          "count": 1147,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:501"
+        },
+        {
+          "bytes": 76048,
+          "count": 703,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:399"
+        },
+        {
+          "bytes": 71120,
+          "count": 600,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:472"
+        },
+        {
+          "bytes": 71120,
+          "count": 600,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:449"
+        },
+        {
+          "bytes": 71040,
+          "count": 599,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:408"
+        },
+        {
+          "bytes": 64296,
+          "count": 928,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:377"
+        },
+        {
+          "bytes": 63176,
+          "count": 803,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1429"
+        },
+        {
+          "bytes": 58719,
+          "count": 962,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\cuda\\memory.py:493"
+        },
+        {
+          "bytes": 57800,
+          "count": 1445,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:380"
+        },
+        {
+          "bytes": 57344,
+          "count": 14,
+          "traceback": "D:\\Dev\\nemu-wt\\P4-02\\services\\voice-sidecar\\.venv\\Lib\\site-packages\\websockets\\extensions\\permessage_deflate.py:140"
+        },
+        {
+          "bytes": 50864,
+          "count": 867,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:509"
+        },
+        {
+          "bytes": 50864,
+          "count": 867,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:508"
+        },
+        {
+          "bytes": 50864,
+          "count": 867,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:507"
+        },
+        {
+          "bytes": 50864,
+          "count": 867,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\_functorch\\autograd_function.py:506"
+        },
+        {
+          "bytes": 36282,
+          "count": 598,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\autograd\\function.py:341"
+        },
+        {
+          "bytes": 35760,
+          "count": 298,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\torch\\utils\\_pytree.py:1644"
+        },
+        {
+          "bytes": 35032,
+          "count": 305,
+          "traceback": "D:\\Dev\\nemu-p007\\workers\\model-adapter\\probe\\.venv\\Lib\\site-packages\\qwen_tts\\core\\models\\modeling_qwen3_tts.py:1531"
+        }
+      ],
+      "rss_delta_mib": 14.609375
+    }
+  },
+  "graph_memory": {
+    "eager": {
+      "status": "measured",
+      "pool": "shared",
+      "frames_per_request": 0,
+      "outputs": {
+        "zh": {
+          "codec_sha256": "d1d0576421723eebce3f510a26942845d076f0814a58d901e1f6a659d7d13251",
+          "pcm_sha256": "f6e089d8c21534c4cb17f04a176033ec209622e2de8afacca4158d9a376dd97c",
+          "seconds": 13.270450800016988,
+          "first_ms": 1124.558600015007,
+          "graph_count": 0,
+          "torch": {
+            "allocatedBytes": 5073074176,
+            "reservedBytes": 5695864832,
+            "peakAllocatedBytes": 5472951808,
+            "peakReservedBytes": 5695864832
+          }
+        },
+        "en": {
+          "codec_sha256": "d33ac6e05e9bf74607bf4230ccf1a75feacdc2d0ece90b15e7c0920b89dc3137",
+          "pcm_sha256": "b11b0d247ba0d1c634f2c745a6090ba8f1dc3554cef440d073a246b7639c7c14",
+          "seconds": 11.285063399991486,
+          "first_ms": 708.8710999814793,
+          "graph_count": 0,
+          "torch": {
+            "allocatedBytes": 5073103360,
+            "reservedBytes": 5825888256,
+            "peakAllocatedBytes": 5490826240,
+            "peakReservedBytes": 5825888256
+          }
+        },
+        "ja": {
+          "codec_sha256": "19adee3290cf8cf726b0837e975a3b636e90bab1fe001942370a925e8e436896",
+          "pcm_sha256": "7e1351be89a7b3b9365c81ce23ed8d2e705d602e766a0f80834310fc5d324bec",
+          "seconds": 5.059021900000516,
+          "first_ms": 711.959200038109,
+          "graph_count": 0,
+          "torch": {
+            "allocatedBytes": 5073139200,
+            "reservedBytes": 5825888256,
+            "peakAllocatedBytes": 5490826240,
+            "peakReservedBytes": 5825888256
+          }
+        }
+      },
+      "memory": {
+        "status": "sampled-not-accepted",
+        "observations": 266,
+        "maximum_start_interval_s": 0.835227,
+        "maximum_acquisition_s": 0.594316,
+        "no_owned_gpu_counter_samples": 20,
+        "errors": [],
+        "sampled_peaks": {
+          "dedicated_bytes": 6375428096,
+          "shared_bytes": 270987264,
+          "total_committed_bytes": 6647119872
+        },
+        "processes": [
+          {
+            "ProcessId": 17468,
+            "ParentProcessId": 44244,
+            "Name": "python.exe",
+            "CreationDate": "/Date(1792737345958)/"
+          },
+          {
+            "ProcessId": 25604,
+            "ParentProcessId": 17468,
+            "Name": "powershell.exe",
+            "CreationDate": "/Date(1792737346806)/"
+          },
+          {
+            "ProcessId": 30700,
+            "ParentProcessId": 17468,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737346819)/"
+          },
+          {
+            "ProcessId": 47988,
+            "ParentProcessId": 25604,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737346827)/"
+          },
+          {
+            "ProcessId": 42272,
+            "ParentProcessId": 30700,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737346828)/"
+          },
+          {
+            "ProcessId": 23328,
+            "ParentProcessId": 30700,
+            "Name": "tasklist.exe",
+            "CreationDate": "/Date(1792737347223)/"
+          },
+          {
+            "ProcessId": 20088,
+            "ParentProcessId": 23328,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737347228)/"
+          },
+          {
+            "ProcessId": 52748,
+            "ParentProcessId": 30700,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737347688)/"
+          },
+          {
+            "ProcessId": 35644,
+            "ParentProcessId": 52748,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737347694)/"
+          },
+          {
+            "ProcessId": 10744,
+            "ParentProcessId": 52748,
+            "Name": "esbuild.exe",
+            "CreationDate": "/Date(1792737347977)/"
+          },
+          {
+            "ProcessId": 51640,
+            "ParentProcessId": 30700,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737348247)/"
+          },
+          {
+            "ProcessId": 35888,
+            "ParentProcessId": 51640,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737348297)/"
+          },
+          {
+            "ProcessId": 13084,
+            "ParentProcessId": 51640,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737348308)/"
+          },
+          {
+            "ProcessId": 41576,
+            "ParentProcessId": 51640,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737348322)/"
+          }
+        ],
+        "adapters": [
+          "luid_0x00000000_0x0000BE91_phys_0"
+        ],
+        "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+      },
+      "nemu_memory_upper_bound_bytes": 6646415360,
+      "memory_evidence_available": true
+    },
+    "fixed2": {
+      "status": "measured",
+      "pool": "shared",
+      "frames_per_request": 4,
+      "outputs": {
+        "zh": {
+          "codec_sha256": "d1d0576421723eebce3f510a26942845d076f0814a58d901e1f6a659d7d13251",
+          "pcm_sha256": "c363f0e8dc7bdbdcce04f0c2ceae22d01ffb3fb23842fec263bab95a27e50df0",
+          "seconds": 5.913398000004236,
+          "first_ms": 1015.9180000191554,
+          "graph_count": 4,
+          "torch": {
+            "allocatedBytes": 5121169920,
+            "reservedBytes": 5974786048,
+            "peakAllocatedBytes": 5521035776,
+            "peakReservedBytes": 5974786048
+          }
+        },
+        "en": {
+          "codec_sha256": "d33ac6e05e9bf74607bf4230ccf1a75feacdc2d0ece90b15e7c0920b89dc3137",
+          "pcm_sha256": "a5a739dfc772d617f0f88473a0981d4ec2a6144e4384eac4674afdd838cdefc3",
+          "seconds": 4.825620000017807,
+          "first_ms": 731.4812000258826,
+          "graph_count": 8,
+          "torch": {
+            "allocatedBytes": 5121207296,
+            "reservedBytes": 5999951872,
+            "peakAllocatedBytes": 5539565568,
+            "peakReservedBytes": 5999951872
+          }
+        },
+        "ja": {
+          "codec_sha256": "19adee3290cf8cf726b0837e975a3b636e90bab1fe001942370a925e8e436896",
+          "pcm_sha256": "1284e8da180ef7d5b945e963f58b08eb4fbe0759eccb8e4bfc03c176b5ffb498",
+          "seconds": 2.788075399992522,
+          "first_ms": 743.8484000158496,
+          "graph_count": 12,
+          "torch": {
+            "allocatedBytes": 5121251328,
+            "reservedBytes": 5972688896,
+            "peakAllocatedBytes": 5539565568,
+            "peakReservedBytes": 5999951872
+          }
+        }
+      },
+      "memory": {
+        "status": "sampled-not-accepted",
+        "observations": 200,
+        "maximum_start_interval_s": 0.544135,
+        "maximum_acquisition_s": 0.306052,
+        "no_owned_gpu_counter_samples": 22,
+        "errors": [],
+        "sampled_peaks": {
+          "dedicated_bytes": 6821765120,
+          "shared_bytes": 287846400,
+          "total_committed_bytes": 7110316032
+        },
+        "processes": [
+          {
+            "ProcessId": 36448,
+            "ParentProcessId": 36564,
+            "Name": "python.exe",
+            "CreationDate": "/Date(1792737889571)/"
+          },
+          {
+            "ProcessId": 52144,
+            "ParentProcessId": 36448,
+            "Name": "powershell.exe",
+            "CreationDate": "/Date(1792737890391)/"
+          },
+          {
+            "ProcessId": 32004,
+            "ParentProcessId": 52144,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737890401)/"
+          },
+          {
+            "ProcessId": 19160,
+            "ParentProcessId": 36448,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737890403)/"
+          },
+          {
+            "ProcessId": 12400,
+            "ParentProcessId": 19160,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737890408)/"
+          },
+          {
+            "ProcessId": 4164,
+            "ParentProcessId": 19160,
+            "Name": "tasklist.exe",
+            "CreationDate": "/Date(1792737890781)/"
+          },
+          {
+            "ProcessId": 47004,
+            "ParentProcessId": 4164,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737890785)/"
+          },
+          {
+            "ProcessId": 28784,
+            "ParentProcessId": 19160,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737891206)/"
+          },
+          {
+            "ProcessId": 51276,
+            "ParentProcessId": 28784,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737891212)/"
+          },
+          {
+            "ProcessId": 39356,
+            "ParentProcessId": 28784,
+            "Name": "esbuild.exe",
+            "CreationDate": "/Date(1792737891483)/"
+          },
+          {
+            "ProcessId": 21860,
+            "ParentProcessId": 19160,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737891764)/"
+          },
+          {
+            "ProcessId": 41204,
+            "ParentProcessId": 21860,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737891807)/"
+          },
+          {
+            "ProcessId": 21316,
+            "ParentProcessId": 21860,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737891818)/"
+          },
+          {
+            "ProcessId": 28264,
+            "ParentProcessId": 21860,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737891834)/"
+          }
+        ],
+        "adapters": [
+          "luid_0x00000000_0x0000BE91_phys_0"
+        ],
+        "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+      },
+      "nemu_memory_upper_bound_bytes": 7109611520,
+      "memory_evidence_available": true
+    },
+    "separate16": {
+      "status": "measured",
+      "pool": "separate",
+      "frames_per_request": 16,
+      "outputs": {
+        "zh": {
+          "codec_sha256": "d1d0576421723eebce3f510a26942845d076f0814a58d901e1f6a659d7d13251",
+          "pcm_sha256": "f6e089d8c21534c4cb17f04a176033ec209622e2de8afacca4158d9a376dd97c",
+          "seconds": 8.135455599986017,
+          "first_ms": 3136.1000000033528,
+          "graph_count": 16,
+          "torch": {
+            "allocatedBytes": 5111626240,
+            "reservedBytes": 5920260096,
+            "peakAllocatedBytes": 5511492096,
+            "peakReservedBytes": 5920260096
+          }
+        },
+        "en": {
+          "codec_sha256": "d33ac6e05e9bf74607bf4230ccf1a75feacdc2d0ece90b15e7c0920b89dc3137",
+          "pcm_sha256": "b11b0d247ba0d1c634f2c745a6090ba8f1dc3554cef440d073a246b7639c7c14",
+          "seconds": 5.14365819998784,
+          "first_ms": 1274.9615000211634,
+          "graph_count": 23,
+          "torch": {
+            "allocatedBytes": 5111669760,
+            "reservedBytes": 5960105984,
+            "peakAllocatedBytes": 5530028032,
+            "peakReservedBytes": 5960105984
+          }
+        },
+        "ja": {
+          "codec_sha256": "19adee3290cf8cf726b0837e975a3b636e90bab1fe001942370a925e8e436896",
+          "pcm_sha256": "7e1351be89a7b3b9365c81ce23ed8d2e705d602e766a0f80834310fc5d324bec",
+          "seconds": 4.6164844000013545,
+          "first_ms": 2664.3077000044286,
+          "graph_count": 39,
+          "torch": {
+            "allocatedBytes": 5111738368,
+            "reservedBytes": 5968494592,
+            "peakAllocatedBytes": 5530028032,
+            "peakReservedBytes": 5968494592
+          }
+        }
+      },
+      "memory": {
+        "status": "sampled-not-accepted",
+        "observations": 213,
+        "maximum_start_interval_s": 1.538933,
+        "maximum_acquisition_s": 1.332739,
+        "no_owned_gpu_counter_samples": 21,
+        "errors": [],
+        "sampled_peaks": {
+          "dedicated_bytes": 7277240320,
+          "shared_bytes": 289026048,
+          "total_committed_bytes": 7566970880
+        },
+        "processes": [
+          {
+            "ProcessId": 53568,
+            "ParentProcessId": 41456,
+            "Name": "python.exe",
+            "CreationDate": "/Date(1792737569894)/"
+          },
+          {
+            "ProcessId": 7772,
+            "ParentProcessId": 53568,
+            "Name": "powershell.exe",
+            "CreationDate": "/Date(1792737570774)/"
+          },
+          {
+            "ProcessId": 19376,
+            "ParentProcessId": 53568,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737570787)/"
+          },
+          {
+            "ProcessId": 42732,
+            "ParentProcessId": 7772,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737570789)/"
+          },
+          {
+            "ProcessId": 37820,
+            "ParentProcessId": 19376,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737570798)/"
+          },
+          {
+            "ProcessId": 1316,
+            "ParentProcessId": 19376,
+            "Name": "tasklist.exe",
+            "CreationDate": "/Date(1792737571195)/"
+          },
+          {
+            "ProcessId": 17100,
+            "ParentProcessId": 1316,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737571200)/"
+          },
+          {
+            "ProcessId": 9288,
+            "ParentProcessId": 19376,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737571672)/"
+          },
+          {
+            "ProcessId": 51740,
+            "ParentProcessId": 9288,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737571678)/"
+          },
+          {
+            "ProcessId": 18636,
+            "ParentProcessId": 9288,
+            "Name": "esbuild.exe",
+            "CreationDate": "/Date(1792737571947)/"
+          },
+          {
+            "ProcessId": 33576,
+            "ParentProcessId": 19376,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737572232)/"
+          },
+          {
+            "ProcessId": 50168,
+            "ParentProcessId": 33576,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737572283)/"
+          },
+          {
+            "ProcessId": 41192,
+            "ParentProcessId": 33576,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737572295)/"
+          },
+          {
+            "ProcessId": 48976,
+            "ParentProcessId": 33576,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737572305)/"
+          }
+        ],
+        "adapters": [
+          "luid_0x00000000_0x0000BE91_phys_0"
+        ],
+        "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+      },
+      "nemu_memory_upper_bound_bytes": 7566266368,
+      "memory_evidence_available": true
+    },
+    "shared16": {
+      "status": "measured",
+      "pool": "shared",
+      "frames_per_request": 16,
+      "outputs": {
+        "zh": {
+          "codec_sha256": "d1d0576421723eebce3f510a26942845d076f0814a58d901e1f6a659d7d13251",
+          "pcm_sha256": "f6e089d8c21534c4cb17f04a176033ec209622e2de8afacca4158d9a376dd97c",
+          "seconds": 7.99622420000378,
+          "first_ms": 3119.856000004802,
+          "graph_count": 16,
+          "torch": {
+            "allocatedBytes": 5111626240,
+            "reservedBytes": 5857345536,
+            "peakAllocatedBytes": 5511492096,
+            "peakReservedBytes": 5857345536
+          }
+        },
+        "en": {
+          "codec_sha256": "d33ac6e05e9bf74607bf4230ccf1a75feacdc2d0ece90b15e7c0920b89dc3137",
+          "pcm_sha256": "b11b0d247ba0d1c634f2c745a6090ba8f1dc3554cef440d073a246b7639c7c14",
+          "seconds": 5.258118199999444,
+          "first_ms": 1349.483700003475,
+          "graph_count": 23,
+          "torch": {
+            "allocatedBytes": 5111669760,
+            "reservedBytes": 5882511360,
+            "peakAllocatedBytes": 5530028032,
+            "peakReservedBytes": 5882511360
+          }
+        },
+        "ja": {
+          "codec_sha256": "19adee3290cf8cf726b0837e975a3b636e90bab1fe001942370a925e8e436896",
+          "pcm_sha256": "7e1351be89a7b3b9365c81ce23ed8d2e705d602e766a0f80834310fc5d324bec",
+          "seconds": 5.288055200013332,
+          "first_ms": 3172.759599983692,
+          "graph_count": 39,
+          "torch": {
+            "allocatedBytes": 5111738368,
+            "reservedBytes": 5859442688,
+            "peakAllocatedBytes": 5530028032,
+            "peakReservedBytes": 5882511360
+          }
+        }
+      },
+      "memory": {
+        "status": "sampled-not-accepted",
+        "observations": 223,
+        "maximum_start_interval_s": 0.535098,
+        "maximum_acquisition_s": 0.296176,
+        "no_owned_gpu_counter_samples": 22,
+        "errors": [],
+        "sampled_peaks": {
+          "dedicated_bytes": 7168155648,
+          "shared_bytes": 270987264,
+          "total_committed_bytes": 7439847424
+        },
+        "processes": [
+          {
+            "ProcessId": 47252,
+            "ParentProcessId": 16176,
+            "Name": "python.exe",
+            "CreationDate": "/Date(1792737410604)/"
+          },
+          {
+            "ProcessId": 3140,
+            "ParentProcessId": 47252,
+            "Name": "powershell.exe",
+            "CreationDate": "/Date(1792737411375)/"
+          },
+          {
+            "ProcessId": 27340,
+            "ParentProcessId": 3140,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737411385)/"
+          },
+          {
+            "ProcessId": 20092,
+            "ParentProcessId": 47252,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737411388)/"
+          },
+          {
+            "ProcessId": 31156,
+            "ParentProcessId": 20092,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737411393)/"
+          },
+          {
+            "ProcessId": 34012,
+            "ParentProcessId": 20092,
+            "Name": "tasklist.exe",
+            "CreationDate": "/Date(1792737411762)/"
+          },
+          {
+            "ProcessId": 37032,
+            "ParentProcessId": 34012,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737411766)/"
+          },
+          {
+            "ProcessId": 30036,
+            "ParentProcessId": 20092,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737412186)/"
+          },
+          {
+            "ProcessId": 48320,
+            "ParentProcessId": 30036,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737412191)/"
+          },
+          {
+            "ProcessId": 35664,
+            "ParentProcessId": 30036,
+            "Name": "esbuild.exe",
+            "CreationDate": "/Date(1792737412465)/"
+          },
+          {
+            "ProcessId": 53640,
+            "ParentProcessId": 20092,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737412742)/"
+          },
+          {
+            "ProcessId": 29396,
+            "ParentProcessId": 53640,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737412783)/"
+          },
+          {
+            "ProcessId": 46636,
+            "ParentProcessId": 53640,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737412794)/"
+          },
+          {
+            "ProcessId": 39196,
+            "ParentProcessId": 53640,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737412808)/"
+          }
+        ],
+        "adapters": [
+          "luid_0x00000000_0x0000BE91_phys_0"
+        ],
+        "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+      },
+      "nemu_memory_upper_bound_bytes": 7439142912,
+      "memory_evidence_available": true
+    },
+    "shared4": {
+      "status": "measured",
+      "pool": "shared",
+      "frames_per_request": 4,
+      "outputs": {
+        "zh": {
+          "codec_sha256": "d1d0576421723eebce3f510a26942845d076f0814a58d901e1f6a659d7d13251",
+          "pcm_sha256": "f6e089d8c21534c4cb17f04a176033ec209622e2de8afacca4158d9a376dd97c",
+          "seconds": 6.653935499954969,
+          "first_ms": 1006.192300003022,
+          "graph_count": 4,
+          "torch": {
+            "allocatedBytes": 5111601664,
+            "reservedBytes": 5859442688,
+            "peakAllocatedBytes": 5511467520,
+            "peakReservedBytes": 5859442688
+          }
+        },
+        "en": {
+          "codec_sha256": "d33ac6e05e9bf74607bf4230ccf1a75feacdc2d0ece90b15e7c0920b89dc3137",
+          "pcm_sha256": "b11b0d247ba0d1c634f2c745a6090ba8f1dc3554cef440d073a246b7639c7c14",
+          "seconds": 5.472083600005135,
+          "first_ms": 842.1987000037916,
+          "graph_count": 8,
+          "torch": {
+            "allocatedBytes": 5111639040,
+            "reservedBytes": 5884608512,
+            "peakAllocatedBytes": 5529997312,
+            "peakReservedBytes": 5884608512
+          }
+        },
+        "ja": {
+          "codec_sha256": "19adee3290cf8cf726b0837e975a3b636e90bab1fe001942370a925e8e436896",
+          "pcm_sha256": "7e1351be89a7b3b9365c81ce23ed8d2e705d602e766a0f80834310fc5d324bec",
+          "seconds": 2.908182500046678,
+          "first_ms": 830.438899982255,
+          "graph_count": 12,
+          "torch": {
+            "allocatedBytes": 5111683072,
+            "reservedBytes": 5859442688,
+            "peakAllocatedBytes": 5529997312,
+            "peakReservedBytes": 5884608512
+          }
+        }
+      },
+      "memory": {
+        "status": "sampled-not-accepted",
+        "observations": 206,
+        "maximum_start_interval_s": 0.580057,
+        "maximum_acquisition_s": 0.33626,
+        "no_owned_gpu_counter_samples": 21,
+        "errors": [],
+        "sampled_peaks": {
+          "dedicated_bytes": 6649794560,
+          "shared_bytes": 289026048,
+          "total_committed_bytes": 6939525120
+        },
+        "processes": [
+          {
+            "ProcessId": 24296,
+            "ParentProcessId": 46312,
+            "Name": "python.exe",
+            "CreationDate": "/Date(1792737518749)/"
+          },
+          {
+            "ProcessId": 29160,
+            "ParentProcessId": 24296,
+            "Name": "powershell.exe",
+            "CreationDate": "/Date(1792737519593)/"
+          },
+          {
+            "ProcessId": 23916,
+            "ParentProcessId": 24296,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737519606)/"
+          },
+          {
+            "ProcessId": 3144,
+            "ParentProcessId": 29160,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737519607)/"
+          },
+          {
+            "ProcessId": 40992,
+            "ParentProcessId": 23916,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737519617)/"
+          },
+          {
+            "ProcessId": 4908,
+            "ParentProcessId": 23916,
+            "Name": "tasklist.exe",
+            "CreationDate": "/Date(1792737520002)/"
+          },
+          {
+            "ProcessId": 42268,
+            "ParentProcessId": 4908,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737520007)/"
+          },
+          {
+            "ProcessId": 51596,
+            "ParentProcessId": 23916,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737520499)/"
+          },
+          {
+            "ProcessId": 7716,
+            "ParentProcessId": 51596,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737520505)/"
+          },
+          {
+            "ProcessId": 36392,
+            "ParentProcessId": 51596,
+            "Name": "esbuild.exe",
+            "CreationDate": "/Date(1792737520788)/"
+          },
+          {
+            "ProcessId": 34712,
+            "ParentProcessId": 23916,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737521057)/"
+          },
+          {
+            "ProcessId": 28872,
+            "ParentProcessId": 34712,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737521105)/"
+          },
+          {
+            "ProcessId": 35688,
+            "ParentProcessId": 34712,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737521117)/"
+          },
+          {
+            "ProcessId": 20684,
+            "ParentProcessId": 34712,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737521129)/"
+          }
+        ],
+        "adapters": [
+          "luid_0x00000000_0x0000BE91_phys_0"
+        ],
+        "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+      },
+      "nemu_memory_upper_bound_bytes": 6938820608,
+      "memory_evidence_available": true
+    },
+    "shared8": {
+      "status": "measured",
+      "pool": "shared",
+      "frames_per_request": 8,
+      "outputs": {
+        "zh": {
+          "codec_sha256": "d1d0576421723eebce3f510a26942845d076f0814a58d901e1f6a659d7d13251",
+          "pcm_sha256": "f6e089d8c21534c4cb17f04a176033ec209622e2de8afacca4158d9a376dd97c",
+          "seconds": 7.0817060000263155,
+          "first_ms": 1688.4122000192292,
+          "graph_count": 8,
+          "torch": {
+            "allocatedBytes": 5111609856,
+            "reservedBytes": 5857345536,
+            "peakAllocatedBytes": 5511475712,
+            "peakReservedBytes": 5857345536
+          }
+        },
+        "en": {
+          "codec_sha256": "d33ac6e05e9bf74607bf4230ccf1a75feacdc2d0ece90b15e7c0920b89dc3137",
+          "pcm_sha256": "b11b0d247ba0d1c634f2c745a6090ba8f1dc3554cef440d073a246b7639c7c14",
+          "seconds": 6.0405271999770775,
+          "first_ms": 1389.1077999724075,
+          "graph_count": 15,
+          "torch": {
+            "allocatedBytes": 5111653376,
+            "reservedBytes": 5884608512,
+            "peakAllocatedBytes": 5530011648,
+            "peakReservedBytes": 5884608512
+          }
+        },
+        "ja": {
+          "codec_sha256": "19adee3290cf8cf726b0837e975a3b636e90bab1fe001942370a925e8e436896",
+          "pcm_sha256": "7e1351be89a7b3b9365c81ce23ed8d2e705d602e766a0f80834310fc5d324bec",
+          "seconds": 3.3912367000011727,
+          "first_ms": 1455.625600006897,
+          "graph_count": 23,
+          "torch": {
+            "allocatedBytes": 5111705600,
+            "reservedBytes": 5859442688,
+            "peakAllocatedBytes": 5530011648,
+            "peakReservedBytes": 5884608512
+          }
+        }
+      },
+      "memory": {
+        "status": "sampled-not-accepted",
+        "observations": 217,
+        "maximum_start_interval_s": 0.589061,
+        "maximum_acquisition_s": 0.33388,
+        "no_owned_gpu_counter_samples": 21,
+        "errors": [],
+        "sampled_peaks": {
+          "dedicated_bytes": 6771433472,
+          "shared_bytes": 288731136,
+          "total_committed_bytes": 7060869120
+        },
+        "processes": [
+          {
+            "ProcessId": 38852,
+            "ParentProcessId": 15640,
+            "Name": "python.exe",
+            "CreationDate": "/Date(1792737465442)/"
+          },
+          {
+            "ProcessId": 32720,
+            "ParentProcessId": 38852,
+            "Name": "powershell.exe",
+            "CreationDate": "/Date(1792737466295)/"
+          },
+          {
+            "ProcessId": 42396,
+            "ParentProcessId": 38852,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737466310)/"
+          },
+          {
+            "ProcessId": 47316,
+            "ParentProcessId": 32720,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737466364)/"
+          },
+          {
+            "ProcessId": 32712,
+            "ParentProcessId": 42396,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737466412)/"
+          },
+          {
+            "ProcessId": 32924,
+            "ParentProcessId": 42396,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737467280)/"
+          },
+          {
+            "ProcessId": 31828,
+            "ParentProcessId": 32924,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737467286)/"
+          },
+          {
+            "ProcessId": 41444,
+            "ParentProcessId": 32924,
+            "Name": "esbuild.exe",
+            "CreationDate": "/Date(1792737467560)/"
+          },
+          {
+            "ProcessId": 36912,
+            "ParentProcessId": 42396,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737467838)/"
+          },
+          {
+            "ProcessId": 33568,
+            "ParentProcessId": 36912,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737467888)/"
+          },
+          {
+            "ProcessId": 10448,
+            "ParentProcessId": 36912,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737467899)/"
+          },
+          {
+            "ProcessId": 31692,
+            "ParentProcessId": 36912,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737467912)/"
+          }
+        ],
+        "adapters": [
+          "luid_0x00000000_0x0000BE91_phys_0"
+        ],
+        "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+      },
+      "nemu_memory_upper_bound_bytes": 7060164608,
+      "memory_evidence_available": true
+    },
+    "sync2": {
+      "status": "measured",
+      "pool": "shared",
+      "frames_per_request": 0,
+      "outputs": {
+        "zh": {
+          "codec_sha256": "d1d0576421723eebce3f510a26942845d076f0814a58d901e1f6a659d7d13251",
+          "pcm_sha256": "c363f0e8dc7bdbdcce04f0c2ceae22d01ffb3fb23842fec263bab95a27e50df0",
+          "seconds": 11.866615800012369,
+          "first_ms": 543.8310999888927,
+          "graph_count": 0,
+          "torch": {
+            "allocatedBytes": 5073074176,
+            "reservedBytes": 5695864832,
+            "peakAllocatedBytes": 5472951808,
+            "peakReservedBytes": 5695864832
+          }
+        },
+        "en": {
+          "codec_sha256": "d33ac6e05e9bf74607bf4230ccf1a75feacdc2d0ece90b15e7c0920b89dc3137",
+          "pcm_sha256": "a5a739dfc772d617f0f88473a0981d4ec2a6144e4384eac4674afdd838cdefc3",
+          "seconds": 11.532323099963833,
+          "first_ms": 411.01420001359656,
+          "graph_count": 0,
+          "torch": {
+            "allocatedBytes": 5073103360,
+            "reservedBytes": 5825888256,
+            "peakAllocatedBytes": 5490826240,
+            "peakReservedBytes": 5825888256
+          }
+        },
+        "ja": {
+          "codec_sha256": "19adee3290cf8cf726b0837e975a3b636e90bab1fe001942370a925e8e436896",
+          "pcm_sha256": "1284e8da180ef7d5b945e963f58b08eb4fbe0759eccb8e4bfc03c176b5ffb498",
+          "seconds": 4.816142499970738,
+          "first_ms": 387.7535000210628,
+          "graph_count": 0,
+          "torch": {
+            "allocatedBytes": 5073139200,
+            "reservedBytes": 5825888256,
+            "peakAllocatedBytes": 5490826240,
+            "peakReservedBytes": 5825888256
+          }
+        }
+      },
+      "memory": {
+        "status": "sampled-not-accepted",
+        "observations": 262,
+        "maximum_start_interval_s": 0.780336,
+        "maximum_acquisition_s": 0.541291,
+        "no_owned_gpu_counter_samples": 20,
+        "errors": [],
+        "sampled_peaks": {
+          "dedicated_bytes": 6375067648,
+          "shared_bytes": 288731136,
+          "total_committed_bytes": 6664503296
+        },
+        "processes": [
+          {
+            "ProcessId": 24536,
+            "ParentProcessId": 16484,
+            "Name": "python.exe",
+            "CreationDate": "/Date(1792737826053)/"
+          },
+          {
+            "ProcessId": 27720,
+            "ParentProcessId": 24536,
+            "Name": "powershell.exe",
+            "CreationDate": "/Date(1792737826880)/"
+          },
+          {
+            "ProcessId": 12580,
+            "ParentProcessId": 24536,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737826892)/"
+          },
+          {
+            "ProcessId": 34416,
+            "ParentProcessId": 12580,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737826902)/"
+          },
+          {
+            "ProcessId": 36804,
+            "ParentProcessId": 27720,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737826913)/"
+          },
+          {
+            "ProcessId": 39284,
+            "ParentProcessId": 12580,
+            "Name": "tasklist.exe",
+            "CreationDate": "/Date(1792737827274)/"
+          },
+          {
+            "ProcessId": 35688,
+            "ParentProcessId": 39284,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737827279)/"
+          },
+          {
+            "ProcessId": 28872,
+            "ParentProcessId": 12580,
+            "Name": "node.exe",
+            "CreationDate": "/Date(1792737827702)/"
+          },
+          {
+            "ProcessId": 51900,
+            "ParentProcessId": 28872,
+            "Name": "conhost.exe",
+            "CreationDate": "/Date(1792737827707)/"
+          },
+          {
+            "ProcessId": 4228,
+            "ParentProcessId": 28872,
+            "Name": "esbuild.exe",
+            "CreationDate": "/Date(1792737827979)/"
+          },
+          {
+            "ProcessId": 22212,
+            "ParentProcessId": 12580,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737828259)/"
+          },
+          {
+            "ProcessId": 18124,
+            "ParentProcessId": 22212,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737828311)/"
+          },
+          {
+            "ProcessId": 46700,
+            "ParentProcessId": 22212,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737828322)/"
+          },
+          {
+            "ProcessId": 38464,
+            "ParentProcessId": 22212,
+            "Name": "chrome-headless-shell.exe",
+            "CreationDate": "/Date(1792737828335)/"
+          }
+        ],
+        "adapters": [
+          "luid_0x00000000_0x0000BE91_phys_0"
+        ],
+        "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+      },
+      "nemu_memory_upper_bound_bytes": 6663798784,
+      "memory_evidence_available": true
+    }
+  },
+  "full512": {
+    "zh": {
+      "samples": 20,
+      "p50_ms": 172.38185001770034,
+      "limit_ms": 250,
+      "passed": true
+    },
+    "en": {
+      "samples": 20,
+      "p50_ms": 176.6487999993842,
+      "limit_ms": 250,
+      "passed": true
+    },
+    "ja": {
+      "samples": 20,
+      "p50_ms": 167.11760000907816,
+      "limit_ms": 250,
+      "passed": true
+    },
+    "cancel": {
+      "samples": 15,
+      "limit_ms": 50,
+      "maximum_last_block_ms": 0.8412000024691224,
+      "passed": true
+    },
+    "stress": {
+      "seconds": 241.6720000000205,
+      "iterations": 126,
+      "assessment": {
+        "acceptance": false,
+        "extension_required": false,
+        "note": "240-second development retest; formal 20-30-minute policy is not assessed"
+      },
+      "policy_samples": [
+        [
+          1.5160000000032596,
+          2644758528,
+          5129771008
+        ],
+        [
+          3.2339999999967404,
+          2644918272,
+          5129771008
+        ],
+        [
+          5.73399999999674,
+          2645278720,
+          5129771008
+        ],
+        [
+          6.98399999999674,
+          2647269376,
+          5129771008
+        ],
+        [
+          8.53100000001723,
+          2648100864,
+          5129771008
+        ],
+        [
+          10.21899999998277,
+          2648514560,
+          5129771008
+        ],
+        [
+          11.96899999998277,
+          2648829952,
+          5129771008
+        ],
+        [
+          13.76600000000326,
+          2648965120,
+          5129771008
+        ],
+        [
+          15.875,
+          2649767936,
+          5129771008
+        ],
+        [
+          17.98399999999674,
+          2650386432,
+          5129771008
+        ],
+        [
+          20.60899999999674,
+          2650619904,
+          5129771008
+        ],
+        [
+          22.98399999999674,
+          2650619904,
+          5129771008
+        ],
+        [
+          24.56199999997625,
+          2650619904,
+          5129771008
+        ],
+        [
+          26.18699999997625,
+          2650619904,
+          5129771008
+        ],
+        [
+          28.64100000000326,
+          2650619904,
+          5129771008
+        ],
+        [
+          30.42200000002049,
+          2650619904,
+          5129771008
+        ],
+        [
+          33.03100000001723,
+          2650607616,
+          5129771008
+        ],
+        [
+          35.32799999997951,
+          2650607616,
+          5129771008
+        ],
+        [
+          36.75,
+          2650615808,
+          5129771008
+        ],
+        [
+          38.29700000002049,
+          2650398720,
+          5129771008
+        ],
+        [
+          40.25,
+          2650607616,
+          5129771008
+        ],
+        [
+          41.32799999997951,
+          2650607616,
+          5129771008
+        ],
+        [
+          42.95299999997951,
+          2650611712,
+          5129771008
+        ],
+        [
+          46.23399999999674,
+          2650673152,
+          5129771008
+        ],
+        [
+          47.67200000002049,
+          2650456064,
+          5129771008
+        ],
+        [
+          49.93699999997625,
+          2650681344,
+          5129771008
+        ],
+        [
+          52.45299999997951,
+          2650464256,
+          5129771008
+        ],
+        [
+          53.84399999998277,
+          2650611712,
+          5129771008
+        ],
+        [
+          55.54700000002049,
+          2650644480,
+          5129771008
+        ],
+        [
+          57.76600000000326,
+          2650689536,
+          5129771008
+        ],
+        [
+          59.39100000000326,
+          2650689536,
+          5129771008
+        ],
+        [
+          61.46899999998277,
+          2650464256,
+          5129771008
+        ],
+        [
+          63.79700000002049,
+          2650464256,
+          5129771008
+        ],
+        [
+          65.03100000001723,
+          2650603520,
+          5129771008
+        ],
+        [
+          67.23399999999674,
+          2650669056,
+          5129771008
+        ],
+        [
+          69.65600000001723,
+          2650460160,
+          5129771008
+        ],
+        [
+          71.20299999997951,
+          2650615808,
+          5129771008
+        ],
+        [
+          72.68699999997625,
+          2650615808,
+          5129771008
+        ],
+        [
+          74.79700000002049,
+          2650710016,
+          5129771008
+        ],
+        [
+          76.31199999997625,
+          2650705920,
+          5129771008
+        ],
+        [
+          78.59399999998277,
+          2650939392,
+          5129771008
+        ],
+        [
+          81.07799999997951,
+          2650951680,
+          5129771008
+        ],
+        [
+          83.28100000001723,
+          2650959872,
+          5129771008
+        ],
+        [
+          85.06199999997625,
+          2650734592,
+          5129771008
+        ],
+        [
+          87.26600000000326,
+          2650959872,
+          5129771008
+        ],
+        [
+          88.5,
+          2650959872,
+          5129771008
+        ],
+        [
+          90.75,
+          2650959872,
+          5129771008
+        ],
+        [
+          92.68699999997625,
+          2650972160,
+          5129771008
+        ],
+        [
+          94.48399999999674,
+          2650972160,
+          5129771008
+        ],
+        [
+          96.93699999997625,
+          2650746880,
+          5129771008
+        ],
+        [
+          99.39100000000326,
+          2650746880,
+          5129771008
+        ],
+        [
+          100.84399999998277,
+          2650910720,
+          5129771008
+        ],
+        [
+          102.93699999997625,
+          2650746880,
+          5129771008
+        ],
+        [
+          104.93699999997625,
+          2650955776,
+          5129771008
+        ],
+        [
+          106.65600000001723,
+          2650955776,
+          5129771008
+        ],
+        [
+          108.70299999997951,
+          2650963968,
+          5129771008
+        ],
+        [
+          110.67200000002049,
+          2650963968,
+          5129771008
+        ],
+        [
+          112.57799999997951,
+          2650963968,
+          5129771008
+        ],
+        [
+          114.48399999999674,
+          2650963968,
+          5129771008
+        ],
+        [
+          116.98399999999674,
+          2650972160,
+          5129771008
+        ],
+        [
+          118.79700000002049,
+          2651041792,
+          5129771008
+        ],
+        [
+          120.95299999997951,
+          2651041792,
+          5129771008
+        ],
+        [
+          123.28100000001723,
+          2651049984,
+          5129771008
+        ],
+        [
+          125.79700000002049,
+          2651070464,
+          5129771008
+        ],
+        [
+          127.53100000001723,
+          2651299840,
+          5129771008
+        ],
+        [
+          130.0,
+          2651385856,
+          5129771008
+        ],
+        [
+          131.14100000000326,
+          2651406336,
+          5129771008
+        ],
+        [
+          133.125,
+          2651435008,
+          5129771008
+        ],
+        [
+          135.875,
+          2651623424,
+          5129771008
+        ],
+        [
+          137.2029999999795,
+          2652712960,
+          5129771008
+        ],
+        [
+          139.6720000000205,
+          2653044736,
+          5129771008
+        ],
+        [
+          142.31199999997625,
+          2653077504,
+          5129771008
+        ],
+        [
+          143.46899999998277,
+          2653077504,
+          5129771008
+        ],
+        [
+          145.125,
+          2653077504,
+          5129771008
+        ],
+        [
+          147.4529999999795,
+          2652852224,
+          5129771008
+        ],
+        [
+          148.56199999997625,
+          2652991488,
+          5129771008
+        ],
+        [
+          150.15600000001723,
+          2653069312,
+          5129771008
+        ],
+        [
+          152.65600000001723,
+          2653130752,
+          5129771008
+        ],
+        [
+          154.4220000000205,
+          2653130752,
+          5129771008
+        ],
+        [
+          156.89100000000326,
+          2653134848,
+          5129771008
+        ],
+        [
+          158.9220000000205,
+          2653138944,
+          5129771008
+        ],
+        [
+          160.26600000000326,
+          2652917760,
+          5129771008
+        ],
+        [
+          161.85899999999674,
+          2652909568,
+          5129771008
+        ],
+        [
+          164.28100000001723,
+          2653134848,
+          5129771008
+        ],
+        [
+          165.5470000000205,
+          2652909568,
+          5129771008
+        ],
+        [
+          167.06199999997625,
+          2652909568,
+          5129771008
+        ],
+        [
+          168.60899999999674,
+          2654277632,
+          5129771008
+        ],
+        [
+          169.85899999999674,
+          2654105600,
+          5129771008
+        ],
+        [
+          171.93699999997625,
+          2654322688,
+          5129771008
+        ],
+        [
+          174.0779999999795,
+          2654330880,
+          5129771008
+        ],
+        [
+          175.40600000001723,
+          2654330880,
+          5129771008
+        ],
+        [
+          177.71899999998277,
+          2654105600,
+          5129771008
+        ],
+        [
+          180.3279999999795,
+          2654474240,
+          5129771008
+        ],
+        [
+          181.73399999999674,
+          2654494720,
+          5129771008
+        ],
+        [
+          184.375,
+          2655567872,
+          5129771008
+        ],
+        [
+          187.06199999997625,
+          2656497664,
+          5129771008
+        ],
+        [
+          188.26600000000326,
+          2656509952,
+          5129771008
+        ],
+        [
+          189.5,
+          2656358400,
+          5129771008
+        ],
+        [
+          191.2029999999795,
+          2656542720,
+          5129771008
+        ],
+        [
+          192.40600000001723,
+          2656813056,
+          5129771008
+        ],
+        [
+          193.98399999999674,
+          2656817152,
+          5129771008
+        ],
+        [
+          195.93699999997625,
+          2657046528,
+          5129771008
+        ],
+        [
+          198.34399999998277,
+          2657456128,
+          5129771008
+        ],
+        [
+          200.98399999999674,
+          2657513472,
+          5129771008
+        ],
+        [
+          203.5,
+          2657517568,
+          5129771008
+        ],
+        [
+          204.93699999997625,
+          2657517568,
+          5129771008
+        ],
+        [
+          206.78100000001723,
+          2657292288,
+          5129771008
+        ],
+        [
+          208.8279999999795,
+          2657501184,
+          5129771008
+        ],
+        [
+          210.35899999999674,
+          2657296384,
+          5129771008
+        ],
+        [
+          211.76600000000326,
+          2657452032,
+          5129771008
+        ],
+        [
+          214.59399999998277,
+          2657521664,
+          5129771008
+        ],
+        [
+          216.31199999997625,
+          2657521664,
+          5129771008
+        ],
+        [
+          218.31199999997625,
+          2657525760,
+          5129771008
+        ],
+        [
+          220.28100000001723,
+          2657529856,
+          5129771008
+        ],
+        [
+          221.96899999998277,
+          2657312768,
+          5129771008
+        ],
+        [
+          223.9220000000205,
+          2657505280,
+          5129771008
+        ],
+        [
+          226.4529999999795,
+          2657538048,
+          5129771008
+        ],
+        [
+          227.75,
+          2657312768,
+          5129771008
+        ],
+        [
+          229.78100000001723,
+          2657521664,
+          5129771008
+        ],
+        [
+          231.34399999998277,
+          2657533952,
+          5129771008
+        ],
+        [
+          232.7029999999795,
+          2657533952,
+          5129771008
+        ],
+        [
+          234.48399999999674,
+          2657533952,
+          5129771008
+        ],
+        [
+          236.5,
+          2657542144,
+          5129771008
+        ],
+        [
+          238.09399999998277,
+          2657542144,
+          5129771008
+        ],
+        [
+          239.6720000000205,
+          2657542144,
+          5129771008
+        ],
+        [
+          241.6720000000205,
+          2657542144,
+          5129771008
+        ]
+      ]
+    },
+    "memory": {
+      "status": "sampled-not-accepted",
+      "observations": 1760,
+      "maximum_start_interval_s": 0.561204,
+      "maximum_acquisition_s": 0.319978,
+      "no_owned_gpu_counter_samples": 22,
+      "errors": [],
+      "sampled_peaks": {
+        "dedicated_bytes": 7243296768,
+        "shared_bytes": 289026048,
+        "total_committed_bytes": 7534075904
+      },
+      "processes": [
+        {
+          "ProcessId": 12572,
+          "ParentProcessId": 53536,
+          "Name": "python.exe",
+          "CreationDate": "/Date(1792737989944)/"
+        },
+        {
+          "ProcessId": 53104,
+          "ParentProcessId": 12572,
+          "Name": "powershell.exe",
+          "CreationDate": "/Date(1792737990762)/"
+        },
+        {
+          "ProcessId": 10380,
+          "ParentProcessId": 53104,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792737990771)/"
+        },
+        {
+          "ProcessId": 4204,
+          "ParentProcessId": 12572,
+          "Name": "node.exe",
+          "CreationDate": "/Date(1792737990774)/"
+        },
+        {
+          "ProcessId": 340,
+          "ParentProcessId": 4204,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792737990779)/"
+        },
+        {
+          "ProcessId": 9744,
+          "ParentProcessId": 4204,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792737991157)/"
+        },
+        {
+          "ProcessId": 44636,
+          "ParentProcessId": 9744,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792737991162)/"
+        },
+        {
+          "ProcessId": 45180,
+          "ParentProcessId": 4204,
+          "Name": "node.exe",
+          "CreationDate": "/Date(1792737991594)/"
+        },
+        {
+          "ProcessId": 42192,
+          "ParentProcessId": 45180,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792737991600)/"
+        },
+        {
+          "ProcessId": 19420,
+          "ParentProcessId": 45180,
+          "Name": "esbuild.exe",
+          "CreationDate": "/Date(1792737991874)/"
+        },
+        {
+          "ProcessId": 28600,
+          "ParentProcessId": 4204,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792737992154)/"
+        },
+        {
+          "ProcessId": 45992,
+          "ParentProcessId": 28600,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792737992199)/"
+        },
+        {
+          "ProcessId": 32776,
+          "ParentProcessId": 28600,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792737992210)/"
+        },
+        {
+          "ProcessId": 25724,
+          "ParentProcessId": 28600,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792737992223)/"
+        },
+        {
+          "ProcessId": 28480,
+          "ParentProcessId": 12572,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792738052031)/"
+        },
+        {
+          "ProcessId": 20616,
+          "ParentProcessId": 12572,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792738113478)/"
+        }
+      ],
+      "adapters": [
+        "luid_0x00000000_0x0000BE91_phys_0"
+      ],
+      "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+    },
+    "nemu_memory_upper_bound_bytes": 7532322816,
+    "memory_evidence_available": true,
+    "rss_delta_mib": 12.19140625,
+    "torch_allocated_first_last": [
+      5129771008,
+      5129771008
+    ]
+  },
+  "codec_pcm_parity": {
+    "eager": {
+      "zh": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "en": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "ja": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      }
+    },
+    "fixed2": {
+      "zh": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": false
+      },
+      "en": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": false
+      },
+      "ja": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": false
+      }
+    },
+    "separate16": {
+      "zh": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "en": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "ja": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      }
+    },
+    "shared16": {
+      "zh": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "en": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "ja": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      }
+    },
+    "shared4": {
+      "zh": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "en": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "ja": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      }
+    },
+    "shared8": {
+      "zh": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "en": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      },
+      "ja": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": true
+      }
+    },
+    "sync2": {
+      "zh": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": false
+      },
+      "en": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": false
+      },
+      "ja": {
+        "codec_equal_eager": true,
+        "pcm_equal_eager_same4": false
+      }
+    }
+  },
+  "fixed2_parity": {
+    "zh": {
+      "codec_equal": true,
+      "pcm_equal": true
+    },
+    "en": {
+      "codec_equal": true,
+      "pcm_equal": true
+    },
+    "ja": {
+      "codec_equal": true,
+      "pcm_equal": true
+    }
+  },
+  "pcm_comparison_note": "PCM requires identical chunk boundaries. sync2/fixed2 vs eager4 differs by design; use fixed2_parity for the paired two-frame comparison."
+}

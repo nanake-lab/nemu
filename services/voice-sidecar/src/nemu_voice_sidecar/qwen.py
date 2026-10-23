@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from contextlib import nullcontext
+from concurrent.futures import ThreadPoolExecutor
 import gc
 import importlib
 import importlib.metadata
@@ -44,6 +45,7 @@ class QwenEngine:
         self.last_timing: dict[str, object] = {}
         self.generation_limit = 512
         self.decode_stream: Any = None
+        self.decode_executor: ThreadPoolExecutor | None = None
 
     def health(self) -> dict[str, object]:
         vram = None
@@ -109,7 +111,8 @@ class QwenEngine:
         if os.getenv("NEMU_TTS_CUDA_GRAPH") == "1" and self.graphs is None:
             with self.torch.inference_mode():
                 try:
-                    self.graphs = ForwardGraphs(self.model, self.torch, generation_length=self.generation_limit)
+                    self.graphs = ForwardGraphs(self.model, self.torch, generation_length=self.generation_limit,
+                        frames_per_request=int(os.getenv("NEMU_TTS_GRAPH_FRAMES", "16")))
                 except Exception:
                     self.model = None
                     raise
@@ -131,7 +134,7 @@ class QwenEngine:
             if not isinstance(exc, oom) or self.variant != "1.7B" or self.measure_exact_variant:
                 raise
         # The failed generation frame (and its CUDA traceback) is gone here.
-        self.decode_stream = None
+        self.close_decoder()
         self.graphs = None
         self.model = None
         self.prompts.clear()
@@ -144,6 +147,13 @@ class QwenEngine:
             # Never replay a sentence whose beginning has already been emitted.
             raise RuntimeError("TTS_PARTIAL_CUDA_OOM")
         self._stream(request, reference, cancel, emit)
+
+    def close_decoder(self) -> None:
+        """Release the single decoder lane only after its current request exits."""
+        if self.decode_executor is not None:
+            self.decode_executor.shutdown(wait=True)
+            self.decode_executor = None
+        self.decode_stream = None
 
     def _stream(self, request: Request, reference: Reference, cancel: Event,
                 emit: Callable[[bytes], None]) -> None:
@@ -190,7 +200,9 @@ class QwenEngine:
         if os.getenv("NEMU_TTS_ASYNC_DECODE") == "1":
             if self.decode_stream is None:
                 self.decode_stream = torch.cuda.Stream()
-            worker = DecodeWorker(torch, decode, cancel, stream=self.decode_stream)
+            if self.decode_executor is None:
+                self.decode_executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="tts-codec-decode")
+            worker = DecodeWorker(torch, decode, cancel, stream=self.decode_stream, executor=self.decode_executor)
 
         def flush() -> None:
             nonlocal scheduled

@@ -33,7 +33,10 @@ class Step:
 
 
 class ForwardGraphs:
-    def __init__(self, model: Any, torch: Any, max_length: int = 256, generation_length: int = 512) -> None:
+    def __init__(self, model: Any, torch: Any, max_length: int = 256, generation_length: int = 512,
+                 frames_per_request: int = 16) -> None:
+        if frames_per_request not in (4, 8, 16):
+            raise ValueError("INVALID_GRAPH_FRAME_BUDGET")
         if any(importlib.metadata.version(package) != expected for package, expected in (
             ("qwen-tts", "0.1.1"), ("transformers", "4.57.3"), ("torch", "2.10.0+cu128"))):
             raise RuntimeError("GRAPH_API_VERSION_MISMATCH")
@@ -44,7 +47,7 @@ class ForwardGraphs:
         self.original_talker = self.inner.forward
         self.original_predictor = self.predictor.forward
         self.graph_budget = 48
-        self.frames_per_request = 16
+        self.frames_per_request = frames_per_request
         self.request_graph_end = 0
         self.length = max_length
         self.generation_length = generation_length
