@@ -1,8 +1,8 @@
 # P5-22 A1 修订报告
 
-## 结果与位置
+## 当前状态
 
-已修复复审针对 0dc5e87 的唯一新增代码阻塞 A1；本机验收完成，整体交付部分完成（见 BLOCKED.md：Windows runner 离线，用户暂时无法启动）。审查意见：https://github.com/nanake-lab/nemu/pull/57#issuecomment-6342345330 。独立会话审查及用户批准仍待完成；PR 保持草稿及 needs-user，执行者不合并。
+**完成。** A1 修复经用户另开的 Codex 新会话[复审通过](https://github.com/nanake-lab/nemu/pull/57#issuecomment-6360980179)，按 2026-10-23 规则代替 Claude 审查要求；Ubuntu 与 Windows CI 均通过，原 runner 离线阻塞已解除。用户已于 2026-10-23 合并 #57，合并即批准契约、主动边界候选和 V2-51–54。最终完成证据见 REPORT.md 和 BLOCKED.md。原 A1 问题来源：https://github.com/nanake-lab/nemu/pull/57#issuecomment-6342345330 。下文保留修复与实测记录。
 
 工作区已从 D:\Dev\nemu-p522 迁到用户指定的 D:\Dev\nemu-wt\P5-22，保留同一任务分支。已合并最新 origin/main=876cff7211389f7058668dfb2b9592634d517abc（原先落后的 #63、#58 两个提交），合并提交 870ead6。本轮检查在合并后执行。历史证据仍保留当时的原始路径，未改写。
 
@@ -70,12 +70,12 @@
 
 针对两个新增 A1 向量又独立调用三语言探针，完整 value/规范字节/Protobuf/摘要与冻结预期逐项相同，0 差异；见 revision-2-resource-vectors.json / .log。复现：`python reports/P5-22/verify-resource-vectors.py reports/P5-22/<新文件>.json`。该证据与 TypeScript 资源→wire→冻结字节测试相连，证明实际资源投影保留这些条目，未只验证直接 wire 输入。
 
-CI 的最终 head、结果和链接以 PR 回复记录为准；全部验收完成前保持草稿。
+[Ubuntu CI 39910674806](https://github.com/nanake-lab/nemu/actions/runs/39910674806) 与 [Windows CI 39928691322](https://github.com/nanake-lab/nemu/actions/runs/39928691322) 均 success，受测 head 为 a57c8b13e774a4470f0e1529c200d9fce6567323。用户合并提交为 b6eb8721b420b4aa168e0c27789f63307959f84c。
 
-修复代码提交 fc5f6dab4d53dd673b0906844ecb66e5d231eb0c；Windows run 39910022507 因 runner 离线排队，用户明确暂时无法启动，未记为通过。本轮结尾的文档提交只记录这一阻塞，不修改该受测代码。
+修复代码提交 fc5f6dab4d53dd673b0906844ecb66e5d231eb0c；早期 Windows 作业曾因 runner 离线排队，当时未记为通过。后续上述最终 Windows CI 已通过，阻塞已解除；原失败/排队记录保留，不改写为成功。
 
 ## 限制与下一步
 
 无 GPU、用户正式或排练存储访问；本卡不签发后续成长、主动调度或社交执行运行时验收。合并 main 带入的 core-store 测试只使用其合成临时存储。
 
-完成本轮验收后在 PR 回复「请审查」并停下，由用户交给另开的 Codex 会话；不操作浏览器或其他应用请求审查，不联系其他执行者，不自行合并。
+本卡审查、CI 和用户批准均已完成。本次只更新报告，开收尾 PR 后停下；不操作浏览器或其他应用，不联系其他执行者，不修改代码或认领下一张卡。

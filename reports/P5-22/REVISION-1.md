@@ -1,8 +1,8 @@
 # P5-22 首轮审查修订
 
-## 结果
+## 当前状态
 
-Claude 首轮审查的 B1、B2、D1 已修改，本机 26 项检查全部通过；PR #57 仍需 Claude 复审及用户批准，执行者不合并。
+**完成。** B1、B2、D1 已在前轮关闭，后续 A1 经用户另开的 Codex 新会话[复审通过](https://github.com/nanake-lab/nemu/pull/57#issuecomment-6360980179)，按 2026-10-23 规则代替 Claude 审查要求。Ubuntu 与 Windows CI 均通过，用户已于 2026-10-23 合并 #57，合并即批准契约、主动边界候选和 V2-51–54。当前完成状态及最终 CI 链接见 REPORT.md；下文保留本轮修订的实现及验收记录。
 
 审查来源：https://github.com/nanake-lab/nemu/pull/57#issuecomment-6341178269 。工作目录 D:\Dev\nemu-p522。已 fetch 并 merge origin/main=47ee2845c4731969242fe0a809ccc7637e1cf55c（合并提交 4658996），全部检查在合并后完成；提交前再次 fetch/merge 为 Already up to date。
 
@@ -31,7 +31,7 @@ Claude 首轮审查的 B1、B2、D1 已修改，本机 26 项检查全部通过�
 | Rust fmt / clippy -D warnings / workspace tests | 通过 | revision-1-checks/rust-*.log |
 | 契约工具及三个 worker 的 ruff / mypy strict / pytest | 全通过 | revision-1-checks/contract-*.log、{irl,drive,model-adapter}-*.log |
 | 旧字节往返与哈希 | 三语言各 1,777 查询、460 拒绝、0 差异 | revision-1-frozen-byte-comparison.json / .log |
-| CI | 最终 head 的 Ubuntu/Windows 以 PR Checks 及修订评论为准，全部完成前保持草稿 | https://github.com/nanake-lab/nemu/pull/57/checks |
+| CI | 最终 head 的 Ubuntu/Windows 均通过，用户已合并；链接见 REPORT.md | https://github.com/nanake-lab/nemu/pull/57/checks |
 
 原首轮施工失败和历史证据全部保留。本轮中间输出在 revision-1-targeted.log、revision-1-targeted-2.log，最终以 revision-1-checks 为准；未放宽验收或删除断言。
 
@@ -55,7 +55,7 @@ Claude 首轮审查的 B1、B2、D1 已修改，本机 26 项检查全部通过�
 
 ## 配套修改
 
-以下与契约同交 Claude 复审；没有改变任何 wire 编码规则。
+以下配套修改与契约一并纳入交叉审查；最终按 2026-10-23 规则由新 Codex 会话复审通过，没有改变任何 wire 编码规则。
 
 | 文件 | 必须修改的原因 |
 | --- | --- |
@@ -67,17 +67,17 @@ Claude 首轮审查的 B1、B2、D1 已修改，本机 26 项检查全部通过�
 | core-types/src/generated.rs、workers/*/generated/echo、packages/contracts/src/generated/echo | 从同一源生成，含新增资源接口与浏览器模块 |
 | reports/P5-22/run-checks.ps1、verify-frozen.py | 纳入新工具检查、覆盖率按证据目录保存、支持指定被审查 head 做比较 |
 
-generate.py 415 行：保留既有解析和多语言输出入口，新增资源接口生成拆到 generate_browser.py；未为行数拆散既有解析。TypeScript runtime 原 >400 行理由见 REPORT.md，本轮仅增加元数据类型。新增实现模块均小于 400 行，生成产物大小由 IDL 决定。
+generate.py 415 行：保留既有解析和多语言输出入口，新增资源接口生成拆到 generate_browser.py；未为行数拆散既有解析。TypeScript runtime 原已超过 400 行，集中承载双编解码与预算校验以保持单一参考实现，本轮仅增加元数据类型。新增实现模块均小于 400 行，生成产物大小由 IDL 决定。
 
 ## 规格对照、依赖和边界
 
-逐条规格对应见 docs/traceability/P5-22.md；V2-52–54 补充在 diff-register.md 末尾，仍待用户批准。无新增依赖；未使用 GPU，未打开用户正式/排练谱系，未签发后续卡的运行时或人格验收。
+逐条规格对应见 docs/traceability/P5-22.md；V2-52–54 补充在 diff-register.md 末尾，已随用户合并 #57 获批。无新增依赖；未使用 GPU，未打开用户正式/排练谱系，未签发后续卡的运行时或人格验收。
 
 继承的非阻塞 C1(a) 仍在：单向 superseded 声明尚可绕过部分后继检查；本轮不扩大到历史 supersession 治理，不声称已解决。
 
 ## 待用户确认与下一步
 
-- [ ] Claude 复审 B1/B2/D1、CONTRACTS、IDL、生成器/校验器及黄金字节证据通过。
-- [ ] 用户批准本 PR 契约、边界候选与差异登记后 squash 合并。
+- [x] 交叉审查完成：B1/B2/D1 已关闭；A1 经新 Codex 会话复审通过，按 2026-10-23 规则代替 Claude 审查。
+- [x] 用户已合并 #57，批准契约、主动边界候选和 V2-51–54。
 
-全部验收及 CI 完成后转可审查并明确请 Claude 复审。执行者不合并。
+本卡已完成；本次仅收尾报告，按用户要求开 PR 后停下，不认领下一张卡。
