@@ -10,7 +10,7 @@ import benchmark  # noqa: E402
 
 
 def test_rss_requires_windows_without_spawning_a_process(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(os, "name", "posix")
+    monkeypatch.setattr(sys, "platform", "linux")
     monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: pytest.fail("spawned subprocess"))
     with pytest.raises(RuntimeError, match="requires Windows"):
         benchmark.rss()

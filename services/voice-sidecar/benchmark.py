@@ -17,6 +17,7 @@ from pathlib import Path
 import shutil
 import statistics
 import subprocess
+import sys
 import time
 from typing import Any, cast
 from collections.abc import Callable, Coroutine, Iterator
@@ -43,7 +44,7 @@ BASE = {
 
 def rss() -> int:
     """Read this process' physical working set without spawning PowerShell."""
-    if os.name != "nt":
+    if sys.platform != "win32":
         raise RuntimeError("formal RSS measurement requires Windows")
 
     class ProcessMemoryCountersEx(ctypes.Structure):
@@ -248,10 +249,10 @@ def main(measurement: Callable[[argparse.Namespace, Any, Path], Coroutine[Any, A
                                     str(Path(__file__).with_name("bounded_memory_watch.ps1")),
                                     "-OutputPath", str(destination / "memory.jsonl"),
                                     "-StopPath", str(memory_stop), "-RootProcessIds", str(os.getpid())],
-                                   stdout=mlog, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)
+                                   stdout=mlog, stderr=subprocess.STDOUT, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         render = subprocess.Popen([shutil.which("node") or "node", str(args.probe / "render_load.mjs"),
                                    str(ready), str(render_stop)], stdout=rlog, stderr=subprocess.STDOUT,
-                                  creationflags=subprocess.CREATE_NO_WINDOW)
+                                  creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         result: dict[str, object] = {"variant": args.variant, "status": "failed"}
         try:
             deadline = time.monotonic() + 90
