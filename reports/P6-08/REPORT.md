@@ -3,6 +3,8 @@
 ## 当前状态
 **实现及用户限定的本机验收完成，等待审查与 CI。** 固定合成工况 CPU 通过；Windows 10 专注识别按用户决定改为只读探针报告、非必过项；supervisor 单独 6/6、当前全量 564/564 通过，原失败保留。PR #75 保留 needs-user（ADR 0023）；按用户要求转为可审查、写「请审查」后停止，不合并、不取下一张卡。工作区 `D:\Dev\nemu-wt\P6-08`，分支 `task/P6-08-desktop-sense`，基线 `0b5412e`。实时 CI 以 PR 的当前提交检查为准，不把本机通过或旧提交 CI 当成当前 CI 全绿。
 
+收尾已 fetch 并 merge 最新 `origin/main` 的 `7f962b2`（含 `9d236d6` CI 超时调整及 P5-33 研究报告）。规则、任务卡和必读文档无新增差异；未实现 P5-33 的缺席或预期事件。合并后的 `7e05796` 上串行重跑 lint、typecheck、全部 564 项测试及完整构建，退出码均为 0；随后只有报告/证据变更。
+
 ## 交付物
 
 - `packages/desktop-sense/src/`：单模块 Win32 FFI，PMv2 查询与恢复、DWM 窗口/任务栏/屏幕平台、前景遮挡裁剪、稳定平台 ID、插入点、公开通知状态、会议特征、空闲边沿、节流与清理。
@@ -16,8 +18,8 @@
 | 命令或检查 | 结果 | 证据（evidence/ 下） |
 | --- | --- | --- |
 | `pnpm test:desktop-sense` | 6 文件、30 测试通过 | unit-focus-20261024.txt |
-| `pnpm lint`、`pnpm typecheck` | 当前实现通过 | lint-close-20261024.txt、typecheck-close-20261024.txt |
-| `pnpm build`；最终桌面 build | 通过；保留现有 Zod PURE 注释告警 | build-final.txt、desktop-build-final.txt |
+| `pnpm lint`、`pnpm typecheck` | 同步最新 main 后通过 | lint-synced-20261024.txt、typecheck-synced-20261024.txt |
+| `pnpm build` | 同步最新 main 后完整构建通过；保留现有 Zod PURE 注释告警 | build-synced-20261024.txt |
 | `pnpm sense:geometry …/native-geometry-current.json` | 8 个原生合成窗口，100/125/150/200% 物理尺寸、两个合成显示器范围，边误差均 0 px | native-geometry-current.json/.txt |
 | 勿扰桩矩阵 | 全屏/PPT/会议/通知 busy 各 10 次断言通过；不等于真实专注开关验收 | semantics.test.ts、unit-28.txt |
 | 隐私/边沿/清理 | 未授权不读取标题，撤回不附带标题、不冒充会议结束；几何不进总线；锁屏停采样；监听和定时器清零 | engine.test.ts、sense/index.test.ts |
@@ -25,7 +27,7 @@
 | 接线前后退出 / scratch 设置保护 | 见下表；6 次退出码 0，2 秒后无测试子进程残留；当前 scratch 三次 setter 调用数全部 0，基线三次为 1（拦截不透传） | package-smoke-06.json/.txt |
 | 首轮全量 `pnpm test` | 当时 559/559 通过 | test-01.txt |
 | 原全量失败（保留） | **559/560，失败**：supervisor.test.ts:64，restartCount=0，期望 ≥1；未改该文件/阈值 | test-final.txt |
-| supervisor 阻塞核验 / 当前全量 | 用户通知空闲且 CPU 测完后，原测试独立 6/6；当时全量 562/562；新增探针测试后当前 **564/564** | supervisor-isolated-20261024.txt、test-quiet-20261024.txt、test-close-20261024.txt |
+| supervisor 阻塞核验 / 当前全量 | 用户通知空闲且 CPU 测完后，原测试独立 6/6；当时全量 562/562；新增探针测试并同步最新 main 后当前 **564/564** | supervisor-isolated-20261024.txt、test-quiet-20261024.txt、test-synced-20261024.txt |
 | CPU ≤1%，登记工况 | 原始单核三次 **0.468334%、0.128333%、0.494988%**，全部 ≤1%；空载均 0%，不扣除空载替代判据；原 2.339468% 失败并列保留 | cpu-quiet-20261024T081456Z/、CPU-RESULTS-20261024.md |
 | Windows 10 专注只读探针（非必过） | build 19045，返回码0、4字节、值0，按映射 inactive；未切换设置验证。Windows 11 仅公开读分支，桩验证，不冒充实机 | focus-probe-19045-20261024.json/.txt、FOCUS-SOURCE.md、ADR 0023 |
 | 登录项只读检查 | 名称/命令/快捷方式目标匹配 Electron/Nemu 的 Run 与 Startup 条目均 0；没有删除。只有键级时间，不能归因历史 CI/e2e | startup-audit-20261024.json、STARTUP-AUDIT-20261024.md |
