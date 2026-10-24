@@ -1,0 +1,33 @@
+{
+  "session_id": "01a15d26-cb8d-7361-abc7-a9a3b9d44b6d",
+  "completed_command_count": 694,
+  "records": [
+    {
+      "session_line": 8515,
+      "timestamp": "2026-10-23T03:11:06.164Z",
+      "categories": [
+        "environment_api_write"
+      ],
+      "command": "C:\\Users\\nanake\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe -Command $vars=@{UV_CACHE_DIR='D:\\Dev\\cache\\uv'; UV_PYTHON_INSTALL_DIR='D:\\Dev\\cache\\uv-python'; npm_config_cache='D:\\Dev\\cache\\npm'; PNPM_STORE_DIR='D:\\Dev\\cache\\pnpm'; HF_HOME='D:\\Dev\\cache\\huggingface'; TORCH_HOME='D:\\Dev\\cache\\torch'; TORCHINDUCTOR_CACHE_DIR='D:\\Dev\\cache\\torchinductor'; TRITON_CACHE_DIR='D:\\Dev\\cache\\triton'; CARGO_TARGET_DIR='D:\\Dev\\cache\\p4-02\\cargo-target'}; foreach($entry in $vars.GetEnumerator()){New-Item -ItemType Directory -Force $entry.Value | Out-Null; [Environment]::SetEnvironmentVariable($entry.Key,$entry.Value,'User')}; Get-Content 'C:/Users/nanake/.codex/worktrees/p4-02-tts/nemu/services/voice-sidecar/.venv/pyvenv.cfg'; Get-ChildItem 'C:/Users/nanake/AppData/Local/uv/cache' -Force -ErrorAction SilentlyContinue | Select-Object Name; Get-Process robocopy -ErrorAction SilentlyContinue | Select-Object Id,CPU",
+      "exit_code": 1
+    },
+    {
+      "session_line": 10816,
+      "timestamp": "2026-10-23T15:50:00.077Z",
+      "categories": [
+        "environment_api_write"
+      ],
+      "command": "C:\\Users\\nanake\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe -Command $existing=[Environment]::GetEnvironmentVariable('CARGO_TARGET_DIR','User')\nif ($existing -ne 'D:\\Dev\\cache\\p4-02\\cargo-target') { throw \"Unexpected user CARGO_TARGET_DIR value: $existing\" }\n[Environment]::SetEnvironmentVariable('CARGO_TARGET_DIR',$null,'User')\n[pscustomobject]@{name='CARGO_TARGET_DIR';previousUserValue=$existing;currentUserValue=[Environment]::GetEnvironmentVariable('CARGO_TARGET_DIR','User');currentToolProcessValue=[Environment]::GetEnvironmentVariable('CARGO_TARGET_DIR','Process');utc=[DateTime]::UtcNow.ToString('o');runningProcessesStopped=$false;runnerChanged=$false} | ConvertTo-Json | Tee-Object D:\\Dev\\cache\\p4-02\\cargo-user-revert-20261023.json\n$session='C:\\Users\\nanake\\.codex\\sessions\\2026\\10\\21\\rollout-2026-10-21T14-29-46-01a15d26-cb8d-7361-abc7-a9a3b9d44b6d.jsonl'\nGet-Item -LiteralPath $session | Select-Object FullName,Length,LastWriteTime | ConvertTo-Json\nrg -n 'SetEnvironmentVariable|setx |git config --global|Set-ItemProperty|New-ItemProperty|reg add|registry::' $session | Select-Object -First 12",
+      "exit_code": 0
+    },
+    {
+      "session_line": 10859,
+      "timestamp": "2026-10-23T15:53:15.260Z",
+      "categories": [
+        "registry_write"
+      ],
+      "command": "C:\\Users\\nanake\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe -Command $key='HKCU:\\Environment'\n$current=[Environment]::GetEnvironmentVariable('CARGO_TARGET_DIR','User')\nif ($current -notin @('', $null, 'D:\\Dev\\cache\\p4-02\\cargo-target')) { throw 'Unexpected user Cargo value' }\nif ((Get-Item -LiteralPath $key).GetValueNames() -contains 'CARGO_TARGET_DIR') {\n  Remove-ItemProperty -LiteralPath $key -Name CARGO_TARGET_DIR\n}\n$verification=[ordered]@{utc=[DateTime]::UtcNow.ToString('o');registryValuePresent=((Get-Item -LiteralPath $key).GetValueNames() -contains 'CARGO_TARGET_DIR');currentUserValue=[Environment]::GetEnvironmentVariable('CARGO_TARGET_DIR','User');note='SetEnvironmentVariable left an empty value; removed only the authorized HKCU Environment value explicitly. Running process environment unchanged.';processValue=[Environment]::GetEnvironmentVariable('CARGO_TARGET_DIR','Process');processesStopped=$false}\n$verification | ConvertTo-Json | Tee-Object D:\\Dev\\cache\\p4-02\\cargo-user-revert-verify-20261023.json\nif ($verification.registryValuePresent) { throw 'Cargo user value still exists' }",
+      "exit_code": 0
+    }
+  ]
+}

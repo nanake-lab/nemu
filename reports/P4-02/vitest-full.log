@@ -1,0 +1,64 @@
+$ vitest run
+
+ RUN  v5.0.4 C:/Users/nanake/.codex/worktrees/p4-02-tts/nemu
+
+ ❯ packages/contracts/src/schemas.test.ts (115 tests | 2 failed) 175ms
+   × every exported schema has a positive and negative fixture 15ms
+   × ttsRequestSchema accepts a valid example and rejects invalid data 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/contracts/src/schemas.test.ts > every exported schema has a positive and negative fixture
+AssertionError: expected [ 'anchorSchema', …(37) ] to deeply equal [ 'anchorSchema', …(36) ]
+
+- Expected
++ Received
+
+@@ -34,6 +34,7 @@
+    "rectSchema",
+    "requestableMotionIdSchema",
+    "speechModeSchema",
+    "stageMessageSchema",
+    "toolTierSchema",
++   "ttsRequestSchema",
+  ]
+
+ ❯ packages/contracts/src/schemas.test.ts:251:48
+    249| );
+    250| test('every exported schema has a positive and negative fixture', () =…
+    251|   expect(schemas.map(([name]) => name).sort()).toEqual(Object.keys(sam…
+       |                                                ^
+    252| });
+    253| test.each(schemas)('%s accepts a valid example and rejects invalid dat…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/contracts/src/schemas.test.ts > ttsRequestSchema accepts a valid example and rejects invalid data
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/contracts/src/schemas.test.ts:254:51
+    252| });
+    253| test.each(schemas)('%s accepts a valid example and rejects invalid dat…
+    254|   expect(schema.safeParse(samples[name]).success).toBe(true);
+       |                                                   ^
+    255|   expect(schema.safeParse(null).success).toBe(false);
+    256|   expect(schema.safeParse({ unexpected: true }).success).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 31 passed (32)
+      Tests  2 failed | 451 passed (453)
+   Start at  14:48:31
+   Duration  4.88s (import 39%, tests 34%, transform 26%, worker 1%)
+
+    Isolate  32 workers spawned · ~272ms startup each (spawn + environment, per file)
+             at least ~308ms faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Test failed. See above for more details.

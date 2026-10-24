@@ -1,0 +1,209 @@
+Scope: all 14 workspace projects
+✓ Lockfile passes supply-chain policies (verified 4m ago)
+Lockfile is up to date, resolution step is skipped
+Done in 61ms using pnpm v12.11.2
+$ eslint .
+$ tsc --noEmit
+$ vitest run
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P4-02
+
+
+ Test Files  48 passed (48)
+      Tests  546 passed (546)
+   Start at  23:12:51
+   Duration  5.96s (import 49%, transform 29%, tests 20%, worker 2%)
+
+    Isolate  48 workers spawned · ~457ms startup each (spawn + environment, per file)
+             at least ~1.00s faster with isolate: false — reuses workers across files instead of one per file
+
+$ pnpm -r build
+packages/desktop-sense build$ tsc -p tsconfig.json
+packages/contracts build$ tsc -p tsconfig.json
+packages/log build$ tsc -p tsconfig.json
+executors/codex-bridge build$ tsc -p tsconfig.json
+packages/log build: Done
+packages/terminal build$ tsc -p tsconfig.json
+packages/desktop-sense build: Done
+spikes/stage-overlay build$ electron-vite build
+executors/codex-bridge build: Done
+packages/terminal build: Done
+packages/contracts build: Done
+packages/avatar-runtime build$ tsc -p tsconfig.json
+packages/body build$ tsc -p tsconfig.json
+apps/panel build$ vite build
+apps/panel build: vite v7.3.7 building client environment for production...
+apps/panel build: transforming...
+apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/panel build: 
+apps/panel build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/panel build: 
+apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/panel build: 
+apps/panel build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/panel build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/panel build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/panel build: 
+apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/panel build: ✓ 153 modules transformed.
+packages/body build: Done
+packages/voice build$ tsc -p tsconfig.json
+apps/panel build: rendering chunks...
+apps/panel build: computing gzip size...
+apps/panel build: dist/index.html                   0.64 kB │ gzip:   0.39 kB
+apps/panel build: dist/assets/index-ibGTfxG7.css    8.91 kB │ gzip:   2.32 kB
+apps/panel build: dist/assets/index-5_Z9JtZW.js   473.33 kB │ gzip: 125.63 kB
+apps/panel build: ✓ built in 2.66s
+apps/panel build: Done
+tools/asset-lint build$ pnpm --filter @nemu/contracts build && tsc -p tsconfig.json
+tools/asset-lint build: $ tsc -p tsconfig.json
+packages/avatar-runtime build: Done
+apps/stage build$ vite build
+spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+apps/stage build: vite v7.3.7 building client environment for production...
+spikes/stage-overlay build: transforming...
+apps/stage build: transforming...
+spikes/stage-overlay build: ✓ 1 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: out/main/index.js  8.46 kB
+spikes/stage-overlay build: ✓ built in 129ms
+spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+spikes/stage-overlay build: transforming...
+spikes/stage-overlay build: ✓ 1 modules transformed.
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: out/preload/index.cjs  1.33 kB
+spikes/stage-overlay build: ✓ built in 16ms
+spikes/stage-overlay build: vite v7.3.7 building client environment for production...
+spikes/stage-overlay build: transforming...
+apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/stage build: 
+apps/stage build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/stage build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/stage build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/stage build: 
+apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/stage build: 
+apps/stage build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/stage build: 
+apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+spikes/stage-overlay build: ✓ 8 modules transformed.
+packages/voice build: Done
+apps/desktop build$ electron-vite build
+spikes/stage-overlay build: rendering chunks...
+spikes/stage-overlay build: ../../out/renderer/index.html                    6.52 kB
+spikes/stage-overlay build: ../../out/renderer/assets/index-P4FdMocT.js  1,448.72 kB
+spikes/stage-overlay build: ✓ built in 2.43s
+apps/stage build: ✓ 182 modules transformed.
+spikes/stage-overlay build: Done
+apps/stage build: rendering chunks...
+apps/desktop build: vite v7.3.7 building ssr environment for production...
+apps/desktop build: transforming...
+apps/stage build: computing gzip size...
+apps/stage build: dist/index.html                     0.76 kB │ gzip:   0.43 kB
+apps/stage build: dist/review.html                   15.07 kB │ gzip:   3.34 kB
+apps/stage build: dist/assets/stage-j6owz3Q9.css      0.50 kB │ gzip:   0.29 kB
+apps/stage build: dist/assets/review-CW6rIG6O.css     5.07 kB │ gzip:   1.60 kB
+apps/stage build: dist/assets/stage-DDKNgBrI.js      13.14 kB │ gzip:   4.42 kB
+apps/stage build: dist/assets/review-aX1i9fjA.js     26.48 kB │ gzip:   7.99 kB
+apps/stage build: dist/assets/profiles-C9dOUGIT.js  983.33 kB │ gzip: 241.05 kB
+apps/stage build: 
+apps/stage build: (!) Some chunks are larger than 500 kB after minification. Consider:
+apps/stage build: - Using dynamic import() to code-split the application
+apps/stage build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+apps/stage build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+apps/stage build: ✓ built in 3.41s
+apps/stage build: Done
+apps/desktop build: ✓ 51 modules transformed.
+apps/desktop build: rendering chunks...
+apps/desktop build: out/main/voice.js                   21.39 kB
+apps/desktop build: out/main/index.js                   58.43 kB
+apps/desktop build: out/main/chunks/cache-DIqV0g3_.js  170.68 kB
+apps/desktop build: ✓ built in 500ms
+apps/desktop build: vite v7.3.7 building ssr environment for production...
+apps/desktop build: transforming...
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/desktop build: 
+apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/desktop build: 
+apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: ✓ 116 modules transformed.
+apps/desktop build: rendering chunks...
+apps/desktop build: out/preload/panel.cjs    0.31 kB
+apps/desktop build: out/preload/stage.cjs  376.12 kB
+apps/desktop build: ✓ built in 731ms
+apps/desktop build: vite v7.3.7 building client environment for production...
+apps/desktop build: transforming...
+tools/asset-lint build: Done
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+apps/desktop build: 
+apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+apps/desktop build: 
+apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+apps/desktop build: 
+apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+apps/desktop build: ✓ 187 modules transformed.
+apps/desktop build: rendering chunks...
+apps/desktop build: desktop/out/renderer/panel/index.html                    0.72 kB
+apps/desktop build: desktop/out/renderer/stage/index.html                    0.77 kB
+apps/desktop build: desktop/out/renderer/stage/asr-mic-worklet.js            1.37 kB
+apps/desktop build: desktop/out/renderer/assets/stage-DABzvroO.css           0.66 kB
+apps/desktop build: desktop/out/renderer/assets/panel-Bf-HAcZX.css          11.36 kB
+apps/desktop build: desktop/out/renderer/assets/proactivity-Dcg9s8G8.js    371.58 kB
+apps/desktop build: desktop/out/renderer/assets/panel-cPzMqcDv.js          698.28 kB
+apps/desktop build: desktop/out/renderer/assets/stage-DBSznvI4.js        1,557.39 kB
+apps/desktop build: ✓ built in 2.56s
+apps/desktop build: Done
+$ vitest run --config packages/contracts/vitest.config.ts --coverage
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P4-02
+      Coverage enabled with v8
+
+
+ Test Files  8 passed (8)
+      Tests  353 passed (353)
+   Start at  23:13:12
+   Duration  983ms (import 52%, transform 26%, tests 16%, worker 6%)
+
+ % Coverage report from v8
+-----------------|---------|----------|---------|---------|-------------------
+File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------------|---------|----------|---------|---------|-------------------
+All files        |     100 |    97.46 |     100 |     100 |                   
+ performance.ts  |     100 |    97.05 |     100 |     100 | 185,204,233,238   
+ queries.ts      |     100 |       90 |     100 |     100 | 32                
+-----------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 234/234 )
+Branches     : 97.46% ( 192/197 )
+Functions    : 100% ( 41/41 )
+Lines        : 100% ( 207/207 )
+================================================================================
+$ node --test tools/scaffold/transport.test.mjs
+✔ local byte transport: Windows named pipe / Unix socket (9.8703ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 92.3496
+$ pnpm --filter @nemu/contracts build && node services/voice-sidecar/export-schema.mjs --check
+$ tsc -p tsconfig.json
+$ node tools/scaffold/ci-budget.mjs
+{"runs":60,"minutesPerRun":12,"estimated":720,"allowance":2000}

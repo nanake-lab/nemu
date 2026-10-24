@@ -54,6 +54,9 @@
     "probe:p0-08:timing-summary": "node spikes/codex-app-server/src/summarize-local-breakdown.mjs",
     "probe:p0-08:resource-audit": "node spikes/codex-app-server/src/resource-surface-audit.mjs",
     "eval:asr:annotations": "tsx packages/voice/src/asr/manual.ts rescore",
+    "tts:schema": "pnpm --filter @nemu/contracts build && node services/voice-sidecar/export-schema.mjs --check",
+    "test:tts": "uv run --project services/voice-sidecar pytest services/voice-sidecar/tests -ra",
+    "tts:bench": "node services/voice-sidecar/launch-benchmark.mjs",
     "test:p205:metrics": "node --test apps/stage/test/jitter/settling-metrics.test.mjs"
   },
   "devDependencies": {

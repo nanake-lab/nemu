@@ -1,0 +1,156 @@
+{
+  "variant": "1.7B",
+  "status": "failed",
+  "error": "CODEC_PARITY_FAILED; development.json retains exact comparisons",
+  "render_exit": 0,
+  "memory_watch_exit": 0,
+  "memory": {
+    "status": "sampled-not-accepted",
+    "observations": 179,
+    "maximum_start_interval_s": 0.502458,
+    "maximum_acquisition_s": 0.261156,
+    "no_owned_gpu_counter_samples": 3,
+    "errors": [],
+    "sampled_peaks": {
+      "dedicated_bytes": 9871425536,
+      "shared_bytes": 701231104,
+      "total_committed_bytes": 10593034240
+    },
+    "processes": [
+      {
+        "ProcessId": 40696,
+        "ParentProcessId": 20600,
+        "Name": "python.exe",
+        "CreationDate": "/Date(1792592662676)/"
+      },
+      {
+        "ProcessId": 28392,
+        "ParentProcessId": 40696,
+        "Name": "powershell.exe",
+        "CreationDate": "/Date(1792592663316)/"
+      },
+      {
+        "ProcessId": 46956,
+        "ParentProcessId": 40696,
+        "Name": "node.exe",
+        "CreationDate": "/Date(1792592663327)/"
+      },
+      {
+        "ProcessId": 47176,
+        "ParentProcessId": 46956,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792592663338)/"
+      },
+      {
+        "ProcessId": 43184,
+        "ParentProcessId": 28392,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792592663338)/"
+      },
+      {
+        "ProcessId": 42424,
+        "ParentProcessId": 46956,
+        "Name": "node.exe",
+        "CreationDate": "/Date(1792592664070)/"
+      },
+      {
+        "ProcessId": 43744,
+        "ParentProcessId": 42424,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792592664076)/"
+      },
+      {
+        "ProcessId": 26332,
+        "ParentProcessId": 42424,
+        "Name": "esbuild.exe",
+        "CreationDate": "/Date(1792592664363)/"
+      },
+      {
+        "ProcessId": 28976,
+        "ParentProcessId": 46956,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792592664628)/"
+      },
+      {
+        "ProcessId": 43296,
+        "ParentProcessId": 28976,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792592664680)/"
+      },
+      {
+        "ProcessId": 18208,
+        "ParentProcessId": 28976,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792592664691)/"
+      },
+      {
+        "ProcessId": 37740,
+        "ParentProcessId": 28976,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792592664704)/"
+      },
+      {
+        "ProcessId": 44888,
+        "ParentProcessId": 40696,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792592667358)/"
+      },
+      {
+        "ProcessId": 26600,
+        "ParentProcessId": 40696,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792592701684)/"
+      },
+      {
+        "ProcessId": 46236,
+        "ParentProcessId": 40696,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792592702716)/"
+      },
+      {
+        "ProcessId": 33784,
+        "ParentProcessId": 40696,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792592708331)/"
+      },
+      {
+        "ProcessId": 45724,
+        "ParentProcessId": 40696,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792592714679)/"
+      },
+      {
+        "ProcessId": 4864,
+        "ParentProcessId": 40696,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792592722638)/"
+      },
+      {
+        "ProcessId": 47468,
+        "ParentProcessId": 40696,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792592723147)/"
+      },
+      {
+        "ProcessId": 44236,
+        "ParentProcessId": 40696,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792592725274)/"
+      },
+      {
+        "ProcessId": 7540,
+        "ParentProcessId": 40696,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792592730529)/"
+      }
+    ],
+    "adapters": [
+      "luid_0x00000000_0x0000BE91_phys_0"
+    ],
+    "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+  },
+  "nemu_memory_upper_bound_bytes": 10572656640,
+  "adr0012_limit_bytes": 8000000000,
+  "memory_evidence_available": true,
+  "vram_within_limit": false
+}

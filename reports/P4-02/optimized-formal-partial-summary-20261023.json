@@ -1,0 +1,344 @@
+{
+  "created_utc": "2026-10-23T01:24:10.306964+00:00",
+  "note": "Partial optimized runs. Stress did not reach two hours; 20-30 minute slope triggers user-approved extension. Traces and raw samples are preserved separately.",
+  "runs": [
+    {
+      "run": "gpu-optimized-0.6B-formal-retry4-bounded",
+      "variant": "0.6B",
+      "status": "failed_native_exit",
+      "error": "Windows process exit -1073741571 (0xC00000FD STATUS_STACK_OVERFLOW)",
+      "samples": {
+        "warmup": 3,
+        "latency": 60,
+        "cancel": 15,
+        "stress": 2639
+      },
+      "cancel_max_ms": 0.0,
+      "stress_seconds": 4295.527892,
+      "stress_extension_completed": false,
+      "rss_20_30_min_ols_mib_per_hour": 13103.033877535321,
+      "rss_20_30_window_samples": 380,
+      "torch_allocated_first_last_bytes": [
+        5129826304,
+        5129826304
+      ],
+      "torch_peak_allocated_bytes": 5934155264,
+      "torch_peak_reserved_bytes": 7277117440,
+      "wddm": {
+        "status": "partial_with_sampler_error",
+        "dedicated_peak_bytes": 8604368896,
+        "shared_peak_bytes": 288280576,
+        "sum_peak_bytes": 8892649472,
+        "limit_bytes": 8000000000,
+        "observations": 8715,
+        "maximum_start_interval_s": 1.919381,
+        "errors": [
+          {
+            "error": "调用已取消 ",
+            "at": "2026-10-22T23:57:06.1715289+00:00"
+          }
+        ]
+      },
+      "timing_latency_p50": {
+        "zh": {
+          "client_first_packet_p50_ms": 209.2236999887973,
+          "realtime_ratio_p50_report_only": 1.7039404601002242,
+          "engine_first_emit_p50_ms": 205.72085000458173,
+          "engine_last_emit_p50_ms": 1258.6862500174902,
+          "audio_seconds_p50": 1.8,
+          "prefill": {
+            "calls_per_request_p50": 1.0,
+            "per_call_host_ms_p50": 46.24494997551665,
+            "per_call_cuda_ms_p50": 42.10942459106445,
+            "request_host_total_ms_p50": 46.24494997551665,
+            "request_cuda_total_ms_p50": 42.10942459106445
+          },
+          "talker": {
+            "calls_per_request_p50": 22.5,
+            "per_call_host_ms_p50": 0.3496999852359295,
+            "per_call_cuda_ms_p50": 5.5214080810546875,
+            "request_host_total_ms_p50": 291.46305003087036,
+            "request_cuda_total_ms_p50": 358.9345247745514
+          },
+          "code_predictor": {
+            "calls_per_request_p50": 337.5,
+            "per_call_host_ms_p50": 0.08870003512129188,
+            "per_call_cuda_ms_p50": 0.8734719753265381,
+            "request_host_total_ms_p50": 48.58905044966377,
+            "request_cuda_total_ms_p50": 314.9548793435097
+          },
+          "decode": {
+            "calls_per_request_p50": 6.5,
+            "per_call_host_ms_p50": 81.10619997023605,
+            "per_call_cuda_ms_p50": 82.7327995300293,
+            "request_host_total_ms_p50": 537.4954500584863,
+            "request_cuda_total_ms_p50": 560.6445636749268
+          },
+          "tokenizer_decode": {
+            "calls_per_request_p50": 7.0,
+            "per_call_host_ms_p50": 80.91980003518984,
+            "per_call_cuda_ms_p50": 82.74568176269531,
+            "request_host_total_ms_p50": 541.5792500134557,
+            "request_cuda_total_ms_p50": 558.289005279541
+          },
+          "generate_and_final_decode_host_ms_p50": 1219.1082499921322
+        },
+        "en": {
+          "client_first_packet_p50_ms": 215.4967999958899,
+          "realtime_ratio_p50_report_only": 1.5443637427638333,
+          "engine_first_emit_p50_ms": 212.0252000167966,
+          "engine_last_emit_p50_ms": 1596.6110499866772,
+          "audio_seconds_p50": 2.2,
+          "prefill": {
+            "calls_per_request_p50": 1.0,
+            "per_call_host_ms_p50": 51.665699982549995,
+            "per_call_cuda_ms_p50": 47.497615814208984,
+            "request_host_total_ms_p50": 51.665699982549995,
+            "request_cuda_total_ms_p50": 47.497615814208984
+          },
+          "talker": {
+            "calls_per_request_p50": 27.5,
+            "per_call_host_ms_p50": 0.443900004029274,
+            "per_call_cuda_ms_p50": 5.700607776641846,
+            "request_host_total_ms_p50": 503.0283500382211,
+            "request_cuda_total_ms_p50": 556.0032458305359
+          },
+          "code_predictor": {
+            "calls_per_request_p50": 412.5,
+            "per_call_host_ms_p50": 0.0877000275067985,
+            "per_call_cuda_ms_p50": 0.8714240193367004,
+            "request_host_total_ms_p50": 54.7111998021137,
+            "request_cuda_total_ms_p50": 380.4912144243717
+          },
+          "decode": {
+            "calls_per_request_p50": 8.0,
+            "per_call_host_ms_p50": 80.17375000054017,
+            "per_call_cuda_ms_p50": 82.94275283813477,
+            "request_host_total_ms_p50": 604.2553999286611,
+            "request_cuda_total_ms_p50": 631.2373485565186
+          },
+          "tokenizer_decode": {
+            "calls_per_request_p50": 8.0,
+            "per_call_host_ms_p50": 80.53289997042157,
+            "per_call_cuda_ms_p50": 82.93793487548828,
+            "request_host_total_ms_p50": 623.831150092883,
+            "request_cuda_total_ms_p50": 653.3321876525879
+          },
+          "generate_and_final_decode_host_ms_p50": 1548.5189000028186
+        },
+        "ja": {
+          "client_first_packet_p50_ms": 209.4999000255484,
+          "realtime_ratio_p50_report_only": 1.4914260426363588,
+          "engine_first_emit_p50_ms": 205.96155000384897,
+          "engine_last_emit_p50_ms": 1901.2841499934439,
+          "audio_seconds_p50": 2.48,
+          "prefill": {
+            "calls_per_request_p50": 1.0,
+            "per_call_host_ms_p50": 45.240649982588366,
+            "per_call_cuda_ms_p50": 41.162160873413086,
+            "request_host_total_ms_p50": 45.240649982588366,
+            "request_cuda_total_ms_p50": 41.162160873413086
+          },
+          "talker": {
+            "calls_per_request_p50": 31.0,
+            "per_call_host_ms_p50": 0.5145999894011766,
+            "per_call_cuda_ms_p50": 6.02623987197876,
+            "request_host_total_ms_p50": 693.5309001710266,
+            "request_cuda_total_ms_p50": 741.135085105896
+          },
+          "code_predictor": {
+            "calls_per_request_p50": 465.0,
+            "per_call_host_ms_p50": 0.08769996929913759,
+            "per_call_cuda_ms_p50": 0.8663039803504944,
+            "request_host_total_ms_p50": 65.5048496555537,
+            "request_cuda_total_ms_p50": 432.5481742322445
+          },
+          "decode": {
+            "calls_per_request_p50": 9.0,
+            "per_call_host_ms_p50": 79.4713000068441,
+            "per_call_cuda_ms_p50": 82.49126434326172,
+            "request_host_total_ms_p50": 684.5185500278603,
+            "request_cuda_total_ms_p50": 704.8672780990601
+          },
+          "tokenizer_decode": {
+            "calls_per_request_p50": 9.0,
+            "per_call_host_ms_p50": 79.8308000084944,
+            "per_call_cuda_ms_p50": 82.56079864501953,
+            "request_host_total_ms_p50": 700.0340000085998,
+            "request_cuda_total_ms_p50": 729.3513717651367
+          },
+          "generate_and_final_decode_host_ms_p50": 1865.5276999925263
+        }
+      }
+    },
+    {
+      "run": "gpu-optimized-1.7B-formal-run1",
+      "variant": "1.7B",
+      "status": "failed",
+      "error": "received 1011 (internal error); then sent 1011 (internal error)",
+      "samples": {
+        "warmup": 3,
+        "latency": 60,
+        "cancel": 15,
+        "stress": 2445
+      },
+      "cancel_max_ms": 0.0,
+      "stress_seconds": 4004.946382,
+      "stress_extension_completed": false,
+      "rss_20_30_min_ols_mib_per_hour": 12704.460445587754,
+      "rss_20_30_window_samples": 368,
+      "torch_allocated_first_last_bytes": [
+        7159662592,
+        7159662592
+      ],
+      "torch_peak_allocated_bytes": 7626955264,
+      "torch_peak_reserved_bytes": 8455716864,
+      "wddm": {
+        "status": "partial_with_sampler_error",
+        "dedicated_peak_bytes": 9780871168,
+        "shared_peak_bytes": 276910080,
+        "sum_peak_bytes": 10057781248,
+        "limit_bytes": 8000000000,
+        "observations": 7951,
+        "maximum_start_interval_s": 2.016903,
+        "errors": [
+          {
+            "error": "内存不足 ",
+            "at": "2026-10-23T01:09:46.1445307+00:00"
+          }
+        ]
+      },
+      "timing_latency_p50": {
+        "zh": {
+          "client_first_packet_p50_ms": 225.7866500003729,
+          "realtime_ratio_p50_report_only": 1.642416675177731,
+          "engine_first_emit_p50_ms": 222.0299999753479,
+          "engine_last_emit_p50_ms": 1272.6161999744363,
+          "audio_seconds_p50": 1.76,
+          "prefill": {
+            "calls_per_request_p50": 1.0,
+            "per_call_host_ms_p50": 50.513200025307015,
+            "per_call_cuda_ms_p50": 46.04249572753906,
+            "request_host_total_ms_p50": 50.513200025307015,
+            "request_cuda_total_ms_p50": 46.04249572753906
+          },
+          "talker": {
+            "calls_per_request_p50": 22.0,
+            "per_call_host_ms_p50": 0.3559000324457884,
+            "per_call_cuda_ms_p50": 8.714239597320557,
+            "request_host_total_ms_p50": 274.72340015810914,
+            "request_cuda_total_ms_p50": 391.63330841064453
+          },
+          "code_predictor": {
+            "calls_per_request_p50": 330.0,
+            "per_call_host_ms_p50": 0.08899997919797897,
+            "per_call_cuda_ms_p50": 0.8755199909210205,
+            "request_host_total_ms_p50": 47.791849880013615,
+            "request_cuda_total_ms_p50": 312.65908747911453
+          },
+          "decode": {
+            "calls_per_request_p50": 6.0,
+            "per_call_host_ms_p50": 82.07529998617247,
+            "per_call_cuda_ms_p50": 86.42793273925781,
+            "request_host_total_ms_p50": 530.00400000019,
+            "request_cuda_total_ms_p50": 549.0464096069336
+          },
+          "tokenizer_decode": {
+            "calls_per_request_p50": 7.0,
+            "per_call_host_ms_p50": 83.20379996439442,
+            "per_call_cuda_ms_p50": 86.3880615234375,
+            "request_host_total_ms_p50": 548.5473499866202,
+            "request_cuda_total_ms_p50": 565.8794860839844
+          },
+          "generate_and_final_decode_host_ms_p50": 1244.517650018679
+        },
+        "en": {
+          "client_first_packet_p50_ms": 225.1649499812629,
+          "realtime_ratio_p50_report_only": 1.4967560583361024,
+          "engine_first_emit_p50_ms": 221.6492000152357,
+          "engine_last_emit_p50_ms": 1631.6309999965597,
+          "audio_seconds_p50": 2.12,
+          "prefill": {
+            "calls_per_request_p50": 1.0,
+            "per_call_host_ms_p50": 50.71280003176071,
+            "per_call_cuda_ms_p50": 46.76192092895508,
+            "request_host_total_ms_p50": 50.71280003176071,
+            "request_cuda_total_ms_p50": 46.76192092895508
+          },
+          "talker": {
+            "calls_per_request_p50": 26.5,
+            "per_call_host_ms_p50": 0.43539999751374125,
+            "per_call_cuda_ms_p50": 9.010688304901123,
+            "request_host_total_ms_p50": 489.67979988083243,
+            "request_cuda_total_ms_p50": 598.6257767677307
+          },
+          "code_predictor": {
+            "calls_per_request_p50": 397.5,
+            "per_call_host_ms_p50": 0.08809997234493494,
+            "per_call_cuda_ms_p50": 0.8796160221099854,
+            "request_host_total_ms_p50": 57.417149568209425,
+            "request_cuda_total_ms_p50": 378.2022722661495
+          },
+          "decode": {
+            "calls_per_request_p50": 7.5,
+            "per_call_host_ms_p50": 80.37675003288314,
+            "per_call_cuda_ms_p50": 85.36516952514648,
+            "request_host_total_ms_p50": 618.9257500227541,
+            "request_cuda_total_ms_p50": 633.3954610824585
+          },
+          "tokenizer_decode": {
+            "calls_per_request_p50": 8.0,
+            "per_call_host_ms_p50": 80.33999998588115,
+            "per_call_cuda_ms_p50": 85.29161834716797,
+            "request_host_total_ms_p50": 647.8339000314008,
+            "request_cuda_total_ms_p50": 665.3509216308594
+          },
+          "generate_and_final_decode_host_ms_p50": 1604.4648000097368
+        },
+        "ja": {
+          "client_first_packet_p50_ms": 227.4180999957025,
+          "realtime_ratio_p50_report_only": 1.4675848862509282,
+          "engine_first_emit_p50_ms": 223.94190001068637,
+          "engine_last_emit_p50_ms": 1816.9702499872074,
+          "audio_seconds_p50": 2.32,
+          "prefill": {
+            "calls_per_request_p50": 1.0,
+            "per_call_host_ms_p50": 48.91614997177385,
+            "per_call_cuda_ms_p50": 43.96748733520508,
+            "request_host_total_ms_p50": 48.91614997177385,
+            "request_cuda_total_ms_p50": 43.96748733520508
+          },
+          "talker": {
+            "calls_per_request_p50": 29.0,
+            "per_call_host_ms_p50": 0.45754999155178666,
+            "per_call_cuda_ms_p50": 9.176064014434814,
+            "request_host_total_ms_p50": 564.3510999507271,
+            "request_cuda_total_ms_p50": 668.6223382949829
+          },
+          "code_predictor": {
+            "calls_per_request_p50": 435.0,
+            "per_call_host_ms_p50": 0.08800002979114652,
+            "per_call_cuda_ms_p50": 0.8796160221099854,
+            "request_host_total_ms_p50": 63.62535044900142,
+            "request_cuda_total_ms_p50": 411.6923363804817
+          },
+          "decode": {
+            "calls_per_request_p50": 8.0,
+            "per_call_host_ms_p50": 79.85770000959747,
+            "per_call_cuda_ms_p50": 84.96644592285156,
+            "request_host_total_ms_p50": 645.0807999644894,
+            "request_cuda_total_ms_p50": 671.1750869750977
+          },
+          "tokenizer_decode": {
+            "calls_per_request_p50": 8.0,
+            "per_call_host_ms_p50": 80.83634998183697,
+            "per_call_cuda_ms_p50": 85.17422103881836,
+            "request_host_total_ms_p50": 677.888099977281,
+            "request_cuda_total_ms_p50": 702.5102424621582
+          },
+          "generate_and_final_decode_host_ms_p50": 1749.4565999950282
+        }
+      }
+    }
+  ]
+}
