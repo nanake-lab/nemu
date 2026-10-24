@@ -61,7 +61,7 @@ dotnet build executors/office-connector/OfficeConnector.csproj --configuration R
 
 ## CI 额度
 
-预算脚本默认每月 60 次 × Ubuntu 12 分钟 = 720 分钟（按 2000 分钟示例额度为 36%）。
+预算脚本默认每月 60 次 × Ubuntu 20 分钟 = 1200 分钟（按 2000 分钟示例额度为 60%）。2026-10-24 起单次 Ubuntu 检查已接近 20 分钟，作业超时上限改为 35 分钟。
 实际额度以账号账单为准；仓库变量 CI_FREE_MINUTES、CI_MONTHLY_RUNS、CI_HOSTED_MINUTES_PER_RUN 可调整。
 超过 80% 时输出 GitHub workflow warning。它是预测，不声称获取了真实账单用量。
 Windows 自托管时间不计入上述托管分钟估算。
