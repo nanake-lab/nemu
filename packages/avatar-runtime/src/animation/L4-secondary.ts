@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import type { VRM } from '@pixiv/three-vrm';
 import type { NemuProfile } from '@nemu/contracts';
+import { FramePoseOffsets } from './pose-offsets.js';
 
 export interface SecondaryMotionLayerOptions {
   vrm?: VRM | undefined;
@@ -16,10 +17,11 @@ interface TemporaryOverride {
 export class SecondaryMotionLayer {
   private vrm: VRM | null = null;
   private profile: NemuProfile | null = null;
+  private offsets = new FramePoseOffsets();
 
   // Readout inputs
-  private earPose = 0.0;        // -1..1
-  private tailAmplitude = 0.5;  // 0..1
+  private earPose = 0.0; // -1..1
+  private tailAmplitude = 0.5; // 0..1
 
   // Temporary performance cue overrides
   private earOverride: TemporaryOverride | null = null;
@@ -41,6 +43,7 @@ export class SecondaryMotionLayer {
   }
 
   bindVRM(vrm: VRM, profile?: NemuProfile): void {
+    this.restoreOffsets();
     this.vrm = vrm;
     if (profile) {
       this.setProfile(profile);
@@ -111,6 +114,8 @@ export class SecondaryMotionLayer {
    */
   update(deltaSec: number): void {
     if (!this.vrm || deltaSec <= 0) return;
+    this.restoreOffsets();
+    this.offsets.capture([this.earRootLeft, this.earRootRight, this.tailRoot]);
 
     // 1. Advance temporary overrides
     this.updateOverrides(deltaSec);
@@ -123,6 +128,11 @@ export class SecondaryMotionLayer {
 
     // 4. Update three-vrm spring bones
     this.vrm.springBoneManager?.update(deltaSec);
+    this.offsets.finish();
+  }
+
+  restoreOffsets(): void {
+    this.offsets.restore();
   }
 
   private updateOverrides(deltaSec: number): void {
@@ -181,6 +191,7 @@ export class SecondaryMotionLayer {
   }
 
   dispose(): void {
+    this.restoreOffsets();
     this.earOverride = null;
     this.tailOverride = null;
     this.earRootLeft = null;

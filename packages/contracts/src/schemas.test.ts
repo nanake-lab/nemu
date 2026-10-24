@@ -55,6 +55,7 @@ const stageSamples: Record<keyof contracts.StagePayloads, unknown> = {
   'stage.perform': { cue },
   'stage.action': { actionId: 'a', action: { kind: 'motion', motionId: 'fidget_yawn' } },
   'stage.readout': { readout },
+  'stage.readout.v2': { readout: { version: 'v2', facing: 0.5, tension: 0, energy: 0.5 } },
   'stage.event': {
     event: {
       v: 2,
@@ -225,6 +226,7 @@ const samples: Record<string, unknown> = {
   },
   bodyReadoutSchema: readout,
   bodyReadoutV2Schema: { version: 'v2', facing: 0.5, tension: 0, energy: 0.5 },
+  bodyReadoutMappingSchema: contracts.CANDIDATE_BODY_READOUT_MAPPING,
   proactiveKindSchema: 'speak',
   socialActionKindSchema: 'social.message',
   proactivityBoundariesSchema: {
