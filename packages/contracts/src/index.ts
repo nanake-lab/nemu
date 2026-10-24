@@ -11,3 +11,4 @@ export * from './generated/index.js';
 export * from './proactivity.js';
 export * from './approval.js';
 export * from './queries.js';
+export * from './body-animation.js';
