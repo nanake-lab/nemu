@@ -70,13 +70,20 @@ pub fn experience(
     }
     let mean = mean_deviation(deviations)?;
     let p = finite(dot(&mean, d), "p_c")?;
-    let support = finite(mu * clip(2.0 * p / r_tilde - 1.0, -1.0, 1.0), "S")?;
+    // Saturation is defined only for finite arithmetic. In particular, a
+    // positive finite r_tilde may still make this division overflow.
+    let twice_p = finite(2.0 * p, "2 p_c")?;
+    let ratio = finite(twice_p / r_tilde, "support ratio")?;
+    let unbounded_support = finite(ratio - 1.0, "support before clip")?;
+    let support = finite(mu * clip(unbounded_support, -1.0, 1.0), "S")?;
     let mut peak = 0.0f64;
     for dev in deviations {
-        peak = peak.max(dot(dev, d).abs());
+        let projection = finite(dot(dev, d), "member projection")?;
+        peak = peak.max(projection.abs());
     }
     let sigma_k = fluctuation(d, sigma)?;
-    let intensity = finite(w_max.min(r_tilde.max(peak) / sigma_k), "strength")?;
+    let raw_strength = finite(r_tilde.max(peak) / sigma_k, "strength ratio")?;
+    let intensity = finite(finite(w_max, "w_max")?.min(raw_strength), "strength")?;
     Ok(GroupSupport {
         support,
         intensity,

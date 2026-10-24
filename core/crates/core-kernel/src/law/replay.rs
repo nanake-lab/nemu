@@ -15,10 +15,14 @@ use super::support::weight;
 
 /// r_k = clip(M/U, 0, r_max); 0 while U = 0 (v2.0 §5.2).
 pub(crate) fn typical_magnitude(law: &Law, sum: f64, weight: f64) -> LawResult<f64> {
+    let sum = finite(sum, "M")?;
+    let weight = finite(weight, "U")?;
+    let cap = finite(law.r_max, "r_max")?;
     if weight == 0.0 {
         return Ok(0.0);
     }
-    finite(clip(sum / weight, 0.0, law.r_max), "typical magnitude")
+    let ratio = finite(sum / weight, "magnitude ratio")?;
+    finite(clip(ratio, 0.0, cap), "typical magnitude")
 }
 
 /// One group with weight W, support S, μ and p_c (None for teaching) recorded

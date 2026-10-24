@@ -6,6 +6,7 @@ mod adr0019;
 mod boundaries;
 mod cases;
 mod engine;
+mod finite_contract;
 pub(super) mod fixture;
 mod group_props;
 mod law_props;
