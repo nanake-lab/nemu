@@ -31,7 +31,7 @@ jobs:
   hosted:
     name: Ubuntu static checks and unit tests
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -87,7 +87,7 @@ jobs:
         env:
           CI_FREE_MINUTES: ${{ vars.CI_FREE_MINUTES || '2000' }}
           CI_MONTHLY_RUNS: ${{ vars.CI_MONTHLY_RUNS || '60' }}
-          CI_HOSTED_MINUTES_PER_RUN: ${{ vars.CI_HOSTED_MINUTES_PER_RUN || '12' }}
+          CI_HOSTED_MINUTES_PER_RUN: ${{ vars.CI_HOSTED_MINUTES_PER_RUN || '20' }}
         run: pnpm ci:budget
       - name: P5-01 IDL and three-language conformance (D10.8 / SYS21)
         run: |
