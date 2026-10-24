@@ -7,38 +7,26 @@ use core_types::{
         EvidenceGroupV2, EvidenceGroupV3, LawVersion, ObjectRef, RSnapshot, RSnapshotV2, Tendency,
         TendencyV2, TendencyV3,
     },
-    semantic::check_allocation_ordinals_v3,
 };
 use rusqlite::{Connection, params};
 use std::collections::{BTreeMap, BTreeSet};
 
-/// Latest groups in the committed prefix, including legacy groups. No type filter
-/// may resurrect an earlier version after a group loses an allocation.
-pub(crate) fn latest_groups(
+/// Stream latest versions, optionally restricted to a current tendency's index.
+/// Select the version before filtering associations, so empty successors win.
+/// Historical row count is not a per-message encoding budget.
+pub(crate) fn visit_latest_groups(
     db: &Connection,
     objects: &Objects,
-) -> Result<BTreeMap<String, StoredEvidenceGroup>> {
-    let mut statement = db.prepare("WITH latest AS (SELECT g.group_id,g.reference,row_number() OVER (PARTITION BY g.group_id ORDER BY c.position DESC) AS rank FROM evidence_groups g JOIN commits c ON c.id=g.commit_id) SELECT reference FROM latest WHERE rank=1 ORDER BY group_id LIMIT ?1")?;
-    let limit = objects.config.encoding.max_items;
-    let budget =
-        i64::try_from(limit).map_err(|_| crate::Error::Rejected("group budget overflow"))?;
-    let rows = statement.query_map([budget], |row| row.get::<_, Vec<u8>>(0))?;
-    let mut groups = BTreeMap::new();
+    tendency: Option<&str>,
+    mut visit: impl FnMut(StoredEvidenceGroup) -> Result<()>,
+) -> Result<()> {
+    let mut statement = db.prepare("WITH latest AS (SELECT g.commit_id,g.group_id,g.reference,row_number() OVER (PARTITION BY g.group_id ORDER BY c.position DESC) AS rank FROM evidence_groups g JOIN commits c ON c.id=g.commit_id) SELECT l.reference FROM latest l WHERE l.rank=1 AND (?1 IS NULL OR EXISTS (SELECT 1 FROM evidence_index i WHERE i.commit_id=l.commit_id AND i.group_id=l.group_id AND i.tendency_id=?1)) ORDER BY l.group_id")?;
+    let rows = statement.query_map([tendency], |row| row.get::<_, Vec<u8>>(0))?;
     for row in rows {
         let reference = ObjectRef::from_canonical(&row?, objects.config.encoding)?;
-        let group = StoredEvidenceGroup::read(objects, &reference)?;
-        groups.insert(group.id().to_owned(), group);
+        visit(StoredEvidenceGroup::read(objects, &reference)?)?;
     }
-    let count: i64 = db.query_row(
-        "SELECT count(DISTINCT group_id) FROM evidence_groups",
-        [],
-        |row| row.get(0),
-    )?;
-    require(
-        count <= budget,
-        "incomplete evidence prefix: group budget exceeded",
-    )?;
-    Ok(groups)
+    Ok(())
 }
 
 pub(crate) fn validate_new(
@@ -46,6 +34,8 @@ pub(crate) fn validate_new(
     objects: &Objects,
     value: &CoreTransactionV2,
 ) -> Result<()> {
+    // Bound the collections actually being published, before any derived lookup.
+    value.canonical_bytes(objects.config.encoding)?;
     let StoredR::V3(r) = StoredR::read(objects, &value.staged_r)? else {
         return Err(crate::Error::Rejected("new R publications require V3"));
     };
@@ -68,39 +58,65 @@ pub(crate) fn validate_new(
     .into_iter()
     .map(|name| Ok(schema.message(name)?.tag.as_str()))
     .collect::<std::result::Result<Vec<_>, String>>()?;
-    let mut groups = latest_groups(db, objects)?;
-    let mut changed = BTreeSet::new();
+    let mut changed = BTreeMap::new();
     for reference in &value.accepted_results {
         require(
             !old_tags.contains(&reference.object_type.as_str()),
             "new accepted results cannot publish legacy R types",
         )?;
         if reference.object_type == schema.message(EvidenceGroupV3::NAME)?.tag {
-            let group = StoredEvidenceGroup::read(objects, reference)?;
+            let group = EvidenceGroupV3::from_canonical(
+                &objects.read(reference)?,
+                objects.config.encoding,
+            )?;
+            for allocation in &group.allocations {
+                core_types::semantic::check_allocation_v3(allocation)?;
+            }
             require(
-                changed.insert(group.id().to_owned()),
+                changed.insert(group.group_id.clone(), group).is_none(),
                 "multiple versions of one evidence group in a transaction",
             )?;
-            groups.insert(group.id().to_owned(), group);
         } else if reference.object_type == schema.message(TendencyV3::NAME)?.tag {
             let tendency =
                 TendencyV3::from_canonical(&objects.read(reference)?, objects.config.encoding)?;
             core_types::semantic::check_tendency_v3_with_parameters(&tendency, &law.parameters)?;
         }
     }
-    let mut active = Vec::new();
-    for group in groups.into_values() {
-        match group {
-            StoredEvidenceGroup::V3(g) => active.push(g),
-            StoredEvidenceGroup::V2(_) => {
-                return Err(crate::Error::Rejected(
-                    "all legacy groups need H replay or an explicit empty successor",
-                ));
-            }
-        }
-    }
     for tendency in &r.tendencies {
-        check_allocation_ordinals_v3(tendency, &active)?;
+        let mut ordinals = BTreeSet::new();
+        let mut add = |group: &EvidenceGroupV3| -> Result<()> {
+            for allocation in &group.allocations {
+                if allocation.tendency_id == tendency.tendency_id {
+                    require(
+                        ordinals.insert(allocation.ordinal.0),
+                        "duplicate allocation ordinal",
+                    )?;
+                }
+            }
+            Ok(())
+        };
+        visit_latest_groups(db, objects, Some(&tendency.tendency_id), |group| {
+            if changed.contains_key(group.id()) {
+                return Ok(());
+            }
+            match group {
+                StoredEvidenceGroup::V3(g) => add(&g),
+                StoredEvidenceGroup::V2(_) => Err(crate::Error::Rejected(
+                    "active legacy evidence needs H replay",
+                )),
+            }
+        })?;
+        for group in changed.values() {
+            add(group)?;
+        }
+        require(
+            u64::try_from(ordinals.len()).is_ok_and(|n| n == tendency.group_count.0),
+            "allocation count differs from the group count",
+        )?;
+        require(
+            ordinals.into_iter().eq(0..tendency.group_count.0),
+            "allocation ordinals are not 0..N-1 exactly once",
+        )?;
     }
     Ok(())
 }

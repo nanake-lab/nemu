@@ -13,6 +13,7 @@ mod objects;
 mod r_fixtures;
 mod r_legacy_fixture;
 mod r_migration;
+mod r_review;
 mod reader;
 fn normal() -> DegradedStatus {
     DegradedStatus {

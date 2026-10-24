@@ -17,6 +17,7 @@ pub struct RReplayEvent {
     pub event: EventEnvelope,
     pub binding: ProposalBindingV2,
     pub accepted_results: Vec<ObjectRef>,
+    pub staged_concepts: Vec<ObjectRef>,
 }
 
 /// Constructed only by Store, from a verified full committed prefix plus the
@@ -43,8 +44,9 @@ impl RReplayInput {
     }
 }
 
-/// Entire rebuilt R and latest evidence groups, including explicit empty
-/// successors for removed groups. This is a kernel result, not a wire schema.
+/// Entire rebuilt R and updated evidence groups, including empty successors for
+/// removed allocations. Already empty groups need not be republished.
+/// This is a kernel result, not a wire schema.
 pub struct RebuiltR {
     pub snapshot: RSnapshotV3,
     pub groups: Vec<EvidenceGroupV3>,
@@ -149,6 +151,7 @@ impl<L: LineageKind> Store<L> {
             roots.push(item.event.payload_ref.clone());
             roots.push(item.binding.validation_snapshot.clone());
             roots.extend(item.accepted_results.iter().cloned());
+            roots.extend(item.staged_concepts.iter().cloned());
             crate::objects::collect_refs(
                 &schema,
                 VersionedEnvironmentV2::NAME,
@@ -186,12 +189,12 @@ impl<L: LineageKind> Store<L> {
         )?;
         let ids: BTreeSet<_> = rebuilt.groups.iter().map(|g| g.group_id.as_str()).collect();
         require(ids.len() == rebuilt.groups.len(), "duplicate replay group")?;
-        for id in crate::r_validation::latest_groups(&self.db, &self.objects)?.keys() {
+        crate::r_validation::visit_latest_groups(&self.db, &self.objects, None, |group| {
             require(
-                ids.contains(id.as_str()),
-                "replay omitted a previous group; an empty successor is required",
-            )?;
-        }
+                group.tendencies().is_empty() || ids.contains(group.id()),
+                "replay omitted an allocated group; an empty successor is required",
+            )
+        })?;
         let mut pins = Vec::new();
         for group in &rebuilt.groups {
             let pin = self.prepare(group, "1")?;
@@ -215,6 +218,7 @@ impl<L: LineageKind> Store<L> {
                 self.objects.config.encoding,
             )?,
             binding: value.binding.clone(),
+            staged_concepts: value.staged_concepts.clone(),
             accepted_results: value
                 .accepted_results
                 .iter()
