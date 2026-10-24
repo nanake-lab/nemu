@@ -1,9 +1,9 @@
 # P6-08 桌面感知 — 报告
 
 ## 当前状态
-**实现及用户限定的本机验收完成，等待审查与 CI。** 固定合成工况 CPU 通过；Windows 10 专注识别按用户决定改为只读探针报告、非必过项；supervisor 单独 6/6、当前全量 564/564 通过，原失败保留。PR #75 保留 needs-user（ADR 0023）；按用户要求转为可审查、写「请审查」后停止，不合并、不取下一张卡。工作区 `D:\Dev\nemu-wt\P6-08`，分支 `task/P6-08-desktop-sense`，基线 `0b5412e`。实时 CI 以 PR 的当前提交检查为准，不把本机通过或旧提交 CI 当成当前 CI 全绿。
+**实现及用户限定的本机验收完成，等待审查和用户合并。** 固定合成工况 CPU 通过；Windows 10 专注识别按用户决定改为只读探针报告、非必过项；supervisor 单独 6/6、本轮全量 580/580 通过，原失败保留。PR #75 保留 needs-user（ADR 0023）；本轮推送后等待同一 head 的 Ubuntu 与 Windows CI 完成，并把实际结果写入 PR 评论，再停止，不合并、不取下一张卡。工作区 `D:\Dev\nemu-wt\P6-08`，分支 `task/P6-08-desktop-sense`，初始基线 `0b5412e`。CI 最终结果以本轮推送 head 的检查及 PR 后续结果评论为准，不把本机通过或旧提交 CI 当成当前 CI 全绿。
 
-收尾已 fetch 并 merge 最新 `origin/main` 的 `7f962b2`（含 `9d236d6` CI 超时调整及 P5-33 研究报告）。规则、任务卡和必读文档无新增差异；未实现 P5-33 的缺席或预期事件。合并后的 `7e05796` 上串行重跑 lint、typecheck、全部 564 项测试及完整构建，退出码均为 0；随后只有报告/证据变更。
+本轮完整阅读 AGENTS.md 和 tasks/README.md 后 fetch，将取得的 `origin/main` **`edf66a5`** merge 进任务分支（含 #80 Windows CI 分流和 #76 P3-06），没有 rebase 或强推。唯一冲突是根 package.json 的 scripts：保留 #76 的 `test:p306:visual`、`test:p306:preview`、`record:p306` 和本卡的 `test:desktop-sense`、`sense:geometry`、`sense:cpu:build`；并逐项核对双方所有原脚本的命令值未丢失或改变。合并提交 **`6bcbe50`** 上依次运行 lint、typecheck、test（52 文件、580/580）和 build，退出码均为 0；四项启动时均无 Runner.Worker，原始日志及起止/退出码见 [本轮同步证据](evidence/sync-edf66a5-20261024/execution.json)。随后只更新本报告与证据。按新 AGENTS.md 第 9 节，修改前退回草稿，推送完成后恢复可审查以触发一次 Windows 检查。感知实现、CPU 方法和原始失败证据未改，不新增缺席或预期事件。
 
 ## 交付物
 
@@ -18,8 +18,8 @@
 | 命令或检查 | 结果 | 证据（evidence/ 下） |
 | --- | --- | --- |
 | `pnpm test:desktop-sense` | 6 文件、30 测试通过 | unit-focus-20261024.txt |
-| `pnpm lint`、`pnpm typecheck` | 同步最新 main 后通过 | lint-synced-20261024.txt、typecheck-synced-20261024.txt |
-| `pnpm build` | 同步最新 main 后完整构建通过；保留现有 Zod PURE 注释告警 | build-synced-20261024.txt |
+| `pnpm lint`、`pnpm typecheck` | 本轮合并 edf66a5 后通过 | sync-edf66a5-20261024/lint.txt、sync-edf66a5-20261024/typecheck.txt |
+| `pnpm build` | 本轮合并 edf66a5 后完整构建通过；保留现有 Zod PURE 注释告警 | sync-edf66a5-20261024/build.txt |
 | `pnpm sense:geometry …/native-geometry-current.json` | 8 个原生合成窗口，100/125/150/200% 物理尺寸、两个合成显示器范围，边误差均 0 px | native-geometry-current.json/.txt |
 | 勿扰桩矩阵 | 全屏/PPT/会议/通知 busy 各 10 次断言通过；不等于真实专注开关验收 | semantics.test.ts、unit-28.txt |
 | 隐私/边沿/清理 | 未授权不读取标题，撤回不附带标题、不冒充会议结束；几何不进总线；锁屏停采样；监听和定时器清零 | engine.test.ts、sense/index.test.ts |
@@ -27,7 +27,7 @@
 | 接线前后退出 / scratch 设置保护 | 见下表；6 次退出码 0，2 秒后无测试子进程残留；当前 scratch 三次 setter 调用数全部 0，基线三次为 1（拦截不透传） | package-smoke-06.json/.txt |
 | 首轮全量 `pnpm test` | 当时 559/559 通过 | test-01.txt |
 | 原全量失败（保留） | **559/560，失败**：supervisor.test.ts:64，restartCount=0，期望 ≥1；未改该文件/阈值 | test-final.txt |
-| supervisor 阻塞核验 / 当前全量 | 用户通知空闲且 CPU 测完后，原测试独立 6/6；当时全量 562/562；新增探针测试并同步最新 main 后当前 **564/564** | supervisor-isolated-20261024.txt、test-quiet-20261024.txt、test-synced-20261024.txt |
+| supervisor 阻塞核验 / 当前全量 | 用户通知空闲且 CPU 测完后，原测试独立 6/6；当时全量 562/562、后续 564/564；本轮同步 main 后 **580/580** | supervisor-isolated-20261024.txt、test-quiet-20261024.txt、test-synced-20261024.txt、sync-edf66a5-20261024/test.txt |
 | CPU ≤1%，登记工况 | 原始单核三次 **0.468334%、0.128333%、0.494988%**，全部 ≤1%；空载均 0%，不扣除空载替代判据；原 2.339468% 失败并列保留 | cpu-quiet-20261024T081456Z/、CPU-RESULTS-20261024.md |
 | Windows 10 专注只读探针（非必过） | build 19045，返回码0、4字节、值0，按映射 inactive；未切换设置验证。Windows 11 仅公开读分支，桩验证，不冒充实机 | focus-probe-19045-20261024.json/.txt、FOCUS-SOURCE.md、ADR 0023 |
 | 登录项只读检查 | 名称/命令/快捷方式目标匹配 Electron/Nemu 的 Run 与 Startup 条目均 0；没有删除。只有键级时间，不能归因历史 CI/e2e | startup-audit-20261024.json、STARTUP-AUDIT-20261024.md |
@@ -80,7 +80,7 @@ contracts/zod 为既有工作区依赖，只增加本包登记。LICENSE 全文�
 
 - [x] 用户空闲授权后完成固定 CPU 测量；全部原始结果及旧失败保留。
 - [x] 用户批准 Windows 10 只读探针、非必过验收边界，记入 ADR 0023；其余勿扰矩阵不放宽。
-- [x] supervisor 原测试在空闲环境通过，当前全量 564/564；未改代码/阈值。资源争用只是可能解释，不把未复现当成原因已证明。
+- [x] supervisor 原测试在空闲环境通过，本轮全量 580/580；未改监督代码/阈值。资源争用只是可能解释，不把未复现当成原因已证明。
 - [x] 用户批准 scaffold 登录项保护；实际包断言调用数为 0；只读检查发现 0 个匹配项，不声称历史从未写过。
 - [ ] （合并前）用户安排交叉审查，当前提交的 CI 检查完成；新增 ADR 保留 needs-user，由用户合并，不自行批准或合并。
 
