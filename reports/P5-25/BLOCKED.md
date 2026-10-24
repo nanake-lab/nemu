@@ -2,6 +2,8 @@
 
 当前为部分完成，草稿 PR #77；不能宣称任务验收通过。
 
+**2026-10-24 逐步定位更新：** 37处残差平方pow/乘法差异中，精确整数舍入全部支持乘法；13处传播为σ差异。首个σ差异前态相同，平方先分叉，sqrt同输入时一致。Rust常量powf在debug/优化构建结果不同，不作修复。用户本轮授权排查运算次序，但未明确授权改参考oracle；生产实现与全部断言不变。需要确定Python平方语义，不能称已修复。见 [rounding-20261024/REPORT.md](rounding-20261024/REPORT.md)。
+
 **实测：** 原始 Python THETA-1/2 均 passed；Rust 首轮 9 passed / 1 failed。THETA-1 附加的跨语言逐位 oracle 在第 59 组、第 147 个事件失败：σ 为 `0.5143697096038282`，原 Python 为 `0.5143697096038283`（1 ULP）。Rust 使用 ADR 0019 §8 的显式乘法；原 Python 用 `residual ** 2`，本平台在该处平方就已有 1 ULP 差异。只读诊断在 72,822 个事件中发现 13 处 σ 位差，b 位差为 0。失败断言、原数据和原日志全部保留，没有改阈值、换种子或用容差通过。
 
 **已试：** 固定原种子生成完整二进制输入/oracle，生产 Rust 递推逐事件比较；只读诊断复现首个差异。证据见 `evidence/tests/dynamics-attempt-2.log`、`theta1-diagnosis.json`、`original-and-fixtures.json`。THETA-2 的原固定ρ与独立自适应检测器两组检验均通过。
