@@ -131,7 +131,7 @@ if (!gotSingleInstanceLock) {
 
     // Configure auto-launch setting
     try {
-      app.setLoginItemSettings({ openAtLogin: settings.general.openAtLogin });
+      if (!scratch) app.setLoginItemSettings({ openAtLogin: settings.general.openAtLogin });
     } catch (err) {
       logger.warn('Failed to set login item settings', { error: String(err) });
     }

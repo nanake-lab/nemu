@@ -115,7 +115,8 @@ const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 app.disableHardwareAcceleration();
 // Avoid all user/system settings writes and never show a window.
-app.setLoginItemSettings = () => {};
+let loginItemCalls = 0;
+app.setLoginItemSettings = () => { loginItemCalls++; };
 BrowserWindow.prototype.show = function () {};
 let loaded = false;
 const deadline = setTimeout(() => { process.stderr.write('startup deadline exceeded'); app.exit(2); }, 15000);
@@ -137,7 +138,7 @@ app.whenReady().then(async () => {
     if (!app.__nemu_supervisor__) return;
     clearInterval(ready); clearTimeout(deadline); loaded = true;
     const children = app.getAppMetrics().map(p => p.pid).filter(pid => pid !== process.pid);
-    setTimeout(() => { process.stdout.write('P608_JSON:' + JSON.stringify({ kind: 'shutdown', mode: process.env.P608_MODE, children }) + '\\n', () => app.quit()); }, 100);
+    setTimeout(() => { process.stdout.write('P608_JSON:' + JSON.stringify({ kind: 'shutdown', mode: process.env.P608_MODE, children, loginItemCalls }) + '\\n', () => app.quit()); }, 100);
   }, 10);
 }).catch(error => { process.stderr.write(String(error.stack || error)); app.exit(3); });
 `,
@@ -234,3 +235,6 @@ const result = {
 };
 writeFileSync(evidence, JSON.stringify(result, null, 2), { flag: 'wx' });
 if (results.some((r) => r.code !== 0 || !r.marker || r.survivors.length > 0)) process.exitCode = 1;
+// Regression assertion against the actual compiled main-process bootstrap.
+if (results.filter((r) => r.mode === 'current').some((r) => r.marker?.loginItemCalls !== 0))
+  throw new Error('Scratch bootstrap must not call setLoginItemSettings');

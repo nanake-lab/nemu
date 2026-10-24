@@ -24,3 +24,13 @@
 - 安装包制作时显式解包 `.node` 及 Koffi 运行资源；本卡 ASAR smoke 包将 node_modules 全部放在 app.asar.unpacked，未修改其他构建配置。P7 可收窄解包规则，但必须重跑实际打包加载和退出检查。
 - P7 负责最终安装器、签名、ASAR 完整性/fuses、更新与发布；本卡的临时分发目录不是签名安装包。不得把“开发环境能加载”替代发布目录的运行证据。
 - CI/本机测试的 scaffold userData 一律选择合成 source；不依赖用户打开的窗口或实际会议状态。
+
+## 2026-10-24 限定只读探针与审计接口
+
+按用户批准添加证据用途的接口，均只在 win32.ts 中调用，未接正式感知循环、未从公共入口导出：
+
+- Windows 10：`NtQueryWnfStateData`，仅查询指定状态名，不声明或调用任何 WNF 更新/订阅 API。
+- Windows 11 公开路线：`RoInitialize`/`RoUninitialize`、`WindowsCreateString`/`WindowsDeleteString`、`RoGetActivationFactory`；COM 仅调用 IsSupported、GetDefault、IsFocusActive 和 Release，不调用任何 Focus 开关/写入方法。初始化/释放只管理当前进程资源。
+- 用户授权的 Run 键时间审计：`RegOpenKeyExW`（只申请 KEY_QUERY_VALUE）、`RegQueryInfoKeyW`、`RegCloseKey`；无注册表 setter。
+
+WNF 状态名来源、仅 build 19045 的实测以及更新失效风险见 FOCUS-SOURCE.md / ADR 0023。Win10 专注识别已由用户明确改为非必过探针；未知、格式不匹配和读失败均返回 unknown，不当作未开启。

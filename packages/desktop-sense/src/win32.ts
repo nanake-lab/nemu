@@ -1,5 +1,7 @@
 import { createRequire } from 'node:module';
 import type * as Koffi from 'koffi';
+import { release } from 'node:os';
+import { readFocusProbe, type FocusProbeResult, type WnfReply } from './focus-probe.js';
 
 const require = createRequire(import.meta.url);
 export function loadKoffi(): typeof Koffi {
@@ -514,4 +516,152 @@ export function probeNativeRuntime(): {
     ),
     tick: api.tickCount() as number,
   };
+}
+
+// Evidence-only best-effort reader, deliberately absent from the public entry and the DND loop.
+// WNF name/values: riverar/980120d7e3a13ed8b1d665cf974c8e31 (2018), corroborated by
+// ionescu007/wnfun script_python/WellKnownWnfNames.py. No third-party implementation copied.
+function queryWindows10FocusWnf(): WnfReply {
+  const ntdll = loadKoffi().load('ntdll.dll');
+  const query = ntdll.func(
+    'int32_t __stdcall NtQueryWnfStateData(const uint64_t *name, void *typeId, void *scope, _Out_ uint32_t *stamp, _Out_ uint8_t *buffer, _Inout_ uint32_t *size)',
+  );
+  const stamp = [0],
+    size = [4],
+    buffer = Buffer.alloc(4);
+  const status: number = query([0x0d83063ea3bf1c75n], null, null, stamp, buffer, size);
+  return { status, size: size[0]!, value: buffer.readUInt32LE(0), changeStamp: stamp[0]! };
+}
+
+let focusComTypes:
+  { boolean: Koffi.TypeObject; object: Koffi.TypeObject; release: Koffi.TypeObject } | undefined;
+function queryWindows11Focus(): Omit<FocusProbeResult, 'version'> {
+  const koffi = loadKoffi(),
+    runtime = koffi.load('combase.dll');
+  const initialize = runtime.func('int32_t __stdcall RoInitialize(uint32_t mode)');
+  const uninitialize = runtime.func('void __stdcall RoUninitialize()');
+  const createString = runtime.func(
+    'int32_t __stdcall WindowsCreateString(const char16_t *source, uint32_t length, _Out_ uintptr_t *value)',
+  );
+  const deleteString = runtime.func('int32_t __stdcall WindowsDeleteString(uintptr_t value)');
+  const factory = runtime.func(
+    'int32_t __stdcall RoGetActivationFactory(uintptr_t name, const uint8_t *iid, _Out_ uintptr_t *result)',
+  );
+  focusComTypes ??= {
+    boolean: koffi.proto(
+      'int32_t __stdcall NemuFocusGetBoolean(uintptr_t self, _Out_ uint8_t *value)',
+    ),
+    object: koffi.proto(
+      'int32_t __stdcall NemuFocusGetObject(uintptr_t self, _Out_ uintptr_t *value)',
+    ),
+    release: koffi.proto('uint32_t __stdcall NemuFocusRelease(uintptr_t self)'),
+  };
+  const comTypes = focusComTypes;
+  const call = (self: bigint, slot: number, type: Koffi.TypeObject, ...args: unknown[]): number => {
+    const table = BigInt(koffi.decode(self, 'uintptr_t') as number | bigint);
+    const pointer = koffi.decode(table + BigInt(slot * koffi.sizeof('uintptr_t')), 'uintptr_t') as
+      number | bigint;
+    return koffi.call(pointer, type, self, ...args) as number;
+  };
+  const unknown = (
+    reason: FocusProbeResult['reason'],
+    nativeCode?: number,
+  ): Omit<FocusProbeResult, 'version'> => ({
+    state: 'unknown',
+    source: 'focus-session-manager',
+    reason,
+    ...(nativeCode === undefined ? {} : { nativeCode: nativeCode >>> 0 }),
+  });
+  const initialized: number = initialize(1);
+  if (initialized < 0 && initialized >>> 0 !== 0x80010106)
+    return unknown('unavailable', initialized);
+  const name: (number | bigint)[] = [0],
+    statics: (number | bigint)[] = [0],
+    manager: (number | bigint)[] = [0];
+  try {
+    const className = 'Windows.UI.Shell.FocusSessionManager';
+    let code: number = createString(className, className.length, name);
+    if (code !== 0) return unknown('query-failed', code);
+    // SDK 10.0.26100 windows.ui.shell.h: IFocusSessionManagerStatics IID, IInspectable slots 6/7.
+    const iid = Buffer.from('64f74d839acb0a5daa9f73df4f249395', 'hex');
+    code = factory(name[0], iid, statics);
+    if (code !== 0 || !statics[0]) return unknown('unavailable', code);
+    const supported = [255];
+    code = call(BigInt(statics[0]), 7, comTypes.boolean, supported);
+    if (code !== 0 || supported[0] !== 1) return unknown('unavailable', code);
+    code = call(BigInt(statics[0]), 6, comTypes.object, manager);
+    if (code !== 0 || !manager[0]) return unknown('unavailable', code);
+    const active = [255];
+    code = call(BigInt(manager[0]), 6, comTypes.boolean, active);
+    if (code !== 0) return unknown('query-failed', code);
+    if (active[0] !== 0 && active[0] !== 1) return unknown('malformed');
+    return {
+      state: active[0] === 1 ? 'active' : 'inactive',
+      source: 'focus-session-manager',
+      reason: 'ok',
+    };
+  } finally {
+    if (manager[0]) call(BigInt(manager[0]), 2, comTypes.release);
+    if (statics[0]) call(BigInt(statics[0]), 2, comTypes.release);
+    if (name[0]) deleteString(name[0]);
+    if (initialized >= 0) uninitialize();
+  }
+}
+
+/** Read-only feasibility probe; query failure/unknown build is data, never an exception. */
+export function probeFocusState(): FocusProbeResult {
+  const version = release();
+  if (process.platform !== 'win32')
+    return { state: 'unknown', source: 'unsupported', reason: 'unavailable', version };
+  return readFocusProbe(version, {
+    windows10: queryWindows10FocusWnf,
+    windows11: queryWindows11Focus,
+  });
+}
+
+/** Audit helper only. Registry exposes a key timestamp, never a per-value write timestamp. */
+export function queryRunKeyLastWriteTime(): { status: number; keyLastWriteUtc?: string } {
+  const library = loadKoffi().load('advapi32.dll');
+  const open = library.func(
+    'int32_t __stdcall RegOpenKeyExW(uintptr_t root, const char16_t *subkey, uint32_t options, uint32_t access, _Out_ uintptr_t *key)',
+  );
+  const query = library.func(
+    'int32_t __stdcall RegQueryInfoKeyW(uintptr_t key, void *className, void *classLength, void *reserved, void *subkeys, void *maxSubkeyLength, void *maxClassLength, void *values, void *maxValueName, void *maxValueLength, void *securityLength, _Out_ uint8_t *lastWrite)',
+  );
+  const close = library.func('int32_t __stdcall RegCloseKey(uintptr_t key)');
+  const handle: (number | bigint)[] = [0];
+  const status: number = open(
+    0xffffffff80000001n,
+    'Software\\Microsoft\\Windows\\CurrentVersion\\Run',
+    0,
+    1,
+    handle,
+  );
+  if (status !== 0 || !handle[0]) return { status };
+  try {
+    const time = Buffer.alloc(8);
+    const result: number = query(
+      handle[0],
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      time,
+    );
+    if (result !== 0) return { status: result };
+    return {
+      status: 0,
+      keyLastWriteUtc: new Date(
+        Number((time.readBigUInt64LE() - 116444736000000000n) / 10000n),
+      ).toISOString(),
+    };
+  } finally {
+    close(handle[0]);
+  }
 }
