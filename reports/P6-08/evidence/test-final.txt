@@ -1,0 +1,32 @@
+$ vitest run
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P6-08
+
+ ❯ apps/desktop/src/supervisor/supervisor.test.ts (6 tests | 1 failed) 12644ms
+   ❯ SupervisedProcess Exponential Backoff and Restart (6)
+     × triggers exponential backoff on crashing process 3785ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/desktop/src/supervisor/supervisor.test.ts > SupervisedProcess Exponential Backoff and Restart > triggers exponential backoff on crashing process
+AssertionError: expected 0 to be greater than or equal to 1
+ ❯ apps/desktop/src/supervisor/supervisor.test.ts:64:43
+     62|       waited += 10;
+     63|     }
+     64|     expect(proc.getStatus().restartCount).toBeGreaterThanOrEqual(1);
+       |                                           ^
+     65|     // After 1st crash, backoff delay was multiplied by 2 -> 50
+     66|     expect(proc.getBackoffDelay()).toBeGreaterThanOrEqual(50);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 48 passed (49)
+      Tests  1 failed | 559 passed (560)
+   Start at  01:07:10
+   Duration  15.87s (tests 38%, import 34%, transform 27%, worker 2%)
+
+    Isolate  49 workers spawned · ~2.09s startup each (spawn + environment, per file)
+             at least ~4.74s faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Test failed. See above for more details.
