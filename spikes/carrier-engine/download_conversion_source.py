@@ -17,6 +17,9 @@ EXACT = {
     "requirements/requirements-convert_legacy_llama.txt",
     "tools/quantize/quantize.cpp", "tools/quantize/main.cpp",
     "tools/quantize/README.md", "ggml/src/ggml-backend-reg.cpp", "common/common.cpp",
+    "tools/server/README.md", "common/arg.cpp",
+    "src/models/qwen3.cpp", "src/llama-graph.cpp", "src/llama-graph.h",
+    "src/llama-adapter.cpp", "src/llama-adapter.h", "ggml/src/ggml-backend.cpp",
 }
 
 
@@ -44,9 +47,10 @@ def main() -> None:
     tree = json.loads(args.tree.read_text(encoding="utf-8-sig"))
     if tree["sha"] != COMMIT or tree["truncated"]:
         raise ValueError("Pinned source tree mismatch or truncated inventory")
-    entries = [entry for entry in tree["tree"] if entry["type"] == "blob"
-               and (entry["path"] in EXACT or entry["path"].startswith(
-                   ("conversion/", "gguf-py/gguf/", "include/", "ggml/include/")))]
+    def wanted(path: str) -> bool:
+        return (path in EXACT or path.startswith(("conversion/", "gguf-py/gguf/", "include/", "ggml/include/"))
+                or (path.startswith("tools/server/") and PurePosixPath(path).suffix in {".cpp", ".h"}))
+    entries = [entry for entry in tree["tree"] if entry["type"] == "blob" and wanted(entry["path"])]
     if not EXACT.issubset({entry["path"] for entry in entries}):
         raise ValueError("Required source files missing")
     target = args.target.resolve()

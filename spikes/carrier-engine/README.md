@@ -1,6 +1,6 @@
 # P0-10 载体推理引擎实测
 
-状态：准备完成，前置条件阻塞；尚未运行 GPU 测量。
+状态：下载、转换和 Q4_K_M 最小 CUDA 实验完成；完整脚本已准备，等待新的 GPU 安静窗口。
 
 本目录只做 llama.cpp 可复现实测，不选择生产引擎，不修改载体或 IRL 契约。
 
@@ -11,5 +11,7 @@
 - 未测项目一律写「未实测」；遇到阻塞写入 `reports/P0-10/BLOCKED.md` 并停止。
 
 计划见 [MEASUREMENT-PLAN.md](MEASUREMENT-PLAN.md)；只读盘点可用 `preflight.ps1` 复现。
+
+完整入口、固定配置与 CPU 检查见 [FULL-RUN.md](FULL-RUN.md)。最小结果见报告的 SMOKE-REPORT.md；不得把它当作完整任务验收。
 
 报告：[REPORT.md](../../reports/P0-10/REPORT.md)。阻塞：[BLOCKED.md](../../reports/P0-10/BLOCKED.md)。

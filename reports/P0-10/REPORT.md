@@ -2,99 +2,94 @@
 
 ## 当前状态
 
-**部分完成：两量化转换完成，Q4_K_M 的最小 CUDA 实验完成；完整验收仍未完成。** [PR #87](https://github.com/nanake-lab/nemu/pull/87) 保持草稿。用户已授权继续和本次 15–20 分钟最小窗口；结束后已通知恢复 runner。现在准备完整位置对比、两量化速度和 200 条 IRL 测量，下一次 GPU 窗口需另行安排。不自行选型或合并，不取下一卡。
+**部分完成：下载、CPU 转换和 Q4_K_M 最小 CUDA 实验完成；完整验收未完成。** 完整测量脚本已准备并做 CPU 检查，等待新的约 1–2 小时 GPU 安静窗口。[PR #87](https://github.com/nanake-lab/nemu/pull/87) 保持草稿，不合并、不取下一卡。上次最小窗口已结束并通知用户恢复 runner，不沿用该次确认。
 
-最重要的已测与未测结论见 [SMOKE-REPORT.md](SMOKE-REPORT.md)：本次三条短输入的零向量末个 prefill logits 字节一致、生成 token 一致；显式清 KV 后，逐请求更新与 fresh 上下文结果一致。位置差的实际影响、方向重提取、完整速度/IRL/同驻仍未实测，不能从 API 成功推断。
+本分支已 merge `origin/main` 的 `9ada24b`，重新读了变动后的 ARCHITECTURE；本卡、AGENTS、CONTRACTS、Echo Core README 未变化。新增 ADR 0026 的持续认知不改变本卡单请求测量的范围；这些数据不能作为持续运行验收。
+
+## 最重要的注入结论
+
+| 问题 | 实测证据及边界 |
+| --- | --- |
+| 零调制 | 三条中/英/日短输入中，未装向量、全零、撤除三臂的**末个 prefill logits 字节一致，最大差 0**；各生成 3 token（含 EOS）也一致。尚未完成逐 decode 位置的全 logits 对照，不能扩大为任意输入一致 |
+| 每请求更新 | 同一已加载模型/上下文连续 A→B→清除→A，设置/清除 API 18 次全部返回 0；A 重复与 fresh-A 的末个 prefill logits 最大差均为 0。每请求**显式清 KV**。A/B 是 ±单位基向量；没有自动 KV 失效、并发或正式方向通路结论 |
+| 位置差异 | P0-07 在零起算第 17 层 attention 残差后、FFN norm 前；实际 b11669 的 Qwen3 图在 FFN 和第二次残差后应用 control vector。静态位置不同；同向量/同掩码的实际效果**未实测** |
+| token 掩码 | 旧探针仅改最后 prefill 位置与每个 decode。原生向量广播的实际覆盖及与最后位置掩码的配对**未实测** |
+| 新位置重提取 | 准备使用 P0-07 原有三语 calm/excited 对比样本在两位置提取；**未实测**。不替代 v2.0 §9.5–9.6 的全部方向、三语单调性和能力无损验证，不能批准迁移 |
+
+完整最小数据与失败见 [SMOKE-REPORT.md](SMOKE-REPORT.md)。A 对 plain / B 对 A 的最大 logits 差分别为 zh 0.666821 / 0.677299、en 0.642494 / 0.532833、ja 0.797075 / 0.669366；这是向量实际影响 logits 的证据，不能据此判断概念行为正确。
 
 ## 交付物
 
-- [CPU 转换库存](conversion-20261026/inventory.json)、[三文件二次哈希](conversion-20261026/recheck.json)、[固定环境与许可元数据](conversion-20261026/environment.json)、[转换命令和原始日志](conversion-20261026/logs/)；所有阶段退出 0。Q4_K_M 2,497,279,104 bytes；Q8_0 4,280,403,584 bytes。中间 BF16 和两个 GGUF 只在 D 盘缓存，未入 Git。
-- `spikes/carrier-engine/prepare_gguf.ps1`、`requirements-convert.in/.lock`、`download_conversion_source.py`：同修订 CPU 转换、固定依赖和逐 blob 源码核验。生成锁文件保留所有 wheel 哈希，不手工缩减。
-- `spikes/carrier-engine/smoke.cpp`、`summarize_smoke.py`：[21 请求原始证据与限界](SMOKE-REPORT.md)。模型/引擎没有写入任何权威存储。
+- [转换及二次哈希](conversion-20261026/inventory.json)：同一 Qwen 修订 `cdbee75f17c01a7cc42f958dc650907174af0554`，BF16、Q4_K_M、Q8_0 三产物在 D 盘缓存。Q4_K_M 2,497,279,104 bytes；Q8_0 4,280,403,584 bytes；转换四步退出 0。
+- [最小 CUDA 原始记录](smoke-gpu-03/)：21 请求、原始 logits、token、激活配置、WDDM、stdout/stderr 和源码快照。
+- [完整测量准备](full-preparation-20261026/)：CPU 检查、编译记录、固定输入与依赖元数据；**不是 GPU 测量结果**。
+- `spikes/carrier-engine/injection_probe.cpp`、`native_probe.hpp`、`activation_trace.hpp`：同模型两位置/掩码配对、逐位置 logits、零调制自由生成、连续更新/fresh 对照、重提取可行性；尚未运行。回调的 observation/setter 组合为实验方法，不能仅因编译通过就宣称可用。
+- `benchmark_plan.py`、`benchmark_native.py`、`http_probe.py`、`full_window.py`：每量化 4 条排除预热、20 条固定句、50 条无约束旧诊断、200 条原 wire schema、200 条紧凑 schema。保持原输入、模板和独立完整 schema/来源校验；原始 SSE、计时、token 和失败逐条保留。顺序执行，不并载两量化。
+- `compact_codec.py`：只缩短字段、用枚举/来源编号编码，展开后回到原 SemanticCandidate；节点 ID、角色、外部来源和文本不丢失。仅 spike，不修改生产 IDL。
+- [模型与引擎登记](../../spikes/carrier-engine/manifest.json)、[分段下载](../../spikes/carrier-engine/DOWNLOADS.md)、[固定方案](../../spikes/carrier-engine/MEASUREMENT-PLAN.md)。
 
-- [MEASUREMENT-PLAN.md](../../spikes/carrier-engine/MEASUREMENT-PLAN.md)：同修订量化、优先注入实验、原/紧凑 IRL、显存与窗口计划。
-- [preflight.ps1](../../spikes/carrier-engine/preflight.ps1)：只读收集 runner、预期路径、输入 SHA-256；不加载引擎或模型、不查询 GPU。
-- [DOWNLOADS.md](../../spikes/carrier-engine/DOWNLOADS.md)、`download_model.py`、`download_engine.py`：分段下载和重启接续入口；不修改旧探针。
-- [引擎库存](preparation/downloads-20261025/engine-inventory.json) 与 [复核日志](preparation/downloads-20261025/engine-recheck.log)：两包共 658,026,325 字节，官方 SHA-256 两次匹配。缓存内解压库存记录 55 文件，均未执行；模型 metadata 与两项 Python 静态检查日志同目录保留。
-- [inventory.json](preparation/inventory-01/inventory.json)：2026-10-25 13:07 UTC（Perth 21:07）原始盘点；200 条 IRL（中/英/日 67/67/66）、输入绑定、D 盘剩余字节与 runner 状态。
-- [upstream/](preparation/upstream/) 和 [来源清单](preparation/upstream-manifest.json)：固定上游源码快照与 MIT 许可，只用于静态核对；没有安装或运行该引擎。`llama.h`、`llama-adapter.cpp` 超过 400 行，因保留未改写的上游证据而保持原样，不属于新增实现。
-
-## 注入相关结果（最重要）
-
-| 问题 | 当前能证明什么 | 运行时结论 |
-| --- | --- | --- |
-| 位置差异 | P0-07 的 [injection.py](../../workers/model-adapter/probe/injection.py) 在 attention 残差之后、FFN 的 `post_attention_layernorm` 之前加向量；固定上游 `qwen3.cpp:132–151` 先完成 FFN 和第二次残差，再 `build_cvec`。两个源码位置不同 | 同向量在两位置造成的激活/logits/token 差异**未实测**，不能称等价 |
-| token 掩码 | 旧探针只改完整 prefill 最后位置与逐个 decode；上游 `llama-adapter.cpp` 的 `apply_to` 是张量加法，没有旧探针的最后位置选择代码 | 实际 prefill/decode 覆盖、位置差与掩码差的配对**未实测** |
-| 零调制一致 | ADR 0012 §2.1 要求同权重、量化、内核配置，与未安装 hook/向量的路径比较 | 未安装/全零/撤除向量三臂逐 token/logits **未实测**；旧 Transformers 的零差不能代替 llama.cpp 证据 |
-| 每请求更新向量 | `llama.h:735–747` 声明 `llama_set_adapter_cvec(ctx, data, len, n_embd, il_start, il_end)`；源码有写入向量和清除分支 | 同一模型/上下文连续请求的更新、graph 复用、KV 清理、A→B→0→A 对新上下文的对照均**未实测**。不能仅据 API 宣称可行 |
-| 在新位置重提取 | v2.0 §9.5 要求重提取全部方向并按 §9.6 验证；计划单列新位置对比提取 | 提取与三语通路/能力无损均**未实测**；没有迁移许可或方向可沿用结论 |
-
-上游核对固定为 [`1a0b56cec73dac938e0602c974b21dc8e2862830`](https://github.com/ggml-org/llama.cpp/tree/1a0b56cec73dac938e0602c974b21dc8e2862830)：[Qwen3 图](https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/src/models/qwen3.cpp)、[control vector 实现](https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/src/llama-adapter.cpp)、[C API](https://github.com/ggml-org/llama.cpp/blob/1a0b56cec73dac938e0602c974b21dc8e2862830/include/llama.h)。只是源码核对，未编译，也未选作实际测量/生产版本。
-
-本轮实际下载官方 [v0.7.0](https://github.com/ggml-org/llama.cpp/releases/tag/v0.7.0) 指向的 [b11669](https://github.com/ggml-org/llama.cpp/releases/tag/b11669)，提交 `620d2225cc436ab0b001e3200e590e3b286ef9ab`。对应 `qwen3.cpp:128–147` 也已静态复核，仍是先 FFN、第二次残差、再 control vector；C API 位于 `llama.h:741`。初次核对快照与实际发行版明确分开，不把前者冒充二进制的构建源码。实际效果仍未实测。
+证据内的上游 `llama-adapter.cpp` 超过 400 行，保留固定提交原文与 MIT 许可便于核对；锁文件是生成的数据。新增实现均未超过 400 行。
 
 ## 与已有基线的对比
 
-以下旧值来自仓库已提交报告，均不是本轮重测，也不是不同引擎的配对因果结论。没有为缺失的 llama.cpp 数字补估算。
+旧值来自 [P0-08 LOCAL-TIMING](../P0-08/review-r1/LOCAL-TIMING.md) 和 [复审报告](../P0-08/REVIEW-R1-REPORT.md)，不是本轮重测。权重修订一致不代表量化、内核和 HTTP 观测开销一致，不能作纯引擎因果归因。
 
-| 指标 | Transformers 既有基线 | llama.cpp Q4_K_M | llama.cpp Q8_0 |
-| --- | --- | --- | --- |
-| P0-08 配对 50 条，无约束 prefill wall P50/P90 | 394.45 / 450.39 ms | 未实测 | 未实测 |
-| 同组首 token P50/P90 | 396.67 / 452.50 ms | 未实测 | 未实测 |
-| 同组 decode 速率 P50，无/有约束 | 21.18 / 13.55 token/s | 未实测 | 未实测 |
-| 同组完成 P50，无/有约束 | 9905.26 / 15389.07 ms | 未实测 | 未实测 |
-| 原本地 200 条 schema / 来源检查 | 192/200 / 169/200 | 未实测 | 未实测 |
-| 紧凑 schema 输出 token/完成时间/展开后合格率 | 没有本卡对应基线 | 未实测 | 未实测 |
-| 载体单独显存 | 没有本卡对应单载体基线 | 未实测 | 未实测 |
-| GPT-SoVITS V5 + 渲染 + 载体显存 | 未实测 | 未实测 | 未实测 |
+| 指标 | 已有 Transformers 基线 | llama.cpp Q4_K_M / Q8_0 |
+| --- | --- | --- |
+| 50 条无约束 prefill wall P50/P90 | 394.45 / 450.39 ms | 未实测 |
+| 同组 TTFT P50/P90 | 396.67 / 452.50 ms | 未实测 |
+| 同组 decode P50，无/有约束 | 21.18 / 13.55 token/s | 未实测 |
+| 同组完成 P50，无/有约束 | 9905.26 / 15389.07 ms | 未实测 |
+| 原本地 200 条 schema / 来源检查 | 192/200 / 169/200 | 未实测 |
+| 紧凑 schema 输出 token/时间/展开合格率 | 无对应旧基线 | 未实测 |
+| 载体单独显存 | 无对应单载体基线 | Q4 最小短输入专用最大 3,196,669,952 + 共享最大 100,663,296 = **3,297,333,248 bytes（3.297 GB）**；Q8 未实测 |
+| GPT-SoVITS V5 + 渲染 + 载体 | 未实测 | 未实测 |
 
-基线来源：[P0-08 LOCAL-TIMING](../P0-08/review-r1/LOCAL-TIMING.md)、[复审报告](../P0-08/REVIEW-R1-REPORT.md)。原 200 条与 50 条诊断总体分别列出；旧有 8 条日文解析失败、49/50 的配对组 schema 结果仍保留，未以新证据覆盖。
-
-模型下载完成证据：[最终库存](preparation/downloads-20261025/model-inventory.json)、[原始下载日志](preparation/downloads-20261025/model-download.log)、[2026-10-26 逐文件复核](preparation/downloads-20261025/model-recheck-20261026.json)。三个 safetensors 共 8,044,982,000 字节；12 个最终文件的大小和 SHA-256 全部重新匹配。网络重试与全部分段仍保留在 D 盘缓存，不删改。复核仅哈希读取，未运行模型。
+上述 Q4 显存按 ADR 0012 的两个独立采样峰值相加：38 行、33 行匹配 PID；不是连续峰值或完整 Nemu 同驻通过。限定路径盘点未发现 GPT-SoVITS V5 部署，按用户指示先只测载体，不部署替代声音模型，不把第三方约 3.5 GB 与本机数字相加。
 
 ## 验收
 
-| 命令或检查 | 结果 | 证据 |
+| 检查 | 当前结果 | 证据 |
 | --- | --- | --- |
-| `pwsh -NoProfile -File spikes/carrier-engine/preflight.ps1 -OutputDirectory reports/P0-10/preparation/inventory-01` | 退出 0，仅盘点完成。Listener PID 43336 存在；PATH 与预期路径无引擎/量化文件 | inventory.json |
-| 上游源码读取与 SHA-256 | 固定提交 4 文件已保存；不是运行时验收 | upstream-manifest.json |
-| 准备材料机械复核 | diff 检查退出 0；PowerShell 语法错误 0；两个 JSON 可解析；上游哈希 4/4、输入绑定 16/16 一致；改动均在本卡代码/报告目录 | 角色返回记录与上述原始 JSON |
-| 两个下载入口 Ruff / strict mypy | 通过；复用既有 ruff 0.15.6、mypy 1.20.2，无新依赖；缓存均在 D 盘 | downloads-20261025/*-downloaders-01.log |
-| 官方引擎档案下载/复核 | 两包大小与 SHA-256 2/2 匹配；复用已下载文件重跑退出 0 | engine-inventory.json、engine-recheck.log |
-| 本卡速度、两量化、200 原 schema、紧凑 schema | **未实测**，模型/引擎前置未具备 | BLOCKED.md |
-| 注入位置配对、零调制、每请求更新 | **未实测** | BLOCKED.md |
-| 载体/GPT-SoVITS V5/渲染显存 | **未实测** | BLOCKED.md |
-| 全语言工作区检查、CI | 本卡尚无业务实现，未运行整库静态/测试；不声称 CI 全绿或任务完成 | 本报告状态 |
-
-限定只读盘点未发现 GPT-SoVITS V5 部署，故下一次按用户指示先只测载体。ADR 0027 的约 3.5 GB 是第三方评测转述，未实测，不与载体数字相加替代同驻数据。旧 Qwen3-TTS 缓存不能代替本次 TTS 对象。
-
-准备时 Context7 返回月度额度耗尽；改读官方源码。GitHub 匿名 release API 返回 rate limit；没有反复重试、安装替代工具、获取凭据或把空响应当作已固定 release。源码 HEAD 通过 `git ls-remote` 固定。两项工具读取限制不代表引擎或模型性能失败。
-
-机械盘点使用 `routine_reporter` 角色名，配置要求 Luna/max，子代理只读返回素材，主代理核对并生成原始预检。没有委派判断或重负载；本地 TOML 自动加载能力未单独验证。
-
-本目录和 spike 的局部 `.gitattributes` 保留原始证据与预检脚本字节，避免 Git 的 CRLF/LF 转换使已记录 SHA-256 失效；不修改全局 Git 配置。
-保留 CRLF 原字节后的首次 diff 空白检查将 CR 行尾标为 trailing whitespace；已只对该证据目录声明 `cr-at-eol`，保留正常的尾随空格检查，没有改写原始 JSON 或哈希。
+| 原始模型 12 文件、引擎 2 归档重新哈希 | 全部匹配 | preparation/downloads-20261025/ |
+| CPU 转换、Q4/Q8 量化、三 GGUF 重哈希 | 全部完成 | conversion-20261026/ |
+| 最小 CUDA 探针 | native 与 WDDM sampler 退出 0；37/37 层上 GPU | smoke-gpu-03/ |
+| 失败保留 | run-01 因探针 DLL 搜索配置落到 CPU，不作 GPU 结果；run-02 绑定函数到错误 DLL，退出 1。修正探针后 run-03 有 CUDA 证据 | smoke-cpu-fallback-01/、smoke-api-binding-02/、SMOKE-REPORT.md |
+| 本卡全部 Python Ruff / strict mypy | 12 文件通过 | full-preparation-20261026/，20261026-04 日志 |
+| schema 往返、流式计时/缓存/截断/空响应 | 6 项 CPU unittest 通过 | 同目录 unittest-04.log |
+| PowerShell AST / C++ `/W4 /WX` | 3 脚本语法错误 0；最终原生探针编译退出 0 | 同目录 |
+| CPU 准备过程失败 | 类型收窄、测试读取未显式 UTF-8、C++ int→float 警告等均修正；原始失败日志保留；不是硬件性能结果 | 同目录历史检查日志 |
+| 完整位置、逐 token、一致更新、重提取 | **未实测** | BLOCKED.md |
+| 两量化速度、原/紧凑 IRL、长输入显存 | **未实测** | BLOCKED.md |
+| 整库 TS/Rust/业务测试及当前 head CI | 未运行、不声称通过；本卡改动仅独立 Python/C++ spike 与报告 | PR 仍为草稿 |
 
 ## 规格对照
 
-| 条款 | 本卡安排 | 当前证据 |
+| 条款 | 实现/证据 | 尚欠 |
 | --- | --- | --- |
-| P0-10 步骤 1–4 | 量化/注入/IRL/显存计划 | 只有预检，所有测量未实测 |
-| v2.0 §9.1、§9.5–9.6；I17 | 方向绑定当前载体配置；换位置/引擎不能沿用旧通路批准 | 静态位置核对，不是迁移通过 |
-| ADR 0012 §2.1 / §2.2 | 同配置零调制；专用/共享各峰值相加 | 新引擎未实测 |
-| J05 / m 变化后的缓存失效 | 同上下文更新与 fresh 对照，显式 KV 清理 | 未实测 |
-| AGENTS §9 | 先报告内容与时间、用户停 runner、入口复查 | Listener 在线，未启动 GPU |
+| P0-10 步骤 1–4 | 两量化、最小载体运行、完整准备脚本 | 完整速度/IRL/注入测量 |
+| v2.0 §9.1、§9.5–9.6 | 配对提取计划；无权威存储或配置改动 | 全部方向、单调性与能力验收不在本卡批准范围 |
+| ADR 0012 §2.1/§2.2 | 同配置零向量最小对照、WDDM 独立峰值 | 逐位置/完整载荷、同驻 |
+| 每事件 m 更新与 KV | 库实际调用；显式清 KV + fresh-A | 完整逐位置配对；未证明自动失效 |
+| AGENTS §9 | 最小窗口用户确认、入口查无 Listener/Worker，已结束；下一窗口另申请 | 新的完整窗口 |
 
 ## 新增依赖
 
-无已运行的新增引擎/模型依赖。下载用系统 curl 8.13.0（curl license）与 Python 3.12 标准库（PSF），没有安装新下载工具。准备的 llama.cpp `b11669` / `620d2225cc436ab0b001e3200e590e3b286ef9ab` 为 MIT，主程序与 CUDA 12.4 runtime 档案已下载/解压；包内含 LLVM OpenMP 许可和 NVIDIA CUDA DLL，后者受 NVIDIA 条款约束，不声称整个二进制包仅为 MIT，也不纳入生产分发。固定 Qwen 模型为 Apache-2.0，原始文件已全部下载并核验，BF16/Q4_K_M/Q8_0 三产物也已二次核验。转换使用独立 CPU 环境：torch 2.11.0+cpu、transformers 4.57.6、numpy 2.2.6、sentencepiece 0.2.2、protobuf 4.25.9，以及同提交 gguf 0.19.0 源码；28 个包的完整版本、License-Expression/classifiers/legacy 元数据见 conversion-20261026/environment.json。certifi 与 tqdm 元数据含 MPL-2.0，regex 含 CNRI-Python；只用于独立转换工具，不新增产品运行时或分发批准。
+| 名称 | 版本 | 许可与用途 |
+| --- | --- | --- |
+| llama.cpp | b11669 / `620d2225` | 源码 MIT；官方 CUDA 12.4 包还含 LLVM OpenMP / NVIDIA 条款；本地测量，不批准整包生产分发 |
+| Qwen3-4B-Instruct-2507 | `cdbee75f` | Apache-2.0；固定载体及量化派生 |
+| CPU 转换环境 | torch 2.11.0+cpu、transformers 4.57.6、numpy 2.2.6、sentencepiece 0.2.2、protobuf 4.25.9、gguf 0.19.0 | 完整 28 包许可元数据见 conversion-20261026/environment.json；torch 无 CUDA。certifi/tqdm 含 MPL-2.0，regex 含 CNRI-Python；工具环境，无产品运行时依赖或分发批准 |
+| 独立 schema 校验 | jsonschema 4.26.0、attrs 26.1.0、jsonschema-specifications 2025.9.1、referencing 0.37.0、rpds-py 2026.9.1 | 这五包 MIT；完整 33 包元数据见 full-preparation-20261026/environment.json；requirements-eval.lock 固定 wheel 哈希 |
+| 下载/检查/编译工具 | 系统 curl、Python 3.12.10、既有 Ruff 0.15.6 / mypy 1.20.2、MSVC 19.44.35229.0 | 仅工具；没有新装下载器、编译器或修改全局配置 |
 
 ## 待用户确认
 
-- [x] 用户已授权下载；按 BLOCKED.md 第 1 项在 D 盘准备，采用可接续分段。
-- [ ] （阻塞）准备完成后安排 15–20 分钟最小 GPU 实验窗口，并由用户停掉 runner；当前没有确认。
+- [x] 已授权分段下载、CPU 转换及完成的最小 GPU 窗口。
+- [ ] （阻塞）新的约 1–2 小时完整 GPU 安静窗口；需用户停 runner 并确认，再查 Listener/Worker 均不存在才启动。
+- [ ] （后续决策）依据全部实测在 P0-09 决定引擎/注入/IRL；当前没有自行选型或迁移。
 
 ## 后续建议（不在本任务范围内）
 
-- 本卡结束时只给 P0-09 引擎/注入/IRL 结论草稿，由用户另行决定 ADR；当前证据不足以给出这些选型结论。
-- GPT-SoVITS V5 的部署/适配由声音工作处理；本卡不恢复暂停的 P4-02。
+- GPT-SoVITS V5 部署后另做实际同驻验证；本卡先载体单测符合用户明确降范围指示，不拿估算替代。
+- P5-31 仍需当前配置的全部方向、三语行为单调性和能力无损；三组对比样本只回答提取技术可行性。
