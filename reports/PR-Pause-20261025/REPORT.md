@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-已逐个发布暂停说明、创建 paused 标签并添加到 10 个 PR。全部仍开放、为草稿，保留 needs-user；未关闭或合并任何 PR，未继续原任务或领取新卡。看板修改已完成，等待本独立 PR 的 Ubuntu CI 和用户决定是否合并；正式看板尚未切换至本分支。
+已逐个发布暂停说明、创建 paused 标签并添加到 10 个 PR。全部仍开放、为草稿，保留 needs-user；未关闭或合并任何 PR，未继续原任务或领取新卡。看板修改已完成，代码提交 aa0b5c4009a1c932301de8a1dfdb06362cb742e9 的 Ubuntu CI 全部成功；独立 PR #85 等用户决定是否合并，正式看板尚未切换至本分支。本次收尾提交只更新报告和 CI 结果证据，不改已验证代码；按现有 paths-ignore 不再重复触发 CI。
 
 ## 暂停处理
 
@@ -37,7 +37,8 @@
 | python -m unittest discover -s tools/status -p 'test_*.py' -v | 7 passed | tools/status/test_build_status.py；Ubuntu CI 新增同命令 |
 | 当前 GitHub 数据新旧逻辑计算 | 6 张卡暂停；10 个暂停 PR 无提醒；依赖与完成数保持 | before.json、after.json |
 | Prettier board.html / ci.yml；git diff --check | 通过 | 本机静态检查 |
-| Ubuntu CI | 提交后核验，结果见本 PR Checks | 只运行 ci.yml 的 ubuntu-latest 作业 |
+| Ubuntu CI | 全部成功，含新增看板回归；源码提交 aa0b5c4 | [run 40188885709](https://github.com/nanake-lab/nemu/actions/runs/40188885709)、ci.json；仅 ubuntu-latest 作业 |
+| 看板 API 与浏览器脚本语法 | 实时 API 返回 200、10 个暂停 PR、6 张暂停卡、暂停卡提醒为 0；脚本语法通过 | 直接调用 serve_board.board_json()；Node new Function 校验内嵌脚本 |
 | Windows 自托管 Runner | 不触发 | windows.yml 显式排除 tools/status/**；本 PR 其他改动仅报告与 ci.yml，均不匹配其路径过滤 |
 
 ## 新增依赖
@@ -46,7 +47,7 @@
 
 ## 待用户确认
 
-- 本独立 PR 是否合并；按本次要求不自动合并。
+- [PR #85](https://github.com/nanake-lab/nemu/pull/85) 是否合并；保留 needs-user，按本次要求不自动合并。
 - 9 个 Echo Core PR 的定义工作、后续范围及何时恢复，由用户另行决定；本次不批准任何定义、ADR 或旧验收条目。
 - #45 等待声音模型选型及恢复指示。
 
