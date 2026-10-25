@@ -13,6 +13,7 @@ import { ChannelManager } from './channels.js';
 import { TrayManager } from './tray.js';
 import { ShortcutManager } from './shortcuts.js';
 import { DesktopLogger } from './logger.js';
+import { startShellSense } from '../sense/runtime.js';
 
 app.setName('Nemu');
 
@@ -51,6 +52,7 @@ if (!gotSingleInstanceLock) {
   let voice: VoiceProcess | null = null;
   let appBus: AppBus | null = null;
   let settingsStore: SettingsStore | null = null;
+  let stopSense: (() => void) | undefined;
 
   async function bootstrap(): Promise<void> {
     logger = new DesktopLogger();
@@ -96,6 +98,22 @@ if (!gotSingleInstanceLock) {
     });
     channelManager.establishChannels(stageWin, panelWin);
 
+    // P6-08: sensing is optional; startup failure must not stop the desktop shell.
+    try {
+      stopSense = startShellSense({
+        bus: appBus,
+        sendStage: (type, payload) => channelManager?.sendStageCommand(type, payload),
+        settings: {
+          idleThresholdMs: 60_000,
+          quietHours: () => settingsStore?.get().general.dnd === 'quietHours',
+        },
+        onFault: () => logger?.warn('Desktop sensing unavailable; using busy gate'),
+      });
+    } catch {
+      appBus.publish(appBus.createEvent('main', 'desktop.dnd', { state: 'busy' }));
+      logger.error('Desktop sensing could not start; desktop shell continues');
+    }
+
     trayManager = new TrayManager({
       stageWindowManager,
       panelWindowManager,
@@ -113,7 +131,7 @@ if (!gotSingleInstanceLock) {
 
     // Configure auto-launch setting
     try {
-      app.setLoginItemSettings({ openAtLogin: settings.general.openAtLogin });
+      if (!scratch) app.setLoginItemSettings({ openAtLogin: settings.general.openAtLogin });
     } catch (err) {
       logger.warn('Failed to set login item settings', { error: String(err) });
     }
@@ -201,6 +219,12 @@ if (!gotSingleInstanceLock) {
 
     try {
       logger?.info('Cleaning up Nemu desktop shell and child processes...');
+      try {
+        stopSense?.();
+      } catch {
+        logger?.warn('Desktop sensing cleanup failed');
+      }
+      stopSense = undefined;
       shortcutManager?.unregisterAll();
       trayManager?.destroy();
       voice?.stop();
@@ -217,7 +241,7 @@ if (!gotSingleInstanceLock) {
   }
 
   app.on('before-quit', (event) => {
-    if (!isShuttingDown && supervisor) {
+    if (!isShuttingDown && (supervisor || stopSense)) {
       event.preventDefault();
       cleanShutdown().then(() => {
         app.quit();
