@@ -84,7 +84,7 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。她最重要�
 | `irl-worker` | Python | 提出 SemanticCandidate，以及情境吻合 M 的 μ、候选倾向与证据标注，都在 m = 0 下。IRL 后端二选一：本地（与载体共用模型）或远程（Codex「日常」档）；M 默认只用本地后端（6.9） |
 | `drive-worker` | Python | 天性评估 A：在 m = 0 下提出 a(e) |
 | `model-adapter` | Python + PyTorch（CUDA） | 模式 A、C 的载体：冻结 decoder + 显式残差注入；方向提取与验证；同时承担 IRL、A、M 的本地后端 |
-| `voice-sidecar` | Python + Qwen3-TTS | 流式合成，中、英、日 |
+| `voice-sidecar` | Python + TTS 模型（ADR 0027：目标 Breeze TTS 2，过渡 Ming-3.0-tts 0.5B） | 流式合成 |
 | `codex-bridge` | TypeScript + `codex app-server` | 模式 B 生成、模式 C 起草、IRL 远程后端、助手任务 |
 | `office-connector` | .NET 10 + COM | Word、Excel、PowerPoint 操作，是行动闸门下的连接器 |
 | Electron 主进程 | Electron + koffi | 守护以上所有进程、窗口与托盘、桌面感知、终端客户端、应用内总线 |
@@ -176,7 +176,7 @@ VRoid Studio（用户）→ VRM 1.0 → Blender 无头脚本：导入、校验�
 - **收音：** 默认按键说话，可选常开监听，可选唤醒词。
 - **识别：** SenseVoice，自动识别中、英、日（也支持粤语、韩语，不在验收范围内），把语言代码随文字上报。
 - **打断：** 回声消除后的 VAD 检测到开口，300 ms 内淡出停止。
-- **合成：** Qwen3-TTS。
+- **合成：** 见 ADR 0027：目标 Breeze TTS 2，过渡 Ming-3.0-tts 0.5B（2026-10-25 取代 Qwen3-TTS）。
   - 用 VoiceDesign 设计一个原创声音；运行时用 Base 模型按参考音频克隆。
   - 每种语言、每种语气各准备一段参考音频，经说话人相似度检查后定稿。
   - Base 模型不接受文字指令，语气从参考音频带出。支持文字指令的云端 TTS 则使用 `voice.json` 的指令表。
