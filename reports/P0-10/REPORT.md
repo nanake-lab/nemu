@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-**部分完成：前置盘点与静态注入位置核对完成，所有 GPU/运行时验收未实测。** 已从 `origin/main` `d66241672be5d3932c2d62daef5ec3754a6dc852` 建立 `task/P0-10-carrier-engine`，草稿 [PR #87](https://github.com/nanake-lab/nemu/pull/87) 认领。等用户决定 [BLOCKED.md](BLOCKED.md) 的模型/依赖准备方式，之后再安排 GPU 安静窗口；保持草稿，不请求最终审查、不转为可审查、不合并、不取下一卡。
+**部分完成：已按用户新指示开始分段下载，所有 GPU/运行时验收未实测。** 已从 `origin/main` `d66241672be5d3932c2d62daef5ec3754a6dc852` 建立 `task/P0-10-carrier-engine`，草稿 [PR #87](https://github.com/nanake-lab/nemu/pull/87) 认领。2026-10-25 用户授权下载，采用既有 8 MiB 分段/请求重试与整文件哈希校验，存入 D 盘缓存；下载完成后再安排 GPU 安静窗口。[BLOCKED.md](BLOCKED.md) 保留剩余前置项。保持草稿，不请求最终审查、不转为可审查、不合并、不取下一卡。
 
 完整阅读 AGENTS、ARCHITECTURE、CONTRACTS、Echo Core README 以及本卡列出的 P0-09、ADR 0012、P0-07、P0-08 和 v2.0 §9.1/9.5。代码范围仅 `spikes/carrier-engine/`；本目录按用户要求与 AGENTS §6 交报告、证据。未修改任务卡、生产配置、IDL、worker 或用户/系统设置。
 
@@ -10,6 +10,7 @@
 
 - [MEASUREMENT-PLAN.md](../../spikes/carrier-engine/MEASUREMENT-PLAN.md)：同修订量化、优先注入实验、原/紧凑 IRL、显存与窗口计划。
 - [preflight.ps1](../../spikes/carrier-engine/preflight.ps1)：只读收集 runner、预期路径、输入 SHA-256；不加载引擎或模型、不查询 GPU。
+- [DOWNLOADS.md](../../spikes/carrier-engine/DOWNLOADS.md)、`download_model.py`、`download_engine.py`：分段下载和重启接续入口；不修改旧探针。
 - [inventory.json](preparation/inventory-01/inventory.json)：2026-10-25 13:07 UTC（Perth 21:07）原始盘点；200 条 IRL（中/英/日 67/67/66）、输入绑定、D 盘剩余字节与 runner 状态。
 - [upstream/](preparation/upstream/) 和 [来源清单](preparation/upstream-manifest.json)：固定上游源码快照与 MIT 许可，只用于静态核对；没有安装或运行该引擎。`llama.h`、`llama-adapter.cpp` 超过 400 行，因保留未改写的上游证据而保持原样，不属于新增实现。
 
@@ -75,11 +76,11 @@
 
 ## 新增依赖
 
-无已安装的运行时依赖。拟用于 spike 的 llama.cpp 为 MIT（仅保存源码快照）；固定 Qwen 模型为 Apache-2.0，尚未下载。转换/构建工具的精确版本与许可证待用户决定准备方式后固定；不在此引入生产依赖或另选模型。
+无已安装的运行时依赖。下载用系统 curl 8.13.0（curl license）与 Python 3.12 标准库（PSF），没有安装新下载工具。拟用于 spike 的 llama.cpp `b11669` / `620d2225cc436ab0b001e3200e590e3b286ef9ab` 为 MIT，主程序与 CUDA 12.4 runtime 档案下载中；二进制内的第三方依赖/许可证待解压登记，不在此声称仅 MIT。固定 Qwen 模型为 Apache-2.0，分段下载中。转换工具另固定，不引入生产依赖或另选模型。
 
 ## 待用户确认
 
-- [ ] （阻塞）按 BLOCKED.md 选模型/引擎准备方式。
+- [x] 用户已授权下载；按 BLOCKED.md 第 1 项在 D 盘准备，采用可接续分段。
 - [ ] （阻塞）准备完成后安排 15–20 分钟最小 GPU 实验窗口，并由用户停掉 runner；当前没有确认。
 
 ## 后续建议（不在本任务范围内）
