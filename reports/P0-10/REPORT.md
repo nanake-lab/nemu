@@ -2,9 +2,11 @@
 
 ## 当前状态
 
-**部分完成：模型分段下载正在运行，引擎两包已校验并解压，所有 GPU/运行时验收未实测。** 已从 `origin/main` `d66241672be5d3932c2d62daef5ec3754a6dc852` 建立 `task/P0-10-carrier-engine`，草稿 [PR #87](https://github.com/nanake-lab/nemu/pull/87) 认领。2026-10-25 用户授权下载，采用既有 8 MiB 分段/请求重试与整文件哈希校验，存入 D 盘缓存；模型/转换准备完成后再安排 GPU 安静窗口。[BLOCKED.md](BLOCKED.md) 保留剩余前置项。保持草稿，不请求最终审查、不转为可审查、不合并、不取下一卡。
+**部分完成：模型下载已完成（Perth 2026-10-25 23:14），本轮 12 文件重新 SHA-256 核验 12/12 一致，引擎两包已校验并解压，所有 GPU/运行时验收未实测。** 已从 `origin/main` `d66241672be5d3932c2d62daef5ec3754a6dc852` 建立 `task/P0-10-carrier-engine`，草稿 [PR #87](https://github.com/nanake-lab/nemu/pull/87) 认领。2026-10-25 用户授权下载，采用既有 8 MiB 分段/请求重试与整文件哈希校验，存入 D 盘缓存；模型/转换准备完成后再安排 GPU 安静窗口。[BLOCKED.md](BLOCKED.md) 保留剩余前置项。保持草稿，不请求最终审查、不转为可审查、不合并、不取下一卡。
 
 完整阅读 AGENTS、ARCHITECTURE、CONTRACTS、Echo Core README 以及本卡列出的 P0-09、ADR 0012、P0-07、P0-08 和 v2.0 §9.1/9.5。代码范围仅 `spikes/carrier-engine/`；本目录按用户要求与 AGENTS §6 交报告、证据。未修改任务卡、生产配置、IDL、worker 或用户/系统设置。
+
+本轮已 fetch 并 merge 最新 origin/main `c0517e5`；AGENTS、必读文档与 P0-10 卡无变化。下载进程已结束；GGUF 转换和 GPU 测量尚未开始。
 
 ## 交付物
 
@@ -46,6 +48,8 @@
 
 基线来源：[P0-08 LOCAL-TIMING](../P0-08/review-r1/LOCAL-TIMING.md)、[复审报告](../P0-08/REVIEW-R1-REPORT.md)。原 200 条与 50 条诊断总体分别列出；旧有 8 条日文解析失败、49/50 的配对组 schema 结果仍保留，未以新证据覆盖。
 
+模型下载完成证据：[最终库存](preparation/downloads-20261025/model-inventory.json)、[原始下载日志](preparation/downloads-20261025/model-download.log)、[2026-10-26 逐文件复核](preparation/downloads-20261025/model-recheck-20261026.json)。三个 safetensors 共 8,044,982,000 字节；12 个最终文件的大小和 SHA-256 全部重新匹配。网络重试与全部分段仍保留在 D 盘缓存，不删改。复核仅哈希读取，未运行模型。
+
 ## 验收
 
 | 命令或检查 | 结果 | 证据 |
@@ -81,7 +85,7 @@
 
 ## 新增依赖
 
-无已运行的新增引擎/模型依赖。下载用系统 curl 8.13.0（curl license）与 Python 3.12 标准库（PSF），没有安装新下载工具。准备的 llama.cpp `b11669` / `620d2225cc436ab0b001e3200e590e3b286ef9ab` 为 MIT，主程序与 CUDA 12.4 runtime 档案已下载/解压；包内含 LLVM OpenMP 许可和 NVIDIA CUDA DLL，后者受 NVIDIA 条款约束，不声称整个二进制包仅为 MIT，也不纳入生产分发。固定 Qwen 模型为 Apache-2.0，分段下载中。转换工具另固定，不引入生产依赖或另选模型。
+无已运行的新增引擎/模型依赖。下载用系统 curl 8.13.0（curl license）与 Python 3.12 标准库（PSF），没有安装新下载工具。准备的 llama.cpp `b11669` / `620d2225cc436ab0b001e3200e590e3b286ef9ab` 为 MIT，主程序与 CUDA 12.4 runtime 档案已下载/解压；包内含 LLVM OpenMP 许可和 NVIDIA CUDA DLL，后者受 NVIDIA 条款约束，不声称整个二进制包仅为 MIT，也不纳入生产分发。固定 Qwen 模型为 Apache-2.0，原始文件已全部下载并核验。转换工具另固定，不引入生产依赖或另选模型。
 
 ## 待用户确认
 
