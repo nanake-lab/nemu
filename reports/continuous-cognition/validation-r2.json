@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "scope": "documentation_only_not_runtime_or_behavior_acceptance",
+  "base_commit": "origin/main",
+  "source_mode": "git_checkout",
+  "checked_at": "2026-10-25T21:59:54.086378+08:00",
+  "checks": {
+    "unexpected_paths": [],
+    "baseline_register_blob_sha": "3c4806714f86e9df9966980f9b949fc624a4dedc",
+    "baseline_register_blob_matches": true,
+    "register_original_prefix_preserved": true,
+    "new_difference_ids": [
+      "COG-01",
+      "COG-02",
+      "COG-03",
+      "COG-04",
+      "COG-05",
+      "COG-06",
+      "COG-07"
+    ],
+    "markdown_files_checked": 5,
+    "relative_link_targets_checked": 14,
+    "git_diff_check_exit_code": 0
+  },
+  "files_sha256": {
+    "docs/ARCHITECTURE.md": "426afc1ea972f916612304c654e82c86cd65a06f547f5746f32193e51af0c9f5",
+    "docs/adr/0026-continuous-cognition.md": "26084181a79704901384336fd43f7a9cf167d30a7805c70bbbce41a0b0813626",
+    "docs/traceability/continuous-cognition.md": "f29c7febc56b51de78cd5763e309e60b8f54afe4099a9237cb5ed0caa48401e7",
+    "docs/traceability/diff-register.md": "988ab85ceb407b109620ffc217ba4dc0d424b729b416c5bf00a285cf1f36123c",
+    "reports/continuous-cognition/REPORT.md": "9a18f2711bcb767713000dcfaaa32439ae2f0ffd5a506da2f4b51c843263431d",
+    "reports/continuous-cognition/verify_docs.py": "1b87d2269aa00d12ae69d073446ccfaefdcd9e8c58addf61d180d90161d5d820"
+  },
+  "not_run": [
+    "runtime implementation",
+    "COG-A01..COG-A13",
+    "GPU/model benchmarks",
+    "full repository test suites",
+    "independent cross-review"
+  ],
+  "errors": []
+}
