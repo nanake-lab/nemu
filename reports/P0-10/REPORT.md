@@ -61,6 +61,7 @@
 机械盘点使用 `routine_reporter` 角色名，配置要求 Luna/max，子代理只读返回素材，主代理核对并生成原始预检。没有委派判断或重负载；本地 TOML 自动加载能力未单独验证。
 
 本目录和 spike 的局部 `.gitattributes` 保留原始证据与预检脚本字节，避免 Git 的 CRLF/LF 转换使已记录 SHA-256 失效；不修改全局 Git 配置。
+保留 CRLF 原字节后的首次 diff 空白检查将 CR 行尾标为 trailing whitespace；已只对该证据目录声明 `cr-at-eol`，保留正常的尾随空格检查，没有改写原始 JSON 或哈希。
 
 ## 规格对照
 
