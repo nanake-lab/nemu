@@ -48,7 +48,7 @@
 | --- | --- | --- |
 | `pwsh -NoProfile -File spikes/carrier-engine/preflight.ps1 -OutputDirectory reports/P0-10/preparation/inventory-01` | 退出 0，仅盘点完成。Listener PID 43336 存在；PATH 与预期路径无引擎/量化文件 | inventory.json |
 | 上游源码读取与 SHA-256 | 固定提交 4 文件已保存；不是运行时验收 | upstream-manifest.json |
-| 准备材料机械复核 | diff 检查退出 0；PowerShell 语法错误 0；两个 JSON 可解析；上游哈希 4/4、输入绑定 16/16 一致；11 条改动路径均在本卡代码/报告目录 | 角色返回记录与上述原始 JSON |
+| 准备材料机械复核 | diff 检查退出 0；PowerShell 语法错误 0；两个 JSON 可解析；上游哈希 4/4、输入绑定 16/16 一致；改动均在本卡代码/报告目录 | 角色返回记录与上述原始 JSON |
 | 本卡速度、两量化、200 原 schema、紧凑 schema | **未实测**，模型/引擎前置未具备 | BLOCKED.md |
 | 注入位置配对、零调制、每请求更新 | **未实测** | BLOCKED.md |
 | 载体/GPT-SoVITS V5/渲染显存 | **未实测** | BLOCKED.md |
@@ -59,6 +59,8 @@
 准备时 Context7 返回月度额度耗尽；改读官方源码。GitHub 匿名 release API 返回 rate limit；没有反复重试、安装替代工具、获取凭据或把空响应当作已固定 release。源码 HEAD 通过 `git ls-remote` 固定。两项工具读取限制不代表引擎或模型性能失败。
 
 机械盘点使用 `routine_reporter` 角色名，配置要求 Luna/max，子代理只读返回素材，主代理核对并生成原始预检。没有委派判断或重负载；本地 TOML 自动加载能力未单独验证。
+
+本目录和 spike 的局部 `.gitattributes` 保留原始证据与预检脚本字节，避免 Git 的 CRLF/LF 转换使已记录 SHA-256 失效；不修改全局 Git 配置。
 
 ## 规格对照
 
