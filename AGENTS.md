@@ -7,7 +7,7 @@
 Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 
 - **Echo Core：** 她的核心。用户设计的状态转移核心，Rust 实现，负责她的历史、短时状态、长期动力学和行动。
-- **桌面应用：** 她的身体与感官。Electron + three.js + @pixiv/three-vrm 负责渲染与桌面集成，sherpa-onnx 与 Qwen3-TTS 负责声音。
+- **桌面应用：** 她的身体与感官。Electron + three.js + @pixiv/three-vrm 负责渲染与桌面集成，sherpa-onnx 与 TTS 模型负责声音（ADR 0027：目标 Breeze TTS 2，过渡 GPT-SoVITS V5）。
 - **说话：** 三种模式：本地严格、云端投影、起草改写。
 - **助手：** 经 Codex app-server 接入。
 
