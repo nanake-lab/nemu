@@ -41,6 +41,7 @@ def main():
         "reports/continuous-cognition/validation-r3.json",
         "reports/continuous-cognition/validation-r4.json",
         "reports/continuous-cognition/validation-r5.json",
+        "reports/continuous-cognition/validation-r6.json",
     }
     if args.source_manifest:
         manifest = json.loads(args.source_manifest.read_text(encoding="utf-8"))
@@ -70,7 +71,7 @@ def main():
         errors.append("difference register does not preserve complete original byte prefix")
     added = current[len(original):].decode("utf-8")
     ids = re.findall(r"^\| (COG-\d+) \|", added, re.M)
-    if ids != [f"COG-{i:02}" for i in range(1, 11)]:
+    if ids != [f"COG-{i:02}" for i in range(1, 12)]:
         errors.append(f"unexpected new difference IDs: {ids}")
     markdown_paths = sorted(p for p in allowed if p.endswith(".md"))
     relative_links = 0
@@ -94,7 +95,7 @@ def main():
     check = subprocess.run(["git", "diff", "--check", compare_ref], cwd=root, capture_output=True, text=True)
     if check.returncode:
         errors.append(f"git diff --check exit {check.returncode}: {check.stdout}{check.stderr}")
-    inspected = sorted(allowed - {"reports/continuous-cognition/validation.json", "reports/continuous-cognition/validation-r2.json", "reports/continuous-cognition/validation-r3.json", "reports/continuous-cognition/validation-r4.json", "reports/continuous-cognition/validation-r5.json"})
+    inspected = sorted(allowed - {"reports/continuous-cognition/validation.json", "reports/continuous-cognition/validation-r2.json", "reports/continuous-cognition/validation-r3.json", "reports/continuous-cognition/validation-r4.json", "reports/continuous-cognition/validation-r5.json", "reports/continuous-cognition/validation-r6.json"})
     result = {
         "status": "passed" if not errors else "failed",
         "scope": "documentation_only_not_runtime_or_behavior_acceptance",
