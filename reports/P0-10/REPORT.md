@@ -2,13 +2,15 @@
 
 ## 当前状态
 
-**部分完成：模型下载已完成（Perth 2026-10-25 23:14），本轮 12 文件重新 SHA-256 核验 12/12 一致，引擎两包已校验并解压，所有 GPU/运行时验收未实测。** 已从 `origin/main` `d66241672be5d3932c2d62daef5ec3754a6dc852` 建立 `task/P0-10-carrier-engine`，草稿 [PR #87](https://github.com/nanake-lab/nemu/pull/87) 认领。2026-10-25 用户授权下载，采用既有 8 MiB 分段/请求重试与整文件哈希校验，存入 D 盘缓存；模型/转换准备完成后再安排 GPU 安静窗口。[BLOCKED.md](BLOCKED.md) 保留剩余前置项。保持草稿，不请求最终审查、不转为可审查、不合并、不取下一卡。
+**部分完成：两量化转换完成，Q4_K_M 的最小 CUDA 实验完成；完整验收仍未完成。** [PR #87](https://github.com/nanake-lab/nemu/pull/87) 保持草稿。用户已授权继续和本次 15–20 分钟最小窗口；结束后已通知恢复 runner。现在准备完整位置对比、两量化速度和 200 条 IRL 测量，下一次 GPU 窗口需另行安排。不自行选型或合并，不取下一卡。
 
-完整阅读 AGENTS、ARCHITECTURE、CONTRACTS、Echo Core README 以及本卡列出的 P0-09、ADR 0012、P0-07、P0-08 和 v2.0 §9.1/9.5。代码范围仅 `spikes/carrier-engine/`；本目录按用户要求与 AGENTS §6 交报告、证据。未修改任务卡、生产配置、IDL、worker 或用户/系统设置。
-
-本轮已 fetch 并 merge 最新 origin/main `c0517e5`；AGENTS、必读文档与 P0-10 卡无变化。下载进程已结束；GGUF 转换和 GPU 测量尚未开始。
+最重要的已测与未测结论见 [SMOKE-REPORT.md](SMOKE-REPORT.md)：本次三条短输入的零向量末个 prefill logits 字节一致、生成 token 一致；显式清 KV 后，逐请求更新与 fresh 上下文结果一致。位置差的实际影响、方向重提取、完整速度/IRL/同驻仍未实测，不能从 API 成功推断。
 
 ## 交付物
+
+- [CPU 转换库存](conversion-20261026/inventory.json)、[三文件二次哈希](conversion-20261026/recheck.json)、[固定环境与许可元数据](conversion-20261026/environment.json)、[转换命令和原始日志](conversion-20261026/logs/)；所有阶段退出 0。Q4_K_M 2,497,279,104 bytes；Q8_0 4,280,403,584 bytes。中间 BF16 和两个 GGUF 只在 D 盘缓存，未入 Git。
+- `spikes/carrier-engine/prepare_gguf.ps1`、`requirements-convert.in/.lock`、`download_conversion_source.py`：同修订 CPU 转换、固定依赖和逐 blob 源码核验。生成锁文件保留所有 wheel 哈希，不手工缩减。
+- `spikes/carrier-engine/smoke.cpp`、`summarize_smoke.py`：[21 请求原始证据与限界](SMOKE-REPORT.md)。模型/引擎没有写入任何权威存储。
 
 - [MEASUREMENT-PLAN.md](../../spikes/carrier-engine/MEASUREMENT-PLAN.md)：同修订量化、优先注入实验、原/紧凑 IRL、显存与窗口计划。
 - [preflight.ps1](../../spikes/carrier-engine/preflight.ps1)：只读收集 runner、预期路径、输入 SHA-256；不加载引擎或模型、不查询 GPU。
@@ -85,7 +87,7 @@
 
 ## 新增依赖
 
-无已运行的新增引擎/模型依赖。下载用系统 curl 8.13.0（curl license）与 Python 3.12 标准库（PSF），没有安装新下载工具。准备的 llama.cpp `b11669` / `620d2225cc436ab0b001e3200e590e3b286ef9ab` 为 MIT，主程序与 CUDA 12.4 runtime 档案已下载/解压；包内含 LLVM OpenMP 许可和 NVIDIA CUDA DLL，后者受 NVIDIA 条款约束，不声称整个二进制包仅为 MIT，也不纳入生产分发。固定 Qwen 模型为 Apache-2.0，原始文件已全部下载并核验。转换工具另固定，不引入生产依赖或另选模型。
+无已运行的新增引擎/模型依赖。下载用系统 curl 8.13.0（curl license）与 Python 3.12 标准库（PSF），没有安装新下载工具。准备的 llama.cpp `b11669` / `620d2225cc436ab0b001e3200e590e3b286ef9ab` 为 MIT，主程序与 CUDA 12.4 runtime 档案已下载/解压；包内含 LLVM OpenMP 许可和 NVIDIA CUDA DLL，后者受 NVIDIA 条款约束，不声称整个二进制包仅为 MIT，也不纳入生产分发。固定 Qwen 模型为 Apache-2.0，原始文件已全部下载并核验，BF16/Q4_K_M/Q8_0 三产物也已二次核验。转换使用独立 CPU 环境：torch 2.11.0+cpu、transformers 4.57.6、numpy 2.2.6、sentencepiece 0.2.2、protobuf 4.25.9，以及同提交 gguf 0.19.0 源码；28 个包的完整版本、License-Expression/classifiers/legacy 元数据见 conversion-20261026/environment.json。certifi 与 tqdm 元数据含 MPL-2.0，regex 含 CNRI-Python；只用于独立转换工具，不新增产品运行时或分发批准。
 
 ## 待用户确认
 
