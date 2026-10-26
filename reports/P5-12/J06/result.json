@@ -1,0 +1,59 @@
+{
+  "result": "passed",
+  "tests": [
+    "test modulation::tests::boundaries::changed_concept_and_misaligned_x_are_not_silently_repaired ... ok",
+    "test modulation::tests::boundaries::invalid_state_and_reversed_time_fail_without_reusing_a_previous_result ... ok",
+    "test modulation::tests::boundaries::j06_budget_rounding_matches_independent_exact_rational_vectors ... ok",
+    "test modulation::tests::boundaries::j06_cancellation_and_zero_state_do_not_evade_configuration_budget ... ok",
+    "test modulation::tests::boundaries::j06_individual_beta_and_nonfinite_inputs_are_rejected ... ok",
+    "test modulation::tests::boundaries::j06_outward_sum_catches_sub_ulp_over_budget_without_inflating_exact_sum ... ok",
+    "test modulation::tests::boundaries::malformed_references_duplicate_ids_and_empty_concepts_are_refused ... ok",
+    "test modulation::tests::boundaries::validation_cannot_be_reused_for_another_model_tokenizer_carrier_or_direction_set ... ok",
+    "test modulation::tests::deterministic_projection_replay_and_input_immutability ... ok",
+    "test modulation::tests::fixed_dyadic_samples_obey_absolute_bound_and_nonconstant_j ... ok",
+    "test modulation::tests::generated_numeric_and_body_types_pass_existing_canonical_codec ... ok",
+    "test modulation::tests::j06_candidates_cannot_affect_m_even_with_available_direction ... ok",
+    "test modulation::tests::j06_positive_two_layers_match_independent_exact_coefficients ... ok",
+    "test modulation::tests::j06_unvalidated_and_missing_directions_are_excluded_and_reported ... ok",
+    "test modulation::tests::readouts::body_clamps_all_three_axes_and_has_no_learned_component ... ok",
+    "test modulation::tests::readouts::body_nonfinite_or_overflow_is_not_hidden_by_clipping ... ok",
+    "test modulation::tests::readouts::f_disabled_is_explicitly_rehearsal_only_and_matches_zero_readout ... ok",
+    "test modulation::tests::readouts::numerical_zero_modulation_keeps_body_neutral_even_for_nonzero_x ... ok",
+    "test modulation::tests::storage_and_configuration_order_do_not_change_numeric_results ... ok",
+    "test modulation::tests::zero_and_rest_are_distinct_and_do_not_subtract_baseline ... ok"
+  ],
+  "scope": "P5-12 local numeric structure only",
+  "pair_argument_orders": 2,
+  "task_complete": false,
+  "raw_log": "../verification/kernel-20261026-183537-213.log",
+  "pending": [
+    {
+      "reason": "V2-116",
+      "result": "not_run",
+      "item": "Production ModulationEnvelopeV2 and canonical effect receipt"
+    },
+    {
+      "reason": "V2-116, P5-31",
+      "result": "not_run",
+      "item": "Genesis resource provenance and direction qualification"
+    },
+    {
+      "reason": "V2-116",
+      "result": "not_run",
+      "item": "Proactivity readout and full two-readout acceptance"
+    },
+    {
+      "reason": "Outside P5-12 numeric scope",
+      "result": "not_run",
+      "item": "Actual carrier/GPU/behavior acceptance"
+    }
+  ],
+  "independent_beta_pairs": 308,
+  "replay_repetitions": 64,
+  "generated_utc": "2026-10-26T10:42:56.0949805Z",
+  "acceptance": "J06",
+  "new_modulation_tests": 20,
+  "bounds_fixture_sha256": "5c8f3752af74734bd197353376db3aaf06d08f931de066d02a06e49c236f3355",
+  "fixed_dyadic_samples": 1024,
+  "input_manifest": "../verification/kernel-20261026-183537-213.json"
+}
