@@ -7,8 +7,11 @@ use std::sync::OnceLock;
 
 #[derive(Clone)]
 pub(crate) struct Record {
+    pub id: String,
     pub event: EventEnvelope,
     pub event_ref: ObjectRef,
+    pub content: ObjectRef,
+    pub reaction: Option<crate::memory::ReactionOrigin>,
     pub text: String,
     pub entities: BTreeSet<String>,
     pub mentions: Vec<(String, String)>,
@@ -37,6 +40,20 @@ pub(crate) fn payload_tag(name: &str) -> Result<Option<String>> {
         "speech_delivery" => Some(tag::<SpeechDelivery>()?),
         "body_action" => Some(tag::<BodyActionResult>()?),
         "terminal" => Some(tag::<TerminalMaintenance>()?),
+        "nature_appraisal" | "past_reaction:nature_appraisal" => {
+            Some(tag::<NatureAppraisalRecord>()?)
+        }
+        "situation_match" | "past_reaction:situation_match" => Some(tag::<SituationMatchRecord>()?),
+        "tendency_candidate" | "past_reaction:tendency_candidate" => {
+            Some(tag::<TendencyCandidateRecord>()?)
+        }
+        "teaching_annotation" | "past_reaction:teaching_annotation" => {
+            Some(tag::<TeachingAnnotation>()?)
+        }
+        "lie_annotation" | "past_reaction:lie_annotation" => Some(tag::<LieAnnotation>()?),
+        "same_matter_annotation" | "past_reaction:same_matter_annotation" => {
+            Some(tag::<SameMatterAnnotation>()?)
+        }
         _ => None,
     })
 }
@@ -114,6 +131,13 @@ pub(crate) fn records<L: LineageKind>(
         let mut entities = BTreeSet::new();
         let mut mentions = Vec::new();
         for r in &tx.accepted_results {
+            if let Some((event_id, _, _)) = crate::memory::reaction(reader, r)? {
+                aliases
+                    .entry(hex(&r.digest.0))
+                    .or_default()
+                    .insert(event_id);
+                continue;
+            }
             if r.object_type != tag::<SemanticGraph>()? {
                 continue;
             }
@@ -141,6 +165,9 @@ pub(crate) fn records<L: LineageKind>(
             }
         }
         records.push(Record {
+            id: event.id.clone(),
+            content: event.payload_ref.clone(),
+            reaction: None,
             event,
             event_ref: tx.staged_h.clone(),
             text: original,
@@ -201,5 +228,6 @@ pub(crate) fn records<L: LineageKind>(
     if transactions.is_empty() {
         return Err(Error::Invalid("empty accepted prefix".into()));
     }
+    crate::memory::append_reactions(reader, transactions, &mut records)?;
     Ok(records)
 }

@@ -42,6 +42,9 @@ pub struct World {
     pub store: Store<Experiment>,
     cap: CommitCapability<Experiment>,
     pub root: TemporaryRoot,
+    pub all_reactions: bool,
+    pub reaction_target: Option<String>,
+    pub event_time: Option<i64>,
 }
 impl World {
     pub fn new() -> Self {
@@ -67,7 +70,14 @@ impl World {
             Store::<Experiment>::create_temporary(&root, "facts", header, "w19-synthetic", cfg)
                 .unwrap();
         let cap = store.take_commit_capability().unwrap();
-        Self { root, store, cap }
+        Self {
+            root,
+            store,
+            cap,
+            all_reactions: false,
+            reaction_target: None,
+            event_time: None,
+        }
     }
     pub fn text(&mut self, text: &str) -> EventEnvelope {
         self.add(
@@ -106,7 +116,7 @@ impl World {
         e.device = device.into();
         e.kind = EventKind::OBSERVATION;
         e.raw_log_position = DecimalU64(n);
-        e.event_time_ns = DecimalI64(n as i64 + 1);
+        e.event_time_ns = DecimalI64(self.event_time.unwrap_or(n as i64 + 1));
         e.ingest_time_ns = DecimalI64(n as i64 + 1);
         e.parents = vec![];
         e.correction_of = corrections.to_vec();
@@ -121,16 +131,12 @@ impl World {
         b.process_time_ns = DecimalU64(n + 1);
         b.read_set = vec![leaf.reference().clone()];
         if let Some(old) = self.store.current().unwrap() {
-            let reader = self.store.reader().unwrap();
-            b.x_revision = reader
-                .read::<FastStateSnapshotV2>(&old.staged_x)
-                .unwrap()
-                .revision;
-            b.r_revision = reader.read::<RSnapshotV2>(&old.staged_r).unwrap().revision;
-            b.theta_revision = reader
-                .read::<ThetaSnapshot>(&old.staged_theta)
-                .unwrap()
-                .revision;
+            // This fixture itself assigns these revisions below. Reopening
+            // and fully recovering the growing store at every synthetic
+            // insertion adds cubic setup work, unrelated to retrieval.
+            b.x_revision = format!("x-{}", n - 1);
+            b.r_revision = format!("r-{}", n - 1);
+            b.theta_revision = format!("theta-{}", n - 1);
             b.read_set.extend([
                 old.staged_h,
                 old.staged_x,
@@ -185,13 +191,33 @@ impl World {
             accepted.push(g.reference().clone());
             pins.push(g);
         }
-        // Deliberately accepted appraisal record referencing ordinary text. It
-        // must never be traversed by a fact projection or retrieval index.
+        // Accepted interpretations are available only as marked task memories.
         let mut a: NatureAppraisalRecord = with_refs(leaf.reference());
         a.binding = b.clone();
-        a.event_id = e.id.clone();
+        a.event_id = self.reaction_target.clone().unwrap_or_else(|| e.id.clone());
         let a = self.store.prepare(&a, "1").unwrap();
         accepted.push(a.reference().clone());
+        let mut extra = Vec::new();
+        if self.all_reactions {
+            macro_rules! add {($($ty:ty),*) => {$(
+                let mut record: $ty = with_refs(leaf.reference());
+                record.event_id = self.reaction_target.clone().unwrap_or_else(|| e.id.clone());
+                record.binding = b.clone();
+                record.record_id = format!("{}-{n}", <$ty as WireMessage>::NAME);
+                record.producer = "synthetic-reaction-only-marker".into();
+                let prepared = self.store.prepare(&record, "1").unwrap();
+                accepted.push(prepared.reference().clone());
+                extra.push(prepared);
+            )*};}
+            add!(
+                SituationMatchRecord,
+                TendencyCandidateRecord,
+                TeachingAnnotation,
+                LieAnnotation,
+                SameMatterAnnotation
+            );
+        }
+        pins.extend(extra);
         accepted.sort_by_key(|r| core_types::scalar::hex(&r.digest.0));
         // Event reference is computed via its exact public encoding.
         let schema = core_types::contract::Schema::builtin().unwrap();
@@ -249,7 +275,14 @@ impl World {
     }
     #[cfg(feature = "cpu-embedding")]
     pub fn reopen(self) -> Self {
-        let Self { root, store, cap } = self;
+        let Self {
+            root,
+            store,
+            cap,
+            all_reactions,
+            reaction_target,
+            event_time,
+        } = self;
         drop(cap);
         drop(store);
         let cfg = StoreConfig {
@@ -263,6 +296,13 @@ impl World {
         };
         let mut store = Store::<Experiment>::open_temporary(&root, "facts", cfg).unwrap();
         let cap = store.take_commit_capability().unwrap();
-        Self { root, store, cap }
+        Self {
+            root,
+            store,
+            cap,
+            all_reactions,
+            reaction_target,
+            event_time,
+        }
     }
 }

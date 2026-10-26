@@ -1,0 +1,25 @@
+{
+  "name": "cpu-model-source-recall",
+  "tool": "cargo",
+  "arguments": [
+    "test",
+    "--manifest-path",
+    "core/Cargo.toml",
+    "-p",
+    "fact-view",
+    "--release",
+    "--features",
+    "cpu-embedding",
+    "real_cpu_multilingual",
+    "--locked",
+    "--",
+    "--ignored",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+  "started_at": "2026-10-26T19:50:40.2362899+08:00",
+  "finished_at": "2026-10-26T19:51:16.7912751+08:00",
+  "exit_code": 0,
+  "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+}

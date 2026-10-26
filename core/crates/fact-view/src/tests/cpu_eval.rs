@@ -114,6 +114,7 @@ fn real_cpu_multilingual_restart_recall_and_100_retractions() {
     let rebuild_ms = start.elapsed().as_secs_f64() * 1000.0;
     let mut rows = Vec::new();
     let mut latencies = Vec::new();
+    let mut core_latencies = Vec::new();
     for (text, expected) in cases {
         let q = query(&prefix, Purpose::Task, text);
         let start = Instant::now();
@@ -141,7 +142,26 @@ fn real_cpu_multilingual_restart_recall_and_100_retractions() {
             Some(1),
             "RRF must preserve these distinct positive controls"
         );
-        rows.push(serde_json::json!({"query":text,"expected":expected,"rank":rank,"vector_rank":vector_rank,"ms":ms,"embedding_ms":model.query_ms,"steps":result.trace.steps_used}));
+        let task_embedding_ms = model.query_ms;
+        // ADR 0012's first-round latency concerns c_core, which still excludes
+        // reactions. Keep the original, broader c_task measurements too.
+        let start = Instant::now();
+        let core = view
+            .execute(
+                &query(&prefix, Purpose::Core, text),
+                &access(),
+                Some(&mut model),
+            )
+            .unwrap();
+        let core_ms = start.elapsed().as_secs_f64() * 1000.0;
+        core_latencies.push(core_ms);
+        assert_eq!(core.projection.status, QueryStatus::OK);
+        assert_eq!(
+            core.projection.items.first().map(|i| i.source_id.as_str()),
+            Some(expected)
+        );
+        assert!(core.memories().iter().all(|m| m.marker.is_none()));
+        rows.push(serde_json::json!({"query":text,"expected":expected,"rank":rank,"vector_rank":vector_rank,"ms":ms,"embedding_ms":task_embedding_ms,"steps":result.trace.steps_used,"core_first_round_ms":core_ms}));
         assert!(
             result
                 .trace
@@ -210,7 +230,8 @@ fn real_cpu_multilingual_restart_recall_and_100_retractions() {
         );
     }
     latencies.sort_by(f64::total_cmp);
-    let report = serde_json::json!({"version":"w19-eval-skeleton-v1","status":"passed","synthetic_facts":9,"languages":["zh","en","ja"],"model":model.version(),"ort_build":ort::info(),"load_ms":load_ms,"rebuild_ms":rebuild_ms,"recall_at_3":{"hits":hits,"queries":rows.len()},"query_p50_ms":latencies[latencies.len()/2],"query_max_ms":latencies.last(),"withdrawal_queries":100,"withdrawal_leaks":leaks,"cases":rows,"limits":"Small synthetic restart skeleton, not the P6-13 multi-year/full-answer 90% acceptance. Latencies are observational on this host, not an exclusive CPU benchmark."});
+    core_latencies.sort_by(f64::total_cmp);
+    let report = serde_json::json!({"version":"w19-eval-skeleton-v2","status":"passed","synthetic_facts":9,"languages":["zh","en","ja"],"model":model.version(),"ort_build":ort::info(),"load_ms":load_ms,"rebuild_ms":rebuild_ms,"recall_at_3":{"hits":hits,"queries":rows.len()},"query_p50_ms":latencies[latencies.len()/2],"query_max_ms":latencies.last(),"core_first_round_p50_ms":core_latencies[core_latencies.len()/2],"core_first_round_max_ms":core_latencies.last(),"withdrawal_queries":100,"withdrawal_leaks":leaks,"cases":rows,"limits":"Small synthetic restart skeleton, not the P6-13 multi-year/full-answer 90% acceptance. Latencies are observational on this host, not an exclusive CPU benchmark. Full c_task pages include marked historical reactions; c_core first-round timings are separate."});
     println!("W19_EVAL_JSON={report}");
     assert_eq!(leaks, 0);
     assert_eq!(

@@ -1,9 +1,9 @@
 use crate::{
-    Access, Budgets, Embedder, Error, FactQuery, FactView, INDEX_VERSION, Purpose, QUERY_VERSION,
-    Result, embedding::vector_bytes, source,
+    Access, Embedder, Error, FactQuery, FactView, INDEX_VERSION, Purpose, QUERY_VERSION, Result,
+    embedding::vector_bytes,
 };
 use core_store::LineageKind;
-use core_types::{WireMessage, generated::*, scalar::hex};
+use core_types::{WireMessage, generated::*};
 use rusqlite::params;
 use std::{
     collections::{BTreeMap, BTreeSet},
@@ -23,6 +23,10 @@ pub struct RetrievalTrace {
     pub channels: [Vec<String>; 4],
     pub returned: Vec<String>,
     pub steps_used: usize,
+    /// Task/user/audit memory prose with provenance. c_core uses only the
+    /// generated FactProjection, without task presentation data.
+    pub memories: Vec<crate::MemoryEntry>,
+    pub next_page: Option<crate::PageCursor>,
 }
 impl RetrievalTrace {
     /// Persist through the outer transaction as a generated audit object before
@@ -31,7 +35,7 @@ impl RetrievalTrace {
         Ok(AuditExtension {
             schema_version: 1,
             audit_schema_tag: "echo.fact-query-trace".into(),
-            audit_schema_version: 1,
+            audit_schema_version: 2,
             payload: core_types::scalar::HexBytes(serde_json::to_vec(&serde_json::json!({
                 "version": QUERY_VERSION,"prefix":self.query.history_prefix,"purpose":format!("{:?}",self.query.purpose),
                 "text":self.query.text,"entities":self.query.entities,"kinds":self.query.kinds,"payload_types":self.query.payload_types,"sources":self.query.sources,
@@ -39,7 +43,8 @@ impl RetrievalTrace {
                 "budget":{"items":self.query.budget.items,"bytes":self.query.budget.bytes,"steps":self.query.budget.steps},
                 "access":{"allowed":self.access.allowed,"audit":self.access.audit,"sources":self.access.sources},
                 "model":self.model_version,"query_vector_bits":self.query_vector.as_ref().map(|v|v.iter().map(|f|f.to_bits()).collect::<Vec<_>>()),
-                "channels":self.channels,"returned":self.returned,"steps_used":self.steps_used,"projection":projection
+                "channels":self.channels,"returned":self.returned,"steps_used":self.steps_used,"projection":projection,
+                "after":self.query.after,"next_page":self.next_page,"memories":self.memories
             }))?),
         })
     }
@@ -47,6 +52,14 @@ impl RetrievalTrace {
 pub struct Execution {
     pub projection: FactProjection,
     pub trace: RetrievalTrace,
+    pub next_page: Option<crate::PageCursor>,
+}
+impl Execution {
+    /// Supply task models with marked memories rather than treating raw
+    /// interpretation references as unlabelled facts.
+    pub fn memories(&self) -> &[crate::MemoryEntry] {
+        &self.trace.memories
+    }
 }
 
 fn spend(steps: &AtomicUsize, n: usize) -> Result<()> {
@@ -93,7 +106,10 @@ impl<L: LineageKind> FactView<'_, L> {
                 channels: Default::default(),
                 returned: vec![],
                 steps_used: 0,
+                memories: vec![],
+                next_page: None,
             },
+            next_page: None,
         };
         if !access.allowed
             || (query.purpose == Purpose::Audit && !access.audit)
@@ -111,6 +127,7 @@ impl<L: LineageKind> FactView<'_, L> {
             result.projection.status = QueryStatus::INDEX_LAGGING;
             return Ok(result);
         }
+        crate::paging::start(query, access, &result.projection.index_version)?;
         let steps = Arc::new(AtomicUsize::new(query.budget.steps));
         let hook = Arc::clone(&steps);
         self.db
@@ -132,12 +149,7 @@ impl<L: LineageKind> FactView<'_, L> {
             }
             Err(e) => return Err(e),
         }
-        result.trace.returned = result
-            .projection
-            .items
-            .iter()
-            .map(|i| i.source_id.clone())
-            .collect();
+        crate::paging::finish(&mut result)?;
         Ok(result)
     }
 
@@ -151,13 +163,21 @@ impl<L: LineageKind> FactView<'_, L> {
     ) -> Result<()> {
         let mut eligible = BTreeSet::new();
         for (i, r) in self.records.iter().enumerate() {
+            // Historical reactions cannot even consume c_core's query budget.
+            if q.purpose == Purpose::Core && r.reaction.is_some() {
+                continue;
+            }
             spend(steps, 1)?;
             let e = &r.event;
-            if (!access.sources.is_empty() && !access.sources.contains(&e.device))
+            if (!access.sources.is_empty()
+                && (!access.sources.contains(&e.device)
+                    || r.reaction.as_ref().is_some_and(|origin| {
+                        !access.sources.contains(&origin.recorded_event.device)
+                    })))
                 || (!q.sources.is_empty() && !q.sources.contains(&e.device))
                 || ((!q.kinds.is_empty() || !q.payload_types.is_empty())
                     && !q.kinds.contains(&e.kind)
-                    && !q.payload_types.contains(&e.payload_ref.object_type))
+                    && !q.payload_types.contains(&r.content.object_type))
                 || q.from_ns.is_some_and(|t| e.event_time_ns.0 < t)
                 || q.to_ns.is_some_and(|t| e.event_time_ns.0 > t)
             {
@@ -202,7 +222,7 @@ impl<L: LineageKind> FactView<'_, L> {
                 .event_time_ns
                 .0
                 .cmp(&self.records[*a].event.event_time_ns.0)
-                .then_with(|| self.records[*a].event.id.cmp(&self.records[*b].event.id))
+                .then_with(|| self.records[*a].id.cmp(&self.records[*b].id))
         };
         for channel in &mut channels[..2] {
             spend(steps, sort_cost(channel.len()))?;
@@ -210,7 +230,14 @@ impl<L: LineageKind> FactView<'_, L> {
         }
         if !q.text.is_empty() {
             let ids = if q.text.chars().count() >= 3 {
-                let mut stmt=self.db.prepare("SELECT rowid FROM fulltext WHERE fulltext MATCH ?1 ORDER BY bm25(fulltext),rowid")?;
+                // Separate corpus statistics prevent reactions changing c_core
+                // BM25 ranking even though the final rows would be filtered.
+                let sql = if q.purpose == Purpose::Core {
+                    "SELECT rowid FROM coretext WHERE coretext MATCH ?1 ORDER BY bm25(coretext),rowid"
+                } else {
+                    "SELECT rowid FROM fulltext WHERE fulltext MATCH ?1 ORDER BY bm25(fulltext),rowid"
+                };
+                let mut stmt = self.db.prepare(sql)?;
                 let literal = format!("\"{}\"", q.text.replace('"', "\"\""));
                 stmt.query_map([literal], |r| r.get::<_, i64>(0))?
                     .collect::<std::result::Result<Vec<_>, _>>()?
@@ -259,18 +286,21 @@ impl<L: LineageKind> FactView<'_, L> {
                 spend(steps, sort_cost(distances.len()))?;
                 distances.sort_by(|(a, da), (b, db)| {
                     da.total_cmp(db)
-                        .then_with(|| self.records[*a].event.id.cmp(&self.records[*b].event.id))
+                        .then_with(|| self.records[*a].id.cmp(&self.records[*b].id))
                 });
                 channels[3] = distances.into_iter().map(|(i, _)| i).collect();
             }
         }
         let mut scores: BTreeMap<usize, f64> = BTreeMap::new();
-        // Fixed RRF k=60, top 64 per channel. Order and summation are fixed.
+        // Fixed RRF k=60. Only c_core keeps its first-round top-64 cap;
+        // memory pages cover the entire matching range (V2-76).
         for (j, channel) in channels.iter_mut().enumerate() {
-            channel.truncate(64);
+            if q.purpose == Purpose::Core {
+                channel.truncate(64);
+            }
             out.trace.channels[j] = channel
                 .iter()
-                .map(|i| self.records[*i].event.id.clone())
+                .map(|i| self.records[*i].id.clone())
                 .collect();
             for (rank, i) in channel.iter().enumerate() {
                 spend(steps, 1)?;
@@ -281,9 +311,10 @@ impl<L: LineageKind> FactView<'_, L> {
         spend(steps, sort_cost(ranked.len()))?;
         ranked.sort_by(|(a, sa), (b, sb)| {
             sb.total_cmp(sa)
-                .then_with(|| self.records[*a].event.id.cmp(&self.records[*b].event.id))
+                .then_with(|| self.records[*a].id.cmp(&self.records[*b].id))
         });
-        for (i, _) in ranked {
+        let offset = crate::paging::start(q, access, &out.projection.index_version)?;
+        for (i, _) in ranked.into_iter().skip(offset) {
             spend(steps, 1)?;
             if out.projection.items.len() >= q.budget.items {
                 out.projection.status = QueryStatus::BUDGET_EXHAUSTED;
@@ -293,26 +324,21 @@ impl<L: LineageKind> FactView<'_, L> {
             let r = &self.records[i];
             let item = FactItem {
                 schema_version: 1,
-                content: r.event.payload_ref.clone(),
+                content: r.content.clone(),
                 source_id: r.event.id.clone(),
                 availability: QueryStatus::OK,
                 correction_chain: r.corrected.iter().chain(&r.retracted).cloned().collect(),
             };
             // Verify original authority bytes, type, digest, lineage and text.
             // Corruption never becomes NO_MATCH, nor a successful empty set.
-            let original = self.reader.read::<EventEnvelope>(&r.event_ref);
-            if original.as_ref().ok() != Some(&r.event) {
+            if !r.verified(self.reader) {
                 out.projection.status = QueryStatus::OBJECT_MISSING;
                 out.projection.items.clear();
+                out.trace.memories.clear();
                 return Ok(());
             }
-            match source::text(self.reader, &item.content) {
-                Ok(Some(text)) if text == r.text => {}
-                _ => {
-                    out.projection.status = QueryStatus::OBJECT_MISSING;
-                    out.projection.items.clear();
-                    return Ok(());
-                }
+            if q.purpose != Purpose::Core {
+                out.trace.memories.push(r.memory()?);
             }
             out.projection.items.push(item);
             out.projection.status = QueryStatus::OK;
@@ -320,85 +346,24 @@ impl<L: LineageKind> FactView<'_, L> {
             let payload_bytes = out.projection.items.iter().try_fold(0usize, |sum, i| {
                 sum.checked_add(usize::try_from(i.content.byte_length.0).ok()?)
             });
+            let memory_bytes = if q.purpose == Purpose::Core {
+                0
+            } else {
+                serde_json::to_vec(&out.trace.memories)?.len()
+            };
             if payload_bytes
                 .and_then(|b| b.checked_add(encoded.len()))
+                .and_then(|b| b.checked_add(memory_bytes))
                 .is_none_or(|b| b > q.budget.bytes)
             {
                 out.projection.items.pop();
+                out.trace.memories.pop();
                 out.projection.status = QueryStatus::BUDGET_EXHAUSTED;
                 out.projection.truncated = true;
                 return Ok(());
             }
         }
         Ok(())
-    }
-
-    /// P5-22's active generated IDL adapter; no superseded query writes.
-    /// Retractions are always hidden from MEMORY, regardless of include_retracted.
-    pub fn user_view(
-        &self,
-        request: &QueryV2,
-        access: &Access,
-        budgets: &Budgets,
-        embedder: Option<&mut dyn Embedder>,
-    ) -> Result<(QueryResultV2, Execution)> {
-        request.canonical_bytes(crate::query::LIMITS)?;
-        let mut q = FactQuery::new(&self.prefix, Purpose::UserView, "", budgets);
-        q.budget.items = q
-            .budget
-            .items
-            .min(usize::try_from(request.limit.0).unwrap_or(usize::MAX));
-        if let Some(filter) = &request.filter {
-            q.filter(filter)?;
-        }
-        let mut grant = access.clone();
-        grant.allowed &= request.kind == QueryKindV2::QUERY_MEMORY;
-        let mut execution = self.execute(&q, &grant, embedder)?;
-        let items = execution
-            .projection
-            .items
-            .iter()
-            .map(|i| {
-                let r = self
-                    .records
-                    .iter()
-                    .find(|r| r.event.id == i.source_id)
-                    .expect("projected record");
-                QueryItem {
-                    schema_version: 1,
-                    r#ref: hex(&i.content.digest.0),
-                    at: r.event.event_time_ns.0.to_string(),
-                    kind: source::payload_name(&r.event.payload_ref)
-                        .expect("allowlisted fact type"),
-                    summary: r.text.clone(),
-                    source: r.event.device.clone(),
-                    retracted: !r.retracted.is_empty(),
-                }
-            })
-            .collect();
-        let mut response = QueryResultV2 {
-            schema_version: 1,
-            query_id: request.query_id.clone(),
-            status: execution.projection.status,
-            items,
-            growth_entries: vec![],
-        };
-        while response.canonical_bytes(crate::query::LIMITS)?.len() > q.budget.bytes
-            && !response.items.is_empty()
-        {
-            response.items.pop();
-            execution.projection.items.pop();
-            response.status = QueryStatus::BUDGET_EXHAUSTED;
-            execution.projection.status = QueryStatus::BUDGET_EXHAUSTED;
-            execution.projection.truncated = true;
-        }
-        execution.trace.returned = execution
-            .projection
-            .items
-            .iter()
-            .map(|i| i.source_id.clone())
-            .collect();
-        Ok((response, execution))
     }
 }
 fn sort_cost(n: usize) -> usize {

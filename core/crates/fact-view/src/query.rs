@@ -2,8 +2,8 @@
 use core_types::generated::{EventKind, QueryFilter};
 use std::collections::BTreeSet;
 
-pub const QUERY_VERSION: &str = "w19-rrf-v1";
-pub const INDEX_VERSION: &str = "w19-trigram-vec-v1";
+pub const QUERY_VERSION: &str = "w19-rrf-v2";
+pub const INDEX_VERSION: &str = "w19-trigram-vec-v2";
 pub(crate) const LIMITS: core_types::contract::Limits = core_types::contract::Limits {
     max_bytes: 4 * 1024 * 1024,
     max_items: 100_000,
@@ -22,7 +22,7 @@ pub(crate) fn kind_name(kind: EventKind) -> &'static str {
     }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, serde::Serialize)]
 pub enum Purpose {
     Core,
     Task,
@@ -30,7 +30,7 @@ pub enum Purpose {
     Audit,
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, serde::Serialize)]
 pub struct Budget {
     pub items: usize,
     pub bytes: usize,
@@ -76,7 +76,7 @@ impl Budgets {
 
 /// Explicit, versioned, bounded request. No p, x, m, R, theta or appraisal input.
 /// Text is the current observation o (or explicit user query), not an IRL result.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, serde::Serialize)]
 pub struct FactQuery {
     pub history_prefix: String,
     pub version: String,
@@ -89,6 +89,8 @@ pub struct FactQuery {
     pub from_ns: Option<i64>,
     pub to_ns: Option<i64>,
     pub budget: Budget,
+    /// Opaque continuation issued by this query plan. No persistent session state.
+    pub after: Option<crate::PageCursor>,
 }
 impl FactQuery {
     pub fn new(prefix: &str, purpose: Purpose, text: &str, budgets: &Budgets) -> Self {
@@ -104,6 +106,7 @@ impl FactQuery {
             from_ns: None,
             to_ns: None,
             budget: budgets.for_purpose(purpose),
+            after: None,
         }
     }
     pub(crate) fn filter(&mut self, filter: &QueryFilter) -> Result<(), String> {
@@ -171,7 +174,7 @@ fn parse_time(s: &str, end_of_day: bool) -> Result<i64, String> {
 
 /// Issued by the trusted caller's permission layer. Fail closed by default.
 /// Restrictions apply before ranking in all four channels.
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, serde::Serialize)]
 pub struct Access {
     pub allowed: bool,
     pub audit: bool,

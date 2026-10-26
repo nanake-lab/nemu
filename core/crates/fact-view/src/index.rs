@@ -37,10 +37,35 @@ impl<'a, L: LineageKind> FactView<'a, L> {
         let records = source::records(reader, &transactions)?;
         crate::sqlite_vec::register()?;
         let mut db = Connection::open_in_memory()?;
-        db.execute_batch("CREATE TABLE facts(rowid INTEGER PRIMARY KEY, id TEXT UNIQUE, text TEXT NOT NULL, at INTEGER NOT NULL); CREATE VIRTUAL TABLE fulltext USING fts5(text, tokenize='trigram'); CREATE TABLE embeddings(rowid INTEGER PRIMARY KEY, vector BLOB NOT NULL);")?;
+        db.execute_batch("CREATE TABLE facts(rowid INTEGER PRIMARY KEY, id TEXT UNIQUE, text TEXT NOT NULL, at INTEGER NOT NULL); CREATE VIRTUAL TABLE fulltext USING fts5(text, tokenize='trigram'); CREATE VIRTUAL TABLE coretext USING fts5(text, tokenize='trigram'); CREATE TABLE embeddings(rowid INTEGER PRIMARY KEY, vector BLOB NOT NULL);")?;
         let model = embedder.as_ref().map(|e| e.version().to_string());
         let vectors = if let Some(e) = embedder.as_mut() {
-            e.passages(&records.iter().map(|r| r.text.clone()).collect::<Vec<_>>())?
+            // Interpretations are recalled with the experience they interpret,
+            // rather than embedding generic JSON metadata as competing facts.
+            // Their own semantic fields remain directly searchable by FTS.
+            // Reusing the source vector also keeps c_core's batch independent.
+            let facts = records.iter().take_while(|r| r.reaction.is_none()).count();
+            let mut vectors = e.passages(
+                &records[..facts]
+                    .iter()
+                    .map(|r| r.text.clone())
+                    .collect::<Vec<_>>(),
+            )?;
+            if vectors.len() != facts {
+                return Err(crate::Error::Invalid("embedding count mismatch".into()));
+            }
+            let sources = records[..facts]
+                .iter()
+                .enumerate()
+                .map(|(i, r)| (r.event.id.as_str(), i))
+                .collect::<std::collections::BTreeMap<_, _>>();
+            for reaction in &records[facts..] {
+                let source = sources
+                    .get(reaction.event.id.as_str())
+                    .ok_or_else(|| crate::Error::Invalid("reaction source absent".into()))?;
+                vectors.push(vectors[*source].clone());
+            }
+            vectors
         } else {
             vec![]
         };
@@ -52,12 +77,18 @@ impl<'a, L: LineageKind> FactView<'a, L> {
         for (i, r) in records.iter().enumerate() {
             tx.execute(
                 "INSERT INTO facts VALUES(?1,?2,?3,?4)",
-                params![i as i64, r.event.id, r.text, r.event.event_time_ns.0],
+                params![i as i64, r.id, r.text, r.event.event_time_ns.0],
             )?;
             tx.execute(
                 "INSERT INTO fulltext(rowid,text) VALUES(?1,?2)",
                 params![i as i64, r.text],
             )?;
+            if r.reaction.is_none() {
+                tx.execute(
+                    "INSERT INTO coretext(rowid,text) VALUES(?1,?2)",
+                    params![i as i64, r.text],
+                )?;
+            }
             if let Some(v) = vectors.get(i) {
                 if dimension.is_some_and(|d| d != v.len()) {
                     return Err(crate::Error::Invalid("embedding dimensions differ".into()));

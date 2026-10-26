@@ -2,6 +2,7 @@
 mod cpu_eval;
 mod edge_cases;
 mod fixture;
+mod memory_pages;
 use super::*;
 use core_types::{WireMessage, generated::*, scalar::DecimalU64};
 use fixture::World;
@@ -190,7 +191,7 @@ fn retraction_zero_in_one_hundred_task_queries_and_audit_preserves_original() {
 }
 
 #[test]
-fn structural_allowlist_excludes_all_explanations_even_when_wrapped_as_event_payload() {
+fn structural_allowlist_excludes_unaccepted_wrapped_explanations_and_core_reactions() {
     let mut w = World::new();
     w.text("visible-original");
     let leaf = w
@@ -215,19 +216,35 @@ fn structural_allowlist_excludes_all_explanations_even_when_wrapped_as_event_pay
     let reader = w.store.reader().unwrap();
     let prefix = w.prefix();
     let view = FactView::rebuild(&reader, &prefix, 100, None).unwrap();
-    assert_eq!(view.records.len(), 1);
+    assert_eq!(
+        view.records.iter().filter(|r| r.reaction.is_none()).count(),
+        1
+    );
     for purpose in [Purpose::Core, Purpose::Task] {
         let execution = view
             .execute(&query(&prefix, purpose, ""), &access(), None)
             .unwrap();
-        assert_eq!(execution.projection.items.len(), 1);
-        assert!(
-            execution
-                .projection
-                .items
-                .iter()
-                .all(|i| i.content.object_type == source::tag::<UserText>().unwrap())
-        );
+        let facts = execution
+            .projection
+            .items
+            .iter()
+            .filter(|i| i.content.object_type == source::tag::<UserText>().unwrap())
+            .count();
+        assert_eq!(facts, 1);
+        if purpose == Purpose::Core {
+            assert_eq!(execution.projection.items.len(), 1);
+        } else {
+            assert_eq!(execution.projection.items.len(), 2);
+            assert_eq!(
+                execution
+                    .trace
+                    .memories
+                    .iter()
+                    .filter(|m| m.marker.as_deref() == Some(PAST_REACTION_MARKER))
+                    .count(),
+                1
+            );
+        }
         let encoded = execution
             .projection
             .canonical_bytes(crate::query::LIMITS)
@@ -274,6 +291,7 @@ fn deterministic_rrf_filters_corrections_and_budgets() {
     let p = w.prefix();
     let view = FactView::rebuild(&reader, &p, 100, None).unwrap();
     let mut q = query(&p, Purpose::Task, "person-A");
+    q.payload_types.insert(source::tag::<UserText>().unwrap());
     q.entities.insert("person-A".into());
     let mut grant = access();
     grant.sources.insert("user".into());

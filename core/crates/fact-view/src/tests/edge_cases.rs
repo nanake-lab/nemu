@@ -17,7 +17,25 @@ fn p522_active_memory_messages_never_emit_growth_or_serve_other_services() {
         .user_view(&request, &access(), &Budgets::default(), None)
         .unwrap();
     assert_eq!(response.status, QueryStatus::OK);
-    assert_eq!(response.items.len(), 1);
+    assert_eq!(response.items.len(), 2);
+    assert_eq!(
+        response
+            .items
+            .iter()
+            .filter(|i| i.kind == "user_text")
+            .count(),
+        1
+    );
+    assert_eq!(
+        response
+            .items
+            .iter()
+            .filter(|i| i
+                .summary
+                .starts_with(&format!("【{PAST_REACTION_MARKER}】")))
+            .count(),
+        1
+    );
     assert!(response.growth_entries.is_empty());
     assert_eq!(
         QueryResultV2::from_canonical(

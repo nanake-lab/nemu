@@ -3,6 +3,8 @@
 mod embedding;
 mod error;
 mod index;
+mod memory;
+mod paging;
 mod query;
 mod retrieval;
 mod source;
@@ -13,6 +15,8 @@ pub use embedding::CpuEmbedder;
 pub use embedding::Embedder;
 pub use error::{Error, Result};
 pub use index::FactView;
+pub use memory::{MemoryEntry, PAST_REACTION_MARKER};
+pub use paging::PageCursor;
 pub use query::{Access, Budget, Budgets, FactQuery, INDEX_VERSION, Purpose, QUERY_VERSION};
 pub use retrieval::{Execution, RetrievalTrace};
 #[cfg(test)]
