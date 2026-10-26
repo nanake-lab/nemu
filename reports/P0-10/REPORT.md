@@ -2,9 +2,9 @@
 
 ## 当前状态
 
-**部分完成：注入配对和方向提取已实测；速度/IRL 阶段因日志可观测配置阻塞并停止。** 用户本次回复「开始」后，2026-10-26 Perth 10:00 检查无 Listener/Worker 并启动；10:01:43 全部 GPU 子进程结束，已通知恢复 runner。[PR #87](https://github.com/nanake-lab/nemu/pull/87) 保持草稿，不合并、不取下一卡。详情见 [BLOCKED.md](BLOCKED.md)，等待用户决定是否批准修正日志参数并另开窗口补测；没有自行重试。
+**部分完成：注入配对已实测；用户已批准修正日志参数并只补测两量化速度/IRL。** 前次 Perth 10:00–10:01:43 窗口的成功/失败原记录保留。现已将 server 日志 3 改为 4，原 CUDA/全 offload 判据不变，CPU 检查通过，正在准备新的补测窗口，不重跑注入。[PR #87](https://github.com/nanake-lab/nemu/pull/87) 保持草稿，不合并、不取下一卡；补测尚未实测，见 [BENCHMARK-RERUN.md](BENCHMARK-RERUN.md)。
 
-本分支已 merge `origin/main` 的 `9ada24b`，重新读了变动后的 ARCHITECTURE；本卡、AGENTS、CONTRACTS、Echo Core README 未变化。新增 ADR 0026 的持续认知不改变本卡单请求测量的范围；这些数据不能作为持续运行验收。
+本分支继续合并了 `origin/main` 的 `716f7f0`，重新读了变动后的 ARCHITECTURE；本卡、AGENTS、CONTRACTS、Echo Core README 未变化。最新 main 的核心/里程碑变动不修改本卡固定输入；解压后的 jobs 与 schemas 与前次逐字节相同，绑定源码只有 http_probe.py 改变。这些数据不能作为持续认知运行验收。
 
 ## 最重要的注入结论
 
@@ -89,7 +89,7 @@
 ## 待用户确认
 
 - [x] 已授权分段下载、CPU 转换、最小与本次完整 GPU 窗口；本次已结束。
-- [ ] （阻塞）是否修正 server 日志参数后补测；入口尚未修改，未重试。新的 GPU 窗口需重新确认，见 BLOCKED.md。
+- [x] 用户选 1，批准 server 日志 3→4、保留原判据，补测两量化速度/IRL，不重跑已完成注入；补测结果待记录。
 - [ ] （后续决策）依据全部实测在 P0-09 决定引擎/注入/IRL；当前没有自行选型或迁移。
 
 ## 后续建议（不在本任务范围内）
