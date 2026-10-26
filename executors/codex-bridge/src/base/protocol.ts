@@ -37,4 +37,3 @@ export const usage = z.object({
   reasoningOutputTokens: z.number().int().nonnegative(),
 });
 export type Message = z.infer<typeof message>;
-

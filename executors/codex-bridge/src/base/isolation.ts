@@ -50,4 +50,3 @@ export function strictThread(model: string, cwd: string, instructions: string): 
     },
   };
 }
-

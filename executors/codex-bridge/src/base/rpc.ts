@@ -91,4 +91,3 @@ export class RpcClient {
     await this.transport.close();
   }
 }
-
