@@ -43,3 +43,9 @@
 在允许目录实现无持久状态的 T0–T3 确认策略和成长命令约束、Low IL 启动及临时文件隔离验证；
 模块登记仅追加 `action-gate/src/lib.rs` 一行，适用 AGENTS §2 的共享登记例外。
 未完成接口分别记入 `reports/P5-05/BLOCKED.md`，不把局部测试计作整卡验收。
+
+## 追加（2026-10-26）：用户批准拆分
+
+用户已批准仅在 action-gate 的 Cargo.toml 增加仓库锁定版本的 sha2，由 Cargo 更新锁文件。
+其余契约与联合验收请求移交 **P5-40**，定义见 [PR #102](https://github.com/nanake-lab/nemu/pull/102)。
+P5-05 按缩小后的独立范围验收；当前状态以 REPORT.md / BLOCKED.md 为准。

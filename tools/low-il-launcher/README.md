@@ -32,7 +32,8 @@ it does not prevent reading otherwise readable Medium files, or writing other
 Low resources accessible to the same user. Keep authority storage at Medium IL
 with no pre-opened writable handles crossing the boundary. Authentication, protocol
 capabilities, resource budgets, supervisor registration and actual core-store
-integration remain pending (see `tasks/requests/P5-05-permission-integration.md`).
+integration are handed off to P5-40 under the user-approved scope split
+([task-definition PR #102](https://github.com/nanake-lab/nemu/pull/102)).
 
 ## Verification
 
