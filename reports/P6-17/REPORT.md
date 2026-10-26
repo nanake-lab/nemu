@@ -14,11 +14,13 @@
 
 | 命令或检查（含 Echo Core 验收编号） | 结果 | 证据 |
 | --- | --- | --- |
-| `python core/contracts/generate.py --check` | 待运行现有基线 | `verification/` |
-| `pnpm test:core-contracts` | 待运行现有基线 | `verification/` |
-| `python core/contracts/check_compat.py --ref origin/main` | 待运行现有基线 | `verification/` |
+| `python core/contracts/generate.py --check` | passed：现有基线 0 过期生成物 | `verification/generate.log`、`light-exit-codes.json` |
+| `pnpm test:core-contracts` | not_run：资源预检发现已有其他 Cargo 全工作区测试，未并行启动编译 | `verification/resource-preflight.json` |
+| `python core/contracts/check_compat.py --ref origin/main` | passed：p5-01、p5-21、p5-32、current、origin/main 全部 0 违例；137 消息、51 枚举 | `verification/compat.log`、`light-exit-codes.json` |
 | 新消息 3 合法/3 非法及定向向量、三语言一致 | not_run：未改契约 | — |
 | 用户批准本次新字节，交叉审查 | not_run：无新字节 | — |
+
+现有依赖离线安装与 `uv sync --locked` 均通过；编译输出预留在 `D:/Dev/cache/P6-17/`。资源预检发现 Cargo PID 81008/87276 正在执行 `test --workspace --locked --offline`，按 AGENTS §9 重负载串行规则，没有启动完整三语言套件；未停止或干预其他任务。未运行套件不能记为通过。没有启动模型、访问用户谱系或修改用户/系统设置。
 
 ## 规格对照（Echo Core 相关的卡必填）
 
