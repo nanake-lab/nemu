@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-本卡本机验收完成，等待交叉审查与用户合并（ADR 0020）。2026-10-26 已解除暂停，分支以 merge 合入 `origin/main@86779b1`（合并提交 `7ec2502`）；本轮只继续事实视图目录及追加文档/请求/报告。Windows 工作流与 main 完全一致，旧 TEMP/TMP 权限阻塞已解除。按用户要求止于推送、转可审查并写「请审查」，不等待或报告 CI，不合并、不取下一卡。
+本卡本机验收完成，等待交叉审查与用户合并（ADR 0020）。2026-10-26 已解除暂停，先 merge `origin/main@86779b1`（`7ec2502`），发布前再 merge 最新 `origin/main@317dde9`（`b1fd135`）。后一次仅合入 #103 的文档/任务元数据，已阅读 V2-117，P5-04 的 V2-76/V2-88 和全部运行字节未变；同步后重跑 fmt、clippy、事实视图全部测试及真实 CPU 模型通过，证据见 [main-sync-20261026](main-sync-20261026/)。本轮只继续事实视图目录及追加文档/请求/报告。Windows 工作流与 main 完全一致，旧 TEMP/TMP 权限阻塞已解除。按用户要求止于推送、转可审查并写「请审查」，不等待或报告 CI，不合并、不取下一卡。
 
 ## 交付物
 
@@ -19,18 +19,18 @@
 
 | 命令或检查 | 结果 | 证据 |
 | --- | --- | --- |
-| `cargo fmt --manifest-path core/Cargo.toml --all -- --check` | 通过 | [fmt-final.json](resume-20261026/fmt-final.json) |
-| `cargo clippy --manifest-path core/Cargo.toml --workspace --all-targets --features fact-view/cpu-embedding --locked -- -D warnings` | 通过 | [clippy-final.log](resume-20261026/clippy-final.log) |
-| `cargo test --manifest-path core/Cargo.toml --workspace --release --features fact-view/cpu-embedding --locked -- --test-threads=1` | 通过；core-store 32 项、fact-view 15 项及谱系 compile_fail 通过 | [workspace-tests-final.log](resume-20261026/workspace-tests-final.log) |
+| `cargo fmt --manifest-path core/Cargo.toml --all -- --check` | 通过；最终 main 同步后复验通过 | [fmt.json](main-sync-20261026/fmt.json) |
+| `cargo clippy --manifest-path core/Cargo.toml --workspace --all-targets --features fact-view/cpu-embedding --locked -- -D warnings` | 通过；最终 main 同步后复验通过 | [clippy.log](main-sync-20261026/clippy.log) |
+| `cargo test --manifest-path core/Cargo.toml --workspace --release --features fact-view/cpu-embedding --locked -- --test-threads=1` | 通过；core-store 32 项、fact-view 15 项及谱系 compile_fail 通过。之后仅文档同步，运行字节零差异，事实视图 15 项及 compile_fail 再通过 | [workspace-tests-final.log](resume-20261026/workspace-tests-final.log)、[同步后](main-sync-20261026/fact-view.log) |
 | SYS05；V2-76、V2-88；100 次撤回 | 五种状态、成功对照、75 条/11 页、原文与精确时间、标记、权限/续页绑定、对象缺失清空、c_core 排名/步骤独立、撤回传播通过 | [SYS05 结果](SYS05/result-resume-20261026.json)；上述工作区日志 |
-| `cargo test --manifest-path core/Cargo.toml -p fact-view --release --features cpu-embedding real_cpu_multilingual --locked -- --ignored --nocapture --test-threads=1` | 真实临时 EXPERIMENT 库重启；三语 9/9 向量与 RRF 排名第 1；100 次撤回零泄漏 | [cpu-model-core-projection.log](resume-20261026/cpu-model-core-projection.log)、[cpu-result.json](resume-20261026/cpu-result.json) |
-| ADR 0012 第一轮 50 ms 目标 | c_core 九查询 p50 **36.52 ms**、max **38.40 ms**；9/9 低于 50 ms。含历史反应的完整 c_task 页另计：p50 **104.54 ms**、max **109.27 ms** | 同上；仅合成骨架观测，不是任意规模 SLO |
+| `cargo test --manifest-path core/Cargo.toml -p fact-view --release --features cpu-embedding real_cpu_multilingual --locked -- --ignored --nocapture --test-threads=1` | 最终同步后真实临时 EXPERIMENT 库重启；三语 9/9 向量与 RRF 排名第 1；100 次撤回零泄漏 | [cpu-model.log](main-sync-20261026/cpu-model.log)、[cpu-result.json](main-sync-20261026/cpu-result.json) |
+| ADR 0012 第一轮 50 ms 目标 | 最终 c_core 九查询 p50 **34.54 ms**、max **35.16 ms**；9/9 低于 50 ms。含历史反应的完整 c_task 页另计：p50 **98.42 ms**、max **101.55 ms** | 同上；仅合成骨架观测，不是任意规模 SLO；同步前的 36.52/38.40 ms 等数据仍保留 |
 | 原 Windows 隔离脚本 | 通过：Low 令牌、Medium 目录拒写、正向写入对照；只操作它新建并清理的测试子目录 | [windows-isolation.log](resume-20261026/windows-isolation.log) |
 | `pnpm lint`、`pnpm typecheck` | 通过 | [lint.log](resume-20261026/lint.log)、[typecheck.log](resume-20261026/typecheck.log) |
 | `pnpm test` | 首次 579 通过/1 失败；main 独立基线及本分支原命令复测均 580/580 通过，失败保留 | [首次](resume-20261026/node-tests.log)、[main](resume-20261026/main-node-tests.log)、[复测](resume-20261026/node-tests-recheck.log) |
 | `pnpm test:contracts` | 354 通过；语句/行/函数 100%，分支 97.46% | [contracts.log](resume-20261026/contracts.log)、[coverage-summary.json](resume-20261026/coverage-summary.json) |
 | `pnpm test:core-contracts` | Rust/Python/TS 各 10,766 例；生成 0 stale、兼容 0 违规；protoc 445 条通过 | [core-contracts.log](resume-20261026/core-contracts.log) |
-| 冻结 IDL/生成物相对 main | 0 差异；本轮未再修改 core-store/core-types | [verification.json](resume-20261026/verification.json) |
+| 冻结 IDL/生成物相对 main | 0 差异；本轮未再修改 core-store/core-types；最终文档同步前后运行字节完全相同 | [verification.json](resume-20261026/verification.json)、[最终同步](main-sync-20261026/verification.json) |
 
 工作区默认保留的核心数值诊断、CPU 描述符诊断与真实模型显式测试仍按其原有 ignore 分类；真实模型项已另行按原命令执行，未删除或跳过断言。完整多年规模与回答正确率验收仍属于 P6-13；未用结构夹具冒充业务结论。
 
