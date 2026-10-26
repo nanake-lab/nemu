@@ -37,12 +37,22 @@ Perth 2026-10-26 **12:59:48–12:59:59**，无 Listener/Worker 后启动。日�
 
 进一步静态核对发现，命令行中 `-ngl 999` 在日志参数之前；[arg.cpp:2802–2816](https://github.com/ggml-org/llama.cpp/blob/620d2225cc436ab0b001e3200e590e3b286ef9ab/common/arg.cpp#L2802-L2816) 的处理会调用 `llama_supports_gpu_offload`，[llama.cpp:95–102](https://github.com/ggml-org/llama.cpp/blob/620d2225cc436ab0b001e3200e590e3b286ef9ab/src/llama.cpp#L95-L102) 在后端尚未注册时会加载后端。CLI 按顺序处理，日志 4 尚未生效时该消息就可能被过滤。只修改值未覆盖此顺序，是本卡准备不完整；静态调用链与缺行现象相符，尚未实测调整顺序后的结果。
 
-已备好 [仅调整顺序的补丁](benchmark-run-02/proposed-log-order.patch)：将现有 `--log-verbosity 4` 放到首个选项，保留所有参数值及全部条件判断。AST 比较确认参数 token 多重集、所有 if 条件均不变；该补丁**未应用**。按阻塞即停要求，不再自行尝试。
+当时已备好 [仅调整顺序的补丁](benchmark-run-02/proposed-log-order.patch)：将现有 `--log-verbosity 4` 放到首个选项，保留所有参数值及全部条件判断。AST 比较确认参数 token 多重集、所有 if 条件均不变；截至第二次失败归档时尚未应用，按阻塞即停要求等待决定。
 
 ## 第三次补测：获批的参数顺序修正
 
 用户随后明确批准应用上述补丁：只调整顺序、判据不变，只补测 Q4_K_M/Q8_0 速度及 IRL，已完成注入不重跑；测前确认无 runner 作业并记录并发。此前 `-ngl` 先触发后端加载而日志 4 尚未生效，根因是本卡准备时漏查参数处理顺序，不能归咎于模型或 CUDA 回落。
 
-本分支先 merge 最新 `origin/main` `b4eb7fd`（merge `094e02a`），必读文档与本卡未变化。已原样应用获批的两行补丁：把既有 `--log-verbosity 4` 从参数末尾移到首个选项，没有改变值、CUDA/full-offload 条件、缓存或截断检查。重新准备 full-v5；CPU 检查、输入一致性、修正提交和 GPU 实际结果依次记录，完成之前不声称补测成功。
+本分支先 merge main `b4eb7fd`（merge `094e02a`），必读文档与本卡未变化。原样应用获批两行补丁，把既有 `--log-verbosity 4` 从末尾移到首个选项，没有改变任何值、CUDA/full-offload条件、缓存或截断检查。修正及实际运行提交为 **`a1f18b0f953a0291dd3f09701d35662cca436402`**。独立AST核验：31参数元素多重集相同，移除被移动的一对后顺序相同，19个条件及其他AST不变；14实现Python静态检查、6项单元测试通过。full-v5解压jobs/schema与full-v4相同，仅http_probe.py绑定改变，见 [准备证据](rerun-preparation-20261026-order/)。
 
-准备阶段进程检查发现 Listener/Worker 均在运行，因此未启动 GPU；随后用户确认“作业已结束，runner 已停”。实际测量前还会再次检查，并持续使用原请求前后的严格无 runner 检查。没有通过修改资源检查来绕过并发。
+准备阶段发现 Listener/Worker 均在运行，未启动GPU；随后用户确认“作业已结束，runner 已停”。实际启动再次核实两者均无，原请求前后检查持续保留，82次巡检未观测到runner；没有修改资源检查绕过并发。
+
+Perth **18:38:24–19:58:29**，Q4_K_M→Q8_0各474 completion全完成（共8预热、940正式），两量化均记录早期CUDA backend加载与37/37 offload。父进程0，两个server由入口主动结束、Windows返回1，两个sampler均0。无transport/cache/truncation失败；无约束Schema失败、来源失败和固定句额外顿号保留。注入未重跑，结束后通知用户恢复runner。
+
+| 运行 | 实际提交 | 正式速度/IRL结果 |
+| --- | --- | --- |
+| 首次日志3 | `072141f7112728ba05ebe70fe95de7468bb14221` | 启动判据拒绝，0样本；此前注入成功 |
+| 获批仅3→4 | `7ab742037a9203e9b5d671d8962598a3bdb0f311` | 缺早期加载消息仍拒绝，0样本，Q8未开始 |
+| 获批仅提前参数 | `a1f18b0f953a0291dd3f09701d35662cca436402` | 原判据通过，940正式样本；原/紧凑Schema各量化200条全部有记录 |
+
+测后merge main `86779b1`（merge `c3df5fd`），收尾再同步 `317dde9`（merge `a6e5926`）；每次测量源码/固定输入均不变，重跑14实现Python静态检查与6项unittest全通过。详见 [最终速度/IRL报告](BENCHMARK-REPORT.md)、[原始记录](benchmark-run-03/README.md)。后处理错误等计数断言及reporter首版含预热统计均保留，另存按实际字段/正式范围核对的结果，没有改动GPU原始记录或测量判据。

@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-本次注入测量完成，后续 server 速度/IRL 启动检查失败后停止，整张卡部分完成。有效原生运行确认 CUDA、37/37 层 offload，native 与 WDDM sampler 均退出 0；没有将后续 server 缺日志当作 CPU 回落。所有原始数据见 [raw-filemap.json](full-run-01/raw-filemap.json)，逐位置分析见 [summary.json](full-run-01/summary.json)。
+本次注入测量完成，未在后续补测中重跑。有效原生运行确认 CUDA、37/37 层 offload，native 与 WDDM sampler 均退出 0；后续 server 两次启动检查失败和获批参数修正均保留，最新速度/IRL 已完成，见 [BENCHMARK-REPORT.md](BENCHMARK-REPORT.md)。注入原始数据见 [raw-filemap.json](full-run-01/raw-filemap.json)，逐位置分析见 [summary.json](full-run-01/summary.json)。
 
 ## 配置与覆盖
 
@@ -62,7 +62,7 @@
 
 Q4 回调实验 PID 的 67 行 WDDM 采样，66 行匹配；专用最大 3,804,901,376、共享最大 125,829,120，相加 **3,930,730,496 bytes（3.930730496 GB）**。配置含 observed 与瞬时 reference/fresh 上下文；不是长输入、连续峰值或 TTS/渲染同驻通过。
 
-后续 server 健康就绪，但日志级别 3 屏蔽底层 INFO（固定源码将其归为 TRACE=4），入口缺 CUDA/full-offload 证据而结束，正式速度/IRL 请求 0。没有自行修正、重试或换引擎，详见 [BLOCKED.md](BLOCKED.md)。
+首次后续 server 因日志3被原检查停止；获批改4后仍因参数顺序漏早期加载消息而停止。再次获批仅提前参数后，速度/IRL补测完成；前两次各0正式样本及成功补测的实际提交详见 [BENCHMARK-RERUN.md](BENCHMARK-RERUN.md)。本报告的注入数字未变。
 
 ## 复核与复现
 
