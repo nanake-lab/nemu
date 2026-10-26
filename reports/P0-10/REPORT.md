@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-**本卡测量与本地验收完成。** 已实测注入，以及 Q4_K_M/Q8_0 各 474 次 completion（各 4 预热、470 正式）的速度、原/紧凑 IRL 和载体显存。最新 GPU 运行提交 `a1f18b0f953a0291dd3f09701d35662cca436402`，Perth 18:38:24–19:58:29，父进程退出 0；注入未重跑，GPU 已释放并通知恢复 runner。此前漏查参数顺序的失误、两次失败、修正提交及成功补测均保留，见 [BENCHMARK-RERUN.md](BENCHMARK-RERUN.md)。[PR #87](https://github.com/nanake-lab/nemu/pull/87) 的远程 CI 以当前 head 检查为准，通过后转为可审查，等待用户审查；不合并、不取下一卡。
+**本卡测量与本地验收完成。** 已实测注入，以及 Q4_K_M/Q8_0 各 474 次 completion（各 4 预热、470 正式）的速度、原/紧凑 IRL 和载体显存。最新 GPU 运行提交 `a1f18b0f953a0291dd3f09701d35662cca436402`，Perth 18:38:24–19:58:29，父进程退出 0；注入未重跑，GPU 已释放并通知恢复 runner。此前漏查参数顺序的失误、两次失败、修正提交及成功补测均保留，见 [BENCHMARK-RERUN.md](BENCHMARK-RERUN.md)。最终提交仅报告/证据，按 AGENTS §9 不触发CI，不把旧提交绿色当本次通过。[PR #87](https://github.com/nanake-lab/nemu/pull/87) 转为可审查，等待用户审查；不合并、不取下一卡。
 
 测前 merge main `b4eb7fd`，测后先 merge `86779b1`，收尾再同步到 `317dde9`（merge `a6e5926`）并重跑 14 个实现 Python 的 Ruff/strict mypy 和 6 项 unittest，全部通过。必读文档和本卡未变；测后合并没有改变测量输入或 spike 源码。full-v5 解压 jobs/schema 与前次逐字节相同，仅日志参数顺序的源码绑定改变。本卡不选择引擎、不批准迁移，也不作为持续认知或完整语音链路验收。
 
@@ -76,7 +76,7 @@
 | 新离线分析/归档检查 | Ruff 与 strict mypy 见本次检查日志；原文件到 gzip 全量独立核验 6,254/6,254、1,115/1,115 匹配 | full-run-01/analysis-checks/ |
 | 本次独立数据复核 | 948 请求检查无差异；每量化450正式IRL的Schema/来源布尔无差异；统计/显存/输出另核验 | benchmark-run-03/audit/ |
 | 分析异常与失败保留 | 主代理等计数假设失败及reporter首版计入预热均保留；按实际字段另存正确统计，没有改测量判据 | benchmark-run-03/analysis/attempt-01/、audit/ |
-| 当前 head CI | 以 PR 当前提交检查为准，不复用旧提交绿色；本机未跑无关整库 TS/Rust/业务测试 | PR #87 checks |
+| 最终报告提交 CI | 仅报告/证据，按 AGENTS §9 paths-ignore 未触发，不声明当前head通过；最终本地实现检查已通过，源码未再改 | benchmark-run-03/context/report-only-ci.json、PR #87 checks |
 
 ## 规格对照
 
