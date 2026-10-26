@@ -23,7 +23,7 @@
 | `cargo fmt --all -- --check` | 通过 | 本机 |
 | `cargo clippy --workspace --all-targets -- -D warnings` | 通过 | 本机 |
 | `cargo test -p core-kernel -p core-policy` | 12 通过 | 本机 |
-| `cargo test --workspace --no-fail-fast` | 见下 | `cargo-test-workspace.log` |
+| `cargo test --workspace --no-fail-fast` | 全部通过（core-kernel 12、core-store 31、core-types 7 及契约测试 17 等），退出码 0 | `cargo-test-workspace.log` |
 | 删除的代码没有残留引用 | 通过：工作区内不再有 `core_policy::` 的使用 | `grep` |
 
 **环境说明：** 云端会话无法下载仓库固定的 Rust 1.99.0（static.rust-lang.org 被代理拒绝），本机检查用已安装的 1.97.0（`RUSTUP_TOOLCHAIN=stable`）。以 CI 上 1.99.0 的结果为准。
