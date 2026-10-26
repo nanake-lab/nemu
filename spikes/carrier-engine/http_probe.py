@@ -56,10 +56,10 @@ class Server(AbstractContextManager["Server"]):
             port_socket.bind(("127.0.0.1", 0))
             port = port_socket.getsockname()[1]
         self.endpoint = f"http://127.0.0.1:{port}"
-        args = [str(self.engine / "llama-server.exe"), "-m", str(self.model), "--host", "127.0.0.1",
+        args = [str(self.engine / "llama-server.exe"), "--log-verbosity", "4", "-m", str(self.model), "--host", "127.0.0.1",
                 "--port", str(port), "-ngl", "999", "-c", "8192", "-np", "1", "-b", "512", "-ub", "512",
                 "-t", "4", "-tb", "4", "--flash-attn", "off", "--no-cache-prompt", "--no-context-shift",
-                "--no-webui", "--no-ui-mcp-proxy", "--offline", "--perf", "--log-verbosity", "4"]
+                "--no-webui", "--no-ui-mcp-proxy", "--offline", "--perf"]
         env = {key: value for key, value in os.environ.items()
                if not key.startswith("LLAMA_") and key != "GGML_BACKEND_PATH"}
         env.update(HF_HUB_OFFLINE="1", HF_HUB_DISABLE_TELEMETRY="1", OMP_NUM_THREADS="4", MKL_NUM_THREADS="4")

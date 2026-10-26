@@ -38,3 +38,11 @@ Perth 2026-10-26 **12:59:48–12:59:59**，无 Listener/Worker 后启动。日�
 进一步静态核对发现，命令行中 `-ngl 999` 在日志参数之前；[arg.cpp:2802–2816](https://github.com/ggml-org/llama.cpp/blob/620d2225cc436ab0b001e3200e590e3b286ef9ab/common/arg.cpp#L2802-L2816) 的处理会调用 `llama_supports_gpu_offload`，[llama.cpp:95–102](https://github.com/ggml-org/llama.cpp/blob/620d2225cc436ab0b001e3200e590e3b286ef9ab/src/llama.cpp#L95-L102) 在后端尚未注册时会加载后端。CLI 按顺序处理，日志 4 尚未生效时该消息就可能被过滤。只修改值未覆盖此顺序，是本卡准备不完整；静态调用链与缺行现象相符，尚未实测调整顺序后的结果。
 
 已备好 [仅调整顺序的补丁](benchmark-run-02/proposed-log-order.patch)：将现有 `--log-verbosity 4` 放到首个选项，保留所有参数值及全部条件判断。AST 比较确认参数 token 多重集、所有 if 条件均不变；该补丁**未应用**。按阻塞即停要求，不再自行尝试。
+
+## 第三次补测：获批的参数顺序修正
+
+用户随后明确批准应用上述补丁：只调整顺序、判据不变，只补测 Q4_K_M/Q8_0 速度及 IRL，已完成注入不重跑；测前确认无 runner 作业并记录并发。此前 `-ngl` 先触发后端加载而日志 4 尚未生效，根因是本卡准备时漏查参数处理顺序，不能归咎于模型或 CUDA 回落。
+
+本分支先 merge 最新 `origin/main` `b4eb7fd`（merge `094e02a`），必读文档与本卡未变化。已原样应用获批的两行补丁：把既有 `--log-verbosity 4` 从参数末尾移到首个选项，没有改变值、CUDA/full-offload 条件、缓存或截断检查。重新准备 full-v5；CPU 检查、输入一致性、修正提交和 GPU 实际结果依次记录，完成之前不声称补测成功。
+
+准备阶段进程检查发现 Listener/Worker 均在运行，因此未启动 GPU；随后用户确认“作业已结束，runner 已停”。实际测量前还会再次检查，并持续使用原请求前后的严格无 runner 检查。没有通过修改资源检查来绕过并发。
