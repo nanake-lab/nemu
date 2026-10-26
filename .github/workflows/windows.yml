@@ -103,7 +103,8 @@ jobs:
         !github.event.pull_request.draft) ||
        (github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/heads/')))
     runs-on: [self-hosted, Windows, X64, nemu]
-    timeout-minutes: 20
+    # W02 core-store crash-recovery tests take over 20 minutes on the user's machine.
+    timeout-minutes: 60
     defaults:
       run:
         shell: pwsh

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "p0-10-experiment-assets-v1",
+  "purpose": "isolated carrier measurement; no production deployment or selection",
+  "assets": [
+    {
+      "id": "Qwen3-4B-Instruct-2507",
+      "source": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "license": "Apache-2.0",
+      "redistributionPermittedByLicense": true,
+      "productionDistributionApproved": false,
+      "inventory": "../../reports/P0-10/preparation/downloads-20261025/model-inventory.json",
+      "derived": [
+        {"quantization": "BF16", "sha256": "72659931e6350a1a7ae92b40d5401fd8f857d4db2f2494105f4f4026c191f929"},
+        {"quantization": "Q4_K_M", "sha256": "972e3afefe3abcfbc5b38c4dd1e5dcf7244bc3824203b67167b44f4468f129f2"},
+        {"quantization": "Q8_0", "sha256": "50352a045e9cfbe5515ce38c60d8e65f3320a372f86c4eb617fd7577c858a51c"}
+      ],
+      "derivedInventory": "../../reports/P0-10/conversion-20261026/inventory.json"
+    },
+    {
+      "id": "llama.cpp-b11669",
+      "source": "https://github.com/ggml-org/llama.cpp/releases/tag/b11669",
+      "revision": "620d2225cc436ab0b001e3200e590e3b286ef9ab",
+      "license": "MIT (source); LLVM OpenMP and NVIDIA terms also apply to binary runtime bundle",
+      "redistributionPermittedByLicense": null,
+      "productionDistributionApproved": false,
+      "inventory": "../../reports/P0-10/preparation/downloads-20261025/engine-inventory.json",
+      "note": "Official Windows x64 CUDA 12.4 archive used locally; complete bundle redistribution not reviewed."
+    }
+  ]
+}
