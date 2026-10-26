@@ -1,0 +1,26 @@
+{
+  "status": "diagnostic_only_acceptance_still_failed",
+  "first_difference": {
+    "stream_zero_based": 58,
+    "event_zero_based": 146,
+    "exogenous": true,
+    "nb": 9.002602571635055,
+    "ns": 18.17364863870306,
+    "rho": 0.926559851793074,
+    "b0": 0.9636448901535122,
+    "a": -0.9691673939995136,
+    "before_b": 0.3580930123949119,
+    "residual": -1.3272604063944256,
+    "square_multiply": 1.7616201863822956,
+    "square_python_power": 1.7616201863822958,
+    "ordered_var": 0.2645761981579266,
+    "original_var": 0.26457619815792666,
+    "ordered_sigma": 0.5143697096038282,
+    "original_sigma": 0.5143697096038283,
+    "ordered_sigma_u64": 4602808250010281358,
+    "original_sigma_u64": 4602808250010281359
+  },
+  "sigma_bit_mismatches_of_72822_events": 13,
+  "baseline_bit_mismatches": 0,
+  "explanation": "Explicit binary64 multiplication and Python **2 have distinct rounding on this platform; this diagnostic reproduces Rust's first sigma bits without changing implementation or fixture."
+}
