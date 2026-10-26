@@ -2,7 +2,14 @@
 
 ## 当前状态
 
-本卡本机验收完成，等待交叉审查与用户合并（ADR 0020）。2026-10-26 已解除暂停，先 merge `origin/main@86779b1`（`7ec2502`），发布前再 merge 最新 `origin/main@317dde9`（`b1fd135`）。后一次仅合入 #103 的文档/任务元数据，已阅读 V2-117，P5-04 的 V2-76/V2-88 和全部运行字节未变；同步后重跑 fmt、clippy、事实视图全部测试及真实 CPU 模型通过，证据见 [main-sync-20261026](main-sync-20261026/)。本轮只继续事实视图目录及追加文档/请求/报告。Windows 工作流与 main 完全一致，旧 TEMP/TMP 权限阻塞已解除。按用户要求止于推送、转可审查并写「请审查」，不等待或报告 CI，不合并、不取下一卡。
+部分完成：既有本机验收通过的证据保留，当前 Windows CI 有网络阻塞，另有两项交叉审查问题与 ADR 0020 待处理，见 [BLOCKED.md](BLOCKED.md)。本轮按用户要求调查 head `fbcb7cc` 的 Windows job；已 merge 最新 `origin/main@929f82d`（`b4e6e73`，仅 #102 的任务/文档），本卡源码、测试、依赖锁文件、全部工作流相对 fbcb7cc 均未变。读取最新审查评论；本次止于 CI 环境定位、证据提交及 PR 说明，不扩展为代码复审修复、不合并、不取下一卡。此前恢复与真实模型复验见 [main-sync-20261026](main-sync-20261026/)。
+
+## 2026-10-26 Windows CI 失败定位
+
+- [run 40323615588 / self-hosted job 121574544222](https://github.com/nanake-lab/nemu/actions/runs/40323615588/job/121574544222) 的第 19 步 `W02 NTFS storage checks` 在 Cargo 更新 crates.io 索引时失败，步骤退出码 1。`ppv-lite86` 源数据读取反复出现 `transfer too slow`，30 秒 0 字节；错误依赖链为 fact-view → fastembed 7.3.0 → tokenizers 0.23.2 → rand 0.9.5 → rand_chacha 0.9.0 → ppv-lite86 0.2.21。属于此次 runner 构建环境的依赖源网络超时；更下层的网络原因未确定，没有因本次日志而修改实现或依赖。
+- 已读原始上传 ZIP 的两个文件（toolchain.log、clippy.log），SHA-256 `20c648f230b27a177cf8182d3488e35cd7e07d93a4c6db065c9cc6b8f5de1dec` 与 GitHub 一致。没有 tests.log，存储测试尚未开始；无编译诊断或测试失败证据。`desktop=false / storage=true`，隔离/E2E/visual 都是 skipped，不能计为本次通过。另一汇总 job 仅传播上游 failure。
+- 本次证据成功写入 `D:\actions-runner\_work\_temp\w02-40323615588-1` 并上传；工作流 blob 与 main 一致，未恢复 TEMP/TMP 覆盖，未改权限、系统/用户/全局设置、runner、超时或阈值，未主动重跑 CI。仅核验证据、哈希、代码与工作流未变化，不用旧的本机成功替代失败 job。
+- [诊断与完整证据](windows-failure-fbcb7cc-20261026/README.md)；[最新交叉审查](https://github.com/nanake-lab/nemu/pull/65#issuecomment-6419219224) 的空信封字节预算、CPU 检查 Rust scope 两项仍未解决，与此次网络失败分别记账。
 
 ## 交付物
 
@@ -82,6 +89,8 @@
 
 ## 待用户确认
 
+- [ ] （合并前阻塞）Windows CI 依赖源网络故障解除后按原配置重跑，当前失败不算通过，见 BLOCKED.md。
+- [ ] （合并前阻塞）修复并复审 fbcb7cc 审查评论的两项 P2；本次 CI 环境定位未修改它们。
 - [ ] （合并前阻塞）交叉审查本 PR，包括既有 core-store/core-types 扩展；由用户安排，不联系其他执行者。
 - [ ] （合并前阻塞）用户合并批准 ADR 0020 的重量级 CPU 依赖，保留 needs-user。
 
