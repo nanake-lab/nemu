@@ -11,4 +11,8 @@
 
 运行命令、起止时间、退出码和原始输出按同名 JSON/日志保存。测试/编译启动前检查本机没有 Runner.Worker、cargo 或测试重负载；CI 后续自行启动不作为性能验收窗口。本轮没有做性能测量。缓存/构建在既有 D 盘位置，临时库均为新的 TemporaryRoot EXPERIMENT。没有改变权限、系统/用户/全局设置、runner、网络、依赖版本或验收阈值；job 时限只接收上述 main 已合并的变更。
 
-fbcb7cc 的 Cargo registry 超时另见 `../windows-failure-fbcb7cc-20261026/`；新修复与旧网络失败分别记账，原失败不改成通过。当前验收结果以本目录完成后的日志和上级 REPORT/BLOCKED 为准。
+最终代码提交为 918b8dc85f0ef481f3d6f7433d7fac9f4f110df5。同步 main 后的 fmt-main、clippy-main、workspace-tests-main 均 exit 0；core-kernel 86 通过/1 个既有 ignored、core-store 32 通过、fact-view 18 通过/2 个既有 ignored，谱系 compile_fail 通过。工作区测试起止为 2026-10-27 01:31:07–01:33:48（+08:00）。后续只追加报告/证据，不改已验代码。
+
+只读机械核验确认原始统计、退出码和源码恢复哈希一致，旧失败目录的 14 个文件相对 092cb2fe 无变化；没有额外执行测试，也不签发审查结论。最终一致性核验见 verification.json / SHA256.json。
+
+fbcb7cc 的 Cargo registry 超时另见 `../windows-failure-fbcb7cc-20261026/`；新修复与旧网络失败分别记账，原失败不改成通过。旧诊断脚本保留 092cb2fe 的上下文，不能拿其旧 main/工作流假设核验新提交；本轮使用 verify-fix.ps1。

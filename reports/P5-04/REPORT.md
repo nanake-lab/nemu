@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-2026-10-27：两项 P2 已修复，新增三项回归（含 45 个空响应组合）、CI scope 11 场景、第一轮 fmt/clippy/完整 release 工作区测试通过；最新 main 同步后的复验正在等待资源。已 merge `origin/main@65052c0`（`c4162dec`），保留 needs-user，等待当前提交的 CI、独立复审及 ADR 0020 批准，见 [BLOCKED.md](BLOCKED.md)。用户本轮明确继续修复，已撤销上一轮仅作网络诊断的范围收窄；不改权限/系统设置，不合并、不取下一卡。
+2026-10-27：两项 P2 已修复于 `918b8dc`；新增三项回归（含 45 个空响应组合）、CI scope 11 场景，以及 main 同步前后的 fmt/clippy/完整 release 工作区测试均通过。已 merge `origin/main@65052c0`（`c4162dec`），保留 needs-user，等待独立复审、当前提交的 CI 及 ADR 0020 批准，见 [BLOCKED.md](BLOCKED.md)。本轮止于推送与「请审查」，不等待新 CI，不改权限/系统设置，不合并、不取下一卡。
 
 ## 本轮两项审查修复
 
@@ -15,11 +15,11 @@
 | --- | --- | --- |
 | 新预算回归 | 3 通过；三种空状态的短/70000 ASCII/UTF-8 ID 与零/差一字节/精确边界/默认预算等 45 组合；裁空及大 ID 翻页保持原文、顺序与 cursor | [panel-budget-green.log](review-fix-20261026/panel-budget-green.log) |
 | 旧实现反向验证 | 预期预算断言失败，exit 101；修复源码完整恢复，SHA 已记录 | [原始失败](review-fix-20261026/budget-regression-red.log)、[控制结果](review-fix-20261026/budget-regression-negative-control.json) |
-| Rust fmt / workspace all-targets CPU clippy -D warnings | 第一轮通过；同步后复验等待资源 | review-fix-20261026/fmt、clippy 的同名 JSON/log；同步后另存 *-main |
-| 完整 release workspace / CPU 特性 | 第一轮通过，fact-view 18、core-store 32、谱系 compile_fail 通过；同步后复验等待资源 | [workspace-tests.log](review-fix-20261026/workspace-tests.log) |
+| Rust fmt / workspace all-targets CPU clippy -D warnings | 同步 main 后再次通过，无警告 | [fmt-main.json](review-fix-20261026/fmt-main.json)、[clippy-main.log](review-fix-20261026/clippy-main.log) |
+| 完整 release workspace / CPU 特性 | 同步 main 后通过：core-kernel 86、core-store 32、fact-view 18；谱系 compile_fail 通过。既有诊断/真实模型 ignore 保留，未新增跳过 | [workspace-tests-main.log](review-fix-20261026/workspace-tests-main.log)；[第一轮](review-fix-20261026/workspace-tests.log) |
 | CI Rust scope | 11 场景通过，stage/desktop-only 跳过 CPU；Rust/共享文件/工作流/手动与 diff 失败保留覆盖 | [ci-scope-result.json](review-fix-20261026/ci-scope-result.json) |
 
-精确命令、工作目录、起止时间、退出码与检查脚本见 [review-fix-20261026](review-fix-20261026/README.md)。本轮没有新依赖、IDL、冻结字节、存储格式、core-store/core-types 修改或性能测量；实际 CPU 模型证据仍属于下述旧恢复提交，不能外推为本轮重新测量。
+精确命令、工作目录、起止时间、退出码与检查脚本见 [review-fix-20261026](review-fix-20261026/README.md)。同步后工作区检查在 918b8dc 上执行，后续仅记录报告/证据。本轮没有新依赖、IDL、冻结字节、存储格式、core-store/core-types 修改或性能测量；实际 CPU 模型证据仍属于下述旧恢复提交，不能外推为本轮重新测量。只读机械核验另确认初始和同步后退出码/统计、源码恢复 SHA，以及旧失败目录 14 个文件未变；不将该核验当作第二次运行或审查批准。
 
 ## 2026-10-26 Windows CI 失败定位
 
@@ -108,7 +108,7 @@
 
 ## 待用户确认
 
-- [ ] （合并前阻塞）最新 main 同步后的本机复验完成；当前提交的 Windows/其他 CI 仍须按提交核对，不用旧成功或旧失败代替，见 BLOCKED.md。
+- [ ] （合并前阻塞）当前提交的 Windows/其他 CI 通过，按提交核对，不用旧成功或旧失败代替；本轮不等待新 CI，见 BLOCKED.md。
 - [ ] （合并前阻塞）独立复审两项已修复的 P2，不把本机回归当作审查批准。
 - [ ] （合并前阻塞）交叉审查本 PR，包括既有 core-store/core-types 扩展；由用户安排，不联系其他执行者。
 - [ ] （合并前阻塞）用户合并批准 ADR 0020 的重量级 CPU 依赖，保留 needs-user。

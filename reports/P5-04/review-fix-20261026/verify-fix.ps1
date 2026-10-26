@@ -36,6 +36,7 @@ $sourceHashes = @($paths | ForEach-Object {
 [ordered]@{
     checked_at_utc=[DateTime]::UtcNow.ToString('o'); result='passed'; baseline='092cb2fe1979beec6b537290173684f5ea6ed86c'
     main_sync_commit='c4162dec56b8d515b507f325fdea53dbf507f140'; merged_main='65052c0c45f932b601340fca43318ba7db814f71'
+    tested_implementation_commit='918b8dc85f0ef481f3d6f7433d7fac9f4f110df5'
     local_checks=$checks; negative_control_expected_failure=101; empty_response_combinations=45
     new_rust_tests=3; fact_view_passed=18; fact_view_existing_ignored=2; core_store_passed=32
     ci_scope_scenarios=11; source_files=$sourceHashes; windows_workflow_blob=$windows

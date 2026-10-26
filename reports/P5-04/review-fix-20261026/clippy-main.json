@@ -1,0 +1,22 @@
+{
+  "name": "clippy-main",
+  "tool": "cargo",
+  "arguments": [
+    "clippy",
+    "--manifest-path",
+    "core/Cargo.toml",
+    "--workspace",
+    "--all-targets",
+    "--features",
+    "fact-view/cpu-embedding",
+    "--locked",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+  "started_at": "2026-10-27T01:31:05.7291869+08:00",
+  "finished_at": "2026-10-27T01:31:06.9795374+08:00",
+  "exit_code": 0,
+  "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+}
