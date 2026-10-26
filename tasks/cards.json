@@ -571,7 +571,8 @@
    "phase": "P5",
    "milestone": "E1",
    "deps": [
-    "P5-02"
+    "P5-02",
+    "P5-35"
    ],
    "difficulty": "中",
    "suggested": "Codex",
@@ -851,7 +852,7 @@
    "id": "P5-22",
    "title": "终端契约变更：身体读出、主动边界、成长的查询与通知",
    "phase": "P5",
-   "milestone": "E2",
+   "milestone": "E1",
    "deps": [
     "P5-21"
    ],
@@ -1022,6 +1023,21 @@
    "suggested": "Codex",
    "you": null,
    "effort": "2 天"
+  },
+  {
+   "id": "P5-35",
+   "title": "契约变更：终端接入（认证、对象上传、分派、入口拒绝审计、背压）",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-02",
+    "P5-22",
+    "P5-34"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "4 天"
   },
   {
    "id": "P5-36",
@@ -1511,6 +1527,7 @@
     "P5-32",
     "P5-33",
     "P5-34",
+    "P5-35",
     "P5-36",
     "P5-37",
     "P5-38",
