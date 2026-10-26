@@ -23,7 +23,7 @@ $commands = @{
     storage = @('cargo', '+1.99.0', 'test', '--manifest-path', 'core/Cargo.toml', '-p', 'core-store', '--locked', '-j', '1', 'p534_', '--', '--test-threads=1')
     types = @('cargo', '+1.99.0', 'test', '--manifest-path', 'core/Cargo.toml', '-p', 'core-types', '--locked', '-j', '1', '--', '--test-threads=1')
     clippy = @('cargo', '+1.99.0', 'clippy', '--manifest-path', 'core/Cargo.toml', '--workspace', '--all-targets', '--locked', '-j', '1', '--', '-D', 'warnings')
-    workspace-without-storage = @('cargo', '+1.99.0', 'test', '--manifest-path', 'core/Cargo.toml', '--workspace', '--exclude', 'core-store', '--locked', '-j', '1', '--', '--test-threads=1')
+    'workspace-without-storage' = @('cargo', '+1.99.0', 'test', '--manifest-path', 'core/Cargo.toml', '--workspace', '--exclude', 'core-store', '--locked', '-j', '1', '--', '--test-threads=1')
     workspace = @('cargo', '+1.99.0', 'test', '--manifest-path', 'core/Cargo.toml', '--workspace', '--locked', '-j', '1', '--', '--test-threads=1')
     remaining = @('cargo', '+1.99.0', 'test', '--manifest-path', 'core/Cargo.toml', '-p', 'echoctl', '-p', 'fact-view', '-p', 'gateway', '-p', 'semantic-core', '-p', 'task-layer', '--locked', '-j', '1', '--', '--test-threads=1')
     doctests = @('cargo', '+1.99.0', 'test', '--manifest-path', 'core/Cargo.toml', '--workspace', '--doc', '--locked', '-j', '1', '--', '--test-threads=1')

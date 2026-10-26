@@ -1,0 +1,29 @@
+{
+  "step": "workspace-without-storage",
+  "command": [
+    "cargo",
+    "+1.99.0",
+    "test",
+    "--manifest-path",
+    "core/Cargo.toml",
+    "--workspace",
+    "--exclude",
+    "core-store",
+    "--locked",
+    "-j",
+    "1",
+    "--",
+    "--test-threads=1"
+  ],
+  "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+  "start": "2026-10-26T11:45:59.5238572Z",
+  "head": "2fa1bc9b575dd2aaad04921a6968bc5fc913a5cd",
+  "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+  "target": "D:\\Dev\\cache\\P5-34\\target",
+  "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+  "jobs": 1,
+  "testThreads": 1,
+  "end": "2026-10-26T11:46:19.9072581Z",
+  "exitCode": 0,
+  "logSha256": "e0ee8f8247ce2b36d4ac97d247f4c843baf20f3826a23f4915d1ff87eb7c8d6e"
+}
