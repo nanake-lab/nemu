@@ -256,7 +256,7 @@
    "id": "P2-01",
    "title": "设定集与人设种子（Nemu Bible）",
    "phase": "P2",
-   "milestone": "E5",
+   "milestone": "E2",
    "deps": [],
    "difficulty": "—",
    "suggested": "你",
@@ -516,7 +516,8 @@
     "P0-02",
     "P4-01",
     "P4-02",
-    "P4-04"
+    "P4-04",
+    "P4-07"
    ],
    "difficulty": "中",
    "suggested": "Codex",
@@ -750,7 +751,7 @@
    "id": "P5-16",
    "title": "指标与运行手册（W15 基础）",
    "phase": "P5",
-   "milestone": "E2",
+   "milestone": "E4",
    "deps": [
     "P5-08",
     "P5-29"
@@ -770,6 +771,7 @@
     "P5-29",
     "P5-30",
     "P5-31",
+    "P5-39",
     "P6-01"
    ],
    "difficulty": "高",
@@ -1273,7 +1275,8 @@
     "P6-12",
     "P6-16",
     "P6-18",
-    "P6-19"
+    "P6-19",
+    "P6-20"
    ],
    "difficulty": "—",
    "suggested": "你",
@@ -1346,7 +1349,11 @@
    "suggested": "Antigravity",
    "you": "和你一起定名字与诞生流程（R-9）",
    "effort": "4 天",
-   "milestone": "E4"
+   "milestone": "E4",
+   "status_override": {
+    "status": "blocked",
+    "note": "开工前要先定 R-9（名字与诞生流程），定下后由 Claude 去掉这个标记"
+   }
   },
   {
    "id": "P6-19",
@@ -1361,6 +1368,20 @@
    "you": null,
    "effort": "3 天",
    "milestone": "E4"
+  },
+  {
+   "id": "P6-20",
+   "title": "终端接入语音输出（原 P6-02 第二部分）",
+   "phase": "P6",
+   "deps": [
+    "P4-06",
+    "P6-02"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "2 天",
+   "milestone": "E3"
   },
   {
    "id": "P7-01",
@@ -1513,6 +1534,7 @@
     "P6-17",
     "P6-18",
     "P6-19",
+    "P6-20",
     "P7-01",
     "P7-02",
     "P7-03",
