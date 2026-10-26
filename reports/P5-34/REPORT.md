@@ -1,80 +1,101 @@
 # P5-34 分配的实际保留率与倾向的证据量 — 报告
 
-## 当前状态
+## 结果
 
-部分完成（见 BLOCKED.md）。新草稿 [PR #95](https://github.com/nanake-lab/nemu/pull/95) 标 needs-user，由用户合并。原 PR #72 因目录冲突关闭；本次在原分支上依次 merge 最新 main，没有 rebase 或强推。已合入 main 2bc04bad4902657eef49d3225cafa7945e7cfae6，合并提交 da945d521ab5d2a2dcfa9d21930a47e6c6d24e82。当前保留草稿，尚不满足转可审查条件。
+已实现用户批准的分阶段交付；最终验收进行中（见 BLOCKED.md）。[PR #95](https://github.com/nanake-lab/nemu/pull/95) 保持 draft/needs-user，最终 head 的 CI 全绿后才转为可审查并写“请审查”，由用户合并。原 PR #72 已关闭，原分支保留；本次只 merge、不 rebase、不强推。已合入 origin/main b4eb7fd（merge 3418159），实现提交 4342065。
 
-本次只保留任务卡列明的契约、core-types、生成代码，以及要求的 ADR、差异登记、规格对照、请求和报告。原 PR 的 core-store 扩围已恢复为 origin/main，净差异为零；原实现仍在 Git 历史，原始证据完整保留。卡外存储消费者尚未从 V2 切换至 V3，不能用旧 PR 的成功日志证明当前兼容。
+用户明确决定：新写入 V3；V2 历史只读、可解码；旧 V2 head 拒绝继续写。当前没有正式或排练存储，现存仅测试数据（用户提供，本卡未访问用户数据）。本次不做 V2→V3 数据迁移。将来需要时由 **P5-26** 按 v2.0 §2.2 用规律 G 从 H 整段重放得到新 q/V 快照，**不另开迁移卡**。这一决定不是用默认 q/V 转换旧状态的授权。
 
 ## 交付物
 
-- core/contracts/law.proto：四种 V3 后继消息；EvidenceAllocationV3.9 actual_retention 保存历史 q，TendencyV3.18 evidence_absolute 保存独立 V。EvidenceGroupV3 保留 7/8，RSnapshotV3 保留 4/5。V2 标为取代，原定义、标签和字节保留。
-- core-types 的编解码与纯语义检查：q 有限且在 (0,1]，V 有限且 ≥|A|；绑定规律参数核对 B、π、r 的有限 binary64 计算次序；序号恰为 0…N−1。JSON 位值通过既有 serde_json 的 float_roundtrip 保留。
-- Rust/Python/TypeScript 生成类型、运行时和浏览器安全 Zod；只增加两个权威字段，不设计 G、检测器或 θ 状态。
-- 黄金向量只追加 19 合法、35 非法；现有总数 464 合法、492 非法、18 Unicode。四种 V3 的合法/非法数量分别为分配 6/10、倾向 5/11、证据组 4/7、快照 4/7。
-- ADR 0021 §10、docs/traceability/P5-34.md 当前范围说明，以及 tasks/requests/P5-34-core-store-v3.md 的接续请求。沿用 V2-62/63，不新占编号。
-- verify-resumed.ps1 与 summarize_resumed.py：独立记录本轮命令、开始/结束、HEAD/main、退出码、日志 SHA-256、生成代码和冻结基线哈希。不会覆盖旧证据。
+- core/contracts/law.proto：EvidenceAllocationV3.9 actual_retention 保存历史 q；TendencyV3.18 evidence_absolute 保存独立 V；EvidenceGroupV3 保留 7/8，RSnapshotV3 保留 4/5。V2 标取代，原定义、标签和字节保留。
+- core-types 的编解码与纯语义检查：q 有限且在 (0,1]，V 有限且 ≥|A|；绑定规律参数核对 B、π、r 的有限 binary64 计算次序；分配序号恰为 0…N−1。既有 serde_json 开启 float_roundtrip 保留 JSON 位值。
+- 三语言生成类型、运行时及浏览器安全 Zod；黄金向量只追加 19 合法、35 非法，总计 464 合法、492 非法、18 Unicode。新分配/倾向/证据组/快照的合法与非法数分别为 6/10、5/11、4/7、4/7。p5-32 冻结基线保留。
+- ADR 0021 §11、差异登记 V2-62/63 接续说明、docs/traceability/P5-34.md 与两份接续请求；不新增检测器/θ 字段或 G 算法。
+- verify-protected.ps1、verify-main-supervisor.ps1、summarize_protected.py 与 verification/protected-20261026/：命令、时间、提交、退出码、日志 SHA-256、逐文件源码/基线哈希及 main 对照。旧运行目录不覆盖。
+
+### 受保护路径 core-store（必须一并交叉审查）
+
+这是用户专项批准的最小契约连锁改动，完整逐文件必要性见 [PROTECTED-SCOPE-20261026.md](PROTECTED-SCOPE-20261026.md)。没有恢复原 PR #72 的存储侧规律校验/重放回调扩围。
+
+| 文件（相对 core/crates/core-store/src/） | 必要性 |
+| --- | --- |
+| objects.rs、store.rs | 专用 R 生产切至 V3；读取 NSI1 时保留 V2/V3 原解码；通用准备入口拒绝两代 R；旧 V2 head 在 writer 配置/回执修复前明确拒绝 |
+| transaction.rs、publication.rs | staged R、可写 head 的 revision 和新发布的倾向/证据组索引切至 V3 |
+| queries.rs、lib.rs | 历史证据查询返回包裹生成消息的 EvidenceGroupRecord::V2/V3，保留原代际；最新版本优先和完整预算查询逻辑不变 |
+| tests/mod.rs、objects.rs、crash.rs、crash_harness.rs | 当前生产夹具与故障标签切至 V3；改变 A 的夹具同步声明 V≥|A|；原断言含义、等待与资源阈值不变 |
+| tests/legacy_v2.rs、retention_versions.rs | 临时历史 V2 夹具和新旧边界回归；生产 API 无旧写入逃生口 |
+
+共 12 个 core-store 文件。SQLite 格式版本/表结构、NSI1 物理布局、事务与预算行为未改变。新增逻辑对象使用独立 V3 标签和摘要；物理布局不变不等于完成语义迁移。受保护源码不含 G 实现、自动迁移、默认 q=1 或 V=B−c。
 
 ## 验收
 
-当前证据根目录为 verification/resumed-20261026/。attempt-01 内各检查均有同名 .log/.json。日志保留原始失败；汇总不把失败或未执行改成通过。验证工具链为 Rust/Cargo 1.99.0、系统 Python 3.12.10、uv 项目 Python 3.12.14、uv 0.12.15、Node 24.21.0、pnpm 12.11.2。缓存、target、临时存储在 D 盘；重负载由主代理串行执行，routine_reporter 仅做只读向量/哈希/CI 核验。命令 JSON 的 jobs/testThreads 表示 Cargo/Rust 环境约束；Vitest 依仓库原配置运行。
+本轮证据在 verification/protected-20261026/，每项 log/json 对记录原始命令、退出码及 SHA-256。Rust/Cargo 1.99.0 与仓库锁定一致；Node 24.21.0、pnpm 12.11.2；系统 Python 3.12.10，uv 项目 Python 3.12.14。缓存、编译、临时数据在 D 盘；重负载串行。routine_reporter（GPT-6 Luna/max）仅执行指定轻量检查/哈希/只读 CI 查询，不作验收或合并裁决；本轮未另行验证客户端是否自动加载 TOML 职责文件，不宣称该能力已验证。
 
-| 命令或检查 | 结果 | 证据 |
+| 命令或检查 | 结果 | 证据（相对 verification/protected-20261026/） |
 | --- | --- | --- |
 | python core/contracts/generate.py --check | 通过，0 stale | attempt-01/generate.log |
-| pnpm test:core-contracts；D10.8 / SYS21 的本卡范围 | 通过；12 项 schema，三语言各 11592 用例（2659 合法/8933 非法）、protoc 464 向量、浏览器 Zod 106 项 | attempt-01/contracts.log |
-| python core/contracts/check_compat.py --ref origin/main | 通过，p5-01、p5-21、p5-32、current、origin/main 均 0 违例 | attempt-01/compatibility.log |
-| 旧黄金及新增字节独立复核 | 旧 445/457/18 项和文本前缀相同；新增 19 合法向量独立复算 0 差异 | attempt-01/bytes.log |
-| 定向输入控制与 p5-32 冻结基线 | 7 合法/23 非法、6 非有限有效对照通过；7 proto 与发布版本 91b31ed 相同 | attempt-01/inputs.log |
-| cargo test -p core-types；语义正反例 | 31 项通过，含 P5-34 的 7 项；0 失败/忽略 | attempt-01/types.log |
-| cargo test --workspace --locked -j1 -- --test-threads=1 | 失败，退出 101；core-kernel 12 通过，core-store 30 通过/1 失败；Cargo 在该包后终止 | attempt-01/workspace.log |
-| 全工作区失败后未运行到的 5 个脚手架 crate 及 doc-tests | 未运行：补充调度被其他卡重负载挡住，未并行启动；不替代或改判全工作区失败 | resource-deferred.json、guard-remaining-*.json |
+| python core/contracts/check_compat.py --ref origin/main | 通过；p5-01、p5-21、p5-32、current、origin/main：0 违例 | attempt-01/compatibility.log |
+| 旧黄金与新增字节独立复核 | 旧 445/457/18 前缀不变；新增 19 合法向量独立复算 0 差异 | attempt-01/bytes.log |
+| 定向输入与 p5-32 基线 | 7 合法、23 非法、6 非有限对照；7 proto 与发布版本相同 | attempt-01/inputs.log |
+| pnpm test:core-contracts（D10.8/SYS21 本卡范围） | 待本轮结果 | attempt-01/contracts.log |
+| cargo test -p core-store p534_ | 通过，3/3；首次夹具构造错误 2/3 的原始失败保留，修复后复验 | attempt-01/storage.log、attempt-02/storage.log |
+| cargo test --workspace --locked -j1 -- --test-threads=1 | 进行中；包含 core-types、core-store 和 doc-tests | attempt-01/workspace.log |
 | cargo clippy --workspace --all-targets -- -D warnings | 通过 | attempt-01/clippy.log |
 | cargo fmt --all -- --check | 通过 | attempt-01/fmt.log |
 | pnpm lint | 通过 | attempt-01/lint.log |
-| pnpm typecheck | 通过 | attempt-01/typecheck.log |
-| pnpm test | 失败，退出 1；579 通过/1 失败，51 文件通过/1 文件失败 | attempt-01/test.log |
-| IDL/生成 Python 的 ruff、mypy --strict | 通过；mypy 12 个文件 | attempt-01/ruff.log、mypy.log |
-| 三个 worker 的 ruff、mypy --strict | 全部通过，各 2 个源/测试文件；生成模块另有上述检查 | attempt-01/irl-*、drive-*、model-adapter-* |
-| 三个 worker 的 uv run pytest | 全部通过，各 1 项脚手架测试；不代表真实模型效果 | attempt-01/*-pytest.log |
-| Ubuntu CI，先前 head b84d0bf | 失败，Rust checks 复现相同 V2 新写入拒绝；退出 101，core-store 30/1 | ci-b84d0bf.json；[run 40271343235](https://github.com/nanake-lab/nemu/actions/runs/40271343235) |
-| Windows CI | 草稿条件跳过；本轮检查时 Runner.Listener/Worker 均未在线，尚不能提供通过结论 | environment.json；PR checks |
-| 真实 G 重放、AC2-08/19/21、I23、SYS17 | not_run；后续集成范围 | 本报告、BLOCKED.md、summary.json |
+| pnpm typecheck / test / build | 待本轮结果 | attempt-01/typecheck.log、test.log、build.log |
+| IDL/生成 Python ruff、mypy --strict | 通过，mypy 12 文件 | attempt-01/ruff.log、mypy.log |
+| 三 worker ruff、mypy --strict | 全通过，各 2 个源/测试文件 | attempt-01/{irl,drive,model-adapter}-{ruff,mypy}.log |
+| 三 worker uv run pytest | 待本轮结果；均为脚手架级用例 | attempt-01/*-pytest.log |
+| 固定 main b4eb7fd 的三次完整 pnpm test | 3/3 通过，每次 52 文件/580 项；未复现 supervisor 失败 | main-test-04/05/06.log、supervisor-comparison.json |
+| 最终 head CI | 转为可审查前须核实 Ubuntu 与手动 Windows 全部通过，跳过不算通过 | PR #95 checks；最终“请审查”评论固定 head 与 run |
+| 完整 G 重放、AC2-08/19/21、I23、SYS17 | not_run，不用存储组件通过替代 | 本报告；各编号目录的本轮结果 |
 
-工作区测试开始于 17ef44d / main 716f7f0；运行期间合入的 main 2bc04ba 只涉及看板、报告和 CI 追加步骤，core、packages、workers 没有差异。后续检查各自记录实际 HEAD；不会把旧提交的 CI 说成最终提交全绿。ci-b84d0bf.json 保存原始错误摘录和 job 链接，明确不是完整 CI 日志；完整记录可在对应不可变 run 查阅。
+### supervisor 对照与原失败
 
-两项失败分别为：core-store/src/tests/objects.rs:172 的 V2 新写入被取代规则拒绝，以及 apps/desktop/src/supervisor/supervisor.test.ts:199 的退出清理断言观察到 PID 87292。后者随后已退出，不能据此改判通过；根因尚未确定。两个卡外目录都没有本卡净修改，未改断言、未放宽阈值、未靠重跑覆盖失败。完整诊断与接续选项见 BLOCKED.md 和两份 tasks/requests/P5-34-*.md。
+先前本分支 pnpm test 在 supervisor.test.ts:199 观察到 PID 87292，579 通过/1 失败；随后 PID 退出不撤销断言时失败。原日志留在 verification/resumed-20261026/attempt-01/test.log。
+
+main 的三次正确调用均通过，因此不声称“main 同样失败”或已定位根因。失败 head da945d5、main b4eb7fd 与当前实现的 supervisor 七文件及 package.json、pnpm-lock.yaml、vitest.config.ts 共十个 Git blob 完全相同；运行依赖为本地 supervisor 模块和 Node 内建 API，不调用本卡 IDL/Rust 存储逻辑。没有发现本卡引入该失败的代码证据。Ubuntu CI 会跑根 pnpm test 并包括 supervisor；Windows workflow 跑 transport/isolation/e2e/visual/W02，不跑根 Vitest。该原失败作为未定位的 Windows 退出检查波动保留，supervisor 代码、设置和断言均未修改。
+
+### 本轮保留的失败与验证脚本问题
+
+- storage attempt-01：旧历史夹具误以为可选 environment.law_version 必定存在，构造时 unwrap(None)；两项其他边界测试通过。夹具改为引用当前已准备 R 对象实际使用的 LawVersion；未改生产代码、断言或阈值。attempt-02 三项通过。
+- main-test-01/02/03：报告验证脚本把单参数拆开，实际命令为 vitest run e s t；虽然都跑了 580 项，仍不作正式 main 对照。修正报告脚本参数数组后，按预先声明的三次固定运行执行 04/05/06，未改测试本身，未运行到成功才停。
+- resumed-20261026 中的 Rust V2 新写入拒绝和 supervisor 失败，以及旧 PR #72 的全部证据保留。只以本轮各项实际结果判定当前实现。
 
 ## 规格对照
 
-完整表见 docs/traceability/P5-34.md，当前有效范围为首表、JSON 位值回归及 2026-10-26 追加节；其中 2026-10-24 的存储映射只描述已关闭 PR #72。
+完整对照见 docs/traceability/P5-34.md 的当前分阶段追加节；ADR 0021 §11 是受保护存储范围的最新决定，§7/9 属旧 PR 历史。
 
-| 规格条款 | 当前实现 | 检查 |
+| 规格条款 | 实现位置 | 测试 |
 | --- | --- | --- |
-| v2.0 §5.2；ADR 0019 §5/6/8.5；ADR 0021 §2–4 | actual_retention；保存首次 q，当前 S=0 不能倒推 q=1 | q 边界、次正规数、修改支持度后 q 仍合法、序号正反例 |
-| v2.0 §5.2；ADR 0019 §1/8.2/8.5；ADR 0021 §1–3 | evidence_absolute；V 不含 c/P，不以 B−c 恢复 | V<|A| 双符号、非有限、B 舍入丢失、小量 M/U、依恋分母括号 |
-| ADR 0007；ADR 0016；ADR 0021 §2 | 四种后继消息、继承 reserved、V2 取代标记 | 三基线/当前兼容门、旧字节独立复核、保留字段号拒绝 |
-| SYS21；施工合同 10.8 | 三语言同一描述符、严格有限 binary64 及浏览器 Zod | 黄金向量、对抗输入、protoc 对照与语义检查 |
+| v2.0 §5.2；ADR 0019 §5/6/8.5；ADR 0021 §2–4 | actual_retention；显式历史 q，不由当前支持度倒推 | q=0/>1/非有限拒绝、次正规数与相邻值、修改支持度后 q 保留、序号正反例 |
+| v2.0 §5.2；ADR 0019 §1/8.2/8.5 | evidence_absolute；B=c+V、π 固定括号与顺序 | V<|A| 双符号、非有限、B 舍入丢失、小量 M/U、依恋分母分组 |
+| ADR 0007/0016；ADR 0021 §11 | 四后继消息、reserved、V2 解码与 V3 写入分派 | 三基线/当前兼容门、旧字节复核、旧 R 平面/分段读取、旧 head 拒写后持久字节不变 |
+| SYS21；施工合同 10.8 | 三语言共享描述符、有限 binary64、浏览器 Zod | 黄金、对抗、protoc 与语义正反例 |
+| v2.0 §2.2；I23；SYS17 | 将来 P5-26 的 G/H 重放与迁移/失败回退 | 本卡 not_run；当前拒写保留旧数据不是完整迁移验收 |
 
-涉及不变量：I18 由显式版本化 IDL 和字段最小性表约束，不引入隐藏持久状态；I23 只验证所需 q/V 信息和计算分组能无损表达，完整重算仍由 G 集成验证；I25 的份额/同源算法不在本卡实现，序号和重复容器检查只覆盖契约局部；I02/I29 通过纯检查器、无权威库写入口及 TemporaryRoot/临时输入验证，未打开用户排练或正式存储。既有 LAW-6 和验收阈值未改变。
+I18：q/V 在显式版本化 IDL 中，无隐藏持久状态。I23：本卡证明字段/计算分组可表达和逐位保存，不证明完整历史重算。I25：契约序号/集合检查不代替 G 同源/分摊算法。I02：沿用原单写者与外层事务。I29：所有存储测试只用 TemporaryRoot，从未打开用户正式/排练存储。LAW-6、故障断言及验收阈值未改。
 
 ## 新增依赖
 
-无新增依赖或锁文件变更。既有 serde_json 1.0.154（MIT OR Apache-2.0）启用 float_roundtrip。超过 400 行的 semantic.rs 保留旧 V1/V2 检查并追加 V3，生成文件按原生成器组织；未另造第二份跨进程类型。
+| 名称 | 版本 | 许可证 | 用途 |
+| --- | --- | --- | --- |
+| 无新增；既有 serde_json 启用 float_roundtrip | 1.0.154 | MIT OR Apache-2.0 | 保持 JSON binary64 输入位值 |
+
+无依赖或锁文件新增。超过 400 行的 semantic.rs 保留旧 V1/V2 检查并追加 V3；生成文件按既有生成器组织，避免重复维护跨进程类型。新存储文件均未超过 400 行。
 
 ## 待用户确认
 
-- [ ] （阻塞）core-store 消费者适配的归属与卡目录安排；不得以取消 V2 取代标记或默认填 q/V 绕过。
-- [ ] （阻塞）桌面进程监督器测试失败的所属模块诊断与复验；不由 P5-34 扩围修复。
-- [ ] （阻塞）ADR 0021、V2-62/63 与具体后继契约交叉审查、用户批准合并。
-- ADR 0019、V2-55–59 已由 V2-84 确认，不重复请求；V2-80/105、81–83 的算法决定留给所属 G 实现。
+- [ ] （阻塞合并）ADR 0021、V2-62/63 与具体 q/V 后继契约，包含上述 core-store 受保护路径，一起交叉审查并由用户合并。实现者不自行审查或合并。
+- [x] 分阶段范围已获用户明确批准；不再请求迁移授权或另开迁移卡。
+- [ ] （不阻塞本卡）后续维护者定位原 supervisor 退出检查波动；原失败不隐藏，测试不放宽。
 
-## 历史证据与后续建议
+## 后续建议（不在本任务范围内）
 
-verification/run-01、after-main-0b5412e、core-store-v3、idle-20261024、review-20261024 和顶层各验收编号 result.json 均保留为 PR #72 历史证据，不代表本轮结果。旧 record_verification.py 面向旧运行目录，不用于生成本次结果。旧 JSON 位值失败、CI 超时和存储复审记录未覆盖或删除。
-
-后续由有权修改存储的卡接入 V3 并保留 V2 历史读取，再对真实 G 的完整 H 重放、来源更正和迁移/回退独立验收。P5-35 依赖 P5-34，不能把等待 P5-35 当作消除当前合并阻塞的安排。新变化检测器/θ 契约由后续卡处理。
+P5-26 需要迁移时，从完整有效 H 运行 G 重建 q/V，并完成备份、失败回退与 SYS17；不能把本卡结构夹具当成真实规律结果。新变化检测器/θ 状态与当前已有算法决定由所属卡处理。PR #65 共享 queries.rs 的追加接口尚未合入，后合并方按最新 main 保留双方改动；本 PR 不修改其分支。
 
 ## 下一步
 
-本卡指定的契约验收命令均已执行并通过；全部要求的工作区命令已实际执行，Rust/TypeScript 两项失败保留。资源占用挡住的补充覆盖不作为通过证据。等待所属目录解决两项失败后，重跑完整验收，再转为可审查；当前保持 draft/needs-user，由用户安排独立交叉审查及最终合并。本卡不领取下一张卡。
+完成当前验收与最终 head CI 后转可审查，保持 needs-user，等待用户安排独立交叉审查及合并。本卡不领取下一张卡。
