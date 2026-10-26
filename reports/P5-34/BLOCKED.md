@@ -15,3 +15,14 @@
 core-store 是受保护路径，在 REPORT.md、PROTECTED-SCOPE 与 PR 描述单列，随 ADR 0021、V2-62/63 一起交叉审查。needs-user 保留，由用户合并，不自行合并或领取下一卡。
 
 完整 G 重放、AC2-08/19/21、I23、SYS17 的后续集成未由本卡签发。最新本地证据为 verification/protected-20261026/；旧 PR #72 与本次早期失败完整保留。
+
+## B4 实测环境阻塞：Windows runner 离线
+
+2026-10-26 11:53–11:56 UTC 核验，GitHub runner ID 42 / DESKTOP-8LBF84O 为 offline、busy=false；本机也无 Runner.Listener/Runner.Worker。head 7cb285a14bcc904abd18f2cd9ffc64947302cb66 已推送，手动 Windows 全量 run [40318429511](https://github.com/nanake-lab/nemu/actions/runs/40318429511) 已成功触发，full=true，job 121556830260 queued，尚未分配到 runner。
+
+同 head 的草稿 PR 事件 run 40318254835 按现有守卫跳过 self-hosted job，汇总 gate failure；这不是执行了测试，也不算通过。Ubuntu run 40318254909 继续执行。原始检查快照见 verification/protected-20261026/ci-7cb285a-initial.json。
+
+已完成所有不依赖该 runner 的本地验收、报告与推送，并通知用户相关 PR/head；未启动/更改 runner 服务或系统设置。选项：恢复现有 runner 后由已排队的 full=true 检查执行；若当前有用户安排的独占资源窗口，则保持排队/草稿，窗口结束再恢复。两种方式都要求实际结果通过，不能通过跳过、缩小范围或改变超时/测试阈值替代。
+
+
+后续核验：同源码 head 7cb285a 的 Ubuntu run 40318254909 已 completed/success，含 core-store 34 项（604.08 秒）和本卡三语言契约。完整下载日志与 SHA-256 元数据已保存；.NET/status 按路径未涉及而跳过，不算执行过。2026-10-26 12:14 UTC 再次查询 runner 仍 offline。报告/证据补充提交不改变任何源码；当前 head 的最终门控以 PR 最新检查为准，恢复 runner 后需确保排队的手动运行指向该 head。
