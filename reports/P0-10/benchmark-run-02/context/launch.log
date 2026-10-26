@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "D:\Dev\nemu-wt\P0-10\spikes\carrier-engine\benchmark_native.py", line 163, in <module>
+    main()
+  File "D:\Dev\nemu-wt\P0-10\spikes\carrier-engine\benchmark_native.py", line 159, in main
+    run(args.cache_root.resolve(), args.prepared.resolve(), args.output.resolve())
+  File "D:\Dev\nemu-wt\P0-10\spikes\carrier-engine\benchmark_native.py", line 76, in run
+    with Server(cache / "llama.cpp/b11669", model, destination / "server") as server:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu-wt\P0-10\spikes\carrier-engine\http_probe.py", line 97, in __enter__
+    raise RuntimeError("CUDA/full-offload evidence missing; reject CPU fallback")
+RuntimeError: CUDA/full-offload evidence missing; reject CPU fallback
