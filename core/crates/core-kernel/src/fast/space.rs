@@ -78,10 +78,11 @@ fn check_aligned(x: &FastState, effects: &EffectiveEffects) -> Result<(), FastEr
 
 /// λ_k's weighted mean without an overflowing numerator. Start with the
 /// largest |d_i| (first channel wins ties), then visit other channels in order.
-/// Scale weights by that maximum: the accumulated weight is >= 1 and each
-/// added weight <= 1. Each update is at most half the distance to the next
-/// positive rate. Multiply the difference by the weight BEFORE dividing, so
-/// a tiny weight times a large rate is not prematurely rounded to zero.
+/// Keep the ORIGINAL weights: normalizing a subnormal weight before its
+/// multiplication can lose a significant contribution to a large rate.
+/// For an authorized unit direction every non-leading weight is < 1, so
+/// (λ_i - mean) * |d_i| cannot overflow. The accumulated mass includes the
+/// largest weight, hence each update is at most half the remaining distance.
 pub(super) fn learned_rate(d: &[f64; 4], lambda: &[f64; 4]) -> Result<f64, FastError> {
     if d.iter().any(|v| !v.is_finite()) {
         return Err(FastError::NonFinite("direction"));
@@ -95,17 +96,25 @@ pub(super) fn learned_rate(d: &[f64; 4], lambda: &[f64; 4]) -> Result<f64, FastE
             first = i;
         }
     }
-    let scale = d[first].abs();
-    if scale == 0.0 {
+    let mut mass = d[first].abs();
+    if mass == 0.0 {
         return Err(FastError::OutOfRange("direction"));
     }
     let mut mean = lambda[first];
-    let mut mass = 1.0;
     for i in 0..4 {
         if i != first {
-            let w = d[i].abs() / scale;
+            let w = d[i].abs();
             mass += w;
-            mean += ((lambda[i] - mean) * w) / mass;
+            if !mass.is_finite() {
+                return Err(FastError::NonFinite("direction_mass"));
+            }
+            // Multiply the original weight first. Dividing it by either the
+            // largest weight or the accumulated mass first is lossy near -1074.
+            let correction = ((lambda[i] - mean) * w) / mass;
+            if !correction.is_finite() {
+                return Err(FastError::NonFinite("learned_rate"));
+            }
+            mean += correction;
         }
     }
     let min = lambda.iter().copied().fold(f64::INFINITY, f64::min);

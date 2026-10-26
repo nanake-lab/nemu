@@ -1,12 +1,13 @@
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('fmt', 'kernel', 'clippy', 'workspace')]
-    [string]$Step
+    [ValidateSet('fmt', 'kernel', 'clippy', 'workspace', 'regression')]
+    [string]$Step,
+    [string]$EvidenceDirectory = 'review-2-2026-10-26'
 )
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
-$evidenceRoot = Join-Path $PSScriptRoot 'review-fixes-2026-10-26'
+$evidenceRoot = Join-Path $PSScriptRoot $EvidenceDirectory
 $taskCache = 'D:\Dev\cache\P5-10'
 $tempRoot = Join-Path $taskCache 'tmp'
 New-Item -ItemType Directory -Force -Path $evidenceRoot, $tempRoot | Out-Null
@@ -26,6 +27,7 @@ $cargoArgs = switch ($Step) {
     'kernel' { @('test', '-p', 'core-kernel', '--locked', '--offline') }
     'clippy' { @('clippy', '--workspace', '--all-targets', '--locked', '--offline', '--', '-D', 'warnings') }
     'workspace' { @('test', '--workspace', '--locked', '--offline') }
+    'regression' { @('test', '-p', 'core-kernel', '--locked', '--offline', 'learned_rate_', '--', '--nocapture') }
 }
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $logPath = Join-Path $evidenceRoot "$Step-$stamp.log"
