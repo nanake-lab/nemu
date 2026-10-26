@@ -1,0 +1,87 @@
+{
+  "verified_implementation_commit": "ad6c5239087f985e285ec8ce9f1ad537a110b1c9",
+  "main_integrated": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+  "merge_commit": "779f81ec9da162a49d80177a9e4bed039e3202ac",
+  "unchanged_scopes": [
+    {
+      "path": "core/crates/core-kernel/src/modulation",
+      "unchanged": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/effects",
+      "unchanged": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast",
+      "unchanged": true
+    },
+    {
+      "path": "core/crates/core-types",
+      "unchanged": true
+    },
+    {
+      "path": "core/crates/core-store",
+      "unchanged": true
+    },
+    {
+      "path": "core/contracts",
+      "unchanged": true
+    },
+    {
+      "path": "core/Cargo.toml",
+      "unchanged": true
+    },
+    {
+      "path": "core/Cargo.lock",
+      "unchanged": true
+    },
+    {
+      "path": "core/rust-toolchain.toml",
+      "unchanged": true
+    },
+    {
+      "path": "AGENTS.md",
+      "unchanged": true
+    },
+    {
+      "path": "tasks/P5-echo-core.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/CONTRACTS.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/echo-core/README.md",
+      "unchanged": true
+    },
+    {
+      "path": ".agents/skills/echo-core-work/SKILL.md",
+      "unchanged": true
+    }
+  ],
+  "kernel_changes": [
+    "core/crates/core-kernel/src/dynamics/bounds.rs",
+    "core/crates/core-kernel/src/dynamics/detector.rs",
+    "core/crates/core-kernel/src/dynamics/duration.rs",
+    "core/crates/core-kernel/src/dynamics/interval.rs",
+    "core/crates/core-kernel/src/dynamics/mod.rs",
+    "core/crates/core-kernel/src/dynamics/numeric.rs",
+    "core/crates/core-kernel/src/dynamics/tests.rs",
+    "core/crates/core-kernel/src/dynamics/tests/batch4.rs",
+    "core/crates/core-kernel/src/dynamics/tests/binary64.rs",
+    "core/crates/core-kernel/src/dynamics/tests/pure_boundary.rs",
+    "core/crates/core-kernel/src/dynamics/tests/reference.rs",
+    "core/crates/core-kernel/src/dynamics/time.rs",
+    "core/crates/core-kernel/src/dynamics/types.rs",
+    "core/crates/core-kernel/src/dynamics/update.rs",
+    "core/crates/core-kernel/src/lib.rs"
+  ],
+  "new_lib_rs": "#![forbid(unsafe_code)]\n//! Echo Core kernel: pure transitions only. No storage, network, clock or\n//! model access.\n\npub mod dynamics;\npub mod effects;\npub mod fast;\npub mod modulation;",
+  "local_postmerge": "not_run: another cargo workspace test owns the workstation",
+  "postmerge_validation": "Use this PR current-head Ubuntu CI; core-store and its dependencies were unchanged and have complete local premerge evidence."
+}
