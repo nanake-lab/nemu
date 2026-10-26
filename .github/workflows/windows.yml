@@ -88,13 +88,15 @@ jobs:
   windows-tests:
     name: Windows self-hosted checks
     # This job-level allowlist is evaluated before a self-hosted runner is assigned.
-    # Keep outside-collaborator workflow approval enabled too: a fork can edit YAML.
+    # Require approval for ALL outside collaborators and never approve fork workflow runs:
+    # a fork can edit this YAML, so this allowlist alone is not a security boundary.
     # Only owner-triggered, same-repository branch code may run on the user's machine.
     # Draft PRs skip this job: it runs once the PR is ready for review, or on demand with
     # `gh workflow run windows.yml --ref <branch>`, restricted to the repository owner.
     if: >-
       github.repository == 'nanake-lab/nemu' &&
       github.actor == github.repository_owner &&
+      github.triggering_actor == github.repository_owner &&
       ((github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')) ||
        (github.event_name == 'pull_request' &&
         github.event.pull_request.head.repo.full_name == github.repository &&
@@ -251,13 +253,14 @@ jobs:
           EVENT: ${{ github.event_name }}
           REPOSITORY: ${{ github.repository }}
           ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
           OWNER: ${{ github.repository_owner }}
           REF: ${{ github.ref }}
           HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
           DRAFT: ${{ github.event.pull_request.draft }}
           WINDOWS_RESULT: ${{ needs.windows-tests.result }}
         run: |
-          if [[ "$REPOSITORY" != 'nanake-lab/nemu' || "$ACTOR" != "$OWNER" ]]; then
+          if [[ "$REPOSITORY" != 'nanake-lab/nemu' || "$ACTOR" != "$OWNER" || "$TRIGGERING_ACTOR" != "$OWNER" ]]; then
             echo '::error::Windows checks require the repository owner in nanake-lab/nemu.'
             exit 1
           fi
