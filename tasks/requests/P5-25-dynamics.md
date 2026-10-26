@@ -43,3 +43,17 @@ shift_sigma、threshold、n_h、n_tau、jump_notice、慢漂参数均待实验�
 P5-25只验收纯C：签名不含x/m/R；改变调用方x初值和m仍得到逐位相同的θ和估计器状态；只返回暂存ThetaChange，不写L、不提交。这些不再作为本卡未完成的集成阻塞。P5-26负责独立完整H重算及其复核集成，P5-29负责同一事务写L和正式运行时提交；P5-36负责全部估计器状态的正式存储契约。调用方H来源/停机记录认证及长期时间域处理仍由后继接口验收，不在本卡伪造。
 
 V2-100已确认：shift_sigma、threshold、n_h、n_tau归规律版本；异常报警阈值随规律版本登记的校准资源，u*不可调；Δθ_max由公式推导，不单独设定。
+
+## 2026-10-26 main合并后的依赖声明恢复请求
+
+本轮用户已授权旧 **2 诊断ignore及纯函数验收收尾。合并main@716f7f0时，P5-27删除了core-kernel/Cargo.toml中原有libm声明；P5-25依赖该固定库的sqrt/log/exp，CI run 40272465565在head 43da867的Rust步骤出现E0433，尚未运行Rust测试。证据：reports/P5-25/closeout-20261026/ci-code/run-40272465565.txt。
+
+需要允许修改唯一额外文件 core/crates/core-kernel/Cargo.toml，在现有[dependencies]中恢复原来的这一行（版本和feature完全不变）：
+
+```toml
+libm = { version = "=0.2.16", default-features = false }
+```
+
+core/Cargo.lock属于AGENTS第2节共享锁文件范围，由Cargo重新生成，不手改。不恢复P5-27已移除的core-policy依赖，不改公式、阈值或运行时设置。libm 0.2.16（MIT）是此前本卡已经使用的数值实现；这是合并兼容性修复，不另选数值库。
+
+当前状态：精确修复方案已准备，因包级Cargo.toml不在用户给定目录范围内，等待用户确认这一文件的扩展。获得确认后完成本机检查、CI全绿、更新报告并转为可审查。
