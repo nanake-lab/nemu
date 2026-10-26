@@ -49,7 +49,11 @@ def board_json() -> tuple[int, bytes]:
         try:
             out = compute(REPO, load_catalog(REPO, ROOT / "tasks" / "cards.json"))
             body = json.dumps(
-                {"rows": board_rows(out), "other_attention": out["other_attention"]},
+                {
+                    "rows": board_rows(out),
+                    "other_attention": out["other_attention"],
+                    "paused_prs": out["paused_prs"],
+                },
                 ensure_ascii=False,
             ).encode()
         except GitHubError as exc:
