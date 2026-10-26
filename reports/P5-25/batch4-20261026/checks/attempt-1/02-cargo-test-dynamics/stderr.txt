@@ -1,0 +1,33 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling typenum v1.20.1
+   Compiling unicode-ident v1.0.27
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling const-oid v0.10.2
+   Compiling serde_json v1.0.154
+   Compiling serde v1.0.229
+   Compiling cfg-if v1.0.5
+   Compiling memchr v2.8.3
+   Compiling itoa v1.0.18
+   Compiling cpufeatures v0.3.1
+   Compiling libm v0.2.16
+   Compiling hybrid-array v0.4.15
+   Compiling crypto-common v0.2.2
+   Compiling block-buffer v0.12.1
+   Compiling syn v3.0.9
+   Compiling digest v0.11.3
+   Compiling sha2 v0.11.1
+   Compiling serde_derive v1.0.229
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-25\core\crates\core-types)
+   Compiling core-policy v0.0.0 (D:\Dev\nemu-wt\P5-25\core\crates\core-policy)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-25\core\crates\core-kernel)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.43s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-25\target\debug\deps\core_kernel-4df46f3327408afa.exe)
+
+thread 'dynamics::tests::reference::theta_1_original_500_streams_zero_violations' (11888) panicked at crates\core-kernel\src\dynamics\tests\reference.rs:56:13:
+assertion `left == right` failed
+  left: 4602808250010281358
+ right: 4602808250010281359
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p core-kernel --lib`

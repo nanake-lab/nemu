@@ -3,6 +3,7 @@ import type { VRM } from '@pixiv/three-vrm';
 import type { NemuProfile, GazeTarget } from '@nemu/contracts';
 import type { GazeLimits, PostureLimits, TwoBoneIKSolution } from './types.js';
 import { CriticallyDampedSpring, DelayBuffer, solveTwoBoneIK } from './math.js';
+import { FramePoseOffsets } from './pose-offsets.js';
 
 export { solveTwoBoneIK };
 
@@ -14,11 +15,14 @@ export interface ProceduralLayerOptions {
 export class ProceduralLayer {
   private vrm: VRM | null = null;
   private profile: NemuProfile | null = null;
+  private offsets = new FramePoseOffsets();
 
   // Modulation inputs
   private idleTempo = 1.0; // 0.5..1.5
-  private posture = 0.0;   // -1..1
-  private gazeSociability = 0.5;
+  private posture = 0.0; // -1..1
+  private gazeUserWeight = 0.5;
+  private bodyTurnMaxDeg = 10;
+  private motionAmplitude = 1;
 
   // Breathing state
   private breathingPhase = 0;
@@ -82,6 +86,7 @@ export class ProceduralLayer {
   }
 
   bindVRM(vrm: VRM, profile?: NemuProfile): void {
+    this.restoreOffsets();
     this.vrm = vrm;
     if (profile) {
       this.setProfile(profile);
@@ -110,7 +115,9 @@ export class ProceduralLayer {
   setReadoutParameters(params: {
     idleTempo?: number;
     posture?: number;
-    gazeSociability?: number;
+    gazeUserWeight?: number;
+    bodyTurnMaxDeg?: number;
+    motionAmplitude?: number;
   }): void {
     if (params.idleTempo !== undefined) {
       this.idleTempo = Math.max(0.5, Math.min(1.5, params.idleTempo));
@@ -118,9 +125,11 @@ export class ProceduralLayer {
     if (params.posture !== undefined) {
       this.posture = Math.max(-1.0, Math.min(1.0, params.posture));
     }
-    if (params.gazeSociability !== undefined) {
-      this.gazeSociability = Math.max(0, Math.min(1.0, params.gazeSociability));
+    if (params.gazeUserWeight !== undefined) {
+      this.gazeUserWeight = Math.max(0, Math.min(1, params.gazeUserWeight));
     }
+    if (params.bodyTurnMaxDeg !== undefined) this.bodyTurnMaxDeg = params.bodyTurnMaxDeg;
+    if (params.motionAmplitude !== undefined) this.motionAmplitude = params.motionAmplitude;
   }
 
   setGazeTarget(target: GazeTarget): void {
@@ -174,6 +183,8 @@ export class ProceduralLayer {
    */
   update(deltaSec: number): void {
     if (!this.vrm || deltaSec <= 0) return;
+    this.restoreOffsets();
+    this.offsets.capture(Object.values(this.bones));
 
     // 1. Posture offset (static offset layered under breathing and sway)
     this.applyPostureOffset();
@@ -186,6 +197,11 @@ export class ProceduralLayer {
 
     // 4. Gaze tracking (Eye weight 1.0 / 0 delay, Head 0.6 / 120ms, Neck 0.3 / 200ms)
     this.applyGaze(deltaSec);
+    this.offsets.finish();
+  }
+
+  restoreOffsets(): void {
+    this.offsets.restore();
   }
 
   private applyPostureOffset(): void {
@@ -202,23 +218,38 @@ export class ProceduralLayer {
     const shoulderRoll = factor * THREE.MathUtils.degToRad(this.postureLimits.shoulderRollMaxDeg);
 
     if (this.bones.spine) {
-      const qOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -spinePitch);
+      const qOffset = new THREE.Quaternion().setFromAxisAngle(
+        new THREE.Vector3(1, 0, 0),
+        -spinePitch,
+      );
       this.bones.spine.quaternion.multiply(qOffset);
     }
     if (this.bones.chest) {
-      const qOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -chestPitch);
+      const qOffset = new THREE.Quaternion().setFromAxisAngle(
+        new THREE.Vector3(1, 0, 0),
+        -chestPitch,
+      );
       this.bones.chest.quaternion.multiply(qOffset);
     }
     if (this.bones.neck) {
-      const qOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), neckPitch * 0.5);
+      const qOffset = new THREE.Quaternion().setFromAxisAngle(
+        new THREE.Vector3(1, 0, 0),
+        neckPitch * 0.5,
+      );
       this.bones.neck.quaternion.multiply(qOffset);
     }
     if (this.bones.leftShoulder) {
-      const qOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -shoulderRoll);
+      const qOffset = new THREE.Quaternion().setFromAxisAngle(
+        new THREE.Vector3(0, 1, 0),
+        -shoulderRoll,
+      );
       this.bones.leftShoulder.quaternion.multiply(qOffset);
     }
     if (this.bones.rightShoulder) {
-      const qOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), shoulderRoll);
+      const qOffset = new THREE.Quaternion().setFromAxisAngle(
+        new THREE.Vector3(0, 1, 0),
+        shoulderRoll,
+      );
       this.bones.rightShoulder.quaternion.multiply(qOffset);
     }
   }
@@ -226,37 +257,46 @@ export class ProceduralLayer {
   private applyBreathing(deltaSec: number): void {
     // Breathing frequency scaled by idleTempo
     const breathFreq = (1.0 / this.breathingNominalPeriodSec) * this.idleTempo;
-    this.breathingPhase = (this.breathingPhase + deltaSec * breathFreq * Math.PI * 2) % (Math.PI * 2);
+    this.breathingPhase =
+      (this.breathingPhase + deltaSec * breathFreq * Math.PI * 2) % (Math.PI * 2);
 
     const breathSin = Math.sin(this.breathingPhase);
 
     // Rotate chest and upperChest slightly along local X axis (pitch)
     if (this.bones.chest) {
-      const chestAngle = breathSin * this.chestBreathPitchRad;
-      const qBreath = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), chestAngle);
+      const chestAngle = breathSin * this.chestBreathPitchRad * this.motionAmplitude;
+      const qBreath = new THREE.Quaternion().setFromAxisAngle(
+        new THREE.Vector3(1, 0, 0),
+        chestAngle,
+      );
       this.bones.chest.quaternion.multiply(qBreath);
     }
 
     if (this.bones.upperChest) {
-      const upperChestAngle = Math.sin(this.breathingPhase - 0.2) * this.upperChestBreathPitchRad;
-      const qBreath = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), upperChestAngle);
+      const upperChestAngle =
+        Math.sin(this.breathingPhase - 0.2) * this.upperChestBreathPitchRad * this.motionAmplitude;
+      const qBreath = new THREE.Quaternion().setFromAxisAngle(
+        new THREE.Vector3(1, 0, 0),
+        upperChestAngle,
+      );
       this.bones.upperChest.quaternion.multiply(qBreath);
     }
   }
 
   private applyHipsSway(deltaSec: number): void {
-    const swayFreq = 1.0 / this.hipsSwayPeriodSec;
+    const swayFreq = this.idleTempo / this.hipsSwayPeriodSec;
     this.hipsSwayPhase = (this.hipsSwayPhase + deltaSec * swayFreq * Math.PI * 2) % (Math.PI * 2);
 
     if (this.bones.hips) {
       // Subtle lateral sway in position
-      const swayX = Math.sin(this.hipsSwayPhase) * 0.005; // 5mm
-      const swayZ = Math.sin(this.hipsSwayPhase * 2.0) * 0.002; // figure-8 depth
+      const swayX = Math.sin(this.hipsSwayPhase) * 0.005 * this.motionAmplitude;
+      const swayZ = Math.sin(this.hipsSwayPhase * 2.0) * 0.002 * this.motionAmplitude;
       this.bones.hips.position.x += swayX;
       this.bones.hips.position.z += swayZ;
 
       // Subtle roll
-      const swayRoll = Math.cos(this.hipsSwayPhase) * THREE.MathUtils.degToRad(0.4);
+      const swayRoll =
+        Math.cos(this.hipsSwayPhase) * THREE.MathUtils.degToRad(0.4) * this.motionAmplitude;
       const qSway = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), swayRoll);
       this.bones.hips.quaternion.multiply(qSway);
     }
@@ -269,14 +309,20 @@ export class ProceduralLayer {
     const headWorldPos = new THREE.Vector3();
     this.bones.head.getWorldPosition(headWorldPos);
 
-    const toTarget = new THREE.Vector3().subVectors(this.currentGazeTarget, headWorldPos);
+    // Blend the external gaze target toward the user without changing action selection.
+    const userTarget = new THREE.Vector3(0, (this.profile?.heightM ?? 1.45) * 0.95, 2.5);
+    const target = this.currentGazeTarget.clone().lerp(userTarget, this.gazeUserWeight);
+    const toTarget = new THREE.Vector3().subVectors(target, headWorldPos);
     const dist = toTarget.length();
     if (dist < 0.001) return;
 
     // Yaw: angle in horizontal plane (X-Z)
     const rawYaw = Math.atan2(toTarget.x, toTarget.z);
     // Pitch: angle in vertical plane
-    const rawPitch = Math.atan2(toTarget.y, Math.sqrt(toTarget.x * toTarget.x + toTarget.z * toTarget.z));
+    const rawPitch = Math.atan2(
+      toTarget.y,
+      Math.sqrt(toTarget.x * toTarget.x + toTarget.z * toTarget.z),
+    );
 
     // 2. Clamp angles to profile gaze limits
     const maxYawRad = THREE.MathUtils.degToRad(this.gazeLimits.yawDeg);
@@ -285,6 +331,15 @@ export class ProceduralLayer {
 
     const clampedYaw = Math.max(-maxYawRad, Math.min(maxYawRad, rawYaw));
     const clampedPitch = Math.max(-maxPitchDownRad, Math.min(maxPitchUpRad, rawPitch));
+    const bodyYaw =
+      Math.max(
+        -THREE.MathUtils.degToRad(this.bodyTurnMaxDeg),
+        Math.min(THREE.MathUtils.degToRad(this.bodyTurnMaxDeg), rawYaw),
+      ) *
+      (1 - this.gazeUserWeight);
+    this.bones.spine?.quaternion.multiply(
+      new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), bodyYaw),
+    );
 
     // 3. Eye: weight 1.0, delay 0
     const eyeTargetYaw = clampedYaw * 1.0;
@@ -294,7 +349,10 @@ export class ProceduralLayer {
 
     // 4. Head: weight 0.6, delay 120ms
     const headWeight = 0.6;
-    this.headTargetBuffer.push({ yaw: clampedYaw * headWeight, pitch: clampedPitch * headWeight }, deltaSec);
+    this.headTargetBuffer.push(
+      { yaw: clampedYaw * headWeight, pitch: clampedPitch * headWeight },
+      deltaSec,
+    );
     const delayedHeadTarget = this.headTargetBuffer.getDelayed(0.12) ?? {
       yaw: clampedYaw * headWeight,
       pitch: clampedPitch * headWeight,
@@ -304,8 +362,11 @@ export class ProceduralLayer {
 
     // 5. Neck: weight 0.3, delay 200ms
     const neckWeight = 0.3;
-    this.neckTargetBuffer.push({ yaw: clampedYaw * neckWeight, pitch: clampedPitch * neckWeight }, deltaSec);
-    const delayedNeckTarget = this.neckTargetBuffer.getDelayed(0.20) ?? {
+    this.neckTargetBuffer.push(
+      { yaw: clampedYaw * neckWeight, pitch: clampedPitch * neckWeight },
+      deltaSec,
+    );
+    const delayedNeckTarget = this.neckTargetBuffer.getDelayed(0.2) ?? {
       yaw: clampedYaw * neckWeight,
       pitch: clampedPitch * neckWeight,
     };
@@ -393,6 +454,7 @@ export class ProceduralLayer {
   }
 
   dispose(): void {
+    this.restoreOffsets();
     this.resetSprings();
   }
 }

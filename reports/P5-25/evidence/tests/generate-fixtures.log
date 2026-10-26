@@ -1,0 +1,32 @@
+{
+  "original_source_sha256": "fa0bbe97ecfe5b472301451f3466725b68261a8584cef03fad90b6bac1b9ce0c",
+  "seed": 20261019,
+  "theta1_events": 72822,
+  "python": "3.12.14 (main, Sep  1 2026, 14:16:52) [Clang 22.1.3 ]",
+  "original_results": [
+    {
+      "check_id": "THETA-1",
+      "spec_ref": "§8 reference form: b stays in [−1, 1], g in range, events she caused leave θ unchanged",
+      "kind": "property",
+      "ok": true,
+      "detail": "500 random exogenous/endogenous streams (constant ρ_θ): 0 violations"
+    },
+    {
+      "check_id": "THETA-2",
+      "spec_ref": "§8 reply loop: b amplifies the world's bias by 1/(1 − k_eff); anchoring n_b ≈ 1/ĥ_θ halves k_eff",
+      "kind": "scenario",
+      "ok": true,
+      "detail": "world bias −0.1, ρ_θ = 0.99; n_b=10 k=0: k_eff=0.00, b=-0.10, after burst -0.10; n_b=10 k=0.3: k_eff=0.27, b=-0.14, after burst -0.14; n_b=10 k=0.6: k_eff=0.55, b=-0.22, after burst -0.22; n_b=10 k=0.9: k_eff=0.82, b=-0.51, after burst -0.51; n_b=10 k=1.2: k_eff=1.09, b=-0.89, after burst -0.89; n_b=100 k=1: k_eff=0.50, b=-0.11, after burst -0.11; n_b=100 k=1.5: k_eff=0.75, b=-0.21, after burst -0.21"
+    }
+  ],
+  "fixtures": {
+    "theta1.bin": {
+      "bytes": 2421126,
+      "sha256": "42ed063142665db93423738d327937cad1ff67811ba0101a410ec10f1f4cdc9c"
+    },
+    "theta2-noise.bin": {
+      "bytes": 48000,
+      "sha256": "51ee5928916d170873243359c31f1d2db9c0d4ba08dc7b37b01b7c0121ead1e7"
+    }
+  }
+}
