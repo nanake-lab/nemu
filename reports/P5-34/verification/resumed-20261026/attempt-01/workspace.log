@@ -1,0 +1,101 @@
+   Compiling core-policy v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-policy)
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-store)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-kernel)
+   Compiling core-replay v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-replay)
+   Compiling core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-runtime)
+   Compiling action-gate v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\action-gate)
+   Compiling semantic-core v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\semantic-core)
+   Compiling echoctl v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\echoctl)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.25s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-34\target\debug\deps\action_gate-42a2a8b45054723e.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-34\target\debug\deps\core_kernel-e1d8367aa926116f.exe)
+
+running 12 tests
+test effects::tests::adr0008_composition_law_and_no_time_dependence ... ok
+test effects::tests::direction_validation_is_passed_through_without_changing_drive ... ok
+test effects::tests::effects_are_in_canonical_tendency_order_whatever_the_input_order ... ok
+test effects::tests::evaluate_uses_fixed_product_order ... ok
+test effects::tests::f_sum_is_summed_in_canonical_order ... ok
+test effects::tests::i06_candidates_have_no_effect_on_x_or_m ... ok
+test effects::tests::i21_inputs_are_only_borrowed_and_repeated_calls_agree ... ok
+test effects::tests::situation_match_outside_its_domain_is_refused ... ok
+test effects::tests::stored_values_outside_their_domain_are_refused ... ok
+test effects::tests::strength_matches_v2_formula_and_has_no_negative_zero ... ok
+test effects::tests::theta_outside_its_domain_is_refused ... ok
+test effects::tests::unlisted_match_is_zero_and_negative_zero_is_normalized ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-34\target\debug\deps\core_policy-cecff13cbca70ecd.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-34\target\debug\deps\core_replay-ab220b1d79dddd88.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-34\target\debug\deps\core_runtime-0b6fcfc9a4a0d297.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-34\target\debug\deps\core_store-a8329e3b1dbabe6a.exe)
+
+running 31 tests
+test tests::atomic::all_binding_fields_are_immutable_after_dispatch ... ok
+test tests::atomic::atomic_publication_and_append_only_history ... ok
+test tests::atomic::d101_d102_stale_and_mutated_bindings_rejected ... ok
+test tests::atomic::disk_full_rolls_back_ledger_and_all_state ... ok
+test tests::atomic::duplicate_and_conflict_only_advance_processed_frontier ... ok
+test tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge ... ok
+test tests::atomic::later_ingress_cannot_overtake_uncommitted_input ... ok
+test tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger ... ok
+test tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations ... ok
+test tests::crash::x03_ingress_and_transaction_publication_boundaries ... ok
+test tests::crash::x03_receipt_publish_and_repair_can_crash_again ... ok
+test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects ... ok
+test tests::crash_harness::crash_worker ... ok
+test tests::crash_harness::stray_environment_or_missing_permit_never_touches_target ... ok
+test tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger ... ok
+test tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch ... ok
+test tests::isolation::i29_all_six_cross_lineage_opens_rejected ... ok
+test tests::isolation::malformed_headers_and_existing_directories_never_initialize ... ok
+test tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind ... ok
+test tests::objects::at01_canonical_identity_and_superseded_writes ... ok
+test tests::objects::at02_corrupt_or_missing_object_never_publishes ... ok
+test tests::objects::at03_pins_close_prepare_gc_publish_race ... ok
+test tests::objects::object_capacity_and_io_failures_never_acknowledge_d ... ok
+test tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete ... FAILED
+test tests::objects::publication_primitive_never_replaces_existing_target ... ok
+test tests::objects::published_closure_damage_refuses_recovery ... ok
+test tests::objects::r_index_reassembles_canonical_and_reuses_unchanged_tendencies ... ok
+test tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc ... ok
+test tests::objects::sys22_capacity_and_busy_wait_are_bounded ... ok
+test tests::reader::live_readers_open_during_ingress_without_false_rollback ... ok
+test tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends ... ok
+
+failures:
+
+---- tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete stdout ----
+
+thread 'tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete' (58432) panicked at crates\core-store\src\tests\objects.rs:172:49:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete
+
+test result: FAILED. 30 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1077.61s
+
+error: test failed, to rerun pass `-p core-store --lib`
