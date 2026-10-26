@@ -1,0 +1,38 @@
+    Checking typenum v1.20.1
+    Checking const-oid v0.10.2
+    Checking cpufeatures v0.3.1
+    Checking cfg-if v1.0.5
+    Checking memchr v2.8.3
+    Checking itoa v1.0.18
+    Checking serde_core v1.0.229
+    Checking zmij v1.0.23
+    Checking libm v0.2.16
+    Checking hybrid-array v0.4.15
+    Checking block-buffer v0.12.1
+    Checking crypto-common v0.2.2
+    Checking serde_json v1.0.154
+    Checking serde v1.0.229
+    Checking digest v0.11.3
+    Checking sha2 v0.11.1
+    Checking core-types v0.0.0 (D:\Dev\nemu-wt\P5-25\core\crates\core-types)
+    Checking core-policy v0.0.0 (D:\Dev\nemu-wt\P5-25\core\crates\core-policy)
+    Checking core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-25\core\crates\core-kernel)
+error: this function has too many arguments (8/7)
+  --> crates\core-kernel\src\dynamics\bounds.rs:38:1
+   |
+38 | / fn moment(
+39 | |     n: f64,
+40 | |     prior: I,
+41 | |     sum: f64,
+...  |
+46 | |     rho: f64,
+47 | | ) -> Result<Moment> {
+   | |___________________^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_arguments
+   = note: `-D clippy::too-many-arguments` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
+
+error: could not compile `core-kernel` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `core-kernel` (lib test) due to 1 previous error

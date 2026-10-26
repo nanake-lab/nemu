@@ -1,0 +1,11 @@
+{
+  "id": "I13",
+  "result": "passed",
+  "code_commit": "0cf1605339a0cd387a5e7f10a7d3bba9f9897e88",
+  "scope": "User-confirmed pure C scope: returns staged ThetaChange, input unchanged, discarded candidate does not advance state; no L writer/commit capability. Same-transaction L writes belong to P5-29 and full H replay to P5-26.",
+  "tests": [
+    "dynamics::tests::pure_boundary::i13_c_only_stages_theta_change_and_cannot_commit_or_mutate_the_input"
+  ],
+  "evidence": "../closeout-20261026/checks/attempt-2/workspace.log",
+  "historical_results_preserved": true
+}
