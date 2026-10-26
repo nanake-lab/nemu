@@ -7,13 +7,16 @@
 
 use super::types::{Drive, DriveLaw, EventClass, EventInput, FastError, LearnedValue};
 use crate::effects::{EffectiveEffects, Evaluation};
+use core_types::semantic::tendency_order;
+use std::cmp::Ordering;
 
 fn plus_zero(v: f64) -> f64 {
     if v == 0.0 { 0.0 } else { v }
 }
 
-/// κ^n by binary exponentiation in a fixed order, so every platform gets the
-/// same bits. Values that underflow binary64 become 0: the weight of a very
+/// κ^n by binary exponentiation in a fixed order. Cross-target compatibility
+/// still requires golden-vector/replay evidence (S §6). Values that underflow
+/// binary64 become 0: the weight of a very
 /// late internal record is then exactly zero, which keeps D bounded and the
 /// event map non-expansive.
 pub fn kappa_power(kappa: f64, n: u64) -> f64 {
@@ -121,6 +124,13 @@ pub fn compute_drive(
     if !aligned {
         return Err(FastError::Misaligned);
     }
+    if effects.effects.iter().any(|e| e.tendency_id.is_empty())
+        || !effects.effects.windows(2).all(|pair| {
+            tendency_order(&pair[0].tendency_id, &pair[1].tendency_id) == Ordering::Less
+        })
+    {
+        return Err(FastError::Misaligned);
+    }
     let w = input.empathy_weight;
     if !w.is_finite() {
         return Err(FastError::NonFinite("empathy_weight"));
@@ -138,37 +148,100 @@ pub fn compute_drive(
     }
     let theta = &effects.theta;
     let weights = [1.0, w, 1.0, 1.0];
+    for i in 0..4 {
+        if !theta.b[i].is_finite() || !theta.g[i].is_finite() {
+            return Err(FastError::NonFinite("theta_drive"));
+        }
+        if !(-1.0..=1.0).contains(&theta.b[i]) || theta.g[i] <= 0.0 {
+            return Err(FastError::OutOfRange("theta_drive"));
+        }
+        if theta.g[i] > law.g_max {
+            return Err(FastError::DriveOverBound { channel: i });
+        }
+    }
+    for e in &effects.effects {
+        if !e.r.is_finite() || e.d.iter().any(|v| !v.is_finite()) {
+            return Err(FastError::NonFinite("effect"));
+        }
+        if !(0.0..=law.r_max).contains(&e.r) {
+            return Err(FastError::OutOfRange("r"));
+        }
+    }
 
     let mut direction_mass = 0.0_f64;
     for i in 0..4 {
-        let mass: f64 = effects.effects.iter().map(|e| e.d[i].abs()).sum();
+        let mass = effects
+            .effects
+            .iter()
+            .fold(0.0, |acc, e| acc + e.d[i].abs());
+        if !mass.is_finite() {
+            return Err(FastError::NonFinite("direction_mass"));
+        }
         direction_mass = direction_mass.max(mass);
     }
-    let eta = (2.0 * law.g_max + law.r_max * direction_mass).max(1.0);
+    let eta = 2.0 * law.g_max + law.r_max * direction_mass;
+    if !eta.is_finite() {
+        return Err(FastError::NonFinite("eta"));
+    }
+    let eta = eta.max(1.0);
 
     let c = class_weight(input.class, law.kappa);
+    if !(c.is_finite() && (0.0..=1.0).contains(&c)) {
+        return Err(FastError::OutOfRange("class_weight"));
+    }
     let mut nature = [0.0; 4];
     for i in 0..4 {
         let base = match input.appraisal {
             Some(a) => (theta.g[i] * weights[i]) * (a[i] - theta.b[i]),
             None => 0.0,
         };
-        let abs_sum = evaluation
-            .drives
-            .iter()
-            .fold(base.abs(), |acc, d| acc + d.f[i].abs());
-        if abs_sum.is_nan() || abs_sum > eta {
+        let mut abs_sum = base.abs();
+        let mut sum = 0.0;
+        // The checked contributions and the applied sum share this exact
+        // canonical tendency order. The redundant DTO sum is only verified.
+        for d in &evaluation.drives {
+            if !d.f[i].is_finite() {
+                return Err(FastError::NonFinite("contribution"));
+            }
+            abs_sum += d.f[i].abs();
+            sum = plus_zero(sum + d.f[i]);
+        }
+        if !abs_sum.is_finite() || abs_sum > eta {
             return Err(FastError::DriveOverBound { channel: i });
         }
-        nature[i] = plus_zero(c * (base + evaluation.f_sum[i]));
+        if !evaluation.f_sum[i].is_finite() {
+            return Err(FastError::NonFinite("f_sum"));
+        }
+        if sum.to_bits() != plus_zero(evaluation.f_sum[i]).to_bits() {
+            return Err(FastError::InconsistentSum { channel: i });
+        }
+        let total = base + sum;
+        let value = c * total;
+        if !total.is_finite() || !value.is_finite() {
+            return Err(FastError::NonFinite("drive"));
+        }
+        if total.abs() > eta || value.abs() > eta {
+            return Err(FastError::DriveOverBound { channel: i });
+        }
+        nature[i] = plus_zero(value);
     }
     let learned = evaluation
         .drives
         .iter()
-        .map(|d| LearnedValue {
-            tendency_id: d.tendency_id.clone(),
-            value: plus_zero(c * d.drive),
+        .enumerate()
+        .map(|(k, d)| {
+            let value = c * d.drive;
+            if !d.drive.is_finite() || !value.is_finite() {
+                return Err(FastError::NonFinite("learned_drive"));
+            }
+            if !(0.0..=1.0).contains(&d.drive) || !(0.0..=1.0).contains(&value) || value > eta {
+                return Err(FastError::DriveOverBound { channel: 4 + k });
+            }
+            Ok(LearnedValue {
+                tendency_id: d.tendency_id.clone(),
+                value: plus_zero(value),
+            })
         })
-        .collect();
+        .collect::<Result<Vec<_>, FastError>>()?;
     Ok(Drive { nature, learned })
 }

@@ -3,7 +3,6 @@
 //! x_init or waits for a washout that provably meets the error bound. Both
 //! break causal continuity, and the runtime records that (P5-19).
 
-use super::space::validate;
 use super::types::{ContinuityBreak, FastError, FastState, LearnedValue};
 use crate::effects::EffectiveEffects;
 
@@ -13,9 +12,9 @@ pub fn reset_to_init(
     x_init_nature: [f64; 4],
     effects: &EffectiveEffects,
 ) -> Result<(FastState, ContinuityBreak), FastError> {
-    let x = FastState {
-        nature: x_init_nature,
-        learned: effects
+    let x = FastState::new(
+        x_init_nature,
+        effects
             .effects
             .iter()
             .map(|e| LearnedValue {
@@ -23,8 +22,7 @@ pub fn reset_to_init(
                 value: 0.0,
             })
             .collect(),
-    };
-    validate(&x)?;
+    )?;
     Ok((x, ContinuityBreak::Reset))
 }
 

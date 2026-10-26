@@ -11,17 +11,47 @@ pub struct FastState {
     pub learned: Vec<LearnedValue>,
 }
 
+impl FastState {
+    /// Construction/restoration boundary: normalize signed zeros, then reject
+    /// invalid coordinates or learned IDs. No clipping or reordering.
+    pub fn new(nature: [f64; 4], learned: Vec<LearnedValue>) -> Result<Self, FastError> {
+        let mut x = Self { nature, learned };
+        for value in x
+            .nature
+            .iter_mut()
+            .chain(x.learned.iter_mut().map(|l| &mut l.value))
+        {
+            if *value == 0.0 {
+                *value = 0.0;
+            }
+        }
+        super::space::validate(&x)?;
+        Ok(x)
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct LearnedValue {
     pub tendency_id: String,
     pub value: f64,
 }
 
-/// D(e): the drive of one event, aligned with E_eff.
+/// D(e): a checked drive, constructed only by `compute_drive`. Read-only
+/// accessors prevent callers from bypassing the bound before `apply_drive`.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Drive {
-    pub nature: [f64; 4],
-    pub learned: Vec<LearnedValue>,
+    pub(super) nature: [f64; 4],
+    pub(super) learned: Vec<LearnedValue>,
+}
+
+impl Drive {
+    pub fn nature(&self) -> &[f64; 4] {
+        &self.nature
+    }
+
+    pub fn learned(&self) -> &[LearnedValue] {
+        &self.learned
+    }
 }
 
 /// Where an event comes from, which decides its weight in F
@@ -70,6 +100,10 @@ pub struct DriveLaw {
 pub enum FastError {
     NonFinite(&'static str),
     OutOfRange(&'static str),
+    NonCanonicalZero,
+    InconsistentSum {
+        channel: usize,
+    },
     /// The learned components are not in canonical order, repeat an ID, or
     /// do not match the tendencies of R⁺ they must align with.
     Misaligned,

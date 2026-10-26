@@ -26,7 +26,8 @@ fn clip(v: f64) -> f64 {
     if c == 0.0 { 0.0 } else { c }
 }
 
-/// x is a valid point of X: finite, in [−1, 1], learned IDs non-empty, unique
+/// x is a valid point of X: finite, in [−1, 1], canonical +0 only;
+/// learned IDs non-empty, unique
 /// and in canonical order.
 pub fn validate(x: &FastState) -> Result<(), FastError> {
     let finite =
@@ -38,6 +39,13 @@ pub fn validate(x: &FastState) -> Result<(), FastError> {
         && x.learned.iter().all(|l| (-1.0..=1.0).contains(&l.value));
     if !in_box {
         return Err(FastError::OutOfRange("x"));
+    }
+    if x.nature
+        .iter()
+        .chain(x.learned.iter().map(|l| &l.value))
+        .any(|v| *v == 0.0 && v.is_sign_negative())
+    {
+        return Err(FastError::NonCanonicalZero);
     }
     if x.learned.iter().any(|l| l.tendency_id.is_empty()) {
         return Err(FastError::Misaligned);
@@ -68,24 +76,62 @@ fn check_aligned(x: &FastState, effects: &EffectiveEffects) -> Result<(), FastEr
     }
 }
 
-/// λ_k = Σ_i |d_{k,i}| λ_i / Σ_i |d_{k,i}| (v2.0 §6 reference), summed in
-/// the fixed channel order.
-fn learned_rate(d: &[f64; 4], lambda: &[f64; 4]) -> f64 {
-    let mut num = 0.0;
-    let mut den = 0.0;
-    for i in 0..4 {
-        let w = d[i].abs();
-        num += w * lambda[i];
-        den += w;
+/// λ_k's weighted mean without an overflowing numerator. Start with the
+/// largest |d_i| (first channel wins ties), then visit other channels in order.
+/// Scale weights by that maximum: the accumulated weight is >= 1 and each
+/// added weight <= 1. Each update is at most half the distance to the next
+/// positive rate. Multiply the difference by the weight BEFORE dividing, so
+/// a tiny weight times a large rate is not prematurely rounded to zero.
+pub(super) fn learned_rate(d: &[f64; 4], lambda: &[f64; 4]) -> Result<f64, FastError> {
+    if d.iter().any(|v| !v.is_finite()) {
+        return Err(FastError::NonFinite("direction"));
     }
-    num / den
+    if lambda.iter().any(|l| !(l.is_finite() && *l > 0.0)) {
+        return Err(FastError::OutOfRange("lambda"));
+    }
+    let mut first = 0;
+    for i in 1..4 {
+        if d[i].abs() > d[first].abs() {
+            first = i;
+        }
+    }
+    let scale = d[first].abs();
+    if scale == 0.0 {
+        return Err(FastError::OutOfRange("direction"));
+    }
+    let mut mean = lambda[first];
+    let mut mass = 1.0;
+    for i in 0..4 {
+        if i != first {
+            let w = d[i].abs() / scale;
+            mass += w;
+            mean += ((lambda[i] - mean) * w) / mass;
+        }
+    }
+    let min = lambda.iter().copied().fold(f64::INFINITY, f64::min);
+    let max = lambda.iter().copied().fold(0.0, f64::max);
+    if !mean.is_finite() {
+        return Err(FastError::NonFinite("learned_rate"));
+    }
+    if mean <= 0.0 || !(min..=max).contains(&mean) {
+        return Err(FastError::OutOfRange("learned_rate"));
+    }
+    Ok(mean)
 }
 
 /// One coordinate of Φ_x: x + (−expm1(−λΔ)) · (rest − x), then clipped.
 /// For Δ = 0 the factor is exactly 0, so the result equals x bit for bit.
-fn relax(x: f64, rest: f64, rate: f64, delta_s: f64) -> f64 {
-    let pull = -libm::expm1(-(rate * delta_s));
-    clip(x + pull * (rest - x))
+fn relax(x: f64, rest: f64, rate: f64, delta_s: f64) -> Result<f64, FastError> {
+    let elapsed = rate * delta_s;
+    if !elapsed.is_finite() {
+        return Err(FastError::NonFinite("lambda_delta"));
+    }
+    let pull = -libm::expm1(-elapsed);
+    let value = x + pull * (rest - x);
+    if !value.is_finite() {
+        return Err(FastError::NonFinite("projection"));
+    }
+    Ok(clip(value))
 }
 
 /// Φ_x(Δ; x) with x_rest = (b, 0) and Λ from θ and the directions of R⁺
@@ -103,19 +149,29 @@ pub fn project_time(
     if theta.lambda.iter().any(|l| !(l.is_finite() && *l > 0.0)) {
         return Err(FastError::OutOfRange("lambda"));
     }
+    if theta.b.iter().any(|b| !b.is_finite()) {
+        return Err(FastError::NonFinite("b"));
+    }
+    if theta.b.iter().any(|b| !(-1.0..=1.0).contains(b)) {
+        return Err(FastError::OutOfRange("b"));
+    }
     let delta_s = delta_ns as f64 / 1e9;
-    let nature: [f64; 4] =
-        std::array::from_fn(|i| relax(x.nature[i], theta.b[i], theta.lambda[i], delta_s));
+    let mut nature = [0.0; 4];
+    for (i, value) in nature.iter_mut().enumerate() {
+        *value = relax(x.nature[i], theta.b[i], theta.lambda[i], delta_s)?;
+    }
     let learned = x
         .learned
         .iter()
         .zip(&effects.effects)
-        .map(|(l, e)| LearnedValue {
-            tendency_id: l.tendency_id.clone(),
-            value: relax(l.value, 0.0, learned_rate(&e.d, &theta.lambda), delta_s),
+        .map(|(l, e)| {
+            Ok(LearnedValue {
+                tendency_id: l.tendency_id.clone(),
+                value: relax(l.value, 0.0, learned_rate(&e.d, &theta.lambda)?, delta_s)?,
+            })
         })
-        .collect();
-    Ok(FastState { nature, learned })
+        .collect::<Result<Vec<_>, FastError>>()?;
+    FastState::new(nature, learned)
 }
 
 /// F_in: x̃ = Proj_X(x̄ + D(e)). The projection is a coordinate-wise clip, so
@@ -145,7 +201,7 @@ pub fn apply_drive(x: &FastState, drive: &Drive) -> Result<FastState, FastError>
             value: clip(l.value + d.value),
         })
         .collect();
-    Ok(FastState { nature, learned })
+    FastState::new(nature, learned)
 }
 
 /// F_out: align x with the R⁺ of the next snapshot. A tendency that entered
@@ -165,10 +221,7 @@ pub fn f_out(x: &FastState, next: &EffectiveEffects) -> Result<FastState, FastEr
                 .map_or(0.0, |l| l.value),
         })
         .collect();
-    Ok(FastState {
-        nature: x.nature,
-        learned,
-    })
+    FastState::new(x.nature, learned)
 }
 
 /// ‖x − y‖∞ over the same coordinates.
@@ -228,17 +281,15 @@ pub fn deserialize(bytes: &[u8]) -> Result<(FastState, String, u64), FastError> 
         return Err(FastError::RepresentationVersion(msg.representation_version));
     }
     let n = &msg.nature;
-    let x = FastState {
-        nature: [n.connection, n.empathy, n.curiosity, n.achievement],
-        learned: msg
-            .learned
+    let x = FastState::new(
+        [n.connection, n.empathy, n.curiosity, n.achievement],
+        msg.learned
             .into_iter()
             .map(|l| LearnedValue {
                 tendency_id: l.tendency_id,
                 value: l.value,
             })
             .collect(),
-    };
-    validate(&x)?;
+    )?;
     Ok((x, msg.revision, msg.anchor_time_ns.0))
 }
