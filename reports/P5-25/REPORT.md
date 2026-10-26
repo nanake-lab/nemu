@@ -2,9 +2,11 @@
 
 ## 当前状态
 
-按用户2026-10-26明确的纯函数范围完成代码调整，并按随后批准恢复固定libm依赖（0cf1605）。本机fmt、Clippy和工作区常规测试通过（90 passed / 0 failed / 1 ignored，含2个doc test）；旧 **2 显式诊断仍为failed。CI尚未全绿，保持草稿。修复后的Ubuntu run 40283963199因GitHub账户付款/支出限额问题未启动任何步骤，Windows runner也处于offline。外部条件恢复并确认最终head CI全绿后，才转可审查并留言「请审查」；不合并、不取下一卡。本轮不实现事务层写L或独立整段H重算，也不将它们伪装成本卡已通过的集成。
+按用户2026-10-26明确的纯函数范围完成代码调整，并按随后批准恢复固定libm依赖（0cf1605）。本机fmt、Clippy和工作区常规测试通过（90 passed / 0 failed / 1 ignored，含2个doc test）；旧 **2 显式诊断仍为failed。用户随后恢复了GitHub Actions计费条件和Windows runner；本卡没有未决规格或目录授权。最终head的CI运行、转可审查状态及「请审查」收尾评论见[PR #77检查页](https://github.com/nanake-lab/nemu/pull/77/checks)和PR评论：只有实际检查通过才转可审查，不以草稿skipped代替通过。本会话不合并、不取下一卡；事务层写L或独立整段H重算不属于本卡已完成的集成。
 
 本次先fetch，将 origin/main@716f7f0 以merge a9b5e72合入；收到依赖恢复批准后再次fetch，并以merge e26bbcf合入origin/main@2bc04ba。未rebase/强推。保留上轮abebb85的V2-93至V2-98实现、原始输入与失败证据；main合入P5-27及后继契约卡P5-36后重新核验。除main合并外，新改动只在授权的dynamics/、reports/P5-25/和指定请求文件，以及用户本轮额外批准的kernel Cargo.toml唯一依赖行与Cargo生成的共享锁文件。未提交status.json、未改用户/系统设置。
+
+用户恢复CI后再次fetch，并以merge cd93b25合入origin/main@a0c9ed8。上游只改CI路径调度、Windows公开仓库门禁与README；core目录tree仍为550c923a232a80a165045e5a185de58d1899cbe2，与已通过本机测试的0cf1605完全相同。合并后的工作流重新验证最终head；本机不与正在运行的Windows runner并发编译。
 
 ## 用户确定的验收边界
 
@@ -12,7 +14,7 @@
 - **AC2-09：** C的函数签名不含x、m、R。调用方x初值和m取9组组合，在同一段128个外源事件的每个前缀比较θ位模式及完整估计器状态；所有组合一致。这里的x/m是纯函数调用边界夹具，不声称连接了真实运行时。
 - **I13：** C只返回暂存ThetaChange，没有L或提交能力。测试检查before/after/事件ID、输入完整不变、丢弃候选不推进事件游标、重复计算结果相同、无事件不产生条目。真正同事务写L由P5-29验收，独立完整H重放由P5-26验收。
 
-这些边界由本轮用户直接决定；不再把相应事务层未接通列为P5-25阻塞。包级依赖恢复也已获得明确批准并完成。当前阻塞是CI运行条件，详见BLOCKED.md。正式存储契约由main已登记的P5-36承接。
+这些边界由本轮用户直接决定；不再把相应事务层未接通列为P5-25阻塞。包级依赖恢复也已获得明确批准并完成。历史CI运行条件及解除过程见BLOCKED.md。正式存储契约由main已登记的P5-36承接。
 
 ## 交付物
 
@@ -41,7 +43,8 @@
 | 旧 **2 显式诊断 | failed，exit 101；原1 ULP差异复现 | checks/attempt-2/legacy-diagnostic.log；不属于常规验收，仍是失败 |
 | Ubuntu CI @43da867（修复前） | failed，run 40272465565 | Rust缺libm，未进入测试；TS/Python步骤通过，历史记录保留 |
 | Ubuntu CI @0cf1605（修复后） | failed，run 40283963199，未启动检查 | 账户计费门控，steps为空；ci-code/run-40283963199.json |
-| Windows W02 | not_run | runner offline；草稿自动作业skipped，不算passed |
+| Windows W02（首次尝试） | not_run，历史记录保留 | 当时runner offline；草稿自动作业skipped，不算passed |
+| 最终head Ubuntu / Windows CI | 实际结论见PR检查页及「请审查」收尾评论 | main新增草稿门禁；先手动运行Windows取得真实通过结果，转可审查后再核验PR作业。最终CI证据记录在同head的PR中，避免回填报告产生新head |
 | 新Python参考ruff/mypy、两版Python同字节 | passed（上一轮，本轮脚本未改） | batch4-20261026/checks/python-1、reference-python31214.stdout.txt |
 
 ## 历史失败保留
@@ -81,7 +84,6 @@ CUSUM的shift_sigma=1、threshold=8、n_h=10只是预先固定夹具，待实验
 
 ## 待用户确认
 
-- [ ] （阻塞）恢复GitHub hosted Actions的计费运行条件和Windows runner；最终head CI通过后再转可审查。
 - [ ] 高难度卡独立交叉审查；本会话不自审、不合并。
 
 用户本轮已决定的诊断分类与纯函数边界不再列成待决项。实现验收问题如有失败在BLOCKED.md与最新PR评论明确记录。
@@ -95,4 +97,4 @@ CUSUM的shift_sigma=1、threshold=8、n_h=10只是预先固定夹具，待实验
 
 ## 下一步
 
-等待外部CI条件恢复；随后重跑最终head检查，全部通过才转为可审查并留言「请审查」。最新head及CI状态以PR检查页和本轮进度评论为准，不以旧提交的结果替代。保留草稿时不请求正式审查。
+交付目标是最终head检查全部通过后转为可审查，等待高难度卡交叉审查；最新head、CI实测结果与已执行的状态转换在PR收尾评论明确记录，不以旧提交结果替代。合并仍需独立审查，本会话不合并。

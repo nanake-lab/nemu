@@ -17,7 +17,7 @@ CI run 40272465565（head 43da867）在Rust编译阶段报7处E0433，未进入�
 
 用户2026-10-26明确批准后，提交0cf1605只恢复 core/crates/core-kernel/Cargo.toml 的 `libm = { version = "=0.2.16", default-features = false }`，由Cargo更新共享锁文件；不改公式或版本。本机fmt、workspace Clippy及kernel常规测试已经通过。PR #94也恢复此行，后合并者只保留一行。
 
-## 当前外部阻塞：GitHub Actions计费与Windows runner
+## 历史CI运行条件：用户已恢复
 
 修复后的Ubuntu run [40283963199](https://github.com/nanake-lab/nemu/actions/runs/40283963199)（head 0cf1605）没有启动任何步骤，GitHub失败注释为：
 
@@ -25,4 +25,6 @@ CI run 40272465565（head 43da867）在Rust编译阶段报7处E0433，未进入�
 
 原注释与空steps记录见 closeout-20261026/ci-code/run-40283963199.json。它不是Rust编译失败，也不能记成测试通过。2026-10-26的GitHub runners API同时报告DESKTOP-8LBF84O为offline；锁文件改动需要Windows W02检查，草稿的自动Windows作业只显示skipped。
 
-处理路径：用户处理GitHub Billing & plans中的账户状态，并恢复Windows runner后，重跑最终head的CI；在这之前继续保留草稿和needs-user。若暂不恢复这些外部条件，就保留当前代码和本机证据，不能省略CI或提前写「请审查」。不修改账户、用户或系统设置，不调整阈值，不以本机通过冒充CI全绿。
+用户随后明确回复计费问题「已解决」，并确认「runner上线了」；GitHub API复核DESKTOP-8LBF84O为online。旧失败仍保留，最终head复跑结果由[PR #77检查页](https://github.com/nanake-lab/nemu/pull/77/checks)与收尾评论记录。本卡没有剩余规格/目录授权待确认；不修改账户、用户或系统设置，不调整阈值，不以本机通过冒充CI全绿。
+
+main@a0c9ed8新增了Windows草稿门禁：自动作业故意拒绝将draft/skipped记成通过。收尾先在最终head手动运行Windows检查，取得真实通过结果后转为可审查，再核验正式PR的Windows作业并留言「请审查」。独立交叉审查属于下一步，本会话不合并。
