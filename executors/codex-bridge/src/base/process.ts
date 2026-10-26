@@ -14,7 +14,7 @@ export interface LaunchOptions {
 
 export async function startProcess(options: LaunchOptions): Promise<Transport> {
   if (!Number.isSafeInteger(options.maxFrameBytes) || options.maxFrameBytes < 1 ||
-    !Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1) throw new Error('launch_budget');
+    !Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1 || options.timeoutMs > 2_147_483_647) throw new Error('launch_budget');
   const lock = z.object({ codex: z.object({ version: z.string().regex(/^\d+\.\d+\.\d+$/) }) }).parse(
     JSON.parse(await readFile(options.lockFile, 'utf8')));
   const env = isolatedEnvironment(process.env, options.codeHome);
@@ -65,8 +65,13 @@ export async function startProcess(options: LaunchOptions): Promise<Transport> {
         closing ??= (async () => {
           if (!ended && child.pid !== undefined) {
             const exited = once(child, 'exit');
-            child.kill();
-            await exited;
+            if (!child.kill()) throw new Error('app_server_stop_failed');
+            let timer: ReturnType<typeof setTimeout> | undefined;
+            try {
+              await Promise.race([exited, new Promise<never>((_, reject) => {
+                timer = setTimeout(() => reject(new Error('app_server_stop_timeout')), options.timeoutMs);
+              })]);
+            } finally { clearTimeout(timer); }
           }
           await claim.release();
         })();

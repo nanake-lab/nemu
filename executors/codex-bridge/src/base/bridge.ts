@@ -62,10 +62,10 @@ export class Bridge {
     this.ready = true;
   }
 
-  private async checkInventory(threadId?: string): Promise<void> {
+  private async checkInventory(threadId?: string, timeoutMs = this.rpcTimeoutMs): Promise<void> {
     const result = await this.rpc.request('mcpServerStatus/list', {
       ...(threadId === undefined ? {} : { threadId }), limit: 100,
-    }, inventoryResult, this.rpcTimeoutMs);
+    }, inventoryResult, timeoutMs);
     if (result.data.length !== 0 || result.nextCursor !== null) throw new Error('mcp_inventory_not_empty');
   }
 
@@ -181,7 +181,7 @@ export class Bridge {
       if (eventTurnId !== null && eventTurnId !== turnId) throw new Error('turn_identity_mismatch');
       this.active = { threadId, turnId };
       await done;
-      await this.checkInventory(threadId);
+      await this.checkInventory(threadId, remaining());
       // Include post-turn inventory in the request deadline, but keep inference timing separate.
       remaining();
       const text = finalText ?? output;
