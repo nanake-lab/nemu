@@ -32,6 +32,8 @@
 | SYS09 / 施工合同第一篇 10.9：worker 和 UI 无直接写权威存储；OS+协议两层拒绝 | OS 合成文件检查通过；真实数据库/协议联合验收阻塞，整项未通过 | 启动器测试 / BLOCKED.md |
 | 成长命令：worker/helper/network 拒绝，缺少复核引用拒绝 | 纯谓词测试通过；真实身份认证、审计和 H 提交未接线 | `permissions/growth/tests.rs`、action-gate.log |
 | I26：批准后改变载荷，审批失效，与 P5-14 联测 | 阻塞，未运行 | BLOCKED.md / 接口请求 |
+| Ubuntu CI（实现提交 `a17888d`） | 通过 | [run 40301867746](https://github.com/nanake-lab/nemu/actions/runs/40301867746)、`CI/a17888d-checks.json` |
+| Windows CI（实现提交 `a17888d`） | self-hosted 作业 skipped；汇总 failure，明确原因为 draft guard；不是通过 | `CI/a17888d-windows-guard.json` |
 
 测试只使用新建临时目录与合成文件，不打开排练/正式存储，不更改用户级或系统级设置。
 脚本的 SDK 环境仅对当前子进程有效，禁用首次运行创建开发证书/修改全局工具 PATH。
@@ -40,6 +42,8 @@
 非存储组命令，未重跑未改动的 core-store 专项崩溃/掉电套件；不把它计为本卡协议验收。
 无 TS/Python 改动，未跑 pnpm/pytest/Electron/GPU 测量。默认 LocalLow 路径由 Known Folder API
 取得；测试使用显式 D 盘新目录，未在用户 LocalLow 下跑默认路径的部署联测。
+机械性证据核验由 `routine_reporter` 收集：6/42 项测试计数与五份 OS 日志的原件哈希逐项吻合，
+主代理核对后归档；不是交叉审查。原始 OS 日志同时保存在 zip 内，避免文本换行规范化影响字节校验。
 
 ## 规格对照
 
@@ -74,5 +78,5 @@
 
 ## 下一步
 
-卡内局部验证和证据已完成，保持 PR #100 draft；集成阻塞解除后完成剩余验收，再转为可审查并写「请审查」。
+卡内局部验证和证据已完成，保持 PR #100 draft / needs-user；集成阻塞解除后完成剩余验收，再转为可审查并写「请审查」。
 不合并，不取下一张卡。
