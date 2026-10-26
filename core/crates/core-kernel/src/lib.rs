@@ -3,3 +3,4 @@
 //! model access.
 
 pub mod effects;
+pub mod fast;

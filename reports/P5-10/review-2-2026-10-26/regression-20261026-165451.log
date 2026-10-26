@@ -1,0 +1,28 @@
+Started: 2026-10-26T16:54:51.3647573+08:00
+Step: regression
+Command: cargo test -p core-kernel --locked --offline learned_rate_ -- --nocapture
+Working directory: D:\Dev\nemu-wt\P5-10\core
+HEAD before review-fix commit: 20ec9aeda8c31d3b37dcc61c0483b899ee847d42
+Origin main: a0c9ed865f8c46c0225b778a4fb1c7a2b3825177
+Toolchain: rustc 1.99.0 (b940084d7 2026-09-28)
+CARGO_HOME=D:\Dev\cache\cargo
+CARGO_TARGET_DIR=D:\Dev\cache\P5-10\target
+TEMP=D:\Dev\cache\P5-10\tmp
+CARGO_BUILD_JOBS=2 RUST_TEST_THREADS=1
+Data: synthetic fixtures and fresh temporary stores only
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-10\core\crates\core-kernel)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.25s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-10\target\debug\deps\core_kernel-5ef562413aa4b2f3.exe)
+
+running 3 tests
+test fast::tests::rates::learned_rate_matches_independent_reference_and_range ... ok
+test fast::tests::rates::learned_rate_mixed_scales_match_exact_rational_vectors ... review-counterexample: actual=3.52904032743748543e-16, reference=3.52904032743748543e-16, ulps=0
+exact-rational vectors=133, max_distance_ulps=2
+ok
+test fast::tests::rates::learned_rate_review_counterexample_agrees_through_public_projection ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 42 filtered out; finished in 0.23s
+
+Finished: 2026-10-26T16:54:53.2379498+08:00
+Elapsed seconds: 1.8731925
+Exit code: 0

@@ -1,0 +1,72 @@
+{
+  "algorithm": "SHA256",
+  "description": "On-disk sources and inputs tested after merge 9534b7f; no source changes after passing kernel run",
+  "inputs": [
+    {
+      "path": "core/Cargo.lock",
+      "sha256": "0a4a9f92d7112ca2de00feef99fbc3f962fb24777e40e306208b12a6ea6298d2",
+      "git_blob_sha1": "8233f74bb591e647eaebfba114a52bef1ca81e83"
+    },
+    {
+      "path": "core/crates/core-kernel/Cargo.toml",
+      "sha256": "23545e68db78713bc28cb56c962255f1fa1b2af3de6c6dea15f707a002f0a230",
+      "git_blob_sha1": "e021d459bdab20045c6dccf0d49a31e9ca8f7806"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/drive.rs",
+      "sha256": "ca14857e46ce0b4b905f3f57e20020cda8166b06a4b995fd5f682727df4af947",
+      "git_blob_sha1": "050cd66fdd4f76966fdc80dcc7c0048dd7943ee7"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/mod.rs",
+      "sha256": "3a23c64429a4f62ab1c7ab4950ae8d86ed5b142c53a29be6351b7bcead7090a9",
+      "git_blob_sha1": "e312d13119b013a0305e4c4319ab552631ea0117"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/recovery.rs",
+      "sha256": "aa86ecaec903a2481910115f205b999d50103ca9e30072bb8e0a60052b8aa5c5",
+      "git_blob_sha1": "910bb28f23f502cbd2bbd20ab855ff6942c4e560"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/space.rs",
+      "sha256": "c6320f47c8c2e24fa44eb8a5008ce171796a4c486e10fa13fc1bb923237b70c3",
+      "git_blob_sha1": "bf624a5082314674296a5b9afd7453507f34107e"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests.rs",
+      "sha256": "410c40fcfc0c7eb699b175530759b2db84207315bc8dff48bd732dc8734dbac7",
+      "git_blob_sha1": "735a8e24e9be4925e2dc54068b7d553c9135ed39"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests/drive_bounds.rs",
+      "sha256": "677a99afb607494f35a0f6936ddd908672be5809115caedfa57bcf4dc4912642",
+      "git_blob_sha1": "84eac0f5de12bb4f9217918b1fe5b244b15d211b"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests/event_map.rs",
+      "sha256": "91d411fd13f403602e08dda1467558901f8756f3cc22f55237213a2b699620ca",
+      "git_blob_sha1": "0a852ac0be4308c2f230db864fdb2e8e3634d44c"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests/rates.rs",
+      "sha256": "4080170c9851c4db2889bbca8e80f4ecbcb5ad9f13e459aa293ceb6a3d81cdbe",
+      "git_blob_sha1": "31bf13a3b9993b97cf5e149b5b51af14f46a9769"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests/state_boundaries.rs",
+      "sha256": "9378a2b741b8b1fb693fc3b4c7484cb3fb212fced2fbc9612b2caed9222fa4bf",
+      "git_blob_sha1": "effbd40febf0964ac471b46e17fe4ba8f12b9ed5"
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/types.rs",
+      "sha256": "1c7cf0928f84ac205f6771ea9474486c91374298f16174718415211784dec150",
+      "git_blob_sha1": "899b5c22a78d512bf3574e376e6e151ad7cbfd8f"
+    },
+    {
+      "path": "profiles/structural_fixture/fast/fixture.json",
+      "sha256": "555627247436094ee727aa10538f7c25879f4667f86ed33d8fffe9f380edc52c",
+      "git_blob_sha1": "7d3b2da68f6248a011ecee214e6c48bac035e766"
+    }
+  ],
+  "sha256_scope": "Raw on-disk bytes at test time (Windows checkout); git_blob_sha1 identifies repository bytes after Git line-ending normalization."
+}
