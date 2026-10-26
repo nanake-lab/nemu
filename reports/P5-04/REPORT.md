@@ -2,14 +2,31 @@
 
 ## 当前状态
 
-部分完成：既有本机验收通过的证据保留，当前 Windows CI 有网络阻塞，另有两项交叉审查问题与 ADR 0020 待处理，见 [BLOCKED.md](BLOCKED.md)。本轮按用户要求调查 head `fbcb7cc` 的 Windows job；已 merge 最新 `origin/main@929f82d`（`b4e6e73`，仅 #102 的任务/文档），本卡源码、测试、依赖锁文件、全部工作流相对 fbcb7cc 均未变。读取最新审查评论；本次止于 CI 环境定位、证据提交及 PR 说明，不扩展为代码复审修复、不合并、不取下一卡。此前恢复与真实模型复验见 [main-sync-20261026](main-sync-20261026/)。
+2026-10-27：两项 P2 已修复，新增三项回归（含 45 个空响应组合）、CI scope 11 场景、第一轮 fmt/clippy/完整 release 工作区测试通过；最新 main 同步后的复验正在等待资源。已 merge `origin/main@65052c0`（`c4162dec`），保留 needs-user，等待当前提交的 CI、独立复审及 ADR 0020 批准，见 [BLOCKED.md](BLOCKED.md)。用户本轮明确继续修复，已撤销上一轮仅作网络诊断的范围收窄；不改权限/系统设置，不合并、不取下一卡。
+
+## 本轮两项审查修复
+
+- 完整响应预算：`paging.rs` 检索前先核验包含原样 query_id 的空信封；最低字节已超预算时走既有 Error::Invalid，不返回超大消息、不裁短 ID。所有返回再次核验完整 canonical 长度；裁空时同步投影/记忆/审计返回项/续页，零进展不发 cursor。IDL、状态枚举、查询/索引版本、默认预算不变。
+- CPU scope：为本 PR 新增的 W19 CPU clippy 补上 `if: steps.scope.outputs.rust == 'true'`，保留原路径判定、手动全量和失败时全量；11 个实际脚本逻辑场景通过，仅 git diff 结果模拟。
+- 旧实现反向验证：新增测试在 092cb2fe 的 paging.rs 上于预算断言失败（exit 101，53 字节空信封在 0 字节预算下未拒绝）；固定源码按字节恢复后，新三项测试通过。原始失败日志保留。
+- main 同步：合并 #87/#105/#106/#101 后本卡修复源码哈希不变；原样接收 main 的 Windows job 20→60 分钟调整（#106，blob a686643b9c6f7508e949157c36ddaf97e946e8fc）。未自行调整时限、网络或验收阈值，也没有恢复 TEMP/TMP 覆盖。
+
+| 本轮检查 | 结果 | 证据 |
+| --- | --- | --- |
+| 新预算回归 | 3 通过；三种空状态的短/70000 ASCII/UTF-8 ID 与零/差一字节/精确边界/默认预算等 45 组合；裁空及大 ID 翻页保持原文、顺序与 cursor | [panel-budget-green.log](review-fix-20261026/panel-budget-green.log) |
+| 旧实现反向验证 | 预期预算断言失败，exit 101；修复源码完整恢复，SHA 已记录 | [原始失败](review-fix-20261026/budget-regression-red.log)、[控制结果](review-fix-20261026/budget-regression-negative-control.json) |
+| Rust fmt / workspace all-targets CPU clippy -D warnings | 第一轮通过；同步后复验等待资源 | review-fix-20261026/fmt、clippy 的同名 JSON/log；同步后另存 *-main |
+| 完整 release workspace / CPU 特性 | 第一轮通过，fact-view 18、core-store 32、谱系 compile_fail 通过；同步后复验等待资源 | [workspace-tests.log](review-fix-20261026/workspace-tests.log) |
+| CI Rust scope | 11 场景通过，stage/desktop-only 跳过 CPU；Rust/共享文件/工作流/手动与 diff 失败保留覆盖 | [ci-scope-result.json](review-fix-20261026/ci-scope-result.json) |
+
+精确命令、工作目录、起止时间、退出码与检查脚本见 [review-fix-20261026](review-fix-20261026/README.md)。本轮没有新依赖、IDL、冻结字节、存储格式、core-store/core-types 修改或性能测量；实际 CPU 模型证据仍属于下述旧恢复提交，不能外推为本轮重新测量。
 
 ## 2026-10-26 Windows CI 失败定位
 
 - [run 40323615588 / self-hosted job 121574544222](https://github.com/nanake-lab/nemu/actions/runs/40323615588/job/121574544222) 的第 19 步 `W02 NTFS storage checks` 在 Cargo 更新 crates.io 索引时失败，步骤退出码 1。`ppv-lite86` 源数据读取反复出现 `transfer too slow`，30 秒 0 字节；错误依赖链为 fact-view → fastembed 7.3.0 → tokenizers 0.23.2 → rand 0.9.5 → rand_chacha 0.9.0 → ppv-lite86 0.2.21。属于此次 runner 构建环境的依赖源网络超时；更下层的网络原因未确定，没有因本次日志而修改实现或依赖。
 - 已读原始上传 ZIP 的两个文件（toolchain.log、clippy.log），SHA-256 `20c648f230b27a177cf8182d3488e35cd7e07d93a4c6db065c9cc6b8f5de1dec` 与 GitHub 一致。没有 tests.log，存储测试尚未开始；无编译诊断或测试失败证据。`desktop=false / storage=true`，隔离/E2E/visual 都是 skipped，不能计为本次通过。另一汇总 job 仅传播上游 failure。
 - 本次证据成功写入 `D:\actions-runner\_work\_temp\w02-40323615588-1` 并上传；工作流 blob 与 main 一致，未恢复 TEMP/TMP 覆盖，未改权限、系统/用户/全局设置、runner、超时或阈值，未主动重跑 CI。仅核验证据、哈希、代码与工作流未变化，不用旧的本机成功替代失败 job。
-- [诊断与完整证据](windows-failure-fbcb7cc-20261026/README.md)；[最新交叉审查](https://github.com/nanake-lab/nemu/pull/65#issuecomment-6419219224) 的空信封字节预算、CPU 检查 Rust scope 两项仍未解决，与此次网络失败分别记账。
+- [诊断与完整证据](windows-failure-fbcb7cc-20261026/README.md) 保留为 fbcb7cc 的失败；[交叉审查](https://github.com/nanake-lab/nemu/pull/65#issuecomment-6419219224) 的两项代码问题已按上节修复并待复审，与原网络失败分别记账。此节的零代码变化、工作流状态及未重跑检查描述只针对 092cb2fe 的诊断提交。
 
 ## 交付物
 
@@ -18,9 +35,11 @@
 - V2-76：`FactQuery.after`、`Execution.next_page`、`user_view_page` 提供无会话续页，绑定查询/前缀/权限/预算/模型；记忆召回取消每路前 64 的总量截断，仍限制每次条数、字节与步骤。75 条同一精确纳秒的记录经 11 页完整返回，无重漏；重建后可继续。
 - NO_MATCH、DENIED、INDEX_LAGGING 及 OBJECT_MISSING、BUDGET_EXHAUSTED 分别返回。撤回连同关联反应过滤；补解释同时检查原事件和记录事件的来源权限；历史有新提交时旧索引/续页明确滞后。
 - 查询/索引版本为 `w19-rrf-v2` / `w19-trigram-vec-v2`，RRF k=60、通道和稳定平局规则固定；c_core 保留首轮每路前 64。反应向量复用被解释经历的向量，自身语义字段仍可全文检索。审计扩展数据版本为 2，记录标记、实际结果与续页；权威 IDL 和既有字节不变。
-- Windows 工作流 blob 与 main 均为 `65b29f2a8a73a7bb08c44492646f3952d8a17435`；本机 env.ps1 也不再覆盖 TEMP/TMP。临时目录继承当前进程配置，未授权或修复任何共享目录 ACL、用户或系统设置。
+- Windows 工作流当前 blob 与 main 均为 `a686643b9c6f7508e949157c36ddaf97e946e8fc`；本机 env.ps1 不覆盖 TEMP/TMP。临时目录继承当前进程配置，未授权或修复任何共享目录 ACL、用户或系统设置。
 
 ## 验收
+
+以下为 2026-10-26 恢复阶段的既有结果；本轮修复与同步后的检查单独在上表及 review-fix-20261026 记录，不混用提交或性能数据。
 
 精确命令、工作目录、起止时间、退出码与原始输出均在 [resume-20261026](resume-20261026/) 的同名 JSON/日志中。全部 Rust 检查使用锁定的 Rust 1.99.0；重负载串行。
 
@@ -89,8 +108,8 @@
 
 ## 待用户确认
 
-- [ ] （合并前阻塞）Windows CI 依赖源网络故障解除后按原配置重跑，当前失败不算通过，见 BLOCKED.md。
-- [ ] （合并前阻塞）修复并复审 fbcb7cc 审查评论的两项 P2；本次 CI 环境定位未修改它们。
+- [ ] （合并前阻塞）最新 main 同步后的本机复验完成；当前提交的 Windows/其他 CI 仍须按提交核对，不用旧成功或旧失败代替，见 BLOCKED.md。
+- [ ] （合并前阻塞）独立复审两项已修复的 P2，不把本机回归当作审查批准。
 - [ ] （合并前阻塞）交叉审查本 PR，包括既有 core-store/core-types 扩展；由用户安排，不联系其他执行者。
 - [ ] （合并前阻塞）用户合并批准 ADR 0020 的重量级 CPU 依赖，保留 needs-user。
 

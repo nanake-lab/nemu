@@ -173,6 +173,7 @@ jobs:
         run: |
           uv run --project core/contracts --locked mypy --strict core/contracts/check_compat.py core/contracts/freeze_vectors.py
       - name: W19 optional CPU runtime compile checks (no model download)
+        if: steps.scope.outputs.rust == 'true'
         working-directory: core
         run: cargo clippy -p fact-view --all-targets --features cpu-embedding --locked -- -D warnings
       - name: P2-05 residual signal metrics (no browser or private assets)

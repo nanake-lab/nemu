@@ -93,8 +93,25 @@ impl<L: LineageKind> FactView<'_, L> {
         }
         let mut grant = access.clone();
         grant.allowed &= request.kind == QueryKindV2::QUERY_MEMORY;
+        let mut response = QueryResultV2 {
+            schema_version: 1,
+            query_id: request.query_id.clone(),
+            status: QueryStatus::NO_MATCH,
+            items: vec![],
+            growth_entries: vec![],
+        };
+        // Even a denied/empty result must echo query_id. If this minimum
+        // envelope cannot fit, no legal wire response can honor the budget.
+        let minimum_bytes = response.canonical_bytes(crate::query::LIMITS)?.len();
+        if minimum_bytes > q.budget.bytes {
+            return Err(Error::Invalid(format!(
+                "response envelope requires {minimum_bytes} bytes, budget is {}",
+                q.budget.bytes
+            )));
+        }
         let mut execution = self.execute(&q, &grant, embedder)?;
-        let items = execution
+        response.status = execution.projection.status;
+        response.items = execution
             .trace
             .memories
             .iter()
@@ -109,17 +126,10 @@ impl<L: LineageKind> FactView<'_, L> {
                 retracted: false,
             })
             .collect();
-        let mut response = QueryResultV2 {
-            schema_version: 1,
-            query_id: request.query_id.clone(),
-            status: execution.projection.status,
-            items,
-            growth_entries: vec![],
-        };
-        while response.canonical_bytes(crate::query::LIMITS)?.len() > q.budget.bytes
-            && !response.items.is_empty()
-        {
-            response.items.pop();
+        while response.canonical_bytes(crate::query::LIMITS)?.len() > q.budget.bytes {
+            if response.items.pop().is_none() {
+                return Err(Error::Invalid("empty response exceeds byte budget".into()));
+            }
             execution.projection.items.pop();
             execution.trace.memories.pop();
             response.status = QueryStatus::BUDGET_EXHAUSTED;

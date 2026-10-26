@@ -3,6 +3,7 @@ mod cpu_eval;
 mod edge_cases;
 mod fixture;
 mod memory_pages;
+mod panel_budget;
 use super::*;
 use core_types::{WireMessage, generated::*, scalar::DecimalU64};
 use fixture::World;
