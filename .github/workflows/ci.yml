@@ -82,8 +82,9 @@ jobs:
             if (-not $known) { $full = $true }
           }
           if ($full) { foreach ($key in @($scope.Keys)) { $scope[$key] = $true } }
+          # Contract/generated-type edits also exercise every Python consumer.
           # Three-language conformance needs both the Node and Python toolchains.
-          if ($scope.contracts) { $scope.node = $true }
+          if ($scope.contracts) { $scope.node = $true; $scope.python = $true }
           foreach ($key in ($scope.Keys | Sort-Object)) {
             $value = $scope[$key].ToString().ToLowerInvariant()
             "$key=$value" >> $env:GITHUB_OUTPUT
@@ -91,6 +92,8 @@ jobs:
             "$key`: $message" | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           }
           "full=$full; changed files=$($files.Count)"
+          # A failed diff selected the full suite; do not propagate its native exit code.
+          $global:LASTEXITCODE = 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         if: steps.scope.outputs.node == 'true'
         with:
