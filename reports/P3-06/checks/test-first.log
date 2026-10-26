@@ -1,0 +1,84 @@
+$ vitest run
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P3-06
+
+ ❯ packages/body/src/readout/readout.test.ts (13 tests | 1 failed) 454ms
+   ❯ P3-06 v2 readout application (11)
+     × validates stage successor input and honors run-state gates without stale replay 28ms
+ ❯ apps/panel/src/debug/schema-validator.test.ts (6 tests | 1 failed) 23ms
+   ❯ schema-validator (6)
+     × validates all default preset payloads successfully 16ms
+ ❯ packages/avatar-runtime/src/animation/animation.test.ts (23 tests | 2 failed) 1337ms
+   ❯ P3-01 Animation Runtime (Five Layers) (23)
+     ❯ L2 Procedural Body Layer (3)
+       × delays head (120ms) and neck (200ms) behind eye (0ms) 8ms
+     ❯ Animation Compositor (6)
+       × v2 stays bounded through 10,800 frames without a base clip, and duplicate apply does not drift 1189ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/panel/src/debug/schema-validator.test.ts > schema-validator > validates all default preset payloads successfully
+AssertionError: Preset for stage.readout.v2 should exist: expected undefined to be defined
+ ❯ apps/panel/src/debug/schema-validator.test.ts:13:60
+     11|     for (const cmdType of STAGE_COMMAND_LIST) {
+     12|       const preset = STAGE_COMMAND_PRESETS[cmdType];
+     13|       expect(preset, `Preset for ${cmdType} should exist`).toBeDefined…
+       |                                                            ^
+     14|       const res = validateStageCommand(cmdType, preset);
+     15|       expect(res.valid, `Preset for ${cmdType} should be valid: ${res.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  packages/avatar-runtime/src/animation/animation.test.ts > P3-01 Animation Runtime (Five Layers) > L2 Procedural Body Layer > delays head (120ms) and neck (200ms) behind eye (0ms)
+AssertionError: expected 0.02459694261066693 to be greater than 0.04
+ ❯ packages/avatar-runtime/src/animation/animation.test.ts:461:29
+    459|       const at50ms = l2.getGazeAngles();
+    460|
+    461|       expect(at50ms.eyeYaw).toBeGreaterThan(0.04);
+       |                             ^
+    462|       expect(at50ms.neckYaw).toBeLessThan(0.01);
+    463|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  packages/avatar-runtime/src/animation/animation.test.ts > P3-01 Animation Runtime (Five Layers) > Animation Compositor > v2 stays bounded through 10,800 frames without a base clip, and duplicate apply does not drift
+AssertionError: expected 0.000026179962014915128 to be close to +0, received difference is 0.000026179962014915128, but expected 5e-9
+ ❯ packages/avatar-runtime/src/animation/animation.test.ts:596:82
+    594|       compositor.applyReadout({ ...readout, tension: 0 });
+    595|       compositor.update(1 / 60);
+    596|       expect(boneNodes.get('spine')!.quaternion.angleTo(new THREE.Quat…
+       |                                                                                  ^
+    597|       expect(vrm.scene.getObjectByName('earRoot_L')!.quaternion.angleT…
+    598|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  packages/body/src/readout/readout.test.ts > P3-06 v2 readout application > validates stage successor input and honors run-state gates without stale replay
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/body/src/readout/readout.test.ts:99:36
+     97|       },
+     98|     } } };
+     99|     expect(input.handle(runState)).toBe(true);
+       |                                    ^
+    100|     expect(app.getCurrentReadout()).toEqual(NEUTRAL_BODY_READOUT);
+    101|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  3 failed | 44 passed (47)
+      Tests  4 failed | 547 passed (551)
+   Start at  00:45:04
+   Duration  6.51s (tests 36%, import 34%, transform 29%, worker 1%)
+
+    Isolate  47 workers spawned · ~332ms startup each (spawn + environment, per file)
+             at least ~709ms faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Test failed. See above for more details.

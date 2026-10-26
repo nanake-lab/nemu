@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { emotionSchema, hitRegionIdSchema, langSchema } from './vocabulary.js';
+import { bodyReadoutMappingSchema } from './body-animation.js';
 
 const vector3 = z.tuple([z.number(), z.number(), z.number()]);
 // These contract fields are relative paths, not URLs or host-absolute paths.
@@ -61,6 +62,7 @@ export const nemuProfileSchema = z.strictObject({
   idleSet: z.array(
     z.strictObject({ motionId: z.string(), weight: z.number(), cooldownS: z.number() }),
   ),
+  bodyReadoutMapping: bodyReadoutMappingSchema.optional(),
 });
 export type NemuProfile = z.infer<typeof nemuProfileSchema>;
 export const assetManifestEntrySchema = z.strictObject({
