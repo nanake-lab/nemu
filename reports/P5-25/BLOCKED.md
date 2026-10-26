@@ -1,0 +1,32 @@
+# P5-25 阻塞解除与验收归属（2026-10-26）
+
+用户本轮已经作出决定，之前要求选择的两项已解除：
+
+1. V2-93旧 **2 对照保留为 #[ignore] 诊断，属性/注释引用理由和证据，测试体、断言、输入及历史失败不变。本卡数值验收使用新x*x参考的严格位比较；ignored不等于passed，显式诊断仍应报告原失败。
+2. I13、AC2-09本卡只验纯函数边界：C不接收x/m/R，改变调用方x初值和m不改变θ/完整估计器，C只返回暂存ThetaChange，不写L、不提交。实际事务与整段重放由P5-29、P5-26验收，不再列作本卡未完成项。
+
+正式估计器契约已由main的P5-36承接；H时间认证与长期时间域列在请求文件，属于后继工作。CUSUM/n_tau/报警参数仍为待实验谱系校准的夹具，不宣称已正式定值。
+
+原两项选择及libm依赖恢复的目录范围确认均已解除。本轮检查实测结果见REPORT.md和closeout-20261026；同head CI全绿后才转为可审查，独立交叉审查仍由用户安排。本会话不合并。
+
+原失败不可抹去：旧σ首处相差1 ULP；evidence/、rounding-20261024/、batch4-20261026/及各编号原结果均原样保留。前一提交CI失败（run 40264985040）也另存ci-before。新诊断结果作为新证据追加，绝不覆盖旧失败。
+
+## 已解除：main合并删掉libm声明
+
+CI run 40272465565（head 43da867）在Rust编译阶段报7处E0433，未进入测试。原因已定位到P5-27从core-kernel/Cargo.toml删除原libm依赖，但dynamics仍按METHODS固定使用libm0.2.16。
+
+用户2026-10-26明确批准后，提交0cf1605只恢复 core/crates/core-kernel/Cargo.toml 的 `libm = { version = "=0.2.16", default-features = false }`，由Cargo更新共享锁文件；不改公式或版本。本机fmt、workspace Clippy及kernel常规测试已经通过。PR #94也恢复此行，后合并者只保留一行。
+
+## 历史CI运行条件：用户已恢复
+
+修复后的Ubuntu run [40283963199](https://github.com/nanake-lab/nemu/actions/runs/40283963199)（head 0cf1605）没有启动任何步骤，GitHub失败注释为：
+
+> The job was not started because recent account payments have failed or your spending limit needs to be increased.
+
+原注释与空steps记录见 closeout-20261026/ci-code/run-40283963199.json。它不是Rust编译失败，也不能记成测试通过。2026-10-26的GitHub runners API同时报告DESKTOP-8LBF84O为offline；锁文件改动需要Windows W02检查，草稿的自动Windows作业只显示skipped。
+
+用户随后明确回复计费问题「已解决」，并确认「runner上线了」；GitHub API复核DESKTOP-8LBF84O为online。旧失败仍保留，最终head复跑结果由[PR #77检查页](https://github.com/nanake-lab/nemu/pull/77/checks)与收尾评论记录。本卡没有剩余规格/目录授权待确认；不修改账户、用户或系统设置，不调整阈值，不以本机通过冒充CI全绿。
+
+main@a0c9ed8新增了Windows草稿门禁：自动作业故意拒绝将draft/skipped记成通过。先前手动full=true运行40293379241在本卡范围外的语音E2E失败（frames=0，原阈值>10），W02未执行；失败日志、artifact摘要及无关依据见REPORT的专节，失败保留不改写。
+
+用户2026-10-26明确批准顺序调整：先转为可审查以触发按实际PR路径执行的W02，最终head的Ubuntu与正式Windows全部通过后才写「请审查」，W02失败即恢复草稿。本卡数值和W02验收均未放宽；全量语音失败由对应任务处理，本卡不改测试、阈值或设置。没有未决的用户授权，独立交叉审查属于下一步，本会话不合并。

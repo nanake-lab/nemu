@@ -1,0 +1,25 @@
+{
+  "cpython": {
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.14/Objects/floatobject.c",
+    "symbol": "float_pow",
+    "observed_call": "ix = pow(iv, iw);",
+    "retrieved": true
+  },
+  "rust_std_source_lookup": {
+    "url": "https://raw.githubusercontent.com/rust-lang/rust/1.99.0/library/std/src/f64.rs",
+    "status": 404,
+    "note": "Not used as evidence; powf conclusions are from actual debug/optimized probe outputs."
+  },
+  "libm": {
+    "version": "0.2.16",
+    "source_path": "src/math/pow.rs",
+    "observed_special_case": "if hy == 0x40000000 { return x * x; }",
+    "source_sha256": "c5566d0f48682d107e8803b0ed204ff3521503348f18a4f26cbe3f47fef15192"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "rust": "1.99.0",
+    "libc": "glibc 2.39",
+    "fma_probe_flags": "-C target-feature=-fma; does not constrain linked system math library internals"
+  }
+}
