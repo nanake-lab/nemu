@@ -99,3 +99,5 @@ jobs:
           uv run --project core/contracts --locked mypy --strict core/contracts/check_compat.py core/contracts/freeze_vectors.py
       - name: P2-05 residual signal metrics (no browser or private assets)
         run: pnpm test:p205:metrics
+      - name: Status board pause and reminder regressions
+        run: python -m unittest discover -s tools/status -p 'test_*.py' -v
