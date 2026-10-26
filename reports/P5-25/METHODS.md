@@ -6,7 +6,7 @@
 
 `stage(previous,event,law,fuses)` 没有 x、m、R、模型、时钟或存储句柄。外层从已提交 H 与存好的 m=0 解释构造事件，来源 enum/bool 只表示已认证投影，不负责认证。只有外界事件、他人回应进入 C；自身行动、触发程序结果、自述、欺骗引起回应及无事件保持完整状态不变。
 
-外源序号严格增加，事件时间不倒退，紧邻 ID 不重复；全历史 ID 唯一性由 H/Γ 保证。正常返回完整状态和现有 IDL 的 ThetaChange，由外层写 L、提交；Err 不修改借用的旧状态。I13 完整事务集成尚未完成。
+外源序号严格增加，事件时间不倒退，紧邻 ID 不重复；全历史 ID 唯一性由 H/Γ 保证。正常返回完整状态和现有 IDL 的 ThetaChange，由外层写 L、提交；Err 不修改借用的旧状态。按用户2026-10-26决定，本卡I13只验收纯函数暂存与输入不变；真实同事务写L及整段重放交由P5-26、P5-29验收。
 
 显式状态包含 law、θ、质量/反应和/平方和、原始 variance/σ、对数时长和/质量/均值/τ、零时长计数、开放段、检测器、h、外源计数、上个事件和运行时间投影、慢漂方向/计数。没有隐藏缓存；重放比较整个状态，包括浮点位和负零。
 
@@ -16,7 +16,7 @@
 
 新增 `reference_binary64.py`（参考标识 `P5-25-binary64-mul-v1`）读取原19分片的500条流、72,822个事件，不重新抽样。流头、a 和来源字节不变，独立生成 b、variance、g；Rust 严格比较位模式，并比较 σ 与参考 variance 的 sqrt。Python sqrt 和 Rust libm sqrt 在本批输入一致。
 
-原 check_law.py、generate_fixtures.py、diagnose_theta1.py、旧 fixture/失败记录及 tests/reference.rs 全部不改；旧 **2 对照仍在首处差异失败。新测试额外完整执行原范围和来源排除性质断言。新参考通过不把旧比较改为通过，也不是 P5-26 的完整 H 重算第二实现。
+原 reports/echo-core-v2-draft/check_law.py、generate_fixtures.py、diagnose_theta1.py、旧 fixture/失败记录全部不改。按用户2026-10-26决定，tests/reference.rs的旧 **2 测试只新增带理由的 #[ignore] 与注释，引用V2-93及原始证据；测试体与所有断言不改，显式运行仍在首处差异失败。新测试额外完整执行原范围和来源排除性质断言。新参考通过不把旧比较改为通过，也不是 P5-26 的完整 H 重算第二实现。
 
 先计算本事件 h，再 rho=sub(1,h)。公共质量每事件算一次；通道顺序 connection、empathy、curiosity、achievement：
 
@@ -134,4 +134,11 @@ cargo test -p core-kernel --locked --no-fail-fast -- --nocapture
 cargo test --workspace --locked --no-fail-fast
 ```
 
-原 **2 对照仍是活跃测试，全套命令当前包含该失败；不得过滤、ignore、放宽断言求全绿。原 fixture 是 Python3.12.14 产物，新参考环境与哈希见 batch4-20261026/reference/reference.json。每条命令结果以 REPORT 和独立 attempt 日志为准。
+常规验收仅使用新参考的严格逐位对照；旧 **2 对照按用户明确决定标为诊断性 ignored，失败不改写为通过。可显式复现：cargo test -p core-kernel --locked dynamics::tests::reference::theta_1_original_500_streams_zero_violations -- --exact --ignored --nocapture；该诊断预期仍失败，不属于常规验收。原 fixture 是 Python3.12.14 产物，新参考环境与哈希见 batch4-20261026/reference/reference.json。每条命令结果以 REPORT 和独立 attempt 日志为准。
+
+
+## 2026-10-26 纯函数验收边界
+
+用户明确本卡 I13、AC2-09 只验收纯函数能证明的部分。tests/pure_boundary.rs 以编译期函数类型检查 C 不含 x、m、R、L 或提交能力参数；调用方保有的 x 初值与 m 取 9 组组合，同一段128个外源事件逐前缀核对 θ 的 to_bits() 及完整估计器状态。夹具不模拟真实运行时、不声称已测试全管线。暂存测试证明借用输入不变、丢弃结果不推进游标、重复计算相同；C返回 ThetaChange，真实写L与提交仍由P5-29负责，独立整段重放由P5-26验收。
+
+最新main已登记P5-36负责V2-98/V2-103正式估计器契约；V2-100要求检测与异常阈值随规律版本/校准资源登记，u*不能调。现有DynamicsFuses只是本地校准资源视图，不能当作u*的可调边界。

@@ -270,4 +270,5 @@ fn numerical_and_ingress_faults_do_not_publish_partial_state() {
 
 mod batch4;
 mod binary64;
+mod pure_boundary;
 mod reference;

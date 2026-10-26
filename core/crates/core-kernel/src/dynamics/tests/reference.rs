@@ -22,6 +22,13 @@ fn double(bytes: &mut &[u8]) -> f64 {
     f64::from_le_bytes(head.try_into().unwrap())
 }
 #[test]
+#[ignore = "V2-93: legacy Python **2 rounding diagnostic; failure evidence: reports/P5-25/rounding-20261024/REPORT.md"]
+// V2-93 (docs/traceability/diff-register.md): preserve the original **2 oracle,
+// assertions and failure; the user authorized diagnostic-only execution on
+// 2026-10-26. See reports/P5-25/evidence/tests/dynamics-attempt-2.log and
+// reports/P5-25/rounding-20261024/trace.json. This is still a known failure,
+// not a passing acceptance test. The active binary64.rs test compares the new
+// explicit x*x reference bit-for-bit and retains the original properties.
 fn theta_1_original_500_streams_zero_violations() {
     let data = fixture("theta1.bin");
     let mut bytes = data.as_slice();
