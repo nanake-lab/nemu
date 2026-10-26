@@ -415,6 +415,11 @@
         </section>
       </div>
 
+      <section class="nb-card" id="paused">
+        <h2>暂停的 PR</h2>
+        <ul class="nb-list" id="nb-paused"></ul>
+      </section>
+
       <section class="nb-card" id="all-cards">
         <h2>全部任务卡</h2>
         <div class="nb-tools">
@@ -461,6 +466,7 @@
           'unverified',
           'review',
           'in_progress',
+          'paused',
           'ready',
           'blocked',
           'done',
@@ -470,6 +476,7 @@
           unverified: '已合并·待核验',
           review: '等审查',
           in_progress: '进行中',
+          paused: '暂停',
           ready: '可开工',
           blocked: '等依赖',
           done: '已完成',
@@ -566,7 +573,7 @@
           );
         }
 
-        function render(rows, other) {
+        function render(rows, other, paused) {
           cards = rows
             .slice()
             .sort(
@@ -586,6 +593,19 @@
           );
 
           $('nb-count').textContent = String(attn.length);
+          $('nb-paused').replaceChildren(
+            ...(paused?.length
+              ? paused.map((p) => {
+                  const li = el('li');
+                  li.append(
+                    el('span', 'nb-id', '#' + p.number),
+                    link(p.title, p.url),
+                    el('span', 'nb-st', '暂停'),
+                  );
+                  return li;
+                })
+              : [el('li', 'nb-empty', '暂无暂停的 PR。')]),
+          );
           $('nb-attn').replaceChildren(
             ...(attn.length
               ? attn.map((a) => {
@@ -687,7 +707,7 @@
             const res = await fetch('/api/board', { cache: 'no-store' });
             const body = await res.json();
             if (!res.ok) throw new Error(body.error || 'HTTP ' + res.status);
-            render(body.rows, body.other_attention);
+            render(body.rows, body.other_attention, body.paused_prs);
             lastOk = Date.now();
             stamp.className = '';
             stamp.textContent = '更新于 ' + clock(new Date());

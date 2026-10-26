@@ -1,0 +1,139 @@
+{
+  "source_commit": "aa0b5c4009a1c932301de8a1dfdb06362cb742e9",
+  "run_id": 40188885709,
+  "url": "https://github.com/nanake-lab/nemu/actions/runs/40188885709",
+  "conclusion": "success",
+  "runner": "ubuntu-latest",
+  "windows_workflow_triggered": false,
+  "jobs": [
+    {
+      "id": 121155416142,
+      "name": "Ubuntu static checks and unit tests",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global pnpm@12.11.2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm test:contracts",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm test:transport",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Python checks (all four projects)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Rust checks",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dotnet build executors/office-connector/OfficeConnector.csproj --configuration Release",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Hosted minutes estimate",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "P5-01 IDL and three-language conformance (D10.8 / SYS21)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "P5-21 contract compatibility tooling (no reuse; checked by test:core-contracts)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "P2-05 residual signal metrics (no browser or private assets)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Status board pause and reminder regressions",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "note": "This closeout commit changes reports only; verified code and Ubuntu workflow are unchanged."
+}
