@@ -1,0 +1,211 @@
+{
+  "generated_utc": "2026-10-26T13:34:51.398070+00:00",
+  "verification_kind": "existing_test_logs_and_current_source_binding_audit",
+  "acceptance": "J06",
+  "result": "passed",
+  "scope": "User-approved P5-12 numeric compilation, absolute budget, body readout and in-process views only",
+  "source_head": "1415050d4e5ad5394af2109bfb1b7d4327a9fb0a",
+  "origin_main": "317dde9cc260effc9df736348af00acfe6fc38d3",
+  "implementation_commit": "ad6c5239087f985e285ec8ce9f1ad537a110b1c9",
+  "new_rust_test_execution": false,
+  "source_files": [
+    {
+      "path": "core/crates/core-kernel/src/lib.rs",
+      "tested_blob": "71ef589ef34586e12d72c1fba20a43c03e93f69e",
+      "current_blob": "c78db431a73db6287e75baeae381df056a8c2797",
+      "same": false
+    },
+    {
+      "path": "core/crates/core-kernel/src/effects/compile.rs",
+      "tested_blob": "b8895892ab6a5263415389678558586e5a3b6c5d",
+      "current_blob": "b8895892ab6a5263415389678558586e5a3b6c5d",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/effects/evaluate.rs",
+      "tested_blob": "fb6085400330d7d002c2e61960f5c07126a90066",
+      "current_blob": "fb6085400330d7d002c2e61960f5c07126a90066",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/effects/mod.rs",
+      "tested_blob": "926245292d641d6389f080be37294a2df85a642e",
+      "current_blob": "926245292d641d6389f080be37294a2df85a642e",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/effects/tests.rs",
+      "tested_blob": "650ea74bb3b2d983b0164780d949ce6c9aa2fa80",
+      "current_blob": "650ea74bb3b2d983b0164780d949ce6c9aa2fa80",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/effects/types.rs",
+      "tested_blob": "cdc55399b592b326df69a3f1fc95febcd725b8f8",
+      "current_blob": "cdc55399b592b326df69a3f1fc95febcd725b8f8",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/drive.rs",
+      "tested_blob": "050cd66fdd4f76966fdc80dcc7c0048dd7943ee7",
+      "current_blob": "050cd66fdd4f76966fdc80dcc7c0048dd7943ee7",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/mod.rs",
+      "tested_blob": "e312d13119b013a0305e4c4319ab552631ea0117",
+      "current_blob": "e312d13119b013a0305e4c4319ab552631ea0117",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/recovery.rs",
+      "tested_blob": "910bb28f23f502cbd2bbd20ab855ff6942c4e560",
+      "current_blob": "910bb28f23f502cbd2bbd20ab855ff6942c4e560",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/space.rs",
+      "tested_blob": "e48447c714fbd2e2db82d0340a8233343da50f0f",
+      "current_blob": "e48447c714fbd2e2db82d0340a8233343da50f0f",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests.rs",
+      "tested_blob": "735a8e24e9be4925e2dc54068b7d553c9135ed39",
+      "current_blob": "735a8e24e9be4925e2dc54068b7d553c9135ed39",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/types.rs",
+      "tested_blob": "899b5c22a78d512bf3574e376e6e151ad7cbfd8f",
+      "current_blob": "899b5c22a78d512bf3574e376e6e151ad7cbfd8f",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests/drive_bounds.rs",
+      "tested_blob": "84eac0f5de12bb4f9217918b1fe5b244b15d211b",
+      "current_blob": "84eac0f5de12bb4f9217918b1fe5b244b15d211b",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests/event_map.rs",
+      "tested_blob": "0a852ac0be4308c2f230db864fdb2e8e3634d44c",
+      "current_blob": "0a852ac0be4308c2f230db864fdb2e8e3634d44c",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests/rates.rs",
+      "tested_blob": "ec955a9b9af87f922dbe743437bf27bcba6f10ce",
+      "current_blob": "ec955a9b9af87f922dbe743437bf27bcba6f10ce",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/fast/tests/state_boundaries.rs",
+      "tested_blob": "effbd40febf0964ac471b46e17fe4ba8f12b9ed5",
+      "current_blob": "effbd40febf0964ac471b46e17fe4ba8f12b9ed5",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/compile.rs",
+      "tested_blob": "1b6ce8bbb804df8e72c81b71f309be125a1307bd",
+      "current_blob": "1b6ce8bbb804df8e72c81b71f309be125a1307bd",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/config.rs",
+      "tested_blob": "f5c15c732c0c1aa68991ba7fd93800b491f57047",
+      "current_blob": "f5c15c732c0c1aa68991ba7fd93800b491f57047",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/mod.rs",
+      "tested_blob": "715e98c5ef3e81523495de1badb13a36e73adc9e",
+      "current_blob": "715e98c5ef3e81523495de1badb13a36e73adc9e",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/numeric.rs",
+      "tested_blob": "fcd2f21abc59849e0493e52dc6ed138d0ba56f19",
+      "current_blob": "fcd2f21abc59849e0493e52dc6ed138d0ba56f19",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/readout.rs",
+      "tested_blob": "500ee7307fed80431fadf1836241d3fcbb18a43a",
+      "current_blob": "500ee7307fed80431fadf1836241d3fcbb18a43a",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/tests.rs",
+      "tested_blob": "41a281ab94ce9fc5adf8e65df9e3bff74c62a273",
+      "current_blob": "41a281ab94ce9fc5adf8e65df9e3bff74c62a273",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/types.rs",
+      "tested_blob": "f872ecb3db457c2b126cf4f3046520c26e540790",
+      "current_blob": "f872ecb3db457c2b126cf4f3046520c26e540790",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/tests/bound-vectors.json",
+      "tested_blob": "3e5f9de042609c37c8fc088b07d060e60f713fc5",
+      "current_blob": "3e5f9de042609c37c8fc088b07d060e60f713fc5",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/tests/boundaries.rs",
+      "tested_blob": "7ba343f22d088a0e85205c75c3fc82b6a9c262c2",
+      "current_blob": "7ba343f22d088a0e85205c75c3fc82b6a9c262c2",
+      "same": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/modulation/tests/readouts.rs",
+      "tested_blob": "9f6c6503c3a3b2a827d8f93b8f0838c36f030d1e",
+      "current_blob": "9f6c6503c3a3b2a827d8f93b8f0838c36f030d1e",
+      "same": true
+    }
+  ],
+  "lib_diff": "diff --git a/71ef589ef34586e12d72c1fba20a43c03e93f69e b/c78db431a73db6287e75baeae381df056a8c2797\nindex 71ef589e..c78db431 100644\n--- a/71ef589ef34586e12d72c1fba20a43c03e93f69e\n+++ b/c78db431a73db6287e75baeae381df056a8c2797\n@@ -4,0 +5 @@\n+pub mod dynamics;",
+  "unchanged_scopes_since_implementation": [
+    "core/crates/core-kernel/src/modulation",
+    "core/crates/core-kernel/src/fast",
+    "core/crates/core-kernel/src/effects",
+    "core/contracts",
+    "core/crates/core-types",
+    "core/Cargo.toml",
+    "core/Cargo.lock",
+    "core/rust-toolchain.toml",
+    "core/crates/core-kernel/Cargo.toml"
+  ],
+  "historical_test_results": {
+    "kernel_passed": 65,
+    "modulation_passed": 20,
+    "workspace_passed_including_doctests": 122,
+    "failed": 0,
+    "ignored": 0,
+    "kernel_log": "../verification/kernel-20261026-183537-213.log",
+    "workspace_log": "../verification/workspace-20261026-183938-846.log",
+    "workspace_note": "Executed before upstream P5-25 dynamics was merged; not a current-head whole-workspace run"
+  },
+  "independent_pairs": 308,
+  "oracle_command": [
+    "python",
+    "-B",
+    "reports/P5-12/generate_bound_vectors.py",
+    "--check"
+  ],
+  "oracle_exit_code": 0,
+  "oracle_log": "closeout-oracle-20261026.log",
+  "preserved_raw_evidence_files": 20,
+  "scope_decision": {
+    "date": "2026-10-26",
+    "contract_handoff_card": "P5-42",
+    "task_definition_pr": "https://github.com/nanake-lab/nemu/pull/105",
+    "production_envelope_publisher": false,
+    "proactivity_readout_required": false,
+    "proactivity_decision": "V2-117, merged PR #103",
+    "independent_cross_review": "pending"
+  },
+  "original_result_preserved": "result.json"
+}
