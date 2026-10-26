@@ -5,7 +5,7 @@ use crate::{
 use core_types::{
     WireMessage,
     contract::Schema,
-    generated::{ActionLifecycle, CoreTransactionV2, ObjectRef},
+    generated::{ActionLifecycle, CoreTransactionV2, EvidenceGroupV2, ObjectRef, RSnapshotV2},
     scalar::hex,
 };
 use rusqlite::{Connection, params};
@@ -33,11 +33,16 @@ pub(crate) fn index(
             params![commit, role, r.canonical_bytes(limits)?],
         )?;
     }
-    let r = crate::r_state::StoredR::read(objects, &value.staged_r)?;
-    for (tendency_id, reference) in r.tendency_refs(objects)? {
+    let r = RSnapshotV2::from_canonical(&objects.read(&value.staged_r)?, limits)?;
+    for tendency in &r.tendencies {
+        let reference = objects.reference(tendency, "1")?;
         db.execute(
             "INSERT INTO snapshot_objects VALUES(?1,'tendency',?2,?3)",
-            params![commit, tendency_id, reference.canonical_bytes(limits)?],
+            params![
+                commit,
+                tendency.tendency_id,
+                reference.canonical_bytes(limits)?
+            ],
         )?;
     }
     for reference in &value.accepted_results {
@@ -65,19 +70,19 @@ pub(crate) fn index(
     let schema = Schema::builtin()?;
     // Index only groups accepted in this transaction, never unaccepted candidates.
     for reference in &value.accepted_results {
-        if crate::r_state::is_group(reference)? {
-            let group = crate::StoredEvidenceGroup::read(objects, reference)?;
+        if reference.object_type == schema.message(EvidenceGroupV2::NAME)?.tag {
+            let group = EvidenceGroupV2::from_canonical(&objects.read(reference)?, limits)?;
             db.execute(
                 "INSERT INTO evidence_groups VALUES(?1,?2,?3)",
-                params![commit, group.id(), reference.canonical_bytes(limits)?],
+                params![commit, group.group_id, reference.canonical_bytes(limits)?],
             )?;
-            for tendency_id in group.tendencies() {
+            for allocation in &group.allocations {
                 db.execute(
                     "INSERT INTO evidence_index VALUES(?1,?2,?3,?4)",
                     params![
                         commit,
-                        tendency_id,
-                        group.id(),
+                        allocation.tendency_id,
+                        group.group_id,
                         reference.canonical_bytes(limits)?
                     ],
                 )?;

@@ -10,10 +10,6 @@ mod crash;
 mod crash_harness;
 mod isolation;
 mod objects;
-mod r_fixtures;
-mod r_legacy_fixture;
-mod r_migration;
-mod r_review;
 mod reader;
 fn normal() -> DegradedStatus {
     DegradedStatus {
@@ -124,16 +120,14 @@ fn proposal<L: LineageKind>(
             "1",
         )
         .unwrap();
-    let law = store.prepare(&r_fixtures::law(), "1").unwrap();
     let mut binding: ProposalBindingV2 = with_refs(leaf.reference());
-    binding.environment.law_version = Some(law.reference().clone());
     binding.branch_id = store.branch.clone();
     binding.event_id = event.id.clone();
     binding.raw_log_position = event.raw_log_position;
     binding.base_commit = store.base_commit().unwrap();
     binding.anchor_time_ns = DecimalU64(store.head().unwrap().2);
     binding.process_time_ns = DecimalU64(n + 1);
-    binding.read_set = vec![leaf.reference().clone(), law.reference().clone()];
+    binding.read_set = vec![leaf.reference().clone()];
     if let Some(old) = store.current().unwrap() {
         binding.x_revision = FastStateSnapshotV2::from_canonical(
             &store.objects.read(&old.staged_x).unwrap(),
@@ -141,10 +135,12 @@ fn proposal<L: LineageKind>(
         )
         .unwrap()
         .revision;
-        binding.r_revision = crate::r_state::StoredR::read(&store.objects, &old.staged_r)
-            .unwrap()
-            .revision()
-            .to_owned();
+        binding.r_revision = RSnapshotV2::from_canonical(
+            &store.objects.read(&old.staged_r).unwrap(),
+            config().encoding,
+        )
+        .unwrap()
+        .revision;
         binding.theta_revision = ThetaSnapshot::from_canonical(
             &store.objects.read(&old.staged_theta).unwrap(),
             config().encoding,
@@ -166,8 +162,10 @@ fn proposal<L: LineageKind>(
         .sort_by_key(|r| core_types::scalar::hex(&r.digest.0));
     binding.read_set.dedup();
     let ticket = store.bind(binding.clone()).unwrap();
-    let mut pins = vec![leaf, law];
-    let mut r = r_fixtures::snapshot(pins[1].reference());
+    let mut pins = vec![leaf];
+    let law: LawVersion = with_refs(pins[0].reference());
+    pins.push(store.prepare(&law, "1").unwrap());
+    let mut r: RSnapshotV2 = with_refs(pins[0].reference());
     r.revision = format!("r-{n}");
     r.law_version = pins[1].reference().clone();
     pins.push(store.prepare_r(&r).unwrap());

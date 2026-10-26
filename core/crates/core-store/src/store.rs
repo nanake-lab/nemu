@@ -146,15 +146,14 @@ impl<L: LineageKind> Store<L> {
     }
     pub fn prepare<T: WireMessage>(&self, value: &T, version: &str) -> Result<PreparedObject<L>> {
         require(
-            T::NAME != core_types::generated::RSnapshotV2::NAME
-                && T::NAME != core_types::generated::RSnapshotV3::NAME,
+            T::NAME != core_types::generated::RSnapshotV2::NAME,
             "R snapshots must use prepare_r",
         )?;
         self.objects.prepare(value, version, &self.fault)
     }
     pub fn prepare_r(
         &self,
-        value: &core_types::generated::RSnapshotV3,
+        value: &core_types::generated::RSnapshotV2,
     ) -> Result<PreparedObject<L>> {
         self.objects.prepare_r(value, &self.fault)
     }

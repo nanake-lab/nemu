@@ -71,12 +71,20 @@ fn at03_pins_close_prepare_gc_publish_race() {
 fn r_index_reassembles_canonical_and_reuses_unchanged_tendencies() {
     let root = TemporaryRoot::new().unwrap();
     let store = rehearsal(&root, "chunks");
-    let law = store.prepare(&r_fixtures::law(), "1").unwrap();
-    let mut first = r_fixtures::tendency("a");
+    let leaf = store
+        .prepare(
+            &UserText {
+                schema_version: 1,
+                text: "resource".into(),
+            },
+            "1",
+        )
+        .unwrap();
+    let mut first: TendencyV2 = with_refs(leaf.reference());
     first.tendency_id = "a".into();
     let mut second = first.clone();
     second.tendency_id = "b".into();
-    let mut r = r_fixtures::snapshot(law.reference());
+    let mut r: RSnapshotV2 = with_refs(leaf.reference());
     r.tendencies = vec![first.clone(), second];
     let old = store.prepare_r(&r).unwrap();
     let first_ref = store.objects.reference(&first, "1").unwrap();
@@ -84,9 +92,6 @@ fn r_index_reassembles_canonical_and_reuses_unchanged_tendencies() {
     let modified = std::fs::metadata(&unchanged).unwrap().modified().unwrap();
     r.revision = "next".into();
     r.tendencies[1].evidence_a += 1.0;
-    r.tendencies[1].evidence_absolute = 1.0;
-    r.tendencies[1].evidence_b = 5.0;
-    r.tendencies[1].pi = 0.2;
     let new = store.prepare_r(&r).unwrap();
     assert_ne!(old.reference(), new.reference());
     assert_eq!(
@@ -159,10 +164,11 @@ fn p532_evidence_versions_and_ledger_prefix_are_complete() {
     for n in 0..2 {
         let e = event(&mut store, n);
         let (ticket, mut value, _pins) = proposal(&store, &e);
-        let mut group = r_fixtures::group("group", "tendency");
-        if n != 0 {
-            group.allocations.clear();
-        }
+        let mut group: EvidenceGroupV2 = fixture();
+        group.group_id = "group".into();
+        let mut allocation: EvidenceAllocationV2 = fixture();
+        allocation.tendency_id = "tendency".into();
+        group.allocations = if n == 0 { vec![allocation] } else { vec![] };
         let object = store.prepare(&group, "1").unwrap();
         value.accepted_results.push(object.reference().clone());
         let staged = store.stage(ticket, value).unwrap();
@@ -283,12 +289,12 @@ fn segmented_r_commit_retains_both_tendencies_through_reopen_and_gc() {
     let cap = store.take_commit_capability().unwrap();
     let e = event(&mut store, 0);
     let (ticket, mut value, _pins) = proposal(&store, &e);
-    let mut r = RSnapshotV3::from_canonical(
+    let mut r = RSnapshotV2::from_canonical(
         &store.objects.read(&value.staged_r).unwrap(),
         config().encoding,
     )
     .unwrap();
-    let mut tendency = r_fixtures::tendency("a");
+    let mut tendency: TendencyV2 = with_refs(&value.staged_q);
     tendency.tendency_id = "a".into();
     r.tendencies = vec![tendency.clone()];
     tendency.tendency_id = "b".into();
@@ -307,7 +313,7 @@ fn segmented_r_commit_retains_both_tendencies_through_reopen_and_gc() {
         store
             .reader()
             .unwrap()
-            .read::<RSnapshotV3>(&reference)
+            .read::<RSnapshotV2>(&reference)
             .unwrap(),
         r
     );

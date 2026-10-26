@@ -92,7 +92,6 @@ pub(crate) fn verify(
                 .ok_or(crate::Error::Rejected("accepted commit lacks snapshot"))?;
             let reference = ObjectRef::from_canonical(bytes, limits)?;
             let value = CoreTransactionV2::from_canonical(&objects.read(&reference)?, limits)?;
-            crate::r_validation::verify_indexes(db, objects, &id, &value)?;
             require(
                 hex(&reference.digest.0) == id
                     && value.binding.base_commit == parent.as_ref().unwrap_or(&initial).as_str()

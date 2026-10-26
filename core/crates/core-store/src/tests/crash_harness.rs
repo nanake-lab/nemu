@@ -155,13 +155,13 @@ fn crash_worker() {
             let e = event(&mut store, 1);
             let (ticket, mut value, _pins) = proposal(&store, &e);
             if operation == "r" {
-                let mut r = RSnapshotV3::from_canonical(
+                let mut r = RSnapshotV2::from_canonical(
                     &store.objects.read(&value.staged_r).unwrap(),
                     config().encoding,
                 )
                 .unwrap();
                 r.revision = "r-targeted-fault".into();
-                let mut tendency = r_fixtures::tendency("target-a");
+                let mut tendency: TendencyV2 = with_refs(&value.staged_q);
                 tendency.tendency_id = "target-a".into();
                 r.tendencies = vec![tendency.clone()];
                 tendency.tendency_id = "target-b".into();
