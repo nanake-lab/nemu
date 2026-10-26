@@ -2,7 +2,7 @@
 
 ## 结果
 
-部分完成（见 BLOCKED.md）：用户批准的分阶段实现与本地验收已完成，Windows CI 因 runner 离线尚未执行。[PR #95](https://github.com/nanake-lab/nemu/pull/95) 保持 draft/needs-user，最终 head 的 CI 全绿后才转为可审查并写“请审查”，由用户合并。原 PR #72 已关闭，原分支保留；本次只 merge、不 rebase、不强推。先合入 main b4eb7fd（merge 3418159），再合入最新 origin/main 86779b1（merge 2fa1bc9）；存储实现提交 4342065。
+部分完成（见 BLOCKED.md）：用户批准的分阶段实现与本地验收已完成，Windows CI 因 runner 离线尚未执行。[PR #95](https://github.com/nanake-lab/nemu/pull/95) 保持 draft/needs-user，最终 head 的 CI 全绿后才转为可审查并写“请审查”，由用户合并。原 PR #72 已关闭，原分支保留；本次只 merge、不 rebase、不强推。先合入 main b4eb7fd（merge 3418159）、86779b1（merge 2fa1bc9），最后合入 origin/main 317dde9（merge 94116d6）；存储实现提交 4342065。
 
 用户明确决定：新写入 V3；V2 历史只读、可解码；旧 V2 head 拒绝继续写。当前没有正式或排练存储，现存仅测试数据（用户提供，本卡未访问用户数据）。本次不做 V2→V3 数据迁移。将来需要时由 **P5-26** 按 v2.0 §2.2 用规律 G 从 H 整段重放得到新 q/V 快照，**不另开迁移卡**。这一决定不是用默认 q/V 转换旧状态的授权。
 
@@ -34,11 +34,12 @@
 
 | 命令或检查 | 结果 | 证据（相对 verification/protected-20261026/） |
 | --- | --- | --- |
-| python core/contracts/generate.py --check | 通过，0 stale | attempt-01/generate.log |
-| python core/contracts/check_compat.py --ref origin/main | 合并后通过；p5-01、p5-21、p5-32、current、origin/main：0 违例 | attempt-02/compatibility.log |
+| python core/contracts/generate.py --check | 最新 main 合并后通过，0 stale | attempt-03/generate.log |
+| python core/contracts/check_compat.py --ref origin/main | 最新 main 合并后通过；p5-01、p5-21、p5-32、current、origin/main：0 违例 | attempt-03/compatibility.log |
 | 旧黄金与新增字节独立复核 | 旧 445/457/18 前缀不变；新增 19 合法向量独立复算 0 差异 | attempt-01/bytes.log |
 | 定向输入与 p5-32 基线 | 7 合法、23 非法、6 非有限对照；7 proto 与发布版本相同 | attempt-01/inputs.log |
-| pnpm test:core-contracts（D10.8/SYS21 本卡范围） | 通过；12 schema 测试、每语言 11592 例、protoc 464、浏览器 Zod 106 | attempt-01/contracts.log |
+| pnpm test:core-contracts（D10.8/SYS21 本卡范围） | 最新 main 合并后通过；12 schema 测试、每语言 11592 例、protoc 464、浏览器 Zod 106 | attempt-03/contracts.log |
+| cargo test -p core-types --locked | 最新 main 合并后 31/31 通过，含 7 个 P5-34 语义正反例 | attempt-03/types.log |
 | cargo test -p core-store p534_ | 通过，3/3；首次夹具构造错误 2/3 的原始失败保留，修复后复验 | attempt-01/storage.log、attempt-02/storage.log |
 | cargo test --workspace --locked -j1 -- --test-threads=1 | 通过；kernel 45、store 34、types 31 及 2 个编译失败示例；store 1252.01 秒 | attempt-01/workspace.log |
 | cargo clippy --workspace --all-targets -- -D warnings | 合并后复验通过 | attempt-01/clippy.log、attempt-02/clippy.log |
@@ -50,11 +51,14 @@
 | 三 worker uv run pytest | 各 1 项通过；仅脚手架级用例 | attempt-01/*-pytest.log |
 | 固定 main b4eb7fd 的三次完整 pnpm test | 3/3 通过，每次 52 文件/580 项；未复现 supervisor 失败 | main-test-04/05/06.log、supervisor-comparison.json |
 | Ubuntu CI，源码提交 7cb285a | 通过，含 34 项存储、两项 compile-fail、Node/Python/Rust 与契约；按路径不涉及的 .NET/status 步骤跳过，不计作本卡验收通过项 | ubuntu-40318254909.log、ci-7cb285a-ubuntu-success.json |
+| Ubuntu CI，提交 7ddefa8 | 通过，run 40321431794；与最新文档 merge 后的全部源码/工作流相同；仍不代替新 head 的检查 | ci-7ddefa8-final.json、main-refresh-317dde9.json |
 | Windows 全量 CI | 未运行：runner ID42 offline；full=true 手动任务排队。草稿自动任务的跳过/守卫失败不算通过 | windows-dispatch-7cb285a.json、BLOCKED.md B4 |
 | 最终 head 门控 | 尚未全绿；保持草稿，恢复 runner 后必须在当前 PR head 取得实际通过，再转可审查 | PR #95 checks 与最新状态评论 |
 | 完整 G 重放、AC2-08/19/21、I23、SYS17 | not_run，不用存储组件通过替代 | 本报告；各编号目录的本轮结果 |
 
 合并 P5-25（86779b1）仅新增 core-kernel 动力学及其文档/报告。存储、core-types、契约、Cargo 清单/锁文件、packages、workers、任务卡/规则的 Git 对象逐项相同，证据见 main-refresh.json。合并后重跑全目标 Clippy、兼容门与 `cargo test --workspace --exclude core-store`：core-kernel 66 通过、1 个 main 已有的 V2-93 旧 Python 舍入诊断 ignored，core-types 31 通过。该 ignored 由 main 带入，本卡没有新增/修改忽略标记，不把它算作通过；证据为 attempt-01/workspace-without-storage.log。未变化的 34 项存储本地完整结果保留，最终 CI 仍在同一最终 head 执行完整 core-store 检查。
+
+最后同步 main 317dde9（PR #103、V2-117）只带入主动时机的文档决定与 P5-20 依赖更新，P5-34 卡原文不变。唯一冲突在差异登记末尾，保留本卡分阶段说明与 main 的 V2-117 全文；没有改写上游内容。全部源码、清单、锁文件、工作流及必读规则的 Git 对象与已通过 CI 的 7ddefa8 相同。合并后重跑生成、全部兼容基线、三语言契约及 core-types 语义测试，结果见 attempt-03；逐项对象和卡片对照见 main-refresh-317dde9.json。最终 head 仍需重新取得 Ubuntu/Windows CI 实际通过。
 
 ### supervisor 对照与原失败
 
@@ -103,4 +107,4 @@ P5-26 需要迁移时，从完整有效 H 运行 G 重建 q/V，并完成备份�
 
 ## 下一步
 
-本地验收和源码提交 7cb285a 的 Ubuntu CI 已完成；等待离线的 Windows runner 恢复。当前保持草稿，同一最终 head 的 Ubuntu 与 Windows 全量 CI 确认通过后才转可审查并写“请审查”。保持 needs-user，等待用户安排独立交叉审查及合并。本卡不领取下一张卡。最终 CI 的提交与 run 链接固定在 PR 的交付评论，不能用旧提交的绿灯代替。
+本地验收及历史 head 7cb285a、7ddefa8 的 Ubuntu CI 已完成；最后合入 main 317dde9 后推送并刷新 CI，Windows runner 仍离线。当前保持草稿，同一最终 head 的 Ubuntu 与 Windows 全量 CI 确认通过后才转可审查并写“请审查”。保持 needs-user，等待用户安排独立交叉审查及合并。本卡不领取下一张卡。最终 CI 的提交与 run 链接固定在 PR 描述，不能用旧提交的绿灯代替。

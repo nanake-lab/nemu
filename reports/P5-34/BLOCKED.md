@@ -26,3 +26,5 @@ core-store 是受保护路径，在 REPORT.md、PROTECTED-SCOPE 与 PR 描述单
 
 
 后续核验：同源码 head 7cb285a 的 Ubuntu run 40318254909 已 completed/success，含 core-store 34 项（604.08 秒）和本卡三语言契约。完整下载日志与 SHA-256 元数据已保存；.NET/status 按路径未涉及而跳过，不算执行过。2026-10-26 12:14 UTC 再次查询 runner 仍 offline。报告/证据补充提交不改变任何源码；当前 head 的最终门控以 PR 最新检查为准，恢复 runner 后需确保排队的手动运行指向该 head。
+
+2026-10-26 12:41 UTC 再核验：7ddefa8 的 Ubuntu run 40321431794 已 completed/success，Windows full=true run 40321480389 仍 queued，runner ID42 仍 offline。快照见 verification/protected-20261026/ci-7ddefa8-final.json。随后已 merge main 的最新文档提交 317dde9（merge 94116d6），全部源码/工作流保持不变，P5-34 卡不变；合并后任务卡验收和 Rust 语义测试通过。最后推送的 head 必须重新取得实际 CI，通过前继续保持草稿；最新 run/head 固定在 PR 描述，不把上述旧 run 当作新 head 的成功。
