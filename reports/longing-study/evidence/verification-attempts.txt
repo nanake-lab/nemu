@@ -1,0 +1,34 @@
+Mechanical verifier, initial path assumption, exit 1:
+Loop used p = report_root / rel for entries of evidence/run-01/manifest.json.
+It should resolve entries against the manifest directory. Data were not changed.
+Traceback (most recent call last):
+  File "<stdin>", line 25, in <module>
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/2c4129af8a1f/longing-study/reports/longing-study/trajectories.csv'
+
+Mechanical verifier final offline check, exit 0:
+gap = [r for r in rows if r['scenario']=='offline_gap' and 11 <= int(r['step']) <= 90]
+offline_gap_steps_11_90 rows=80 event_committed_true=0
+
+Root independent hash / CSV / offline / XML / scope check, exit 0:
+sha256 OK feedback_sensitivity.csv
+sha256 OK input_tapes.json
+sha256 OK paired_paths.csv
+sha256 OK summary.json
+sha256 OK trajectories.csv
+sha256 OK trajectories.svg
+script sha256 OK
+rows trajectories.csv 720
+offline gap rows 80 committed 0
+rows paired_paths.csv 360
+rows feedback_sensitivity.csv 605
+svg XML OK
+scope OK
+
+Root preliminary Markdown local-link check before writing VERIFICATION.md, exit 1:
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+AssertionError: ('REPORT.md', 'VERIFICATION.md')
+The missing verification document was then created; no numeric output changed.
