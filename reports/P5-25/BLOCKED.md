@@ -27,4 +27,6 @@ CI run 40272465565（head 43da867）在Rust编译阶段报7处E0433，未进入�
 
 用户随后明确回复计费问题「已解决」，并确认「runner上线了」；GitHub API复核DESKTOP-8LBF84O为online。旧失败仍保留，最终head复跑结果由[PR #77检查页](https://github.com/nanake-lab/nemu/pull/77/checks)与收尾评论记录。本卡没有剩余规格/目录授权待确认；不修改账户、用户或系统设置，不调整阈值，不以本机通过冒充CI全绿。
 
-main@a0c9ed8新增了Windows草稿门禁：自动作业故意拒绝将draft/skipped记成通过。收尾先在最终head手动运行Windows检查，取得真实通过结果后转为可审查，再核验正式PR的Windows作业并留言「请审查」。独立交叉审查属于下一步，本会话不合并。
+main@a0c9ed8新增了Windows草稿门禁：自动作业故意拒绝将draft/skipped记成通过。先前手动full=true运行40293379241在本卡范围外的语音E2E失败（frames=0，原阈值>10），W02未执行；失败日志、artifact摘要及无关依据见REPORT的专节，失败保留不改写。
+
+用户2026-10-26明确批准顺序调整：先转为可审查以触发按实际PR路径执行的W02，最终head的Ubuntu与正式Windows全部通过后才写「请审查」，W02失败即恢复草稿。本卡数值和W02验收均未放宽；全量语音失败由对应任务处理，本卡不改测试、阈值或设置。没有未决的用户授权，独立交叉审查属于下一步，本会话不合并。

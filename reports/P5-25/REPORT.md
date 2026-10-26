@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-按用户2026-10-26明确的纯函数范围完成代码调整，并按随后批准恢复固定libm依赖（0cf1605）。本机fmt、Clippy和工作区常规测试通过（90 passed / 0 failed / 1 ignored，含2个doc test）；旧 **2 显式诊断仍为failed。用户随后恢复了GitHub Actions计费条件和Windows runner；本卡没有未决规格或目录授权。最终head的CI运行、转可审查状态及「请审查」收尾评论见[PR #77检查页](https://github.com/nanake-lab/nemu/pull/77/checks)和PR评论：只有实际检查通过才转可审查，不以草稿skipped代替通过。本会话不合并、不取下一卡；事务层写L或独立整段H重算不属于本卡已完成的集成。
+按用户2026-10-26明确的纯函数范围完成代码调整，并按随后批准恢复固定libm依赖（0cf1605）。本机fmt、Clippy和工作区常规测试通过（90 passed / 0 failed / 1 ignored，含2个doc test）；旧 **2 显式诊断仍为failed。用户随后恢复了GitHub Actions计费条件和Windows runner；本卡没有未决规格或目录授权。用户另行批准CI执行顺序：先转为可审查以触发正常PR路径的W02，最终head的Ubuntu与Windows全部通过后才留言「请审查」；W02失败则恢复草稿。最终运行、状态及收尾评论见[PR #77检查页](https://github.com/nanake-lab/nemu/pull/77/checks)。本会话不合并、不取下一卡；事务层写L或独立整段H重算不属于本卡已完成的集成。
 
 本次先fetch，将 origin/main@716f7f0 以merge a9b5e72合入；收到依赖恢复批准后再次fetch，并以merge e26bbcf合入origin/main@2bc04ba。未rebase/强推。保留上轮abebb85的V2-93至V2-98实现、原始输入与失败证据；main合入P5-27及后继契约卡P5-36后重新核验。除main合并外，新改动只在授权的dynamics/、reports/P5-25/和指定请求文件，以及用户本轮额外批准的kernel Cargo.toml唯一依赖行与Cargo生成的共享锁文件。未提交status.json、未改用户/系统设置。
 
@@ -44,7 +44,9 @@
 | Ubuntu CI @43da867（修复前） | failed，run 40272465565 | Rust缺libm，未进入测试；TS/Python步骤通过，历史记录保留 |
 | Ubuntu CI @0cf1605（修复后） | failed，run 40283963199，未启动检查 | 账户计费门控，steps为空；ci-code/run-40283963199.json |
 | Windows W02（首次尝试） | not_run，历史记录保留 | 当时runner offline；草稿自动作业skipped，不算passed |
-| 最终head Ubuntu / Windows CI | 实际结论见PR检查页及「请审查」收尾评论 | main新增草稿门禁；先手动运行Windows取得真实通过结果，转可审查后再核验PR作业。最终CI证据记录在同head的PR中，避免回填报告产生新head |
+| Ubuntu CI @1980f67 | passed，run 40293339108 | ci-final/ubuntu-40293339108.json；合并新main后的90项Rust测试通过，1 ignored；TS/Python/契约检查通过 |
+| 额外手动Windows全量检查 @1980f67 | failed，run 40293379241 | 桌面语音E2E失败，W02未执行；见下节。不改写为passed |
+| 最终head Ubuntu / 正式Windows CI | 实际结论见PR检查页及「请审查」收尾评论 | 用户批准先转可审查触发正常PR路径的W02，失败恢复草稿；全部通过后才请求审查。最终CI证据记录在同head的PR中，避免回填报告产生新head |
 | 新Python参考ruff/mypy、两版Python同字节 | passed（上一轮，本轮脚本未改） | batch4-20261026/checks/python-1、reference-python31214.stdout.txt |
 
 ## 历史失败保留
@@ -52,6 +54,16 @@
 旧 **2 对照与显式乘法在首处σ差1 ULP：4602808250010281358 / 4602808250010281359。原平方的37处差异、传播到σ的13处差异及精确整数舍入诊断见 rounding-20261024/；原失败见 evidence/tests/dynamics-attempt-2.log、THETA-1/result.json。上一轮常规kernel 36通过/1失败、workspace 103通过/1失败及fmt/Clippy早期失败日志均不改写。旧CI run 40264985040 也因该诊断失败，本轮保存其失败步骤摘要于 closeout-20261026/ci-before/。
 
 本轮改变的是诊断的运行分类，由用户明确授权；没有删除断言、改变输入或阈值。新参考仍要求严格逐位相等。旧Python原性质检查独立保留。随后CI的E0433失败和修复后账户计费阻止作业启动的失败也分别保存，不因后续成功而抹去。
+
+## 额外全量Windows运行的语音失败（本卡范围外）
+
+run [40293379241](https://github.com/nanake-lab/nemu/actions/runs/40293379241)，head 1980f67，手动full=true。失败项为apps/desktop/tests/voice.spec.ts:83：`P4-01 utility ports, real AudioWorklet capture and disable`，5000 ms内音频frames实际为0，原断言要求>10。传输、隔离通过；桌面E2E失败导致视觉与W02后续步骤未执行，不能将未执行记为通过。
+
+原始job日志：[windows-40293379241-attempt-1.log](closeout-20261026/ci-final/windows-40293379241-attempt-1.log)。摘要及artifact哈希：[windows-40293379241-attempt-1.json](closeout-20261026/ci-final/windows-40293379241-attempt-1.json)；另保留e2e-result.json和voice-stage-errors.json。原artifact ID 12638190708。stage错误记录只有PROFILE_FETCH_FAILED，语音失败根因未确定，不据此宣称偶发或把重跑当作修复。
+
+与本卡无关的依据：本PR相对main没有改apps/desktop、packages/voice或CI配置；代码改动只有dynamics及libm声明/锁文件。失败测试启动Electron时设置NEMU_DISABLE_SUPERVISOR=1，检查浏览器AudioWorklet麦克风帧数，不调用Rust动力学C。按Windows工作流的正式PR路径规则，本PR为desktop=false、storage=true，只需W02。全量手动运行额外覆盖的语音问题由对应任务处理，未修改其源码、测试、阈值、用户或系统设置。
+
+用户已明确确认该失败与本卡无关，并批准先转可审查来触发正式W02；最终head的Ubuntu和Windows检查全部通过后才写「请审查」，W02失败就恢复草稿。原全量失败持续保留，不用后续W02通过替换它。
 
 ## 数值定义与边界
 
@@ -94,7 +106,8 @@ CUSUM的shift_sigma=1、threshold=8、n_h=10只是预先固定夹具，待实验
 - P5-29：真实事件管线与来源/停机记录认证，同一事务写ThetaSnapshot、完整估计器和L，原子提交/故障回退及运行时AC2-09集成。
 - P5-36：V2-98/V2-103正式估计器契约、编码/校验、round trip和迁移；承接请求文件中的时间域需求。
 - 实验谱系后继卡：预登记并校准CUSUM、n_tau、报警夹具。P5-25性质测试不能替代生活参数校准。
+- 语音/桌面对应卡：排查上述AudioWorklet frames=0的全量Windows E2E失败；保留原阈值及本轮诊断证据。
 
 ## 下一步
 
-交付目标是最终head检查全部通过后转为可审查，等待高难度卡交叉审查；最新head、CI实测结果与已执行的状态转换在PR收尾评论明确记录，不以旧提交结果替代。合并仍需独立审查，本会话不合并。
+按用户批准先转为可审查触发正式W02，最终head检查全部通过后留言「请审查」，等待高难度卡交叉审查；W02失败则恢复草稿。最新head、CI实测结果与已执行的状态转换在PR收尾评论明确记录，不以旧提交结果替代。合并仍需独立审查，本会话不合并。

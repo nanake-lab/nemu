@@ -57,3 +57,13 @@ libm = { version = "=0.2.16", default-features = false }
 core/Cargo.lock属于AGENTS第2节共享锁文件范围，由Cargo重新生成，不手改。不恢复P5-27已移除的core-policy依赖，不改公式、阈值或运行时设置。libm 0.2.16（MIT）是此前本卡已经使用的数值实现；这是合并兼容性修复，不另选数值库。
 
 当前状态：用户于2026-10-26明确批准仅恢复上述一行，并由Cargo更新core/Cargo.lock；已按批准执行。PR #94（P5-10）也恢复同一行，后合并者解决这一处冲突并只保留一行。此范围确认已解除；最终head的CI全部通过后转为可审查并留言「请审查」。
+
+## 2026-10-26 最终Windows检查的执行顺序
+
+main@a0c9ed8的Windows工作流在draft阶段拒绝自托管测试，并由汇总作业明确报错。为先实际验收再转状态，在head 1980f67手动触发full=true（run 40293379241）；现有桌面语音E2E在apps/desktop/tests/voice.spec.ts:83失败：5000 ms内frames=0，要求>10，导致后续W02未运行。失败日志和artifact摘要保留在reports/P5-25/closeout-20261026/ci-final/。artifact只记录PROFILE_FETCH_FAILED，根因未定，不能宣称是偶发环境问题，也没有改阈值或重复运行直到通过。
+
+本PR相对main只改变core、报告和请求，按正式PR路径分流desktop=false、storage=true。手动full=false只比较HEAD^1..HEAD，当前最后一提交仅报告，会把W02也排除，所以不能用它冒充通过。
+
+具体收尾方案：允许调整用户要求的转状态顺序，先将本PR转为可审查以触发正常PR路径的W02；仅在最终head的Ubuntu与正式Windows检查全部通过后留言「请审查」。若W02失败，恢复草稿并保留失败证据。额外全量Windows中的语音失败保留并交相应任务处理；本卡不改apps/desktop、packages/voice、CI工作流或用户/系统设置，不把额外失败改成通过。
+
+用户2026-10-26明确批准上述顺序：先转为可审查以触发W02，最终head的Ubuntu与Windows检查全绿后再写「请审查」，W02失败就恢复草稿。用户同时确认全量运行里的语音E2E失败与本卡无关，要求保留失败并在报告写明失败项、日志位置及无关依据。本卡不改测试、阈值或设置；此决定没有放宽数值或W02验收。
