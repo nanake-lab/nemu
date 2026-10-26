@@ -27,10 +27,16 @@ pub(super) fn seed(
     tendency.evidence_b = 4.0;
     tendency.group_count = DecimalU64(1);
     let child = raw(store, &tendency, "1");
+    let law_version = RSnapshotV3::from_canonical(
+        &store.objects.read(&value.staged_r).unwrap(),
+        config().encoding,
+    )
+    .unwrap()
+    .law_version;
     let r = RSnapshotV2 {
         schema_version: 1,
         revision: "legacy-r".into(),
-        law_version: value.binding.environment.law_version.clone().unwrap(),
+        law_version,
         tendencies: vec![tendency],
     };
     let r_ref = store.objects.reference(&r, &r.revision).unwrap();

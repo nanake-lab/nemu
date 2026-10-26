@@ -21,8 +21,8 @@ $stem = 'main-{0}-{1:d2}' -f $Step,$Attempt
 $log = Join-Path $folder ($stem + '.log')
 $meta = Join-Path $folder ($stem + '.json')
 if ((Test-Path -LiteralPath $log) -or (Test-Path -LiteralPath $meta)) { throw 'Evidence already exists' }
-$nativeArgs = if ($Step -eq 'install') { @('install','--frozen-lockfile','--store-dir','D:\Dev\cache\pnpm-store') } else { @('test') }
-$record = [ordered]@{ command=@('pnpm') + $nativeArgs; cwd=$baselineRoot; head=$head; node=(& node --version); pnpm=(& pnpm --version); startUtc=(Get-Date).ToUniversalTime().ToString('o'); resourceGuard='no Runner.Worker/cargo/rustc/core_store before start'; comparison='Predeclared 3 full pnpm test runs on unchanged main; retain all outcomes, not run-until-pass.' }
+$nativeArgs = @(if ($Step -eq 'install') { @('install','--frozen-lockfile','--store-dir','D:\Dev\cache\pnpm-store') } else { @('test') })
+$record = [ordered]@{ command=@('pnpm') + $nativeArgs; cwd=$baselineRoot; head=$head; node=(& node --version); pnpm=(& pnpm --version); startUtc=(Get-Date).ToUniversalTime().ToString('o'); resourceGuard='no Runner.Worker/cargo/rustc/core_store before start'; comparison='Predeclared 3 full pnpm test runs on unchanged main. Attempts 01-03 exposed scalar argument splatting (vitest run e s t); retained as harness-error evidence. Attempts 04-06 are the corrected fixed-size comparison, not run-until-pass.' }
 New-Item -ItemType File -Path $log | Out-Null
 $ErrorActionPreference = 'Continue'
 & pnpm @nativeArgs 2>&1 | Tee-Object -FilePath $log
