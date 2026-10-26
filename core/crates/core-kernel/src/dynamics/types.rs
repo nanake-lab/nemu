@@ -26,10 +26,10 @@ pub struct DynamicsLaw {
     pub detector_threshold: f64,
 }
 
-/// Mutable caretaker boundaries are a separate input; they are not learned.
+/// Notification thresholds only. V2-96 computation bounds are derived, not tunable.
 #[derive(Clone, Debug, PartialEq)]
 pub struct DynamicsFuses {
-    pub max_step: f64,
+    pub jump_notice: f64,
     pub drift_run: u64,
     pub drift_margin: f64,
 }
@@ -41,6 +41,7 @@ pub struct ReactionEvent {
     pub id: String,
     pub ordinal: u64,
     pub time_ns: u64,
+    pub running_time: super::RunningTime,
     pub source: ReactionSource,
     pub evaluation_unmodulated: bool,
     pub reaction: NatureVector,
@@ -63,21 +64,20 @@ impl ReactionSource {
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ReviewSignal {
-    /// The entire candidate is held. No estimator state or theta value is released.
-    StepLimit,
+    /// Candidate is applied; the outer layer records and notifies (V2-97).
+    Jump,
     /// Component order: b[0..4], g[4..8], lambda[8..12].
     SlowDrift { component: usize, direction: i8 },
 }
 
 /// C stages a complete state and an existing-IDL ThetaChange. It cannot write H/L/storage.
-/// `held` means state() is exactly the input state. P5-26 must record the review trigger.
+/// Signals never hold a candidate. Err(Fault) leaves the borrowed input untouched.
 #[derive(Clone, Debug, PartialEq)]
 pub struct StagedDynamics {
     pub(super) state: DynamicsState,
     pub change: Option<ThetaChange>,
     pub signals: Vec<ReviewSignal>,
-    pub held: bool,
-    pub proposed_values: Option<ThetaValues>,
+    pub bounds: Option<super::StepBounds>,
 }
 impl StagedDynamics {
     pub fn state(&self) -> &DynamicsState {
@@ -113,14 +113,18 @@ pub struct DynamicsState {
     pub(super) reaction_sum: [f64; 4],
     pub(super) square_sum: [f64; 4],
     pub(super) sigma: [f64; 4],
-    pub(super) duration_sum: [f64; 4],
+    pub(super) variance: [f64; 4],
+    pub(super) duration_log_sum: [f64; 4],
     pub(super) duration_mass: [f64; 4],
+    pub(super) duration_log_mean: [f64; 4],
+    pub(super) zero_duration_count: [u64; 4],
     pub(super) tau: [f64; 4],
     pub(super) runs: [Run; 4],
     pub(super) detector: Detector,
     pub(super) event_count: u64,
     pub(super) h: f64,
     pub(super) last_event: Option<(u64, u64, String)>,
+    pub(super) last_running_time: Option<super::RunningTime>,
     pub(super) drift_sign: [i8; 12],
     pub(super) drift_count: [u64; 12],
 }
@@ -128,25 +132,41 @@ impl DynamicsState {
     pub fn genesis(law: DynamicsLaw) -> Result<Self> {
         law.validate()?;
         let mut recovery = [0.0; 4];
+        let mut variance = [0.0; 4];
+        let mut log_mean = [0.0; 4];
+        let mut tau = [0.0; 4];
         for (i, v) in recovery.iter_mut().enumerate() {
-            *v = n::div(1.0, law.tau_prior_s[i])?.clamp(law.recovery_min, law.recovery_max);
+            variance[i] = n::mul(law.sigma_prior[i], law.sigma_prior[i])?;
+            log_mean[i] = n::div(
+                n::mul(
+                    law.duration_weight,
+                    super::duration::log(law.tau_prior_s[i])?,
+                )?,
+                law.duration_weight,
+            )?;
+            tau[i] = super::duration::exp(log_mean[i])?;
+            *v = n::div(1.0, tau[i])?.clamp(law.recovery_min, law.recovery_max);
         }
         let values = theta(law.baseline_prior, law.gain_prior, recovery);
         Ok(Self {
             values,
             sigma: law.sigma_prior,
-            tau: law.tau_prior_s,
+            variance,
+            tau,
+            duration_log_mean: log_mean,
             h: law.change_prior.max(law.change_min),
             law,
             weight: 0.0,
             reaction_sum: [0.0; 4],
             square_sum: [0.0; 4],
-            duration_sum: [0.0; 4],
+            duration_log_sum: [0.0; 4],
             duration_mass: [0.0; 4],
+            zero_duration_count: [0; 4],
             runs: std::array::from_fn(|_| Run::default()),
             detector: Detector::default(),
             event_count: 0,
             last_event: None,
+            last_running_time: None,
             drift_sign: [0; 12],
             drift_count: [0; 12],
         })
@@ -171,6 +191,9 @@ impl DynamicsState {
     }
     pub fn weight_sum(&self) -> f64 {
         self.weight
+    }
+    pub fn zero_duration_count(&self) -> [u64; 4] {
+        self.zero_duration_count
     }
 }
 
@@ -229,8 +252,8 @@ impl DynamicsLaw {
 }
 impl DynamicsFuses {
     pub(super) fn validate(&self) -> Result<()> {
-        if !self.max_step.is_finite()
-            || self.max_step <= 0.0
+        if !self.jump_notice.is_finite()
+            || self.jump_notice <= 0.0
             || !self.drift_margin.is_finite()
             || self.drift_margin < 0.0
             || self.drift_run == 0

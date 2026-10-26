@@ -3,7 +3,7 @@ use super::*;
 
 fn law() -> DynamicsLaw {
     DynamicsLaw {
-        version: "P5-25-reference-pending".into(),
+        version: "P5-25-v2-93-98-libm-0.2.16".into(),
         baseline_prior: [0.0; 4],
         gain_prior: [1.0; 4],
         sigma_prior: [0.3; 4],
@@ -24,7 +24,7 @@ fn law() -> DynamicsLaw {
 }
 fn fuses() -> DynamicsFuses {
     DynamicsFuses {
-        max_step: 100.0,
+        jump_notice: 100.0,
         drift_run: 1_000_000,
         drift_margin: 0.01,
     }
@@ -34,6 +34,7 @@ fn event(i: u64, a: f64) -> ReactionEvent {
         id: format!("synthetic-{i}"),
         ordinal: i,
         time_ns: i * 1_000_000_000,
+        running_time: RunningTime::from_history(0, i * 1_000_000_000, &[]).unwrap(),
         source: ReactionSource::OtherPersonReply,
         evaluation_unmodulated: true,
         reaction: nature([a; 4]),
@@ -47,7 +48,6 @@ fn identical(a: &DynamicsState, b: &DynamicsState) {
 }
 fn advance(s: &DynamicsState, e: &ReactionEvent) -> DynamicsState {
     let staged = stage(s, Some(e), &s.law, &fuses()).unwrap();
-    assert!(!staged.held);
     staged.into_state()
 }
 
@@ -126,11 +126,14 @@ fn variance_uses_baseline_before_event_and_duration_completes_same_sign_run() {
     let first = advance(&s, &event(0, 0.6));
     let expected_var = (10.0 * (0.3 * 0.3) + 0.6 * 0.6) / 11.0;
     assert_eq!(first.sigma[0].to_bits(), libm::sqrt(expected_var).to_bits());
-    assert_eq!(first.tau, [10.0; 4]); // open run is right-censored
+    assert_eq!(first.tau, s.tau); // open run is right-censored
     let next = advance(&first, &event(5, -0.6));
-    assert_eq!(next.duration_sum, [5.0; 4]);
+    assert_eq!(next.duration_log_sum, [libm::log(5.0); 4]);
     assert_eq!(next.duration_mass, [1.0; 4]);
-    assert_eq!(next.tau, [105.0 / 11.0; 4]);
+    assert_eq!(
+        next.tau,
+        [libm::exp((10.0 * libm::log(10.0) + libm::log(5.0)) / 11.0); 4]
+    );
     assert_eq!(next.runs[0].start_ns, 5_000_000_000);
 }
 
@@ -178,7 +181,7 @@ fn adaptive_h_respects_floor_and_ignores_wall_clock_and_excluded_events() {
 }
 
 #[test]
-fn strict_step_fuse_and_directional_drift_hold_atomically_before_boundary() {
+fn jump_and_directional_drift_apply_and_stage_notices_before_boundary() {
     let s = DynamicsState::genesis(law()).unwrap();
     let e = event(1, 1.0);
     let proposed = advance(&s, &e);
@@ -188,12 +191,15 @@ fn strict_step_fuse_and_directional_drift_hold_atomically_before_boundary() {
         .map(|(a, b)| (a - b).abs())
         .fold(0.0_f64, f64::max);
     let mut f = fuses();
-    f.max_step = largest; // exact equality must not be released
-    let held = stage(&s, Some(&e), &s.law, &f).unwrap();
-    assert!(held.held);
-    assert!(held.signals.contains(&ReviewSignal::StepLimit));
-    assert!(held.change.is_none());
-    identical(held.state(), &s);
+    f.jump_notice = largest;
+    let equal = stage(&s, Some(&e), &s.law, &f).unwrap();
+    assert!(!equal.signals.contains(&ReviewSignal::Jump));
+    identical(equal.state(), &proposed);
+    f.jump_notice = largest / 2.0;
+    let notice = stage(&s, Some(&e), &s.law, &f).unwrap();
+    assert!(notice.signals.contains(&ReviewSignal::Jump));
+    assert!(notice.change.is_some());
+    identical(notice.state(), &proposed);
     let mut p = law();
     p.baseline_weight = 1.0;
     let mut s = DynamicsState::genesis(p).unwrap();
@@ -203,13 +209,14 @@ fn strict_step_fuse_and_directional_drift_hold_atomically_before_boundary() {
     let mut seen = false;
     for i in 0..200 {
         let staged = stage(&s, Some(&event(i, 1.0)), &s.law, &f).unwrap();
-        if staged.held {
+        if !staged.signals.is_empty() {
             assert!(staged.signals.contains(&ReviewSignal::SlowDrift {
                 component: 0,
                 direction: 1
             }));
-            assert!(staged.proposed_values.as_ref().unwrap().baseline.connection < 1.0);
-            identical(staged.state(), &s);
+            assert!(staged.state().values.baseline.connection < 1.0);
+            assert_ne!(staged.state(), &s);
+            assert!(staged.change.is_some());
             seen = true;
             break;
         }
@@ -253,6 +260,7 @@ fn numerical_and_ingress_faults_do_not_publish_partial_state() {
     assert_eq!(zero.values.baseline.connection.to_bits(), 0.0f64.to_bits());
     let mut long = event(2, -0.5);
     long.time_ns = (1 << 53) + 1_000_000_000;
+    long.running_time = RunningTime::from_history(0, long.time_ns, &[]).unwrap();
     assert_eq!(
         stage(&updated, Some(&long), &updated.law, &fuses()),
         Err(Fault::TimePrecision)
@@ -260,4 +268,6 @@ fn numerical_and_ingress_faults_do_not_publish_partial_state() {
     identical(&s, &DynamicsState::genesis(law()).unwrap());
 }
 
+mod batch4;
+mod binary64;
 mod reference;

@@ -1,0 +1,17 @@
+Diff in \\?\D:\Dev\nemu-wt\P5-25\core\crates\core-kernel\src\dynamics\tests\batch4.rs:183:
+         for i in 0..500 {
+             let e = event(i, if i % 3 == 0 { -1.0 } else { 1.0 });
+             let result = stage(&s, Some(&e), &s.law, &fuses()).unwrap();
+-            assert!(result.bounds.as_ref().unwrap().range_only.iter().all(|x| !x));
++            assert!(
++                result
++                    .bounds
++                    .as_ref()
++                    .unwrap()
++                    .range_only
++                    .iter()
++                    .all(|x| !x)
++            );
+             result
+                 .bounds
+                 .as_ref()

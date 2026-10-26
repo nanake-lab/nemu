@@ -1,9 +1,15 @@
 //! Pure, atomic staging of Echo Core v2.0 §8 C. No x, R, model, clock or storage.
 //! The estimator resource is temporary and has no authority to serialize a new IDL type.
+mod bounds;
 mod detector;
+mod duration;
+mod interval;
 mod numeric;
+mod time;
 mod types;
 mod update;
+pub use bounds::StepBounds;
+pub use time::{Downtime, RunningTime};
 pub use types::{
     DynamicsFuses, DynamicsLaw, DynamicsState, ReactionEvent, ReactionSource, ReviewSignal,
     StagedDynamics,
@@ -23,6 +29,8 @@ pub enum Fault {
     TimePrecision,
     OutOfRange,
     PrecisionExhausted,
+    InvalidRunningTime,
+    ComputationBound { component: usize },
 }
 pub type Result<T> = std::result::Result<T, Fault>;
 
@@ -42,8 +50,7 @@ pub fn stage(
         state: previous.clone(),
         change: None,
         signals: Vec::new(),
-        held: false,
-        proposed_values: None,
+        bounds: None,
     };
     let Some(event) = event else {
         return Ok(unchanged());
@@ -59,6 +66,9 @@ pub fn stage(
     {
         return Err(Fault::EventOrder);
     }
+    event
+        .running_time
+        .validate_after(previous.last_running_time.as_ref(), event.time_ns)?;
     let mut a = core_types::semantic::nature(&event.reaction);
     for v in &mut a {
         *v = numeric::finite(*v)?;
@@ -74,10 +84,11 @@ pub fn stage(
     )?;
     let denominator = numeric::add(law.change_prior_weight, numeric::count(count)?)?;
     let h = numeric::div(numerator, denominator)?.max(law.change_min);
-    let mut next = update::statistics(previous, a, event.time_ns, h)?;
+    let mut next = update::statistics(previous, a, event.running_time.running_ns(), h)?;
     next.detector = detector;
     next.event_count = count;
     next.last_event = Some((event.ordinal, event.time_ns, event.id.clone()));
+    next.last_running_time = Some(event.running_time.clone());
     update::finish(previous, next, event, fuses)
 }
 
