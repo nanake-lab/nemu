@@ -1,168 +1,144 @@
-//! Typed inputs and outputs of the two-phase effect functions (O 3.2; S 12).
-//!
-//! Each input is a narrow view that holds only the fields the compiler may
-//! read. Nothing here is a general context map.
+//! Narrow inputs and outputs of the two effect phases. The caller builds the
+//! inputs from the committed R and θ; nothing here is a general context map.
 
-use std::collections::{BTreeMap, BTreeSet};
-
-use core_policy::{Catalog, Endpoint, Scope};
-use core_types::generated::{CouplingPhase, EffectContract, ResponsibilityBinding, ThetaModule};
-
-use super::params::EffectParameters;
-
-/// SHA-256 digest of a content-addressed object.
-pub type Digest = [u8; 32];
+use std::fmt;
 
 /// Processing time in nanoseconds on the committed time axis.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ProcessTime(pub u64);
 
-/// One stored R effect (an active-or-not coupling revision) together with the
-/// resolved scope and parameter objects its contract references.
+/// Validity snapshot of ADR 0008 §2. Echo Core v2.0 has no validity contracts
+/// (§15), so it carries nothing; it stays in the signature so callers keep the
+/// shape fixed by ADR 0008.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct Validity;
+
+/// One stored tendency as far as its effect is concerned (v2.0 §5.2, §7).
+/// Candidates (π ≤ ½) may be passed; they have no effect (I06).
 #[derive(Clone, Debug, PartialEq)]
-pub struct REffectRecord {
-    pub contract: EffectContract,
-    pub phase: CouplingPhase,
-    pub scope: Scope,
-    pub parameters: EffectParameters,
-    /// Envelope value q at the anchor, in [0, 1] (O 15).
-    pub q_at_anchor: f64,
-    /// Fixed decay rate γ per second, set at legal activation (O 15).
-    pub gamma_per_second: f64,
-    /// Committed time anchor of the envelope.
-    pub anchor: ProcessTime,
-    /// Responsibilities this coupling is declared to conflict with.
-    pub conflict_set: BTreeSet<String>,
+pub struct StoredTendency {
+    pub tendency_id: String,
+    /// Reference of the tendency's concept (name, definition, examples).
+    pub concept: String,
+    /// π_k ∈ (−1, 1).
+    pub pi: f64,
+    /// Typical magnitude r_k ≥ 0, already clipped to [0, r_max] by the law.
+    pub r: f64,
+    /// Predicted direction d_k ∈ ℝ⁴, a unit vector, in the fixed channel order
+    /// connection, empathy, curiosity, achievement.
+    pub d: [f64; 4],
+    /// Whether the concept's model direction u_k passed validation (v2.0 §9.6).
+    /// Passed through for J; it does not change f_k or D_k.
+    pub direction_validated: bool,
 }
 
-/// Validity contract of one θ module (O 10.2; I22). At least one of a finite
-/// `valid_until` or a non-empty set of verifiable conditions is required.
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub struct ThetaValidity {
-    pub valid_until: Option<ProcessTime>,
-    /// Conditions that must all be present in `ValiditySnapshot::satisfied`.
-    pub conditions: BTreeSet<Digest>,
+/// The stored R as a list of tendencies. Order does not matter: the compiler
+/// sorts by tendency ID in the CanonicalV1 set order.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct StoredR {
+    pub tendencies: Vec<StoredTendency>,
 }
 
-/// One stored θ module with its responsibility binding and resolved objects.
+/// The stored θ = (b, g, λ), per nature channel in the fixed order.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct StoredTheta {
+    pub b: [f64; 4],
+    pub g: [f64; 4],
+    pub lambda: [f64; 4],
+}
+
+/// One effect in E_eff: a tendency of R⁺ with s_k > 0.
 #[derive(Clone, Debug, PartialEq)]
-pub struct ThetaModuleRecord {
-    pub module: ThetaModule,
-    pub binding: ResponsibilityBinding,
-    pub scope: Scope,
-    pub parameters: EffectParameters,
-    pub validity: ThetaValidity,
+pub struct TendencyEffect {
+    pub tendency_id: String,
+    pub concept: String,
+    /// s_k = max(0, 2π_k − 1) ∈ (0, 1).
+    pub s: f64,
+    pub r: f64,
+    pub d: [f64; 4],
+    pub direction_validated: bool,
 }
 
-/// Validity of one qualification certificate at compile time.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub struct CertificateValidity {
-    pub qualified: bool,
-    pub valid_until: Option<ProcessTime>,
-}
-
-/// Read-only validity snapshot bound to the same committed snapshot.
-#[derive(Clone, Debug, Default, PartialEq, Eq)]
-pub struct ValiditySnapshot {
-    pub certificates: BTreeMap<Digest, CertificateValidity>,
-    /// Failure barrier: objects whose validity has been withdrawn.
-    pub invalidated: BTreeSet<Digest>,
-    /// Continuing-validity conditions currently verified.
-    pub satisfied: BTreeSet<Digest>,
-    /// Known dependency objects and their outgoing edges.
-    pub dependency_graph: BTreeMap<Digest, BTreeSet<Digest>>,
-}
-
-/// Immutable compile configuration (part of the bound profile and Ω).
+/// E_eff: the effects of R⁺ in canonical tendency order, and θ.
 #[derive(Clone, Debug, PartialEq)]
-pub struct CompileConfig {
-    pub catalog: Catalog,
-    /// Absolute amplitude budget per endpoint. A missing entry means the
-    /// endpoint has no configured budget and no effect may be authorised.
-    pub endpoint_budgets: BTreeMap<Endpoint, f64>,
-    /// Declared parameter dimension per endpoint.
-    pub endpoint_dimensions: BTreeMap<Endpoint, u32>,
-    /// Resource version of parameter objects (carrier contract version).
-    pub parameter_resource_version: String,
+pub struct EffectiveEffects {
+    pub effects: Vec<TendencyEffect>,
+    pub theta: StoredTheta,
 }
 
-/// Effective owner of a responsibility.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub enum Owner {
-    R,
-    Theta,
+/// Situation match of one event: μ_k(e) ∈ [0, 1] per tendency ID. Tendencies
+/// not listed have μ = 0. Entries for tendencies outside R⁺ are ignored, since
+/// the matcher also scores candidates.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct SituationMatch {
+    pub mu: Vec<(String, f64)>,
 }
 
-/// One authorised, compiled effect.
+/// Contribution of one tendency of R⁺ to one event (v2.0 §6).
 #[derive(Clone, Debug, PartialEq)]
-pub struct CompiledEffect {
-    pub responsibility_id: String,
-    pub causal_revision: String,
-    pub owner: Owner,
-    pub endpoint: Endpoint,
-    pub scope: Scope,
-    pub scope_digest: Digest,
-    pub parameters: EffectParameters,
-    /// Current envelope factor: q(t) for R, 1 for θ.
-    pub factor: f64,
-    pub amplitude_bound: f64,
-    pub dependencies: BTreeSet<Digest>,
+pub struct TendencyDrive {
+    pub tendency_id: String,
+    /// μ_k(e) as given (0 when not listed).
+    pub mu: f64,
+    /// f_k(e) = s_k μ_k(e) r_k d_k, added to the nature channels.
+    pub f: [f64; 4],
+    /// D_k(e) = s_k μ_k(e), the drive of the learned component x_k.
+    pub drive: f64,
 }
 
-/// Minimal effective description at one processing time. It carries no
-/// candidate text, confidence narrative or evidence count.
+/// Result of [`crate::effects::evaluate_effects`].
 #[derive(Clone, Debug, PartialEq)]
-pub struct AuthorizedEffectSet {
-    pub at: ProcessTime,
-    pub catalog_version: String,
-    /// Sorted by endpoint, responsibility, scope digest, revision.
-    pub effects: Vec<CompiledEffect>,
-    /// Earliest known expiry; a cache of this set is invalid from here on.
-    pub expires_at: Option<ProcessTime>,
-    /// Dependency DAG restricted to the authorised effects.
-    pub dependency_dag: BTreeMap<Digest, BTreeSet<Digest>>,
+pub struct Evaluation {
+    /// One entry per tendency of R⁺, in canonical tendency order.
+    pub drives: Vec<TendencyDrive>,
+    /// Σ_k f_k(e) per channel, summed in canonical tendency order.
+    pub f_sum: [f64; 4],
 }
 
-/// Why a stored R effect did not enter the effective set. Kept separate
-/// from the set so that it never reaches effect consumers.
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub enum ExclusionReason {
-    NotActive,
-    TakenOverByTheta,
-    NoValidQualification,
-    Invalidated,
-    DependencyUnresolved,
-    InterpreterMismatch,
-    ZeroEnvelope,
-}
-
-#[derive(Clone, Debug, Default, PartialEq, Eq)]
-pub struct CompileAudit {
-    pub excluded: Vec<(String, String, ExclusionReason)>,
-}
-
-/// Structural fault: the stored state cannot be compiled. In strict mode a
-/// θ fault is a whole-core quarantine request, never a local disable.
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub enum StructuralFault {
-    InvalidConfig(String),
-    Integrity {
-        responsibility_id: String,
-        detail: String,
+/// Why compilation refused the stored state. A refusal is a structural fault
+/// of the committed snapshot: the caller must not substitute partial effects.
+#[derive(Clone, Debug, PartialEq)]
+pub enum CompileError {
+    NonFinite {
+        tendency_id: Option<String>,
+        field: &'static str,
     },
-    /// I07: more than one owner for one responsibility in one domain.
-    DuplicateOwner {
-        responsibility_id: String,
+    PiOutOfRange {
+        tendency_id: String,
     },
-    /// θ outside its ValidityContract or behind a failure barrier (I22).
-    ThetaInvalid {
-        module_id: String,
-        detail: String,
+    NegativeMagnitude {
+        tendency_id: String,
     },
-    TimeBeforeAnchor {
-        responsibility_id: String,
+    DirectionNotUnit {
+        tendency_id: String,
     },
-    BudgetExceeded {
-        endpoint: u32,
+    DuplicateTendency {
+        tendency_id: String,
+    },
+    EmptyIdentifier,
+    ThetaOutOfRange {
+        field: &'static str,
     },
 }
+
+/// Why evaluation refused the situation match.
+#[derive(Clone, Debug, PartialEq)]
+pub enum EvaluateError {
+    MuOutOfRange { tendency_id: String },
+    DuplicateMatch { tendency_id: String },
+}
+
+impl fmt::Display for CompileError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{self:?}")
+    }
+}
+
+impl fmt::Display for EvaluateError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{self:?}")
+    }
+}
+
+impl std::error::Error for CompileError {}
+impl std::error::Error for EvaluateError {}

@@ -1,447 +1,378 @@
-//! P5-09 structural tests. Acceptance IDs appear in test names: J06 and the
-//! structural part of F06; invariants I06, I07, I08, I12, I21, I22.
-
-mod fixture;
-
-use std::collections::BTreeMap;
-
-use core_policy::{Endpoint, FieldValue, ScopeExpr};
-use core_types::generated::{CouplingPhase, EffectOwner};
-use fixture::*;
-
 use super::*;
 
-fn jd(expr: ScopeExpr) -> core_policy::Scope {
-    scope(Endpoint::JDirect, expr)
-}
-
-fn fe(expr: ScopeExpr) -> core_policy::Scope {
-    scope(Endpoint::FEvent, expr)
-}
-
-#[test]
-fn i21_compile_is_pure_and_repeated_reads_do_not_accumulate_decay() {
-    let r = vec![r_effect(
-        "resp-a",
-        jd(ScopeExpr::True),
-        params(&[(0, 0.5)]),
-        1.0,
-    )];
-    let v = validity();
-    let before = (r.clone(), v.clone());
-    let (once, _) = compile(&r, &[], &v, 7 * SECOND).unwrap();
-    let (again, _) = compile(&r, &[], &v, 7 * SECOND).unwrap();
-    // Reading at an earlier time first must not change a later read.
-    let _ = compile(&r, &[], &v, 3 * SECOND).unwrap();
-    let (later, _) = compile(&r, &[], &v, 7 * SECOND).unwrap();
-    assert_eq!(once, again);
-    assert_eq!(once, later);
-    assert_eq!(before, (r, v), "inputs must be untouched");
-    let expected = libm::exp(-0.05 * 7.0);
-    assert_eq!(once.effects[0].factor, expected);
-}
-
-#[test]
-fn i06_only_active_r_effects_are_authorised() {
-    for phase in [
-        CouplingPhase::ZERO,
-        CouplingPhase::SHADOW,
-        CouplingPhase::QUALIFIED_SHADOW,
-        CouplingPhase::SUSPENDED,
-        CouplingPhase::SUPERSEDED,
-    ] {
-        let mut rec = r_effect("resp-a", jd(ScopeExpr::True), params(&[(0, 0.5)]), 1.0);
-        rec.phase = phase;
-        let (set, audit) = compile(&[rec], &[], &validity(), SECOND).unwrap();
-        assert!(set.effects.is_empty(), "{phase:?}");
-        assert_eq!(audit.excluded[0].2, ExclusionReason::NotActive);
+fn theta() -> StoredTheta {
+    StoredTheta {
+        b: [0.1, -0.2, 0.0, 0.3],
+        g: [1.0, 0.8, 1.2, 0.5],
+        lambda: [0.01, 0.02, 0.005, 0.001],
     }
 }
 
-#[test]
-fn i07_theta_takeover_suppresses_r_even_after_legal_disable() {
-    let s = jd(ScopeExpr::True);
-    let r = r_effect("resp-a", s.clone(), params(&[(0, 0.5)]), 1.0);
-    let mut th = theta("mod-1", "resp-a", s, params(&[(0, 0.4)]), 1.0);
-    let (set, audit) = compile(
-        std::slice::from_ref(&r),
-        std::slice::from_ref(&th),
-        &validity(),
-        SECOND,
-    )
-    .unwrap();
-    assert_eq!(set.effects.len(), 1);
-    assert_eq!(set.effects[0].owner, Owner::Theta);
-    assert_eq!(audit.excluded[0].2, ExclusionReason::TakenOverByTheta);
-    // C disposition disables the module: R must not resume (no double count).
-    th.module.enabled = false;
-    let (set, audit) = compile(&[r], &[th], &validity(), SECOND).unwrap();
-    assert!(set.effects.is_empty());
-    assert_eq!(audit.excluded[0].2, ExclusionReason::TakenOverByTheta);
+fn unit(v: [f64; 4]) -> [f64; 4] {
+    let n = v.iter().map(|x| x * x).sum::<f64>().sqrt();
+    [v[0] / n, v[1] / n, v[2] / n, v[3] / n]
+}
+
+fn tendency(id: &str, pi: f64, r: f64, d: [f64; 4]) -> StoredTendency {
+    StoredTendency {
+        tendency_id: id.to_owned(),
+        concept: format!("concept/{id}"),
+        pi,
+        r,
+        d,
+        direction_validated: true,
+    }
+}
+
+fn compile(r: &StoredR) -> Result<EffectiveEffects, CompileError> {
+    compile_authorized_effects(r, &theta(), ProcessTime(0), &Validity)
 }
 
 #[test]
-fn i08_new_evidence_revision_does_not_release_a_taken_over_responsibility() {
-    let s = jd(ScopeExpr::True);
-    let p = params(&[(0, 0.5)]);
-    let mut r = r_effect("resp-a", s.clone(), p.clone(), 1.0);
-    r.contract.causal_revision = "rev-2-new-evidence".into();
-    let th = theta("mod-1", "resp-a", s, p, 1.0);
-    let (set, _) = compile(&[r], &[th], &validity(), SECOND).unwrap();
-    assert_eq!(set.effects.len(), 1);
-    assert_eq!(set.effects[0].owner, Owner::Theta);
+fn i06_candidates_have_no_effect_on_x_or_m() {
+    let r = StoredR {
+        tendencies: vec![
+            tendency("cand-neg", -0.4, 0.5, [1.0, 0.0, 0.0, 0.0]),
+            tendency("cand-zero", 0.0, 0.5, [0.0, 1.0, 0.0, 0.0]),
+            tendency("cand-half", 0.5, 0.5, [0.0, 0.0, 1.0, 0.0]),
+            tendency("trait", 0.75, 0.4, [0.0, 0.0, 0.0, 1.0]),
+        ],
+    };
+    let eff = compile(&r).unwrap();
+    assert_eq!(eff.effects.len(), 1);
+    assert_eq!(eff.effects[0].tendency_id, "trait");
+    assert_eq!(eff.effects[0].s, 0.5);
+    // Candidates that the matcher scored are ignored; only R⁺ drives.
+    let mu = SituationMatch {
+        mu: vec![
+            ("cand-neg".into(), 1.0),
+            ("cand-zero".into(), 1.0),
+            ("cand-half".into(), 1.0),
+            ("trait".into(), 0.5),
+        ],
+    };
+    let ev = evaluate_effects(&eff, &mu).unwrap();
+    assert_eq!(ev.drives.len(), 1);
+    assert_eq!(ev.drives[0].drive, 0.25);
+    assert_eq!(ev.drives[0].f, [0.0, 0.0, 0.0, 0.1]);
+    assert_eq!(ev.f_sum, [0.0, 0.0, 0.0, 0.1]);
 }
 
 #[test]
-fn i07_two_owners_for_one_responsibility_and_domain_is_a_structural_fault() {
-    let p = params(&[(1, 0.2)]);
-    let a = theta("mod-1", "resp-a", jd(x0(0, 100)), p.clone(), 0.5);
-    let b = theta("mod-2", "resp-a", jd(x0(50, 150)), p.clone(), 0.5);
-    let err = compile(&[], &[a.clone(), b], &validity(), SECOND).unwrap_err();
-    assert_eq!(
-        err,
-        StructuralFault::DuplicateOwner {
-            responsibility_id: "resp-a".into()
+fn strength_matches_v2_formula_and_has_no_negative_zero() {
+    assert_eq!(strength(0.75), 0.5);
+    assert_eq!(strength(0.5).to_bits(), 0.0_f64.to_bits());
+    assert_eq!(strength(-0.9).to_bits(), 0.0_f64.to_bits());
+    assert_eq!(strength(0.999), 2.0 * 0.999 - 1.0);
+}
+
+#[test]
+fn evaluate_uses_fixed_product_order() {
+    let d = unit([1.0, -2.0, 0.5, 3.0]);
+    let r = StoredR {
+        tendencies: vec![tendency("k", 0.9, 0.37, d)],
+    };
+    let eff = compile(&r).unwrap();
+    let mu = SituationMatch {
+        mu: vec![("k".into(), 0.6)],
+    };
+    let ev = evaluate_effects(&eff, &mu).unwrap();
+    let s = 2.0 * 0.9 - 1.0;
+    let drive = s * 0.6;
+    let scale = drive * 0.37;
+    for (f, di) in ev.drives[0].f.iter().zip(d) {
+        assert_eq!(f.to_bits(), (scale * di).to_bits());
+    }
+    assert_eq!(ev.drives[0].drive.to_bits(), drive.to_bits());
+}
+
+#[test]
+fn unlisted_match_is_zero_and_negative_zero_is_normalized() {
+    let r = StoredR {
+        tendencies: vec![
+            tendency("a", 0.8, 0.5, [0.0, -1.0, 0.0, 0.0]),
+            tendency("b", 0.8, 0.5, [-1.0, 0.0, 0.0, 0.0]),
+        ],
+    };
+    let eff = compile(&r).unwrap();
+    let mu = SituationMatch {
+        mu: vec![("b".into(), -0.0)],
+    };
+    let ev = evaluate_effects(&eff, &mu).unwrap();
+    for drive in &ev.drives {
+        assert_eq!(drive.mu.to_bits(), 0.0_f64.to_bits());
+        assert_eq!(drive.drive.to_bits(), 0.0_f64.to_bits());
+        for x in drive.f {
+            assert_eq!(x.to_bits(), 0.0_f64.to_bits());
         }
-    );
-    // Provably disjoint sub-domains of one responsibility are allowed.
-    let c = theta("mod-3", "resp-a", jd(x0(200, 300)), p.clone(), 0.5);
-    assert!(compile(&[], &[a, c], &validity(), SECOND).is_ok());
-    // Two active R revisions overlapping in one domain are also a fault.
-    let r1 = r_effect("resp-b", jd(x0(0, 10)), p.clone(), 0.5);
-    let mut r2 = r_effect("resp-b", jd(x0(5, 15)), p, 0.5);
-    r2.contract.causal_revision = "rev-2".into();
-    assert!(matches!(
-        compile(&[r1, r2], &[], &validity(), SECOND),
-        Err(StructuralFault::DuplicateOwner { .. })
-    ));
-}
-
-#[test]
-fn i22_theta_outside_validity_contract_quarantines_instead_of_local_disable() {
-    let base = theta(
-        "mod-1",
-        "resp-a",
-        jd(ScopeExpr::True),
-        params(&[(0, 0.4)]),
-        1.0,
-    );
-    // Expired finite validity.
-    let err = compile(&[], std::slice::from_ref(&base), &validity(), 100 * SECOND).unwrap_err();
-    assert!(
-        matches!(err, StructuralFault::ThetaInvalid { .. }),
-        "{err:?}"
-    );
-    // No finite expiry and no verifiable condition.
-    let mut open = base.clone();
-    open.validity.valid_until = None;
-    assert!(matches!(
-        compile(&[], &[open], &validity(), SECOND),
-        Err(StructuralFault::ThetaInvalid { .. })
-    ));
-    // Continuing condition present but not currently verified.
-    let mut cond = base.clone();
-    cond.validity = ThetaValidity {
-        valid_until: None,
-        conditions: [d(0x77)].into_iter().collect(),
-    };
-    assert!(compile(&[], std::slice::from_ref(&cond), &validity(), SECOND).is_err());
-    let mut v = validity();
-    v.satisfied.insert(d(0x77));
-    assert!(compile(&[], &[cond], &v, SECOND).is_ok());
-}
-
-#[test]
-fn i12_failure_barrier_blocks_effects_immediately() {
-    let mut v = validity();
-    v.invalidated.insert(d(0xD1));
-    let th = theta(
-        "mod-1",
-        "resp-a",
-        jd(ScopeExpr::True),
-        params(&[(0, 0.4)]),
-        1.0,
-    );
-    assert!(matches!(
-        compile(&[], &[th], &v, SECOND),
-        Err(StructuralFault::ThetaInvalid { .. })
-    ));
-    let r = r_effect("resp-b", jd(ScopeExpr::True), params(&[(0, 0.4)]), 1.0);
-    let (set, audit) = compile(&[r], &[], &v, SECOND).unwrap();
-    assert!(set.effects.is_empty());
-    assert_eq!(audit.excluded[0].2, ExclusionReason::Invalidated);
-}
-
-#[test]
-fn r_certificate_expiry_and_dependency_faults_withhold_authorisation() {
-    let r = r_effect("resp-a", jd(ScopeExpr::True), params(&[(0, 0.4)]), 1.0);
-    let mut v = validity();
-    v.certificates.insert(
-        d(0xA1),
-        CertificateValidity {
-            qualified: true,
-            valid_until: Some(ProcessTime(5 * SECOND)),
-        },
-    );
-    let (set, _) = compile(std::slice::from_ref(&r), &[], &v, SECOND).unwrap();
-    assert_eq!(
-        set.expires_at,
-        Some(ProcessTime(5 * SECOND)),
-        "cache must end at expiry (AT09)"
-    );
-    let (set, audit) = compile(std::slice::from_ref(&r), &[], &v, 5 * SECOND).unwrap();
-    assert!(set.effects.is_empty());
-    assert_eq!(audit.excluded[0].2, ExclusionReason::NoValidQualification);
-    // Unknown dependency and a cycle both block the effect.
-    let mut unknown = validity();
-    unknown.dependency_graph.clear();
-    let mut cycle = validity();
-    cycle
-        .dependency_graph
-        .insert(d(0xD1), [d(0xD2)].into_iter().collect());
-    cycle
-        .dependency_graph
-        .insert(d(0xD2), [d(0xD1)].into_iter().collect());
-    for snap in [unknown, cycle] {
-        let (set, audit) = compile(std::slice::from_ref(&r), &[], &snap, SECOND).unwrap();
-        assert!(set.effects.is_empty());
-        assert_eq!(audit.excluded[0].2, ExclusionReason::DependencyUnresolved);
+    }
+    for x in ev.f_sum {
+        assert_eq!(x.to_bits(), 0.0_f64.to_bits());
     }
 }
 
 #[test]
-fn integrity_and_time_faults_are_structural() {
-    let mut tampered = r_effect("resp-a", jd(ScopeExpr::True), params(&[(0, 0.4)]), 1.0);
-    tampered.parameters = params(&[(0, 0.9)]);
-    assert!(matches!(
-        compile(&[tampered], &[], &validity(), SECOND),
-        Err(StructuralFault::Integrity { .. })
-    ));
-    let mut late = r_effect("resp-a", jd(ScopeExpr::True), params(&[(0, 0.4)]), 1.0);
-    late.anchor = ProcessTime(10 * SECOND);
-    assert!(matches!(
-        compile(&[late], &[], &validity(), SECOND),
-        Err(StructuralFault::TimeBeforeAnchor { .. })
-    ));
-    let over = r_effect(
-        "resp-a",
-        jd(ScopeExpr::True),
-        params(&[(0, 0.7), (1, -0.7)]),
-        1.0,
-    );
-    assert!(matches!(
-        compile(&[over], &[], &validity(), SECOND),
-        Err(StructuralFault::Integrity { .. })
-    ));
+fn effects_are_in_canonical_tendency_order_whatever_the_input_order() {
+    // CanonicalV1 set order: length first, then bytes.
+    let ids = ["zz", "a", "ab", "b", "aaa"];
+    let mut r = StoredR::default();
+    for (n, id) in ids.iter().enumerate() {
+        r.tendencies.push(tendency(
+            id,
+            0.6 + 0.05 * n as f64,
+            0.1,
+            unit([1.0, 1.0, 0.0, 0.0]),
+        ));
+    }
+    let eff = compile(&r).unwrap();
+    let order: Vec<&str> = eff.effects.iter().map(|e| e.tendency_id.as_str()).collect();
+    assert_eq!(order, ["a", "b", "ab", "zz", "aaa"]);
+    r.tendencies.reverse();
+    assert_eq!(compile(&r).unwrap(), eff);
 }
 
 #[test]
-fn j06_out_of_scope_and_unauthorised_effects_contribute_zero() {
-    let cfg = config();
-    let hit = r_effect("resp-a", jd(x0(0, 100)), params(&[(0, 0.5)]), 1.0);
-    let mut shadow = r_effect("resp-b", jd(ScopeExpr::True), params(&[(1, 0.5)]), 1.0);
-    shadow.phase = CouplingPhase::SHADOW;
-    let (set, _) = compile(&[hit, shadow], &[], &validity(), 0).unwrap();
-    let outside = TypedContext::new(
-        Endpoint::JDirect,
-        &cfg.catalog,
-        [("x0".into(), FieldValue::Number(0.5))].into(),
-    )
-    .unwrap();
-    let out = evaluate_effects(&set, &outside, &cfg.catalog).unwrap();
-    assert!(out.values.is_empty() && out.receipt.is_empty());
-    let inside = TypedContext::new(
-        Endpoint::JDirect,
-        &cfg.catalog,
-        [("x0".into(), FieldValue::Number(0.05))].into(),
-    )
-    .unwrap();
-    let out = evaluate_effects(&set, &inside, &cfg.catalog).unwrap();
-    assert_eq!(
-        out.values,
-        BTreeMap::from([(0, 0.5)]),
-        "shadow index 1 must stay zero"
-    );
-    assert_eq!(out.receipt.len(), 1);
+fn i21_inputs_are_only_borrowed_and_repeated_calls_agree() {
+    let r = StoredR {
+        tendencies: vec![tendency("k", 0.7, 0.2, [0.0, 0.0, 1.0, 0.0])],
+    };
+    let th = theta();
+    let (r0, th0) = (r.clone(), th);
+    let first = compile_authorized_effects(&r, &th, ProcessTime(5), &Validity).unwrap();
+    let mu = SituationMatch {
+        mu: vec![("k".into(), 1.0)],
+    };
+    let mu0 = mu.clone();
+    let e1 = evaluate_effects(&first, &mu).unwrap();
+    let e2 = evaluate_effects(&first, &mu).unwrap();
+    assert_eq!(e1, e2);
+    assert_eq!(r, r0);
+    assert_eq!(th, th0);
+    assert_eq!(mu, mu0);
+    assert_eq!(first.theta, th);
 }
 
 #[test]
-fn j06_candidate_over_budget_or_cancelling_is_rejected_and_existing_kept() {
-    let cfg = config();
-    let existing = r_effect("resp-a", jd(ScopeExpr::True), params(&[(0, 1.5)]), 1.5);
-    let (set, _) = compile(&[existing], &[], &validity(), 0).unwrap();
-    let snapshot = set.clone();
-    let cand =
-        |rid: &str, s: core_policy::Scope, p: EffectParameters, bound: f64| CandidateEffect {
-            contract: contract(rid, "c-1", EffectOwner::R_OWNER, &s, &p, bound),
-            scope: s,
-            parameters: p,
-            conflict_set: Default::default(),
-        };
-    // Opposite sign would cancel numerically; absolute budget still rejects.
-    let cancel = cand("resp-b", jd(ScopeExpr::True), params(&[(0, -1.0)]), 1.0);
-    assert_eq!(
-        admit_candidate(&set, &cancel, &cfg),
-        Err(AdmissionRejection::BudgetExceeded { endpoint: 3 })
-    );
-    assert_eq!(set, snapshot, "existing effects are not scaled down");
-    // Within budget is admitted.
-    let small = cand("resp-c", jd(ScopeExpr::True), params(&[(2, 0.4)]), 0.4);
-    assert_eq!(admit_candidate(&set, &small, &cfg), Ok(()));
-    // Same responsibility again is a duplicate, even with a new revision.
-    let dup = cand("resp-a", jd(x0(0, 10)), params(&[(2, 0.1)]), 0.1);
-    assert!(matches!(
-        admit_candidate(&set, &dup, &cfg),
-        Err(AdmissionRejection::DuplicateResponsibility(_))
-    ));
-    // Declared conflict overlapping an existing effect is rejected.
-    let mut conflict = cand("resp-d", jd(ScopeExpr::True), params(&[(3, 0.1)]), 0.1);
-    conflict.conflict_set.insert("resp-a".into());
-    assert!(matches!(
-        admit_candidate(&set, &conflict, &cfg),
-        Err(AdmissionRejection::Conflict(_))
-    ));
+fn adr0008_composition_law_and_no_time_dependence() {
+    let r = StoredR {
+        tendencies: (0..20)
+            .map(|n| {
+                let pi = -0.95 + 0.0975 * n as f64;
+                tendency(
+                    &format!("k{n}"),
+                    pi,
+                    0.05 * n as f64,
+                    unit([1.0, n as f64, 2.0, -1.0]),
+                )
+            })
+            .collect(),
+    };
+    let th = theta();
+    let at = |t: u64| compile_authorized_effects(&r, &th, ProcessTime(t), &Validity).unwrap();
+    let base = at(0);
+    for (t, delta) in [
+        (0_u64, 0_u64),
+        (1, 1),
+        (10_u64.pow(9), 3_600 * 10_u64.pow(9)),
+        (u64::MAX, u64::MAX),
+    ] {
+        let projected = project_r(&r, delta);
+        let via_projection =
+            compile_authorized_effects(&projected, &th, ProcessTime(t), &Validity).unwrap();
+        assert_eq!(via_projection, at(t));
+        assert_eq!(via_projection, base);
+    }
 }
 
 #[test]
-fn j06_candidate_with_non_whitelisted_field_is_rejected() {
-    let cfg = config();
-    let (set, _) = compile(&[], &[], &validity(), 0).unwrap();
-    // A J_direct scope may not read event features; build it as F_event and
-    // relabel to bypass the constructor, as a forged proposal would.
-    let mut forged = fe(kind(&[1]));
-    forged.endpoint = Endpoint::JDirect;
-    let p = params(&[(0, 0.1)]);
-    let cand = CandidateEffect {
-        contract: contract("resp-x", "c-1", EffectOwner::R_OWNER, &forged, &p, 0.1),
-        scope: forged,
-        parameters: p,
-        conflict_set: Default::default(),
+fn stored_values_outside_their_domain_are_refused() {
+    let good = || tendency("k", 0.7, 0.2, [1.0, 0.0, 0.0, 0.0]);
+    let cases: Vec<(StoredTendency, &str)> = vec![
+        (StoredTendency { pi: 1.0, ..good() }, "PiOutOfRange"),
+        (StoredTendency { pi: -1.0, ..good() }, "PiOutOfRange"),
+        (
+            StoredTendency {
+                pi: f64::NAN,
+                ..good()
+            },
+            "NonFinite",
+        ),
+        (StoredTendency { r: -0.1, ..good() }, "NegativeMagnitude"),
+        (
+            StoredTendency {
+                r: f64::INFINITY,
+                ..good()
+            },
+            "NonFinite",
+        ),
+        (
+            StoredTendency {
+                d: [0.9, 0.0, 0.0, 0.0],
+                ..good()
+            },
+            "DirectionNotUnit",
+        ),
+        (
+            StoredTendency {
+                d: [1.0, 1e-5, 0.0, 0.0],
+                ..good()
+            },
+            "DirectionNotUnit",
+        ),
+        (
+            StoredTendency {
+                d: [f64::NAN, 0.0, 0.0, 0.0],
+                ..good()
+            },
+            "NonFinite",
+        ),
+        (
+            StoredTendency {
+                tendency_id: String::new(),
+                ..good()
+            },
+            "EmptyIdentifier",
+        ),
+        (
+            StoredTendency {
+                concept: String::new(),
+                ..good()
+            },
+            "EmptyIdentifier",
+        ),
+    ];
+    for (t, want) in cases {
+        let err = compile(&StoredR {
+            tendencies: vec![t],
+        })
+        .unwrap_err();
+        assert!(format!("{err:?}").starts_with(want), "{err:?} vs {want}");
+    }
+    // A candidate outside its domain is a fault too, even though it has no effect.
+    let bad_candidate = StoredTendency {
+        pi: 0.1,
+        d: [2.0, 0.0, 0.0, 0.0],
+        ..good()
     };
     assert!(matches!(
-        admit_candidate(&set, &cand, &cfg),
-        Err(AdmissionRejection::Invalid(_))
+        compile(&StoredR {
+            tendencies: vec![bad_candidate]
+        }),
+        Err(CompileError::DirectionNotUnit { .. })
     ));
-}
-
-#[test]
-fn compile_budget_overflow_in_stored_state_is_a_fault() {
-    let a = r_effect("resp-a", jd(ScopeExpr::True), params(&[(0, 1.5)]), 1.5);
-    let b = r_effect("resp-b", jd(ScopeExpr::True), params(&[(1, -1.5)]), 1.5);
-    assert_eq!(
-        compile(&[a, b], &[], &validity(), 0).unwrap_err(),
-        StructuralFault::BudgetExceeded { endpoint: 3 }
-    );
-}
-
-#[test]
-fn f06_drive_proposal_may_not_reencode_an_r_or_theta_effect() {
-    let r = r_effect("resp-a", fe(kind(&[1])), params(&[(0, 0.3)]), 0.3);
-    let (set, _) = compile(&[r], &[], &validity(), 0).unwrap();
-    assert_eq!(audit_drive_route(&set, &[]), Ok(()));
-    assert_eq!(
-        audit_drive_route(&set, &["resp-a".into()]),
-        Err(RouteFault::DuplicateRoute("resp-a".into()))
-    );
-    assert!(audit_drive_route(&set, &["resp-zzz".into()]).is_err());
-}
-
-#[test]
-fn evaluate_rejects_missing_inputs_foreign_fields_and_version_mismatch() {
-    let cfg = config();
-    let r = r_effect(
-        "resp-a",
-        fe(ScopeExpr::And(vec![kind(&[2]), x0(0, 100)])),
-        params(&[(0, 0.3)]),
-        0.3,
-    );
-    let (set, _) = compile(&[r], &[], &validity(), 0).unwrap();
-    let partial = TypedContext::new(
-        Endpoint::FEvent,
-        &cfg.catalog,
-        [("event_kind".into(), FieldValue::Enum(2))].into(),
-    )
-    .unwrap();
-    assert_eq!(
-        evaluate_effects(&set, &partial, &cfg.catalog),
-        Err(EvaluateError::UnsupportedScope {
-            responsibility_id: "resp-a".into(),
-            field: "x0".into()
-        })
-    );
-    // J_direct contexts cannot carry event features at all.
-    assert!(
-        TypedContext::new(
-            Endpoint::JDirect,
-            &cfg.catalog,
-            [("event_kind".into(), FieldValue::Enum(2))].into()
-        )
-        .is_err()
-    );
-    assert!(
-        TypedContext::new(
-            Endpoint::JDirect,
-            &cfg.catalog,
-            [("x0".into(), FieldValue::Number(f64::NAN))].into()
-        )
-        .is_err()
-    );
-    let mut other = cfg.catalog.clone();
-    other.version = "fixture-catalog-2".into();
-    let ctx = TypedContext::new(Endpoint::FEvent, &other, BTreeMap::new()).unwrap();
+    let dup = StoredR {
+        tendencies: vec![good(), good()],
+    };
     assert!(matches!(
-        evaluate_effects(&set, &ctx, &other),
-        Err(EvaluateError::DependencyFault(_))
+        compile(&dup),
+        Err(CompileError::DuplicateTendency { .. })
+    ));
+    // A tolerance-sized deviation of a few ulps is accepted (V2-32).
+    let near = StoredTendency {
+        d: [1.0 + 1e-13, 0.0, 0.0, 0.0],
+        ..good()
+    };
+    assert!(
+        compile(&StoredR {
+            tendencies: vec![near]
+        })
+        .is_ok()
+    );
+}
+
+#[test]
+fn theta_outside_its_domain_is_refused() {
+    let r = StoredR::default();
+    let bad = [
+        StoredTheta {
+            b: [1.5, 0.0, 0.0, 0.0],
+            ..theta()
+        },
+        StoredTheta {
+            g: [0.0, 1.0, 1.0, 1.0],
+            ..theta()
+        },
+        StoredTheta {
+            lambda: [1.0, -1.0, 1.0, 1.0],
+            ..theta()
+        },
+        StoredTheta {
+            b: [f64::NAN, 0.0, 0.0, 0.0],
+            ..theta()
+        },
+    ];
+    for th in bad {
+        assert!(compile_authorized_effects(&r, &th, ProcessTime(0), &Validity).is_err());
+    }
+    let empty = compile_authorized_effects(&r, &theta(), ProcessTime(0), &Validity).unwrap();
+    assert!(empty.effects.is_empty());
+    let ev = evaluate_effects(&empty, &SituationMatch::default()).unwrap();
+    assert_eq!(ev.f_sum, [0.0; 4]);
+}
+
+#[test]
+fn situation_match_outside_its_domain_is_refused() {
+    let r = StoredR {
+        tendencies: vec![tendency("k", 0.7, 0.2, [1.0, 0.0, 0.0, 0.0])],
+    };
+    let eff = compile(&r).unwrap();
+    for mu in [1.0 + f64::EPSILON, -0.1, f64::NAN, f64::INFINITY] {
+        let m = SituationMatch {
+            mu: vec![("k".into(), mu)],
+        };
+        assert!(matches!(
+            evaluate_effects(&eff, &m),
+            Err(EvaluateError::MuOutOfRange { .. })
+        ));
+    }
+    let dup = SituationMatch {
+        mu: vec![("k".into(), 0.2), ("k".into(), 0.2)],
+    };
+    assert!(matches!(
+        evaluate_effects(&eff, &dup),
+        Err(EvaluateError::DuplicateMatch { .. })
     ));
 }
 
 #[test]
-fn effects_sum_in_canonical_order_with_receipts() {
-    let cfg = config();
-    let a = r_effect(
-        "resp-b",
-        jd(ScopeExpr::True),
-        params(&[(0, 0.25), (2, 0.5)]),
-        0.75,
-    );
-    let b = theta(
-        "mod-1",
-        "resp-a",
-        jd(ScopeExpr::True),
-        params(&[(0, 0.5)]),
-        0.5,
-    );
-    let (set, _) = compile(&[a], &[b], &validity(), 0).unwrap();
-    let order: Vec<&str> = set
-        .effects
-        .iter()
-        .map(|e| e.responsibility_id.as_str())
-        .collect();
-    assert_eq!(order, ["resp-a", "resp-b"]);
-    let ctx = TypedContext::new(Endpoint::JDirect, &cfg.catalog, BTreeMap::new()).unwrap();
-    let out = evaluate_effects(&set, &ctx, &cfg.catalog).unwrap();
-    assert_eq!(out.values, BTreeMap::from([(0, 0.75), (2, 0.5)]));
-    let owners: Vec<Owner> = out.receipt.iter().map(|r| r.owner).collect();
-    assert_eq!(owners, [Owner::Theta, Owner::R]);
-    assert_eq!(out.receipt[1].magnitude, 0.75);
+fn f_sum_is_summed_in_canonical_order() {
+    // Values chosen so that the summation order changes the last bit.
+    let r = StoredR {
+        tendencies: vec![
+            tendency("c", 0.9999, 1.0, [1.0, 0.0, 0.0, 0.0]),
+            tendency("a", 0.9999, 1e-16, [1.0, 0.0, 0.0, 0.0]),
+            tendency("b", 0.9999, 1e-16, [1.0, 0.0, 0.0, 0.0]),
+        ],
+    };
+    let eff = compile(&r).unwrap();
+    let mu = SituationMatch {
+        mu: vec![("a".into(), 1.0), ("b".into(), 1.0), ("c".into(), 1.0)],
+    };
+    let ev = evaluate_effects(&eff, &mu).unwrap();
+    let f: Vec<f64> = ev.drives.iter().map(|d| d.f[0]).collect();
+    let canonical = (0.0 + f[0]) + f[1] + f[2];
+    assert_eq!(ev.f_sum[0].to_bits(), canonical.to_bits());
 }
 
 #[test]
-fn parameter_canonical_bytes_golden_layout() {
-    let p = params(&[(1, -0.0), (0, 0.5)]);
-    let bytes = p.canonical_bytes().unwrap();
-    let mut want = b"NCV1".to_vec();
-    want.extend(1u32.to_le_bytes());
-    want.extend((PARAMETERS_TAG.len() as u32).to_le_bytes());
-    want.extend(PARAMETERS_TAG.as_bytes());
-    want.extend(4u32.to_le_bytes());
-    want.extend(2u32.to_le_bytes());
-    want.extend(0u32.to_le_bytes());
-    want.extend(0.5f64.to_bits().to_le_bytes());
-    want.extend(1u32.to_le_bytes());
-    want.extend(0.0f64.to_bits().to_le_bytes());
+fn direction_validation_is_passed_through_without_changing_drive() {
+    let mut t = tendency("k", 0.8, 0.3, [0.0, 1.0, 0.0, 0.0]);
+    let validated = compile(&StoredR {
+        tendencies: vec![t.clone()],
+    })
+    .unwrap();
+    t.direction_validated = false;
+    let unvalidated = compile(&StoredR {
+        tendencies: vec![t],
+    })
+    .unwrap();
+    assert!(validated.effects[0].direction_validated);
+    assert!(!unvalidated.effects[0].direction_validated);
+    let mu = SituationMatch {
+        mu: vec![("k".into(), 0.5)],
+    };
     assert_eq!(
-        bytes, want,
-        "negative zero normalised, keys in canonical order"
+        evaluate_effects(&validated, &mu).unwrap(),
+        evaluate_effects(&unvalidated, &mu).unwrap()
     );
 }
