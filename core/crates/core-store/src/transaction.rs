@@ -11,7 +11,7 @@ use core_types::{
     contract::Schema,
     generated::{
         CoreCommitResultV2, CoreTransactionV2, DegradedStatus, EventEnvelope, FastStateSnapshotV2,
-        ObjectRef, ProposalBindingV2, RSnapshotV2, ThetaSnapshot,
+        ObjectRef, ProposalBindingV2, RSnapshotV3, ThetaSnapshot,
     },
     scalar::hex,
 };
@@ -142,7 +142,7 @@ impl<L: LineageKind> Store<L> {
             x.anchor_time_ns == value.anchor_time_ns,
             "staged x has wrong anchor",
         )?;
-        RSnapshotV2::from_canonical(&self.objects.read(&value.staged_r)?, limits)?;
+        RSnapshotV3::from_canonical(&self.objects.read(&value.staged_r)?, limits)?;
         self.fault.hit(FaultPoint::GStaged)?;
         ThetaSnapshot::from_canonical(&self.objects.read(&value.staged_theta)?, limits)?;
         self.fault.hit(FaultPoint::CStaged)?;
@@ -321,7 +321,7 @@ impl<L: LineageKind> Store<L> {
         if let Some(old) = self.current()? {
             let x =
                 FastStateSnapshotV2::from_canonical(&self.objects.read(&old.staged_x)?, limits)?;
-            let r = RSnapshotV2::from_canonical(&self.objects.read(&old.staged_r)?, limits)?;
+            let r = RSnapshotV3::from_canonical(&self.objects.read(&old.staged_r)?, limits)?;
             let theta =
                 ThetaSnapshot::from_canonical(&self.objects.read(&old.staged_theta)?, limits)?;
             require(

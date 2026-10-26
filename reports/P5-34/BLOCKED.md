@@ -1,30 +1,21 @@
-# P5-34 当前阻塞（2026-10-26，PR #95）
+# P5-34 当前待完成项（2026-10-26，PR #95）
 
-## B1：卡外 core-store 仍生产 V2
+## B1：最小存储适配的最终验证
 
-本卡要求旧消息标为取代；当前 main 的 `core-store/src/objects.rs::prepare` 拒绝 `T::SUPERSEDED`，而 `store.rs::prepare_r`、证据组生产者与查询仍使用 V2。V3 的类型和校验已提供，但消费者未切换。
+原 full workspace 在 EvidenceGroupV2 新写入处失败，原始证据保留于 verification/resumed-20261026/attempt-01/workspace.log，Ubuntu 40271343235/40274213446 也复现。用户已批准最小 core-store 连锁改动及分阶段方案，详细范围与原因见 PROTECTED-SCOPE-20261026.md。当前实现改为 V3 新写、V2 只读、旧 V2 head 拒写；不恢复旧 PR 的迁移回调。
 
-实测：完整 Rust 工作区退出 101。`tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete` 在 `core-store/src/tests/objects.rs:172:49` 通过通用 prepare 写 EvidenceGroupV2，收到 `Rejected("new writes must use the active successor message")`；core-store 为 30 通过、1 失败、0 忽略，耗时 1077.61 秒。原始日志和命令/退出码位于 `verification/resumed-20261026/attempt-01/workspace.log`、`.json`。该失败没有重跑来替代诊断。
+待执行新边界测试与完整工作区验收。当前其他任务占用本机 Rust 重负载窗口，先完成轻量静态检查及文档，不并行启动重负载。处理方式：窗口空闲后按 verify-protected.ps1 串行执行；若出现实现失败，保留日志并在授权范围内修复。完整 G/H 迁移不再是本卡的待授权项，未来由 P5-26 完成，不另开迁移卡。
 
-Ubuntu CI run 40271343235（head b84d0bf）也复现相同拒绝，退出 101，30 通过/1 失败；原始错误摘录及 job 链接见本轮 ci-b84d0bf.json。因此该消费者冲突并非只在本机发生。
+## B2：supervisor 的 main 对照
 
-旧 PR #72 的 core-store 扩围实现已按用户本次范围要求撤回；不能使用它的旧成功日志证明当前消费者兼容。没有取消 V2 取代标记、放宽新写入拒绝、改测试或默认补 q/V。已更新 `tasks/requests/P5-34-core-store-v3.md`，继续执行契约及其他不受影响的检查。
+旧 pnpm test 为 579 通过/1 失败，apps/desktop/src/supervisor/supervisor.test.ts:199 在 hung-process 退出清理断言观察到 PID 87292；原日志保留。随后 PID 已消失，但不把原失败改判成功。
 
-可选处理：
+supervisor 七个文件、根 Vitest 配置、package.json 与 pnpm-lock.yaml 在本分支和 main b4eb7fd 的 Git blob 相同。Ubuntu CI 的根 pnpm test 包含 supervisor；Windows desktop workflow 不跑根 Vitest（跑 transport/isolation/e2e/visual 和 storage）。还需在独立 main worktree 执行预先声明的三次完整 pnpm test，保留全部结果，以区别本卡回归与既有波动。测试/设置/阈值不改。
 
-1. 安排有权修改 core-store 的独立迁移工作，协调依赖/目录占用后接入，再合入 P5-34 并完整复验。
-2. 用户修订本卡目录并安排串行窗口后，恢复并审查旧分支中的存储适配，按最新 main 重新验证。
+若 main 复现，则按用户指示原样保留、记录证据；若证实本卡引起，则写明原因并向用户报告。不用后续成功覆盖旧失败。
 
-P5-35 已依赖 P5-34，不能假定直接等 P5-35 就能消除这个合并前阻塞。当前不扩大代码范围。
+## B3：最终 head CI 与交叉审查
 
-## B2：卡外 Windows 进程监督器测试失败
+完成本地验收、报告与推送后，检查同一最终 head 的 Ubuntu 和手动 Windows 全量 CI；草稿条件跳过不算通过。全部 CI 确认通过后才转为可审查并写“请审查”。core-store 受保护路径在报告和 PR 描述单列，随契约交叉审查；ADR 0021、V2-62/63 仍由用户最终合并批准，保持 needs-user。
 
-`pnpm test` 退出 1：52 个文件中 51 通过，580 项中 579 通过、1 失败。`apps/desktop/src/supervisor/supervisor.test.ts:199` 的 hung-process 清理测试期望空 PID 数组，实际为 `[87292]`。原始日志见 `verification/resumed-20261026/attempt-01/test.log`。随后只读检查该 PID 已不存在；这不撤销断言时的失败，也不足以判断根因。本次与 origin/main 的 supervisor 代码差异为零，没有证据把它归因于 CI 作业冲突。
-
-未改 apps/desktop、等待时长或断言，未用重跑成功覆盖失败。后续可由桌面模块维护者诊断停止/退出确认的时序，修复后在本分支复验；也可在独立授权的排查中确定环境因素。P5-34 继续保持该检查失败。
-
-## B3：契约交叉审查与用户批准
-
-ADR 0021、V2-62/63 与具体 q/V 后继契约仍待交叉审查及用户批准；PR 标 `needs-user`，由用户合并。ADR 0019、V2-55–59 已由 V2-84 确认采纳，不重复列为待决。实现者不自行审查、不另开审查聊天。
-
-真实 G 重放、生产迁移、AC2-08/19/21、I23、SYS17 属于后续集成范围；本次未访问排练或正式存储，也未签发这些验收。历史失败、原始日志和旧范围记录保留，当前结果以 REPORT.md 和 `verification/resumed-20261026/` 为准。
+完整 G 重放、AC2-08/19/21、I23、SYS17 不由本卡的结构/存储测试签发。新证据统一放 verification/protected-20261026/；旧 PR #72 与本轮此前失败全部保留。
