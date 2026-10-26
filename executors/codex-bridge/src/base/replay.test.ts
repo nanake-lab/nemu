@@ -125,6 +125,12 @@ describe('P5-07 synthetic app-server replay', () => {
     const first = await setup(replay); await expect(first.bridge.run(input)).rejects.toThrow('turn_identity_mismatch');
     const second = await setup(); await expect(second.bridge.run({ ...input, maxOutputBytes: 1 })).rejects.toThrow('output_limit');
   });
+  it('rejects a tool event even after turn/completed has already resolved', async () => {
+    const replay = new Replay();
+    replay.frames.push({ method: 'rawResponseItem/completed', params: { item: { type: 'function_call', name: 'late_tool' } } });
+    const { bridge } = await setup(replay); await expect(bridge.run(input)).rejects.toThrow('tool_surface_violation');
+    expect(bridge.usage()[0]?.succeeded).toBe(false);
+  });
   it('times out without a completion', async () => {
     const replay = new Replay(); replay.frames = [];
     const { bridge } = await setup(replay); await expect(bridge.run({ ...input, deadlineMs: 10 })).rejects.toThrow('turn_timeout');

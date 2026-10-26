@@ -181,7 +181,9 @@ export class Bridge {
       if (eventTurnId !== null && eventTurnId !== turnId) throw new Error('turn_identity_mismatch');
       this.active = { threadId, turnId };
       await done;
+      if (notificationFailure !== null) throw notificationFailure;
       await this.checkInventory(threadId, remaining());
+      if (notificationFailure !== null) throw notificationFailure;
       // Include post-turn inventory in the request deadline, but keep inference timing separate.
       remaining();
       const text = finalText ?? output;
