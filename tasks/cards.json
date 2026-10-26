@@ -8,24 +8,29 @@
    "name": "技术验证"
   },
   {
-   "id": "N1",
-   "review_card": "P2-07",
-   "name": "认得出是她"
+   "id": "E1",
+   "review_card": null,
+   "name": "核心闭环"
   },
   {
-   "id": "N2",
+   "id": "E2",
    "review_card": "P6-12",
-   "name": "她在了（排练版）"
+   "name": "她能想、能说（文字排练版）"
   },
   {
-   "id": "N3",
+   "id": "E3",
+   "review_card": null,
+   "name": "她有声音"
+  },
+  {
+   "id": "E4",
    "review_card": "P6-13",
    "name": "诞生"
   },
   {
-   "id": "N4",
+   "id": "E5",
    "review_card": "P7-05",
-   "name": "发布"
+   "name": "外观与世界"
   }
  ],
  "cards": [
@@ -59,7 +64,7 @@
    "id": "P0-02",
    "title": "应用契约包",
    "phase": "P0",
-   "milestone": "N1",
+   "milestone": "N0",
    "deps": [
     "P0-01"
    ],
@@ -168,7 +173,7 @@
    "id": "P0-10",
    "title": "载体推理引擎实测",
    "phase": "P0",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P0-07"
    ],
@@ -181,7 +186,7 @@
    "id": "P1-01",
    "title": "舞台渲染器",
    "phase": "P1",
-   "milestone": "N1",
+   "milestone": "E2",
    "deps": [
     "P0-02",
     "P0-03"
@@ -195,7 +200,7 @@
    "id": "P1-02",
    "title": "桌面窗口外壳与进程守护",
    "phase": "P1",
-   "milestone": "N1",
+   "milestone": "E2",
    "deps": [
     "P0-02",
     "P0-03"
@@ -209,7 +214,7 @@
    "id": "P1-03",
    "title": "评审台",
    "phase": "P1",
-   "milestone": "N1",
+   "milestone": "E5",
    "deps": [
     "P1-01"
    ],
@@ -222,7 +227,7 @@
    "id": "P1-04",
    "title": "调试面板",
    "phase": "P1",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P1-02"
    ],
@@ -235,7 +240,7 @@
    "id": "P1-05",
    "title": "早期对话演示",
    "phase": "P1",
-   "milestone": "N2",
+   "milestone": "E3",
    "deps": [
     "P1-02",
     "P4-01",
@@ -251,7 +256,7 @@
    "id": "P2-01",
    "title": "设定集与人设种子（Nemu Bible）",
    "phase": "P2",
-   "milestone": "N1",
+   "milestone": "E2",
    "deps": [],
    "difficulty": "—",
    "suggested": "你",
@@ -262,7 +267,7 @@
    "id": "P2-02",
    "title": "VRoid 塑形",
    "phase": "P2",
-   "milestone": "N1",
+   "milestone": "E5",
    "deps": [
     "P2-01"
    ],
@@ -275,7 +280,7 @@
    "id": "P2-03",
    "title": "Blender 无头资产管线",
    "phase": "P2",
-   "milestone": "N1",
+   "milestone": "E5",
    "deps": [
     "P0-05",
     "P2-04"
@@ -289,7 +294,7 @@
    "id": "P2-04",
    "title": "资产契约校验器",
    "phase": "P2",
-   "milestone": "N1",
+   "milestone": "E5",
    "deps": [
     "P0-02"
    ],
@@ -302,7 +307,7 @@
    "id": "P2-05",
    "title": "尾巴、猫耳与弹簧骨调校",
    "phase": "P2",
-   "milestone": "N1",
+   "milestone": "E5",
    "deps": [
     "P1-03",
     "P2-02",
@@ -318,7 +323,7 @@
    "id": "P2-06",
    "title": "自定义表情与材质精修",
    "phase": "P2",
-   "milestone": "N1",
+   "milestone": "E5",
    "deps": [
     "P1-03",
     "P2-02",
@@ -328,13 +333,17 @@
    "suggested": "Codex",
    "you": "评审",
    "effort": "4 天（你约 2 小时）",
-   "note": "依赖 P2-02 的中期导出版本；可与 P2-05 同时进行"
+   "note": "依赖 P2-02 的中期导出版本；可与 P2-05 同时进行",
+   "status_override": {
+    "status": "blocked",
+    "note": "自做外观线暂停（用户 2026-10-26）：改为购买外观模型，接入时另开卡"
+   }
   },
   {
    "id": "P2-07",
    "title": "N1 评审：认得出是她",
    "phase": "P2",
-   "milestone": "N1",
+   "milestone": "E5",
    "deps": [
     "P1-01",
     "P1-02",
@@ -346,13 +355,17 @@
    "difficulty": "—",
    "suggested": "你",
    "you": "你来做",
-   "effort": "约 1.5 小时"
+   "effort": "约 1.5 小时",
+   "status_override": {
+    "status": "blocked",
+    "note": "自做外观线暂停（用户 2026-10-26）：改为购买外观模型，接入时另开卡"
+   }
   },
   {
    "id": "P3-01",
    "title": "动画运行时（五层）",
    "phase": "P3",
-   "milestone": "N1",
+   "milestone": "E2",
    "deps": [
     "P1-01"
    ],
@@ -365,7 +378,7 @@
    "id": "P3-02",
    "title": "动作资产管线",
    "phase": "P3",
-   "milestone": "N2",
+   "milestone": "E5",
    "deps": [
     "P2-03"
    ],
@@ -378,7 +391,7 @@
    "id": "P3-03",
    "title": "身体读出与待机生命",
    "phase": "P3",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P0-02",
     "P3-01"
@@ -392,7 +405,7 @@
    "id": "P3-04",
    "title": "物理状态机、反射与身体动作",
    "phase": "P3",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P3-03"
    ],
@@ -405,7 +418,7 @@
    "id": "P3-05",
    "title": "动作库 v1 选定",
    "phase": "P3",
-   "milestone": "N3",
+   "milestone": "E5",
    "deps": [
     "P1-03",
     "P3-02"
@@ -419,7 +432,7 @@
    "id": "P3-06",
    "title": "身体读出 v2（E5 修订）",
    "phase": "P3",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P5-22"
    ],
@@ -432,7 +445,7 @@
    "id": "P4-01",
    "title": "语音识别与语言识别",
    "phase": "P4",
-   "milestone": "N2",
+   "milestone": "E3",
    "deps": [
     "P1-02"
    ],
@@ -445,7 +458,7 @@
    "id": "P4-02",
    "title": "TTS 旁路服务（三种语言）",
    "phase": "P4",
-   "milestone": "N2",
+   "milestone": "E3",
    "deps": [
     "P0-01"
    ],
@@ -458,7 +471,7 @@
    "id": "P4-03",
    "title": "Nemu 声音设计（一个声音，三种语言）",
    "phase": "P4",
-   "milestone": "N2",
+   "milestone": "E3",
    "deps": [
     "P2-01",
     "P4-02"
@@ -472,7 +485,7 @@
    "id": "P4-04",
    "title": "口型同步（运行时）",
    "phase": "P4",
-   "milestone": "N2",
+   "milestone": "E3",
    "deps": [
     "P3-01"
    ],
@@ -485,7 +498,7 @@
    "id": "P4-05",
    "title": "口型校准（三种语言）",
    "phase": "P4",
-   "milestone": "N2",
+   "milestone": "E3",
    "deps": [
     "P4-03"
    ],
@@ -498,12 +511,13 @@
    "id": "P4-06",
    "title": "语音输出管线",
    "phase": "P4",
-   "milestone": "N2",
+   "milestone": "E3",
    "deps": [
     "P0-02",
     "P4-01",
     "P4-02",
-    "P4-04"
+    "P4-04",
+    "P4-07"
    ],
    "difficulty": "中",
    "suggested": "Codex",
@@ -511,10 +525,24 @@
    "effort": "5 天"
   },
   {
+   "id": "P4-07",
+   "title": "声音读出与风格契约（V2-106）",
+   "phase": "P4",
+   "deps": [
+    "P4-02",
+    "P5-12"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "milestone": "E3"
+  },
+  {
    "id": "P5-01",
    "title": "IDL、规范编码与黄金向量（W01）",
    "phase": "P5",
-   "milestone": "N2",
+   "milestone": "E1",
    "deps": [
     "P0-02",
     "P0-06"
@@ -528,7 +556,7 @@
    "id": "P5-02",
    "title": "单写事务与对象存储（W02）",
    "phase": "P5",
-   "milestone": "N2",
+   "milestone": "E1",
    "deps": [
     "P5-01"
    ],
@@ -541,7 +569,7 @@
    "id": "P5-03",
    "title": "入口与网关（W18）",
    "phase": "P5",
-   "milestone": "N2",
+   "milestone": "E1",
    "deps": [
     "P5-02"
    ],
@@ -554,7 +582,7 @@
    "id": "P5-04",
    "title": "事实视图（W19）",
    "phase": "P5",
-   "milestone": "N2",
+   "milestone": "E1",
    "deps": [
     "P5-02"
    ],
@@ -567,7 +595,7 @@
    "id": "P5-05",
    "title": "权限、身份与 worker 隔离（W22）",
    "phase": "P5",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P5-02",
     "P5-21"
@@ -581,7 +609,7 @@
    "id": "P5-06",
    "title": "语义核心：IRL 与解释记录的治理、概念注册表（W20 核心部分）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P5-04",
     "P5-21"
@@ -595,7 +623,7 @@
    "id": "P5-07",
    "title": "IRL worker 与 codex-bridge 基础层（W20 认知部分）",
    "phase": "P5",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P0-08",
     "P0-09",
@@ -610,7 +638,7 @@
    "id": "P5-08",
    "title": "编排、阶段接口与时钟（W03）",
    "phase": "P5",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P5-03",
     "P5-04",
@@ -625,7 +653,7 @@
    "id": "P5-09",
    "title": "作用解析与授权（W04）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-01"
    ],
@@ -638,7 +666,7 @@
    "id": "P5-10",
    "title": "快状态 F（v2.0 第 6 节）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-21",
     "P5-27"
@@ -652,7 +680,7 @@
    "id": "P5-11",
    "title": "天性评估 worker（原 A_x）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P5-07",
     "P5-21"
@@ -666,7 +694,7 @@
    "id": "P5-12",
    "title": "J 编译与读出（v2.0 第 9 节）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-10"
    ],
@@ -679,7 +707,7 @@
    "id": "P5-13",
    "title": "模型载体适配器（W12）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P0-07",
     "P0-10",
@@ -695,7 +723,7 @@
    "id": "P5-14",
    "title": "行动生命周期与 outbox（W13 基础）",
    "phase": "P5",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P5-05",
     "P5-08"
@@ -709,7 +737,7 @@
    "id": "P5-15",
    "title": "结构重放、整段重算、本机备份与诞生（W14）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
     "P5-14",
     "P5-29"
@@ -723,7 +751,7 @@
    "id": "P5-16",
    "title": "指标与运行手册（W15 基础）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
     "P5-08",
     "P5-29"
@@ -737,12 +765,13 @@
    "id": "P5-17",
    "title": "genesis 校准（你参与）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
     "P5-13",
     "P5-29",
     "P5-30",
     "P5-31",
+    "P5-39",
     "P6-01"
    ],
    "difficulty": "高",
@@ -755,7 +784,7 @@
    "id": "P5-18",
    "title": "v2.0 验收（N3 阶段门）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
     "P5-15",
     "P5-17",
@@ -774,7 +803,7 @@
    "id": "P5-19",
    "title": "第一集成里程碑：语义、天性与情绪接入编排",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P5-06",
     "P5-07",
@@ -793,7 +822,7 @@
    "id": "P5-20",
    "title": "自主调度与主动（v2.0 第 9.4 节）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P5-12",
     "P5-14",
@@ -809,7 +838,7 @@
    "id": "P5-21",
    "title": "IDL 契约变更：v2.0 的状态与记录",
    "phase": "P5",
-   "milestone": "N2",
+   "milestone": "E1",
    "deps": [
     "P5-01"
    ],
@@ -822,7 +851,7 @@
    "id": "P5-22",
    "title": "终端契约变更：身体读出、主动边界、成长的查询与通知",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P5-21"
    ],
@@ -835,7 +864,7 @@
    "id": "P5-23",
    "title": "规律引擎 G：倾向的证据计数",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-21",
     "P5-34"
@@ -849,7 +878,7 @@
    "id": "P5-24",
    "title": "证据组装：从解释记录到证据组",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-23"
    ],
@@ -862,7 +891,7 @@
    "id": "P5-25",
    "title": "动力学 C：θ 的学习与回应回路",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-21"
    ],
@@ -875,7 +904,7 @@
    "id": "P5-26",
    "title": "重算、来源更正、暂停与复核",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-12",
     "P5-23",
@@ -891,7 +920,7 @@
    "id": "P5-27",
    "title": "作用视图按 v2.0 简化（P5-09 后续）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-09"
    ],
@@ -904,7 +933,7 @@
    "id": "P5-28",
    "title": "情境吻合与候选倾向 worker（M）",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
     "P5-13",
     "P5-21"
@@ -918,7 +947,7 @@
    "id": "P5-29",
    "title": "第二集成里程碑：成长接入编排",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
     "P5-19",
     "P5-26",
@@ -934,7 +963,7 @@
    "id": "P5-30",
    "title": "实验谱系：合成世界与规律校准",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-26",
     "P5-33"
@@ -948,7 +977,7 @@
    "id": "P5-31",
    "title": "方向提取与验证",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P5-13"
    ],
@@ -961,7 +990,7 @@
    "id": "P5-32",
    "title": "契约变更：R 的典型幅度递推与分配重放字段",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-21"
    ],
@@ -974,7 +1003,7 @@
    "id": "P5-33",
    "title": "R 的变化检测预研",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [],
    "difficulty": "高",
    "suggested": "Codex",
@@ -985,7 +1014,7 @@
    "id": "P5-34",
    "title": "契约变更：分配的实际保留率与倾向的证据量",
    "phase": "P5",
-   "milestone": "N3",
+   "milestone": "E1",
    "deps": [
     "P5-32"
    ],
@@ -995,10 +1024,67 @@
    "effort": "2 天"
   },
   {
+   "id": "P5-36",
+   "title": "契约变更：θ 估计器状态的存储",
+   "phase": "P5",
+   "deps": [
+    "P5-25"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "2 天",
+   "milestone": "E1"
+  },
+  {
+   "id": "P5-37",
+   "title": "契约变更：持续认知的记录与工作状态（ADR 0026 第 1 步）",
+   "phase": "P5",
+   "deps": [
+    "P5-21"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "4 天",
+   "milestone": "E2"
+  },
+  {
+   "id": "P5-38",
+   "title": "持续认知：原子发布、接续与恢复（ADR 0026 第 2 步）",
+   "phase": "P5",
+   "deps": [
+    "P0-10",
+    "P5-08",
+    "P5-10",
+    "P5-37"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "milestone": "E2"
+  },
+  {
+   "id": "P5-39",
+   "title": "持续认知：载体、调度与行动接入（ADR 0026 第 3 步）",
+   "phase": "P5",
+   "deps": [
+    "P5-13",
+    "P5-14",
+    "P5-38"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "6 天",
+   "milestone": "E2"
+  },
+  {
    "id": "P6-01",
    "title": "任务层与协议 p v0（W21）",
    "phase": "P6",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P2-01",
     "P5-04",
@@ -1014,10 +1100,9 @@
    "id": "P6-02",
    "title": "终端客户端与身体接入",
    "phase": "P6",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P3-04",
-    "P4-06",
     "P5-03",
     "P6-01",
     "P6-17"
@@ -1031,7 +1116,7 @@
    "id": "P6-03",
    "title": "模式 A：本地严格，接通 J",
    "phase": "P6",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P5-13",
     "P6-01"
@@ -1045,7 +1130,7 @@
    "id": "P6-04",
    "title": "模式 B：云端投影与 J_text",
    "phase": "P6",
-   "milestone": "N2",
+   "milestone": "E5",
    "deps": [
     "P0-08",
     "P5-07",
@@ -1060,7 +1145,7 @@
    "id": "P6-05",
    "title": "模式 C：起草改写，三种模式对照",
    "phase": "P6",
-   "milestone": "N3",
+   "milestone": "E5",
    "deps": [
     "P5-17",
     "P6-03",
@@ -1075,7 +1160,7 @@
    "id": "P6-06",
    "title": "助手：Codex 执行器",
    "phase": "P6",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
     "P5-05",
     "P5-07",
@@ -1090,7 +1175,7 @@
    "id": "P6-07",
    "title": "Office 连接器",
    "phase": "P6",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
     "P5-05",
     "P5-14"
@@ -1104,7 +1189,7 @@
    "id": "P6-08",
    "title": "桌面感知",
    "phase": "P6",
-   "milestone": "N3",
+   "milestone": "E2",
    "deps": [
     "P1-02"
    ],
@@ -1117,7 +1202,7 @@
    "id": "P6-09",
    "title": "场景行为",
    "phase": "P6",
-   "milestone": "N3",
+   "milestone": "E5",
    "deps": [
     "P3-04",
     "P6-02",
@@ -1132,7 +1217,7 @@
    "id": "P6-10",
    "title": "面板",
    "phase": "P6",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P1-04",
     "P5-05",
@@ -1147,7 +1232,7 @@
    "id": "P6-11",
    "title": "Codex 会话感知（可选功能）",
    "phase": "P6",
-   "milestone": "N3",
+   "milestone": "E5",
    "deps": [
     "P1-02"
    ],
@@ -1160,14 +1245,12 @@
    "id": "P6-12",
    "title": "N2 评审：她在了（排练版）",
    "phase": "P6",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
-    "P2-07",
-    "P3-02",
-    "P4-03",
-    "P4-05",
+    "P5-19",
+    "P5-39",
     "P6-02",
-    "P6-04",
+    "P6-03",
     "P6-10"
    ],
    "difficulty": "—",
@@ -1179,21 +1262,21 @@
    "id": "P6-13",
    "title": "N3 评审：诞生",
    "phase": "P6",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
-    "P3-05",
     "P3-06",
+    "P4-06",
     "P5-16",
     "P5-18",
     "P5-20",
     "P6-03",
-    "P6-05",
     "P6-06",
     "P6-07",
-    "P6-09",
-    "P6-11",
     "P6-12",
-    "P6-16"
+    "P6-16",
+    "P6-18",
+    "P6-19",
+    "P6-20"
    ],
    "difficulty": "—",
    "suggested": "你",
@@ -1204,7 +1287,7 @@
    "id": "P6-14",
    "title": "网络生活：边界与隔离",
    "phase": "P6",
-   "milestone": "N4",
+   "milestone": "E5",
    "deps": [
     "P5-29",
     "P6-01"
@@ -1218,7 +1301,7 @@
    "id": "P6-15",
    "title": "网络生活：平台连接器",
    "phase": "P6",
-   "milestone": "N4",
+   "milestone": "E5",
    "deps": [
     "P6-14"
    ],
@@ -1231,7 +1314,7 @@
    "id": "P6-16",
    "title": "面板：成长记录、暂停与复核通知",
    "phase": "P6",
-   "milestone": "N3",
+   "milestone": "E4",
    "deps": [
     "P5-22",
     "P6-10"
@@ -1245,7 +1328,7 @@
    "id": "P6-17",
    "title": "契约变更：触摸观察加入「停留」",
    "phase": "P6",
-   "milestone": "N2",
+   "milestone": "E2",
    "deps": [
     "P5-22"
    ],
@@ -1255,10 +1338,56 @@
    "effort": "1 天"
   },
   {
+   "id": "P6-18",
+   "title": "诞生界面",
+   "phase": "P6",
+   "deps": [
+    "P5-15",
+    "P6-10"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": "和你一起定名字与诞生流程（R-9）",
+   "effort": "4 天",
+   "milestone": "E4",
+   "status_override": {
+    "status": "blocked",
+    "note": "开工前要先定 R-9（名字与诞生流程），定下后由 Claude 去掉这个标记"
+   }
+  },
+  {
+   "id": "P6-19",
+   "title": "契约变更：窗口标题默认读取与排除名单（ADR 0025）",
+   "phase": "P6",
+   "deps": [
+    "P5-22",
+    "P6-08"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "3 天",
+   "milestone": "E4"
+  },
+  {
+   "id": "P6-20",
+   "title": "终端接入语音输出（原 P6-02 第二部分）",
+   "phase": "P6",
+   "deps": [
+    "P4-06",
+    "P6-02"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "2 天",
+   "milestone": "E3"
+  },
+  {
    "id": "P7-01",
    "title": "性能与稳定性",
    "phase": "P7",
-   "milestone": "N4",
+   "milestone": "E5",
    "deps": [
     "P6-13"
    ],
@@ -1271,7 +1400,7 @@
    "id": "P7-02",
    "title": "安装包与更新",
    "phase": "P7",
-   "milestone": "N4",
+   "milestone": "E5",
    "deps": [
     "P7-01"
    ],
@@ -1284,7 +1413,7 @@
    "id": "P7-03",
    "title": "视觉与交互打磨",
    "phase": "P7",
-   "milestone": "N4",
+   "milestone": "E5",
    "deps": [
     "P6-13"
    ],
@@ -1297,7 +1426,7 @@
    "id": "P7-04",
    "title": "可公开准备",
    "phase": "P7",
-   "milestone": "N4",
+   "milestone": "E5",
    "deps": [
     "P7-02"
    ],
@@ -1310,7 +1439,7 @@
    "id": "P7-05",
    "title": "N4 发布验收",
    "phase": "P7",
-   "milestone": "N4",
+   "milestone": "E5",
    "deps": [
     "P0-00",
     "P0-01",
@@ -1347,6 +1476,7 @@
     "P4-04",
     "P4-05",
     "P4-06",
+    "P4-07",
     "P5-01",
     "P5-02",
     "P5-03",
@@ -1381,6 +1511,10 @@
     "P5-32",
     "P5-33",
     "P5-34",
+    "P5-36",
+    "P5-37",
+    "P5-38",
+    "P5-39",
     "P6-01",
     "P6-02",
     "P6-03",
@@ -1398,6 +1532,9 @@
     "P6-15",
     "P6-16",
     "P6-17",
+    "P6-18",
+    "P6-19",
+    "P6-20",
     "P7-01",
     "P7-02",
     "P7-03",
