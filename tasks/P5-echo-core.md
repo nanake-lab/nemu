@@ -1577,7 +1577,8 @@ P5-03（PR #64）已在 `core/crates/gateway/` 里做完管道、帧、九类事
 - **目录：** `core/contracts/`、`core/crates/core-types/`、`core/crates/action-gate/`、
   `core/crates/gateway/`、`core/crates/core-runtime/`、`core/crates/core-store/`、
   `core/crates/echoctl/`、`packages/terminal/`、`apps/panel/`、
-  `apps/desktop/src/supervisor/`、`tools/low-il-launcher/`；生成到
+  `apps/desktop/src/main/`、`apps/desktop/src/supervisor/`、`tools/low-il-launcher/`、
+  `docs/CONTRACTS.md` 中本卡对应的权限/消息条款；生成到
   `workers/*/generated/`、`packages/contracts/src/generated/`。
   上述目录只做本卡的认证/权限/管理服务/守护适配及联测，不接手其他功能；
   开工 PR 列出具体修改文件，目录占用按 AGENTS §2 串行。CI 按共享规则只追加检查。
