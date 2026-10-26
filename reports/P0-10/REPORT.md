@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-**部分完成：注入配对已实测；用户已批准修正日志参数并只补测两量化速度/IRL。** 前次 Perth 10:00–10:01:43 窗口的成功/失败原记录保留。现已将 server 日志 3 改为 4，原 CUDA/全 offload 判据不变，CPU 检查通过，正在准备新的补测窗口，不重跑注入。[PR #87](https://github.com/nanake-lab/nemu/pull/87) 保持草稿，不合并、不取下一卡；补测尚未实测，见 [BENCHMARK-RERUN.md](BENCHMARK-RERUN.md)。
+**部分完成：注入配对已实测；获批的日志 3→4 补测再次在启动证据检查处停止。** 前次运行提交 `072141f`，本次为 `7ab7420`，Perth 2026-10-26 12:59:48–12:59:59；未重跑注入。日志已出现实际使用 CUDA0 与 37/37 层 offload，但原入口要求的 `loaded CUDA backend` 行仍缺失，正式速度/IRL 请求 0；Q8_0 未运行。[PR #87](https://github.com/nanake-lab/nemu/pull/87) 保持草稿。已停止并通知恢复 runner，等待后续参数顺序修正的决定，见 [BLOCKED.md](BLOCKED.md)、[BENCHMARK-RERUN.md](BENCHMARK-RERUN.md)。
 
 本分支继续合并了 `origin/main` 的 `716f7f0`，重新读了变动后的 ARCHITECTURE；本卡、AGENTS、CONTRACTS、Echo Core README 未变化。最新 main 的核心/里程碑变动不修改本卡固定输入；解压后的 jobs 与 schemas 与前次逐字节相同，绑定源码只有 http_probe.py 改变。这些数据不能作为持续认知运行验收。
 
@@ -58,7 +58,7 @@
 | 本次配对注入、零调制、逐请求更新、方向提取 | 78 次执行完成；51 个生成位置配对结果见上表，能力无损/概念行为仍未实测 | full-run-01/、INJECTION-REPORT.md |
 | 本次 server/速度/IRL | 健康就绪，但缺少 CUDA/full-offload 日志；入口拒绝后主动结束 server（退出 1），sampler 退出 0；正式样本 0。不是引擎崩溃结论 | full-run-01/失败日志、BLOCKED.md |
 | 失败保留 | run-01 因探针 DLL 搜索配置落到 CPU，不作 GPU 结果；run-02 绑定函数到错误 DLL，退出 1。修正探针后 run-03 有 CUDA 证据 | smoke-cpu-fallback-01/、smoke-api-binding-02/、SMOKE-REPORT.md |
-| 本卡全部 Python Ruff / strict mypy | 12 文件通过 | full-preparation-20261026/，20261026-04 日志 |
+| 本卡全部 Python Ruff / strict mypy | 本次 14 文件通过 | rerun-preparation-20261026/，rerun-*-01.log |
 | schema 往返、流式计时/缓存/截断/空响应 | 6 项 CPU unittest 通过 | 同目录 unittest-04.log |
 | PowerShell AST / C++ `/W4 /WX` | 3 脚本语法错误 0；最终原生探针编译退出 0 | 同目录 |
 | CPU 准备过程失败 | 类型收窄、测试读取未显式 UTF-8、C++ int→float 警告等均修正；原始失败日志保留；不是硬件性能结果 | 同目录历史检查日志 |
@@ -89,7 +89,8 @@
 ## 待用户确认
 
 - [x] 已授权分段下载、CPU 转换、最小与本次完整 GPU 窗口；本次已结束。
-- [x] 用户选 1，批准 server 日志 3→4、保留原判据，补测两量化速度/IRL，不重跑已完成注入；补测结果待记录。
+- [x] 用户选 1 批准的 server 日志 3→4 已应用，原判据保留；补测启动后再次停止，失败原记录已保存，注入未重跑。
+- [ ] （阻塞）是否将现有日志参数移到 `-ngl` 之前再测；当前只备补丁、未应用，参数值与判据不变，见 BLOCKED.md。
 - [ ] （后续决策）依据全部实测在 P0-09 决定引擎/注入/IRL；当前没有自行选型或迁移。
 
 ## 后续建议（不在本任务范围内）

@@ -27,4 +27,14 @@
 
 补测使用 `benchmark_native.py` 单独入口，按 Q4_K_M→Q8_0 串行，每量化 474 请求（含 4 条排除预热）。GPT-SoVITS V5 在限定缓存路径盘点仍未发现，按用户授权只测载体，无 TTS/渲染。GPU 前再次核实 Listener/Worker 均未运行；失败/异常保留，严重组件问题停止，不自行换方案。
 
-本次实际测量提交由启动前的 `run-binding.json` 记录完整 HEAD；完成后在本节补写该提交及结果。当前仅完成修正与准备，尚无新的 GPU 数字。
+## 本次实际提交与失败结果
+
+实际运行提交：**`7ab742037a9203e9b5d671d8962598a3bdb0f311`**。前次实际运行提交为 **`072141f7112728ba05ebe70fe95de7468bb14221`**；前次结果记录在 `396fad7e92b3faf7c1d3541ae8601136c311feff`。完整启动绑定及本次原始记录见 [benchmark-run-02/](benchmark-run-02/)。
+
+Perth 2026-10-26 **12:59:48–12:59:59**，无 Listener/Worker 后启动。日志确认 verbosity=4、`using device CUDA0 (NVIDIA GeForce RTX 3080)`、CUDA0 model/KV/compute buffers，以及 `offloaded 37/37 layers to GPU`；但没有原入口要求的 `loaded CUDA backend` 行，因此仍按原条件拒绝，不自行放行。父进程退出 1；server 由入口主动结束，退出 1；采样器退出 0。**正式速度/IRL 样本 0，Q8_0 未运行，注入未重跑。** 不能将本次描述为 CPU 回落或模型崩溃。
+
+显存采样只有 1 行、匹配本进程 PID 为 0。离线函数的零值是空集合汇总，**不是 0 字节显存实测**；本次启动显存峰值未测得，不能用于显存验收。
+
+进一步静态核对发现，命令行中 `-ngl 999` 在日志参数之前；[arg.cpp:2802–2816](https://github.com/ggml-org/llama.cpp/blob/620d2225cc436ab0b001e3200e590e3b286ef9ab/common/arg.cpp#L2802-L2816) 的处理会调用 `llama_supports_gpu_offload`，[llama.cpp:95–102](https://github.com/ggml-org/llama.cpp/blob/620d2225cc436ab0b001e3200e590e3b286ef9ab/src/llama.cpp#L95-L102) 在后端尚未注册时会加载后端。CLI 按顺序处理，日志 4 尚未生效时该消息就可能被过滤。只修改值未覆盖此顺序，是本卡准备不完整；静态调用链与缺行现象相符，尚未实测调整顺序后的结果。
+
+已备好 [仅调整顺序的补丁](benchmark-run-02/proposed-log-order.patch)：将现有 `--log-verbosity 4` 放到首个选项，保留所有参数值及全部条件判断。AST 比较确认参数 token 多重集、所有 if 条件均不变；该补丁**未应用**。按阻塞即停要求，不再自行尝试。
