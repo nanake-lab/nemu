@@ -2,7 +2,7 @@
 
 ## 当前状态
 
-2026-10-26：已修复最新复审指出的 λ_k 混合量级偏差。本轮验收命令全部通过：定向回归、45 项 core-kernel 测试、工作区 100 项单元/集成测试与 2 项 compile-fail 文档测试，以及工作区 fmt/Clippy。保留 PR #94 草稿与 `needs-user`，等待独立复审与当前 head 的 CI；本轮不合并、不取下一张卡。接入 process_head 仍属 P5-19。
+2026-10-26：已修复最新复审指出的 λ_k 混合量级偏差。本轮验收命令全部通过：定向回归、45 项 core-kernel 测试、工作区 100 项单元/集成测试与 2 项 compile-fail 文档测试，以及工作区 fmt/Clippy。完成本地验收后将 PR #94 转为可审查，保留 `needs-user`，等待独立复审与当前 head 的 CI；本轮不合并、不取下一张卡。接入 process_head 仍属 P5-19。
 
 分支 `task/P5-10-fast-state` 已 fetch，并通过 merge `20ec9ae` 合入 `origin/main` 的 `a0c9ed8`；未 rebase 或强推。上游仅更新 CI 与 README，任务卡和规格未变。本轮自有修改只涉及 fast 模块、fast 结构夹具、本卡报告与规格对照条目。
 
@@ -38,6 +38,8 @@
 环境：Windows，锁定 Rust 1.99.0；`CARGO_HOME=D:\Dev\cache\cargo`，构建与临时存储位于 `D:\Dev\cache\P5-10\`，jobs=2、测试线程=1。等待 Windows runner 作业结束后再启动本机重负载，串行运行。未打开用户排练或正式存储。
 
 失败记录：先前 head `1e7644d` 的混合量级反例偏小约 20%，由上述复审复现，本轮回归已覆盖。第一轮曾误用 `Evaluation::default()` 编译失败，修正后通过，[失败原始日志](review-fixes-2026-10-26/kernel-20261026-131414.log) 保留。旧轮次日志、结果索引及输入哈希均未删改。
+
+CI 状态：修复提交 `2540a32` 的 [Windows run 40298009739](https://github.com/nanake-lab/nemu/actions/runs/40298009739) 被上游新增的草稿 PR 门禁拒绝，self-hosted 测试未运行；不计作通过。完成本地验收后按 AGENTS.md 转为可审查以触发 Windows 检查，最终结论以当前 head 的 PR 检查为准。
 
 | 验收项 | 结果与范围 | 证据 |
 | --- | --- | --- |
