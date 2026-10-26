@@ -2,9 +2,9 @@
 
 ## 当前状态
 
-按用户2026-10-26明确的纯函数范围完成代码调整（43da867），尚未完成验收，保持草稿。CI run 40272465565因main移除了core-kernel的libm依赖声明而编译失败；仅恢复包级Cargo.toml一行即可修复，但该文件超出用户限定目录，精确补丁已写入请求文件，等待这一处范围确认。CI全绿后才转可审查并留言「请审查」，不合并、不取下一卡。本轮不实现事务层写L或独立整段H重算，也不将它们伪装成本卡已通过的集成。
+按用户2026-10-26明确的纯函数范围完成代码调整，并按随后批准恢复固定libm依赖（0cf1605）。本机fmt、Clippy和工作区常规测试通过（90 passed / 0 failed / 1 ignored，含2个doc test）；旧 **2 显式诊断仍为failed。CI尚未全绿，保持草稿。修复后的Ubuntu run 40283963199因GitHub账户付款/支出限额问题未启动任何步骤，Windows runner也处于offline。外部条件恢复并确认最终head CI全绿后，才转可审查并留言「请审查」；不合并、不取下一卡。本轮不实现事务层写L或独立整段H重算，也不将它们伪装成本卡已通过的集成。
 
-本次先fetch，将 origin/main@716f7f0 以 merge a9b5e72 合入任务分支，未rebase/强推。保留上轮 abebb85 的V2-93至V2-98实现、原始输入与失败证据；main合入P5-27及后继契约卡P5-36后重新核验。除main合并外，新改动只在授权的dynamics/、reports/P5-25/和指定请求文件，未提交status.json、未改用户/系统设置。
+本次先fetch，将 origin/main@716f7f0 以merge a9b5e72合入；收到依赖恢复批准后再次fetch，并以merge e26bbcf合入origin/main@2bc04ba。未rebase/强推。保留上轮abebb85的V2-93至V2-98实现、原始输入与失败证据；main合入P5-27及后继契约卡P5-36后重新核验。除main合并外，新改动只在授权的dynamics/、reports/P5-25/和指定请求文件，以及用户本轮额外批准的kernel Cargo.toml唯一依赖行与Cargo生成的共享锁文件。未提交status.json、未改用户/系统设置。
 
 ## 用户确定的验收边界
 
@@ -12,7 +12,7 @@
 - **AC2-09：** C的函数签名不含x、m、R。调用方x初值和m取9组组合，在同一段128个外源事件的每个前缀比较θ位模式及完整估计器状态；所有组合一致。这里的x/m是纯函数调用边界夹具，不声称连接了真实运行时。
 - **I13：** C只返回暂存ThetaChange，没有L或提交能力。测试检查before/after/事件ID、输入完整不变、丢弃候选不推进事件游标、重复计算结果相同、无事件不产生条目。真正同事务写L由P5-29验收，独立完整H重放由P5-26验收。
 
-这些边界由本轮用户直接决定；不再把相应事务层未接通列为P5-25阻塞。当前新增阻塞仅是同步main后必需的包级依赖声明恢复。正式存储契约由main已登记的P5-36承接。
+这些边界由本轮用户直接决定；不再把相应事务层未接通列为P5-25阻塞。包级依赖恢复也已获得明确批准并完成。当前阻塞是CI运行条件，详见BLOCKED.md。正式存储契约由main已登记的P5-36承接。
 
 ## 交付物
 
@@ -25,28 +25,30 @@
 
 ## 验收
 
-本轮证据目录为closeout-20261026/。全部运行结论在落盘后填写，不把预期当实测。
+本轮证据目录为closeout-20261026/；各验收编号的closeout-20261026.json引用实际测试名与日志。checks/attempt-2/toolchain.txt记录启动时merge head e26bbcf，dependency.diff记录当时未提交的批准补丁；随后提交0cf1605与受测core目录完全一致（source-scope-final.json）。kernel为33 passed / 0 failed / 1 ignored。
 
 | 命令或检查 | 结果 | 证据/范围 |
 | --- | --- | --- |
-| cargo fmt --all -- --check | 待本轮结果 | 常规格式检查 |
-| cargo clippy --workspace --all-targets --locked -- -D warnings | failed（CI编译E0433） | main的P5-27删除libm声明；ci-code/run-40272465565.txt |
-| cargo test --workspace --locked --no-fail-fast | 待本轮结果 | 旧 **2 诊断应明确ignored，新参考与性质测试正常运行 |
-| THETA-1 新binary64参考 | 待本轮结果；上一轮已0位差 | 原500流/72822事件，严格b/variance/σ/g位比较，不加容差 |
-| THETA-2 / AC2-25性质部分 | 待本轮结果 | 固定ρ和自适应各7场景，原阈值保持 |
-| AC2-14 / AC2-05 θ | 待本轮结果 | 外源正例、自致/无事件完整恒等；128前缀纯函数重放 |
-| AC2-09 θ纯函数边界 | 待本轮结果 | 9组x初值/m，每个前缀θ和完整估计器逐位一致 |
-| I13纯函数暂存 | 待本轮结果 | 只返ThetaChange，不写L、不提交、不修改输入 |
-| V2-95/96/97 | 待本轮结果 | 停机扣除、对数平均、零时长/开放段、先验衰减、严格大于、计算故障/报警区别 |
-| 旧 **2 显式诊断 | 已知failed，待本轮显式复现 | 不属于常规验收；旧失败绝不改成通过 |
-| Ubuntu CI @43da867 | failed，run 40272465565 | Rust缺libm，未进入测试；TS/Python步骤通过；保持草稿 |
+| cargo fmt --all -- --check | passed | checks/attempt-2/results.json、fmt.log |
+| cargo clippy --workspace --all-targets --locked -- -D warnings | passed | checks/attempt-2/clippy.log；此前CI的E0433失败记录保留 |
+| cargo test --workspace --locked --no-fail-fast | passed：90通过、0失败、1 ignored | checks/attempt-2/workspace.log；旧 **2 ignored，新参考与性质测试正常运行 |
+| THETA-1 新binary64参考 | passed，0位差 | 原500流/72822事件，严格b/variance/σ/g位比较，不加容差 |
+| THETA-2 / AC2-25性质部分 | passed | 固定ρ和自适应各7场景，原阈值保持 |
+| AC2-14 / AC2-05 θ | passed | 外源正例、自致/无事件完整恒等；128前缀纯函数重放 |
+| AC2-09 θ纯函数边界 | passed | 9组x初值/m，每个前缀θ和完整估计器逐位一致 |
+| I13纯函数暂存 | passed | 只返ThetaChange，不写L、不提交、不修改输入 |
+| V2-95/96/97 | passed | 停机扣除、对数平均、零时长/开放段、先验衰减、严格大于、计算故障/报警区别 |
+| 旧 **2 显式诊断 | failed，exit 101；原1 ULP差异复现 | checks/attempt-2/legacy-diagnostic.log；不属于常规验收，仍是失败 |
+| Ubuntu CI @43da867（修复前） | failed，run 40272465565 | Rust缺libm，未进入测试；TS/Python步骤通过，历史记录保留 |
+| Ubuntu CI @0cf1605（修复后） | failed，run 40283963199，未启动检查 | 账户计费门控，steps为空；ci-code/run-40283963199.json |
+| Windows W02 | not_run | runner offline；草稿自动作业skipped，不算passed |
 | 新Python参考ruff/mypy、两版Python同字节 | passed（上一轮，本轮脚本未改） | batch4-20261026/checks/python-1、reference-python31214.stdout.txt |
 
 ## 历史失败保留
 
 旧 **2 对照与显式乘法在首处σ差1 ULP：4602808250010281358 / 4602808250010281359。原平方的37处差异、传播到σ的13处差异及精确整数舍入诊断见 rounding-20261024/；原失败见 evidence/tests/dynamics-attempt-2.log、THETA-1/result.json。上一轮常规kernel 36通过/1失败、workspace 103通过/1失败及fmt/Clippy早期失败日志均不改写。旧CI run 40264985040 也因该诊断失败，本轮保存其失败步骤摘要于 closeout-20261026/ci-before/。
 
-本轮改变的是诊断的运行分类，由用户明确授权；没有删除断言、改变输入或阈值。新参考仍要求严格逐位相等。旧Python原性质检查独立保留。
+本轮改变的是诊断的运行分类，由用户明确授权；没有删除断言、改变输入或阈值。新参考仍要求严格逐位相等。旧Python原性质检查独立保留。随后CI的E0433失败和修复后账户计费阻止作业启动的失败也分别保存，不因后续成功而抹去。
 
 ## 数值定义与边界
 
@@ -75,10 +77,11 @@ CUSUM的shift_sigma=1、threshold=8、n_h=10只是预先固定夹具，待实验
 
 本机Windows/Rust1.99.0；编译缓存与测试临时目录在D:/Dev/cache/P5-25/，环境变量仅进程内有效。只用合成输入与临时存储，不访问用户谱系/系统设置。子代理本轮只做只读CI与证据核验，重负载由主代理串行执行。
 
-无新增依赖或锁文件修改（main合并带入的上游变更除外）。复用libm0.2.16；新参考仅Python标准库。
+用户批准恢复被main移除的原依赖libm0.2.16（MIT，default-features=false）。cargo update --offline -p core-kernel只向共享锁文件增加该包及core-kernel的依赖关系，没有改变其他包版本。未引入新数学实现；新参考仅Python标准库。PR #94也恢复同一行，后合并者解决冲突并只保留一行。
 
 ## 待用户确认
 
+- [ ] （阻塞）恢复GitHub hosted Actions的计费运行条件和Windows runner；最终head CI通过后再转可审查。
 - [ ] 高难度卡独立交叉审查；本会话不自审、不合并。
 
 用户本轮已决定的诊断分类与纯函数边界不再列成待决项。实现验收问题如有失败在BLOCKED.md与最新PR评论明确记录。
@@ -89,3 +92,7 @@ CUSUM的shift_sigma=1、threshold=8、n_h=10只是预先固定夹具，待实验
 - P5-29：真实事件管线与来源/停机记录认证，同一事务写ThetaSnapshot、完整估计器和L，原子提交/故障回退及运行时AC2-09集成。
 - P5-36：V2-98/V2-103正式估计器契约、编码/校验、round trip和迁移；承接请求文件中的时间域需求。
 - 实验谱系后继卡：预登记并校准CUSUM、n_tau、报警夹具。P5-25性质测试不能替代生活参数校准。
+
+## 下一步
+
+等待外部CI条件恢复；随后重跑最终head检查，全部通过才转为可审查并留言「请审查」。最新head及CI状态以PR检查页和本轮进度评论为准，不以旧提交的结果替代。保留草稿时不请求正式审查。

@@ -1,0 +1,38 @@
+[
+  {
+    "command": "cargo fmt --all -- --check",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "result": "passed",
+    "expected_outcome_observed": true,
+    "started_utc": "2026-10-26T07:07:47.5379388Z",
+    "ended_utc": "2026-10-26T07:07:48.0229172Z"
+  },
+  {
+    "command": "cargo clippy --workspace --all-targets --locked -- -D warnings",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "result": "passed",
+    "expected_outcome_observed": true,
+    "started_utc": "2026-10-26T07:07:48.0342701Z",
+    "ended_utc": "2026-10-26T07:07:49.6819938Z"
+  },
+  {
+    "command": "cargo test --workspace --locked --no-fail-fast",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "result": "passed",
+    "expected_outcome_observed": true,
+    "started_utc": "2026-10-26T07:07:49.6838926Z",
+    "ended_utc": "2026-10-26T07:16:47.1802356Z"
+  },
+  {
+    "command": "cargo test -p core-kernel --locked dynamics::tests::reference::theta_1_original_500_streams_zero_violations -- --exact --ignored --nocapture",
+    "exit_code": 101,
+    "expected_exit_code": 101,
+    "result": "failed",
+    "expected_outcome_observed": true,
+    "started_utc": "2026-10-26T07:16:47.1821310Z",
+    "ended_utc": "2026-10-26T07:16:49.5145299Z"
+  }
+]
