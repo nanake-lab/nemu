@@ -1,0 +1,55 @@
+Started: 2026-10-26T13:14:14.8520868+08:00
+Step: kernel
+Command: cargo test -p core-kernel --locked --offline
+Working directory: D:\Dev\nemu-wt\P5-10\core
+HEAD before review-fix commit: 5458ad707e25dc539ef9cb01e22168ec9011efc8
+Origin main: 2bc04bad4902657eef49d3225cafa7945e7cfae6
+Toolchain: rustc 1.99.0 (b940084d7 2026-09-28)
+CARGO_HOME=D:\Dev\cache\cargo
+CARGO_TARGET_DIR=D:\Dev\cache\P5-10\target
+TEMP=D:\Dev\cache\P5-10\tmp
+CARGO_BUILD_JOBS=2 RUST_TEST_THREADS=1
+Data: synthetic fixtures and fresh temporary stores only
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling typenum v1.20.1
+   Compiling unicode-ident v1.0.27
+   Compiling hybrid-array v0.4.15
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling syn v3.0.9
+   Compiling crypto-common v0.2.2
+   Compiling block-buffer v0.12.1
+   Compiling serde_json v1.0.154
+   Compiling serde v1.0.229
+   Compiling const-oid v0.10.2
+   Compiling digest v0.11.3
+   Compiling serde_derive v1.0.229
+   Compiling cpufeatures v0.3.1
+   Compiling cfg-if v1.0.5
+   Compiling memchr v2.8.3
+   Compiling itoa v1.0.18
+   Compiling libm v0.2.16
+   Compiling sha2 v0.11.1
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-10\core\crates\core-types)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-10\core\crates\core-kernel)
+error[E0599]: no associated function or constant named `default` found for struct `effects::types::Evaluation` in the current scope
+  --> crates\core-kernel\src\fast\tests\event_map.rs:39:48
+   |
+39 |     let drive = compute_drive(&e, &Evaluation::default(), &input, &fixture().law).unwrap();
+   |                                                ^^^^^^^ associated function or constant not found in `effects::types::Evaluation`
+   |
+  ::: crates\core-kernel\src\effects\types.rs:91:1
+   |
+91 | pub struct Evaluation {
+   | --------------------- associated function or constant `default` not found for this struct
+   |
+   = help: items from traits can only be used if the trait is implemented and in scope
+   = note: the following trait defines an item `default`, perhaps you need to implement it:
+           candidate #1: `Default`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `core-kernel` (lib test) due to 1 previous error
+Finished: 2026-10-26T13:14:34.7237545+08:00
+Elapsed seconds: 19.8716677
+Exit code: 101
