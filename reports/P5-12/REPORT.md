@@ -6,6 +6,8 @@
 
 用户于 2026-10-26 从 Claude 改派给 Codex。工作树 `D:\Dev\nemu-wt\P5-12`，分支 `task/P5-12-j-compiler`，基线 `origin/main@b4eb7fd52f848eb042b2446c3f4ebf2416108c6c`。P5-10 #94 与 P5-27 #92 均已合并；开始实现前已推送认领提交并开草稿 PR。
 
+收尾 fetch 发现 main 新合入 P5-25 #77，于 `779f81e` merge `origin/main@86779b1`，没有 rebase/强推。自动合并保留 `dynamics/effects/fast/modulation` 四项登记。卡片、规则、modulation、fast/effects、IDL、存储及其依赖均未变化，15 个范围的核对见 [main-sync.json](main-sync.json)。
+
 ## 交付物
 
 - `core/crates/core-kernel/src/modulation/`：纯数值入口 `compile_numeric`，只借用 θ/x/R/t/空 validity。直接调用既有 `effects` 与 `fast`，从提交锚点投影一次；四天性固定顺序、学得项按规范倾向顺序。未验证或缺失方向被排除并列出，不缩放旧项。
@@ -23,15 +25,15 @@
 
 本地 Windows、仓库锁定 Rust 工具链，`CARGO_HOME=D:\Dev\cache\cargo`，编译与 TEMP/TMP 在 `D:\Dev\cache\P5-12`。进程内配置，未修改系统/用户设置。主代理串行执行，构建 jobs=2、测试线程=1；开始前检查其他重负载与 Runner.Worker。按角色名调用 `routine_reporter`，仅只读核对完成的日志、测试数、路径及哈希；未授予重负载窗口或验收裁决职责。未使用 GPU。
 
-测试在提交实现前执行，因此日志中的 `revision` 为认领提交；`inputs` 逐文件记录实际受测源码的 SHA-256。只读复核已确认 kernel 与 Clippy 两份记录各 26/26 个输入与当前源码一致（2026-10-26 18:49–18:50 +08:00），不能仅按该 `revision` 把测试误读为只测了认领报告。
+第一轮本地测试在提交实现前执行，因此日志中的 `revision` 为认领提交；`inputs` 逐文件记录实际受测源码的 SHA-256。只读复核已确认 kernel 与 Clippy 两份记录各 26/26 个输入与当时源码一致（2026-10-26 18:49–18:50 +08:00），不能仅按该 `revision` 把测试误读为只测了认领报告。合入新 main 后只增加上游 dynamics 与一行模块登记，不把旧本地日志冒充合并后的全工作区测试。
 
-[tested-git-blobs.json](tested-git-blobs.json) 同时记录这 26 个文件的受测 Windows 字节哈希和待提交 Git blob 身份；两者经核对仅可能存在仓库规则造成的 CRLF/LF 差异。克隆后的核对使用 Git blob 哈希，原始日志中的本机哈希保留不改。
+[tested-git-blobs.json](tested-git-blobs.json) 同时记录这 26 个文件的受测 Windows 字节哈希和实现提交 `ad6c523` 的 Git blob 身份；两者经核对仅可能存在仓库规则造成的 CRLF/LF 差异。克隆后的核对使用 Git blob 哈希，原始日志中的本机哈希保留不改。新 main 的变化另由 main-sync.json 列明。
 
 | 命令或检查（含验收编号） | 结果 | 证据 |
 | --- | --- | --- |
 | `cargo test -p core-kernel --locked --offline` | passed：65 项，其中新增 20 项 | `verification/kernel-20261026-183537-213.log` / `.json` |
 | `cargo clippy --workspace --all-targets --locked --offline -- -D warnings` | passed | `verification/clippy-20261026-183849-036.log` / `.json` |
-| `cargo test --workspace --locked --offline` | passed：120 项单元/集成测试 + 2 项 compile-fail 文档测试，0 失败/忽略；总计 1193.17 秒 | `verification/workspace-20261026-183938-846.log` / `.json`；26/26 个输入哈希与当前源码一致 |
+| `cargo test --workspace --locked --offline`（同步 P5-25 前） | passed：120 项单元/集成测试 + 2 项 compile-fail 文档测试，0 失败/忽略；总计 1193.17 秒 | `verification/workspace-20261026-183938-846.log` / `.json`；26/26 个输入哈希已核对 |
 | `cargo fmt --all -- --check` | passed | `verification/fmt-20261026-190029-027.json`（命令无输出） |
 | `python -B reports/P5-12/generate_bound_vectors.py --check`；该文件 `mypy --strict` 与 Ruff E4/E7/E9/F/I | passed：308 对独立参考向量复算一致；静态检查通过 | `verification/{oracle,mypy,ruff}-20261026-190106-829.log` / `.json` |
 | J06 数值结构：正向两层调制、未授权零作用、绝对预算、相消拒绝、旧项不缩放 | passed（局部） | `J06/result.json`；308 对 Fraction 算术向量，各测两个顺序 |
@@ -40,12 +42,13 @@
 | 两个读出的整体零态/排练验收 | not_run | 身体部分通过，主动函数缺定义 |
 | J01/J02/J03/J04 行为、J05 KV、J07 迁移 | not_run | 真实载体、模型与行为验证不属于本卡局部数值结果 |
 | 独立交叉审查 | not_run | 本卡仍有阻塞；完成后在 PR 写「请审查」 |
+| 合入 P5-25 后的本机 fmt/Clippy | not_run：其他 cargo workspace 作业占用本机，未启动命令 | `verification/{fmt,clippy}-20261026-190547-*.json`；合并结果由推送后当前 head 的 Ubuntu CI 验证 |
 
 测试使用合成内存状态；工作区存储测试使用新临时目录，不打开她的排练或正式存储。部署 profile、真实方向提取/验证、模型注入与行为有效性均未宣称通过。没有因本卡修改 TypeScript/Python worker 或 UI，不运行其应用验收；预算向量生成脚本另外检查。
 
 资源等待记录：第一次 fmt 检查发现其他 cargo 进程，未启动命令（`verification/fmt-20261026-190000-978.json` 为 `not_run`）；确认这些进程结束后执行 fmt 通过。未跳过断言或测试，未改阈值。以上已执行检查没有失败结果。
 
-CI 以 PR 当前 head 的检查为准，本地通过不替代 CI；推送后在 PR 记录结果。本轮纯 core-kernel 路径触发 Ubuntu Rust 检查，不在 `windows.yml` 的触发路径内。未要求或触发 Windows/GPU 作业。
+CI 以 PR 当前 head 的检查为准，本地通过不替代 CI；推送后在 PR 记录结果。本轮纯 core-kernel 路径触发 Ubuntu Rust fmt、workspace Clippy 及不含 core-store 的 workspace 测试，不在 `windows.yml` 的触发路径内。core-store、core-types、契约、清单/锁文件和工具链均未变化，已有本机完整存储证据保留；合并后不另声称重跑过本机全量。未要求或触发 Windows/GPU 作业。
 
 ## 规格对照
 
