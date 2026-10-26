@@ -85,16 +85,23 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: '1'
   UV_LINK_MODE: copy
 jobs:
-  windows:
-    name: Windows desktop and isolation
-    # Only owner-triggered, same-repository code may run on the user's machine.
+  windows-tests:
+    name: Windows self-hosted checks
+    # This job-level allowlist is evaluated before a self-hosted runner is assigned.
+    # Require approval for ALL outside collaborators and never approve fork workflow runs:
+    # a fork can edit this YAML, so this allowlist alone is not a security boundary.
+    # Only owner-triggered, same-repository branch code may run on the user's machine.
     # Draft PRs skip this job: it runs once the PR is ready for review, or on demand with
-    # `gh workflow run windows.yml --ref <branch>`.
+    # `gh workflow run windows.yml --ref <branch>`, restricted to the repository owner.
     if: >-
+      github.repository == 'nanake-lab/nemu' &&
       github.actor == github.repository_owner &&
-      (github.event_name != 'pull_request' ||
-       (github.event.pull_request.head.repo.full_name == github.repository &&
-        !github.event.pull_request.draft))
+      github.triggering_actor == github.repository_owner &&
+      ((github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')) ||
+       (github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        !github.event.pull_request.draft) ||
+       (github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/heads/')))
     runs-on: [self-hosted, Windows, X64, nemu]
     timeout-minutes: 20
     defaults:
@@ -229,3 +236,54 @@ jobs:
           name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ env.NEMU_W02_EVIDENCE }}/
           if-no-files-found: error
+
+  windows:
+    # Preserve the existing required-check name, but never report skipped tests as green.
+    # This hosted job does not check out or execute any PR files and needs no token access.
+    name: Windows desktop and isolation
+    needs: windows-tests
+    if: always()
+    runs-on: ubuntu-latest
+    permissions: {}
+    timeout-minutes: 5
+    steps:
+      - name: Require successful Windows checks
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          REPOSITORY: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+          OWNER: ${{ github.repository_owner }}
+          REF: ${{ github.ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          DRAFT: ${{ github.event.pull_request.draft }}
+          WINDOWS_RESULT: ${{ needs.windows-tests.result }}
+        run: |
+          if [[ "$REPOSITORY" != 'nanake-lab/nemu' || "$ACTOR" != "$OWNER" || "$TRIGGERING_ACTOR" != "$OWNER" ]]; then
+            echo '::error::Windows checks require the repository owner in nanake-lab/nemu.'
+            exit 1
+          fi
+          case "$EVENT" in
+            pull_request)
+              if [[ "$HEAD_REPOSITORY" != "$REPOSITORY" || "$DRAFT" != 'false' ]]; then
+                echo '::error::Windows checks are blocked for fork or draft PRs; skipped is not a pass.'
+                exit 1
+              fi
+              ;;
+            push|workflow_dispatch)
+              if [[ "$REF" != refs/heads/* ]]; then
+                echo '::error::Windows checks require a branch in this repository.'
+                exit 1
+              fi
+              ;;
+            *)
+              echo '::error::This event is not allowed to run Windows checks.'
+              exit 1
+              ;;
+          esac
+          if [[ "$WINDOWS_RESULT" != 'success' ]]; then
+            echo "::error::Windows checks did not succeed (result: $WINDOWS_RESULT)."
+            exit 1
+          fi
+          echo 'Windows checks completed successfully on the trusted self-hosted runner.'
