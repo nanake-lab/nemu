@@ -1,0 +1,29 @@
+{
+  "acceptance_id": "F02",
+  "result": "passed",
+  "scope": "P5-10 pure functions and structural fixtures only; runtime integration and behavior qualification excluded",
+  "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "command": "cargo test -p core-kernel --locked --offline",
+  "log": "../review-2-2026-10-26/kernel-20261026-165501.log",
+  "log_sha256": "03782ce522cfcec1fd099ad54dd509c5314a166f1bc888aa5d947cb71d3e2d86",
+  "log_sha256_scope": "UTF-8 with LF line endings (repository blob)",
+  "captured_log_sha256": "a59583de4fea6b416a92ec627189792b8c1e81feb619c967592a070a32903d8b",
+  "test_count": 13,
+  "tests": [
+    "fast::tests::drive_bounds::f02_contributions_are_summed_in_canonical_order",
+    "fast::tests::drive_bounds::f02_inconsistent_sum_is_rejected_even_when_within_bound",
+    "fast::tests::drive_bounds::f02_learned_out_of_range_or_nonfinite_is_rejected_before_weighting",
+    "fast::tests::drive_bounds::f02_nonfinite_eta_contributions_and_sum_are_rejected",
+    "fast::tests::f02_invalid_inputs_are_refused_not_repaired",
+    "fast::tests::f02_projection_and_drive_stay_in_x",
+    "fast::tests::rates::f02_extreme_finite_rates_through_authorized_compiler",
+    "fast::tests::rates::f02_projection_refuses_invalid_derived_rate_and_baseline",
+    "fast::tests::rates::learned_rate_matches_independent_reference_and_range",
+    "fast::tests::rates::learned_rate_mixed_scales_match_exact_rational_vectors",
+    "fast::tests::rates::learned_rate_review_counterexample_agrees_through_public_projection",
+    "fast::tests::state_boundaries::f02_negative_zero_is_rejected_by_validator_and_normalized_at_construction",
+    "fast::tests::state_boundaries::snapshot_decoder_rejects_noncanonical_negative_zero_bytes"
+  ],
+  "fixture": "../../../profiles/structural_fixture/fast/fixture.json",
+  "rate_reference_vectors": "../../../profiles/structural_fixture/fast/rate-reference-vectors.json"
+}

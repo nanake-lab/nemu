@@ -37,24 +37,89 @@ jobs:
         with:
           lfs: true
           persist-credentials: false
+          # Compare the complete PR, not just its latest commit. Pushes compare before..HEAD.
+          fetch-depth: 0
+      - name: Decide scope
+        id: scope
+        shell: pwsh
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # A manual run or an unavailable comparison runs everything (fail closed).
+          $full = $true
+          $files = @()
+          if ($env:EVENT -eq 'pull_request') {
+            $files = @(git diff --name-only --no-renames "$($env:PR_BASE)...$($env:PR_HEAD)")
+            $full = $LASTEXITCODE -ne 0
+          } elseif ($env:EVENT -eq 'push' -and $env:BEFORE -and $env:BEFORE -notmatch '^0+$') {
+            $files = @(git diff --name-only --no-renames $env:BEFORE HEAD)
+            $full = $LASTEXITCODE -ne 0
+          }
+          $scope = @{ node = $false; python = $false; rust = $false; storage = $false; contracts = $false; dotnet = $false; status = $false }
+          foreach ($f in $files) {
+            if ($f -match '\.md$|^(docs/|tasks/|reports/|content$)') { continue }
+            if ($f -match '^\.github/workflows/') { $full = $true; continue }
+            $known = $false
+            if ($f -match '^(apps/|packages/|tools/|spikes/|executors/codex-bridge/)') {
+              $scope.node = $true; $known = $true
+            }
+            if ($f -match '^(workers/|services/)') { $scope.python = $true; $known = $true }
+            if ($f -match '^core/') { $scope.rust = $true; $known = $true }
+            # core-store currently depends on core-types and frozen contract fixtures.
+            # Include workspace/lock/toolchain/config changes; update this with new path deps.
+            if ($f -match '^core/(crates/(core-store|core-types)/|contracts/|\.cargo/|[^/]+$)') {
+              $scope.storage = $true
+            }
+            if ($f -match '^(core/(contracts/|crates/core-types/|\.cargo/|[^/]+$)|packages/contracts/|workers/irl/generated/)') {
+              $scope.contracts = $true
+            }
+            if ($f -match '^executors/office-connector/') { $scope.dotnet = $true; $known = $true }
+            if ($f -match '^tools/status/') { $scope.status = $true }
+            # New directories and shared root build/toolchain files cannot silently miss checks.
+            if (-not $known) { $full = $true }
+          }
+          if ($full) { foreach ($key in @($scope.Keys)) { $scope[$key] = $true } }
+          # Contract/generated-type edits also exercise every Python consumer.
+          # Three-language conformance needs both the Node and Python toolchains.
+          if ($scope.contracts) { $scope.node = $true; $scope.python = $true }
+          foreach ($key in ($scope.Keys | Sort-Object)) {
+            $value = $scope[$key].ToString().ToLowerInvariant()
+            "$key=$value" >> $env:GITHUB_OUTPUT
+            $message = if ($scope[$key]) { 'run' } else { '无相关改动' }
+            "$key`: $message" | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          }
+          "full=$full; changed files=$($files.Count)"
+          # A failed diff selected the full suite; do not propagate its native exit code.
+          $global:LASTEXITCODE = 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        if: steps.scope.outputs.node == 'true'
         with:
           node-version-file: .nvmrc
-      - run: npm install --global pnpm@12.11.2
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm lint && pnpm typecheck && pnpm test && pnpm build
-      - run: pnpm test:contracts
+      - if: steps.scope.outputs.node == 'true'
+        run: npm install --global pnpm@12.11.2
+      - if: steps.scope.outputs.node == 'true'
+        run: pnpm install --frozen-lockfile
+      - if: steps.scope.outputs.node == 'true'
+        run: pnpm lint && pnpm typecheck && pnpm test && pnpm build
+      - if: steps.scope.outputs.node == 'true'
+        run: pnpm test:contracts
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: always()
+        if: always() && steps.scope.outputs.node == 'true'
         with:
           name: contracts-coverage
           path: reports/P0-02/coverage/
-      - run: pnpm test:transport
+      - if: steps.scope.outputs.node == 'true'
+        run: pnpm test:transport
       - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        if: steps.scope.outputs.python == 'true' || steps.scope.outputs.contracts == 'true'
         with:
           version: '0.12.15'
           python-version: '3.12'
       - name: Python checks (all four projects)
+        if: steps.scope.outputs.python == 'true'
         shell: pwsh
         run: |
           foreach ($project in @('workers/irl', 'workers/drive', 'workers/model-adapter', 'services/voice-sidecar')) {
@@ -73,29 +138,43 @@ jobs:
             } finally { Pop-Location }
           }
       - name: Rust checks
+        if: steps.scope.outputs.rust == 'true'
         working-directory: core
         run: |
           rustup show
           cargo fmt --all -- --check
           cargo clippy --workspace --all-targets -- -D warnings
-          cargo test --workspace --locked
+          cargo test --workspace --locked --exclude core-store
+      - name: core-store tests (including crash recovery)
+        if: steps.scope.outputs.storage == 'true'
+        working-directory: core
+        run: cargo test -p core-store --locked
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        if: steps.scope.outputs.dotnet == 'true'
         with:
           global-json-file: executors/office-connector/global.json
-      - run: dotnet build executors/office-connector/OfficeConnector.csproj --configuration Release
+      - if: steps.scope.outputs.dotnet == 'true'
+        run: dotnet build executors/office-connector/OfficeConnector.csproj --configuration Release
       - name: Hosted minutes estimate
+        if: steps.scope.outputs.node == 'true'
         env:
           CI_FREE_MINUTES: ${{ vars.CI_FREE_MINUTES || '2000' }}
           CI_MONTHLY_RUNS: ${{ vars.CI_MONTHLY_RUNS || '60' }}
           CI_HOSTED_MINUTES_PER_RUN: ${{ vars.CI_HOSTED_MINUTES_PER_RUN || '20' }}
         run: pnpm ci:budget
       - name: P5-01 IDL and three-language conformance (D10.8 / SYS21)
+        if: steps.scope.outputs.contracts == 'true'
         run: |
           pnpm test:core-contracts
           uv run --project core/contracts --locked ruff check core/contracts workers/irl/generated/echo
           uv run --project core/contracts --locked mypy --strict core/contracts/generate.py core/contracts/fixture_inputs.py core/contracts/adversarial.py core/contracts/verify.py workers/irl/generated/echo
       - name: P5-21 contract compatibility tooling (no reuse; checked by test:core-contracts)
+        if: steps.scope.outputs.contracts == 'true'
         run: |
           uv run --project core/contracts --locked mypy --strict core/contracts/check_compat.py core/contracts/freeze_vectors.py
       - name: P2-05 residual signal metrics (no browser or private assets)
+        if: steps.scope.outputs.node == 'true'
         run: pnpm test:p205:metrics
+      - name: Status board pause and reminder regressions
+        if: steps.scope.outputs.status == 'true'
+        run: python -m unittest discover -s tools/status -p 'test_*.py' -v
