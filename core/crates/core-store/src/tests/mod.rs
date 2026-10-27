@@ -13,6 +13,7 @@ mod legacy_v2;
 mod objects;
 mod reader;
 mod retention_versions;
+mod terminal_ingress;
 fn normal() -> DegradedStatus {
     DegradedStatus {
         schema_version: 1,

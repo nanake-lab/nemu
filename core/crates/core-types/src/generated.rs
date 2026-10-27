@@ -1098,6 +1098,118 @@ impl ProactiveGate {
     /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
     pub const fn is_superseded(self) -> bool { false }
 }
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum IngressKind {
+    INGRESS_EVENT = 1,
+    INGRESS_UPLOAD = 2,
+    INGRESS_QUERY = 3,
+    INGRESS_APPROVAL = 4,
+    INGRESS_CANCEL = 5,
+    INGRESS_GROWTH = 6,
+}
+impl TryFrom<u32> for IngressKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::INGRESS_EVENT),
+2 => Ok(Self::INGRESS_UPLOAD),
+3 => Ok(Self::INGRESS_QUERY),
+4 => Ok(Self::INGRESS_APPROVAL),
+5 => Ok(Self::INGRESS_CANCEL),
+6 => Ok(Self::INGRESS_GROWTH),
+_ => Err("unknown enum".into()), }}}
+impl From<IngressKind> for u32 {fn from(v:IngressKind)->Self{v as u32}}
+impl IngressKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum IngressReason {
+    INVALID_FRAME = 1,
+    AUTH_FAILED = 2,
+    SESSION_EXPIRED = 3,
+    CAPABILITY_DENIED = 4,
+    VERSION_UNSUPPORTED = 5,
+    OBJECT_MISMATCH = 6,
+    PENDING_RECORDS_FULL = 7,
+    PENDING_BYTES_FULL = 8,
+    AUDIT_FULL = 9,
+    UPLOAD_BUDGET_FULL = 10,
+    SOURCE_KEY_CONFLICT = 11,
+}
+impl TryFrom<u32> for IngressReason { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::INVALID_FRAME),
+2 => Ok(Self::AUTH_FAILED),
+3 => Ok(Self::SESSION_EXPIRED),
+4 => Ok(Self::CAPABILITY_DENIED),
+5 => Ok(Self::VERSION_UNSUPPORTED),
+6 => Ok(Self::OBJECT_MISMATCH),
+7 => Ok(Self::PENDING_RECORDS_FULL),
+8 => Ok(Self::PENDING_BYTES_FULL),
+9 => Ok(Self::AUDIT_FULL),
+10 => Ok(Self::UPLOAD_BUDGET_FULL),
+11 => Ok(Self::SOURCE_KEY_CONFLICT),
+_ => Err("unknown enum".into()), }}}
+impl From<IngressReason> for u32 {fn from(v:IngressReason)->Self{v as u32}}
+impl IngressReason {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum AuthStatus {
+    AUTHENTICATED = 1,
+    AUTH_REJECTED = 2,
+}
+impl TryFrom<u32> for AuthStatus { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::AUTHENTICATED),
+2 => Ok(Self::AUTH_REJECTED),
+_ => Err("unknown enum".into()), }}}
+impl From<AuthStatus> for u32 {fn from(v:AuthStatus)->Self{v as u32}}
+impl AuthStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum UploadStatus {
+    UPLOAD_CONTINUE = 1,
+    UPLOAD_COMPLETE = 2,
+}
+impl TryFrom<u32> for UploadStatus { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::UPLOAD_CONTINUE),
+2 => Ok(Self::UPLOAD_COMPLETE),
+_ => Err("unknown enum".into()), }}}
+impl From<UploadStatus> for u32 {fn from(v:UploadStatus)->Self{v as u32}}
+impl UploadStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum IngressResponseKind {
+    EVENT_RECEIPT = 1,
+    UPLOAD_RECEIPT = 2,
+    QUERY_REPLY = 3,
+    CONTROL_ACK = 4,
+    INGRESS_REJECTED = 5,
+}
+impl TryFrom<u32> for IngressResponseKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::EVENT_RECEIPT),
+2 => Ok(Self::UPLOAD_RECEIPT),
+3 => Ok(Self::QUERY_REPLY),
+4 => Ok(Self::CONTROL_ACK),
+5 => Ok(Self::INGRESS_REJECTED),
+_ => Err("unknown enum".into()), }}}
+impl From<IngressResponseKind> for u32 {fn from(v:IngressResponseKind)->Self{v as u32}}
+impl IngressResponseKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 /// S 5,6,7; D I 7.1; frozen tag `echo.object-ref`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -3155,6 +3267,182 @@ pub r#gates: Vec<ProactiveGate>,
 pub r#budgets: ProactivityBudgets,
 }
 impl super::WireMessage for ProactivityBoundaries {const NAME: &'static str = "ProactivityBoundaries";}
+/// ADR 0024 explicit deployment limits; frozen tag `echo.terminal-budget`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TerminalBudget {
+pub r#schema_version: u32,
+pub r#version: String,
+pub r#max_frame_bytes: u32,
+pub r#max_chunk_bytes: u32,
+pub r#max_object_bytes: u32,
+pub r#max_uploads: u32,
+pub r#max_upload_bytes: u32,
+}
+impl super::WireMessage for TerminalBudget {const NAME: &'static str = "TerminalBudget";}
+/// ADR 0024 transient credentials; never persist or log; frozen tag `echo.terminal-authenticate`.
+#[derive(Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TerminalAuthenticate {
+pub r#schema_version: u32,
+pub r#request_id: String,
+pub r#installation_id: String,
+pub r#token: HexBytes,
+pub r#protocol_versions: Vec<u32>,
+}
+impl std::fmt::Debug for TerminalAuthenticate {fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {f.write_str("TerminalAuthenticate([REDACTED])")}}
+impl super::WireMessage for TerminalAuthenticate {const NAME: &'static str = "TerminalAuthenticate"; const PERSISTABLE: bool = false;}
+/// ADR 0024 server-issued, connection-bound; frozen tag `echo.terminal-session`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TerminalSession {
+pub r#schema_version: u32,
+pub r#session_id: String,
+pub r#installation_id: String,
+pub r#protocol_version: u32,
+pub r#capabilities: Vec<IngressKind>,
+pub r#budget: TerminalBudget,
+}
+impl super::WireMessage for TerminalSession {const NAME: &'static str = "TerminalSession";}
+/// ADR 0024 authentication pairing; frozen tag `echo.terminal-auth-result`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TerminalAuthResult {
+pub r#schema_version: u32,
+pub r#request_id: String,
+pub r#status: AuthStatus,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#session: Option<TerminalSession>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason: Option<IngressReason>,
+}
+impl super::WireMessage for TerminalAuthResult {const NAME: &'static str = "TerminalAuthResult";}
+/// ADR 0024 no client receipt position/time/identity; frozen tag `echo.terminal-event`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TerminalEvent {
+pub r#schema_version: u32,
+pub r#id: String,
+pub r#stable_source_key: String,
+pub r#kind: EventKind,
+pub r#event_time_ns: DecimalI64,
+pub r#parents: Vec<String>,
+pub r#payload_ref: ObjectRef,
+pub r#provenance: ObjectRef,
+pub r#payload_digest: HexBytes,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#action_id: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#trial_id: Option<String>,
+pub r#correction_of: Vec<String>,
+pub r#derivation: Derivation,
+}
+impl super::WireMessage for TerminalEvent {const NAME: &'static str = "TerminalEvent";}
+/// ADR 0024 sequential CanonicalV1 bytes; frozen tag `echo.object-upload-chunk`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ObjectUploadChunk {
+pub r#schema_version: u32,
+pub r#upload_id: String,
+pub r#object: ObjectRef,
+pub r#offset: DecimalU64,
+pub r#data: HexBytes,
+pub r#final_chunk: bool,
+}
+impl super::WireMessage for ObjectUploadChunk {const NAME: &'static str = "ObjectUploadChunk";}
+/// ADR 0024 completion only after verification; frozen tag `echo.object-upload-receipt`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ObjectUploadReceipt {
+pub r#schema_version: u32,
+pub r#upload_id: String,
+pub r#object: ObjectRef,
+pub r#next_offset: DecimalU64,
+pub r#status: UploadStatus,
+}
+impl super::WireMessage for ObjectUploadReceipt {const NAME: &'static str = "ObjectUploadReceipt";}
+/// ADR 0024 typed successor; legacy Receipt stays internal; frozen tag `echo.receipt-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ReceiptV2 {
+pub r#schema_version: u32,
+pub r#stable_source_key: String,
+pub r#stage: ReceiptStage,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#event_id: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason_code: Option<IngressReason>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#raw_log_position: Option<DecimalU64>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#ingest_time_ns: Option<DecimalI64>,
+}
+impl super::WireMessage for ReceiptV2 {const NAME: &'static str = "ReceiptV2";}
+/// ADR 0024 closed authenticated dispatch; frozen tag `echo.terminal-request`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TerminalRequest {
+pub r#schema_version: u32,
+pub r#request_id: String,
+pub r#session_id: String,
+pub r#protocol_version: u32,
+pub r#kind: IngressKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#event: Option<TerminalEvent>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#upload: Option<ObjectUploadChunk>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#query: Option<QueryV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#approval: Option<ApprovalDecisionV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#cancel: Option<OutputCancel>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#growth: Option<GrowthControl>,
+}
+impl super::WireMessage for TerminalRequest {const NAME: &'static str = "TerminalRequest";}
+/// ADR 0024 paired reply; no old Receipt arm; frozen tag `echo.terminal-response`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TerminalResponse {
+pub r#schema_version: u32,
+pub r#request_id: String,
+pub r#session_id: String,
+pub r#protocol_version: u32,
+pub r#reply_to: IngressKind,
+pub r#kind: IngressResponseKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#receipt: Option<ReceiptV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#upload: Option<ObjectUploadReceipt>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#query: Option<QueryResultV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason: Option<IngressReason>,
+}
+impl super::WireMessage for TerminalResponse {const NAME: &'static str = "TerminalResponse";}
+/// ADR 0024 independent append-only bound; frozen tag `echo.ingress-audit-budget`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IngressAuditBudget {
+pub r#schema_version: u32,
+pub r#version: String,
+pub r#max_records: u32,
+pub r#max_bytes: u32,
+}
+impl super::WireMessage for IngressAuditBudget {const NAME: &'static str = "IngressAuditBudget";}
+/// ADR 0024 server fields only; no raw credential or input; frozen tag `echo.ingress-rejection`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IngressRejection {
+pub r#schema_version: u32,
+pub r#position: DecimalU64,
+pub r#recorded_at_ns: DecimalI64,
+pub r#reason: IngressReason,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#request_kind: Option<IngressKind>,
+}
+impl super::WireMessage for IngressRejection {const NAME: &'static str = "IngressRejection";}
 /// Conformance dispatch through every generated DTO and both typed codecs.
 pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contract::Limits) -> Result<(), String> {match name {
 "ObjectRef" => super::verify_typed::<ObjectRef>(value, limits),
@@ -3298,6 +3586,18 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "ProactivityCooldown" => super::verify_typed::<ProactivityCooldown>(value, limits),
 "ProactivityBudgets" => super::verify_typed::<ProactivityBudgets>(value, limits),
 "ProactivityBoundaries" => super::verify_typed::<ProactivityBoundaries>(value, limits),
+"TerminalBudget" => super::verify_typed::<TerminalBudget>(value, limits),
+"TerminalAuthenticate" => super::verify_typed::<TerminalAuthenticate>(value, limits),
+"TerminalSession" => super::verify_typed::<TerminalSession>(value, limits),
+"TerminalAuthResult" => super::verify_typed::<TerminalAuthResult>(value, limits),
+"TerminalEvent" => super::verify_typed::<TerminalEvent>(value, limits),
+"ObjectUploadChunk" => super::verify_typed::<ObjectUploadChunk>(value, limits),
+"ObjectUploadReceipt" => super::verify_typed::<ObjectUploadReceipt>(value, limits),
+"ReceiptV2" => super::verify_typed::<ReceiptV2>(value, limits),
+"TerminalRequest" => super::verify_typed::<TerminalRequest>(value, limits),
+"TerminalResponse" => super::verify_typed::<TerminalResponse>(value, limits),
+"IngressAuditBudget" => super::verify_typed::<IngressAuditBudget>(value, limits),
+"IngressRejection" => super::verify_typed::<IngressRejection>(value, limits),
 _ => Err("unknown message".into()), }}
 /// Message types kept only to read old data and for tests; no runtime path may produce them.
 pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "EvidenceAllocationV2", "EvidenceGroupV2", "TendencyV2", "RSnapshotV2", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "ApprovalRequest", "RunState", "Readout", "Query", "QueryResult", "ApprovalDecision", "HookCoefficients", "ModulationEnvelope"];

@@ -9889,6 +9889,913 @@
       "file": "terminal.proto",
       "rules": {},
       "resource": true
+    },
+    "TerminalBudget": {
+      "tag": "echo.terminal-budget",
+      "source": "ADR 0024 explicit deployment limits",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "max_frame_bytes",
+          "type": "uint32",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "max_chunk_bytes",
+          "type": "uint32",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "max_object_bytes",
+          "type": "uint32",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "max_uploads",
+          "type": "uint32",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "max_upload_bytes",
+          "type": "uint32",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {}
+    },
+    "TerminalAuthenticate": {
+      "tag": "echo.terminal-authenticate",
+      "source": "ADR 0024 transient credentials; never persist or log",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "installation_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "token",
+          "type": "bytes",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "protocol_versions",
+          "type": "uint32",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {},
+      "transient": true
+    },
+    "TerminalSession": {
+      "tag": "echo.terminal-session",
+      "source": "ADR 0024 server-issued, connection-bound",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "installation_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "protocol_version",
+          "type": "uint32",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0,
+          "max": 1.0
+        },
+        {
+          "name": "capabilities",
+          "type": "IngressKind",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "budget",
+          "type": "TerminalBudget",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {}
+    },
+    "TerminalAuthResult": {
+      "tag": "echo.terminal-auth-result",
+      "source": "ADR 0024 authentication pairing",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "status",
+          "type": "AuthStatus",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "session",
+          "type": "TerminalSession",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "IngressReason",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {
+        "discriminator": "status",
+        "common": [
+          "request_id"
+        ],
+        "cases": {
+          "1": {
+            "required": [
+              "session"
+            ]
+          },
+          "2": {
+            "required": [
+              "reason"
+            ]
+          }
+        }
+      }
+    },
+    "TerminalEvent": {
+      "tag": "echo.terminal-event",
+      "source": "ADR 0024 no client receipt position/time/identity",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "stable_source_key",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "EventKind",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_time_ns",
+          "type": "sint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parents",
+          "type": "string",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "payload_ref",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "provenance",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "payload_digest",
+          "type": "bytes",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "trial_id",
+          "type": "string",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "correction_of",
+          "type": "string",
+          "number": 12,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "derivation",
+          "type": "Derivation",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {}
+    },
+    "ObjectUploadChunk": {
+      "tag": "echo.object-upload-chunk",
+      "source": "ADR 0024 sequential CanonicalV1 bytes",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "upload_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "object",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "offset",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "data",
+          "type": "bytes",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "final_chunk",
+          "type": "bool",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {}
+    },
+    "ObjectUploadReceipt": {
+      "tag": "echo.object-upload-receipt",
+      "source": "ADR 0024 completion only after verification",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "upload_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "object",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "next_offset",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "status",
+          "type": "UploadStatus",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {}
+    },
+    "ReceiptV2": {
+      "tag": "echo.receipt-v2",
+      "source": "ADR 0024 typed successor; legacy Receipt stays internal",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "stable_source_key",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "stage",
+          "type": "ReceiptStage",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "reason_code",
+          "type": "IngressReason",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "raw_log_position",
+          "type": "uint64",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "ingest_time_ns",
+          "type": "sint64",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {
+        "discriminator": "stage",
+        "common": [
+          "stable_source_key"
+        ],
+        "cases": {
+          "1": {
+            "required": [
+              "event_id",
+              "raw_log_position",
+              "ingest_time_ns"
+            ]
+          },
+          "2": {
+            "required": [
+              "event_id"
+            ]
+          },
+          "3": {
+            "required": [
+              "event_id"
+            ]
+          },
+          "4": {
+            "required": [
+              "event_id",
+              "reason_code"
+            ]
+          }
+        }
+      },
+      "retains": "Receipt",
+      "reserved": [
+        5
+      ]
+    },
+    "TerminalRequest": {
+      "tag": "echo.terminal-request",
+      "source": "ADR 0024 closed authenticated dispatch",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "protocol_version",
+          "type": "uint32",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0,
+          "max": 1.0
+        },
+        {
+          "name": "kind",
+          "type": "IngressKind",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event",
+          "type": "TerminalEvent",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "upload",
+          "type": "ObjectUploadChunk",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "query",
+          "type": "QueryV2",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "approval",
+          "type": "ApprovalDecisionV2",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "cancel",
+          "type": "OutputCancel",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "growth",
+          "type": "GrowthControl",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {
+        "common": [
+          "request_id",
+          "session_id",
+          "protocol_version"
+        ],
+        "cases": {
+          "1": {
+            "required": [
+              "event"
+            ]
+          },
+          "2": {
+            "required": [
+              "upload"
+            ]
+          },
+          "3": {
+            "required": [
+              "query"
+            ]
+          },
+          "4": {
+            "required": [
+              "approval"
+            ]
+          },
+          "5": {
+            "required": [
+              "cancel"
+            ]
+          },
+          "6": {
+            "required": [
+              "growth"
+            ]
+          }
+        }
+      }
+    },
+    "TerminalResponse": {
+      "tag": "echo.terminal-response",
+      "source": "ADR 0024 paired reply; no old Receipt arm",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "protocol_version",
+          "type": "uint32",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0,
+          "max": 1.0
+        },
+        {
+          "name": "reply_to",
+          "type": "IngressKind",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "IngressResponseKind",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "receipt",
+          "type": "ReceiptV2",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "upload",
+          "type": "ObjectUploadReceipt",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "query",
+          "type": "QueryResultV2",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "IngressReason",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {
+        "common": [
+          "request_id",
+          "session_id",
+          "protocol_version",
+          "reply_to"
+        ],
+        "cases": {
+          "1": {
+            "required": [
+              "receipt"
+            ]
+          },
+          "2": {
+            "required": [
+              "upload"
+            ]
+          },
+          "3": {
+            "required": [
+              "query"
+            ]
+          },
+          "4": {},
+          "5": {
+            "required": [
+              "reason"
+            ]
+          }
+        }
+      }
+    },
+    "IngressAuditBudget": {
+      "tag": "echo.ingress-audit-budget",
+      "source": "ADR 0024 independent append-only bound",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "max_records",
+          "type": "uint32",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "max_bytes",
+          "type": "uint32",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {}
+    },
+    "IngressRejection": {
+      "tag": "echo.ingress-rejection",
+      "source": "ADR 0024 server fields only; no raw credential or input",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "position",
+          "type": "uint64",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "recorded_at_ns",
+          "type": "sint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "IngressReason",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request_kind",
+          "type": "IngressKind",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "terminal_ingress.proto",
+      "rules": {}
     }
   },
   "enums": {
@@ -10279,6 +11186,47 @@
       "GATE_BUDGET": 3,
       "GATE_MODE": 4,
       "GATE_MIN_INTERVAL": 5
+    },
+    "IngressKind": {
+      "INGRESS_UNSPECIFIED": 0,
+      "INGRESS_EVENT": 1,
+      "INGRESS_UPLOAD": 2,
+      "INGRESS_QUERY": 3,
+      "INGRESS_APPROVAL": 4,
+      "INGRESS_CANCEL": 5,
+      "INGRESS_GROWTH": 6
+    },
+    "IngressReason": {
+      "INGRESS_REASON_UNSPECIFIED": 0,
+      "INVALID_FRAME": 1,
+      "AUTH_FAILED": 2,
+      "SESSION_EXPIRED": 3,
+      "CAPABILITY_DENIED": 4,
+      "VERSION_UNSUPPORTED": 5,
+      "OBJECT_MISMATCH": 6,
+      "PENDING_RECORDS_FULL": 7,
+      "PENDING_BYTES_FULL": 8,
+      "AUDIT_FULL": 9,
+      "UPLOAD_BUDGET_FULL": 10,
+      "SOURCE_KEY_CONFLICT": 11
+    },
+    "AuthStatus": {
+      "AUTH_UNSPECIFIED": 0,
+      "AUTHENTICATED": 1,
+      "AUTH_REJECTED": 2
+    },
+    "UploadStatus": {
+      "UPLOAD_UNSPECIFIED": 0,
+      "UPLOAD_CONTINUE": 1,
+      "UPLOAD_COMPLETE": 2
+    },
+    "IngressResponseKind": {
+      "INGRESS_RESPONSE_UNSPECIFIED": 0,
+      "EVENT_RECEIPT": 1,
+      "UPLOAD_RECEIPT": 2,
+      "QUERY_REPLY": 3,
+      "CONTROL_ACK": 4,
+      "INGRESS_REJECTED": 5
     }
   },
   "json_enums": {

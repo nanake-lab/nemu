@@ -41308,5 +41308,1799 @@
         ]
       }
     }
+  },
+  {
+    "request": {
+      "name": "TerminalBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "max_frame_bytes": 1,
+        "max_chunk_bytes": 1,
+        "max_object_bytes": 1,
+        "max_uploads": 1,
+        "max_upload_bytes": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e7465726d696e616c2d6275646765740200000041300100000001000000010000000100000001000000",
+      "digest": "e6a542567f9251a366327419135bc40909ed435c9b6e0c3e001bdb78a0333617",
+      "ok": true,
+      "protobuf": "08011202413018012001280130013801",
+      "value": {
+        "max_chunk_bytes": 1,
+        "max_frame_bytes": 1,
+        "max_object_bytes": 1,
+        "max_upload_bytes": 1,
+        "max_uploads": 1,
+        "schema_version": 1,
+        "version": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "中文🙂1",
+        "max_frame_bytes": 4294967295,
+        "max_chunk_bytes": 4294967295,
+        "max_object_bytes": 4294967295,
+        "max_uploads": 4294967295,
+        "max_upload_bytes": 4294967295
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e7465726d696e616c2d6275646765740b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffffffffffff",
+      "digest": "dc35fd6264ca55fd816dc7f85ba3f1ad3e3d3e08f007805b97f71b5117895c79",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823118ffffffff0f20ffffffff0f28ffffffff0f30ffffffff0f38ffffffff0f",
+      "value": {
+        "max_chunk_bytes": 4294967295,
+        "max_frame_bytes": 4294967295,
+        "max_object_bytes": 4294967295,
+        "max_upload_bytes": 4294967295,
+        "max_uploads": 4294967295,
+        "schema_version": 1,
+        "version": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "﻿zero\u00002",
+        "max_frame_bytes": 17,
+        "max_chunk_bytes": 17,
+        "max_object_bytes": 17,
+        "max_uploads": 17,
+        "max_upload_bytes": 17
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e7465726d696e616c2d62756467657409000000efbbbf7a65726f00321100000011000000110000001100000011000000",
+      "digest": "3e723ecd0f511bd7a0e4c24e9ba87e6573919857f894839c78903fa1aad6f3aa",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003218112011281130113811",
+      "value": {
+        "max_chunk_bytes": 17,
+        "max_frame_bytes": 17,
+        "max_object_bytes": 17,
+        "max_upload_bytes": 17,
+        "max_uploads": 17,
+        "schema_version": 1,
+        "version": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthenticate",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "A0",
+        "installation_id": "A0",
+        "token": "0000000000000000000000000000000000000000000000000000000000000000",
+        "protocol_versions": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e7465726d696e616c2d61757468656e74696361746502000000413002000000413020000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "c2086f34b1152c02a07c36d4bc42e091eaefa300e75db4b7bcb35c137b7679c0",
+      "ok": true,
+      "protobuf": "0801120241301a02413022200000000000000000000000000000000000000000000000000000000000000000",
+      "value": {
+        "installation_id": "A0",
+        "protocol_versions": [],
+        "request_id": "A0",
+        "schema_version": 1,
+        "token": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthenticate",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "中文🙂1",
+        "installation_id": "中文🙂1",
+        "token": "0101010101010101010101010101010101010101010101010101010101010101",
+        "protocol_versions": [
+          4294967295
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e7465726d696e616c2d61757468656e7469636174650b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f99823120000000010101010101010101010101010101010101010101010101010101010101010101000000ffffffff",
+      "digest": "a610d242fad01a87dd116f08c47c8d16bbfff8dd57157444a1bcd08c3aa78557",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f9982312220010101010101010101010101010101010101010101010101010101010101010128ffffffff0f",
+      "value": {
+        "installation_id": "中文🙂1",
+        "protocol_versions": [
+          4294967295
+        ],
+        "request_id": "中文🙂1",
+        "schema_version": 1,
+        "token": "0101010101010101010101010101010101010101010101010101010101010101"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthenticate",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "﻿zero\u00002",
+        "installation_id": "﻿zero\u00002",
+        "token": "0202020202020202020202020202020202020202020202020202020202020202",
+        "protocol_versions": [
+          17,
+          0
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e7465726d696e616c2d61757468656e74696361746509000000efbbbf7a65726f003209000000efbbbf7a65726f0032200000000202020202020202020202020202020202020202020202020202020202020202020000000000000011000000",
+      "digest": "7d0a7a527653ffc86dff7042c7164ee9adba3154baba19e18942151e2b86844c",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f00322220020202020202020202020202020202020202020202020202020202020202020228002811",
+      "value": {
+        "installation_id": "﻿zero\u00002",
+        "protocol_versions": [
+          0,
+          17
+        ],
+        "request_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "token": "0202020202020202020202020202020202020202020202020202020202020202"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalSession",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "session_id": "A0",
+        "installation_id": "A0",
+        "protocol_version": 1,
+        "capabilities": [],
+        "budget": {
+          "schema_version": 1,
+          "version": "A0",
+          "max_frame_bytes": 1,
+          "max_chunk_bytes": 1,
+          "max_object_bytes": 1,
+          "max_uploads": 1,
+          "max_upload_bytes": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e02000000413002000000413001000000000000003a0000004e43563101000000140000006563686f2e7465726d696e616c2d6275646765740200000041300100000001000000010000000100000001000000",
+      "digest": "8d44fb8e3d4a655e4f5e168d9a94f3ab26082ecb6b0d2e420cd479da4f93c940",
+      "ok": true,
+      "protobuf": "0801120241301a0241302001321008011202413018012001280130013801",
+      "value": {
+        "budget": {
+          "max_chunk_bytes": 1,
+          "max_frame_bytes": 1,
+          "max_object_bytes": 1,
+          "max_upload_bytes": 1,
+          "max_uploads": 1,
+          "schema_version": 1,
+          "version": "A0"
+        },
+        "capabilities": [],
+        "installation_id": "A0",
+        "protocol_version": 1,
+        "schema_version": 1,
+        "session_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalSession",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "session_id": "中文🙂1",
+        "installation_id": "中文🙂1",
+        "protocol_version": 1,
+        "capabilities": [
+          2
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "中文🙂1",
+          "max_frame_bytes": 4294967295,
+          "max_chunk_bytes": 4294967295,
+          "max_object_bytes": 4294967295,
+          "max_uploads": 4294967295,
+          "max_upload_bytes": 4294967295
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e0b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231010000000100000002000000430000004e43563101000000140000006563686f2e7465726d696e616c2d6275646765740b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffffffffffff",
+      "digest": "c1b19532864413e8672ece8871ade3301016832aa9cd961d55ac35f2ee9a6e3f",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f99823120012802322d0801120be4b8ade69687f09f99823118ffffffff0f20ffffffff0f28ffffffff0f30ffffffff0f38ffffffff0f",
+      "value": {
+        "budget": {
+          "max_chunk_bytes": 4294967295,
+          "max_frame_bytes": 4294967295,
+          "max_object_bytes": 4294967295,
+          "max_upload_bytes": 4294967295,
+          "max_uploads": 4294967295,
+          "schema_version": 1,
+          "version": "中文🙂1"
+        },
+        "capabilities": [
+          2
+        ],
+        "installation_id": "中文🙂1",
+        "protocol_version": 1,
+        "schema_version": 1,
+        "session_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalSession",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "session_id": "﻿zero\u00002",
+        "installation_id": "﻿zero\u00002",
+        "protocol_version": 1,
+        "capabilities": [
+          3,
+          4
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "﻿zero\u00002",
+          "max_frame_bytes": 17,
+          "max_chunk_bytes": 17,
+          "max_object_bytes": 17,
+          "max_uploads": 17,
+          "max_upload_bytes": 17
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e09000000efbbbf7a65726f003209000000efbbbf7a65726f003201000000020000000300000004000000410000004e43563101000000140000006563686f2e7465726d696e616c2d62756467657409000000efbbbf7a65726f00321100000011000000110000001100000011000000",
+      "digest": "bd8bb4036a437f8c8800d451fa3c6ca9cff1132b46570fe4550c8a939e5381b9",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f0032200128032804321708011209efbbbf7a65726f003218112011281130113811",
+      "value": {
+        "budget": {
+          "max_chunk_bytes": 17,
+          "max_frame_bytes": 17,
+          "max_object_bytes": 17,
+          "max_upload_bytes": 17,
+          "max_uploads": 17,
+          "schema_version": 1,
+          "version": "﻿zero\u00002"
+        },
+        "capabilities": [
+          3,
+          4
+        ],
+        "installation_id": "﻿zero\u00002",
+        "protocol_version": 1,
+        "schema_version": 1,
+        "session_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthResult",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "A0",
+        "status": 1,
+        "session": {
+          "schema_version": 1,
+          "session_id": "A0",
+          "installation_id": "A0",
+          "protocol_version": 1,
+          "capabilities": [],
+          "budget": {
+            "schema_version": 1,
+            "version": "A0",
+            "max_frame_bytes": 1,
+            "max_chunk_bytes": 1,
+            "max_object_bytes": 1,
+            "max_uploads": 1,
+            "max_upload_bytes": 1
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e7465726d696e616c2d617574682d726573756c740200000041300100000001730000004e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e02000000413002000000413001000000000000003a0000004e43563101000000140000006563686f2e7465726d696e616c2d627564676574020000004130010000000100000001000000010000000100000000",
+      "digest": "b09e7fc5b86fc5889065085a2f44fe988736d8c3cef3de5ba2412bfa7980d641",
+      "ok": true,
+      "protobuf": "0801120241301801221e0801120241301a0241302001321008011202413018012001280130013801",
+      "value": {
+        "request_id": "A0",
+        "schema_version": 1,
+        "session": {
+          "budget": {
+            "max_chunk_bytes": 1,
+            "max_frame_bytes": 1,
+            "max_object_bytes": 1,
+            "max_upload_bytes": 1,
+            "max_uploads": 1,
+            "schema_version": 1,
+            "version": "A0"
+          },
+          "capabilities": [],
+          "installation_id": "A0",
+          "protocol_version": 1,
+          "schema_version": 1,
+          "session_id": "A0"
+        },
+        "status": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthResult",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "中文🙂1",
+        "status": 2,
+        "reason": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e7465726d696e616c2d617574682d726573756c740b000000e4b8ade69687f09f99823102000000000102000000",
+      "digest": "4650b20fbed446b9666ffa5c5b1a710fb2150424d0b2f37e786b2c6b33563755",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823118022802",
+      "value": {
+        "reason": 2,
+        "request_id": "中文🙂1",
+        "schema_version": 1,
+        "status": 2
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthResult",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "﻿zero\u00002",
+        "status": 1,
+        "session": {
+          "schema_version": 1,
+          "session_id": "﻿zero\u00002",
+          "installation_id": "﻿zero\u00002",
+          "protocol_version": 1,
+          "capabilities": [
+            3,
+            4
+          ],
+          "budget": {
+            "schema_version": 1,
+            "version": "﻿zero\u00002",
+            "max_frame_bytes": 17,
+            "max_chunk_bytes": 17,
+            "max_object_bytes": 17,
+            "max_uploads": 17,
+            "max_upload_bytes": 17
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e7465726d696e616c2d617574682d726573756c7409000000efbbbf7a65726f00320100000001900000004e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e09000000efbbbf7a65726f003209000000efbbbf7a65726f003201000000020000000300000004000000410000004e43563101000000140000006563686f2e7465726d696e616c2d62756467657409000000efbbbf7a65726f0032110000001100000011000000110000001100000000",
+      "digest": "214e0390399b48b83f9af457ec3482c3551ae2f0a9c09e00e0c49cc1f57f0794",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321801223708011209efbbbf7a65726f00321a09efbbbf7a65726f0032200128032804321708011209efbbbf7a65726f003218112011281130113811",
+      "value": {
+        "request_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "session": {
+          "budget": {
+            "max_chunk_bytes": 17,
+            "max_frame_bytes": 17,
+            "max_object_bytes": 17,
+            "max_upload_bytes": 17,
+            "max_uploads": 17,
+            "schema_version": 1,
+            "version": "﻿zero\u00002"
+          },
+          "capabilities": [
+            3,
+            4
+          ],
+          "installation_id": "﻿zero\u00002",
+          "protocol_version": 1,
+          "schema_version": 1,
+          "session_id": "﻿zero\u00002"
+        },
+        "status": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalEvent",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "id": "A0",
+        "stable_source_key": "A0",
+        "kind": 1,
+        "event_time_ns": "0",
+        "parents": [],
+        "payload_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "provenance": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "correction_of": [],
+        "derivation": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e7465726d696e616c2d6576656e7402000000413002000000413001000000000000000000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000000000000000000000000000000000000000000000000000000000000000000020000004130020000004130000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000",
+      "digest": "93bf5bee786f2aa7266d4a4dc095eb89e5235a763a77e79b3141d6bfde242a5a",
+      "ok": true,
+      "protobuf": "0801120241301a024130200128003a2e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800422e0801122000000000000000000000000000000000000000000000000000000000000000001a0241302202413028004a2000000000000000000000000000000000000000000000000000000000000000006801",
+      "value": {
+        "correction_of": [],
+        "derivation": 1,
+        "event_time_ns": "0",
+        "id": "A0",
+        "kind": 1,
+        "parents": [],
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "payload_ref": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "provenance": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "stable_source_key": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalEvent",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "id": "中文🙂1",
+        "stable_source_key": "中文🙂1",
+        "kind": 2,
+        "event_time_ns": "-9223372036854775808",
+        "parents": [
+          "中文🙂1"
+        ],
+        "payload_ref": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "provenance": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "payload_digest": "0101010101010101010101010101010101010101010101010101010101010101",
+        "action_id": "中文🙂1",
+        "trial_id": "中文🙂1",
+        "correction_of": [
+          "中文🙂1"
+        ],
+        "derivation": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e7465726d696e616c2d6576656e740b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231020000000000000000000080010000000b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffff650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffff200000000101010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f998231010b000000e4b8ade69687f09f998231010000000b000000e4b8ade69687f09f99823102000000",
+      "digest": "03fa88569f0f2a8213def769e7660da94e829470cdeb1904878126cebf117ca7",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231200228ffffffffffffffffff01320be4b8ade69687f09f9982313a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0142490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff014a200101010101010101010101010101010101010101010101010101010101010101520be4b8ade69687f09f9982315a0be4b8ade69687f09f998231620be4b8ade69687f09f9982316802",
+      "value": {
+        "action_id": "中文🙂1",
+        "correction_of": [
+          "中文🙂1"
+        ],
+        "derivation": 2,
+        "event_time_ns": "-9223372036854775808",
+        "id": "中文🙂1",
+        "kind": 2,
+        "parents": [
+          "中文🙂1"
+        ],
+        "payload_digest": "0101010101010101010101010101010101010101010101010101010101010101",
+        "payload_ref": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "provenance": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "stable_source_key": "中文🙂1",
+        "trial_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalEvent",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "id": "﻿zero\u00002",
+        "stable_source_key": "﻿zero\u00002",
+        "kind": 3,
+        "event_time_ns": "9223372036854775807",
+        "parents": [
+          "﻿zero\u00002",
+          "A3"
+        ],
+        "payload_ref": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "provenance": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "payload_digest": "0202020202020202020202020202020202020202020202020202020202020202",
+        "action_id": "﻿zero\u00002",
+        "trial_id": "﻿zero\u00002",
+        "correction_of": [
+          "﻿zero\u00002",
+          "A3"
+        ],
+        "derivation": 3
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e7465726d696e616c2d6576656e7409000000efbbbf7a65726f003209000000efbbbf7a65726f003203000000ffffffffffffff7f0200000002000000413309000000efbbbf7a65726f0032610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f00320100000000002000610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f003201000000000020002000000002020202020202020202020202020202020202020202020202020202020202020109000000efbbbf7a65726f00320109000000efbbbf7a65726f00320200000002000000413309000000efbbbf7a65726f003203000000",
+      "digest": "3abc847e0b0c8404648abed3bd3145e5240b065912e91aac92891fd84d578a0d",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f0032200328feffffffffffffffff01320241333209efbbbf7a65726f00323a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f003228818080808080801042430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080104a2002020202020202020202020202020202020202020202020202020202020202025209efbbbf7a65726f00325a09efbbbf7a65726f0032620241336209efbbbf7a65726f00326803",
+      "value": {
+        "action_id": "﻿zero\u00002",
+        "correction_of": [
+          "A3",
+          "﻿zero\u00002"
+        ],
+        "derivation": 3,
+        "event_time_ns": "9223372036854775807",
+        "id": "﻿zero\u00002",
+        "kind": 3,
+        "parents": [
+          "A3",
+          "﻿zero\u00002"
+        ],
+        "payload_digest": "0202020202020202020202020202020202020202020202020202020202020202",
+        "payload_ref": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "provenance": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "stable_source_key": "﻿zero\u00002",
+        "trial_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadChunk",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "A0",
+        "object": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "offset": "0",
+        "data": "",
+        "final_chunk": true
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e6f626a6563742d75706c6f61642d6368756e6b020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000000000000000000000000000000000000000000000000000000000000000000020000004130020000004130000000000000000000000000000000000000000001",
+      "digest": "00b24547da1df194a6d0e5fd125c50c7623beeb4fbcfd09aad59a71e9d84d469",
+      "ok": true,
+      "protobuf": "0801120241301a2e0801122000000000000000000000000000000000000000000000000000000000000000001a02413022024130280020002a003001",
+      "value": {
+        "data": "",
+        "final_chunk": true,
+        "object": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "offset": "0",
+        "schema_version": 1,
+        "upload_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadChunk",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "中文🙂1",
+        "object": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "offset": "18446744073709551615",
+        "data": "01",
+        "final_chunk": false
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e6f626a6563742d75706c6f61642d6368756e6b0b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffff010000000100",
+      "digest": "74979e826dd37f3dc9fbedd1f5bcd3a46971dd83128f8de2e240b0bbaa817e68",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0120ffffffffffffffffff012a01013000",
+      "value": {
+        "data": "01",
+        "final_chunk": false,
+        "object": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "offset": "18446744073709551615",
+        "schema_version": 1,
+        "upload_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadChunk",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "﻿zero\u00002",
+        "object": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "offset": "9007199254740993",
+        "data": "0202",
+        "final_chunk": true
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e6f626a6563742d75706c6f61642d6368756e6b09000000efbbbf7a65726f0032610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f00320100000000002000010000000000200002000000020201",
+      "digest": "ec5fc2d8586de8ba4f2e40fa8d7c7bb489e39cef16e1bca835df91672b150cdb",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080102081808080808080102a0202023001",
+      "value": {
+        "data": "0202",
+        "final_chunk": true,
+        "object": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "offset": "9007199254740993",
+        "schema_version": 1,
+        "upload_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "A0",
+        "object": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "next_offset": "0",
+        "status": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e6f626a6563742d75706c6f61642d72656365697074020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000000000000000000001000000",
+      "digest": "84bcb70f321482c82f050259e78d6ef6e9fdd88e5af9525ad48a00691d820aef",
+      "ok": true,
+      "protobuf": "0801120241301a2e0801122000000000000000000000000000000000000000000000000000000000000000001a02413022024130280020002801",
+      "value": {
+        "next_offset": "0",
+        "object": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "status": 1,
+        "upload_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "中文🙂1",
+        "object": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "next_offset": "18446744073709551615",
+        "status": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e6f626a6563742d75706c6f61642d726563656970740b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffff02000000",
+      "digest": "a69230147cb1b5a47651c0553882352795e6afa1d8e0ba78ab0cb38cc91fb7df",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0120ffffffffffffffffff012802",
+      "value": {
+        "next_offset": "18446744073709551615",
+        "object": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "status": 2,
+        "upload_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "﻿zero\u00002",
+        "object": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "next_offset": "9007199254740993",
+        "status": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e6f626a6563742d75706c6f61642d7265636569707409000000efbbbf7a65726f0032610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f00320100000000002000010000000000200001000000",
+      "digest": "a959054880ad150d3a9cfccee2ac5085a8f2cd3824970834d6a0baac22813fbb",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080102081808080808080102801",
+      "value": {
+        "next_offset": "9007199254740993",
+        "object": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "status": 1,
+        "upload_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalRequest",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "A0",
+        "session_id": "A0",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "A0",
+          "stable_source_key": "A0",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "byte_length": "0"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "byte_length": "0"
+          },
+          "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d72657175657374020000004130020000004130010000000100000001170100004e43563101000000130000006563686f2e7465726d696e616c2d6576656e7402000000413002000000413001000000000000000000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000",
+      "digest": "c5d6d40af94e35cfede90b6589c19ab365fe5d441899cdcb6c28bf5531af5b64",
+      "ok": true,
+      "protobuf": "0801120241301a024130200128013292010801120241301a024130200128003a2e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800422e0801122000000000000000000000000000000000000000000000000000000000000000001a0241302202413028004a2000000000000000000000000000000000000000000000000000000000000000006801",
+      "value": {
+        "event": {
+          "correction_of": [],
+          "derivation": 1,
+          "event_time_ns": "0",
+          "id": "A0",
+          "kind": 1,
+          "parents": [],
+          "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "payload_ref": {
+            "byte_length": "0",
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "schema_version": 1
+          },
+          "provenance": {
+            "byte_length": "0",
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "schema_version": 1
+          },
+          "schema_version": 1,
+          "stable_source_key": "A0"
+        },
+        "kind": 1,
+        "protocol_version": 1,
+        "request_id": "A0",
+        "schema_version": 1,
+        "session_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalRequest",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "中文🙂1",
+        "session_id": "中文🙂1",
+        "protocol_version": 1,
+        "kind": 2,
+        "upload": {
+          "schema_version": 1,
+          "upload_id": "中文🙂1",
+          "object": {
+            "schema_version": 1,
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "中文🙂1",
+            "resource_version": "中文🙂1",
+            "byte_length": "18446744073709551615"
+          },
+          "offset": "18446744073709551615",
+          "data": "01",
+          "final_chunk": false
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d726571756573740b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f99823101000000020000000001aa0000004e43563101000000180000006563686f2e6f626a6563742d75706c6f61642d6368756e6b0b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffff01000000010000000000",
+      "digest": "6dd362002ee96da49e78a854528ef5de5ffbba7ed1228a24031aaed6d2bfcafe",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231200128023a6a0801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0120ffffffffffffffffff012a01013000",
+      "value": {
+        "kind": 2,
+        "protocol_version": 1,
+        "request_id": "中文🙂1",
+        "schema_version": 1,
+        "session_id": "中文🙂1",
+        "upload": {
+          "data": "01",
+          "final_chunk": false,
+          "object": {
+            "byte_length": "18446744073709551615",
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "中文🙂1",
+            "resource_version": "中文🙂1",
+            "schema_version": 1
+          },
+          "offset": "18446744073709551615",
+          "schema_version": 1,
+          "upload_id": "中文🙂1"
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalRequest",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "﻿zero\u00002",
+        "session_id": "﻿zero\u00002",
+        "protocol_version": 1,
+        "kind": 3,
+        "query": {
+          "schema_version": 1,
+          "query_id": "﻿zero\u00002",
+          "filter": {
+            "schema_version": 1,
+            "text": "﻿zero\u00002",
+            "from": "﻿zero\u00002",
+            "to": "﻿zero\u00002",
+            "kinds": [],
+            "include_retracted": true
+          },
+          "limit": "9007199254740993",
+          "kind": 3
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d7265717565737409000000efbbbf7a65726f003209000000efbbbf7a65726f00320100000003000000000001840000004e435631010000000d0000006563686f2e71756572792d763209000000efbbbf7a65726f0032014d0000004e43563101000000110000006563686f2e71756572792d66696c7465720109000000efbbbf7a65726f00320109000000efbbbf7a65726f00320109000000efbbbf7a65726f0032000000000101010000000000200003000000000000",
+      "digest": "f42dc45832205afd80c116726215e78df8027b1542ad580aba049b97c2a1ecae",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f003220012803423f08011209efbbbf7a65726f0032222508011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f003230012881808080808080103003",
+      "value": {
+        "kind": 3,
+        "protocol_version": 1,
+        "query": {
+          "filter": {
+            "from": "﻿zero\u00002",
+            "include_retracted": true,
+            "kinds": [],
+            "schema_version": 1,
+            "text": "﻿zero\u00002",
+            "to": "﻿zero\u00002"
+          },
+          "kind": 3,
+          "limit": "9007199254740993",
+          "query_id": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "request_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "session_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressAuditBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "max_records": 1,
+        "max_bytes": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e696e67726573732d61756469742d6275646765740200000041300100000001000000",
+      "digest": "6aac848cf39155a68e4848d8c11ec9a203cfc9bccb5dc0f448112dcc773ba8a8",
+      "ok": true,
+      "protobuf": "08011202413018012001",
+      "value": {
+        "max_bytes": 1,
+        "max_records": 1,
+        "schema_version": 1,
+        "version": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressAuditBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "中文🙂1",
+        "max_records": 4294967295,
+        "max_bytes": 4294967295
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e696e67726573732d61756469742d6275646765740b000000e4b8ade69687f09f998231ffffffffffffffff",
+      "digest": "0e92516292c8f47bbc153603c32032378dd635592ae9cac4686c400cd32e1c52",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823118ffffffff0f20ffffffff0f",
+      "value": {
+        "max_bytes": 4294967295,
+        "max_records": 4294967295,
+        "schema_version": 1,
+        "version": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressAuditBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "﻿zero\u00002",
+        "max_records": 17,
+        "max_bytes": 17
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e696e67726573732d61756469742d62756467657409000000efbbbf7a65726f00321100000011000000",
+      "digest": "bc15b0fd062dd46ff688896ef848a8f7fb2226b49c92741889ccea6238b038d3",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003218112011",
+      "value": {
+        "max_bytes": 17,
+        "max_records": 17,
+        "schema_version": 1,
+        "version": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressRejection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "position": "0",
+        "recorded_at_ns": "0",
+        "reason": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e696e67726573732d72656a656374696f6e000000000000000000000000000000000100000000",
+      "digest": "ff96f559c424e862d51d87d49d71a6c939d36a8cf85f53125abc8db984168609",
+      "ok": true,
+      "protobuf": "0801100018002001",
+      "value": {
+        "position": "0",
+        "reason": 1,
+        "recorded_at_ns": "0",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressRejection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "position": "18446744073709551615",
+        "recorded_at_ns": "-9223372036854775808",
+        "reason": 2,
+        "request_kind": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e696e67726573732d72656a656374696f6effffffffffffffff0000000000000080020000000102000000",
+      "digest": "84c12a54e3fb20fa04d016d74642a8ffd8ecc473aea448fe9d1103a4b1082b91",
+      "ok": true,
+      "protobuf": "080110ffffffffffffffffff0118ffffffffffffffffff0120022802",
+      "value": {
+        "position": "18446744073709551615",
+        "reason": 2,
+        "recorded_at_ns": "-9223372036854775808",
+        "request_kind": 2,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressRejection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "position": "9007199254740993",
+        "recorded_at_ns": "9223372036854775807",
+        "reason": 3,
+        "request_kind": 3
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e696e67726573732d72656a656374696f6e0100000000002000ffffffffffffff7f030000000103000000",
+      "digest": "ce82932e2d2874f83096ed4cef81c56a55f925d8f213880610eeda7c18c9beca",
+      "ok": true,
+      "protobuf": "080110818080808080801018feffffffffffffffff0120032803",
+      "value": {
+        "position": "9007199254740993",
+        "reason": 3,
+        "recorded_at_ns": "9223372036854775807",
+        "request_kind": 3,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReceiptV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "stable_source_key": "A0",
+        "stage": 1,
+        "event_id": "A0",
+        "raw_log_position": "0",
+        "ingest_time_ns": "0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726563656970742d7632020000004130010000000102000000413000010000000000000000010000000000000000",
+      "digest": "9ef98339018563a2f9521aed44bcf76c429603288ecf95a8a0925d1827215176",
+      "ok": true,
+      "protobuf": "08011202413018012202413038004000",
+      "value": {
+        "event_id": "A0",
+        "ingest_time_ns": "0",
+        "raw_log_position": "0",
+        "schema_version": 1,
+        "stable_source_key": "A0",
+        "stage": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReceiptV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "stable_source_key": "中文🙂1",
+        "stage": 2,
+        "event_id": "中文🙂1"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726563656970742d76320b000000e4b8ade69687f09f99823102000000010b000000e4b8ade69687f09f998231000000",
+      "digest": "6b9b5dc8f9245bc3b739359c1fddf952349059441cef3a0af6519a5050545596",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311802220be4b8ade69687f09f998231",
+      "value": {
+        "event_id": "中文🙂1",
+        "schema_version": 1,
+        "stable_source_key": "中文🙂1",
+        "stage": 2
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReceiptV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "stable_source_key": "﻿zero\u00002",
+        "stage": 3,
+        "event_id": "﻿zero\u00002"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726563656970742d763209000000efbbbf7a65726f0032030000000109000000efbbbf7a65726f0032000000",
+      "digest": "6bb1bbd5af5fa7fd3ce881046621834a08a302560e584313a92f2bbc91541577",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003218032209efbbbf7a65726f0032",
+      "value": {
+        "event_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "stable_source_key": "﻿zero\u00002",
+        "stage": 3
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalResponse",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "A0",
+        "session_id": "A0",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 1,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "A0",
+          "stage": 1,
+          "event_id": "A0",
+          "raw_log_position": "0",
+          "ingest_time_ns": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e7465726d696e616c2d726573706f6e7365020000004130020000004130010000000100000001000000013f0000004e435631010000000f0000006563686f2e726563656970742d7632020000004130010000000102000000413000010000000000000000010000000000000000000000",
+      "digest": "cd043b56312e4e772ee091e5f7a7afd301e6de4a09d1da4ffd64c29302fc3d66",
+      "ok": true,
+      "protobuf": "0801120241301a0241302001280130013a1008011202413018012202413038004000",
+      "value": {
+        "kind": 1,
+        "protocol_version": 1,
+        "receipt": {
+          "event_id": "A0",
+          "ingest_time_ns": "0",
+          "raw_log_position": "0",
+          "schema_version": 1,
+          "stable_source_key": "A0",
+          "stage": 1
+        },
+        "reply_to": 1,
+        "request_id": "A0",
+        "schema_version": 1,
+        "session_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalResponse",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "中文🙂1",
+        "session_id": "中文🙂1",
+        "protocol_version": 1,
+        "reply_to": 2,
+        "kind": 2,
+        "upload": {
+          "schema_version": 1,
+          "upload_id": "中文🙂1",
+          "object": {
+            "schema_version": 1,
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "中文🙂1",
+            "resource_version": "中文🙂1",
+            "byte_length": "18446744073709551615"
+          },
+          "next_offset": "18446744073709551615",
+          "status": 2
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e7465726d696e616c2d726573706f6e73650b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310100000002000000020000000001aa0000004e435631010000001a0000006563686f2e6f626a6563742d75706c6f61642d726563656970740b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffff020000000000",
+      "digest": "2ee3246e65e14a0ca97c43358ff5ef16b8760e88565545bbc3519ee9480a242b",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f99823120012802300242670801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0120ffffffffffffffffff012802",
+      "value": {
+        "kind": 2,
+        "protocol_version": 1,
+        "reply_to": 2,
+        "request_id": "中文🙂1",
+        "schema_version": 1,
+        "session_id": "中文🙂1",
+        "upload": {
+          "next_offset": "18446744073709551615",
+          "object": {
+            "byte_length": "18446744073709551615",
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "中文🙂1",
+            "resource_version": "中文🙂1",
+            "schema_version": 1
+          },
+          "schema_version": 1,
+          "status": 2,
+          "upload_id": "中文🙂1"
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalResponse",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "﻿zero\u00002",
+        "session_id": "﻿zero\u00002",
+        "protocol_version": 1,
+        "reply_to": 3,
+        "kind": 3,
+        "query": {
+          "schema_version": 1,
+          "query_id": "﻿zero\u00002",
+          "status": 3,
+          "items": [
+            {
+              "schema_version": 1,
+              "ref": "﻿zero\u00002",
+              "at": "﻿zero\u00002",
+              "kind": "﻿zero\u00002",
+              "summary": "﻿zero\u00002",
+              "source": "﻿zero\u00002",
+              "retracted": true
+            },
+            {
+              "schema_version": 1,
+              "ref": "A3",
+              "at": "A3",
+              "kind": "A3",
+              "summary": "A3",
+              "source": "A3",
+              "retracted": false
+            }
+          ],
+          "growth_entries": [
+            {
+              "schema_version": 1,
+              "entry_id": "﻿zero\u00002",
+              "event_id": "﻿zero\u00002",
+              "kind": 3,
+              "recompute": {
+                "schema_version": 1,
+                "cause": 3,
+                "law_version": {
+                  "schema_version": 1,
+                  "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                  "object_type": "﻿zero\u00002",
+                  "resource_version": "﻿zero\u00002",
+                  "byte_length": "9007199254740993"
+                },
+                "previous_law_version": {
+                  "schema_version": 1,
+                  "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                  "object_type": "﻿zero\u00002",
+                  "resource_version": "﻿zero\u00002",
+                  "byte_length": "9007199254740993"
+                },
+                "r_revision_before": "﻿zero\u00002",
+                "r_revision_after": "﻿zero\u00002",
+                "theta_revision_before": "﻿zero\u00002",
+                "theta_revision_after": "﻿zero\u00002",
+                "changed_tendencies": [],
+                "theta_changed": true
+              }
+            },
+            {
+              "schema_version": 1,
+              "entry_id": "A3",
+              "event_id": "A3",
+              "kind": 4,
+              "migration": {
+                "schema_version": 1,
+                "previous_environment": {
+                  "schema_version": 1,
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "byte_length": "0"
+                },
+                "environment": {
+                  "schema_version": 1,
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "byte_length": "0"
+                },
+                "validation": {
+                  "schema_version": 1,
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "byte_length": "0"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e7465726d696e616c2d726573706f6e736509000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000300000003000000000001ad0300004e43563101000000140000006563686f2e71756572792d726573756c742d763209000000efbbbf7a65726f003203000000020000005d0000004e435631010000000f0000006563686f2e71756572792d6974656d09000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f0032013a0000004e435631010000000f0000006563686f2e71756572792d6974656d02000000413302000000413302000000413302000000413302000000413300020000006f0100004e43563101000000110000006563686f2e6c65646765722d656e74727909000000efbbbf7a65726f003209000000efbbbf7a65726f003203000000000001290100004e43563101000000150000006563686f2e7265636f6d707574652d7265636f726403000000610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000000200001610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000000200009000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f00320000000001000000005e0100004e43563101000000110000006563686f2e6c65646765722d656e7472790200000041330200000041330400000000000001260100004e43563101000000150000006563686f2e6d6967726174696f6e2d7265636f7264530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000003030303030303030303030303030303030303030303030303030303030303030200000041330200000041330000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000003030303030303030303030303030303030303030303030303030303030303030200000041330200000041330000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000303030303030303030303030303030303030303030303030303030303030303020000004133020000004133000000000000000000000000",
+      "digest": "48777cbbf5b07c6333e539a59e60e27e5243f872b3eba824d725e8584b409d79",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f00322001280330034ae60308011209efbbbf7a65726f00321803223b08011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f00322a09efbbbf7a65726f00323209efbbbf7a65726f0032380122180801120241331a024133220241332a0241333202413338002ad90108011209efbbbf7a65726f00321a09efbbbf7a65726f003220033abc01080110031a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f003228818080808080801022430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080102a09efbbbf7a65726f00323209efbbbf7a65726f00323a09efbbbf7a65726f00324209efbbbf7a65726f003250012aa1010801120241331a02413320044292010801122e0801122003030303030303030303030303030303030303030303030303030303030303031a0241332202413328001a2e0801122003030303030303030303030303030303030303030303030303030303030303031a024133220241332800222e0801122003030303030303030303030303030303030303030303030303030303030303031a024133220241332800",
+      "value": {
+        "kind": 3,
+        "protocol_version": 1,
+        "query": {
+          "growth_entries": [
+            {
+              "entry_id": "﻿zero\u00002",
+              "event_id": "﻿zero\u00002",
+              "kind": 3,
+              "recompute": {
+                "cause": 3,
+                "changed_tendencies": [],
+                "law_version": {
+                  "byte_length": "9007199254740993",
+                  "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                  "object_type": "﻿zero\u00002",
+                  "resource_version": "﻿zero\u00002",
+                  "schema_version": 1
+                },
+                "previous_law_version": {
+                  "byte_length": "9007199254740993",
+                  "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                  "object_type": "﻿zero\u00002",
+                  "resource_version": "﻿zero\u00002",
+                  "schema_version": 1
+                },
+                "r_revision_after": "﻿zero\u00002",
+                "r_revision_before": "﻿zero\u00002",
+                "schema_version": 1,
+                "theta_changed": true,
+                "theta_revision_after": "﻿zero\u00002",
+                "theta_revision_before": "﻿zero\u00002"
+              },
+              "schema_version": 1
+            },
+            {
+              "entry_id": "A3",
+              "event_id": "A3",
+              "kind": 4,
+              "migration": {
+                "environment": {
+                  "byte_length": "0",
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "schema_version": 1
+                },
+                "previous_environment": {
+                  "byte_length": "0",
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "schema_version": 1
+                },
+                "schema_version": 1,
+                "validation": {
+                  "byte_length": "0",
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "schema_version": 1
+                }
+              },
+              "schema_version": 1
+            }
+          ],
+          "items": [
+            {
+              "at": "﻿zero\u00002",
+              "kind": "﻿zero\u00002",
+              "ref": "﻿zero\u00002",
+              "retracted": true,
+              "schema_version": 1,
+              "source": "﻿zero\u00002",
+              "summary": "﻿zero\u00002"
+            },
+            {
+              "at": "A3",
+              "kind": "A3",
+              "ref": "A3",
+              "retracted": false,
+              "schema_version": 1,
+              "source": "A3",
+              "summary": "A3"
+            }
+          ],
+          "query_id": "﻿zero\u00002",
+          "schema_version": 1,
+          "status": 3
+        },
+        "reply_to": 3,
+        "request_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "session_id": "﻿zero\u00002"
+      }
+    }
   }
 ]

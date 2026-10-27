@@ -120,6 +120,18 @@ fn p534_v2_uncheckpointed_wal_preserved_on_rejected_writer() {
                 "V2 R head is read-only; P5-26 G/H replay is required before writing"
             ))
         ));
+        // P5-35: physical migration must not bypass V2 read-only protection or
+        // checkpoint its uncheckpointed WAL, in either physical direction.
+        for target in [1, 2] {
+            assert!(matches!(
+                Store::<Rehearsal>::migrate_temporary(&root, "legacy-wal", config(), target),
+                Err(Error::Rejected(
+                    "V2 R head is read-only; P5-26 G/H replay is required before writing"
+                ))
+            ));
+            assert!(fs::read(&db_path).unwrap() == db_before);
+            assert!(fs::read(&wal_path).unwrap() == wal_before);
+        }
         let db_after = fs::read(&db_path).unwrap();
         let wal_after = match fs::read(&wal_path) {
             Ok(bytes) => bytes,

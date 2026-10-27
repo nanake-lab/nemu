@@ -28,6 +28,10 @@ pub struct Field {
 #[derive(Deserialize)]
 pub struct Message {
     pub tag: String,
+    pub file: String,
+    #[serde(default)]
+    pub transient: bool,
+    pub superseded: Option<serde_json::Value>,
     pub fields: Vec<Field>,
     pub rules: Rules,
 }

@@ -112,6 +112,17 @@ fn crash_worker() {
         input["tag"].as_str(),
     );
     let operation = input["operation"].as_str().unwrap();
+    if operation == "migrate-up" || operation == "migrate-down" {
+        Store::<Rehearsal>::migrate_format(
+            path,
+            config(),
+            true,
+            if operation == "migrate-up" { 2 } else { 1 },
+            fault,
+        )
+        .unwrap();
+        panic!("migration fault did not fire");
+    }
     if operation == "init" {
         Store::<Rehearsal>::create_with_fault(
             path,
@@ -131,6 +142,26 @@ fn crash_worker() {
     let mut store = Store::<Rehearsal>::open(path, config(), true).unwrap();
     let cap = store.take_commit_capability().unwrap();
     match operation {
+        "terminal" => {
+            let (event, _pin) = unpersisted_event(&mut store, 0);
+            store.set_fault(fault);
+            store
+                .ingest_terminal(
+                    &super::terminal_ingress::input(event),
+                    &super::terminal_ingress::session(),
+                )
+                .unwrap();
+        }
+        "audit" => {
+            store.set_fault(fault);
+            store
+                .audit_ingress_rejection(
+                    IngressReason::AUTH_FAILED,
+                    None,
+                    &super::terminal_ingress::budget(),
+                )
+                .unwrap();
+        }
         "ingress" => {
             let (e, _payload) = unpersisted_event(&mut store, 1);
             store.set_fault(fault);

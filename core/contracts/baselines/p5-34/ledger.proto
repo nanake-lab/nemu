@@ -1,0 +1,78 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+
+// Echo Core v2.0 change ledger L (v2.0 §1, §2.5; P5-21). Append-only; F and J never read it.
+
+enum LedgerKind { LEDGER_UNSPECIFIED = 0; LEDGER_TENDENCY_CHANGED = 1; LEDGER_THETA_CHANGED = 2; LEDGER_RECOMPUTED = 3; LEDGER_MIGRATED = 4; LEDGER_GROWTH_PAUSED = 5; LEDGER_GROWTH_RESUMED = 6; LEDGER_REVIEW_HELD = 7; LEDGER_REVIEW_CONCLUDED = 8; }
+enum RecomputeCause { CAUSE_UNSPECIFIED = 0; CAUSE_LAW_VERSION = 1; CAUSE_SOURCE_CORRECTION = 2; CAUSE_REINTERPRETATION = 3; }
+enum ReviewTrigger { TRIGGER_UNSPECIFIED = 0; TRIGGER_JUMP = 1; TRIGGER_THETA_STEP = 2; TRIGGER_SLOW_DRIFT = 3; }
+enum ReviewVerdict { VERDICT_UNSPECIFIED = 0; LAW_CORRECT = 1; LAW_INCORRECT = 2; }
+
+// @message echo.theta-values | v2.0 §8 θ = (b, g, λ)
+message ThetaValues {
+  // recovery_per_s is λ in 1/s (unit: P5-21 reading, V2-31).
+  optional uint32 schema_version = 1; // required
+  optional NatureVector baseline = 2; // required
+  optional NatureScale gain = 3; // required
+  optional NatureScale recovery_per_s = 4; // required
+}
+
+// @message echo.tendency-change | v2.0 §2.5 R change: tendency, π before and after, evidence groups
+message TendencyChange {
+  // pi_before absent: the tendency entered R; pi_after absent: it left R (capacity fuse, v2.0 §12). V2-30.
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double pi_before = 3; // optional,min=-1,max=1
+  optional double pi_after = 4; // optional,min=-1,max=1
+  repeated string evidence_groups = 5; // required,set=self
+}
+
+// @message echo.theta-change | v2.0 §2.5 θ change: before and after values, referenced events
+message ThetaChange {
+  optional uint32 schema_version = 1; // required
+  optional ThetaValues before = 2; // required
+  optional ThetaValues after = 3; // required
+  repeated string events = 4; // required,set=self
+}
+
+// @message echo.recompute-record | v2.0 §2.5, §5.4 recompute: law version and difference summary
+message RecomputeRecord {
+  // Difference summary fields are a minimal reconstruction (V2-30).
+  optional uint32 schema_version = 1; // required
+  optional RecomputeCause cause = 2; // required
+  optional ObjectRef law_version = 3; // required
+  optional ObjectRef previous_law_version = 4; // optional
+  optional string r_revision_before = 5; // required,nonempty
+  optional string r_revision_after = 6; // required,nonempty
+  optional string theta_revision_before = 7; // required,nonempty
+  optional string theta_revision_after = 8; // required,nonempty
+  repeated string changed_tendencies = 9; // required,set=self
+  optional bool theta_changed = 10; // required
+}
+
+// @message echo.migration-record | v2.0 §2.5, §9.5 model change is a migration, not growth
+message MigrationRecord {
+  // Environments carry carrier, model, tokenizer and direction set; validation is the §9.6 record (V2-30).
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef previous_environment = 2; // required
+  optional ObjectRef environment = 3; // required
+  optional ObjectRef validation = 4; // required
+}
+
+// @message echo.ledger-entry | v2.0 §1 L, §2.5, §5.4, §12; V2-10, V2-11
+message LedgerEntry {
+  // @rules {"common":["entry_id","event_id"],"cases":{"1":{"required":["tendency_change"]},"2":{"required":["theta_change"]},"3":{"required":["recompute"]},"4":{"required":["migration"]},"5":{},"6":{},"7":{"required":["review_trigger"]},"8":{"required":["review_verdict","review_record"]}}}
+  // event_id is the committed H event this entry was appended with (V2-11).
+  optional uint32 schema_version = 1; // required
+  optional string entry_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional LedgerKind kind = 4; // required
+  optional TendencyChange tendency_change = 5; // optional
+  optional ThetaChange theta_change = 6; // optional
+  optional RecomputeRecord recompute = 7; // optional
+  optional MigrationRecord migration = 8; // optional
+  optional ReviewTrigger review_trigger = 9; // optional
+  optional ReviewVerdict review_verdict = 10; // optional
+  optional ObjectRef review_record = 11; // optional
+}
