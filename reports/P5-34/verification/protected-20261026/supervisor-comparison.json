@@ -1,0 +1,148 @@
+{
+  "comparisonHead": "43420652fa9604ee137c656693065b619a1dfd34",
+  "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+  "identicalGitBlobs": {
+    "apps/desktop/src/supervisor/index.ts": {
+      "failedHead": "1b05622030c75ae1821b8765965ca1bb46b67881",
+      "baseline": "1b05622030c75ae1821b8765965ca1bb46b67881",
+      "current": "1b05622030c75ae1821b8765965ca1bb46b67881"
+    },
+    "apps/desktop/src/supervisor/low-integrity-launcher.ts": {
+      "failedHead": "ca204c2182b55342ae45c061b2fc3dec26acd443",
+      "baseline": "ca204c2182b55342ae45c061b2fc3dec26acd443",
+      "current": "ca204c2182b55342ae45c061b2fc3dec26acd443"
+    },
+    "apps/desktop/src/supervisor/process-config.ts": {
+      "failedHead": "2c7ad65918ea51ca818f30955602e592e4dd3778",
+      "baseline": "2c7ad65918ea51ca818f30955602e592e4dd3778",
+      "current": "2c7ad65918ea51ca818f30955602e592e4dd3778"
+    },
+    "apps/desktop/src/supervisor/supervised-process.ts": {
+      "failedHead": "9fa6791a258243c5696c87294fc6386559686c45",
+      "baseline": "9fa6791a258243c5696c87294fc6386559686c45",
+      "current": "9fa6791a258243c5696c87294fc6386559686c45"
+    },
+    "apps/desktop/src/supervisor/supervisor.test.ts": {
+      "failedHead": "03fcd3f60c49c4ccff6e50c70c3b0a435fb81f17",
+      "baseline": "03fcd3f60c49c4ccff6e50c70c3b0a435fb81f17",
+      "current": "03fcd3f60c49c4ccff6e50c70c3b0a435fb81f17"
+    },
+    "apps/desktop/src/supervisor/supervisor.ts": {
+      "failedHead": "e476a56f8d8cdaa14f7b84ca1c881e8184fa10e1",
+      "baseline": "e476a56f8d8cdaa14f7b84ca1c881e8184fa10e1",
+      "current": "e476a56f8d8cdaa14f7b84ca1c881e8184fa10e1"
+    },
+    "apps/desktop/src/supervisor/types.ts": {
+      "failedHead": "5513d310697fcca939fc6dfd0bc5e866eb64ee9b",
+      "baseline": "5513d310697fcca939fc6dfd0bc5e866eb64ee9b",
+      "current": "5513d310697fcca939fc6dfd0bc5e866eb64ee9b"
+    },
+    "package.json": {
+      "failedHead": "51cb477cb475e7e97898fa4d455db8ceab3db4a6",
+      "baseline": "51cb477cb475e7e97898fa4d455db8ceab3db4a6",
+      "current": "51cb477cb475e7e97898fa4d455db8ceab3db4a6"
+    },
+    "pnpm-lock.yaml": {
+      "failedHead": "e358806286632b5626452d783c0cbfccaa624c30",
+      "baseline": "e358806286632b5626452d783c0cbfccaa624c30",
+      "current": "e358806286632b5626452d783c0cbfccaa624c30"
+    },
+    "vitest.config.ts": {
+      "failedHead": "e01eaa80f04581e04aa8c4955147e0c41faa200d",
+      "baseline": "e01eaa80f04581e04aa8c4955147e0c41faa200d",
+      "current": "e01eaa80f04581e04aa8c4955147e0c41faa200d"
+    }
+  },
+  "supervisorImports": {
+    "apps/desktop/src/supervisor/index.ts": [
+      "export * from './types.js';",
+      "export * from './low-integrity-launcher.js';",
+      "export * from './supervised-process.js';",
+      "export * from './supervisor.js';"
+    ],
+    "apps/desktop/src/supervisor/low-integrity-launcher.ts": [
+      "import { spawn, type ChildProcess, type SpawnOptions } from 'node:child_process';"
+    ],
+    "apps/desktop/src/supervisor/process-config.ts": [
+      "import { existsSync, readFileSync } from 'node:fs';",
+      "import { resolve } from 'node:path';",
+      "import type { ProcessConfig, HealthCheckConfig } from './types.js';",
+      "import type { DesktopSettings } from '../settings/migrations.js';"
+    ],
+    "apps/desktop/src/supervisor/supervised-process.ts": [
+      "import { spawn, type ChildProcess, type StdioOptions, exec } from 'node:child_process';",
+      "import { existsSync, appendFileSync, mkdirSync } from 'node:fs';",
+      "import { join } from 'node:path';",
+      "import { launchLowIntegrityProcess } from './low-integrity-launcher.js';",
+      "import type { ProcessConfig, ProcessState, ProcessStatus } from './types.js';"
+    ],
+    "apps/desktop/src/supervisor/supervisor.test.ts": [
+      "import { describe, it, expect, afterEach } from 'vitest';",
+      "import { SupervisedProcess, ProcessSupervisor } from './index.js';"
+    ],
+    "apps/desktop/src/supervisor/supervisor.ts": [
+      "import { SupervisedProcess } from './supervised-process.js';",
+      "import { createProcessConfigs } from './process-config.js';",
+      "import type { ProcessConfig, ProcessStatus } from './types.js';",
+      "import type { DesktopSettings } from '../settings/migrations.js';"
+    ],
+    "apps/desktop/src/supervisor/types.ts": []
+  },
+  "baselineRuns": [
+    {
+      "command": [
+        "pnpm",
+        "test"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34-main-check",
+      "head": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "node": "v24.21.0",
+      "pnpm": "12.11.2",
+      "startUtc": "2026-10-26T11:01:37.9336910Z",
+      "resourceGuard": "no Runner.Worker/cargo/rustc/core_store before start",
+      "comparison": "Predeclared 3 full pnpm test runs on unchanged main. Attempts 01-03 exposed scalar argument splatting (vitest run e s t); retained as harness-error evidence. Attempts 04-06 are the corrected fixed-size comparison, not run-until-pass.",
+      "endUtc": "2026-10-26T11:01:44.1227821Z",
+      "exitCode": 0,
+      "logSha256": "ae5e4a98c886dea0c2b17865a2f2953c9d720ae840734e4f245cc1d8d1ceb90a"
+    },
+    {
+      "command": [
+        "pnpm",
+        "test"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34-main-check",
+      "head": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "node": "v24.21.0",
+      "pnpm": "12.11.2",
+      "startUtc": "2026-10-26T11:01:45.3208653Z",
+      "resourceGuard": "no Runner.Worker/cargo/rustc/core_store before start",
+      "comparison": "Predeclared 3 full pnpm test runs on unchanged main. Attempts 01-03 exposed scalar argument splatting (vitest run e s t); retained as harness-error evidence. Attempts 04-06 are the corrected fixed-size comparison, not run-until-pass.",
+      "endUtc": "2026-10-26T11:01:51.2107733Z",
+      "exitCode": 0,
+      "logSha256": "ee802421eb2da23e8381927ffa0e5fdcda4438d454d4b4c9519962bfc20ed8e6"
+    },
+    {
+      "command": [
+        "pnpm",
+        "test"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34-main-check",
+      "head": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "node": "v24.21.0",
+      "pnpm": "12.11.2",
+      "startUtc": "2026-10-26T11:01:52.3375661Z",
+      "resourceGuard": "no Runner.Worker/cargo/rustc/core_store before start",
+      "comparison": "Predeclared 3 full pnpm test runs on unchanged main. Attempts 01-03 exposed scalar argument splatting (vitest run e s t); retained as harness-error evidence. Attempts 04-06 are the corrected fixed-size comparison, not run-until-pass.",
+      "endUtc": "2026-10-26T11:01:58.6009088Z",
+      "exitCode": 0,
+      "logSha256": "16274ea90ee36a67ae76c0e1f938f17d827263b4854464ae927fb3f02b95a85f"
+    }
+  ],
+  "harnessIssue": "main-test-01 through 03 ran vitest run e s t due to scalar splatting. Logs retained; corrected fixed-size runs are 04 through 06. No source test/config change.",
+  "priorFailure": "resumed-20261026/attempt-01/test.log: supervisor.test.ts:199, PID 87292, 579 passed/1 failed; later process exit does not revoke failure.",
+  "ciCoverage": {
+    "ubuntu": "ci.yml root pnpm test; vitest.config.ts includes apps/desktop/src/**/*.test.ts",
+    "windows": "windows.yml runs transport/isolation/e2e/visual and W02; not root pnpm test"
+  },
+  "conclusionBoundary": "Correct main runs did not reproduce the prior failure (3/3 passed). Do not claim a main failure, prove a root cause, or replace original failure with a later pass. Supervisor code, test, config and dependency lock match the failing head; its runtime imports are local supervisor modules and Node built-ins, not retention IDL/Rust storage."
+}

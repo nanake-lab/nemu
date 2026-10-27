@@ -1,0 +1,174 @@
+# P5-34 分配的实际保留率与倾向的证据量 — 报告
+
+## 当前状态
+
+实现和复审修复已完成；[最新复审](https://github.com/nanake-lab/nemu/pull/95#issuecomment-6436424046) 已关闭原 WAL 阻塞，并认可上传恢复的实现和既有验证边界。本次按用户要求 merge main 88455673，完成 #65 与 P5-34 的组合适配。提交前对该 main 的兼容门为 0 违例；其余受影响的契约、缓存、存储、fact-view 与静态检查由新 head 的 CI 验证。最终线上结果维护在 [PR #95](https://github.com/nanake-lab/nemu/pull/95) 描述、最新回复和[当前检查](https://github.com/nanake-lab/nemu/pull/95/checks)，不以历史成功替代新组合验证。保留 needs-user，交原审查者增量复核后停止，由用户合并，不领取下一卡。
+
+修复源码 af200a67 的 Ubuntu/Windows 均通过。随后仅补报告的 c6525e65 也通过 Ubuntu 与 W02 35+2，但上传报 Upload progress stalled，因此曾按要求恢复草稿。用户随后明确要求解决上传稳定性；本次追加仅修改 W02 上传流程和报告，最多三次上传、20/40 秒间隔、每次 6 分钟、成功 ID 门禁，重试复用同一日志而不重跑测试。详情见 [CI-UPLOAD-20261027.md](CI-UPLOAD-20261027.md)，原失败和所有日志保留。
+
+此前已 merge origin/main 3f8f98e5（merge 3da8c1dc，含 #106/#107）；本次继续 merge 8845567376e4726cc63d6f148cedd46ec563cd34（#109/#65），没有 rebase 或强推。必要报告更新与组合适配集中在本次 merge 提交；最终 CI 状态固定在 PR 中，不再为补录成功结果产生报告提交。
+
+用户明确决定：新写入 V3；V2 历史只读、可解码；旧 V2 head 拒绝继续写。当前没有正式或排练存储，现存仅测试数据（用户提供，本卡未访问用户数据）。本次不做 V2→V3 数据迁移。将来需要时由 **P5-26** 按 v2.0 §2.2 用规律 G 从 H 整段重放得到新 q/V 快照，**不另开迁移卡**。这一决定不是用默认 q/V 转换旧状态的授权。
+
+## 交付物
+
+- core/contracts/law.proto：EvidenceAllocationV3.9 actual_retention 保存历史 q；TendencyV3.18 evidence_absolute 保存独立 V；EvidenceGroupV3 保留 7/8，RSnapshotV3 保留 4/5。V2 标取代，原定义、标签和字节保留。
+- core-types 的编解码与纯语义检查：q 有限且在 (0,1]，V 有限且 ≥|A|；绑定规律参数核对 B、π、r 的有限 binary64 计算次序；分配序号恰为 0…N−1。既有 serde_json 开启 float_roundtrip 保留 JSON 位值。
+- 三语言生成类型、运行时及浏览器安全 Zod；黄金向量只追加 19 合法、35 非法，总计 464 合法、492 非法、18 Unicode。新分配/倾向/证据组/快照的合法与非法数分别为 6/10、5/11、4/7、4/7。p5-32 冻结基线保留。
+- ADR 0021 §11、差异登记 V2-62/63 接续说明、docs/traceability/P5-34.md 与两份接续请求；不新增检测器/θ 字段或 G 算法。
+- verify-protected.ps1、verify-main-supervisor.ps1、summarize_protected.py 与 verification/protected-20261026/：命令、时间、提交、退出码、日志 SHA-256、逐文件源码/基线哈希及 main 对照。旧运行目录不覆盖。
+
+### 2026-10-27 最后组合验证：合入 #65
+
+按最新 AGENTS §6 固定实际验证基线：上一轮 PR head 为 `c3444feabeda9fede878fe96464fff60475361c9`；Ubuntu 40463047717、Windows 40463210385 实际 checkout 均为 `cf038a608dd005991f74e24f5660f3ab1f399f8d`。其两个父提交为 **B = `3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf`** 与上述 head，tree 与该 head 相同，两次运行均成功。本次固定 **M = `8845567376e4726cc63d6f148cedd46ec563cd34`**，已确认 B 是 M 的祖先，B→M 只有 #109 流程规则和 #65 事实视图。依据、全部变化路径和保留文件的 Git 哈希见 `verification/combined-main-20261027/context.json`，实际 checkout 日志摘录见同目录 `previous-checkouts.json`。
+
+合并无文本冲突，实质差异如下：
+
+- 保留 #65 的四个 WireMessage 编解码入口不可变描述符缓存及冷/热/无缓存一致性测试；保留本卡 V3 类型、语义检查和黄金向量。
+- `core-store/src/queries.rs` 同时保留 #65 的 `Reader::transactions_at` 完整已接受事务前缀接口，以及本卡 `EvidenceGroupRecord::V2/V3` 与 `evidence_for` 版本分派。#65 的 reader 测试原样保留；本次没有改写这些接口的逻辑。
+- 唯一额外源码适配是 `fact-view/src/tests/fixture.rs` 的一行：`RSnapshotV2` → `RSnapshotV3`。该 TemporaryRoot 新写入夹具经 `prepare_r` 消费本卡的 V3 接口；`with_refs` 按消息名称选取本卡已有的 V3 黄金样例，不转换 V2 数据、不补默认 q/V、不改变断言或测试预算。这是合并后必须消除的类型不匹配，fact-view 生产逻辑保留 #65 原样。
+- #65 的 Cargo.lock 和可选 `cpu-embedding` Clippy 步骤原样合入；已通过复审的 WAL 修复、回归和 Windows 上传重试文件与旧 head 完全相同。
+
+| 必要检查 | 本次安排 / 结果 | 证据 |
+| --- | --- | --- |
+| `python core/contracts/check_compat.py --ref 8845567376e4726cc63d6f148cedd46ec563cd34` | 提交前通过；三个冻结基线、current、M 均 0 违例 | `verification/combined-main-20261027/compatibility.log` |
+| `pnpm test:core-contracts`（含 generate --check、冻结基线兼容、三语言黄金/对抗向量）、契约 Python 静态检查 | 由新 head 的 Ubuntu CI 执行，含缓存与 V3 组合；不在本机重复全量运行 | PR 当前检查及收口评论 |
+| `cargo fmt --all -- --check`、工作区全目标 Clippy、`cargo test --workspace --locked --exclude core-store` | 由同一 Ubuntu 作业执行，覆盖 core-types 缓存一致性及 fact-view | 同上 |
+| `cargo clippy -p fact-view --all-targets --features cpu-embedding --locked -- -D warnings` | 使用 #65 新增 CI 步骤，不下载模型、不重做未受影响的模型测量 | 同上 |
+| `cargo test -p core-store --locked` 与 Windows W02、上传门禁 | 分别由 Ubuntu 与 Windows 新 head 作业执行；W02 同时覆盖新 reader 接口和保留的 V2/V3 回归 | 同上 |
+
+现有 q/V 独立字节复算、上传恢复故障场景、supervisor 对照及完整 G/H/SYS17 的既有限制继续有效，不因同步 main 重做。CI 按原路径规则附带运行的 Node/Python/Windows 检查保持原配置，本机不另起重复套件。若仅上传失败，区分测试结论与上传结论并保留日志，不重跑整套测试或修改上传方案。
+
+### 受保护路径 core-store（必须一并交叉审查）
+
+这是用户专项批准的最小契约连锁改动，完整逐文件必要性见 [PROTECTED-SCOPE-20261026.md](PROTECTED-SCOPE-20261026.md)。没有恢复原 PR #72 的存储侧规律校验/重放回调扩围。
+
+| 文件（相对 core/crates/core-store/src/） | 必要性 |
+| --- | --- |
+| objects.rs、store.rs | 专用 R 生产切至 V3；读取 NSI1 时保留 V2/V3 原解码；通用准备入口拒绝两代 R；持有 writer 锁，以 SQLITE_OPEN_READ_ONLY 检查旧 V2 head，在建立任何读写连接之前明确拒绝 |
+| transaction.rs、publication.rs | staged R、可写 head 的 revision 和新发布的倾向/证据组索引切至 V3 |
+| queries.rs、lib.rs | 历史证据查询返回包裹生成消息的 EvidenceGroupRecord::V2/V3，保留原代际；最新版本优先和完整预算查询逻辑不变 |
+| tests/mod.rs、objects.rs、crash.rs、crash_harness.rs | 当前生产夹具与故障标签切至 V3；改变 A 的夹具同步声明 V≥|A|；原断言含义、等待与资源阈值不变 |
+| tests/legacy_v2.rs、retention_versions.rs | 临时历史 V2 夹具和新旧边界回归；生产 API 无旧写入逃生口 |
+
+共 12 个 core-store 文件。SQLite 格式版本/表结构、NSI1 物理布局、事务与预算行为未改变。新增逻辑对象使用独立 V3 标签和摘要；物理布局不变不等于完成语义迁移。受保护源码不含 G 实现、自动迁移、默认 q=1 或 V=B−c。
+
+### 2026-10-27 复审修复
+
+[审查意见](https://github.com/nanake-lab/nemu/pull/95#issuecomment-6432647798) 指出：旧实现先建立读写 SQLite 连接，V2 拒绝返回时关闭最后连接仍可能检查点并清理 WAL。仓库内新增回归在未修复实现上确认 DB 4096→159744 字节、WAL 284312→0；原有三项回归仍通过，新项失败，原始失败保留在 verification/protected-20261026/attempt-04/storage.log。审查方原日志复制至 verification/review-20261027/reviewer-wal-probe.log，SHA-256 为 2ced26c3a0a9e42d014125369a838009b2c4ad8debae9ac5485ee7e8d0c6a816。
+
+本轮只改两个受保护源码文件：store.rs 在原 writer 锁内先用真正的只读连接核验版本，允许写入后才打开读写连接；tests/retention_versions.rs 新增非空 WAL 的平面/分段 V2 回归，逐字节比较拒写前后的 DB/WAL，并验证拒绝后旧对象、事实和账本仍可读取。只在新建 TemporaryRoot 内恢复同一位置的静止 DB/WAL 副本；既有测试、阈值、存储格式与 V3 恢复路径均保留。该修复落实已批准的“V2 只读且拒写保留旧数据”，不是新增迁移或存储行为范围。
+
+本轮本地命令及原始日志如下，路径相对 verification/protected-20261026/。每个日志旁的 JSON 保存命令、时间、退出码、提交与 SHA-256；verification/review-20261027/red-inputs.json、green-inputs.json 记录测试时的未提交源码哈希。
+
+| 命令或检查 | 结果 | 原始证据 |
+| --- | --- | --- |
+| cargo test -p core-store --locked p534_ -- --test-threads=1，未修复实现 | 3 通过、1 失败；新增回归捕获 DB/WAL 改写 | attempt-04/storage.log |
+| 同一命令，修复后 | 4 通过、0 失败、0 忽略，包含非空 WAL 的平面/分段 V2 | attempt-05/storage.log |
+| cargo fmt --all -- --check；cargo clippy --workspace --all-targets --locked -- -D warnings | 通过 | attempt-05/fmt.log、clippy.log |
+| python core/contracts/generate.py --check；check_compat.py --ref origin/main | 0 stale；p5-01/p5-21/p5-32/current/origin/main 0 违例 | attempt-05/generate.log、compatibility.log |
+| pnpm test:core-contracts | schema 12 项；三语言各 11,592；protoc 464；浏览器 Zod 106，全部通过 | attempt-05/contracts.log |
+| cargo test --workspace --exclude core-store --locked -- --test-threads=1 | core-types 31、core-kernel 86 通过；main 已有 V2-93 诊断 1 ignored，不计作通过 | attempt-05/workspace-without-storage.log |
+
+修复源码 af200a67 的完整 CI 已通过，原始日志与状态在 verification/review-20261027/。Ubuntu run [40443460541](https://github.com/nanake-lab/nemu/actions/runs/40443460541)、Windows run [40443545530](https://github.com/nanake-lab/nemu/actions/runs/40443545530) 均为 success，Windows self-hosted 与汇总门禁均实际成功。W02 日志中 segmented=false/true 均为 DB 4096→4096、WAL 284312→284312，两个完整字节比较都为 true；35 项测试和 2 项文档测试通过，0 失败、0 忽略。W02 制品 [windows-P5-02-40443545530-1](https://github.com/nanake-lab/nemu/actions/runs/40443545530/artifacts/12707679278) 的 SHA-256 为 690db9fe4e50aa8c966d9adf7ae44cced45fbc0392cc20d0a6390b1e594142be。
+
+Ubuntu 同样完成 35 项存储测试及 2 项文档测试、三语言契约与 Rust/Node/Python 检查。根 Vitest 为 579 通过、1 个 Windows 专属 ASR 缓存测试按既有平台条件跳过；supervisor 6 项实际通过。core-kernel 的 V2-93 旧诊断 1 ignored 保留，不把跳过/忽略当通过。CI 状态及每一步结果见 ci-af200a67.json；原始日志为 ubuntu-40443460541-raw.log、windows-40443545530.log，各自 JSON 含下载来源和 SHA-256。旧 CI 成功、超时/取消和本次修复前失败均保留。
+
+### 报告提交 c6525e65：W02 测试通过，制品上传失败
+
+[Ubuntu 40456116455](https://github.com/nanake-lab/nemu/actions/runs/40456116455) 为 success，core-store 35+2、supervisor 6 项通过；既有平台跳过/ignored 仍不计作通过。[Windows 40456116456](https://github.com/nanake-lab/nemu/actions/runs/40456116456) 的 W02 测试步骤为 success：35 项测试（1079.46 秒）和 2 项文档测试（0.20 秒）通过，0 失败、0 忽略。新增 WAL 回归对两种布局均确认 DB 4096→4096、WAL 284312→284312，完整字节相同。
+
+Windows job 122029713840 在 2026-10-27 06:09:37 UTC 完成测试，06:09:39 开始上传 3 份日志；06:14:39 报 `Upload progress stalled`。06:18:23 虽随后输出 `Uploaded bytes 4725`，上传步骤结论仍为 failure，汇总 job 122043122361 也为 failure。不能把这次运行写成 CI 全绿；这不是 W02 测试失败或 60 分钟作业超时，具体网络根因未定位。该次失败后 PR 已恢复草稿；当时未改 CI、runner、超时、测试或阈值。用户随后授权的上传恢复见 CI-UPLOAD-20261027.md，测试与作业时限仍保留。
+
+证据在 verification/review-20261027/final-ci-c6525e65/：toolchain.log、clippy.log、tests.log 是收尾前从 runner 临时目录复制的原字节；tests.log SHA-256 为 c33be51ce47e24c2b24aabd0fc76e5e9d8d86c4c55d366747e0efb4468281a4d。GitHub job 日志通过连接器读取后以 UTF-8/LF 保存为 *-decoded.log，保留其完整文本，归档哈希见 decoded-files.json。gh 原字节下载返回 EOF 的空文件及错误元数据也保留，不当作测试失败；ci-state.json 保存实际运行/步骤结论。制品列表的后续查询出现传输错误，未据此声称制品存在或不存在。
+
+后续选项和本卡交付门控见 BLOCKED.md B6；本轮不把源代码修复通过与最终 CI 门控混为一谈。
+
+### 用户追加的上传恢复
+
+用户要求“换个稳定的方式就算遇到网络波动也能上传过去”。本轮据此修改 .github/workflows/windows.yml 的 W02 上传步骤：固定官方 action、不引入运行时依赖、只重试上传。临时 continue-on-error 仅限上传尝试，最终门禁必须找到成功 outcome 和有效制品 ID；全部失败仍使 CI 失败。实际工作流的重试条件、环境变量绑定、PowerShell 门禁已通过 14 个本地场景，并确认原测试步骤、安全范围和 Windows 汇总门禁与 main 完全相同。验证脚本、失败日志、修复后静态检查及最终哈希在 verification/review-20261027/upload-retry/；完整说明见 CI-UPLOAD-20261027.md。
+
+## 验收
+
+原交付证据在 verification/protected-20261026/，每项 log/json 对记录原始命令、退出码及 SHA-256。Rust/Cargo 1.99.0 与仓库锁定一致；Node 24.21.0、pnpm 12.11.2；系统 Python 3.12.10，uv 项目 Python 3.12.14。缓存、编译、临时数据在 D 盘；重负载串行。2026-10-26 曾使用 routine_reporter（GPT-6 Luna/max）仅执行指定轻量核验；2026-10-27 本轮修复未委派子代理。下表保留原交付验证与失败边界，复审修复证据见上一节。
+
+| 命令或检查 | 结果 | 证据（相对 verification/protected-20261026/） |
+| --- | --- | --- |
+| python core/contracts/generate.py --check | 最新 main 合并后通过，0 stale | attempt-03/generate.log |
+| python core/contracts/check_compat.py --ref origin/main | 最新 main 合并后通过；p5-01、p5-21、p5-32、current、origin/main：0 违例 | attempt-03/compatibility.log |
+| 旧黄金与新增字节独立复核 | 旧 445/457/18 前缀不变；新增 19 合法向量独立复算 0 差异 | attempt-01/bytes.log |
+| 定向输入与 p5-32 基线 | 7 合法、23 非法、6 非有限对照；7 proto 与发布版本相同 | attempt-01/inputs.log |
+| pnpm test:core-contracts（D10.8/SYS21 本卡范围） | 最新 main 合并后通过；12 schema 测试、每语言 11592 例、protoc 464、浏览器 Zod 106 | attempt-03/contracts.log |
+| cargo test -p core-types --locked | 最新 main 合并后 31/31 通过，含 7 个 P5-34 语义正反例 | attempt-03/types.log |
+| cargo test -p core-store p534_ | 通过，3/3；首次夹具构造错误 2/3 的原始失败保留，修复后复验 | attempt-01/storage.log、attempt-02/storage.log |
+| cargo test --workspace --locked -j1 -- --test-threads=1 | 通过；kernel 45、store 34、types 31 及 2 个编译失败示例；store 1252.01 秒 | attempt-01/workspace.log |
+| cargo clippy --workspace --all-targets -- -D warnings | 合并后复验通过 | attempt-01/clippy.log、attempt-02/clippy.log |
+| cargo fmt --all -- --check | 通过，最后源码格式复核通过 | attempt-01/fmt.log、attempt-02/fmt.log |
+| pnpm lint | 通过 | attempt-01/lint.log |
+| pnpm typecheck / test / build | 全通过；Node 52 文件/580 项 | attempt-01/typecheck.log、test.log、build.log |
+| IDL/生成 Python ruff、mypy --strict | 通过，mypy 12 文件 | attempt-01/ruff.log、mypy.log |
+| 三 worker ruff、mypy --strict | 全通过，各 2 个源/测试文件 | attempt-01/{irl,drive,model-adapter}-{ruff,mypy}.log |
+| 三 worker uv run pytest | 各 1 项通过；仅脚手架级用例 | attempt-01/*-pytest.log |
+| 固定 main b4eb7fd 的三次完整 pnpm test | 3/3 通过，每次 52 文件/580 项；未复现 supervisor 失败 | main-test-04/05/06.log、supervisor-comparison.json |
+| Ubuntu CI，源码提交 7cb285a | 通过，含 34 项存储、两项 compile-fail、Node/Python/Rust 与契约；按路径不涉及的 .NET/status 步骤跳过，不计作本卡验收通过项 | ubuntu-40318254909.log、ci-7cb285a-ubuntu-success.json |
+| Ubuntu CI，提交 7ddefa8 | 通过，run 40321431794；与最新文档 merge 后的全部源码/工作流相同；仍不代替新 head 的检查 | ci-7ddefa8-final.json、main-refresh-317dde9.json |
+| 历史 head d047b417 的 Ubuntu / Windows CI | 两者实际通过；W02 34 项测试及 2 项文档测试通过，未覆盖本轮新增 WAL 场景 | [Ubuntu 40358933290](https://github.com/nanake-lab/nemu/actions/runs/40358933290)、[Windows 40358965023](https://github.com/nanake-lab/nemu/actions/runs/40358965023) |
+| 本轮修复源码 af200a67 的 CI | Ubuntu 与 Windows 实际通过，存储 35+2；报告提交 c6525e65 的上传失败单独记录于上一节 | verification/review-20261027/ci-af200a67.json；[PR #95 当前检查](https://github.com/nanake-lab/nemu/pull/95/checks) |
+| 完整 G 重放、AC2-08/19/21、I23、SYS17 | not_run，不用存储组件通过替代 | 本报告；各编号目录的本轮结果 |
+
+合并 P5-25（86779b1）仅新增 core-kernel 动力学及其文档/报告。存储、core-types、契约、Cargo 清单/锁文件、packages、workers、任务卡/规则的 Git 对象逐项相同，证据见 main-refresh.json。合并后重跑全目标 Clippy、兼容门与 `cargo test --workspace --exclude core-store`：core-kernel 66 通过、1 个 main 已有的 V2-93 旧 Python 舍入诊断 ignored，core-types 31 通过。该 ignored 由 main 带入，本卡没有新增/修改忽略标记，不把它算作通过；证据为 attempt-01/workspace-without-storage.log。原 34 项存储本地完整结果保留；当前含新增回归的 35 项实际 CI 结果见上一节。
+
+历史同步 main 317dde9（PR #103、V2-117）只带入主动时机的文档决定与 P5-20 依赖更新，P5-34 卡原文不变；冲突保留双方追加记录，attempt-03 与 main-refresh-317dde9.json 保存当时的源码对照和复验。随后 d047b417 合入 main 65052c0c，包含 #106；其 Ubuntu/Windows 实际成功。此次继续 merge main 3f8f98e5，只带入 #107 的代理配置，P5-34 卡与规格不变；本轮 WAL 修复的独立 CI 证据固定在 af200a67。
+
+### supervisor 对照与原失败
+
+先前本分支 pnpm test 在 supervisor.test.ts:199 观察到 PID 87292，579 通过/1 失败；随后 PID 退出不撤销断言时失败。原日志留在 verification/resumed-20261026/attempt-01/test.log。
+
+main 的三次正确调用均通过，因此不声称“main 同样失败”或已定位根因。失败 head da945d5、main b4eb7fd 与当前实现的 supervisor 七文件及 package.json、pnpm-lock.yaml、vitest.config.ts 共十个 Git blob 完全相同；运行依赖为本地 supervisor 模块和 Node 内建 API，不调用本卡 IDL/Rust 存储逻辑。没有发现本卡引入该失败的代码证据。Ubuntu CI 会跑根 pnpm test 并包括 supervisor；Windows workflow 跑 transport/isolation/e2e/visual/W02，不跑根 Vitest。该原失败作为未定位的 Windows 退出检查波动保留，supervisor 代码、设置和断言均未修改。
+
+### 本轮保留的失败与验证脚本问题
+
+- storage attempt-01：旧历史夹具误以为可选 environment.law_version 必定存在，构造时 unwrap(None)；两项其他边界测试通过。夹具改为引用当前已准备 R 对象实际使用的 LawVersion；未改生产代码、断言或阈值。attempt-02 三项通过。
+- main-test-01/02/03：报告验证脚本把单参数拆开，实际命令为 vitest run e s t；虽然都跑了 580 项，仍不作正式 main 对照。修正报告脚本参数数组后，按预先声明的三次固定运行执行 04/05/06，未改测试本身，未运行到成功才停。
+- 合并后验证脚本新增带连字符的步骤名时未加 PowerShell 引号，解析提前失败，实际测试未启动；修正报告脚本的键名后通过。原错误摘录见 harness-errors.json。
+- resumed-20261026 中的 Rust V2 新写入拒绝和 supervisor 失败，以及旧 PR #72 的全部证据保留。只以本轮各项实际结果判定当前实现。
+- acf73c3 的 Windows run 40329723140 因旧 20 分钟作业时限取消，未完成 W02；原始日志与制品链接保留于 [失败记录](https://github.com/nanake-lab/nemu/pull/95#issuecomment-6418525763)。#106 延长至 60 分钟后，d047b417 的实际 W02 通过。草稿运行的跳过/守卫失败和取消不算通过。
+- 2026-10-27 新增 WAL 回归在旧实现上失败，修复后通过；失败及其测试输入哈希保留，不覆盖或修改原日志。
+- 首次下载 Ubuntu 原始日志被 gh 的终端转义序列保护拒绝，未取得日志；0 字节文件与失败元数据保留。随后显式允许原字节输出到文件，成功归档为 -raw.log，没有向终端执行或渲染这些控制字节；该下载失败不是测试失败。
+
+## 规格对照
+
+完整对照见 docs/traceability/P5-34.md 的当前分阶段追加节；ADR 0021 §11 是受保护存储范围的最新决定，§7/9 属旧 PR 历史。
+
+| 规格条款 | 实现位置 | 测试 |
+| --- | --- | --- |
+| v2.0 §5.2；ADR 0019 §5/6/8.5；ADR 0021 §2–4 | actual_retention；显式历史 q，不由当前支持度倒推 | q=0/>1/非有限拒绝、次正规数与相邻值、修改支持度后 q 保留、序号正反例 |
+| v2.0 §5.2；ADR 0019 §1/8.2/8.5 | evidence_absolute；B=c+V、π 固定括号与顺序 | V<|A| 双符号、非有限、B 舍入丢失、小量 M/U、依恋分母分组 |
+| ADR 0007/0016；ADR 0021 §11 | 四后继消息、reserved、V2 解码与 V3 写入分派；只读版本预检先于读写连接 | 三基线/当前兼容门、旧字节复核、旧 R 平面/分段读取；正常关闭与未检查点 WAL 两种旧 head 拒写后 DB/WAL 字节不变 |
+| SYS21；施工合同 10.8 | 三语言共享描述符、有限 binary64、浏览器 Zod | 黄金、对抗、protoc 与语义正反例 |
+| v2.0 §2.2；I23；SYS17 | 将来 P5-26 的 G/H 重放与迁移/失败回退 | 本卡 not_run；当前拒写保留旧数据不是完整迁移验收 |
+
+I18：q/V 在显式版本化 IDL 中，无隐藏持久状态。I23：本卡证明字段/计算分组可表达和逐位保存，不证明完整历史重算。I25：契约序号/集合检查不代替 G 同源/分摊算法。I02：沿用原单写者与外层事务。I29：所有存储测试只用 TemporaryRoot，从未打开用户正式/排练存储。LAW-6、故障断言及验收阈值未改。
+
+## 新增依赖
+
+| 名称 | 版本 | 许可证 | 用途 |
+| --- | --- | --- | --- |
+| 无新增；既有 serde_json 启用 float_roundtrip | 1.0.154 | MIT OR Apache-2.0 | 保持 JSON binary64 输入位值 |
+
+本卡未新增运行时依赖；本次 merge 带入 #65 已发布的 fact-view 依赖及 Cargo.lock，版本、许可与用途见该卡 REPORT 和 ADR 0020，未另外选型或修改锁文件。超过 400 行的 semantic.rs 保留旧 V1/V2 检查并追加 V3；生成文件按既有生成器组织，避免重复维护跨进程类型。新存储文件均未超过 400 行。
+
+## 待用户确认
+
+- [ ] （阻塞合并）#65 合入后的新 head 完成必要组合验证并交原审查者增量复核；CI 最终状态以 PR 描述/最新评论为准，不另交成功报告。c6525e65 上传失败是保留的历史记录，c3444fea 的后续上传已经成功。
+- [ ] （阻塞合并）ADR 0021、V2-62/63 与具体 q/V 后继契约，包含上述 core-store 受保护路径，一起交叉审查并由用户合并。实现者不自行审查或合并。
+- [x] 分阶段范围已获用户明确批准；不再请求迁移授权或另开迁移卡。
+- [ ] （不阻塞本卡）后续维护者定位原 supervisor 退出检查波动；原失败不隐藏，测试不放宽。
+
+## 后续建议（不在本任务范围内）
+
+P5-26 需要迁移时，从完整有效 H 运行 G 重建 q/V，并完成备份、失败回退与 SYS17；不能把本卡结构夹具当成真实规律结果。新变化检测器/θ 状态与当前已有算法决定由所属卡处理。#65 已由本次 merge 合入，双方 queries.rs 接口保留。
+
+## 下一步
+
+本次 merge、单行夹具适配和必要报告集中提交一次；保持现有可审查 PR，由该次推送触发新 head 的 CI，不另开重复运行。必要验证结束后，将新 SHA、结果和组合差异写入 PR 描述/评论，交原审查者增量复核并停止。保留 needs-user，不合并、不领取下一卡，历史失败记录保留。

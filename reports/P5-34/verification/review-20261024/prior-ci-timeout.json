@@ -1,0 +1,267 @@
+{
+  "runId": 40002333162,
+  "attempt": 2,
+  "head": "2cf025c9bebbe723f476cefa9ce2dba68b8ec35a",
+  "job": {
+    "id": 120767654127,
+    "run_id": 40002333162,
+    "workflow_name": "CI",
+    "head_branch": "task/P5-34-law-retention-idl",
+    "run_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/40002333162",
+    "run_attempt": 2,
+    "node_id": "CR_kwDOVHy5y88AAAAcHlAo7w",
+    "head_sha": "2cf025c9bebbe723f476cefa9ce2dba68b8ec35a",
+    "url": "https://api.github.com/repos/nanake-lab/nemu/actions/jobs/120767654127",
+    "html_url": "https://github.com/nanake-lab/nemu/actions/runs/40002333162/job/120767654127",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "created_at": "2026-10-24T03:33:55Z",
+    "started_at": "2026-10-24T03:33:57Z",
+    "completed_at": "2026-10-24T03:54:13Z",
+    "name": "Ubuntu static checks and unit tests",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-24T03:33:58Z",
+        "completed_at": "2026-10-24T03:33:59Z"
+      },
+      {
+        "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-24T03:33:59Z",
+        "completed_at": "2026-10-24T03:34:06Z"
+      },
+      {
+        "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-24T03:34:06Z",
+        "completed_at": "2026-10-24T03:34:08Z"
+      },
+      {
+        "name": "Run npm install --global pnpm@12.11.2",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-10-24T03:34:08Z",
+        "completed_at": "2026-10-24T03:34:10Z"
+      },
+      {
+        "name": "Run pnpm install --frozen-lockfile",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-10-24T03:34:10Z",
+        "completed_at": "2026-10-24T03:34:13Z"
+      },
+      {
+        "name": "Run pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-10-24T03:34:13Z",
+        "completed_at": "2026-10-24T03:35:28Z"
+      },
+      {
+        "name": "Run pnpm test:contracts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-10-24T03:35:28Z",
+        "completed_at": "2026-10-24T03:35:32Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-10-24T03:35:32Z",
+        "completed_at": "2026-10-24T03:35:33Z"
+      },
+      {
+        "name": "Run pnpm test:transport",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-10-24T03:35:33Z",
+        "completed_at": "2026-10-24T03:35:33Z"
+      },
+      {
+        "name": "Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-10-24T03:35:33Z",
+        "completed_at": "2026-10-24T03:35:50Z"
+      },
+      {
+        "name": "Python checks (all four projects)",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-10-24T03:35:50Z",
+        "completed_at": "2026-10-24T03:36:06Z"
+      },
+      {
+        "name": "Rust checks",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-10-24T03:36:06Z",
+        "completed_at": "2026-10-24T03:53:20Z"
+      },
+      {
+        "name": "Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-10-24T03:53:20Z",
+        "completed_at": "2026-10-24T03:53:22Z"
+      },
+      {
+        "name": "Run dotnet build executors/office-connector/OfficeConnector.csproj --configuration Release",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-10-24T03:53:22Z",
+        "completed_at": "2026-10-24T03:53:28Z"
+      },
+      {
+        "name": "Hosted minutes estimate",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-10-24T03:53:28Z",
+        "completed_at": "2026-10-24T03:53:28Z"
+      },
+      {
+        "name": "P5-01 IDL and three-language conformance (D10.8 / SYS21)",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "number": 16,
+        "started_at": "2026-10-24T03:53:28Z",
+        "completed_at": "2026-10-24T03:54:10Z"
+      },
+      {
+        "name": "P5-21 contract compatibility tooling (no reuse; checked by test:core-contracts)",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 17,
+        "started_at": "2026-10-24T03:54:10Z",
+        "completed_at": "2026-10-24T03:54:10Z"
+      },
+      {
+        "name": "P2-05 residual signal metrics (no browser or private assets)",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 18,
+        "started_at": "2026-10-24T03:54:10Z",
+        "completed_at": "2026-10-24T03:54:10Z"
+      },
+      {
+        "name": "Post Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 33,
+        "started_at": "2026-10-24T03:54:10Z",
+        "completed_at": "2026-10-24T03:54:10Z"
+      },
+      {
+        "name": "Post Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 34,
+        "started_at": "2026-10-24T03:54:10Z",
+        "completed_at": "2026-10-24T03:54:10Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 35,
+        "started_at": "2026-10-24T03:54:10Z",
+        "completed_at": "2026-10-24T03:54:10Z"
+      },
+      {
+        "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 36,
+        "started_at": "2026-10-24T03:54:10Z",
+        "completed_at": "2026-10-24T03:54:11Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 37,
+        "started_at": "2026-10-24T03:54:11Z",
+        "completed_at": "2026-10-24T03:54:11Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/nanake-lab/nemu/check-runs/120767654127",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000000289,
+    "runner_name": "GitHub Actions 1000000289",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "annotations": [
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/nanake-lab/nemu/blob/2cf025c9bebbe723f476cefa9ce2dba68b8ec35a/.github",
+      "start_line": 1,
+      "start_column": null,
+      "end_line": 1,
+      "end_column": null,
+      "annotation_level": "failure",
+      "title": "",
+      "message": "The job has exceeded the maximum execution time of 20m0s",
+      "raw_details": ""
+    },
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/nanake-lab/nemu/blob/2cf025c9bebbe723f476cefa9ce2dba68b8ec35a/.github",
+      "start_line": 5,
+      "start_column": null,
+      "end_line": 5,
+      "end_column": null,
+      "annotation_level": "warning",
+      "title": "",
+      "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02, astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+      "raw_details": ""
+    },
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/nanake-lab/nemu/blob/2cf025c9bebbe723f476cefa9ce2dba68b8ec35a/.github",
+      "start_line": 36,
+      "start_column": null,
+      "end_line": 36,
+      "end_column": null,
+      "annotation_level": "failure",
+      "title": "",
+      "message": "The operation was canceled.",
+      "raw_details": ""
+    },
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/nanake-lab/nemu/blob/2cf025c9bebbe723f476cefa9ce2dba68b8ec35a/.github",
+      "start_line": 1,
+      "start_column": null,
+      "end_line": 1,
+      "end_column": null,
+      "annotation_level": "notice",
+      "title": "",
+      "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+      "raw_details": ""
+    }
+  ]
+}

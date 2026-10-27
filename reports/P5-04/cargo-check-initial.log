@@ -1,0 +1,12 @@
+    Updating crates.io index
+error: failed to select a version for `serde`.
+    ... required by package `fact-view v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\fact-view)`
+versions that meet the requirements `=1.0.228` are: 1.0.228
+
+all possible versions conflict with previously selected packages
+
+  previously selected package `serde v1.0.229`
+    ... which satisfies dependency `serde = "=1.0.229"` of package `core-types v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\core-types)`
+    ... which satisfies path dependency `core-types` (locked to 0.0.0) of package `action-gate v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\action-gate)`
+
+failed to select a version for `serde` which could resolve this conflict

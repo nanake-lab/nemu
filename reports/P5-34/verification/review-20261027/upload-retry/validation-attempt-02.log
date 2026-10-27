@@ -1,0 +1,129 @@
+WARN `--no-project` was provided, but no project was found
+{
+  "cases": [
+    {
+      "case": "first_success",
+      "attempts": [
+        1
+      ],
+      "gate_pass": true,
+      "verified": true
+    },
+    {
+      "case": "recover_second",
+      "attempts": [
+        1,
+        2
+      ],
+      "gate_pass": true,
+      "verified": true
+    },
+    {
+      "case": "recover_third",
+      "attempts": [
+        1,
+        2,
+        3
+      ],
+      "gate_pass": true,
+      "verified": true
+    },
+    {
+      "case": "all_fail",
+      "attempts": [
+        1,
+        2,
+        3
+      ],
+      "gate_pass": false,
+      "verified": true
+    },
+    {
+      "case": "step_cancel_then_recover",
+      "attempts": [
+        1,
+        2
+      ],
+      "gate_pass": true,
+      "verified": true
+    },
+    {
+      "case": "all_steps_cancelled",
+      "attempts": [
+        1,
+        2,
+        3
+      ],
+      "gate_pass": false,
+      "verified": true
+    },
+    {
+      "case": "success_without_id",
+      "attempts": [
+        1
+      ],
+      "gate_pass": false,
+      "verified": true
+    },
+    {
+      "case": "success_invalid_id",
+      "attempts": [
+        1
+      ],
+      "gate_pass": false,
+      "verified": true
+    },
+    {
+      "case": "success_zero_id",
+      "attempts": [
+        1
+      ],
+      "gate_pass": false,
+      "verified": true
+    },
+    {
+      "case": "failed_with_stale_id",
+      "attempts": [
+        1,
+        2,
+        3
+      ],
+      "gate_pass": false,
+      "verified": true
+    },
+    {
+      "case": "skipped_with_evidence",
+      "attempts": [
+        1,
+        2,
+        3
+      ],
+      "gate_pass": false,
+      "verified": true
+    },
+    {
+      "case": "unknown_with_id",
+      "attempts": [
+        1,
+        2,
+        3
+      ],
+      "gate_pass": false,
+      "verified": true
+    },
+    {
+      "case": "cancelled_job",
+      "attempts": [],
+      "gate_pass": false,
+      "verified": true
+    },
+    {
+      "case": "unselected_scope",
+      "attempts": [],
+      "gate_pass": null,
+      "verified": true
+    }
+  ],
+  "yaml_version": "6.0.3",
+  "unchanged_tests_and_security_gate": true
+}

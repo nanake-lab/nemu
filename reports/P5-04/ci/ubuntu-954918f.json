@@ -1,0 +1,203 @@
+{
+  "conclusion": "success",
+  "headSha": "954918fae3f9db245fc9a92ca646c090d655510f",
+  "jobs": [
+    {
+      "completedAt": "2026-10-23T04:47:33Z",
+      "conclusion": "success",
+      "databaseId": 120243043508,
+      "name": "Ubuntu static checks and unit tests",
+      "startedAt": "2026-10-23T04:36:40Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-23T04:36:43Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-23T04:36:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:36:50Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-10-23T04:36:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:36:51Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "number": 3,
+          "startedAt": "2026-10-23T04:36:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:36:54Z",
+          "conclusion": "success",
+          "name": "Run npm install --global pnpm@12.11.2",
+          "number": 4,
+          "startedAt": "2026-10-23T04:36:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:36:57Z",
+          "conclusion": "success",
+          "name": "Run pnpm install --frozen-lockfile",
+          "number": 5,
+          "startedAt": "2026-10-23T04:36:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:38:03Z",
+          "conclusion": "success",
+          "name": "Run pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+          "number": 6,
+          "startedAt": "2026-10-23T04:36:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:38:05Z",
+          "conclusion": "success",
+          "name": "Run pnpm test:contracts",
+          "number": 7,
+          "startedAt": "2026-10-23T04:38:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:38:06Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "number": 8,
+          "startedAt": "2026-10-23T04:38:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:38:07Z",
+          "conclusion": "success",
+          "name": "Run pnpm test:transport",
+          "number": 9,
+          "startedAt": "2026-10-23T04:38:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:38:23Z",
+          "conclusion": "success",
+          "name": "Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+          "number": 10,
+          "startedAt": "2026-10-23T04:38:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:38:40Z",
+          "conclusion": "success",
+          "name": "Python checks (all four projects)",
+          "number": 11,
+          "startedAt": "2026-10-23T04:38:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:46:05Z",
+          "conclusion": "success",
+          "name": "Rust checks",
+          "number": 12,
+          "startedAt": "2026-10-23T04:38:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:46:07Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+          "number": 13,
+          "startedAt": "2026-10-23T04:46:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:46:15Z",
+          "conclusion": "success",
+          "name": "Run dotnet build executors/office-connector/OfficeConnector.csproj --configuration Release",
+          "number": 14,
+          "startedAt": "2026-10-23T04:46:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:46:15Z",
+          "conclusion": "success",
+          "name": "Hosted minutes estimate",
+          "number": 15,
+          "startedAt": "2026-10-23T04:46:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:46:47Z",
+          "conclusion": "success",
+          "name": "P5-01 IDL and three-language conformance (D10.8 / SYS21)",
+          "number": 16,
+          "startedAt": "2026-10-23T04:46:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:46:47Z",
+          "conclusion": "success",
+          "name": "P5-21 contract compatibility tooling (no reuse; checked by test:core-contracts)",
+          "number": 17,
+          "startedAt": "2026-10-23T04:46:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:47:29Z",
+          "conclusion": "success",
+          "name": "W19 optional CPU runtime compile checks (no model download)",
+          "number": 18,
+          "startedAt": "2026-10-23T04:46:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:47:29Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+          "number": 33,
+          "startedAt": "2026-10-23T04:47:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:47:29Z",
+          "conclusion": "success",
+          "name": "Post Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff",
+          "number": 34,
+          "startedAt": "2026-10-23T04:47:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:47:29Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "number": 35,
+          "startedAt": "2026-10-23T04:47:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:47:30Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 36,
+          "startedAt": "2026-10-23T04:47:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-23T04:47:30Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 37,
+          "startedAt": "2026-10-23T04:47:30Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/nanake-lab/nemu/actions/runs/39901232250/job/120243043508"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/nanake-lab/nemu/actions/runs/39901232250"
+}
