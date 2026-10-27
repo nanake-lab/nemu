@@ -44,7 +44,23 @@ const INIT: &[FaultPoint] = &[
 ];
 const GC: &[FaultPoint] = &[GcDeleted, GcDirectorySyncBefore, GcDirectorySynced];
 pub(super) fn points() -> Vec<FaultPoint> {
-    [OBJECT, RECEIPT, REUSE, COMMIT, INGRESS, INIT, GC].concat()
+    [
+        OBJECT,
+        RECEIPT,
+        REUSE,
+        COMMIT,
+        INGRESS,
+        INIT,
+        GC,
+        &[
+            IngressAllocated,
+            AuditBeforeSql,
+            AuditSqlCommitted,
+            MigrationBeforeSql,
+            MigrationSqlCommitted,
+        ],
+    ]
+    .concat()
 }
 fn tag<T: WireMessage>() -> String {
     core_types::contract::Schema::builtin()

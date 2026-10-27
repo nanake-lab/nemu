@@ -14,6 +14,11 @@ for line in sys.stdin:
     try:
         q = json.loads(line)
         limits = r.Limits(**q["limits"])
+        if q["op"] == "ingress":
+            import ingress_probe
+            ingress_probe.check(q, limits)
+            print(json.dumps(dict(ok=True)))
+            continue
         name = q["name"]
         v = (
             r.normalize(name, from_json(name, q["value"]), limits)
