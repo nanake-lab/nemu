@@ -6,6 +6,7 @@ from typing import Any
 from copy import deepcopy
 import json
 from pathlib import Path
+from fixture_ingress_rejections import vectors as rejection_vectors
 
 
 def vectors() -> list[dict[str, Any]]:
@@ -338,7 +339,7 @@ def vectors() -> list[dict[str, Any]]:
         reserved=int(ref["byte_length"]),
         declared_object=ref | dict(resource_version="other"),
     )
-    return out
+    return out + rejection_vectors(out)
 
 
 if __name__ == "__main__":

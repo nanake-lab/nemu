@@ -117,20 +117,29 @@ export function checkUploaded(
   const value = decodeCanonicalData(name, Buffer.from(data), limits);
   check(digest(name, value, limits) === Buffer.from(ref.digest).toString('hex'), 'object digest');
 }
-export function checkRequest(
+// Structural validity and connection binding also apply to rejected requests.
+function checkRequestConnection(
   q: TerminalRequest,
-  s: TerminalSession | undefined,
+  s: TerminalSession,
   limits: Limits,
-): void {
+): number {
   const bytes = encodeProtobuf('TerminalRequest', q, limits);
-  check(s, 'unauthenticated dispatch');
   checkSession(s, limits);
   check(
     q.session_id === s.session_id && q.protocol_version === s.protocol_version,
     'session mismatch',
   );
+  return bytes.length;
+}
+export function checkRequest(
+  q: TerminalRequest,
+  s: TerminalSession | undefined,
+  limits: Limits,
+): void {
+  check(s, 'unauthenticated dispatch');
+  const size = checkRequestConnection(q, s, limits);
   check(
-    s.capabilities.includes(q.kind) && bytes.length <= s.budget.max_frame_bytes,
+    s.capabilities.includes(q.kind) && size <= s.budget.max_frame_bytes,
     'request budget or capability',
   );
   if (q.event)
@@ -146,7 +155,7 @@ export function checkResponse(
   s: TerminalSession,
   limits: Limits,
 ): void {
-  checkRequest(q, s, limits);
+  checkRequestConnection(q, s, limits);
   check(
     encodeProtobuf('TerminalResponse', a, limits).length <= s.budget.max_frame_bytes,
     'response budget',
@@ -159,6 +168,7 @@ export function checkResponse(
     'response pairing',
   );
   if (a.kind === 5) return;
+  checkRequest(q, s, limits);
   check(a.kind === (q.kind <= 3 ? q.kind : 4), 'reply kind');
   if (q.kind === 1)
     check(

@@ -43,25 +43,36 @@ pub fn check_session(session: &TerminalSession, limits: Limits) -> Result<()> {
     )
 }
 
-pub fn check_request(
+/// Structural validity and authenticated connection binding also apply to rejections.
+/// Admission checks (capabilities, request budgets and payloads) are separate.
+fn check_request_connection(
     request: &TerminalRequest,
-    authenticated: Option<&TerminalSession>,
+    session: &TerminalSession,
     limits: Limits,
-) -> Result<()> {
+) -> Result<usize> {
     let bytes = request.protobuf_bytes(limits)?;
-    let session = authenticated.ok_or("unauthenticated dispatch")?;
     check_session(session, limits)?;
     require(
         request.session_id == session.session_id
             && request.protocol_version == session.protocol_version,
         "connection session mismatch",
     )?;
+    Ok(bytes.len())
+}
+
+pub fn check_request(
+    request: &TerminalRequest,
+    authenticated: Option<&TerminalSession>,
+    limits: Limits,
+) -> Result<()> {
+    let session = authenticated.ok_or("unauthenticated dispatch")?;
+    let size = check_request_connection(request, session, limits)?;
     require(
         session.capabilities.contains(&request.kind),
         "capability denied",
     )?;
     require(
-        bytes.len() <= session.budget.max_frame_bytes as usize,
+        size <= session.budget.max_frame_bytes as usize,
         "frame budget exceeded",
     )?;
     if let Some(event) = &request.event {
@@ -82,7 +93,7 @@ pub fn check_response(
     session: &TerminalSession,
     limits: Limits,
 ) -> Result<()> {
-    check_request(request, Some(session), limits)?;
+    check_request_connection(request, session, limits)?;
     let bytes = reply.protobuf_bytes(limits)?;
     require(
         bytes.len() <= session.budget.max_frame_bytes as usize,
@@ -98,6 +109,7 @@ pub fn check_response(
     if reply.kind == IngressResponseKind::INGRESS_REJECTED {
         return Ok(());
     }
+    check_request(request, Some(session), limits)?;
     let paired = match request.kind {
         IngressKind::INGRESS_EVENT => {
             reply.kind == IngressResponseKind::EVENT_RECEIPT

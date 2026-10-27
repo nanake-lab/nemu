@@ -2129,5 +2129,1946 @@
     "expected": {
       "ok": false
     }
+  },
+  {
+    "label": "r1-capability-admission",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "request",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 1,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "stable-1",
+          "event_id": "event-1",
+          "stage": 1,
+          "raw_log_position": "0",
+          "ingest_time_ns": "123"
+        }
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-capability-rejection",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": true
+    }
+  },
+  {
+    "label": "r1-capability-success-denied",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 1,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "stable-1",
+          "event_id": "event-1",
+          "stage": 1,
+          "raw_log_position": "0",
+          "ingest_time_ns": "123"
+        }
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-event-digest-admission",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "request",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 1,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "stable-1",
+          "event_id": "event-1",
+          "stage": 1,
+          "raw_log_position": "0",
+          "ingest_time_ns": "123"
+        }
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-event-digest-rejection",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 6
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": true
+    }
+  },
+  {
+    "label": "r1-event-digest-success-denied",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 1,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "stable-1",
+          "event_id": "event-1",
+          "stage": 1,
+          "raw_log_position": "0",
+          "ingest_time_ns": "123"
+        }
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-request-frame-budget-admission",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "request",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 1,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "stable-1",
+          "event_id": "event-1",
+          "stage": 1,
+          "raw_log_position": "0",
+          "ingest_time_ns": "123"
+        }
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 128,
+          "max_chunk_bytes": 1,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-request-frame-budget-rejection",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 1
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 128,
+          "max_chunk_bytes": 1,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": true
+    }
+  },
+  {
+    "label": "r1-request-frame-budget-success-denied",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 1,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "stable-1",
+          "event_id": "event-1",
+          "stage": 1,
+          "raw_log_position": "0",
+          "ingest_time_ns": "123"
+        }
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 128,
+          "max_chunk_bytes": 1,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-upload-budget-admission",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "request",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 2,
+        "upload": {
+          "schema_version": 1,
+          "upload_id": "upload-1",
+          "object": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "offset": "0",
+          "data": "4e435631010000000e0000006563686f2e757365722d74657874020000004130",
+          "final_chunk": true
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 1,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "stable-1",
+          "event_id": "event-1",
+          "stage": 1,
+          "raw_log_position": "0",
+          "ingest_time_ns": "123"
+        }
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-upload-budget-rejection",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 2,
+        "upload": {
+          "schema_version": 1,
+          "upload_id": "upload-1",
+          "object": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "offset": "0",
+          "data": "4e435631010000000e0000006563686f2e757365722d74657874020000004130",
+          "final_chunk": true
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 2,
+        "kind": 5,
+        "reason": 10
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": true
+    }
+  },
+  {
+    "label": "r1-upload-budget-success-denied",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 2,
+        "upload": {
+          "schema_version": 1,
+          "upload_id": "upload-1",
+          "object": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "offset": "0",
+          "data": "4e435631010000000e0000006563686f2e757365722d74657874020000004130",
+          "final_chunk": true
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 2,
+        "kind": 2,
+        "upload": {
+          "schema_version": 1,
+          "upload_id": "upload-1",
+          "object": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "next_offset": "32",
+          "status": 2
+        }
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-wrong-id",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "other",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-wrong-session",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "other",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-wrong-version",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 2,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-wrong-kind",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 2,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-unspecified-reason",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 0
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-unknown-reason",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 99
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-mixed-success-payload",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "stable-1",
+          "event_id": "event-1",
+          "stage": 1,
+          "raw_log_position": "0",
+          "ingest_time_ns": "123"
+        }
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-missing-reason",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-wrong-connection",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "other",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "other",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-malformed-request",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-unknown-request-field",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        },
+        "raw_log_position": "0"
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          3
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 1024,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-response-frame-budget",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 32,
+          "max_chunk_bytes": 1,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
+  },
+  {
+    "label": "r1-rejection-inconsistent-budget",
+    "request": {
+      "name": "TerminalRequest",
+      "op": "ingress",
+      "check": "response",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      },
+      "request": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "event-1",
+          "stable_source_key": "stable-1",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+            "object_type": "echo.user-text",
+            "resource_version": "1",
+            "byte_length": "32"
+          },
+          "payload_digest": "c829fd884481ad8feb82b677d69b6304fb223dc4bd38b8605f82a7d795a22720",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "response": {
+        "schema_version": 1,
+        "request_id": "request-1",
+        "session_id": "server-session-A",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 5,
+        "reason": 4
+      },
+      "session": {
+        "schema_version": 1,
+        "session_id": "server-session-A",
+        "installation_id": "installation-A",
+        "protocol_version": 1,
+        "capabilities": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "test-limits-1",
+          "max_frame_bytes": 8192,
+          "max_chunk_bytes": 8192,
+          "max_object_bytes": 4096,
+          "max_uploads": 2,
+          "max_upload_bytes": 8192
+        }
+      }
+    },
+    "expected": {
+      "ok": false
+    }
   }
 ]

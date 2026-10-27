@@ -95,18 +95,24 @@ def uploaded(
     r.fail(r.digest(name, v, limits) == ref["digest"].hex(), "object digest")
 
 
-def request(q: dict[str, Any], s: dict[str, Any] | None, limits: r.Limits) -> None:
+def _request_connection(q: dict[str, Any], s: dict[str, Any], limits: r.Limits) -> int:
+    """Validate structure and connection even when admission must be rejected."""
     data = r.encode_protobuf("TerminalRequest", q, limits)
-    r.fail(s is not None, "unauthenticated dispatch")
-    assert s is not None
     session(s, limits)
     r.fail(
         q["session_id"] == s["session_id"]
         and q["protocol_version"] == s["protocol_version"],
         "session mismatch",
     )
+    return len(data)
+
+
+def request(q: dict[str, Any], s: dict[str, Any] | None, limits: r.Limits) -> None:
+    r.fail(s is not None, "unauthenticated dispatch")
+    assert s is not None
+    size = _request_connection(q, s, limits)
     r.fail(
-        q["kind"] in s["capabilities"] and len(data) <= s["budget"]["max_frame_bytes"],
+        q["kind"] in s["capabilities"] and size <= s["budget"]["max_frame_bytes"],
         "request budget or capability",
     )
     if "event" in q:
@@ -121,7 +127,7 @@ def request(q: dict[str, Any], s: dict[str, Any] | None, limits: r.Limits) -> No
 def response(
     q: dict[str, Any], a: dict[str, Any], s: dict[str, Any], limits: r.Limits
 ) -> None:
-    request(q, s, limits)
+    _request_connection(q, s, limits)
     r.fail(
         len(r.encode_protobuf("TerminalResponse", a, limits))
         <= s["budget"]["max_frame_bytes"],
@@ -134,6 +140,7 @@ def response(
     )
     if a["kind"] == 5:
         return
+    request(q, s, limits)
     expected = q["kind"] if q["kind"] <= 3 else 4
     r.fail(a["kind"] == expected, "reply kind")
     if expected == 1:
