@@ -348,10 +348,10 @@ pub(crate) fn current(db: &Connection, objects: &Objects) -> Result<Option<CoreT
     bytes
         .map(|b| -> Result<_> {
             let r = ObjectRef::from_canonical(&b, objects.config.encoding)?;
-            Ok(CoreTransactionV2::from_canonical(
-                &objects.read(&r)?,
-                objects.config.encoding,
-            )?)
+            let value =
+                CoreTransactionV2::from_canonical(&objects.read(&r)?, objects.config.encoding)?;
+            crate::theta::read(objects, &value.staged_theta)?;
+            Ok(value)
         })
         .transpose()
 }
@@ -390,6 +390,7 @@ pub(crate) fn require_writable_head(db: &Connection, objects: &Objects) -> Resul
                     .tag,
             "V2 R head is read-only; P5-26 G/H replay is required before writing",
         )?;
+        crate::theta::writable(objects, &head.staged_theta)?;
     }
     Ok(())
 }

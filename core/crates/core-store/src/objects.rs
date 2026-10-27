@@ -81,6 +81,7 @@ impl Objects {
             !T::SUPERSEDED && T::PERSISTABLE,
             "new writes must use the active successor message",
         )?;
+        core_types::semantic::check_theta_message(T::NAME, &serde_json::to_value(value)?)?;
         let r = self.reference(value, version)?;
         let bytes = value.canonical_bytes(self.config.encoding)?;
         let mut held = self
@@ -261,6 +262,7 @@ impl Objects {
             schema.digest(name, &value, self.config.encoding)? == hex(&r.digest.0),
             "object digest mismatch",
         )?;
+        core_types::semantic::check_theta_message(name, &value)?;
         Ok(bytes)
     }
     pub fn closure(&self, root: &ObjectRef) -> Result<Vec<ObjectRef>> {

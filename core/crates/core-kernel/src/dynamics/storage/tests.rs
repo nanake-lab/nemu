@@ -383,6 +383,37 @@ fn actual_states_all_prefixes_roundtrip_and_continuation() {
             seen.len()
         );
     }
+    // Storage acceptance returns bytes read only after commit, close and reopen.
+    // Reuse the same exhaustive private-field oracle and every suffix above.
+    if let Some(path) = std::env::var_os("P536_STORE_RESTORE") {
+        let rows: Vec<Value> = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        assert_eq!(rows.len(), states.len());
+        let mut seen = std::collections::BTreeSet::new();
+        for row in rows {
+            let prefix = row["prefix"].as_u64().unwrap() as usize;
+            assert!(prefix < states.len() && seen.insert(prefix));
+            let trusted: ObjectRef = serde_json::from_value(row["law_version"].clone()).unwrap();
+            let bytes = core_types::scalar::unhex(row["hex"].as_str().unwrap()).unwrap();
+            let decoded = ThetaSnapshotV2::from_canonical(&bytes, LIMITS).unwrap();
+            let expected = export_snapshot(
+                &states[prefix],
+                &format!("synthetic-prefix-{prefix}"),
+                &trusted,
+                &fuses(),
+            )
+            .unwrap();
+            assert_eq!(bytes, expected.canonical_bytes(LIMITS).unwrap());
+            continue_from(
+                &states[prefix],
+                restore_snapshot(&decoded, &trusted, &law(), &fuses()).unwrap(),
+                prefix,
+            );
+        }
+        println!(
+            "restored every private field bit and continued {} committed/reopened states",
+            seen.len()
+        );
+    }
 }
 
 #[test]
