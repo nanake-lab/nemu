@@ -183,10 +183,13 @@ impl<L: LineageKind> Uploads<L> {
             let name = upload_type(&u.object.object_type).map_err(|_| Error::Contract)?;
             let pin = match prepare(store, &name, &u.bytes, &u.object.resource_version, limits) {
                 Ok(pin) => pin,
-                Err(
-                    Error::Contract
-                    | Error::Store(core_store::Error::Contract(_) | core_store::Error::Rejected(_)),
-                ) => return Ok(Err(IngressReason::OBJECT_MISMATCH)),
+                Err(Error::Contract) => return Ok(Err(IngressReason::OBJECT_MISMATCH)),
+                // Generic store rejection also covers physical object capacity,
+                // retention/corruption checks, etc. Never infer a wire reason
+                // from its string. Only typed capacity refusals are safe.
+                Err(Error::Store(e)) if e.safe_ingress_reason().is_some() => {
+                    return Ok(Err(e.safe_ingress_reason().unwrap()));
+                }
                 Err(e) => return Err(e),
             };
             if pin.reference() != &u.object {

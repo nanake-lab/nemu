@@ -1,6 +1,43 @@
 use super::*;
 
 #[tokio::test]
+async fn untyped_object_store_rejection_never_becomes_a_false_protocol_mismatch() {
+    let root = TemporaryRoot::new().unwrap();
+    let mut cfg = config();
+    cfg.max_object_bytes = 64;
+    let (mut gateway, listener, name, token) =
+        setup_with_store_config(&root, "object-capacity", deployment(), cfg);
+    let run = gateway.serve_listener(listener, std::future::pending());
+    let client = async {
+        let mut peer = Peer::connect(&name, &token).await;
+        let value = UserText {
+            schema_version: 1,
+            text: "x".repeat(100),
+        };
+        let mut r = peer.request("store-capacity-unknown", IngressKind::INGRESS_UPLOAD);
+        r.upload = Some(ObjectUploadChunk {
+            schema_version: 1,
+            upload_id: "bounded".into(),
+            object: reference(&value),
+            offset: DecimalU64(0),
+            data: HexBytes(value.canonical_bytes(limits()).unwrap()),
+            final_chunk: true,
+        });
+        peer.wire.write(&r).await.unwrap();
+        assert!(peer.wire.read::<TerminalResponse>().await.is_err());
+    };
+    let (r, ()) = tokio::join!(run, client);
+    assert!(matches!(
+        r,
+        Err(Error::Store(core_store::Error::Rejected(_)))
+    ));
+    let (s, _) = gateway.into_parts();
+    assert!(s.next_raw().unwrap().is_none());
+    assert!(s.ingress_rejections().unwrap().is_empty());
+    assert_eq!(s.head().unwrap(), (None, 0, 0));
+}
+
+#[tokio::test]
 async fn actual_store_record_and_byte_backpressure_never_consume_a_d_position() {
     for byte_limit in [false, true] {
         let root = TemporaryRoot::new().unwrap();

@@ -6,7 +6,7 @@
 `origin/main=f24f1256259c998bc213a9dc93103fcfb9cfe89a`（#110 / P5-35），
 合并提交 `62b544d6`；Windows 工作流冲突保留最新 main 的门禁与证据上传，追加 W18 范围，
 Cargo.lock 通过离线重新生成解决。未修改契约、core-types、core-store 或 θ 消费者。
-B3 的四项接口已可用且已接入，不再等待契约卡。本机 fmt、全工作区 all-targets clippy 与完整 gateway 36 项测试全部通过。当前 head CI 终态记录在 PR #64，避免为记录 CI 制造提交循环；独立审查尚待交接。
+B3 的四项接口已可用且已接入，不再等待契约卡。本机 fmt、全工作区 all-targets clippy 与完整 gateway 37 项测试全部通过。Windows 首次手动检查在 setup 下载 action 时 SSL/100 秒超时失败，W18 未执行（原始输出已保留）；后续当前 head CI 终态记录在 PR #64，避免为记录 CI 制造提交循环；独立审查尚待交接。
 
 ## 交付物
 
@@ -15,7 +15,7 @@ B3 的四项接口已可用且已接入，不再等待契约卡。本机 fmt、�
 - `uploads.rs` / `build.rs`：完整对象配额预留、连续分片、声明绑定、CanonicalV1/域摘要校验、官方生成类型分派到 Store.prepare/prepare_r；完成前不确认，断线/过期释放缓冲与 pins，Store GC 回收孤儿。
 - `dispatch.rs` / `hooks.rs`：事件、上传、查询、审批、取消、成长六路分派；T1 与来源/行动权威逐事件从可信处理器获取；控制默认拒绝，处理器成功后才 ACK。
 - `progress.rs`：每次核心处理之前执行 Γ；接收位置/时间由 Store.ingest_terminal 分配；实际提交后观察公开 head，仅在有界待回执关联中保存发布摘要，核验事务与原请求后转发 CORE_COMMITTED，可逆序/延迟；无第二套持久回执或去重库。
-- 独立持久拒绝审计复用 Store.audit_ingress_rejection；记录/字节/上传/连接/请求元数据/输出队列都有界。只有类型化容量错误能给安全拒绝；I/O/SQL/见证结果不确定时断开，不假装已拒绝或成功。
+- 独立持久拒绝审计复用 Store.audit_ingress_rejection；记录/字节/上传/连接/请求元数据/输出队列都有界。只有类型化容量错误能给安全拒绝；通用存储拒绝不冒充 OBJECT_MISMATCH，I/O/SQL/见证等未分类结果不确定时断开，不假装已拒绝或成功。
 - `tests/service/`：真实认证、上传、分派、Store 提交、并发连接、撤权、审计/背压和子进程骤停恢复。
 - `post-P5-35/check.ps1`：等待本机重负载空闲，再串行 fmt、工作区 clippy、完整 gateway 测试；D 盘缓存/临时目录，逐轮保留原始输出、输入 blob 清单与子进程 stdout/stderr。
 
@@ -34,10 +34,10 @@ B3 的四项接口已可用且已接入，不再等待契约卡。本机 fmt、�
 | --- | --- | --- |
 | 初轮 all-targets cargo check | passed | post-P5-35/check-initial.log |
 | 初轮原生服务集成 | 11 passed，0 failed；后续完整复验如下 | post-P5-35/native-initial.log |
-| 本轮 fmt / workspace all-targets clippy -D warnings / 全部 gateway | passed；36 passed，0 failed；含全部既有 21 项和新增原生服务 15 项 | post-P5-35/runs/20261028-030614-71ae5cb4c20a424aa679bec846635397/ |
+| 本轮 fmt / workspace all-targets clippy -D warnings / 全部 gateway | passed；37 passed，0 failed；含全部既有 21 项和新增服务测试 16 项（含子进程入口辅助测试） | post-P5-35/runs/20261028-031757-eacd958a2dd1477db4a35670efa11b66/ |
 | 当前 head CI / Windows W18 | 必要检查及实际 checkout/B/M 见 PR 终态评论；草稿跳过不算通过 | https://github.com/nanake-lab/nemu/pull/64 |
 | SYS01 认证上传→D=(e1,e2,e2,conflict)，逆序提交回执、重连与并发 | 最终复验 passed：H=2、processed=4、anchor=2、ledger=2；真实 Store 提交两次；积压重复队列只提交一次 | SYS01/README.md、native-initial.log |
-| SYS01 未提交骤停恢复 | SQL 前 exit 86、SQL 后未见证 exit 86、持久接收后 TerminateProcess exit 1；全新子进程恢复后原键只提交一次 | post-P5-35/runs/20261028-030614-71ae5cb4c20a424aa679bec846635397/SYS01/、SYS01/README.md |
+| SYS01 未提交骤停恢复 | SQL 前 exit 86、SQL 后未见证 exit 86、持久接收后 TerminateProcess exit 1；全新子进程恢复后原键只提交一次 | post-P5-35/runs/20261028-031757-eacd958a2dd1477db4a35670efa11b66/SYS01/、SYS01/README.md |
 | 物理断电 | not_run；已向用户确认骤停注入是否满足本卡此项，未自行放宽 | BLOCKED.md |
 | 第二账户拒绝 | passed，用户提供；当前句柄 ACL 自动复验另列 | second-account/ |
 | P5-22 后继黄金/live 拒绝/查询审批上下文 | 完整 gateway 重跑通过；原始冻结字节测试保留 | tests/terminal.rs、post-P5-22/ |
@@ -45,12 +45,13 @@ B3 的四项接口已可用且已接入，不再等待契约卡。本机 fmt、�
 所有库均为 TemporaryRoot 或父进程新建的 tempfile 合成库。骤停子进程只在一次性许可验证后
 使用其父进程临时根内的 LOCALAPPDATA；从未打开用户真正的排练/正式库，未改用户/系统环境变量。
 不跑 GPU 或性能测量。历史失败日志保持原样，包括 Win32 233、黄金集合次序断言及 pnpm 参数错误；
-本轮原始结果不覆盖旧证据。新失败：首轮 clippy 三项 collapsible_if（025904）；次轮 34/36，通过积压重复队列发现同步 actor 饿住 I/O 导致有界输出误断开，已加入每步 yield 与 MissedTickBehavior::Skip；另一个失败为扫描尚持 SQLite 字节锁的文件，改为关闭临时库后扫描（030328）。最终完整重跑全部通过（030614），未放宽断言、配额或阈值。进程骤停不等于实机电源中断，不声称物理存储栈掉电测量。
+本轮原始结果不覆盖旧证据。新失败：首轮 clippy 三项 collapsible_if（025904）；次轮 34/36，通过积压重复队列发现同步 actor 饿住 I/O 导致有界输出误断开，已加入每步 yield 与 MissedTickBehavior::Skip；另一个失败为扫描尚持 SQLite 字节锁的文件，改为关闭临时库后扫描（030328）。随后 030614 的 36 项全部通过；收紧未分类存储错误映射并增加真实对象限额反例后，031757 的 37 项再全部通过，未放宽断言、配额或阈值。进程骤停不等于实机电源中断，不声称物理存储栈掉电测量。
 
 ## 规格与基线
 
 详见 `docs/traceability/P5-03.md` 与 `SYS01/README.md`。沿用 ADR 0024、CONTRACTS 4.2–4.4、
 I01/I04、I02/I03/I18/I21、I26/I29；无新协议、规律、阈值或差异登记。
+对象准备/读取错误分类的最小非阻塞反馈见 INTERFACE-NOTES.md；实际对象限额反例确认不伪造协议回执。`Error::Rejected` 同时包含容量与内部检查，网关保守断开而不解析字符串。
 本轮必要验证基线 B=M=f24f1256；2026-10-28 再 fetch 后 main 未前进。P5-22 的旧全矩阵不是
 本轮新网关的通过证据；本轮重新执行 gateway 与相关静态检查，由当前 CI 验证组合。
 B1 按 ACL 构造未变和新增实际句柄检查复用，来源/限制单列，不拿旧组件测试替代新服务验收。

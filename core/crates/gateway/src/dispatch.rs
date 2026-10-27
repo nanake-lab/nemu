@@ -180,18 +180,12 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         let limits = self.config.frames.encoding;
         let payload = match c.uploads.payload(&self.store, &e.payload_ref, limits) {
             Ok(v) => v,
-            Err(
-                Error::Contract
-                | Error::Store(core_store::Error::Rejected(_) | core_store::Error::Contract(_)),
-            ) => return Ok(Err(IngressReason::OBJECT_MISMATCH)),
+            Err(Error::Contract) => return Ok(Err(IngressReason::OBJECT_MISMATCH)),
             Err(v) => return Err(v),
         };
         let source: SourceMetadata = match c.uploads.read(&self.store, &e.provenance, limits) {
             Ok(v) => v,
-            Err(
-                Error::Contract
-                | Error::Store(core_store::Error::Rejected(_) | core_store::Error::Contract(_)),
-            ) => return Ok(Err(IngressReason::OBJECT_MISMATCH)),
+            Err(Error::Contract) => return Ok(Err(IngressReason::OBJECT_MISMATCH)),
             Err(v) => return Err(v),
         };
         let grants = match self
