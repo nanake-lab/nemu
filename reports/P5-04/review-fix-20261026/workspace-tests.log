@@ -1,0 +1,314 @@
+   Compiling fact-view v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\fact-view)
+    Finished `release` profile [optimized] target(s) in 2.63s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\action_gate-10c90daa676849ff.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\core_kernel-3d2f281d0966b2d1.exe)
+
+running 67 tests
+test dynamics::tests::ac2_05_replay_every_prefix_including_detector_open_runs_and_drift ... ok
+test dynamics::tests::ac2_09_has_only_stored_unmodulated_reaction_and_stages_existing_idl ... ok
+test dynamics::tests::ac2_14_i13_external_changes_and_all_self_sources_are_whole_state_identity ... ok
+test dynamics::tests::adaptive_h_respects_floor_and_ignores_wall_clock_and_excluded_events ... ok
+test dynamics::tests::batch4::v2_95_geometric_mean_uses_each_external_event_retention ... ok
+test dynamics::tests::batch4::v2_95_recorded_downtime_is_subtracted_and_replay_is_bitwise ... ok
+test dynamics::tests::batch4::v2_95_rejects_invalid_or_inconsistent_recorded_time ... ok
+test dynamics::tests::batch4::v2_95_zero_duration_counts_separately_and_open_run_is_censored ... ok
+test dynamics::tests::batch4::v2_96_equality_is_allowed_and_strictly_above_bound_is_a_fault ... ok
+test dynamics::tests::batch4::v2_96_legal_extremes_and_changing_retention_stay_inside_derived_bounds ... ok
+test dynamics::tests::batch4::v2_96_legal_subnormal_variance_uses_proven_range_not_a_false_fault ... ok
+test dynamics::tests::batch4::v2_96_prior_decay_changes_baseline_even_when_reaction_equals_current ... ok
+test dynamics::tests::batch4::v2_97_computation_fault_rejects_whole_candidate_without_clipping ... ok
+test dynamics::tests::binary64::theta_1_binary64_500_original_streams_zero_bit_differences ... ok
+test dynamics::tests::gaussian_detector_uses_magnitude_not_reaction_sign_changes ... ok
+test dynamics::tests::jump_and_directional_drift_apply_and_stage_notices_before_boundary ... ok
+test dynamics::tests::numerical_and_ingress_faults_do_not_publish_partial_state ... ok
+test dynamics::tests::pure_boundary::ac2_09_changing_caller_x_initial_and_m_preserves_every_theta_and_estimator_bit ... ok
+test dynamics::tests::pure_boundary::i13_c_only_stages_theta_change_and_cannot_commit_or_mutate_the_input ... ok
+test dynamics::tests::reference::theta_1_original_500_streams_zero_violations ... ignored, V2-93: legacy Python **2 rounding diagnostic; failure evidence: reports/P5-25/rounding-20261024/REPORT.md
+test dynamics::tests::reference::theta_2_original_feedback_and_independent_adaptive_detector_check ... ok
+test dynamics::tests::variance_uses_baseline_before_event_and_duration_completes_same_sign_run ... ok
+test effects::tests::adr0008_composition_law_and_no_time_dependence ... ok
+test effects::tests::direction_validation_is_passed_through_without_changing_drive ... ok
+test effects::tests::effects_are_in_canonical_tendency_order_whatever_the_input_order ... ok
+test effects::tests::evaluate_uses_fixed_product_order ... ok
+test effects::tests::f_sum_is_summed_in_canonical_order ... ok
+test effects::tests::i06_candidates_have_no_effect_on_x_or_m ... ok
+test effects::tests::i21_inputs_are_only_borrowed_and_repeated_calls_agree ... ok
+test effects::tests::situation_match_outside_its_domain_is_refused ... ok
+test effects::tests::stored_values_outside_their_domain_are_refused ... ok
+test effects::tests::strength_matches_v2_formula_and_has_no_negative_zero ... ok
+test effects::tests::theta_outside_its_domain_is_refused ... ok
+test effects::tests::unlisted_match_is_zero_and_negative_zero_is_normalized ... ok
+test fast::tests::ac2_15_contraction_holds_on_intervals_with_events ... ok
+test fast::tests::ac2_15_without_events_x_relaxes_to_rest ... ok
+test fast::tests::drive_bounds::f02_contributions_are_summed_in_canonical_order ... ok
+test fast::tests::drive_bounds::f02_inconsistent_sum_is_rejected_even_when_within_bound ... ok
+test fast::tests::drive_bounds::f02_learned_out_of_range_or_nonfinite_is_rejected_before_weighting ... ok
+test fast::tests::drive_bounds::f02_nonfinite_eta_contributions_and_sum_are_rejected ... ok
+test fast::tests::drive_signature_has_no_fast_state ... ok
+test fast::tests::empathy_weight_takes_the_closest_person ... ok
+test fast::tests::event_map::ac2_15_zero_delta_direct_event_map_is_nonexpansive ... ok
+test fast::tests::event_map::direct_event_map_has_independent_reference_with_saturation ... ok
+test fast::tests::f01_piecewise_projection_and_no_accumulated_decay ... ok
+test fast::tests::f02_invalid_inputs_are_refused_not_repaired ... ok
+test fast::tests::f02_projection_and_drive_stay_in_x ... ok
+test fast::tests::f03_lambda_zero_is_rejected ... ok
+test fast::tests::f03_two_histories_converge_after_driving_stops ... ok
+test fast::tests::f05_f_out_is_identity_when_r_plus_is_unchanged_and_aligns_otherwise ... ok
+test fast::tests::f05_same_event_gives_the_same_pulse ... ok
+test fast::tests::internal_count_follows_the_event_classes ... ok
+test fast::tests::kappa_power_matches_direct_products_and_vanishes_for_large_n ... ok
+test fast::tests::missing_appraisal_keeps_only_the_tendency_effects ... ok
+test fast::tests::rates::f02_extreme_finite_rates_through_authorized_compiler ... ok
+test fast::tests::rates::f02_projection_refuses_invalid_derived_rate_and_baseline ... ok
+test fast::tests::rates::learned_rate_matches_independent_reference_and_range ... ok
+test fast::tests::rates::learned_rate_mixed_scales_match_exact_rational_vectors ... ok
+test fast::tests::rates::learned_rate_review_counterexample_agrees_through_public_projection ... ok
+test fast::tests::recovery_reset_and_washout ... ok
+test fast::tests::self_caused_events_are_weighted_by_kappa_powers ... ok
+test fast::tests::snapshot_round_trip_is_bit_exact ... ok
+test fast::tests::snapshot_with_unknown_representation_is_refused ... ok
+test fast::tests::state_boundaries::f02_negative_zero_is_rejected_by_validator_and_normalized_at_construction ... ok
+test fast::tests::state_boundaries::negative_zero_recovery_and_snapshot_preserve_canonical_zero_delta ... ok
+test fast::tests::state_boundaries::snapshot_decoder_rejects_noncanonical_negative_zero_bytes ... ok
+test fast::tests::zero_delta_is_identity_bit_for_bit ... ok
+
+test result: ok. 66 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.35s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\core_policy-5f0e549fd73cbf72.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\core_replay-210d5c1e6d039bc4.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\core_runtime-069c335c050ab4e9.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\core_store-93f2892cb7527e0d.exe)
+
+running 32 tests
+test tests::atomic::all_binding_fields_are_immutable_after_dispatch ... ok
+test tests::atomic::atomic_publication_and_append_only_history ... ok
+test tests::atomic::d101_d102_stale_and_mutated_bindings_rejected ... ok
+test tests::atomic::disk_full_rolls_back_ledger_and_all_state ... ok
+test tests::atomic::duplicate_and_conflict_only_advance_processed_frontier ... ok
+test tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge ... ok
+test tests::atomic::later_ingress_cannot_overtake_uncommitted_input ... ok
+test tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger ... ok
+test tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations ... ok
+test tests::crash::x03_ingress_and_transaction_publication_boundaries ... ok
+test tests::crash::x03_receipt_publish_and_repair_can_crash_again ... ok
+test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects ... ok
+test tests::crash_harness::crash_worker ... ok
+test tests::crash_harness::stray_environment_or_missing_permit_never_touches_target ... ok
+test tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger ... ok
+test tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch ... ok
+test tests::isolation::i29_all_six_cross_lineage_opens_rejected ... ok
+test tests::isolation::malformed_headers_and_existing_directories_never_initialize ... ok
+test tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind ... ok
+test tests::objects::at01_canonical_identity_and_superseded_writes ... ok
+test tests::objects::at02_corrupt_or_missing_object_never_publishes ... ok
+test tests::objects::at03_pins_close_prepare_gc_publish_race ... ok
+test tests::objects::object_capacity_and_io_failures_never_acknowledge_d ... ok
+test tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete ... ok
+test tests::objects::publication_primitive_never_replaces_existing_target ... ok
+test tests::objects::published_closure_damage_refuses_recovery ... ok
+test tests::objects::r_index_reassembles_canonical_and_reuses_unchanged_tendencies ... ok
+test tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc ... ok
+test tests::objects::sys22_capacity_and_busy_wait_are_bounded ... ok
+test tests::reader::complete_transaction_prefix_is_verified_and_bounded ... ok
+test tests::reader::live_readers_open_during_ingress_without_false_rollback ... ok
+test tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 89.48s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\core_types-27d13755e55536e6.exe)
+
+running 9 tests
+test codec_cache_tests::all_legal_and_illegal_golden_vectors_are_equal_cold_hot_and_uncached ... ok
+test codec_cache_tests::codec_keys_bind_tag_schema_version_hash_and_share_only_immutable_graph ... ok
+test numeric::tests::sys21_count_accepts_boundaries_rejects_limit_and_overflow ... ok
+test numeric::tests::sys21_finite_values_preserve_binary64_bits ... ok
+test numeric::tests::sys21_intervals_are_explicitly_bounded_and_never_wrap ... ok
+test numeric::tests::sys21_normalizes_negative_zero_only ... ok
+test numeric::tests::sys21_rejects_all_nonfinite_categories ... ok
+test semantic::tests::tendency_order_is_canonical_set_order ... ok
+test semantic::tests::unit_directions_pass_and_others_fail ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.75s
+
+     Running tests\canonical_boundaries.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\canonical_boundaries-38604a428116a1d7.exe)
+
+running 5 tests
+test first_codec_call_and_later_calls_are_equivalent_and_owned_schemas_stay_independent ... 
+running 1 test
+test first_codec_call_and_later_calls_are_equivalent_and_owned_schemas_stay_independent ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.01s
+
+ok
+test frozen_tag_is_independent_of_message_name ... ok
+test nested_encoding_repeats_header_and_vector_order_is_significant ... ok
+test optional_nonfinite_is_rejected_before_json_can_erase_it ... ok
+test sys21_canonical_count_overflow_negative_zero_and_bad_presence ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\p5_32_contract.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\p5_32_contract-e1d0db26898df512.exe)
+
+running 5 tests
+test allocation_ordinals_are_exactly_zero_to_n_minus_one ... ok
+test subnormal_edge_u_zero_with_m_nonzero_is_valid ... ok
+test successors_are_live_and_predecessors_superseded ... ok
+test teaching_allocation_has_no_projection_and_roundtrips ... ok
+test tendency_v2_semantics_include_the_magnitude_sums ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\v2_contract.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\v2_contract-d4b5db28201208c9.exe)
+
+running 8 tests
+test adr_0014_values_are_live ... ok
+test genesis_has_no_free_text_fields ... ok
+test genesis_semantics ... ok
+test law_parameter_inequalities ... ok
+test superseded_registry ... ok
+test tendency_change_needs_an_endpoint ... ok
+test tendency_order_matches_codec_set_order ... ok
+test tendency_semantics_beyond_the_codec ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\main.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\echoctl-7d0cb73780ea15bd.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\fact_view-5cce19ede946e26b.exe)
+
+running 20 tests
+test tests::cpu_eval::profile_builtin_codec_descriptor_construction ... ignored, explicit diagnostic; immutable descriptor only, no stores
+test tests::cpu_eval::real_cpu_multilingual_restart_recall_and_100_retractions ... ignored, explicit pinned local CPU model required; see fact-view README
+test tests::deterministic_rrf_filters_corrections_and_budgets ... ok
+test tests::edge_cases::p522_active_memory_messages_never_emit_growth_or_serve_other_services ... ok
+test tests::edge_cases::panel_time_and_payload_filters_are_compatible_and_invalid_dates_fail ... ok
+test tests::edge_cases::withdrawing_object_reference_also_suppresses_correction_replacements ... ok
+test tests::memory_pages::v276_continuations_bind_query_permissions_budget_and_prefix ... ok
+test tests::memory_pages::v276_pages_reach_beyond_old_top64_with_tied_exact_times_and_no_state ... ok
+test tests::memory_pages::v276_panel_byte_pages_keep_original_text_and_resume_without_omissions ... ok
+test tests::memory_pages::v288_all_six_accepted_reactions_are_marked_and_core_cannot_recall_them ... ok
+test tests::memory_pages::v288_backfilled_reactions_keep_both_times_permissions_and_withdrawals ... ok
+test tests::memory_pages::v288_core_ranking_and_cost_do_not_depend_on_reaction_content_or_count ... ok
+test tests::memory_pages::v288_missing_reaction_object_clears_the_entire_memory_result ... ok
+test tests::panel_budget::sys05_empty_panel_statuses_enforce_the_entire_response_envelope ... ok
+test tests::panel_budget::sys05_wire_trimmed_pages_preserve_the_cursor_and_all_original_items ... ok
+test tests::panel_budget::sys05_wire_trimming_can_remove_every_item_at_the_exact_envelope_limit ... ok
+test tests::retraction_zero_in_one_hundred_task_queries_and_audit_preserves_original ... ok
+test tests::structural_allowlist_excludes_unaccepted_wrapped_explanations_and_core_reactions ... ok
+test tests::sys05_five_distinct_results_and_real_positive_control ... ok
+test tests::trigram_and_short_unicode_literal_queries_are_not_fts_syntax ... ok
+
+test result: ok. 18 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 77.01s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\gateway-9b8f523daf72bd18.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\semantic_core-fe3284de86c73d2d.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\task_layer-efba775cd5f2b264.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests action_gate
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_kernel
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_policy
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_replay
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_runtime
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests core_store
+
+running 3 tests
+test crates\core-store\src\queries.rs - queries::Reader<L>::transactions_at (line 14) - compile fail ... ok
+test crates\core-store\src\transaction.rs - transaction::CommitCapability (line 25) - compile fail ... ok
+test crates\core-store\src\transaction.rs - transaction::PreparedTransaction (line 44) - compile fail ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+   Doc-tests core_types
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests fact_view
+
+running 1 test
+test crates\fact-view\src\index.rs - index::FactView (line 12) - compile fail ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+   Doc-tests gateway
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests semantic_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests task_layer
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
