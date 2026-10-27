@@ -1,0 +1,393 @@
+   Compiling typenum v1.20.1
+   Compiling cfg-if v1.0.5
+   Compiling const-oid v0.10.2
+   Compiling once_cell v1.21.4
+   Compiling memchr v2.8.3
+   Compiling itoa v1.0.18
+   Compiling cpufeatures v0.3.1
+   Compiling windows-link v0.2.1
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling pin-project-lite v0.2.17
+   Compiling smallvec v1.16.3
+   Compiling fastrand v2.5.0
+   Compiling fallible-iterator v0.3.0
+   Compiling libsqlite3-sys v0.38.2
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling windows-sys v0.61.2
+   Compiling getrandom v0.4.3
+   Compiling bitflags v2.13.2
+   Compiling tracing-core v0.1.36
+   Compiling rusqlite v0.40.2
+   Compiling tracing v0.1.44
+   Compiling hybrid-array v0.4.15
+   Compiling tempfile v3.27.0
+   Compiling block-buffer v0.12.1
+   Compiling crypto-common v0.2.2
+   Compiling digest v0.11.3
+   Compiling sha2 v0.11.1
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.154
+   Compiling core-types v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-types)
+   Compiling core-store v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-store)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.75s
+     Running unittests src\lib.rs (target\debug\deps\core_store-801b8b4a8c08a23a.exe)
+
+running 35 tests
+test tests::atomic::all_binding_fields_are_immutable_after_dispatch ... ok
+test tests::atomic::atomic_publication_and_append_only_history ... ok
+test tests::atomic::d101_d102_stale_and_mutated_bindings_rejected ... ok
+test tests::atomic::disk_full_rolls_back_ledger_and_all_state ... ok
+test tests::atomic::duplicate_and_conflict_only_advance_processed_frontier ... ok
+test tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge ... ok
+test tests::atomic::later_ingress_cannot_overtake_uncommitted_input ... ok
+test tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger ... ok
+test tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations ... running 1 test
+W02_INJECT InitRootCreated object=None plan=Nth(NthFault { point: InitRootCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT InitRootCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitRootSynced object=None plan=Nth(NthFault { point: InitRootSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT InitRootSynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitObjectsCreated object=None plan=Nth(NthFault { point: InitObjectsCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT InitObjectsCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitObjectsSynced object=None plan=Nth(NthFault { point: InitObjectsSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT InitObjectsSynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitSqlCommitted object=None plan=Nth(NthFault { point: InitSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+INIT InitSqlCommitted/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitDbDirectorySynced object=None plan=Nth(NthFault { point: InitDbDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+INIT InitDbDirectorySynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptRootCreated object=None plan=Nth(NthFault { point: ReceiptRootCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptRootCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptKindCreated object=None plan=Nth(NthFault { point: ReceiptKindCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptKindCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptKindCreated object=None plan=Nth(NthFault { point: ReceiptKindCreated, occurrence: 2, object_type: None, seen: 2 })
+INIT ReceiptKindCreated/2: exit=86; verified empty store
+running 1 test
+W02_INJECT ReceiptKindSynced object=None plan=Nth(NthFault { point: ReceiptKindSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptKindSynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptKindSynced object=None plan=Nth(NthFault { point: ReceiptKindSynced, occurrence: 2, object_type: None, seen: 2 })
+INIT ReceiptKindSynced/2: exit=86; verified empty store
+running 1 test
+W02_INJECT ReceiptRootSynced object=None plan=Nth(NthFault { point: ReceiptRootSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptRootSynced/1: exit=86; verified empty store
+running 1 test
+W02_INJECT ReceiptParentSynced object=None plan=Nth(NthFault { point: ReceiptParentSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptParentSynced/1: exit=86; verified empty store
+running 1 test
+W02_INJECT GcDeleted object=None plan=Nth(NthFault { point: GcDeleted, occurrence: 1, object_type: None, seen: 1 })
+X03 gc/GcDeleted/1: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT GcDeleted object=None plan=Nth(NthFault { point: GcDeleted, occurrence: 2, object_type: None, seen: 2 })
+X03 gc/GcDeleted/2: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT GcDirectorySyncBefore object=None plan=Nth(NthFault { point: GcDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 gc/GcDirectorySyncBefore/1: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT GcDirectorySynced object=None plan=Nth(NthFault { point: GcDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 gc/GcDirectorySynced/1: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+ok
+test tests::crash::x03_ingress_and_transaction_publication_boundaries ... running 1 test
+W02_INJECT GStaged object=None plan=Nth(NthFault { point: GStaged, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/GStaged: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT CStaged object=None plan=Nth(NthFault { point: CStaged, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/CStaged: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT LedgerWritten object=None plan=Nth(NthFault { point: LedgerWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/LedgerWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT BeforePublish object=None plan=Nth(NthFault { point: BeforePublish, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/BeforePublish: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/SqlCommitted: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT AfterPublish object=None plan=Nth(NthFault { point: AfterPublish, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/AfterPublish: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ObjectWritten object=Some("echo.event") plan=Nth(NthFault { point: ObjectWritten, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+X03 ingress/ObjectWritten: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.event") plan=Nth(NthFault { point: FileSynced, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+X03 ingress/FileSynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.event") plan=Nth(NthFault { point: Renamed, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+X03 ingress/Renamed: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.event") plan=Nth(NthFault { point: DirectorySynced, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+X03 ingress/DirectorySynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressBeforeSql object=None plan=Nth(NthFault { point: IngressBeforeSql, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/IngressBeforeSql: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/IngressSqlCommitted: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressAcknowledged object=None plan=Nth(NthFault { point: IngressAcknowledged, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/IngressAcknowledged: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+ok
+test tests::crash::x03_receipt_publish_and_repair_can_crash_again ... running 1 test
+W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptFileSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptFileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptRenameBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptRenamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptTargetSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptTargetSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptDirectorySyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptDirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptFileSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptFileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptRenameBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptRenamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptTargetSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptTargetSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptDirectorySyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptDirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptWritten: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptFileSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptFileSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptRenameBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptRenamed: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptTargetSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptTargetSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptDirectorySyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptDirectorySynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptWritten: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptFileSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptFileSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptRenameBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptRenamed: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptTargetSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptTargetSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptDirectorySyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptDirectorySynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+ok
+test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects ... running 1 test
+W02_INJECT ObjectWritten object=Some("echo.tendency-v3") plan=Nth(NthFault { point: ObjectWritten, occurrence: 2, object_type: Some("echo.tendency-v3"), seen: 2 })
+X03 r/echo.tendency-v3/2/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ObjectWritten object=Some("echo.r-snapshot-v3") plan=Nth(NthFault { point: ObjectWritten, occurrence: 1, object_type: Some("echo.r-snapshot-v3"), seen: 1 })
+X03 r/echo.r-snapshot-v3/1/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ObjectWritten object=Some("echo.transaction-v2") plan=Nth(NthFault { point: ObjectWritten, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.tendency-v3") plan=Nth(NthFault { point: FileSynced, occurrence: 2, object_type: Some("echo.tendency-v3"), seen: 2 })
+X03 r/echo.tendency-v3/2/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.r-snapshot-v3") plan=Nth(NthFault { point: FileSynced, occurrence: 1, object_type: Some("echo.r-snapshot-v3"), seen: 1 })
+X03 r/echo.r-snapshot-v3/1/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.transaction-v2") plan=Nth(NthFault { point: FileSynced, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.tendency-v3") plan=Nth(NthFault { point: Renamed, occurrence: 2, object_type: Some("echo.tendency-v3"), seen: 2 })
+X03 r/echo.tendency-v3/2/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.r-snapshot-v3") plan=Nth(NthFault { point: Renamed, occurrence: 1, object_type: Some("echo.r-snapshot-v3"), seen: 1 })
+X03 r/echo.r-snapshot-v3/1/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.transaction-v2") plan=Nth(NthFault { point: Renamed, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.tendency-v3") plan=Nth(NthFault { point: DirectorySynced, occurrence: 2, object_type: Some("echo.tendency-v3"), seen: 2 })
+X03 r/echo.tendency-v3/2/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.r-snapshot-v3") plan=Nth(NthFault { point: DirectorySynced, occurrence: 1, object_type: Some("echo.r-snapshot-v3"), seen: 1 })
+X03 r/echo.r-snapshot-v3/1/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.transaction-v2") plan=Nth(NthFault { point: DirectorySynced, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseFileSyncBefore object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseFileSyncBefore, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseFileSyncBefore: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseFileSynced object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseFileSynced, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseFileSynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseDirectorySyncBefore object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseDirectorySyncBefore, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseDirectorySyncBefore: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseDirectorySynced object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseDirectorySynced, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseDirectorySynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+ok
+test tests::crash_harness::crash_worker ... ok
+test tests::crash_harness::stray_environment_or_missing_permit_never_touches_target ... ok
+test tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger ... ok
+test tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch ... ok
+test tests::isolation::i29_all_six_cross_lineage_opens_rejected ... ok
+test tests::isolation::malformed_headers_and_existing_directories_never_initialize ... ok
+test tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind ... ok
+test tests::objects::at01_canonical_identity_and_superseded_writes ... ok
+test tests::objects::at02_corrupt_or_missing_object_never_publishes ... ok
+test tests::objects::at03_pins_close_prepare_gc_publish_race ... ok
+test tests::objects::object_capacity_and_io_failures_never_acknowledge_d ... ok
+test tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete ... ok
+test tests::objects::publication_primitive_never_replaces_existing_target ... ok
+test tests::objects::published_closure_damage_refuses_recovery ... ok
+test tests::objects::r_index_reassembles_canonical_and_reuses_unchanged_tendencies ... ok
+test tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc ... ok
+test tests::objects::sys22_capacity_and_busy_wait_are_bounded ... ok
+test tests::reader::live_readers_open_during_ingress_without_false_rollback ... ok
+test tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends ... ok
+test tests::retention_versions::p534_old_messages_and_flat_r_cannot_enter_new_writes ... ok
+test tests::retention_versions::p534_v2_history_readable_writer_refused_without_migration ... ok
+test tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer ... P534_WAL sqlite=3.53.2 segmented=false db_before=4096 db_after=4096 wal_before=284312 wal_after=284312 db_unchanged=true wal_unchanged=true
+P534_WAL sqlite=3.53.2 segmented=true db_before=4096 db_after=4096 wal_before=284312 wal_after=284312 db_unchanged=true wal_unchanged=true
+ok
+test tests::retention_versions::p534_v3_q_v_survive_commit_reopen_gc_and_continued_writes ... ok
+
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1079.46s
+
+   Doc-tests core_store
+
+running 2 tests
+error: cannot construct `CommitCapability<Rehearsal>` with struct literal syntax due to private fields
+  --> crates\core-store\src\transaction.rs:28:14
+   |
+28 | let forged = CommitCapability::<Rehearsal> {};
+   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: aborting due to 1 previous error
+
+test crates\core-store\src\transaction.rs - transaction::CommitCapability (line 25) - compile fail ... ok
+error[E0308]: mismatched types
+   --> crates\core-store\src\transaction.rs:50:17
+    |
+ 50 |     s.commit(c, t, status);
+    |       ------    ^ expected `PreparedTransaction<Life>`, found `PreparedTransaction<Rehearsal>`
+    |       |
+    |       arguments to this method are incorrect
+    |
+    = note: expected struct `PreparedTransaction<Life>`
+               found struct `PreparedTransaction<Rehearsal>`
+note: method defined here
+   --> crates\core-store\src\transaction.rs:165:12
+    |
+165 |     pub fn commit(
+    |            ^^^^^^
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0308`.
+test crates\core-store\src\transaction.rs - transaction::PreparedTransaction (line 44) - compile fail ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+

@@ -775,6 +775,7 @@ class GenesisManifestV2:
     protocol: ObjectRef
 @dataclass(frozen=True)
 class EvidenceAllocationV2:
+    # Superseded (successor EvidenceAllocationV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence
     schema_version: int
     tendency_id: str
     support: float
@@ -785,6 +786,7 @@ class EvidenceAllocationV2:
     projection: float | None
 @dataclass(frozen=True)
 class EvidenceGroupV2:
+    # Superseded (successor EvidenceGroupV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence
     schema_version: int
     group_id: str
     members: list[str]
@@ -794,6 +796,7 @@ class EvidenceGroupV2:
     allocations: list[EvidenceAllocationV2]
 @dataclass(frozen=True)
 class TendencyV2:
+    # Superseded (successor TendencyV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence
     schema_version: int
     tendency_id: str
     concept: ConceptRef
@@ -813,10 +816,57 @@ class TendencyV2:
     magnitude_weight: float
 @dataclass(frozen=True)
 class RSnapshotV2:
+    # Superseded (successor RSnapshotV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence
     schema_version: int
     revision: str
     law_version: ObjectRef
     tendencies: list[TendencyV2]
+@dataclass(frozen=True)
+class EvidenceAllocationV3:
+    schema_version: int
+    tendency_id: str
+    support: float
+    intensity: float
+    share: float
+    ordinal: int
+    mu: float
+    projection: float | None
+    actual_retention: float
+@dataclass(frozen=True)
+class EvidenceGroupV3:
+    schema_version: int
+    group_id: str
+    members: list[str]
+    source_key: str
+    credibility: float
+    verifiability: float
+    allocations: list[EvidenceAllocationV3]
+@dataclass(frozen=True)
+class TendencyV3:
+    schema_version: int
+    tendency_id: str
+    concept: ConceptRef
+    predicate: list[TrilingualText]
+    direction: NatureVector
+    evidence_a: float
+    evidence_b: float
+    h_hat: float
+    group_count: int
+    flip_count: int
+    last_sign: EvidenceSign | None
+    pi: float
+    typical_magnitude: float
+    relation: PersonRelation | None
+    attachment_prior: float | None
+    magnitude_sum: float
+    magnitude_weight: float
+    evidence_absolute: float
+@dataclass(frozen=True)
+class RSnapshotV3:
+    schema_version: int
+    revision: str
+    law_version: ObjectRef
+    tendencies: list[TendencyV3]
 @dataclass(frozen=True)
 class ThetaValues:
     schema_version: int

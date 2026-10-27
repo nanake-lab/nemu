@@ -1797,7 +1797,7 @@ pub r#boundaries: ObjectRef,
 pub r#protocol: ObjectRef,
 }
 impl super::WireMessage for GenesisManifestV2 {const NAME: &'static str = "GenesisManifestV2";}
-/// v2.0 §5.2 S_{c,k}, weight factors, shares, r_k; LP2, I25; ADR 0016; frozen tag `echo.evidence-allocation-v2`. Supersedes [`EvidenceAllocation`].
+/// v2.0 §5.2 S_{c,k}, weight factors, shares, r_k; LP2, I25; ADR 0016; frozen tag `echo.evidence-allocation-v2`. Superseded (successor EvidenceAllocationV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence Supersedes [`EvidenceAllocation`].
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EvidenceAllocationV2 {
@@ -1816,8 +1816,8 @@ pub r#mu: f64,
 #[serde(serialize_with = "super::scalar::finite_option")]
 pub r#projection: Option<f64>,
 }
-impl super::WireMessage for EvidenceAllocationV2 {const NAME: &'static str = "EvidenceAllocationV2";}
-/// v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; ADR 0016; frozen tag `echo.evidence-group-v2`. Supersedes [`EvidenceGroup`].
+impl super::WireMessage for EvidenceAllocationV2 {const NAME: &'static str = "EvidenceAllocationV2"; const SUPERSEDED: bool = true;}
+/// v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; ADR 0016; frozen tag `echo.evidence-group-v2`. Superseded (successor EvidenceGroupV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence Supersedes [`EvidenceGroup`].
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct EvidenceGroupV2 {
@@ -1831,8 +1831,8 @@ pub r#credibility: f64,
 pub r#verifiability: f64,
 pub r#allocations: Vec<EvidenceAllocationV2>,
 }
-impl super::WireMessage for EvidenceGroupV2 {const NAME: &'static str = "EvidenceGroupV2";}
-/// v2.0 §5.2, §5.3 corollary 7, §7, §10; ADR 0016; frozen tag `echo.tendency-v2`. Supersedes [`Tendency`].
+impl super::WireMessage for EvidenceGroupV2 {const NAME: &'static str = "EvidenceGroupV2"; const SUPERSEDED: bool = true;}
+/// v2.0 §5.2, §5.3 corollary 7, §7, §10; ADR 0016; frozen tag `echo.tendency-v2`. Superseded (successor TendencyV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence Supersedes [`Tendency`].
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TendencyV2 {
@@ -1865,8 +1865,8 @@ pub r#magnitude_sum: f64,
 #[serde(serialize_with = "super::scalar::finite")]
 pub r#magnitude_weight: f64,
 }
-impl super::WireMessage for TendencyV2 {const NAME: &'static str = "TendencyV2";}
-/// v2.0 §2.1, §2.2, §7; ADR 0016; frozen tag `echo.r-snapshot-v2`. Supersedes [`RSnapshot`].
+impl super::WireMessage for TendencyV2 {const NAME: &'static str = "TendencyV2"; const SUPERSEDED: bool = true;}
+/// v2.0 §2.1, §2.2, §7; ADR 0016; frozen tag `echo.r-snapshot-v2`. Superseded (successor RSnapshotV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence Supersedes [`RSnapshot`].
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct RSnapshotV2 {
@@ -1875,7 +1875,90 @@ pub r#revision: String,
 pub r#law_version: ObjectRef,
 pub r#tendencies: Vec<TendencyV2>,
 }
-impl super::WireMessage for RSnapshotV2 {const NAME: &'static str = "RSnapshotV2";}
+impl super::WireMessage for RSnapshotV2 {const NAME: &'static str = "RSnapshotV2"; const SUPERSEDED: bool = true;}
+/// v2.0 §5.2 S_{c,k}, weight factors, shares, r_k; LP2, I25; ADR 0019, ADR 0021; frozen tag `echo.evidence-allocation-v3`. Supersedes [`EvidenceAllocationV2`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EvidenceAllocationV3 {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#support: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#intensity: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#share: f64,
+pub r#ordinal: DecimalU64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#mu: f64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#projection: Option<f64>,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#actual_retention: f64,
+}
+impl super::WireMessage for EvidenceAllocationV3 {const NAME: &'static str = "EvidenceAllocationV3";}
+/// v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; ADR 0019, ADR 0021; frozen tag `echo.evidence-group-v3`. Supersedes [`EvidenceGroupV2`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EvidenceGroupV3 {
+pub r#schema_version: u32,
+pub r#group_id: String,
+pub r#members: Vec<String>,
+pub r#source_key: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#credibility: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#verifiability: f64,
+pub r#allocations: Vec<EvidenceAllocationV3>,
+}
+impl super::WireMessage for EvidenceGroupV3 {const NAME: &'static str = "EvidenceGroupV3";}
+/// v2.0 §5.2, §5.3 corollary 7, §7, §10; ADR 0019, ADR 0021; frozen tag `echo.tendency-v3`. Supersedes [`TendencyV2`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TendencyV3 {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+pub r#concept: ConceptRef,
+pub r#predicate: Vec<TrilingualText>,
+pub r#direction: NatureVector,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#evidence_a: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#evidence_b: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#h_hat: f64,
+pub r#group_count: DecimalU64,
+pub r#flip_count: DecimalU64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#last_sign: Option<EvidenceSign>,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#pi: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#typical_magnitude: f64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#relation: Option<PersonRelation>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#attachment_prior: Option<f64>,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#magnitude_sum: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#magnitude_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#evidence_absolute: f64,
+}
+impl super::WireMessage for TendencyV3 {const NAME: &'static str = "TendencyV3";}
+/// v2.0 §2.1, §2.2, §7; ADR 0019, ADR 0021; frozen tag `echo.r-snapshot-v3`. Supersedes [`RSnapshotV2`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RSnapshotV3 {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#law_version: ObjectRef,
+pub r#tendencies: Vec<TendencyV3>,
+}
+impl super::WireMessage for RSnapshotV3 {const NAME: &'static str = "RSnapshotV3";}
 /// v2.0 §8 θ = (b, g, λ); frozen tag `echo.theta-values`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -3123,6 +3206,10 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "EvidenceGroupV2" => super::verify_typed::<EvidenceGroupV2>(value, limits),
 "TendencyV2" => super::verify_typed::<TendencyV2>(value, limits),
 "RSnapshotV2" => super::verify_typed::<RSnapshotV2>(value, limits),
+"EvidenceAllocationV3" => super::verify_typed::<EvidenceAllocationV3>(value, limits),
+"EvidenceGroupV3" => super::verify_typed::<EvidenceGroupV3>(value, limits),
+"TendencyV3" => super::verify_typed::<TendencyV3>(value, limits),
+"RSnapshotV3" => super::verify_typed::<RSnapshotV3>(value, limits),
 "ThetaValues" => super::verify_typed::<ThetaValues>(value, limits),
 "TendencyChange" => super::verify_typed::<TendencyChange>(value, limits),
 "ThetaChange" => super::verify_typed::<ThetaChange>(value, limits),
@@ -3213,4 +3300,4 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "ProactivityBoundaries" => super::verify_typed::<ProactivityBoundaries>(value, limits),
 _ => Err("unknown message".into()), }}
 /// Message types kept only to read old data and for tests; no runtime path may produce them.
-pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "ApprovalRequest", "RunState", "Readout", "Query", "QueryResult", "ApprovalDecision", "HookCoefficients", "ModulationEnvelope"];
+pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "EvidenceAllocationV2", "EvidenceGroupV2", "TendencyV2", "RSnapshotV2", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "ApprovalRequest", "RunState", "Readout", "Query", "QueryResult", "ApprovalDecision", "HookCoefficients", "ModulationEnvelope"];

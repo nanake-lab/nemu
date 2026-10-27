@@ -153,7 +153,7 @@ impl World {
         let ticket = self.store.bind(b.clone()).unwrap();
         let law: LawVersion = with_refs(leaf.reference());
         let law = self.store.prepare(&law, "1").unwrap();
-        let mut r: RSnapshotV2 = with_refs(leaf.reference());
+        let mut r: RSnapshotV3 = with_refs(leaf.reference());
         r.revision = format!("r-{n}");
         r.law_version = law.reference().clone();
         let r = self.store.prepare_r(&r).unwrap();
