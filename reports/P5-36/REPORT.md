@@ -155,3 +155,11 @@ P5-25 #77 的标签接口返回 null，未将 null 解释为空标签；补充�
 ### 冻结字节与 whitespace 说明
 
 `git diff --cached --check` 只报新冻结的 `baselines/p5-35/growth.proto:300` 含末尾空行（exit 2）。该文件已逐字节核对等于 main 的原文件；为保留冻结字节没有删空行。这不是源码逻辑或测试失败，完整工作区的未通过仍按 B3 保留。源文件范围检查与所有冻结 proto 的 main 字节核对见 `implementation/scope-source-manifest.json`，原始 whitespace 输出见 `implementation/staged-diff-check.log`。
+
+### 发布记录
+
+实现与本轮证据已于提交 `6be258320b8683117bdc19d55afb88a92ed905f5` 推送至原分支；PR #108 的标题和描述已更新为实现成果及 B3，仍为 draft / needs-user。GitHub 连接器更新描述遇网络错误后，通过 `gh pr edit --body-file` 完成并重新读取确认。
+
+固定实现提交的 CI 快照见 `implementation/ci-6be25832-snapshot.json`：Windows self-hosted 作业 skipped，汇总门禁 failure，注释明确为草稿 PR 不允许把 skipped 当通过；Ubuntu 当时仍 in_progress，不作通过结论。此快照只属于该 head。B3 已由本地完整测试证明，未转 ready 来规避草稿门禁，也未在已知存储接线未完成时额外触发 Windows 重负载。
+
+本条发布记录为纯报告追加，不改变已验证源文件；不用为它重复本卡基线或真实恢复测试。后继解除 B3 时仍须核对最新 main 与实际验证基线，并补完整验收及当前 head CI。
