@@ -1,12 +1,12 @@
 # P5-34 分配的实际保留率与倾向的证据量 — 报告
 
-## 结果
+## 当前状态
 
-截至本报告提交，实现和复审修复已完成；按用户后续要求增加的 W02 上传恢复已通过 14 个本地场景、Ruff 和 mypy --strict。最终 head 的线上 Ubuntu、Windows、制品上传结果维护在 [PR #95](https://github.com/nanake-lab/nemu/pull/95) 描述、最新回复和[当前检查](https://github.com/nanake-lab/nemu/pull/95/checks)，不以本报告中的历史成功替代当前门控。保留 needs-user，由用户安排独立复审及合并，不领取下一卡。
+实现和复审修复已完成；[最新复审](https://github.com/nanake-lab/nemu/pull/95#issuecomment-6436424046) 已关闭原 WAL 阻塞，并认可上传恢复的实现和既有验证边界。本次按用户要求 merge main 88455673，完成 #65 与 P5-34 的组合适配。提交前对该 main 的兼容门为 0 违例；其余受影响的契约、缓存、存储、fact-view 与静态检查由新 head 的 CI 验证。最终线上结果维护在 [PR #95](https://github.com/nanake-lab/nemu/pull/95) 描述、最新回复和[当前检查](https://github.com/nanake-lab/nemu/pull/95/checks)，不以历史成功替代新组合验证。保留 needs-user，交原审查者增量复核后停止，由用户合并，不领取下一卡。
 
 修复源码 af200a67 的 Ubuntu/Windows 均通过。随后仅补报告的 c6525e65 也通过 Ubuntu 与 W02 35+2，但上传报 Upload progress stalled，因此曾按要求恢复草稿。用户随后明确要求解决上传稳定性；本次追加仅修改 W02 上传流程和报告，最多三次上传、20/40 秒间隔、每次 6 分钟、成功 ID 门禁，重试复用同一日志而不重跑测试。详情见 [CI-UPLOAD-20261027.md](CI-UPLOAD-20261027.md)，原失败和所有日志保留。
 
-已 merge origin/main 3f8f98e5（merge 3da8c1dc，含 #106/#107），没有 rebase 或强推。上传修复的测试、文档、证据集中在同一提交；之后的最终 CI 状态固定在 PR 中，不再为补录成功结果产生报告提交。
+此前已 merge origin/main 3f8f98e5（merge 3da8c1dc，含 #106/#107）；本次继续 merge 8845567376e4726cc63d6f148cedd46ec563cd34（#109/#65），没有 rebase 或强推。必要报告更新与组合适配集中在本次 merge 提交；最终 CI 状态固定在 PR 中，不再为补录成功结果产生报告提交。
 
 用户明确决定：新写入 V3；V2 历史只读、可解码；旧 V2 head 拒绝继续写。当前没有正式或排练存储，现存仅测试数据（用户提供，本卡未访问用户数据）。本次不做 V2→V3 数据迁移。将来需要时由 **P5-26** 按 v2.0 §2.2 用规律 G 从 H 整段重放得到新 q/V 快照，**不另开迁移卡**。这一决定不是用默认 q/V 转换旧状态的授权。
 
@@ -17,6 +17,27 @@
 - 三语言生成类型、运行时及浏览器安全 Zod；黄金向量只追加 19 合法、35 非法，总计 464 合法、492 非法、18 Unicode。新分配/倾向/证据组/快照的合法与非法数分别为 6/10、5/11、4/7、4/7。p5-32 冻结基线保留。
 - ADR 0021 §11、差异登记 V2-62/63 接续说明、docs/traceability/P5-34.md 与两份接续请求；不新增检测器/θ 字段或 G 算法。
 - verify-protected.ps1、verify-main-supervisor.ps1、summarize_protected.py 与 verification/protected-20261026/：命令、时间、提交、退出码、日志 SHA-256、逐文件源码/基线哈希及 main 对照。旧运行目录不覆盖。
+
+### 2026-10-27 最后组合验证：合入 #65
+
+按最新 AGENTS §6 固定实际验证基线：上一轮 PR head 为 `c3444feabeda9fede878fe96464fff60475361c9`；Ubuntu 40463047717、Windows 40463210385 实际 checkout 均为 `cf038a608dd005991f74e24f5660f3ab1f399f8d`。其两个父提交为 **B = `3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf`** 与上述 head，tree 与该 head 相同，两次运行均成功。本次固定 **M = `8845567376e4726cc63d6f148cedd46ec563cd34`**，已确认 B 是 M 的祖先，B→M 只有 #109 流程规则和 #65 事实视图。依据、全部变化路径和保留文件的 Git 哈希见 `verification/combined-main-20261027/context.json`，实际 checkout 日志摘录见同目录 `previous-checkouts.json`。
+
+合并无文本冲突，实质差异如下：
+
+- 保留 #65 的四个 WireMessage 编解码入口不可变描述符缓存及冷/热/无缓存一致性测试；保留本卡 V3 类型、语义检查和黄金向量。
+- `core-store/src/queries.rs` 同时保留 #65 的 `Reader::transactions_at` 完整已接受事务前缀接口，以及本卡 `EvidenceGroupRecord::V2/V3` 与 `evidence_for` 版本分派。#65 的 reader 测试原样保留；本次没有改写这些接口的逻辑。
+- 唯一额外源码适配是 `fact-view/src/tests/fixture.rs` 的一行：`RSnapshotV2` → `RSnapshotV3`。该 TemporaryRoot 新写入夹具经 `prepare_r` 消费本卡的 V3 接口；`with_refs` 按消息名称选取本卡已有的 V3 黄金样例，不转换 V2 数据、不补默认 q/V、不改变断言或测试预算。这是合并后必须消除的类型不匹配，fact-view 生产逻辑保留 #65 原样。
+- #65 的 Cargo.lock 和可选 `cpu-embedding` Clippy 步骤原样合入；已通过复审的 WAL 修复、回归和 Windows 上传重试文件与旧 head 完全相同。
+
+| 必要检查 | 本次安排 / 结果 | 证据 |
+| --- | --- | --- |
+| `python core/contracts/check_compat.py --ref 8845567376e4726cc63d6f148cedd46ec563cd34` | 提交前通过；三个冻结基线、current、M 均 0 违例 | `verification/combined-main-20261027/compatibility.log` |
+| `pnpm test:core-contracts`（含 generate --check、冻结基线兼容、三语言黄金/对抗向量）、契约 Python 静态检查 | 由新 head 的 Ubuntu CI 执行，含缓存与 V3 组合；不在本机重复全量运行 | PR 当前检查及收口评论 |
+| `cargo fmt --all -- --check`、工作区全目标 Clippy、`cargo test --workspace --locked --exclude core-store` | 由同一 Ubuntu 作业执行，覆盖 core-types 缓存一致性及 fact-view | 同上 |
+| `cargo clippy -p fact-view --all-targets --features cpu-embedding --locked -- -D warnings` | 使用 #65 新增 CI 步骤，不下载模型、不重做未受影响的模型测量 | 同上 |
+| `cargo test -p core-store --locked` 与 Windows W02、上传门禁 | 分别由 Ubuntu 与 Windows 新 head 作业执行；W02 同时覆盖新 reader 接口和保留的 V2/V3 回归 | 同上 |
+
+现有 q/V 独立字节复算、上传恢复故障场景、supervisor 对照及完整 G/H/SYS17 的既有限制继续有效，不因同步 main 重做。CI 按原路径规则附带运行的 Node/Python/Windows 检查保持原配置，本机不另起重复套件。若仅上传失败，区分测试结论与上传结论并保留日志，不重跑整套测试或修改上传方案。
 
 ### 受保护路径 core-store（必须一并交叉审查）
 
@@ -135,19 +156,19 @@ I18：q/V 在显式版本化 IDL 中，无隐藏持久状态。I23：本卡证�
 | --- | --- | --- | --- |
 | 无新增；既有 serde_json 启用 float_roundtrip | 1.0.154 | MIT OR Apache-2.0 | 保持 JSON binary64 输入位值 |
 
-无依赖或锁文件新增。超过 400 行的 semantic.rs 保留旧 V1/V2 检查并追加 V3；生成文件按既有生成器组织，避免重复维护跨进程类型。新存储文件均未超过 400 行。
+本卡未新增运行时依赖；本次 merge 带入 #65 已发布的 fact-view 依赖及 Cargo.lock，版本、许可与用途见该卡 REPORT 和 ADR 0020，未另外选型或修改锁文件。超过 400 行的 semantic.rs 保留旧 V1/V2 检查并追加 V3；生成文件按既有生成器组织，避免重复维护跨进程类型。新存储文件均未超过 400 行。
 
 ## 待用户确认
 
-- [ ] （阻塞合并）最终 head 的 Windows CI 须完整成功；本轮 W02 测试通过但制品上传失败，不能替代整个工作流成功。
+- [ ] （阻塞合并）#65 合入后的新 head 完成必要组合验证并交原审查者增量复核；CI 最终状态以 PR 描述/最新评论为准，不另交成功报告。c6525e65 上传失败是保留的历史记录，c3444fea 的后续上传已经成功。
 - [ ] （阻塞合并）ADR 0021、V2-62/63 与具体 q/V 后继契约，包含上述 core-store 受保护路径，一起交叉审查并由用户合并。实现者不自行审查或合并。
 - [x] 分阶段范围已获用户明确批准；不再请求迁移授权或另开迁移卡。
 - [ ] （不阻塞本卡）后续维护者定位原 supervisor 退出检查波动；原失败不隐藏，测试不放宽。
 
 ## 后续建议（不在本任务范围内）
 
-P5-26 需要迁移时，从完整有效 H 运行 G 重建 q/V，并完成备份、失败回退与 SYS17；不能把本卡结构夹具当成真实规律结果。新变化检测器/θ 状态与当前已有算法决定由所属卡处理。PR #65 共享 queries.rs 的追加接口尚未合入，后合并方按最新 main 保留双方改动；本 PR 不修改其分支。
+P5-26 需要迁移时，从完整有效 H 运行 G 重建 q/V，并完成备份、失败回退与 SYS17；不能把本卡结构夹具当成真实规律结果。新变化检测器/θ 状态与当前已有算法决定由所属卡处理。#65 已由本次 merge 合入，双方 queries.rs 接口保留。
 
 ## 下一步
 
-上传恢复的代码、验证和报告一起提交后，按用户已批准的 ready→W02 顺序验证最终 head；只有整个 Ubuntu/Windows 工作流和上传门禁都成功才回复“请审查”。最新 head、运行与附件链接写入 PR 描述和回复，避免补记报告再次触发完整 CI。保留 needs-user，交叉审查后由用户合并，不领取下一卡。历史上传失败记录不删除。
+本次 merge、单行夹具适配和必要报告集中提交一次；保持现有可审查 PR，由该次推送触发新 head 的 CI，不另开重复运行。必要验证结束后，将新 SHA、结果和组合差异写入 PR 描述/评论，交原审查者增量复核并停止。保留 needs-user，不合并、不领取下一卡，历史失败记录保留。

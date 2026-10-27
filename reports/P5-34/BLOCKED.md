@@ -8,17 +8,17 @@
 
 旧 Windows pnpm test 的 579/1 失败保留；固定 main b4eb7fd 三次与当时本分支均 580/580，不能声称 main 同样失败。十个相关 Git blob 一致，运行依赖不调用本卡 IDL/Rust 存储，根因未定位；未改 supervisor、阈值或设置。对照与原始失败路径见 REPORT.md。
 
-## B3 源码 CI 已通过；上传恢复后的最终门控见 PR
+## B3 旧 head CI 已通过；新组合门控见 B7 与 PR
 
 本轮已 merge main 3f8f98e5。修复源码 af200a67 的 Ubuntu 40443460541 与 Windows 40443545530 均实际成功，W02 35+2；这份归档不替代后续提交的检查。报告提交 c6525e65 的 Ubuntu 40456116455 成功，Windows 40456116456 的 W02 35+2 通过，但随后制品上传失败，整个 Windows 工作流为 failure，详见 B6。该次失败后 PR #95 已按用户要求恢复草稿；用户随后授权解决上传稳定性，当前恢复实现和本地验证见 B6 追加。保留 needs-user，最终 head、实时 CI 和状态在 PR 描述中固定，全部成功后才发布本轮“请审查”。
 
-core-store 与契约、ADR 0021、V2-62/63 仍需一并交叉复审；最终 CI 全绿后由用户合并，不自行合并或领取下一卡。
+后续 c3444fea 的 Ubuntu 40463047717 和 Windows 40463210385 已实际成功，上传和汇总门禁均成功。[最新复审](https://github.com/nanake-lab/nemu/pull/95#issuecomment-6436424046) 已关闭 WAL 与上传实现事项，当前只剩 #65 合入后的组合验证与增量复核。core-store 与契约、ADR 0021、V2-62/63 保留 needs-user，由用户合并，不自行合并或领取下一卡。
 
 ## B4 已解除：runner 离线及旧 20 分钟时限
 
 2026-10-26 的 runner 离线、草稿守卫失败与排队快照保留在 verification/protected-20261026/。随后 acf73c3 的 W02 因 20 分钟作业时限取消，原日志/制品见 [失败记录](https://github.com/nanake-lab/nemu/pull/95#issuecomment-6418525763)。#106 将时限改为 60 分钟后，d047b417 的 [Ubuntu 40358933290](https://github.com/nanake-lab/nemu/actions/runs/40358933290) 与 [Windows 40358965023](https://github.com/nanake-lab/nemu/actions/runs/40358965023) 实际通过，W02 为 34 项测试及 2 项文档测试通过。本轮不再把 runner 离线列为当前阻塞，未改 runner 或系统设置。
 
-## B5 已修复并验证，待复审：旧 V2 非空 WAL 拒写
+## B5 已复审关闭：旧 V2 非空 WAL 拒写
 
 [审查](https://github.com/nanake-lab/nemu/pull/95#issuecomment-6432647798) 发现拒绝前的读写连接关闭会检查点并清理 WAL。新增仓库回归在旧实现上失败：DB 4096→159744，WAL 284312→0。改为持有原 writer 锁的只读预检后，本地四项边界测试通过；完整 W02 对平面/分段 V2 分别确认 DB 4096→4096、WAL 284312→284312，原字节均相同。旧测试和阈值未改。原始失败在 attempt-04/storage.log，修复后在 attempt-05/storage.log（均位于 verification/protected-20261026/）；审查方原日志、输入哈希与实际 CI 日志在 verification/review-20261027/。独立复审仍按 B3 执行。
 
@@ -35,4 +35,8 @@ core-store 与契约、ADR 0021、V2-62/63 仍需一并交叉复审；最终 CI 
 
 用户已明确要求“换个稳定的方式就算遇到网络波动也能上传过去”。本轮仅追加修改 .github/workflows/windows.yml 的 W02 上传环节：三次有界尝试、20/40 秒等待、独立附件名、同一日志复用、最终成功 outcome 与 artifact ID 门禁。测试、检查名、来源限制、60 分钟作业上限均不变。14 个实际工作流条件/PowerShell 门禁场景及 Ruff、mypy --strict 均通过，详见 CI-UPLOAD-20261027.md。
 
-上传恢复的线上效果和最终交付状态以 PR 描述、当前检查和最新回复为准。有限重试全部失败仍阻塞合并；不会把旧成功、取消或跳过算作当前通过。后续只维护 PR 中的最终 CI 结果，不因补录成功日志另作报告提交。
+上传恢复已由 c3444fea 的首次真实上传及最新复审确认；线上重试分支未故障注入，仍以既有场景验证为限。本次保持上传实现不变。最终交付状态以 PR 描述、当前检查和最新回复为准。有限重试全部失败仍阻塞合并；不会把旧成功、取消或跳过算作当前通过。后续只维护 PR 中的最终 CI 结果，不因补录成功日志另作报告提交。
+
+## B7 本次组合验证与增量复核
+
+旧实际验证基线 B=3f8f98e5，本次 main M=88455673，完整 SHA 和证据见 REPORT 的组合验证节。已无冲突 merge #109/#65；双方 core-store 查询接口、core-types 缓存与 V3 契约均保留。仅将 fact-view 新写入测试夹具的 RSnapshotV2 改为现有 RSnapshotV3 黄金样例，断言和预算不变。提交前对 M 的兼容门 0 违例；新 head 的契约/缓存/core-types/core-store/fact-view、静态检查和 W02 由本次 CI 验证。结果及原审查者增量复核交接在 PR 中记录，不追加成功报告提交。若仅上传失败，写明“测试通过、上传失败”，保留日志后停止，不重跑或扩展实现。

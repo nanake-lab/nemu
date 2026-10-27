@@ -15,6 +15,57 @@ pub enum EvidenceGroupRecord {
 }
 
 impl<L: LineageKind> Reader<L> {
+    /// Complete accepted transaction prefix, after the same recovery and receipt
+    /// checks as opening a Reader. Filtered ingress has no new H transaction.
+    /// Unknown commits, damaged indexes and insufficient budgets fail explicitly.
+    /// The receipt capture precedes the SQL snapshot (W02 review A1/B2).
+    ///
+    /// ```compile_fail
+    /// use core_store::{Reader, Rehearsal, Life};
+    /// fn cross_lineage(reader: &Reader<Rehearsal>) {
+    ///     let other: &Reader<Life> = reader;
+    ///     other.transactions_at("commit", 10).unwrap();
+    /// }
+    /// ```
+    pub fn transactions_at(
+        &self,
+        commit: &str,
+        limit: usize,
+    ) -> Result<Vec<core_types::generated::CoreTransactionV2>> {
+        require(
+            limit < self.objects.config.encoding.max_items && limit < i64::MAX as usize,
+            "query budget exceeded",
+        )?;
+        let root = self
+            .objects
+            .root
+            .parent()
+            .ok_or(crate::Error::Rejected("missing store root"))?;
+        let receipts = crate::witness::capture(root, &self.objects)?;
+        let snapshot = self.db.unchecked_transaction()?;
+        // This first SQL read pins the snapshot. Header, recovery, indexes,
+        // prefix resolution and object visibility all use this one connection.
+        let temporary: bool = snapshot.query_row(
+            "SELECT temporary FROM metadata WHERE singleton=1",
+            [],
+            |r| r.get(0),
+        )?;
+        let (header, branch) =
+            crate::store::check_header::<L>(&snapshot, root, self.objects.config, temporary)?;
+        crate::recovery::verify(&snapshot, &self.objects, &header, &branch)?;
+        crate::witness::check(&snapshot, &self.objects, &receipts)?;
+        let position = self.query_prefix(commit, limit)?;
+        let refs = {
+            let mut stmt = snapshot.prepare("SELECT snapshot FROM commits WHERE position<=?1 AND decision='accepted' ORDER BY position LIMIT ?2")?;
+            stmt.query_map(params![position, (limit + 1) as i64], |r| {
+                r.get::<_, Vec<u8>>(0)
+            })?
+            .collect::<std::result::Result<Vec<_>, _>>()?
+        };
+        let result = self.decode_complete(refs, limit)?;
+        snapshot.rollback()?;
+        Ok(result)
+    }
     /// Complete ledger prefix or an explicit budget error; never an empty/truncated
     /// result masquerading as evidence that no prior cost was recorded.
     pub fn ledger_at(&self, commit: &str, limit: usize) -> Result<Vec<LedgerEntry>> {
