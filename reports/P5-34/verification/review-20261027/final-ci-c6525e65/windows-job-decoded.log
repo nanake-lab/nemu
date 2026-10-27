@@ -1,0 +1,1555 @@
+﻿2026-10-27T05:40:50.9568854Z Current runner version: '2.338.0'
+2026-10-27T05:40:50.9574297Z Runner name: 'DESKTOP-8LBF84O'
+2026-10-27T05:40:50.9574874Z Runner group name: 'Default'
+2026-10-27T05:40:50.9575515Z Machine name: 'DESKTOP-8LBF84O'
+2026-10-27T05:40:50.9577608Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T05:40:50.9579110Z Contents: read
+2026-10-27T05:40:50.9579503Z Metadata: read
+2026-10-27T05:40:50.9579886Z ##[endgroup]
+2026-10-27T05:40:50.9581322Z Secret source: Actions
+2026-10-27T05:40:50.9581938Z Cache mode: write
+2026-10-27T05:40:50.9582410Z Prepare workflow directory
+2026-10-27T05:40:51.0360350Z Prepare all required actions
+2026-10-27T05:40:51.0397233Z Getting action download info
+2026-10-27T05:40:56.1952899Z Failed to resolve action download info. Error: The SSL connection could not be established, see inner exception.
+2026-10-27T05:40:56.1967924Z Retrying in 19.958 seconds
+2026-10-27T05:41:17.5133398Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T05:41:22.8196770Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-27T05:41:27.9690760Z Download action repository 'actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+2026-10-27T05:41:33.0211350Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T05:41:42.7817890Z Complete job name: Windows self-hosted checks
+2026-10-27T05:41:42.9053378Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-27T05:41:42.9054051Z with:
+2026-10-27T05:41:42.9054195Z   lfs: true
+2026-10-27T05:41:42.9054353Z   persist-credentials: false
+2026-10-27T05:41:42.9054545Z   fetch-depth: 2
+2026-10-27T05:41:42.9054719Z   repository: nanake-lab/nemu
+2026-10-27T05:41:42.9057064Z   token: ***
+2026-10-27T05:41:42.9057242Z   ssh-strict: true
+2026-10-27T05:41:42.9057406Z   ssh-user: git
+2026-10-27T05:41:42.9057553Z   clean: true
+2026-10-27T05:41:42.9057721Z   sparse-checkout-cone-mode: true
+2026-10-27T05:41:42.9057929Z   fetch-tags: false
+2026-10-27T05:41:42.9058090Z   show-progress: true
+2026-10-27T05:41:42.9058256Z   submodules: false
+2026-10-27T05:41:42.9058461Z   set-safe-directory: true
+2026-10-27T05:41:42.9058667Z   allow-unsafe-pr-checkout: false
+2026-10-27T05:41:42.9059002Z env:
+2026-10-27T05:41:42.9059154Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:41:42.9059349Z   UV_LINK_MODE: copy
+2026-10-27T05:41:42.9059550Z ##[endgroup]
+2026-10-27T05:41:43.3365862Z Syncing repository: nanake-lab/nemu
+2026-10-27T05:41:43.3367223Z ##[group]Getting Git version info
+2026-10-27T05:41:43.3367625Z Working directory is 'D:\actions-runner\_work\nemu\nemu'
+2026-10-27T05:41:43.3710791Z [command]"C:\Program Files\Git\cmd\git.exe" version
+2026-10-27T05:41:43.3979929Z git version 2.54.0.windows.1
+2026-10-27T05:41:43.4350764Z [command]"C:\Program Files\Git\cmd\git.exe" lfs version
+2026-10-27T05:41:43.5563260Z git-lfs/3.7.1 (GitHub; windows amd64; go 1.25.1; git b84b3384)
+2026-10-27T05:41:43.5605802Z ##[endgroup]
+2026-10-27T05:41:43.5619783Z Copying 'C:\Users\nanake\.gitconfig' to 'D:\actions-runner\_work\_temp\880fb2ea-65a7-44f0-8023-8462140dc181\.gitconfig'
+2026-10-27T05:41:43.5635795Z Temporarily overriding HOME='D:\actions-runner\_work\_temp\880fb2ea-65a7-44f0-8023-8462140dc181' before making global git config changes
+2026-10-27T05:41:43.5636626Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T05:41:43.5646284Z [command]"C:\Program Files\Git\cmd\git.exe" config --global --add safe.directory D:\actions-runner\_work\nemu\nemu
+2026-10-27T05:41:43.5944611Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --get remote.origin.url
+2026-10-27T05:41:43.6172652Z https://github.com/nanake-lab/nemu
+2026-10-27T05:41:43.6209412Z ##[group]Removing previously created refs, to avoid conflicts
+2026-10-27T05:41:43.6219156Z [command]"C:\Program Files\Git\cmd\git.exe" rev-parse --symbolic-full-name --verify --quiet HEAD
+2026-10-27T05:41:43.6453370Z HEAD
+2026-10-27T05:41:43.6787852Z ##[endgroup]
+2026-10-27T05:41:43.6788213Z [command]"C:\Program Files\Git\cmd\git.exe" submodule status
+2026-10-27T05:41:44.1070942Z -e62dc1e7e76847f08bd5dbf14eb352ad6f1f8a26 content
+2026-10-27T05:41:44.1137165Z ##[group]Cleaning the repository
+2026-10-27T05:41:44.1146547Z [command]"C:\Program Files\Git\cmd\git.exe" clean -ffdx
+2026-10-27T05:41:53.3257593Z Removing apps/desktop/node_modules/
+2026-10-27T05:41:53.3257962Z Removing apps/desktop/out/
+2026-10-27T05:41:53.3258225Z Removing apps/panel/dist/
+2026-10-27T05:41:53.3258490Z Removing apps/panel/node_modules/
+2026-10-27T05:41:53.3258752Z Removing apps/stage/dist/
+2026-10-27T05:41:53.3259009Z Removing apps/stage/node_modules/
+2026-10-27T05:41:53.3259258Z Removing core/target/
+2026-10-27T05:41:53.3259511Z Removing executors/codex-bridge/dist/
+2026-10-27T05:41:53.3259789Z Removing node_modules/
+2026-10-27T05:41:53.3260068Z Removing packages/avatar-runtime/dist/
+2026-10-27T05:41:53.3260433Z Removing packages/avatar-runtime/node_modules/
+2026-10-27T05:41:53.3260797Z Removing packages/body/dist/
+2026-10-27T05:41:53.3261076Z Removing packages/body/node_modules/
+2026-10-27T05:41:53.3261356Z Removing packages/contracts/dist/
+2026-10-27T05:41:53.3261658Z Removing packages/contracts/node_modules/
+2026-10-27T05:41:53.3261981Z Removing packages/desktop-sense/dist/
+2026-10-27T05:41:53.3262298Z Removing packages/desktop-sense/node_modules/
+2026-10-27T05:41:53.3263856Z Removing packages/log/dist/
+2026-10-27T05:41:53.3264167Z Removing packages/terminal/dist/
+2026-10-27T05:41:53.3264440Z Removing packages/voice/dist/
+2026-10-27T05:41:53.3264716Z Removing packages/voice/node_modules/
+2026-10-27T05:41:53.3265025Z Removing spikes/stage-overlay/node_modules/
+2026-10-27T05:41:53.3265332Z Removing spikes/stage-overlay/out/
+2026-10-27T05:41:53.3265628Z Removing tools/asset-lint/dist/
+2026-10-27T05:41:53.3265910Z Removing tools/asset-lint/node_modules/
+2026-10-27T05:41:53.3266232Z Removing tools/scaffold/windows-isolation/bin/
+2026-10-27T05:41:53.3266593Z Removing tools/scaffold/windows-isolation/obj/
+2026-10-27T05:41:53.3313165Z [command]"C:\Program Files\Git\cmd\git.exe" reset --hard HEAD
+2026-10-27T05:41:53.7360162Z HEAD is now at c487fd7 Merge af200a67fefecf55f33de71f7c3a00982a7cc9bf into 3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf
+2026-10-27T05:41:53.7395115Z ##[endgroup]
+2026-10-27T05:41:53.7399713Z ##[group]Disabling automatic garbage collection
+2026-10-27T05:41:53.7409301Z [command]"C:\Program Files\Git\cmd\git.exe" config --local gc.auto 0
+2026-10-27T05:41:53.7677814Z ##[endgroup]
+2026-10-27T05:41:53.7678201Z ##[group]Setting up auth
+2026-10-27T05:41:53.7690778Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T05:41:53.7954959Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-27T05:41:54.1953635Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T05:41:54.2226760Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-27T05:41:54.6330045Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T05:41:54.6602137Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-27T05:41:55.0601954Z [command]"C:\Program Files\Git\cmd\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-27T05:41:55.0947054Z ##[endgroup]
+2026-10-27T05:41:55.0957082Z [command]"C:\Program Files\Git\cmd\git.exe" lfs install --local
+2026-10-27T05:41:55.3909159Z Updated Git hooks.
+2026-10-27T05:41:55.3909405Z Git LFS initialized.
+2026-10-27T05:41:55.3951227Z ##[group]Fetching the repository
+2026-10-27T05:41:55.3964398Z [command]"C:\Program Files\Git\cmd\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=2 origin +204945510ff2d24eaace08e32639758643878e8e:refs/remotes/pull/95/merge
+2026-10-27T05:41:57.6904523Z From https://github.com/nanake-lab/nemu
+2026-10-27T05:41:57.6905073Z  + c487fd7...2049455 204945510ff2d24eaace08e32639758643878e8e -> pull/95/merge  (forced update)
+2026-10-27T05:41:57.7142032Z ##[endgroup]
+2026-10-27T05:41:57.7142402Z ##[group]Determining the checkout info
+2026-10-27T05:41:57.7143314Z ##[endgroup]
+2026-10-27T05:41:57.7143643Z ##[group]Fetching LFS objects
+2026-10-27T05:41:57.7153917Z [command]"C:\Program Files\Git\cmd\git.exe" lfs fetch origin refs/remotes/pull/95/merge
+2026-10-27T05:41:57.9457154Z Fetching reference refs/remotes/pull/95/merge
+2026-10-27T05:41:58.7526603Z ##[endgroup]
+2026-10-27T05:41:58.7539759Z [command]"C:\Program Files\Git\cmd\git.exe" sparse-checkout disable
+2026-10-27T05:41:58.8004625Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-27T05:41:58.8268704Z ##[group]Checking out the ref
+2026-10-27T05:41:58.8279210Z [command]"C:\Program Files\Git\cmd\git.exe" checkout --progress --force refs/remotes/pull/95/merge
+2026-10-27T05:41:58.8912917Z Warning: you are leaving 2 commits behind, not connected to
+2026-10-27T05:41:58.8913253Z any of your branches:
+2026-10-27T05:41:58.8913369Z 
+2026-10-27T05:41:58.8913750Z   c487fd7 Merge af200a67fefecf55f33de71f7c3a00982a7cc9bf into 3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf
+2026-10-27T05:41:58.8914309Z   af200a6 fix(P5-34): preserve legacy WAL when refusing writer
+2026-10-27T05:41:58.8914546Z 
+2026-10-27T05:41:58.8914795Z If you want to keep them by creating a new branch, this may be a good time
+2026-10-27T05:41:58.8915136Z to do so with:
+2026-10-27T05:41:58.8915283Z 
+2026-10-27T05:41:58.8915615Z  git branch <new-branch-name> c487fd7
+2026-10-27T05:41:58.8915772Z 
+2026-10-27T05:41:58.8929011Z HEAD is now at 2049455 Merge c6525e650a7d0be7a1278e9586ae5c3b696b2592 into 3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf
+2026-10-27T05:41:59.2323787Z ##[endgroup]
+2026-10-27T05:41:59.2641556Z [command]"C:\Program Files\Git\cmd\git.exe" log -1 --format=%H
+2026-10-27T05:41:59.2896502Z 204945510ff2d24eaace08e32639758643878e8e
+2026-10-27T05:41:59.2933356Z ##[group]Removing auth
+2026-10-27T05:41:59.2942529Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T05:41:59.3189517Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-27T05:41:59.7134578Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T05:41:59.7351461Z http.https://github.com/.extraheader
+2026-10-27T05:41:59.7393334Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T05:41:59.7682496Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-27T05:42:00.1708244Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T05:42:00.1961101Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-27T05:42:00.5806558Z ##[endgroup]
+2026-10-27T05:42:00.6171455Z ##[group]Run # Anything that cannot be determined runs every group.
+2026-10-27T05:42:00.6171969Z [36;1m# Anything that cannot be determined runs every group.[0m
+2026-10-27T05:42:00.6172255Z [36;1m$full = $false[0m
+2026-10-27T05:42:00.6172426Z [36;1m$base = $null[0m
+2026-10-27T05:42:00.6172634Z [36;1mif ($env:EVENT -eq 'workflow_dispatch') {[0m
+2026-10-27T05:42:00.6172898Z [36;1m  $full = $env:FULL_INPUT -ne 'false'[0m
+2026-10-27T05:42:00.6173146Z [36;1m  if (-not $full) { $base = 'HEAD^1' }[0m
+2026-10-27T05:42:00.6173402Z [36;1m} elseif ($env:EVENT -eq 'pull_request') {[0m
+2026-10-27T05:42:00.6173648Z [36;1m  $base = 'HEAD^1'[0m
+2026-10-27T05:42:00.6173964Z [36;1m} elseif ($env:EVENT -eq 'push' -and $env:BEFORE -and $env:BEFORE -notmatch '^0+$') {[0m
+2026-10-27T05:42:00.6174366Z [36;1m  git cat-file -e "$($env:BEFORE)^{commit}" 2>$null[0m
+2026-10-27T05:42:00.6174674Z [36;1m  if ($LASTEXITCODE -eq 0) { $base = $env:BEFORE }[0m
+2026-10-27T05:42:00.6174956Z [36;1m}[0m
+2026-10-27T05:42:00.6175097Z [36;1m$files = @()[0m
+2026-10-27T05:42:00.6175265Z [36;1mif (-not $full) {[0m
+2026-10-27T05:42:00.6175460Z [36;1m  if (-not $base) { $full = $true }[0m
+2026-10-27T05:42:00.6175672Z [36;1m  else {[0m
+2026-10-27T05:42:00.6175865Z [36;1m    $files = @(git diff --name-only $base HEAD)[0m
+2026-10-27T05:42:00.6176173Z [36;1m    if ($LASTEXITCODE -ne 0) { $full = $true; $files = @() }[0m
+2026-10-27T05:42:00.6176442Z [36;1m  }[0m
+2026-10-27T05:42:00.6176585Z [36;1m}[0m
+2026-10-27T05:42:00.6176811Z [36;1m$files = @($files | Where-Object { $_ -and $_ -notmatch '\.md$' })[0m
+2026-10-27T05:42:00.6177116Z [36;1m$desktopPatterns = @([0m
+2026-10-27T05:42:00.6177366Z [36;1m  '^apps/', '^packages/', '^executors/codex-bridge/',[0m
+2026-10-27T05:42:00.6177663Z [36;1m  '^workers/[^/]+/src/', '^services/[^/]+/src/',[0m
+2026-10-27T05:42:00.6178025Z [36;1m  '^tools/(?!status/|asset-pipeline/|texture-fix/|scaffold/ci-budget\.mjs$)',[0m
+2026-10-27T05:42:00.6178536Z [36;1m  '^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|\.nvmrc|\.npmrc|\.gitattributes)$',[0m
+2026-10-27T05:42:00.6179026Z [36;1m  '^tsconfig[^/]*\.json$', '^executors/office-connector/global\.json$',[0m
+2026-10-27T05:42:00.6179741Z [36;1m  '^\.github/workflows/windows\.yml$'[0m
+2026-10-27T05:42:00.6179975Z [36;1m)[0m
+2026-10-27T05:42:00.6180133Z [36;1m$storagePatterns = @([0m
+2026-10-27T05:42:00.6180452Z [36;1m  '^core/crates/core-store/', '^core/crates/core-types/', '^core/contracts/',[0m
+2026-10-27T05:42:00.6180939Z [36;1m  '^core/(Cargo\.toml|Cargo\.lock|rust-toolchain\.toml)$',[0m
+2026-10-27T05:42:00.6181279Z [36;1m  '^\.github/workflows/windows\.yml$'[0m
+2026-10-27T05:42:00.6181497Z [36;1m)[0m
+2026-10-27T05:42:00.6181684Z [36;1mfunction Test-Group([string[]]$patterns) {[0m
+2026-10-27T05:42:00.6182080Z [36;1m  foreach ($f in $files) { foreach ($p in $patterns) { if ($f -match $p) { return $true } } }[0m
+2026-10-27T05:42:00.6182463Z [36;1m  return $false[0m
+2026-10-27T05:42:00.6182634Z [36;1m}[0m
+2026-10-27T05:42:00.6182836Z [36;1m$desktop = $full -or (Test-Group $desktopPatterns)[0m
+2026-10-27T05:42:00.6183149Z [36;1m$storage = $full -or (Test-Group $storagePatterns)[0m
+2026-10-27T05:42:00.6183481Z [36;1m"full=$full; base=$base; desktop=$desktop; storage=$storage"[0m
+2026-10-27T05:42:00.6183791Z [36;1m"changed files: $($files.Count)"[0m
+2026-10-27T05:42:00.6184053Z [36;1m$files | ForEach-Object { "  $_" }[0m
+2026-10-27T05:42:00.6184395Z [36;1m"desktop=$($desktop.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT[0m
+2026-10-27T05:42:00.6184833Z [36;1m"storage=$($storage.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT[0m
+2026-10-27T05:42:00.6237036Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:42:00.6237402Z env:
+2026-10-27T05:42:00.6237590Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:42:00.6237786Z   UV_LINK_MODE: copy
+2026-10-27T05:42:00.6239265Z   EVENT: pull_request
+2026-10-27T05:42:00.6239487Z   BEFORE: af200a67fefecf55f33de71f7c3a00982a7cc9bf
+2026-10-27T05:42:00.6239723Z   FULL_INPUT: 
+2026-10-27T05:42:00.6239869Z ##[endgroup]
+2026-10-27T05:42:01.4215675Z full=False; base=HEAD^1; desktop=True; storage=True
+2026-10-27T05:42:01.4236443Z changed files: 362
+2026-10-27T05:42:01.4335646Z   core/contracts/check_retention_browser.ts
+2026-10-27T05:42:01.4336003Z   core/contracts/fixture_inputs.py
+2026-10-27T05:42:01.4336284Z   core/contracts/fixture_retention.py
+2026-10-27T05:42:01.4336739Z   core/contracts/generate.py
+2026-10-27T05:42:01.4337345Z   core/contracts/generated/schema.json
+2026-10-27T05:42:01.4337867Z   core/contracts/golden/illegal.json
+2026-10-27T05:42:01.4338398Z   core/contracts/golden/legal.json
+2026-10-27T05:42:01.4339419Z   core/contracts/law.proto
+2026-10-27T05:42:01.4339741Z   core/contracts/templates/python/runtime.py
+2026-10-27T05:42:01.4340142Z   core/contracts/templates/typescript/browser.ts
+2026-10-27T05:42:01.4340636Z   core/contracts/templates/typescript/runtime.ts
+2026-10-27T05:42:01.4341305Z   core/contracts/test_retention_schema.py
+2026-10-27T05:42:01.4341743Z   core/contracts/verify.py
+2026-10-27T05:42:01.4342308Z   core/crates/core-store/src/lib.rs
+2026-10-27T05:42:01.4342877Z   core/crates/core-store/src/objects.rs
+2026-10-27T05:42:01.4343420Z   core/crates/core-store/src/publication.rs
+2026-10-27T05:42:01.4343955Z   core/crates/core-store/src/queries.rs
+2026-10-27T05:42:01.4344509Z   core/crates/core-store/src/store.rs
+2026-10-27T05:42:01.4345859Z   core/crates/core-store/src/tests/crash.rs
+2026-10-27T05:42:01.4347522Z   core/crates/core-store/src/tests/crash_harness.rs
+2026-10-27T05:42:01.4347882Z   core/crates/core-store/src/tests/legacy_v2.rs
+2026-10-27T05:42:01.4348380Z   core/crates/core-store/src/tests/mod.rs
+2026-10-27T05:42:01.4349100Z   core/crates/core-store/src/tests/objects.rs
+2026-10-27T05:42:01.4349587Z   core/crates/core-store/src/tests/retention_versions.rs
+2026-10-27T05:42:01.4350085Z   core/crates/core-store/src/transaction.rs
+2026-10-27T05:42:01.4359777Z   core/crates/core-types/Cargo.toml
+2026-10-27T05:42:01.4360083Z   core/crates/core-types/src/contract.rs
+2026-10-27T05:42:01.4360388Z   core/crates/core-types/src/generated.rs
+2026-10-27T05:42:01.4360679Z   core/crates/core-types/src/semantic.rs
+2026-10-27T05:42:01.4360991Z   core/crates/core-types/tests/p5_32_contract.rs
+2026-10-27T05:42:01.4361314Z   core/crates/core-types/tests/p5_34_contract.rs
+2026-10-27T05:42:01.4361619Z   core/crates/core-types/tests/v2_contract.rs
+2026-10-27T05:42:01.4361943Z   packages/contracts/src/generated/echo/browser.ts
+2026-10-27T05:42:01.4362289Z   packages/contracts/src/generated/echo/runtime.ts
+2026-10-27T05:42:01.4362631Z   packages/contracts/src/generated/echo/schema.ts
+2026-10-27T05:42:01.4363185Z   reports/P5-34/AC2-08/20261026-phased-result.json
+2026-10-27T05:42:01.4363508Z   reports/P5-34/AC2-08/result.json
+2026-10-27T05:42:01.4363817Z   reports/P5-34/AC2-19/20261026-phased-result.json
+2026-10-27T05:42:01.4364134Z   reports/P5-34/AC2-19/result.json
+2026-10-27T05:42:01.4364451Z   reports/P5-34/AC2-21/20261026-phased-result.json
+2026-10-27T05:42:01.4364743Z   reports/P5-34/AC2-21/result.json
+2026-10-27T05:42:01.4365027Z   reports/P5-34/D10.8/20261026-phased-result.json
+2026-10-27T05:42:01.4365321Z   reports/P5-34/D10.8/result.json
+2026-10-27T05:42:01.4365609Z   reports/P5-34/I23/20261026-phased-result.json
+2026-10-27T05:42:01.4365921Z   reports/P5-34/I23/result.json
+2026-10-27T05:42:01.4366212Z   reports/P5-34/SYS17/20261026-phased-result.json
+2026-10-27T05:42:01.4366511Z   reports/P5-34/SYS17/result.json
+2026-10-27T05:42:01.4366802Z   reports/P5-34/SYS21/20261026-phased-result.json
+2026-10-27T05:42:01.4367092Z   reports/P5-34/SYS21/result.json
+2026-10-27T05:42:01.4367379Z   reports/P5-34/W02/20261026-phased-result.json
+2026-10-27T05:42:01.4367710Z   reports/P5-34/check_retention_inputs.py
+2026-10-27T05:42:01.4368011Z   reports/P5-34/record_verification.py
+2026-10-27T05:42:01.4369332Z   reports/P5-34/summarize_protected.py
+2026-10-27T05:42:01.4369627Z   reports/P5-34/summarize_resumed.py
+2026-10-27T05:42:01.4369981Z   reports/P5-34/verification/after-main-0b5412e/compat.log
+2026-10-27T05:42:01.4370399Z   reports/P5-34/verification/after-main-0b5412e/exit-codes.json
+2026-10-27T05:42:01.4370833Z   reports/P5-34/verification/after-main-0b5412e/generate.log
+2026-10-27T05:42:01.4371225Z   reports/P5-34/verification/after-main-0b5412e/lint.log
+2026-10-27T05:42:01.4371606Z   reports/P5-34/verification/after-main-0b5412e/schema.log
+2026-10-27T05:42:01.4473647Z   reports/P5-34/verification/after-main-0b5412e/tool-versions.json
+2026-10-27T05:42:01.4475161Z   reports/P5-34/verification/after-main-0b5412e/typecheck.log
+2026-10-27T05:42:01.4475631Z   reports/P5-34/verification/core-store-v3/check_store_sql.py
+2026-10-27T05:42:01.4476082Z   reports/P5-34/verification/core-store-v3/source-sha256.json
+2026-10-27T05:42:01.4477048Z   reports/P5-34/verification/idle-20261024/.gitattributes
+2026-10-27T05:42:01.4477526Z   reports/P5-34/verification/idle-20261024/attempt-01/bytes.json
+2026-10-27T05:42:01.4478017Z   reports/P5-34/verification/idle-20261024/attempt-01/bytes.log
+2026-10-27T05:42:01.4478516Z   reports/P5-34/verification/idle-20261024/attempt-01/clippy.json
+2026-10-27T05:42:01.4478962Z   reports/P5-34/verification/idle-20261024/attempt-01/clippy.log
+2026-10-27T05:42:01.4479480Z   reports/P5-34/verification/idle-20261024/attempt-01/compat.json
+2026-10-27T05:42:01.4480181Z   reports/P5-34/verification/idle-20261024/attempt-01/compat.log
+2026-10-27T05:42:01.4480902Z   reports/P5-34/verification/idle-20261024/attempt-01/contracts.json
+2026-10-27T05:42:01.4481424Z   reports/P5-34/verification/idle-20261024/attempt-01/contracts.log
+2026-10-27T05:42:01.4482683Z   reports/P5-34/verification/idle-20261024/attempt-01/fmt-harness-error.txt
+2026-10-27T05:42:01.4483412Z   reports/P5-34/verification/idle-20261024/attempt-01/freeze.json
+2026-10-27T05:42:01.4484366Z   reports/P5-34/verification/idle-20261024/attempt-01/freeze.log
+2026-10-27T05:42:01.4485364Z   reports/P5-34/verification/idle-20261024/attempt-01/json-rounding-diagnosis.json
+2026-10-27T05:42:01.4486002Z   reports/P5-34/verification/idle-20261024/attempt-01/migration.json
+2026-10-27T05:42:01.4486519Z   reports/P5-34/verification/idle-20261024/attempt-01/migration.log
+2026-10-27T05:42:01.4486986Z   reports/P5-34/verification/idle-20261024/attempt-01/probe.json
+2026-10-27T05:42:01.4488168Z   reports/P5-34/verification/idle-20261024/attempt-01/probe.log
+2026-10-27T05:42:01.4488701Z   reports/P5-34/verification/idle-20261024/attempt-01/python-drive-mypy.json
+2026-10-27T05:42:01.4489230Z   reports/P5-34/verification/idle-20261024/attempt-01/python-drive-mypy.log
+2026-10-27T05:42:01.4489771Z   reports/P5-34/verification/idle-20261024/attempt-01/python-drive-pytest.json
+2026-10-27T05:42:01.4490310Z   reports/P5-34/verification/idle-20261024/attempt-01/python-drive-pytest.log
+2026-10-27T05:42:01.4490869Z   reports/P5-34/verification/idle-20261024/attempt-01/python-drive-ruff.json
+2026-10-27T05:42:01.4491495Z   reports/P5-34/verification/idle-20261024/attempt-01/python-drive-ruff.log
+2026-10-27T05:42:01.4492035Z   reports/P5-34/verification/idle-20261024/attempt-01/python-irl-mypy.json
+2026-10-27T05:42:01.4492553Z   reports/P5-34/verification/idle-20261024/attempt-01/python-irl-mypy.log
+2026-10-27T05:42:01.4493073Z   reports/P5-34/verification/idle-20261024/attempt-01/python-irl-pytest.json
+2026-10-27T05:42:01.4493604Z   reports/P5-34/verification/idle-20261024/attempt-01/python-irl-pytest.log
+2026-10-27T05:42:01.4494173Z   reports/P5-34/verification/idle-20261024/attempt-01/python-irl-ruff.json
+2026-10-27T05:42:01.4494734Z   reports/P5-34/verification/idle-20261024/attempt-01/python-irl-ruff.log
+2026-10-27T05:42:01.4495281Z   reports/P5-34/verification/idle-20261024/attempt-01/python-model-adapter-mypy.json
+2026-10-27T05:42:01.4496181Z   reports/P5-34/verification/idle-20261024/attempt-01/python-model-adapter-mypy.log
+2026-10-27T05:42:01.4496929Z   reports/P5-34/verification/idle-20261024/attempt-01/python-model-adapter-pytest.json
+2026-10-27T05:42:01.4497519Z   reports/P5-34/verification/idle-20261024/attempt-01/python-model-adapter-pytest.log
+2026-10-27T05:42:01.4498103Z   reports/P5-34/verification/idle-20261024/attempt-01/python-model-adapter-ruff.json
+2026-10-27T05:42:01.4498696Z   reports/P5-34/verification/idle-20261024/attempt-01/python-model-adapter-ruff.log
+2026-10-27T05:42:01.4499282Z   reports/P5-34/verification/idle-20261024/attempt-01/python-voice-sidecar-mypy.json
+2026-10-27T05:42:01.4499856Z   reports/P5-34/verification/idle-20261024/attempt-01/python-voice-sidecar-mypy.log
+2026-10-27T05:42:01.4500443Z   reports/P5-34/verification/idle-20261024/attempt-01/python-voice-sidecar-pytest.json
+2026-10-27T05:42:01.4501036Z   reports/P5-34/verification/idle-20261024/attempt-01/python-voice-sidecar-pytest.log
+2026-10-27T05:42:01.4501624Z   reports/P5-34/verification/idle-20261024/attempt-01/python-voice-sidecar-ruff.json
+2026-10-27T05:42:01.4502201Z   reports/P5-34/verification/idle-20261024/attempt-01/python-voice-sidecar-ruff.log
+2026-10-27T05:42:01.4502711Z   reports/P5-34/verification/idle-20261024/attempt-01/rust.json
+2026-10-27T05:42:01.4503130Z   reports/P5-34/verification/idle-20261024/attempt-01/rust.log
+2026-10-27T05:42:01.4503552Z   reports/P5-34/verification/idle-20261024/attempt-01/types.json
+2026-10-27T05:42:01.4503973Z   reports/P5-34/verification/idle-20261024/attempt-01/types.log
+2026-10-27T05:42:01.4504413Z   reports/P5-34/verification/idle-20261024/attempt-02/coverage.json
+2026-10-27T05:42:01.4504858Z   reports/P5-34/verification/idle-20261024/attempt-02/coverage.log
+2026-10-27T05:42:01.4505285Z   reports/P5-34/verification/idle-20261024/attempt-02/fmt.json
+2026-10-27T05:42:01.4505709Z   reports/P5-34/verification/idle-20261024/attempt-02/fmt.log
+2026-10-27T05:42:01.4506130Z   reports/P5-34/verification/idle-20261024/attempt-02/freeze.json
+2026-10-27T05:42:01.4506565Z   reports/P5-34/verification/idle-20261024/attempt-02/freeze.log
+2026-10-27T05:42:01.4506985Z   reports/P5-34/verification/idle-20261024/attempt-02/lint.json
+2026-10-27T05:42:01.4507401Z   reports/P5-34/verification/idle-20261024/attempt-02/lint.log
+2026-10-27T05:42:01.4507812Z   reports/P5-34/verification/idle-20261024/attempt-02/mypy.json
+2026-10-27T05:42:01.4508231Z   reports/P5-34/verification/idle-20261024/attempt-02/mypy.log
+2026-10-27T05:42:01.4508657Z   reports/P5-34/verification/idle-20261024/attempt-02/node.json
+2026-10-27T05:42:01.4509115Z   reports/P5-34/verification/idle-20261024/attempt-02/node.log
+2026-10-27T05:42:01.4509601Z   reports/P5-34/verification/idle-20261024/attempt-02/probe.json
+2026-10-27T05:42:01.4510629Z   reports/P5-34/verification/idle-20261024/attempt-02/probe.log
+2026-10-27T05:42:01.4511129Z   reports/P5-34/verification/idle-20261024/attempt-02/ruff.json
+2026-10-27T05:42:01.4511724Z   reports/P5-34/verification/idle-20261024/attempt-02/ruff.log
+2026-10-27T05:42:01.4512276Z   reports/P5-34/verification/idle-20261024/attempt-02/typecheck.json
+2026-10-27T05:42:01.4512921Z   reports/P5-34/verification/idle-20261024/attempt-02/typecheck.log
+2026-10-27T05:42:01.4513387Z   reports/P5-34/verification/idle-20261024/command-index.json
+2026-10-27T05:42:01.4513867Z   reports/P5-34/verification/idle-20261024/contracts-coverage-summary.json
+2026-10-27T05:42:01.4514354Z   reports/P5-34/verification/idle-20261024/resource-release.json
+2026-10-27T05:42:01.4514799Z   reports/P5-34/verification/idle-20261024/resource-window.jsonl
+2026-10-27T05:42:01.4515242Z   reports/P5-34/verification/idle-20261024/sync-before-publish.json
+2026-10-27T05:42:01.4515701Z   reports/P5-34/verification/idle-20261024/tested-source-sha256.json
+2026-10-27T05:42:01.4516142Z   reports/P5-34/verification/idle-20261024/tool-versions.json
+2026-10-27T05:42:01.4516680Z   reports/P5-34/verification/protected-20261026/.gitattributes
+2026-10-27T05:42:01.4517759Z   reports/P5-34/verification/protected-20261026/attempt-01/build.json
+2026-10-27T05:42:01.4518491Z   reports/P5-34/verification/protected-20261026/attempt-01/build.log
+2026-10-27T05:42:01.4519170Z   reports/P5-34/verification/protected-20261026/attempt-01/bytes.json
+2026-10-27T05:42:01.4519690Z   reports/P5-34/verification/protected-20261026/attempt-01/bytes.log
+2026-10-27T05:42:01.4522087Z   reports/P5-34/verification/protected-20261026/attempt-01/clippy.json
+2026-10-27T05:42:01.4522983Z   reports/P5-34/verification/protected-20261026/attempt-01/clippy.log
+2026-10-27T05:42:01.4523534Z   reports/P5-34/verification/protected-20261026/attempt-01/compatibility.json
+2026-10-27T05:42:01.4524083Z   reports/P5-34/verification/protected-20261026/attempt-01/compatibility.log
+2026-10-27T05:42:01.4524604Z   reports/P5-34/verification/protected-20261026/attempt-01/contracts.json
+2026-10-27T05:42:01.4525099Z   reports/P5-34/verification/protected-20261026/attempt-01/contracts.log
+2026-10-27T05:42:01.4525679Z   reports/P5-34/verification/protected-20261026/attempt-01/drive-mypy.json
+2026-10-27T05:42:01.4526263Z   reports/P5-34/verification/protected-20261026/attempt-01/drive-mypy.log
+2026-10-27T05:42:01.4526777Z   reports/P5-34/verification/protected-20261026/attempt-01/drive-pytest.json
+2026-10-27T05:42:01.4527300Z   reports/P5-34/verification/protected-20261026/attempt-01/drive-pytest.log
+2026-10-27T05:42:01.4527811Z   reports/P5-34/verification/protected-20261026/attempt-01/drive-ruff.json
+2026-10-27T05:42:01.4528384Z   reports/P5-34/verification/protected-20261026/attempt-01/drive-ruff.log
+2026-10-27T05:42:01.4528875Z   reports/P5-34/verification/protected-20261026/attempt-01/fmt.json
+2026-10-27T05:42:01.4529322Z   reports/P5-34/verification/protected-20261026/attempt-01/fmt.log
+2026-10-27T05:42:01.4529792Z   reports/P5-34/verification/protected-20261026/attempt-01/generate.json
+2026-10-27T05:42:01.4530279Z   reports/P5-34/verification/protected-20261026/attempt-01/generate.log
+2026-10-27T05:42:01.4530760Z   reports/P5-34/verification/protected-20261026/attempt-01/inputs.json
+2026-10-27T05:42:01.4531240Z   reports/P5-34/verification/protected-20261026/attempt-01/inputs.log
+2026-10-27T05:42:01.4531716Z   reports/P5-34/verification/protected-20261026/attempt-01/irl-mypy.json
+2026-10-27T05:42:01.4532197Z   reports/P5-34/verification/protected-20261026/attempt-01/irl-mypy.log
+2026-10-27T05:42:01.4532684Z   reports/P5-34/verification/protected-20261026/attempt-01/irl-pytest.json
+2026-10-27T05:42:01.4533186Z   reports/P5-34/verification/protected-20261026/attempt-01/irl-pytest.log
+2026-10-27T05:42:01.4533697Z   reports/P5-34/verification/protected-20261026/attempt-01/irl-ruff.json
+2026-10-27T05:42:01.4534177Z   reports/P5-34/verification/protected-20261026/attempt-01/irl-ruff.log
+2026-10-27T05:42:01.4534636Z   reports/P5-34/verification/protected-20261026/attempt-01/lint.json
+2026-10-27T05:42:01.4535086Z   reports/P5-34/verification/protected-20261026/attempt-01/lint.log
+2026-10-27T05:42:01.4535603Z   reports/P5-34/verification/protected-20261026/attempt-01/model-adapter-mypy.json
+2026-10-27T05:42:01.4536202Z   reports/P5-34/verification/protected-20261026/attempt-01/model-adapter-mypy.log
+2026-10-27T05:42:01.4536782Z   reports/P5-34/verification/protected-20261026/attempt-01/model-adapter-pytest.json
+2026-10-27T05:42:01.4537365Z   reports/P5-34/verification/protected-20261026/attempt-01/model-adapter-pytest.log
+2026-10-27T05:42:01.4537935Z   reports/P5-34/verification/protected-20261026/attempt-01/model-adapter-ruff.json
+2026-10-27T05:42:01.4538496Z   reports/P5-34/verification/protected-20261026/attempt-01/model-adapter-ruff.log
+2026-10-27T05:42:01.4539068Z   reports/P5-34/verification/protected-20261026/attempt-01/mypy.json
+2026-10-27T05:42:01.4539526Z   reports/P5-34/verification/protected-20261026/attempt-01/mypy.log
+2026-10-27T05:42:01.4539977Z   reports/P5-34/verification/protected-20261026/attempt-01/ruff.json
+2026-10-27T05:42:01.4540423Z   reports/P5-34/verification/protected-20261026/attempt-01/ruff.log
+2026-10-27T05:42:01.4541874Z   reports/P5-34/verification/protected-20261026/attempt-01/storage.json
+2026-10-27T05:42:01.4542381Z   reports/P5-34/verification/protected-20261026/attempt-01/storage.log
+2026-10-27T05:42:01.4542839Z   reports/P5-34/verification/protected-20261026/attempt-01/test.json
+2026-10-27T05:42:01.4543288Z   reports/P5-34/verification/protected-20261026/attempt-01/test.log
+2026-10-27T05:42:01.4543752Z   reports/P5-34/verification/protected-20261026/attempt-01/typecheck.json
+2026-10-27T05:42:01.4544234Z   reports/P5-34/verification/protected-20261026/attempt-01/typecheck.log
+2026-10-27T05:42:01.4544794Z   reports/P5-34/verification/protected-20261026/attempt-01/workspace-without-storage.json
+2026-10-27T05:42:01.4545411Z   reports/P5-34/verification/protected-20261026/attempt-01/workspace-without-storage.log
+2026-10-27T05:42:01.4546016Z   reports/P5-34/verification/protected-20261026/attempt-01/workspace.json
+2026-10-27T05:42:01.4546619Z   reports/P5-34/verification/protected-20261026/attempt-01/workspace.log
+2026-10-27T05:42:01.4547110Z   reports/P5-34/verification/protected-20261026/attempt-02/clippy.json
+2026-10-27T05:42:01.4547577Z   reports/P5-34/verification/protected-20261026/attempt-02/clippy.log
+2026-10-27T05:42:01.4548079Z   reports/P5-34/verification/protected-20261026/attempt-02/compatibility.json
+2026-10-27T05:42:01.4548599Z   reports/P5-34/verification/protected-20261026/attempt-02/compatibility.log
+2026-10-27T05:42:01.4549423Z   reports/P5-34/verification/protected-20261026/attempt-02/fmt.json
+2026-10-27T05:42:01.4550150Z   reports/P5-34/verification/protected-20261026/attempt-02/fmt.log
+2026-10-27T05:42:01.4550905Z   reports/P5-34/verification/protected-20261026/attempt-02/storage.json
+2026-10-27T05:42:01.4551769Z   reports/P5-34/verification/protected-20261026/attempt-02/storage.log
+2026-10-27T05:42:01.4552555Z   reports/P5-34/verification/protected-20261026/attempt-03/compatibility.json
+2026-10-27T05:42:01.4553373Z   reports/P5-34/verification/protected-20261026/attempt-03/compatibility.log
+2026-10-27T05:42:01.4554180Z   reports/P5-34/verification/protected-20261026/attempt-03/contracts.json
+2026-10-27T05:42:01.4555014Z   reports/P5-34/verification/protected-20261026/attempt-03/contracts.log
+2026-10-27T05:42:01.4555845Z   reports/P5-34/verification/protected-20261026/attempt-03/generate.json
+2026-10-27T05:42:01.4556600Z   reports/P5-34/verification/protected-20261026/attempt-03/generate.log
+2026-10-27T05:42:01.4557446Z   reports/P5-34/verification/protected-20261026/attempt-03/types.json
+2026-10-27T05:42:01.4558182Z   reports/P5-34/verification/protected-20261026/attempt-03/types.log
+2026-10-27T05:42:01.4558899Z   reports/P5-34/verification/protected-20261026/attempt-04/storage.json
+2026-10-27T05:42:01.4559618Z   reports/P5-34/verification/protected-20261026/attempt-04/storage.log
+2026-10-27T05:42:01.4560348Z   reports/P5-34/verification/protected-20261026/attempt-05/clippy.json
+2026-10-27T05:42:01.4561132Z   reports/P5-34/verification/protected-20261026/attempt-05/clippy.log
+2026-10-27T05:42:01.4562064Z   reports/P5-34/verification/protected-20261026/attempt-05/compatibility.json
+2026-10-27T05:42:01.4562883Z   reports/P5-34/verification/protected-20261026/attempt-05/compatibility.log
+2026-10-27T05:42:01.4563678Z   reports/P5-34/verification/protected-20261026/attempt-05/contracts.json
+2026-10-27T05:42:01.4564448Z   reports/P5-34/verification/protected-20261026/attempt-05/contracts.log
+2026-10-27T05:42:01.4565171Z   reports/P5-34/verification/protected-20261026/attempt-05/fmt.json
+2026-10-27T05:42:01.4565855Z   reports/P5-34/verification/protected-20261026/attempt-05/fmt.log
+2026-10-27T05:42:01.4566593Z   reports/P5-34/verification/protected-20261026/attempt-05/generate.json
+2026-10-27T05:42:01.4567541Z   reports/P5-34/verification/protected-20261026/attempt-05/generate.log
+2026-10-27T05:42:01.4568334Z   reports/P5-34/verification/protected-20261026/attempt-05/storage.json
+2026-10-27T05:42:01.4569062Z   reports/P5-34/verification/protected-20261026/attempt-05/storage.log
+2026-10-27T05:42:01.4571136Z   reports/P5-34/verification/protected-20261026/attempt-05/workspace-without-storage.json
+2026-10-27T05:42:01.4572169Z   reports/P5-34/verification/protected-20261026/attempt-05/workspace-without-storage.log
+2026-10-27T05:42:01.4573266Z   reports/P5-34/verification/protected-20261026/ci-7cb285a-initial.json
+2026-10-27T05:42:01.4574172Z   reports/P5-34/verification/protected-20261026/ci-7cb285a-ubuntu-success.json
+2026-10-27T05:42:01.4574977Z   reports/P5-34/verification/protected-20261026/ci-7ddefa8-final.json
+2026-10-27T05:42:01.4575943Z   reports/P5-34/verification/protected-20261026/guard-irl-pytest-20261026T113231229.json
+2026-10-27T05:42:01.4576917Z   reports/P5-34/verification/protected-20261026/guard-test-20261026T112652883.json
+2026-10-27T05:42:01.4577768Z   reports/P5-34/verification/protected-20261026/harness-errors.json
+2026-10-27T05:42:01.4578478Z   reports/P5-34/verification/protected-20261026/main-install-01.json
+2026-10-27T05:42:01.4579205Z   reports/P5-34/verification/protected-20261026/main-install-01.log
+2026-10-27T05:42:01.4579958Z   reports/P5-34/verification/protected-20261026/main-refresh-317dde9.json
+2026-10-27T05:42:01.4580689Z   reports/P5-34/verification/protected-20261026/main-refresh.json
+2026-10-27T05:42:01.4581375Z   reports/P5-34/verification/protected-20261026/main-test-01.json
+2026-10-27T05:42:01.4582044Z   reports/P5-34/verification/protected-20261026/main-test-01.log
+2026-10-27T05:42:01.4582828Z   reports/P5-34/verification/protected-20261026/main-test-02.json
+2026-10-27T05:42:01.4583474Z   reports/P5-34/verification/protected-20261026/main-test-02.log
+2026-10-27T05:42:01.4584108Z   reports/P5-34/verification/protected-20261026/main-test-03.json
+2026-10-27T05:42:01.4584782Z   reports/P5-34/verification/protected-20261026/main-test-03.log
+2026-10-27T05:42:01.4585460Z   reports/P5-34/verification/protected-20261026/main-test-04.json
+2026-10-27T05:42:01.4586092Z   reports/P5-34/verification/protected-20261026/main-test-04.log
+2026-10-27T05:42:01.4586789Z   reports/P5-34/verification/protected-20261026/main-test-05.json
+2026-10-27T05:42:01.4587517Z   reports/P5-34/verification/protected-20261026/main-test-05.log
+2026-10-27T05:42:01.4588319Z   reports/P5-34/verification/protected-20261026/main-test-06.json
+2026-10-27T05:42:01.4589031Z   reports/P5-34/verification/protected-20261026/main-test-06.log
+2026-10-27T05:42:01.4589802Z   reports/P5-34/verification/protected-20261026/refresh-summary-317dde9.json
+2026-10-27T05:42:01.4590551Z   reports/P5-34/verification/protected-20261026/summary.json
+2026-10-27T05:42:01.4591317Z   reports/P5-34/verification/protected-20261026/supervisor-comparison.json
+2026-10-27T05:42:01.4592125Z   reports/P5-34/verification/protected-20261026/ubuntu-40318254909.json
+2026-10-27T05:42:01.4593022Z   reports/P5-34/verification/protected-20261026/ubuntu-40318254909.log
+2026-10-27T05:42:01.4593831Z   reports/P5-34/verification/protected-20261026/windows-dispatch-7cb285a.json
+2026-10-27T05:42:01.4594591Z   reports/P5-34/verification/resumed-20261026/.gitattributes
+2026-10-27T05:42:01.4595262Z   reports/P5-34/verification/resumed-20261026/attempt-01/bytes.json
+2026-10-27T05:42:01.4595988Z   reports/P5-34/verification/resumed-20261026/attempt-01/bytes.log
+2026-10-27T05:42:01.4596711Z   reports/P5-34/verification/resumed-20261026/attempt-01/clippy.json
+2026-10-27T05:42:01.4597425Z   reports/P5-34/verification/resumed-20261026/attempt-01/clippy.log
+2026-10-27T05:42:01.4598341Z   reports/P5-34/verification/resumed-20261026/attempt-01/compatibility.json
+2026-10-27T05:42:01.4599153Z   reports/P5-34/verification/resumed-20261026/attempt-01/compatibility.log
+2026-10-27T05:42:01.4599952Z   reports/P5-34/verification/resumed-20261026/attempt-01/contracts.json
+2026-10-27T05:42:01.4600681Z   reports/P5-34/verification/resumed-20261026/attempt-01/contracts.log
+2026-10-27T05:42:01.4601428Z   reports/P5-34/verification/resumed-20261026/attempt-01/drive-mypy.json
+2026-10-27T05:42:01.4602429Z   reports/P5-34/verification/resumed-20261026/attempt-01/drive-mypy.log
+2026-10-27T05:42:01.4603683Z   reports/P5-34/verification/resumed-20261026/attempt-01/drive-pytest.json
+2026-10-27T05:42:01.4604484Z   reports/P5-34/verification/resumed-20261026/attempt-01/drive-pytest.log
+2026-10-27T05:42:01.4604988Z   reports/P5-34/verification/resumed-20261026/attempt-01/drive-ruff.json
+2026-10-27T05:42:01.4605474Z   reports/P5-34/verification/resumed-20261026/attempt-01/drive-ruff.log
+2026-10-27T05:42:01.4605964Z   reports/P5-34/verification/resumed-20261026/attempt-01/fmt.json
+2026-10-27T05:42:01.4606399Z   reports/P5-34/verification/resumed-20261026/attempt-01/fmt.log
+2026-10-27T05:42:01.4606899Z   reports/P5-34/verification/resumed-20261026/attempt-01/generate.json
+2026-10-27T05:42:01.4607444Z   reports/P5-34/verification/resumed-20261026/attempt-01/generate.log
+2026-10-27T05:42:01.4608150Z   reports/P5-34/verification/resumed-20261026/attempt-01/inputs.json
+2026-10-27T05:42:01.4608892Z   reports/P5-34/verification/resumed-20261026/attempt-01/inputs.log
+2026-10-27T05:42:01.4609433Z   reports/P5-34/verification/resumed-20261026/attempt-01/irl-mypy.json
+2026-10-27T05:42:01.4609895Z   reports/P5-34/verification/resumed-20261026/attempt-01/irl-mypy.log
+2026-10-27T05:42:01.4610393Z   reports/P5-34/verification/resumed-20261026/attempt-01/irl-pytest.json
+2026-10-27T05:42:01.4610882Z   reports/P5-34/verification/resumed-20261026/attempt-01/irl-pytest.log
+2026-10-27T05:42:01.4611364Z   reports/P5-34/verification/resumed-20261026/attempt-01/irl-ruff.json
+2026-10-27T05:42:01.4611832Z   reports/P5-34/verification/resumed-20261026/attempt-01/irl-ruff.log
+2026-10-27T05:42:01.4612285Z   reports/P5-34/verification/resumed-20261026/attempt-01/lint.json
+2026-10-27T05:42:01.4612722Z   reports/P5-34/verification/resumed-20261026/attempt-01/lint.log
+2026-10-27T05:42:01.4613223Z   reports/P5-34/verification/resumed-20261026/attempt-01/model-adapter-mypy.json
+2026-10-27T05:42:01.4613778Z   reports/P5-34/verification/resumed-20261026/attempt-01/model-adapter-mypy.log
+2026-10-27T05:42:01.4614361Z   reports/P5-34/verification/resumed-20261026/attempt-01/model-adapter-pytest.json
+2026-10-27T05:42:01.4614924Z   reports/P5-34/verification/resumed-20261026/attempt-01/model-adapter-pytest.log
+2026-10-27T05:42:01.4615476Z   reports/P5-34/verification/resumed-20261026/attempt-01/model-adapter-ruff.json
+2026-10-27T05:42:01.4616018Z   reports/P5-34/verification/resumed-20261026/attempt-01/model-adapter-ruff.log
+2026-10-27T05:42:01.4616541Z   reports/P5-34/verification/resumed-20261026/attempt-01/mypy.json
+2026-10-27T05:42:01.4616980Z   reports/P5-34/verification/resumed-20261026/attempt-01/mypy.log
+2026-10-27T05:42:01.4617413Z   reports/P5-34/verification/resumed-20261026/attempt-01/ruff.json
+2026-10-27T05:42:01.4617842Z   reports/P5-34/verification/resumed-20261026/attempt-01/ruff.log
+2026-10-27T05:42:01.4618268Z   reports/P5-34/verification/resumed-20261026/attempt-01/test.json
+2026-10-27T05:42:01.4618699Z   reports/P5-34/verification/resumed-20261026/attempt-01/test.log
+2026-10-27T05:42:01.4619174Z   reports/P5-34/verification/resumed-20261026/attempt-01/typecheck.json
+2026-10-27T05:42:01.4619654Z   reports/P5-34/verification/resumed-20261026/attempt-01/typecheck.log
+2026-10-27T05:42:01.4620119Z   reports/P5-34/verification/resumed-20261026/attempt-01/types.json
+2026-10-27T05:42:01.4620559Z   reports/P5-34/verification/resumed-20261026/attempt-01/types.log
+2026-10-27T05:42:01.4621017Z   reports/P5-34/verification/resumed-20261026/attempt-01/workspace.json
+2026-10-27T05:42:01.4621488Z   reports/P5-34/verification/resumed-20261026/attempt-01/workspace.log
+2026-10-27T05:42:01.4621928Z   reports/P5-34/verification/resumed-20261026/ci-b84d0bf.json
+2026-10-27T05:42:01.4622346Z   reports/P5-34/verification/resumed-20261026/environment.json
+2026-10-27T05:42:01.4622850Z   reports/P5-34/verification/resumed-20261026/guard-remaining-20261026T051801313.json
+2026-10-27T05:42:01.4623373Z   reports/P5-34/verification/resumed-20261026/resource-deferred.json
+2026-10-27T05:42:01.4624150Z   reports/P5-34/verification/resumed-20261026/resource-guard.txt
+2026-10-27T05:42:01.4624612Z   reports/P5-34/verification/resumed-20261026/summary.json
+2026-10-27T05:42:01.4625002Z   reports/P5-34/verification/review-20261024/.gitattributes
+2026-10-27T05:42:01.4625441Z   reports/P5-34/verification/review-20261024/attempt-01/bytes.json
+2026-10-27T05:42:01.4625877Z   reports/P5-34/verification/review-20261024/attempt-01/bytes.log
+2026-10-27T05:42:01.4626313Z   reports/P5-34/verification/review-20261024/attempt-01/clippy.json
+2026-10-27T05:42:01.4626753Z   reports/P5-34/verification/review-20261024/attempt-01/clippy.log
+2026-10-27T05:42:01.4627219Z   reports/P5-34/verification/review-20261024/attempt-01/compatibility.json
+2026-10-27T05:42:01.4627717Z   reports/P5-34/verification/review-20261024/attempt-01/compatibility.log
+2026-10-27T05:42:01.4628193Z   reports/P5-34/verification/review-20261024/attempt-01/contracts.json
+2026-10-27T05:42:01.4628655Z   reports/P5-34/verification/review-20261024/attempt-01/contracts.log
+2026-10-27T05:42:01.4629099Z   reports/P5-34/verification/review-20261024/attempt-01/fmt.json
+2026-10-27T05:42:01.4629535Z   reports/P5-34/verification/review-20261024/attempt-01/fmt.log
+2026-10-27T05:42:01.4629981Z   reports/P5-34/verification/review-20261024/attempt-01/regression.json
+2026-10-27T05:42:01.4630453Z   reports/P5-34/verification/review-20261024/attempt-01/regression.log
+2026-10-27T05:42:01.4630918Z   reports/P5-34/verification/review-20261024/attempt-01/workspace.json
+2026-10-27T05:42:01.4631380Z   reports/P5-34/verification/review-20261024/attempt-01/workspace.log
+2026-10-27T05:42:01.4631831Z   reports/P5-34/verification/review-20261024/prior-ci-timeout.json
+2026-10-27T05:42:01.4632271Z   reports/P5-34/verification/review-20261024/resource-window.jsonl
+2026-10-27T05:42:01.4632721Z   reports/P5-34/verification/review-20261024/verification-index.json
+2026-10-27T05:42:01.4633169Z   reports/P5-34/verification/review-20261027/.gitattributes
+2026-10-27T05:42:01.4633575Z   reports/P5-34/verification/review-20261027/ci-af200a67.json
+2026-10-27T05:42:01.4633987Z   reports/P5-34/verification/review-20261027/green-inputs.json
+2026-10-27T05:42:01.4634392Z   reports/P5-34/verification/review-20261027/red-inputs.json
+2026-10-27T05:42:01.4634836Z   reports/P5-34/verification/review-20261027/reviewer-wal-probe.log
+2026-10-27T05:42:01.4635301Z   reports/P5-34/verification/review-20261027/ubuntu-40443460541-raw.json
+2026-10-27T05:42:01.4635773Z   reports/P5-34/verification/review-20261027/ubuntu-40443460541-raw.log
+2026-10-27T05:42:01.4636229Z   reports/P5-34/verification/review-20261027/ubuntu-40443460541.json
+2026-10-27T05:42:01.4636678Z   reports/P5-34/verification/review-20261027/ubuntu-40443460541.log
+2026-10-27T05:42:01.4637127Z   reports/P5-34/verification/review-20261027/windows-40443545530.json
+2026-10-27T05:42:01.4637580Z   reports/P5-34/verification/review-20261027/windows-40443545530.log
+2026-10-27T05:42:01.4637996Z   reports/P5-34/verification/run-01/compat-final.log
+2026-10-27T05:42:01.4638343Z   reports/P5-34/verification/run-01/compat.log
+2026-10-27T05:42:01.4638695Z   reports/P5-34/verification/run-01/generate-check.log
+2026-10-27T05:42:01.4639065Z   reports/P5-34/verification/run-01/generate-final.log
+2026-10-27T05:42:01.4639441Z   reports/P5-34/verification/run-01/light-exit-codes.json
+2026-10-27T05:42:01.4639835Z   reports/P5-34/verification/run-01/mypy-ci-scope.log
+2026-10-27T05:42:01.4640204Z   reports/P5-34/verification/run-01/mypy-final.log
+2026-10-27T05:42:01.4640536Z   reports/P5-34/verification/run-01/mypy.log
+2026-10-27T05:42:01.4640943Z   reports/P5-34/verification/run-01/node-static-exit-codes.json
+2026-10-27T05:42:01.4641343Z   reports/P5-34/verification/run-01/pnpm-install.log
+2026-10-27T05:42:01.4641738Z   reports/P5-34/verification/run-01/pnpm-lint-after-install.log
+2026-10-27T05:42:01.4642122Z   reports/P5-34/verification/run-01/pnpm-lint.log
+2026-10-27T05:42:01.4642481Z   reports/P5-34/verification/run-01/pnpm-typecheck.log
+2026-10-27T05:42:01.4643651Z   reports/P5-34/verification/run-01/resource-window-cancelled.json
+2026-10-27T05:42:01.4644091Z   reports/P5-34/verification/run-01/resource-window.log
+2026-10-27T05:42:01.4644506Z   reports/P5-34/verification/run-01/retention-browser-typecheck.log
+2026-10-27T05:42:01.4644943Z   reports/P5-34/verification/run-01/retention-inputs.log
+2026-10-27T05:42:01.4645361Z   reports/P5-34/verification/run-01/retention-static-exit-codes.json
+2026-10-27T05:42:01.4653270Z   reports/P5-34/verification/run-01/ruff-final.log
+2026-10-27T05:42:01.4653619Z   reports/P5-34/verification/run-01/ruff.log
+2026-10-27T05:42:01.4653940Z   reports/P5-34/verification/run-01/rustfmt.log
+2026-10-27T05:42:01.4654312Z   reports/P5-34/verification/run-01/schema-tests-final.log
+2026-10-27T05:42:01.4654693Z   reports/P5-34/verification/run-01/schema-tests.log
+2026-10-27T05:42:01.4655075Z   reports/P5-34/verification/run-01/static-exit-codes.json
+2026-10-27T05:42:01.4655439Z   reports/P5-34/verify-main-supervisor.ps1
+2026-10-27T05:42:01.4655745Z   reports/P5-34/verify-protected.ps1
+2026-10-27T05:42:01.4656026Z   reports/P5-34/verify-resumed.ps1
+2026-10-27T05:42:01.4656309Z   workers/drive/generated/echo/runtime.py
+2026-10-27T05:42:01.4656616Z   workers/drive/generated/echo/schema.json
+2026-10-27T05:42:01.4656912Z   workers/drive/generated/echo/types.py
+2026-10-27T05:42:01.4657202Z   workers/irl/generated/echo/runtime.py
+2026-10-27T05:42:01.4657489Z   workers/irl/generated/echo/schema.json
+2026-10-27T05:42:01.4657773Z   workers/irl/generated/echo/types.py
+2026-10-27T05:42:01.4658090Z   workers/model-adapter/generated/echo/runtime.py
+2026-10-27T05:42:01.4658573Z   workers/model-adapter/generated/echo/schema.json
+2026-10-27T05:42:01.4659099Z   workers/model-adapter/generated/echo/types.py
+2026-10-27T05:42:01.6218737Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-10-27T05:42:01.6219081Z with:
+2026-10-27T05:42:01.6219234Z   node-version-file: .nvmrc
+2026-10-27T05:42:01.6219435Z   always-auth: false
+2026-10-27T05:42:01.6219602Z   check-latest: false
+2026-10-27T05:42:01.6221974Z   token: ***
+2026-10-27T05:42:01.6222122Z env:
+2026-10-27T05:42:01.6222272Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:42:01.6222465Z   UV_LINK_MODE: copy
+2026-10-27T05:42:01.6222622Z ##[endgroup]
+2026-10-27T05:42:02.0904550Z Resolved .nvmrc as 24
+2026-10-27T05:42:02.0948206Z Found in cache @ D:\actions-runner\_work\_tool\node\24.21.0\x64
+2026-10-27T05:42:02.0955615Z (node:38844) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T05:42:02.0956263Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T05:42:02.0958062Z ##[group]Environment details
+2026-10-27T05:42:02.7366538Z [warning]This project is configured to use pnpm because D:\actions-runner\_work\nemu\nemu\package.json has a "packageManager" field
+2026-10-27T05:42:02.7366979Z 
+2026-10-27T05:42:02.9298608Z node: v24.21.0
+2026-10-27T05:42:02.9298835Z npm: 11.19.0
+2026-10-27T05:42:02.9299008Z yarn: 
+2026-10-27T05:42:02.9299490Z ##[endgroup]
+2026-10-27T05:42:02.9592912Z ##[group]Run npm install --global pnpm@12.11.2
+2026-10-27T05:42:02.9593275Z [36;1mnpm install --global pnpm@12.11.2[0m
+2026-10-27T05:42:02.9640991Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:42:02.9641345Z env:
+2026-10-27T05:42:02.9641501Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:42:02.9641692Z   UV_LINK_MODE: copy
+2026-10-27T05:42:02.9641850Z ##[endgroup]
+2026-10-27T05:46:31.1809251Z 
+2026-10-27T05:46:31.1814139Z changed 2 packages in 4m
+2026-10-27T05:46:31.1827509Z npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-10-27T05:46:31.1828310Z npm warn install-scripts   pnpm@12.11.2 (preinstall: node install.js; postinstall: node install.js)
+2026-10-27T05:46:31.1828788Z npm warn install-scripts
+2026-10-27T05:46:31.1830001Z npm warn install-scripts Run `npm install -g --allow-scripts=pnpm` to allow these scripts once, or `npm config set allow-scripts=pnpm --location=user` to allow them for all global installs.
+2026-10-27T05:46:31.2669405Z ##[group]Run pnpm install --frozen-lockfile
+2026-10-27T05:46:31.2669717Z [36;1mpnpm install --frozen-lockfile[0m
+2026-10-27T05:46:31.2715042Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:46:31.2715398Z env:
+2026-10-27T05:46:31.2715563Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:46:31.2715755Z   UV_LINK_MODE: copy
+2026-10-27T05:46:31.2715913Z ##[endgroup]
+2026-10-27T05:46:32.4773771Z Scope: all 14 workspace projects
+2026-10-27T05:46:32.5084982Z ✓ Lockfile passes supply-chain policies (verified 3d ago)
+2026-10-27T05:46:32.5085486Z Lockfile is up to date, resolution step is skipped
+2026-10-27T05:46:32.7059277Z Packages are hard linked from the content-addressable store to the virtual store.
+2026-10-27T05:46:32.7060007Z   Content-addressable store is at: D:\.pnpm-store\v11
+2026-10-27T05:46:32.7060649Z   Virtual store is at:             node_modules/.pnpm
+2026-10-27T05:46:33.8843112Z Progress: resolved 123, reused 123, downloaded 0, added 108
+2026-10-27T05:46:34.9124247Z Progress: resolved 193, reused 193, downloaded 0, added 180
+2026-10-27T05:46:35.9853598Z Progress: resolved 239, reused 239, downloaded 0, added 231
+2026-10-27T05:46:36.1024878Z Packages: +239
+2026-10-27T05:46:36.1025309Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-10-27T05:46:36.9599286Z Progress: resolved 239, reused 239, downloaded 0, added 239, done
+2026-10-27T05:46:36.9664104Z .../.pnpm/koffi@3.3.3/node_modules/koffi install$ node ./cnoke.cjs -P . -D src/koffi --prebuild --release
+2026-10-27T05:46:36.9664801Z .../esbuild@0.27.7/node_modules/esbuild postinstall$ node install.js
+2026-10-27T05:46:36.9665432Z .../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+2026-10-27T05:46:36.9666262Z .../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+2026-10-27T05:46:37.1113180Z .../.pnpm/koffi@3.3.3/node_modules/koffi install: Done
+2026-10-27T05:46:37.1939409Z .../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+2026-10-27T05:46:37.2233049Z .../esbuild@0.27.7/node_modules/esbuild postinstall: Done
+2026-10-27T05:46:37.5381877Z .../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+2026-10-27T05:46:37.5771007Z 
+2026-10-27T05:46:37.5771783Z devDependencies:
+2026-10-27T05:46:37.5772259Z + @eslint/js 10.0.1
+2026-10-27T05:46:37.5772616Z + @playwright/test 1.64.0
+2026-10-27T05:46:37.5772959Z + @types/node 24.19.2
+2026-10-27T05:46:37.5773285Z + @types/pixelmatch 7.1.0
+2026-10-27T05:46:37.5773614Z + @types/pngjs 6.0.5
+2026-10-27T05:46:37.5773946Z + @types/react 19.3.0
+2026-10-27T05:46:37.5774928Z + @types/react-dom 19.3.0
+2026-10-27T05:46:37.5775361Z + @vitest/coverage-v8 5.0.4
+2026-10-27T05:46:37.5775726Z + ajv 8.20.0
+2026-10-27T05:46:37.5776020Z + electron 44.7.0
+2026-10-27T05:46:37.5776396Z + electron-vite 5.0.0
+2026-10-27T05:46:37.5776641Z + eslint 10.12.0
+2026-10-27T05:46:37.5776863Z + pixelmatch 8.0.0
+2026-10-27T05:46:37.5777115Z + pngjs 7.0.0
+2026-10-27T05:46:37.5777407Z + prettier 3.9.10
+2026-10-27T05:46:37.5777652Z + tsx 4.21.0
+2026-10-27T05:46:37.5777905Z + typescript 6.0.3
+2026-10-27T05:46:37.5778177Z + typescript-eslint 8.71.2
+2026-10-27T05:46:37.5778475Z + vite 7.3.7
+2026-10-27T05:46:37.5778668Z + vitest 5.0.4
+2026-10-27T05:46:37.5778765Z 
+2026-10-27T05:46:37.5778977Z Done in 5.1s using pnpm v12.11.2
+2026-10-27T05:46:37.6517141Z ##[group]Run $required = (Get-Content global.json | ConvertFrom-Json).sdk.version
+2026-10-27T05:46:37.6517948Z [36;1m$required = (Get-Content global.json | ConvertFrom-Json).sdk.version[0m
+2026-10-27T05:46:37.6518682Z [36;1m$available = (dotnet --list-sdks) -match ("^" + [regex]::Escape($required) + " ")[0m
+2026-10-27T05:46:37.6519404Z [36;1m"available=$([bool]$available)".ToLowerInvariant() >> $env:GITHUB_OUTPUT[0m
+2026-10-27T05:46:37.6571113Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:46:37.6571474Z env:
+2026-10-27T05:46:37.6571635Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:46:37.6571834Z   UV_LINK_MODE: copy
+2026-10-27T05:46:37.6572001Z ##[endgroup]
+2026-10-27T05:46:38.2288925Z ##[group]Run pnpm exec playwright install chromium
+2026-10-27T05:46:38.2289265Z [36;1mpnpm exec playwright install chromium[0m
+2026-10-27T05:46:38.2333576Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:46:38.2333931Z env:
+2026-10-27T05:46:38.2334082Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:46:38.2334280Z   UV_LINK_MODE: copy
+2026-10-27T05:46:38.2334441Z ##[endgroup]
+2026-10-27T05:46:39.3542594Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Init
+2026-10-27T05:46:39.3543179Z [36;1m./tools/scaffold/windows-evidence.ps1 -Mode Init[0m
+2026-10-27T05:46:39.3588152Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:46:39.3588518Z env:
+2026-10-27T05:46:39.3588670Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:46:39.3588863Z   UV_LINK_MODE: copy
+2026-10-27T05:46:39.3589023Z ##[endgroup]
+2026-10-27T05:46:39.9163684Z D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:46:39.9879568Z ##[group]Run pwsh -NoProfile -File tools/scaffold/windows-evidence.tests.ps1
+2026-10-27T05:46:39.9880108Z [36;1mpwsh -NoProfile -File tools/scaffold/windows-evidence.tests.ps1[0m
+2026-10-27T05:46:39.9923450Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:46:39.9923805Z env:
+2026-10-27T05:46:39.9923960Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:46:39.9924157Z   UV_LINK_MODE: copy
+2026-10-27T05:46:39.9924448Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:46:39.9924784Z ##[endgroup]
+2026-10-27T05:46:41.2399778Z C:\Users\nanake\AppData\Local\Temp\nemu-evidence-tests-bad58c02-99c5-4b0f-b680-25f4e97493c5\nemu-evidence\fixture\1\windows
+2026-10-27T05:46:41.8212710Z [31;1mException: [0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\windows-evidence.ps1:14[0m
+2026-10-27T05:46:41.8213221Z [31;1m[0m[36;1mLine |[0m
+2026-10-27T05:46:41.8213897Z [31;1m[0m[36;1m[36;1m  14 | [0m … teralPath $root) { [36;1mthrow "Evidence directory already exists: $root"[0m }[0m
+2026-10-27T05:46:41.8214652Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2026-10-27T05:46:41.8215403Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mEvidence directory already exists:[0m
+2026-10-27T05:46:41.8216668Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m[31;1m[36;1m     | [31;1mC:\Users\nanake\AppData\Local\Temp\nemu-evidence-tests-bad58c02-99c5-4b0f-b680-25f4e97493c5\nemu-evidence\fixture\1\windows[0m
+2026-10-27T05:46:42.4216390Z Verified 2 current-attempt evidence files
+2026-10-27T05:46:43.0500196Z [31;1mException: [0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\windows-evidence.ps1:112[0m
+2026-10-27T05:46:43.0500812Z [31;1m[0m[36;1mLine |[0m
+2026-10-27T05:46:43.0501616Z [31;1m[0m[36;1m[36;1m 112 | [0m $manifest = @([36;1mGet-ChildItem -LiteralPath $root -Recurse -File[0m | Where …[0m
+2026-10-27T05:46:43.0502537Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2026-10-27T05:46:43.0503429Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mNot generated in this attempt: fixture.txt[0m
+2026-10-27T05:46:43.6144758Z [31;1mException: [0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\windows-evidence.ps1:108[0m
+2026-10-27T05:46:43.6145258Z [31;1m[0m[36;1mLine |[0m
+2026-10-27T05:46:43.6145900Z [31;1m[0m[36;1m[36;1m 108 | [0m … .sha -ne (git rev-parse HEAD)) { [36;1mthrow 'Evidence identity mismatch'[0m }[0m
+2026-10-27T05:46:43.6146913Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2026-10-27T05:46:43.6147626Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mEvidence identity mismatch[0m
+2026-10-27T05:46:44.1627596Z Verified 2 current-attempt evidence files
+2026-10-27T05:46:44.2435103Z PASS: fresh evidence accepted; duplicate directory, stale timestamp and wrong attempt rejected.
+2026-10-27T05:46:44.3838581Z ##[group]Run node --test tools/scaffold/window-wait-diagnostics.test.mjs
+2026-10-27T05:46:44.3839115Z [36;1mnode --test tools/scaffold/window-wait-diagnostics.test.mjs[0m
+2026-10-27T05:46:44.3884646Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:46:44.3884999Z env:
+2026-10-27T05:46:44.3885152Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:46:44.3885352Z   UV_LINK_MODE: copy
+2026-10-27T05:46:44.3885655Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:46:44.3885986Z ##[endgroup]
+2026-10-27T05:46:45.1491643Z ✔ snapshot starts after window wait settles (success) (2.8534ms)
+2026-10-27T05:46:45.1493642Z ✔ snapshot starts after window wait settles (failure) (1.3653ms)
+2026-10-27T05:46:45.1494713Z ✔ repository snapshots contain only related processes and matching derivative hashes (8.6879ms)
+2026-10-27T05:46:45.1604752Z ℹ tests 3
+2026-10-27T05:46:45.1605031Z ℹ suites 0
+2026-10-27T05:46:45.1605307Z ℹ pass 3
+2026-10-27T05:46:45.1605532Z ℹ fail 0
+2026-10-27T05:46:45.1605766Z ℹ cancelled 0
+2026-10-27T05:46:45.1606047Z ℹ skipped 0
+2026-10-27T05:46:45.1606275Z ℹ todo 0
+2026-10-27T05:46:45.1606529Z ℹ duration_ms 329.1729
+2026-10-27T05:46:45.2559463Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport
+2026-10-27T05:46:45.2559955Z [36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport[0m
+2026-10-27T05:46:45.2603977Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:46:45.2604335Z env:
+2026-10-27T05:46:45.2604494Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:46:45.2604688Z   UV_LINK_MODE: copy
+2026-10-27T05:46:45.2604976Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:46:45.2605348Z ##[endgroup]
+2026-10-27T05:46:46.8787287Z [31;1m$ node --test tools/scaffold/transport.test.mjs[0m
+2026-10-27T05:46:46.9458724Z ✔ local byte transport: Windows named pipe / Unix socket (8.3317ms)
+2026-10-27T05:46:46.9535641Z ℹ tests 1
+2026-10-27T05:46:46.9536215Z ℹ suites 0
+2026-10-27T05:46:46.9537281Z ℹ pass 1
+2026-10-27T05:46:46.9538483Z ℹ fail 0
+2026-10-27T05:46:46.9539611Z ℹ cancelled 0
+2026-10-27T05:46:46.9540633Z ℹ skipped 0
+2026-10-27T05:46:46.9541702Z ℹ todo 0
+2026-10-27T05:46:46.9542839Z ℹ duration_ms 76.7806
+2026-10-27T05:46:47.2810873Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation
+2026-10-27T05:46:47.2811640Z [36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation[0m
+2026-10-27T05:46:47.2858262Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:46:47.2858611Z env:
+2026-10-27T05:46:47.2858764Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:46:47.2858963Z   UV_LINK_MODE: copy
+2026-10-27T05:46:47.2859247Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:46:47.2859584Z ##[endgroup]
+2026-10-27T05:46:48.8307537Z processed file: C:\Users\nanake\AppData\Local\Temp\nemu-isolation-55e7b853-e4e3-4fa7-a464-2ad68404ee3f
+2026-10-27T05:46:48.8308247Z Successfully processed 1 files; Failed processing 0 files
+2026-10-27T05:46:52.8729066Z PASS: process token lowered to Low; medium-directory write denied; positive write control passed.
+2026-10-27T05:46:53.2800014Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e
+2026-10-27T05:46:53.2800629Z [36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e[0m
+2026-10-27T05:46:53.2846058Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:46:53.2846416Z env:
+2026-10-27T05:46:53.2846573Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:46:53.2846777Z   UV_LINK_MODE: copy
+2026-10-27T05:46:53.2847067Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:46:53.2847413Z ##[endgroup]
+2026-10-27T05:46:54.5324391Z [31;1m$ pnpm build && playwright test --config apps/desktop/playwright.config.ts[0m
+2026-10-27T05:46:54.5339150Z [31;1m$ pnpm -r build[0m
+2026-10-27T05:46:54.5816040Z packages/log build$ tsc -p tsconfig.json
+2026-10-27T05:46:54.5817585Z packages/terminal build$ tsc -p tsconfig.json
+2026-10-27T05:46:54.5819257Z executors/codex-bridge build$ tsc -p tsconfig.json
+2026-10-27T05:46:54.5820503Z packages/contracts build$ tsc -p tsconfig.json
+2026-10-27T05:46:55.5665755Z packages/log build: Done
+2026-10-27T05:46:55.5666280Z packages/terminal build: Done
+2026-10-27T05:46:55.5669734Z spikes/stage-overlay build$ electron-vite build
+2026-10-27T05:46:55.5850659Z executors/codex-bridge build: Done
+2026-10-27T05:46:56.3691354Z spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+2026-10-27T05:46:56.4380505Z spikes/stage-overlay build: transforming...
+2026-10-27T05:46:56.4771742Z spikes/stage-overlay build: ✓ 1 modules transformed.
+2026-10-27T05:46:56.4974726Z spikes/stage-overlay build: rendering chunks...
+2026-10-27T05:46:56.5043622Z spikes/stage-overlay build: out/main/index.js  8.46 kB
+2026-10-27T05:46:56.5046689Z spikes/stage-overlay build: ✓ built in 112ms
+2026-10-27T05:46:56.5097224Z spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+2026-10-27T05:46:56.5154088Z spikes/stage-overlay build: transforming...
+2026-10-27T05:46:56.5176376Z spikes/stage-overlay build: ✓ 1 modules transformed.
+2026-10-27T05:46:56.5206444Z spikes/stage-overlay build: rendering chunks...
+2026-10-27T05:46:56.5217432Z spikes/stage-overlay build: out/preload/index.cjs  1.33 kB
+2026-10-27T05:46:56.5218194Z spikes/stage-overlay build: ✓ built in 12ms
+2026-10-27T05:46:56.5289690Z spikes/stage-overlay build: vite v7.3.7 building client environment for production...
+2026-10-27T05:46:56.5564021Z spikes/stage-overlay build: transforming...
+2026-10-27T05:46:56.7911136Z packages/contracts build: Done
+2026-10-27T05:46:56.7918112Z packages/body build$ tsc -p tsconfig.json
+2026-10-27T05:46:56.7918737Z apps/panel build$ vite build
+2026-10-27T05:46:56.7919381Z packages/avatar-runtime build$ tsc -p tsconfig.json
+2026-10-27T05:46:57.2166808Z apps/panel build: vite v7.3.7 building client environment for production...
+2026-10-27T05:46:57.2672386Z apps/panel build: transforming...
+2026-10-27T05:46:57.7900991Z spikes/stage-overlay build: ✓ 8 modules transformed.
+2026-10-27T05:46:57.8582345Z apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+2026-10-27T05:46:57.8583330Z apps/panel build: 
+2026-10-27T05:46:57.8584201Z apps/panel build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+2026-10-27T05:46:57.8585416Z apps/panel build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+2026-10-27T05:46:57.8586545Z apps/panel build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+2026-10-27T05:46:57.8587281Z apps/panel build: 
+2026-10-27T05:46:57.8588990Z apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T05:46:57.8845614Z apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+2026-10-27T05:46:57.8846409Z apps/panel build: 
+2026-10-27T05:46:57.8848757Z apps/panel build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+2026-10-27T05:46:57.8849805Z apps/panel build: 
+2026-10-27T05:46:57.8851343Z apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T05:46:58.4857698Z spikes/stage-overlay build: rendering chunks...
+2026-10-27T05:46:58.4945708Z spikes/stage-overlay build: ../../out/renderer/index.html                    6.52 kB
+2026-10-27T05:46:58.4947921Z spikes/stage-overlay build: ../../out/renderer/assets/index-P4FdMocT.js  1,448.72 kB
+2026-10-27T05:46:58.4949281Z spikes/stage-overlay build: ✓ built in 1.97s
+2026-10-27T05:46:58.5422848Z spikes/stage-overlay build: Done
+2026-10-27T05:46:58.5428701Z packages/desktop-sense build$ tsc -p tsconfig.json
+2026-10-27T05:46:58.6221988Z apps/panel build: ✓ 153 modules transformed.
+2026-10-27T05:46:59.4160632Z apps/panel build: rendering chunks...
+2026-10-27T05:46:59.4268015Z apps/panel build: computing gzip size...
+2026-10-27T05:46:59.4409315Z apps/panel build: dist/index.html                   0.64 kB │ gzip:   0.38 kB
+2026-10-27T05:46:59.4410373Z apps/panel build: dist/assets/index-ibGTfxG7.css    8.91 kB │ gzip:   2.32 kB
+2026-10-27T05:46:59.4411423Z apps/panel build: dist/assets/index-B-j56mpL.js   478.38 kB │ gzip: 126.06 kB
+2026-10-27T05:46:59.4412168Z apps/panel build: ✓ built in 2.21s
+2026-10-27T05:46:59.4854041Z apps/panel build: Done
+2026-10-27T05:46:59.4866169Z packages/voice build$ tsc -p tsconfig.json
+2026-10-27T05:46:59.6978800Z packages/body build: Done
+2026-10-27T05:46:59.6988967Z tools/asset-lint build$ pnpm --filter @nemu/contracts build && tsc -p tsconfig.json
+2026-10-27T05:46:59.7793625Z tools/asset-lint build: $ tsc -p tsconfig.json
+2026-10-27T05:47:00.1743041Z packages/avatar-runtime build: Done
+2026-10-27T05:47:00.1751408Z apps/stage build$ vite build
+2026-10-27T05:47:00.5976836Z apps/stage build: vite v7.3.7 building client environment for production...
+2026-10-27T05:47:00.6774835Z apps/stage build: transforming...
+2026-10-27T05:47:01.0175198Z packages/desktop-sense build: Done
+2026-10-27T05:47:01.4927506Z apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+2026-10-27T05:47:01.4928454Z apps/stage build: 
+2026-10-27T05:47:01.4929889Z apps/stage build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+2026-10-27T05:47:01.4931047Z apps/stage build: 
+2026-10-27T05:47:01.4932838Z apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T05:47:01.5037293Z apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+2026-10-27T05:47:01.5038131Z apps/stage build: 
+2026-10-27T05:47:01.5039208Z apps/stage build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+2026-10-27T05:47:01.5040593Z apps/stage build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+2026-10-27T05:47:01.5041965Z apps/stage build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+2026-10-27T05:47:01.5042728Z apps/stage build: 
+2026-10-27T05:47:01.5045656Z apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T05:47:02.0335309Z packages/voice build: Done
+2026-10-27T05:47:02.0341045Z apps/desktop build$ electron-vite build
+2026-10-27T05:47:02.7649734Z apps/desktop build: vite v7.3.7 building ssr environment for production...
+2026-10-27T05:47:02.7862000Z apps/stage build: ✓ 186 modules transformed.
+2026-10-27T05:47:02.8324376Z apps/desktop build: transforming...
+2026-10-27T05:47:02.9311222Z apps/stage build: rendering chunks...
+2026-10-27T05:47:03.2004570Z apps/desktop build: ✓ 59 modules transformed.
+2026-10-27T05:47:03.2503308Z apps/desktop build: rendering chunks...
+2026-10-27T05:47:03.2717521Z apps/desktop build: out/main/voice.js                         16.26 kB
+2026-10-27T05:47:03.2718498Z apps/desktop build: out/main/index.js                         83.30 kB
+2026-10-27T05:47:03.2719495Z apps/desktop build: out/main/chunks/proactivity-BtESKN3l.js  177.63 kB
+2026-10-27T05:47:03.2720281Z apps/desktop build: ✓ built in 485ms
+2026-10-27T05:47:03.2776395Z apps/desktop build: vite v7.3.7 building ssr environment for production...
+2026-10-27T05:47:03.2827559Z apps/desktop build: transforming...
+2026-10-27T05:47:03.3389229Z apps/stage build: computing gzip size...
+2026-10-27T05:47:03.3652491Z apps/stage build: dist/index.html                       0.76 kB │ gzip:   0.42 kB
+2026-10-27T05:47:03.3653138Z apps/stage build: dist/review.html                     12.80 kB │ gzip:   3.06 kB
+2026-10-27T05:47:03.3653759Z apps/stage build: dist/assets/stage-j6owz3Q9.css        0.50 kB │ gzip:   0.29 kB
+2026-10-27T05:47:03.3654396Z apps/stage build: dist/assets/review-CW6rIG6O.css       5.07 kB │ gzip:   1.60 kB
+2026-10-27T05:47:03.3655024Z apps/stage build: dist/assets/stage-D0SSSrz_.js        14.10 kB │ gzip:   4.72 kB
+2026-10-27T05:47:03.3656339Z apps/stage build: dist/assets/review-CgW23HM8.js       23.18 kB │ gzip:   7.66 kB
+2026-10-27T05:47:03.3657417Z apps/stage build: dist/assets/applicator-CkjpNu1V.js  992.51 kB │ gzip: 242.62 kB
+2026-10-27T05:47:03.3658051Z apps/stage build: 
+2026-10-27T05:47:03.3658711Z apps/stage build: (!) Some chunks are larger than 500 kB after minification. Consider:
+2026-10-27T05:47:03.3659605Z apps/stage build: - Using dynamic import() to code-split the application
+2026-10-27T05:47:03.3660695Z apps/stage build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2026-10-27T05:47:03.3661742Z apps/stage build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2026-10-27T05:47:03.3662252Z apps/stage build: ✓ built in 2.75s
+2026-10-27T05:47:03.4121509Z apps/stage build: Done
+2026-10-27T05:47:03.5351136Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+2026-10-27T05:47:03.5351637Z apps/desktop build: 
+2026-10-27T05:47:03.5352670Z apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+2026-10-27T05:47:03.5353413Z apps/desktop build: 
+2026-10-27T05:47:03.5354546Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T05:47:03.5363962Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+2026-10-27T05:47:03.5364469Z apps/desktop build: 
+2026-10-27T05:47:03.5365089Z apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+2026-10-27T05:47:03.5365947Z apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+2026-10-27T05:47:03.5366835Z apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+2026-10-27T05:47:03.5367585Z apps/desktop build: 
+2026-10-27T05:47:03.5368705Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T05:47:03.8341489Z apps/desktop build: ✓ 116 modules transformed.
+2026-10-27T05:47:03.8662003Z apps/desktop build: rendering chunks...
+2026-10-27T05:47:03.9044967Z apps/desktop build: out/preload/panel.cjs    0.31 kB
+2026-10-27T05:47:03.9045443Z apps/desktop build: out/preload/stage.cjs  382.83 kB
+2026-10-27T05:47:03.9045848Z apps/desktop build: ✓ built in 627ms
+2026-10-27T05:47:03.9088603Z apps/desktop build: vite v7.3.7 building client environment for production...
+2026-10-27T05:47:03.9322569Z apps/desktop build: transforming...
+2026-10-27T05:47:04.2870423Z tools/asset-lint build: Done
+2026-10-27T05:47:04.7281598Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+2026-10-27T05:47:04.7282092Z apps/desktop build: 
+2026-10-27T05:47:04.7283073Z apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+2026-10-27T05:47:04.7283828Z apps/desktop build: 
+2026-10-27T05:47:04.7284902Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T05:47:04.7315613Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+2026-10-27T05:47:04.7316101Z apps/desktop build: 
+2026-10-27T05:47:04.7316718Z apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+2026-10-27T05:47:04.7317578Z apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+2026-10-27T05:47:04.7318389Z apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+2026-10-27T05:47:04.7318861Z apps/desktop build: 
+2026-10-27T05:47:04.7319949Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T05:47:05.8637578Z apps/desktop build: ✓ 217 modules transformed.
+2026-10-27T05:47:06.0066957Z apps/desktop build: rendering chunks...
+2026-10-27T05:47:06.3990288Z apps/desktop build: desktop/out/renderer/panel/index.html                    0.72 kB
+2026-10-27T05:47:06.3991358Z apps/desktop build: desktop/out/renderer/stage/index.html                    0.77 kB
+2026-10-27T05:47:06.3992393Z apps/desktop build: desktop/out/renderer/stage/asr-mic-worklet.js            1.37 kB
+2026-10-27T05:47:06.3993487Z apps/desktop build: desktop/out/renderer/assets/stage-DABzvroO.css           0.66 kB
+2026-10-27T05:47:06.3994530Z apps/desktop build: desktop/out/renderer/assets/panel-Bf-HAcZX.css          11.36 kB
+2026-10-27T05:47:06.3995555Z apps/desktop build: desktop/out/renderer/assets/proactivity-DOh2FiJs.js    378.69 kB
+2026-10-27T05:47:06.3996584Z apps/desktop build: desktop/out/renderer/assets/panel-D0homD-X.js          698.39 kB
+2026-10-27T05:47:06.3997637Z apps/desktop build: desktop/out/renderer/assets/stage-Btt-zBMB.js        1,564.94 kB
+2026-10-27T05:47:06.3998448Z apps/desktop build: ✓ built in 2.49s
+2026-10-27T05:47:06.4904807Z apps/desktop build: Done
+2026-10-27T05:47:07.4405114Z 
+2026-10-27T05:47:07.4406223Z Running 5 tests using 1 worker
+2026-10-27T05:47:07.4406409Z 
+2026-10-27T05:47:07.8712116Z   -  1 apps\desktop\tests\click-through.spec.ts:10:1 › click-through verification (完成标准第 17 项): 50 transparent pass-throughs and 50 character captures
+2026-10-27T05:47:07.8897947Z Downloading Electron binary...
+2026-10-27T05:47:09.6096449Z [31;1m  pw:browser <launching> "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist\electron.exe" "-r" "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\playwright-core@1.64.0\node_modules\playwright-core\lib\server\electron\loader.js" "--inspect=0" "--remote-debugging-port=0" "D:\actions-runner\_work\nemu\nemu\apps\desktop" "--use-gl=angle" "--use-angle=swiftshader" "--enable-unsafe-swiftshader"  +0ms[0m
+2026-10-27T05:47:09.6174988Z [31;1m  pw:browser <launched> pid=26520 +9ms[0m
+2026-10-27T05:47:09.9771538Z [31;1m  pw:browser [pid=26520][out]  +359ms[0m
+2026-10-27T05:47:09.9901149Z [31;1m  pw:browser [pid=26520][err] Debugger listening on ws://127.0.0.1:63587/6d884efb-be6a-4b3d-a978-730f878c5e8d +13ms[0m
+2026-10-27T05:47:09.9905760Z [31;1m  pw:browser [pid=26520][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms[0m
+2026-10-27T05:47:09.9908970Z [31;1m  pw:browser <ws connecting> ws://127.0.0.1:63587/6d884efb-be6a-4b3d-a978-730f878c5e8d +1ms[0m
+2026-10-27T05:47:09.9967737Z [31;1m  pw:browser <ws connected> ws://127.0.0.1:63587/6d884efb-be6a-4b3d-a978-730f878c5e8d +6ms[0m
+2026-10-27T05:47:09.9970950Z [31;1m  pw:browser [pid=26520][err] Debugger attached. +0ms[0m
+2026-10-27T05:47:10.1231274Z [31;1m  pw:browser [pid=26520][err]  +125ms[0m
+2026-10-27T05:47:10.1237301Z [31;1m  pw:browser [pid=26520][err] DevTools listening on ws://127.0.0.1:63589/devtools/browser/ba07fa0e-de56-44e7-a8a9-7ae1d62d0bcf +1ms[0m
+2026-10-27T05:47:10.1239572Z [31;1m  pw:browser <ws connecting> ws://127.0.0.1:63589/devtools/browser/ba07fa0e-de56-44e7-a8a9-7ae1d62d0bcf +0ms[0m
+2026-10-27T05:47:10.1269616Z [31;1m  pw:browser <ws connected> ws://127.0.0.1:63589/devtools/browser/ba07fa0e-de56-44e7-a8a9-7ae1d62d0bcf +4ms[0m
+2026-10-27T05:47:12.0053374Z [31;1m  pw:browser <ws disconnecting> ws://127.0.0.1:63587/6d884efb-be6a-4b3d-a978-730f878c5e8d +2s[0m
+2026-10-27T05:47:12.0063128Z [31;1m  pw:browser [pid=26520][err] Debugger ending on ws://127.0.0.1:63587/6d884efb-be6a-4b3d-a978-730f878c5e8d +1ms[0m
+2026-10-27T05:47:12.0066872Z [31;1m  pw:browser [pid=26520][err] For help, see: https://nodejs.org/learn/getting-started/debugging +1ms[0m
+2026-10-27T05:47:12.0068382Z [31;1m  pw:browser <ws disconnected> ws://127.0.0.1:63587/6d884efb-be6a-4b3d-a978-730f878c5e8d code=1005 reason= +1ms[0m
+2026-10-27T05:47:12.0101019Z [31;1m  pw:browser [pid=26520][err] [Desktop] Voice utility exited { code: 0 } +2ms[0m
+2026-10-27T05:47:12.2822838Z [31;1m  pw:browser <ws disconnected> ws://127.0.0.1:63589/devtools/browser/ba07fa0e-de56-44e7-a8a9-7ae1d62d0bcf code=1006 reason= +273ms[0m
+2026-10-27T05:47:12.2919310Z [31;1m  pw:browser [pid=26520] <process did exit: exitCode=0, signal=null> +10ms[0m
+2026-10-27T05:47:12.2921190Z [31;1m  pw:browser [pid=26520] starting temporary directories cleanup +0ms[0m
+2026-10-27T05:47:12.2926767Z [31;1m  pw:browser [pid=26520] finished temporary directories cleanup +1ms[0m
+2026-10-27T05:47:14.3048467Z   ✓  2 apps\desktop\tests\shell.spec.ts:12:1 › stage window shell properties, channel routing, panel summoning and clean process termination (6.4s)
+2026-10-27T05:47:14.3322083Z [31;1m  pw:browser <launching> "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist\electron.exe" "-r" "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\playwright-core@1.64.0\node_modules\playwright-core\lib\server\electron\loader.js" "--inspect=0" "--remote-debugging-port=0" "D:\actions-runner\_work\nemu\nemu\apps\desktop" "--use-gl=angle" "--use-angle=swiftshader" "--enable-unsafe-swiftshader"  +2s[0m
+2026-10-27T05:47:14.3342822Z [31;1m  pw:browser <launched> pid=23376 +2ms[0m
+2026-10-27T05:47:14.3563982Z [31;1m  pw:browser [pid=23376][out]  +23ms[0m
+2026-10-27T05:47:14.3705496Z [31;1m  pw:browser [pid=23376][err] Debugger listening on ws://127.0.0.1:63594/443ea94b-281e-488b-8ed0-6809fc2e2d94 +14ms[0m
+2026-10-27T05:47:14.3707814Z [31;1m  pw:browser [pid=23376][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms[0m
+2026-10-27T05:47:14.3708788Z [31;1m  pw:browser <ws connecting> ws://127.0.0.1:63594/443ea94b-281e-488b-8ed0-6809fc2e2d94 +0ms[0m
+2026-10-27T05:47:14.3719324Z [31;1m  pw:browser <ws connected> ws://127.0.0.1:63594/443ea94b-281e-488b-8ed0-6809fc2e2d94 +1ms[0m
+2026-10-27T05:47:14.3721319Z [31;1m  pw:browser [pid=23376][err] Debugger attached. +1ms[0m
+2026-10-27T05:47:14.5061773Z [31;1m  pw:browser [pid=23376][err]  +133ms[0m
+2026-10-27T05:47:14.5065203Z [31;1m  pw:browser [pid=23376][err] DevTools listening on ws://127.0.0.1:63596/devtools/browser/34164a8e-49f5-4bc6-80bb-dbc3fa2e420c +0ms[0m
+2026-10-27T05:47:14.5067522Z [31;1m  pw:browser <ws connecting> ws://127.0.0.1:63596/devtools/browser/34164a8e-49f5-4bc6-80bb-dbc3fa2e420c +0ms[0m
+2026-10-27T05:47:14.5110661Z [31;1m  pw:browser <ws connected> ws://127.0.0.1:63596/devtools/browser/34164a8e-49f5-4bc6-80bb-dbc3fa2e420c +5ms[0m
+2026-10-27T05:47:16.7362842Z [31;1m  pw:browser <ws disconnecting> ws://127.0.0.1:63594/443ea94b-281e-488b-8ed0-6809fc2e2d94 +2s[0m
+2026-10-27T05:47:16.7364051Z [31;1m  pw:browser <ws disconnected> ws://127.0.0.1:63594/443ea94b-281e-488b-8ed0-6809fc2e2d94 code=1005 reason= +1ms[0m
+2026-10-27T05:47:16.7366051Z [31;1m  pw:browser [pid=23376][err] Debugger ending on ws://127.0.0.1:63594/443ea94b-281e-488b-8ed0-6809fc2e2d94 +0ms[0m
+2026-10-27T05:47:16.7370047Z [31;1m  pw:browser [pid=23376][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms[0m
+2026-10-27T05:47:16.7383218Z [31;1m  pw:browser [pid=23376][err] [Desktop] Voice utility exited { code: 0 } +2ms[0m
+2026-10-27T05:47:16.9783779Z [31;1m  pw:browser <ws disconnected> ws://127.0.0.1:63596/devtools/browser/34164a8e-49f5-4bc6-80bb-dbc3fa2e420c code=1006 reason= +232ms[0m
+2026-10-27T05:47:16.9791602Z [31;1m  pw:browser [pid=23376] <process did exit: exitCode=0, signal=null> +9ms[0m
+2026-10-27T05:47:16.9793129Z [31;1m  pw:browser [pid=23376] starting temporary directories cleanup +0ms[0m
+2026-10-27T05:47:16.9800962Z [31;1m  pw:browser [pid=23376] finished temporary directories cleanup +1ms[0m
+2026-10-27T05:47:16.9921204Z   ✓  3 apps\desktop\tests\smoke.spec.ts:9:1 › two visible isolated windows; transparent stage; no core storage (2.7s)
+2026-10-27T05:47:17.1099230Z   -  4 apps\desktop\tests\voice-idle.spec.ts:8:1 › P4-01 60-second utility CPU with live silent PCM
+2026-10-27T05:47:17.1273181Z [31;1m  pw:browser <launching> "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist\electron.exe" "-r" "D:\actions-runner\_work\nemu\nemu\node_modules\.pnpm\playwright-core@1.64.0\node_modules\playwright-core\lib\server\electron\loader.js" "--inspect=0" "--remote-debugging-port=0" "D:\actions-runner\_work\nemu\nemu\apps\desktop" "--use-fake-device-for-media-stream" "--use-gl=angle" "--use-angle=swiftshader" "--enable-unsafe-swiftshader"  +146ms[0m
+2026-10-27T05:47:17.1350958Z [31;1m  pw:browser <launched> pid=34684 +8ms[0m
+2026-10-27T05:47:17.1651270Z [31;1m  pw:browser [pid=34684][out]  +30ms[0m
+2026-10-27T05:47:17.1795513Z [31;1m  pw:browser [pid=34684][err] Debugger listening on ws://127.0.0.1:63601/e42e6988-f63d-4386-8fd8-cc78e553e179 +15ms[0m
+2026-10-27T05:47:17.1797711Z [31;1m  pw:browser [pid=34684][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms[0m
+2026-10-27T05:47:17.1799687Z [31;1m  pw:browser <ws connecting> ws://127.0.0.1:63601/e42e6988-f63d-4386-8fd8-cc78e553e179 +0ms[0m
+2026-10-27T05:47:17.1806897Z [31;1m  pw:browser <ws connected> ws://127.0.0.1:63601/e42e6988-f63d-4386-8fd8-cc78e553e179 +1ms[0m
+2026-10-27T05:47:17.1808096Z [31;1m  pw:browser [pid=34684][err] Debugger attached. +0ms[0m
+2026-10-27T05:47:17.3381226Z [31;1m  pw:browser [pid=34684][err]  +157ms[0m
+2026-10-27T05:47:17.3383070Z [31;1m  pw:browser [pid=34684][err] DevTools listening on ws://127.0.0.1:63604/devtools/browser/851dd67b-9a0b-4c55-af68-4795e21a9ce0 +0ms[0m
+2026-10-27T05:47:17.3385999Z [31;1m  pw:browser <ws connecting> ws://127.0.0.1:63604/devtools/browser/851dd67b-9a0b-4c55-af68-4795e21a9ce0 +0ms[0m
+2026-10-27T05:47:17.3427331Z [31;1m  pw:browser <ws connected> ws://127.0.0.1:63604/devtools/browser/851dd67b-9a0b-4c55-af68-4795e21a9ce0 +5ms[0m
+2026-10-27T05:47:20.7144128Z [31;1m  pw:browser <ws disconnecting> ws://127.0.0.1:63601/e42e6988-f63d-4386-8fd8-cc78e553e179 +3s[0m
+2026-10-27T05:47:20.7145512Z [31;1m  pw:browser <ws disconnected> ws://127.0.0.1:63601/e42e6988-f63d-4386-8fd8-cc78e553e179 code=1005 reason= +1ms[0m
+2026-10-27T05:47:20.7147564Z [31;1m  pw:browser [pid=34684][err] Debugger ending on ws://127.0.0.1:63601/e42e6988-f63d-4386-8fd8-cc78e553e179 +0ms[0m
+2026-10-27T05:47:20.7150817Z [31;1m  pw:browser [pid=34684][err] For help, see: https://nodejs.org/learn/getting-started/debugging +0ms[0m
+2026-10-27T05:47:20.7272399Z [31;1m  pw:browser [pid=34684][err] [Desktop] Voice utility exited { code: 0 } +12ms[0m
+2026-10-27T05:47:20.7834090Z [31;1m  pw:browser <ws disconnected> ws://127.0.0.1:63604/devtools/browser/851dd67b-9a0b-4c55-af68-4795e21a9ce0 code=1006 reason= +57ms[0m
+2026-10-27T05:47:20.7933578Z [31;1m  pw:browser [pid=34684] <process did exit: exitCode=0, signal=null> +10ms[0m
+2026-10-27T05:47:20.7936194Z [31;1m  pw:browser [pid=34684] starting temporary directories cleanup +0ms[0m
+2026-10-27T05:47:20.7938968Z [31;1m  pw:browser [pid=34684] finished temporary directories cleanup +0ms[0m
+2026-10-27T05:47:20.8039552Z   ✓  5 apps\desktop\tests\voice.spec.ts:10:1 › P4-01 utility ports, real AudioWorklet capture and disable (3.7s)
+2026-10-27T05:47:20.8238391Z 
+2026-10-27T05:47:20.8240967Z   2 skipped
+2026-10-27T05:47:20.8241409Z   3 passed (13.8s)
+2026-10-27T05:47:21.1351742Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual
+2026-10-27T05:47:21.1352216Z [36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual[0m
+2026-10-27T05:47:21.1395479Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:47:21.1395830Z env:
+2026-10-27T05:47:21.1395998Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:47:21.1396199Z   UV_LINK_MODE: copy
+2026-10-27T05:47:21.1396487Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:47:21.1396821Z ##[endgroup]
+2026-10-27T05:47:22.3777257Z [31;1m$ node apps/stage/tests/visual/runner.mjs[0m
+2026-10-27T05:47:25.3981474Z [PASSED] deterministic-1_bg-white_framing-fullBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:26.8614995Z [PASSED] deterministic-1_bg-white_framing-fullBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:28.2837150Z [PASSED] deterministic-1_bg-white_framing-fullBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:29.7700553Z [PASSED] deterministic-1_bg-white_framing-upperBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:31.2728552Z [PASSED] deterministic-1_bg-white_framing-upperBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:32.7556482Z [PASSED] deterministic-1_bg-white_framing-upperBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:34.2073088Z [PASSED] deterministic-1_bg-black_framing-fullBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:35.6533361Z [PASSED] deterministic-1_bg-black_framing-fullBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:37.0677262Z [PASSED] deterministic-1_bg-black_framing-fullBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:38.5394544Z [PASSED] deterministic-1_bg-black_framing-upperBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:40.0212007Z [PASSED] deterministic-1_bg-black_framing-upperBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:41.5199500Z [PASSED] deterministic-1_bg-black_framing-upperBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:42.9587745Z [PASSED] deterministic-1_bg-gradient_framing-fullBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:44.4414815Z [PASSED] deterministic-1_bg-gradient_framing-fullBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:45.8926729Z [PASSED] deterministic-1_bg-gradient_framing-fullBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:47.3963744Z [PASSED] deterministic-1_bg-gradient_framing-upperBody_expr-neutral.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:48.8805621Z [PASSED] deterministic-1_bg-gradient_framing-upperBody_expr-happy.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:50.4298152Z [PASSED] deterministic-1_bg-gradient_framing-upperBody_expr-surprised.png: 0 diff pixels (0.0000% <= 0.1%)
+2026-10-27T05:47:50.4325016Z All 18 visual regression cases completed successfully!
+2026-10-27T05:47:50.8594828Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Verify
+2026-10-27T05:47:50.8595456Z [36;1m./tools/scaffold/windows-evidence.ps1 -Mode Verify[0m
+2026-10-27T05:47:50.8644976Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:47:50.8645353Z env:
+2026-10-27T05:47:50.8645512Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:47:50.8645713Z   UV_LINK_MODE: copy
+2026-10-27T05:47:50.8646007Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:47:50.8646350Z ##[endgroup]
+2026-10-27T05:47:51.5664905Z Verified 28 current-attempt evidence files
+2026-10-27T05:47:51.6398222Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-27T05:47:51.6398638Z with:
+2026-10-27T05:47:51.6398812Z   name: windows-P0-01-evidence-40456116456-1
+2026-10-27T05:47:51.6399137Z   path: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows/
+2026-10-27T05:47:51.6399487Z   if-no-files-found: error
+2026-10-27T05:47:51.6399672Z   compression-level: 6
+2026-10-27T05:47:51.6399837Z   overwrite: false
+2026-10-27T05:47:51.6400005Z   include-hidden-files: false
+2026-10-27T05:47:51.6400184Z env:
+2026-10-27T05:47:51.6400344Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:47:51.6400531Z   UV_LINK_MODE: copy
+2026-10-27T05:47:51.6400814Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:47:51.6401139Z ##[endgroup]
+2026-10-27T05:47:52.1285909Z (node:13340) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T05:47:52.1286672Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T05:47:52.1407094Z With the provided path, there will be 28 files uploaded
+2026-10-27T05:47:52.1410829Z Artifact name is valid!
+2026-10-27T05:47:52.1412775Z Root directory input is valid!
+2026-10-27T05:51:05.2465015Z Attempt 1 of 5 failed with error: Request timeout: /twirp/github.actions.results.api.v1.ArtifactService/CreateArtifact. Retrying request in 3000 ms...
+2026-10-27T05:51:09.1803267Z Beginning upload of artifact content to blob storage
+2026-10-27T05:51:09.2413494Z (node:13340) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T05:51:11.8139994Z Uploaded bytes 92654
+2026-10-27T05:51:12.1781398Z Finished uploading artifact content to blob storage!
+2026-10-27T05:51:12.1782134Z SHA256 digest of uploaded artifact zip is ce56c759e75a22c665551dce65fa0aaf8eb4bf3bda18117ffc22efe5be686ac6
+2026-10-27T05:51:12.1783101Z Finalizing artifact upload
+2026-10-27T05:51:12.9776268Z Artifact windows-P0-01-evidence-40456116456-1.zip successfully finalized. Artifact ID 12713431915
+2026-10-27T05:51:12.9777205Z Artifact windows-P0-01-evidence-40456116456-1 has been successfully uploaded! Final size is 92654 bytes. Artifact ID is 12713431915
+2026-10-27T05:51:12.9786655Z Artifact download URL: https://github.com/nanake-lab/nemu/actions/runs/40456116456/artifacts/12713431915
+2026-10-27T05:51:13.0001019Z ##[group]Run $evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+2026-10-27T05:51:13.0001793Z [36;1m$evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"[0m
+2026-10-27T05:51:13.0002269Z [36;1mNew-Item -ItemType Directory -Path $evidence -Force | Out-Null[0m
+2026-10-27T05:51:13.0002629Z [36;1m"NEMU_W02_EVIDENCE=$evidence" >> $env:GITHUB_ENV[0m
+2026-10-27T05:51:13.0002984Z [36;1mrustup show 2>&1 | Tee-Object (Join-Path $evidence 'toolchain.log')[0m
+2026-10-27T05:51:13.0003342Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-27T05:51:13.0003836Z [36;1mcargo clippy -p core-store --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')[0m
+2026-10-27T05:51:13.0004345Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-27T05:51:13.0004855Z [36;1mcargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')[0m
+2026-10-27T05:51:13.0005311Z [36;1mexit $LASTEXITCODE[0m
+2026-10-27T05:51:13.0048390Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-27T05:51:13.0048741Z env:
+2026-10-27T05:51:13.0048895Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T05:51:13.0049093Z   UV_LINK_MODE: copy
+2026-10-27T05:51:13.0049382Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T05:51:13.0049716Z ##[endgroup]
+2026-10-27T05:51:13.5863297Z Default host: x86_64-pc-windows-msvc
+2026-10-27T05:51:13.5864746Z rustup home:  C:\Users\nanake\.rustup
+2026-10-27T05:51:13.5865397Z 
+2026-10-27T05:51:13.6044356Z installed toolchains
+2026-10-27T05:51:13.6044632Z --------------------
+2026-10-27T05:51:13.6139447Z stable-x86_64-pc-windows-msvc (default)
+2026-10-27T05:51:13.6140600Z 1.99.0-x86_64-pc-windows-msvc (active)
+2026-10-27T05:51:13.6141340Z 
+2026-10-27T05:51:13.6142341Z active toolchain
+2026-10-27T05:51:13.6143183Z ----------------
+2026-10-27T05:51:13.6144121Z name: 1.99.0-x86_64-pc-windows-msvc
+2026-10-27T05:51:13.6145300Z active because: overridden by 'D:\actions-runner\_work\nemu\nemu\core\rust-toolchain.toml'
+2026-10-27T05:51:13.6146358Z installed targets:
+2026-10-27T05:51:13.6214908Z   x86_64-pc-windows-msvc
+2026-10-27T05:51:14.3769747Z [31;1m   Compiling proc-macro2 v1.0.107[0m
+2026-10-27T05:51:14.3789426Z [31;1m   Compiling quote v1.0.47[0m
+2026-10-27T05:51:14.3795715Z [31;1m   Compiling unicode-ident v1.0.27[0m
+2026-10-27T05:51:14.3800752Z [31;1m    Checking typenum v1.20.1[0m
+2026-10-27T05:51:14.3806539Z [31;1m   Compiling serde_core v1.0.229[0m
+2026-10-27T05:51:14.3812479Z [31;1m   Compiling shlex v2.0.1[0m
+2026-10-27T05:51:14.3819107Z [31;1m   Compiling find-msvc-tools v0.1.15[0m
+2026-10-27T05:51:14.3829107Z [31;1m   Compiling zmij v1.0.23[0m
+2026-10-27T05:51:14.3835759Z [31;1m   Compiling vcpkg v0.2.15[0m
+2026-10-27T05:51:14.3841615Z [31;1m   Compiling pkg-config v0.3.34[0m
+2026-10-27T05:51:14.3848570Z [31;1m    Checking cfg-if v1.0.5[0m
+2026-10-27T05:51:14.3853953Z [31;1m    Checking const-oid v0.10.2[0m
+2026-10-27T05:51:14.3862571Z [31;1m   Compiling serde v1.0.229[0m
+2026-10-27T05:51:14.3869217Z [31;1m   Compiling serde_json v1.0.154[0m
+2026-10-27T05:51:14.3876817Z [31;1m    Checking once_cell v1.21.4[0m
+2026-10-27T05:51:14.3886063Z [31;1m   Compiling getrandom v0.4.3[0m
+2026-10-27T05:51:14.4801798Z [31;1m    Checking cpufeatures v0.3.1[0m
+2026-10-27T05:51:14.5508649Z [31;1m    Checking itoa v1.0.18[0m
+2026-10-27T05:51:14.6052083Z [31;1m    Checking memchr v2.8.3[0m
+2026-10-27T05:51:14.6252401Z [31;1m    Checking windows-link v0.2.1[0m
+2026-10-27T05:51:14.6323611Z [31;1m    Checking tracing-core v0.1.36[0m
+2026-10-27T05:51:14.7313119Z [31;1m    Checking windows-sys v0.61.2[0m
+2026-10-27T05:51:14.7438602Z [31;1m    Checking pin-project-lite v0.2.17[0m
+2026-10-27T05:51:14.7532361Z [31;1m    Checking fallible-streaming-iterator v0.1.9[0m
+2026-10-27T05:51:14.8158331Z [31;1m    Checking fallible-iterator v0.3.0[0m
+2026-10-27T05:51:14.8654723Z [31;1m    Checking bitflags v2.13.2[0m
+2026-10-27T05:51:15.0159960Z [31;1m   Compiling cc v1.9.0[0m
+2026-10-27T05:51:15.0418772Z [31;1m    Checking fastrand v2.5.0[0m
+2026-10-27T05:51:15.1400749Z [31;1m    Checking smallvec v1.16.3[0m
+2026-10-27T05:51:15.5216022Z [31;1m    Checking hybrid-array v0.4.15[0m
+2026-10-27T05:51:15.8439531Z [31;1m    Checking tempfile v3.27.0[0m
+2026-10-27T05:51:16.2140121Z [31;1m   Compiling libsqlite3-sys v0.38.2[0m
+2026-10-27T05:51:16.2376759Z [31;1m   Compiling syn v3.0.9[0m
+2026-10-27T05:51:16.2382335Z [31;1m   Compiling syn v2.0.119[0m
+2026-10-27T05:51:16.2768962Z [31;1m    Checking crypto-common v0.2.2[0m
+2026-10-27T05:51:16.2773295Z [31;1m    Checking block-buffer v0.12.1[0m
+2026-10-27T05:51:16.8510292Z [31;1m    Checking digest v0.11.3[0m
+2026-10-27T05:51:16.9521493Z [31;1m    Checking sha2 v0.11.1[0m
+2026-10-27T05:51:17.8447369Z [31;1m   Compiling serde_derive v1.0.229[0m
+2026-10-27T05:51:18.8453993Z [31;1m    Checking rusqlite v0.40.2[0m
+2026-10-27T05:51:19.1123306Z [31;1m   Compiling tracing-attributes v0.1.31[0m
+2026-10-27T05:51:19.8126245Z [31;1m    Checking tracing v0.1.44[0m
+2026-10-27T05:51:19.9644807Z [31;1m    Checking core-types v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-types)[0m
+2026-10-27T05:51:23.7049278Z [31;1m    Checking core-store v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-store)[0m
+2026-10-27T05:51:24.2770044Z [31;1m    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.30s[0m
+2026-10-27T05:51:24.5104995Z [31;1m   Compiling typenum v1.20.1[0m
+2026-10-27T05:51:24.5107549Z [31;1m   Compiling cfg-if v1.0.5[0m
+2026-10-27T05:51:24.5109772Z [31;1m   Compiling const-oid v0.10.2[0m
+2026-10-27T05:51:24.5112397Z [31;1m   Compiling once_cell v1.21.4[0m
+2026-10-27T05:51:24.5117565Z [31;1m   Compiling memchr v2.8.3[0m
+2026-10-27T05:51:24.5120760Z [31;1m   Compiling itoa v1.0.18[0m
+2026-10-27T05:51:24.5123652Z [31;1m   Compiling cpufeatures v0.3.1[0m
+2026-10-27T05:51:24.5126204Z [31;1m   Compiling windows-link v0.2.1[0m
+2026-10-27T05:51:24.5128348Z [31;1m   Compiling serde_core v1.0.229[0m
+2026-10-27T05:51:24.5132938Z [31;1m   Compiling zmij v1.0.23[0m
+2026-10-27T05:51:24.5135431Z [31;1m   Compiling pin-project-lite v0.2.17[0m
+2026-10-27T05:51:24.5138350Z [31;1m   Compiling smallvec v1.16.3[0m
+2026-10-27T05:51:24.5141132Z [31;1m   Compiling fastrand v2.5.0[0m
+2026-10-27T05:51:24.5145280Z [31;1m   Compiling fallible-iterator v0.3.0[0m
+2026-10-27T05:51:24.5149003Z [31;1m   Compiling libsqlite3-sys v0.38.2[0m
+2026-10-27T05:51:24.5152408Z [31;1m   Compiling fallible-streaming-iterator v0.1.9[0m
+2026-10-27T05:51:24.6035449Z [31;1m   Compiling windows-sys v0.61.2[0m
+2026-10-27T05:51:24.6149254Z [31;1m   Compiling getrandom v0.4.3[0m
+2026-10-27T05:51:24.6365304Z [31;1m   Compiling bitflags v2.13.2[0m
+2026-10-27T05:51:24.6772286Z [31;1m   Compiling tracing-core v0.1.36[0m
+2026-10-27T05:51:24.9158143Z [31;1m   Compiling rusqlite v0.40.2[0m
+2026-10-27T05:51:25.0559100Z [31;1m   Compiling tracing v0.1.44[0m
+2026-10-27T05:51:25.4705796Z [31;1m   Compiling hybrid-array v0.4.15[0m
+2026-10-27T05:51:25.6353897Z [31;1m   Compiling tempfile v3.27.0[0m
+2026-10-27T05:51:25.8777325Z [31;1m   Compiling block-buffer v0.12.1[0m
+2026-10-27T05:51:25.8777959Z [31;1m   Compiling crypto-common v0.2.2[0m
+2026-10-27T05:51:26.3856552Z [31;1m   Compiling digest v0.11.3[0m
+2026-10-27T05:51:26.4728611Z [31;1m   Compiling sha2 v0.11.1[0m
+2026-10-27T05:51:26.4870044Z [31;1m   Compiling serde v1.0.229[0m
+2026-10-27T05:51:26.4873239Z [31;1m   Compiling serde_json v1.0.154[0m
+2026-10-27T05:51:27.1928771Z [31;1m   Compiling core-types v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-types)[0m
+2026-10-27T05:51:31.8430261Z [31;1m   Compiling core-store v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\core-store)[0m
+2026-10-27T05:51:37.0956535Z [31;1m    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.75s[0m
+2026-10-27T05:51:37.1045145Z [31;1m     Running unittests src\lib.rs (target\debug\deps\core_store-801b8b4a8c08a23a.exe)[0m
+2026-10-27T05:51:37.4570002Z 
+2026-10-27T05:51:37.4570510Z running 35 tests
+2026-10-27T05:51:41.8108531Z test tests::atomic::all_binding_fields_are_immutable_after_dispatch ... ok
+2026-10-27T05:51:45.1062551Z test tests::atomic::atomic_publication_and_append_only_history ... ok
+2026-10-27T05:51:59.6925922Z test tests::atomic::d101_d102_stale_and_mutated_bindings_rejected ... ok
+2026-10-27T05:52:07.0388779Z test tests::atomic::disk_full_rolls_back_ledger_and_all_state ... ok
+2026-10-27T05:52:12.9408250Z test tests::atomic::duplicate_and_conflict_only_advance_processed_frontier ... ok
+2026-10-27T05:52:25.8512821Z test tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge ... ok
+2026-10-27T05:52:27.1059644Z test tests::atomic::later_ingress_cannot_overtake_uncommitted_input ... ok
+2026-10-27T05:53:02.1664321Z test tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger ... ok
+2026-10-27T05:53:02.1931130Z test tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations ... running 1 test
+2026-10-27T05:53:02.1932665Z W02_INJECT InitRootCreated object=None plan=Nth(NthFault { point: InitRootCreated, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.2011486Z INIT InitRootCreated/1: exit=86; partial initialization refused
+2026-10-27T05:53:02.2242990Z running 1 test
+2026-10-27T05:53:02.2243780Z W02_INJECT InitRootSynced object=None plan=Nth(NthFault { point: InitRootSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.2323337Z INIT InitRootSynced/1: exit=86; partial initialization refused
+2026-10-27T05:53:02.2563235Z running 1 test
+2026-10-27T05:53:02.2564057Z W02_INJECT InitObjectsCreated object=None plan=Nth(NthFault { point: InitObjectsCreated, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.2644576Z INIT InitObjectsCreated/1: exit=86; partial initialization refused
+2026-10-27T05:53:02.2912128Z running 1 test
+2026-10-27T05:53:02.2912891Z W02_INJECT InitObjectsSynced object=None plan=Nth(NthFault { point: InitObjectsSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.2997291Z INIT InitObjectsSynced/1: exit=86; partial initialization refused
+2026-10-27T05:53:02.3439850Z running 1 test
+2026-10-27T05:53:02.3441820Z W02_INJECT InitSqlCommitted object=None plan=Nth(NthFault { point: InitSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.3838940Z INIT InitSqlCommitted/1: exit=86; partial initialization refused
+2026-10-27T05:53:02.4226026Z running 1 test
+2026-10-27T05:53:02.4226840Z W02_INJECT InitDbDirectorySynced object=None plan=Nth(NthFault { point: InitDbDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.4608102Z INIT InitDbDirectorySynced/1: exit=86; partial initialization refused
+2026-10-27T05:53:02.5022070Z running 1 test
+2026-10-27T05:53:02.5023211Z W02_INJECT ReceiptRootCreated object=None plan=Nth(NthFault { point: ReceiptRootCreated, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.5400223Z INIT ReceiptRootCreated/1: exit=86; partial initialization refused
+2026-10-27T05:53:02.5811404Z running 1 test
+2026-10-27T05:53:02.5812203Z W02_INJECT ReceiptKindCreated object=None plan=Nth(NthFault { point: ReceiptKindCreated, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.6193305Z INIT ReceiptKindCreated/1: exit=86; partial initialization refused
+2026-10-27T05:53:02.6606496Z running 1 test
+2026-10-27T05:53:02.6608945Z W02_INJECT ReceiptKindCreated object=None plan=Nth(NthFault { point: ReceiptKindCreated, occurrence: 2, object_type: None, seen: 2 })
+2026-10-27T05:53:02.7143492Z INIT ReceiptKindCreated/2: exit=86; verified empty store
+2026-10-27T05:53:02.7604954Z running 1 test
+2026-10-27T05:53:02.7606375Z W02_INJECT ReceiptKindSynced object=None plan=Nth(NthFault { point: ReceiptKindSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.8000179Z INIT ReceiptKindSynced/1: exit=86; partial initialization refused
+2026-10-27T05:53:02.8404996Z running 1 test
+2026-10-27T05:53:02.8405780Z W02_INJECT ReceiptKindSynced object=None plan=Nth(NthFault { point: ReceiptKindSynced, occurrence: 2, object_type: None, seen: 2 })
+2026-10-27T05:53:02.8991373Z INIT ReceiptKindSynced/2: exit=86; verified empty store
+2026-10-27T05:53:02.9435629Z running 1 test
+2026-10-27T05:53:02.9436401Z W02_INJECT ReceiptRootSynced object=None plan=Nth(NthFault { point: ReceiptRootSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:02.9953659Z INIT ReceiptRootSynced/1: exit=86; verified empty store
+2026-10-27T05:53:03.0365181Z running 1 test
+2026-10-27T05:53:03.0365962Z W02_INJECT ReceiptParentSynced object=None plan=Nth(NthFault { point: ReceiptParentSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:03.0897513Z INIT ReceiptParentSynced/1: exit=86; verified empty store
+2026-10-27T05:53:07.5623165Z running 1 test
+2026-10-27T05:53:07.5623837Z W02_INJECT GcDeleted object=None plan=Nth(NthFault { point: GcDeleted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:12.3405178Z X03 gc/GcDeleted/1: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:53:16.7922769Z running 1 test
+2026-10-27T05:53:16.7923441Z W02_INJECT GcDeleted object=None plan=Nth(NthFault { point: GcDeleted, occurrence: 2, object_type: None, seen: 2 })
+2026-10-27T05:53:21.5565366Z X03 gc/GcDeleted/2: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:53:26.0333600Z running 1 test
+2026-10-27T05:53:26.0334421Z W02_INJECT GcDirectorySyncBefore object=None plan=Nth(NthFault { point: GcDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:30.8013500Z X03 gc/GcDirectorySyncBefore/1: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:53:35.3425963Z running 1 test
+2026-10-27T05:53:35.3426697Z W02_INJECT GcDirectorySynced object=None plan=Nth(NthFault { point: GcDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:40.2003435Z X03 gc/GcDirectorySynced/1: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:53:40.2039154Z ok
+2026-10-27T05:53:52.1078627Z test tests::crash::x03_ingress_and_transaction_publication_boundaries ... running 1 test
+2026-10-27T05:53:52.1079501Z W02_INJECT GStaged object=None plan=Nth(NthFault { point: GStaged, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:53:57.5700947Z X03 commit/GStaged: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:54:03.0621794Z running 1 test
+2026-10-27T05:54:03.0622435Z W02_INJECT CStaged object=None plan=Nth(NthFault { point: CStaged, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:54:08.5204392Z X03 commit/CStaged: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:54:15.7544593Z running 1 test
+2026-10-27T05:54:15.7545622Z W02_INJECT LedgerWritten object=None plan=Nth(NthFault { point: LedgerWritten, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:54:21.2812433Z X03 commit/LedgerWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:54:28.7588735Z running 1 test
+2026-10-27T05:54:28.7589443Z W02_INJECT BeforePublish object=None plan=Nth(NthFault { point: BeforePublish, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:54:34.2718417Z X03 commit/BeforePublish: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:54:41.6546954Z running 1 test
+2026-10-27T05:54:41.6547674Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:54:51.8981119Z X03 commit/SqlCommitted: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:54:59.1891158Z running 1 test
+2026-10-27T05:54:59.1891877Z W02_INJECT AfterPublish object=None plan=Nth(NthFault { point: AfterPublish, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:55:09.3425476Z X03 commit/AfterPublish: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:55:12.8170903Z running 1 test
+2026-10-27T05:55:12.8171791Z W02_INJECT ObjectWritten object=Some("echo.event") plan=Nth(NthFault { point: ObjectWritten, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+2026-10-27T05:55:17.5796875Z X03 ingress/ObjectWritten: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:55:21.0092129Z running 1 test
+2026-10-27T05:55:21.0092947Z W02_INJECT FileSynced object=Some("echo.event") plan=Nth(NthFault { point: FileSynced, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+2026-10-27T05:55:25.7623155Z X03 ingress/FileSynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:55:29.1868084Z running 1 test
+2026-10-27T05:55:29.1868854Z W02_INJECT Renamed object=Some("echo.event") plan=Nth(NthFault { point: Renamed, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+2026-10-27T05:55:33.9441719Z X03 ingress/Renamed: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:55:37.3645034Z running 1 test
+2026-10-27T05:55:37.3645939Z W02_INJECT DirectorySynced object=Some("echo.event") plan=Nth(NthFault { point: DirectorySynced, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+2026-10-27T05:55:42.1144661Z X03 ingress/DirectorySynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:55:45.6125771Z running 1 test
+2026-10-27T05:55:45.6126541Z W02_INJECT IngressBeforeSql object=None plan=Nth(NthFault { point: IngressBeforeSql, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:55:50.4040564Z X03 ingress/IngressBeforeSql: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:55:53.9567452Z running 1 test
+2026-10-27T05:55:53.9568254Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:55:59.5880556Z X03 ingress/IngressSqlCommitted: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:56:03.1063165Z running 1 test
+2026-10-27T05:56:03.1064109Z W02_INJECT IngressAcknowledged object=None plan=Nth(NthFault { point: IngressAcknowledged, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:56:08.6372066Z X03 ingress/IngressAcknowledged: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:56:08.6410356Z ok
+2026-10-27T05:56:18.5732302Z test tests::crash::x03_receipt_publish_and_repair_can_crash_again ... running 1 test
+2026-10-27T05:56:18.5733196Z W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:56:24.0284852Z X03 ingress/repair=false/ReceiptWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:56:27.5587246Z running 1 test
+2026-10-27T05:56:27.5588058Z W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:56:33.0118974Z X03 ingress/repair=false/ReceiptFileSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:56:36.5448907Z running 1 test
+2026-10-27T05:56:36.5449656Z W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:56:42.0021507Z X03 ingress/repair=false/ReceiptFileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:56:45.5273452Z running 1 test
+2026-10-27T05:56:45.5274247Z W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:56:51.0869134Z X03 ingress/repair=false/ReceiptRenameBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:56:54.6159386Z running 1 test
+2026-10-27T05:56:54.6160112Z W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:57:00.0805278Z X03 ingress/repair=false/ReceiptRenamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:57:03.5952769Z running 1 test
+2026-10-27T05:57:03.5953581Z W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:57:09.0586695Z X03 ingress/repair=false/ReceiptTargetSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:57:12.6035652Z running 1 test
+2026-10-27T05:57:12.6036459Z W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:57:18.0963849Z X03 ingress/repair=false/ReceiptTargetSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:57:21.6257431Z running 1 test
+2026-10-27T05:57:21.6258287Z W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:57:27.0820808Z X03 ingress/repair=false/ReceiptDirectorySyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:57:30.6107284Z running 1 test
+2026-10-27T05:57:30.6108107Z W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:57:36.0615423Z X03 ingress/repair=false/ReceiptDirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:57:39.5624605Z running 1 test
+2026-10-27T05:57:39.5625391Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:57:40.7049169Z running 1 test
+2026-10-27T05:57:40.7049896Z W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:57:46.1444490Z X03 ingress/repair=true/ReceiptWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:57:49.6779050Z running 1 test
+2026-10-27T05:57:49.6780138Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:57:50.8270614Z running 1 test
+2026-10-27T05:57:50.8271405Z W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:57:56.2840792Z X03 ingress/repair=true/ReceiptFileSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:57:59.8191059Z running 1 test
+2026-10-27T05:57:59.8191855Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:00.9571890Z running 1 test
+2026-10-27T05:58:00.9572647Z W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:06.4004883Z X03 ingress/repair=true/ReceiptFileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:58:09.9139284Z running 1 test
+2026-10-27T05:58:09.9140685Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:11.0416418Z running 1 test
+2026-10-27T05:58:11.0417200Z W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:16.4762387Z X03 ingress/repair=true/ReceiptRenameBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:58:19.9906764Z running 1 test
+2026-10-27T05:58:19.9907540Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:21.1185098Z running 1 test
+2026-10-27T05:58:21.1185823Z W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:26.5666540Z X03 ingress/repair=true/ReceiptRenamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:58:30.0747847Z running 1 test
+2026-10-27T05:58:30.0748642Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:31.2182184Z running 1 test
+2026-10-27T05:58:31.2183018Z W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:36.6675758Z X03 ingress/repair=true/ReceiptTargetSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:58:40.1794791Z running 1 test
+2026-10-27T05:58:40.1795559Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:41.3080382Z running 1 test
+2026-10-27T05:58:41.3081145Z W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:46.7668989Z X03 ingress/repair=true/ReceiptTargetSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:58:50.3084825Z running 1 test
+2026-10-27T05:58:50.3085700Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:51.4729098Z running 1 test
+2026-10-27T05:58:51.4729963Z W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:58:56.9257416Z X03 ingress/repair=true/ReceiptDirectorySyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:59:00.4340111Z running 1 test
+2026-10-27T05:59:00.4340903Z W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:59:01.5857066Z running 1 test
+2026-10-27T05:59:01.5857887Z W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:59:07.0305000Z X03 ingress/repair=true/ReceiptDirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:59:14.2760881Z running 1 test
+2026-10-27T05:59:14.2761605Z W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:59:24.4292868Z X03 commit/repair=false/ReceiptWritten: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:59:31.7945635Z running 1 test
+2026-10-27T05:59:31.7946435Z W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:59:42.0679507Z X03 commit/repair=false/ReceiptFileSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T05:59:49.5748391Z running 1 test
+2026-10-27T05:59:49.5749921Z W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T05:59:59.9162597Z X03 commit/repair=false/ReceiptFileSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:00:07.3475242Z running 1 test
+2026-10-27T06:00:07.3476032Z W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:00:17.6669134Z X03 commit/repair=false/ReceiptRenameBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:00:25.0973467Z running 1 test
+2026-10-27T06:00:25.0974199Z W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:00:35.3990731Z X03 commit/repair=false/ReceiptRenamed: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:00:42.9048308Z running 1 test
+2026-10-27T06:00:42.9049149Z W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:00:53.2376987Z X03 commit/repair=false/ReceiptTargetSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:01:00.5309846Z running 1 test
+2026-10-27T06:01:00.5310637Z W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:01:10.8009921Z X03 commit/repair=false/ReceiptTargetSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:01:18.1573786Z running 1 test
+2026-10-27T06:01:18.1575023Z W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:01:28.4679533Z X03 commit/repair=false/ReceiptDirectorySyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:01:35.7251351Z running 1 test
+2026-10-27T06:01:35.7252163Z W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:01:45.8603948Z X03 commit/repair=false/ReceiptDirectorySynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:01:53.2531065Z running 1 test
+2026-10-27T06:01:53.2531754Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:01:55.3173765Z running 1 test
+2026-10-27T06:01:55.3174544Z W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:02:05.4518365Z X03 commit/repair=true/ReceiptWritten: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:02:12.7075075Z running 1 test
+2026-10-27T06:02:12.7076726Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:02:14.8141413Z running 1 test
+2026-10-27T06:02:14.8142859Z W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:02:24.9582706Z X03 commit/repair=true/ReceiptFileSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:02:32.2150280Z running 1 test
+2026-10-27T06:02:32.2150979Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:02:34.2752205Z running 1 test
+2026-10-27T06:02:34.2753594Z W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:02:44.4253486Z X03 commit/repair=true/ReceiptFileSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:02:51.7184846Z running 1 test
+2026-10-27T06:02:51.7185546Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:02:53.8322979Z running 1 test
+2026-10-27T06:02:53.8329492Z W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:03:03.9744371Z X03 commit/repair=true/ReceiptRenameBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:03:11.2535870Z running 1 test
+2026-10-27T06:03:11.2536573Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:03:13.3390774Z running 1 test
+2026-10-27T06:03:13.3391514Z W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:03:23.4819465Z X03 commit/repair=true/ReceiptRenamed: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:03:30.8600480Z running 1 test
+2026-10-27T06:03:30.8601179Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:03:32.9090873Z running 1 test
+2026-10-27T06:03:32.9091682Z W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:03:43.0355702Z X03 commit/repair=true/ReceiptTargetSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:03:50.3279835Z running 1 test
+2026-10-27T06:03:50.3280571Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:03:52.3913636Z running 1 test
+2026-10-27T06:03:52.3914440Z W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:04:02.5216648Z X03 commit/repair=true/ReceiptTargetSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:04:09.7698622Z running 1 test
+2026-10-27T06:04:09.7699327Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:04:11.8259047Z running 1 test
+2026-10-27T06:04:11.8259928Z W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:04:22.0062230Z X03 commit/repair=true/ReceiptDirectorySyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:04:29.3371792Z running 1 test
+2026-10-27T06:04:29.3372530Z W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:04:31.4286817Z running 1 test
+2026-10-27T06:04:31.4287625Z W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+2026-10-27T06:04:41.6280197Z X03 commit/repair=true/ReceiptDirectorySynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:04:41.6326119Z ok
+2026-10-27T06:04:46.8611869Z test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects ... running 1 test
+2026-10-27T06:04:46.8612943Z W02_INJECT ObjectWritten object=Some("echo.tendency-v3") plan=Nth(NthFault { point: ObjectWritten, occurrence: 2, object_type: Some("echo.tendency-v3"), seen: 2 })
+2026-10-27T06:04:52.4384957Z X03 r/echo.tendency-v3/2/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:04:57.6742766Z running 1 test
+2026-10-27T06:04:57.6744833Z W02_INJECT ObjectWritten object=Some("echo.r-snapshot-v3") plan=Nth(NthFault { point: ObjectWritten, occurrence: 1, object_type: Some("echo.r-snapshot-v3"), seen: 1 })
+2026-10-27T06:05:03.1850039Z X03 r/echo.r-snapshot-v3/1/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:05:10.4958983Z running 1 test
+2026-10-27T06:05:10.4959945Z W02_INJECT ObjectWritten object=Some("echo.transaction-v2") plan=Nth(NthFault { point: ObjectWritten, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+2026-10-27T06:05:15.9641486Z X03 manifest-second/echo.transaction-v2/2/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:05:21.1652358Z running 1 test
+2026-10-27T06:05:21.1653280Z W02_INJECT FileSynced object=Some("echo.tendency-v3") plan=Nth(NthFault { point: FileSynced, occurrence: 2, object_type: Some("echo.tendency-v3"), seen: 2 })
+2026-10-27T06:05:26.6253207Z X03 r/echo.tendency-v3/2/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:05:31.8485657Z running 1 test
+2026-10-27T06:05:31.8486537Z W02_INJECT FileSynced object=Some("echo.r-snapshot-v3") plan=Nth(NthFault { point: FileSynced, occurrence: 1, object_type: Some("echo.r-snapshot-v3"), seen: 1 })
+2026-10-27T06:05:37.3003850Z X03 r/echo.r-snapshot-v3/1/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:05:44.4763974Z running 1 test
+2026-10-27T06:05:44.4764851Z W02_INJECT FileSynced object=Some("echo.transaction-v2") plan=Nth(NthFault { point: FileSynced, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+2026-10-27T06:05:49.9907450Z X03 manifest-second/echo.transaction-v2/2/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:05:55.1994190Z running 1 test
+2026-10-27T06:05:55.1995077Z W02_INJECT Renamed object=Some("echo.tendency-v3") plan=Nth(NthFault { point: Renamed, occurrence: 2, object_type: Some("echo.tendency-v3"), seen: 2 })
+2026-10-27T06:06:00.6686429Z X03 r/echo.tendency-v3/2/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:06:05.8664864Z running 1 test
+2026-10-27T06:06:05.8665976Z W02_INJECT Renamed object=Some("echo.r-snapshot-v3") plan=Nth(NthFault { point: Renamed, occurrence: 1, object_type: Some("echo.r-snapshot-v3"), seen: 1 })
+2026-10-27T06:06:11.3242891Z X03 r/echo.r-snapshot-v3/1/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:06:18.5326955Z running 1 test
+2026-10-27T06:06:18.5328039Z W02_INJECT Renamed object=Some("echo.transaction-v2") plan=Nth(NthFault { point: Renamed, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+2026-10-27T06:06:24.0591054Z X03 manifest-second/echo.transaction-v2/2/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:06:29.2972713Z running 1 test
+2026-10-27T06:06:29.2973637Z W02_INJECT DirectorySynced object=Some("echo.tendency-v3") plan=Nth(NthFault { point: DirectorySynced, occurrence: 2, object_type: Some("echo.tendency-v3"), seen: 2 })
+2026-10-27T06:06:34.7764472Z X03 r/echo.tendency-v3/2/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:06:40.0646706Z running 1 test
+2026-10-27T06:06:40.0647683Z W02_INJECT DirectorySynced object=Some("echo.r-snapshot-v3") plan=Nth(NthFault { point: DirectorySynced, occurrence: 1, object_type: Some("echo.r-snapshot-v3"), seen: 1 })
+2026-10-27T06:06:45.6554438Z X03 r/echo.r-snapshot-v3/1/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:06:53.1067486Z running 1 test
+2026-10-27T06:06:53.1068720Z W02_INJECT DirectorySynced object=Some("echo.transaction-v2") plan=Nth(NthFault { point: DirectorySynced, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+2026-10-27T06:06:58.6390504Z X03 manifest-second/echo.transaction-v2/2/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:07:02.1746564Z running 1 test
+2026-10-27T06:07:02.1747517Z W02_INJECT ReuseFileSyncBefore object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseFileSyncBefore, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+2026-10-27T06:07:06.9860433Z X03 reuse/FastStateSnapshotV2/2/ReuseFileSyncBefore: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:07:10.5011614Z running 1 test
+2026-10-27T06:07:10.5012535Z W02_INJECT ReuseFileSynced object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseFileSynced, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+2026-10-27T06:07:15.2934669Z X03 reuse/FastStateSnapshotV2/2/ReuseFileSynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:07:18.7895586Z running 1 test
+2026-10-27T06:07:18.7896584Z W02_INJECT ReuseDirectorySyncBefore object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseDirectorySyncBefore, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+2026-10-27T06:07:23.6095091Z X03 reuse/FastStateSnapshotV2/2/ReuseDirectorySyncBefore: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:07:27.0953939Z running 1 test
+2026-10-27T06:07:27.0954905Z W02_INJECT ReuseDirectorySynced object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseDirectorySynced, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+2026-10-27T06:07:31.9171445Z X03 reuse/FastStateSnapshotV2/2/ReuseDirectorySynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+2026-10-27T06:07:31.9204978Z ok
+2026-10-27T06:07:31.9206214Z test tests::crash_harness::crash_worker ... ok
+2026-10-27T06:07:31.9330735Z test tests::crash_harness::stray_environment_or_missing_permit_never_touches_target ... ok
+2026-10-27T06:07:40.9920920Z test tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger ... ok
+2026-10-27T06:07:45.1313114Z test tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch ... ok
+2026-10-27T06:08:01.2254976Z test tests::isolation::i29_all_six_cross_lineage_opens_rejected ... ok
+2026-10-27T06:08:01.2679618Z test tests::isolation::malformed_headers_and_existing_directories_never_initialize ... ok
+2026-10-27T06:08:07.9000062Z test tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind ... ok
+2026-10-27T06:08:08.0844526Z test tests::objects::at01_canonical_identity_and_superseded_writes ... ok
+2026-10-27T06:08:10.0011857Z test tests::objects::at02_corrupt_or_missing_object_never_publishes ... ok
+2026-10-27T06:08:13.3828250Z test tests::objects::at03_pins_close_prepare_gc_publish_race ... ok
+2026-10-27T06:08:13.6847596Z test tests::objects::object_capacity_and_io_failures_never_acknowledge_d ... ok
+2026-10-27T06:08:22.5647097Z test tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete ... ok
+2026-10-27T06:08:22.5690246Z test tests::objects::publication_primitive_never_replaces_existing_target ... ok
+2026-10-27T06:08:25.3555295Z test tests::objects::published_closure_damage_refuses_recovery ... ok
+2026-10-27T06:08:26.2322928Z test tests::objects::r_index_reassembles_canonical_and_reuses_unchanged_tendencies ... ok
+2026-10-27T06:08:32.8672022Z test tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc ... ok
+2026-10-27T06:08:33.4307666Z test tests::objects::sys22_capacity_and_busy_wait_are_bounded ... ok
+2026-10-27T06:08:38.0589866Z test tests::reader::live_readers_open_during_ingress_without_false_rollback ... ok
+2026-10-27T06:09:02.3943178Z test tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends ... ok
+2026-10-27T06:09:03.7390917Z test tests::retention_versions::p534_old_messages_and_flat_r_cannot_enter_new_writes ... ok
+2026-10-27T06:09:14.3252873Z test tests::retention_versions::p534_v2_history_readable_writer_refused_without_migration ... ok
+2026-10-27T06:09:18.2086937Z test tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer ... P534_WAL sqlite=3.53.2 segmented=false db_before=4096 db_after=4096 wal_before=284312 wal_after=284312 db_unchanged=true wal_unchanged=true
+2026-10-27T06:09:23.5716768Z P534_WAL sqlite=3.53.2 segmented=true db_before=4096 db_after=4096 wal_before=284312 wal_after=284312 db_unchanged=true wal_unchanged=true
+2026-10-27T06:09:24.8220771Z ok
+2026-10-27T06:09:36.9135368Z test tests::retention_versions::p534_v3_q_v_survive_commit_reopen_gc_and_continued_writes ... ok
+2026-10-27T06:09:36.9135728Z 
+2026-10-27T06:09:36.9136151Z test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1079.46s
+2026-10-27T06:09:36.9136469Z 
+2026-10-27T06:09:36.9168592Z [31;1m   Doc-tests core_store[0m
+2026-10-27T06:09:37.1049648Z 
+2026-10-27T06:09:37.1050857Z running 2 tests
+2026-10-27T06:09:37.1896435Z [31;1merror: cannot construct `CommitCapability<Rehearsal>` with struct literal syntax due to private fields[0m
+2026-10-27T06:09:37.1898218Z [31;1m  --> crates\core-store\src\transaction.rs:28:14[0m
+2026-10-27T06:09:37.1905519Z [31;1m   |[0m
+2026-10-27T06:09:37.1907695Z [31;1m28 | let forged = CommitCapability::<Rehearsal> {};[0m
+2026-10-27T06:09:37.1908351Z [31;1m   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+2026-10-27T06:09:37.1909730Z [31;1m[0m
+2026-10-27T06:09:37.1911224Z [31;1merror: aborting due to 1 previous error[0m
+2026-10-27T06:09:37.1912137Z [31;1m[0m
+2026-10-27T06:09:37.1912981Z test crates\core-store\src\transaction.rs - transaction::CommitCapability (line 25) - compile fail ... ok
+2026-10-27T06:09:37.2995781Z [31;1merror[E0308]: mismatched types[0m
+2026-10-27T06:09:37.2997613Z [31;1m   --> crates\core-store\src\transaction.rs:50:17[0m
+2026-10-27T06:09:37.2998683Z [31;1m    |[0m
+2026-10-27T06:09:37.3000106Z [31;1m 50 |     s.commit(c, t, status);[0m
+2026-10-27T06:09:37.3001930Z [31;1m    |       ------    ^ expected `PreparedTransaction<Life>`, found `PreparedTransaction<Rehearsal>`[0m
+2026-10-27T06:09:37.3003297Z [31;1m    |       |[0m
+2026-10-27T06:09:37.3004430Z [31;1m    |       arguments to this method are incorrect[0m
+2026-10-27T06:09:37.3005338Z [31;1m    |[0m
+2026-10-27T06:09:37.3007037Z [31;1m    = note: expected struct `PreparedTransaction<Life>`[0m
+2026-10-27T06:09:37.3008495Z [31;1m               found struct `PreparedTransaction<Rehearsal>`[0m
+2026-10-27T06:09:37.3009886Z [31;1mnote: method defined here[0m
+2026-10-27T06:09:37.3011048Z [31;1m   --> crates\core-store\src\transaction.rs:165:12[0m
+2026-10-27T06:09:37.3012247Z [31;1m    |[0m
+2026-10-27T06:09:37.3013898Z [31;1m165 |     pub fn commit([0m
+2026-10-27T06:09:37.3015397Z [31;1m    |            ^^^^^^[0m
+2026-10-27T06:09:37.3016503Z [31;1m[0m
+2026-10-27T06:09:37.3017952Z [31;1merror: aborting due to 1 previous error[0m
+2026-10-27T06:09:37.3018782Z [31;1m[0m
+2026-10-27T06:09:37.3020267Z [31;1mFor more information about this error, try `rustc --explain E0308`.[0m
+2026-10-27T06:09:37.3021144Z test crates\core-store\src\transaction.rs - transaction::PreparedTransaction (line 44) - compile fail ... ok
+2026-10-27T06:09:37.3021523Z 
+2026-10-27T06:09:37.3021913Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+2026-10-27T06:09:37.3022219Z 
+2026-10-27T06:09:37.3483225Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-27T06:09:37.3483595Z with:
+2026-10-27T06:09:37.3483755Z   name: windows-P5-02-40456116456-1
+2026-10-27T06:09:37.3484016Z   path: D:\actions-runner\_work\_temp\w02-40456116456-1/
+2026-10-27T06:09:37.3484279Z   if-no-files-found: error
+2026-10-27T06:09:37.3484469Z   compression-level: 6
+2026-10-27T06:09:37.3484641Z   overwrite: false
+2026-10-27T06:09:37.3484819Z   include-hidden-files: false
+2026-10-27T06:09:37.3485172Z env:
+2026-10-27T06:09:37.3485321Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T06:09:37.3485517Z   UV_LINK_MODE: copy
+2026-10-27T06:09:37.3485809Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\40456116456\1\windows
+2026-10-27T06:09:37.3486226Z   NEMU_W02_EVIDENCE: D:\actions-runner\_work\_temp\w02-40456116456-1
+2026-10-27T06:09:37.3486508Z ##[endgroup]
+2026-10-27T06:09:37.5039053Z (node:35332) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T06:09:37.5039804Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T06:09:37.5086872Z With the provided path, there will be 3 files uploaded
+2026-10-27T06:09:37.5090602Z Artifact name is valid!
+2026-10-27T06:09:37.5092806Z Root directory input is valid!
+2026-10-27T06:09:39.1684063Z Beginning upload of artifact content to blob storage
+2026-10-27T06:09:39.2035575Z (node:35332) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T06:14:39.1727650Z ##[error]Upload progress stalled.
+2026-10-27T06:18:23.4276567Z Uploaded bytes 4725
+2026-10-27T06:18:23.4577564Z Post job cleanup.
+2026-10-27T06:18:23.5735954Z [command]"C:\Program Files\Git\cmd\git.exe" version
+2026-10-27T06:18:23.5956196Z git version 2.54.0.windows.1
+2026-10-27T06:18:23.6000786Z Copying 'C:\Users\nanake\.gitconfig' to 'D:\actions-runner\_work\_temp\4074c0bf-022a-4ca9-bac8-8db46bde40d8\.gitconfig'
+2026-10-27T06:18:23.6016297Z Temporarily overriding HOME='D:\actions-runner\_work\_temp\4074c0bf-022a-4ca9-bac8-8db46bde40d8' before making global git config changes
+2026-10-27T06:18:23.6017242Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T06:18:23.6029975Z [command]"C:\Program Files\Git\cmd\git.exe" config --global --add safe.directory D:\actions-runner\_work\nemu\nemu
+2026-10-27T06:18:23.6299428Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T06:18:23.6563732Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-27T06:18:24.0505398Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T06:18:24.0778676Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-27T06:18:24.4708574Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T06:18:24.4982295Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-27T06:18:24.9182900Z Cleaning up orphan processes
+2026-10-27T06:18:25.5324398Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,8 +1,10 @@
 # P5-34 分配的实际保留率与倾向的证据量 — 报告
 
-## 当前状态
+## 结果
 
-分阶段实现与 2026-10-27 复审修复已完成，等待独立复审及用户合并（门控见 BLOCKED.md）。修复源码提交 af200a67fefecf55f33de71f7c3a00982a7cc9bf 的 Ubuntu 与 Windows 均实际通过，W02 为 35 项测试及 2 项文档测试通过；平面/分段 V2 的 DB 和非空 WAL 原字节均保留。[PR #95](https://github.com/nanake-lab/nemu/pull/95) 已按用户批准的 ready→W02 顺序转为可审查，保留 needs-user。本次已 merge origin/main 3f8f98e5（merge 3da8c1dc，含 #106/#107），没有 rebase 或强推。本报告补充只归档状态与原始证据；最终 PR head 及其实际 CI 结果固定在 PR 描述、最新复审回复和[当前检查](https://github.com/nanake-lab/nemu/pull/95/checks)。由用户合并，本卡不领取下一卡。
+部分完成（见 BLOCKED.md）：实现与 2026-10-27 复审修复已完成，最终 CI 门控因制品上传失败而未完成。被核验的报告提交 c6525e650a7d0be7a1278e9586ae5c3b696b2592 的 Ubuntu CI 实际成功，Windows W02 的 35 项测试及 2 项文档测试也通过，平面/分段 V2 的 DB/WAL 原字节均保留；随后 actions/upload-artifact 报 Upload progress stalled，Windows self-hosted 与汇总门禁因此失败。[PR #95](https://github.com/nanake-lab/nemu/pull/95) 已按用户要求恢复草稿，保留 needs-user，尚未发布本轮“请审查”。
+
+修复源码 af200a67 的上一轮 Ubuntu/Windows 均通过；c6525e65 仅补报告和证据，源码相同。本次追加仅记录最终 CI 失败，不再改源码或测试。已 merge origin/main 3f8f98e5（merge 3da8c1dc，含 #106/#107），没有 rebase 或强推。最新 PR head 与检查链接固定在 PR 描述；恢复制品上传后仍需核对该 head 的实际 CI，独立复审和用户合并，不领取下一卡。
 
 用户明确决定：新写入 V3；V2 历史只读、可解码；旧 V2 head 拒绝继续写。当前没有正式或排练存储，现存仅测试数据（用户提供，本卡未访问用户数据）。本次不做 V2→V3 数据迁移。将来需要时由 **P5-26** 按 v2.0 §2.2 用规律 G 从 H 整段重放得到新 q/V 快照，**不另开迁移卡**。这一决定不是用默认 q/V 转换旧状态的授权。
 
@@ -49,6 +51,16 @@
 
 Ubuntu 同样完成 35 项存储测试及 2 项文档测试、三语言契约与 Rust/Node/Python 检查。根 Vitest 为 579 通过、1 个 Windows 专属 ASR 缓存测试按既有平台条件跳过；supervisor 6 项实际通过。core-kernel 的 V2-93 旧诊断 1 ignored 保留，不把跳过/忽略当通过。CI 状态及每一步结果见 ci-af200a67.json；原始日志为 ubuntu-40443460541-raw.log、windows-40443545530.log，各自 JSON 含下载来源和 SHA-256。旧 CI 成功、超时/取消和本次修复前失败均保留。
 
+### 报告提交 c6525e65：W02 测试通过，制品上传失败
+
+[Ubuntu 40456116455](https://github.com/nanake-lab/nemu/actions/runs/40456116455) 为 success，core-store 35+2、supervisor 6 项通过；既有平台跳过/ignored 仍不计作通过。[Windows 40456116456](https://github.com/nanake-lab/nemu/actions/runs/40456116456) 的 W02 测试步骤为 success：35 项测试（1079.46 秒）和 2 项文档测试（0.20 秒）通过，0 失败、0 忽略。新增 WAL 回归对两种布局均确认 DB 4096→4096、WAL 284312→284312，完整字节相同。
+
+Windows job 122029713840 在 2026-10-27 06:09:37 UTC 完成测试，06:09:39 开始上传 3 份日志；06:14:39 报 `Upload progress stalled`。06:18:23 虽随后输出 `Uploaded bytes 4725`，上传步骤结论仍为 failure，汇总 job 122043122361 也为 failure。不能把这次运行写成 CI 全绿；这不是 W02 测试失败或 60 分钟作业超时，具体网络根因未定位。PR 已恢复草稿，未改 CI、runner、超时、测试或阈值，也未自动重跑整套测试。
+
+证据在 verification/review-20261027/final-ci-c6525e65/：toolchain.log、clippy.log、tests.log 是收尾前从 runner 临时目录复制的原字节；tests.log SHA-256 为 c33be51ce47e24c2b24aabd0fc76e5e9d8d86c4c55d366747e0efb4468281a4d。GitHub job 日志通过连接器读取后以 UTF-8/LF 保存为 *-decoded.log，保留其完整文本，归档哈希见 decoded-files.json。gh 原字节下载返回 EOF 的空文件及错误元数据也保留，不当作测试失败；ci-state.json 保存实际运行/步骤结论。制品列表的后续查询出现传输错误，未据此声称制品存在或不存在。
+
+后续选项和本卡交付门控见 BLOCKED.md B6；本轮不把源代码修复通过与最终 CI 门控混为一谈。
+
 ## 验收
 
 原交付证据在 verification/protected-20261026/，每项 log/json 对记录原始命令、退出码及 SHA-256。Rust/Cargo 1.99.0 与仓库锁定一致；Node 24.21.0、pnpm 12.11.2；系统 Python 3.12.10，uv 项目 Python 3.12.14。缓存、编译、临时数据在 D 盘；重负载串行。2026-10-26 曾使用 routine_reporter（GPT-6 Luna/max）仅执行指定轻量核验；2026-10-27 本轮修复未委派子代理。下表保留原交付验证与失败边界，复审修复证据见上一节。
@@ -74,7 +86,7 @@ Ubuntu 同样完成 35 项存储测试及 2 项文档测试、三语言契约与
 | Ubuntu CI，源码提交 7cb285a | 通过，含 34 项存储、两项 compile-fail、Node/Python/Rust 与契约；按路径不涉及的 .NET/status 步骤跳过，不计作本卡验收通过项 | ubuntu-40318254909.log、ci-7cb285a-ubuntu-success.json |
 | Ubuntu CI，提交 7ddefa8 | 通过，run 40321431794；与最新文档 merge 后的全部源码/工作流相同；仍不代替新 head 的检查 | ci-7ddefa8-final.json、main-refresh-317dde9.json |
 | 历史 head d047b417 的 Ubuntu / Windows CI | 两者实际通过；W02 34 项测试及 2 项文档测试通过，未覆盖本轮新增 WAL 场景 | [Ubuntu 40358933290](https://github.com/nanake-lab/nemu/actions/runs/40358933290)、[Windows 40358965023](https://github.com/nanake-lab/nemu/actions/runs/40358965023) |
-| 本轮修复源码 af200a67 的 CI | Ubuntu 与 Windows 实际通过，存储 35+2；报告补充提交的最终 head 门控仍单独核对 | verification/review-20261027/ci-af200a67.json；[PR #95 当前检查](https://github.com/nanake-lab/nemu/pull/95/checks) |
+| 本轮修复源码 af200a67 的 CI | Ubuntu 与 Windows 实际通过，存储 35+2；报告提交 c6525e65 的上传失败单独记录于上一节 | verification/review-20261027/ci-af200a67.json；[PR #95 当前检查](https://github.com/nanake-lab/nemu/pull/95/checks) |
 | 完整 G 重放、AC2-08/19/21、I23、SYS17 | not_run，不用存储组件通过替代 | 本报告；各编号目录的本轮结果 |
 
 合并 P5-25（86779b1）仅新增 core-kernel 动力学及其文档/报告。存储、core-types、契约、Cargo 清单/锁文件、packages、workers、任务卡/规则的 Git 对象逐项相同，证据见 main-refresh.json。合并后重跑全目标 Clippy、兼容门与 `cargo test --workspace --exclude core-store`：core-kernel 66 通过、1 个 main 已有的 V2-93 旧 Python 舍入诊断 ignored，core-types 31 通过。该 ignored 由 main 带入，本卡没有新增/修改忽略标记，不把它算作通过；证据为 attempt-01/workspace-without-storage.log。原 34 项存储本地完整结果保留；当前含新增回归的 35 项实际 CI 结果见上一节。
@@ -121,6 +133,7 @@ I18：q/V 在显式版本化 IDL 中，无隐藏持久状态。I23：本卡证�
 
 ## 待用户确认
 
+- [ ] （阻塞合并）最终 head 的 Windows CI 须完整成功；本轮 W02 测试通过但制品上传失败，不能替代整个工作流成功。
 - [ ] （阻塞合并）ADR 0021、V2-62/63 与具体 q/V 后继契约，包含上述 core-store 受保护路径，一起交叉审查并由用户合并。实现者不自行审查或合并。
 - [x] 分阶段范围已获用户明确批准；不再请求迁移授权或另开迁移卡。
 - [ ] （不阻塞本卡）后续维护者定位原 supervisor 退出检查波动；原失败不隐藏，测试不放宽。
@@ -131,4 +144,4 @@ P5-26 需要迁移时，从完整有效 H 运行 G 重建 q/V，并完成备份�
 
 ## 下一步
 
-实现与审查修复已完成，修复源码的 Ubuntu/Windows 原始成功证据已归档。报告补充提交后再次核对最终 PR head 的实际检查，通过后回复“请审查”；保留 needs-user，等待用户安排独立复审及合并，不领取下一张卡。归档证据固定到明确提交，最终 head 的检查与链接固定在 PR 描述和最新回复。
+代码修复和现有验收证据已完成；c6525e65 的 Ubuntu 与 W02 测试通过，制品上传失败导致最终 CI 门控未完成。已按用户要求恢复草稿并保留 needs-user。待 runner 到制品服务的连接恢复后，再按 ready→W02 顺序核对当前最终 head；全部 CI 成功后回复“请审查”，由用户安排独立复审及合并。不自行改 CI/系统设置，不领取下一张卡。失败归档提交仅更新 reports/P5-34/。
