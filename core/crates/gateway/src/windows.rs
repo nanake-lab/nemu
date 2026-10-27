@@ -291,9 +291,9 @@ pub(crate) fn create_pipe(
         tokio::net::windows::named_pipe::ServerOptions::new()
             .first_pipe_instance(first)
             .reject_remote_clients(true)
-            // One session and its replacement can overlap during rotation.
-            // Listener's mutable borrow still serializes session processing.
-            .max_instances(2)
+            // Bounded concurrent clients plus the waiting/rotating listener.
+            // Gateway caps client tasks at 14, leaving room for handle rotation.
+            .max_instances(16)
             .in_buffer_size(4096)
             .out_buffer_size(4096)
             .create_with_security_attributes_raw(

@@ -1,12 +1,27 @@
 #![deny(unsafe_code)]
-//! W18 boundary components. No second storage, wire DTOs, or growth operators.
-//! The complete service awaits the IDL/store interfaces listed in README.md.
+//! W18 authenticated Windows gateway over generated ingress contracts/core-store.
+//! Business authority and core transitions are supplied by a trusted CoreHandler.
 mod auth;
+#[cfg(windows)]
+mod authentication;
+#[cfg(windows)]
+mod connection;
+#[cfg(windows)]
+mod dispatch;
 pub mod framing;
+#[cfg(windows)]
+pub mod gateway;
+pub mod hooks;
 mod ingress;
 #[cfg(windows)]
+mod network;
+#[cfg(windows)]
 pub mod pipe;
+#[cfg(windows)]
+mod progress;
 pub mod terminal;
+#[cfg(windows)]
+mod uploads;
 mod validation;
 #[cfg(windows)]
 #[allow(unsafe_code)]
@@ -22,6 +37,7 @@ pub enum Error {
     Io(std::io::Error),
     Timeout,
     Store(core_store::Error),
+    Disconnected,
 }
 impl std::fmt::Debug for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -37,6 +53,7 @@ impl std::fmt::Display for Error {
             Self::Io(_) => "gateway I/O failed",
             Self::Timeout => "gateway deadline exceeded",
             Self::Store(_) => "gateway storage operation failed",
+            Self::Disconnected => "terminal disconnected",
         })
     }
 }

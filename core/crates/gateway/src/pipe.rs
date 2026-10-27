@@ -1,5 +1,4 @@
-//! Current-user, local-only pipe binding. No production bootstrap is exported:
-//! the IDL authentication/upload adapter is a prerequisite, not a guessed RPC.
+//! Current-user, local-only pipe binding for the generated ingress service.
 use crate::{
     Error, Result,
     framing::{FrameConfig, Framed},
@@ -37,7 +36,7 @@ impl Listener {
             config,
         })
     }
-    /// Raw stream for the future generated authentication adapter only. Calling
+    /// Raw stream for the generated authentication adapter. Calling
     /// this does not grant authority to ingest; validate_event requires a token
     /// capability and ingest_validated retains the core-store writer boundary.
     pub async fn accept(&mut self) -> Result<Framed<&mut NamedPipeServer>> {
@@ -45,6 +44,16 @@ impl Listener {
             .await
             .map_err(|_| Error::Timeout)??;
         Framed::new(&mut self.server, self.config)
+    }
+    /// Rotate before handing a connection to its I/O task. Name ownership and
+    /// the explicit SID ACL remain continuous across concurrent connections.
+    pub async fn accept_owned(&mut self) -> Result<Framed<NamedPipeServer>> {
+        tokio::time::timeout(self.config.deadline, self.server.connect())
+            .await
+            .map_err(|_| Error::Timeout)??;
+        let next = crate::windows::create_pipe(&self.name, self.config, false)?;
+        let connected = std::mem::replace(&mut self.server, next);
+        Framed::new(connected, self.config)
     }
     /// End an authenticated or failed session. Create the next ACL-protected
     /// instance before closing this one, so ownership of the pipe name never

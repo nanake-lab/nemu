@@ -25,10 +25,10 @@ fn with_refs<T: WireMessage>(reference: &ObjectRef) -> T {
     serde_json::from_value(value).unwrap()
 }
 
-pub(super) fn commit_next(
+pub(super) fn commit_result(
     store: &mut Store<Rehearsal>,
     cap: &CommitCapability<Rehearsal>,
-) -> Receipt {
+) -> CoreCommitResultV2 {
     let event = store.next_raw().unwrap().unwrap();
     assert!(
         store.settle_duplicate().unwrap().is_none(),
@@ -58,7 +58,7 @@ pub(super) fn commit_next(
             .read::<FastStateSnapshotV2>(&old.staged_x)
             .unwrap()
             .revision;
-        binding.r_revision = reader.read::<RSnapshotV2>(&old.staged_r).unwrap().revision;
+        binding.r_revision = reader.read::<RSnapshotV3>(&old.staged_r).unwrap().revision;
         binding.theta_revision = reader
             .read::<ThetaSnapshot>(&old.staged_theta)
             .unwrap()
@@ -80,7 +80,7 @@ pub(super) fn commit_next(
     let ticket = store.bind(binding.clone()).unwrap();
     let law: LawVersion = with_refs(leaf.reference());
     let law = store.prepare(&law, "1").unwrap();
-    let r = RSnapshotV2 {
+    let r = RSnapshotV3 {
         schema_version: 1,
         revision: format!("synthetic-r-{n}"),
         law_version: law.reference().clone(),
@@ -137,6 +137,14 @@ pub(super) fn commit_next(
         .unwrap();
     assert!(result.committed);
     assert_eq!(result.event_id, event.id);
+    result
+}
+pub(super) fn commit_next(
+    store: &mut Store<Rehearsal>,
+    cap: &CommitCapability<Rehearsal>,
+) -> Receipt {
+    let event = store.next_raw().unwrap().unwrap();
+    commit_result(store, cap);
     Receipt {
         schema_version: 1,
         stable_source_key: event.stable_source_key,

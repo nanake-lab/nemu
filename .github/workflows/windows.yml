@@ -8,6 +8,7 @@ name: Windows
 #   the Node toolchain files and this workflow. spikes/* are left to the Ubuntu build.
 # - storage: W02 NTFS checks of core-store and what it depends on (core-types, the contracts
 #   that generate core-types, the Cargo workspace files) and this workflow.
+# - gateway: W18 native auth/upload/dispatch/SYS01, its storage/contract dependencies.
 # Pure Rust crates that only need Linux (core-kernel law/dynamics and the like) do not start
 # this workflow. A manual run (`gh workflow run windows.yml --ref <branch>`) runs everything
 # by default. A change that adds a Windows check adds its group here and in the scope step.
@@ -170,7 +171,7 @@ jobs:
           $desktop = $full -or (Test-Group $desktopPatterns)
           $storage = $full -or (Test-Group $storagePatterns)
           $gateway = $full -or (Test-Group $gatewayPatterns)
-          "full=$full; base=$base; desktop=$desktop; storage=$storage"
+          "full=$full; base=$base; desktop=$desktop; storage=$storage; gateway=$gateway"
           "changed files: $($files.Count)"
           $files | ForEach-Object { "  $_" }
           "desktop=$($desktop.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
@@ -309,6 +310,7 @@ jobs:
           $evidence = Join-Path $env:TEMP "w18-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
           New-Item -ItemType Directory -Path $evidence -Force | Out-Null
           "NEMU_W18_EVIDENCE=$evidence" >> $env:GITHUB_ENV
+          $env:NEMU_W18_EVIDENCE_DIR = $evidence
           cargo clippy -p gateway --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cargo test -p gateway --locked -- --test-threads=1 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')

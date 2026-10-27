@@ -1,77 +1,76 @@
-# W18 gateway boundary components
+# W18 Windows gateway
 
-This crate is **partial**, not a runnable authenticated gateway daemon. See
-`tasks/requests/P5-03-gateway-interfaces.md` and `reports/P5-03/BLOCKED.md`.
+`gateway::Gateway::serve` is the authenticated, bounded named-pipe service. Its
+owner supplies the sole `core_store::Store`, trusted installation IDs/DPAPI tokens,
+deployment budgets, and a `hooks::CoreHandler`. The gateway creates no database,
+protocol types, business permission store, or growth operators.
 
-- `framing::Framed`: a bounded u32 LE length prefix and generated Protobuf body.
-  The caller supplies byte/item/depth and whole-frame time limits. Header and body
-  share one deadline. Timeout, caller cancellation, malformed input and partial
-  writes poison the session, preventing stream desynchronization on retry.
-- `TerminalToken`: generates a per-installation 256-bit Windows CSPRNG secret,
-  saves only current-user DPAPI ciphertext under a protected current-user DACL,
-  reloads without replacing corrupt/existing tokens, and compares candidates with
-  `subtle`. Secrets are zeroizing and have no Debug/Serialize implementation.
-  No raw authentication wire format is invented here. Installation configuration
-  owns the credential path; tests create credentials only in temporary directories.
-- `AuthenticatedSession`: a process-local source capability minted after token
-  verification. Device/session come from trusted installation configuration.
-  It is not a deserializable peer claim. Current T1 permission decisions are
-  supplied separately for each event, never cached in the authenticated session.
-- `validate_event`: validates nine CONTRACTS 4.2 generated payloads and their
-  canonical reference/digest bindings, ULID stable key, source identity, event kind,
-  provenance type/derivation, result action ID and T1 fields. The local enum is
-  never serialized. Strict generated parsing rejects unknown fields/enums,
-  duplicates, unknown versions and invalid numeric fields.
-- `ingest_validated`: prepares payload/provenance using **core-store**, verifies
-  their references, then uses its durable ingress and quotas. It emits only the
-  store's `RECEIVED_DURABLE`; this does not mean a core transaction committed.
-  Object closure/lineage/durability checks remain W02's responsibility.
-- P5-22 successors: generated `ReadoutV2` (both approved oneof branches),
-  `RunStateV2`, `QueryV2`/`QueryResultV2`, `ApprovalRequestV2`/`ApprovalDecisionV2`,
-  `Notice` and `GrowthControl` use the same bounded frame codec. Superseded types
-  are rejected on live read/write; core-types still decodes historical bytes.
-  `terminal::validate_query_result` checks correlation and growth/items isolation,
-  preserving full L entries and every status. `terminal::validate_approval`
-  checks exact payload/SHA256, request/decision/action binding, expiry and T3 trust
-  exclusion, returning an immutable one-use payload snapshot with a fresh time
-  check on consumption. This is not a P5-05 identity or execution credential.
-  The future trusted dispatch adapter must call these context checks; generic
-  frame decoding alone cannot establish query or approval correlation.
-- Windows `pipe::Listener`: binds `\\.\pipe\nemu-core-<current SID>`, protected
-  DACL with exactly the current SID, remote-client rejection, first-instance name
-  protection and at most two kernel instances during rotation. Session processing
-  is sequential through a mutable borrow. Disconnect creates the replacement with
-  the same explicit ACL before closing the old handle, keeping name ownership
-  continuous and preventing stale overlapped reads from crossing sessions.
-  EXPERIMENT is rejected before creating a handle. There is no production bootstrap.
+- The pipe is `\\.\pipe\nemu-core-<current SID>`, with a protected current-SID-only
+  DACL, remote rejection and first-instance protection. A successor with the same
+  explicit ACL is created before handing off each connected handle. Up to 14
+  concurrent clients share one serial Store actor; the 16-instance kernel ceiling
+  leaves space for rotation. EXPERIMENT is rejected before binding.
+- Pre-authentication framing uses static deployment byte/item/depth/deadline
+  limits. Only the generated `TerminalAuthenticate` is accepted first. DPAPI
+  protects the 256-bit per-installation token at rest; token buffers are zeroizing,
+  comparison uses `subtle`, and no credential is logged or persisted in core-store.
+  Every connection gets a fresh random session with server-owned identity,
+  capabilities and budget. A session ID cannot authenticate another connection.
+- Generated `TerminalRequest`/`TerminalResponse` and `ReceiptV2` implement all six
+  ingress kinds. The core-types pairing/session/request/response checks are used
+  at the boundary. Superseded messages remain historically decodable but are
+  rejected on live frames. No local enum is serialized.
+- Uploads reserve the full declared canonical object length before the first
+  chunk, enforce sequential offsets/stable declarations, verify CanonicalV1 and
+  the domain-separated digest, and call the existing typed Store preparation API
+  before COMPLETE. `build.rs` generates dispatch to existing IDL-generated Rust
+  types from the official schema, never wire types. Transient, superseded and
+  ingress-envelope objects cannot be uploaded. Completed objects retain quota and
+  Store pins until consumed, expired or disconnected; Store GC owns reclamation.
+- Events resolve the nine CONTRACTS 4.2 payload types and provenance, validate
+  their semantic/reference bindings, and obtain current T1/source/action
+  authority from `CoreHandler::authorize_event` for every event. Only
+  `Store::ingest_terminal` assigns D position/time and returns RECEIVED_DURABLE.
+  Gamma runs before each core transition. Only accepted, lineage-visible
+  committed transactions can produce CORE_COMMITTED; delayed/reordered results
+  retain their original request IDs. Publication is observed after each serial
+  core step and retained only in the bounded pending-request correlation map.
+- Query results get contextual correlation/content-isolation validation. Approval,
+  cancel and growth reach trusted handlers and get ACK only on handler success;
+  defaults deny. The approval handler must resolve the actual outstanding request
+  and execution bytes and use `terminal::validate_approval`/its one-use snapshot.
+  Authentication and a structurally valid decision do not confer execution or
+  growth-management authority. Runtime/action-gate integration belongs to its
+  owning cards; SYS01 uses a synthetic actual Store transaction handler.
+- Rejections use core-store's independent bounded durable enum audit. No client
+  text/token enters it. Typed Store quotas and bounded in-memory correlation return
+  safe capacity reasons before D reception. An exhausted audit stops intake;
+  audit/storage/witness errors terminate service without inventing success or a
+  safe rejection. A full output queue disconnects: the peer retries the same event
+  ID/stable key after an unknown outcome. There is no second receipt journal.
 
-Only `windows.rs` permits unsafe code, with ownership/lifetime notes at each Win32
-call. Named pipe and DPAPI behavior follow the [Tokio server API](https://docs.rs/tokio/1.54.1/tokio/net/windows/named_pipe/struct.ServerOptions.html),
-[Microsoft pipe security](https://learn.microsoft.com/en-us/windows/win32/ipc/named-pipe-security-and-access-rights)
-and [DPAPI](https://learn.microsoft.com/en-us/windows/win32/api/dpapi/nf-dpapi-cryptprotectdata).
-Same-account hostile code, an administrator taking ownership, or a compromised
-trusted caller is outside this current-user ACL/bearer boundary.
+Session/upload lifetimes, connection count, parser limits, upload reservations,
+pending request metadata and output queues all have explicit bounds. Session and
+upload expiry are checked on admission as well as by the timer. Same-account
+hostile code, administrator ownership changes and compromised trusted handlers
+are outside the current-SID/bearer boundary.
 
-Before calling `validate_event`, the trusted runtime must resolve provenance,
-source/correction/parent references, allocate the authoritative D position and
-ingest time, and bind action-result authority. Those peer claims are not certified
-by this component alone. The public store adapter does not perform those missing
-steps or implement the growth/runtime pipeline.
-
-Checks (Windows, D-drive temporary roots/caches):
+Run on Windows with D-drive caches and temporary roots:
 
 ```powershell
-& ./reports/P5-03/check.ps1
+& ./reports/P5-03/post-P5-35/check.ps1
 ```
 
-The user has supplied a successful real second-account denial result on Windows
-10 (Win32 error 5, exit 0); the original user message and evidence provenance are
-saved under `reports/P5-03/second-account/`. Full window transcripts were not
-attached. This evidence is separate from the automated same-account tests.
-The suite never opens user stores.
+Native tests cover DPAPI reload, authentication/replay, uploads/expiry/disconnect/
+GC, six-way dispatch, per-event revocation, durable rejection/audit failure,
+actual Store record/byte backpressure, concurrent pipe ACLs, and SYS01 with real
+Store commits. Fresh gateway child processes test SQL-before/SQL-after crashes
+and TerminateProcess after durable reception. All data is synthetic in freshly
+owned temporary directories; the child process's LOCALAPPDATA points only
+inside its parent-owned sandbox. No user store or system setting is accessed.
+These are process-death/recovery tests, not a physical power-cut measurement.
 
-Windows SYS01 structural tests connect real pipes to public core-store APIs:
-durable receive, delayed/interleaved commit receipts, retransmission/conflict with
-unchanged H/state/anchor, and uncommitted close/reopen. A test-only coordinator
-preloads synthetic payload/provenance and authenticates locally; it is not a wire
-authentication/upload protocol or a full runtime. Close/reopen is not power loss.
+The real Windows 10 second-account denial result is user-provided and retained
+verbatim under `reports/P5-03/second-account/`. Full terminal-window transcripts
+were not supplied. Current automated tests verify the actual DACL on concurrent
+and successor handles; they do not claim a new second-account run.

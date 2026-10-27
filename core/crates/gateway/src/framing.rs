@@ -5,6 +5,7 @@ use crate::{Error, Result};
 use core_types::{WireMessage, contract::Limits};
 use std::time::Duration;
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
+use zeroize::Zeroizing;
 
 #[derive(Clone, Copy)]
 pub struct FrameConfig {
@@ -29,7 +30,7 @@ pub struct Framed<S> {
     config: FrameConfig,
     failed: bool,
 }
-impl<S: AsyncRead + AsyncWrite + Unpin> Framed<S> {
+impl<S> Framed<S> {
     pub fn new(stream: S, config: FrameConfig) -> Result<Self> {
         config.validate()?;
         Ok(Self {
@@ -38,6 +39,12 @@ impl<S: AsyncRead + AsyncWrite + Unpin> Framed<S> {
             failed: false,
         })
     }
+    #[cfg(windows)]
+    pub(crate) fn into_inner(self) -> S {
+        self.stream
+    }
+}
+impl<S: AsyncRead + Unpin> Framed<S> {
     pub async fn read<T: WireMessage>(&mut self) -> Result<T> {
         if self.failed {
             return Err(Error::Rejected("connection is closed"));
@@ -50,12 +57,15 @@ impl<S: AsyncRead + AsyncWrite + Unpin> Framed<S> {
         let limits = self.config.encoding;
         let result = tokio::time::timeout(self.config.deadline, async {
             let mut header = [0; 4];
-            self.stream.read_exact(&mut header).await?;
+            if self.stream.read(&mut header[..1]).await? == 0 {
+                return Err(Error::Disconnected);
+            }
+            self.stream.read_exact(&mut header[1..]).await?;
             let size = u32::from_le_bytes(header) as usize;
             if size == 0 || size > limits.max_bytes {
                 return Err(Error::Rejected("frame size exceeded"));
             }
-            let mut bytes = vec![0; size];
+            let mut bytes = Zeroizing::new(vec![0; size]);
             self.stream.read_exact(&mut bytes).await?;
             T::from_protobuf(&bytes, limits).map_err(|_| Error::Contract)
         })
@@ -66,6 +76,8 @@ impl<S: AsyncRead + AsyncWrite + Unpin> Framed<S> {
         }
         result
     }
+}
+impl<S: AsyncWrite + Unpin> Framed<S> {
     pub async fn write<T: WireMessage>(&mut self, value: &T) -> Result<()> {
         if self.failed {
             return Err(Error::Rejected("connection is closed"));
@@ -73,9 +85,11 @@ impl<S: AsyncRead + AsyncWrite + Unpin> Framed<S> {
         if T::SUPERSEDED {
             return Err(Error::Rejected("superseded outbound message"));
         }
-        let bytes = value
-            .protobuf_bytes(self.config.encoding)
-            .map_err(|_| Error::Contract)?;
+        let bytes = Zeroizing::new(
+            value
+                .protobuf_bytes(self.config.encoding)
+                .map_err(|_| Error::Contract)?,
+        );
         let size = u32::try_from(bytes.len()).map_err(|_| Error::Contract)?;
         if size == 0 {
             return Err(Error::Contract);

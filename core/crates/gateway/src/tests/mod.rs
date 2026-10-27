@@ -11,6 +11,8 @@ mod ingress;
 #[cfg(windows)]
 mod runtime_fixture;
 #[cfg(windows)]
+mod service;
+#[cfg(windows)]
 mod sys01_pipe;
 mod terminal;
 mod validation;
