@@ -79,6 +79,82 @@ fn p534_v2_history_readable_writer_refused_without_migration() {
 }
 
 #[test]
+fn p534_v2_uncheckpointed_wal_preserved_on_rejected_writer() {
+    for segmented in [false, true] {
+        let root = TemporaryRoot::new().unwrap();
+        let mut store = rehearsal(&root, "legacy-wal");
+        let (commit, r_ref, group_ref) = legacy_v2::seed(&mut store, segmented);
+        let path = store.path().to_path_buf();
+        let db_path = path.join("store.sqlite");
+        let wal_path = path.join("store.sqlite-wal");
+        let shm_path = path.join("store.sqlite-shm");
+        // The sole fixture writer is idle. Capture its consistent DB/WAL pair
+        // before last-close checkpointing, then restore it in the SAME owned
+        // TemporaryRoot to represent a crash with committed WAL frames.
+        let db_before = fs::read(&db_path).unwrap();
+        let wal_before = fs::read(&wal_path).unwrap();
+        assert!(!wal_before.is_empty(), "fixture must retain committed WAL");
+        drop(store);
+        fs::write(&db_path, &db_before).unwrap();
+        fs::write(&wal_path, &wal_before).unwrap();
+        if shm_path.exists() {
+            fs::remove_file(&shm_path).unwrap();
+        }
+
+        let reader = Reader::<Rehearsal>::open_temporary(&root, "legacy-wal", config()).unwrap();
+        let r: RSnapshotV2 = reader.read(&r_ref).unwrap();
+        let group: EvidenceGroupV2 = reader.read(&group_ref).unwrap();
+        assert_eq!(reader.current().unwrap().unwrap().staged_r, r_ref);
+        assert_eq!(
+            reader.evidence_for("legacy-t", &commit, 1).unwrap(),
+            vec![EvidenceGroupRecord::V2(group.clone())]
+        );
+        drop(reader);
+        assert!(fs::read(&db_path).unwrap() == db_before);
+        assert!(fs::read(&wal_path).unwrap() == wal_before);
+
+        let opened = Store::<Rehearsal>::open_temporary(&root, "legacy-wal", config());
+        assert!(matches!(
+            opened,
+            Err(Error::Rejected(
+                "V2 R head is read-only; P5-26 G/H replay is required before writing"
+            ))
+        ));
+        let db_after = fs::read(&db_path).unwrap();
+        let wal_after = match fs::read(&wal_path) {
+            Ok(bytes) => bytes,
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Vec::new(),
+            Err(error) => panic!("read WAL after rejected writer: {error}"),
+        };
+        println!(
+            "P534_WAL sqlite={} segmented={segmented} db_before={} db_after={} wal_before={} wal_after={} db_unchanged={} wal_unchanged={}",
+            rusqlite::version(),
+            db_before.len(),
+            db_after.len(),
+            wal_before.len(),
+            wal_after.len(),
+            db_before == db_after,
+            wal_before == wal_after,
+        );
+        assert!(
+            db_before == db_after && wal_before == wal_after,
+            "rejected writer changed persistent DB/WAL bytes"
+        );
+        // Reopening the old decoder after rejection must still expose the same
+        // V2 history, including both flat and segmented R representations.
+        let reader = Reader::<Rehearsal>::open_temporary(&root, "legacy-wal", config()).unwrap();
+        assert_eq!(reader.read::<RSnapshotV2>(&r_ref).unwrap(), r);
+        assert_eq!(reader.read::<EvidenceGroupV2>(&group_ref).unwrap(), group);
+        assert_eq!(reader.current().unwrap().unwrap().processed_position.0, 1);
+        assert_eq!(reader.facts(10).unwrap().len(), 1);
+        assert_eq!(reader.ledger_at(&commit, 1).unwrap().len(), 1);
+        drop(reader);
+        assert!(fs::read(&db_path).unwrap() == db_before);
+        assert!(fs::read(&wal_path).unwrap() == wal_before);
+    }
+}
+
+#[test]
 fn p534_v3_q_v_survive_commit_reopen_gc_and_continued_writes() {
     let root = TemporaryRoot::new().unwrap();
     let mut store = rehearsal(&root, "v3");

@@ -1,8 +1,8 @@
 # P5-34 分配的实际保留率与倾向的证据量 — 报告
 
-## 结果
+## 当前状态
 
-部分完成（见 BLOCKED.md）：用户批准的分阶段实现与本地验收已完成，Windows CI 因 runner 离线尚未执行。[PR #95](https://github.com/nanake-lab/nemu/pull/95) 保持 draft/needs-user，最终 head 的 CI 全绿后才转为可审查并写“请审查”，由用户合并。原 PR #72 已关闭，原分支保留；本次只 merge、不 rebase、不强推。先合入 main b4eb7fd（merge 3418159）、86779b1（merge 2fa1bc9），最后合入 origin/main 317dde9（merge 94116d6）；存储实现提交 4342065。
+部分完成（见 BLOCKED.md）：2026-10-27 复审发现的旧 V2 非空 WAL 拒写问题已修复，定向回归和工作区 Clippy 通过，等待修复后 head 的完整 CI 与独立复审。[PR #95](https://github.com/nanake-lab/nemu/pull/95) 暂为 draft/needs-user；按用户批准的顺序转为可审查触发 W02，通过后回复“请审查”，失败恢复草稿。原 runner 离线阻塞已解除，d047b417 的 Ubuntu 与 Windows 已实际通过，但不能代替本轮修复后的验证。本次已 merge origin/main 3f8f98e5（merge 3da8c1dc，含 #106 的 60 分钟 Windows 时限与 #107）；没有 rebase 或强推，由用户合并，本卡不领取下一卡。
 
 用户明确决定：新写入 V3；V2 历史只读、可解码；旧 V2 head 拒绝继续写。当前没有正式或排练存储，现存仅测试数据（用户提供，本卡未访问用户数据）。本次不做 V2→V3 数据迁移。将来需要时由 **P5-26** 按 v2.0 §2.2 用规律 G 从 H 整段重放得到新 q/V 快照，**不另开迁移卡**。这一决定不是用默认 q/V 转换旧状态的授权。
 
@@ -20,13 +20,32 @@
 
 | 文件（相对 core/crates/core-store/src/） | 必要性 |
 | --- | --- |
-| objects.rs、store.rs | 专用 R 生产切至 V3；读取 NSI1 时保留 V2/V3 原解码；通用准备入口拒绝两代 R；旧 V2 head 在 writer 配置/回执修复前明确拒绝 |
+| objects.rs、store.rs | 专用 R 生产切至 V3；读取 NSI1 时保留 V2/V3 原解码；通用准备入口拒绝两代 R；持有 writer 锁，以 SQLITE_OPEN_READ_ONLY 检查旧 V2 head，在建立任何读写连接之前明确拒绝 |
 | transaction.rs、publication.rs | staged R、可写 head 的 revision 和新发布的倾向/证据组索引切至 V3 |
 | queries.rs、lib.rs | 历史证据查询返回包裹生成消息的 EvidenceGroupRecord::V2/V3，保留原代际；最新版本优先和完整预算查询逻辑不变 |
 | tests/mod.rs、objects.rs、crash.rs、crash_harness.rs | 当前生产夹具与故障标签切至 V3；改变 A 的夹具同步声明 V≥|A|；原断言含义、等待与资源阈值不变 |
 | tests/legacy_v2.rs、retention_versions.rs | 临时历史 V2 夹具和新旧边界回归；生产 API 无旧写入逃生口 |
 
 共 12 个 core-store 文件。SQLite 格式版本/表结构、NSI1 物理布局、事务与预算行为未改变。新增逻辑对象使用独立 V3 标签和摘要；物理布局不变不等于完成语义迁移。受保护源码不含 G 实现、自动迁移、默认 q=1 或 V=B−c。
+
+### 2026-10-27 复审修复
+
+[审查意见](https://github.com/nanake-lab/nemu/pull/95#issuecomment-6432647798) 指出：旧实现先建立读写 SQLite 连接，V2 拒绝返回时关闭最后连接仍可能检查点并清理 WAL。仓库内新增回归在未修复实现上确认 DB 4096→159744 字节、WAL 284312→0；原有三项回归仍通过，新项失败，原始失败保留在 verification/protected-20261026/attempt-04/storage.log。审查方原日志复制至 verification/review-20261027/reviewer-wal-probe.log，SHA-256 为 2ced26c3a0a9e42d014125369a838009b2c4ad8debae9ac5485ee7e8d0c6a816。
+
+本轮只改两个受保护源码文件：store.rs 在原 writer 锁内先用真正的只读连接核验版本，允许写入后才打开读写连接；tests/retention_versions.rs 新增非空 WAL 的平面/分段 V2 回归，逐字节比较拒写前后的 DB/WAL，并验证拒绝后旧对象、事实和账本仍可读取。只在新建 TemporaryRoot 内恢复同一位置的静止 DB/WAL 副本；既有测试、阈值、存储格式与 V3 恢复路径均保留。该修复落实已批准的“V2 只读且拒写保留旧数据”，不是新增迁移或存储行为范围。
+
+本轮本地命令及原始日志如下，路径相对 verification/protected-20261026/。每个日志旁的 JSON 保存命令、时间、退出码、提交与 SHA-256；review-20261027/red-inputs.json、green-inputs.json 记录测试时的未提交源码哈希。
+
+| 命令或检查 | 结果 | 原始证据 |
+| --- | --- | --- |
+| cargo test -p core-store --locked p534_ -- --test-threads=1，未修复实现 | 3 通过、1 失败；新增回归捕获 DB/WAL 改写 | attempt-04/storage.log |
+| 同一命令，修复后 | 4 通过、0 失败、0 忽略，包含非空 WAL 的平面/分段 V2 | attempt-05/storage.log |
+| cargo fmt --all -- --check；cargo clippy --workspace --all-targets --locked -- -D warnings | 通过 | attempt-05/fmt.log、clippy.log |
+| python core/contracts/generate.py --check；check_compat.py --ref origin/main | 0 stale；p5-01/p5-21/p5-32/current/origin/main 0 违例 | attempt-05/generate.log、compatibility.log |
+| pnpm test:core-contracts | schema 12 项；三语言各 11,592；protoc 464；浏览器 Zod 106，全部通过 | attempt-05/contracts.log |
+| cargo test --workspace --exclude core-store --locked -- --test-threads=1 | core-types 31、core-kernel 86 通过；main 已有 V2-93 诊断 1 ignored，不计作通过 | attempt-05/workspace-without-storage.log |
+
+完整 CI 结果待本轮实际执行后更新；旧 CI 成功和旧失败均保留，不能覆盖本次新增场景。
 
 ## 验收
 
@@ -52,13 +71,13 @@
 | 固定 main b4eb7fd 的三次完整 pnpm test | 3/3 通过，每次 52 文件/580 项；未复现 supervisor 失败 | main-test-04/05/06.log、supervisor-comparison.json |
 | Ubuntu CI，源码提交 7cb285a | 通过，含 34 项存储、两项 compile-fail、Node/Python/Rust 与契约；按路径不涉及的 .NET/status 步骤跳过，不计作本卡验收通过项 | ubuntu-40318254909.log、ci-7cb285a-ubuntu-success.json |
 | Ubuntu CI，提交 7ddefa8 | 通过，run 40321431794；与最新文档 merge 后的全部源码/工作流相同；仍不代替新 head 的检查 | ci-7ddefa8-final.json、main-refresh-317dde9.json |
-| Windows 全量 CI | 未运行：runner ID42 offline；full=true 手动任务排队。草稿自动任务的跳过/守卫失败不算通过 | windows-dispatch-7cb285a.json、BLOCKED.md B4 |
-| 最终 head 门控 | 尚未全绿；保持草稿，恢复 runner 后必须在当前 PR head 取得实际通过，再转可审查 | PR #95 checks 与最新状态评论 |
+| 历史 head d047b417 的 Ubuntu / Windows CI | 两者实际通过；W02 34 项测试及 2 项文档测试通过，未覆盖本轮新增 WAL 场景 | [Ubuntu 40358933290](https://github.com/nanake-lab/nemu/actions/runs/40358933290)、[Windows 40358965023](https://github.com/nanake-lab/nemu/actions/runs/40358965023) |
+| 本轮修复后的 head 门控 | 待实际 CI；runner 离线已解除，不以历史 head 成功替代 | PR #95 当前检查；BLOCKED.md B3 |
 | 完整 G 重放、AC2-08/19/21、I23、SYS17 | not_run，不用存储组件通过替代 | 本报告；各编号目录的本轮结果 |
 
 合并 P5-25（86779b1）仅新增 core-kernel 动力学及其文档/报告。存储、core-types、契约、Cargo 清单/锁文件、packages、workers、任务卡/规则的 Git 对象逐项相同，证据见 main-refresh.json。合并后重跑全目标 Clippy、兼容门与 `cargo test --workspace --exclude core-store`：core-kernel 66 通过、1 个 main 已有的 V2-93 旧 Python 舍入诊断 ignored，core-types 31 通过。该 ignored 由 main 带入，本卡没有新增/修改忽略标记，不把它算作通过；证据为 attempt-01/workspace-without-storage.log。未变化的 34 项存储本地完整结果保留，最终 CI 仍在同一最终 head 执行完整 core-store 检查。
 
-最后同步 main 317dde9（PR #103、V2-117）只带入主动时机的文档决定与 P5-20 依赖更新，P5-34 卡原文不变。唯一冲突在差异登记末尾，保留本卡分阶段说明与 main 的 V2-117 全文；没有改写上游内容。全部源码、清单、锁文件、工作流及必读规则的 Git 对象与已通过 CI 的 7ddefa8 相同。合并后重跑生成、全部兼容基线、三语言契约及 core-types 语义测试，结果见 attempt-03；逐项对象和卡片对照见 main-refresh-317dde9.json。最终 head 仍需重新取得 Ubuntu/Windows CI 实际通过。
+历史同步 main 317dde9（PR #103、V2-117）只带入主动时机的文档决定与 P5-20 依赖更新，P5-34 卡原文不变；冲突保留双方追加记录，attempt-03 与 main-refresh-317dde9.json 保存当时的源码对照和复验。随后 d047b417 合入 main 65052c0c，包含 #106；其 Ubuntu/Windows 实际成功。此次继续 merge main 3f8f98e5，只带入 #107 的代理配置，P5-34 卡与规格不变；本轮 WAL 修复需要自己的 CI 证据。
 
 ### supervisor 对照与原失败
 
@@ -72,6 +91,8 @@ main 的三次正确调用均通过，因此不声称“main 同样失败”或�
 - main-test-01/02/03：报告验证脚本把单参数拆开，实际命令为 vitest run e s t；虽然都跑了 580 项，仍不作正式 main 对照。修正报告脚本参数数组后，按预先声明的三次固定运行执行 04/05/06，未改测试本身，未运行到成功才停。
 - 合并后验证脚本新增带连字符的步骤名时未加 PowerShell 引号，解析提前失败，实际测试未启动；修正报告脚本的键名后通过。原错误摘录见 harness-errors.json。
 - resumed-20261026 中的 Rust V2 新写入拒绝和 supervisor 失败，以及旧 PR #72 的全部证据保留。只以本轮各项实际结果判定当前实现。
+- acf73c3 的 Windows run 40329723140 因旧 20 分钟作业时限取消，未完成 W02；原始日志与制品链接保留于 [失败记录](https://github.com/nanake-lab/nemu/pull/95#issuecomment-6418525763)。#106 延长至 60 分钟后，d047b417 的实际 W02 通过。草稿运行的跳过/守卫失败和取消不算通过。
+- 2026-10-27 新增 WAL 回归在旧实现上失败，修复后通过；失败及其测试输入哈希保留，不覆盖或修改原日志。
 
 ## 规格对照
 
@@ -81,7 +102,7 @@ main 的三次正确调用均通过，因此不声称“main 同样失败”或�
 | --- | --- | --- |
 | v2.0 §5.2；ADR 0019 §5/6/8.5；ADR 0021 §2–4 | actual_retention；显式历史 q，不由当前支持度倒推 | q=0/>1/非有限拒绝、次正规数与相邻值、修改支持度后 q 保留、序号正反例 |
 | v2.0 §5.2；ADR 0019 §1/8.2/8.5 | evidence_absolute；B=c+V、π 固定括号与顺序 | V<|A| 双符号、非有限、B 舍入丢失、小量 M/U、依恋分母分组 |
-| ADR 0007/0016；ADR 0021 §11 | 四后继消息、reserved、V2 解码与 V3 写入分派 | 三基线/当前兼容门、旧字节复核、旧 R 平面/分段读取、旧 head 拒写后持久字节不变 |
+| ADR 0007/0016；ADR 0021 §11 | 四后继消息、reserved、V2 解码与 V3 写入分派；只读版本预检先于读写连接 | 三基线/当前兼容门、旧字节复核、旧 R 平面/分段读取；正常关闭与未检查点 WAL 两种旧 head 拒写后 DB/WAL 字节不变 |
 | SYS21；施工合同 10.8 | 三语言共享描述符、有限 binary64、浏览器 Zod | 黄金、对抗、protoc 与语义正反例 |
 | v2.0 §2.2；I23；SYS17 | 将来 P5-26 的 G/H 重放与迁移/失败回退 | 本卡 not_run；当前拒写保留旧数据不是完整迁移验收 |
 
@@ -107,4 +128,4 @@ P5-26 需要迁移时，从完整有效 H 运行 G 重建 q/V，并完成备份�
 
 ## 下一步
 
-本地验收及历史 head 7cb285a、7ddefa8 的 Ubuntu CI 已完成；最后合入 main 317dde9 后推送并刷新 CI，Windows runner 仍离线。当前保持草稿，同一最终 head 的 Ubuntu 与 Windows 全量 CI 确认通过后才转可审查并写“请审查”。保持 needs-user，等待用户安排独立交叉审查及合并。本卡不领取下一张卡。最终 CI 的提交与 run 链接固定在 PR 描述，不能用旧提交的绿灯代替。
+完成修复后同一 head 的 Ubuntu/Windows 检查并更新原始证据，按用户批准的 ready→W02 顺序运行；失败恢复草稿，通过后回复复审。保持 needs-user，等待用户安排独立交叉审查及合并，本卡不领取下一张卡。最终 CI 的提交与 run 链接同时固定在本报告和 PR 描述，不用旧提交的绿灯代替。
