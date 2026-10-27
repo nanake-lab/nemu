@@ -1,3 +1,4 @@
 # Preserve original diagnostic bytes and their recorded SHA-256 values.
-*.log -text whitespace=cr-at-eol,-blank-at-eof
+# Keep the repository's reports/**/*.log whitespace exemption for raw CI output.
+*.log -text -whitespace
 *.json -text whitespace=cr-at-eol
