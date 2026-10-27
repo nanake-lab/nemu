@@ -24,6 +24,7 @@ pub use error::{Error, Result};
 pub use fault::{Fault, FaultPoint};
 pub use lineage::{Experiment, Life, LineageKind, Rehearsal, TemporaryRoot};
 pub use objects::PreparedObject;
+pub use queries::EvidenceGroupRecord;
 pub use reader::Reader;
 pub use store::Store;
 pub use transaction::{CommitCapability, PreparedTransaction, ReadTicket};

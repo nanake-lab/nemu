@@ -175,6 +175,14 @@ def schema(directory: Path = HERE) -> dict[str, Any]:
     assert len({m["tag"] for m in messages.values()}) == len(messages)
     scalars = {"uint32", "uint64", "sint64", "double", "bool", "string", "bytes"}
     for m in messages.values():
+        # Numeric cross-field rules are explicit IDL metadata, on required doubles only.
+        numeric = {
+            f["name"] for f in m["fields"]
+            if f["type"] == "double" and f["required"] and not f["repeated"]
+        }
+        assert set(m["rules"].get("positive", [])) <= numeric
+        absolute = m["rules"].get("at_least_abs", {})
+        assert set(absolute) | set(absolute.values()) <= numeric
         for f in m["fields"]:
             assert f["type"] in scalars | messages.keys() | enums.keys(), f
         by = m.get("superseded", {}).get("by", "-")

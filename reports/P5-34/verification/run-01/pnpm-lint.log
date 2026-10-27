@@ -1,0 +1,14 @@
+! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-12.11.2.tgz
+Downloading the pnpm 12.11.2 binary for win32-x64...
+Scope: all 14 workspace projects
+? Verifying lockfile against supply-chain policies (342 entries)...
+✓ Lockfile passes supply-chain policies (342 entries in 10.2s)
+Lockfile is up to date, resolution step is skipped
+Packages: +12 -4
+++++++++++++----
+Error:   × installing dependencies
+  ╰─▶ Failed to create directory at "D:\\Dev\\nemu-wt\\P5-34\\node_modules":
+      workspace hoist directory is not a real directory
+
+[WARN] The install that runs before scripts failed, so your node_modules may be out of sync with your lockfile. Set "verifyDepsBeforeRun: false" to skip this install.
+$ eslint .

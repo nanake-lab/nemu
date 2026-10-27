@@ -1,0 +1,33 @@
+    Updating crates.io index
+warning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+warning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)
+error: failed to get `ppv-lite86` as a dependency of package `rand_chacha v0.9.0`
+    ... which satisfies dependency `rand_chacha = "^0.9.0"` (locked to 0.9.0) of package `rand v0.9.5`
+    ... which satisfies dependency `rand = "^0.9"` (locked to 0.9.5) of package `tokenizers v0.23.2`
+    ... which satisfies dependency `tokenizers = "^0.23.2"` (locked to 0.23.2) of package `fastembed v7.3.0`
+    ... which satisfies dependency `fastembed = "=7.3.0"` (locked to 7.3.0) of package `fact-view v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\fact-view)`
+
+Caused by:
+  failed to load source for dependency `ppv-lite86`
+
+Caused by:
+  unable to update registry `crates-io`
+
+Caused by:
+  download of pp/v-/ppv-lite86 failed
+
+Caused by:
+  transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)

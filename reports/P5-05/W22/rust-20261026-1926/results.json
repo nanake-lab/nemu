@@ -1,0 +1,22 @@
+{
+  "end": "2026-10-26T19:26:53.4605154+08:00",
+  "tested_head": "79b295b0f2a960461f2e3ebd9b56120064b2301d",
+  "start": "2026-10-26T19:26:38.2690296+08:00",
+  "commands": [
+    {
+      "exit_code": 0,
+      "log": "fmt.log",
+      "command": "cargo fmt --all -- --check"
+    },
+    {
+      "exit_code": 0,
+      "log": "clippy.log",
+      "command": "cargo clippy --workspace --all-targets --locked --offline -- -D warnings"
+    },
+    {
+      "exit_code": 0,
+      "log": "workspace.log",
+      "command": "cargo test --workspace --locked --offline --exclude core-store"
+    }
+  ]
+}

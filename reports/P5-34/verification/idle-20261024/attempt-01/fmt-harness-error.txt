@@ -1,0 +1,5 @@
+2026-10-24: the fmt command produced no output. The evidence wrapper then failed before writing fmt.json because Tee-Object had not created an empty log file.
+Captured tool output:
+Get-FileHash: D:\Dev\cache\P5-34\verify-step.ps1:48
+Could not find file 'D:\Dev\nemu-wt\P5-34\reports\P5-34\verification\idle-20261024\attempt-01\fmt.log'.
+The command exit code was not persisted. This attempt is not acceptance evidence. The wrapper now explicitly creates the log first; fmt is rerun as attempt-02.

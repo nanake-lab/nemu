@@ -231,12 +231,63 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
           exit $LASTEXITCODE
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: always() && env.NEMU_W02_EVIDENCE != ''
+      # Retry only the upload: W02 logs stay in the same run-specific directory.
+      # The final gate below is mandatory; exhausted retries must still fail CI.
+      - name: Upload W02 evidence (attempt 1)
+        id: w02_upload_1
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' }}
+        continue-on-error: true
+        timeout-minutes: 6
         with:
           name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ env.NEMU_W02_EVIDENCE }}/
           if-no-files-found: error
+      - name: Wait before W02 upload retry 2
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' }}
+        run: Start-Sleep -Seconds 20
+      - name: Upload W02 evidence (attempt 2)
+        id: w02_upload_2
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' }}
+        continue-on-error: true
+        timeout-minutes: 6
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}-retry-2
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
+          if-no-files-found: error
+      - name: Wait before W02 upload retry 3
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' && steps.w02_upload_2.outcome != 'success' }}
+        run: Start-Sleep -Seconds 40
+      - name: Upload W02 evidence (attempt 3)
+        id: w02_upload_3
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' && steps.w02_upload_2.outcome != 'success' }}
+        continue-on-error: true
+        timeout-minutes: 6
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}-retry-3
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
+          if-no-files-found: error
+      - name: Require W02 evidence upload
+        if: always() && env.NEMU_W02_EVIDENCE != ''
+        env:
+          UPLOAD_1_OUTCOME: ${{ steps.w02_upload_1.outcome }}
+          UPLOAD_1_ID: ${{ steps.w02_upload_1.outputs.artifact-id }}
+          UPLOAD_2_OUTCOME: ${{ steps.w02_upload_2.outcome }}
+          UPLOAD_2_ID: ${{ steps.w02_upload_2.outputs.artifact-id }}
+          UPLOAD_3_OUTCOME: ${{ steps.w02_upload_3.outcome }}
+          UPLOAD_3_ID: ${{ steps.w02_upload_3.outputs.artifact-id }}
+        run: |
+          $outcomes = @($env:UPLOAD_1_OUTCOME, $env:UPLOAD_2_OUTCOME, $env:UPLOAD_3_OUTCOME)
+          $artifactIds = @($env:UPLOAD_1_ID, $env:UPLOAD_2_ID, $env:UPLOAD_3_ID)
+          for ($attempt = 0; $attempt -lt $outcomes.Count; $attempt++) {
+            if ($outcomes[$attempt] -eq 'success' -and $artifactIds[$attempt] -match '^[1-9][0-9]*$') {
+              "W02 evidence uploaded: attempt $($attempt + 1), artifact $($artifactIds[$attempt])" >> $env:GITHUB_STEP_SUMMARY
+              exit 0
+            }
+          }
+          throw 'W02 evidence upload did not succeed after three attempts; retained local logs do not replace an uploaded artifact.'
 
   windows:
     # Preserve the existing required-check name, but never report skipped tests as green.

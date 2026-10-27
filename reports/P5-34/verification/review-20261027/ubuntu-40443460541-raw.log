@@ -1,0 +1,1625 @@
+﻿2026-10-27T03:18:48.4112446Z Current runner version: '2.338.0'
+2026-10-27T03:18:48.4130402Z ##[group]Runner Image Provisioner
+2026-10-27T03:18:48.4131074Z Hosted Compute Agent
+2026-10-27T03:18:48.4131434Z Version: 20261021.618
+2026-10-27T03:18:48.4131821Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-27T03:18:48.4132308Z Build Date: 2026-10-21T00:45:21Z
+2026-10-27T03:18:48.4132730Z Worker ID: {e7f2e85b-4878-49b7-b471-e9ced848a414}
+2026-10-27T03:18:48.4133204Z Region: centralus
+2026-10-27T03:18:48.4133559Z Cloud: Azure
+2026-10-27T03:18:48.4133893Z ##[endgroup]
+2026-10-27T03:18:48.4134765Z ##[group]Operating System
+2026-10-27T03:18:48.4135135Z Ubuntu
+2026-10-27T03:18:48.4135542Z 24.04.5
+2026-10-27T03:18:48.4135871Z LTS
+2026-10-27T03:18:48.4136189Z ##[endgroup]
+2026-10-27T03:18:48.4136560Z ##[group]Runner Image
+2026-10-27T03:18:48.4136935Z Image: ubuntu-24.04
+2026-10-27T03:18:48.4137301Z Version: 20261012.334.1
+2026-10-27T03:18:48.4138102Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-27T03:18:48.4139124Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-27T03:18:48.4139681Z ##[endgroup]
+2026-10-27T03:18:48.4140418Z ##[group]GITHUB_TOKEN Permissions
+2026-10-27T03:18:48.4141752Z Contents: read
+2026-10-27T03:18:48.4142093Z Metadata: read
+2026-10-27T03:18:48.4142499Z ##[endgroup]
+2026-10-27T03:18:48.4143851Z Secret source: Actions
+2026-10-27T03:18:48.4144463Z Cache mode: write
+2026-10-27T03:18:48.4145076Z Prepare workflow directory
+2026-10-27T03:18:48.4394046Z Prepare all required actions
+2026-10-27T03:18:48.4426625Z Getting action download info
+2026-10-27T03:18:48.6931783Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-27T03:18:48.7730392Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-27T03:18:48.8826639Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-27T03:18:49.0301772Z Download action repository 'astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff' (SHA:d0d8abe699bfb85fec6de9f7adb5ae17292296ff)
+2026-10-27T03:18:49.5460525Z Download action repository 'actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+2026-10-27T03:18:50.1572883Z Complete job name: Ubuntu static checks and unit tests
+2026-10-27T03:18:50.2306722Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-27T03:18:50.2307675Z with:
+2026-10-27T03:18:50.2308152Z   lfs: true
+2026-10-27T03:18:50.2308809Z   persist-credentials: false
+2026-10-27T03:18:50.2309400Z   fetch-depth: 0
+2026-10-27T03:18:50.2309931Z   repository: nanake-lab/nemu
+2026-10-27T03:18:50.2315056Z   token: ***
+2026-10-27T03:18:50.2315547Z   ssh-strict: true
+2026-10-27T03:18:50.2316058Z   ssh-user: git
+2026-10-27T03:18:50.2316567Z   clean: true
+2026-10-27T03:18:50.2317090Z   sparse-checkout-cone-mode: true
+2026-10-27T03:18:50.2317706Z   fetch-tags: false
+2026-10-27T03:18:50.2318230Z   show-progress: true
+2026-10-27T03:18:50.2318861Z   submodules: false
+2026-10-27T03:18:50.2319393Z   set-safe-directory: true
+2026-10-27T03:18:50.2319999Z   allow-unsafe-pr-checkout: false
+2026-10-27T03:18:50.2320693Z env:
+2026-10-27T03:18:50.2321180Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:18:50.2321776Z   UV_LINK_MODE: copy
+2026-10-27T03:18:50.2322324Z ##[endgroup]
+2026-10-27T03:18:50.4732489Z Syncing repository: nanake-lab/nemu
+2026-10-27T03:18:50.4734605Z ##[group]Getting Git version info
+2026-10-27T03:18:50.4735446Z Working directory is '/home/runner/work/nemu/nemu'
+2026-10-27T03:18:50.4736650Z [command]/usr/bin/git version
+2026-10-27T03:18:50.4796053Z git version 2.55.0
+2026-10-27T03:18:50.4811449Z [command]/usr/bin/git lfs version
+2026-10-27T03:18:50.5232427Z git-lfs/3.8.0 (GitHub; linux amd64; go 1.27.0)
+2026-10-27T03:18:50.5254175Z ##[endgroup]
+2026-10-27T03:18:50.5265136Z Temporarily overriding HOME='/home/runner/work/_temp/4a683670-7364-4d4f-a3c1-45c5f360e8bd' before making global git config changes
+2026-10-27T03:18:50.5268968Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T03:18:50.5270297Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nemu/nemu
+2026-10-27T03:18:50.5311745Z Deleting the contents of '/home/runner/work/nemu/nemu'
+2026-10-27T03:18:50.5314728Z ##[group]Initializing the repository
+2026-10-27T03:18:50.5317229Z [command]/usr/bin/git init /home/runner/work/nemu/nemu
+2026-10-27T03:18:50.5452140Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-27T03:18:50.5453907Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-27T03:18:50.5455611Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-27T03:18:50.5456560Z hint: call:
+2026-10-27T03:18:50.5457064Z hint:
+2026-10-27T03:18:50.5457749Z hint: 	git config --global init.defaultBranch <name>
+2026-10-27T03:18:50.5458906Z hint:
+2026-10-27T03:18:50.5459652Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-27T03:18:50.5460903Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-27T03:18:50.5462125Z hint:
+2026-10-27T03:18:50.5462680Z hint: 	git branch -m <name>
+2026-10-27T03:18:50.5463302Z hint:
+2026-10-27T03:18:50.5464137Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-27T03:18:50.5465250Z Initialized empty Git repository in /home/runner/work/nemu/nemu/.git/
+2026-10-27T03:18:50.5467095Z [command]/usr/bin/git remote add origin https://github.com/nanake-lab/nemu
+2026-10-27T03:18:50.5573329Z ##[endgroup]
+2026-10-27T03:18:50.5574328Z ##[group]Disabling automatic garbage collection
+2026-10-27T03:18:50.5576078Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-27T03:18:50.5604459Z ##[endgroup]
+2026-10-27T03:18:50.5606096Z ##[group]Setting up auth
+2026-10-27T03:18:50.5608624Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T03:18:50.5637283Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T03:18:50.5840223Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T03:18:50.5870182Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T03:18:50.6046481Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T03:18:50.6079813Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T03:18:50.6256385Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-27T03:18:50.6289627Z ##[endgroup]
+2026-10-27T03:18:50.6291636Z [command]/usr/bin/git lfs install --local
+2026-10-27T03:18:50.6602258Z Updated Git hooks.
+2026-10-27T03:18:50.6603158Z Git LFS initialized.
+2026-10-27T03:18:50.6616435Z ##[group]Fetching the repository
+2026-10-27T03:18:50.6627973Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +c487fd7d01379787d43f4184649c0944208098ba:refs/remotes/pull/95/merge
+2026-10-27T03:18:58.2995737Z From https://github.com/nanake-lab/nemu
+2026-10-27T03:18:58.2997748Z  * [new branch]        audit/design-presets                     -> origin/audit/design-presets
+2026-10-27T03:18:58.2998575Z  * [new branch]        backup/P5-23-local-bcdce6f               -> origin/backup/P5-23-local-bcdce6f
+2026-10-27T03:18:58.2999476Z  * [new branch]        ci/windows-timeout                       -> origin/ci/windows-timeout
+2026-10-27T03:18:58.3000630Z  * [new branch]        claude/adr-0008-spec-clarifications      -> origin/claude/adr-0008-spec-clarifications
+2026-10-27T03:18:58.3001374Z  * [new branch]        claude/adr-0012-continuity               -> origin/claude/adr-0012-continuity
+2026-10-27T03:18:58.3002123Z  * [new branch]        claude/adr-0014-correction               -> origin/claude/adr-0014-correction
+2026-10-27T03:18:58.3002906Z  * [new branch]        claude/adr-0014-v2-amendments            -> origin/claude/adr-0014-v2-amendments
+2026-10-27T03:18:58.3003669Z  * [new branch]        claude/adr-0015-asset-meta               -> origin/claude/adr-0015-asset-meta
+2026-10-27T03:18:58.3004432Z  * [new branch]        claude/adr-0017-voice-latency            -> origin/claude/adr-0017-voice-latency
+2026-10-27T03:18:58.3005216Z  * [new branch]        claude/agents-claude-lane                -> origin/claude/agents-claude-lane
+2026-10-27T03:18:58.3005991Z  * [new branch]        claude/agents-simplify                   -> origin/claude/agents-simplify
+2026-10-27T03:18:58.3006704Z  * [new branch]        claude/agents-sync-main                  -> origin/claude/agents-sync-main
+2026-10-27T03:18:58.3007480Z  * [new branch]        claude/change-detection-scenarios        -> origin/claude/change-detection-scenarios
+2026-10-27T03:18:58.3008306Z  * [new branch]        claude/ci-scope                          -> origin/claude/ci-scope
+2026-10-27T03:18:58.3009293Z  * [new branch]        claude/ci-timeout                        -> origin/claude/ci-timeout
+2026-10-27T03:18:58.3010180Z  * [new branch]        claude/drop-stray-log                    -> origin/claude/drop-stray-log
+2026-10-27T03:18:58.3012337Z  * [new branch]        claude/exciting-knuth-hco1f0             -> origin/claude/exciting-knuth-hco1f0
+2026-10-27T03:18:58.3013090Z  * [new branch]        claude/focused-wozniak-ee0f0q            -> origin/claude/focused-wozniak-ee0f0q
+2026-10-27T03:18:58.3013683Z  * [new branch]        claude/n0-decision                       -> origin/claude/n0-decision
+2026-10-27T03:18:58.3014228Z  * [new branch]        claude/needs-user-merge                  -> origin/claude/needs-user-merge
+2026-10-27T03:18:58.3014770Z  * [new branch]        claude/p0-09-agenda                      -> origin/claude/p0-09-agenda
+2026-10-27T03:18:58.3015303Z  * [new branch]        claude/p2-05-fold-split                  -> origin/claude/p2-05-fold-split
+2026-10-27T03:18:58.3016071Z  * [new branch]        claude/p5-07-after-p0-09                 -> origin/claude/p5-07-after-p0-09
+2026-10-27T03:18:58.3016726Z  * [new branch]        claude/p5-20-proactivity-questions       -> origin/claude/p5-20-proactivity-questions
+2026-10-27T03:18:58.3017386Z  * [new branch]        claude/p5-34-and-p5-23-rework            -> origin/claude/p5-34-and-p5-23-rework
+2026-10-27T03:18:58.3017886Z  * [new branch]        claude/p6-13-prebirth-review             -> origin/claude/p6-13-prebirth-review
+2026-10-27T03:18:58.3018250Z  * [new branch]        claude/review-scope                      -> origin/claude/review-scope
+2026-10-27T03:18:58.3018601Z  * [new branch]        claude/runner-idle-rule                  -> origin/claude/runner-idle-rule
+2026-10-27T03:18:58.3019384Z  * [new branch]        claude/user-first-reorg                  -> origin/claude/user-first-reorg
+2026-10-27T03:18:58.3020011Z  * [new branch]        claude/v2-task-cards                     -> origin/claude/v2-task-cards
+2026-10-27T03:18:58.3020365Z  * [new branch]        claude/windows-ci-scope                  -> origin/claude/windows-ci-scope
+2026-10-27T03:18:58.3020732Z  * [new branch]        codex/docs-test-e12-unicode              -> origin/codex/docs-test-e12-unicode
+2026-10-27T03:18:58.3021109Z  * [new branch]        codex/echo-core-v2-revision              -> origin/codex/echo-core-v2-revision
+2026-10-27T03:18:58.3021473Z  * [new branch]        codex/law-lp1-reference                  -> origin/codex/law-lp1-reference
+2026-10-27T03:18:58.3021960Z  * [new branch]        codex/longing-study                      -> origin/codex/longing-study
+2026-10-27T03:18:58.3022302Z  * [new branch]        codex/p5-05-scope-split                  -> origin/codex/p5-05-scope-split
+2026-10-27T03:18:58.3022705Z  * [new branch]        codex/p5-12-scope-split                  -> origin/codex/p5-12-scope-split
+2026-10-27T03:18:58.3023081Z  * [new branch]        codex/pr-pause-closeout                  -> origin/codex/pr-pause-closeout
+2026-10-27T03:18:58.3023447Z  * [new branch]        codex/routine-agent-rules                -> origin/codex/routine-agent-rules
+2026-10-27T03:18:58.3023843Z  * [new branch]        docs/adr-0025-desktop-perception         -> origin/docs/adr-0025-desktop-perception
+2026-10-27T03:18:58.3024214Z  * [new branch]        docs/adr-0027-voice                      -> origin/docs/adr-0027-voice
+2026-10-27T03:18:58.3024554Z  * [new branch]        docs/agents-rules-1025                   -> origin/docs/agents-rules-1025
+2026-10-27T03:18:58.3024898Z  * [new branch]        docs/batch-2-3                           -> origin/docs/batch-2-3
+2026-10-27T03:18:58.3025231Z  * [new branch]        docs/batch4-theta                        -> origin/docs/batch4-theta
+2026-10-27T03:18:58.3025581Z  * [new branch]        docs/batch5-lifecycle                    -> origin/docs/batch5-lifecycle
+2026-10-27T03:18:58.3025935Z  * [new branch]        docs/batch6-contracts                    -> origin/docs/batch6-contracts
+2026-10-27T03:18:58.3026276Z  * [new branch]        docs/card-P5-35                          -> origin/docs/card-P5-35
+2026-10-27T03:18:58.3026617Z  * [new branch]        docs/milestones-e1-e5                    -> origin/docs/milestones-e1-e5
+2026-10-27T03:18:58.3026987Z  * [new branch]        docs/proactivity-fuse-only               -> origin/docs/proactivity-fuse-only
+2026-10-27T03:18:58.3027488Z  * [new branch]        main                                     -> origin/main
+2026-10-27T03:18:58.3027814Z  * [new branch]        task/P0-01-monorepo                      -> origin/task/P0-01-monorepo
+2026-10-27T03:18:58.3028206Z  * [new branch]        task/P0-01-windows-diagnostics           -> origin/task/P0-01-windows-diagnostics
+2026-10-27T03:18:58.3028574Z  * [new branch]        task/P0-02-contracts                     -> origin/task/P0-02-contracts
+2026-10-27T03:18:58.3028982Z  * [new branch]        task/P0-04-doctor                        -> origin/task/P0-04-doctor
+2026-10-27T03:18:58.3029482Z  * [new branch]        task/P0-04-vrm-addon-fix                 -> origin/task/P0-04-vrm-addon-fix
+2026-10-27T03:18:58.3029874Z  * [new branch]        task/P0-05-content-submodule             -> origin/task/P0-05-content-submodule
+2026-10-27T03:18:58.3030270Z  * [new branch]        task/P0-06-echo-baseline                 -> origin/task/P0-06-echo-baseline
+2026-10-27T03:18:58.3030647Z  * [new branch]        task/P0-07-carrier-probe                 -> origin/task/P0-07-carrier-probe
+2026-10-27T03:18:58.3031034Z  * [new branch]        task/P0-08-codex-irl-spike               -> origin/task/P0-08-codex-irl-spike
+2026-10-27T03:18:58.3031409Z  * [new branch]        task/P0-08-part2                         -> origin/task/P0-08-part2
+2026-10-27T03:18:58.3031770Z  * [new branch]        task/P0-10-carrier-engine                -> origin/task/P0-10-carrier-engine
+2026-10-27T03:18:58.3032139Z  * [new branch]        task/P2-01-bible                         -> origin/task/P2-01-bible
+2026-10-27T03:18:58.3032492Z  * [new branch]        task/P2-01-bible-refine                  -> origin/task/P2-01-bible-refine
+2026-10-27T03:18:58.3032847Z  * [new branch]        task/P2-02-vroid                         -> origin/task/P2-02-vroid
+2026-10-27T03:18:58.3033289Z  * [new branch]        task/P2-03-asset-pipeline                -> origin/task/P2-03-asset-pipeline
+2026-10-27T03:18:58.3033684Z  * [new branch]        task/P2-04-asset-lint                    -> origin/task/P2-04-asset-lint
+2026-10-27T03:18:58.3034047Z  * [new branch]        task/P2-05-tail-springs                  -> origin/task/P2-05-tail-springs
+2026-10-27T03:18:58.3034541Z  * [new branch]        task/P2-06-expressions-materials         -> origin/task/P2-06-expressions-materials
+2026-10-27T03:18:58.3034934Z  * [new branch]        task/P3-06-readout-v2                    -> origin/task/P3-06-readout-v2
+2026-10-27T03:18:58.3035275Z  * [new branch]        task/P4-01-asr                           -> origin/task/P4-01-asr
+2026-10-27T03:18:58.3035625Z  * [new branch]        task/P4-02-tts-sidecar                   -> origin/task/P4-02-tts-sidecar
+2026-10-27T03:18:58.3035968Z  * [new branch]        task/P5-01-idl                           -> origin/task/P5-01-idl
+2026-10-27T03:18:58.3036293Z  * [new branch]        task/P5-02-store                         -> origin/task/P5-02-store
+2026-10-27T03:18:58.3036629Z  * [new branch]        task/P5-03-gateway                       -> origin/task/P5-03-gateway
+2026-10-27T03:18:58.3036974Z  * [new branch]        task/P5-04-fact-view                     -> origin/task/P5-04-fact-view
+2026-10-27T03:18:58.3037338Z  * [new branch]        task/P5-05-permissions                   -> origin/task/P5-05-permissions
+2026-10-27T03:18:58.3037696Z  * [new branch]        task/P5-07-irl-worker                    -> origin/task/P5-07-irl-worker
+2026-10-27T03:18:58.3038045Z  * [new branch]        task/P5-09-effects                       -> origin/task/P5-09-effects
+2026-10-27T03:18:58.3038401Z  * [new branch]        task/P5-09-review-fixes                  -> origin/task/P5-09-review-fixes
+2026-10-27T03:18:58.3038987Z  * [new branch]        task/P5-10-fast-state                    -> origin/task/P5-10-fast-state
+2026-10-27T03:18:58.3039366Z  * [new branch]        task/P5-12-j-compiler                    -> origin/task/P5-12-j-compiler
+2026-10-27T03:18:58.3039769Z  * [new branch]        task/P5-21-idl-v2                        -> origin/task/P5-21-idl-v2
+2026-10-27T03:18:58.3040173Z  * [new branch]        task/P5-22-report-closeout               -> origin/task/P5-22-report-closeout
+2026-10-27T03:18:58.3040577Z  * [new branch]        task/P5-22-terminal-contracts-v2         -> origin/task/P5-22-terminal-contracts-v2
+2026-10-27T03:18:58.3040969Z  * [new branch]        task/P5-23-law-engine                    -> origin/task/P5-23-law-engine
+2026-10-27T03:18:58.3041325Z  * [new branch]        task/P5-25-dynamics                      -> origin/task/P5-25-dynamics
+2026-10-27T03:18:58.3041673Z  * [new branch]        task/P5-27-effects-v2                    -> origin/task/P5-27-effects-v2
+2026-10-27T03:18:58.3042179Z  * [new branch]        task/P5-32-law-replay-idl                -> origin/task/P5-32-law-replay-idl
+2026-10-27T03:18:58.3042673Z  * [new branch]        task/P5-33-change-detection              -> origin/task/P5-33-change-detection
+2026-10-27T03:18:58.3043058Z  * [new branch]        task/P5-34-law-retention-idl             -> origin/task/P5-34-law-retention-idl
+2026-10-27T03:18:58.3043543Z  * [new branch]        task/P5-36-theta-estimator-idl           -> origin/task/P5-36-theta-estimator-idl
+2026-10-27T03:18:58.3043979Z  * [new branch]        task/P6-08-desktop-sense                 -> origin/task/P6-08-desktop-sense
+2026-10-27T03:18:58.3044392Z  * [new branch]        task/P6-11-codex-session                 -> origin/task/P6-11-codex-session
+2026-10-27T03:18:58.3044798Z  * [new branch]        task/P6-17-touch-dwell                   -> origin/task/P6-17-touch-dwell
+2026-10-27T03:18:58.3045172Z  * [new branch]        task/ci-minutes                          -> origin/task/ci-minutes
+2026-10-27T03:18:58.3045567Z  * [new branch]        task/ci-public-hardening                 -> origin/task/ci-public-hardening
+2026-10-27T03:18:58.3046015Z  * [new branch]        task/design-continuous-cognition         -> origin/task/design-continuous-cognition
+2026-10-27T03:18:58.3046515Z  * [new branch]        task/routine-reporter-terra              -> origin/task/routine-reporter-terra
+2026-10-27T03:18:58.3046868Z  * [new ref]           c487fd7d01379787d43f4184649c0944208098ba -> pull/95/merge
+2026-10-27T03:18:58.3048108Z ##[endgroup]
+2026-10-27T03:18:58.3048483Z ##[group]Determining the checkout info
+2026-10-27T03:18:58.3048910Z ##[endgroup]
+2026-10-27T03:18:58.3049161Z ##[group]Fetching LFS objects
+2026-10-27T03:18:58.3049397Z [command]/usr/bin/git lfs fetch origin refs/remotes/pull/95/merge
+2026-10-27T03:18:58.3201096Z Fetching reference refs/remotes/pull/95/merge
+2026-10-27T03:19:02.6367535Z ##[endgroup]
+2026-10-27T03:19:02.6371958Z [command]/usr/bin/git sparse-checkout disable
+2026-10-27T03:19:02.6594259Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-27T03:19:02.6624585Z ##[group]Checking out the ref
+2026-10-27T03:19:02.6627585Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/95/merge
+2026-10-27T03:19:03.6742301Z Updating files:  75% (8286/11003)
+2026-10-27T03:19:03.6794258Z Updating files:  76% (8363/11003)
+2026-10-27T03:19:03.6830960Z Updating files:  77% (8473/11003)
+2026-10-27T03:19:03.6858954Z Updating files:  78% (8583/11003)
+2026-10-27T03:19:03.6885671Z Updating files:  79% (8693/11003)
+2026-10-27T03:19:03.6996721Z Updating files:  80% (8803/11003)
+2026-10-27T03:19:03.7107830Z Updating files:  81% (8913/11003)
+2026-10-27T03:19:03.7563543Z Updating files:  82% (9023/11003)
+2026-10-27T03:19:03.7592255Z Updating files:  83% (9133/11003)
+2026-10-27T03:19:03.7626525Z Updating files:  84% (9243/11003)
+2026-10-27T03:19:03.7656570Z Updating files:  85% (9353/11003)
+2026-10-27T03:19:03.7701810Z Updating files:  86% (9463/11003)
+2026-10-27T03:19:03.7897204Z Updating files:  87% (9573/11003)
+2026-10-27T03:19:03.8205545Z Updating files:  88% (9683/11003)
+2026-10-27T03:19:03.8416583Z Updating files:  89% (9793/11003)
+2026-10-27T03:19:03.8450626Z Updating files:  90% (9903/11003)
+2026-10-27T03:19:03.8479758Z Updating files:  91% (10013/11003)
+2026-10-27T03:19:03.8512379Z Updating files:  92% (10123/11003)
+2026-10-27T03:19:03.8542420Z Updating files:  93% (10233/11003)
+2026-10-27T03:19:03.8573463Z Updating files:  94% (10343/11003)
+2026-10-27T03:19:03.8604116Z Updating files:  95% (10453/11003)
+2026-10-27T03:19:03.8633832Z Updating files:  96% (10563/11003)
+2026-10-27T03:19:03.8664182Z Updating files:  97% (10673/11003)
+2026-10-27T03:19:03.8805154Z Updating files:  98% (10783/11003)
+2026-10-27T03:19:03.8860818Z Updating files:  99% (10893/11003)
+2026-10-27T03:19:03.8861116Z Updating files: 100% (11003/11003)
+2026-10-27T03:19:03.8861497Z Updating files: 100% (11003/11003), done.
+2026-10-27T03:19:03.8943557Z Note: switching to 'refs/remotes/pull/95/merge'.
+2026-10-27T03:19:03.8943777Z 
+2026-10-27T03:19:03.8944213Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-27T03:19:03.8944478Z changes and commit them, and you can discard any commits you make in this
+2026-10-27T03:19:03.8944735Z state without impacting any branches by switching back to a branch.
+2026-10-27T03:19:03.8944887Z 
+2026-10-27T03:19:03.8944987Z If you want to create a new branch to retain commits you create, you may
+2026-10-27T03:19:03.8945234Z do so (now or later) by using -c with the switch command. Example:
+2026-10-27T03:19:03.8945382Z 
+2026-10-27T03:19:03.8945449Z   git switch -c <new-branch-name>
+2026-10-27T03:19:03.8945543Z 
+2026-10-27T03:19:03.8945604Z Or undo this operation with:
+2026-10-27T03:19:03.8945691Z 
+2026-10-27T03:19:03.8945743Z   git switch -
+2026-10-27T03:19:03.8945808Z 
+2026-10-27T03:19:03.8945924Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-27T03:19:03.8946087Z 
+2026-10-27T03:19:03.8946293Z HEAD is now at c487fd7d Merge af200a67fefecf55f33de71f7c3a00982a7cc9bf into 3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf
+2026-10-27T03:19:03.9436343Z ##[endgroup]
+2026-10-27T03:19:03.9479745Z [command]/usr/bin/git log -1 --format=%H
+2026-10-27T03:19:03.9504316Z c487fd7d01379787d43f4184649c0944208098ba
+2026-10-27T03:19:03.9512532Z ##[group]Removing auth
+2026-10-27T03:19:03.9515174Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T03:19:03.9542891Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T03:19:03.9735926Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T03:19:03.9761461Z http.https://github.com/.extraheader
+2026-10-27T03:19:03.9767941Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-27T03:19:03.9800145Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T03:19:04.0001914Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T03:19:04.0030687Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T03:19:04.0212757Z ##[endgroup]
+2026-10-27T03:19:04.0382364Z ##[group]Run # A manual run or an unavailable comparison runs everything (fail closed).
+2026-10-27T03:19:04.0382774Z [36;1m# A manual run or an unavailable comparison runs everything (fail closed).[0m
+2026-10-27T03:19:04.0382999Z [36;1m$full = $true[0m
+2026-10-27T03:19:04.0383127Z [36;1m$files = @()[0m
+2026-10-27T03:19:04.0383270Z [36;1mif ($env:EVENT -eq 'pull_request') {[0m
+2026-10-27T03:19:04.0383518Z [36;1m  $files = @(git diff --name-only --no-renames "$($env:PR_BASE)...$($env:PR_HEAD)")[0m
+2026-10-27T03:19:04.0383753Z [36;1m  $full = $LASTEXITCODE -ne 0[0m
+2026-10-27T03:19:04.0383990Z [36;1m} elseif ($env:EVENT -eq 'push' -and $env:BEFORE -and $env:BEFORE -notmatch '^0+$') {[0m
+2026-10-27T03:19:04.0384271Z [36;1m  $files = @(git diff --name-only --no-renames $env:BEFORE HEAD)[0m
+2026-10-27T03:19:04.0384471Z [36;1m  $full = $LASTEXITCODE -ne 0[0m
+2026-10-27T03:19:04.0384610Z [36;1m}[0m
+2026-10-27T03:19:04.0384891Z [36;1m$scope = @{ node = $false; python = $false; rust = $false; storage = $false; contracts = $false; dotnet = $false; status = $false }[0m
+2026-10-27T03:19:04.0385187Z [36;1mforeach ($f in $files) {[0m
+2026-10-27T03:19:04.0385386Z [36;1m  if ($f -match '\.md$|^(docs/|tasks/|reports/|content$)') { continue }[0m
+2026-10-27T03:19:04.0385633Z [36;1m  if ($f -match '^\.github/workflows/') { $full = $true; continue }[0m
+2026-10-27T03:19:04.0385829Z [36;1m  $known = $false[0m
+2026-10-27T03:19:04.0386027Z [36;1m  if ($f -match '^(apps/|packages/|tools/|spikes/|executors/codex-bridge/)') {[0m
+2026-10-27T03:19:04.0386257Z [36;1m    $scope.node = $true; $known = $true[0m
+2026-10-27T03:19:04.0386412Z [36;1m  }[0m
+2026-10-27T03:19:04.0386593Z [36;1m  if ($f -match '^(workers/|services/)') { $scope.python = $true; $known = $true }[0m
+2026-10-27T03:19:04.0386847Z [36;1m  if ($f -match '^core/') { $scope.rust = $true; $known = $true }[0m
+2026-10-27T03:19:04.0387112Z [36;1m  # core-store currently depends on core-types and frozen contract fixtures.[0m
+2026-10-27T03:19:04.0387426Z [36;1m  # Include workspace/lock/toolchain/config changes; update this with new path deps.[0m
+2026-10-27T03:19:04.0387750Z [36;1m  if ($f -match '^core/(crates/(core-store|core-types)/|contracts/|\.cargo/|[^/]+$)') {[0m
+2026-10-27T03:19:04.0387988Z [36;1m    $scope.storage = $true[0m
+2026-10-27T03:19:04.0388127Z [36;1m  }[0m
+2026-10-27T03:19:04.0388369Z [36;1m  if ($f -match '^(core/(contracts/|crates/core-types/|\.cargo/|[^/]+$)|packages/contracts/|workers/irl/generated/)') {[0m
+2026-10-27T03:19:04.0388857Z [36;1m    $scope.contracts = $true[0m
+2026-10-27T03:19:04.0389039Z [36;1m  }[0m
+2026-10-27T03:19:04.0389244Z [36;1m  if ($f -match '^executors/office-connector/') { $scope.dotnet = $true; $known = $true }[0m
+2026-10-27T03:19:04.0389512Z [36;1m  if ($f -match '^tools/status/') { $scope.status = $true }[0m
+2026-10-27T03:19:04.0389780Z [36;1m  # New directories and shared root build/toolchain files cannot silently miss checks.[0m
+2026-10-27T03:19:04.0390029Z [36;1m  if (-not $known) { $full = $true }[0m
+2026-10-27T03:19:04.0390327Z [36;1m}[0m
+2026-10-27T03:19:04.0390495Z [36;1mif ($full) { foreach ($key in @($scope.Keys)) { $scope[$key] = $true } }[0m
+2026-10-27T03:19:04.0390764Z [36;1m# Contract/generated-type edits also exercise every Python consumer.[0m
+2026-10-27T03:19:04.0391042Z [36;1m# Three-language conformance needs both the Node and Python toolchains.[0m
+2026-10-27T03:19:04.0391312Z [36;1mif ($scope.contracts) { $scope.node = $true; $scope.python = $true }[0m
+2026-10-27T03:19:04.0391546Z [36;1mforeach ($key in ($scope.Keys | Sort-Object)) {[0m
+2026-10-27T03:19:04.0391755Z [36;1m  $value = $scope[$key].ToString().ToLowerInvariant()[0m
+2026-10-27T03:19:04.0391952Z [36;1m  "$key=$value" >> $env:GITHUB_OUTPUT[0m
+2026-10-27T03:19:04.0392153Z [36;1m  $message = if ($scope[$key]) { 'run' } else { '无相关改动' }[0m
+2026-10-27T03:19:04.0392401Z [36;1m  "$key`: $message" | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append[0m
+2026-10-27T03:19:04.0392728Z [36;1m}[0m
+2026-10-27T03:19:04.0392864Z [36;1m"full=$full; changed files=$($files.Count)"[0m
+2026-10-27T03:19:04.0393102Z [36;1m# A failed diff selected the full suite; do not propagate its native exit code.[0m
+2026-10-27T03:19:04.0393331Z [36;1m$global:LASTEXITCODE = 0[0m
+2026-10-27T03:19:04.0415891Z shell: /usr/bin/pwsh -command ". '{0}'"
+2026-10-27T03:19:04.0416050Z env:
+2026-10-27T03:19:04.0416174Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:04.0416314Z   UV_LINK_MODE: copy
+2026-10-27T03:19:04.0416435Z   EVENT: pull_request
+2026-10-27T03:19:04.0416580Z   BEFORE: d047b417cb0bff94f053e6a4b023fff495d292d9
+2026-10-27T03:19:04.0416771Z   PR_BASE: 3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf
+2026-10-27T03:19:04.0416957Z   PR_HEAD: af200a67fefecf55f33de71f7c3a00982a7cc9bf
+2026-10-27T03:19:04.0417121Z ##[endgroup]
+2026-10-27T03:19:04.8724099Z contracts: run
+2026-10-27T03:19:04.8730870Z dotnet: 无相关改动
+2026-10-27T03:19:04.8736719Z node: run
+2026-10-27T03:19:04.8739497Z python: run
+2026-10-27T03:19:04.8742103Z rust: run
+2026-10-27T03:19:04.8744573Z status: 无相关改动
+2026-10-27T03:19:04.8746875Z storage: run
+2026-10-27T03:19:04.8761352Z full=False; changed files=364
+2026-10-27T03:19:04.9549133Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-10-27T03:19:04.9549360Z with:
+2026-10-27T03:19:04.9549480Z   node-version-file: .nvmrc
+2026-10-27T03:19:04.9549613Z   always-auth: false
+2026-10-27T03:19:04.9549733Z   check-latest: false
+2026-10-27T03:19:04.9551138Z   token: ***
+2026-10-27T03:19:04.9551247Z env:
+2026-10-27T03:19:04.9551363Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:04.9551502Z   UV_LINK_MODE: copy
+2026-10-27T03:19:04.9551623Z ##[endgroup]
+2026-10-27T03:19:05.0406744Z Resolved .nvmrc as 24
+2026-10-27T03:19:05.0441711Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-27T03:19:05.0444587Z (node:2308) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T03:19:05.0445144Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T03:19:05.0446383Z ##[group]Environment details
+2026-10-27T03:19:05.3162669Z node: v24.21.0
+2026-10-27T03:19:05.3163088Z npm: 11.19.0
+2026-10-27T03:19:05.3163253Z yarn: 1.22.22
+2026-10-27T03:19:05.3163732Z ##[endgroup]
+2026-10-27T03:19:05.3275025Z ##[group]Run npm install --global pnpm@12.11.2
+2026-10-27T03:19:05.3275235Z [36;1mnpm install --global pnpm@12.11.2[0m
+2026-10-27T03:19:05.3334012Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:19:05.3334163Z env:
+2026-10-27T03:19:05.3334280Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:05.3334424Z   UV_LINK_MODE: copy
+2026-10-27T03:19:05.3334550Z ##[endgroup]
+2026-10-27T03:19:07.0938425Z 
+2026-10-27T03:19:07.0946280Z added 2 packages in 2s
+2026-10-27T03:19:07.0950033Z npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-10-27T03:19:07.0950909Z npm warn install-scripts   pnpm@12.11.2 (preinstall: node install.js; postinstall: node install.js)
+2026-10-27T03:19:07.0951723Z npm warn install-scripts
+2026-10-27T03:19:07.0953145Z npm warn install-scripts Run `npm install -g --allow-scripts=pnpm` to allow these scripts once, or `npm config set allow-scripts=pnpm --location=user` to allow them for all global installs.
+2026-10-27T03:19:07.1359352Z ##[group]Run pnpm install --frozen-lockfile
+2026-10-27T03:19:07.1359570Z [36;1mpnpm install --frozen-lockfile[0m
+2026-10-27T03:19:07.1413438Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:19:07.1413578Z env:
+2026-10-27T03:19:07.1413700Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:07.1413842Z   UV_LINK_MODE: copy
+2026-10-27T03:19:07.1413968Z ##[endgroup]
+2026-10-27T03:19:07.1609543Z Scope: all 14 workspace projects
+2026-10-27T03:19:07.1741954Z ? Verifying lockfile against supply-chain policies (363 entries)...
+2026-10-27T03:19:07.2904380Z Downloading sherpa-onnx-linux-x64@1.13.8: 0.00 B/11.08 MB
+2026-10-27T03:19:07.3300618Z Packages are hard linked from the content-addressable store to the virtual store.
+2026-10-27T03:19:07.3309962Z   Content-addressable store is at: /home/runner/.local/share/pnpm/store/v11
+2026-10-27T03:19:07.3310991Z   Virtual store is at:             node_modules/.pnpm
+2026-10-27T03:19:07.5599655Z Downloading three@0.174.0: 0.00 B/7.29 MB
+2026-10-27T03:19:08.6087970Z ✓ Lockfile passes supply-chain policies (363 entries in 1.4s)
+2026-10-27T03:19:08.6088413Z Lockfile is up to date, resolution step is skipped
+2026-10-27T03:19:08.6119485Z Packages: +239
+2026-10-27T03:19:08.6119818Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-10-27T03:19:08.6246503Z Progress: resolved 239, reused 0, downloaded 239, added 239, done
+2026-10-27T03:19:08.6272631Z .../.pnpm/koffi@3.3.3/node_modules/koffi install$ node ./cnoke.cjs -P . -D src/koffi --prebuild --release
+2026-10-27T03:19:08.6274146Z .../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+2026-10-27T03:19:08.6274798Z .../esbuild@0.27.7/node_modules/esbuild postinstall$ node install.js
+2026-10-27T03:19:08.6275236Z .../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+2026-10-27T03:19:08.6910157Z .../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+2026-10-27T03:19:08.7050963Z .../.pnpm/koffi@3.3.3/node_modules/koffi install: Done
+2026-10-27T03:19:08.7993959Z .../esbuild@0.27.7/node_modules/esbuild postinstall: Done
+2026-10-27T03:19:08.7999327Z .../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+2026-10-27T03:19:08.9893580Z 
+2026-10-27T03:19:08.9894063Z devDependencies:
+2026-10-27T03:19:08.9897145Z + @eslint/js 10.0.1
+2026-10-27T03:19:08.9897638Z + @playwright/test 1.64.0
+2026-10-27T03:19:08.9897935Z + @types/node 24.19.2
+2026-10-27T03:19:08.9898140Z + @types/pixelmatch 7.1.0
+2026-10-27T03:19:08.9898344Z + @types/pngjs 6.0.5
+2026-10-27T03:19:08.9898533Z + @types/react 19.3.0
+2026-10-27T03:19:08.9898878Z + @types/react-dom 19.3.0
+2026-10-27T03:19:08.9899104Z + @vitest/coverage-v8 5.0.4
+2026-10-27T03:19:08.9899297Z + ajv 8.20.0
+2026-10-27T03:19:08.9899475Z + electron 44.7.0
+2026-10-27T03:19:08.9899662Z + electron-vite 5.0.0
+2026-10-27T03:19:08.9899953Z + eslint 10.12.0
+2026-10-27T03:19:08.9900139Z + pixelmatch 8.0.0
+2026-10-27T03:19:08.9900314Z + pngjs 7.0.0
+2026-10-27T03:19:08.9900485Z + prettier 3.9.10
+2026-10-27T03:19:08.9900653Z + tsx 4.21.0
+2026-10-27T03:19:08.9900837Z + typescript 6.0.3
+2026-10-27T03:19:08.9901036Z + typescript-eslint 8.71.2
+2026-10-27T03:19:08.9901225Z + vite 7.3.7
+2026-10-27T03:19:08.9901381Z + vitest 5.0.4
+2026-10-27T03:19:08.9901482Z 
+2026-10-27T03:19:09.0042940Z Done in 1.8s using pnpm v12.11.2
+2026-10-27T03:19:09.0264764Z ##[group]Run pnpm lint && pnpm typecheck && pnpm test && pnpm build
+2026-10-27T03:19:09.0265035Z [36;1mpnpm lint && pnpm typecheck && pnpm test && pnpm build[0m
+2026-10-27T03:19:09.0319355Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:19:09.0319498Z env:
+2026-10-27T03:19:09.0319615Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:09.0319756Z   UV_LINK_MODE: copy
+2026-10-27T03:19:09.0319877Z ##[endgroup]
+2026-10-27T03:19:09.0488472Z $ eslint .
+2026-10-27T03:19:12.5020508Z $ tsc --noEmit
+2026-10-27T03:19:16.5899302Z $ vitest run
+2026-10-27T03:19:16.7766597Z 
+2026-10-27T03:19:16.7767982Z [1m[30m[46m RUN [49m[39m[22m [36mv5.0.4 [39m[90m/home/runner/work/nemu/nemu[39m
+2026-10-27T03:19:16.7768943Z 
+2026-10-27T03:19:17.5475289Z  [32m✓[39m packages/contracts/src/schemas.test.ts [2m([22m[2m125 tests[22m[2m)[22m[32m 161[2mms[22m[39m
+2026-10-27T03:19:17.8509853Z  [32m✓[39m packages/contracts/src/performance.test.ts [2m([22m[2m197 tests[22m[2m)[22m[32m 85[2mms[22m[39m
+2026-10-27T03:19:18.0190811Z  [32m✓[39m packages/avatar-runtime/src/animation/animation.test.ts [2m([22m[2m23 tests[22m[2m)[22m[33m 641[2mms[22m[39m
+2026-10-27T03:19:18.0214463Z    [32m✓[39m P3-01 Animation Runtime (Five Layers) [2m(23)[22m
+2026-10-27T03:19:18.0249955Z      [32m✓[39m Animation Compositor [2m(6)[22m
+2026-10-27T03:19:18.0310573Z        [33m[2m✓[22m[39m v2 stays bounded through 10,800 frames without a base clip, and duplicate apply does not drift[33m 515[2mms[22m[39m
+2026-10-27T03:19:18.1748321Z  [32m✓[39m packages/contracts/src/review-regressions.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 49[2mms[22m[39m
+2026-10-27T03:19:18.2580717Z  [32m✓[39m packages/body/src/fsm/fsm.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 35[2mms[22m[39m
+2026-10-27T03:19:18.5688776Z  [32m✓[39m packages/avatar-runtime/src/index.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+2026-10-27T03:19:18.9260964Z  [32m✓[39m packages/body/src/readout/readout.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 195[2mms[22m[39m
+2026-10-27T03:19:19.0220831Z [90mstderr[2m | apps/desktop/src/supervisor/supervisor.test.ts[2m > [22m[2mSupervisedProcess Exponential Backoff and Restart[2m > [22m[2mdetects hung process missing heartbeats and restarts it without leaving orphan processes
+2026-10-27T03:19:19.0222341Z [22m[39m[Supervisor] Process hung-process failed health check (stdout-heartbeat). Killing process tree for restart.
+2026-10-27T03:19:19.0222957Z 
+2026-10-27T03:19:19.1145123Z [90mstderr[2m | apps/desktop/src/supervisor/supervisor.test.ts[2m > [22m[2mSupervisedProcess Exponential Backoff and Restart[2m > [22m[2mdetects hung process missing heartbeats and restarts it without leaving orphan processes
+2026-10-27T03:19:19.1147735Z [22m[39m[Supervisor] Process hung-process failed health check (stdout-heartbeat). Killing process tree for restart.
+2026-10-27T03:19:19.1149143Z 
+2026-10-27T03:19:19.1477378Z  [32m✓[39m packages/desktop-sense/src/engine.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+2026-10-27T03:19:19.3124753Z  [32m✓[39m packages/avatar-runtime/src/lipsync/lipsync.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 2179[2mms[22m[39m
+2026-10-27T03:19:19.3125752Z    [32m✓[39m Cross-correlation deviation test (完成标准第 10 项) [2m(3)[22m
+2026-10-27T03:19:19.3126590Z      [33m[2m✓[22m[39m cross-correlation delay for 20 sentences in zh: mean <= 50ms, max <= 80ms[33m 461[2mms[22m[39m
+2026-10-27T03:19:19.3127405Z      [33m[2m✓[22m[39m cross-correlation delay for 20 sentences in en: mean <= 50ms, max <= 80ms[33m 1092[2mms[22m[39m
+2026-10-27T03:19:19.3128287Z      [33m[2m✓[22m[39m cross-correlation delay for 20 sentences in ja: mean <= 50ms, max <= 80ms[33m 544[2mms[22m[39m
+2026-10-27T03:19:19.3178977Z  [32m✓[39m packages/contracts/src/terminal-v2.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+2026-10-27T03:19:19.3493447Z  [32m✓[39m apps/desktop/src/supervisor/supervisor.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 614[2mms[22m[39m
+2026-10-27T03:19:19.4641124Z  [32m✓[39m packages/body/src/idle/idle.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+2026-10-27T03:19:19.6973172Z  [32m✓[39m apps/panel/src/debug/DebugPanel.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+2026-10-27T03:19:19.7581066Z  [32m✓[39m packages/voice/src/asr/runtime.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+2026-10-27T03:19:19.8222253Z  [32m✓[39m packages/voice/src/asr/annotation.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 353[2mms[22m[39m
+2026-10-27T03:19:19.8889976Z  [32m✓[39m packages/body/src/actions/actions.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+2026-10-27T03:19:19.9926209Z  [32m✓[39m apps/stage/src/review/review.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+2026-10-27T03:19:20.0825141Z  [32m✓[39m apps/desktop/src/bus/bus.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+2026-10-27T03:19:20.1247887Z  [32m✓[39m packages/contracts/src/resource-dictionary.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+2026-10-27T03:19:20.1829417Z  [32m✓[39m packages/voice/src/asr/quiet.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+2026-10-27T03:19:20.2171069Z  [32m✓[39m apps/desktop/src/main/display.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-10-27T03:19:20.3109532Z  [32m✓[39m packages/body/src/reflex/reflex.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+2026-10-27T03:19:20.4030828Z  [32m✓[39m packages/voice/src/asr/asr.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+2026-10-27T03:19:20.4450676Z  [32m✓[39m packages/voice/src/asr/hybrid-reference.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+2026-10-27T03:19:20.4995625Z  [32m✓[39m packages/voice/src/asr/alignment.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+2026-10-27T03:19:20.5289248Z  [32m✓[39m packages/desktop-sense/src/geometry.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+2026-10-27T03:19:20.6210424Z  [32m✓[39m apps/panel/src/debug/bus-client.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+2026-10-27T03:19:20.7381017Z  [32m✓[39m packages/contracts/src/body-animation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+2026-10-27T03:19:20.8313586Z  [32m✓[39m apps/panel/src/debug/schema-validator.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+2026-10-27T03:19:20.9961330Z  [32m✓[39m apps/desktop/src/sense/index.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+2026-10-27T03:19:21.1755550Z  [32m✓[39m packages/desktop-sense/src/semantics.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+2026-10-27T03:19:21.2423131Z  [32m✓[39m packages/voice/src/asr/models.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 260[2mms[22m[39m
+2026-10-27T03:19:21.2815065Z  [32m✓[39m packages/voice/src/asr/barge-window-gate.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-10-27T03:19:21.3583528Z  [32m✓[39m packages/body/src/actions/cue-scheduler.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-10-27T03:19:21.3905726Z  [32m✓[39m packages/voice/src/asr/cache.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[32m 4[2mms[22m[39m
+2026-10-27T03:19:21.4953419Z  [32m✓[39m packages/desktop-sense/src/focus-probe.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-10-27T03:19:21.5986988Z  [32m✓[39m tools/scaffold/structure.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 95[2mms[22m[39m
+2026-10-27T03:19:21.7028495Z  [32m✓[39m packages/avatar-runtime/src/animation/readout-mapping.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+2026-10-27T03:19:21.7202724Z  [32m✓[39m apps/panel/src/debug/latency.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-10-27T03:19:21.8220073Z  [32m✓[39m packages/voice/src/asr/latency-acceptance.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-10-27T03:19:21.9499187Z  [32m✓[39m apps/panel/src/legacy/Composer.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+2026-10-27T03:19:22.0813414Z  [32m✓[39m packages/voice/src/asr/measurement-stats.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+2026-10-27T03:19:22.1540798Z  [32m✓[39m packages/contracts/src/browser-contracts.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 250[2mms[22m[39m
+2026-10-27T03:19:22.2444825Z  [32m✓[39m packages/voice/src/asr/timing-quality.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+2026-10-27T03:19:22.3445429Z  [32m✓[39m executors/codex-bridge/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 2[2mms[22m[39m
+2026-10-27T03:19:22.3750909Z  [32m✓[39m packages/desktop-sense/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+2026-10-27T03:19:22.4882356Z  [32m✓[39m packages/terminal/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 2[2mms[22m[39m
+2026-10-27T03:19:22.5217296Z  [32m✓[39m packages/contracts/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 2[2mms[22m[39m
+2026-10-27T03:19:22.6079575Z  [32m✓[39m packages/voice/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+2026-10-27T03:19:22.6522141Z [90mstdout[2m | apps/desktop/src/settings/settings.test.ts
+2026-10-27T03:19:22.6540056Z [22m[39mDownloading Electron binary...
+2026-10-27T03:19:22.6553436Z 
+2026-10-27T03:19:22.6883010Z [90mstderr[2m | apps/desktop/src/settings/settings.test.ts[2m > [22m[2mSettings Migration and Store[2m > [22m[2mrecovers gracefully from corrupted json file
+2026-10-27T03:19:22.6890589Z [22m[39m[SettingsStore] Corrupt settings backed up to /tmp/nemu-settings-test-vWVNUQ/corrupted.json.bak.1793071162684: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)
+2026-10-27T03:19:22.6891844Z     at JSON.parse (<anonymous>)
+2026-10-27T03:19:22.6892775Z     at SettingsStore.load [90m(/home/runner/work/nemu/nemu/[39mapps/desktop/src/settings/settings.ts:58:27[90m)[39m
+2026-10-27T03:19:22.6894023Z     at new SettingsStore [90m(/home/runner/work/nemu/nemu/[39mapps/desktop/src/settings/settings.ts:31:26[90m)[39m
+2026-10-27T03:19:22.6895273Z     at [90m/home/runner/work/nemu/nemu/[39mapps/desktop/src/settings/settings.test.ts:78:19
+2026-10-27T03:19:22.6896907Z     at [90mfile:///home/runner/work/nemu/nemu/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.4_@types+node@24.19.2_@vitest+coverage-v8@5.0.4_vite@7.3.7_@types+node@24.19.2_tsx@4.21.0_/node_modules/[4mvitest[24m/dist/chunks/run.Cm2sd7-x.js:1632:35
+2026-10-27T03:19:22.6899214Z     at [90mfile:///home/runner/work/nemu/nemu/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.4_@types+node@24.19.2_@vitest+coverage-v8@5.0.4_vite@7.3.7_@types+node@24.19.2_tsx@4.21.0_/node_modules/[4mvitest[24m/dist/chunks/run.Cm2sd7-x.js:2794:26
+2026-10-27T03:19:22.6901256Z     at [90mfile:///home/runner/work/nemu/nemu/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.4_@types+node@24.19.2_@vitest+coverage-v8@5.0.4_vite@7.3.7_@types+node@24.19.2_tsx@4.21.0_/node_modules/[4mvitest[24m/dist/chunks/run.Cm2sd7-x.js:3334:20
+2026-10-27T03:19:22.6902393Z     at new Promise (<anonymous>)
+2026-10-27T03:19:22.6903964Z     at runWithCancel [90m(file:///home/runner/work/nemu/nemu/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.4_@types+node@24.19.2_@vitest+coverage-v8@5.0.4_vite@7.3.7_@types+node@24.19.2_tsx@4.21.0_/node_modules/[4mvitest[24m/dist/chunks/run.Cm2sd7-x.js:3329:10[90m)[39m
+2026-10-27T03:19:22.6906096Z     at [90mfile:///home/runner/work/nemu/nemu/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.4_@types+node@24.19.2_@vitest+coverage-v8@5.0.4_vite@7.3.7_@types+node@24.19.2_tsx@4.21.0_/node_modules/[4mvitest[24m/dist/chunks/run.Cm2sd7-x.js:3314:20
+2026-10-27T03:19:22.6907103Z 
+2026-10-27T03:19:22.6946385Z  [32m✓[39m apps/desktop/src/settings/settings.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+2026-10-27T03:19:22.7272349Z  [32m✓[39m packages/log/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 2[2mms[22m[39m
+2026-10-27T03:19:22.7574559Z  [32m✓[39m packages/body/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 2[2mms[22m[39m
+2026-10-27T03:19:22.7632796Z 
+2026-10-27T03:19:22.7646050Z [2m Test Files [22m [1m[32m52 passed[39m[22m[90m (52)[39m
+2026-10-27T03:19:22.7649207Z [2m      Tests [22m [1m[32m579 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (580)[39m
+2026-10-27T03:19:22.7650048Z [2m   Start at [22m 03:19:16
+2026-10-27T03:19:22.7671001Z [2m   Duration [22m 5.98s[2m (tests 43%, import 40%, transform 16%, worker 1%)[22m
+2026-10-27T03:19:22.7671480Z 
+2026-10-27T03:19:22.7672279Z [2m     Import [22m [33m193 modules were evaluated 364 times[39m[2m · 5.04s total, 40% of tracked time[22m
+2026-10-27T03:19:22.7673211Z [2m            [22m [2m~476ms faster with [22m[33misolate: false[39m[2m — shared modules are evaluated once per worker instead of once per file[22m
+2026-10-27T03:19:22.7673755Z [2m            [22m [2mlearn more: https://vitest.dev/guide/improving-performance#test-isolation[22m
+2026-10-27T03:19:22.7674049Z 
+2026-10-27T03:19:22.8350324Z $ pnpm -r build
+2026-10-27T03:19:23.0400062Z packages/terminal build$ tsc -p tsconfig.json
+2026-10-27T03:19:23.0400747Z packages/log build$ tsc -p tsconfig.json
+2026-10-27T03:19:23.0416072Z packages/contracts build$ tsc -p tsconfig.json
+2026-10-27T03:19:23.0434321Z executors/codex-bridge build$ tsc -p tsconfig.json
+2026-10-27T03:19:24.3264768Z packages/terminal build: Done
+2026-10-27T03:19:24.3269683Z spikes/stage-overlay build$ electron-vite build
+2026-10-27T03:19:24.5635286Z executors/codex-bridge build: Done
+2026-10-27T03:19:24.5682085Z packages/log build: Done
+2026-10-27T03:19:24.7038494Z spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+2026-10-27T03:19:24.7540193Z spikes/stage-overlay build: transforming...
+2026-10-27T03:19:24.7855119Z spikes/stage-overlay build: ✓ 1 modules transformed.
+2026-10-27T03:19:24.8000111Z spikes/stage-overlay build: rendering chunks...
+2026-10-27T03:19:24.8026737Z spikes/stage-overlay build: out/main/index.js  8.46 kB
+2026-10-27T03:19:24.8027983Z spikes/stage-overlay build: ✓ built in 78ms
+2026-10-27T03:19:24.8054518Z spikes/stage-overlay build: vite v7.3.7 building ssr environment for production...
+2026-10-27T03:19:24.8101792Z spikes/stage-overlay build: transforming...
+2026-10-27T03:19:24.8137190Z spikes/stage-overlay build: ✓ 1 modules transformed.
+2026-10-27T03:19:24.8175551Z spikes/stage-overlay build: rendering chunks...
+2026-10-27T03:19:24.8184333Z spikes/stage-overlay build: out/preload/index.cjs  1.33 kB
+2026-10-27T03:19:24.8185167Z spikes/stage-overlay build: ✓ built in 13ms
+2026-10-27T03:19:24.8213991Z spikes/stage-overlay build: vite v7.3.7 building client environment for production...
+2026-10-27T03:19:24.8509341Z spikes/stage-overlay build: transforming...
+2026-10-27T03:19:26.1028577Z packages/contracts build: Done
+2026-10-27T03:19:26.1029233Z apps/panel build$ vite build
+2026-10-27T03:19:26.1049845Z packages/avatar-runtime build$ tsc -p tsconfig.json
+2026-10-27T03:19:26.1059783Z packages/body build$ tsc -p tsconfig.json
+2026-10-27T03:19:26.1650471Z spikes/stage-overlay build: ✓ 8 modules transformed.
+2026-10-27T03:19:26.3987184Z apps/panel build: vite v7.3.7 building client environment for production...
+2026-10-27T03:19:26.5309975Z apps/panel build: transforming...
+2026-10-27T03:19:26.6840164Z spikes/stage-overlay build: rendering chunks...
+2026-10-27T03:19:26.6940276Z spikes/stage-overlay build: ../../out/renderer/index.html                    6.52 kB
+2026-10-27T03:19:26.6969380Z spikes/stage-overlay build: ../../out/renderer/assets/index-P4FdMocT.js  1,448.72 kB
+2026-10-27T03:19:26.6999847Z spikes/stage-overlay build: ✓ built in 1.87s
+2026-10-27T03:19:26.7637212Z spikes/stage-overlay build: Done
+2026-10-27T03:19:26.7652669Z packages/desktop-sense build$ tsc -p tsconfig.json
+2026-10-27T03:19:27.5910315Z apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+2026-10-27T03:19:27.5937300Z apps/panel build: 
+2026-10-27T03:19:27.5990744Z apps/panel build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+2026-10-27T03:19:27.6069363Z apps/panel build: 
+2026-10-27T03:19:27.6100134Z apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T03:19:27.6129699Z apps/panel build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+2026-10-27T03:19:27.6189286Z apps/panel build: 
+2026-10-27T03:19:27.6217215Z apps/panel build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+2026-10-27T03:19:27.6240509Z apps/panel build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+2026-10-27T03:19:27.6297076Z apps/panel build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+2026-10-27T03:19:27.6340447Z apps/panel build: 
+2026-10-27T03:19:27.6369943Z apps/panel build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T03:19:29.0770483Z apps/panel build: ✓ 153 modules transformed.
+2026-10-27T03:19:29.5877205Z apps/panel build: rendering chunks...
+2026-10-27T03:19:29.5973853Z apps/panel build: computing gzip size...
+2026-10-27T03:19:29.6190826Z apps/panel build: dist/index.html                   0.64 kB │ gzip:   0.38 kB
+2026-10-27T03:19:29.6191827Z apps/panel build: dist/assets/index-ibGTfxG7.css    8.91 kB │ gzip:   2.32 kB
+2026-10-27T03:19:29.6192521Z apps/panel build: dist/assets/index-B-j56mpL.js   478.38 kB │ gzip: 126.06 kB
+2026-10-27T03:19:29.6193051Z apps/panel build: ✓ built in 3.16s
+2026-10-27T03:19:29.7362233Z apps/panel build: Done
+2026-10-27T03:19:29.7400812Z packages/voice build$ tsc -p tsconfig.json
+2026-10-27T03:19:31.0905869Z packages/body build: Done
+2026-10-27T03:19:31.0924593Z tools/asset-lint build$ pnpm --filter @nemu/contracts build && tsc -p tsconfig.json
+2026-10-27T03:19:31.1731207Z tools/asset-lint build: $ tsc -p tsconfig.json
+2026-10-27T03:19:31.2398260Z packages/desktop-sense build: Done
+2026-10-27T03:19:31.4354316Z packages/avatar-runtime build: Done
+2026-10-27T03:19:31.4371695Z apps/stage build$ vite build
+2026-10-27T03:19:31.6434162Z apps/stage build: vite v7.3.7 building client environment for production...
+2026-10-27T03:19:31.7459939Z apps/stage build: transforming...
+2026-10-27T03:19:32.9875564Z apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+2026-10-27T03:19:32.9887975Z apps/stage build: 
+2026-10-27T03:19:32.9900371Z apps/stage build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+2026-10-27T03:19:32.9901155Z apps/stage build: 
+2026-10-27T03:19:32.9902168Z apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T03:19:32.9903368Z apps/stage build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+2026-10-27T03:19:32.9903883Z apps/stage build: 
+2026-10-27T03:19:32.9904475Z apps/stage build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+2026-10-27T03:19:32.9905725Z apps/stage build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+2026-10-27T03:19:32.9906507Z apps/stage build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+2026-10-27T03:19:32.9907032Z apps/stage build: 
+2026-10-27T03:19:32.9907999Z apps/stage build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T03:19:33.6279729Z packages/voice build: Done
+2026-10-27T03:19:33.6287154Z apps/desktop build$ electron-vite build
+2026-10-27T03:19:34.0776620Z apps/desktop build: vite v7.3.7 building ssr environment for production...
+2026-10-27T03:19:34.1625569Z apps/desktop build: transforming...
+2026-10-27T03:19:34.7962231Z apps/desktop build: ✓ 59 modules transformed.
+2026-10-27T03:19:34.8688018Z apps/desktop build: rendering chunks...
+2026-10-27T03:19:34.8863239Z apps/desktop build: out/main/voice.js                         16.26 kB
+2026-10-27T03:19:34.8873736Z apps/desktop build: out/main/index.js                         83.30 kB
+2026-10-27T03:19:34.8874386Z apps/desktop build: out/main/chunks/proactivity-BtESKN3l.js  177.63 kB
+2026-10-27T03:19:34.8875158Z apps/desktop build: ✓ built in 771ms
+2026-10-27T03:19:34.8934855Z apps/desktop build: vite v7.3.7 building ssr environment for production...
+2026-10-27T03:19:34.9018798Z apps/desktop build: transforming...
+2026-10-27T03:19:34.9220102Z apps/stage build: ✓ 186 modules transformed.
+2026-10-27T03:19:35.1585905Z apps/stage build: rendering chunks...
+2026-10-27T03:19:35.1993833Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+2026-10-27T03:19:35.2005295Z apps/desktop build: 
+2026-10-27T03:19:35.2007003Z apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+2026-10-27T03:19:35.2007723Z apps/desktop build: 
+2026-10-27T03:19:35.2008852Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T03:19:35.2011881Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+2026-10-27T03:19:35.2012343Z apps/desktop build: 
+2026-10-27T03:19:35.2012867Z apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+2026-10-27T03:19:35.2013642Z apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+2026-10-27T03:19:35.2019712Z apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+2026-10-27T03:19:35.2020293Z apps/desktop build: 
+2026-10-27T03:19:35.2021352Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T03:19:35.3924076Z apps/stage build: computing gzip size...
+2026-10-27T03:19:35.4372724Z apps/stage build: dist/index.html                       0.76 kB │ gzip:   0.42 kB
+2026-10-27T03:19:35.4407304Z apps/stage build: 
+2026-10-27T03:19:35.4420538Z apps/stage build: (!) Some chunks are larger than 500 kB after minification. Consider:
+2026-10-27T03:19:35.4421327Z apps/stage build: - Using dynamic import() to code-split the application
+2026-10-27T03:19:35.4422329Z apps/stage build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2026-10-27T03:19:35.4423325Z apps/stage build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2026-10-27T03:19:35.4424597Z apps/stage build: dist/review.html                     12.80 kB │ gzip:   3.06 kB
+2026-10-27T03:19:35.4444984Z apps/stage build: dist/assets/stage-j6owz3Q9.css        0.50 kB │ gzip:   0.29 kB
+2026-10-27T03:19:35.4445866Z apps/stage build: dist/assets/review-CW6rIG6O.css       5.07 kB │ gzip:   1.60 kB
+2026-10-27T03:19:35.4446646Z apps/stage build: dist/assets/stage-D0SSSrz_.js        14.10 kB │ gzip:   4.72 kB
+2026-10-27T03:19:35.4447377Z apps/stage build: dist/assets/review-CgW23HM8.js       23.18 kB │ gzip:   7.66 kB
+2026-10-27T03:19:35.4448424Z apps/stage build: dist/assets/applicator-CkjpNu1V.js  992.51 kB │ gzip: 242.62 kB
+2026-10-27T03:19:35.4449164Z apps/stage build: ✓ built in 3.77s
+2026-10-27T03:19:35.5066095Z apps/stage build: Done
+2026-10-27T03:19:35.6363877Z apps/desktop build: ✓ 116 modules transformed.
+2026-10-27T03:19:35.6705851Z apps/desktop build: rendering chunks...
+2026-10-27T03:19:35.7045304Z apps/desktop build: out/preload/panel.cjs    0.31 kB
+2026-10-27T03:19:35.7046229Z apps/desktop build: out/preload/stage.cjs  382.83 kB
+2026-10-27T03:19:35.7046991Z apps/desktop build: ✓ built in 811ms
+2026-10-27T03:19:35.7080509Z apps/desktop build: vite v7.3.7 building client environment for production...
+2026-10-27T03:19:35.7250198Z apps/desktop build: transforming...
+2026-10-27T03:19:36.6940329Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+2026-10-27T03:19:36.6941258Z apps/desktop build: 
+2026-10-27T03:19:36.6970239Z apps/desktop build: "// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+2026-10-27T03:19:36.6999500Z apps/desktop build: 
+2026-10-27T03:19:36.7030225Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T03:19:36.7031469Z apps/desktop build: ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+2026-10-27T03:19:36.7059302Z apps/desktop build: 
+2026-10-27T03:19:36.7089703Z apps/desktop build: "/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+2026-10-27T03:19:36.7119503Z apps/desktop build:  * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+2026-10-27T03:19:36.7120293Z apps/desktop build:  * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+2026-10-27T03:19:36.7149247Z apps/desktop build: 
+2026-10-27T03:19:36.7179953Z apps/desktop build: in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-27T03:19:37.1715551Z tools/asset-lint build: Done
+2026-10-27T03:19:37.8105993Z apps/desktop build: ✓ 217 modules transformed.
+2026-10-27T03:19:37.9723017Z apps/desktop build: rendering chunks...
+2026-10-27T03:19:38.0468241Z apps/desktop build: desktop/out/renderer/panel/index.html                    0.72 kB
+2026-10-27T03:19:38.0469009Z apps/desktop build: desktop/out/renderer/stage/index.html                    0.77 kB
+2026-10-27T03:19:38.0469616Z apps/desktop build: desktop/out/renderer/stage/asr-mic-worklet.js            1.37 kB
+2026-10-27T03:19:38.0469974Z apps/desktop build: desktop/out/renderer/assets/stage-DABzvroO.css           0.66 kB
+2026-10-27T03:19:38.0470356Z apps/desktop build: desktop/out/renderer/assets/panel-Bf-HAcZX.css          11.36 kB
+2026-10-27T03:19:38.0470699Z apps/desktop build: desktop/out/renderer/assets/proactivity-DOh2FiJs.js    378.69 kB
+2026-10-27T03:19:38.0471051Z apps/desktop build: desktop/out/renderer/assets/panel-D0homD-X.js          698.39 kB
+2026-10-27T03:19:38.0471516Z apps/desktop build: desktop/out/renderer/assets/stage-Btt-zBMB.js        1,564.94 kB
+2026-10-27T03:19:38.0472389Z apps/desktop build: ✓ built in 2.34s
+2026-10-27T03:19:38.1011296Z apps/desktop build: Done
+2026-10-27T03:19:38.1093647Z ##[group]Run pnpm test:contracts
+2026-10-27T03:19:38.1093842Z [36;1mpnpm test:contracts[0m
+2026-10-27T03:19:38.1146734Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:19:38.1146891Z env:
+2026-10-27T03:19:38.1147023Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:38.1147175Z   UV_LINK_MODE: copy
+2026-10-27T03:19:38.1147306Z ##[endgroup]
+2026-10-27T03:19:38.1323568Z $ vitest run --config packages/contracts/vitest.config.ts --coverage
+2026-10-27T03:19:38.3466571Z 
+2026-10-27T03:19:38.3467701Z [1m[30m[46m RUN [49m[39m[22m [36mv5.0.4 [39m[90m/home/runner/work/nemu/nemu[39m
+2026-10-27T03:19:38.3468297Z       [2mCoverage enabled with [22m[33mv8[39m
+2026-10-27T03:19:38.3468489Z 
+2026-10-27T03:19:38.7437098Z  [32m✓[39m packages/contracts/src/performance.test.ts [2m([22m[2m197 tests[22m[2m)[22m[32m 89[2mms[22m[39m
+2026-10-27T03:19:38.9509428Z  [32m✓[39m packages/contracts/src/schemas.test.ts [2m([22m[2m125 tests[22m[2m)[22m[32m 133[2mms[22m[39m
+2026-10-27T03:19:39.0160800Z  [32m✓[39m packages/contracts/src/browser-contracts.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 294[2mms[22m[39m
+2026-10-27T03:19:39.0759842Z  [32m✓[39m packages/contracts/src/review-regressions.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 68[2mms[22m[39m
+2026-10-27T03:19:39.2090444Z  [32m✓[39m packages/contracts/src/resource-dictionary.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+2026-10-27T03:19:39.3250778Z  [32m✓[39m packages/contracts/src/terminal-v2.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+2026-10-27T03:19:39.3523312Z  [32m✓[39m packages/contracts/src/body-animation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+2026-10-27T03:19:39.4063912Z  [32m✓[39m packages/contracts/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 2[2mms[22m[39m
+2026-10-27T03:19:39.4421949Z 
+2026-10-27T03:19:39.4425428Z [2m Test Files [22m [1m[32m8 passed[39m[22m[90m (8)[39m
+2026-10-27T03:19:39.4426059Z [2m      Tests [22m [1m[32m354 passed[39m[22m[90m (354)[39m
+2026-10-27T03:19:39.4426465Z [2m   Start at [22m 03:19:38
+2026-10-27T03:19:39.4429142Z [2m   Duration [22m 1.09s[2m (import 35%, tests 32%, transform 27%, worker 6%)[22m
+2026-10-27T03:19:39.4435704Z 
+2026-10-27T03:19:39.4449117Z [34m % [39m[2mCoverage report from [22m[33mv8[39m
+2026-10-27T03:19:39.4462851Z -------------------|---------|----------|---------|---------|-------------------
+2026-10-27T03:19:39.4463424Z File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+2026-10-27T03:19:39.4463898Z -------------------|---------|----------|---------|---------|-------------------
+2026-10-27T03:19:39.4466813Z All files          |     100 |    97.46 |     100 |     100 |                   
+2026-10-27T03:19:39.4467256Z  appbus.ts         |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4467706Z  approval.ts       |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4468248Z  asset.ts          |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4468812Z  body-animation.ts |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4469235Z  geometry.ts       |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4469632Z  index.ts          |       0 |        0 |       0 |       0 |                   
+2026-10-27T03:19:39.4470041Z  motions.ts        |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4470469Z  performance.ts    |     100 |    97.05 |     100 |     100 | 185,204,233,238   
+2026-10-27T03:19:39.4470936Z  proactivity.ts    |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4471449Z  queries.ts        |     100 |       90 |     100 |     100 | 32                
+2026-10-27T03:19:39.4472078Z  readout.ts        |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4472906Z  stage-events.ts   |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4473300Z  stage.ts          |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4473693Z  vocabulary.ts     |     100 |      100 |     100 |     100 |                   
+2026-10-27T03:19:39.4474128Z -------------------|---------|----------|---------|---------|-------------------
+2026-10-27T03:19:39.4739505Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-27T03:19:39.4739722Z with:
+2026-10-27T03:19:39.4739842Z   name: contracts-coverage
+2026-10-27T03:19:39.4739985Z   path: reports/P0-02/coverage/
+2026-10-27T03:19:39.4740128Z   if-no-files-found: warn
+2026-10-27T03:19:39.4740257Z   compression-level: 6
+2026-10-27T03:19:39.4740377Z   overwrite: false
+2026-10-27T03:19:39.4740499Z   include-hidden-files: false
+2026-10-27T03:19:39.4740628Z env:
+2026-10-27T03:19:39.4740738Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:39.4740873Z   UV_LINK_MODE: copy
+2026-10-27T03:19:39.4740990Z ##[endgroup]
+2026-10-27T03:19:39.5774594Z (node:3574) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T03:19:39.5775113Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T03:19:39.5809487Z With the provided path, there will be 1 file uploaded
+2026-10-27T03:19:39.5815614Z Artifact name is valid!
+2026-10-27T03:19:39.5819012Z Root directory input is valid!
+2026-10-27T03:19:39.8690757Z Beginning upload of artifact content to blob storage
+2026-10-27T03:19:39.8831903Z (node:3574) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T03:19:40.0185837Z Uploaded bytes 660
+2026-10-27T03:19:40.0568854Z Finished uploading artifact content to blob storage!
+2026-10-27T03:19:40.0569649Z SHA256 digest of uploaded artifact zip is c9266ad16f8d9b1860b79981a3ebd48b77e023b93d6dfc69cdab9502014f55ee
+2026-10-27T03:19:40.0570895Z Finalizing artifact upload
+2026-10-27T03:19:40.5010361Z Artifact contracts-coverage.zip successfully finalized. Artifact ID 12707197244
+2026-10-27T03:19:40.5011141Z Artifact contracts-coverage has been successfully uploaded! Final size is 660 bytes. Artifact ID is 12707197244
+2026-10-27T03:19:40.5015607Z Artifact download URL: https://github.com/nanake-lab/nemu/actions/runs/40443460541/artifacts/12707197244
+2026-10-27T03:19:40.5133081Z ##[group]Run pnpm test:transport
+2026-10-27T03:19:40.5133260Z [36;1mpnpm test:transport[0m
+2026-10-27T03:19:40.5185478Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:19:40.5185617Z env:
+2026-10-27T03:19:40.5185734Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:40.5185871Z   UV_LINK_MODE: copy
+2026-10-27T03:19:40.5185991Z ##[endgroup]
+2026-10-27T03:19:40.5360990Z $ node --test tools/scaffold/transport.test.mjs
+2026-10-27T03:19:40.5991098Z ✔ local byte transport: Windows named pipe / Unix socket (4.853453ms)
+2026-10-27T03:19:40.6046224Z ℹ tests 1
+2026-10-27T03:19:40.6046481Z ℹ suites 0
+2026-10-27T03:19:40.6046681Z ℹ pass 1
+2026-10-27T03:19:40.6046869Z ℹ fail 0
+2026-10-27T03:19:40.6047094Z ℹ cancelled 0
+2026-10-27T03:19:40.6047299Z ℹ skipped 0
+2026-10-27T03:19:40.6047486Z ℹ todo 0
+2026-10-27T03:19:40.6047717Z ℹ duration_ms 46.727435
+2026-10-27T03:19:40.6182001Z ##[group]Run astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff
+2026-10-27T03:19:40.6182227Z with:
+2026-10-27T03:19:40.6182341Z   version: 0.12.15
+2026-10-27T03:19:40.6182461Z   python-version: 3.12
+2026-10-27T03:19:40.6182596Z   activate-environment: false
+2026-10-27T03:19:40.6182759Z   working-directory: /home/runner/work/nemu/nemu
+2026-10-27T03:19:40.6182939Z   server-url: https://github.com
+2026-10-27T03:19:40.6184436Z   github-token: ***
+2026-10-27T03:19:40.6184554Z   enable-cache: auto
+2026-10-27T03:19:40.6184853Z   cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+2026-10-27T03:19:40.6185174Z   restore-cache: true
+2026-10-27T03:19:40.6185294Z   save-cache: true
+2026-10-27T03:19:40.6185408Z   prune-cache: true
+2026-10-27T03:19:40.6185533Z   ignore-nothing-to-cache: false
+2026-10-27T03:19:40.6185679Z   ignore-empty-workdir: false
+2026-10-27T03:19:40.6185842Z   add-problem-matchers: true
+2026-10-27T03:19:40.6186100Z env:
+2026-10-27T03:19:40.6186213Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:40.6186348Z   UV_LINK_MODE: copy
+2026-10-27T03:19:40.6186467Z ##[endgroup]
+2026-10-27T03:19:40.7276531Z (node:3621) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T03:19:40.7277239Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T03:19:40.7388479Z manifest-file not provided, reading from local file.
+2026-10-27T03:19:40.7413069Z manifest-file does not contain version 0.12.15, arch x86_64, platform unknown-linux-gnu. Falling back to GitHub releases.
+2026-10-27T03:19:40.7414158Z Downloading uv from "https://github.com/astral-sh/uv/releases/download/0.12.15/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+2026-10-27T03:19:41.1044778Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/d977ef7a-3202-4e68-a24b-9e865fbe626d -f /home/runner/work/_temp/d5ede1bf-9cb3-4352-823d-7af99675da46
+2026-10-27T03:19:41.5715434Z Added /home/runner/.local/bin to the path
+2026-10-27T03:19:41.5717261Z Added /opt/hostedtoolcache/uv/0.12.15/x86_64 to the path
+2026-10-27T03:19:41.5717954Z Set UV_PYTHON to 3.12
+2026-10-27T03:19:41.5722003Z Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+2026-10-27T03:19:41.5722372Z Successfully installed uv version 0.12.15
+2026-10-27T03:19:41.5723958Z Searching files using cache dependency glob: /home/runner/work/nemu/nemu/**/*requirements*.txt,/home/runner/work/nemu/nemu/**/*requirements*.in,/home/runner/work/nemu/nemu/**/*constraints*.txt,/home/runner/work/nemu/nemu/**/*constraints*.in,/home/runner/work/nemu/nemu/**/pyproject.toml,/home/runner/work/nemu/nemu/**/uv.lock,/home/runner/work/nemu/nemu/**/*.py.lock
+2026-10-27T03:19:42.0129186Z /home/runner/work/nemu/nemu/apps/desktop/node_modules/@nemu/voice/src/asr/alignment/pyproject.toml
+2026-10-27T03:19:42.0149912Z /home/runner/work/nemu/nemu/apps/desktop/node_modules/@nemu/voice/src/asr/alignment/uv.lock
+2026-10-27T03:19:42.6686914Z /home/runner/work/nemu/nemu/core/contracts/pyproject.toml
+2026-10-27T03:19:42.6704116Z /home/runner/work/nemu/nemu/core/contracts/uv.lock
+2026-10-27T03:19:45.5816718Z /home/runner/work/nemu/nemu/node_modules/.pnpm/node_modules/@nemu/desktop/node_modules/@nemu/voice/src/asr/alignment/pyproject.toml
+2026-10-27T03:19:45.5829196Z /home/runner/work/nemu/nemu/node_modules/.pnpm/node_modules/@nemu/desktop/node_modules/@nemu/voice/src/asr/alignment/uv.lock
+2026-10-27T03:19:46.5897712Z /home/runner/work/nemu/nemu/node_modules/.pnpm/node_modules/@nemu/voice/src/asr/alignment/pyproject.toml
+2026-10-27T03:19:46.5909117Z /home/runner/work/nemu/nemu/node_modules/.pnpm/node_modules/@nemu/voice/src/asr/alignment/uv.lock
+2026-10-27T03:19:48.2731812Z /home/runner/work/nemu/nemu/packages/voice/src/asr/alignment/pyproject.toml
+2026-10-27T03:19:48.2742652Z /home/runner/work/nemu/nemu/packages/voice/src/asr/alignment/uv.lock
+2026-10-27T03:19:48.7805507Z /home/runner/work/nemu/nemu/services/voice-sidecar/pyproject.toml
+2026-10-27T03:19:48.7816185Z /home/runner/work/nemu/nemu/services/voice-sidecar/uv.lock
+2026-10-27T03:19:48.7833929Z /home/runner/work/nemu/nemu/spikes/carrier-engine/requirements-convert.in
+2026-10-27T03:19:48.7838054Z /home/runner/work/nemu/nemu/spikes/carrier-engine/requirements-eval.in
+2026-10-27T03:19:48.8322263Z /home/runner/work/nemu/nemu/spikes/codex-app-server/pyproject.toml
+2026-10-27T03:19:48.8340887Z /home/runner/work/nemu/nemu/spikes/codex-app-server/uv.lock
+2026-10-27T03:19:49.0695746Z /home/runner/work/nemu/nemu/tools/asset-pipeline/pyproject.toml
+2026-10-27T03:19:49.0735963Z /home/runner/work/nemu/nemu/workers/drive/pyproject.toml
+2026-10-27T03:19:49.0745079Z /home/runner/work/nemu/nemu/workers/drive/uv.lock
+2026-10-27T03:19:49.0756487Z /home/runner/work/nemu/nemu/workers/irl/pyproject.toml
+2026-10-27T03:19:49.0764370Z /home/runner/work/nemu/nemu/workers/irl/uv.lock
+2026-10-27T03:19:49.0786925Z /home/runner/work/nemu/nemu/workers/model-adapter/probe/pyproject.toml
+2026-10-27T03:19:49.0796264Z /home/runner/work/nemu/nemu/workers/model-adapter/probe/uv.lock
+2026-10-27T03:19:49.0801270Z /home/runner/work/nemu/nemu/workers/model-adapter/pyproject.toml
+2026-10-27T03:19:49.0808863Z /home/runner/work/nemu/nemu/workers/model-adapter/uv.lock
+2026-10-27T03:19:49.0811562Z Found 25 files to hash.
+2026-10-27T03:19:49.0879543Z Trying to restore uv cache from GitHub Actions cache with key: setup-uv-1-x86_64-unknown-linux-gnu-3.12-pruned-304d393f144c728a7dd5b811676b0c4b3e0a4c6e071331f2c72e172f882bd5a6
+2026-10-27T03:19:49.2045896Z Cache hit for: setup-uv-1-x86_64-unknown-linux-gnu-3.12-pruned-304d393f144c728a7dd5b811676b0c4b3e0a4c6e071331f2c72e172f882bd5a6
+2026-10-27T03:19:49.2119791Z (node:3621) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-27T03:19:49.5118141Z Received 86116 of 86116 (100.0%), 0.7 MBs/sec
+2026-10-27T03:19:49.5118585Z Cache Size: ~0 MB (86116 B)
+2026-10-27T03:19:49.5134394Z [command]/usr/bin/tar -xf /home/runner/work/_temp/ae9906a3-7fae-426d-98c3-6947d025b288/cache.tzst -P -C /home/runner/work/nemu/nemu --use-compress-program unzstd
+2026-10-27T03:19:49.5215730Z Cache restored successfully
+2026-10-27T03:19:49.5220875Z uv cache restored from GitHub Actions cache with key: setup-uv-1-x86_64-unknown-linux-gnu-3.12-pruned-304d393f144c728a7dd5b811676b0c4b3e0a4c6e071331f2c72e172f882bd5a6
+2026-10-27T03:19:49.5534372Z ##[group]Run foreach ($project in @('workers/irl', 'workers/drive', 'workers/model-adapter', 'services/voice-sidecar')) {
+2026-10-27T03:19:49.5535106Z [36;1mforeach ($project in @('workers/irl', 'workers/drive', 'workers/model-adapter', 'services/voice-sidecar')) {[0m
+2026-10-27T03:19:49.5535589Z [36;1m  Push-Location $project[0m
+2026-10-27T03:19:49.5535825Z [36;1m  try {[0m
+2026-10-27T03:19:49.5536023Z [36;1m    uv sync --locked[0m
+2026-10-27T03:19:49.5536308Z [36;1m    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-27T03:19:49.5536628Z [36;1m    uv run ruff check .[0m
+2026-10-27T03:19:49.5536916Z [36;1m    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-27T03:19:49.5537234Z [36;1m    uv run mypy --strict src tests[0m
+2026-10-27T03:19:49.5537541Z [36;1m    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-27T03:19:49.5537836Z [36;1m    uv run pytest[0m
+2026-10-27T03:19:49.5538135Z [36;1m    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-27T03:19:49.5538422Z [36;1m    uv build[0m
+2026-10-27T03:19:49.5538792Z [36;1m    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-27T03:19:49.5539094Z [36;1m  } finally { Pop-Location }[0m
+2026-10-27T03:19:49.5539335Z [36;1m}[0m
+2026-10-27T03:19:49.5570932Z shell: /usr/bin/pwsh -command ". '{0}'"
+2026-10-27T03:19:49.5571188Z env:
+2026-10-27T03:19:49.5571381Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:49.5571620Z   UV_LINK_MODE: copy
+2026-10-27T03:19:49.5571824Z   UV_PYTHON: 3.12
+2026-10-27T03:19:49.5572069Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-27T03:19:49.5572357Z ##[endgroup]
+2026-10-27T03:19:50.0526489Z Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+2026-10-27T03:19:50.0526949Z Creating virtual environment at: .venv
+2026-10-27T03:19:50.0539310Z Resolved 13 packages in 0.48ms
+2026-10-27T03:19:50.0578575Z    Building nemu-irl @ file:///home/runner/work/nemu/nemu/workers/irl
+2026-10-27T03:19:50.1404075Z Downloading mypy (14.1MiB)
+2026-10-27T03:19:50.1404684Z Downloading pygments (1.2MiB)
+2026-10-27T03:19:50.1405078Z Downloading ruff (10.8MiB)
+2026-10-27T03:19:50.4154356Z  Downloaded pygments
+2026-10-27T03:19:50.5986316Z       Built nemu-irl @ file:///home/runner/work/nemu/nemu/workers/irl
+2026-10-27T03:19:50.6830376Z  Downloaded ruff
+2026-10-27T03:19:50.7433527Z  Downloaded mypy
+2026-10-27T03:19:50.7433871Z Prepared 12 packages in 689ms
+2026-10-27T03:19:51.3941622Z Installed 12 packages in 650ms
+2026-10-27T03:19:51.3941949Z  + iniconfig==2.3.1
+2026-10-27T03:19:51.3942436Z  + librt==0.16.0
+2026-10-27T03:19:51.3942624Z  + mypy==1.20.2
+2026-10-27T03:19:51.3942819Z  + mypy-extensions==1.1.0
+2026-10-27T03:19:51.3943137Z  + nemu-irl==0.0.0 (from file:///home/runner/work/nemu/nemu/workers/irl)
+2026-10-27T03:19:51.3943452Z  + packaging==26.3
+2026-10-27T03:19:51.3943636Z  + pathspec==1.1.1
+2026-10-27T03:19:51.3943816Z  + pluggy==1.6.0
+2026-10-27T03:19:51.3944001Z  + pygments==2.21.0
+2026-10-27T03:19:51.3949297Z  + pytest==9.1.1
+2026-10-27T03:19:51.3949522Z  + ruff==0.15.6
+2026-10-27T03:19:51.3949736Z  + typing-extensions==4.16.0
+2026-10-27T03:19:51.4355208Z All checks passed!
+2026-10-27T03:19:51.9252567Z Success: no issues found in 2 source files
+2026-10-27T03:19:52.1980596Z ============================= test session starts ==============================
+2026-10-27T03:19:52.1980990Z platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0
+2026-10-27T03:19:52.1981251Z rootdir: /home/runner/work/nemu/nemu/workers/irl
+2026-10-27T03:19:52.1981449Z configfile: pyproject.toml
+2026-10-27T03:19:52.1981610Z testpaths: tests
+2026-10-27T03:19:52.1981736Z collected 1 item
+2026-10-27T03:19:52.1981862Z 
+2026-10-27T03:19:52.2062161Z tests/test_scaffold.py .                                                 [100%]
+2026-10-27T03:19:52.2062393Z 
+2026-10-27T03:19:52.2062528Z ============================== 1 passed in 0.00s ===============================
+2026-10-27T03:19:52.2294806Z Building source distribution...
+2026-10-27T03:19:52.4450792Z Building wheel from source distribution...
+2026-10-27T03:19:52.6466184Z Successfully built dist/nemu_irl-0.0.0.tar.gz
+2026-10-27T03:19:52.6466540Z Successfully built dist/nemu_irl-0.0.0-py3-none-any.whl
+2026-10-27T03:19:52.6573415Z Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+2026-10-27T03:19:52.6573846Z Creating virtual environment at: .venv
+2026-10-27T03:19:52.6585898Z Resolved 13 packages in 0.47ms
+2026-10-27T03:19:52.6596182Z    Building nemu-drive @ file:///home/runner/work/nemu/nemu/workers/drive
+2026-10-27T03:19:52.8467266Z       Built nemu-drive @ file:///home/runner/work/nemu/nemu/workers/drive
+2026-10-27T03:19:52.8476015Z Prepared 1 package in 188ms
+2026-10-27T03:19:53.4639467Z Installed 12 packages in 616ms
+2026-10-27T03:19:53.4639794Z  + iniconfig==2.3.1
+2026-10-27T03:19:53.4640034Z  + librt==0.16.0
+2026-10-27T03:19:53.4640224Z  + mypy==1.20.2
+2026-10-27T03:19:53.4640425Z  + mypy-extensions==1.1.0
+2026-10-27T03:19:53.4640786Z  + nemu-drive==0.0.0 (from file:///home/runner/work/nemu/nemu/workers/drive)
+2026-10-27T03:19:53.4641152Z  + packaging==26.3
+2026-10-27T03:19:53.4641350Z  + pathspec==1.1.1
+2026-10-27T03:19:53.4641537Z  + pluggy==1.6.0
+2026-10-27T03:19:53.4641728Z  + pygments==2.21.0
+2026-10-27T03:19:53.4641916Z  + pytest==9.1.1
+2026-10-27T03:19:53.4642097Z  + ruff==0.15.6
+2026-10-27T03:19:53.4642240Z  + typing-extensions==4.16.0
+2026-10-27T03:19:53.5025970Z All checks passed!
+2026-10-27T03:19:53.9899437Z Success: no issues found in 2 source files
+2026-10-27T03:19:54.2493560Z ============================= test session starts ==============================
+2026-10-27T03:19:54.2494268Z platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0
+2026-10-27T03:19:54.2494699Z rootdir: /home/runner/work/nemu/nemu/workers/drive
+2026-10-27T03:19:54.2495019Z configfile: pyproject.toml
+2026-10-27T03:19:54.2495245Z testpaths: tests
+2026-10-27T03:19:54.2495433Z collected 1 item
+2026-10-27T03:19:54.2495554Z 
+2026-10-27T03:19:54.2566915Z tests/test_scaffold.py .                                                 [100%]
+2026-10-27T03:19:54.2567190Z 
+2026-10-27T03:19:54.2567398Z ============================== 1 passed in 0.00s ===============================
+2026-10-27T03:19:54.2783631Z Building source distribution...
+2026-10-27T03:19:54.4785215Z Building wheel from source distribution...
+2026-10-27T03:19:54.6685819Z Successfully built dist/nemu_drive-0.0.0.tar.gz
+2026-10-27T03:19:54.6686336Z Successfully built dist/nemu_drive-0.0.0-py3-none-any.whl
+2026-10-27T03:19:54.6783359Z Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+2026-10-27T03:19:54.6783856Z Creating virtual environment at: .venv
+2026-10-27T03:19:54.6795200Z Resolved 13 packages in 0.49ms
+2026-10-27T03:19:54.6806900Z    Building nemu-model-adapter @ file:///home/runner/work/nemu/nemu/workers/model-adapter
+2026-10-27T03:19:54.8669866Z       Built nemu-model-adapter @ file:///home/runner/work/nemu/nemu/workers/model-adapter
+2026-10-27T03:19:54.8678033Z Prepared 1 package in 187ms
+2026-10-27T03:19:55.4910308Z Installed 12 packages in 622ms
+2026-10-27T03:19:55.4910752Z  + iniconfig==2.3.1
+2026-10-27T03:19:55.4910959Z  + librt==0.16.0
+2026-10-27T03:19:55.4911149Z  + mypy==1.20.2
+2026-10-27T03:19:55.4911349Z  + mypy-extensions==1.1.0
+2026-10-27T03:19:55.4911776Z  + nemu-model-adapter==0.0.0 (from file:///home/runner/work/nemu/nemu/workers/model-adapter)
+2026-10-27T03:19:55.4912166Z  + packaging==26.3
+2026-10-27T03:19:55.4912364Z  + pathspec==1.1.1
+2026-10-27T03:19:55.4912550Z  + pluggy==1.6.0
+2026-10-27T03:19:55.4912739Z  + pygments==2.21.0
+2026-10-27T03:19:55.4912932Z  + pytest==9.1.1
+2026-10-27T03:19:55.4913120Z  + ruff==0.15.6
+2026-10-27T03:19:55.4913320Z  + typing-extensions==4.16.0
+2026-10-27T03:19:55.5872616Z All checks passed!
+2026-10-27T03:19:56.0791243Z Success: no issues found in 2 source files
+2026-10-27T03:19:56.3461439Z ============================= test session starts ==============================
+2026-10-27T03:19:56.3462009Z platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0
+2026-10-27T03:19:56.3462756Z rootdir: /home/runner/work/nemu/nemu/workers/model-adapter
+2026-10-27T03:19:56.3463110Z configfile: pyproject.toml
+2026-10-27T03:19:56.3463346Z testpaths: tests
+2026-10-27T03:19:56.3463545Z collected 1 item
+2026-10-27T03:19:56.3463668Z 
+2026-10-27T03:19:56.3538614Z tests/test_scaffold.py .                                                 [100%]
+2026-10-27T03:19:56.3539037Z 
+2026-10-27T03:19:56.3539253Z ============================== 1 passed in 0.00s ===============================
+2026-10-27T03:19:56.3753164Z Building source distribution...
+2026-10-27T03:19:57.0782847Z Building wheel from source distribution...
+2026-10-27T03:19:57.5382684Z Successfully built dist/nemu_model_adapter-0.0.0.tar.gz
+2026-10-27T03:19:57.5383041Z Successfully built dist/nemu_model_adapter-0.0.0-py3-none-any.whl
+2026-10-27T03:19:57.5484284Z Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+2026-10-27T03:19:57.5484811Z Creating virtual environment at: .venv
+2026-10-27T03:19:57.5496999Z Resolved 13 packages in 0.47ms
+2026-10-27T03:19:57.5507947Z    Building nemu-voice-sidecar @ file:///home/runner/work/nemu/nemu/services/voice-sidecar
+2026-10-27T03:19:57.7401184Z       Built nemu-voice-sidecar @ file:///home/runner/work/nemu/nemu/services/voice-sidecar
+2026-10-27T03:19:57.7409637Z Prepared 1 package in 190ms
+2026-10-27T03:19:58.2875727Z Installed 12 packages in 546ms
+2026-10-27T03:19:58.2876051Z  + iniconfig==2.3.1
+2026-10-27T03:19:58.2876286Z  + librt==0.16.0
+2026-10-27T03:19:58.2876474Z  + mypy==1.20.2
+2026-10-27T03:19:58.2876683Z  + mypy-extensions==1.1.0
+2026-10-27T03:19:58.2877121Z  + nemu-voice-sidecar==0.0.0 (from file:///home/runner/work/nemu/nemu/services/voice-sidecar)
+2026-10-27T03:19:58.2877543Z  + packaging==26.3
+2026-10-27T03:19:58.2877742Z  + pathspec==1.1.1
+2026-10-27T03:19:58.2877938Z  + pluggy==1.6.0
+2026-10-27T03:19:58.2878128Z  + pygments==2.21.0
+2026-10-27T03:19:58.2878318Z  + pytest==9.1.1
+2026-10-27T03:19:58.2878505Z  + ruff==0.15.6
+2026-10-27T03:19:58.2878826Z  + typing-extensions==4.16.0
+2026-10-27T03:19:58.3237263Z All checks passed!
+2026-10-27T03:19:58.8403238Z Success: no issues found in 2 source files
+2026-10-27T03:19:59.1060877Z ============================= test session starts ==============================
+2026-10-27T03:19:59.1061421Z platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0
+2026-10-27T03:19:59.1061878Z rootdir: /home/runner/work/nemu/nemu/services/voice-sidecar
+2026-10-27T03:19:59.1062235Z configfile: pyproject.toml
+2026-10-27T03:19:59.1062475Z testpaths: tests
+2026-10-27T03:19:59.1062679Z collected 1 item
+2026-10-27T03:19:59.1062807Z 
+2026-10-27T03:19:59.1137284Z tests/test_scaffold.py .                                                 [100%]
+2026-10-27T03:19:59.1137592Z 
+2026-10-27T03:19:59.1137808Z ============================== 1 passed in 0.00s ===============================
+2026-10-27T03:19:59.1354224Z Building source distribution...
+2026-10-27T03:19:59.3356341Z Building wheel from source distribution...
+2026-10-27T03:19:59.5508634Z Successfully built dist/nemu_voice_sidecar-0.0.0.tar.gz
+2026-10-27T03:19:59.5509269Z Successfully built dist/nemu_voice_sidecar-0.0.0-py3-none-any.whl
+2026-10-27T03:19:59.5905590Z ##[group]Run rustup show
+2026-10-27T03:19:59.5905769Z [36;1mrustup show[0m
+2026-10-27T03:19:59.5905911Z [36;1mcargo fmt --all -- --check[0m
+2026-10-27T03:19:59.5906114Z [36;1mcargo clippy --workspace --all-targets -- -D warnings[0m
+2026-10-27T03:19:59.5906361Z [36;1mcargo test --workspace --locked --exclude core-store[0m
+2026-10-27T03:19:59.5960073Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:19:59.5960224Z env:
+2026-10-27T03:19:59.5974800Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:19:59.5975083Z   UV_LINK_MODE: copy
+2026-10-27T03:19:59.5975278Z   UV_PYTHON: 3.12
+2026-10-27T03:19:59.5975505Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-27T03:19:59.5975775Z ##[endgroup]
+2026-10-27T03:19:59.6333466Z Default host: x86_64-unknown-linux-gnu
+2026-10-27T03:19:59.6333707Z rustup home:  /home/runner/.rustup
+2026-10-27T03:19:59.6333823Z 
+2026-10-27T03:19:59.6352761Z info: syncing channel updates for 1.99.0-x86_64-unknown-linux-gnu
+2026-10-27T03:19:59.9010230Z info: latest update on 2026-10-01 for version 1.99.0 (b940084d7 2026-09-28)
+2026-10-27T03:19:59.9012410Z info: downloading 5 components
+2026-10-27T03:20:06.4599386Z warn: the missing active toolchain `1.99.0-x86_64-unknown-linux-gnu` has been auto-installed
+2026-10-27T03:20:06.4600097Z warn: auto-installation is deprecated for most `rustup` commands
+2026-10-27T03:20:06.4600644Z warn: scripts relying on this behavior in `rustup` may stop working in the future
+2026-10-27T03:20:06.4601210Z warn: to install the active toolchain, use `rustup install` instead
+2026-10-27T03:20:06.4601729Z warn: see <https://github.com/rust-lang/rustup/issues/4836> for more info
+2026-10-27T03:20:06.4602138Z installed toolchains
+2026-10-27T03:20:06.4602368Z --------------------
+2026-10-27T03:20:06.4602646Z stable-x86_64-unknown-linux-gnu (default)
+2026-10-27T03:20:06.4602835Z 
+2026-10-27T03:20:06.4602923Z active toolchain
+2026-10-27T03:20:06.4603112Z ----------------
+2026-10-27T03:20:06.4603362Z name: 1.99.0-x86_64-unknown-linux-gnu
+2026-10-27T03:20:06.4603837Z active because: overridden by '/home/runner/work/nemu/nemu/core/rust-toolchain.toml'
+2026-10-27T03:20:06.4604356Z installed targets:
+2026-10-27T03:20:06.4683863Z   x86_64-unknown-linux-gnu
+2026-10-27T03:20:06.6439824Z     Updating crates.io index
+2026-10-27T03:20:06.9352853Z  Downloading crates ...
+2026-10-27T03:20:06.9768018Z   Downloaded cfg-if v1.0.5
+2026-10-27T03:20:06.9789874Z   Downloaded block-buffer v0.12.1
+2026-10-27T03:20:06.9869194Z   Downloaded bitflags v2.13.2
+2026-10-27T03:20:06.9943913Z   Downloaded const-oid v0.10.2
+2026-10-27T03:20:07.0030644Z   Downloaded errno v0.3.14
+2026-10-27T03:20:07.0041435Z   Downloaded fallible-streaming-iterator v0.1.9
+2026-10-27T03:20:07.0048078Z   Downloaded cpufeatures v0.3.1
+2026-10-27T03:20:07.0197156Z   Downloaded itoa v1.0.18
+2026-10-27T03:20:07.0217323Z   Downloaded crypto-common v0.2.2
+2026-10-27T03:20:07.0280329Z   Downloaded pkg-config v0.3.34
+2026-10-27T03:20:07.0292189Z   Downloaded find-msvc-tools v0.1.15
+2026-10-27T03:20:07.0344834Z   Downloaded digest v0.11.3
+2026-10-27T03:20:07.0362342Z   Downloaded quote v1.0.47
+2026-10-27T03:20:07.0387073Z   Downloaded shlex v2.0.1
+2026-10-27T03:20:07.0396144Z   Downloaded fallible-iterator v0.3.0
+2026-10-27T03:20:07.0406143Z   Downloaded fastrand v2.5.0
+2026-10-27T03:20:07.0415480Z   Downloaded smallvec v1.16.3
+2026-10-27T03:20:07.0425204Z   Downloaded cc v1.9.0
+2026-10-27T03:20:07.0460496Z   Downloaded pin-project-lite v0.2.17
+2026-10-27T03:20:07.0507625Z   Downloaded sha2 v0.11.1
+2026-10-27T03:20:07.0544176Z   Downloaded once_cell v1.21.4
+2026-10-27T03:20:07.0563134Z   Downloaded hybrid-array v0.4.15
+2026-10-27T03:20:07.0583247Z   Downloaded unicode-ident v1.0.27
+2026-10-27T03:20:07.0611729Z   Downloaded getrandom v0.4.3
+2026-10-27T03:20:07.0642739Z   Downloaded zmij v1.0.23
+2026-10-27T03:20:07.0662980Z   Downloaded tempfile v3.27.0
+2026-10-27T03:20:07.0689744Z   Downloaded tracing-core v0.1.36
+2026-10-27T03:20:07.0712133Z   Downloaded proc-macro2 v1.0.107
+2026-10-27T03:20:07.0734058Z   Downloaded tracing-attributes v0.1.31
+2026-10-27T03:20:07.0773193Z   Downloaded serde_derive v1.0.229
+2026-10-27T03:20:07.0802282Z   Downloaded serde_core v1.0.229
+2026-10-27T03:20:07.0835958Z   Downloaded serde v1.0.229
+2026-10-27T03:20:07.0878073Z   Downloaded memchr v2.8.3
+2026-10-27T03:20:07.0951312Z   Downloaded typenum v1.20.1
+2026-10-27T03:20:07.0981274Z   Downloaded libm v0.2.16
+2026-10-27T03:20:07.1066386Z   Downloaded serde_json v1.0.154
+2026-10-27T03:20:07.1120401Z   Downloaded rusqlite v0.40.2
+2026-10-27T03:20:07.1169977Z   Downloaded vcpkg v0.2.15
+2026-10-27T03:20:07.1593674Z   Downloaded syn v2.0.119
+2026-10-27T03:20:07.1673285Z   Downloaded syn v3.0.9
+2026-10-27T03:20:07.1752767Z   Downloaded rustix v1.1.5
+2026-10-27T03:20:07.1959525Z   Downloaded tracing v0.1.44
+2026-10-27T03:20:07.2077605Z   Downloaded libc v0.2.190
+2026-10-27T03:20:07.2443634Z   Downloaded linux-raw-sys v0.12.1
+2026-10-27T03:20:07.2909071Z   Downloaded libsqlite3-sys v0.38.2
+2026-10-27T03:20:07.3631517Z    Compiling proc-macro2 v1.0.107
+2026-10-27T03:20:07.3631869Z    Compiling quote v1.0.47
+2026-10-27T03:20:07.3632263Z    Compiling unicode-ident v1.0.27
+2026-10-27T03:20:07.3632864Z     Checking typenum v1.20.1
+2026-10-27T03:20:07.4047555Z    Compiling serde_core v1.0.229
+2026-10-27T03:20:07.4830041Z     Checking cfg-if v1.0.5
+2026-10-27T03:20:07.5009639Z    Compiling zmij v1.0.23
+2026-10-27T03:20:07.6120152Z    Compiling serde_json v1.0.154
+2026-10-27T03:20:07.6840528Z    Compiling serde v1.0.229
+2026-10-27T03:20:07.8846581Z     Checking hybrid-array v0.4.15
+2026-10-27T03:20:07.8850708Z    Compiling syn v3.0.9
+2026-10-27T03:20:07.9050693Z     Checking const-oid v0.10.2
+2026-10-27T03:20:08.1059946Z     Checking cpufeatures v0.3.1
+2026-10-27T03:20:08.1270462Z     Checking itoa v1.0.18
+2026-10-27T03:20:08.1631533Z     Checking crypto-common v0.2.2
+2026-10-27T03:20:08.1759920Z     Checking block-buffer v0.12.1
+2026-10-27T03:20:08.2224355Z     Checking memchr v2.8.3
+2026-10-27T03:20:08.4332490Z    Compiling find-msvc-tools v0.1.15
+2026-10-27T03:20:08.4840504Z     Checking digest v0.11.3
+2026-10-27T03:20:08.5319488Z    Compiling shlex v2.0.1
+2026-10-27T03:20:08.5367354Z     Checking sha2 v0.11.1
+2026-10-27T03:20:08.6009967Z    Compiling cc v1.9.0
+2026-10-27T03:20:08.8459978Z    Compiling vcpkg v0.2.15
+2026-10-27T03:20:09.0741602Z    Compiling pkg-config v0.3.34
+2026-10-27T03:20:09.1780112Z    Compiling libc v0.2.190
+2026-10-27T03:20:09.2792474Z    Compiling serde_derive v1.0.229
+2026-10-27T03:20:09.3269810Z     Checking bitflags v2.13.2
+2026-10-27T03:20:09.3750397Z    Compiling getrandom v0.4.3
+2026-10-27T03:20:09.3967021Z    Compiling rustix v1.1.5
+2026-10-27T03:20:09.4670040Z     Checking once_cell v1.21.4
+2026-10-27T03:20:09.5652616Z    Compiling syn v2.0.119
+2026-10-27T03:20:09.5923737Z    Compiling libsqlite3-sys v0.38.2
+2026-10-27T03:20:10.1149753Z    Compiling libm v0.2.16
+2026-10-27T03:20:10.2249906Z     Checking linux-raw-sys v0.12.1
+2026-10-27T03:20:10.3960243Z     Checking core-policy v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-policy)
+2026-10-27T03:20:11.3710074Z     Checking tracing-core v0.1.36
+2026-10-27T03:20:11.4120441Z     Checking core-types v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-types)
+2026-10-27T03:20:11.5390288Z     Checking fastrand v2.5.0
+2026-10-27T03:20:11.5970113Z     Checking fallible-streaming-iterator v0.1.9
+2026-10-27T03:20:11.6420317Z     Checking fallible-iterator v0.3.0
+2026-10-27T03:20:11.7720024Z     Checking pin-project-lite v0.2.17
+2026-10-27T03:20:11.7960005Z     Checking smallvec v1.16.3
+2026-10-27T03:20:11.8719829Z     Checking tempfile v3.27.0
+2026-10-27T03:20:12.6124454Z    Compiling tracing-attributes v0.1.31
+2026-10-27T03:20:13.2320662Z     Checking tracing v0.1.44
+2026-10-27T03:20:14.8100147Z     Checking core-kernel v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-kernel)
+2026-10-27T03:20:14.8101143Z     Checking task-layer v0.0.0 (/home/runner/work/nemu/nemu/core/crates/task-layer)
+2026-10-27T03:20:14.8590950Z     Checking action-gate v0.0.0 (/home/runner/work/nemu/nemu/core/crates/action-gate)
+2026-10-27T03:20:14.8720066Z     Checking semantic-core v0.0.0 (/home/runner/work/nemu/nemu/core/crates/semantic-core)
+2026-10-27T03:20:14.9488075Z     Checking gateway v0.0.0 (/home/runner/work/nemu/nemu/core/crates/gateway)
+2026-10-27T03:20:14.9690958Z     Checking fact-view v0.0.0 (/home/runner/work/nemu/nemu/core/crates/fact-view)
+2026-10-27T03:20:16.1093686Z     Checking rusqlite v0.40.2
+2026-10-27T03:20:16.3464392Z     Checking core-store v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-store)
+2026-10-27T03:20:16.5267247Z     Checking core-replay v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-replay)
+2026-10-27T03:20:16.5268175Z     Checking core-runtime v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-runtime)
+2026-10-27T03:20:16.5460074Z     Checking echoctl v0.0.0 (/home/runner/work/nemu/nemu/core/crates/echoctl)
+2026-10-27T03:20:16.6590164Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.03s
+2026-10-27T03:20:16.7391605Z    Compiling typenum v1.20.1
+2026-10-27T03:20:16.7391942Z    Compiling cfg-if v1.0.5
+2026-10-27T03:20:16.7392201Z    Compiling serde_core v1.0.229
+2026-10-27T03:20:16.7413107Z    Compiling const-oid v0.10.2
+2026-10-27T03:20:16.7626695Z    Compiling zmij v1.0.23
+2026-10-27T03:20:16.8299927Z    Compiling cpufeatures v0.3.1
+2026-10-27T03:20:16.8492986Z    Compiling itoa v1.0.18
+2026-10-27T03:20:16.9210092Z    Compiling memchr v2.8.3
+2026-10-27T03:20:16.9249776Z    Compiling core-policy v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-policy)
+2026-10-27T03:20:16.9429765Z    Compiling once_cell v1.21.4
+2026-10-27T03:20:17.0340074Z    Compiling bitflags v2.13.2
+2026-10-27T03:20:17.1349826Z    Compiling libc v0.2.190
+2026-10-27T03:20:17.3010733Z    Compiling hybrid-array v0.4.15
+2026-10-27T03:20:17.3290767Z    Compiling libm v0.2.16
+2026-10-27T03:20:17.5959974Z    Compiling crypto-common v0.2.2
+2026-10-27T03:20:17.7621314Z    Compiling block-buffer v0.12.1
+2026-10-27T03:20:17.8240799Z    Compiling linux-raw-sys v0.12.1
+2026-10-27T03:20:18.0299271Z    Compiling digest v0.11.3
+2026-10-27T03:20:18.0570837Z    Compiling serde_json v1.0.154
+2026-10-27T03:20:18.0944230Z    Compiling sha2 v0.11.1
+2026-10-27T03:20:18.1022127Z    Compiling serde v1.0.229
+2026-10-27T03:20:18.2119907Z    Compiling rustix v1.1.5
+2026-10-27T03:20:18.4117629Z    Compiling libsqlite3-sys v0.38.2
+2026-10-27T03:20:18.5098049Z    Compiling getrandom v0.4.3
+2026-10-27T03:20:18.5870437Z    Compiling tracing-core v0.1.36
+2026-10-27T03:20:18.6183354Z    Compiling fallible-iterator v0.3.0
+2026-10-27T03:20:18.8070346Z    Compiling core-types v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-types)
+2026-10-27T03:20:18.9060391Z    Compiling fastrand v2.5.0
+2026-10-27T03:20:19.0062168Z    Compiling smallvec v1.16.3
+2026-10-27T03:20:19.0339832Z    Compiling pin-project-lite v0.2.17
+2026-10-27T03:20:19.0600143Z    Compiling fallible-streaming-iterator v0.1.9
+2026-10-27T03:20:19.0937312Z    Compiling tracing v0.1.44
+2026-10-27T03:20:19.1047318Z    Compiling rusqlite v0.40.2
+2026-10-27T03:20:19.2013236Z    Compiling tempfile v3.27.0
+2026-10-27T03:20:21.7200456Z    Compiling core-kernel v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-kernel)
+2026-10-27T03:20:21.7201251Z    Compiling core-store v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-store)
+2026-10-27T03:20:21.7201875Z    Compiling semantic-core v0.0.0 (/home/runner/work/nemu/nemu/core/crates/semantic-core)
+2026-10-27T03:20:21.7423979Z    Compiling fact-view v0.0.0 (/home/runner/work/nemu/nemu/core/crates/fact-view)
+2026-10-27T03:20:21.7710200Z    Compiling action-gate v0.0.0 (/home/runner/work/nemu/nemu/core/crates/action-gate)
+2026-10-27T03:20:21.7960076Z    Compiling gateway v0.0.0 (/home/runner/work/nemu/nemu/core/crates/gateway)
+2026-10-27T03:20:21.8161253Z    Compiling task-layer v0.0.0 (/home/runner/work/nemu/nemu/core/crates/task-layer)
+2026-10-27T03:20:22.4243831Z    Compiling core-replay v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-replay)
+2026-10-27T03:20:22.4466869Z    Compiling core-runtime v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-runtime)
+2026-10-27T03:20:23.2414855Z    Compiling echoctl v0.0.0 (/home/runner/work/nemu/nemu/core/crates/echoctl)
+2026-10-27T03:20:24.3999875Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 7.70s
+2026-10-27T03:20:24.4034287Z      Running unittests src/lib.rs (target/debug/deps/action_gate-2a32fa7b76c5ac7a)
+2026-10-27T03:20:24.4049057Z 
+2026-10-27T03:20:24.4049284Z running 0 tests
+2026-10-27T03:20:24.4050706Z 
+2026-10-27T03:20:24.4051192Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:24.4051506Z 
+2026-10-27T03:20:24.4052777Z      Running unittests src/lib.rs (target/debug/deps/core_kernel-1e821cdeb4a70759)
+2026-10-27T03:20:24.4060712Z 
+2026-10-27T03:20:24.4060797Z running 87 tests
+2026-10-27T03:20:24.4066602Z test dynamics::tests::ac2_09_has_only_stored_unmodulated_reaction_and_stages_existing_idl ... ok
+2026-10-27T03:20:24.4067578Z test dynamics::tests::batch4::v2_95_geometric_mean_uses_each_external_event_retention ... ok
+2026-10-27T03:20:24.4068477Z test dynamics::tests::ac2_14_i13_external_changes_and_all_self_sources_are_whole_state_identity ... ok
+2026-10-27T03:20:24.4071305Z test dynamics::tests::batch4::v2_95_recorded_downtime_is_subtracted_and_replay_is_bitwise ... ok
+2026-10-27T03:20:24.4072088Z test dynamics::tests::batch4::v2_95_rejects_invalid_or_inconsistent_recorded_time ... ok
+2026-10-27T03:20:24.4090709Z test dynamics::tests::batch4::v2_96_equality_is_allowed_and_strictly_above_bound_is_a_fault ... ok
+2026-10-27T03:20:24.4139342Z test dynamics::tests::batch4::v2_95_zero_duration_counts_separately_and_open_run_is_censored ... ok
+2026-10-27T03:20:24.4169327Z test dynamics::tests::batch4::v2_96_legal_subnormal_variance_uses_proven_range_not_a_false_fault ... ok
+2026-10-27T03:20:24.4189228Z test dynamics::tests::batch4::v2_96_prior_decay_changes_baseline_even_when_reaction_equals_current ... ok
+2026-10-27T03:20:24.4229225Z test dynamics::tests::batch4::v2_97_computation_fault_rejects_whole_candidate_without_clipping ... ok
+2026-10-27T03:20:24.4589200Z test dynamics::tests::adaptive_h_respects_floor_and_ignores_wall_clock_and_excluded_events ... ok
+2026-10-27T03:20:24.4599163Z test dynamics::tests::gaussian_detector_uses_magnitude_not_reaction_sign_changes ... ok
+2026-10-27T03:20:24.4599870Z test dynamics::tests::jump_and_directional_drift_apply_and_stage_notices_before_boundary ... ok
+2026-10-27T03:20:24.4609244Z test dynamics::tests::numerical_and_ingress_faults_do_not_publish_partial_state ... ok
+2026-10-27T03:20:24.4931379Z test dynamics::tests::batch4::v2_96_legal_extremes_and_changing_retention_stay_inside_derived_bounds ... ok
+2026-10-27T03:20:24.4959282Z test dynamics::tests::pure_boundary::i13_c_only_stages_theta_change_and_cannot_commit_or_mutate_the_input ... ok
+2026-10-27T03:20:24.4989560Z test dynamics::tests::reference::theta_1_original_500_streams_zero_violations ... ignored, V2-93: legacy Python **2 rounding diagnostic; failure evidence: reports/P5-25/rounding-20261024/REPORT.md
+2026-10-27T03:20:24.5819409Z test dynamics::tests::pure_boundary::ac2_09_changing_caller_x_initial_and_m_preserves_every_theta_and_estimator_bit ... ok
+2026-10-27T03:20:24.5820227Z test dynamics::tests::variance_uses_baseline_before_event_and_duration_completes_same_sign_run ... ok
+2026-10-27T03:20:24.5820869Z test effects::tests::adr0008_composition_law_and_no_time_dependence ... ok
+2026-10-27T03:20:24.5821485Z test effects::tests::direction_validation_is_passed_through_without_changing_drive ... ok
+2026-10-27T03:20:24.5822380Z test effects::tests::effects_are_in_canonical_tendency_order_whatever_the_input_order ... ok
+2026-10-27T03:20:24.5822937Z test effects::tests::evaluate_uses_fixed_product_order ... ok
+2026-10-27T03:20:24.5823397Z test effects::tests::f_sum_is_summed_in_canonical_order ... ok
+2026-10-27T03:20:24.5823881Z test effects::tests::i06_candidates_have_no_effect_on_x_or_m ... ok
+2026-10-27T03:20:24.5824592Z test effects::tests::i21_inputs_are_only_borrowed_and_repeated_calls_agree ... ok
+2026-10-27T03:20:24.5825150Z test effects::tests::situation_match_outside_its_domain_is_refused ... ok
+2026-10-27T03:20:24.5825680Z test effects::tests::stored_values_outside_their_domain_are_refused ... ok
+2026-10-27T03:20:24.5827245Z test effects::tests::strength_matches_v2_formula_and_has_no_negative_zero ... ok
+2026-10-27T03:20:24.5827770Z test effects::tests::theta_outside_its_domain_is_refused ... ok
+2026-10-27T03:20:24.5909185Z test effects::tests::unlisted_match_is_zero_and_negative_zero_is_normalized ... ok
+2026-10-27T03:20:24.6595513Z test fast::tests::ac2_15_contraction_holds_on_intervals_with_events ... ok
+2026-10-27T03:20:24.6649098Z test fast::tests::ac2_15_without_events_x_relaxes_to_rest ... ok
+2026-10-27T03:20:24.6679084Z test fast::tests::drive_bounds::f02_contributions_are_summed_in_canonical_order ... ok
+2026-10-27T03:20:24.6709078Z test fast::tests::drive_bounds::f02_inconsistent_sum_is_rejected_even_when_within_bound ... ok
+2026-10-27T03:20:24.6709830Z test fast::tests::drive_bounds::f02_learned_out_of_range_or_nonfinite_is_rejected_before_weighting ... ok
+2026-10-27T03:20:24.6710535Z test fast::tests::drive_bounds::f02_nonfinite_eta_contributions_and_sum_are_rejected ... ok
+2026-10-27T03:20:24.6711077Z test fast::tests::drive_signature_has_no_fast_state ... ok
+2026-10-27T03:20:24.6711542Z test fast::tests::empathy_weight_takes_the_closest_person ... ok
+2026-10-27T03:20:24.7819232Z test dynamics::tests::ac2_05_replay_every_prefix_including_detector_open_runs_and_drift ... ok
+2026-10-27T03:20:24.7829119Z test fast::tests::event_map::direct_event_map_has_independent_reference_with_saturation ... ok
+2026-10-27T03:20:24.7889994Z test fast::tests::f01_piecewise_projection_and_no_accumulated_decay ... ok
+2026-10-27T03:20:24.7890661Z test fast::tests::f02_invalid_inputs_are_refused_not_repaired ... ok
+2026-10-27T03:20:24.8914242Z test fast::tests::event_map::ac2_15_zero_delta_direct_event_map_is_nonexpansive ... ok
+2026-10-27T03:20:24.8920137Z test fast::tests::f03_lambda_zero_is_rejected ... ok
+2026-10-27T03:20:24.8939146Z test fast::tests::f03_two_histories_converge_after_driving_stops ... ok
+2026-10-27T03:20:24.8949266Z test fast::tests::f05_f_out_is_identity_when_r_plus_is_unchanged_and_aligns_otherwise ... ok
+2026-10-27T03:20:24.8989028Z test fast::tests::f05_same_event_gives_the_same_pulse ... ok
+2026-10-27T03:20:24.8989516Z test fast::tests::internal_count_follows_the_event_classes ... ok
+2026-10-27T03:20:24.9029205Z test fast::tests::kappa_power_matches_direct_products_and_vanishes_for_large_n ... ok
+2026-10-27T03:20:24.9049213Z test fast::tests::missing_appraisal_keeps_only_the_tendency_effects ... ok
+2026-10-27T03:20:24.9422630Z test fast::tests::rates::f02_extreme_finite_rates_through_authorized_compiler ... ok
+2026-10-27T03:20:24.9459323Z test fast::tests::rates::f02_projection_refuses_invalid_derived_rate_and_baseline ... ok
+2026-10-27T03:20:24.9602326Z test fast::tests::rates::learned_rate_matches_independent_reference_and_range ... ok
+2026-10-27T03:20:24.9649289Z test fast::tests::rates::learned_rate_mixed_scales_match_exact_rational_vectors ... ok
+2026-10-27T03:20:25.0389258Z test fast::tests::f02_projection_and_drive_stay_in_x ... ok
+2026-10-27T03:20:25.0419054Z test fast::tests::recovery_reset_and_washout ... ok
+2026-10-27T03:20:25.0429221Z test fast::tests::self_caused_events_are_weighted_by_kappa_powers ... ok
+2026-10-27T03:20:25.1529226Z test fast::tests::rates::learned_rate_review_counterexample_agrees_through_public_projection ... ok
+2026-10-27T03:20:25.1659172Z test fast::tests::snapshot_with_unknown_representation_is_refused ... ok
+2026-10-27T03:20:25.1669229Z test fast::tests::state_boundaries::f02_negative_zero_is_rejected_by_validator_and_normalized_at_construction ... ok
+2026-10-27T03:20:25.2039306Z test fast::tests::state_boundaries::negative_zero_recovery_and_snapshot_preserve_canonical_zero_delta ... ok
+2026-10-27T03:20:25.2249189Z test fast::tests::state_boundaries::snapshot_decoder_rejects_noncanonical_negative_zero_bytes ... ok
+2026-10-27T03:20:25.2279369Z test fast::tests::zero_delta_is_identity_bit_for_bit ... ok
+2026-10-27T03:20:25.2630108Z test dynamics::tests::binary64::theta_1_binary64_500_original_streams_zero_bit_differences ... ok
+2026-10-27T03:20:25.3378132Z test modulation::tests::boundaries::invalid_state_and_reversed_time_fail_without_reusing_a_previous_result ... ok
+2026-10-27T03:20:25.3379229Z test modulation::tests::boundaries::changed_concept_and_misaligned_x_are_not_silently_repaired ... ok
+2026-10-27T03:20:25.3409402Z test modulation::tests::boundaries::j06_budget_rounding_matches_independent_exact_rational_vectors ... ok
+2026-10-27T03:20:25.4419790Z test modulation::tests::boundaries::j06_cancellation_and_zero_state_do_not_evade_configuration_budget ... ok
+2026-10-27T03:20:25.5957585Z test modulation::tests::boundaries::j06_outward_sum_catches_sub_ulp_over_budget_without_inflating_exact_sum ... ok
+2026-10-27T03:20:25.6893888Z test modulation::tests::boundaries::j06_individual_beta_and_nonfinite_inputs_are_rejected ... ok
+2026-10-27T03:20:25.7816387Z test modulation::tests::boundaries::malformed_references_duplicate_ids_and_empty_concepts_are_refused ... ok
+2026-10-27T03:20:25.7849466Z test modulation::tests::deterministic_projection_replay_and_input_immutability ... ok
+2026-10-27T03:20:25.8045550Z test modulation::tests::fixed_dyadic_samples_obey_absolute_bound_and_nonconstant_j ... ok
+2026-10-27T03:20:25.8431174Z test modulation::tests::generated_numeric_and_body_types_pass_existing_canonical_codec ... ok
+2026-10-27T03:20:25.8443289Z test modulation::tests::j06_candidates_cannot_affect_m_even_with_available_direction ... ok
+2026-10-27T03:20:25.8444137Z test modulation::tests::j06_positive_two_layers_match_independent_exact_coefficients ... ok
+2026-10-27T03:20:25.8469345Z test modulation::tests::j06_unvalidated_and_missing_directions_are_excluded_and_reported ... ok
+2026-10-27T03:20:25.8529232Z test modulation::tests::readouts::body_clamps_all_three_axes_and_has_no_learned_component ... ok
+2026-10-27T03:20:25.8529950Z test modulation::tests::readouts::body_nonfinite_or_overflow_is_not_hidden_by_clipping ... ok
+2026-10-27T03:20:25.8530707Z test modulation::tests::readouts::f_disabled_is_explicitly_rehearsal_only_and_matches_zero_readout ... ok
+2026-10-27T03:20:25.8619403Z test modulation::tests::boundaries::validation_cannot_be_reused_for_another_model_tokenizer_carrier_or_direction_set ... ok
+2026-10-27T03:20:25.9242693Z test modulation::tests::readouts::numerical_zero_modulation_keeps_body_neutral_even_for_nonzero_x ... ok
+2026-10-27T03:20:25.9243923Z test modulation::tests::zero_and_rest_are_distinct_and_do_not_subtract_baseline ... ok
+2026-10-27T03:20:25.9497393Z test fast::tests::snapshot_round_trip_is_bit_exact ... ok
+2026-10-27T03:20:25.9655858Z test modulation::tests::storage_and_configuration_order_do_not_change_numeric_results ... ok
+2026-10-27T03:20:28.7160856Z test dynamics::tests::reference::theta_2_original_feedback_and_independent_adaptive_detector_check ... ok
+2026-10-27T03:20:28.7161142Z 
+2026-10-27T03:20:28.7161383Z test result: ok. 86 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 4.31s
+2026-10-27T03:20:28.7161583Z 
+2026-10-27T03:20:28.7166781Z      Running unittests src/lib.rs (target/debug/deps/core_policy-eda3ca376bda5ac0)
+2026-10-27T03:20:28.7178226Z 
+2026-10-27T03:20:28.7178383Z running 0 tests
+2026-10-27T03:20:28.7178525Z 
+2026-10-27T03:20:28.7182414Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:28.7182767Z 
+2026-10-27T03:20:28.7183377Z      Running unittests src/lib.rs (target/debug/deps/core_replay-67e7b6aa74e44e77)
+2026-10-27T03:20:28.7188785Z 
+2026-10-27T03:20:28.7188893Z running 0 tests
+2026-10-27T03:20:28.7190355Z 
+2026-10-27T03:20:28.7190722Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:28.7191294Z      Running unittests src/lib.rs (target/debug/deps/core_runtime-238346eae2305e43)
+2026-10-27T03:20:28.7191539Z 
+2026-10-27T03:20:28.7198159Z 
+2026-10-27T03:20:28.7198454Z running 0 tests
+2026-10-27T03:20:28.7198577Z 
+2026-10-27T03:20:28.7198974Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:28.7199265Z 
+2026-10-27T03:20:28.7200183Z      Running unittests src/lib.rs (target/debug/deps/core_types-162ccff38a96334f)
+2026-10-27T03:20:28.7207391Z 
+2026-10-27T03:20:28.7207478Z running 7 tests
+2026-10-27T03:20:28.7210719Z test numeric::tests::sys21_count_accepts_boundaries_rejects_limit_and_overflow ... ok
+2026-10-27T03:20:28.7211321Z test numeric::tests::sys21_finite_values_preserve_binary64_bits ... ok
+2026-10-27T03:20:28.7211852Z test numeric::tests::sys21_intervals_are_explicitly_bounded_and_never_wrap ... ok
+2026-10-27T03:20:28.7212377Z test numeric::tests::sys21_normalizes_negative_zero_only ... ok
+2026-10-27T03:20:28.7212843Z test semantic::tests::tendency_order_is_canonical_set_order ... ok
+2026-10-27T03:20:28.7213314Z test numeric::tests::sys21_rejects_all_nonfinite_categories ... ok
+2026-10-27T03:20:28.7213798Z test semantic::tests::unit_directions_pass_and_others_fail ... ok
+2026-10-27T03:20:28.7214043Z 
+2026-10-27T03:20:28.7214354Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:28.7214657Z 
+2026-10-27T03:20:28.7222262Z 
+2026-10-27T03:20:28.7222369Z running 4 tests
+2026-10-27T03:20:28.7239744Z      Running tests/canonical_boundaries.rs (target/debug/deps/canonical_boundaries-406108a929c9c1e3)
+2026-10-27T03:20:28.7282309Z test frozen_tag_is_independent_of_message_name ... ok
+2026-10-27T03:20:28.7322797Z test sys21_canonical_count_overflow_negative_zero_and_bad_presence ... ok
+2026-10-27T03:20:28.7562704Z test optional_nonfinite_is_rejected_before_json_can_erase_it ... ok
+2026-10-27T03:20:28.7667591Z test nested_encoding_repeats_header_and_vector_order_is_significant ... ok
+2026-10-27T03:20:28.7668132Z 
+2026-10-27T03:20:28.7668544Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+2026-10-27T03:20:28.7668966Z 
+2026-10-27T03:20:28.7678318Z      Running tests/p5_32_contract.rs (target/debug/deps/p5_32_contract-3c6a17dab7717ab8)
+2026-10-27T03:20:28.7688794Z 
+2026-10-27T03:20:28.7688890Z running 5 tests
+2026-10-27T03:20:28.7789584Z test successors_are_live_and_predecessors_superseded ... ok
+2026-10-27T03:20:28.7941092Z test subnormal_edge_u_zero_with_m_nonzero_is_valid ... ok
+2026-10-27T03:20:28.7942155Z test teaching_allocation_has_no_projection_and_roundtrips ... ok
+2026-10-27T03:20:28.8166964Z test tendency_v2_semantics_include_the_magnitude_sums ... ok
+2026-10-27T03:20:28.8325862Z test allocation_ordinals_are_exactly_zero_to_n_minus_one ... ok
+2026-10-27T03:20:28.8326110Z 
+2026-10-27T03:20:28.8326420Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+2026-10-27T03:20:28.8326938Z 
+2026-10-27T03:20:28.8331307Z      Running tests/p5_34_contract.rs (target/debug/deps/p5_34_contract-5e8bd79a5144717e)
+2026-10-27T03:20:28.8342748Z 
+2026-10-27T03:20:28.8342908Z running 7 tests
+2026-10-27T03:20:28.8619766Z test attachment_denominator_uses_the_normative_grouping ... ok
+2026-10-27T03:20:28.8960003Z test rounded_b_does_not_erase_v_or_the_subnormal_m_u_edge ... ok
+2026-10-27T03:20:28.9081440Z test ordinals_and_nested_containers_are_checked ... ok
+2026-10-27T03:20:28.9144130Z test successor_fields_reserved_numbers_and_lifecycle ... ok
+2026-10-27T03:20:28.9230756Z test json_roundtrip_preserves_adjacent_q_v_values ... ok
+2026-10-27T03:20:28.9594139Z test v_semantics_reject_both_signs_and_nonfinite_native_values ... ok
+2026-10-27T03:20:29.0505259Z test q_boundaries_and_current_support_do_not_redefine_historical_q ... ok
+2026-10-27T03:20:29.0505575Z 
+2026-10-27T03:20:29.0505892Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+2026-10-27T03:20:29.0506181Z 
+2026-10-27T03:20:29.0512122Z      Running tests/v2_contract.rs (target/debug/deps/v2_contract-6a1cbbd2d133854a)
+2026-10-27T03:20:29.0523184Z 
+2026-10-27T03:20:29.0523271Z running 8 tests
+2026-10-27T03:20:29.0539614Z test law_parameter_inequalities ... ok
+2026-10-27T03:20:29.0569353Z test superseded_registry ... ok
+2026-10-27T03:20:29.0579104Z test tendency_change_needs_an_endpoint ... ok
+2026-10-27T03:20:29.0609111Z test genesis_has_no_free_text_fields ... ok
+2026-10-27T03:20:29.0621796Z test genesis_semantics ... ok
+2026-10-27T03:20:29.0622154Z test tendency_order_matches_codec_set_order ... ok
+2026-10-27T03:20:29.0622490Z test adr_0014_values_are_live ... ok
+2026-10-27T03:20:29.0928266Z test tendency_semantics_beyond_the_codec ... ok
+2026-10-27T03:20:29.0928427Z 
+2026-10-27T03:20:29.0928634Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+2026-10-27T03:20:29.0929034Z 
+2026-10-27T03:20:29.0933519Z      Running unittests src/main.rs (target/debug/deps/echoctl-401661d3b407f336)
+2026-10-27T03:20:29.0943787Z 
+2026-10-27T03:20:29.0943886Z running 0 tests
+2026-10-27T03:20:29.0944056Z 
+2026-10-27T03:20:29.0944387Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.0944583Z 
+2026-10-27T03:20:29.0946020Z      Running unittests src/lib.rs (target/debug/deps/fact_view-829d10ec00258890)
+2026-10-27T03:20:29.0954170Z 
+2026-10-27T03:20:29.0954248Z running 0 tests
+2026-10-27T03:20:29.0955326Z 
+2026-10-27T03:20:29.0955648Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.0955941Z 
+2026-10-27T03:20:29.0956439Z      Running unittests src/lib.rs (target/debug/deps/gateway-cccf24c0a204a299)
+2026-10-27T03:20:29.0964277Z 
+2026-10-27T03:20:29.0964363Z running 0 tests
+2026-10-27T03:20:29.0964513Z 
+2026-10-27T03:20:29.0964913Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.0966415Z      Running unittests src/lib.rs (target/debug/deps/semantic_core-cbfe68ce043677ed)
+2026-10-27T03:20:29.0966691Z 
+2026-10-27T03:20:29.0973905Z 
+2026-10-27T03:20:29.0973991Z running 0 tests
+2026-10-27T03:20:29.0974151Z 
+2026-10-27T03:20:29.0974516Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.0974803Z 
+2026-10-27T03:20:29.0976040Z      Running unittests src/lib.rs (target/debug/deps/task_layer-c07c7fd92b7061a7)
+2026-10-27T03:20:29.0983441Z 
+2026-10-27T03:20:29.0983527Z running 0 tests
+2026-10-27T03:20:29.0984925Z 
+2026-10-27T03:20:29.0985231Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.0985524Z 
+2026-10-27T03:20:29.0985624Z    Doc-tests action_gate
+2026-10-27T03:20:29.1087692Z 
+2026-10-27T03:20:29.1087909Z running 0 tests
+2026-10-27T03:20:29.1088066Z 
+2026-10-27T03:20:29.1088396Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.1088833Z 
+2026-10-27T03:20:29.1096755Z    Doc-tests core_kernel
+2026-10-27T03:20:29.1397801Z 
+2026-10-27T03:20:29.1397958Z running 0 tests
+2026-10-27T03:20:29.1398097Z 
+2026-10-27T03:20:29.1398454Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.1398840Z 
+2026-10-27T03:20:29.1408878Z    Doc-tests core_policy
+2026-10-27T03:20:29.1509361Z 
+2026-10-27T03:20:29.1509665Z running 0 tests
+2026-10-27T03:20:29.1509830Z 
+2026-10-27T03:20:29.1510170Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.1510389Z 
+2026-10-27T03:20:29.1519318Z    Doc-tests core_replay
+2026-10-27T03:20:29.1612704Z 
+2026-10-27T03:20:29.1613025Z running 0 tests
+2026-10-27T03:20:29.1613186Z 
+2026-10-27T03:20:29.1613529Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.1613766Z 
+2026-10-27T03:20:29.1620591Z    Doc-tests core_runtime
+2026-10-27T03:20:29.1713741Z 
+2026-10-27T03:20:29.1714022Z running 0 tests
+2026-10-27T03:20:29.1714197Z 
+2026-10-27T03:20:29.1714822Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.1715129Z 
+2026-10-27T03:20:29.1723825Z    Doc-tests core_types
+2026-10-27T03:20:29.6424391Z 
+2026-10-27T03:20:29.6424868Z running 0 tests
+2026-10-27T03:20:29.6425046Z 
+2026-10-27T03:20:29.6438477Z    Doc-tests fact_view
+2026-10-27T03:20:29.6439004Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.6439214Z 
+2026-10-27T03:20:29.6539463Z 
+2026-10-27T03:20:29.6539616Z running 0 tests
+2026-10-27T03:20:29.6539796Z 
+2026-10-27T03:20:29.6540026Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.6540220Z 
+2026-10-27T03:20:29.6548109Z    Doc-tests gateway
+2026-10-27T03:20:29.6642869Z 
+2026-10-27T03:20:29.6643024Z running 0 tests
+2026-10-27T03:20:29.6643179Z 
+2026-10-27T03:20:29.6643521Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.6643828Z 
+2026-10-27T03:20:29.6650571Z    Doc-tests semantic_core
+2026-10-27T03:20:29.6736410Z 
+2026-10-27T03:20:29.6736614Z running 0 tests
+2026-10-27T03:20:29.6736767Z 
+2026-10-27T03:20:29.6737099Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.6737362Z 
+2026-10-27T03:20:29.6744810Z    Doc-tests task_layer
+2026-10-27T03:20:29.6830605Z 
+2026-10-27T03:20:29.6830792Z running 0 tests
+2026-10-27T03:20:29.6830948Z 
+2026-10-27T03:20:29.6831279Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-27T03:20:29.6831618Z 
+2026-10-27T03:20:29.6891441Z ##[group]Run cargo test -p core-store --locked
+2026-10-27T03:20:29.6891667Z [36;1mcargo test -p core-store --locked[0m
+2026-10-27T03:20:29.6945588Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:20:29.6945736Z env:
+2026-10-27T03:20:29.6945860Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:20:29.6946009Z   UV_LINK_MODE: copy
+2026-10-27T03:20:29.6946138Z   UV_PYTHON: 3.12
+2026-10-27T03:20:29.6946291Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-27T03:20:29.6946478Z ##[endgroup]
+2026-10-27T03:20:29.7399801Z    Compiling core-store v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-store)
+2026-10-27T03:20:30.8277172Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 1.10s
+2026-10-27T03:20:30.8305248Z      Running unittests src/lib.rs (target/debug/deps/core_store-8b248ce759c96e8c)
+2026-10-27T03:20:30.8317251Z 
+2026-10-27T03:20:30.8317357Z running 35 tests
+2026-10-27T03:20:34.4444997Z test tests::atomic::atomic_publication_and_append_only_history ... ok
+2026-10-27T03:20:35.4221725Z test tests::atomic::all_binding_fields_are_immutable_after_dispatch ... ok
+2026-10-27T03:20:38.3965321Z test tests::atomic::disk_full_rolls_back_ledger_and_all_state ... ok
+2026-10-27T03:20:39.5477700Z test tests::atomic::later_ingress_cannot_overtake_uncommitted_input ... ok
+2026-10-27T03:20:42.5827028Z test tests::atomic::duplicate_and_conflict_only_advance_processed_frontier ... ok
+2026-10-27T03:20:45.0791783Z test tests::atomic::d101_d102_stale_and_mutated_bindings_rejected ... ok
+2026-10-27T03:20:49.5410216Z test tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge ... ok
+2026-10-27T03:21:13.5395771Z test tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger ... ok
+2026-10-27T03:21:18.8556416Z test tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations ... ok
+2026-10-27T03:21:18.8557250Z test tests::crash_harness::crash_worker ... ok
+2026-10-27T03:21:18.8639789Z test tests::crash_harness::stray_environment_or_missing_permit_never_touches_target ... ok
+2026-10-27T03:21:27.3128014Z test tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger ... ok
+2026-10-27T03:21:31.1435643Z test tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch ... ok
+2026-10-27T03:21:45.0792806Z test tests::crash::x03_ingress_and_transaction_publication_boundaries has been running for over 60 seconds
+2026-10-27T03:21:45.8089820Z test tests::isolation::i29_all_six_cross_lineage_opens_rejected ... ok
+2026-10-27T03:21:45.8459455Z test tests::isolation::malformed_headers_and_existing_directories_never_initialize ... ok
+2026-10-27T03:21:49.5419946Z test tests::crash::x03_receipt_publish_and_repair_can_crash_again has been running for over 60 seconds
+2026-10-27T03:21:52.0027101Z test tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind ... ok
+2026-10-27T03:21:52.1679648Z test tests::objects::at01_canonical_identity_and_superseded_writes ... ok
+2026-10-27T03:21:53.9120049Z test tests::objects::at02_corrupt_or_missing_object_never_publishes ... ok
+2026-10-27T03:21:57.0239753Z test tests::objects::at03_pins_close_prepare_gc_publish_race ... ok
+2026-10-27T03:21:57.2719602Z test tests::objects::object_capacity_and_io_failures_never_acknowledge_d ... ok
+2026-10-27T03:22:05.3767516Z test tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete ... ok
+2026-10-27T03:22:05.3809410Z test tests::objects::publication_primitive_never_replaces_existing_target ... ok
+2026-10-27T03:22:07.9575965Z test tests::objects::published_closure_damage_refuses_recovery ... ok
+2026-10-27T03:22:08.7447506Z test tests::objects::r_index_reassembles_canonical_and_reuses_unchanged_tendencies ... ok
+2026-10-27T03:22:13.5419993Z test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects has been running for over 60 seconds
+2026-10-27T03:22:14.9229496Z test tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc ... ok
+2026-10-27T03:22:15.4340020Z test tests::objects::sys22_capacity_and_busy_wait_are_bounded ... ok
+2026-10-27T03:22:19.5129238Z test tests::reader::live_readers_open_during_ingress_without_false_rollback ... ok
+2026-10-27T03:22:41.8300014Z test tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends ... ok
+2026-10-27T03:22:43.0559804Z test tests::retention_versions::p534_old_messages_and_flat_r_cannot_enter_new_writes ... ok
+2026-10-27T03:22:52.8370049Z test tests::retention_versions::p534_v2_history_readable_writer_refused_without_migration ... ok
+2026-10-27T03:23:02.5582042Z test tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer ... ok
+2026-10-27T03:23:05.5440890Z test tests::crash::x03_ingress_and_transaction_publication_boundaries ... ok
+2026-10-27T03:23:13.6622078Z test tests::retention_versions::p534_v3_q_v_survive_commit_reopen_gc_and_continued_writes ... ok
+2026-10-27T03:23:38.1470955Z test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects ... ok
+2026-10-27T03:26:54.0598885Z test tests::crash::x03_receipt_publish_and_repair_can_crash_again ... ok
+2026-10-27T03:26:54.0599183Z 
+2026-10-27T03:26:54.0599478Z test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 383.23s
+2026-10-27T03:26:54.0599767Z 
+2026-10-27T03:26:54.0608490Z    Doc-tests core_store
+2026-10-27T03:26:54.0883018Z 
+2026-10-27T03:26:54.0883441Z running 2 tests
+2026-10-27T03:26:54.1077965Z test crates/core-store/src/transaction.rs - transaction::CommitCapability (line 25) - compile fail ... ok
+2026-10-27T03:26:54.1143248Z test crates/core-store/src/transaction.rs - transaction::PreparedTransaction (line 44) - compile fail ... ok
+2026-10-27T03:26:54.1143609Z 
+2026-10-27T03:26:54.1143909Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+2026-10-27T03:26:54.1144183Z 
+2026-10-27T03:26:54.1203885Z ##[group]Run pnpm ci:budget
+2026-10-27T03:26:54.1204049Z [36;1mpnpm ci:budget[0m
+2026-10-27T03:26:54.1253018Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:26:54.1253158Z env:
+2026-10-27T03:26:54.1253270Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:26:54.1253406Z   UV_LINK_MODE: copy
+2026-10-27T03:26:54.1253525Z   UV_PYTHON: 3.12
+2026-10-27T03:26:54.1253662Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-27T03:26:54.1253831Z   CI_FREE_MINUTES: 2000
+2026-10-27T03:26:54.1253955Z   CI_MONTHLY_RUNS: 60
+2026-10-27T03:26:54.1254075Z   CI_HOSTED_MINUTES_PER_RUN: 20
+2026-10-27T03:26:54.1254209Z ##[endgroup]
+2026-10-27T03:26:54.1417086Z $ node tools/scaffold/ci-budget.mjs
+2026-10-27T03:26:54.1591871Z {"runs":60,"minutesPerRun":20,"estimated":1200,"allowance":2000}
+2026-10-27T03:26:54.1661374Z ##[group]Run pnpm test:core-contracts
+2026-10-27T03:26:54.1661573Z [36;1mpnpm test:core-contracts[0m
+2026-10-27T03:26:54.1661823Z [36;1muv run --project core/contracts --locked ruff check core/contracts workers/irl/generated/echo[0m
+2026-10-27T03:26:54.1662332Z [36;1muv run --project core/contracts --locked mypy --strict core/contracts/generate.py core/contracts/fixture_inputs.py core/contracts/adversarial.py core/contracts/verify.py workers/irl/generated/echo[0m
+2026-10-27T03:26:54.1710774Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:26:54.1710914Z env:
+2026-10-27T03:26:54.1711031Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:26:54.1711171Z   UV_LINK_MODE: copy
+2026-10-27T03:26:54.1711286Z   UV_PYTHON: 3.12
+2026-10-27T03:26:54.1711429Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-27T03:26:54.1711600Z ##[endgroup]
+2026-10-27T03:26:54.1870255Z $ python core/contracts/verify.py
+2026-10-27T03:26:54.2693619Z 0 generated files stale
+2026-10-27T03:26:54.4617577Z ............
+2026-10-27T03:26:54.4617931Z ----------------------------------------------------------------------
+2026-10-27T03:26:54.4618189Z Ran 12 tests in 0.150s
+2026-10-27T03:26:54.4618274Z 
+2026-10-27T03:26:54.4618323Z OK
+2026-10-27T03:26:54.7967987Z Compatibility against p5-01, p5-21, p5-32, current: 0 violations; 141 messages (46 superseded), 51 enums
+2026-10-27T03:26:54.8361827Z    Compiling proc-macro2 v1.0.107
+2026-10-27T03:26:54.8362298Z    Compiling quote v1.0.47
+2026-10-27T03:26:55.1320309Z    Compiling syn v3.0.9
+2026-10-27T03:26:55.7662406Z    Compiling serde_derive v1.0.229
+2026-10-27T03:26:56.5092318Z    Compiling serde v1.0.229
+2026-10-27T03:26:56.6706762Z    Compiling core-types v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-types)
+2026-10-27T03:27:00.2933575Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.47s
+2026-10-27T03:27:01.5827041Z Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+2026-10-27T03:27:01.5827370Z Creating virtual environment at: core/contracts/.venv
+2026-10-27T03:27:01.6525869Z Downloading grpcio (6.8MiB)
+2026-10-27T03:27:01.6630194Z Downloading grpcio-tools (2.6MiB)
+2026-10-27T03:27:01.9644389Z  Downloaded grpcio-tools
+2026-10-27T03:27:02.0372813Z  Downloaded grpcio
+2026-10-27T03:27:02.7703773Z Installed 15 packages in 732ms
+2026-10-27T03:27:02.9110853Z Official protoc and protobuf runtime: 464 transport vectors PASS
+2026-10-27T03:28:08.5711702Z P5-34 browser-safe schema: 106 checks PASS
+2026-10-27T03:28:08.5964031Z Rust: 11592 cases PASS
+2026-10-27T03:28:08.5964330Z Python: 11592 cases PASS
+2026-10-27T03:28:08.5965540Z TypeScript: 11592 cases PASS
+2026-10-27T03:28:08.5965923Z {"messages": 141, "cases_per_language": 11592, "legal": 2659, "illegal": 8933}
+2026-10-27T03:28:08.6214610Z All checks passed!
+2026-10-27T03:28:09.2273662Z Success: no issues found in 9 source files
+2026-10-27T03:28:09.2357800Z ##[group]Run uv run --project core/contracts --locked mypy --strict core/contracts/check_compat.py core/contracts/freeze_vectors.py
+2026-10-27T03:28:09.2358274Z [36;1muv run --project core/contracts --locked mypy --strict core/contracts/check_compat.py core/contracts/freeze_vectors.py[0m
+2026-10-27T03:28:09.2409056Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:28:09.2409195Z env:
+2026-10-27T03:28:09.2409310Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:28:09.2409585Z   UV_LINK_MODE: copy
+2026-10-27T03:28:09.2409701Z   UV_PYTHON: 3.12
+2026-10-27T03:28:09.2409843Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-27T03:28:09.2410012Z ##[endgroup]
+2026-10-27T03:28:09.3781093Z Success: no issues found in 2 source files
+2026-10-27T03:28:09.3862090Z ##[group]Run pnpm test:p205:metrics
+2026-10-27T03:28:09.3862280Z [36;1mpnpm test:p205:metrics[0m
+2026-10-27T03:28:09.3912353Z shell: /usr/bin/bash -e {0}
+2026-10-27T03:28:09.3912491Z env:
+2026-10-27T03:28:09.3912605Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-27T03:28:09.3912742Z   UV_LINK_MODE: copy
+2026-10-27T03:28:09.3912859Z   UV_PYTHON: 3.12
+2026-10-27T03:28:09.3913000Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-27T03:28:09.3913171Z ##[endgroup]
+2026-10-27T03:28:09.4071554Z $ node --test apps/stage/test/jitter/settling-metrics.test.mjs
+2026-10-27T03:28:09.4817541Z ✔ constant coordinates have zero residual spectrum without numerical DC leakage (5.377458ms)
+2026-10-27T03:28:09.4818363Z ✔ a known 18 Hz oscillation is retained above the reporting band (13.928718ms)
+2026-10-27T03:28:09.4819104Z ✔ low-frequency oscillation, RMS and signed trend are measured (4.288384ms)
+2026-10-27T03:28:09.4819836Z ✔ geometric range preserves tiny angle and displacement instead of rounding them away (0.166071ms)
+2026-10-27T03:28:09.4875934Z ℹ tests 4
+2026-10-27T03:28:09.4876122Z ℹ suites 0
+2026-10-27T03:28:09.4876291Z ℹ pass 4
+2026-10-27T03:28:09.4876468Z ℹ fail 0
+2026-10-27T03:28:09.4876582Z ℹ cancelled 0
+2026-10-27T03:28:09.4876825Z ℹ skipped 0
+2026-10-27T03:28:09.4877017Z ℹ todo 0
+2026-10-27T03:28:09.4877151Z ℹ duration_ms 60.288459
+2026-10-27T03:28:09.5006919Z Post job cleanup.
+2026-10-27T03:28:09.5741322Z Cache hit occurred on key setup-uv-1-x86_64-unknown-linux-gnu-3.12-pruned-304d393f144c728a7dd5b811676b0c4b3e0a4c6e071331f2c72e172f882bd5a6, not saving cache.
+2026-10-27T03:28:09.5742264Z (node:6091) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T03:28:09.5742747Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T03:28:09.5824677Z Post job cleanup.
+2026-10-27T03:28:09.6532707Z (node:6100) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-27T03:28:09.6533131Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-27T03:28:09.6700854Z Post job cleanup.
+2026-10-27T03:28:09.7260299Z [command]/usr/bin/git version
+2026-10-27T03:28:09.7290195Z git version 2.55.0
+2026-10-27T03:28:09.7313597Z Temporarily overriding HOME='/home/runner/work/_temp/6861f3d9-7082-48f8-9192-f481d1b59eb9' before making global git config changes
+2026-10-27T03:28:09.7314496Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-27T03:28:09.7316930Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nemu/nemu
+2026-10-27T03:28:09.7345941Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-27T03:28:09.7397412Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-27T03:28:09.7612820Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-27T03:28:09.7653009Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-27T03:28:09.7858350Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-27T03:28:09.7887628Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-27T03:28:09.8169899Z Cleaning up orphan processes
+2026-10-27T03:28:09.8393782Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02, astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
