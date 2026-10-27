@@ -35,7 +35,7 @@ pub(crate) fn create(root: &Path, fault: &Fault) -> Result<()> {
     )?;
     fs::create_dir(&receipts)?;
     fault.hit(FaultPoint::ReceiptRootCreated)?;
-    for kind in ["d", "commits"] {
+    for kind in ["d", "commits", "reject"] {
         fs::create_dir(receipts.join(kind))?;
         fault.hit(FaultPoint::ReceiptKindCreated)?;
         platform::sync_dir(&receipts.join(kind))?;
@@ -92,7 +92,12 @@ pub(crate) fn expected(
     kind: &str,
 ) -> Result<BTreeMap<u64, ObjectRef>> {
     let mut result = BTreeMap::new();
-    let sql = if kind == "d" {
+    if kind == "reject" && crate::migration::format(db)? == 1 {
+        return Ok(result);
+    }
+    let sql = if kind == "reject" {
+        "SELECT position,record FROM ingress_rejections ORDER BY position"
+    } else if kind == "d" {
         "SELECT position,event FROM raw_ingress ORDER BY position"
     } else {
         "SELECT c.position,CASE WHEN c.decision='accepted' THEN c.snapshot ELSE d.event END,c.decision,c.id FROM commits c JOIN raw_ingress d USING(position) ORDER BY c.position"
@@ -103,7 +108,15 @@ pub(crate) fn expected(
         let position = unsigned(row.get(0)?)?;
         let bytes: Vec<u8> = row.get(1)?;
         let is_snapshot = kind == "commits" && row.get::<_, String>(2)? == "accepted";
-        let reference = if is_snapshot {
+        let reference = if kind == "reject" {
+            objects.reference(
+                &core_types::generated::IngressRejection::from_canonical(
+                    &bytes,
+                    objects.config.encoding,
+                )?,
+                "1",
+            )?
+        } else if is_snapshot {
             ObjectRef::from_canonical(&bytes, objects.config.encoding)?
         } else {
             objects.reference(
@@ -129,10 +142,14 @@ pub(crate) type Captured = BTreeMap<&'static str, BTreeMap<u64, ObjectRef>>;
 
 pub(crate) fn capture(root: &Path, objects: &Objects) -> Result<Captured> {
     let mut captured = BTreeMap::new();
-    for kind in ["d", "commits"] {
+    for kind in ["d", "commits", "reject"] {
         let dir = path(root)?.join(kind);
         platform::no_links(&dir)?;
         let mut found = BTreeMap::new();
+        if kind == "reject" && !dir.exists() {
+            captured.insert(kind, found);
+            continue;
+        }
         for entry in fs::read_dir(&dir)? {
             let entry = entry?;
             let name = entry.file_name().to_string_lossy().into_owned();
@@ -184,7 +201,7 @@ pub(crate) fn reconcile(
     let captured = capture(root, objects)?;
     check(db, objects, &captured)?;
     if repair_tail {
-        for kind in ["d", "commits"] {
+        for kind in ["d", "commits", "reject"] {
             for (position, r) in expected(db, objects, kind)? {
                 if !captured[kind].contains_key(&position) {
                     record(root, kind, position, &r, objects, fault)?;

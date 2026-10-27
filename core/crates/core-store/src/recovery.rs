@@ -37,6 +37,7 @@ pub(crate) fn verify(
         objects.closure(&r)?;
     }
     let limits = objects.config.encoding;
+    crate::terminal_ingress::verify_audit(db, limits)?;
     let mut input = db.prepare("SELECT position,event FROM raw_ingress ORDER BY position")?;
     let mut rows = input.query([])?;
     let mut count = 0u64;

@@ -7,6 +7,7 @@ pub mod numeric;
 mod protobuf;
 pub mod scalar;
 pub mod semantic;
+pub mod terminal_ingress;
 #[rustfmt::skip]
 pub mod generated;
 
@@ -101,6 +102,8 @@ pub trait WireMessage: serde::Serialize + serde::de::DeserializeOwned {
     /// True for types superseded by a later contract (P5-21). They stay
     /// decodable for old data and tests; no runtime path may produce them.
     const SUPERSEDED: bool = false;
+    /// Transient credentials must never become authoritative objects.
+    const PERSISTABLE: bool = true;
     fn canonical_bytes(&self, limits: contract::Limits) -> contract::Result<Vec<u8>> {
         let schema = codec_schema(Self::NAME)?;
         schema.encode_canonical(

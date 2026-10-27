@@ -26,6 +26,7 @@ export interface Schema {
       tag: string;
       source: string;
       resource?: boolean;
+      transient?: boolean;
       file: string;
       fields: Field[];
       rules: {
@@ -43,6 +44,7 @@ export interface Schema {
       /** Lifecycle metadata only (P5-21); never changes encoding. */
       superseded?: Supersession;
       supersedes?: string;
+      retains?: string;
       reserved?: number[];
     }
   >;

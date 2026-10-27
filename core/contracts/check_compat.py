@@ -65,6 +65,10 @@ def violations(old: Schema, new: Schema) -> list[str]:
                     out.append(f"message {name} field {number} changed")
             if before == after:
                 out.append(f"message {name} field order changed")
+        if m.get("transient", False) != n.get("transient", False):
+            out.append(f"message {name} persistence classification changed")
+        if m.get("retains") != n.get("retains"):
+            out.append(f"message {name} retained predecessor changed")
         if m.get("resource") != n.get("resource"):
             out.append(f"message {name} resource projection changed")
         if n["rules"] != m["rules"]:
@@ -119,10 +123,12 @@ def discipline(s: Schema) -> list[str]:
                 out.append(f"{name} invalid oneof {group_name}")
         if any(f.get("oneof") not in groups for f in m["fields"] if "oneof" in f):
             out.append(f"{name} orphan oneof member")
-        predecessor = m.get("supersedes")
+        predecessor = m.get("supersedes") or m.get("retains")
         if predecessor:
             p = messages.get(predecessor, {})
-            if p.get("superseded", {}).get("by") != name:
+            if not p or (
+                "supersedes" in m and p.get("superseded", {}).get("by") != name
+            ):
                 out.append(f"{name} supersedes {predecessor}, which does not name it")
             kept = {f["number"]: f for f in m["fields"]}
             reserved = set(m.get("reserved", []))
@@ -160,6 +166,10 @@ def discipline(s: Schema) -> list[str]:
             continue
         for f in m["fields"]:
             t = f["type"]
+            if not m.get("transient") and messages.get(t, {}).get("transient"):
+                out.append(
+                    f"persistent {name}.{f['name']} embeds transient credentials"
+                )
             if "superseded" in messages.get(t, {}) or whole_enum_superseded(s, t):
                 out.append(f"live {name}.{f['name']} uses superseded {t}")
     return out

@@ -32,7 +32,10 @@ def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
         if t == "sint64":
             return str([0, -(2**63), 2**63 - 1][n % 3])
         if t == "uint32":
-            return max(int(f.get("min", 0)), [0, 2**32 - 1, 17][n % 3])
+            return min(
+                int(f.get("max", 2**32 - 1)),
+                max(int(f.get("min", 0)), [0, 2**32 - 1, 17][n % 3]),
+            )
         return max(
             f.get("min", -1e300),
             min(

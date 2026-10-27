@@ -100,6 +100,7 @@ message TerminalMaintenance {
 
 // @message echo.receipt | CONTRACTS 4.3
 message Receipt {
+  // P5-35: retained for internal callers and historical bytes. TerminalResponse uses ReceiptV2.
   optional uint32 schema_version = 1; // required
   optional string stable_source_key = 2; // required,nonempty
   optional ReceiptStage stage = 3; // required

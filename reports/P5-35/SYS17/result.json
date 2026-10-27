@@ -1,0 +1,8 @@
+{
+  "result": "passed",
+  "scope": "SQLite physical format 1 <-> 2 on writable V3; not full SYS17",
+  "successor": "P5-26 V2->V3 historical conversion and G/H replay: not_run, not P5-35 merge blocking",
+  "evidence": "../W02/store-ingress-final.log",
+  "failure_injection": "precommit StorageFull and process exit; both directions",
+  "rollback_boundary": "empty audit only; acknowledged audit must not be discarded"
+}

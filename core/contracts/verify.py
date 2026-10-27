@@ -244,6 +244,9 @@ def main() -> None:
             ),
         ],
     }
+    for vector in json.loads((HERE / "golden/ingress.json").read_text(encoding="utf-8")):
+        queries.append(vector["request"])
+        expected.append(vector["expected"])
     for language, command in commands.items():
         actual = probe(command, queries)
         for i, (got, want) in enumerate(zip(actual, expected, strict=True)):

@@ -78,7 +78,7 @@ impl Objects {
         fault: &Fault,
     ) -> Result<PreparedObject<L>> {
         require(
-            !T::SUPERSEDED,
+            !T::SUPERSEDED && T::PERSISTABLE,
             "new writes must use the active successor message",
         )?;
         let r = self.reference(value, version)?;
