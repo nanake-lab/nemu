@@ -304,6 +304,37 @@ class ProactiveGate(IntEnum):
     GATE_BUDGET = 3
     GATE_MODE = 4
     GATE_MIN_INTERVAL = 5
+class IngressKind(IntEnum):
+    INGRESS_EVENT = 1
+    INGRESS_UPLOAD = 2
+    INGRESS_QUERY = 3
+    INGRESS_APPROVAL = 4
+    INGRESS_CANCEL = 5
+    INGRESS_GROWTH = 6
+class IngressReason(IntEnum):
+    INVALID_FRAME = 1
+    AUTH_FAILED = 2
+    SESSION_EXPIRED = 3
+    CAPABILITY_DENIED = 4
+    VERSION_UNSUPPORTED = 5
+    OBJECT_MISMATCH = 6
+    PENDING_RECORDS_FULL = 7
+    PENDING_BYTES_FULL = 8
+    AUDIT_FULL = 9
+    UPLOAD_BUDGET_FULL = 10
+    SOURCE_KEY_CONFLICT = 11
+class AuthStatus(IntEnum):
+    AUTHENTICATED = 1
+    AUTH_REJECTED = 2
+class UploadStatus(IntEnum):
+    UPLOAD_CONTINUE = 1
+    UPLOAD_COMPLETE = 2
+class IngressResponseKind(IntEnum):
+    EVENT_RECEIPT = 1
+    UPLOAD_RECEIPT = 2
+    QUERY_REPLY = 3
+    CONTROL_ACK = 4
+    INGRESS_REJECTED = 5
 @dataclass(frozen=True)
 class ObjectRef:
     schema_version: int
@@ -775,6 +806,7 @@ class GenesisManifestV2:
     protocol: ObjectRef
 @dataclass(frozen=True)
 class EvidenceAllocationV2:
+    # Superseded (successor EvidenceAllocationV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence
     schema_version: int
     tendency_id: str
     support: float
@@ -785,6 +817,7 @@ class EvidenceAllocationV2:
     projection: float | None
 @dataclass(frozen=True)
 class EvidenceGroupV2:
+    # Superseded (successor EvidenceGroupV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence
     schema_version: int
     group_id: str
     members: list[str]
@@ -794,6 +827,7 @@ class EvidenceGroupV2:
     allocations: list[EvidenceAllocationV2]
 @dataclass(frozen=True)
 class TendencyV2:
+    # Superseded (successor TendencyV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence
     schema_version: int
     tendency_id: str
     concept: ConceptRef
@@ -813,10 +847,57 @@ class TendencyV2:
     magnitude_weight: float
 @dataclass(frozen=True)
 class RSnapshotV2:
+    # Superseded (successor RSnapshotV3): P5-34 (ADR 0021): explicit actual retention and absolute evidence
     schema_version: int
     revision: str
     law_version: ObjectRef
     tendencies: list[TendencyV2]
+@dataclass(frozen=True)
+class EvidenceAllocationV3:
+    schema_version: int
+    tendency_id: str
+    support: float
+    intensity: float
+    share: float
+    ordinal: int
+    mu: float
+    projection: float | None
+    actual_retention: float
+@dataclass(frozen=True)
+class EvidenceGroupV3:
+    schema_version: int
+    group_id: str
+    members: list[str]
+    source_key: str
+    credibility: float
+    verifiability: float
+    allocations: list[EvidenceAllocationV3]
+@dataclass(frozen=True)
+class TendencyV3:
+    schema_version: int
+    tendency_id: str
+    concept: ConceptRef
+    predicate: list[TrilingualText]
+    direction: NatureVector
+    evidence_a: float
+    evidence_b: float
+    h_hat: float
+    group_count: int
+    flip_count: int
+    last_sign: EvidenceSign | None
+    pi: float
+    typical_magnitude: float
+    relation: PersonRelation | None
+    attachment_prior: float | None
+    magnitude_sum: float
+    magnitude_weight: float
+    evidence_absolute: float
+@dataclass(frozen=True)
+class RSnapshotV3:
+    schema_version: int
+    revision: str
+    law_version: ObjectRef
+    tendencies: list[TendencyV3]
 @dataclass(frozen=True)
 class ThetaValues:
     schema_version: int
@@ -1590,3 +1671,111 @@ class ProactivityBoundaries:
     cooldowns: list[ProactivityCooldown]
     gates: list[ProactiveGate]
     budgets: ProactivityBudgets
+@dataclass(frozen=True)
+class TerminalBudget:
+    schema_version: int
+    version: str
+    max_frame_bytes: int
+    max_chunk_bytes: int
+    max_object_bytes: int
+    max_uploads: int
+    max_upload_bytes: int
+@dataclass(frozen=True, repr=False)
+class TerminalAuthenticate:
+    schema_version: int
+    request_id: str
+    installation_id: str
+    token: bytes
+    protocol_versions: list[int]
+@dataclass(frozen=True)
+class TerminalSession:
+    schema_version: int
+    session_id: str
+    installation_id: str
+    protocol_version: int
+    capabilities: list[IngressKind]
+    budget: TerminalBudget
+@dataclass(frozen=True)
+class TerminalAuthResult:
+    schema_version: int
+    request_id: str
+    status: AuthStatus
+    session: TerminalSession | None
+    reason: IngressReason | None
+@dataclass(frozen=True)
+class TerminalEvent:
+    schema_version: int
+    id: str
+    stable_source_key: str
+    kind: EventKind
+    event_time_ns: int
+    parents: list[str]
+    payload_ref: ObjectRef
+    provenance: ObjectRef
+    payload_digest: bytes
+    action_id: str | None
+    trial_id: str | None
+    correction_of: list[str]
+    derivation: Derivation
+@dataclass(frozen=True)
+class ObjectUploadChunk:
+    schema_version: int
+    upload_id: str
+    object: ObjectRef
+    offset: int
+    data: bytes
+    final_chunk: bool
+@dataclass(frozen=True)
+class ObjectUploadReceipt:
+    schema_version: int
+    upload_id: str
+    object: ObjectRef
+    next_offset: int
+    status: UploadStatus
+@dataclass(frozen=True)
+class ReceiptV2:
+    schema_version: int
+    stable_source_key: str
+    stage: ReceiptStage
+    event_id: str | None
+    reason_code: IngressReason | None
+    raw_log_position: int | None
+    ingest_time_ns: int | None
+@dataclass(frozen=True)
+class TerminalRequest:
+    schema_version: int
+    request_id: str
+    session_id: str
+    protocol_version: int
+    kind: IngressKind
+    event: TerminalEvent | None
+    upload: ObjectUploadChunk | None
+    query: QueryV2 | None
+    approval: ApprovalDecisionV2 | None
+    cancel: OutputCancel | None
+    growth: GrowthControl | None
+@dataclass(frozen=True)
+class TerminalResponse:
+    schema_version: int
+    request_id: str
+    session_id: str
+    protocol_version: int
+    reply_to: IngressKind
+    kind: IngressResponseKind
+    receipt: ReceiptV2 | None
+    upload: ObjectUploadReceipt | None
+    query: QueryResultV2 | None
+    reason: IngressReason | None
+@dataclass(frozen=True)
+class IngressAuditBudget:
+    schema_version: int
+    version: str
+    max_records: int
+    max_bytes: int
+@dataclass(frozen=True)
+class IngressRejection:
+    schema_version: int
+    position: int
+    recorded_at_ns: int
+    reason: IngressReason
+    request_kind: IngressKind | None

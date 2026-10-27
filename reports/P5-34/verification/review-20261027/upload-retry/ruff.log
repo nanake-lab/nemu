@@ -1,0 +1,66 @@
+WARN `--no-project` was provided, but no project was found
+Downloading mypy (10.9MiB)
+Downloading ast-serialize (1.1MiB)
+Downloading ruff (9.9MiB)
+ Downloaded ast-serialize
+ Downloaded ruff
+ Downloaded mypy
+Installed 9 packages in 413ms
+I001 [*] Import block is un-sorted or un-formatted
+  --> reports\P5-34\verify-upload-retry.py:3:1
+   |
+ 1 |   """Exercise the actual Windows workflow upload conditions and PowerShell gate."""
+ 2 |
+ 3 | / from __future__ import annotations
+ 4 | |
+ 5 | | import ast
+ 6 | | import copy
+ 7 | | import json
+ 8 | | import os
+ 9 | | from pathlib import Path
+10 | | import re
+11 | | import subprocess
+12 | | import tempfile
+13 | |
+14 | | import yaml
+   | |___________^
+help: Organize imports
+   |
+8  | import os
+   - from pathlib import Path
+9  | import re
+10 | import subprocess
+11 | import tempfile
+12 + from pathlib import Path
+13 |
+14 | import yaml
+   -
+15 |
+   |
+
+UP031 Use format specifiers instead of percent format
+  --> reports\P5-34\verify-upload-retry.py:42:55
+   |
+40 | assert not gate.get("continue-on-error", False)
+41 | for number in range(1, 4):
+42 |     assert gate["env"][f"UPLOAD_{number}_OUTCOME"] == "${{ steps.w02_upload_%d.outcome }}" % number
+   |                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+43 |     assert gate["env"][f"UPLOAD_{number}_ID"] == "${{ steps.w02_upload_%d.outputs.artifact-id }}" % number
+44 | assert workflow["jobs"]["windows-tests"]["timeout-minutes"] == 60
+   |
+help: Replace with format specifiers
+
+UP031 Use format specifiers instead of percent format
+  --> reports\P5-34\verify-upload-retry.py:43:50
+   |
+41 | for number in range(1, 4):
+42 |     assert gate["env"][f"UPLOAD_{number}_OUTCOME"] == "${{ steps.w02_upload_%d.outcome }}" % number
+43 |     assert gate["env"][f"UPLOAD_{number}_ID"] == "${{ steps.w02_upload_%d.outputs.artifact-id }}" % number
+   |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+44 | assert workflow["jobs"]["windows-tests"]["timeout-minutes"] == 60
+45 | for number, delay in ((2, 20), (3, 40)):
+   |
+help: Replace with format specifiers
+
+Found 3 errors.
+[*] 1 fixable with `--fix`.

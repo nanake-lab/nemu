@@ -1,0 +1,29 @@
+{
+  "step": "clippy",
+  "command": [
+    "cargo",
+    "+1.99.0",
+    "clippy",
+    "--manifest-path",
+    "core/Cargo.toml",
+    "--workspace",
+    "--all-targets",
+    "--locked",
+    "-j",
+    "1",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+  "start": "2026-10-26T11:05:21.0804039Z",
+  "head": "43420652fa9604ee137c656693065b619a1dfd34",
+  "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+  "target": "D:\\Dev\\cache\\P5-34\\target",
+  "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+  "jobs": 1,
+  "testThreads": 1,
+  "end": "2026-10-26T11:05:24.3890632Z",
+  "exitCode": 0,
+  "logSha256": "64fc37a169616b57f291c8593a3d54cd99829862f535c79cea3b437bd28b4cb8"
+}

@@ -11,6 +11,7 @@ Usage (repository root, GitHub CLI authenticated):
 
 Rules, first match wins:
     status_override in the catalog       -> that status
+    open PR with label paused            -> paused (no user-action reminders)
     open PR with label needs-user        -> needs_you ("等你决定" while the PR is
                                             a draft, "等你合并" once it is ready)
     open draft PR                        -> in_progress (claimed)
@@ -58,6 +59,7 @@ GUARDED = (
 )
 
 LABELS = {
+    "paused": "暂停",
     "done": "已完成",
     "review": "等审查",
     "in_progress": "进行中",
@@ -169,6 +171,8 @@ def touches_guarded(repo: str, number: int) -> bool:
 
 
 def open_pr_details(repo: str, pr: dict) -> dict:
+    if any(label["name"] == "paused" for label in pr.get("labels", [])):
+        return {}
     details = {"waiting_runner": windows_waiting(repo, pr["head"]["sha"])}
     if not pr.get("draft"):
         details["verdict"] = review_verdict(repo, pr["number"])
@@ -264,6 +268,8 @@ def compute(repo: str, catalog: dict) -> dict:
         if c.get("status_override"):
             return c["status_override"]["status"]
         live = [p for p in c["prs"] if p["state"] == "open"]
+        if any("paused" in p["labels"] for p in live):
+            return "paused"
         if any("needs-user" in p["labels"] for p in live):
             return "needs_you"
         if any(p["draft"] for p in live):
@@ -302,6 +308,8 @@ def compute(repo: str, catalog: dict) -> dict:
     attention = []
     for c in sorted(cards.values(), key=lambda c: c["id"]):
         for p in (p for p in c["prs"] if p["state"] == "open"):
+            if "paused" in p["labels"]:
+                continue
             item = {"card": c["id"], "pr": p["number"], "url": p["url"]}
             due = review_due(c, p)
             if "needs-user" in p["labels"] and not due:
@@ -341,6 +349,8 @@ def compute(repo: str, catalog: dict) -> dict:
     # user when they wait for approval or for the Windows runner.
     other_attention = []
     for pr in open_prs:
+        if any(label["name"] == "paused" for label in pr.get("labels", [])):
+            continue
         if cards_of_pr(pr) & cards.keys():
             continue
         item = {"card": "", "pr": pr["number"], "url": pr["html_url"]}
@@ -386,6 +396,11 @@ def compute(repo: str, catalog: dict) -> dict:
         "milestones": milestones,
         "attention": attention,
         "other_attention": other_attention,
+        "paused_prs": [
+            {"number": pr["number"], "title": pr["title"], "url": pr["html_url"]}
+            for pr in sorted(open_prs, key=lambda pr: pr["number"])
+            if any(label["name"] == "paused" for label in pr.get("labels", []))
+        ],
         "next_up": next_up,
         "cards": [cards[cid] for cid in sorted(cards)],
     }

@@ -1,28 +1,27 @@
-//! W04: effect resolution and authorisation (O 3, 12.1; S 12).
+//! Effects of learned tendencies, simplified to Echo Core v2.0 (P5-27).
 //!
-//! Two pure phases: `compile_authorized_effects` turns the committed R/θ
-//! views into the effective set at one processing time; `evaluate_effects`
-//! evaluates that set against one endpoint's typed context. In v1.0 R is
-//! empty and θ holds only genesis, but these functions are complete and are
-//! exercised with structural fixtures.
+//! Two pure phases (ADR 0008 §2):
+//!
+//! - [`compile_authorized_effects`] reads the stored R and θ once and returns
+//!   E_eff: for every tendency in R⁺ (π > ½) its strength s_k = max(0, 2π − 1),
+//!   typical magnitude r_k, direction d_k, concept reference and whether its
+//!   model direction has been validated, together with θ. R does not decay with
+//!   time in v2.0, so the time projection Φ_R is the identity and the result
+//!   does not depend on the processing time.
+//! - [`evaluate_effects`] combines E_eff with the situation match μ(e) of one
+//!   event and returns f_k(e) = s_k μ_k(e) r_k d_k and D_k(e) = s_k μ_k(e) for
+//!   the fast state F (P5-10, v2.0 §6).
+//!
+//! Superseded by v2.0 §15 and removed here: the q envelope, validity
+//! contracts, takeover, qualification, the scope DSL and its overlap check.
 
-mod admission;
 mod compile;
-mod dag;
 mod evaluate;
-mod params;
 mod types;
 
 #[cfg(test)]
 mod tests;
 
-pub use admission::{
-    AdmissionRejection, CandidateEffect, RouteFault, admit_candidate, audit_drive_route,
-};
-pub use compile::compile_authorized_effects;
-pub use dag::DagError;
-pub use evaluate::{
-    ContextError, EvaluateError, Evaluation, ReceiptEntry, TypedContext, evaluate_effects,
-};
-pub use params::{EffectParameters, PARAMETERS_TAG};
+pub use compile::{compile_authorized_effects, project_r, strength};
+pub use evaluate::evaluate_effects;
 pub use types::*;

@@ -33,7 +33,7 @@ pub(crate) fn configure(db: &Connection, config: StoreConfig, writable: bool) ->
 
 // Physical indexes contain references only. There are no alternate R/theta/L state tables.
 pub(crate) const INITIAL: &str = r#"
-CREATE TABLE metadata(singleton INTEGER PRIMARY KEY CHECK(singleton=1), format INTEGER NOT NULL CHECK(format=1),
+CREATE TABLE metadata(singleton INTEGER PRIMARY KEY CHECK(singleton=1), format INTEGER NOT NULL CHECK(format=2),
  location TEXT NOT NULL, temporary INTEGER NOT NULL, header BLOB NOT NULL, branch TEXT NOT NULL);
 CREATE TABLE object_refs(digest TEXT PRIMARY KEY, reference BLOB NOT NULL);
 CREATE TABLE visible_objects(digest TEXT PRIMARY KEY REFERENCES object_refs(digest));
@@ -61,11 +61,12 @@ CREATE TABLE evidence_index(commit_id TEXT NOT NULL REFERENCES commits(id), tend
  reference BLOB NOT NULL, PRIMARY KEY(commit_id,tendency_id,group_id));
 CREATE TABLE evidence_groups(commit_id TEXT NOT NULL REFERENCES commits(id), group_id TEXT NOT NULL, reference BLOB NOT NULL, PRIMARY KEY(commit_id,group_id));
 CREATE TABLE ledger_index(entry_id TEXT PRIMARY KEY, event_id TEXT NOT NULL REFERENCES facts(event_id), commit_id TEXT NOT NULL REFERENCES commits(id), reference BLOB NOT NULL);
-PRAGMA user_version=1;
+PRAGMA user_version=2;
 "#;
 
 pub(crate) fn create(db: &Connection) -> Result<()> {
     db.execute_batch(INITIAL)?;
+    db.execute_batch(crate::migration::AUDIT_SQL)?;
     for table in [
         "metadata",
         "raw_ingress",

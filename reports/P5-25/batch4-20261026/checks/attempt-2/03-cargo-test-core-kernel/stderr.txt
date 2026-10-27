@@ -1,0 +1,13 @@
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-25\core\crates\core-kernel)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.61s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-25\target\debug\deps\core_kernel-4df46f3327408afa.exe)
+
+thread 'dynamics::tests::reference::theta_1_original_500_streams_zero_violations' (25168) panicked at crates\core-kernel\src\dynamics\tests\reference.rs:56:13:
+assertion `left == right` failed
+  left: 4602808250010281358
+ right: 4602808250010281359
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p core-kernel --lib`
+   Doc-tests core_kernel
+error: 1 target failed:
+    `-p core-kernel --lib`

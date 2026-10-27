@@ -1,0 +1,414 @@
+{
+  "status": "diagnosis_only_not_fixed",
+  "python": "3.12.14 (main, Sep  1 2026, 14:16:52) [Clang 22.1.3 ]",
+  "libc": [
+    "glibc",
+    "2.39"
+  ],
+  "original_oracle_values_verified": 72822,
+  "power_differences": 37,
+  "sigma_differences": 13,
+  "nearest_even_violations_multiply_at_differing_powers": 0,
+  "nearest_even_violations_pow_at_differing_powers": 37,
+  "first_power_difference": {
+    "stream_zero_based": 18,
+    "event_zero_based": 148,
+    "residual": {
+      "value": "-0.662278153603279",
+      "hex": "-0x1.53161f4529a67p-1",
+      "bits": "bfe53161f4529a67"
+    },
+    "integer_rounding_proof": {
+      "exact_numerator": "35584461581989785509827633223025",
+      "exact_denominator": "81129638414606681695789005144064",
+      "quotient_before_round": "7901337713442876",
+      "remainder": "40585370677160781053713276993536",
+      "divisor": "81129638414606681695789005144064",
+      "tie": false,
+      "round_up": true,
+      "nearest_even_bits": "3fdc12398ba9003d",
+      "multiply_bits": "3fdc12398ba9003d",
+      "pow_bits": "3fdc12398ba9003c",
+      "multiply_is_nearest_even": true,
+      "pow_is_nearest_even": false,
+      "multiply_error_in_ulps": "2250658977933967/4503599627370496",
+      "pow_error_in_ulps": "2252940649436529/4503599627370496"
+    }
+  },
+  "first_sigma_difference": {
+    "stream_zero_based": 58,
+    "event_zero_based": 146,
+    "input": {
+      "nb": {
+        "value": "9.002602571635055",
+        "hex": "0x1.201551fd01dbap+3",
+        "bits": "402201551fd01dba"
+      },
+      "ns": {
+        "value": "18.17364863870306",
+        "hex": "0x1.22c743cb8397dp+4",
+        "bits": "40322c743cb8397d"
+      },
+      "rho": {
+        "value": "0.926559851793074",
+        "hex": "0x1.da660d8a79c8cp-1",
+        "bits": "3feda660d8a79c8c"
+      },
+      "b0": {
+        "value": "0.9636448901535122",
+        "hex": "0x1.ed62dcf0556d0p-1",
+        "bits": "3feed62dcf0556d0"
+      },
+      "a": {
+        "value": "-0.9691673939995136",
+        "hex": "-0x1.f036b56b27a88p-1",
+        "bits": "bfef036b56b27a88"
+      }
+    },
+    "before": {
+      "weight": {
+        "python": {
+          "value": "13.601190938625669",
+          "hex": "0x1.b33cf4c7818fbp+3",
+          "bits": "402b33cf4c7818fb"
+        },
+        "rust_order": {
+          "value": "13.601190938625669",
+          "hex": "0x1.b33cf4c7818fbp+3",
+          "bits": "402b33cf4c7818fb"
+        },
+        "same": true
+      },
+      "reaction_sum": {
+        "python": {
+          "value": "-0.5810514565971674",
+          "hex": "-0x1.297f9396c188ep-1",
+          "bits": "bfe297f9396c188e"
+        },
+        "rust_order": {
+          "value": "-0.5810514565971674",
+          "hex": "-0x1.297f9396c188ep-1",
+          "bits": "bfe297f9396c188e"
+        },
+        "same": true
+      },
+      "square_sum": {
+        "python": {
+          "value": "5.407007145527906",
+          "hex": "0x1.5a0c67b2d1f68p+2",
+          "bits": "4015a0c67b2d1f68"
+        },
+        "rust_order": {
+          "value": "5.407007145527906",
+          "hex": "0x1.5a0c67b2d1f68p+2",
+          "bits": "4015a0c67b2d1f68"
+        },
+        "same": true
+      },
+      "baseline": {
+        "python": {
+          "value": "0.3580930123949119",
+          "hex": "0x1.6eafef44a629fp-2",
+          "bits": "3fd6eafef44a629f"
+        },
+        "rust_order": {
+          "value": "0.3580930123949119",
+          "hex": "0x1.6eafef44a629fp-2",
+          "bits": "3fd6eafef44a629f"
+        },
+        "same": true
+      }
+    },
+    "steps": {
+      "residual": {
+        "python": {
+          "value": "-1.3272604063944256",
+          "hex": "-0x1.53c75686bd5ecp+0",
+          "bits": "bff53c75686bd5ec"
+        },
+        "rust_order": {
+          "value": "-1.3272604063944256",
+          "hex": "-0x1.53c75686bd5ecp+0",
+          "bits": "bff53c75686bd5ec"
+        },
+        "same": true
+      },
+      "residual_square": {
+        "python": {
+          "value": "1.7616201863822958",
+          "hex": "0x1.c2f98a607c423p+0",
+          "bits": "3ffc2f98a607c423"
+        },
+        "rust_order": {
+          "value": "1.7616201863822956",
+          "hex": "0x1.c2f98a607c422p+0",
+          "bits": "3ffc2f98a607c422"
+        },
+        "same": false
+      },
+      "decayed_square_sum": {
+        "python": {
+          "value": "5.009915739404429",
+          "hex": "0x1.40a275a01d4aap+2",
+          "bits": "40140a275a01d4aa"
+        },
+        "rust_order": {
+          "value": "5.009915739404429",
+          "hex": "0x1.40a275a01d4aap+2",
+          "bits": "40140a275a01d4aa"
+        },
+        "same": true
+      },
+      "square_sum": {
+        "python": {
+          "value": "6.771535925786725",
+          "hex": "0x1.b160d8383c5b3p+2",
+          "bits": "401b160d8383c5b3"
+        },
+        "rust_order": {
+          "value": "6.771535925786724",
+          "hex": "0x1.b160d8383c5b2p+2",
+          "bits": "401b160d8383c5b2"
+        },
+        "same": false
+      },
+      "decayed_weight": {
+        "python": {
+          "value": "12.6023174603023",
+          "hex": "0x1.93462f4439dc7p+3",
+          "bits": "40293462f4439dc7"
+        },
+        "rust_order": {
+          "value": "12.6023174603023",
+          "hex": "0x1.93462f4439dc7p+3",
+          "bits": "40293462f4439dc7"
+        },
+        "same": true
+      },
+      "weight": {
+        "python": {
+          "value": "13.6023174603023",
+          "hex": "0x1.b3462f4439dc7p+3",
+          "bits": "402b3462f4439dc7"
+        },
+        "rust_order": {
+          "value": "13.6023174603023",
+          "hex": "0x1.b3462f4439dc7p+3",
+          "bits": "402b3462f4439dc7"
+        },
+        "same": true
+      },
+      "decayed_reaction_sum": {
+        "python": {
+          "value": "-0.5383789515088212",
+          "hex": "-0x1.13a667eb2b99bp-1",
+          "bits": "bfe13a667eb2b99b"
+        },
+        "rust_order": {
+          "value": "-0.5383789515088212",
+          "hex": "-0x1.13a667eb2b99bp-1",
+          "bits": "bfe13a667eb2b99b"
+        },
+        "same": true
+      },
+      "reaction_sum": {
+        "python": {
+          "value": "-1.5075463455083349",
+          "hex": "-0x1.81ee8eab29a12p+0",
+          "bits": "bff81ee8eab29a12"
+        },
+        "rust_order": {
+          "value": "-1.5075463455083349",
+          "hex": "-0x1.81ee8eab29a12p+0",
+          "bits": "bff81ee8eab29a12"
+        },
+        "same": true
+      },
+      "prior_baseline_numerator": {
+        "python": {
+          "value": "8.67531196623899",
+          "hex": "0x1.159c27d733016p+3",
+          "bits": "402159c27d733016"
+        },
+        "rust_order": {
+          "value": "8.67531196623899",
+          "hex": "0x1.159c27d733016p+3",
+          "bits": "402159c27d733016"
+        },
+        "same": true
+      },
+      "baseline_numerator": {
+        "python": {
+          "value": "7.1677656207306555",
+          "hex": "0x1.cabcac039b9a8p+2",
+          "bits": "401cabcac039b9a8"
+        },
+        "rust_order": {
+          "value": "7.1677656207306555",
+          "hex": "0x1.cabcac039b9a8p+2",
+          "bits": "401cabcac039b9a8"
+        },
+        "same": true
+      },
+      "baseline_denominator": {
+        "python": {
+          "value": "22.604920031937354",
+          "hex": "0x1.69adc0a09ddc0p+4",
+          "bits": "40369adc0a09ddc0"
+        },
+        "rust_order": {
+          "value": "22.604920031937354",
+          "hex": "0x1.69adc0a09ddc0p+4",
+          "bits": "40369adc0a09ddc0"
+        },
+        "same": true
+      },
+      "baseline": {
+        "python": {
+          "value": "0.317088740442509",
+          "hex": "0x1.44b2e9288589ep-2",
+          "bits": "3fd44b2e9288589e"
+        },
+        "rust_order": {
+          "value": "0.317088740442509",
+          "hex": "0x1.44b2e9288589ep-2",
+          "bits": "3fd44b2e9288589e"
+        },
+        "same": true
+      },
+      "prior_sigma_square": {
+        "python": {
+          "value": "0.09",
+          "hex": "0x1.70a3d70a3d70ap-4",
+          "bits": "3fb70a3d70a3d70a"
+        },
+        "rust_order": {
+          "value": "0.09",
+          "hex": "0x1.70a3d70a3d70ap-4",
+          "bits": "3fb70a3d70a3d70a"
+        },
+        "same": true
+      },
+      "weighted_prior_variance": {
+        "python": {
+          "value": "1.6356283774832754",
+          "hex": "0x1.a2b88a95b3410p+0",
+          "bits": "3ffa2b88a95b3410"
+        },
+        "rust_order": {
+          "value": "1.6356283774832754",
+          "hex": "0x1.a2b88a95b3410p+0",
+          "bits": "3ffa2b88a95b3410"
+        },
+        "same": true
+      },
+      "variance_numerator": {
+        "python": {
+          "value": "8.407164303270001",
+          "hex": "0x1.0d077d6ed495cp+3",
+          "bits": "4020d077d6ed495c"
+        },
+        "rust_order": {
+          "value": "8.40716430327",
+          "hex": "0x1.0d077d6ed495bp+3",
+          "bits": "4020d077d6ed495b"
+        },
+        "same": false
+      },
+      "variance_denominator": {
+        "python": {
+          "value": "31.77596609900536",
+          "hex": "0x1.fc6a5b6da0860p+4",
+          "bits": "403fc6a5b6da0860"
+        },
+        "rust_order": {
+          "value": "31.77596609900536",
+          "hex": "0x1.fc6a5b6da0860p+4",
+          "bits": "403fc6a5b6da0860"
+        },
+        "same": true
+      },
+      "variance": {
+        "python": {
+          "value": "0.26457619815792666",
+          "hex": "0x1.0eed10198da14p-2",
+          "bits": "3fd0eed10198da14"
+        },
+        "rust_order": {
+          "value": "0.2645761981579266",
+          "hex": "0x1.0eed10198da13p-2",
+          "bits": "3fd0eed10198da13"
+        },
+        "same": false
+      },
+      "sigma": {
+        "python": {
+          "value": "0.5143697096038283",
+          "hex": "0x1.075b77719a58fp-1",
+          "bits": "3fe075b77719a58f"
+        },
+        "rust_order": {
+          "value": "0.5143697096038282",
+          "hex": "0x1.075b77719a58ep-1",
+          "bits": "3fe075b77719a58e"
+        },
+        "same": false
+      },
+      "gain_numerator": {
+        "python": {
+          "value": "0.3",
+          "hex": "0x1.3333333333333p-2",
+          "bits": "3fd3333333333333"
+        },
+        "rust_order": {
+          "value": "0.3",
+          "hex": "0x1.3333333333333p-2",
+          "bits": "3fd3333333333333"
+        },
+        "same": true
+      },
+      "raw_gain": {
+        "python": {
+          "value": "0.5832380764237894",
+          "hex": "0x1.2a9e2e600b53ep-1",
+          "bits": "3fe2a9e2e600b53e"
+        },
+        "rust_order": {
+          "value": "0.5832380764237896",
+          "hex": "0x1.2a9e2e600b53fp-1",
+          "bits": "3fe2a9e2e600b53f"
+        },
+        "same": false
+      },
+      "gain": {
+        "python": {
+          "value": "0.5832380764237894",
+          "hex": "0x1.2a9e2e600b53ep-1",
+          "bits": "3fe2a9e2e600b53e"
+        },
+        "rust_order": {
+          "value": "0.5832380764237896",
+          "hex": "0x1.2a9e2e600b53fp-1",
+          "bits": "3fe2a9e2e600b53f"
+        },
+        "same": false
+      }
+    },
+    "integer_rounding_proof": {
+      "exact_numerator": "2233118886641682457919991359769",
+      "exact_denominator": "1267650600228229401496703205376",
+      "quotient_before_round": "7933632014959650",
+      "remainder": "630406788656854654586688897024",
+      "divisor": "1267650600228229401496703205376",
+      "tie": false,
+      "round_up": false,
+      "nearest_even_bits": "3ffc2f98a607c422",
+      "multiply_bits": "3ffc2f98a607c422",
+      "pow_bits": "3ffc2f98a607c423",
+      "multiply_is_nearest_even": true,
+      "pow_is_nearest_even": false,
+      "multiply_error_in_ulps": "139978426329369/281474976710656",
+      "pow_error_in_ulps": "141496550381287/281474976710656"
+    }
+  }
+}

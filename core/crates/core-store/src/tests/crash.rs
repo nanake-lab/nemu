@@ -44,7 +44,23 @@ const INIT: &[FaultPoint] = &[
 ];
 const GC: &[FaultPoint] = &[GcDeleted, GcDirectorySyncBefore, GcDirectorySynced];
 pub(super) fn points() -> Vec<FaultPoint> {
-    [OBJECT, RECEIPT, REUSE, COMMIT, INGRESS, INIT, GC].concat()
+    [
+        OBJECT,
+        RECEIPT,
+        REUSE,
+        COMMIT,
+        INGRESS,
+        INIT,
+        GC,
+        &[
+            IngressAllocated,
+            AuditBeforeSql,
+            AuditSqlCommitted,
+            MigrationBeforeSql,
+            MigrationSqlCommitted,
+        ],
+    ]
+    .concat()
 }
 fn tag<T: WireMessage>() -> String {
     core_types::contract::Schema::builtin()
@@ -213,8 +229,8 @@ fn x03_receipt_publish_and_repair_can_crash_again() {
 fn x03_targeted_r_segments_manifest_and_reused_objects() {
     for point in OBJECT {
         for (operation, object_tag, nth) in [
-            ("r", tag::<TendencyV2>(), 2),
-            ("r", tag::<RSnapshotV2>(), 1),
+            ("r", tag::<TendencyV3>(), 2),
+            ("r", tag::<RSnapshotV3>(), 1),
             ("manifest-second", tag::<CoreTransactionV2>(), 2),
         ] {
             let root = TemporaryRoot::new().unwrap();

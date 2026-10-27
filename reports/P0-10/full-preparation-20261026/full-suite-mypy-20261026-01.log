@@ -1,0 +1,12 @@
+spikes\carrier-engine\test_compact_codec.py:9: error: Library stubs not installed for "jsonschema"  [import-untyped]
+spikes\carrier-engine\test_compact_codec.py:9: note: Hint: "python3 -m pip install types-jsonschema"
+spikes\carrier-engine\test_compact_codec.py:9: note: (or run "mypy --install-types" to install all missing stub packages)
+spikes\carrier-engine\test_compact_codec.py:9: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
+spikes\carrier-engine\test_compact_codec.py:46: error: Unsupported target for indexed assignment ("object")  [index]
+spikes\carrier-engine\test_compact_codec.py:52: error: Unsupported target for indexed assignment ("object")  [index]
+spikes\carrier-engine\test_compact_codec.py:57: error: Unsupported target for indexed assignment ("object")  [index]
+spikes\carrier-engine\benchmark_plan.py:34: error: Call to untyped function "from_pretrained" of "AutoTokenizer" in typed context  [no-untyped-call]
+spikes\carrier-engine\benchmark_native.py:15: error: Library stubs not installed for "jsonschema"  [import-untyped]
+spikes\carrier-engine\benchmark_native.py:101: error: Argument 1 to "expand" has incompatible type "object"; expected "dict[str, Any]"  [arg-type]
+spikes\carrier-engine\benchmark_native.py:133: error: Incompatible types in assignment (expression has type "dict[str, float | None]", target has type "float | None")  [assignment]
+Found 8 errors in 3 files (checked 5 source files)

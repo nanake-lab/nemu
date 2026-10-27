@@ -1,0 +1,25 @@
+{
+  "name": "cpu-model",
+  "tool": "cargo",
+  "arguments": [
+    "test",
+    "--manifest-path",
+    "core/Cargo.toml",
+    "-p",
+    "fact-view",
+    "--release",
+    "--features",
+    "cpu-embedding",
+    "real_cpu_multilingual",
+    "--locked",
+    "--",
+    "--ignored",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+  "started_at": "2026-10-26T19:45:05.2401025+08:00",
+  "finished_at": "2026-10-26T19:45:16.0775841+08:00",
+  "exit_code": 101,
+  "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+}

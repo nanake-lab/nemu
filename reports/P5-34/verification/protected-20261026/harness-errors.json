@@ -1,0 +1,21 @@
+{
+  "scope": "verification harness only; no repository test/config/threshold change",
+  "events": [
+    {
+      "head": "2fa1bc9b575dd2aaad04921a6968bc5fc913a5cd",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "reports/P5-34/verify-protected.ps1",
+        "-Step",
+        "compatibility",
+        "-Attempt",
+        "2"
+      ],
+      "result": "PowerShell ParserError before any verification command started",
+      "error": "Line 26: workspace-without-storage = ...; Missing = operator after key in hash literal.",
+      "repair": "Quote the hyphenated hashtable key in the report verification script. The corrected compatibility attempt-02 exited 0."
+    }
+  ]
+}

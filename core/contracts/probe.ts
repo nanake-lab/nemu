@@ -1,4 +1,5 @@
 // Test-only JSON-lines adapter, run with Node's TypeScript stripping.
+import { ingressProbe } from './ingress_probe.js';
 import { createInterface } from 'node:readline';
 import { fromJson, toJson } from '../../packages/contracts/src/generated/echo/bridge.js';
 import {
@@ -20,6 +21,11 @@ for await (const line of createInterface({ input: process.stdin })) {
       hex: string;
       limits: Limits;
     };
+    if (q.op === 'ingress') {
+      ingressProbe(q, q.limits);
+      console.log(JSON.stringify({ ok: true }));
+      continue;
+    }
     const v =
       q.op === 'encode'
         ? normalize(q.name, fromJson(q.name, q.value), q.limits)

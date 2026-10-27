@@ -183,6 +183,7 @@ message GenesisManifestV2 {
 
 // @message echo.evidence-allocation-v2 | v2.0 §5.2 S_{c,k}, weight factors, shares, r_k; LP2, I25; ADR 0016
 message EvidenceAllocationV2 {
+  // @superseded EvidenceAllocationV3 | P5-34 (ADR 0021): explicit actual retention and absolute evidence
   // @supersedes EvidenceAllocation
   // ordinal: index of this group among the tendency's groups, from 0, fixed once assigned (P5-23 D1);
   // mu is μ_{c,k}; projection is p_c = ⟨Δ_c, d_k⟩, absent for teaching groups (not part of r_k).
@@ -198,6 +199,7 @@ message EvidenceAllocationV2 {
 
 // @message echo.evidence-group-v2 | v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; ADR 0016
 message EvidenceGroupV2 {
+  // @superseded EvidenceGroupV3 | P5-34 (ADR 0021): explicit actual retention and absolute evidence
   // @supersedes EvidenceGroup
   // Field 7 (allocations of the superseded EvidenceAllocation) is reserved; field 8 carries the successors.
   reserved 7;
@@ -212,6 +214,7 @@ message EvidenceGroupV2 {
 
 // @message echo.tendency-v2 | v2.0 §5.2, §5.3 corollary 7, §7, §10; ADR 0016
 message TendencyV2 {
+  // @superseded TendencyV3 | P5-34 (ADR 0021): explicit actual retention and absolute evidence
   // @supersedes Tendency
   // magnitude_sum is M_k = Σ ω·μ·p_c and magnitude_weight is U_k = Σ ω·μ over the matching
   // experience groups; typical_magnitude = clip(M/U, 0, r_max), 0 while U = 0 (v2.0 §5.2).
@@ -236,6 +239,7 @@ message TendencyV2 {
 
 // @message echo.r-snapshot-v2 | v2.0 §2.1, §2.2, §7; ADR 0016
 message RSnapshotV2 {
+  // @superseded RSnapshotV3 | P5-34 (ADR 0021): explicit actual retention and absolute evidence
   // @supersedes RSnapshot
   // Field 4 (tendencies of the superseded Tendency) is reserved; field 5 carries TendencyV2.
   reserved 4;
@@ -243,4 +247,75 @@ message RSnapshotV2 {
   optional string revision = 2; // required,nonempty
   optional ObjectRef law_version = 3; // required
   repeated TendencyV2 tendencies = 5; // required,set=tendency_id
+}
+
+// P5-34 (ADR 0021): additive successors; all published V2 field tables stay frozen.
+// @message echo.evidence-allocation-v3 | v2.0 §5.2 S_{c,k}, weight factors, shares, r_k; LP2, I25; ADR 0019, ADR 0021
+message EvidenceAllocationV3 {
+  // @supersedes EvidenceAllocationV2
+  // @rules {"positive":["actual_retention"]}
+  // ordinal: index of this group among the tendency's groups, from 0, fixed once assigned (P5-23 D1);
+  // mu is μ_{c,k}; projection is p_c = ⟨Δ_c, d_k⟩, absent for teaching groups (not part of r_k).
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double support = 3; // required,min=-1,max=1
+  optional double intensity = 4; // required,min=0
+  optional double share = 5; // required,min=0,max=1
+  optional uint64 ordinal = 6; // required
+  optional double mu = 7; // required,min=0,max=1
+  optional double projection = 8; // optional
+  // First-inclusion multiplier on the old statistics; frozen on ordinary revisions (ADR 0019 §5).
+  optional double actual_retention = 9; // required,min=0,max=1
+}
+
+// @message echo.evidence-group-v3 | v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; ADR 0019, ADR 0021
+message EvidenceGroupV3 {
+  // @supersedes EvidenceGroupV2
+  // Inherit reserved 7; reserve the V2 container field 8 as well.
+  reserved 7, 8;
+  optional uint32 schema_version = 1; // required
+  optional string group_id = 2; // required,nonempty
+  repeated string members = 3; // required,set=self
+  optional string source_key = 4; // required,nonempty
+  optional double credibility = 5; // required,min=0,max=1
+  optional double verifiability = 6; // required,min=0,max=1
+  repeated EvidenceAllocationV3 allocations = 9; // required,set=tendency_id
+}
+
+// @message echo.tendency-v3 | v2.0 §5.2, §5.3 corollary 7, §7, §10; ADR 0019, ADR 0021
+message TendencyV3 {
+  // @supersedes TendencyV2
+  // @rules {"at_least_abs":{"evidence_absolute":"evidence_a"}}
+  // magnitude_sum is M_k = Σ ω·μ·p_c and magnitude_weight is U_k = Σ ω·μ over the matching
+  // experience groups; typical_magnitude = clip(M/U, 0, r_max), 0 while U = 0 (v2.0 §5.2).
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional ConceptRef concept = 3; // required
+  repeated TrilingualText predicate = 4; // required
+  optional NatureVector direction = 5; // required
+  optional double evidence_a = 6; // required
+  optional double evidence_b = 7; // required,min=0
+  optional double h_hat = 8; // required,min=0,max=1
+  optional uint64 group_count = 9; // required
+  optional uint64 flip_count = 10; // required
+  optional EvidenceSign last_sign = 11; // optional
+  optional double pi = 12; // required,min=-1,max=1
+  optional double typical_magnitude = 13; // required,min=0
+  optional PersonRelation relation = 14; // optional
+  optional double attachment_prior = 15; // optional,min=0
+  optional double magnitude_sum = 16; // required
+  optional double magnitude_weight = 17; // required,min=0
+  // V = E+C, excluding c and P; never reconstruct it by subtracting c from rounded B.
+  optional double evidence_absolute = 18; // required,min=0
+}
+
+// @message echo.r-snapshot-v3 | v2.0 §2.1, §2.2, §7; ADR 0019, ADR 0021
+message RSnapshotV3 {
+  // @supersedes RSnapshotV2
+  // Inherit reserved 4; reserve the V2 container field 5 as well.
+  reserved 4, 5;
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional ObjectRef law_version = 3; // required
+  repeated TendencyV3 tendencies = 6; // required,set=tendency_id
 }

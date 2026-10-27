@@ -1,5 +1,13 @@
 import type { VRM } from '@pixiv/three-vrm';
-import type { NemuProfile, BodyReadout, GazeTarget } from '@nemu/contracts';
+import {
+  CANDIDATE_BODY_READOUT_MAPPING,
+  bodyReadoutMappingSchema,
+  type NemuProfile,
+  type BodyReadoutV2,
+  type BodyReadoutMapping,
+  type GazeTarget,
+} from '@nemu/contracts';
+import { mapBodyReadout, type BodyAnimationParameters } from './readout-mapping.js';
 import type {
   AnimationLayerId,
   AnimationCompositorOptions,
@@ -22,6 +30,13 @@ export class AnimationCompositor {
 
   private vrm: VRM | null = null;
   private profile: NemuProfile | null = null;
+  private readout: BodyReadoutV2 = {
+    version: 'body-neutral-v2',
+    facing: 0.5,
+    tension: 0,
+    energy: 0.5,
+  };
+  private readoutMapping: BodyReadoutMapping = { ...CANDIDATE_BODY_READOUT_MAPPING };
 
   // Layer enable toggles (all enabled by default)
   private layerEnabled: Record<AnimationLayerId, boolean> = {
@@ -59,6 +74,7 @@ export class AnimationCompositor {
     this.l2.bindVRM(vrm, profile);
     this.l3.bindVRM(vrm, profile);
     this.l4.bindVRM(vrm, profile);
+    this.setReadoutMapping(profile?.bodyReadoutMapping ?? CANDIDATE_BODY_READOUT_MAPPING);
   }
 
   setLayerEnabled(layer: AnimationLayerId, enabled: boolean): void {
@@ -70,24 +86,32 @@ export class AnimationCompositor {
   }
 
   /**
-   * Applies BodyReadout parameters across layers L2, L3, and L4.
+   * Applies the three v2 fields to L2/L4 only. L3 has no readout input.
    */
-  applyReadout(readout: BodyReadout): void {
-    // L2: idleTempo, posture, gazeSociability
+  applyReadout(readout: BodyReadoutV2): BodyAnimationParameters {
+    const mapped = mapBodyReadout(readout, this.readoutMapping);
+    this.readout = { ...readout };
     this.l2.setReadoutParameters({
-      idleTempo: readout.idleTempo,
-      posture: readout.posture,
-      gazeSociability: readout.gazeSociability,
+      idleTempo: mapped.idleTempo,
+      posture: mapped.posture,
+      gazeUserWeight: mapped.gazeUserWeight,
+      bodyTurnMaxDeg: mapped.bodyTurnMaxDeg,
+      motionAmplitude: mapped.motionAmplitude,
     });
-
-    // L3: expressionBaseline (0..0.4)
-    this.l3.setExpressionBaseline(readout.expressionBaseline);
-
-    // L4: earPose, tailAmplitude
     this.l4.setReadoutParameters({
-      earPose: readout.earPose,
-      tailAmplitude: readout.tailAmplitude,
+      earPose: mapped.earPose,
+      tailAmplitude: mapped.tailAmplitude,
     });
+    return mapped;
+  }
+
+  setReadoutMapping(mapping: Readonly<BodyReadoutMapping>): void {
+    this.readoutMapping = bodyReadoutMappingSchema.parse(mapping);
+    this.applyReadout(this.readout);
+  }
+
+  getReadoutMapping(): BodyReadoutMapping {
+    return { ...this.readoutMapping };
   }
 
   setGaze(target: GazeTarget): void {
@@ -121,6 +145,8 @@ export class AnimationCompositor {
    */
   update(deltaSec: number): void {
     if (!this.vrm || deltaSec <= 0) return;
+    this.l4.restoreOffsets();
+    this.l2.restoreOffsets();
 
     // 1. L0 Base Pose
     if (this.layerEnabled.L0) {
@@ -137,10 +163,13 @@ export class AnimationCompositor {
       this.l2.update(deltaSec);
     }
 
-    // 4. L3 Facial Expression (baseline + emo cue, blink, lip-sync clamp)
+    // 4. L3 Facial Expression (emo cue, blink, lip-sync clamp)
     if (this.layerEnabled.L3) {
       this.l3.update(deltaSec);
     }
+
+    // Copy normalized body animation into the VRM's raw rig before secondary motion.
+    this.vrm.humanoid?.update?.();
 
     // 5. L4 Secondary Motion (ear/tail offsets + spring bones)
     if (this.layerEnabled.L4) {

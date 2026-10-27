@@ -1,0 +1,68 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling typenum v1.20.1
+   Compiling unicode-ident v1.0.27
+   Compiling quote v1.0.47
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling serde_json v1.0.154
+   Compiling serde v1.0.229
+   Compiling const-oid v0.10.2
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling cfg-if v1.0.5
+   Compiling cpufeatures v0.3.1
+   Compiling libm v0.2.16
+   Compiling syn v3.0.9
+   Compiling hybrid-array v0.4.15
+   Compiling crypto-common v0.2.2
+   Compiling block-buffer v0.12.1
+   Compiling digest v0.11.3
+   Compiling sha2 v0.11.1
+   Compiling serde_derive v1.0.229
+   Compiling core-types v0.0.0 (/workspace/scratch/d01b408f4fd4/nemu-main/core/crates/core-types)
+   Compiling core-policy v0.0.0 (/workspace/scratch/d01b408f4fd4/nemu-main/core/crates/core-policy)
+   Compiling core-kernel v0.0.0 (/workspace/scratch/d01b408f4fd4/nemu-main/core/crates/core-kernel)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.88s
+     Running unittests src/lib.rs (target/debug/deps/core_kernel-e8f9515eb9e69e35)
+
+running 10 tests
+test dynamics::tests::ac2_09_has_only_stored_unmodulated_reaction_and_stages_existing_idl ... ok
+test dynamics::tests::ac2_14_i13_external_changes_and_all_self_sources_are_whole_state_identity ... ok
+test dynamics::tests::gaussian_detector_uses_magnitude_not_reaction_sign_changes ... ok
+test dynamics::tests::variance_uses_baseline_before_event_and_duration_completes_same_sign_run ... ok
+test dynamics::tests::strict_step_fuse_and_directional_drift_hold_atomically_before_boundary ... ok
+test dynamics::tests::numerical_and_ingress_faults_do_not_publish_partial_state ... ok
+test dynamics::tests::adaptive_h_respects_floor_and_ignores_wall_clock_and_excluded_events ... ok
+THETA-2 adaptive=false nb=10.00000000000000000 k=0 k_eff=0.00000000000000000 predicted=-0.09090909090909091 final=-0.09993824763030805 after=-0.09993824763030805 changes=0/0
+test dynamics::tests::ac2_05_replay_every_prefix_including_detector_open_runs_and_drift ... ok
+THETA-2 adaptive=false nb=10.00000000000000000 k=0.3 k_eff=0.27272727272727271 predicted=-0.12500000000000000 final=-0.13638358401382342 after=-0.13638358401383052 changes=0/0
+
+thread 'dynamics::tests::reference::theta_1_original_500_streams_zero_violations' (813) panicked at crates/core-kernel/src/dynamics/tests/reference.rs:50:13:
+assertion `left == right` failed
+  left: 4602808250010281358
+ right: 4602808250010281359
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test dynamics::tests::reference::theta_1_original_500_streams_zero_violations ... FAILED
+THETA-2 adaptive=false nb=10.00000000000000000 k=0.6 k_eff=0.54545454545454541 predicted=-0.19999999999999998 final=-0.21503075132405447 after=-0.21503075227651183 changes=0/0
+THETA-2 adaptive=false nb=10.00000000000000000 k=0.9 k_eff=0.81818181818181812 predicted=-0.49999999999999983 final=-0.51437598256354833 after=-0.51443121537356074 changes=0/0
+THETA-2 adaptive=false nb=10.00000000000000000 k=1.2 k_eff=1.09090909090909083 predicted=-inf final=-0.89035532984152543 after=-0.89035532984152532 changes=0/0
+THETA-2 adaptive=false nb=99.99999999999991473 k=1 k_eff=0.50000000000000000 predicted=-0.10000000000000002 final=-0.10787663190885012 after=-0.10787663198277127 changes=0/0
+THETA-2 adaptive=false nb=99.99999999999991473 k=1.5 k_eff=0.75000000000000000 predicted=-0.20000000000000004 final=-0.20979172962556911 after=-0.20979470829009211 changes=0/0
+THETA-2 adaptive=true nb=10.00000000000000000 k=0 k_eff=0.00000000000000000 predicted=-0.09090909090909091 final=-0.09993824763030805 after=-0.09993824763030805 changes=0/2
+THETA-2 adaptive=true nb=10.00000000000000000 k=0.3 k_eff=0.27272727272727271 predicted=-0.12500000000000000 final=-0.13638358401382342 after=-0.13638358401383052 changes=0/2
+THETA-2 adaptive=true nb=10.00000000000000000 k=0.6 k_eff=0.54545454545454541 predicted=-0.19999999999999998 final=-0.21503075132404073 after=-0.21503075227650925 changes=0/2
+THETA-2 adaptive=true nb=10.00000000000000000 k=0.9 k_eff=0.81818181818181812 predicted=-0.49999999999999983 final=-0.51437592917403496 after=-0.51443121175741646 changes=0/1
+THETA-2 adaptive=true nb=10.00000000000000000 k=1.2 k_eff=1.09090909090909083 predicted=-inf final=-0.89035532984152543 after=-0.89035532984152532 changes=1/1
+THETA-2 adaptive=true nb=99.99999999999991473 k=1 k_eff=0.50000000000000000 predicted=-0.10000000000000002 final=-0.10787663190884930 after=-0.10787663198277110 changes=0/2
+THETA-2 adaptive=true nb=99.99999999999991473 k=1.5 k_eff=0.75000000000000000 predicted=-0.20000000000000004 final=-0.20979172826407080 after=-0.20979470815698756 changes=0/2
+THETA-2: original and adaptive detector feedback cases, 0 violations
+test dynamics::tests::reference::theta_2_original_feedback_and_independent_adaptive_detector_check ... ok
+
+failures:
+
+failures:
+    dynamics::tests::reference::theta_1_original_500_streams_zero_violations
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.87s
+
+error: test failed, to rerun pass `-p core-kernel --lib`
