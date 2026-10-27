@@ -24,6 +24,7 @@ function Wait-HeavySlot {
 }
 Push-Location $repo
 try {
+    Wait-HeavySlot
     $files = @(git ls-files --cached --others --exclude-standard -- core/crates/gateway core/Cargo.lock .github/workflows/windows.yml)
     $manifest = foreach ($file in $files) {
         # git hash-object applies the repository's normal clean/line-ending rules.
@@ -54,6 +55,10 @@ try {
         $ErrorActionPreference = 'Stop'
         $results += [pscustomobject]@{ command=('cargo ' + ($command.args -join ' ')); exit_code=$code; started=$start.ToString('o'); elapsed_seconds=((Get-Date)-$start).TotalSeconds }
         if ($code -ne 0) { throw ($command.name + ' failed; raw output retained in ' + $run) }
+        foreach ($entry in $manifest) {
+            $actual = git -C $repo hash-object -- $entry.path
+            if ($actual -ne $entry.git_blob) { throw ('Validation input changed during run: ' + $entry.path) }
+        }
     }
 } finally {
     $results | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $run 'result.json') -Encoding utf8

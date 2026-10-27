@@ -2,11 +2,11 @@
 
 ## 当前状态
 
-接线实现已完成，正在复验，PR #64 继续保持草稿。原分支已 merge
+接线实现及本机复验已完成，PR #64 继续保持草稿。原分支已 merge
 `origin/main=f24f1256259c998bc213a9dc93103fcfb9cfe89a`（#110 / P5-35），
 合并提交 `62b544d6`；Windows 工作流冲突保留最新 main 的门禁与证据上传，追加 W18 范围，
 Cargo.lock 通过离线重新生成解决。未修改契约、core-types、core-store 或 θ 消费者。
-B3 的四项接口已可用且已接入，不再等待契约卡。最终检查/CI 尚在进行，独立审查尚未请求。
+B3 的四项接口已可用且已接入，不再等待契约卡。本机 fmt、全工作区 all-targets clippy 与完整 gateway 36 项测试全部通过。当前 head CI 终态记录在 PR #64，避免为记录 CI 制造提交循环；独立审查尚待交接。
 
 ## 交付物
 
@@ -33,19 +33,19 @@ B3 的四项接口已可用且已接入，不再等待契约卡。最终检查/C
 | 检查 | 当前结果 | 证据 |
 | --- | --- | --- |
 | 初轮 all-targets cargo check | passed | post-P5-35/check-initial.log |
-| 初轮原生服务集成 | 11 passed，0 failed；随后加固发布证明/配额/上传重试，最终复验进行中 | post-P5-35/native-initial.log |
-| 本轮 fmt / workspace clippy / 全部 gateway | 等待其他 runner 重负载结束后串行执行 | post-P5-35/runs/ |
-| 当前 head CI / Windows W18 | 尚未完成；草稿不会将 Windows 跳过算作通过 | 待本轮 CI |
-| SYS01 认证上传→D=(e1,e2,e2,conflict)，逆序提交回执、重连与并发 | 初轮 passed：H=2、processed=4、anchor=2、ledger=2；真实 Store 提交两次 | SYS01/README.md、native-initial.log |
-| SYS01 未提交骤停恢复 | SQL 前 exit 86、SQL 后未见证 exit 86、持久接收后 TerminateProcess exit 1；全新子进程恢复后原键只提交一次 | post-P5-35/native-initial-*/、SYS01/README.md |
+| 初轮原生服务集成 | 11 passed，0 failed；后续完整复验如下 | post-P5-35/native-initial.log |
+| 本轮 fmt / workspace all-targets clippy -D warnings / 全部 gateway | passed；36 passed，0 failed；含全部既有 21 项和新增原生服务 15 项 | post-P5-35/runs/20261028-030614-71ae5cb4c20a424aa679bec846635397/ |
+| 当前 head CI / Windows W18 | 必要检查及实际 checkout/B/M 见 PR 终态评论；草稿跳过不算通过 | https://github.com/nanake-lab/nemu/pull/64 |
+| SYS01 认证上传→D=(e1,e2,e2,conflict)，逆序提交回执、重连与并发 | 最终复验 passed：H=2、processed=4、anchor=2、ledger=2；真实 Store 提交两次；积压重复队列只提交一次 | SYS01/README.md、native-initial.log |
+| SYS01 未提交骤停恢复 | SQL 前 exit 86、SQL 后未见证 exit 86、持久接收后 TerminateProcess exit 1；全新子进程恢复后原键只提交一次 | post-P5-35/runs/20261028-030614-71ae5cb4c20a424aa679bec846635397/SYS01/、SYS01/README.md |
 | 物理断电 | not_run；已向用户确认骤停注入是否满足本卡此项，未自行放宽 | BLOCKED.md |
 | 第二账户拒绝 | passed，用户提供；当前句柄 ACL 自动复验另列 | second-account/ |
-| P5-22 后继黄金/live 拒绝/查询审批上下文 | 纳入完整 gateway 重跑；原始冻结字节测试保留 | tests/terminal.rs、post-P5-22/ |
+| P5-22 后继黄金/live 拒绝/查询审批上下文 | 完整 gateway 重跑通过；原始冻结字节测试保留 | tests/terminal.rs、post-P5-22/ |
 
 所有库均为 TemporaryRoot 或父进程新建的 tempfile 合成库。骤停子进程只在一次性许可验证后
 使用其父进程临时根内的 LOCALAPPDATA；从未打开用户真正的排练/正式库，未改用户/系统环境变量。
 不跑 GPU 或性能测量。历史失败日志保持原样，包括 Win32 233、黄金集合次序断言及 pnpm 参数错误；
-本轮原始结果不覆盖旧证据。进程骤停不等于实机电源中断，不声称物理存储栈掉电测量。
+本轮原始结果不覆盖旧证据。新失败：首轮 clippy 三项 collapsible_if（025904）；次轮 34/36，通过积压重复队列发现同步 actor 饿住 I/O 导致有界输出误断开，已加入每步 yield 与 MissedTickBehavior::Skip；另一个失败为扫描尚持 SQLite 字节锁的文件，改为关闭临时库后扫描（030328）。最终完整重跑全部通过（030614），未放宽断言、配额或阈值。进程骤停不等于实机电源中断，不声称物理存储栈掉电测量。
 
 ## 规格与基线
 
@@ -71,6 +71,6 @@ wasi 0.11.1+wasi-snapshot-preview1（Apache-2.0 WITH LLVM-exception OR Apache-2.
 ## 待确认与后续
 
 - [x] B1 第二账户证据；B2 #57 后继；B3 #110 的四项公开接口。
-- [ ] 最终本机检查与当前 head CI。
+- [x] 最终本机检查；当前 head CI 终态另见 PR #64 的固定 head 记录。
 - [ ] 用户明确 SYS01 骤停注入/物理断电的验收边界；有未完成验收时保持草稿。
 - [ ] 独立审查认证、ACL、上传 pin/额度、持久回执与权限拒绝；完成必要检查后在 PR 写「请审查」，不自行合并或取下一卡。

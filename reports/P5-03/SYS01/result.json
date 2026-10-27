@@ -1,0 +1,20 @@
+{
+  "acceptance_id": "SYS01",
+  "status": "not_run",
+  "boundary": "Native gateway end-to-end and abrupt-process recovery passed; physical-power-loss acceptance awaits user decision",
+  "main_baseline": "f24f1256259c998bc213a9dc93103fcfb9cfe89a",
+  "source_manifest": "../post-P5-35/runs/20261028-030614-71ae5cb4c20a424aa679bec846635397/source-manifest.json",
+  "subitems": {
+    "authenticated_upload_dispatch": "passed",
+    "durable_vs_committed_receipt": "passed",
+    "retransmission_conflict_id": "passed",
+    "gamma_duplicate_backlog_no_extra_core_transition": "passed",
+    "delayed_reverse_receipts": "passed",
+    "concurrent_terminals_reconnect": "passed",
+    "pre_sql_abrupt_exit_recovery": "passed",
+    "post_sql_pre_witness_abrupt_exit_recovery": "passed",
+    "acknowledged_uncommitted_process_kill_recovery": "passed",
+    "physical_power_loss": "not_run"
+  },
+  "profile": "synthetic temporary storage; actual Windows pipe, DPAPI, Store transactions; no growth behavior claim"
+}

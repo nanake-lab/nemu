@@ -5,31 +5,31 @@ use core_types::{WireMessage, generated::*};
 impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
     pub(crate) fn progress(&mut self) -> Result<()> {
         // Gamma operates on durable D before the core can learn or sample time.
-        if let Some(event) = self.store.next_raw()? {
-            if let Some(settled) = self.store.settle_duplicate()? {
-                let reason = match settled.stage {
-                    ReceiptStage::FILTERED => None,
-                    ReceiptStage::REJECTED => Some(self.audit(
-                        IngressReason::SOURCE_KEY_CONFLICT,
-                        Some(IngressKind::INGRESS_EVENT),
-                    )?),
-                    _ => return Err(Error::Rejected("unexpected Gamma outcome")),
-                };
-                let receipt = ReceiptV2 {
-                    schema_version: 1,
-                    stable_source_key: event.stable_source_key.clone(),
-                    stage: settled.stage,
-                    event_id: Some(event.id.clone()),
-                    reason_code: reason,
-                    raw_log_position: None,
-                    ingest_time_ns: None,
-                };
-                self.deliver(event.raw_log_position.0, &event, receipt)?;
-                // Do not hand the next queued duplicate to the core merely
-                // because one duplicate was settled in this tick. Gamma must
-                // precede EVERY new core transition, including a retry backlog.
-                return Ok(());
-            }
+        if let Some(event) = self.store.next_raw()?
+            && let Some(settled) = self.store.settle_duplicate()?
+        {
+            let reason = match settled.stage {
+                ReceiptStage::FILTERED => None,
+                ReceiptStage::REJECTED => Some(self.audit(
+                    IngressReason::SOURCE_KEY_CONFLICT,
+                    Some(IngressKind::INGRESS_EVENT),
+                )?),
+                _ => return Err(Error::Rejected("unexpected Gamma outcome")),
+            };
+            let receipt = ReceiptV2 {
+                schema_version: 1,
+                stable_source_key: event.stable_source_key.clone(),
+                stage: settled.stage,
+                event_id: Some(event.id.clone()),
+                reason_code: reason,
+                raw_log_position: None,
+                ingest_time_ns: None,
+            };
+            self.deliver(event.raw_log_position.0, &event, receipt)?;
+            // Do not hand the next queued duplicate to the core merely
+            // because one duplicate was settled in this tick. Gamma must
+            // precede EVERY new core transition, including a retry backlog.
+            return Ok(());
         }
         let before = self.store.head()?;
         let outcomes = self.handler.process_next(&mut self.store)?;

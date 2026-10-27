@@ -94,17 +94,16 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         }) {
             return Ok(Err(IngressReason::INVALID_FRAME));
         }
-        if let Some(e) = &r.event {
-            if e.payload_digest != e.payload_ref.digest {
-                return Ok(Err(IngressReason::OBJECT_MISMATCH));
-            }
+        if let Some(e) = &r.event
+            && e.payload_digest != e.payload_ref.digest
+        {
+            return Ok(Err(IngressReason::OBJECT_MISMATCH));
         }
-        if let Some(u) = &r.upload {
-            if u.data.0.len() > c.session.budget.max_chunk_bytes as usize
-                || u.object.byte_length.0 > u64::from(c.session.budget.max_object_bytes)
-            {
-                return Ok(Err(IngressReason::UPLOAD_BUDGET_FULL));
-            }
+        if let Some(u) = &r.upload
+            && (u.data.0.len() > c.session.budget.max_chunk_bytes as usize
+                || u.object.byte_length.0 > u64::from(c.session.budget.max_object_bytes))
+        {
+            return Ok(Err(IngressReason::UPLOAD_BUDGET_FULL));
         }
         if check_request(r, Some(&c.session), limits).is_err() {
             return Ok(Err(IngressReason::OBJECT_MISMATCH));

@@ -217,6 +217,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         let (tx, mut rx) = tokio::sync::mpsc::channel(self.config.max_connections * 2);
         let mut tasks = tokio::task::JoinSet::new();
         let mut timer = tokio::time::interval(self.config.poll_interval);
+        timer.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
         let mut sequence = 0u64;
         tokio::pin!(shutdown);
         let result = async { loop {
@@ -241,6 +242,9 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
                 _ = tasks.join_next(), if !tasks.is_empty() => Ok(()),
             };
             if let Err(e) = step { break Err(e); }
+            // Store operations are synchronous. Let native I/O tasks and peers
+            // drain bounded replies between steps even when a timer is overdue.
+            tokio::task::yield_now().await;
         } }.await;
         tasks.abort_all();
         while tasks.join_next().await.is_some() {}

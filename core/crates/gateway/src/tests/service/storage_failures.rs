@@ -136,6 +136,7 @@ async fn bad_object_digest_has_no_complete_receipt_and_orphan_pins_are_released(
     assert!(s.next_raw().unwrap().is_none());
     assert_eq!(s.collect_garbage().unwrap(), 1);
     s.verify().unwrap();
+    drop(s); // close SQLite/its byte-range writer lock before scanning files
     fn no_secret(path: &std::path::Path, token: &[u8], hex: &[u8]) {
         for entry in std::fs::read_dir(path).unwrap() {
             let entry = entry.unwrap();

@@ -1,6 +1,65 @@
 use super::*;
 
 #[tokio::test]
+async fn sys01_queued_duplicate_backlog_never_reaches_a_second_core_step() {
+    let root = TemporaryRoot::new().unwrap();
+    let (mut gateway, listener, name, token) = setup(&root, "gamma-backlog", deployment());
+    let enabled = Arc::clone(&gateway.handler.enabled);
+    let (stop, stopped) = tokio::sync::oneshot::channel();
+    let run = async {
+        let result = gateway
+            .serve_listener(listener, async {
+                let _ = stopped.await;
+            })
+            .await;
+        assert!(
+            result.is_ok(),
+            "synthetic backlog service failed: {result:?}"
+        );
+        result
+    };
+    let client = async {
+        let mut peer = Peer::connect(&name, &token).await;
+        let p = text();
+        let (e, source) = event(&p, 0);
+        peer.upload(
+            "p",
+            match &p {
+                TerminalPayload::Text(v) => v,
+                _ => unreachable!(),
+            },
+        )
+        .await;
+        peer.upload("s", &source).await;
+        let mut requests = vec![];
+        for n in 0..4 {
+            let r = peer
+                .send_event(&format!("duplicate-{n}"), input(e.clone()))
+                .await;
+            assert_eq!(peer.reply(&r).await.raw_log_position, Some(DecimalU64(n)));
+            requests.push(r);
+        }
+        enabled.store(true, Ordering::SeqCst);
+        assert_eq!(
+            peer.reply(&requests[0]).await.stage,
+            ReceiptStage::CORE_COMMITTED
+        );
+        for r in &requests[1..] {
+            assert_eq!(peer.reply(r).await.stage, ReceiptStage::FILTERED);
+        }
+        let _ = stop.send(());
+    };
+    let (r, ()) = tokio::join!(run, client);
+    r.unwrap();
+    let (s, h) = gateway.into_parts();
+    assert_eq!(h.commits.load(Ordering::SeqCst), 1);
+    assert_eq!(s.head().unwrap().1, 4);
+    assert_eq!(s.head().unwrap().2, 1);
+    assert_eq!(s.reader().unwrap().facts(10).unwrap().len(), 1);
+    s.verify().unwrap();
+}
+
+#[tokio::test]
 async fn sys01_authenticated_upload_dispatch_reconnect_gamma_and_reverse_receipts() {
     let root = TemporaryRoot::new().unwrap();
     let (mut gateway, listener, name, token) = setup(&root, "sys01", deployment());
