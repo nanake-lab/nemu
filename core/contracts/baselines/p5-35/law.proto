@@ -1,0 +1,321 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "ledger.proto";
+
+// Echo Core v2.0 law state (P5-21): tendencies R, dynamics θ, the law version 𝔏_v, growth
+// management commands and the genesis manifest. (R, θ) = 𝔏_v(H, genesis, records) (v2.0 §2.2):
+// these objects are recomputable results, not independent memory. Types only; G, C and the
+// recomputation are implemented in P5-23 to P5-26 and wired in P5-29.
+
+enum EvidenceSign { SIGN_UNSPECIFIED = 0; SIGN_NEGATIVE = 1; SIGN_POSITIVE = 2; }
+enum GrowthCommandKind { GROWTH_COMMAND_UNSPECIFIED = 0; GROWTH_PAUSE = 1; GROWTH_RESUME = 2; GROWTH_REVIEW_CONCLUSION = 3; }
+
+// @message echo.evidence-allocation | v2.0 §5.2 S_{c,k}, weight factors, shares; LP2, I25
+message EvidenceAllocation {
+  // @superseded EvidenceAllocationV2 | P5-32; ADR 0016: adds the ordinal, μ and p_c that G needs to replay a tendency
+  // support is S_{c,k}; intensity is the strength factor (≤ w_max); share is the explanation share.
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double support = 3; // required,min=-1,max=1
+  optional double intensity = 4; // required,min=0
+  optional double share = 5; // required,min=0,max=1
+}
+
+// @message echo.evidence-group | v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share
+message EvidenceGroup {
+  // @superseded EvidenceGroupV2 | P5-32; ADR 0016: carries EvidenceAllocationV2
+  // members: committed H events of the group; source_key: the same-source key (EV2).
+  optional uint32 schema_version = 1; // required
+  optional string group_id = 2; // required,nonempty
+  repeated string members = 3; // required,set=self
+  optional string source_key = 4; // required,nonempty
+  optional double credibility = 5; // required,min=0,max=1
+  optional double verifiability = 6; // required,min=0,max=1
+  repeated EvidenceAllocation allocations = 7; // required,set=tendency_id
+}
+
+// @message echo.tendency | v2.0 §5.2, §5.3 corollary 7, §7, §10
+message Tendency {
+  // @superseded TendencyV2 | P5-32; ADR 0016: adds the sums of the typical-magnitude recurrence
+  // evidence_a is A_k = Σ ω·W·S; evidence_b is B_k = n₀ + κ_k + Σ ω·W·|S| (v2.0 §5.2).
+  // attachment_prior is A_att, present only on the caretaker closeness tendency (corollary 7).
+  // predicate is the ordered list of situation conditions; π_k ∈ (−1, 1) is checked in core-types.
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional ConceptRef concept = 3; // required
+  repeated TrilingualText predicate = 4; // required
+  optional NatureVector direction = 5; // required
+  optional double evidence_a = 6; // required
+  optional double evidence_b = 7; // required,min=0
+  optional double h_hat = 8; // required,min=0,max=1
+  optional uint64 group_count = 9; // required
+  optional uint64 flip_count = 10; // required
+  optional EvidenceSign last_sign = 11; // optional
+  optional double pi = 12; // required,min=-1,max=1
+  optional double typical_magnitude = 13; // required,min=0
+  optional PersonRelation relation = 14; // optional
+  optional double attachment_prior = 15; // optional,min=0
+}
+
+// @message echo.r-snapshot | v2.0 §2.1, §2.2, §7
+message RSnapshot {
+  // @superseded RSnapshotV2 | P5-32; ADR 0016: carries TendencyV2
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional ObjectRef law_version = 3; // required
+  repeated Tendency tendencies = 4; // required,set=tendency_id
+}
+
+// @message echo.theta-snapshot | v2.0 §8 θ and the statistics of C
+message ThetaSnapshot {
+  // sigma is σ̂, tau_s is τ̂ in seconds, weight_sum is Σω_e, h_hat_theta is ĥ_θ. estimator_state
+  // holds the remaining recursion state (change-point detector, current same-sign runs), whose
+  // format the law version defines (P5-25; V2-30).
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional ObjectRef law_version = 3; // required
+  optional ThetaValues values = 4; // required
+  optional NatureScale sigma = 5; // required
+  optional NatureScale tau_s = 6; // required
+  optional double weight_sum = 7; // required,min=0
+  optional double h_hat_theta = 8; // required,min=0,max=1
+  optional ObjectRef estimator_state = 9; // required
+}
+
+// @message echo.growth-command | v2.0 §5.4, §10; ADR 0010 decision 5; permissions P5-05
+message GrowthCommand {
+  // @rules {"common":["command_id"],"cases":{"1":{},"2":{},"3":{"required":["verdict","review_record"]}}}
+  // A review conclusion answers only whether the law is right (v2.0 §5.4); there is no verdict on
+  // the resulting change.
+  optional uint32 schema_version = 1; // required
+  optional string command_id = 2; // required,nonempty
+  optional GrowthCommandKind kind = 3; // required
+  optional ReviewVerdict verdict = 4; // optional
+  optional ObjectRef review_record = 5; // optional
+}
+
+// @message echo.law-parameters | v2.0 §5.2, §6, §8, §16
+message LawParameters {
+  // Law, θ-prior weight and fast-state window parameters. Initial nature values (g₀, b₀, σ₀, τ₀),
+  // A_att, fuses and interface parameters live in GenesisManifestV2 (v2.0 §13; V2-29).
+  // Rates are 1/s and durations are seconds (V2-31). Cross-field inequalities are checked in core-types.
+  optional uint32 schema_version = 1; // required
+  optional double n0 = 2; // required,min=0
+  optional double kappa1 = 3; // required,min=0
+  optional double w_max = 4; // required,min=0
+  optional double w_teach = 5; // required,min=0
+  optional double v_u = 6; // required,min=0,max=1
+  optional double r_min = 7; // required,min=0
+  optional double r_max = 8; // required,min=0
+  optional double h0 = 9; // required,min=0,max=1
+  optional double n_h = 10; // required,min=0
+  optional double h_hat_min = 11; // optional,min=0,max=1
+  optional double h0_theta = 12; // required,min=0,max=1
+  optional double h_hat_theta_min = 13; // required,min=0,max=1
+  optional double n_b = 14; // required,min=0
+  optional double n_sigma = 15; // required,min=0
+  optional double g_min = 16; // required,min=0
+  optional double g_max = 17; // required,min=0
+  optional double recovery_min_per_s = 18; // required,min=0
+  optional double recovery_max_per_s = 19; // required,min=0
+  optional double w_min = 20; // required,min=0,max=1
+  optional double t_x_s = 21; // required,min=0
+  optional double epsilon_x = 22; // required,min=0
+  optional double k_max = 23; // required,min=0
+}
+
+// @message echo.law-version | v2.0 §1 𝔏_v, §5.4, §16
+message LawVersion {
+  // reference_form names the written form of the law (v2.0 §0 item 4, §5.2). The law version's
+  // digest is its CanonicalV1 object digest (ADR 0007 §7), carried by every ObjectRef to it.
+  optional uint32 schema_version = 1; // required
+  optional uint32 version = 2; // required,min=1
+  optional string reference_form = 3; // required,nonempty
+  optional LawParameters parameters = 4; // required
+}
+
+// @message echo.fuse-config | v2.0 §11, §12, §16
+message FuseConfig {
+  // Caretaker boundaries: initial values come from genesis; later adjustments are events in H (v2.0 §16).
+  // Field set is a minimal reconstruction (V2-30).
+  optional uint32 schema_version = 1; // required
+  optional uint32 r_capacity = 2; // required,min=1
+  optional double delta_theta_max = 3; // required,min=0
+  optional double jump_threshold = 4; // required,min=0
+  optional ObjectRef jump_probes = 5; // required
+  optional uint32 slow_drift_run = 6; // required,min=1
+  optional double slow_drift_margin = 7; // required,min=0
+  optional uint32 contact_limit = 8; // required
+  optional uint32 message_limit = 9; // required
+  optional uint64 network_window_ns = 10; // required
+}
+
+// @message echo.genesis-v2 | v2.0 §2.3, §13, §16; I28; ADR 0010 decision 6
+message GenesisManifestV2 {
+  // Every item of the v2.0 §13 list and nothing else. No field can carry personality or style
+  // text (I28): strings are identifiers only, and protocol p is referenced, not embedded. Her name
+  // is the first fact in H, not part of genesis (v2.0 §2.3).
+  optional uint32 schema_version = 1; // required
+  optional LawVersion law_version = 2; // required
+  optional string nature_structure = 3; // required,nonempty
+  optional NatureScale initial_gain = 4; // required
+  optional NatureVector initial_baseline = 5; // required
+  optional double sigma0 = 6; // required,min=0
+  optional double tau0_s = 7; // required,min=0
+  optional double attachment_prior = 8; // required,min=0
+  optional string caretaker_id = 9; // required,nonempty
+  optional ObjectRef carrier = 10; // required
+  optional ObjectRef direction_set = 11; // required
+  optional ObjectRef direction_validation = 12; // required
+  optional ObjectRef body_readout = 13; // required
+  optional ObjectRef proactivity_readout = 14; // required
+  optional FuseConfig fuses = 15; // required
+  optional ObjectRef boundaries = 16; // required
+  optional ObjectRef protocol = 17; // required
+}
+
+// P5-32 (ADR 0016): successors that add the R state the law engine G needs (V2-48). The typical
+// magnitude r_k = clip(M/U, 0, r_max) is a recency-weighted average, so a tendency keeps its sums
+// M = Σ ω·μ·p_c and U = Σ ω·μ like A and B; each allocation keeps its ordinal, μ and p_c so that G
+// can replay a tendency's recurrence when an earlier allocation changes (EV5 back-collection, a
+// late member, re-sharing after a capacity removal).
+
+// @message echo.evidence-allocation-v2 | v2.0 §5.2 S_{c,k}, weight factors, shares, r_k; LP2, I25; ADR 0016
+message EvidenceAllocationV2 {
+  // @superseded EvidenceAllocationV3 | P5-34 (ADR 0021): explicit actual retention and absolute evidence
+  // @supersedes EvidenceAllocation
+  // ordinal: index of this group among the tendency's groups, from 0, fixed once assigned (P5-23 D1);
+  // mu is μ_{c,k}; projection is p_c = ⟨Δ_c, d_k⟩, absent for teaching groups (not part of r_k).
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double support = 3; // required,min=-1,max=1
+  optional double intensity = 4; // required,min=0
+  optional double share = 5; // required,min=0,max=1
+  optional uint64 ordinal = 6; // required
+  optional double mu = 7; // required,min=0,max=1
+  optional double projection = 8; // optional
+}
+
+// @message echo.evidence-group-v2 | v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; ADR 0016
+message EvidenceGroupV2 {
+  // @superseded EvidenceGroupV3 | P5-34 (ADR 0021): explicit actual retention and absolute evidence
+  // @supersedes EvidenceGroup
+  // Field 7 (allocations of the superseded EvidenceAllocation) is reserved; field 8 carries the successors.
+  reserved 7;
+  optional uint32 schema_version = 1; // required
+  optional string group_id = 2; // required,nonempty
+  repeated string members = 3; // required,set=self
+  optional string source_key = 4; // required,nonempty
+  optional double credibility = 5; // required,min=0,max=1
+  optional double verifiability = 6; // required,min=0,max=1
+  repeated EvidenceAllocationV2 allocations = 8; // required,set=tendency_id
+}
+
+// @message echo.tendency-v2 | v2.0 §5.2, §5.3 corollary 7, §7, §10; ADR 0016
+message TendencyV2 {
+  // @superseded TendencyV3 | P5-34 (ADR 0021): explicit actual retention and absolute evidence
+  // @supersedes Tendency
+  // magnitude_sum is M_k = Σ ω·μ·p_c and magnitude_weight is U_k = Σ ω·μ over the matching
+  // experience groups; typical_magnitude = clip(M/U, 0, r_max), 0 while U = 0 (v2.0 §5.2).
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional ConceptRef concept = 3; // required
+  repeated TrilingualText predicate = 4; // required
+  optional NatureVector direction = 5; // required
+  optional double evidence_a = 6; // required
+  optional double evidence_b = 7; // required,min=0
+  optional double h_hat = 8; // required,min=0,max=1
+  optional uint64 group_count = 9; // required
+  optional uint64 flip_count = 10; // required
+  optional EvidenceSign last_sign = 11; // optional
+  optional double pi = 12; // required,min=-1,max=1
+  optional double typical_magnitude = 13; // required,min=0
+  optional PersonRelation relation = 14; // optional
+  optional double attachment_prior = 15; // optional,min=0
+  optional double magnitude_sum = 16; // required
+  optional double magnitude_weight = 17; // required,min=0
+}
+
+// @message echo.r-snapshot-v2 | v2.0 §2.1, §2.2, §7; ADR 0016
+message RSnapshotV2 {
+  // @superseded RSnapshotV3 | P5-34 (ADR 0021): explicit actual retention and absolute evidence
+  // @supersedes RSnapshot
+  // Field 4 (tendencies of the superseded Tendency) is reserved; field 5 carries TendencyV2.
+  reserved 4;
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional ObjectRef law_version = 3; // required
+  repeated TendencyV2 tendencies = 5; // required,set=tendency_id
+}
+
+// P5-34 (ADR 0021): additive successors; all published V2 field tables stay frozen.
+// @message echo.evidence-allocation-v3 | v2.0 §5.2 S_{c,k}, weight factors, shares, r_k; LP2, I25; ADR 0019, ADR 0021
+message EvidenceAllocationV3 {
+  // @supersedes EvidenceAllocationV2
+  // @rules {"positive":["actual_retention"]}
+  // ordinal: index of this group among the tendency's groups, from 0, fixed once assigned (P5-23 D1);
+  // mu is μ_{c,k}; projection is p_c = ⟨Δ_c, d_k⟩, absent for teaching groups (not part of r_k).
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double support = 3; // required,min=-1,max=1
+  optional double intensity = 4; // required,min=0
+  optional double share = 5; // required,min=0,max=1
+  optional uint64 ordinal = 6; // required
+  optional double mu = 7; // required,min=0,max=1
+  optional double projection = 8; // optional
+  // First-inclusion multiplier on the old statistics; frozen on ordinary revisions (ADR 0019 §5).
+  optional double actual_retention = 9; // required,min=0,max=1
+}
+
+// @message echo.evidence-group-v3 | v2.0 §1 c, §4 EV1, EV2, EV7, EV9; §5.2 W = intensity × credibility × verifiability × share; ADR 0019, ADR 0021
+message EvidenceGroupV3 {
+  // @supersedes EvidenceGroupV2
+  // Inherit reserved 7; reserve the V2 container field 8 as well.
+  reserved 7, 8;
+  optional uint32 schema_version = 1; // required
+  optional string group_id = 2; // required,nonempty
+  repeated string members = 3; // required,set=self
+  optional string source_key = 4; // required,nonempty
+  optional double credibility = 5; // required,min=0,max=1
+  optional double verifiability = 6; // required,min=0,max=1
+  repeated EvidenceAllocationV3 allocations = 9; // required,set=tendency_id
+}
+
+// @message echo.tendency-v3 | v2.0 §5.2, §5.3 corollary 7, §7, §10; ADR 0019, ADR 0021
+message TendencyV3 {
+  // @supersedes TendencyV2
+  // @rules {"at_least_abs":{"evidence_absolute":"evidence_a"}}
+  // magnitude_sum is M_k = Σ ω·μ·p_c and magnitude_weight is U_k = Σ ω·μ over the matching
+  // experience groups; typical_magnitude = clip(M/U, 0, r_max), 0 while U = 0 (v2.0 §5.2).
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional ConceptRef concept = 3; // required
+  repeated TrilingualText predicate = 4; // required
+  optional NatureVector direction = 5; // required
+  optional double evidence_a = 6; // required
+  optional double evidence_b = 7; // required,min=0
+  optional double h_hat = 8; // required,min=0,max=1
+  optional uint64 group_count = 9; // required
+  optional uint64 flip_count = 10; // required
+  optional EvidenceSign last_sign = 11; // optional
+  optional double pi = 12; // required,min=-1,max=1
+  optional double typical_magnitude = 13; // required,min=0
+  optional PersonRelation relation = 14; // optional
+  optional double attachment_prior = 15; // optional,min=0
+  optional double magnitude_sum = 16; // required
+  optional double magnitude_weight = 17; // required,min=0
+  // V = E+C, excluding c and P; never reconstruct it by subtracting c from rounded B.
+  optional double evidence_absolute = 18; // required,min=0
+}
+
+// @message echo.r-snapshot-v3 | v2.0 §2.1, §2.2, §7; ADR 0019, ADR 0021
+message RSnapshotV3 {
+  // @supersedes RSnapshotV2
+  // Inherit reserved 4; reserve the V2 container field 5 as well.
+  reserved 4, 5;
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional ObjectRef law_version = 3; // required
+  repeated TendencyV3 tendencies = 6; // required,set=tendency_id
+}

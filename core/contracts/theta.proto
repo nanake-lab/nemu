@@ -1,0 +1,91 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "ledger.proto";
+
+// @message echo.theta-estimator-parameters | P5-36; ADR 0029; V2-94/95/98/100/103
+message ThetaEstimatorParameters {
+  // Complete C resource view, including law-bound notification calibration.
+  optional uint32 schema_version = 1; // required
+  optional string law_id = 2; // required,nonempty
+  optional string numerics_id = 3; // required,nonempty
+  optional NatureVector baseline_prior = 4; // required
+  optional NatureScale gain_prior = 5; // required
+  optional NatureScale sigma_prior = 6; // required
+  optional NatureScale tau_prior_s = 7; // required
+  optional double baseline_weight = 8; // required,min=0
+  optional double variance_weight = 9; // required,min=0
+  optional double duration_weight = 10; // required,min=0
+  optional double change_prior = 11; // required,min=0,max=1
+  optional double change_prior_weight = 12; // required,min=0
+  optional double change_min = 13; // required,min=0,max=1
+  optional double gain_min = 14; // required,min=0
+  optional double gain_max = 15; // required,min=0
+  optional double recovery_min = 16; // required,min=0
+  optional double recovery_max = 17; // required,min=0
+  optional double detector_shift_sigma = 18; // required,min=0
+  optional double detector_threshold = 19; // required,min=0
+  optional double jump_notice = 20; // required,min=0
+  optional uint64 drift_run = 21; // required
+  optional double drift_margin = 22; // required,min=0
+}
+
+// @message echo.theta-running-time | P5-36; ADR 0029; V2-95 recorded running time
+message ThetaRunningTime {
+  optional uint32 schema_version = 1; // required
+  optional uint64 origin_ns = 2; // required
+  optional uint64 event_ns = 3; // required
+  optional uint64 stopped_ns = 4; // required
+  optional uint64 running_ns = 5; // required
+}
+
+// @message echo.theta-last-event | P5-36; ADR 0029; last accepted external learning event
+message ThetaLastEvent {
+  optional uint32 schema_version = 1; // required
+  optional uint64 ordinal = 2; // required
+  optional uint64 time_ns = 3; // required
+  optional string event_id = 4; // required,nonempty
+}
+
+// @message echo.theta-estimator-state | P5-36; ADR 0029; I18 complete P5-25 recursion
+message ThetaEstimatorState {
+  // Ordered Nature channels; drift order b4,g4,lambda4. Log statistics are signed.
+  optional uint32 schema_version = 1; // required
+  optional double weight = 2; // required,min=0
+  repeated double reaction_sum = 3; // required
+  repeated double square_sum = 4; // required,min=0
+  optional NatureScale sigma = 5; // required
+  repeated double variance = 6; // required,min=0
+  repeated double duration_log_sum = 7; // required
+  repeated double duration_mass = 8; // required,min=0
+  repeated double duration_log_mean = 9; // required
+  repeated uint64 zero_duration_count = 10; // required
+  optional NatureScale tau_s = 11; // required
+  repeated sint64 run_sign = 12; // required
+  repeated uint64 run_start_ns = 13; // required
+  optional uint64 detector_segment_count = 14; // required
+  optional uint64 detector_changes = 15; // required
+  repeated double detector_mean = 16; // required,min=-1,max=1
+  repeated double detector_positive = 17; // required,min=0
+  repeated double detector_negative = 18; // required,min=0
+  optional uint64 event_count = 19; // required
+  optional double h = 20; // required,min=0,max=1
+  optional ThetaLastEvent last_event = 21; // optional
+  optional ThetaRunningTime last_running_time = 22; // optional
+  repeated sint64 drift_sign = 23; // required
+  repeated uint64 drift_count = 24; // required
+}
+
+// @message echo.theta-snapshot-v2 | P5-36; ADR 0029; inline estimator and bound complete parameters
+message ThetaSnapshotV2 {
+  // @supersedes ThetaSnapshot
+  // Fields 5..9 moved into the complete state; predecessor numbers are never reused.
+  reserved 5, 6, 7, 8, 9;
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional ObjectRef law_version = 3; // required
+  optional ThetaValues values = 4; // required
+  optional ThetaEstimatorParameters parameters = 10; // required
+  optional bytes parameters_digest = 11; // required,size=32
+  optional ThetaEstimatorState estimator = 12; // required
+}

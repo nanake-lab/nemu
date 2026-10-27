@@ -1,5 +1,7 @@
 # P5-36 θ 估计器状态的存储 — 报告
 
+> **当前结论（2026-10-28 实施）：部分完成。** 内嵌契约、最小桥接及真实逐位恢复/续算已完成并通过专项验收；完整工作区测试受新增 **B3 存储消费者冲突**阻塞，保持草稿 #108，不转可审查、不写“请审查”。最新交付/验收/下一步见文末“2026-10-28 实施报告”。下面的准备阶段正文与旧证据原样保留，不再代表当前目录占用或实现状态。
+
 > 2026-10-28 恢复准备增量：#95/#65 已合并，当前等待 #110 释放契约目录；桥接请求已收窄为两个新文件与一个模块入口，见 [BLOCKED 当前更新](BLOCKED.md#2026-10-28-当前状态更新) 和 [接口请求](../../tasks/requests/P5-36-dynamics-roundtrip.md)。本轮不改实现、不重跑基线；以下保留 2026-10-27 的报告与原始验证口径，旧测试不代表最新 main 组合通过。
 
 ## 结果
@@ -73,3 +75,83 @@ P5-25 #77 的标签接口返回 null，未将 null 解释为空标签；补充�
 ## 下一步
 
 保持草稿和 `needs-user`。目录释放并具备桥接后，先 fetch 并 merge 最新 main，重查任务追加、ADR/类型编号和 PR 占用，再实施后继消息、三语言校验/向量、冻结基线及真实往返。全部验收完成后才转可审查并评论“请审查”；本轮不满足此条件，不取下一卡。
+
+## 2026-10-28 实施报告
+
+### 结果
+
+部分完成（见 [BLOCKED.md](BLOCKED.md) B3）。用户批准的内嵌方案、三路径 kernel 最小桥接、契约和真实逐位恢复/续算均已完成；完整工作区验收未通过，尚不能转可审查。
+
+继续原分支 `task/P5-36-theta-estimator-idl` / PR #108，已 merge main `f24f1256259c998bc213a9dc93103fcfb9cfe89a`，合并提交 `34c81aea38211c1fb0ebce307dbc2d3525008c25`。实施后再次 fetch，main 未变化。#95/#65/#110 和原接口范围阻塞均已解除。
+
+### 交付物
+
+- `core/contracts/theta.proto`：5 个新消息，ThetaSnapshotV2 内嵌完整参数、参数摘要和估计器；旧 ThetaSnapshot 标为被取代，旧字段表、标签和向量字节保留。保留旧 5–9 号，新增 10–12 号。
+- `core/crates/core-types/src/semantic/theta.rs` 和 Python/TypeScript 生成的 `echo/theta` 模块：一致的显式语义检查；通用结构解码不能替代它。完整 law/fuses 参数摘要经现有 CanonicalV1 类型域分离 SHA-256 产生。
+- 已批准的 kernel 三路径：新增 `dynamics/storage.rs`、`dynamics/storage/tests.rs`，`dynamics/mod.rs` 只注册/导出及更新说明。未修改递推算法、字段可见性、存储、迁移或运行时接线；未增加 Cargo 依赖。
+- `core/contracts/verify_theta_restore.py`：真实 C → 字节 → Python/TS 解码复编码 → Rust 真正恢复并续算，已接入 `pnpm test:core-contracts`；所有数据都是临时合成轨迹。
+- `baselines/p5-35/`：冻结合入 #110 后、本卡实施前 8 个 proto 和 500 legal / 528 illegal / 63 ingress / 18 unicode 的摘要。新增向量仅追加 15 legal / 69 illegal，详见 [逐消息覆盖](implementation/message-coverage.json)。
+- ADR 0029、接口请求、规格对照均只追加实施差异；V2-107–109 已登记。历史 `verification/` 不改写、不充当本次结果；新增日志在 [implementation/](implementation/) 和 [V2-109/](V2-109/)。
+
+`storage/tests.rs` 超过 400 行（478 行）：它包含独立的全字段位比较、真实轨迹、完整续算/报警/故障边界及跨语言交换验证。保留在用户批准的唯一测试文件内，未为拆文件扩围。DynamicsState、DynamicsLaw、Detector、Run、RunningTime 的字段以完整解构检查，新增字段会强迫测试更新。
+
+### 验收
+
+| 命令或检查 | 结果 | 证据 |
+| --- | --- | --- |
+| `python core/contracts/generate.py --check` | passed，0 stale | `implementation/contracts-acceptance.log` |
+| `python core/contracts/check_compat.py`（所有已冻结基线） | passed；p5-01/21/32/34/35/current，0 违例 | 同上 |
+| `pnpm test:core-contracts` | 三语言各 13,224 例（2,983 legal、10,241 illegal）、官方 protoc 515 向量、14 schema 测试；真实交换验证见下行 | `implementation/contracts-acceptance.log`、`contracts-acceptance-result.json` |
+| V2-109 真实逐位恢复 + 续算 | passed；65 前缀 × 2 种格式；Python/TS 返回 260 份状态逐一恢复；状态/ThetaChange/signals/StepBounds 一致 | `V2-109/result.json`、`actual-states.json`、`returned-states.json`；`implementation/three-language-restore-01.log` |
+| 每新消息 ≥3 合法、≥3 非法 | passed；参数 3/18、时间 3/6、末事件 3/6、估计器 3/27、快照 3/12 | `implementation/message-coverage.json` |
+| `cargo test -p core-kernel`（工作区独立执行结果） | 89 passed，1 个既有 V2-93 旧诊断 ignored；本卡 3 项均通过，包括报警、大 ordinal、次正规数 | `implementation/rust-other-crates.log` |
+| `cargo test -p core-types --locked` | passed；34 个单元/集成测试，另含子进程冷启动检查 | `implementation/core-types-acceptance.log` |
+| `cargo fmt --all -- --check`；`cargo clippy --workspace --all-targets --locked -- -D warnings` | passed | `implementation/rust-acceptance-results.json`、对应 acceptance 日志 |
+| `cargo test --workspace --locked` | **failed**；core-store 31 failed / 15 passed，旧 θ 新写拒绝；未完成后续 crate | `implementation/rust-workspace-01.log`；B3 |
+| `cargo test --workspace --locked --exclude core-store --no-fail-fast`（继续其余验收，不是完成门槛替代） | **failed**；fact-view 17 failed / 1 passed，同一 B3。core-types 当时 2 项失败后已定向修复并通过上行；其余执行结果在原始日志 | `implementation/rust-other-crates.log` |
+| `pnpm lint`；`pnpm typecheck`；`pnpm test` | passed；52 文件、580 测试 | `implementation/pnpm-lint-01.log`、`pnpm-typecheck.log`、`pnpm-test.log` |
+| 契约 Python ruff / mypy strict；三个 worker 的 src/tests/generated ruff / mypy strict / `uv run --locked pytest` | passed；各 worker 1 个既有骨架测试。新语义覆盖来自三语言契约套件 | `implementation/ruff-01.log`、`mypy-02.log`、`workers-results.json` 及各日志 |
+| 迁移、运行时存储/发布/接续 | not_run；明确不在授权范围，不签发 SYS17 或整系统恢复 | B3；ADR 0029 实施追加 |
+
+首轮契约命令的自动安装告警保留在 `contracts-01.log`。随后将复用的 node_modules 联接保留到本任务缓存备份，按锁文件独立 `pnpm install --offline --frozen-lockfile` 成功（239 包、0 下载），生成探针的 Node 依赖也改为本工作区；最终契约日志无该告警。未更改全局配置或关闭依赖检查。首次测试的 signed min 注解、探针语义边界、登记数量和测试导入问题均保留失败日志与修复后的定向验证，不隐藏失败或把试运行写成通过。
+
+全部构建/测试由主代理串行；无 GPU、Electron 或视觉测试，无用户排练/正式存储。先前子代理仅作 PR/编号只读机械查询，按 GPT-6.1 Terra / max 显式参数试用，不作规格或通过判定，原始审计已复制到 `implementation/pr-audit-20261027T173056Z*.json`。
+
+### 规格对照
+
+| 规格条款 | 实现位置 | 测试 |
+| --- | --- | --- |
+| ADR 0007；V2-107 | theta.proto、旧 superseded 标记、p5-35 基线 | 旧向量前缀不变、所有基线 0 违例；B3 说明消费者影响 |
+| V2-94/95/98/103、I18 | 全字段估计器与四时间量、kernel storage | 真实前缀，正/零时长、负 log、停机、开放段、检测与慢漂；所有 f64 直接 to_bits |
+| V2-100、V2-108 | 完整参数与摘要；restore 的可信资源匹配 | 资源/参数/摘要/未知版本/计数/质量/时间反例，无部分恢复或默认填值 |
+| I23、V2-109 | verify_theta_restore + storage/tests.rs | 两种编码、两种返回语言、真实内存续算；variance 不等于 sigma² 的正控 |
+| I11/I24、AC2-05/14 | 原 stage 不改 | 恢复后无事件/排除来源恒等，重复/倒序事件拒绝 |
+| V2-96/97、AC2-20/21 | 原数值/报警算法不改 | StepBounds/ThetaChange/signals 同值，Jump/SlowDrift 正控；不声明运行时报警记录已接线 |
+| I29 | 合成数据与任务缓存 | 未读取个体数据；不签发行为/校准有效性 |
+
+完整对照见 [P5-36 追踪表](../../docs/traceability/P5-36.md) 的实施追加。
+
+### 新增依赖
+
+| 名称 | 版本 | 许可证 | 用途 |
+| --- | --- | --- | --- |
+| 无 | — | — | 复用既有 core-types、libm、serde_json 测试依赖与已锁定工具链；未改锁文件 |
+
+### 待用户确认
+
+- [x] 原 B1：#95/#65/#110 合并，目录释放。
+- [x] 原 B2：用户批准三路径最小扩围及内嵌方案，桥接已交付。
+- [ ] **（阻塞 B3）** 存储消费者后继接线的范围与安排。当前明确禁止扩围，按 BLOCKED 的两个选项留给后继协调；不通过放行旧写或改断言消除失败。
+- [ ] （合并门槛）实现通过完整验收后的交叉审查及用户最终契约合并；当前未请求 ready 审查，未自行批准或合并。
+
+### 后续建议（不在本任务范围内）
+
+由明确拥有 core-store 的后继工作处理 θ 写入/读取代际；同步相关合成夹具，并判断旧存储读写边界是否要求单独迁移设计。H/资源来源认证、外层原子发布和独立完整 H 重算沿原后继任务处理。不能从本卡的纯内存恢复证据推断这些已经完成。
+
+### 下一步
+
+保持 PR #108 **draft / needs-user**，提交并推送已完成实现和证据。等待 B3 存储接线范围裁定或后继交付；后续合入相关变更后重跑受影响的完整工作区验收，全部通过才转可审查并写“请审查”。本轮不取下一卡。
+
+### 冻结字节与 whitespace 说明
+
+`git diff --cached --check` 只报新冻结的 `baselines/p5-35/growth.proto:300` 含末尾空行（exit 2）。该文件已逐字节核对等于 main 的原文件；为保留冻结字节没有删空行。这不是源码逻辑或测试失败，完整工作区的未通过仍按 B3 保留。源文件范围检查与所有冻结 proto 的 main 字节核对见 `implementation/scope-source-manifest.json`，原始 whitespace 输出见 `implementation/staged-diff-check.log`。

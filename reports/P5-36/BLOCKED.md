@@ -1,5 +1,24 @@
 # P5-36 阻塞（2026-10-27）
 
+## 2026-10-28 实施后的当前阻塞 B3
+
+**旧 B1/B2 已解除。** #95、#65、#110 已合并；本分支 merge 了 main `f24f1256259c998bc213a9dc93103fcfb9cfe89a`。用户已批准 `dynamics/storage.rs`、`dynamics/storage/tests.rs`、`dynamics/mod.rs` 三路径的最小扩围，并选定后继 θ 快照内嵌完整估计器状态；桥接和真实逐位恢复/续算已实施。以下旧日期章节仅保留历史。
+
+**B3：任务卡要求标记旧消息被取代，而当前 core-store 的写入/事务读取仍绑定旧 ThetaSnapshot；本轮明确禁止扩到运行时接线。**
+
+- 实测：`cargo test --manifest-path core/Cargo.toml --workspace --locked` exit 101；core-store 15 passed、31 failed，原始日志 `implementation/rust-workspace-01.log`。共同错误为 `Rejected("new writes must use the active successor message")`。这不是 main 原有失败或环境故障，而是本卡新增 superseded 标记与现有存储消费者的冲突。
+- `core/crates/core-store/src/objects.rs:80` 检查 `!T::SUPERSEDED`；旧 `ThetaSnapshot` 保留字段/字节但按本卡要求被 `ThetaSnapshotV2` 取代，因而不能再用于新写入。
+- `core/crates/core-store/src/tests/mod.rs:178` 仍 prepare 旧类型；生产代码 `transaction.rs:147`、`:326` 仍用旧类型读取 staged/current θ。只换测试夹具不足以解决生产接线问题。
+- 继续执行其余 crate 后，fact-view 为 1 passed、17 failed，均在 `core/crates/fact-view/src/tests/fixture.rs:163` prepare 同一旧 θ 类型时失败，见 `implementation/rust-other-crates.log`。core-types 的黄金探针需接入新增显式语义边界、取代登记数量需更新；这些本卡范围内问题已修复，并以 `core-types-acceptance.log` 和 `clippy-acceptance.log` 复核通过，不属于残余阻塞。
+- 已完成的恢复桥接不写存储，不能绕开以上入口。未删除 superseded 标记、未允许旧类型继续新写、未跳过失败测试、未将其误报为与本卡无关。其余 crate 的检查另行继续，不替代失败的完整工作区验收。
+
+处理选项：
+
+1. 后继存储工作完成版本化 θ 消费者接线与必要的旧读取边界后，再合入本分支并重跑完整验收；本卡保持 draft/needs-user。任何既存数据迁移仍须单独明确范围，不能默认补零。
+2. 用户另行批准具体 core-store 接线范围后完成这项协调。本轮“不得扩到迁移和运行时接线”的边界继续有效，未擅自实施。
+
+暂不把“仅文字标记取代、继续放行旧写入”列为实现修复，因为它改变既有活跃消息门禁，需要额外契约决策，不能为了全绿隐式采用。全部验收尚未通过，因此不转可审查、不评论“请审查”。继续完成其余静态检查、三语言向量、证据和报告。
+
 ## 2026-10-28 当前状态更新
 
 旧 B1 中 #95、#65 的占用已解除：合并提交分别为 `0416e934`、`88455673`，均在最新 main `32a5888e` 内。当前待释放的是 #110（head `4c8dd453`，开放、非草稿）：增量复审及用户契约批准已完成，但尚未合并，仍占用 contracts/types/generated；不得沿用旧报告中的“等待 #95/#65”。

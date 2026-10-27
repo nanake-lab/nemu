@@ -1,0 +1,22 @@
+    Checking core-types v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-types)
+    Checking core-store v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-store)
+    Checking core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-kernel)
+    Checking semantic-core v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\semantic-core)
+    Checking action-gate v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\action-gate)
+    Checking gateway v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\gateway)
+    Checking task-layer v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\task-layer)
+error[E0433]: cannot find type `ThetaSnapshot` in this scope
+   --> crates\core-types\tests\v2_contract.rs:238:21
+    |
+238 |     const { assert!(ThetaSnapshot::SUPERSEDED) };
+    |                     ^^^^^^^^^^^^^ use of undeclared type `ThetaSnapshot`
+
+error[E0433]: cannot find type `ThetaSnapshotV2` in this scope
+   --> crates\core-types\tests\v2_contract.rs:239:22
+    |
+239 |     const { assert!(!ThetaSnapshotV2::SUPERSEDED) };
+    |                      ^^^^^^^^^^^^^^^ use of undeclared type `ThetaSnapshotV2`
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `core-types` (test "v2_contract") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...

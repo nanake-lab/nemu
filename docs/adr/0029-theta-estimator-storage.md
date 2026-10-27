@@ -1,7 +1,7 @@
 # ADR 0029：θ 估计器递推状态的后继存储契约
 
 - 日期：2026-10-27
-- 状态：提案，待用户批准；尚未实施或冻结 IDL
+- 状态：2026-10-28 用户批准三路径最小扩围和完整状态内嵌方案，已实施；存储消费者冲突 B3 阻塞完整验收，待交叉审查及用户最终合并
 - 任务：P5-36；草稿 PR #108
 - 核对基线：`3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf`
 - 依据：ADR 0007、ADR 0019 §8、V2-94 至 V2-98、V2-100、V2-103，以及 `reports/P5-25/METHODS.md`
@@ -86,3 +86,17 @@
 ## 后果和未完成项
 
 本提案不改变任何运行行为。ADR 批准、V2-107 至 V2-109 的正式条目、精确 IDL 分配、语义实现、逐消息向量、正式基线冻结和真实往返均未完成。编号截至本次主线与开放 PR 核对仍为本卡预留；实施和合并前再次核对。实现目录释放和恢复接口是独立阻塞，不能由本提案或旧基线测试替代。
+
+## 2026-10-28 实施定案（取代前文准备阶段状态）
+
+用户已批准三个 core-kernel 路径的最小扩围，指定采用后继 θ 快照内嵌完整估计器状态，要求验证真实逐位恢复和续算，并明确排除迁移及运行时接线。本分支合入 #110 / main `f24f1256259c998bc213a9dc93103fcfb9cfe89a`；#95/#65/#110 的旧占用和桥接范围阻塞均已解除。
+
+- 新 `theta.proto` 唯一定义五个消息：`ThetaEstimatorParameters`、`ThetaRunningTime`、`ThetaLastEvent`、`ThetaEstimatorState`、`ThetaSnapshotV2`；类型标签分别为 `echo.theta-estimator-parameters`、`echo.theta-running-time`、`echo.theta-last-event`、`echo.theta-estimator-state`、`echo.theta-snapshot-v2`。字段号以该 IDL 为准。V2 保留旧 1–4 字段，保留不用 5–9，新参数/摘要/状态使用 10–12；旧定义和旧黄金字节未改变。
+- 选择**内嵌**完整参数及估计器，不再保留“可选任意引用”方案。参数涵盖全部 DynamicsLaw 和 DynamicsFuses 字段，`numerics_id` 固定为现行 `P5-25-v2-93-98-libm-0.2.16`。参数摘要是既有 CanonicalV1 类型域分离 SHA-256；不以传输字节或 JSON 求摘要。
+- `export_snapshot(state, revision, law_version, fuses)` 只复制已保存位值；`restore_snapshot(snapshot, expected_law_ref, law, fuses)` 校验后构造全新 DynamicsState。恢复核对完整 ObjectRef 和独立传入 law/fuses 的规范参数字节，不从原状态/H 回填，不重算 variance、sigma、log mean、tau 等中间量。不增加运行时依赖。
+- Rust `semantic::check_theta_message` / `check_theta_snapshot_v2`、Python `echo.theta.check_theta_message`、TypeScript `echo/theta.checkThetaMessage` 是**显式语义边界**。通用 WireMessage/runtime 解码只保证结构与基础字段规则；消费估计器前必须调用语义边界。kernel 导出/恢复与三个测试探针均调用它。资源认证、H 前缀完整性和实际停机来源仍由调用方负责，消息自洽或摘要匹配不等于可信。
+- 合法真实状态含零规范化后的有限 binary64；符号整型经语义检查限定 −1/0/1。质量非负，方差/σ/τ 正，计数小于 2^53 且不超过学习事件数；ordinal/time 保留完整 u64，不能当 binary64。解码不修补、裁剪或初始化缺失状态。
+- `baselines/p5-35` 冻结合入 #110 后、实施本卡前的八个 proto 和黄金摘要；当前所有既有基线 0 违例。新增黄金 15 合法、69 非法，五种消息各有 3 合法、至少 3 非法。部分合法源夹具直接取真实 C 的前缀 0/17/64；声明合成来源，不代表个体校准。
+- 真实 C 的 65 个前缀分别经两种编码回到 Rust，并经 Python/TypeScript 解码复编码形成 260 份返回字节；恢复后比较所有内存字段的 `to_bits`/整数/标记/字符串，逐事件比较同一后缀、ThetaChange、signals、StepBounds。额外验证报警边界、超过 2^53 的 ordinal 和合法次正规基线值。该交换验收接入 `pnpm test:core-contracts`，普通 kernel 测试始终执行独立真实状态对照，不依赖外部文件才做断言。
+
+**新发现 B3：** `ThetaSnapshot::SUPERSEDED` 使 core-store 的既有新写门禁拒绝旧类型，但 `transaction.rs` 仍只消费旧 θ。完整工作区测试因此失败，fact-view 的存储夹具也受影响。不得通过取消标记、例外放行旧写入或修改断言来消除失败。修复需要明确的后继存储接线，超过本轮边界；见 `reports/P5-36/BLOCKED.md`。本 ADR 不授权迁移、权威存储格式变更或运行时发布，也不声明 P5-36 已全部验收。

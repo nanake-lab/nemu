@@ -265,6 +265,8 @@ def main() -> None:
             )
         )
     )
+    # P5-36: restore actual kernel states returned by both non-Rust codecs.
+    run([sys.executable, "core/contracts/verify_theta_restore.py", "--output", str(HERE / ".test-build/theta-restore")])
 
 
 if __name__ == "__main__":
