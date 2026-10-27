@@ -113,6 +113,7 @@ export function checkUploaded(
   );
   check(Object.hasOwn(uploadTypes, ref.object_type), 'upload type');
   const name = uploadTypes[ref.object_type];
+  check(name !== undefined, 'upload type');
   const value = decodeCanonicalData(name, Buffer.from(data), limits);
   check(digest(name, value, limits) === Buffer.from(ref.digest).toString('hex'), 'object digest');
 }
