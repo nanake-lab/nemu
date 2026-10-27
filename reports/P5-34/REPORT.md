@@ -2,9 +2,11 @@
 
 ## 结果
 
-部分完成（见 BLOCKED.md）：实现与 2026-10-27 复审修复已完成，最终 CI 门控因制品上传失败而未完成。被核验的报告提交 c6525e650a7d0be7a1278e9586ae5c3b696b2592 的 Ubuntu CI 实际成功，Windows W02 的 35 项测试及 2 项文档测试也通过，平面/分段 V2 的 DB/WAL 原字节均保留；随后 actions/upload-artifact 报 Upload progress stalled，Windows self-hosted 与汇总门禁因此失败。[PR #95](https://github.com/nanake-lab/nemu/pull/95) 已按用户要求恢复草稿，保留 needs-user，尚未发布本轮“请审查”。
+截至本报告提交，实现和复审修复已完成；按用户后续要求增加的 W02 上传恢复已通过 14 个本地场景、Ruff 和 mypy --strict。最终 head 的线上 Ubuntu、Windows、制品上传结果维护在 [PR #95](https://github.com/nanake-lab/nemu/pull/95) 描述、最新回复和[当前检查](https://github.com/nanake-lab/nemu/pull/95/checks)，不以本报告中的历史成功替代当前门控。保留 needs-user，由用户安排独立复审及合并，不领取下一卡。
 
-修复源码 af200a67 的上一轮 Ubuntu/Windows 均通过；c6525e65 仅补报告和证据，源码相同。本次追加仅记录最终 CI 失败，不再改源码或测试。已 merge origin/main 3f8f98e5（merge 3da8c1dc，含 #106/#107），没有 rebase 或强推。最新 PR head 与检查链接固定在 PR 描述；恢复制品上传后仍需核对该 head 的实际 CI，独立复审和用户合并，不领取下一卡。
+修复源码 af200a67 的 Ubuntu/Windows 均通过。随后仅补报告的 c6525e65 也通过 Ubuntu 与 W02 35+2，但上传报 Upload progress stalled，因此曾按要求恢复草稿。用户随后明确要求解决上传稳定性；本次追加仅修改 W02 上传流程和报告，最多三次上传、20/40 秒间隔、每次 6 分钟、成功 ID 门禁，重试复用同一日志而不重跑测试。详情见 [CI-UPLOAD-20261027.md](CI-UPLOAD-20261027.md)，原失败和所有日志保留。
+
+已 merge origin/main 3f8f98e5（merge 3da8c1dc，含 #106/#107），没有 rebase 或强推。上传修复的测试、文档、证据集中在同一提交；之后的最终 CI 状态固定在 PR 中，不再为补录成功结果产生报告提交。
 
 用户明确决定：新写入 V3；V2 历史只读、可解码；旧 V2 head 拒绝继续写。当前没有正式或排练存储，现存仅测试数据（用户提供，本卡未访问用户数据）。本次不做 V2→V3 数据迁移。将来需要时由 **P5-26** 按 v2.0 §2.2 用规律 G 从 H 整段重放得到新 q/V 快照，**不另开迁移卡**。这一决定不是用默认 q/V 转换旧状态的授权。
 
@@ -55,11 +57,15 @@ Ubuntu 同样完成 35 项存储测试及 2 项文档测试、三语言契约与
 
 [Ubuntu 40456116455](https://github.com/nanake-lab/nemu/actions/runs/40456116455) 为 success，core-store 35+2、supervisor 6 项通过；既有平台跳过/ignored 仍不计作通过。[Windows 40456116456](https://github.com/nanake-lab/nemu/actions/runs/40456116456) 的 W02 测试步骤为 success：35 项测试（1079.46 秒）和 2 项文档测试（0.20 秒）通过，0 失败、0 忽略。新增 WAL 回归对两种布局均确认 DB 4096→4096、WAL 284312→284312，完整字节相同。
 
-Windows job 122029713840 在 2026-10-27 06:09:37 UTC 完成测试，06:09:39 开始上传 3 份日志；06:14:39 报 `Upload progress stalled`。06:18:23 虽随后输出 `Uploaded bytes 4725`，上传步骤结论仍为 failure，汇总 job 122043122361 也为 failure。不能把这次运行写成 CI 全绿；这不是 W02 测试失败或 60 分钟作业超时，具体网络根因未定位。PR 已恢复草稿，未改 CI、runner、超时、测试或阈值，也未自动重跑整套测试。
+Windows job 122029713840 在 2026-10-27 06:09:37 UTC 完成测试，06:09:39 开始上传 3 份日志；06:14:39 报 `Upload progress stalled`。06:18:23 虽随后输出 `Uploaded bytes 4725`，上传步骤结论仍为 failure，汇总 job 122043122361 也为 failure。不能把这次运行写成 CI 全绿；这不是 W02 测试失败或 60 分钟作业超时，具体网络根因未定位。该次失败后 PR 已恢复草稿；当时未改 CI、runner、超时、测试或阈值。用户随后授权的上传恢复见 CI-UPLOAD-20261027.md，测试与作业时限仍保留。
 
 证据在 verification/review-20261027/final-ci-c6525e65/：toolchain.log、clippy.log、tests.log 是收尾前从 runner 临时目录复制的原字节；tests.log SHA-256 为 c33be51ce47e24c2b24aabd0fc76e5e9d8d86c4c55d366747e0efb4468281a4d。GitHub job 日志通过连接器读取后以 UTF-8/LF 保存为 *-decoded.log，保留其完整文本，归档哈希见 decoded-files.json。gh 原字节下载返回 EOF 的空文件及错误元数据也保留，不当作测试失败；ci-state.json 保存实际运行/步骤结论。制品列表的后续查询出现传输错误，未据此声称制品存在或不存在。
 
 后续选项和本卡交付门控见 BLOCKED.md B6；本轮不把源代码修复通过与最终 CI 门控混为一谈。
+
+### 用户追加的上传恢复
+
+用户要求“换个稳定的方式就算遇到网络波动也能上传过去”。本轮据此修改 .github/workflows/windows.yml 的 W02 上传步骤：固定官方 action、不引入运行时依赖、只重试上传。临时 continue-on-error 仅限上传尝试，最终门禁必须找到成功 outcome 和有效制品 ID；全部失败仍使 CI 失败。实际工作流的重试条件、环境变量绑定、PowerShell 门禁已通过 14 个本地场景，并确认原测试步骤、安全范围和 Windows 汇总门禁与 main 完全相同。验证脚本、失败日志、修复后静态检查及最终哈希在 verification/review-20261027/upload-retry/；完整说明见 CI-UPLOAD-20261027.md。
 
 ## 验收
 
@@ -144,4 +150,4 @@ P5-26 需要迁移时，从完整有效 H 运行 G 重建 q/V，并完成备份�
 
 ## 下一步
 
-代码修复和现有验收证据已完成；c6525e65 的 Ubuntu 与 W02 测试通过，制品上传失败导致最终 CI 门控未完成。已按用户要求恢复草稿并保留 needs-user。待 runner 到制品服务的连接恢复后，再按 ready→W02 顺序核对当前最终 head；全部 CI 成功后回复“请审查”，由用户安排独立复审及合并。不自行改 CI/系统设置，不领取下一张卡。失败归档提交仅更新 reports/P5-34/。
+上传恢复的代码、验证和报告一起提交后，按用户已批准的 ready→W02 顺序验证最终 head；只有整个 Ubuntu/Windows 工作流和上传门禁都成功才回复“请审查”。最新 head、运行与附件链接写入 PR 描述和回复，避免补记报告再次触发完整 CI。保留 needs-user，交叉审查后由用户合并，不领取下一卡。历史上传失败记录不删除。
