@@ -109,6 +109,7 @@ A 后来也变为负值，所以不能说它“不能接受反证”。以上只
 - [10 项回归与最小反例原文](evidence/attempt-02/tests.log)、[构建](evidence/attempt-02/build.log)、[格式](evidence/attempt-02/fmt.log)、[Clippy](evidence/attempt-02/clippy.log)、[命令/退出码/时间](evidence/attempt-02/commands.jsonl)。没有运行全工作区或应用/GPU验收；正式目录无改动。
 - [进程资源](evidence/attempt-02/experiment-process.json)：墙钟 .5163s（含启动），CPU .3594s；程序内部 .3601s，单线程、模型/GPU 调用 0。PowerShell 的峰值工作集返回 null，**内存峰值未测得**，不报为 0；为此不重复主实验。原始证据共约 4.16 MB，满足预登记体积预算。
 - [被测源码哈希](evidence/attempt-02/tested-inputs.json)、[原始证据哈希](evidence/attempt-02/evidence-hashes.json)、[运行后核对](evidence/post-run-inspection.json)：被测输入不一致 0、原始证据哈希不一致 0；构建副本与原 drive.rs 仅一个乘数赋值不同。最终 fetch 后 main 仍为 `f24f1256259c998bc213a9dc93103fcfb9cfe89a`，基线 B=M，无新增影响；正式 core/profiles/config/原始规格/content 的 diff 为空。
+- 提交时发现仓库默认文本换行规范化会改变 PowerShell 原始证据的字节。已在本研究证据目录设置 `-text` 并按原始工作区文件重新入库；本机原始证据未改写，最终 Git blob 与原始文件逐一核对。先前提交的换行规范化版本保留在 Git 历史，不作为哈希校验基准；不因此重跑实验。
 - 全部源码文件 <400 行。新增的独立探针直接使用仓库已有版本：libm 0.2.16（MIT）、serde 1.0.229、serde_json 1.0.154、sha2 0.11.1（后三者 MIT OR Apache-2.0）；许可证已核对本机缓存包清单。不增加应用运行时依赖，独立 Cargo.lock 固定探针解析结果。编译缓存/临时目录均在 D 盘。
 
 PowerShell 一键复现（输出名必须全新，拒绝覆盖旧证据；检测到其他编译/CI Worker 时退出）：
