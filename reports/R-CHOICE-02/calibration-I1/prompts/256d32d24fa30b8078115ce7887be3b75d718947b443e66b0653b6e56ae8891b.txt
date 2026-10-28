@@ -1,0 +1,8 @@
+Synthetic rule task. A correct final decision earns 10 points; each read costs 1 point. At most one read is available before the final decision.
+RULE: Select ENTER if both stamp and ticket are valid; otherwise select WAIT.
+CURRENT FACTS: Stamp valid: yes. Ticket validity is unreported.
+OPERATION CODES:
+A: submit a decision using the visible information
+B: read the decorative border color
+C: read ticket validity
+Select the next operation code. The response slot reads exactly one token: A, B, or C. Write only that code, with no other text.
