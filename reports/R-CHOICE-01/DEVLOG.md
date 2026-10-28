@@ -23,3 +23,18 @@
 规格对应：v2.0 §2.3/§9.6、I28（无性格提示、提取/通路/能力）；O §13.2（每请求缓存失效）；O §14（留出任务、随机对照、行为评分）；I29/ADR 0005（仅合成数据）。本轮不签发完整 AC2/SYS/COG 验收。
 
 当前状态：准备中；GPU 未运行，尚无行为结论。复现命令、执行记录与决定将在本日志追加。
+
+## 运行准备完成
+
+用户已回复「runner 已停，可以开始本轮实验」。MSVC `/W4 /WX /O2 /fp:precise` 编译成功；Ruff、strict mypy、3 项 CPU 协议测试通过。mypy 首次 PowerShell 通配符调用错误及随后发现的类型注解问题原文保留在 preparation；修正仅是命令展开、变量命名和类型收窄，未改任务、方向或判据。没有新增依赖，Python 仅标准库；模型/引擎沿用 P0-10 的来源许可登记。`choice_probe.cpp` 直接包含原 `native_probe.hpp`，不复制或修改载体实现。
+
+GPU 复现（先按 AGENTS §9 获得安静窗口，输出目录必须新建）：
+
+```powershell
+pwsh -NoProfile -File reports/R-CHOICE-01/build.ps1 -OutputDirectory D:/Dev/cache/R-CHOICE-01/build-reproduce
+$env:PYTHONDONTWRITEBYTECODE = '1'
+python -u reports/R-CHOICE-01/run.py --executable D:/Dev/cache/R-CHOICE-01/build-reproduce/choice_probe.exe --output D:/Dev/cache/R-CHOICE-01/run-reproduce --quiet-window-confirmed
+python reports/R-CHOICE-01/analyze.py D:/Dev/cache/R-CHOICE-01/run-reproduce --output D:/Dev/cache/R-CHOICE-01/summary-reproduce.json
+```
+
+首次实际构建为 `build-01`，计划运行 `run-01`。方向只来自提取语料；保留 24 个原始激活、3 个单位方向、所有合成提示/原始 logits 摘要/实际动作/答案，以及注入与 KV 检查的完整 logits。每次请求同时保存未约束 argmax 和合法候选质量；受约束选择不能泛化为自然对话或生产工具接入成功。
