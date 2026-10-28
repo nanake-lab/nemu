@@ -91,3 +91,5 @@ python reports/R-CHOICE-01/analyze.py D:/Dev/cache/R-CHOICE-01/run-reproduce --o
 - 原始目录 `D:/Dev/cache/R-CHOICE-01/run-01` 保留。137 个原文件共 195,287,757 bytes；仓库保存约 9.69 MB。唯一压缩项是重复较多的 native-stderr.log，存为 gzip；其余原样复制，全部复制/解压 SHA256 与原文件一致，映射见 [files.json](run-01/files.json)。无失败行为样本删除。
 - 离线重算：`python reports/R-CHOICE-01/analyze.py reports/R-CHOICE-01/run-01 --output D:/Dev/cache/R-CHOICE-01/recomputed-summary.json`。此命令不加载模型，不需要 GPU 窗口；输出文件必须不存在。
 - 没有正式运行时依赖、IDL、规律、κⁿ、θ、genesis 或用户存储变化；没有签发 AC2-16、COG、SYS 或生产载体验收。本轮在此结束。
+
+收尾：再次 fetch 的 main 仍为 `f24f1256`，与实际验证基线相同；离线从仓库副本重算得到与首次 summary 完全相同的 SHA256。首次证据 diff 检查把保留的 Windows CRLF 当成尾随空格；按 P0-10 已有做法为本目录证据登记 `-text whitespace=cr-at-eol`，保留原字节后检查。该修正仅涉及 Git 证据编码属性，没有改测量、样本或行为阈值；GPU 未重跑。
