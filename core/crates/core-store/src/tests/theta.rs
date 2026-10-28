@@ -159,6 +159,54 @@ fn published(store: &Store<Rehearsal>) -> Vec<i64> {
 }
 
 #[test]
+fn caller_limits_reach_prepare_commit_and_read() {
+    for size in [1_048_576, 1_048_577] {
+        let root = TemporaryRoot::new().unwrap();
+        let mut store = rehearsal(&root, "theta-limits");
+        let cap = store.take_commit_capability().unwrap();
+        let e = event(&mut store, 0);
+        let (ticket, mut tx, pins) = proposal(&store, &e);
+        let rows: Vec<Value> = serde_json::from_slice(include_bytes!(
+            "../../../../contracts/fixtures/theta-states.json"
+        ))
+        .unwrap();
+        let mut snapshot: ThetaSnapshotV2 =
+            serde_json::from_value(rows[1]["value"].clone()).unwrap();
+        snapshot.estimator.last_event.as_mut().unwrap().event_id = "x".repeat(size);
+        snapshot.law_version = pins[1].reference().clone();
+        let mut narrow = config();
+        narrow.encoding.max_bytes = 1_048_576;
+        let restricted = crate::objects::Objects::new(store.objects.root.clone(), narrow);
+        let count = fs::read_dir(&store.objects.root).unwrap().count();
+        let before = published(&store);
+        assert!(
+            restricted
+                .prepare::<Rehearsal, _>(&snapshot, "large", &Fault::None)
+                .is_err()
+        );
+        assert_eq!(count, fs::read_dir(&store.objects.root).unwrap().count());
+        assert_eq!(before, published(&store));
+        assert!(store.current().unwrap().is_none());
+        let prepared = store.prepare(&snapshot, &snapshot.revision).unwrap();
+        let reference = prepared.reference().clone();
+        assert!(restricted.read(&reference).is_err());
+        tx.staged_theta = reference.clone();
+        let staged = store.stage(ticket, tx).unwrap();
+        store.commit(&cap, staged, normal()).unwrap();
+        drop((prepared, pins, cap, store));
+        let reader = Reader::<Rehearsal>::open_temporary(&root, "theta-limits", config()).unwrap();
+        let restored: ThetaSnapshotV2 = reader.read(&reference).unwrap();
+        assert_eq!(
+            restored.canonical_bytes(config().encoding).unwrap(),
+            snapshot.canonical_bytes(config().encoding).unwrap()
+        );
+        println!(
+            "P536_LIMITS bytes={size} prepare/stage/commit/reopen/read passed; narrow refused without publication"
+        );
+    }
+}
+
+#[test]
 fn invalid_new_and_legacy_staging_never_publish() {
     let root = TemporaryRoot::new().unwrap();
     let mut store = rehearsal(&root, "invalid-theta");

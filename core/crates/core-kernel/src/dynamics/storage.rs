@@ -14,12 +14,6 @@ use core_types::{
     semantic::{THETA_NUMERICS_ID, check_theta_snapshot_v2, theta_parameters_digest},
 };
 
-const LIMITS: Limits = Limits {
-    max_bytes: 1_048_576,
-    max_items: 4096,
-    max_depth: 32,
-};
-
 /// Decode/restore errors are not a C growth-computation Fault. The caller owns
 /// storage recovery and authenticated H/resource binding; this module cannot resume it.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -80,9 +74,10 @@ pub fn export_snapshot(
     revision: &str,
     law_version: &ObjectRef,
     fuses: &DynamicsFuses,
+    limits: Limits,
 ) -> Result<ThetaSnapshotV2, SnapshotError> {
     let parameters = parameters(&state.law, fuses)?;
-    let parameters_digest = theta_parameters_digest(&parameters)?;
+    let parameters_digest = theta_parameters_digest(&parameters, limits)?;
     let s = state;
     let snapshot = ThetaSnapshotV2 {
         schema_version: 1,
@@ -132,7 +127,7 @@ pub fn export_snapshot(
             drift_count: s.drift_count.map(U).to_vec(),
         },
     };
-    check_theta_snapshot_v2(&snapshot)?;
+    check_theta_snapshot_v2(&snapshot, limits)?;
     Ok(snapshot)
 }
 
@@ -149,11 +144,12 @@ pub fn restore_snapshot(
     expected_law_ref: &ObjectRef,
     law: &DynamicsLaw,
     fuses: &DynamicsFuses,
+    limits: Limits,
 ) -> Result<DynamicsState, SnapshotError> {
-    check_theta_snapshot_v2(snapshot)?;
+    check_theta_snapshot_v2(snapshot, limits)?;
     let expected = parameters(law, fuses)?;
     if &snapshot.law_version != expected_law_ref
-        || snapshot.parameters.canonical_bytes(LIMITS)? != expected.canonical_bytes(LIMITS)?
+        || snapshot.parameters.canonical_bytes(limits)? != expected.canonical_bytes(limits)?
     {
         return Err(SnapshotError::BindingMismatch);
     }

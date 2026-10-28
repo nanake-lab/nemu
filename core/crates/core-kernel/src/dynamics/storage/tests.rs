@@ -4,6 +4,12 @@ use super::*;
 use core_types::{generated::ThetaValues, scalar::HexBytes};
 use serde_json::{Value, json};
 
+const LIMITS: Limits = Limits {
+    max_bytes: 1_048_576,
+    max_items: 4096,
+    max_depth: 32,
+};
+
 fn law() -> DynamicsLaw {
     DynamicsLaw {
         version: "synthetic-storage-law".into(),
@@ -332,6 +338,7 @@ fn actual_states_all_prefixes_roundtrip_and_continuation() {
             &format!("synthetic-prefix-{prefix}"),
             &reference(),
             &fuses(),
+            LIMITS,
         )
         .unwrap();
         let cb = s.canonical_bytes(LIMITS).unwrap();
@@ -342,7 +349,7 @@ fn actual_states_all_prefixes_roundtrip_and_continuation() {
         ] {
             continue_from(
                 state,
-                restore_snapshot(&decoded, &reference(), &law(), &fuses()).unwrap(),
+                restore_snapshot(&decoded, &reference(), &law(), &fuses(), LIMITS).unwrap(),
                 prefix,
             );
         }
@@ -374,7 +381,7 @@ fn actual_states_all_prefixes_roundtrip_and_continuation() {
             .unwrap();
             continue_from(
                 &states[prefix],
-                restore_snapshot(&decoded, &reference(), &law(), &fuses()).unwrap(),
+                restore_snapshot(&decoded, &reference(), &law(), &fuses(), LIMITS).unwrap(),
                 prefix,
             );
         }
@@ -400,12 +407,13 @@ fn actual_states_all_prefixes_roundtrip_and_continuation() {
                 &format!("synthetic-prefix-{prefix}"),
                 &trusted,
                 &fuses(),
+                LIMITS,
             )
             .unwrap();
             assert_eq!(bytes, expected.canonical_bytes(LIMITS).unwrap());
             continue_from(
                 &states[prefix],
-                restore_snapshot(&decoded, &trusted, &law(), &fuses()).unwrap(),
+                restore_snapshot(&decoded, &trusted, &law(), &fuses(), LIMITS).unwrap(),
                 prefix,
             );
         }
@@ -419,23 +427,23 @@ fn actual_states_all_prefixes_roundtrip_and_continuation() {
 #[test]
 fn rejects_corruption_and_wrong_trusted_context_without_mutation() {
     let original = trajectory().remove(17);
-    let snapshot = export_snapshot(&original, "synthetic", &reference(), &fuses()).unwrap();
+    let snapshot = export_snapshot(&original, "synthetic", &reference(), &fuses(), LIMITS).unwrap();
     let mut wrong = reference();
     wrong.digest.0[0] ^= 1;
     assert_eq!(
-        restore_snapshot(&snapshot, &wrong, &law(), &fuses()),
+        restore_snapshot(&snapshot, &wrong, &law(), &fuses(), LIMITS),
         Err(SnapshotError::BindingMismatch)
     );
     let mut wrong_law = law();
     wrong_law.detector_threshold += 1.0;
     assert_eq!(
-        restore_snapshot(&snapshot, &reference(), &wrong_law, &fuses()),
+        restore_snapshot(&snapshot, &reference(), &wrong_law, &fuses(), LIMITS),
         Err(SnapshotError::BindingMismatch)
     );
     let mut wrong_fuses = fuses();
     wrong_fuses.drift_run += 1;
     assert_eq!(
-        restore_snapshot(&snapshot, &reference(), &law(), &wrong_fuses),
+        restore_snapshot(&snapshot, &reference(), &law(), &wrong_fuses, LIMITS),
         Err(SnapshotError::BindingMismatch)
     );
     let mutations: Vec<fn(&mut ThetaSnapshotV2)> = vec![
@@ -455,7 +463,7 @@ fn rejects_corruption_and_wrong_trusted_context_without_mutation() {
     for mutate in mutations {
         let mut bad = snapshot.clone();
         mutate(&mut bad);
-        assert!(restore_snapshot(&bad, &reference(), &law(), &fuses()).is_err());
+        assert!(restore_snapshot(&bad, &reference(), &law(), &fuses(), LIMITS).is_err());
     }
     let bytes = snapshot.canonical_bytes(LIMITS).unwrap();
     assert!(ThetaSnapshotV2::from_canonical(&bytes[..bytes.len() - 1], LIMITS).is_err());
@@ -463,6 +471,52 @@ fn rejects_corruption_and_wrong_trusted_context_without_mutation() {
     // A lossy bridge which reconstructs variance from sigma would fail the oracle.
     let states = trajectory();
     assert!(states.iter().any(|s|(0..4).any(|i|s.variance[i].to_bits()!=(s.sigma[i]*s.sigma[i]).to_bits())));
+}
+
+#[test]
+fn caller_limits_cover_export_digest_restore_and_continuation() {
+    let wide = Limits {
+        max_bytes: 4_194_304,
+        max_items: 4096,
+        max_depth: 64,
+    };
+    for size in [1_048_576, 1_048_577] {
+        let mut p = law();
+        p.version = "l".repeat(size);
+        let mut trusted = reference();
+        trusted.resource_version = p.version.clone();
+        let f = fuses();
+        let mut first = events()[0].clone();
+        first.id = "x".repeat(size);
+        let original = stage(
+            &DynamicsState::genesis(p.clone()).unwrap(),
+            Some(&first),
+            &p,
+            &f,
+        )
+        .unwrap()
+        .into_state();
+        let snapshot = export_snapshot(&original, "large-identifiers", &trusted, &f, wide).unwrap();
+        assert_eq!(
+            theta_parameters_digest(&snapshot.parameters, wide).unwrap(),
+            snapshot.parameters_digest
+        );
+        assert!(theta_parameters_digest(&snapshot.parameters, LIMITS).is_err());
+        assert!(export_snapshot(&original, "large-identifiers", &trusted, &f, LIMITS).is_err());
+        assert!(restore_snapshot(&snapshot, &trusted, &p, &f, LIMITS).is_err());
+        for decoded in [
+            ThetaSnapshotV2::from_canonical(&snapshot.canonical_bytes(wide).unwrap(), wide)
+                .unwrap(),
+            ThetaSnapshotV2::from_protobuf(&snapshot.protobuf_bytes(wide).unwrap(), wide).unwrap(),
+        ] {
+            let restored = restore_snapshot(&decoded, &trusted, &p, &f, wide).unwrap();
+            identical(&original, &restored);
+            same_stage(
+                &stage(&original, Some(&events()[1]), &p, &f).unwrap(),
+                &stage(&restored, Some(&events()[1]), &p, &f).unwrap(),
+            );
+        }
+    }
 }
 
 #[test]
@@ -479,10 +533,11 @@ fn alarm_boundary_and_large_integers_survive_restore() {
     for mut event in events() {
         // Exact integer path, well above binary64's consecutive-integer limit.
         event.ordinal += 1 << 53;
-        let snapshot = export_snapshot(&state, "synthetic-alarm", &reference(), &f).unwrap();
+        let snapshot =
+            export_snapshot(&state, "synthetic-alarm", &reference(), &f, LIMITS).unwrap();
         let bytes = snapshot.canonical_bytes(LIMITS).unwrap();
         let decoded = ThetaSnapshotV2::from_canonical(&bytes, LIMITS).unwrap();
-        let restored = restore_snapshot(&decoded, &reference(), &p, &f).unwrap();
+        let restored = restore_snapshot(&decoded, &reference(), &p, &f, LIMITS).unwrap();
         identical(&state, &restored);
         let a = stage(&state, Some(&event), &p, &f).unwrap();
         let b = stage(&restored, Some(&event), &p, &f).unwrap();
@@ -499,11 +554,12 @@ fn alarm_boundary_and_large_integers_survive_restore() {
     let mut p = law();
     p.baseline_prior[0] = f64::from_bits(1);
     let state = DynamicsState::genesis(p.clone()).unwrap();
-    let snapshot = export_snapshot(&state, "synthetic-subnormal", &reference(), &f).unwrap();
+    let snapshot =
+        export_snapshot(&state, "synthetic-subnormal", &reference(), &f, LIMITS).unwrap();
     let decoded =
         ThetaSnapshotV2::from_protobuf(&snapshot.protobuf_bytes(LIMITS).unwrap(), LIMITS).unwrap();
     identical(
         &state,
-        &restore_snapshot(&decoded, &reference(), &p, &f).unwrap(),
+        &restore_snapshot(&decoded, &reference(), &p, &f, LIMITS).unwrap(),
     );
 }

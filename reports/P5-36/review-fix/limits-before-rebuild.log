@@ -1,0 +1,10 @@
+{"theta_limits": "ThetaLastEvent", "event_or_law_id_bytes": 1048576, "canonical_bytes": 1048629, "protobuf_bytes": 1048591, "result": "passed"}
+{"theta_limits": "ThetaSnapshotV2", "event_or_law_id_bytes": 1048576, "canonical_bytes": 1050475, "protobuf_bytes": 1049786, "result": "passed"}
+{"theta_limits": "ThetaEstimatorParameters", "event_or_law_id_bytes": 1048576, "canonical_bytes": 1049034, "protobuf_bytes": 1048905, "result": "passed"}
+Traceback (most recent call last):
+  File "D:\Dev\nemu-wt\P5-36\core\contracts\verify_theta_limits.py", line 69, in <module>
+    verify({
+  File "D:\Dev\nemu-wt\P5-36\core\contracts\verify_theta_limits.py", line 53, in verify
+    assert answer["ok"] == (i < len(queries)), (language, name, size, i, answer.get("error"))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('Rust', 'ThetaLastEvent', 1048577, 0, 'string limit')

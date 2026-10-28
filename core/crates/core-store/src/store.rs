@@ -10,7 +10,7 @@ use core_types::{
 };
 use rusqlite::{Connection, OpenFlags, OptionalExtension, params};
 use std::{
-    fs::{self, File},
+    fs,
     marker::PhantomData,
     path::{Path, PathBuf},
 };
@@ -23,7 +23,8 @@ pub struct Store<L: LineageKind> {
     pub(crate) header: LineageHeaderV2,
     pub(crate) fault: Fault,
     pub(crate) capability_issued: bool,
-    _writer: File,
+    // Declared after db/objects: they finish dropping before unlock.
+    _writer: platform::WriterLock,
     _lineage: PhantomData<L>,
 }
 

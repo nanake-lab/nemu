@@ -6,21 +6,19 @@ use serde_json::Value;
 
 pub const THETA_NUMERICS_ID: &str = "P5-25-v2-93-98-libm-0.2.16";
 /// CanonicalV1 domain-separated digest of the complete C resource view.
-pub fn theta_parameters_digest(parameters: &ThetaEstimatorParameters) -> Result<HexBytes> {
+pub fn theta_parameters_digest(
+    parameters: &ThetaEstimatorParameters,
+    limits: Limits,
+) -> Result<HexBytes> {
     let value = serde_json::to_value(parameters).map_err(|e| e.to_string())?;
-    check_theta_message("ThetaEstimatorParameters", &value)?;
+    check_theta_message("ThetaEstimatorParameters", &value, limits)?;
     Ok(HexBytes(unhex(&Schema::builtin()?.digest(
         "ThetaEstimatorParameters",
         &value,
-        LIMITS,
+        limits,
     )?)?))
 }
 const EXACT: u64 = 1_u64 << 53;
-const LIMITS: Limits = Limits {
-    max_bytes: 1_048_576,
-    max_items: 4096,
-    max_depth: 32,
-};
 
 fn number(v: &Value, key: &str) -> f64 {
     v[key].as_f64().expect("normalized double")
@@ -222,7 +220,8 @@ fn state(s: &Value) -> Result<()> {
 /// Call after decoding and before treating a message as estimator state. The
 /// structural codec is deliberately separate, as for other semantic validators.
 /// Even a valid snapshot still needs a trusted caller's resource/H-prefix binding.
-pub fn check_theta_message(name: &str, value: &Value) -> Result<()> {
+/// Use the same caller-owned limits as the structural codec, including digesting.
+pub fn check_theta_message(name: &str, value: &Value, limits: Limits) -> Result<()> {
     if !matches!(
         name,
         "ThetaEstimatorParameters"
@@ -234,7 +233,7 @@ pub fn check_theta_message(name: &str, value: &Value) -> Result<()> {
         return Ok(());
     }
     let schema = Schema::builtin()?;
-    let v = schema.normalize(name, value, LIMITS, 0)?;
+    let v = schema.normalize(name, value, limits, 0)?;
     match name {
         "ThetaEstimatorParameters" => parameters(&v),
         "ThetaRunningTime" => running(&v),
@@ -254,7 +253,7 @@ pub fn check_theta_message(name: &str, value: &Value) -> Result<()> {
                 v["parameters_digest"].as_str()
                     == Some(
                         schema
-                            .digest("ThetaEstimatorParameters", p, LIMITS)?
+                            .digest("ThetaEstimatorParameters", p, limits)?
                             .as_str(),
                     ),
                 "theta parameter digest",
@@ -284,9 +283,10 @@ pub fn check_theta_message(name: &str, value: &Value) -> Result<()> {
         }
     }
 }
-pub fn check_theta_snapshot_v2(snapshot: &ThetaSnapshotV2) -> Result<()> {
+pub fn check_theta_snapshot_v2(snapshot: &ThetaSnapshotV2, limits: Limits) -> Result<()> {
     check_theta_message(
         "ThetaSnapshotV2",
         &serde_json::to_value(snapshot).map_err(|e| e.to_string())?,
+        limits,
     )
 }
