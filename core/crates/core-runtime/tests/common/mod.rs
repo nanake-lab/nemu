@@ -9,6 +9,46 @@ pub fn limits() -> Limits {
         max_depth: 64,
     }
 }
+pub fn theta_bits(t: &ThetaSnapshot) -> Vec<u64> {
+    let b = &t.values.baseline;
+    let mut out = vec![
+        b.connection.to_bits(),
+        b.empathy.to_bits(),
+        b.curiosity.to_bits(),
+        b.achievement.to_bits(),
+        t.weight_sum.to_bits(),
+        t.h_hat_theta.to_bits(),
+    ];
+    for s in [&t.values.gain, &t.values.recovery_per_s, &t.sigma, &t.tau_s] {
+        out.extend([s.connection, s.empathy, s.curiosity, s.achievement].map(f64::to_bits));
+    }
+    out
+}
+pub fn r_bits(r: &RSnapshotV3) -> Vec<u64> {
+    let mut out = vec![];
+    for t in &r.tendencies {
+        let d = &t.direction;
+        out.extend(
+            [
+                d.connection,
+                d.empathy,
+                d.curiosity,
+                d.achievement,
+                t.evidence_a,
+                t.evidence_b,
+                t.h_hat,
+                t.pi,
+                t.typical_magnitude,
+                t.magnitude_sum,
+                t.magnitude_weight,
+                t.evidence_absolute,
+            ]
+            .map(f64::to_bits),
+        );
+        out.extend(t.attachment_prior.map(f64::to_bits));
+    }
+    out
+}
 pub fn fixture<T: WireMessage>() -> T {
     let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("tests/fixtures")

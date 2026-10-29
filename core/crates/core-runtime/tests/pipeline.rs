@@ -113,13 +113,19 @@ fn paused_growth_still_records_a_m_and_maintenance_preserves_r_theta() {
             .states
             .contains(&RunStatus::GROWTH_PAUSED)
     );
+    let mut maintenance_base = case.base.clone();
+    maintenance_base.r.tendencies.push(fixture());
+    maintenance_base.r.tendencies[0].evidence_a = -0.0;
+    maintenance_base.theta.values.baseline.connection = -0.0;
     for t in [30, 100, 9000] {
-        let view = stages.maintenance(&case.base, &time(t)).unwrap();
+        let view = stages.maintenance(&maintenance_base, &time(t)).unwrap();
         assert_eq!(
             core_runtime::binding::digest(&view.r, limits()).unwrap(),
-            core_runtime::binding::digest(&case.base.r, limits()).unwrap()
+            core_runtime::binding::digest(&maintenance_base.r, limits()).unwrap()
         );
-        assert_eq!(view.theta, case.base.theta);
+        assert_eq!(view.theta, maintenance_base.theta);
+        assert_eq!(theta_bits(&view.theta), theta_bits(&maintenance_base.theta));
+        assert_eq!(r_bits(&view.r), r_bits(&maintenance_base.r));
     }
     assert_eq!(case.base.x.anchor_time_ns.0, 10);
 }

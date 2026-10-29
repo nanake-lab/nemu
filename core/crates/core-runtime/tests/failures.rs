@@ -12,6 +12,41 @@ impl Interpret for Unavailable {
 }
 
 struct InvalidA;
+struct InvalidIrl;
+impl Interpret for InvalidIrl {
+    fn interpret(&mut self, i: Interpretation<'_>) -> StageResult<Bound<SemanticOutput>> {
+        let mut graph: SemanticGraph = fixture();
+        graph.schema_version = 99;
+        Ok(Bound {
+            binding: i.binding.clone(),
+            value: SemanticOutput {
+                graph,
+                concepts: vec![],
+            },
+        })
+    }
+}
+#[test]
+fn invalid_semantic_output_degrades_with_no_drive() {
+    let c = Case::new();
+    let log = Log::default();
+    let mut p = parts(&log);
+    p.irl = Some(Box::new(InvalidIrl));
+    let mut stages =
+        StageSet::<Experiment>::complete(p, c.binding.environment.clone(), limits()).unwrap();
+    let result = stages.process_head(c.input(false)).unwrap();
+    assert!(
+        result
+            .status()
+            .value()
+            .states
+            .contains(&RunStatus::IRL_DEGRADED)
+    );
+    assert_eq!(result.snapshot().x, c.x_with_anchor(30));
+    assert_eq!(result.snapshot().r, c.base.r);
+    assert_eq!(result.snapshot().theta, c.base.theta);
+    assert!(!log.borrow().contains(&Step::FIn));
+}
 impl Appraise for InvalidA {
     fn appraise(&mut self, i: Appraisal<'_>) -> StageResult<NatureAppraisalRecord> {
         let mut a: NatureAppraisalRecord = fixture();

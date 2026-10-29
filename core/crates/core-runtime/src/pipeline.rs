@@ -187,19 +187,26 @@ impl<L: LineageKind> StageSet<L> {
         let semantic = match semantic {
             Ok(output) => {
                 let output = output.check(&binding, limits)?;
-                validate(&output.graph, limits)?;
-                check(
-                    digest(&output.graph, limits)? == binding.accepted_z_digest,
-                    "accepted z digest mismatch",
-                )?;
-                for concept in &output.concepts {
-                    validate(concept, limits)?;
+                let validated = (|| {
+                    validate(&output.graph, limits)?;
                     check(
-                        same(&concept.binding, &binding, limits)?,
-                        "concept binding mismatch",
+                        digest(&output.graph, limits)? == binding.accepted_z_digest,
+                        "accepted z digest mismatch",
                     )?;
+                    for concept in &output.concepts {
+                        validate(concept, limits)?;
+                        check(
+                            same(&concept.binding, &binding, limits)?,
+                            "concept binding mismatch",
+                        )?;
+                    }
+                    Ok(())
+                })();
+                if recoverable(validated, &mut status, RunStatus::IRL_DEGRADED)? {
+                    Some(output)
+                } else {
+                    None
                 }
-                Some(output)
             }
             Err(reason) => {
                 failure(&mut status, RunStatus::IRL_DEGRADED, reason)?;

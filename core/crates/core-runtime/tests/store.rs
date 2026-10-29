@@ -217,6 +217,12 @@ fn staged_visibility_rollback_commit_and_duplicate_filter_use_real_w02() {
     assert_eq!(reader.read::<FastStateSnapshotV2>(&xref).unwrap(), expected);
     assert_eq!(reader.facts(10).unwrap().len(), 2);
     let current = store.current().unwrap().unwrap();
+    assert_eq!(
+        reader
+            .read::<DegradedStatus>(&current.audit_refs[0])
+            .unwrap(),
+        result.status
+    );
     assert_eq!(current.staged_r, old.staged_r);
     assert_eq!(current.staged_theta, old.staged_theta);
     let stages = StageSet::<Rehearsal>::rehearsal(
