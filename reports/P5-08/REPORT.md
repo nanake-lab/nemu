@@ -4,7 +4,7 @@
 
 **部分完成，保持 draft；全卡未验收。** 2026-10-30（Perth）收尾。PR #120，分支 `task/P5-08-orchestration`，工作区 `D:/Dev/nemu-wt/P5-08`。已实现可独立验证的阶段编排、谱系能力、时钟计算及既有 W02 head 的无成长准备接口。完整时钟持久化、初始 L/Q/U、异步语义派发、真实入口及运行状态发布仍缺卡外接口，见 [BLOCKED.md](BLOCKED.md)。不合并，不领取下一卡。
 
-开工已 fetch；#64 的 merge commit `02948dc11aa1b43dc0dfe67c9da2e61676427385` 即实际 main 基线 B。#65 `8845567376e4726cc63d6f148cedd46ec563cd34`、#36 `9042c59455efa340e194ce7a53fa397c09b324af` 均经祖先检查在 B 中。收尾 fetch 后 M 仍等于 B，无新增差异。期间一次 fetch、一次 push 出现 schannel 握手失败，同命令重试成功，未修改 TLS 或任何用户/系统设置。
+开工已 fetch；#64 的 merge commit `02948dc11aa1b43dc0dfe67c9da2e61676427385` 即实际 main 基线 B。#65 `8845567376e4726cc63d6f148cedd46ec563cd34`、#36 `9042c59455efa340e194ce7a53fa397c09b324af` 均经祖先检查在 B 中。收尾 fetch 后 M 仍等于 B，无新增差异。期间 fetch/push 曾出现 schannel 握手失败，采用同命令重试，未修改 TLS 或任何用户/系统设置。
 
 ## 交付物与边界
 
