@@ -8,9 +8,9 @@ from pathlib import Path
 import random
 import sys
 
-from analysis import paired_power, power
 from carrier import Carrier
 from io_support import PaidClient, digest, new_run, save
+from planning import plan
 from worlds import (ACTOR_SYSTEM, LAYOUTS, PROBES, SEEDS, Fact, ability_items,
                     actor_input, carrier_prompt, manifest, scenes, validate_actor)
 
@@ -97,9 +97,9 @@ def main() -> None:
     root = new_run(args.output)
     save(root / "design.json", manifest())
     save(root / "source-binding.json", {p.name: digest(p) for p in sorted(HERE.iterdir())
-         if p.is_file() and (p.suffix in (".py", ".cpp", ".ps1") or p.name in ("PREREG.md", "COSTS.md"))})
-    save(root / "power.json", [power(n, p, a) for n, p, a in ((24, .75, .05), (160, .65, .05 / 6), (160, .60, .05 / 6))])
-    save(root / "paired-power.json", {str(q): paired_power(160, .20, q, .05 / 4) for q in (.3, .5, .8)})
+         if p.is_file() and (p.suffix in (".py", ".cpp", ".ps1")
+                            or p.name in ("PREREG.md", "COSTS.md", "CODEX-JUDGE.md", "R-LIFE-02-CONDITIONS.md"))})
+    save(root / "analysis-plan.json", plan())
     if args.mode == "prepare":
         save(root / "status.json", {"status": "prepared_offline", "paid_calls": 0, "gpu_calls": 0,
                                    "behavior_result": "not_run"})

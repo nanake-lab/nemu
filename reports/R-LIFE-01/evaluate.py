@@ -1,4 +1,4 @@
-"""Post-GPU blind judging. Uses the same cumulative paid budget as the pilot."""
+"""Codex-only judging exports; live execution blocked pending strict capability proof."""
 from __future__ import annotations
 
 import argparse
@@ -10,9 +10,11 @@ import sys
 from typing import cast
 
 from analysis import cluster_interval, summarize
+from codex_judge import CodexJudge, export_jobs
 from diagnostics import audit_scores, margins, quality
-from io_support import CACHE, PaidClient, digest, save
+from io_support import CACHE, digest, save
 from judging import AUDIT_SYSTEM, JUDGE_SYSTEM, decode_pair, packets
+from probability_analysis import adjust_primary, analyze_root
 from worlds import SEEDS
 
 
@@ -28,7 +30,7 @@ def external(life: dict[str, object]) -> list[dict[str, object]]:
             if not str(fact["event_id"]).endswith("-action")]
 
 
-def pair_trials(client: PaidClient, histories: list[object], behaviors: list[object],
+def pair_trials(client: CodexJudge, histories: list[object], behaviors: list[object],
                 repeats: int) -> list[dict[str, object]]:
     result = []
     for layout, (payload, truth) in enumerate(packets(histories, behaviors)):
@@ -52,22 +54,23 @@ def pair_trials(client: PaidClient, histories: list[object], behaviors: list[obj
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("run", type=Path)
-    parser.add_argument("--approved-usd", required=True)
-    parser.add_argument("--approval-ref", required=True)
+    parser.add_argument("--mode", choices=("prepare-jobs", "run"), default="prepare-jobs")
     args = parser.parse_args()
     root = args.run.resolve()
     if not root.is_relative_to(CACHE.resolve()):
         parser.error("Experiment cache only")
     approval = read(root / "approval.json")
-    if (approval["approved_usd"] != args.approved_usd or approval["approval_ref"] != args.approval_ref
-            or approval["prereg_sha256"] != digest(Path(__file__).with_name("PREREG.md"))):
-        parser.error("Approval/protocol differs; stop for a new explicit decision")
+    if approval["prereg_sha256"] != digest(Path(__file__).with_name("PREREG.md")):
+        parser.error("Protocol differs; stop for a new explicit decision")
     if read(root / "status.json")["status"] != "C_behavior_complete_pending_blind_audit":
         parser.error("C pilot incomplete")
+    if args.mode == "prepare-jobs":
+        print(json.dumps(export_jobs(root)))
+        return
     if (root / "judging-started.json").exists():
         parser.error("Never automatically rerun or overwrite a judging attempt")
+    client = CodexJudge(root)  # Fails before any process/network until requirements are proven.
     save(root / "judging-started.json", {"status": "started"})
-    client = PaidClient(root, args.approved_usd, args.approval_ref)
     scores: list[float] = []
     negative: list[float] = []
     valid_fractions: list[float] = []
@@ -124,7 +127,13 @@ def main() -> None:
         agreement = statistics.fmean(agreements) if agreements else None
         layout_scores = [statistics.fmean(float(bool(rows[2 * layout + repeat]["correct"]))
                          for rows in all_trials for repeat in (0, 1)) for layout in range(8)]
-        save(root / "measurement-summary.json", {"main": summarize(scores, valid_fractions), "negative": summarize(negative, negative_valid),
+        pairing_summary, probability_summary = summarize(scores, valid_fractions), analyze_root(root)
+        probability_test = cast(dict[str, object], probability_summary["test"])
+        primary_p = {"H1a:C": cast(float, probability_test["p_value"]),
+                     "H1b:C": cast(float, pairing_summary["p_one_sided_sign_randomization"])}
+        save(root / "measurement-summary.json", {"main": pairing_summary, "H1a": probability_summary,
+             "co_primary_raw_p": primary_p, "co_primary_holm_p": adjust_primary(primary_p, pilot=True),
+             "negative": summarize(negative, negative_valid),
              "judge_validity": validity, "repeat_agreement_valid_only": agreement,
              "layout_accuracy": layout_scores, "layout_range": max(layout_scores) - min(layout_scores),
              "marginal_bias": margins(layout_scores), "quality": quality(root), "realism": audit_scores(root),
@@ -134,7 +143,7 @@ def main() -> None:
              "positive_accuracy": statistics.fmean(float(bool(row["correct"])) for row in positives),
              "ability_delta": statistics.fmean(ability_deltas), "ability_delta_95": cluster_interval(ability_deltas),
              "status": "requires_full_protocol_audit_not_automatic_acceptance",
-             "paid_reserved_usd": str(client.reserved)})
+             "judge_transport": "codex_exec_chatgpt"})
     finally:
         client.close()
 

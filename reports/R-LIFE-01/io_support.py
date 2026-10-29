@@ -11,8 +11,8 @@ from typing import cast
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 CACHE = Path("D:/Dev/cache/R-LIFE-01")
-RATES = {"actor": (Decimal("0.30"), Decimal("1.20")), "judge": (Decimal("3"), Decimal("15"))}
-MODELS = {"actor": "deepseek-flash", "judge": "claude-sonnet-4-6"}
+RATES = {"actor": (Decimal("0.30"), Decimal("1.20"))}
+MODELS = {"actor": "deepseek-flash"}
 
 
 def save(path: Path, value: object) -> None:
@@ -46,8 +46,8 @@ class NoRedirect(HTTPRedirectHandler):
 class PaidClient:
     def __init__(self, root: Path, approved_usd: str, approval_ref: str) -> None:
         self.root, self.cap = root, Decimal(approved_usd)
-        if not approval_ref.strip() or not self.cap.is_finite() or not 0 < self.cap <= 30:
-            raise ValueError("Explicit human budget approval required; R-LIFE-01 maximum $30")
+        if not approval_ref.strip() or not self.cap.is_finite() or not 0 < self.cap <= Decimal("0.50"):
+            raise ValueError("Explicit human budget approval required; actor-only R-LIFE-01 maximum $0.50")
         self.lock = (root / "paid.lock").open("x", encoding="utf-8")
         self.ledger = root / "budget.jsonl"
         self.reserved = Decimal(0)
@@ -67,7 +67,7 @@ class PaidClient:
         if role not in MODELS:
             raise ValueError("Unknown API role")
         text = json.dumps(payload, ensure_ascii=False, allow_nan=False)
-        limit, output = (2500, 256) if role == "actor" else (12000, 384)
+        limit, output = 2500, 256
         # Conservative byte accounting, plus protocol allowance. No tools/thinking.
         bound = len((system + text).encode("utf-8")) + 1024
         if bound > limit:
@@ -75,21 +75,15 @@ class PaidClient:
         cost = (bound * RATES[role][0] + output * RATES[role][1]) / 1000000
         if self.reserved + cost > self.cap:
             raise RuntimeError("Approved budget exhausted")
-        env_name = "DEEPSEEK_API_KEY" if role == "actor" else "ANTHROPIC_API_KEY"
-        key = os.environ.get(env_name)
+        key = os.environ.get("DEEPSEEK_API_KEY")
         if not key:
             raise RuntimeError("Required process environment key absent")
         body: dict[str, object] = {"model": MODELS[role], "max_tokens": output, "stream": False}
-        if role == "actor":
-            url = "https://api.deepseek.com/chat/completions"
-            body.update(messages=[{"role": "system", "content": system}, {"role": "user", "content": text}],
-                        thinking={"type": "disabled"}, temperature=0.8,
-                        response_format={"type": "json_object"})
-            headers = {"Authorization": "Bearer " + key, "Content-Type": "application/json"}
-        else:
-            url = "https://api.anthropic.com/v1/messages"
-            body.update(system=system, messages=[{"role": "user", "content": text}], thinking={"type": "disabled"})
-            headers = {"x-api-key": key, "anthropic-version": "2026-10-21", "Content-Type": "application/json"}
+        url = "https://api.deepseek.com/chat/completions"
+        body.update(messages=[{"role": "system", "content": system}, {"role": "user", "content": text}],
+                    thinking={"type": "disabled"}, temperature=0.8,
+                    response_format={"type": "json_object"})
+        headers = {"Authorization": "Bearer " + key, "Content-Type": "application/json"}
         number = self.index
         save(self.root / f"api-{number:05d}-request.json", {"role": role, "body": body})
         with self.ledger.open("a", encoding="utf-8", newline="\n") as stream:
@@ -107,8 +101,8 @@ class PaidClient:
             usage = data.get("usage")
             if not isinstance(usage, dict):
                 raise ValueError("Missing usage; stop to reconcile budget")
-            in_keys = ("prompt_tokens",) if role == "actor" else ("input_tokens", "cache_read_input_tokens", "cache_creation_input_tokens")
-            out_key = "completion_tokens" if role == "actor" else "output_tokens"
+            in_keys = ("prompt_tokens",)
+            out_key = "completion_tokens"
             counts = [usage.get(k, 0) for k in in_keys] + [usage.get(out_key)]
             if any(type(count) is not int or count < 0 for count in counts):
                 raise ValueError("Invalid usage")
@@ -124,16 +118,10 @@ class PaidClient:
                     raise ValueError("Returned model identity changed")
             else:
                 save(identity_path, {"requested": MODELS[role], "model": model})
-            if role == "actor":
-                choices = cast(list[dict[str, object]], data["choices"])
-                if choices[0]["finish_reason"] != "stop":
-                    raise ValueError("Truncated actor response")
-                content = cast(dict[str, object], choices[0]["message"])["content"]
-            else:
-                if data["stop_reason"] != "end_turn":
-                    raise ValueError("Truncated judge response")
-                blocks = cast(list[dict[str, object]], data["content"])
-                content = "".join(str(block["text"]) for block in blocks if block["type"] == "text")
+            choices = cast(list[dict[str, object]], data["choices"])
+            if choices[0]["finish_reason"] != "stop":
+                raise ValueError("Truncated actor response")
+            content = cast(dict[str, object], choices[0]["message"])["content"]
             if not isinstance(content, str):
                 raise ValueError("Unexpected response")
             return content

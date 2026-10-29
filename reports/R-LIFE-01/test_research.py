@@ -67,7 +67,7 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(sign_randomization([.25] * 24, [.5] * 24), 1)
         self.assertEqual(sign_randomization([0.] * 24, [0.] * 24), 1)
         self.assertLess(sign_randomization([1.] * 24), .001)
-        self.assertGreater(float(power(160, .65, .05 / 6)["power"]), .8)
+        self.assertGreater(float(power(160, .65, .05 / 10)["power"]), .8)
         self.assertEqual(holm({"a": .01, "b": .03}), {"a": .02, "b": .03})
 
     def test_paid_api_gates_no_network(self) -> None:
