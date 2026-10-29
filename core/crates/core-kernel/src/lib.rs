@@ -5,4 +5,5 @@
 pub mod dynamics;
 pub mod effects;
 pub mod fast;
+pub mod law;
 pub mod modulation;
