@@ -3,14 +3,14 @@
 //! AC2-05, AC2-21 with re-sharing, input-order independence. Hand-built
 //! scenarios are in `cases.rs`.
 
-use crate::law::pending::{EvidenceGroup, Tendency};
+use crate::law::state::{EvidenceGroup, Tendency};
 use std::collections::BTreeMap;
 
 use core_types::semantic;
 
 use crate::law::engine::Output;
 use crate::law::replay::{Stored, check_with_allocations, replay};
-use crate::law::{Candidate, GroupContent, GroupItem, LawError, MatchTarget, Step, weight};
+use crate::law::{Candidate, GroupContent, GroupItem, MatchTarget, Step, weight};
 
 use super::fixture::{concept, text, vector};
 use super::world::{Fixture, Generator, World, theta};
@@ -25,6 +25,7 @@ pub(super) fn step<'a>(
         candidates,
         groups,
         aliases,
+        proposal_order: &[],
     }
 }
 
@@ -59,7 +60,17 @@ pub(super) fn stored_of<'a>(groups: &'a [EvidenceGroup], id: &str) -> Vec<Stored
 pub(super) fn check_world(f: &Fixture, w: &World) {
     let l = &f.law;
     let groups = w.group_list();
-    assert!(w.r.tendencies.len() <= f.capacity as usize);
+    if w.r.tendencies.len() > f.capacity as usize {
+        // Only personality and the explicitly protected K may exceed a lowered
+        // boundary. K=0 preserves the original random fixture's stronger check.
+        assert!(
+            w.r.tendencies
+                .iter()
+                .filter(|t| !crate::law::is_personality(t.pi))
+                .count()
+                <= f.protected_candidates as usize
+        );
+    }
     assert!(
         w.r.tendencies.windows(2).all(|p| semantic::tendency_order(
             &p[0].tendency_id,
@@ -69,12 +80,8 @@ pub(super) fn check_world(f: &Fixture, w: &World) {
         "R in canonical order"
     );
     for t in &w.r.tendencies {
-        semantic::check_tendency_v2(&t.legacy()).unwrap();
-        semantic::check_allocation_ordinals(
-            &t.legacy(),
-            &groups.iter().map(|g| g.legacy()).collect::<Vec<_>>(),
-        )
-        .unwrap();
+        semantic::check_tendency_v3(t).unwrap();
+        semantic::check_allocation_ordinals_v3(t, &groups).unwrap();
         check_with_allocations(t, l, stored_of(&groups, t.tendency_id.as_str())).unwrap();
         // ADR 0016 §4: replaying the stored allocations reproduces the tendency bit for bit.
         let again = replay(
@@ -157,10 +164,9 @@ pub(super) fn run_world(
         let e = events.event(&w);
         let before = w.clone();
         match w.apply(&f, &e) {
-            Ok(out) => check_changes(&before, &w, &out),
-            Err(LawError::CapacityExhausted { .. }) => {
-                capacity_hits += 1;
-                w = before;
+            Ok(out) => {
+                capacity_hits += usize::from(out.capacity_notice.is_some());
+                check_changes(&before, &w, &out);
             }
             Err(err) => panic!("seed {seed}: {err}"),
         }

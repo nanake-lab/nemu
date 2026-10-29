@@ -2,7 +2,7 @@
 //! V is independent evidence mass; B retains its legacy meaning c+V.
 //! P/c never decay. First insertions compute q; revisions fold stored q.
 
-use crate::law::pending::Tendency;
+use crate::law::state::Tendency;
 use core_types::generated::{
     ConceptRef, EvidenceSign, NatureVector, PersonRelation, TrilingualText,
 };
@@ -40,7 +40,7 @@ pub fn prior(t: &Tendency) -> f64 {
 
 /// Capacity score V_k + P_k (V2-43); V itself excludes the fixed prior.
 pub fn evidence_amount(t: &Tendency, _law: &Law) -> LawResult<f64> {
-    finite(t.evidence_v + prior(t), "evidence amount")
+    finite(t.evidence_absolute + prior(t), "evidence amount")
 }
 
 /// What a new tendency starts with (D4.0, D6).
@@ -87,7 +87,7 @@ pub fn initial(law: &Law, o: &Origin<'_>) -> LawResult<Tendency> {
         direction: o.direction.clone(),
         evidence_a: a,
         evidence_b: b,
-        evidence_v: init,
+        evidence_absolute: init,
         h_hat: law.h_hat(0, 0)?,
         group_count: DecimalU64(0),
         flip_count: DecimalU64(0),
@@ -105,7 +105,7 @@ pub fn initial(law: &Law, o: &Origin<'_>) -> LawResult<Tendency> {
 /// bit for bit with the law: ĥ and π are functions of the counts and sums.
 pub fn check_stored(t: &Tendency, law: &Law) -> LawResult<()> {
     let bad = |m: &str| LawError::InconsistentState(format!("{}: {m}", t.tendency_id));
-    semantic::check_tendency_v2(&t.legacy()).map_err(|e| bad(&e.to_string()))?;
+    semantic::check_tendency_v3(t).map_err(|e| bad(&e.to_string()))?;
     let (n, f) = (t.group_count.0, t.flip_count.0);
     if n >= MAX_GROUPS {
         return Err(bad("group count beyond 2^53"));
@@ -117,13 +117,13 @@ pub fn check_stored(t: &Tendency, law: &Law) -> LawResult<()> {
         return Err(bad("h_hat differs from the law"));
     }
     let c = law.base(t.predicate.len())?;
-    if !t.evidence_v.is_finite()
-        || t.evidence_v < t.evidence_a.abs()
-        || t.evidence_b.to_bits() != finite(c + t.evidence_v, "B")?.to_bits()
+    if !t.evidence_absolute.is_finite()
+        || t.evidence_absolute < t.evidence_a.abs()
+        || t.evidence_b.to_bits() != finite(c + t.evidence_absolute, "B")?.to_bits()
     {
         return Err(bad("V inconsistent with evidence or B"));
     }
-    if t.pi.to_bits() != pi(prior(t), t.evidence_a, c, t.evidence_v)?.to_bits() {
+    if t.pi.to_bits() != pi(prior(t), t.evidence_a, c, t.evidence_absolute)?.to_bits() {
         return Err(bad("pi differs from A and B"));
     }
     if !(0.0..=law.r_max).contains(&t.typical_magnitude) {
@@ -184,7 +184,7 @@ pub(super) fn actual_retention(
         prior(t),
         t.evidence_a,
         law.base(t.predicate.len())?,
-        t.evidence_v,
+        t.evidence_absolute,
     )?;
     let h = finite(1.0 - rho, "h")?;
     let anchor = finite(prior(t) + law.base(t.predicate.len())?, "anchor")?;
@@ -248,11 +248,11 @@ pub(super) fn fold(
     if !(q > 0.0 && q <= 1.0) {
         return Err(LawError::NumericFault("InvalidRetention"));
     }
-    let before = pi(prior(t), t.evidence_a, c0, t.evidence_v)?;
+    let before = pi(prior(t), t.evidence_a, c0, t.evidence_absolute)?;
     let signed = finite(w * s, "signed signal")?;
     let signal = super::num::nonnegative_product(w, s.abs(), "UnderflowEvidence")?;
     let a = finite(finite(q * t.evidence_a, "discount A")? + signed, "A")?;
-    let v = finite(finite(q * t.evidence_v, "discount V")? + signal, "V")?;
+    let v = finite(finite(q * t.evidence_absolute, "discount V")? + signal, "V")?;
     let b = finite(c0 + v, "B")?;
     let mut flips = f;
     let mut last = t.last_sign;
@@ -287,7 +287,7 @@ pub(super) fn fold(
     let h_hat = law.h_hat(groups, flips)?;
     t.evidence_a = a;
     t.evidence_b = b;
-    t.evidence_v = v;
+    t.evidence_absolute = v;
     t.group_count = DecimalU64(groups);
     t.flip_count = DecimalU64(flips);
     t.last_sign = last;
@@ -299,6 +299,6 @@ pub(super) fn fold(
 /// E = Σ_{S>0} ω·W·|S| and C = Σ_{S<0} ω·W·|S| (v2.0 §5.3), from the stored sums.
 pub fn consistent_and_contrary(t: &Tendency, law: &Law) -> LawResult<(f64, f64)> {
     let _ = law;
-    let total = t.evidence_v;
+    let total = t.evidence_absolute;
     Ok(((total + t.evidence_a) / 2.0, (total - t.evidence_a) / 2.0))
 }

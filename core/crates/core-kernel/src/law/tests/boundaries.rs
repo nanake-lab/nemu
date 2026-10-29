@@ -2,7 +2,7 @@
 //! the capacity fuse with re-sharing, input validation. The I10 signature
 //! check and the type checks are in `types.rs`.
 
-use crate::law::pending::{EvidenceGroup, Snapshot};
+use crate::law::state::{EvidenceGroup, Snapshot};
 use std::collections::BTreeMap;
 
 use core_types::generated::{PersonRelation, RelationKind};
@@ -228,7 +228,7 @@ fn ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups() {
         ["g1"]
     );
     check_world(&f, &w);
-    // Only personality left: an explicit fault, nothing is removed.
+    // V2-105: only personality left stays available; emit a notice, not a fault.
     let f0 = Fixture::new(0);
     let mut persona = tendency(&f0.law, "persona", None);
     record(&mut persona, &f0.law, 6.0, 1.0).unwrap();
@@ -244,24 +244,18 @@ fn ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups() {
     );
     let mut fresh_persona = tendency(&f0.law, "persona", Some(60.0));
     fresh_persona.relation.as_mut().unwrap().person_id = "someone".to_owned();
-    let err = f0
+    let out = f0
         .run(
             &f0.snapshot(vec![fresh_persona]),
             &[],
             &default_theta(),
             &step(&[], &[], &BTreeMap::new()),
         )
-        .unwrap_err();
-    assert!(
-        matches!(
-            err,
-            LawError::CapacityExhausted {
-                capacity: 0,
-                personality: 1
-            }
-        ),
-        "{err}"
-    );
+        .unwrap();
+    let notice = out.capacity_notice.unwrap();
+    assert_eq!((notice.capacity, notice.retained), (0, 1));
+    assert_eq!(out.r.tendencies.len(), 1);
+    assert!(out.changes.is_empty());
 }
 
 #[test]

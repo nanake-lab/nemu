@@ -20,11 +20,6 @@ pub enum LawError {
     /// negligible next to V_k in binary64 (ADR 0019).
     /// Reported at the step that would produce it, never stored (D9).
     PrecisionExhausted(String),
-    /// R is over capacity and holds no candidate (π ≤ ½) to remove (v2.0 §12; V2-43).
-    CapacityExhausted {
-        capacity: u32,
-        personality: usize,
-    },
     /// A single group's weight exceeds w_max (v2.0 §12; D8). Cannot happen
     /// with checked parameters; reported if it ever does.
     WeightAboveCap {
@@ -43,13 +38,6 @@ impl fmt::Display for LawError {
             Self::NonFinite(m) => write!(f, "nonfinite value: {m}"),
             Self::Overflow(m) => write!(f, "count overflow: {m}"),
             Self::PrecisionExhausted(m) => write!(f, "binary64 precision exhausted: {m}"),
-            Self::CapacityExhausted {
-                capacity,
-                personality,
-            } => write!(
-                f,
-                "R over capacity {capacity} with {personality} personality tendencies and no candidate to remove"
-            ),
             Self::WeightAboveCap {
                 group_id,
                 tendency_id,

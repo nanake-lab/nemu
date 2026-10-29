@@ -1,12 +1,13 @@
 //! I23: persisted incremental G versus all accepted events in H order.
 //! D5 additionally reconstructs each tendency using only stored allocations.
 
-use crate::law::pending::{EvidenceGroup, Snapshot, Tendency};
+use crate::law::state::{EvidenceGroup, Snapshot, Tendency};
 
+use core_types::WireMessage;
 use core_types::contract::Limits;
 
+use crate::law::GroupContent;
 use crate::law::replay::replay;
-use crate::law::{GroupContent, LawError};
 
 use super::cases::{event, experience, on};
 use super::engine::{candidate, check_world, stored_of};
@@ -22,7 +23,7 @@ fn bits(t: &Tendency) -> [u64; 8] {
     [
         t.evidence_a,
         t.evidence_b,
-        t.evidence_v,
+        t.evidence_absolute,
         t.h_hat,
         t.pi,
         t.typical_magnitude,
@@ -176,7 +177,7 @@ fn i23_d5_back_collection_late_member_and_capacity_are_bitwise_reproducible() {
 #[test]
 fn i23_random_h_prefixes_survive_canonical_reload_and_full_recomputation() {
     let mut accepted = 0;
-    let mut capacity_faults = 0;
+    let mut capacity_notices = 0;
     for seed in 0..5 {
         let f = Fixture::new(10);
         let mut incremental = World::new(&f);
@@ -186,18 +187,18 @@ fn i23_random_h_prefixes_survive_canonical_reload_and_full_recomputation() {
             let e = generator.event(&incremental);
             reload(&mut incremental);
             match incremental.apply(&f, &e) {
-                Ok(_) => {
+                Ok(out) => {
+                    capacity_notices += usize::from(out.capacity_notice.is_some());
                     history.push(e);
                     accepted += 1;
                     check_prefix(&f, &incremental, &history);
                 }
-                Err(LawError::CapacityExhausted { .. }) => capacity_faults += 1,
                 Err(err) => panic!("{err}"),
             }
         }
     }
-    assert_eq!((accepted, capacity_faults), (125, 0));
+    assert_eq!((accepted, capacity_notices), (125, 0));
     println!(
-        "I23: {accepted} H prefixes; persisted incremental, full H and D5 test envelope bytes (legacy fields plus raw V/q) and eight scalar bit patterns equal"
+        "I23: {accepted} H prefixes; persisted incremental, full H and D5 production V3 CanonicalV1 bytes and eight scalar bit patterns equal"
     );
 }

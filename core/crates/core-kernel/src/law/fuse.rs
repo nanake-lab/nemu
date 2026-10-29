@@ -1,4 +1,4 @@
-//! Fuses of the tendency count (v2.0 §12; D7, D8, V2-43).
+//! Fuses of the tendency count (v2.0 §12; V2-80/105).
 //!
 //! Capacity: when R holds more tendencies than the caretaker's boundary
 //! allows, the candidate (π ≤ ½) with the least evidence leaves R first. Its
@@ -7,7 +7,7 @@
 //!
 //! Single-group cap: one group's weight never exceeds w_max.
 
-use crate::law::pending::{Allocation, Tendency};
+use crate::law::state::{Allocation, Tendency};
 use std::cmp::Ordering;
 use std::collections::BTreeSet;
 
@@ -15,7 +15,7 @@ use core_types::semantic::tendency_order;
 
 use super::engine::Work;
 use super::error::{LawError, LawResult};
-use super::input::LawContext;
+use super::input::{LawContext, Step};
 use super::params::Law;
 use super::recurrence::{evidence_amount, is_personality};
 use super::shares::{ShareInput, shares};
@@ -24,9 +24,17 @@ use super::shares::{ShareInput, shares};
 /// evidence score V_k + P_k; ties go to the first in
 /// canonical tendency-ID order. `None` when R holds no candidate.
 pub fn eviction_choice(r: &[Tendency], law: &Law) -> LawResult<Option<usize>> {
+    eviction_unprotected(r, law, &BTreeSet::new())
+}
+
+fn eviction_unprotected(
+    r: &[Tendency],
+    law: &Law,
+    protected: &BTreeSet<String>,
+) -> LawResult<Option<usize>> {
     let mut best: Option<(usize, f64)> = None;
     for (i, t) in r.iter().enumerate() {
-        if is_personality(t.pi) {
+        if is_personality(t.pi) || protected.contains(&t.tendency_id) {
             continue;
         }
         let v = evidence_amount(t, law)?;
@@ -45,14 +53,6 @@ pub fn eviction_choice(r: &[Tendency], law: &Law) -> LawResult<Option<usize>> {
     Ok(best.map(|(i, _)| i))
 }
 
-/// The capacity fault when nothing can be removed.
-pub fn exhausted(r: &[Tendency], capacity: u32) -> LawError {
-    LawError::CapacityExhausted {
-        capacity,
-        personality: r.iter().filter(|t| is_personality(t.pi)).count(),
-    }
-}
-
 /// D8: W ≤ w_max for every allocation.
 pub fn check_weight_cap(w: f64, law: &Law, group_id: &str, tendency_id: &str) -> LawResult<()> {
     if w > law.w_max {
@@ -64,24 +64,50 @@ pub fn check_weight_cap(w: f64, law: &Law, group_id: &str, tendency_id: &str) ->
     Ok(())
 }
 
-/// Stage 3 (D7, V2-43): remove the weakest candidates until R fits its capacity.
+/// Protect the newest K candidates using the caller's H-derived order.
+/// Missing/duplicate order data is a structural input error, never guessed from
+/// ID strings, evidence counts, memory, or wall-clock timestamps.
+pub fn protected_candidates(
+    r: &[Tendency],
+    order: &[String],
+    k: u32,
+) -> LawResult<BTreeSet<String>> {
+    if k == 0 {
+        return Ok(BTreeSet::new());
+    }
+    let candidates: BTreeSet<&str> = r
+        .iter()
+        .filter(|t| !is_personality(t.pi))
+        .map(|t| t.tendency_id.as_str())
+        .collect();
+    let supplied: BTreeSet<&str> = order.iter().map(String::as_str).collect();
+    if supplied.len() != order.len() || !candidates.is_subset(&supplied) {
+        return Err(LawError::InvalidInput(
+            "candidate proposal order is incomplete or repeats".into(),
+        ));
+    }
+    Ok(order
+        .iter()
+        .rev()
+        .filter(|id| candidates.contains(id.as_str()))
+        .take(k as usize)
+        .cloned()
+        .collect())
+}
+
+/// Stage 3: remove the weakest unprotected candidates until R fits its capacity.
 /// The removed tendency's allocations leave their groups; the remaining
 /// tendencies on the same side are re-shared with the current π and replayed.
-#[cfg_attr(
-    not(test),
-    allow(
-        dead_code,
-        reason = "reached only through G, which P5-29 wires; public once P5-32 merges"
-    )
-)]
-pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
+pub(super) fn capacity(work: &mut Work, step: &Step<'_>, ctx: &LawContext<'_>) -> LawResult<()> {
     let cap = usize::try_from(ctx.r_capacity).map_err(|_| LawError::Overflow("capacity"))?;
     while work.now.len() > cap {
         let before_revision = work.clone();
         let ids = work.ordered_ids();
         let bases = work.bases();
-        let Some(i) = eviction_choice(&bases, &ctx.law)? else {
-            return Err(exhausted(&bases, ctx.r_capacity));
+        let protected =
+            protected_candidates(&bases, step.proposal_order, ctx.protected_candidates)?;
+        let Some(i) = eviction_unprotected(&bases, &ctx.law, &protected)? else {
+            break;
         };
         let gone = ids[i].clone();
         work.now.remove(&gone);
@@ -151,6 +177,16 @@ pub(super) fn capacity(work: &mut Work, ctx: &LawContext<'_>) -> LawResult<()> {
                 .map(|(id, t)| (id.clone(), t.pi))
                 .collect(),
             after: work.now.iter().map(|(id, t)| (id.clone(), t.pi)).collect(),
+        });
+    }
+    if work.now.len() > cap || !work.deferred_candidates.is_empty() {
+        let mut deferred: Vec<_> = work.deferred_candidates.iter().cloned().collect();
+        deferred.sort_by(|a, b| tendency_order(a, b));
+        work.capacity_notice = Some(super::engine::CapacityNotice {
+            capacity: ctx.r_capacity,
+            retained: work.now.len(),
+            protected_candidates: ctx.protected_candidates,
+            deferred_candidates: deferred,
         });
     }
     Ok(())

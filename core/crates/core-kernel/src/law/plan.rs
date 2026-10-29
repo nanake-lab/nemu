@@ -2,7 +2,7 @@
 //! applied, for an experience group (S, strength, μ, p_c per tendency) and a
 //! teaching group (EV7, V2-45). See `group.rs` for what is recomputed when.
 
-use crate::law::pending::{Allocation, EvidenceGroup};
+use crate::law::state::{Allocation, EvidenceGroup};
 use std::collections::{BTreeMap, BTreeSet};
 
 use core_types::semantic::nature;
@@ -32,6 +32,7 @@ pub(super) fn of(a: &Allocation) -> Values {
     }
 }
 
+#[derive(Clone)]
 pub(super) struct Plan {
     pub(super) credibility: f64,
     pub(super) verifiability: f64,

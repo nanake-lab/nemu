@@ -50,7 +50,7 @@ pub(super) fn new_candidates(
                     &rel.person_id,
                     rel.kind,
                 )?;
-                work.now.insert(id.clone(), t);
+                work.admit(id.clone(), t);
             }
             remap.insert(c.record_id.clone(), id);
             continue;
@@ -98,7 +98,7 @@ pub(super) fn new_candidates(
                 initial_evidence: 0.0,
             },
         )?;
-        work.now.insert(c.record_id.clone(), t);
+        work.admit(c.record_id.clone(), t);
         remap.insert(c.record_id.clone(), c.record_id.clone());
     }
     Ok(remap)
@@ -123,14 +123,10 @@ pub(super) fn new_relations(
     wanted.sort_by(|a, b| tendency_order(&a.0, &b.0));
     wanted.dedup_by(|a, b| a.0 == b.0);
     for (id, person, kind) in wanted {
-        if let std::collections::btree_map::Entry::Vacant(slot) = work.now.entry(id) {
-            slot.insert(relation_tendency(
-                &ctx.law,
-                ctx.relation_concepts,
-                ctx.caretaker,
-                person,
-                kind,
-            )?);
+        if !work.now.contains_key(&id) {
+            let tendency =
+                relation_tendency(&ctx.law, ctx.relation_concepts, ctx.caretaker, person, kind)?;
+            work.admit(id, tendency);
         }
     }
     Ok(())

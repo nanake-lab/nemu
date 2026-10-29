@@ -11,7 +11,7 @@
 //!   changed in evidence content: its shares, from this step's π;
 //! - otherwise nothing: the same group arriving again changes nothing (AC2-03).
 
-use crate::law::pending::{Allocation, EvidenceGroup};
+use crate::law::state::{Allocation, EvidenceGroup};
 use std::collections::{BTreeMap, BTreeSet};
 
 use core_types::scalar::DecimalU64;

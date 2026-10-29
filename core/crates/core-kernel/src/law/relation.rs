@@ -8,7 +8,7 @@
 //! to experience like any other evidence. Everyone else starts neutral (π = 0)
 //! the first time they are involved.
 
-use crate::law::pending::Tendency;
+use crate::law::state::Tendency;
 use std::f64::consts::FRAC_1_SQRT_2;
 
 use core_types::generated::{

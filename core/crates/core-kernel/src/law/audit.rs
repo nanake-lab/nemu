@@ -2,8 +2,8 @@
 //! Opposite-sign replacements are split so their effects cannot hide each other.
 use super::engine::Work;
 use super::input::LawContext;
-use super::pending::Tendency;
 use super::replay::{fold_group, start};
+use super::state::Tendency;
 use super::support::weight;
 use super::{LawError, LawResult};
 use std::collections::BTreeSet;

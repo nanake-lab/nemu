@@ -54,14 +54,15 @@ fn adr0019_python_legacy_and_extra_same_input_all_scalar_bits() {
                 let p = float(v[3]);
                 let mut t = tendency(&l, "k", if p == 0.0 { None } else { Some(p) });
                 t.evidence_a = float(v[6]);
-                t.evidence_v = float(v[7]);
-                t.evidence_b = l.base(1).unwrap() + t.evidence_v;
+                t.evidence_absolute = float(v[7]);
+                t.evidence_b = l.base(1).unwrap() + t.evidence_absolute;
                 t.magnitude_sum = float(v[8]);
                 t.magnitude_weight = float(v[9]);
                 t.group_count = DecimalU64(v[10].parse().unwrap());
                 t.flip_count = DecimalU64(v[11].parse().unwrap());
                 t.last_sign = sign(v[12]);
-                t.pi = crate::law::pi(p, t.evidence_a, l.base(1).unwrap(), t.evidence_v).unwrap();
+                t.pi = crate::law::pi(p, t.evidence_a, l.base(1).unwrap(), t.evidence_absolute)
+                    .unwrap();
                 t.h_hat = l.h_hat(t.group_count.0, t.flip_count.0).unwrap();
                 t.typical_magnitude =
                     crate::law::replay::typical_magnitude(&l, t.magnitude_sum, t.magnitude_weight)
@@ -104,7 +105,7 @@ fn adr0019_python_legacy_and_extra_same_input_all_scalar_bits() {
                     let got = [
                         q,
                         t.evidence_a,
-                        t.evidence_v,
+                        t.evidence_absolute,
                         t.pi,
                         t.magnitude_sum,
                         t.magnitude_weight,
@@ -121,7 +122,7 @@ fn adr0019_python_legacy_and_extra_same_input_all_scalar_bits() {
                     }
                     let mut expected = before;
                     expected.evidence_a = float(v[20]);
-                    expected.evidence_v = float(v[21]);
+                    expected.evidence_absolute = float(v[21]);
                     expected.pi = float(v[22]);
                     expected.magnitude_sum = float(v[23]);
                     expected.magnitude_weight = float(v[24]);

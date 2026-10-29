@@ -2,7 +2,7 @@
 //! EV5 back-collection, teaching. Candidates, aliases, relations, the capacity
 //! fuse, input validation and I10 are in `boundaries.rs`.
 
-use crate::law::pending::Tendency;
+use crate::law::state::Tendency;
 use std::collections::BTreeMap;
 
 use crate::law::{Candidate, GroupContent, GroupItem, Match, MatchTarget};

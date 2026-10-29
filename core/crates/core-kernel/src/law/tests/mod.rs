@@ -4,6 +4,8 @@
 mod ac2_count;
 mod adr0019;
 mod boundaries;
+mod capacity_replay;
+mod capacity_v3;
 mod cases;
 mod engine;
 mod finite_contract;
@@ -19,8 +21,8 @@ mod review_regressions;
 mod types;
 pub(super) mod world;
 
-mod pending_codec;
 mod reference_events;
 mod reference_parity;
 mod reference_support;
 mod state_bits;
+mod v3_storage;

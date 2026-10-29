@@ -6,8 +6,8 @@
 //! (LP8, I10). No clock, randomness, storage, network or model access.
 //!
 //! ADR 0019 supersedes the old D2-D5 recurrence and ordering. Historical q
-//! and explicit V use the in-process pending state until P5-34 is merged.
-//! No pending state implements a wire protocol or opens authoritative storage.
+//! and explicit V use the generated P5-34 V3 messages, including their codecs.
+//! G never opens authoritative storage.
 
 mod audit;
 mod candidates;
@@ -19,12 +19,12 @@ mod group;
 mod input;
 mod num;
 mod params;
-pub mod pending;
 mod plan;
 mod recurrence;
 mod relation;
 mod replay;
 mod shares;
+pub mod state;
 mod support;
 mod validation;
 
@@ -32,9 +32,9 @@ mod validation;
 mod tests;
 
 pub use change_rate::{ChangeRateEstimator, EvidenceCounts, FlipFrequency};
-pub use engine::{CapacityAudit, Output, g};
+pub use engine::{CapacityAudit, CapacityNotice, Output, g};
 pub use error::{LawError, LawResult};
-pub use fuse::{check_weight_cap, eviction_choice, exhausted};
+pub use fuse::{check_weight_cap, eviction_choice, protected_candidates};
 pub use input::{
     Candidate, GroupContent, GroupItem, LawContext, Match, MatchTarget, RState, Step, ThetaView,
 };

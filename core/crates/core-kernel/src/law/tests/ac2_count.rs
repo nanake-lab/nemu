@@ -2,9 +2,9 @@
 //! The original counterexample is retained in prior evidence; the new law
 //! must strictly increase on the same four supporting inputs.
 
-use crate::law::pending::Tendency;
 use crate::law::recurrence::apply;
 use crate::law::shares::{ShareInput, shares};
+use crate::law::state::Tendency;
 use crate::law::{Law, experience, record};
 
 use super::fixture::{law, tendency};
@@ -147,7 +147,7 @@ fn ac2_07_one_group_moves_pi_at_most_by_corollary_4() {
         let q = crate::law::recurrence::actual_retention(&t, &l, nominal, w, s).unwrap();
         let c = l.base(1).unwrap();
         let drift = -base * c;
-        let b = c + q * t.evidence_v;
+        let b = c + q * t.evidence_absolute;
         let mut learned = t.clone();
         record(&mut learned, &l, w, s).unwrap();
         bad_marginal += u32::from(

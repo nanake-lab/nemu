@@ -1,45 +1,64 @@
 # P5-23 规律引擎 G — 报告
 
-## 当前状态
+## 结果
 
-按 PR #49 审查评论 6379618075 修复非有限中间量被裁剪隐藏的问题，新增七项回归，等待独立复审。分支已合并 `origin/main` 的 `7f962b2`，仍按 ADR 0019 实施；没有改变公式、参数下限或容差。当前提交的实际检查结论与逐条修复回复见 [PR #49](https://github.com/nanake-lab/nemu/pull/49)，不使用旧提交 a3d2ff2 的通过结果代替本轮验证。写「请审查」后停下，不合并、不取下一张卡。
+纯 G 的 V3 状态接入与 V2-80/105 容量处理及本机验收已完成。PR #49 已恢复；等待独立交叉审查，不自行合并。当前基线为 `origin/main` 的 `f24f1256259c998bc213a9dc93103fcfb9cfe89a`，通过 merge `551928db` 合入，没有 rebase 或强推。
 
-## 本轮修复
+## 交付物
 
-- `support.rs`：依原计算顺序检查 `2*p`、除法和减法，再执行规定的支持度裁剪；逐成员投影先检查再取峰值；强度商和 cap 先检查再取 min。
-- `replay.rs`：M、U、r_max 及非零 U 时的 M/U 在裁剪前检查；保留 U=0/M≠0、分别舍入和有限值的正常裁剪。
-- `tests/finite_contract.rs`：审查给出的正负 helper 最小复现；完整 G 最小复现及前置教导已成功暂存后的晚阶段失败；强度、成员投影、M/U 溢出和回滚；正常裁剪、最小正 r_min 与 U=0/M≠0 的成功对照。
-- [同类排查表](FINITE-AUDIT.md)：逐一核对 law 生产代码的 clip/min/max 及 core-kernel 其余生产模块；没有修改卡外实现。
+- `core/crates/core-kernel/src/law/state.rs`：只重新导出 P5-34 的四种 V3 消息；删除 `pending.rs` 和测试专用包络。实际 q 与独立 V 直接使用生成字段，递推次序不变。
+- `law/fuse.rs`、`engine.rs`、`input.rs`：保护最新 K 个候选，移出其余证据最少的候选；人格不移出。容量耗尽时已有倾向继续成长，只暂缓新候选进入 R 并返回待提交的通知，不返回容量故障或暂停成长。K 和 H 导出的候选次序显式传入，不保存隐藏队列。
+- `law/tests/capacity_v3.rs`、`capacity_replay.rs`、`v3_storage.rs`：K=1/K=2、容量调整、同义候选、拒收与重新提出、冻结历史 q、真实 V3 编码恢复及继续计算。
+- [卡外接线请求](../../tasks/requests/P5-23-capacity-inputs.md)：K 的权威配置、H 候选次序视图、提交后通知和 P5-26 的迁移边界。未修改契约、生成代码、存储或运行时。
+- [规格对照追加](../../docs/traceability/P5-23.md)、[差异登记状态追加](../../docs/traceability/diff-register.md)：落实 V2-80 至84、105；不新增待确认规格读法。V2-81 翻转和 V2-82 关系实现保留。
 
-## 验证与证据
+## 验收
 
-本机重负载被连续 Windows CI 占用时不并行编译；本轮完整验证使用当前 PR head 的 Ubuntu CI。检查会执行新增七项回归及原有全部 core-kernel/workspace 测试；具体退出码、测试数量和日志由 PR 对应提交的 Checks 与修复回复给出。本机仅格式检查不等于编译或测试通过。
+环境：Windows，锁定 Rust 1.99.0，Python 3.12.10。仅使用合成数据和测试临时存储；重负载串行。原 Python 参考脚本、种子、规模、阈值和黄金向量未改。
 
-| 检查 | 当前提交证据入口 |
-| --- | --- |
-| `cargo fmt --all -- --check` | PR Ubuntu CI 的 Rust checks；本机格式检查原日志在 `verification/finite-review-20261024/` |
-| `cargo clippy --workspace --all-targets -- -D warnings` | 同提交 Rust checks |
-| `cargo test --workspace --locked`，含 `finite_contract` | 同提交 Rust checks；必须保留 helper/G 故障与原子性断言 |
-| legacy/extra、80,000 整步、events/review/sides 同输入逐位比较 | `reference_parity`、`reference_events` 随完整测试执行，不跳过 |
-| 原 LAW-6 | 原判据失败继续保留；诊断测试要求 3,064 个状态违例，不能当作 LAW-6 通过。先前独立命令 result.json 与退出 1 的原证据保留在 `LAW-6/adr0019-20261024/` |
-| Windows CI | 以 PR 对应提交的检查与路径范围判定为准；不操作其他应用启动或干预 runner |
+| 命令或检查 | 结果 | 证据 |
+| --- | --- | --- |
+| `cargo test -p core-kernel --locked v3 -- --nocapture --test-threads=1` | 11/11 通过；300次 V3 编码/前缀逐位比较，51次容量通知、77次移出 | `verification/resume-20261029/v3-02.*` |
+| `cargo test --workspace --locked -- --nocapture --test-threads=1` | 通过（退出0，约22分钟）；core-kernel 169通过/1个原有忽略 | `verification/resume-20261029/workspace-01.*` |
+| `cargo fmt --all -- --check` | 通过（退出0） | `verification/resume-20261029/fmt-01.*` |
+| `cargo clippy --workspace --all-targets --locked -- -D warnings` | 通过（退出0） | `verification/resume-20261029/clippy-01.*` |
+| `pwsh -File reports/P5-23/verify_ac2_01.ps1 -EvidenceDirectory reports/P5-23/AC2-01/resume-20261029` | passed（退出0） | `AC2-01/resume-20261029/` |
+| `pwsh -File reports/P5-23/verify_law_6.ps1 -EvidenceDirectory reports/P5-23/LAW-6/resume-20261029` | failed（退出1）；3,000条序列、3,064个违例，按V2-60保留 | `LAW-6/resume-20261029/` |
+| `git diff --check` | 通过；46个 law 源文件哈希与测试时一致 | `verification/resume-20261029/summary.json`、`source-sha256.json` |
 
-修复前审查原始失败材料及源码复制为 `verification/finite-review-20261024/reviewer-fault-contract.*`，原测试为 1 passed / 1 failed、退出 101；这不是本轮新跑的本机红测。原 a3d2ff2 的本机与 CI 证据全部保留；它们仍不能证明本轮新代码通过。没有覆盖或删除失败日志。
+工作区原有忽略项为 `dynamics::tests::reference::theta_1_original_500_streams_zero_violations`，由 main 按 V2-93 标记；本卡未增删忽略项。它不是 P5-23 验收通过证据。工作区 stderr 的编译错误来自预期失败的类型隔离文档测试，最终测试命令退出0。
 
-## 规格对照与边界
+同输入对照：2,539,894个标量状态、261,581组份额、7类显式故障；13,339个成功事件、5个原子故障，全部状态/分配/cf零位差。完整日志、命令、时间和源文件哈希在 `verification/resume-20261029/`。收尾再次fetch，main仍为上述f24f1256，无新增基线差异。
 
-见 [P5-23 规格对照](../../docs/traceability/P5-23.md) 的 ADR 0019 追加节和本轮有限性修复追加说明。I03 的故障原子性由暂存返回和 G 回归检查；I10/I18/I24 的受限输入与显式状态、I23 的重放、I25 的精确份额、I29 的合成夹具边界保持不变。
+首轮容量测试为5通过/1失败：测试刺激恰好使旧候选达到 π=0.5，未达到测试要求的人格区间。修正合成输入的 sigma 后，保持 `π>0.5` 及全部原断言，新增同义候选、两种编码和随机前缀后11/11通过。原始失败日志 `capacity-01.stdout.log` / `capacity-01.stderr.log` 保留，不覆盖、不计作通过。
 
-q/V 仍在 law 内临时结构承载，P5-34 合并前没有生产编码；完整运行时、真实有效 H 的来源更正及暂停补算不由本卡证明。原 Python 参考文件、IDL、黄金向量及冻结规格未改动。标量 Python 模型只保存原始 M/U，不能替代本轮 G 读出商的非有限故障检查。
+## 规格对照
+
+| 条款/验收 | 实现与范围 | 验证入口 |
+| --- | --- | --- |
+| ADR 0019 §3–8、ADR 0021；AC2-01/06/07 | 显式 V、首次生成 q、普通修订冻结 q；LP1 三条、反事实、严格有限 binary64 与精度故障 | `recurrence` / `replay` / `audit`；原 scalar/event 逐位对照、`finite_contract` |
+| AC2-02/03/05、I25 | 两侧份额各精确为1，重复不再计数，无证据不随时间改变 | 原 `engine` / `group_props` / `law_props` / `cases` |
+| V2-80/105、AC2-21 | 最新 K 个保护、证据最弱移出、人格保留；拒收新候选时已有证据照常更新 | `capacity_v3`、原容量与单组上限检查 |
+| I23 | 同一 H 与边界事件分别增量/整段重做；每步原生 CanonicalV1/Protobuf 恢复后继续 G；D5 存储分配重放 | 原125个随机 H 前缀与新增300个编码/容量前缀比较 |
+| I10/I18/I24 | G 只读 R、b/σ、事件证据、规律与显式边界；不读 x/m/g/λ，不增加隐藏状态 | 类型签名/源边界检查；生成 V3 消息 |
+| AC2-13、推论1–7 | 保留原 LAW-1…10 的规模；原 LAW-6 按 V2-60 继续报告失败 | `law_props` 与独立 `verify_law_6.ps1` |
+| ADR 0014、V2-81/82/83/84 | 同义归并；跳过零 S 翻转；关系/分摊读法已确认 | 原别名、关系与回归；新增满容量别名用例 |
+| I03/I29 | 晚阶段数值失败不发布部分状态；只用合成输入与临时目录 | `finite_contract`、`adr0019`、`capacity_v3`、测试夹具 |
+
+原 LAW-6 的诊断测试通过不等于该原判据通过。该保证变化已由 ADR 0019 / V2-60 采纳，不增加下限或容差掩盖失败。
 
 ## 新增依赖
 
-无。
+无。未修改运行时依赖、IDL、生成器或黄金向量；所有本轮改动的 Rust 文件均不超过400行。
 
-## 待用户确认与下一步
+## 待用户确认
 
-- [ ] 独立复审评论 6379618075 的阻塞问题；执行者不自行发布审查通过结论。
-- [ ] V2-38–V2-47 白话清单仍由 Claude 整理后供用户一次确认，本卡不代做。
-- [x] 原 LAW-6 按原判据继续报告失败；ADR 0019 / V2-60 的保证变化不改写为通过。
+没有新增的阻塞确认项。用户已取消暂停，V2-83/84 解决旧确认项，P5-34/#95 解除 q/V 消息依赖。仍须独立交叉审查本 PR；执行者不自行签发“审查结论：通过”。
 
-在原 PR #49 逐条回复并写「请审查」后停下；保留 needs-user，不合并。
+## 后续建议（不在本任务范围内）
+
+按卡外请求接通 K/H 视图与通知。完整有效 H、来源更正及新规律的整段重算、V2→V3 迁移/回退由 P5-26 等所属卡接续。本报告不宣称生产通知、生产迁移、AC2-19 或 SYS17 完成；V2-82 的诚实性信任缺口仍为既定后续。
+
+## 下一步
+
+交付至 PR #49，转为可审查并写“请审查”后等待独立交叉审查；不合并、不取下一张卡。

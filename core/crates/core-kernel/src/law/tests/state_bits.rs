@@ -1,5 +1,5 @@
 //! Test comparisons preserve zero signs; CanonicalV1 deliberately normalizes them.
-use crate::law::pending::{Allocation, EvidenceGroup, Snapshot, Tendency};
+use crate::law::state::{Allocation, EvidenceGroup, Snapshot, Tendency};
 
 pub(super) fn tendency_bits_eq(a: &Tendency, b: &Tendency) -> bool {
     fn floats(t: &Tendency) -> [u64; 12] {
@@ -10,7 +10,7 @@ pub(super) fn tendency_bits_eq(a: &Tendency, b: &Tendency) -> bool {
             t.direction.achievement,
             t.evidence_a,
             t.evidence_b,
-            t.evidence_v,
+            t.evidence_absolute,
             t.h_hat,
             t.pi,
             t.typical_magnitude,

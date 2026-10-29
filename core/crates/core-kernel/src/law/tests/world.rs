@@ -1,10 +1,10 @@
 //! A synthetic world for G: R as G keeps it, and a seeded generator of
 //! committed events (candidates, experience groups, late members, EV5
 //! back-collection, teaching and its repeats). No store is opened (AGENTS.md
-//! golden rule 14). R is the P5-32 `Snapshot` with its `EvidenceGroup`
+//! golden rule 14). R is the P5-34 V3 `Snapshot` with its `EvidenceGroup`
 //! summaries.
 
-use crate::law::pending::{EvidenceGroup, Snapshot, Tendency};
+use crate::law::state::{EvidenceGroup, Snapshot, Tendency};
 use std::collections::BTreeMap;
 
 use core_types::generated::{NatureScale, NatureVector, ObjectRef, RelationKind};
@@ -46,6 +46,9 @@ pub struct Fixture {
     pub concepts: RelationConcepts,
     pub law: Law,
     pub capacity: u32,
+    /// Legacy K=0 profile keeps the original LAW/random test inputs unchanged.
+    /// V2-80/105 tests explicitly use the current initial boundary K=1 (and K=2).
+    pub protected_candidates: u32,
 }
 
 impl Fixture {
@@ -55,6 +58,7 @@ impl Fixture {
             concepts: concepts(),
             law: law(3.0, 1.0, 0.1, 10.0),
             capacity,
+            protected_candidates: 0,
         }
     }
 
@@ -67,6 +71,7 @@ impl Fixture {
                 attachment_prior: A_ATT,
             },
             r_capacity: self.capacity,
+            protected_candidates: self.protected_candidates,
             relation_concepts: &self.concepts,
         }
     }
@@ -149,6 +154,7 @@ impl Event {
             candidates: &self.candidates,
             groups: &self.groups,
             aliases: &self.aliases,
+            proposal_order: &[],
         }
     }
 }

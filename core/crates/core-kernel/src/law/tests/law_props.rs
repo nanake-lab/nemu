@@ -19,7 +19,7 @@ fn base(l: &Law) -> f64 {
     l.base(1).unwrap()
 }
 
-fn e_c(t: &crate::law::pending::Tendency, l: &Law) -> (f64, f64) {
+fn e_c(t: &crate::law::state::Tendency, l: &Law) -> (f64, f64) {
     consistent_and_contrary(t, l).unwrap()
 }
 

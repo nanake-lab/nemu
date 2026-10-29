@@ -7,9 +7,9 @@
 //! 3. the capacity fuse (D7);
 //! 4. staged L entries (D11).
 //!
-//! Pending V/q state is process-local until P5-34 provides successor IDL.
+//! q/V are carried by the published P5-34 V3 messages.
 
-use crate::law::pending::{EvidenceGroup, Snapshot, Tendency};
+use crate::law::state::{EvidenceGroup, Snapshot, Tendency};
 use std::collections::{BTreeMap, BTreeSet};
 
 use core_types::generated::TendencyChange;
@@ -34,6 +34,17 @@ pub struct Output {
     pub counterfactual: BTreeMap<String, f64>,
     pub after_additions: BTreeMap<String, f64>,
     pub capacity_audits: Vec<CapacityAudit>,
+    /// Staged notification for the outer transaction, never a growth pause.
+    pub capacity_notice: Option<CapacityNotice>,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct CapacityNotice {
+    pub capacity: u32,
+    pub retained: usize,
+    pub protected_candidates: u32,
+    /// These proposals stay in H; a later re-proposal must collect all EV5 evidence.
+    pub deferred_candidates: Vec<String>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -72,9 +83,53 @@ where
     ) -> LawResult<Vec<group::FirstAllocation>>,
 {
     validate(r, ctx)?;
+    // A saturated R still consumes evidence. No new hypothesis participates in
+    // its shares or q sequence. If growth in this event exhausts the available
+    // slots, recompute the same pure event without new candidates before publish.
+    let saturated = r
+        .snapshot
+        .tendencies
+        .iter()
+        .filter(|t| super::is_personality(t.pi))
+        .count()
+        >= ctx.r_capacity as usize;
+    let first = execute_once(r, step, ctx, &mut prepare, !saturated)?;
+    if !saturated
+        && first.capacity_notice.is_some()
+        && first.r.tendencies.iter().any(|t| {
+            !r.snapshot
+                .tendencies
+                .iter()
+                .any(|old| old.tendency_id == t.tendency_id)
+        })
+    {
+        return execute_once(r, step, ctx, &mut prepare, false);
+    }
+    Ok(first)
+}
+
+fn execute_once<P>(
+    r: RState<'_>,
+    step: &Step<'_>,
+    ctx: &LawContext<'_>,
+    prepare: &mut P,
+    admit_new: bool,
+) -> LawResult<Output>
+where
+    P: FnMut(
+        &mut Work,
+        &super::input::GroupItem,
+        &BTreeMap<String, String>,
+    ) -> LawResult<Vec<group::FirstAllocation>>,
+{
     let mut work = Work::new(r);
     let remap = new_candidates(&mut work, step, ctx)?;
     new_relations(&mut work, step, ctx)?;
+    if !admit_new {
+        // Canonicalise aliases before withholding the new identities. Otherwise
+        // a deferred canonical proposal could make its synonyms look ambiguous.
+        work.defer_new();
+    }
     let items = ordered_groups(step)?;
     let initial = work.clone();
     let mut first = Vec::new();
@@ -108,7 +163,7 @@ where
         }
     }
     let after_additions = work.now.iter().map(|(id, t)| (id.clone(), t.pi)).collect();
-    super::fuse::capacity(&mut work, ctx)?;
+    super::fuse::capacity(&mut work, step, ctx)?;
     work.finish(r, step, ctx, counterfactual, after_additions)
 }
 
@@ -161,6 +216,8 @@ pub(super) struct Work {
     pub(super) revised: BTreeSet<String>,
     processed: BTreeMap<String, BTreeSet<String>>,
     pub(super) capacity_audits: Vec<CapacityAudit>,
+    pub(super) deferred_candidates: BTreeSet<String>,
+    pub(super) capacity_notice: Option<CapacityNotice>,
 }
 
 impl Work {
@@ -185,7 +242,24 @@ impl Work {
             revised: BTreeSet::new(),
             processed: BTreeMap::new(),
             capacity_audits: Vec::new(),
+            deferred_candidates: BTreeSet::new(),
+            capacity_notice: None,
         }
+    }
+
+    pub(super) fn admit(&mut self, id: String, tendency: Tendency) {
+        self.now.insert(id, tendency);
+    }
+
+    fn defer_new(&mut self) {
+        self.now.retain(|id, _| {
+            if self.before.contains_key(id) {
+                true
+            } else {
+                self.deferred_candidates.insert(id.clone());
+                false
+            }
+        });
     }
 
     /// Tendency IDs in canonical order.
@@ -271,6 +345,7 @@ impl Work {
                 counterfactual,
                 after_additions,
                 capacity_audits: self.capacity_audits,
+                capacity_notice: self.capacity_notice,
             });
         }
         if step.revision.is_empty() {
@@ -301,6 +376,7 @@ impl Work {
             counterfactual,
             after_additions,
             capacity_audits: self.capacity_audits,
+            capacity_notice: self.capacity_notice,
         })
     }
 }

@@ -238,7 +238,10 @@ fn zero_signal_preserves_evidence_and_q_but_can_add_magnitude() {
     let q = crate::law::replay::record_group(&mut t, &l, 3., 0., 0.5, Some(0.4)).unwrap();
     assert_eq!(q, 1.);
     assert_eq!(t.evidence_a.to_bits(), before.evidence_a.to_bits());
-    assert_eq!(t.evidence_v.to_bits(), before.evidence_v.to_bits());
+    assert_eq!(
+        t.evidence_absolute.to_bits(),
+        before.evidence_absolute.to_bits()
+    );
     assert_eq!(t.pi.to_bits(), before.pi.to_bits());
     assert_eq!(t.magnitude_sum, 0.2);
     assert_eq!(t.magnitude_weight, 0.5);

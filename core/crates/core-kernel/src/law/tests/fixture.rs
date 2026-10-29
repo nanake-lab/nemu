@@ -1,7 +1,7 @@
 //! Test fixtures: law parameters and tendencies. Synthetic values only; no
 //! store is opened (AGENTS.md golden rule 14).
 
-use crate::law::pending::Tendency;
+use crate::law::state::Tendency;
 use core_types::generated::{
     ConceptRef, LawParameters, NatureVector, PersonRelation, RelationKind, TrilingualText,
 };

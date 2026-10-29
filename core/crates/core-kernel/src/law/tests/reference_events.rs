@@ -3,8 +3,8 @@ use super::fixture::tendency;
 use super::reference_support::{ReferenceChild, fault_code};
 use super::state_bits::{group_bits_eq, snapshot_bits_eq};
 use super::world::{Fixture, default_theta};
-use crate::law::pending::{Allocation, EvidenceGroup, Tendency};
 use crate::law::plan::{Plan, Values};
+use crate::law::state::{Allocation, EvidenceGroup, Tendency};
 use crate::law::{GroupContent, GroupItem, RState, Step};
 use core_types::scalar::DecimalU64;
 use std::collections::BTreeMap;
@@ -32,7 +32,7 @@ impl Input<'_> {
             let id = self.id();
             let mut t = tendency(&f.law, &id, if p == 0.0 { None } else { Some(p) });
             t.evidence_a = self.float();
-            t.evidence_v = self.float();
+            t.evidence_absolute = self.float();
             t.magnitude_sum = self.float();
             t.magnitude_weight = self.float();
             t.pi = self.float();
@@ -246,6 +246,7 @@ fn adr0019_python_events_review_and_side_tapes_match_g_phase_machine() {
             candidates: &[],
             groups: &items,
             aliases: &aliases,
+            proposal_order: &[],
         };
         let result = crate::law::engine::execute(
             RState {
@@ -257,7 +258,7 @@ fn adr0019_python_events_review_and_side_tapes_match_g_phase_machine() {
             &f.ctx(),
             |work, item, _| {
                 let stored = work.groups.get(&item.group_id).cloned();
-                let plan = plans.remove(&item.group_id).unwrap();
+                let plan = plans[&item.group_id].clone();
                 crate::law::group::store_plan(
                     work,
                     item,

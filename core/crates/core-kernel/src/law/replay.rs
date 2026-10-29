@@ -2,7 +2,7 @@
 //! A/V/M/U all use that same q. Teaching adds no magnitude contribution.
 //! M/U round separately: U=0 with M!=0 remains valid (ADR 0016).
 
-use crate::law::pending::{Allocation, Tendency};
+use crate::law::state::{Allocation, Tendency};
 use core_types::generated::RelationKind;
 
 use super::error::{LawError, LawResult};

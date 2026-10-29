@@ -1,7 +1,7 @@
-//! In-process G inputs, including temporary explicit V/q state (P5-34 pending).
+//! In-process G inputs; R and evidence use the generated P5-34 V3 messages.
 //! ThetaView contains only b and sigma; no fast state or modulation is readable.
 
-use crate::law::pending::{EvidenceGroup, Snapshot};
+use crate::law::state::{EvidenceGroup, Snapshot};
 use std::collections::BTreeMap;
 
 use core_types::generated::{
@@ -62,6 +62,9 @@ pub struct LawContext<'a> {
     pub caretaker: Caretaker<'a>,
     /// R's capacity: a caretaker boundary from the fuse configuration.
     pub r_capacity: u32,
+    /// K from the caretaker's recorded boundary (V2-80/100). Never inferred
+    /// from R or silently defaulted; the initial configured value is 1.
+    pub protected_candidates: u32,
     pub relation_concepts: &'a RelationConcepts,
 }
 
@@ -77,6 +80,7 @@ impl<'a> LawContext<'a> {
         law_version: &'a ObjectRef,
         fuses: &'a FuseConfig,
         relation_concepts: &'a RelationConcepts,
+        protected_candidates: u32,
     ) -> LawResult<Self> {
         Ok(Self {
             law_version,
@@ -86,6 +90,7 @@ impl<'a> LawContext<'a> {
                 attachment_prior: genesis.attachment_prior,
             },
             r_capacity: fuses.r_capacity,
+            protected_candidates,
             relation_concepts,
         })
     }
@@ -168,4 +173,10 @@ pub struct Step<'a> {
     pub groups: &'a [GroupItem],
     /// Concept → canonical representative (P5-06's alias graph); absent means itself.
     pub aliases: &'a BTreeMap<String, String>,
+    /// Canonical tendency IDs in proposal order, oldest first, derived from H
+    /// including this event. Each identity occurs once at its latest proposal.
+    /// Includes structural candidates at first involvement and genesis seeds.
+    /// Alias records do not create another identity or refresh its position.
+    /// Required for all live candidates when K > 0; never persisted beside R.
+    pub proposal_order: &'a [String],
 }
