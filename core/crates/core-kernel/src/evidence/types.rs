@@ -124,6 +124,10 @@ pub struct Frame {
     /// including newly involved structural relations. Required when H position
     /// alone cannot order them. No ID-based tie-break substitutes for this input.
     pub simultaneous_proposals: Option<Vec<String>>,
+    /// Accepted structural entry/re-entry proposals at this commit, canonical
+    /// identities. Some(empty) means no entry; None means the adapter has not
+    /// supplied intent. The originating decision belongs in H, not a side queue.
+    pub structural_admissions: Option<Vec<String>>,
 }
 
 #[derive(Clone, Copy)]
@@ -152,6 +156,8 @@ pub struct ExternalEvent {
 /// A complete projection, not a serialized authority or a cache.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Assembly {
+    /// Last commit's entry intent, copied from the governed H projection.
+    pub structural_admissions: Option<Vec<String>>,
     pub groups: Vec<GroupItem>,
     pub external: Vec<ExternalEvent>,
     /// Proposals at the last commit, with canonical identity preserved on re-entry.
@@ -161,8 +167,10 @@ pub struct Assembly {
 }
 
 impl Assembly {
-    /// Full groups are safe for an initial G step or an EV5 re-proposal step.
-    /// For ordinary incremental use, call `delta` first. A source correction,
+    /// Borrow a prepared input for G. For commits (including re-proposals),
+    /// call `delta` first: a raw full assembly has not routed structural entry.
+    /// Initial/replay callers must also supply the recorded entry intent.
+    /// A source correction,
     /// newly discovered lie, merge or reinterpretation needs P5-26 recomputation.
     pub fn step<'a>(&'a self, revision: &'a str) -> Step<'a> {
         Step {
@@ -175,6 +183,11 @@ impl Assembly {
     }
 
     pub fn delta(&self, previous: &Self) -> Result<Self> {
+        let out = self.checked_delta(previous)?;
+        super::delta::route(self, out)
+    }
+
+    pub(super) fn checked_delta(&self, previous: &Self) -> Result<Self> {
         if !self.external.starts_with(&previous.external) {
             return Err(Fault::RecomputeRequired("external history changed".into()));
         }

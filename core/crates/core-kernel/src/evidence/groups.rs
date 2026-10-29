@@ -39,6 +39,9 @@ pub(super) fn build(
     let mut parents: Vec<usize> = (0..prefix.frames.len()).collect();
     let mut keys = BTreeMap::new();
     for (i, frame) in prefix.frames.iter().enumerate() {
+        if !eligibility::connectable(i, prefix, tainted) {
+            continue;
+        }
         let attr = frame.attributes.as_ref().expect("validated");
         let sem = frame.semantics.as_ref().expect("validated");
         let mut identities = vec![(
@@ -55,7 +58,11 @@ pub(super) fn build(
         }
     }
     for &(a, b) in &records.same {
-        union(&mut parents, a, b);
+        if eligibility::connectable(a, prefix, tainted)
+            && eligibility::connectable(b, prefix, tainted)
+        {
+            union(&mut parents, a, b);
+        }
     }
     let mut members: BTreeMap<usize, Vec<(usize, Vec<Match>)>> = BTreeMap::new();
     for i in 0..prefix.frames.len() {

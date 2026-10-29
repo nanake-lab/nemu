@@ -83,6 +83,7 @@ pub fn frame(i: usize, source: &str, a: Option<f64>) -> Frame {
         lies: vec![],
         candidates: vec![],
         simultaneous_proposals: None,
+        structural_admissions: None,
     };
     if let Some(a) = a {
         f.appraisals.push(NatureAppraisalRecord {

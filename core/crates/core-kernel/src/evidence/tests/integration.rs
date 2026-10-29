@@ -2,7 +2,10 @@ use super::{super::*, fixture::*};
 use crate::law::{self, *};
 use core_types::generated::*;
 
-fn context<'a>(law_version: &'a ObjectRef, relations: &'a RelationConcepts) -> LawContext<'a> {
+pub(super) fn context<'a>(
+    law_version: &'a ObjectRef,
+    relations: &'a RelationConcepts,
+) -> LawContext<'a> {
     // Same valid domain as P5-23's fixture, explicitly synthetic.
     let params = LawParameters {
         schema_version: 1,

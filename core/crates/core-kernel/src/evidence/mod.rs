@@ -8,6 +8,7 @@
 
 mod assemble;
 mod candidates;
+mod delta;
 mod eligibility;
 mod groups;
 mod records;

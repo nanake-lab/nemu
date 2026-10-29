@@ -61,6 +61,32 @@ pub fn assemble(prefix: Prefix<'_>) -> Result<Assembly> {
         }
     }
     let mut order = Vec::new();
+    let known_relations = super::delta::relation_ids(&groups);
+    let mut first_seen = BTreeMap::new();
+    for (i, rows) in &ops {
+        for (id, _) in rows {
+            first_seen.entry(id.clone()).or_insert(*i);
+        }
+    }
+    for (i, frame) in prefix.frames.iter().enumerate() {
+        if let Some(admissions) = &frame.structural_admissions {
+            let unique: BTreeSet<_> = admissions.iter().cloned().collect();
+            if admissions.len() > prefix.limits.max_items
+                || unique.len() != admissions.len()
+                || !unique.is_subset(&known_relations)
+                || admissions
+                    .iter()
+                    .any(|id| first_seen.get(id).is_none_or(|first| *first > i))
+            {
+                return Err(Fault::InvalidRecord(
+                    "structural admission identities".into(),
+                ));
+            }
+            for id in admissions {
+                ops.entry(i).or_default().push((id.clone(), true));
+            }
+        }
+    }
     for id in prefix.genesis_order {
         if id.is_empty() || order.contains(id) {
             return Err(Fault::InvalidRecord("genesis proposal order".into()));
@@ -102,6 +128,10 @@ pub fn assemble(prefix: Prefix<'_>) -> Result<Assembly> {
         }
     }
     Ok(Assembly {
+        structural_admissions: prefix
+            .frames
+            .last()
+            .and_then(|f| f.structural_admissions.clone()),
         groups,
         external,
         candidates: catalog.current,

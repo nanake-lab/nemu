@@ -13,9 +13,14 @@ pub(super) fn usable(
     records: &Records<'_>,
     tainted: &BTreeSet<usize>,
 ) -> bool {
+    connectable(i, prefix, tainted) && records.appraisals.contains_key(&i)
+}
+
+/// Excluded events cannot be graph vertices, even without an appraisal.
+/// Real experience without A may still carry conversation/source identity.
+pub(super) fn connectable(i: usize, prefix: Prefix<'_>, tainted: &BTreeSet<usize>) -> bool {
     let f = &prefix.frames[i];
     !tainted.contains(&i)
-        && records.appraisals.contains_key(&i)
         && !f.attributes.as_ref().expect("validated").self_narrative
         && f.semantics.as_ref().expect("validated").kind == EventUse::Experience
 }
