@@ -55,6 +55,8 @@ $sources = Get-ChildItem -LiteralPath $PSScriptRoot -Recurse -File | ForEach-Obj
     @{ path = $_.FullName.Substring($root.Length + 1).Replace('\','/'); sha256 = (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash }
 }
 $sources | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $evidence 'source-sha256.json') -Encoding utf8NoBOM
+$startHead = (& git -C $root rev-parse HEAD)
+$startBaseline = (& git -C $root rev-parse origin/main)
 $start = [DateTimeOffset]::UtcNow
 Push-Location (Join-Path $root 'core')
 try {
@@ -66,11 +68,10 @@ try {
     }
     @{ command = $command; arguments = $arguments; cwd = (Get-Location).Path;
        started_utc = $start.ToString('o'); ended_utc = [DateTimeOffset]::UtcNow.ToString('o');
-       exit_code = $code; baseline = (& git rev-parse origin/main); head = (& git rev-parse HEAD);
+       exit_code = $code; baseline = $startBaseline; head = $startHead; ended_head = (& git rev-parse HEAD);
        rustc = (& rustc --version); target = $env:CARGO_TARGET_DIR } | ConvertTo-Json -Depth 4 |
        Set-Content -LiteralPath (Join-Path $evidence 'result.json') -Encoding utf8NoBOM
 } finally { Pop-Location }
 Get-Content -LiteralPath (Join-Path $evidence 'stdout.log') -Tail 12
 Get-Content -LiteralPath (Join-Path $evidence 'stderr.log') -Tail 40
 exit $code
-
