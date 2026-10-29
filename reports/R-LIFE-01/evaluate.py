@@ -1,4 +1,4 @@
-"""Codex-only judging exports; live execution blocked pending strict capability proof."""
+"""Phase two only: explicitly selected hosted API, fresh anonymous requests, unchanged gates."""
 from __future__ import annotations
 
 import argparse
@@ -10,7 +10,10 @@ import sys
 from typing import cast
 
 from analysis import cluster_interval, summarize
-from codex_judge import CodexJudge, export_jobs
+from anonymous_jobs import export_jobs
+from hosted_judge import HostedJudge, PROVIDERS
+from phases import verify_binding, verify_data
+from phase1 import stage1
 from diagnostics import audit_scores, margins, quality
 from io_support import CACHE, digest, save
 from judging import AUDIT_SYSTEM, JUDGE_SYSTEM, decode_pair, packets
@@ -30,7 +33,7 @@ def external(life: dict[str, object]) -> list[dict[str, object]]:
             if not str(fact["event_id"]).endswith("-action")]
 
 
-def pair_trials(client: CodexJudge, histories: list[object], behaviors: list[object],
+def pair_trials(client: HostedJudge, histories: list[object], behaviors: list[object],
                 repeats: int) -> list[dict[str, object]]:
     result = []
     for layout, (payload, truth) in enumerate(packets(histories, behaviors)):
@@ -55,21 +58,33 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("run", type=Path)
     parser.add_argument("--mode", choices=("prepare-jobs", "run"), default="prepare-jobs")
+    parser.add_argument("--provider", choices=tuple(PROVIDERS))
+    parser.add_argument("--approved-usd")
+    parser.add_argument("--approval-ref")
+    parser.add_argument("--prereg-sha256")
+    parser.add_argument("--local-review", type=Path)
     args = parser.parse_args()
     root = args.run.resolve()
     if not root.is_relative_to(CACHE.resolve()):
         parser.error("Experiment cache only")
-    approval = read(root / "approval.json")
-    if approval["prereg_sha256"] != digest(Path(__file__).with_name("PREREG.md")):
-        parser.error("Protocol differs; stop for a new explicit decision")
-    if read(root / "status.json")["status"] != "C_behavior_complete_pending_blind_audit":
-        parser.error("C pilot incomplete")
+    verify_binding(root)
+    verify_data(root)
     if args.mode == "prepare-jobs":
         print(json.dumps(export_jobs(root)))
         return
     if (root / "judging-started.json").exists():
         parser.error("Never automatically rerun or overwrite a judging attempt")
-    client = CodexJudge(root)  # Fails before any process/network until requirements are proven.
+    if (not args.provider or not args.approved_usd or not args.approval_ref or not args.local_review
+            or args.prereg_sha256 != digest(Path(__file__).with_name("PREREG.md"))):
+        parser.error("Phase two requires provider selection, separate approval, current protocol and full local review")
+    phase1 = stage1(root, args.local_review)
+    phase1_gates = cast(dict[str, object], phase1["gates"])
+    # H1a significance is not a prerequisite for H1b; interface/input validity still is.
+    required = ("input_compliance_local", "action_interface", "dynamic_range", "capability",
+                "utterance_diversity", "reaction_diversity_local")
+    if any(phase1_gates[name] is not True for name in required):
+        parser.error("Phase-one validity/quality insufficient; preserve, do not repair or replace lives")
+    client = HostedJudge(root, args.provider, args.approved_usd, args.approval_ref, args.prereg_sha256)
     save(root / "judging-started.json", {"status": "started"})
     scores: list[float] = []
     negative: list[float] = []
@@ -143,7 +158,7 @@ def main() -> None:
              "positive_accuracy": statistics.fmean(float(bool(row["correct"])) for row in positives),
              "ability_delta": statistics.fmean(ability_deltas), "ability_delta_95": cluster_interval(ability_deltas),
              "status": "requires_full_protocol_audit_not_automatic_acceptance",
-             "judge_transport": "codex_exec_chatgpt"})
+             "phase1": phase1, "judge_transport": "hosted_chat_completions", "judge_provider": args.provider})
     finally:
         client.close()
 

@@ -11,6 +11,7 @@ import sys
 from carrier import Carrier
 from io_support import PaidClient, digest, new_run, save
 from planning import plan
+from phases import COMPLETE, binding, freeze_data
 from worlds import (ACTOR_SYSTEM, LAYOUTS, PROBES, SEEDS, Fact, ability_items,
                     actor_input, carrier_prompt, manifest, scenes, validate_actor)
 
@@ -100,6 +101,7 @@ def main() -> None:
          if p.is_file() and (p.suffix in (".py", ".cpp", ".ps1")
                             or p.name in ("PREREG.md", "COSTS.md", "CODEX-JUDGE.md", "R-LIFE-02-CONDITIONS.md"))})
     save(root / "analysis-plan.json", plan())
+    save(root / "phase1-binding.json", binding())
     if args.mode == "prepare":
         save(root / "status.json", {"status": "prepared_offline", "paid_calls": 0, "gpu_calls": 0,
                                    "behavior_result": "not_run"})
@@ -117,7 +119,9 @@ def main() -> None:
         if smoke["index"] != 0:
             raise ValueError("Minimal carrier interface smoke failed")
         live(root, client, carrier)
-        save(root / "status.json", {"status": "C_behavior_complete_pending_blind_audit", "paid_reserved_usd": str(client.reserved)})
+        freeze_data(root)
+        save(root / "status.json", {"status": COMPLETE, "paid_reserved_usd": str(client.reserved),
+                                   "phase2": "not_run", "judge_calls": 0})
     except Exception as error:
         save(root / "status.json", {"status": "blocked", "error_type": type(error).__name__,
              "paid_reserved_usd": str(client.reserved), "retry": False})

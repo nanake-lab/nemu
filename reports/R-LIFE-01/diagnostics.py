@@ -49,6 +49,8 @@ def quality(root: Path) -> dict[str, object]:
             "ability_pre": statistics.fmean(baseline_scores),
             "ability_pre_by_label_swap": {str(label): statistics.fmean(values) for label, values in label_scores.items()},
             "ability_world_delta": {str(w): {"mean": statistics.fmean(d), "ci95": cluster_interval(d)} for w, d in deltas.items()},
+            "ability_paired_world_average": {"mean": statistics.fmean((a + b) / 2 for a, b in zip(deltas[0], deltas[1])),
+                "ci95": cluster_interval([(a + b) / 2 for a, b in zip(deltas[0], deltas[1])])},
             "note": "All lives must pass semantic audit. Reaction categories require event-cited manual coding."}
 
 

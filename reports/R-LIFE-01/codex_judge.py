@@ -1,4 +1,4 @@
-"""Anonymous per-call exports; live exec is blocked until isolation/version are verified."""
+"""RETIRED historical prototype. Subscription judging is disabled by user decision."""
 from __future__ import annotations
 
 import json
@@ -11,7 +11,7 @@ from io_support import CACHE, digest, save
 from judging import AUDIT_SYSTEM, JUDGE_SYSTEM, packets
 from worlds import SEEDS
 
-BLOCK_REASON = ("CODEX_JUDGE_UNVERIFIED: strict isolation and actual provider model revision are unverified; "
+BLOCK_REASON = ("CODEX_JUDGE_UNVERIFIED / RETIRED: user disabled subscription judging; "
                 "subscription batch terms applicability is unverified. See CODEX-JUDGE.md. No process launched.")
 
 

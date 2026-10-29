@@ -84,7 +84,7 @@ class RevisionTests(unittest.TestCase):
         self.assertEqual(full["judge_sessions"], 25024)
         self.assertEqual(small["judge_sessions"], 6304)
         self.assertEqual(full["deepseek_expected_usd"], small["deepseek_expected_usd"])
-        self.assertEqual(full["judge_incremental_api_usd"], 0)
+        self.assertIsInstance(full["judge_api_usd"], dict)
 
     def test_no_paid_judge_or_unverified_codex_execution(self) -> None:
         CACHE.mkdir(parents=True, exist_ok=True)

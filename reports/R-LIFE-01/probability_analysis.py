@@ -13,6 +13,7 @@ from typing import cast
 from analysis import cluster_interval, holm
 from io_support import CACHE, digest, save
 from planning import H1_KEYS
+from phases import COMPLETE
 from worlds import LAYOUTS, PROBES, SEEDS
 
 
@@ -107,7 +108,7 @@ def analyze_root(root: Path) -> dict[str, object]:
     if not root.is_relative_to(CACHE.resolve()) or root == CACHE.resolve():
         raise ValueError("Experiment cache only")
     status = json.loads((root / "status.json").read_text(encoding="utf-8"))
-    if status.get("status") != "C_behavior_complete_pending_blind_audit":
+    if status.get("status") not in (COMPLETE, "C_behavior_complete_pending_blind_audit"):
         raise ValueError("No complete C behavior; never analyze preparation as observations")
     pairs = []
     bindings = {}

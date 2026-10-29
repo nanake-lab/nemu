@@ -5,8 +5,9 @@ import hashlib
 import math
 
 from analysis import binomial_tail, paired_power, power
+from hosted_judge import PROVIDERS, estimate
 
-PROTOCOL_VERSION = "rlife-prereg-v2-proposed"
+PROTOCOL_VERSION = "rlife-prereg-v3-proposed"
 H1_GROUPS = ("C", "E", "F", "A", "B")
 H1_KEYS = tuple(f"{endpoint}:{group}" for endpoint in ("H1a", "H1b") for group in H1_GROUPS)
 FORMAL_SEEDS = tuple(range(18101, 18261))
@@ -29,7 +30,7 @@ def rank_one_power(n: int, positive_probability: float, alpha: float) -> dict[st
     return {"n": n, "pi": positive_probability, "critical_upper": critical, "power": probability}
 
 
-def budget(judged_pairs_per_group: int) -> dict[str, int | float]:
+def budget(judged_pairs_per_group: int) -> dict[str, object]:
     if judged_pairs_per_group not in JUDGE_SAMPLE_OPTIONS:
         raise ValueError("Unregistered judge sample")
     actor_calls = 160 * 6 * 2 * 32
@@ -39,7 +40,8 @@ def budget(judged_pairs_per_group: int) -> dict[str, int | float]:
             "judge_audits": pairs * 2, "judge_anchors": 64, "judge_sessions": judge_calls,
             "deepseek_expected_usd": actor_calls * (1000 * .30 + 120 * 1.20) / 1e6,
             "deepseek_upper_usd": actor_calls * (2500 * .30 + 256 * 1.20) / 1e6,
-            "judge_incremental_api_usd": 0,
+            "judge_api_usd": {name: {"expected": estimate(judge_calls, name),
+                                     "upper": estimate(judge_calls, name, upper=True)} for name in PROVIDERS},
             "judge_visible_input_tokens_assumption": judge_calls * 2500,
             "judge_visible_output_tokens_assumption": judge_calls * 200,
             "unsampled_lives_requiring_manual_audit": 2 * 6 * (160 - judged_pairs_per_group)}

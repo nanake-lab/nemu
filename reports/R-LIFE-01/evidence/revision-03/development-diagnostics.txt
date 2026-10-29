@@ -1,0 +1,13 @@
+Development command output transcribed verbatim from terminal tool returns; not a rerun.
+
+First mypy-only command: outer exit_code=1
+reports\R-LIFE-01\phase1.py:63: error: Redundant cast to "int"  [redundant-cast]
+reports\R-LIFE-01\test_revision.py:87: error: Argument 2 to "assertIn" of "TestCase" has incompatible type "object"; expected "Iterable[Any] | Container[Any]"  [arg-type]
+Found 2 errors in 2 files (checked 17 source files)
+
+Second command ran mypy then Ruff: outer exit_code=0 (Ruff), mypy individual exit not captured.
+reports\R-LIFE-01\test_phases.py:99: error: Need type annotation for "changes"  [var-annotated]
+Found 1 error in 1 file (checked 18 source files)
+All checks passed!
+
+Only annotations/assertion typing were corrected before checks-01. No acceptance gate changed.
