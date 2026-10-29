@@ -1,13 +1,16 @@
 name: Windows
 # Runs on the user's own machine (self-hosted runner in their desktop session), so it only
-# runs for changes that can affect what it checks:
-# - every pnpm workspace package, since the e2e step runs `pnpm build` across the workspace
-#   (apps, packages, tools, spikes, executors/codex-bridge); tools/status is Python and is not built;
-# - the Windows scaffold checks under tools/scaffold;
-# - workers/*/src and services/*/src, because the supervisor e2e starts their entry points
-#   once they exist;
-# - the Node toolchain files and this workflow.
-# A change that adds a Windows check for another area adds that area here too.
+# runs the parts that a change can affect. Two groups, decided per run by the "Decide scope"
+# step from the changed files (regexes there must stay in step with the path lists below):
+# - desktop: transport, isolation smoke, desktop e2e and stage visual regression. Inputs are
+#   the pnpm workspace packages the e2e build and supervisor start (apps, packages, tools
+#   packages, executors/codex-bridge, workers/*/src, services/*/src), the Windows scaffold,
+#   the Node toolchain files and this workflow. spikes/* are left to the Ubuntu build.
+# - storage: W02 NTFS checks of core-store and what it depends on (core-types, the contracts
+#   that generate core-types, the Cargo workspace files) and this workflow.
+# Pure Rust crates that only need Linux (core-kernel law/dynamics and the like) do not start
+# this workflow. A manual run (`gh workflow run windows.yml --ref <branch>`) runs everything
+# by default. A change that adds a Windows check adds its group here and in the scope step.
 on:
   push:
     branches: [main]
@@ -15,11 +18,15 @@ on:
       - 'apps/**'
       - 'packages/**'
       - 'tools/**'
-      - 'spikes/**'
-      - 'core/**'
       - 'executors/codex-bridge/**'
       - 'workers/*/src/**'
       - 'services/*/src/**'
+      - 'core/crates/core-store/**'
+      - 'core/crates/core-types/**'
+      - 'core/contracts/**'
+      - 'core/Cargo.toml'
+      - 'core/Cargo.lock'
+      - 'core/rust-toolchain.toml'
       - 'executors/office-connector/global.json'
       - 'package.json'
       - 'pnpm-lock.yaml'
@@ -30,6 +37,9 @@ on:
       - 'tsconfig*.json'
       - '.github/workflows/windows.yml'
       - '!tools/status/**'
+      - '!tools/asset-pipeline/**'
+      - '!tools/texture-fix/**'
+      - '!tools/scaffold/ci-budget.mjs'
       - '!**.md'
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -37,11 +47,15 @@ on:
       - 'apps/**'
       - 'packages/**'
       - 'tools/**'
-      - 'spikes/**'
-      - 'core/**'
       - 'executors/codex-bridge/**'
       - 'workers/*/src/**'
       - 'services/*/src/**'
+      - 'core/crates/core-store/**'
+      - 'core/crates/core-types/**'
+      - 'core/contracts/**'
+      - 'core/Cargo.toml'
+      - 'core/Cargo.lock'
+      - 'core/rust-toolchain.toml'
       - 'executors/office-connector/global.json'
       - 'package.json'
       - 'pnpm-lock.yaml'
@@ -52,8 +66,16 @@ on:
       - 'tsconfig*.json'
       - '.github/workflows/windows.yml'
       - '!tools/status/**'
+      - '!tools/asset-pipeline/**'
+      - '!tools/texture-fix/**'
+      - '!tools/scaffold/ci-budget.mjs'
       - '!**.md'
   workflow_dispatch:
+    inputs:
+      full:
+        description: 'Run every Windows check regardless of changed paths'
+        type: boolean
+        default: true
 permissions:
   contents: read
 concurrency:
@@ -63,18 +85,26 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: '1'
   UV_LINK_MODE: copy
 jobs:
-  windows:
-    name: Windows desktop and isolation
-    # Only owner-triggered, same-repository code may run on the user's machine.
+  windows-tests:
+    name: Windows self-hosted checks
+    # This job-level allowlist is evaluated before a self-hosted runner is assigned.
+    # Require approval for ALL outside collaborators and never approve fork workflow runs:
+    # a fork can edit this YAML, so this allowlist alone is not a security boundary.
+    # Only owner-triggered, same-repository branch code may run on the user's machine.
     # Draft PRs skip this job: it runs once the PR is ready for review, or on demand with
-    # `gh workflow run windows.yml --ref <branch>`.
+    # `gh workflow run windows.yml --ref <branch>`, restricted to the repository owner.
     if: >-
+      github.repository == 'nanake-lab/nemu' &&
       github.actor == github.repository_owner &&
-      (github.event_name != 'pull_request' ||
-       (github.event.pull_request.head.repo.full_name == github.repository &&
-        !github.event.pull_request.draft))
+      github.triggering_actor == github.repository_owner &&
+      ((github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')) ||
+       (github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        !github.event.pull_request.draft) ||
+       (github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/heads/')))
     runs-on: [self-hosted, Windows, X64, nemu]
-    timeout-minutes: 20
+    # W02 core-store crash-recovery tests take over 20 minutes on the user's machine.
+    timeout-minutes: 60
     defaults:
       run:
         shell: pwsh
@@ -83,35 +113,101 @@ jobs:
         with:
           lfs: true
           persist-credentials: false
+          # Two commits: for a pull request HEAD is the merge commit and HEAD^1 its base.
+          fetch-depth: 2
+      - name: Decide scope
+        id: scope
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          FULL_INPUT: ${{ inputs.full }}
+        run: |
+          # Anything that cannot be determined runs every group.
+          $full = $false
+          $base = $null
+          if ($env:EVENT -eq 'workflow_dispatch') {
+            $full = $env:FULL_INPUT -ne 'false'
+            if (-not $full) { $base = 'HEAD^1' }
+          } elseif ($env:EVENT -eq 'pull_request') {
+            $base = 'HEAD^1'
+          } elseif ($env:EVENT -eq 'push' -and $env:BEFORE -and $env:BEFORE -notmatch '^0+$') {
+            git cat-file -e "$($env:BEFORE)^{commit}" 2>$null
+            if ($LASTEXITCODE -eq 0) { $base = $env:BEFORE }
+          }
+          $files = @()
+          if (-not $full) {
+            if (-not $base) { $full = $true }
+            else {
+              $files = @(git diff --name-only $base HEAD)
+              if ($LASTEXITCODE -ne 0) { $full = $true; $files = @() }
+            }
+          }
+          $files = @($files | Where-Object { $_ -and $_ -notmatch '\.md$' })
+          $desktopPatterns = @(
+            '^apps/', '^packages/', '^executors/codex-bridge/',
+            '^workers/[^/]+/src/', '^services/[^/]+/src/',
+            '^tools/(?!status/|asset-pipeline/|texture-fix/|scaffold/ci-budget\.mjs$)',
+            '^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|\.nvmrc|\.npmrc|\.gitattributes)$',
+            '^tsconfig[^/]*\.json$', '^executors/office-connector/global\.json$',
+            '^\.github/workflows/windows\.yml$'
+          )
+          $storagePatterns = @(
+            '^core/crates/core-store/', '^core/crates/core-types/', '^core/contracts/',
+            '^core/(Cargo\.toml|Cargo\.lock|rust-toolchain\.toml)$',
+            '^\.github/workflows/windows\.yml$'
+          )
+          function Test-Group([string[]]$patterns) {
+            foreach ($f in $files) { foreach ($p in $patterns) { if ($f -match $p) { return $true } } }
+            return $false
+          }
+          $desktop = $full -or (Test-Group $desktopPatterns)
+          $storage = $full -or (Test-Group $storagePatterns)
+          "full=$full; base=$base; desktop=$desktop; storage=$storage"
+          "changed files: $($files.Count)"
+          $files | ForEach-Object { "  $_" }
+          "desktop=$($desktop.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "storage=$($storage.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        if: steps.scope.outputs.desktop == 'true'
         with:
           node-version-file: .nvmrc
-      - run: npm install --global pnpm@12.11.2
-      - run: pnpm install --frozen-lockfile
+      - if: steps.scope.outputs.desktop == 'true'
+        run: npm install --global pnpm@12.11.2
+      - if: steps.scope.outputs.desktop == 'true'
+        run: pnpm install --frozen-lockfile
       - name: Detect installed .NET SDK
         id: dotnet
+        if: steps.scope.outputs.desktop == 'true'
         working-directory: executors/office-connector
         run: |
           $required = (Get-Content global.json | ConvertFrom-Json).sdk.version
           $available = (dotnet --list-sdks) -match ("^" + [regex]::Escape($required) + " ")
           "available=$([bool]$available)".ToLowerInvariant() >> $env:GITHUB_OUTPUT
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
-        if: steps.dotnet.outputs.available != 'true'
+        if: steps.scope.outputs.desktop == 'true' && steps.dotnet.outputs.available != 'true'
         env:
           DOTNET_INSTALL_DIR: ${{ runner.temp }}/dotnet
         with:
           global-json-file: executors/office-connector/global.json
-      - run: pnpm exec playwright install chromium
+      - if: steps.scope.outputs.desktop == 'true'
+        run: pnpm exec playwright install chromium
       - name: Initialize current-run Windows evidence
+        if: steps.scope.outputs.desktop == 'true'
         run: ./tools/scaffold/windows-evidence.ps1 -Mode Init
       - name: Evidence provenance regression tests
+        if: steps.scope.outputs.desktop == 'true'
         run: pwsh -NoProfile -File tools/scaffold/windows-evidence.tests.ps1
       - name: Snapshot timing and repository filtering checks
+        if: steps.scope.outputs.desktop == 'true'
         run: node --test tools/scaffold/window-wait-diagnostics.test.mjs
-      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport
-      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation
-      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e
-      - run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual
+      - if: steps.scope.outputs.desktop == 'true'
+        run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport
+      - if: steps.scope.outputs.desktop == 'true'
+        run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation
+      - if: steps.scope.outputs.desktop == 'true'
+        run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e
+      - if: steps.scope.outputs.desktop == 'true'
+        run: ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual
       - name: Verify Windows evidence provenance
         id: evidence
         if: always() && env.NEMU_EVIDENCE_DIR != ''
@@ -123,6 +219,7 @@ jobs:
           path: ${{ env.NEMU_EVIDENCE_DIR }}/
           if-no-files-found: error
       - name: W02 NTFS storage checks
+        if: steps.scope.outputs.storage == 'true'
         working-directory: core
         run: |
           $evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
@@ -134,9 +231,111 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
           exit $LASTEXITCODE
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: always() && env.NEMU_W02_EVIDENCE != ''
+      # Retry only the upload: W02 logs stay in the same run-specific directory.
+      # The final gate below is mandatory; exhausted retries must still fail CI.
+      - name: Upload W02 evidence (attempt 1)
+        id: w02_upload_1
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' }}
+        continue-on-error: true
+        timeout-minutes: 6
         with:
           name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ env.NEMU_W02_EVIDENCE }}/
           if-no-files-found: error
+      - name: Wait before W02 upload retry 2
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' }}
+        run: Start-Sleep -Seconds 20
+      - name: Upload W02 evidence (attempt 2)
+        id: w02_upload_2
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' }}
+        continue-on-error: true
+        timeout-minutes: 6
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}-retry-2
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
+          if-no-files-found: error
+      - name: Wait before W02 upload retry 3
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' && steps.w02_upload_2.outcome != 'success' }}
+        run: Start-Sleep -Seconds 40
+      - name: Upload W02 evidence (attempt 3)
+        id: w02_upload_3
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' && steps.w02_upload_2.outcome != 'success' }}
+        continue-on-error: true
+        timeout-minutes: 6
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}-retry-3
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
+          if-no-files-found: error
+      - name: Require W02 evidence upload
+        if: always() && env.NEMU_W02_EVIDENCE != ''
+        env:
+          UPLOAD_1_OUTCOME: ${{ steps.w02_upload_1.outcome }}
+          UPLOAD_1_ID: ${{ steps.w02_upload_1.outputs.artifact-id }}
+          UPLOAD_2_OUTCOME: ${{ steps.w02_upload_2.outcome }}
+          UPLOAD_2_ID: ${{ steps.w02_upload_2.outputs.artifact-id }}
+          UPLOAD_3_OUTCOME: ${{ steps.w02_upload_3.outcome }}
+          UPLOAD_3_ID: ${{ steps.w02_upload_3.outputs.artifact-id }}
+        run: |
+          $outcomes = @($env:UPLOAD_1_OUTCOME, $env:UPLOAD_2_OUTCOME, $env:UPLOAD_3_OUTCOME)
+          $artifactIds = @($env:UPLOAD_1_ID, $env:UPLOAD_2_ID, $env:UPLOAD_3_ID)
+          for ($attempt = 0; $attempt -lt $outcomes.Count; $attempt++) {
+            if ($outcomes[$attempt] -eq 'success' -and $artifactIds[$attempt] -match '^[1-9][0-9]*$') {
+              "W02 evidence uploaded: attempt $($attempt + 1), artifact $($artifactIds[$attempt])" >> $env:GITHUB_STEP_SUMMARY
+              exit 0
+            }
+          }
+          throw 'W02 evidence upload did not succeed after three attempts; retained local logs do not replace an uploaded artifact.'
+
+  windows:
+    # Preserve the existing required-check name, but never report skipped tests as green.
+    # This hosted job does not check out or execute any PR files and needs no token access.
+    name: Windows desktop and isolation
+    needs: windows-tests
+    if: always()
+    runs-on: ubuntu-latest
+    permissions: {}
+    timeout-minutes: 5
+    steps:
+      - name: Require successful Windows checks
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          REPOSITORY: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+          OWNER: ${{ github.repository_owner }}
+          REF: ${{ github.ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          DRAFT: ${{ github.event.pull_request.draft }}
+          WINDOWS_RESULT: ${{ needs.windows-tests.result }}
+        run: |
+          if [[ "$REPOSITORY" != 'nanake-lab/nemu' || "$ACTOR" != "$OWNER" || "$TRIGGERING_ACTOR" != "$OWNER" ]]; then
+            echo '::error::Windows checks require the repository owner in nanake-lab/nemu.'
+            exit 1
+          fi
+          case "$EVENT" in
+            pull_request)
+              if [[ "$HEAD_REPOSITORY" != "$REPOSITORY" || "$DRAFT" != 'false' ]]; then
+                echo '::error::Windows checks are blocked for fork or draft PRs; skipped is not a pass.'
+                exit 1
+              fi
+              ;;
+            push|workflow_dispatch)
+              if [[ "$REF" != refs/heads/* ]]; then
+                echo '::error::Windows checks require a branch in this repository.'
+                exit 1
+              fi
+              ;;
+            *)
+              echo '::error::This event is not allowed to run Windows checks.'
+              exit 1
+              ;;
+          esac
+          if [[ "$WINDOWS_RESULT" != 'success' ]]; then
+            echo "::error::Windows checks did not succeed (result: $WINDOWS_RESULT)."
+            exit 1
+          fi
+          echo 'Windows checks completed successfully on the trusted self-hosted runner.'

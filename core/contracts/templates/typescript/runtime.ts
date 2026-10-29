@@ -26,9 +26,12 @@ export interface Schema {
       tag: string;
       source: string;
       resource?: boolean;
+      transient?: boolean;
       file: string;
       fields: Field[];
       rules: {
+        positive?: string[];
+        at_least_abs?: Record<string, string>;
         oneofs?: Record<string, { fields: string[]; required: boolean }>;
         discriminator?: string;
         common?: string[];
@@ -41,6 +44,7 @@ export interface Schema {
       /** Lifecycle metadata only (P5-21); never changes encoding. */
       superseded?: Supersession;
       supersedes?: string;
+      retains?: string;
       reserved?: number[];
     }
   >;
@@ -202,6 +206,13 @@ export function normalize(
   for (const group of Object.values(m.rules.oneofs ?? {})) {
     requireValue(group.fields.filter(k => out[k] !== undefined).length === 1, 'required oneof');
   }
+  for (const key of m.rules.positive ?? [])
+    requireValue((out[key] as number) > 0, 'positive field required');
+  for (const [key, signed] of Object.entries(m.rules.at_least_abs ?? {}))
+    requireValue(
+      (out[key] as number) >= Math.abs(out[signed] as number),
+      'absolute evidence below signed magnitude',
+    );
   return out;
 }
 

@@ -1,0 +1,107 @@
+{
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "seed": 731,
+  "sampling": "greedy",
+  "context": 8192,
+  "threads": 4,
+  "batch": 512,
+  "ubatch": 512,
+  "flashAttention": "off",
+  "promptCache": false,
+  "maxIrlTokens": 2048,
+  "m": 0,
+  "jobsPerQuantization": 474,
+  "formalPerQuantization": {
+    "speech": 20,
+    "unconstrained": 50,
+    "wire": 200,
+    "compact": 200
+  },
+  "warmupsPerQuantization": 4,
+  "bindings": [
+    {
+      "path": "spikes/codex-app-server/fixtures/irl-cases.json",
+      "sha256": "0163e74d3a034cbb519b526f866c7beabc5d572dc86161100baca098c7e3f3fc"
+    },
+    {
+      "path": "spikes/codex-app-server/semantic-candidate.schema.json",
+      "sha256": "ac68fa9f0831a1f1e788b91086317d3589427b40dcf1b7f01fe35676185fe9f7"
+    },
+    {
+      "path": "spikes/codex-app-server/semantic-candidate.wire.schema.json",
+      "sha256": "9e07fc5dadcda07b7b068f1ee6a9e9e304572b00b67b65c415240e6fb3a8cf71"
+    },
+    {
+      "path": "spikes/codex-app-server/src/local_irl.py",
+      "sha256": "76573d4e47980aa6d213b6650f7528deafed12929be7d7488bfb8fa675219823"
+    },
+    {
+      "path": "spikes/codex-app-server/src/local_breakdown.py",
+      "sha256": "88851f887335ba7862f50f2858c468d0ee4636796f9cda9a52ebd335a09245f4"
+    },
+    {
+      "path": "workers/model-adapter/probe/latency_probe.py",
+      "sha256": "14996f8e27763ad2f1cac9fcf6a053aa92ee4171354e40c64dbfab1346f6953f"
+    },
+    {
+      "path": "spikes/carrier-engine/compact_codec.py",
+      "sha256": "233c307a6beab3a631dced330b72035b93e86895ad36c741193ed2f68e896fc8"
+    },
+    {
+      "path": "spikes/carrier-engine/benchmark_plan.py",
+      "sha256": "731df25f9310d931ca8a70cd477bd0d987b807b70441ffee005b6ddc91740faa"
+    },
+    {
+      "path": "spikes/carrier-engine/http_probe.py",
+      "sha256": "ad227e39a9fc70a10e3f23a072b62216b120bd0fd9bde897333e1d99b14ea039"
+    },
+    {
+      "path": "spikes/carrier-engine/benchmark_native.py",
+      "sha256": "68b288420e4e9deee3a886ab2e76d30d1e91c401c71f23d522b19a8e66e08ac7"
+    },
+    {
+      "path": "spikes/carrier-engine/requirements-eval.lock",
+      "sha256": "a615f6d7021989a5e65efa2f1754f6366b3725867429e75e4d340403f3205111"
+    },
+    {
+      "path": "spikes/carrier-engine/schema_validation.py",
+      "sha256": "b8b034b678cf3693293081d0669e79f98ed51ba632a24d6ad875519605000b73"
+    },
+    {
+      "path": "spikes/carrier-engine/full_window.py",
+      "sha256": "13c66c55c465070a5c41c0db5c416499f3f90948599176c4d4a90e5a5e179ed4"
+    },
+    {
+      "path": "spikes/carrier-engine/injection_probe.cpp",
+      "sha256": "f31d0630dd9fa0265c2587ad2896131a2fd2b16d2bd590c892046557e1bf5ea0"
+    },
+    {
+      "path": "spikes/carrier-engine/native_probe.hpp",
+      "sha256": "3f74f9211c5655be390922e5bde75f240e61ecbbdeb0052babe7acb1d999cb16"
+    },
+    {
+      "path": "spikes/carrier-engine/activation_trace.hpp",
+      "sha256": "de3e45402f450d7634def6baaa978a078643c875599bfa0e876f097a639c47a3"
+    },
+    {
+      "path": "workers/model-adapter/probe/direction_probe.py",
+      "sha256": "7091f09e9b10959e1d2d924eed8bc424a9d097d27e597d8709d9265f6f0a459e"
+    },
+    {
+      "path": "workers/model-adapter/probe/memory_watch.ps1",
+      "sha256": "b230c89ff7d234456f1996aa4ea4e5b725f499db57ad0efeb085ac3c82b0ef09"
+    },
+    {
+      "path": "spikes/codex-app-server/src/decoder_adapter.py",
+      "sha256": "a0c9ccad4a5586c14f62b8fb1e67e5e492075adac5e16fe516b2cdce3a51f2af"
+    }
+  ],
+  "jobsSha256": "113d9050a1186987270d5a82e280d9367fbda04461924cca8e11bab56cfe82a4",
+  "schemasSha256": "f18aded9fb2c33f4d98aff6cc76e5f50708fc704d36d69fdea410a56a830b651",
+  "notes": [
+    "Input text/template follows P0-07 fixed-twenty and P0-08 review 50/200 fixtures.",
+    "Input token IDs are prepared before timers, using the fixed tokenizer files.",
+    "Different quantization/kernel/HTTP observation prevent a pure engine-only causal claim.",
+    "Compact arm includes a decoding legend; report total speed, not only token savings."
+  ]
+}

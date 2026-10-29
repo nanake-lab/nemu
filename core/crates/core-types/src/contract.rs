@@ -28,6 +28,10 @@ pub struct Field {
 #[derive(Deserialize)]
 pub struct Message {
     pub tag: String,
+    pub file: String,
+    #[serde(default)]
+    pub transient: bool,
+    pub superseded: Option<serde_json::Value>,
     pub fields: Vec<Field>,
     pub rules: Rules,
 }
@@ -37,6 +41,10 @@ pub struct Oneof {
 }
 #[derive(Deserialize)]
 pub struct Rules {
+    #[serde(default)]
+    pub positive: Vec<String>,
+    #[serde(default)]
+    pub at_least_abs: BTreeMap<String, String>,
     #[serde(default)]
     pub oneofs: BTreeMap<String, Oneof>,
     pub discriminator: Option<String>,
@@ -166,6 +174,25 @@ impl Schema {
                 group.fields.iter().filter(|k| out.contains_key(*k)).count() == 1,
                 "required oneof",
             )?;
+        }
+        for key in &m.rules.positive {
+            require(
+                out.get(key)
+                    .and_then(Value::as_f64)
+                    .is_some_and(|v| v > 0.0),
+                "positive field required",
+            )?;
+        }
+        for (key, signed) in &m.rules.at_least_abs {
+            let v = out
+                .get(key)
+                .and_then(Value::as_f64)
+                .ok_or("absolute evidence")?;
+            let a = out
+                .get(signed)
+                .and_then(Value::as_f64)
+                .ok_or("signed evidence")?;
+            require(v >= a.abs(), "absolute evidence below signed magnitude")?;
         }
         Ok(Value::Object(out))
     }

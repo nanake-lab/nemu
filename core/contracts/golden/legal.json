@@ -39953,5 +39953,3154 @@
         "version": "2"
       }
     }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "support": 0.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "0",
+        "mu": 0.0,
+        "actual_retention": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330200000041300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e03f",
+      "digest": "b28c9c5357c4071167260dcfe1fcb851e60c475bf80982dff719549a4fc1ebae",
+      "ok": true,
+      "protobuf": "080112024130190000000000000000210000000000000000290000000000000000300039000000000000000049000000000000e03f",
+      "value": {
+        "actual_retention": 0.5,
+        "intensity": 0.0,
+        "mu": 0.0,
+        "ordinal": "0",
+        "schema_version": 1,
+        "share": 0.0,
+        "support": 0.0,
+        "tendency_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "中文🙂1",
+        "support": -1.0,
+        "intensity": 0.0,
+        "share": 0.0,
+        "ordinal": "18446744073709551615",
+        "mu": 0.0,
+        "projection": -1.25,
+        "actual_retention": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330b000000e4b8ade69687f09f998231000000000000f0bf00000000000000000000000000000000ffffffffffffffff000000000000000001000000000000f4bf000000000000e03f",
+      "digest": "39e99b6c4a07ed9220b87552096db5546e259b53329633b4c27ae2a5cd41b627",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823119000000000000f0bf21000000000000000029000000000000000030ffffffffffffffffff0139000000000000000041000000000000f4bf49000000000000e03f",
+      "value": {
+        "actual_retention": 0.5,
+        "intensity": 0.0,
+        "mu": 0.0,
+        "ordinal": "18446744073709551615",
+        "projection": -1.25,
+        "schema_version": 1,
+        "share": 0.0,
+        "support": -1.0,
+        "tendency_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "﻿zero\u00002",
+        "support": 1.0,
+        "intensity": 2.5,
+        "share": 1.0,
+        "ordinal": "9007199254740993",
+        "mu": 1.0,
+        "projection": 2.5,
+        "actual_retention": 1.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d763309000000efbbbf7a65726f0032000000000000f03f0000000000000440000000000000f03f0100000000002000000000000000f03f010000000000000440000000000000f03f",
+      "digest": "1e94b0cc5cb163852f228031e4c2709266a6a1020ea63f5d887fc19c281e640d",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003219000000000000f03f21000000000000044029000000000000f03f30818080808080801039000000000000f03f41000000000000044049000000000000f03f",
+      "value": {
+        "actual_retention": 1.0,
+        "intensity": 2.5,
+        "mu": 1.0,
+        "ordinal": "9007199254740993",
+        "projection": 2.5,
+        "schema_version": 1,
+        "share": 1.0,
+        "support": 1.0,
+        "tendency_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e65766964656e63652d67726f75702d7633020000004130000000000200000041300000000000000000000000000000000000000000",
+      "digest": "75fb20729bc98045a099266bd90d2ad8ae6bbec454da58ac0661093e65a0369c",
+      "ok": true,
+      "protobuf": "08011202413022024130290000000000000000310000000000000000",
+      "value": {
+        "allocations": [],
+        "credibility": 0.0,
+        "group_id": "A0",
+        "members": [],
+        "schema_version": 1,
+        "source_key": "A0",
+        "verifiability": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "中文🙂1",
+        "members": [
+          "中文🙂1"
+        ],
+        "source_key": "中文🙂1",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "中文🙂1",
+            "support": -1.0,
+            "intensity": 0.0,
+            "share": 0.0,
+            "ordinal": "18446744073709551615",
+            "mu": 0.0,
+            "projection": -1.25,
+            "actual_retention": 0.5
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e65766964656e63652d67726f75702d76330b000000e4b8ade69687f09f998231010000000b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f99823100000000000000000000000000000000010000006f0000004e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330b000000e4b8ade69687f09f998231000000000000f0bf00000000000000000000000000000000ffffffffffffffff000000000000000001000000000000f4bf000000000000e03f",
+      "digest": "75b98af2a5c5be4d3e91aa5a9d08503413687a9a69ea6c41bb4e725ca327cac5",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231220be4b8ade69687f09f9982312900000000000000003100000000000000004a500801120be4b8ade69687f09f99823119000000000000f0bf21000000000000000029000000000000000030ffffffffffffffffff0139000000000000000041000000000000f4bf49000000000000e03f",
+      "value": {
+        "allocations": [
+          {
+            "actual_retention": 0.5,
+            "intensity": 0.0,
+            "mu": 0.0,
+            "ordinal": "18446744073709551615",
+            "projection": -1.25,
+            "schema_version": 1,
+            "share": 0.0,
+            "support": -1.0,
+            "tendency_id": "中文🙂1"
+          }
+        ],
+        "credibility": 0.0,
+        "group_id": "中文🙂1",
+        "members": [
+          "中文🙂1"
+        ],
+        "schema_version": 1,
+        "source_key": "中文🙂1",
+        "verifiability": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "﻿zero\u00002",
+        "members": [
+          "﻿zero\u00002",
+          "A3"
+        ],
+        "source_key": "﻿zero\u00002",
+        "credibility": 1.0,
+        "verifiability": 1.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "﻿zero\u00002",
+            "support": 1.0,
+            "intensity": 2.5,
+            "share": 1.0,
+            "ordinal": "9007199254740993",
+            "mu": 1.0,
+            "projection": 2.5,
+            "actual_retention": 1.0
+          },
+          {
+            "schema_version": 1,
+            "tendency_id": "A3",
+            "support": 0.0,
+            "intensity": 0.0,
+            "share": 0.0,
+            "ordinal": "0",
+            "mu": 0.0,
+            "actual_retention": 0.5
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e65766964656e63652d67726f75702d763309000000efbbbf7a65726f00320200000002000000413309000000efbbbf7a65726f003209000000efbbbf7a65726f0032000000000000f03f000000000000f03f020000005e0000004e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330200000041330000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e03f6d0000004e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d763309000000efbbbf7a65726f0032000000000000f03f0000000000000440000000000000f03f0100000000002000000000000000f03f010000000000000440000000000000f03f",
+      "digest": "a1794dde07d421c0cbe82ca415a64243dab853fd95417a2553aeffd58ffd9e4e",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a0241331a09efbbbf7a65726f00322209efbbbf7a65726f003229000000000000f03f31000000000000f03f4a35080112024133190000000000000000210000000000000000290000000000000000300039000000000000000049000000000000e03f4a4c08011209efbbbf7a65726f003219000000000000f03f21000000000000044029000000000000f03f30818080808080801039000000000000f03f41000000000000044049000000000000f03f",
+      "value": {
+        "allocations": [
+          {
+            "actual_retention": 0.5,
+            "intensity": 0.0,
+            "mu": 0.0,
+            "ordinal": "0",
+            "schema_version": 1,
+            "share": 0.0,
+            "support": 0.0,
+            "tendency_id": "A3"
+          },
+          {
+            "actual_retention": 1.0,
+            "intensity": 2.5,
+            "mu": 1.0,
+            "ordinal": "9007199254740993",
+            "projection": 2.5,
+            "schema_version": 1,
+            "share": 1.0,
+            "support": 1.0,
+            "tendency_id": "﻿zero\u00002"
+          }
+        ],
+        "credibility": 1.0,
+        "group_id": "﻿zero\u00002",
+        "members": [
+          "A3",
+          "﻿zero\u00002"
+        ],
+        "schema_version": 1,
+        "source_key": "﻿zero\u00002",
+        "verifiability": 1.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "A0",
+          "registry_version": "A0"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 0.0,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "0",
+        "flip_count": "0",
+        "pi": 0.0,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0,
+        "evidence_absolute": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d7633020000004130280000004e43563101000000100000006563686f2e636f6e636570742d726566020000004130020000004130000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f7200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "93d754bee2684833cdf8f6e6008a81f375877862f5b7dc3de0fcaa1a8bc10649",
+      "ok": true,
+      "protobuf": "0801120241301a0a0801120241301a0241302a26080111000000000000000019000000000000000021000000000000000029000000000000000031000000000000000039000000000000000041000000000000000048005000610000000000000000690000000000000000810100000000000000008901000000000000000091010000000000000000",
+      "value": {
+        "concept": {
+          "concept_id": "A0",
+          "registry_version": "A0",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": 0.0,
+          "connection": 0.0,
+          "curiosity": 0.0,
+          "empathy": 0.0,
+          "schema_version": 1
+        },
+        "evidence_a": 0.0,
+        "evidence_absolute": 0.0,
+        "evidence_b": 0.0,
+        "flip_count": "0",
+        "group_count": "0",
+        "h_hat": 0.0,
+        "magnitude_sum": 0.0,
+        "magnitude_weight": 0.0,
+        "pi": 0.0,
+        "predicate": [],
+        "schema_version": 1,
+        "tendency_id": "A0",
+        "typical_magnitude": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "中文🙂1",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "中文🙂1",
+          "registry_version": "中文🙂1"
+        },
+        "predicate": [
+          {
+            "schema_version": 1,
+            "zh": "中文🙂1",
+            "en": "中文🙂1",
+            "ja": "中文🙂1"
+          }
+        ],
+        "direction": {
+          "schema_version": 1,
+          "connection": -1.0,
+          "empathy": -1.0,
+          "curiosity": -1.0,
+          "achievement": -1.0
+        },
+        "evidence_a": -1.25,
+        "evidence_b": 0.0,
+        "h_hat": 0.0,
+        "group_count": "18446744073709551615",
+        "flip_count": "18446744073709551615",
+        "last_sign": 2,
+        "pi": -1.0,
+        "typical_magnitude": 0.0,
+        "relation": {
+          "schema_version": 1,
+          "person_id": "中文🙂1",
+          "kind": 2
+        },
+        "attachment_prior": 0.0,
+        "magnitude_sum": -1.25,
+        "magnitude_weight": 0.0,
+        "evidence_absolute": 1.25
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d76330b000000e4b8ade69687f09f9982313a0000004e43563101000000100000006563686f2e636f6e636570742d7265660b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231010000004d0000004e43563101000000140000006563686f2e7472696c696e6775616c2d746578740b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982313e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f0bf000000000000f0bf000000000000f0bf000000000000f0bf000000000000f4bf00000000000000000000000000000000ffffffffffffffffffffffffffffffff0102000000000000000000f0bf000000000000000001330000004e43563101000000140000006563686f2e706572736f6e2d72656c6174696f6e0b000000e4b8ade69687f09f99823102000000010000000000000000000000000000f4bf0000000000000000000000000000f43f",
+      "digest": "0f443656705bedba46299cb1bdeeb9f81c05d839007af4f3b160689ec73a7f6e",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a1c0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f99823122290801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231220be4b8ade69687f09f9982312a26080111000000000000f0bf19000000000000f0bf21000000000000f0bf29000000000000f0bf31000000000000f4bf39000000000000000041000000000000000048ffffffffffffffffff0150ffffffffffffffffff01580261000000000000f0bf69000000000000000072110801120be4b8ade69687f09f99823118027900000000000000008101000000000000f4bf890100000000000000009101000000000000f43f",
+      "value": {
+        "attachment_prior": 0.0,
+        "concept": {
+          "concept_id": "中文🙂1",
+          "registry_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": -1.0,
+          "connection": -1.0,
+          "curiosity": -1.0,
+          "empathy": -1.0,
+          "schema_version": 1
+        },
+        "evidence_a": -1.25,
+        "evidence_absolute": 1.25,
+        "evidence_b": 0.0,
+        "flip_count": "18446744073709551615",
+        "group_count": "18446744073709551615",
+        "h_hat": 0.0,
+        "last_sign": 2,
+        "magnitude_sum": -1.25,
+        "magnitude_weight": 0.0,
+        "pi": -1.0,
+        "predicate": [
+          {
+            "en": "中文🙂1",
+            "ja": "中文🙂1",
+            "schema_version": 1,
+            "zh": "中文🙂1"
+          }
+        ],
+        "relation": {
+          "kind": 2,
+          "person_id": "中文🙂1",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "tendency_id": "中文🙂1",
+        "typical_magnitude": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "﻿zero\u00002",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "﻿zero\u00002",
+          "registry_version": "﻿zero\u00002"
+        },
+        "predicate": [
+          {
+            "schema_version": 1,
+            "zh": "﻿zero\u00002",
+            "en": "﻿zero\u00002",
+            "ja": "﻿zero\u00002"
+          },
+          {
+            "schema_version": 1,
+            "zh": "A3",
+            "en": "A3",
+            "ja": "A3"
+          }
+        ],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 1.0,
+          "curiosity": 1.0,
+          "achievement": 1.0
+        },
+        "evidence_a": 2.5,
+        "evidence_b": 2.5,
+        "h_hat": 1.0,
+        "group_count": "9007199254740993",
+        "flip_count": "9007199254740993",
+        "last_sign": 1,
+        "pi": 1.0,
+        "typical_magnitude": 2.5,
+        "relation": {
+          "schema_version": 1,
+          "person_id": "﻿zero\u00002",
+          "kind": 1
+        },
+        "attachment_prior": 2.5,
+        "magnitude_sum": 2.5,
+        "magnitude_weight": 2.5,
+        "evidence_absolute": 2.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d763309000000efbbbf7a65726f0032360000004e43563101000000100000006563686f2e636f6e636570742d72656609000000efbbbf7a65726f003209000000efbbbf7a65726f003202000000470000004e43563101000000140000006563686f2e7472696c696e6775616c2d7465787409000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f0032320000004e43563101000000140000006563686f2e7472696c696e6775616c2d746578740200000041330200000041330200000041333e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000f03f000000000000f03f000000000000f03f00000000000004400000000000000440000000000000f03f010000000000200001000000000020000101000000000000000000f03f000000000000044001310000004e43563101000000140000006563686f2e706572736f6e2d72656c6174696f6e09000000efbbbf7a65726f003201000000010000000000000440000000000000044000000000000004400000000000000440",
+      "digest": "3193d186d6a96838c9616934ba6cae317719e534064239a9460bada4dca4e552",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a1808011209efbbbf7a65726f00321a09efbbbf7a65726f0032222308011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f0032220e0801120241331a024133220241332a26080111000000000000f03f19000000000000f03f21000000000000f03f29000000000000f03f31000000000000044039000000000000044041000000000000f03f488180808080808010508180808080808010580161000000000000f03f690000000000000440720f08011209efbbbf7a65726f00321801790000000000000440810100000000000004408901000000000000044091010000000000000440",
+      "value": {
+        "attachment_prior": 2.5,
+        "concept": {
+          "concept_id": "﻿zero\u00002",
+          "registry_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": 1.0,
+          "connection": 1.0,
+          "curiosity": 1.0,
+          "empathy": 1.0,
+          "schema_version": 1
+        },
+        "evidence_a": 2.5,
+        "evidence_absolute": 2.5,
+        "evidence_b": 2.5,
+        "flip_count": "9007199254740993",
+        "group_count": "9007199254740993",
+        "h_hat": 1.0,
+        "last_sign": 1,
+        "magnitude_sum": 2.5,
+        "magnitude_weight": 2.5,
+        "pi": 1.0,
+        "predicate": [
+          {
+            "en": "﻿zero\u00002",
+            "ja": "﻿zero\u00002",
+            "schema_version": 1,
+            "zh": "﻿zero\u00002"
+          },
+          {
+            "en": "A3",
+            "ja": "A3",
+            "schema_version": 1,
+            "zh": "A3"
+          }
+        ],
+        "relation": {
+          "kind": 1,
+          "person_id": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "tendency_id": "﻿zero\u00002",
+        "typical_magnitude": 2.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e722d736e617073686f742d7633020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000000000000000000000000000000000000000000000000000000000000000000020000004130020000004130000000000000000000000000",
+      "digest": "e8b2179a26774efcf9f8f887218e4644d33c681437f497fa0e48a0a6cced72a5",
+      "ok": true,
+      "protobuf": "0801120241301a2e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800",
+      "value": {
+        "law_version": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "revision": "A0",
+        "schema_version": 1,
+        "tendencies": []
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "中文🙂1",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "tendencies": [
+          {
+            "schema_version": 1,
+            "tendency_id": "中文🙂1",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "中文🙂1",
+              "registry_version": "中文🙂1"
+            },
+            "predicate": [
+              {
+                "schema_version": 1,
+                "zh": "中文🙂1",
+                "en": "中文🙂1",
+                "ja": "中文🙂1"
+              }
+            ],
+            "direction": {
+              "schema_version": 1,
+              "connection": -1.0,
+              "empathy": -1.0,
+              "curiosity": -1.0,
+              "achievement": -1.0
+            },
+            "evidence_a": -1.25,
+            "evidence_b": 0.0,
+            "h_hat": 0.0,
+            "group_count": "18446744073709551615",
+            "flip_count": "18446744073709551615",
+            "last_sign": 2,
+            "pi": -1.0,
+            "typical_magnitude": 0.0,
+            "relation": {
+              "schema_version": 1,
+              "person_id": "中文🙂1",
+              "kind": 2
+            },
+            "attachment_prior": 0.0,
+            "magnitude_sum": -1.25,
+            "magnitude_weight": 0.0,
+            "evidence_absolute": 1.25
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e722d736e617073686f742d76330b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffff01000000960100004e43563101000000100000006563686f2e74656e64656e63792d76330b000000e4b8ade69687f09f9982313a0000004e43563101000000100000006563686f2e636f6e636570742d7265660b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231010000004d0000004e43563101000000140000006563686f2e7472696c696e6775616c2d746578740b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982313e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f0bf000000000000f0bf000000000000f0bf000000000000f0bf000000000000f4bf00000000000000000000000000000000ffffffffffffffffffffffffffffffff0102000000000000000000f0bf000000000000000001330000004e43563101000000140000006563686f2e706572736f6e2d72656c6174696f6e0b000000e4b8ade69687f09f99823102000000010000000000000000000000000000f4bf0000000000000000000000000000f43f",
+      "digest": "28662abccbda8ca9990deeda7e3905453278800214b3e8dfce6262b37c2140de",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0132ff010801120be4b8ade69687f09f9982311a1c0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f99823122290801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231220be4b8ade69687f09f9982312a26080111000000000000f0bf19000000000000f0bf21000000000000f0bf29000000000000f0bf31000000000000f4bf39000000000000000041000000000000000048ffffffffffffffffff0150ffffffffffffffffff01580261000000000000f0bf69000000000000000072110801120be4b8ade69687f09f99823118027900000000000000008101000000000000f4bf890100000000000000009101000000000000f43f",
+      "value": {
+        "law_version": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "revision": "中文🙂1",
+        "schema_version": 1,
+        "tendencies": [
+          {
+            "attachment_prior": 0.0,
+            "concept": {
+              "concept_id": "中文🙂1",
+              "registry_version": "中文🙂1",
+              "schema_version": 1
+            },
+            "direction": {
+              "achievement": -1.0,
+              "connection": -1.0,
+              "curiosity": -1.0,
+              "empathy": -1.0,
+              "schema_version": 1
+            },
+            "evidence_a": -1.25,
+            "evidence_absolute": 1.25,
+            "evidence_b": 0.0,
+            "flip_count": "18446744073709551615",
+            "group_count": "18446744073709551615",
+            "h_hat": 0.0,
+            "last_sign": 2,
+            "magnitude_sum": -1.25,
+            "magnitude_weight": 0.0,
+            "pi": -1.0,
+            "predicate": [
+              {
+                "en": "中文🙂1",
+                "ja": "中文🙂1",
+                "schema_version": 1,
+                "zh": "中文🙂1"
+              }
+            ],
+            "relation": {
+              "kind": 2,
+              "person_id": "中文🙂1",
+              "schema_version": 1
+            },
+            "schema_version": 1,
+            "tendency_id": "中文🙂1",
+            "typical_magnitude": 0.0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "﻿zero\u00002",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "tendencies": [
+          {
+            "schema_version": 1,
+            "tendency_id": "﻿zero\u00002",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "﻿zero\u00002",
+              "registry_version": "﻿zero\u00002"
+            },
+            "predicate": [
+              {
+                "schema_version": 1,
+                "zh": "﻿zero\u00002",
+                "en": "﻿zero\u00002",
+                "ja": "﻿zero\u00002"
+              },
+              {
+                "schema_version": 1,
+                "zh": "A3",
+                "en": "A3",
+                "ja": "A3"
+              }
+            ],
+            "direction": {
+              "schema_version": 1,
+              "connection": 1.0,
+              "empathy": 1.0,
+              "curiosity": 1.0,
+              "achievement": 1.0
+            },
+            "evidence_a": 2.5,
+            "evidence_b": 2.5,
+            "h_hat": 1.0,
+            "group_count": "9007199254740993",
+            "flip_count": "9007199254740993",
+            "last_sign": 1,
+            "pi": 1.0,
+            "typical_magnitude": 2.5,
+            "relation": {
+              "schema_version": 1,
+              "person_id": "﻿zero\u00002",
+              "kind": 1
+            },
+            "attachment_prior": 2.5,
+            "magnitude_sum": 2.5,
+            "magnitude_weight": 2.5,
+            "evidence_absolute": 2.5
+          },
+          {
+            "schema_version": 1,
+            "tendency_id": "A3",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "A3",
+              "registry_version": "A3"
+            },
+            "predicate": [],
+            "direction": {
+              "schema_version": 1,
+              "connection": 0.0,
+              "empathy": 0.0,
+              "curiosity": 0.0,
+              "achievement": 0.0
+            },
+            "evidence_a": 0.0,
+            "evidence_b": 0.0,
+            "h_hat": 0.0,
+            "group_count": "0",
+            "flip_count": "0",
+            "pi": 0.0,
+            "typical_magnitude": 0.0,
+            "magnitude_sum": 0.0,
+            "magnitude_weight": 0.0,
+            "evidence_absolute": 0.0
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e722d736e617073686f742d763309000000efbbbf7a65726f0032610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000000200002000000e70000004e43563101000000100000006563686f2e74656e64656e63792d7633020000004133280000004e43563101000000100000006563686f2e636f6e636570742d726566020000004133020000004133000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f7200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000be0100004e43563101000000100000006563686f2e74656e64656e63792d763309000000efbbbf7a65726f0032360000004e43563101000000100000006563686f2e636f6e636570742d72656609000000efbbbf7a65726f003209000000efbbbf7a65726f003202000000470000004e43563101000000140000006563686f2e7472696c696e6775616c2d7465787409000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f0032320000004e43563101000000140000006563686f2e7472696c696e6775616c2d746578740200000041330200000041330200000041333e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000f03f000000000000f03f000000000000f03f00000000000004400000000000000440000000000000f03f010000000000200001000000000020000101000000000000000000f03f000000000000044001310000004e43563101000000140000006563686f2e706572736f6e2d72656c6174696f6e09000000efbbbf7a65726f003201000000010000000000000440000000000000044000000000000004400000000000000440",
+      "digest": "fe4b7e20463e408d2ca0eb6b7de6e1047bda3b1c18168c2471e71dddce7e348a",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080103289010801120241331a0a0801120241331a0241332a2608011100000000000000001900000000000000002100000000000000002900000000000000003100000000000000003900000000000000004100000000000000004800500061000000000000000069000000000000000081010000000000000000890100000000000000009101000000000000000032fd0108011209efbbbf7a65726f00321a1808011209efbbbf7a65726f00321a09efbbbf7a65726f0032222308011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f0032220e0801120241331a024133220241332a26080111000000000000f03f19000000000000f03f21000000000000f03f29000000000000f03f31000000000000044039000000000000044041000000000000f03f488180808080808010508180808080808010580161000000000000f03f690000000000000440720f08011209efbbbf7a65726f00321801790000000000000440810100000000000004408901000000000000044091010000000000000440",
+      "value": {
+        "law_version": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "revision": "﻿zero\u00002",
+        "schema_version": 1,
+        "tendencies": [
+          {
+            "concept": {
+              "concept_id": "A3",
+              "registry_version": "A3",
+              "schema_version": 1
+            },
+            "direction": {
+              "achievement": 0.0,
+              "connection": 0.0,
+              "curiosity": 0.0,
+              "empathy": 0.0,
+              "schema_version": 1
+            },
+            "evidence_a": 0.0,
+            "evidence_absolute": 0.0,
+            "evidence_b": 0.0,
+            "flip_count": "0",
+            "group_count": "0",
+            "h_hat": 0.0,
+            "magnitude_sum": 0.0,
+            "magnitude_weight": 0.0,
+            "pi": 0.0,
+            "predicate": [],
+            "schema_version": 1,
+            "tendency_id": "A3",
+            "typical_magnitude": 0.0
+          },
+          {
+            "attachment_prior": 2.5,
+            "concept": {
+              "concept_id": "﻿zero\u00002",
+              "registry_version": "﻿zero\u00002",
+              "schema_version": 1
+            },
+            "direction": {
+              "achievement": 1.0,
+              "connection": 1.0,
+              "curiosity": 1.0,
+              "empathy": 1.0,
+              "schema_version": 1
+            },
+            "evidence_a": 2.5,
+            "evidence_absolute": 2.5,
+            "evidence_b": 2.5,
+            "flip_count": "9007199254740993",
+            "group_count": "9007199254740993",
+            "h_hat": 1.0,
+            "last_sign": 1,
+            "magnitude_sum": 2.5,
+            "magnitude_weight": 2.5,
+            "pi": 1.0,
+            "predicate": [
+              {
+                "en": "﻿zero\u00002",
+                "ja": "﻿zero\u00002",
+                "schema_version": 1,
+                "zh": "﻿zero\u00002"
+              },
+              {
+                "en": "A3",
+                "ja": "A3",
+                "schema_version": 1,
+                "zh": "A3"
+              }
+            ],
+            "relation": {
+              "kind": 1,
+              "person_id": "﻿zero\u00002",
+              "schema_version": 1
+            },
+            "schema_version": 1,
+            "tendency_id": "﻿zero\u00002",
+            "typical_magnitude": 2.5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.5,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "projection": 0.25,
+        "actual_retention": 0.75
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330100000074000000000000e03f000000000000f03f000000000000f03f0000000000000000000000000000e83f01000000000000d03f000000000000e83f",
+      "digest": "cbd9b0291ba30ceaa5772d336bf435bd7e8bbf9e963352b8a637bc76d695b15c",
+      "ok": true,
+      "protobuf": "080112017419000000000000e03f21000000000000f03f29000000000000f03f300039000000000000e83f41000000000000d03f49000000000000e83f",
+      "value": {
+        "actual_retention": 0.75,
+        "intensity": 1.0,
+        "mu": 0.75,
+        "ordinal": "0",
+        "projection": 0.25,
+        "schema_version": 1,
+        "share": 1.0,
+        "support": 0.5,
+        "tendency_id": "t"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.0,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "actual_retention": 1.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d763301000000740000000000000000000000000000f03f000000000000f03f0000000000000000000000000000e83f00000000000000f03f",
+      "digest": "bdcaa4f1e1c0d50118d7a2dbb67246ec4dbda23296ca6e002fcb72622554914f",
+      "ok": true,
+      "protobuf": "080112017419000000000000000021000000000000f03f29000000000000f03f300039000000000000e83f49000000000000f03f",
+      "value": {
+        "actual_retention": 1.0,
+        "intensity": 1.0,
+        "mu": 0.75,
+        "ordinal": "0",
+        "schema_version": 1,
+        "share": 1.0,
+        "support": 0.0,
+        "tendency_id": "t"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceAllocationV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "support": 0.5,
+        "intensity": 1.0,
+        "share": 1.0,
+        "ordinal": "0",
+        "mu": 0.75,
+        "projection": 0.25,
+        "actual_retention": 5e-324
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330100000074000000000000e03f000000000000f03f000000000000f03f0000000000000000000000000000e83f01000000000000d03f0100000000000000",
+      "digest": "ff310a339c86c598ba38276e7cc1da73e46b848dcefa86de23e6610baa738c3e",
+      "ok": true,
+      "protobuf": "080112017419000000000000e03f21000000000000f03f29000000000000f03f300039000000000000e83f41000000000000d03f490100000000000000",
+      "value": {
+        "actual_retention": 5e-324,
+        "intensity": 1.0,
+        "mu": 0.75,
+        "ordinal": "0",
+        "projection": 0.25,
+        "schema_version": 1,
+        "share": 1.0,
+        "support": 0.5,
+        "tendency_id": "t"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "c",
+          "registry_version": "v"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": -1.0,
+        "evidence_b": 5.0,
+        "evidence_absolute": 1.0,
+        "h_hat": 0.1,
+        "group_count": "2",
+        "flip_count": "0",
+        "last_sign": 1,
+        "pi": -0.2,
+        "typical_magnitude": 0.25,
+        "magnitude_sum": 0.5,
+        "magnitude_weight": 2.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d76330100000074260000004e43563101000000100000006563686f2e636f6e636570742d72656601000000630100000076000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000000000000000000000000000000000000000000000000000f0bf00000000000014409a9999999999b93f0200000000000000000000000000000001010000009a9999999999c9bf000000000000d03f0000000000000000e03f0000000000000040000000000000f03f",
+      "digest": "b6488bab614f10a0c4e0e4d29dc4b01ab16a9fb6b5ba0f39562243413dd2e80c",
+      "ok": true,
+      "protobuf": "08011201741a0808011201631a01762a26080111000000000000f03f19000000000000000021000000000000000029000000000000000031000000000000f0bf390000000000001440419a9999999999b93f480250005801619a9999999999c9bf69000000000000d03f8101000000000000e03f890100000000000000409101000000000000f03f",
+      "value": {
+        "concept": {
+          "concept_id": "c",
+          "registry_version": "v",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": 0.0,
+          "connection": 1.0,
+          "curiosity": 0.0,
+          "empathy": 0.0,
+          "schema_version": 1
+        },
+        "evidence_a": -1.0,
+        "evidence_absolute": 1.0,
+        "evidence_b": 5.0,
+        "flip_count": "0",
+        "group_count": "2",
+        "h_hat": 0.1,
+        "last_sign": 1,
+        "magnitude_sum": 0.5,
+        "magnitude_weight": 2.0,
+        "pi": -0.2,
+        "predicate": [],
+        "schema_version": 1,
+        "tendency_id": "t",
+        "typical_magnitude": 0.25
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TendencyV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "t",
+        "concept": {
+          "schema_version": 1,
+          "concept_id": "c",
+          "registry_version": "v"
+        },
+        "predicate": [],
+        "direction": {
+          "schema_version": 1,
+          "connection": 1.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "evidence_a": 1.1102230246251565e-16,
+        "evidence_b": 4.0,
+        "evidence_absolute": 1.1102230246251565e-16,
+        "h_hat": 0.1,
+        "group_count": "2",
+        "flip_count": "0",
+        "last_sign": 1,
+        "pi": 2.7755575615628914e-17,
+        "typical_magnitude": 0.0,
+        "magnitude_sum": 5e-324,
+        "magnitude_weight": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000100000006563686f2e74656e64656e63792d76330100000074260000004e43563101000000100000006563686f2e636f6e636570742d72656601000000630100000076000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000000000000000000000000000000000000000000000000000a03c00000000000010409a9999999999b93f020000000000000000000000000000000101000000000000000000803c0000000000000000000001000000000000000000000000000000000000000000a03c",
+      "digest": "3d728936b0212094bfd9c861a6ae135f4915548ee3694ad43c323136996f43b6",
+      "ok": true,
+      "protobuf": "08011201741a0808011201631a01762a26080111000000000000f03f19000000000000000021000000000000000029000000000000000031000000000000a03c390000000000001040419a9999999999b93f48025000580161000000000000803c69000000000000000081010100000000000000890100000000000000009101000000000000a03c",
+      "value": {
+        "concept": {
+          "concept_id": "c",
+          "registry_version": "v",
+          "schema_version": 1
+        },
+        "direction": {
+          "achievement": 0.0,
+          "connection": 1.0,
+          "curiosity": 0.0,
+          "empathy": 0.0,
+          "schema_version": 1
+        },
+        "evidence_a": 1.1102230246251565e-16,
+        "evidence_absolute": 1.1102230246251565e-16,
+        "evidence_b": 4.0,
+        "flip_count": "0",
+        "group_count": "2",
+        "h_hat": 0.1,
+        "last_sign": 1,
+        "magnitude_sum": 5e-324,
+        "magnitude_weight": 0.0,
+        "pi": 2.7755575615628914e-17,
+        "predicate": [],
+        "schema_version": 1,
+        "tendency_id": "t",
+        "typical_magnitude": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "EvidenceGroupV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "group_id": "A0",
+        "members": [],
+        "source_key": "A0",
+        "credibility": 0.0,
+        "verifiability": 0.0,
+        "allocations": [
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "support": 0.5,
+            "intensity": 1.0,
+            "share": 1.0,
+            "ordinal": "0",
+            "mu": 0.75,
+            "projection": 0.25,
+            "actual_retention": 0.75
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e65766964656e63652d67726f75702d7633020000004130000000000200000041300000000000000000000000000000000001000000650000004e435631010000001b0000006563686f2e65766964656e63652d616c6c6f636174696f6e2d76330100000074000000000000e03f000000000000f03f000000000000f03f0000000000000000000000000000e83f01000000000000d03f000000000000e83f",
+      "digest": "81eefb66cb61fc0a8b57fa95f6138f12d2106d3003e8be35f41656572eb883d9",
+      "ok": true,
+      "protobuf": "080112024130220241302900000000000000003100000000000000004a3d080112017419000000000000e03f21000000000000f03f29000000000000f03f300039000000000000e83f41000000000000d03f49000000000000e83f",
+      "value": {
+        "allocations": [
+          {
+            "actual_retention": 0.75,
+            "intensity": 1.0,
+            "mu": 0.75,
+            "ordinal": "0",
+            "projection": 0.25,
+            "schema_version": 1,
+            "share": 1.0,
+            "support": 0.5,
+            "tendency_id": "t"
+          }
+        ],
+        "credibility": 0.0,
+        "group_id": "A0",
+        "members": [],
+        "schema_version": 1,
+        "source_key": "A0",
+        "verifiability": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "RSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "A0",
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "tendencies": [
+          {
+            "schema_version": 1,
+            "tendency_id": "t",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "c",
+              "registry_version": "v"
+            },
+            "predicate": [],
+            "direction": {
+              "schema_version": 1,
+              "connection": 1.0,
+              "empathy": 0.0,
+              "curiosity": 0.0,
+              "achievement": 0.0
+            },
+            "evidence_a": -1.0,
+            "evidence_b": 5.0,
+            "evidence_absolute": 1.0,
+            "h_hat": 0.1,
+            "group_count": "2",
+            "flip_count": "0",
+            "last_sign": 1,
+            "pi": -0.2,
+            "typical_magnitude": 0.25,
+            "magnitude_sum": 0.5,
+            "magnitude_weight": 2.0
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e722d736e617073686f742d7633020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000000000000000000000000000000000000000000000000000000000000000000020000004130020000004130000000000000000001000000e80000004e43563101000000100000006563686f2e74656e64656e63792d76330100000074260000004e43563101000000100000006563686f2e636f6e636570742d72656601000000630100000076000000003e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72000000000000f03f000000000000000000000000000000000000000000000000000000000000f0bf00000000000014409a9999999999b93f0200000000000000000000000000000001010000009a9999999999c9bf000000000000d03f0000000000000000e03f0000000000000040000000000000f03f",
+      "digest": "272fca1469736f6bd6bd6f4390f28a5aa56fa749a3b8c7db840d9752c0bc3012",
+      "ok": true,
+      "protobuf": "0801120241301a2e0801122000000000000000000000000000000000000000000000000000000000000000001a02413022024130280032880108011201741a0808011201631a01762a26080111000000000000f03f19000000000000000021000000000000000029000000000000000031000000000000f0bf390000000000001440419a9999999999b93f480250005801619a9999999999c9bf69000000000000d03f8101000000000000e03f890100000000000000409101000000000000f03f",
+      "value": {
+        "law_version": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "revision": "A0",
+        "schema_version": 1,
+        "tendencies": [
+          {
+            "concept": {
+              "concept_id": "c",
+              "registry_version": "v",
+              "schema_version": 1
+            },
+            "direction": {
+              "achievement": 0.0,
+              "connection": 1.0,
+              "curiosity": 0.0,
+              "empathy": 0.0,
+              "schema_version": 1
+            },
+            "evidence_a": -1.0,
+            "evidence_absolute": 1.0,
+            "evidence_b": 5.0,
+            "flip_count": "0",
+            "group_count": "2",
+            "h_hat": 0.1,
+            "last_sign": 1,
+            "magnitude_sum": 0.5,
+            "magnitude_weight": 2.0,
+            "pi": -0.2,
+            "predicate": [],
+            "schema_version": 1,
+            "tendency_id": "t",
+            "typical_magnitude": 0.25
+          }
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "max_frame_bytes": 1,
+        "max_chunk_bytes": 1,
+        "max_object_bytes": 1,
+        "max_uploads": 1,
+        "max_upload_bytes": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e7465726d696e616c2d6275646765740200000041300100000001000000010000000100000001000000",
+      "digest": "e6a542567f9251a366327419135bc40909ed435c9b6e0c3e001bdb78a0333617",
+      "ok": true,
+      "protobuf": "08011202413018012001280130013801",
+      "value": {
+        "max_chunk_bytes": 1,
+        "max_frame_bytes": 1,
+        "max_object_bytes": 1,
+        "max_upload_bytes": 1,
+        "max_uploads": 1,
+        "schema_version": 1,
+        "version": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "中文🙂1",
+        "max_frame_bytes": 4294967295,
+        "max_chunk_bytes": 4294967295,
+        "max_object_bytes": 4294967295,
+        "max_uploads": 4294967295,
+        "max_upload_bytes": 4294967295
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e7465726d696e616c2d6275646765740b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffffffffffff",
+      "digest": "dc35fd6264ca55fd816dc7f85ba3f1ad3e3d3e08f007805b97f71b5117895c79",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823118ffffffff0f20ffffffff0f28ffffffff0f30ffffffff0f38ffffffff0f",
+      "value": {
+        "max_chunk_bytes": 4294967295,
+        "max_frame_bytes": 4294967295,
+        "max_object_bytes": 4294967295,
+        "max_upload_bytes": 4294967295,
+        "max_uploads": 4294967295,
+        "schema_version": 1,
+        "version": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "﻿zero\u00002",
+        "max_frame_bytes": 17,
+        "max_chunk_bytes": 17,
+        "max_object_bytes": 17,
+        "max_uploads": 17,
+        "max_upload_bytes": 17
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e7465726d696e616c2d62756467657409000000efbbbf7a65726f00321100000011000000110000001100000011000000",
+      "digest": "3e723ecd0f511bd7a0e4c24e9ba87e6573919857f894839c78903fa1aad6f3aa",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003218112011281130113811",
+      "value": {
+        "max_chunk_bytes": 17,
+        "max_frame_bytes": 17,
+        "max_object_bytes": 17,
+        "max_upload_bytes": 17,
+        "max_uploads": 17,
+        "schema_version": 1,
+        "version": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthenticate",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "A0",
+        "installation_id": "A0",
+        "token": "0000000000000000000000000000000000000000000000000000000000000000",
+        "protocol_versions": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e7465726d696e616c2d61757468656e74696361746502000000413002000000413020000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "c2086f34b1152c02a07c36d4bc42e091eaefa300e75db4b7bcb35c137b7679c0",
+      "ok": true,
+      "protobuf": "0801120241301a02413022200000000000000000000000000000000000000000000000000000000000000000",
+      "value": {
+        "installation_id": "A0",
+        "protocol_versions": [],
+        "request_id": "A0",
+        "schema_version": 1,
+        "token": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthenticate",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "中文🙂1",
+        "installation_id": "中文🙂1",
+        "token": "0101010101010101010101010101010101010101010101010101010101010101",
+        "protocol_versions": [
+          4294967295
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e7465726d696e616c2d61757468656e7469636174650b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f99823120000000010101010101010101010101010101010101010101010101010101010101010101000000ffffffff",
+      "digest": "a610d242fad01a87dd116f08c47c8d16bbfff8dd57157444a1bcd08c3aa78557",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f9982312220010101010101010101010101010101010101010101010101010101010101010128ffffffff0f",
+      "value": {
+        "installation_id": "中文🙂1",
+        "protocol_versions": [
+          4294967295
+        ],
+        "request_id": "中文🙂1",
+        "schema_version": 1,
+        "token": "0101010101010101010101010101010101010101010101010101010101010101"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthenticate",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "﻿zero\u00002",
+        "installation_id": "﻿zero\u00002",
+        "token": "0202020202020202020202020202020202020202020202020202020202020202",
+        "protocol_versions": [
+          17,
+          0
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e7465726d696e616c2d61757468656e74696361746509000000efbbbf7a65726f003209000000efbbbf7a65726f0032200000000202020202020202020202020202020202020202020202020202020202020202020000000000000011000000",
+      "digest": "7d0a7a527653ffc86dff7042c7164ee9adba3154baba19e18942151e2b86844c",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f00322220020202020202020202020202020202020202020202020202020202020202020228002811",
+      "value": {
+        "installation_id": "﻿zero\u00002",
+        "protocol_versions": [
+          0,
+          17
+        ],
+        "request_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "token": "0202020202020202020202020202020202020202020202020202020202020202"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalSession",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "session_id": "A0",
+        "installation_id": "A0",
+        "protocol_version": 1,
+        "capabilities": [],
+        "budget": {
+          "schema_version": 1,
+          "version": "A0",
+          "max_frame_bytes": 1,
+          "max_chunk_bytes": 1,
+          "max_object_bytes": 1,
+          "max_uploads": 1,
+          "max_upload_bytes": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e02000000413002000000413001000000000000003a0000004e43563101000000140000006563686f2e7465726d696e616c2d6275646765740200000041300100000001000000010000000100000001000000",
+      "digest": "8d44fb8e3d4a655e4f5e168d9a94f3ab26082ecb6b0d2e420cd479da4f93c940",
+      "ok": true,
+      "protobuf": "0801120241301a0241302001321008011202413018012001280130013801",
+      "value": {
+        "budget": {
+          "max_chunk_bytes": 1,
+          "max_frame_bytes": 1,
+          "max_object_bytes": 1,
+          "max_upload_bytes": 1,
+          "max_uploads": 1,
+          "schema_version": 1,
+          "version": "A0"
+        },
+        "capabilities": [],
+        "installation_id": "A0",
+        "protocol_version": 1,
+        "schema_version": 1,
+        "session_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalSession",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "session_id": "中文🙂1",
+        "installation_id": "中文🙂1",
+        "protocol_version": 1,
+        "capabilities": [
+          2
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "中文🙂1",
+          "max_frame_bytes": 4294967295,
+          "max_chunk_bytes": 4294967295,
+          "max_object_bytes": 4294967295,
+          "max_uploads": 4294967295,
+          "max_upload_bytes": 4294967295
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e0b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231010000000100000002000000430000004e43563101000000140000006563686f2e7465726d696e616c2d6275646765740b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffffffffffff",
+      "digest": "c1b19532864413e8672ece8871ade3301016832aa9cd961d55ac35f2ee9a6e3f",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f99823120012802322d0801120be4b8ade69687f09f99823118ffffffff0f20ffffffff0f28ffffffff0f30ffffffff0f38ffffffff0f",
+      "value": {
+        "budget": {
+          "max_chunk_bytes": 4294967295,
+          "max_frame_bytes": 4294967295,
+          "max_object_bytes": 4294967295,
+          "max_upload_bytes": 4294967295,
+          "max_uploads": 4294967295,
+          "schema_version": 1,
+          "version": "中文🙂1"
+        },
+        "capabilities": [
+          2
+        ],
+        "installation_id": "中文🙂1",
+        "protocol_version": 1,
+        "schema_version": 1,
+        "session_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalSession",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "session_id": "﻿zero\u00002",
+        "installation_id": "﻿zero\u00002",
+        "protocol_version": 1,
+        "capabilities": [
+          3,
+          4
+        ],
+        "budget": {
+          "schema_version": 1,
+          "version": "﻿zero\u00002",
+          "max_frame_bytes": 17,
+          "max_chunk_bytes": 17,
+          "max_object_bytes": 17,
+          "max_uploads": 17,
+          "max_upload_bytes": 17
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e09000000efbbbf7a65726f003209000000efbbbf7a65726f003201000000020000000300000004000000410000004e43563101000000140000006563686f2e7465726d696e616c2d62756467657409000000efbbbf7a65726f00321100000011000000110000001100000011000000",
+      "digest": "bd8bb4036a437f8c8800d451fa3c6ca9cff1132b46570fe4550c8a939e5381b9",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f0032200128032804321708011209efbbbf7a65726f003218112011281130113811",
+      "value": {
+        "budget": {
+          "max_chunk_bytes": 17,
+          "max_frame_bytes": 17,
+          "max_object_bytes": 17,
+          "max_upload_bytes": 17,
+          "max_uploads": 17,
+          "schema_version": 1,
+          "version": "﻿zero\u00002"
+        },
+        "capabilities": [
+          3,
+          4
+        ],
+        "installation_id": "﻿zero\u00002",
+        "protocol_version": 1,
+        "schema_version": 1,
+        "session_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthResult",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "A0",
+        "status": 1,
+        "session": {
+          "schema_version": 1,
+          "session_id": "A0",
+          "installation_id": "A0",
+          "protocol_version": 1,
+          "capabilities": [],
+          "budget": {
+            "schema_version": 1,
+            "version": "A0",
+            "max_frame_bytes": 1,
+            "max_chunk_bytes": 1,
+            "max_object_bytes": 1,
+            "max_uploads": 1,
+            "max_upload_bytes": 1
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e7465726d696e616c2d617574682d726573756c740200000041300100000001730000004e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e02000000413002000000413001000000000000003a0000004e43563101000000140000006563686f2e7465726d696e616c2d627564676574020000004130010000000100000001000000010000000100000000",
+      "digest": "b09e7fc5b86fc5889065085a2f44fe988736d8c3cef3de5ba2412bfa7980d641",
+      "ok": true,
+      "protobuf": "0801120241301801221e0801120241301a0241302001321008011202413018012001280130013801",
+      "value": {
+        "request_id": "A0",
+        "schema_version": 1,
+        "session": {
+          "budget": {
+            "max_chunk_bytes": 1,
+            "max_frame_bytes": 1,
+            "max_object_bytes": 1,
+            "max_upload_bytes": 1,
+            "max_uploads": 1,
+            "schema_version": 1,
+            "version": "A0"
+          },
+          "capabilities": [],
+          "installation_id": "A0",
+          "protocol_version": 1,
+          "schema_version": 1,
+          "session_id": "A0"
+        },
+        "status": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthResult",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "中文🙂1",
+        "status": 2,
+        "reason": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e7465726d696e616c2d617574682d726573756c740b000000e4b8ade69687f09f99823102000000000102000000",
+      "digest": "4650b20fbed446b9666ffa5c5b1a710fb2150424d0b2f37e786b2c6b33563755",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823118022802",
+      "value": {
+        "reason": 2,
+        "request_id": "中文🙂1",
+        "schema_version": 1,
+        "status": 2
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalAuthResult",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "﻿zero\u00002",
+        "status": 1,
+        "session": {
+          "schema_version": 1,
+          "session_id": "﻿zero\u00002",
+          "installation_id": "﻿zero\u00002",
+          "protocol_version": 1,
+          "capabilities": [
+            3,
+            4
+          ],
+          "budget": {
+            "schema_version": 1,
+            "version": "﻿zero\u00002",
+            "max_frame_bytes": 17,
+            "max_chunk_bytes": 17,
+            "max_object_bytes": 17,
+            "max_uploads": 17,
+            "max_upload_bytes": 17
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e7465726d696e616c2d617574682d726573756c7409000000efbbbf7a65726f00320100000001900000004e43563101000000150000006563686f2e7465726d696e616c2d73657373696f6e09000000efbbbf7a65726f003209000000efbbbf7a65726f003201000000020000000300000004000000410000004e43563101000000140000006563686f2e7465726d696e616c2d62756467657409000000efbbbf7a65726f0032110000001100000011000000110000001100000000",
+      "digest": "214e0390399b48b83f9af457ec3482c3551ae2f0a9c09e00e0c49cc1f57f0794",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321801223708011209efbbbf7a65726f00321a09efbbbf7a65726f0032200128032804321708011209efbbbf7a65726f003218112011281130113811",
+      "value": {
+        "request_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "session": {
+          "budget": {
+            "max_chunk_bytes": 17,
+            "max_frame_bytes": 17,
+            "max_object_bytes": 17,
+            "max_upload_bytes": 17,
+            "max_uploads": 17,
+            "schema_version": 1,
+            "version": "﻿zero\u00002"
+          },
+          "capabilities": [
+            3,
+            4
+          ],
+          "installation_id": "﻿zero\u00002",
+          "protocol_version": 1,
+          "schema_version": 1,
+          "session_id": "﻿zero\u00002"
+        },
+        "status": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalEvent",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "id": "A0",
+        "stable_source_key": "A0",
+        "kind": 1,
+        "event_time_ns": "0",
+        "parents": [],
+        "payload_ref": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "provenance": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "correction_of": [],
+        "derivation": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e7465726d696e616c2d6576656e7402000000413002000000413001000000000000000000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000000000000000000000000000000000000000000000000000000000000000000020000004130020000004130000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000",
+      "digest": "93bf5bee786f2aa7266d4a4dc095eb89e5235a763a77e79b3141d6bfde242a5a",
+      "ok": true,
+      "protobuf": "0801120241301a024130200128003a2e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800422e0801122000000000000000000000000000000000000000000000000000000000000000001a0241302202413028004a2000000000000000000000000000000000000000000000000000000000000000006801",
+      "value": {
+        "correction_of": [],
+        "derivation": 1,
+        "event_time_ns": "0",
+        "id": "A0",
+        "kind": 1,
+        "parents": [],
+        "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "payload_ref": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "provenance": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "stable_source_key": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalEvent",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "id": "中文🙂1",
+        "stable_source_key": "中文🙂1",
+        "kind": 2,
+        "event_time_ns": "-9223372036854775808",
+        "parents": [
+          "中文🙂1"
+        ],
+        "payload_ref": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "provenance": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "payload_digest": "0101010101010101010101010101010101010101010101010101010101010101",
+        "action_id": "中文🙂1",
+        "trial_id": "中文🙂1",
+        "correction_of": [
+          "中文🙂1"
+        ],
+        "derivation": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e7465726d696e616c2d6576656e740b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231020000000000000000000080010000000b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffff650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffff200000000101010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f998231010b000000e4b8ade69687f09f998231010000000b000000e4b8ade69687f09f99823102000000",
+      "digest": "03fa88569f0f2a8213def769e7660da94e829470cdeb1904878126cebf117ca7",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231200228ffffffffffffffffff01320be4b8ade69687f09f9982313a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0142490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff014a200101010101010101010101010101010101010101010101010101010101010101520be4b8ade69687f09f9982315a0be4b8ade69687f09f998231620be4b8ade69687f09f9982316802",
+      "value": {
+        "action_id": "中文🙂1",
+        "correction_of": [
+          "中文🙂1"
+        ],
+        "derivation": 2,
+        "event_time_ns": "-9223372036854775808",
+        "id": "中文🙂1",
+        "kind": 2,
+        "parents": [
+          "中文🙂1"
+        ],
+        "payload_digest": "0101010101010101010101010101010101010101010101010101010101010101",
+        "payload_ref": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "provenance": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "stable_source_key": "中文🙂1",
+        "trial_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalEvent",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "id": "﻿zero\u00002",
+        "stable_source_key": "﻿zero\u00002",
+        "kind": 3,
+        "event_time_ns": "9223372036854775807",
+        "parents": [
+          "﻿zero\u00002",
+          "A3"
+        ],
+        "payload_ref": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "provenance": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "payload_digest": "0202020202020202020202020202020202020202020202020202020202020202",
+        "action_id": "﻿zero\u00002",
+        "trial_id": "﻿zero\u00002",
+        "correction_of": [
+          "﻿zero\u00002",
+          "A3"
+        ],
+        "derivation": 3
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e7465726d696e616c2d6576656e7409000000efbbbf7a65726f003209000000efbbbf7a65726f003203000000ffffffffffffff7f0200000002000000413309000000efbbbf7a65726f0032610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f00320100000000002000610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f003201000000000020002000000002020202020202020202020202020202020202020202020202020202020202020109000000efbbbf7a65726f00320109000000efbbbf7a65726f00320200000002000000413309000000efbbbf7a65726f003203000000",
+      "digest": "3abc847e0b0c8404648abed3bd3145e5240b065912e91aac92891fd84d578a0d",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f0032200328feffffffffffffffff01320241333209efbbbf7a65726f00323a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f003228818080808080801042430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080104a2002020202020202020202020202020202020202020202020202020202020202025209efbbbf7a65726f00325a09efbbbf7a65726f0032620241336209efbbbf7a65726f00326803",
+      "value": {
+        "action_id": "﻿zero\u00002",
+        "correction_of": [
+          "A3",
+          "﻿zero\u00002"
+        ],
+        "derivation": 3,
+        "event_time_ns": "9223372036854775807",
+        "id": "﻿zero\u00002",
+        "kind": 3,
+        "parents": [
+          "A3",
+          "﻿zero\u00002"
+        ],
+        "payload_digest": "0202020202020202020202020202020202020202020202020202020202020202",
+        "payload_ref": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "provenance": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "stable_source_key": "﻿zero\u00002",
+        "trial_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadChunk",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "A0",
+        "object": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "offset": "0",
+        "data": "",
+        "final_chunk": true
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e6f626a6563742d75706c6f61642d6368756e6b020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000000000000000000000000000000000000000000000000000000000000000000020000004130020000004130000000000000000000000000000000000000000001",
+      "digest": "00b24547da1df194a6d0e5fd125c50c7623beeb4fbcfd09aad59a71e9d84d469",
+      "ok": true,
+      "protobuf": "0801120241301a2e0801122000000000000000000000000000000000000000000000000000000000000000001a02413022024130280020002a003001",
+      "value": {
+        "data": "",
+        "final_chunk": true,
+        "object": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "offset": "0",
+        "schema_version": 1,
+        "upload_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadChunk",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "中文🙂1",
+        "object": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "offset": "18446744073709551615",
+        "data": "01",
+        "final_chunk": false
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e6f626a6563742d75706c6f61642d6368756e6b0b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffff010000000100",
+      "digest": "74979e826dd37f3dc9fbedd1f5bcd3a46971dd83128f8de2e240b0bbaa817e68",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0120ffffffffffffffffff012a01013000",
+      "value": {
+        "data": "01",
+        "final_chunk": false,
+        "object": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "offset": "18446744073709551615",
+        "schema_version": 1,
+        "upload_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadChunk",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "﻿zero\u00002",
+        "object": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "offset": "9007199254740993",
+        "data": "0202",
+        "final_chunk": true
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000180000006563686f2e6f626a6563742d75706c6f61642d6368756e6b09000000efbbbf7a65726f0032610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f00320100000000002000010000000000200002000000020201",
+      "digest": "ec5fc2d8586de8ba4f2e40fa8d7c7bb489e39cef16e1bca835df91672b150cdb",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080102081808080808080102a0202023001",
+      "value": {
+        "data": "0202",
+        "final_chunk": true,
+        "object": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "offset": "9007199254740993",
+        "schema_version": 1,
+        "upload_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "A0",
+        "object": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "next_offset": "0",
+        "status": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e6f626a6563742d75706c6f61642d72656365697074020000004130530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000000000000000000001000000",
+      "digest": "84bcb70f321482c82f050259e78d6ef6e9fdd88e5af9525ad48a00691d820aef",
+      "ok": true,
+      "protobuf": "0801120241301a2e0801122000000000000000000000000000000000000000000000000000000000000000001a02413022024130280020002801",
+      "value": {
+        "next_offset": "0",
+        "object": {
+          "byte_length": "0",
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "status": 1,
+        "upload_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "中文🙂1",
+        "object": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "byte_length": "18446744073709551615"
+        },
+        "next_offset": "18446744073709551615",
+        "status": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e6f626a6563742d75706c6f61642d726563656970740b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffff02000000",
+      "digest": "a69230147cb1b5a47651c0553882352795e6afa1d8e0ba78ab0cb38cc91fb7df",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0120ffffffffffffffffff012802",
+      "value": {
+        "next_offset": "18446744073709551615",
+        "object": {
+          "byte_length": "18446744073709551615",
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "中文🙂1",
+          "resource_version": "中文🙂1",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "status": 2,
+        "upload_id": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ObjectUploadReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "upload_id": "﻿zero\u00002",
+        "object": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "byte_length": "9007199254740993"
+        },
+        "next_offset": "9007199254740993",
+        "status": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e6f626a6563742d75706c6f61642d7265636569707409000000efbbbf7a65726f0032610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f00320100000000002000010000000000200001000000",
+      "digest": "a959054880ad150d3a9cfccee2ac5085a8f2cd3824970834d6a0baac22813fbb",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080102081808080808080102801",
+      "value": {
+        "next_offset": "9007199254740993",
+        "object": {
+          "byte_length": "9007199254740993",
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "﻿zero\u00002",
+          "resource_version": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "status": 1,
+        "upload_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalRequest",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "A0",
+        "session_id": "A0",
+        "protocol_version": 1,
+        "kind": 1,
+        "event": {
+          "schema_version": 1,
+          "id": "A0",
+          "stable_source_key": "A0",
+          "kind": 1,
+          "event_time_ns": "0",
+          "parents": [],
+          "payload_ref": {
+            "schema_version": 1,
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "byte_length": "0"
+          },
+          "provenance": {
+            "schema_version": 1,
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "byte_length": "0"
+          },
+          "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "correction_of": [],
+          "derivation": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d72657175657374020000004130020000004130010000000100000001170100004e43563101000000130000006563686f2e7465726d696e616c2d6576656e7402000000413002000000413001000000000000000000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000000000000000000000000000000000000000000000000000000000000000000000200000041300200000041300000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000",
+      "digest": "c5d6d40af94e35cfede90b6589c19ab365fe5d441899cdcb6c28bf5531af5b64",
+      "ok": true,
+      "protobuf": "0801120241301a024130200128013292010801120241301a024130200128003a2e0801122000000000000000000000000000000000000000000000000000000000000000001a024130220241302800422e0801122000000000000000000000000000000000000000000000000000000000000000001a0241302202413028004a2000000000000000000000000000000000000000000000000000000000000000006801",
+      "value": {
+        "event": {
+          "correction_of": [],
+          "derivation": 1,
+          "event_time_ns": "0",
+          "id": "A0",
+          "kind": 1,
+          "parents": [],
+          "payload_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "payload_ref": {
+            "byte_length": "0",
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "schema_version": 1
+          },
+          "provenance": {
+            "byte_length": "0",
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "schema_version": 1
+          },
+          "schema_version": 1,
+          "stable_source_key": "A0"
+        },
+        "kind": 1,
+        "protocol_version": 1,
+        "request_id": "A0",
+        "schema_version": 1,
+        "session_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalRequest",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "中文🙂1",
+        "session_id": "中文🙂1",
+        "protocol_version": 1,
+        "kind": 2,
+        "upload": {
+          "schema_version": 1,
+          "upload_id": "中文🙂1",
+          "object": {
+            "schema_version": 1,
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "中文🙂1",
+            "resource_version": "中文🙂1",
+            "byte_length": "18446744073709551615"
+          },
+          "offset": "18446744073709551615",
+          "data": "01",
+          "final_chunk": false
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d726571756573740b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f99823101000000020000000001aa0000004e43563101000000180000006563686f2e6f626a6563742d75706c6f61642d6368756e6b0b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffff01000000010000000000",
+      "digest": "6dd362002ee96da49e78a854528ef5de5ffbba7ed1228a24031aaed6d2bfcafe",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f998231200128023a6a0801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0120ffffffffffffffffff012a01013000",
+      "value": {
+        "kind": 2,
+        "protocol_version": 1,
+        "request_id": "中文🙂1",
+        "schema_version": 1,
+        "session_id": "中文🙂1",
+        "upload": {
+          "data": "01",
+          "final_chunk": false,
+          "object": {
+            "byte_length": "18446744073709551615",
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "中文🙂1",
+            "resource_version": "中文🙂1",
+            "schema_version": 1
+          },
+          "offset": "18446744073709551615",
+          "schema_version": 1,
+          "upload_id": "中文🙂1"
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalRequest",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "﻿zero\u00002",
+        "session_id": "﻿zero\u00002",
+        "protocol_version": 1,
+        "kind": 3,
+        "query": {
+          "schema_version": 1,
+          "query_id": "﻿zero\u00002",
+          "filter": {
+            "schema_version": 1,
+            "text": "﻿zero\u00002",
+            "from": "﻿zero\u00002",
+            "to": "﻿zero\u00002",
+            "kinds": [],
+            "include_retracted": true
+          },
+          "limit": "9007199254740993",
+          "kind": 3
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e7465726d696e616c2d7265717565737409000000efbbbf7a65726f003209000000efbbbf7a65726f00320100000003000000000001840000004e435631010000000d0000006563686f2e71756572792d763209000000efbbbf7a65726f0032014d0000004e43563101000000110000006563686f2e71756572792d66696c7465720109000000efbbbf7a65726f00320109000000efbbbf7a65726f00320109000000efbbbf7a65726f0032000000000101010000000000200003000000000000",
+      "digest": "f42dc45832205afd80c116726215e78df8027b1542ad580aba049b97c2a1ecae",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f003220012803423f08011209efbbbf7a65726f0032222508011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f003230012881808080808080103003",
+      "value": {
+        "kind": 3,
+        "protocol_version": 1,
+        "query": {
+          "filter": {
+            "from": "﻿zero\u00002",
+            "include_retracted": true,
+            "kinds": [],
+            "schema_version": 1,
+            "text": "﻿zero\u00002",
+            "to": "﻿zero\u00002"
+          },
+          "kind": 3,
+          "limit": "9007199254740993",
+          "query_id": "﻿zero\u00002",
+          "schema_version": 1
+        },
+        "request_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "session_id": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressAuditBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "A0",
+        "max_records": 1,
+        "max_bytes": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e696e67726573732d61756469742d6275646765740200000041300100000001000000",
+      "digest": "6aac848cf39155a68e4848d8c11ec9a203cfc9bccb5dc0f448112dcc773ba8a8",
+      "ok": true,
+      "protobuf": "08011202413018012001",
+      "value": {
+        "max_bytes": 1,
+        "max_records": 1,
+        "schema_version": 1,
+        "version": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressAuditBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "中文🙂1",
+        "max_records": 4294967295,
+        "max_bytes": 4294967295
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e696e67726573732d61756469742d6275646765740b000000e4b8ade69687f09f998231ffffffffffffffff",
+      "digest": "0e92516292c8f47bbc153603c32032378dd635592ae9cac4686c400cd32e1c52",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f99823118ffffffff0f20ffffffff0f",
+      "value": {
+        "max_bytes": 4294967295,
+        "max_records": 4294967295,
+        "schema_version": 1,
+        "version": "中文🙂1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressAuditBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "﻿zero\u00002",
+        "max_records": 17,
+        "max_bytes": 17
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000190000006563686f2e696e67726573732d61756469742d62756467657409000000efbbbf7a65726f00321100000011000000",
+      "digest": "bc15b0fd062dd46ff688896ef848a8f7fb2226b49c92741889ccea6238b038d3",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003218112011",
+      "value": {
+        "max_bytes": 17,
+        "max_records": 17,
+        "schema_version": 1,
+        "version": "﻿zero\u00002"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressRejection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "position": "0",
+        "recorded_at_ns": "0",
+        "reason": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e696e67726573732d72656a656374696f6e000000000000000000000000000000000100000000",
+      "digest": "ff96f559c424e862d51d87d49d71a6c939d36a8cf85f53125abc8db984168609",
+      "ok": true,
+      "protobuf": "0801100018002001",
+      "value": {
+        "position": "0",
+        "reason": 1,
+        "recorded_at_ns": "0",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressRejection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "position": "18446744073709551615",
+        "recorded_at_ns": "-9223372036854775808",
+        "reason": 2,
+        "request_kind": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e696e67726573732d72656a656374696f6effffffffffffffff0000000000000080020000000102000000",
+      "digest": "84c12a54e3fb20fa04d016d74642a8ffd8ecc473aea448fe9d1103a4b1082b91",
+      "ok": true,
+      "protobuf": "080110ffffffffffffffffff0118ffffffffffffffffff0120022802",
+      "value": {
+        "position": "18446744073709551615",
+        "reason": 2,
+        "recorded_at_ns": "-9223372036854775808",
+        "request_kind": 2,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IngressRejection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "position": "9007199254740993",
+        "recorded_at_ns": "9223372036854775807",
+        "reason": 3,
+        "request_kind": 3
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e696e67726573732d72656a656374696f6e0100000000002000ffffffffffffff7f030000000103000000",
+      "digest": "ce82932e2d2874f83096ed4cef81c56a55f925d8f213880610eeda7c18c9beca",
+      "ok": true,
+      "protobuf": "080110818080808080801018feffffffffffffffff0120032803",
+      "value": {
+        "position": "9007199254740993",
+        "reason": 3,
+        "recorded_at_ns": "9223372036854775807",
+        "request_kind": 3,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReceiptV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "stable_source_key": "A0",
+        "stage": 1,
+        "event_id": "A0",
+        "raw_log_position": "0",
+        "ingest_time_ns": "0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726563656970742d7632020000004130010000000102000000413000010000000000000000010000000000000000",
+      "digest": "9ef98339018563a2f9521aed44bcf76c429603288ecf95a8a0925d1827215176",
+      "ok": true,
+      "protobuf": "08011202413018012202413038004000",
+      "value": {
+        "event_id": "A0",
+        "ingest_time_ns": "0",
+        "raw_log_position": "0",
+        "schema_version": 1,
+        "stable_source_key": "A0",
+        "stage": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReceiptV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "stable_source_key": "中文🙂1",
+        "stage": 2,
+        "event_id": "中文🙂1"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726563656970742d76320b000000e4b8ade69687f09f99823102000000010b000000e4b8ade69687f09f998231000000",
+      "digest": "6b9b5dc8f9245bc3b739359c1fddf952349059441cef3a0af6519a5050545596",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311802220be4b8ade69687f09f998231",
+      "value": {
+        "event_id": "中文🙂1",
+        "schema_version": 1,
+        "stable_source_key": "中文🙂1",
+        "stage": 2
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ReceiptV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "stable_source_key": "﻿zero\u00002",
+        "stage": 3,
+        "event_id": "﻿zero\u00002"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e726563656970742d763209000000efbbbf7a65726f0032030000000109000000efbbbf7a65726f0032000000",
+      "digest": "6bb1bbd5af5fa7fd3ce881046621834a08a302560e584313a92f2bbc91541577",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f003218032209efbbbf7a65726f0032",
+      "value": {
+        "event_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "stable_source_key": "﻿zero\u00002",
+        "stage": 3
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalResponse",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "A0",
+        "session_id": "A0",
+        "protocol_version": 1,
+        "reply_to": 1,
+        "kind": 1,
+        "receipt": {
+          "schema_version": 1,
+          "stable_source_key": "A0",
+          "stage": 1,
+          "event_id": "A0",
+          "raw_log_position": "0",
+          "ingest_time_ns": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e7465726d696e616c2d726573706f6e7365020000004130020000004130010000000100000001000000013f0000004e435631010000000f0000006563686f2e726563656970742d7632020000004130010000000102000000413000010000000000000000010000000000000000000000",
+      "digest": "cd043b56312e4e772ee091e5f7a7afd301e6de4a09d1da4ffd64c29302fc3d66",
+      "ok": true,
+      "protobuf": "0801120241301a0241302001280130013a1008011202413018012202413038004000",
+      "value": {
+        "kind": 1,
+        "protocol_version": 1,
+        "receipt": {
+          "event_id": "A0",
+          "ingest_time_ns": "0",
+          "raw_log_position": "0",
+          "schema_version": 1,
+          "stable_source_key": "A0",
+          "stage": 1
+        },
+        "reply_to": 1,
+        "request_id": "A0",
+        "schema_version": 1,
+        "session_id": "A0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalResponse",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "中文🙂1",
+        "session_id": "中文🙂1",
+        "protocol_version": 1,
+        "reply_to": 2,
+        "kind": 2,
+        "upload": {
+          "schema_version": 1,
+          "upload_id": "中文🙂1",
+          "object": {
+            "schema_version": 1,
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "中文🙂1",
+            "resource_version": "中文🙂1",
+            "byte_length": "18446744073709551615"
+          },
+          "next_offset": "18446744073709551615",
+          "status": 2
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e7465726d696e616c2d726573706f6e73650b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f9982310100000002000000020000000001aa0000004e435631010000001a0000006563686f2e6f626a6563742d75706c6f61642d726563656970740b000000e4b8ade69687f09f998231650000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000001010101010101010101010101010101010101010101010101010101010101010b000000e4b8ade69687f09f9982310b000000e4b8ade69687f09f998231ffffffffffffffffffffffffffffffff020000000000",
+      "digest": "2ee3246e65e14a0ca97c43358ff5ef16b8760e88565545bbc3519ee9480a242b",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982311a0be4b8ade69687f09f99823120012802300242670801120be4b8ade69687f09f9982311a490801122001010101010101010101010101010101010101010101010101010101010101011a0be4b8ade69687f09f998231220be4b8ade69687f09f99823128ffffffffffffffffff0120ffffffffffffffffff012802",
+      "value": {
+        "kind": 2,
+        "protocol_version": 1,
+        "reply_to": 2,
+        "request_id": "中文🙂1",
+        "schema_version": 1,
+        "session_id": "中文🙂1",
+        "upload": {
+          "next_offset": "18446744073709551615",
+          "object": {
+            "byte_length": "18446744073709551615",
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "中文🙂1",
+            "resource_version": "中文🙂1",
+            "schema_version": 1
+          },
+          "schema_version": 1,
+          "status": 2,
+          "upload_id": "中文🙂1"
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TerminalResponse",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "request_id": "﻿zero\u00002",
+        "session_id": "﻿zero\u00002",
+        "protocol_version": 1,
+        "reply_to": 3,
+        "kind": 3,
+        "query": {
+          "schema_version": 1,
+          "query_id": "﻿zero\u00002",
+          "status": 3,
+          "items": [
+            {
+              "schema_version": 1,
+              "ref": "﻿zero\u00002",
+              "at": "﻿zero\u00002",
+              "kind": "﻿zero\u00002",
+              "summary": "﻿zero\u00002",
+              "source": "﻿zero\u00002",
+              "retracted": true
+            },
+            {
+              "schema_version": 1,
+              "ref": "A3",
+              "at": "A3",
+              "kind": "A3",
+              "summary": "A3",
+              "source": "A3",
+              "retracted": false
+            }
+          ],
+          "growth_entries": [
+            {
+              "schema_version": 1,
+              "entry_id": "﻿zero\u00002",
+              "event_id": "﻿zero\u00002",
+              "kind": 3,
+              "recompute": {
+                "schema_version": 1,
+                "cause": 3,
+                "law_version": {
+                  "schema_version": 1,
+                  "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                  "object_type": "﻿zero\u00002",
+                  "resource_version": "﻿zero\u00002",
+                  "byte_length": "9007199254740993"
+                },
+                "previous_law_version": {
+                  "schema_version": 1,
+                  "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                  "object_type": "﻿zero\u00002",
+                  "resource_version": "﻿zero\u00002",
+                  "byte_length": "9007199254740993"
+                },
+                "r_revision_before": "﻿zero\u00002",
+                "r_revision_after": "﻿zero\u00002",
+                "theta_revision_before": "﻿zero\u00002",
+                "theta_revision_after": "﻿zero\u00002",
+                "changed_tendencies": [],
+                "theta_changed": true
+              }
+            },
+            {
+              "schema_version": 1,
+              "entry_id": "A3",
+              "event_id": "A3",
+              "kind": 4,
+              "migration": {
+                "schema_version": 1,
+                "previous_environment": {
+                  "schema_version": 1,
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "byte_length": "0"
+                },
+                "environment": {
+                  "schema_version": 1,
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "byte_length": "0"
+                },
+                "validation": {
+                  "schema_version": 1,
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "byte_length": "0"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e7465726d696e616c2d726573706f6e736509000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000300000003000000000001ad0300004e43563101000000140000006563686f2e71756572792d726573756c742d763209000000efbbbf7a65726f003203000000020000005d0000004e435631010000000f0000006563686f2e71756572792d6974656d09000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f0032013a0000004e435631010000000f0000006563686f2e71756572792d6974656d02000000413302000000413302000000413302000000413302000000413300020000006f0100004e43563101000000110000006563686f2e6c65646765722d656e74727909000000efbbbf7a65726f003209000000efbbbf7a65726f003203000000000001290100004e43563101000000150000006563686f2e7265636f6d707574652d7265636f726403000000610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000000200001610000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000020202020202020202020202020202020202020202020202020202020202020209000000efbbbf7a65726f003209000000efbbbf7a65726f0032010000000000200009000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f003209000000efbbbf7a65726f00320000000001000000005e0100004e43563101000000110000006563686f2e6c65646765722d656e7472790200000041330200000041330400000000000001260100004e43563101000000150000006563686f2e6d6967726174696f6e2d7265636f7264530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000003030303030303030303030303030303030303030303030303030303030303030200000041330200000041330000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000003030303030303030303030303030303030303030303030303030303030303030200000041330200000041330000000000000000530000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000303030303030303030303030303030303030303030303030303030303030303020000004133020000004133000000000000000000000000",
+      "digest": "48777cbbf5b07c6333e539a59e60e27e5243f872b3eba824d725e8584b409d79",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00321a09efbbbf7a65726f00322001280330034ae60308011209efbbbf7a65726f00321803223b08011209efbbbf7a65726f00321a09efbbbf7a65726f00322209efbbbf7a65726f00322a09efbbbf7a65726f00323209efbbbf7a65726f0032380122180801120241331a024133220241332a0241333202413338002ad90108011209efbbbf7a65726f00321a09efbbbf7a65726f003220033abc01080110031a430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f003228818080808080801022430801122002020202020202020202020202020202020202020202020202020202020202021a09efbbbf7a65726f00322209efbbbf7a65726f00322881808080808080102a09efbbbf7a65726f00323209efbbbf7a65726f00323a09efbbbf7a65726f00324209efbbbf7a65726f003250012aa1010801120241331a02413320044292010801122e0801122003030303030303030303030303030303030303030303030303030303030303031a0241332202413328001a2e0801122003030303030303030303030303030303030303030303030303030303030303031a024133220241332800222e0801122003030303030303030303030303030303030303030303030303030303030303031a024133220241332800",
+      "value": {
+        "kind": 3,
+        "protocol_version": 1,
+        "query": {
+          "growth_entries": [
+            {
+              "entry_id": "﻿zero\u00002",
+              "event_id": "﻿zero\u00002",
+              "kind": 3,
+              "recompute": {
+                "cause": 3,
+                "changed_tendencies": [],
+                "law_version": {
+                  "byte_length": "9007199254740993",
+                  "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                  "object_type": "﻿zero\u00002",
+                  "resource_version": "﻿zero\u00002",
+                  "schema_version": 1
+                },
+                "previous_law_version": {
+                  "byte_length": "9007199254740993",
+                  "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+                  "object_type": "﻿zero\u00002",
+                  "resource_version": "﻿zero\u00002",
+                  "schema_version": 1
+                },
+                "r_revision_after": "﻿zero\u00002",
+                "r_revision_before": "﻿zero\u00002",
+                "schema_version": 1,
+                "theta_changed": true,
+                "theta_revision_after": "﻿zero\u00002",
+                "theta_revision_before": "﻿zero\u00002"
+              },
+              "schema_version": 1
+            },
+            {
+              "entry_id": "A3",
+              "event_id": "A3",
+              "kind": 4,
+              "migration": {
+                "environment": {
+                  "byte_length": "0",
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "schema_version": 1
+                },
+                "previous_environment": {
+                  "byte_length": "0",
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "schema_version": 1
+                },
+                "schema_version": 1,
+                "validation": {
+                  "byte_length": "0",
+                  "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+                  "object_type": "A3",
+                  "resource_version": "A3",
+                  "schema_version": 1
+                }
+              },
+              "schema_version": 1
+            }
+          ],
+          "items": [
+            {
+              "at": "﻿zero\u00002",
+              "kind": "﻿zero\u00002",
+              "ref": "﻿zero\u00002",
+              "retracted": true,
+              "schema_version": 1,
+              "source": "﻿zero\u00002",
+              "summary": "﻿zero\u00002"
+            },
+            {
+              "at": "A3",
+              "kind": "A3",
+              "ref": "A3",
+              "retracted": false,
+              "schema_version": 1,
+              "source": "A3",
+              "summary": "A3"
+            }
+          ],
+          "query_id": "﻿zero\u00002",
+          "schema_version": 1,
+          "status": 3
+        },
+        "reply_to": 3,
+        "request_id": "﻿zero\u00002",
+        "schema_version": 1,
+        "session_id": "﻿zero\u00002"
+      }
+    }
   }
 ]

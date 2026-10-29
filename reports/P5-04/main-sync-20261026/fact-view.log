@@ -1,0 +1,31 @@
+    Finished `release` profile [optimized] target(s) in 0.34s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\fact_view-5cce19ede946e26b.exe)
+
+running 17 tests
+test tests::cpu_eval::profile_builtin_codec_descriptor_construction ... ignored, explicit diagnostic; immutable descriptor only, no stores
+test tests::cpu_eval::real_cpu_multilingual_restart_recall_and_100_retractions ... ignored, explicit pinned local CPU model required; see fact-view README
+test tests::deterministic_rrf_filters_corrections_and_budgets ... ok
+test tests::edge_cases::p522_active_memory_messages_never_emit_growth_or_serve_other_services ... ok
+test tests::edge_cases::panel_time_and_payload_filters_are_compatible_and_invalid_dates_fail ... ok
+test tests::edge_cases::withdrawing_object_reference_also_suppresses_correction_replacements ... ok
+test tests::memory_pages::v276_continuations_bind_query_permissions_budget_and_prefix ... ok
+test tests::memory_pages::v276_pages_reach_beyond_old_top64_with_tied_exact_times_and_no_state ... ok
+test tests::memory_pages::v276_panel_byte_pages_keep_original_text_and_resume_without_omissions ... ok
+test tests::memory_pages::v288_all_six_accepted_reactions_are_marked_and_core_cannot_recall_them ... ok
+test tests::memory_pages::v288_backfilled_reactions_keep_both_times_permissions_and_withdrawals ... ok
+test tests::memory_pages::v288_core_ranking_and_cost_do_not_depend_on_reaction_content_or_count ... ok
+test tests::memory_pages::v288_missing_reaction_object_clears_the_entire_memory_result ... ok
+test tests::retraction_zero_in_one_hundred_task_queries_and_audit_preserves_original ... ok
+test tests::structural_allowlist_excludes_unaccepted_wrapped_explanations_and_core_reactions ... ok
+test tests::sys05_five_distinct_results_and_real_positive_control ... ok
+test tests::trigram_and_short_unicode_literal_queries_are_not_fts_syntax ... ok
+
+test result: ok. 15 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 63.51s
+
+   Doc-tests fact_view
+
+running 1 test
+test crates\fact-view\src\index.rs - index::FactView (line 12) - compile fail ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+

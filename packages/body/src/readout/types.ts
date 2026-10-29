@@ -1,26 +1,10 @@
-import type { BodyReadout, Emotion } from '@nemu/contracts';
+import type { BodyReadoutV2 } from '@nemu/contracts';
 
 export type CoreConnectionStatus =
-  | 'CONNECTED'
-  | 'DISCONNECTED'
-  | 'CORE_UNMODULATED'
-  | 'CORE_QUARANTINED';
+  'CONNECTED' | 'DISCONNECTED' | 'CORE_UNMODULATED' | 'MODULATION_NOT_ENABLED';
 
 export interface ReadoutApplicatorOptions {
-  /**
-   * Fixed smoothing transition duration in seconds (default: 2.0s per CONTRACTS.md 7).
-   */
+  /** Fixed animation transition, not core state or learned parameters. */
   smoothingDurationSec?: number | undefined;
-
-  /**
-   * Callback fired whenever smoothed readout values update.
-   */
-  onReadoutUpdated?: ((readout: BodyReadout) => void) | undefined;
-
-  /**
-   * Callback fired when smoothed idleTempo updates.
-   */
-  onIdleTempoUpdated?: ((idleTempo: number) => void) | undefined;
+  onReadoutUpdated?: ((readout: BodyReadoutV2) => void) | undefined;
 }
-
-export type ExpressionBaselineMap = Partial<Record<Emotion, number>>;

@@ -2,7 +2,7 @@ use crate::{Error, Fault, FaultPoint, LineageKind, Result, StoreConfig, error::r
 use core_types::{
     WireMessage,
     contract::{Reader as ByteReader, Schema, append_blob},
-    generated::{ObjectRef, RSnapshotV2},
+    generated::{ObjectRef, RSnapshotV2, RSnapshotV3},
     scalar::{DecimalU64, HexBytes, hex, unhex},
 };
 use serde_json::Value;
@@ -78,7 +78,7 @@ impl Objects {
         fault: &Fault,
     ) -> Result<PreparedObject<L>> {
         require(
-            !T::SUPERSEDED,
+            !T::SUPERSEDED && T::PERSISTABLE,
             "new writes must use the active successor message",
         )?;
         let r = self.reference(value, version)?;
@@ -101,14 +101,14 @@ impl Objects {
     }
     /// Physical segmentation only: reassembly is byte-identical to generated CanonicalV1.
     /// The index contains the canonical prefix and generated ObjectRef values, never a
-    /// second R schema. Unchanged TendencyV2 files are reused by digest.
+    /// second R schema. Unchanged TendencyV3 files are reused by digest.
     pub fn prepare_r<L: LineageKind>(
         &self,
-        value: &RSnapshotV2,
+        value: &RSnapshotV3,
         fault: &Fault,
     ) -> Result<PreparedObject<L>> {
         let logical = value.canonical_bytes(self.config.encoding)?;
-        let canonical = RSnapshotV2::from_canonical(&logical, self.config.encoding)?;
+        let canonical = RSnapshotV3::from_canonical(&logical, self.config.encoding)?;
         let r = self.reference(&canonical, &canonical.revision)?;
         let mut empty = canonical.clone();
         empty.tendencies.clear();
@@ -225,8 +225,10 @@ impl Objects {
         )?;
         let disk = fs::read(path)?;
         let bytes = if disk.starts_with(b"NSI1") {
+            let schema = Schema::builtin()?;
             require(
-                r.object_type == Schema::builtin()?.message(RSnapshotV2::NAME)?.tag,
+                r.object_type == schema.message(RSnapshotV2::NAME)?.tag
+                    || r.object_type == schema.message(RSnapshotV3::NAME)?.tag,
                 "index has wrong logical type",
             )?;
             let mut input = ByteReader::new(&disk[4..], self.config.encoding)?;

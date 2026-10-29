@@ -7,6 +7,7 @@ mod error;
 mod fault;
 mod ingress;
 mod lineage;
+mod migration;
 mod objects;
 #[allow(unsafe_code)]
 mod platform;
@@ -16,6 +17,7 @@ mod reader;
 mod recovery;
 mod schema;
 mod store;
+mod terminal_ingress;
 mod transaction;
 mod witness;
 
@@ -24,6 +26,7 @@ pub use error::{Error, Result};
 pub use fault::{Fault, FaultPoint};
 pub use lineage::{Experiment, Life, LineageKind, Rehearsal, TemporaryRoot};
 pub use objects::PreparedObject;
+pub use queries::EvidenceGroupRecord;
 pub use reader::Reader;
 pub use store::Store;
 pub use transaction::{CommitCapability, PreparedTransaction, ReadTicket};

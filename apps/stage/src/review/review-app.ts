@@ -8,7 +8,7 @@ import {
   adaptOutlineWidth,
   AnimationCompositor,
 } from '@nemu/avatar-runtime';
-import type { NemuProfile, Emotion } from '@nemu/contracts';
+import type { NemuProfile, Emotion, BodyReadoutV2, BodyReadoutMapping } from '@nemu/contracts';
 import { TurntableController, type TurntablePreset } from './turntable.js';
 import { LightingAndBackgroundManager, type LightingPreset, type BackgroundPreset } from './lighting-bg.js';
 import { SpringBoneInspector } from './spring-bones.js';
@@ -82,10 +82,8 @@ export class ReviewApp {
     this.readoutApplicator = new ReadoutApplicator({
       smoothingDurationSec: 2.0,
       onReadoutUpdated: (readout) => {
-        this.compositor.applyReadout(readout);
-      },
-      onIdleTempoUpdated: (tempo) => {
-        this.idleScheduler.setIdleTempo(tempo);
+        const mapped = this.compositor.applyReadout(readout);
+        this.idleScheduler.setIdleTempo(mapped.idleTempo);
       },
     });
 
@@ -113,6 +111,7 @@ export class ReviewApp {
 
       // Bind subsystems
       this.compositor.bindAvatar(vrm, profile);
+      this.applyBodyReadout({});
       this.springInspector.bindVRM(vrm);
       if (profile.idleSet) {
         this.idleScheduler.setIdleSet(profile.idleSet);
@@ -316,27 +315,16 @@ export class ReviewApp {
     });
   }
 
-  applyBodyReadout(params: {
-    posture?: number;
-    idleTempo?: number;
-    earPose?: number;
-    tailAmplitude?: number;
-    gazeSociability?: number;
-    expressionBaseline?: number;
-  }): void {
-    const currentTarget = this.readoutApplicator.getTargetReadout();
+  applyBodyReadout(params: Partial<Pick<BodyReadoutV2, 'facing' | 'tension' | 'energy'>>): void {
     this.readoutApplicator.applyReadout({
-      version: '1.0',
-      posture: params.posture ?? currentTarget.posture,
-      idleTempo: params.idleTempo ?? currentTarget.idleTempo,
-      earPose: params.earPose ?? currentTarget.earPose,
-      tailAmplitude: params.tailAmplitude ?? currentTarget.tailAmplitude,
-      gazeSociability: params.gazeSociability ?? currentTarget.gazeSociability,
-      expressionBaseline:
-        params.expressionBaseline !== undefined
-          ? { relaxed: params.expressionBaseline }
-          : currentTarget.expressionBaseline,
+      ...this.readoutApplicator.getTargetReadout(), ...params,
     });
+  }
+
+  setBodyReadoutMapping(mapping: BodyReadoutMapping): void {
+    this.compositor.setReadoutMapping(mapping);
+    const mapped = this.compositor.applyReadout(this.readoutApplicator.getCurrentReadout());
+    this.idleScheduler.setIdleTempo(mapped.idleTempo);
   }
 
   updateSpringParameters(params: {
@@ -398,26 +386,9 @@ export class ReviewApp {
 
   selectMotion(motionId: string): void {
     if (!this.currentVrm) return;
-    if (motionId === 'idle_stand') {
-      this.compositor.applyReadout({
-        version: '1.0',
-        posture: 0,
-        idleTempo: 1.0,
-        earPose: 0,
-        tailAmplitude: 0.5,
-        gazeSociability: 0.5,
-        expressionBaseline: { relaxed: 0 },
-      });
-    } else if (motionId === 'idle_relaxed') {
-      this.compositor.applyReadout({
-        version: '1.0',
-        posture: -0.4,
-        idleTempo: 0.7,
-        earPose: 0.3,
-        tailAmplitude: 0.3,
-        gazeSociability: 0.7,
-        expressionBaseline: { relaxed: 0.3 },
-      });
+    if (motionId === 'idle_stand' || motionId === 'idle_relaxed') {
+      // Selecting a motion never overrides the core's readout.
+      return;
     } else if (motionId === 'wave') {
       const rightUpperArm = this.currentVrm.humanoid.getNormalizedBoneNode('rightUpperArm');
       if (rightUpperArm) {
@@ -437,7 +408,8 @@ export class ReviewApp {
     } else if (motionId === 'fidget_stretch') {
       const spine = this.currentVrm.humanoid.getNormalizedBoneNode('spine');
       if (spine) {
-        spine.rotation.set(-0.2, 0, 0);
+        const amplitude = this.compositor.applyReadout(this.readoutApplicator.getCurrentReadout()).motionAmplitude;
+        spine.rotation.set(-0.2 * amplitude, 0, 0);
       }
     }
   }

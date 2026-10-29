@@ -1,0 +1,20 @@
+{
+  "recordedUtc": "2026-10-26T10:37:41.8622902Z",
+  "instruction": "仅提前已有日志参数；参数值和判据不变；补测两种量化速度/IRL，注入不重跑；每次请求更新向量前必须显式清理 KV，作为 P5-13 约束",
+  "resourceReply": "作业已结束，runner 已停",
+  "estimatedWindow": "1–2 hours",
+  "initialObservedProcesses": [
+    {
+      "Id": 67628,
+      "ProcessName": "Runner.Listener"
+    },
+    {
+      "Id": 69924,
+      "ProcessName": "Runner.Worker"
+    }
+  ],
+  "sourceOnlyChange": "spikes/carrier-engine/http_probe.py args order",
+  "measurementStarted": false,
+  "mergedMain": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+  "mergeCommit": "094e02a68be57a05532cf461c7a9632774217799"
+}

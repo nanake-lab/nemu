@@ -9,7 +9,7 @@ import {
 } from './geometry.js';
 import { forwardedAppBusEventSchema } from './appbus.js';
 import { performanceCueSchema } from './performance.js';
-import { bodyReadoutSchema } from './readout.js';
+import { bodyReadoutSchema, bodyReadoutV2Schema } from './readout.js';
 import { mirroredStagePayloads } from './stage-events.js';
 import { dndStateSchema, langSchema } from './vocabulary.js';
 export * from './geometry.js';
@@ -25,6 +25,7 @@ export const controlCommandPayloads = {
   'stage.perform': z.strictObject({ cue: performanceCueSchema }),
   'stage.action': z.strictObject({ actionId: z.string(), action: bodyActionSchema }),
   'stage.readout': z.strictObject({ readout: bodyReadoutSchema }),
+  'stage.readout.v2': z.strictObject({ readout: bodyReadoutV2Schema }),
   'stage.event': z.strictObject({ event: forwardedAppBusEventSchema }),
   'stage.gaze': z.strictObject({ target: gazeTargetSchema, holdMs: z.number().optional() }),
   'stage.setQuality': z.strictObject({

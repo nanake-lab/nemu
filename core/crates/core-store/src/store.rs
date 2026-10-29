@@ -80,7 +80,7 @@ impl<L: LineageKind> Store<L> {
         let tx = db.transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)?;
         schema::create(&tx)?;
         tx.execute(
-            "INSERT INTO metadata VALUES(1,1,?1,?2,?3,?4)",
+            "INSERT INTO metadata VALUES(1,2,?1,?2,?3,?4)",
             params![root.to_string_lossy(), temporary, encoded, branch],
         )?;
         tx.commit()?;
@@ -113,15 +113,29 @@ impl<L: LineageKind> Store<L> {
         let root = root.canonicalize()?;
         platform::local_volume(&root, temporary)?;
         let writer = platform::writer_lock(&root)?;
+        // Reject legacy heads before opening any writable connection: its last
+        // close can checkpoint and delete an existing WAL even without SQL writes.
+        // Hold the writer lock across this read-only check and the writable reopen.
+        let readonly = Connection::open_with_flags(
+            root.join("store.sqlite"),
+            OpenFlags::SQLITE_OPEN_READ_ONLY,
+        )?;
+        let (header, branch) = check_header::<L>(&readonly, &root, config, temporary)?;
+        let objects = Objects::new(root.join("objects"), config);
+        require_writable_head(&readonly, &objects)?;
+        require(
+            crate::migration::format(&readonly)? == 2,
+            "physical format 1 requires explicit migration to format 2",
+        )?;
+        drop(readonly);
         // No CREATE flag: missing/corrupt stores never silently become a new life.
         let db = Connection::open_with_flags(
             root.join("store.sqlite"),
             OpenFlags::SQLITE_OPEN_READ_WRITE,
         )?;
-        let (header, branch) = check_header::<L>(&db, &root, config, temporary)?;
         schema::configure(&db, config, true)?;
         let store = Self {
-            objects: Objects::new(root.join("objects"), config),
+            objects,
             root,
             db,
             branch,
@@ -146,14 +160,15 @@ impl<L: LineageKind> Store<L> {
     }
     pub fn prepare<T: WireMessage>(&self, value: &T, version: &str) -> Result<PreparedObject<L>> {
         require(
-            T::NAME != core_types::generated::RSnapshotV2::NAME,
+            T::NAME != core_types::generated::RSnapshotV2::NAME
+                && T::NAME != core_types::generated::RSnapshotV3::NAME,
             "R snapshots must use prepare_r",
         )?;
         self.objects.prepare(value, version, &self.fault)
     }
     pub fn prepare_r(
         &self,
-        value: &core_types::generated::RSnapshotV2,
+        value: &core_types::generated::RSnapshotV3,
     ) -> Result<PreparedObject<L>> {
         self.objects.prepare_r(value, &self.fault)
     }
@@ -292,7 +307,7 @@ pub(crate) fn check_header<L: LineageKind>(
     temporary: bool,
 ) -> Result<(LineageHeaderV2, String)> {
     require(
-        db.pragma_query_value(None, "user_version", |r| r.get::<_, i32>(0))? == 1,
+        matches!(crate::migration::format(db)?, 1 | 2),
         "unknown storage format; explicit migration required",
     )?;
     let (format, location, is_temp, bytes, branch): (i32, String, bool, Vec<u8>, String) = db
@@ -303,7 +318,7 @@ pub(crate) fn check_header<L: LineageKind>(
         )?;
     let header = LineageHeaderV2::from_canonical(&bytes, config.encoding)?;
     require(
-        format == 1 && header.lineage == L::KIND,
+        format == crate::migration::format(db)? && header.lineage == L::KIND,
         "lineage or storage format mismatch",
     )?;
     require(
@@ -362,6 +377,19 @@ pub(crate) fn publish_refs(db: &Connection, refs: &[ObjectRef], config: StoreCon
         } else {
             db.execute("INSERT INTO object_refs VALUES(?1,?2)", params![key, bytes])?;
         }
+    }
+    Ok(())
+}
+
+pub(crate) fn require_writable_head(db: &Connection, objects: &Objects) -> Result<()> {
+    if let Some(head) = current(db, objects)? {
+        require(
+            head.staged_r.object_type
+                != core_types::contract::Schema::builtin()?
+                    .message(core_types::generated::RSnapshotV2::NAME)?
+                    .tag,
+            "V2 R head is read-only; P5-26 G/H replay is required before writing",
+        )?;
     }
     Ok(())
 }

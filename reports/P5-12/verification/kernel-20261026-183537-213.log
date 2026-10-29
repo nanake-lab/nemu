@@ -1,0 +1,101 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling typenum v1.20.1
+   Compiling hybrid-array v0.4.15
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling syn v3.0.9
+   Compiling crypto-common v0.2.2
+   Compiling block-buffer v0.12.1
+   Compiling const-oid v0.10.2
+   Compiling serde_json v1.0.154
+   Compiling serde v1.0.229
+   Compiling digest v0.11.3
+   Compiling serde_derive v1.0.229
+   Compiling cfg-if v1.0.5
+   Compiling libm v0.2.16
+   Compiling cpufeatures v0.3.1
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling sha2 v0.11.1
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-12\core\crates\core-types)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-12\core\crates\core-kernel)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.18s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-12\target\debug\deps\core_kernel-5ef562413aa4b2f3.exe)
+
+running 65 tests
+test effects::tests::adr0008_composition_law_and_no_time_dependence ... ok
+test effects::tests::direction_validation_is_passed_through_without_changing_drive ... ok
+test effects::tests::effects_are_in_canonical_tendency_order_whatever_the_input_order ... ok
+test effects::tests::evaluate_uses_fixed_product_order ... ok
+test effects::tests::f_sum_is_summed_in_canonical_order ... ok
+test effects::tests::i06_candidates_have_no_effect_on_x_or_m ... ok
+test effects::tests::i21_inputs_are_only_borrowed_and_repeated_calls_agree ... ok
+test effects::tests::situation_match_outside_its_domain_is_refused ... ok
+test effects::tests::stored_values_outside_their_domain_are_refused ... ok
+test effects::tests::strength_matches_v2_formula_and_has_no_negative_zero ... ok
+test effects::tests::theta_outside_its_domain_is_refused ... ok
+test effects::tests::unlisted_match_is_zero_and_negative_zero_is_normalized ... ok
+test fast::tests::ac2_15_contraction_holds_on_intervals_with_events ... ok
+test fast::tests::ac2_15_without_events_x_relaxes_to_rest ... ok
+test fast::tests::drive_bounds::f02_contributions_are_summed_in_canonical_order ... ok
+test fast::tests::drive_bounds::f02_inconsistent_sum_is_rejected_even_when_within_bound ... ok
+test fast::tests::drive_bounds::f02_learned_out_of_range_or_nonfinite_is_rejected_before_weighting ... ok
+test fast::tests::drive_bounds::f02_nonfinite_eta_contributions_and_sum_are_rejected ... ok
+test fast::tests::drive_signature_has_no_fast_state ... ok
+test fast::tests::empathy_weight_takes_the_closest_person ... ok
+test fast::tests::event_map::ac2_15_zero_delta_direct_event_map_is_nonexpansive ... ok
+test fast::tests::event_map::direct_event_map_has_independent_reference_with_saturation ... ok
+test fast::tests::f01_piecewise_projection_and_no_accumulated_decay ... ok
+test fast::tests::f02_invalid_inputs_are_refused_not_repaired ... ok
+test fast::tests::f02_projection_and_drive_stay_in_x ... ok
+test fast::tests::f03_lambda_zero_is_rejected ... ok
+test fast::tests::f03_two_histories_converge_after_driving_stops ... ok
+test fast::tests::f05_f_out_is_identity_when_r_plus_is_unchanged_and_aligns_otherwise ... ok
+test fast::tests::f05_same_event_gives_the_same_pulse ... ok
+test fast::tests::internal_count_follows_the_event_classes ... ok
+test fast::tests::kappa_power_matches_direct_products_and_vanishes_for_large_n ... ok
+test fast::tests::missing_appraisal_keeps_only_the_tendency_effects ... ok
+test fast::tests::rates::f02_extreme_finite_rates_through_authorized_compiler ... ok
+test fast::tests::rates::f02_projection_refuses_invalid_derived_rate_and_baseline ... ok
+test fast::tests::rates::learned_rate_matches_independent_reference_and_range ... ok
+test fast::tests::rates::learned_rate_mixed_scales_match_exact_rational_vectors ... ok
+test fast::tests::rates::learned_rate_review_counterexample_agrees_through_public_projection ... ok
+test fast::tests::recovery_reset_and_washout ... ok
+test fast::tests::self_caused_events_are_weighted_by_kappa_powers ... ok
+test fast::tests::snapshot_round_trip_is_bit_exact ... ok
+test fast::tests::snapshot_with_unknown_representation_is_refused ... ok
+test fast::tests::state_boundaries::f02_negative_zero_is_rejected_by_validator_and_normalized_at_construction ... ok
+test fast::tests::state_boundaries::negative_zero_recovery_and_snapshot_preserve_canonical_zero_delta ... ok
+test fast::tests::state_boundaries::snapshot_decoder_rejects_noncanonical_negative_zero_bytes ... ok
+test fast::tests::zero_delta_is_identity_bit_for_bit ... ok
+test modulation::tests::boundaries::changed_concept_and_misaligned_x_are_not_silently_repaired ... ok
+test modulation::tests::boundaries::invalid_state_and_reversed_time_fail_without_reusing_a_previous_result ... ok
+test modulation::tests::boundaries::j06_budget_rounding_matches_independent_exact_rational_vectors ... ok
+test modulation::tests::boundaries::j06_cancellation_and_zero_state_do_not_evade_configuration_budget ... ok
+test modulation::tests::boundaries::j06_individual_beta_and_nonfinite_inputs_are_rejected ... ok
+test modulation::tests::boundaries::j06_outward_sum_catches_sub_ulp_over_budget_without_inflating_exact_sum ... ok
+test modulation::tests::boundaries::malformed_references_duplicate_ids_and_empty_concepts_are_refused ... ok
+test modulation::tests::boundaries::validation_cannot_be_reused_for_another_model_tokenizer_carrier_or_direction_set ... ok
+test modulation::tests::deterministic_projection_replay_and_input_immutability ... ok
+test modulation::tests::fixed_dyadic_samples_obey_absolute_bound_and_nonconstant_j ... ok
+test modulation::tests::generated_numeric_and_body_types_pass_existing_canonical_codec ... ok
+test modulation::tests::j06_candidates_cannot_affect_m_even_with_available_direction ... ok
+test modulation::tests::j06_positive_two_layers_match_independent_exact_coefficients ... ok
+test modulation::tests::j06_unvalidated_and_missing_directions_are_excluded_and_reported ... ok
+test modulation::tests::readouts::body_clamps_all_three_axes_and_has_no_learned_component ... ok
+test modulation::tests::readouts::body_nonfinite_or_overflow_is_not_hidden_by_clipping ... ok
+test modulation::tests::readouts::f_disabled_is_explicitly_rehearsal_only_and_matches_zero_readout ... ok
+test modulation::tests::readouts::numerical_zero_modulation_keeps_body_neutral_even_for_nonzero_x ... ok
+test modulation::tests::storage_and_configuration_order_do_not_change_numeric_results ... ok
+test modulation::tests::zero_and_rest_are_distinct_and_do_not_subtract_baseline ... ok
+
+test result: ok. 65 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.49s
+
+   Doc-tests core_kernel
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,19 @@
+{
+  "id": "THETA-1",
+  "result": "passed",
+  "code_commit": "0cf1605339a0cd387a5e7f10a7d3bba9f9897e88",
+  "scope": "V2-93 normative x*x oracle; original 500 streams and 72822 events; exact bits and original properties",
+  "tests": [
+    "dynamics::tests::binary64::theta_1_binary64_500_original_streams_zero_bit_differences"
+  ],
+  "evidence": "../closeout-20261026/checks/attempt-2/workspace.log",
+  "historical_results_preserved": true,
+  "legacy_diagnostic": "Original **2 comparison remains a known failure and is explicitly ignored in regular tests under user authorization.",
+  "explicit_legacy_result": {
+    "result": "failed",
+    "exit_code": 101,
+    "left_bits": "4602808250010281358",
+    "right_bits": "4602808250010281359",
+    "evidence": "../closeout-20261026/checks/attempt-2/legacy-diagnostic.log"
+  }
+}

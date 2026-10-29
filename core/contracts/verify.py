@@ -85,6 +85,7 @@ def main() -> None:
             "--outDir",
             "packages/contracts/src/generated/.test-build",
             "core/contracts/probe.ts",
+            "core/contracts/check_retention_browser.ts",
         ]
     )
     legal = json.loads((HERE / "golden/legal.json").read_text(encoding="utf-8"))
@@ -243,6 +244,9 @@ def main() -> None:
             ),
         ],
     }
+    for vector in json.loads((HERE / "golden/ingress.json").read_text(encoding="utf-8")):
+        queries.append(vector["request"])
+        expected.append(vector["expected"])
     for language, command in commands.items():
         actual = probe(command, queries)
         for i, (got, want) in enumerate(zip(actual, expected, strict=True)):
@@ -250,6 +254,7 @@ def main() -> None:
             if want["ok"]:
                 assert got == want, (language, i, queries[i]["name"], got, want)
         print(f"{language}: {len(actual)} cases PASS")
+    run(["node", str(ROOT / "packages/contracts/src/generated/.test-build/core/contracts/check_retention_browser.js")])
     counts = collections.Counter("legal" if e["ok"] else "illegal" for e in expected)
     print(
         json.dumps(
