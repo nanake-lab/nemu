@@ -183,6 +183,20 @@
    "effort": "3 天"
   },
   {
+   "id": "P0-11",
+   "title": "--cache-ram 0 TTFT 补测",
+   "phase": "P0",
+   "milestone": "E3",
+   "deps": [
+    "P0-10"
+   ],
+   "difficulty": "低",
+   "suggested": "Codex",
+   "you": "安排下一个 GPU 安静窗口",
+   "effort": "一个 GPU 窗口及报告",
+   "note": "E3 前置，仅测量；见 ADR 0031，不新增截止阈值。"
+  },
+  {
    "id": "P1-01",
    "title": "舞台渲染器",
    "phase": "P1",
@@ -1427,7 +1441,8 @@
    "phase": "P6",
    "deps": [
     "P4-06",
-    "P6-02"
+    "P6-02",
+    "P0-11"
    ],
    "difficulty": "中",
    "suggested": "Codex",
@@ -1504,6 +1519,7 @@
     "P0-08",
     "P0-09",
     "P0-10",
+    "P0-11",
     "P1-01",
     "P1-02",
     "P1-03",
