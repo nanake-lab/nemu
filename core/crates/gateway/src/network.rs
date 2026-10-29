@@ -58,7 +58,10 @@ async fn run<S: AsyncRead + AsyncWrite + Unpin>(
     loop {
         // Keep the SAME read future alive while writing delayed core receipts.
         // Cancelling/restarting a partial frame would desynchronize the stream.
-        let read = reader.read::<TerminalRequest>();
+        // No new frame exists until its first byte arrives. Normal waiting for
+        // a request/commit receipt is bounded by the actor's session lifetime,
+        // not by the partial-frame deadline or an INVALID_FRAME audit record.
+        let read = reader.read_after_idle::<TerminalRequest>();
         tokio::pin!(read);
         let request = loop {
             tokio::select! {

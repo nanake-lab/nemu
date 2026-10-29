@@ -11,7 +11,12 @@ protocol types, business permission store, or growth operators.
   concurrent clients share one serial Store actor; the 16-instance kernel ceiling
   leaves space for rotation. EXPERIMENT is rejected before binding.
 - Pre-authentication framing uses static deployment byte/item/depth/deadline
-  limits. Only the generated `TerminalAuthenticate` is accepted first. DPAPI
+  limits, including time to the first byte. After authentication, waiting for the
+  first byte of the next request is normal idle under the actor's session lifetime;
+  it does not consume rejection audit. The single partial-frame deadline starts
+  at that first byte and covers the rest of the header/body without resetting.
+  The same read future stays alive while delayed receipts are written. Only the
+  generated `TerminalAuthenticate` is accepted first. DPAPI
   protects the 256-bit per-installation token at rest; token buffers are zeroizing,
   comparison uses `subtle`, and no credential is logged or persisted in core-store.
   Every connection gets a fresh random session with server-owned identity,

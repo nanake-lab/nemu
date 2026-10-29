@@ -45,7 +45,37 @@ impl<S> Framed<S> {
     }
 }
 impl<S: AsyncRead + Unpin> Framed<S> {
+    /// Whole-operation bound, including the first byte (e.g. authentication).
     pub async fn read<T: WireMessage>(&mut self) -> Result<T> {
+        self.read_frame(false).await
+    }
+    /// Authenticated connections may wait normally before a new frame begins.
+    /// The caller must enforce session lifetime and retain this same future
+    /// while forwarding delayed replies. Partial frames still have one deadline.
+    #[cfg(windows)]
+    pub(crate) async fn read_after_idle<T: WireMessage>(&mut self) -> Result<T> {
+        self.read_frame(true).await
+    }
+    async fn first_byte(&mut self, header: &mut [u8; 4]) -> Result<()> {
+        match self.stream.read(&mut header[..1]).await {
+            Ok(0) => Err(Error::Disconnected),
+            Ok(_) => Ok(()),
+            Err(e)
+                if matches!(
+                    e.kind(),
+                    std::io::ErrorKind::BrokenPipe
+                        | std::io::ErrorKind::ConnectionReset
+                        | std::io::ErrorKind::ConnectionAborted
+                        | std::io::ErrorKind::NotConnected
+                        | std::io::ErrorKind::UnexpectedEof
+                ) =>
+            {
+                Err(Error::Disconnected)
+            }
+            Err(e) => Err(e.into()),
+        }
+    }
+    async fn read_frame<T: WireMessage>(&mut self, allow_idle: bool) -> Result<T> {
         if self.failed {
             return Err(Error::Rejected("connection is closed"));
         }
@@ -55,10 +85,13 @@ impl<S: AsyncRead + Unpin> Framed<S> {
             return Err(Error::Rejected("superseded inbound message"));
         }
         let limits = self.config.encoding;
+        let mut header = [0; 4];
+        if allow_idle {
+            self.first_byte(&mut header).await?;
+        }
         let result = tokio::time::timeout(self.config.deadline, async {
-            let mut header = [0; 4];
-            if self.stream.read(&mut header[..1]).await? == 0 {
-                return Err(Error::Disconnected);
+            if !allow_idle {
+                self.first_byte(&mut header).await?;
             }
             self.stream.read_exact(&mut header[1..]).await?;
             let size = u32::from_le_bytes(header) as usize;

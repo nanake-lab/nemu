@@ -1,9 +1,9 @@
 {
   "acceptance_id": "SYS01",
-  "status": "not_run",
-  "boundary": "Native gateway end-to-end and abrupt-process recovery passed; physical-power-loss acceptance awaits user decision",
-  "main_baseline": "f24f1256259c998bc213a9dc93103fcfb9cfe89a",
-  "source_manifest": "../post-P5-35/runs/20261028-031757-eacd958a2dd1477db4a35670efa11b66/source-manifest.json",
+  "status": "passed",
+  "boundary": "User-accepted P5-03 scope: three actual abrupt-process cases and fresh-process recovery; physical power loss remains not_run and is not equivalent",
+  "main_baseline": "787fd2bec82f17b247158a0a985c3ee2c214af03",
+  "source_manifest": "../review-20261029/runs/20261029-143622-83651cd71d7347578b63c9a675d67c63/source-manifest.json",
   "subitems": {
     "authenticated_upload_dispatch": "passed",
     "durable_vs_committed_receipt": "passed",
@@ -16,5 +16,12 @@
     "acknowledged_uncommitted_process_kill_recovery": "passed",
     "physical_power_loss": "not_run"
   },
-  "profile": "synthetic temporary storage; actual Windows pipe, DPAPI, Store transactions; no growth behavior claim"
+  "profile": "synthetic temporary storage; actual Windows pipe, DPAPI, Store transactions; no growth behavior claim",
+  "acceptance_decision": {
+    "date": "2026-10-29",
+    "authority": "explicit user decision in this task",
+    "verbatim": "../review-20261029/user-acceptance.txt",
+    "durability_inventory": "../review-20261029/DURABILITY.md",
+    "physical_power_loss_followup": "E4 storage and backup; user decides whether to test"
+  }
 }

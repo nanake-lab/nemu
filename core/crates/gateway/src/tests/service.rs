@@ -2,6 +2,7 @@
 mod acceptance;
 mod adversarial;
 mod crash;
+mod idle;
 mod permissions;
 mod storage_failures;
 use super::*;

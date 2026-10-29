@@ -1,3 +1,4 @@
+param([string]$EvidenceRoot = $PSScriptRoot)
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false
 $env:CARGO_HOME = 'D:\Dev\cache\cargo'
@@ -10,7 +11,7 @@ $env:TEMP = 'D:\Dev\cache\P5-03\tmp'
 $env:TMP = $env:TEMP
 New-Item -ItemType Directory -Force $env:TEMP | Out-Null
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '../../..')).Path
-$run = Join-Path $PSScriptRoot ('runs/' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + [guid]::NewGuid().ToString('N'))
+$run = Join-Path $EvidenceRoot ('runs/' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $run | Out-Null
 $env:NEMU_W18_EVIDENCE_DIR = Join-Path $run 'SYS01'
 $results = @()
@@ -48,9 +49,11 @@ try {
     foreach ($command in $commands) {
         Wait-HeavySlot
         $start = Get-Date
+        $log = Join-Path $run ($command.name + '.log')
+        New-Item -ItemType File -Path $log | Out-Null
         $ErrorActionPreference = 'Continue'
         $cargoArgs = $command.args
-        & cargo @cargoArgs 2>&1 | Tee-Object -FilePath (Join-Path $run ($command.name + '.log'))
+        & cargo @cargoArgs 2>&1 | Tee-Object -FilePath $log
         $code = $LASTEXITCODE
         $ErrorActionPreference = 'Stop'
         $results += [pscustomobject]@{ command=('cargo ' + ($command.args -join ' ')); exit_code=$code; started=$start.ToString('o'); elapsed_seconds=((Get-Date)-$start).TotalSeconds }
