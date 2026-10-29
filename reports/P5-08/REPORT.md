@@ -30,7 +30,7 @@ Windows；rustc `1.99.0 (b940084d7 2026-09-28)`；cargo `1.99.0 (5f94df478 2026-
 
 Fixture 来自基线冻结 golden/legal.json 的 canonical 字节，来源见包内 `tests/fixtures/README.md`。存储测试初始根明确为 **synthetic**，不是 genesis/完整 Q。数值适配器也是结构夹具：有非恒等 G/C 和 F_out 新维度正例，但不能声称真实成长或调制有效。
 
-验证增量：全工作区在 `2019efd7` 编译；随后只有 runtime 内部 IRL 非法输出降级、强化数值 bits/持久审计断言及 fixture 说明变化（`ac5aa7d3`）。没有公共接口、依赖、契约或其他 crate 源码变化，故重跑全部 runtime 测试和全工作区 Clippy/fmt；未重复无关包的长重放/崩溃测试。最终报告/证据提交不改源码。各项实际基线与文件哈希见 [manifest.json](validation/manifest.json)。
+验证增量：全工作区在 `2019efd7` 编译；随后只有 runtime 内部 IRL 非法输出降级、强化数值 bits/持久审计断言及 fixture 说明变化（`ac5aa7d3`）。没有公共接口、依赖、契约或其他 crate 源码变化，故重跑全部 runtime 测试和全工作区 Clippy/fmt；未重复无关包的长重放/崩溃测试。最终报告/证据提交不改源码。各项实际基线与文件哈希见 [manifest.json](validation/manifest.json)：source 哈希针对本机工作副本字节；validation 通过本目录 .gitattributes 保留原始字节，避免 Git 换行转换改变日志哈希。
 
 既有 ignored 为 core-kernel `theta_1_original_500_streams_zero_violations`（V2-93 legacy Python rounding diagnostic，指向既有失败报告）；本卡未增删忽略项，未重写旧验收结论。首次开发 check 还修正过三个生成 enum 名称拼写错误（TerminalLineage/Autonomy）；那一轮仅有对话工具输出，没有另存原始文件，不把它用作通过证据。
 
