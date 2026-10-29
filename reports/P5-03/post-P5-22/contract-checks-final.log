@@ -1,0 +1,111 @@
+Scope: all 14 workspace projects
+? Verifying lockfile against supply-chain policies (342 entries)...
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: D:\Dev\cache\pnpm\v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 198, reused 198, downloaded 0, added 184
+Update available! 12.11.2 → 12.15.0.
+Changelog: https://pnpm.io/v/12.15.0
+To update, run: Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
+✓ Lockfile passes supply-chain policies (342 entries in 11.2s)
+Lockfile is up to date, resolution step is skipped
+Packages: +237
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 237, reused 237, downloaded 0, added 237, done
+.../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+.../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+.../esbuild@0.27.7/node_modules/esbuild postinstall$ node install.js
+.../esbuild@0.27.7/node_modules/esbuild postinstall: Done
+.../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+.../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+
+devDependencies:
++ @eslint/js 10.0.1
++ @playwright/test 1.64.0
++ @types/node 24.19.2
++ @types/pixelmatch 7.1.0
++ @types/pngjs 6.0.5
++ @types/react 19.3.0
++ @types/react-dom 19.3.0
++ @vitest/coverage-v8 5.0.4
++ ajv 8.20.0
++ electron 44.7.0
++ electron-vite 5.0.0
++ eslint 10.12.0
++ pixelmatch 8.0.0
++ pngjs 7.0.0
++ prettier 3.9.10
++ tsx 4.21.0
++ typescript 6.0.3
++ typescript-eslint 8.71.2
++ vite 7.3.7
++ vitest 5.0.4
+
+Done in 12.1s using pnpm v12.11.2
+Using CPython 3.12.14
+Creating virtual environment at: D:\Dev\cache\P5-03\contracts-venv
+Resolved 17 packages in 1ms
+Installed 16 packages in 971ms
+ + colorama==0.4.6
+ + grpcio==1.84.0
+ + grpcio-tools==1.84.0
+ + iniconfig==2.3.1
+ + librt==0.16.0
+ + mypy==1.20.2
+ + mypy-extensions==1.1.0
+ + packaging==26.3
+ + pathspec==1.1.1
+ + pluggy==1.6.0
+ + protobuf==7.36.2
+ + pygments==2.21.0
+ + pytest==9.1.1
+ + ruff==0.15.6
+ + setuptools==84.0.0
+ + typing-extensions==4.16.0
+Compatibility against p5-01, p5-21, p5-32, current, origin/main: 0 violations; 137 messages (42 superseded), 51 enums
+$ vitest run --config packages/contracts/vitest.config.ts --coverage
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P5-03
+      Coverage enabled with v8
+
+
+ Test Files  7 passed (7)
+      Tests  350 passed (350)
+   Start at  00:05:24
+   Duration  995ms (import 46%, transform 34%, tests 15%, worker 5%)
+
+ % Coverage report from v8
+-----------------|---------|----------|---------|---------|-------------------
+File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------------|---------|----------|---------|---------|-------------------
+All files        |     100 |    97.46 |     100 |     100 |                   
+ performance.ts  |     100 |    97.05 |     100 |     100 | 185,204,233,238   
+ queries.ts      |     100 |       90 |     100 |     100 | 32                
+-----------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 233/233 )
+Branches     : 97.46% ( 192/197 )
+Functions    : 100% ( 41/41 )
+Lines        : 100% ( 206/206 )
+================================================================================
+$ python core/contracts/verify.py
+0 generated files stale
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.530s
+
+OK
+Compatibility against p5-01, p5-21, p5-32, current: 0 violations; 137 messages (42 superseded), 51 enums
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling syn v3.0.9
+   Compiling serde_derive v1.0.229
+   Compiling serde v1.0.229
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-types)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 13.37s
+Official protoc and protobuf runtime: 445 transport vectors PASS
+Rust: 10766 cases PASS
+Python: 10766 cases PASS
+TypeScript: 10766 cases PASS
+{"messages": 137, "cases_per_language": 10766, "legal": 2527, "illegal": 8239}

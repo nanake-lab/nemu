@@ -1,0 +1,10 @@
+P5-03 second-account ACL probe completed successfully on Windows 10.
+
+- Server account: `desktop-8lbf84o\nanake`
+- Client account: `desktop-8lbf84o\nemu`
+- Listener: `\\.\pipe\nemu-core-S-1-5-21-354449478-2150114251-2405058114-1001`
+- Result: `passed: different Windows SID received ERROR_ACCESS_DENIED (5)`
+- Exit code: `0`
+
+The cross-account access-denial check passed.\
+Please record this evidence in the P5-03 PR and continue the remaining checks. 两个窗口的原始输出附在下面（如有），请原样存进 reports/P5-03/ 作为证据，不要只记摘要。剩下的部分照常推进：SYS01 端到端、#57 合并后接入后继消息并复验；跨卡接口请求（tasks/requests/P5-03-gateway-interfaces.md）等 #57 合并后由用户另行安排，在此之前不要自行修改契约。

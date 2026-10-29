@@ -1,0 +1,27 @@
+{
+  "acceptance_id": "SYS01",
+  "status": "passed",
+  "boundary": "User-accepted P5-03 scope: three actual abrupt-process cases and fresh-process recovery; physical power loss remains not_run and is not equivalent",
+  "main_baseline": "787fd2bec82f17b247158a0a985c3ee2c214af03",
+  "source_manifest": "../review-20261029/runs/20261029-143622-83651cd71d7347578b63c9a675d67c63/source-manifest.json",
+  "subitems": {
+    "authenticated_upload_dispatch": "passed",
+    "durable_vs_committed_receipt": "passed",
+    "retransmission_conflict_id": "passed",
+    "gamma_duplicate_backlog_no_extra_core_transition": "passed",
+    "delayed_reverse_receipts": "passed",
+    "concurrent_terminals_reconnect": "passed",
+    "pre_sql_abrupt_exit_recovery": "passed",
+    "post_sql_pre_witness_abrupt_exit_recovery": "passed",
+    "acknowledged_uncommitted_process_kill_recovery": "passed",
+    "physical_power_loss": "not_run"
+  },
+  "profile": "synthetic temporary storage; actual Windows pipe, DPAPI, Store transactions; no growth behavior claim",
+  "acceptance_decision": {
+    "date": "2026-10-29",
+    "authority": "explicit user decision in this task",
+    "verbatim": "../review-20261029/user-acceptance.txt",
+    "durability_inventory": "../review-20261029/DURABILITY.md",
+    "physical_power_loss_followup": "E4 storage and backup; user decides whether to test"
+  }
+}

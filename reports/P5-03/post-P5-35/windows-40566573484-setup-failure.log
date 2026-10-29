@@ -1,0 +1,63 @@
+Windows self-hosted checks	Set up job	﻿2026-10-27T19:10:04.6272310Z Current runner version: '2.338.0'
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6279658Z Runner name: 'DESKTOP-8LBF84O'
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6280200Z Runner group name: 'Default'
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6280796Z Machine name: 'DESKTOP-8LBF84O'
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6282869Z ##[group]GITHUB_TOKEN Permissions
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6284273Z Contents: read
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6284668Z Metadata: read
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6285051Z ##[endgroup]
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6286421Z Secret source: Actions
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6287055Z Cache mode: write
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.6287526Z Prepare workflow directory
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.7012147Z Prepare all required actions
+Windows self-hosted checks	Set up job	2026-10-27T19:10:04.7048952Z Getting action download info
+Windows self-hosted checks	Set up job	2026-10-27T19:10:09.8653676Z Failed to resolve action download info. Error: The SSL connection could not be established, see inner exception.
+Windows self-hosted checks	Set up job	2026-10-27T19:10:09.8667248Z Retrying in 16.793 seconds
+Windows self-hosted checks	Set up job	2026-10-27T19:10:29.6641227Z Failed to resolve action download info. Error: The SSL connection could not be established, see inner exception.
+Windows self-hosted checks	Set up job	2026-10-27T19:10:29.6644758Z Retrying in 16.532 seconds
+Windows self-hosted checks	Set up job	2026-10-27T19:12:26.2015813Z ##[error]The HTTP request timed out after 00:01:40.
+Windows self-hosted checks	Set up job	2026-10-27T19:12:26.2040145Z ##[error]Failed to resolve action download info.
+Windows desktop and isolation	Require successful Windows checks	﻿2026-10-27T19:15:41.4057400Z ##[group]Run if [[ "$REPOSITORY" != 'nanake-lab/nemu' || "$ACTOR" != "$OWNER" || "$TRIGGERING_ACTOR" != "$OWNER" ]]; then
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4058446Z ^[[36;1mif [[ "$REPOSITORY" != 'nanake-lab/nemu' || "$ACTOR" != "$OWNER" || "$TRIGGERING_ACTOR" != "$OWNER" ]]; then^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4059278Z ^[[36;1m  echo '::error::Windows checks require the repository owner in nanake-lab/nemu.'^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4059918Z ^[[36;1m  exit 1^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4060372Z ^[[36;1mfi^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4060767Z ^[[36;1mcase "$EVENT" in^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4061134Z ^[[36;1m  pull_request)^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4061590Z ^[[36;1m    if [[ "$HEAD_REPOSITORY" != "$REPOSITORY" || "$DRAFT" != 'false' ]]; then^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4062340Z ^[[36;1m      echo '::error::Windows checks are blocked for fork or draft PRs; skipped is not a pass.'^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4062902Z ^[[36;1m      exit 1^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4063260Z ^[[36;1m    fi^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4063596Z ^[[36;1m    ;;^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4064068Z ^[[36;1m  push|workflow_dispatch)^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4064507Z ^[[36;1m    if [[ "$REF" != refs/heads/* ]]; then^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4065087Z ^[[36;1m      echo '::error::Windows checks require a branch in this repository.'^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4065597Z ^[[36;1m      exit 1^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4065942Z ^[[36;1m    fi^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4066363Z ^[[36;1m    ;;^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4066716Z ^[[36;1m  *)^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4067144Z ^[[36;1m    echo '::error::This event is not allowed to run Windows checks.'^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4067669Z ^[[36;1m    exit 1^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4068004Z ^[[36;1m    ;;^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4068381Z ^[[36;1mesac^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4068783Z ^[[36;1mif [[ "$WINDOWS_RESULT" != 'success' ]]; then^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4069585Z ^[[36;1m  echo "::error::Windows checks did not succeed (result: $WINDOWS_RESULT)."^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4070250Z ^[[36;1m  exit 1^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4070576Z ^[[36;1mfi^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.4071095Z ^[[36;1mecho 'Windows checks completed successfully on the trusted self-hosted runner.'^[[0m
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5073532Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5074354Z env:
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5074708Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5075082Z   UV_LINK_MODE: copy
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5075532Z   EVENT: workflow_dispatch
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5076175Z   REPOSITORY: nanake-lab/nemu
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5076574Z   ACTOR: nanake-lab
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5076941Z   TRIGGERING_ACTOR: nanake-lab
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5077327Z   OWNER: nanake-lab
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5077702Z   REF: refs/heads/task/P5-03-gateway
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5078080Z   HEAD_REPOSITORY: 
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5078390Z   DRAFT: 
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5078749Z   WINDOWS_RESULT: failure
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5079315Z ##[endgroup]
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5347560Z ##[error]Windows checks did not succeed (result: failure).
+Windows desktop and isolation	Require successful Windows checks	2026-10-27T19:15:41.5357578Z ##[error]Process completed with exit code 1.
