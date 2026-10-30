@@ -1,0 +1,164 @@
+{
+  "commit": "3bd67896ad593be1b4d1e1ef11964559434b041b",
+  "main": "787fd2bec82f17b247158a0a985c3ee2c214af03",
+  "dirty": [
+    " M core/crates/gateway/README.md",
+    " M core/crates/gateway/src/framing.rs",
+    " M core/crates/gateway/src/network.rs",
+    " M core/crates/gateway/src/tests/service.rs",
+    " M reports/P5-03/post-P5-35/check.ps1",
+    "?? core/crates/gateway/src/tests/service/idle.rs",
+    "?? reports/P5-03/review-20261029/"
+  ],
+  "captured": "2026-10-29T14:36:23.9205615+08:00",
+  "files": [
+    {
+      "path": "core/crates/gateway/src/tests/service/idle.rs",
+      "git_blob": "6c270e30e374c5e86223ee34aabce09a70848e34"
+    },
+    {
+      "path": ".github/workflows/windows.yml",
+      "git_blob": "c07ac07f242ad79e163af54cdefbc11ae34c9636"
+    },
+    {
+      "path": "core/Cargo.lock",
+      "git_blob": "f7b22052d7c2a79431dcebd6968109dbdd234a0c"
+    },
+    {
+      "path": "core/crates/gateway/Cargo.toml",
+      "git_blob": "e91862cb2f41896f343bbb946c199765a9a46578"
+    },
+    {
+      "path": "core/crates/gateway/README.md",
+      "git_blob": "8bda2e5c480fb1733f7ddd2d3761889ae7455311"
+    },
+    {
+      "path": "core/crates/gateway/build.rs",
+      "git_blob": "3d86f6fb77007fded98f5b05465770cc490d0f9d"
+    },
+    {
+      "path": "core/crates/gateway/examples/acl_probe.rs",
+      "git_blob": "e2836507105fceffa3358b4030975f6eba7b9ca3"
+    },
+    {
+      "path": "core/crates/gateway/src/auth.rs",
+      "git_blob": "411204754c631963c73584404361f787b97bc96d"
+    },
+    {
+      "path": "core/crates/gateway/src/authentication.rs",
+      "git_blob": "1da0879d3adfe5447681a68bff8c5ea75e86c77b"
+    },
+    {
+      "path": "core/crates/gateway/src/connection.rs",
+      "git_blob": "082b008060618ca7d757bda318056acbcee82b24"
+    },
+    {
+      "path": "core/crates/gateway/src/dispatch.rs",
+      "git_blob": "50166e3bbb871f558797d88e1d33ba6c28dd342e"
+    },
+    {
+      "path": "core/crates/gateway/src/framing.rs",
+      "git_blob": "737d650c31a19f10f117e4cd29909d9d605e9430"
+    },
+    {
+      "path": "core/crates/gateway/src/gateway.rs",
+      "git_blob": "38e39afd62e4dbd69d9b3a5254c6869631739b51"
+    },
+    {
+      "path": "core/crates/gateway/src/hooks.rs",
+      "git_blob": "435086373279d9f20e9ce7966b123bbe6a5a76e1"
+    },
+    {
+      "path": "core/crates/gateway/src/ingress.rs",
+      "git_blob": "23200d9778bc71d0b69363f140066ec9bc35d372"
+    },
+    {
+      "path": "core/crates/gateway/src/lib.rs",
+      "git_blob": "eb0dbbf6ca8e0c253e36f2174357c520f0d73a46"
+    },
+    {
+      "path": "core/crates/gateway/src/network.rs",
+      "git_blob": "1a1b7b3aa5245da1bc1a9537cff2cf97ff58e6c1"
+    },
+    {
+      "path": "core/crates/gateway/src/pipe.rs",
+      "git_blob": "8b3256bf7473f9b363d0c75d1a8fb018f5876c92"
+    },
+    {
+      "path": "core/crates/gateway/src/progress.rs",
+      "git_blob": "c2e7925ef10f18a47fb1c4cafb7c73bdf2a6bc9c"
+    },
+    {
+      "path": "core/crates/gateway/src/terminal.rs",
+      "git_blob": "d9788d51f42c69d72065dc8ac4907fd4b5f509a7"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/frames.rs",
+      "git_blob": "428634879c243de72985532169085a2be3b2515b"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/ingress.rs",
+      "git_blob": "115dcd5608f228120315d4c8614d60b6227dbcfc"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/mod.rs",
+      "git_blob": "a84fdd10817921f018670ac01c801a17115478d2"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/runtime_fixture.rs",
+      "git_blob": "61df6f906eddb09ca9dfbafe480c41dad5e9126c"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/service.rs",
+      "git_blob": "cf77010cceee4cb9d8452fc5d812e7e40f587d33"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/service/acceptance.rs",
+      "git_blob": "2e14971442fd25f0ee5b1744b0ab763239e5689e"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/service/adversarial.rs",
+      "git_blob": "748a2a65d683a0777eab7755bfa5789a1d6ef312"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/service/crash.rs",
+      "git_blob": "3a4e02469e830e8cf5f23efe35aa86101765ce3e"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/service/permissions.rs",
+      "git_blob": "f434f54a4c482e4a46576f6cc52116470035a934"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/service/storage_failures.rs",
+      "git_blob": "4cd10687b578066eff9c85ebcf232a566f493046"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/sys01_pipe.rs",
+      "git_blob": "281a96d321dc217e3d9e1ce1815d835e40e6fadd"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/terminal.rs",
+      "git_blob": "02ea5fb0171c825d120bf6cf681216da4581ea05"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/validation.rs",
+      "git_blob": "9fadbd89bae3f2035eae8f5affb003d677125789"
+    },
+    {
+      "path": "core/crates/gateway/src/tests/windows.rs",
+      "git_blob": "20fd437a5be3097fc70483a2c6c41fbc338d6d8f"
+    },
+    {
+      "path": "core/crates/gateway/src/uploads.rs",
+      "git_blob": "5f1b0377219ce05d26d9987774110ab37ee61ae2"
+    },
+    {
+      "path": "core/crates/gateway/src/validation.rs",
+      "git_blob": "1a42c2e179e3c82a655179aee4fae975606bacfa"
+    },
+    {
+      "path": "core/crates/gateway/src/windows.rs",
+      "git_blob": "6e138b3b9ba10006bfa90bf2a61c099d471a754a"
+    }
+  ]
+}

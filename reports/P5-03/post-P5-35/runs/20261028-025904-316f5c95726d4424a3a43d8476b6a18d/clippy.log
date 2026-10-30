@@ -1,0 +1,86 @@
+    Checking core-policy v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-policy)
+   Compiling sqlite-vec v0.1.9
+    Checking powerfmt v0.2.1
+    Checking time-core v0.1.6
+    Checking num-conv v0.1.0
+    Checking rusqlite v0.40.2
+    Checking core-types v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-types)
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\gateway)
+    Checking deranged v0.5.9
+    Checking time v0.3.44
+    Checking core-store v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-store)
+    Checking core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-kernel)
+    Checking semantic-core v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\semantic-core)
+    Checking action-gate v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\action-gate)
+    Checking task-layer v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\task-layer)
+    Checking core-replay v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-replay)
+    Checking core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-runtime)
+    Checking fact-view v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\fact-view)
+    Checking echoctl v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\echoctl)
+error: this `if` statement can be collapsed
+   --> crates\gateway\src\dispatch.rs:97:9
+    |
+ 97 | /         if let Some(e) = &r.event {
+ 98 | |             if e.payload_digest != e.payload_ref.digest {
+ 99 | |                 return Ok(Err(IngressReason::OBJECT_MISMATCH));
+100 | |             }
+101 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+ 97 ~         if let Some(e) = &r.event
+ 98 ~             && e.payload_digest != e.payload_ref.digest {
+ 99 |                 return Ok(Err(IngressReason::OBJECT_MISMATCH));
+100 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> crates\gateway\src\dispatch.rs:102:9
+    |
+102 | /         if let Some(u) = &r.upload {
+103 | |             if u.data.0.len() > c.session.budget.max_chunk_bytes as usize
+104 | |                 || u.object.byte_length.0 > u64::from(c.session.budget.max_object_bytes)
+...   |
+108 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+102 ~         if let Some(u) = &r.upload
+103 ~             && (u.data.0.len() > c.session.budget.max_chunk_bytes as usize
+104 ~                 || u.object.byte_length.0 > u64::from(c.session.budget.max_object_bytes))
+105 |             {
+106 |                 return Ok(Err(IngressReason::UPLOAD_BUDGET_FULL));
+107 ~             }
+    |
+
+error: this `if` statement can be collapsed
+  --> crates\gateway\src\progress.rs:8:9
+   |
+ 8 | /         if let Some(event) = self.store.next_raw()? {
+ 9 | |             if let Some(settled) = self.store.settle_duplicate()? {
+10 | |                 let reason = match settled.stage {
+11 | |                     ReceiptStage::FILTERED => None,
+...  |
+33 | |         }
+   | |_________^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+   |
+ 8 ~         if let Some(event) = self.store.next_raw()?
+ 9 ~             && let Some(settled) = self.store.settle_duplicate()? {
+10 |                 let reason = match settled.stage {
+...
+31 |                 return Ok(());
+32 ~             }
+   |
+
+error: could not compile `gateway` (lib) due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `gateway` (lib test) due to 3 previous errors

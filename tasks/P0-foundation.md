@@ -428,3 +428,34 @@ P0-08 实测本地载体去掉约束后只有约 21 token/s，瓶颈在 transfor
 - 列出给 P0-09 待补项的结论草稿：可选的引擎、注入方案、IRL 能否在可接受的时间内完成。不自行选型，由用户在 ADR 中决定。
 - 需要 GPU 安静窗口，按 AGENTS.md 第 9 节执行，与其他测量错开。
 - 新增依赖登记版本与许可（llama.cpp 为 MIT）。
+
+---
+
+## P0-11 --cache-ram 0 TTFT 补测
+
+- **建议执行者：** Codex
+- **难度：** 低
+- **里程碑：** E3 她有声音（前置测量）
+- **依赖：** P0-10
+- **工期：** 一个 GPU 窗口及报告
+- **分支：** `task/P0-11-cache-ram-zero-ttft`
+- **目录：** `reports/P0-11/`（使用既有 `spikes/carrier-engine/` 测量入口，不改生产实现）
+- **必读：** [ADR 0031](../docs/adr/0031-carrier-engine-and-injection.md)；`reports/P0-10/BENCHMARK-REPORT.md`、`benchmark-run-03/README.md` 与原始文件映射；AGENTS.md 第 9 节。
+
+### 目标
+
+在下一个用户安排的 GPU 安静窗口，确认 llama-server 禁用内存提示缓存后的客户端 TTFT。只测量，不选型、不实施载体迁移、不设置新的延迟或截止阈值。本卡是 E3 前置，P6-20 等待本卡完成；不新增 E2 依赖。
+
+### 测量与交付物
+
+- 沿用 P0-10 的 llama.cpp b11669、Q4_K_M 与模型修订 `cdbee75f17c01a7cc42f958dc650907174af0554`，使用既有固定输入和对应运行配置，在启动命令中显式设置 `--cache-ram 0`，请求显式设置 `cache_prompt=false`；m = 0。
+- 覆盖既有无约束与原 wire schema 输入，分别记录客户端 TTFT、原生 prefill 和两者的逐请求差值；与 `benchmark-run-03` 的相同输入对比。沿用原报告计时边界与分位数口径，预热单列，失败和慢样本保留，不用分位数相减代替逐请求差值。
+- 保存实际命令、配置与输入绑定、server 日志、逐请求原始计时及失败记录；核对日志中的内存提示缓存确已关闭。报告 P50/P90、样本数与实际差异，写入 `reports/P0-11/REPORT.md`；尚未测得的结果写未测。
+- 不重跑 Q8_0、紧凑 schema、方向提取或注入实验；GPT-SoVITS V5 与渲染同驻显存仍是独立未决事项，不纳入本卡。
+
+### 验收
+
+- 命令与日志证明 `--cache-ram 0`，请求证明 `cache_prompt=false`；引擎、量化、模型修订、输入与对比基线可追溯。
+- 客户端 TTFT 与原生 prefill 分别报告，原始记录完整，失败不删除；如差距仍在，如实记录，不据此自动更换方案或放宽阈值。
+- 按 AGENTS.md 第 9 节取得 GPU 安静窗口，测前确认 `Runner.Listener`、`Runner.Worker` 均未运行；只用合成输入，测完通知用户恢复 runner。
+- 交付测量与结论即为本卡范围；不以本卡签发 P5-31、完整语音延迟或同驻显存验收结论。

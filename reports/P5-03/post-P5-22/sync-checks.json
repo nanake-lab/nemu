@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "initial_main": "541be9eb649dd1fe8db42e7768b97b516e186272",
+  "final_main": "0b5412e95caab447c70148c473e544dbab28c57c",
+  "merge_commit": "d9348503a1fcfb25fbf53f58210eb7457b910484",
+  "unchanged_input_command": "git diff --name-only 541be9e..origin/main -- core packages/contracts pnpm-lock.yaml",
+  "unchanged_input_output": [],
+  "post_merge_checks": {
+    "fmt": "passed",
+    "workspace_all_targets_clippy": "passed",
+    "gateway_tests_passed": 21,
+    "gateway_tests_failed": 0,
+    "compatibility_violations": 0,
+    "exit_code": 0,
+    "provenance": "direct terminal execution after final merge; full raw matrix/contract logs cover identical Rust and IDL input files"
+  },
+  "source_manifest": "source-manifest.json"
+}

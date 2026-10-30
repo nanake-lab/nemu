@@ -1,0 +1,34 @@
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.38s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-03\debug\deps\gateway-a9c22f17bb74d235.exe)
+
+running 13 tests
+test tests::frames::fragmented_frames_roundtrip_and_preserve_receipt_stages ... ok
+test tests::frames::oversize_empty_truncated_and_invalid_messages_poison_connection ... ok
+test tests::frames::slow_header_body_writer_and_cancelled_read_are_bounded ... ok
+test tests::frames::wire_bytes_are_length_prefixed_protobuf ... ok
+test tests::ingress::experiment_cannot_ingest_terminal_data ... ok
+test tests::ingress::queue_and_byte_limits_reject_before_success ... ok
+test tests::ingress::received_durable_survives_reopen_without_claiming_core_commit ... ok
+test tests::validation::all_nine_terminal_payloads_validate_and_bind_generated_objects ... ok
+test tests::validation::authentication_never_accepts_short_wrong_or_empty_identity ... ok
+test tests::validation::rejects_bad_fields_unknown_protobuf_and_nonfinite_values ... ok
+test tests::validation::rejects_source_spoofing_payload_changes_and_privilege_claims ... ok
+test tests::windows::actual_pipe_acl_current_user_connects_squatting_and_experiment_refused ... FAILED
+test tests::windows::dpapi_create_reload_reject_corruption_and_protect_actual_file_acl ... ok
+
+failures:
+
+---- tests::windows::actual_pipe_acl_current_user_connects_squatting_and_experiment_refused stdout ----
+
+thread 'tests::windows::actual_pipe_acl_current_user_connects_squatting_and_experiment_refused' (34872) panicked at crates\gateway\src\tests\windows.rs:67:51:
+called `Result::unwrap()` on an `Err` value: Os { code: 231, kind: Uncategorized, message: "所有的管道范例都在使用中。" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::windows::actual_pipe_acl_current_user_connects_squatting_and_experiment_refused
+
+test result: FAILED. 12 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.89s
+
+error: test failed, to rerun pass `-p gateway --lib`

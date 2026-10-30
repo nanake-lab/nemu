@@ -1,0 +1,66 @@
+   Compiling serde_json v1.0.154
+   Compiling zeroize v1.9.1
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-types)
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\gateway)
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-store)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.46s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-03\debug\deps\gateway-eef0200df3cbeedf.exe)
+
+running 11 tests
+test tests::service::acceptance::control_dispatch_never_acknowledges_denial_and_does_not_enter_d ... ok
+test tests::service::acceptance::sys01_authenticated_upload_dispatch_reconnect_gamma_and_reverse_receipts ... SYS01 native: DPAPI/auth/upload/dispatch, concurrent pipes, reverse e2/e1 CORE receipts, D=e1,e2,e2,conflict; H=e1,e2; processed=4 anchor=2 ledger=2
+ok
+test tests::service::adversarial::auth_failure_connection_replay_and_audit_full_fail_closed ... ok
+test tests::service::adversarial::authorized_controls_reach_the_trusted_handler_and_only_then_ack ... ok
+test tests::service::adversarial::malformed_frame_and_audit_witness_failure_never_receive_success ... ok
+test tests::service::adversarial::pending_backpressure_is_typed_and_capacity_retry_keeps_source_key ... ok
+test tests::service::adversarial::upload_reservations_binding_expiry_and_disconnect_cleanup ... ok
+test tests::service::crash::crash_peer ... ok
+test tests::service::crash::sys01_abrupt_exit_before_sql_after_sql_and_after_durable_ack_recover ... SYS01 child before-sql-initial: exit=Some(86)
+
+running 1 test
+test tests::service::crash::crash_peer ... W02_INJECT IngressBeforeSql object=None plan=Crash(IngressBeforeSql)
+
+SYS01 child before-sql-recovery: exit=Some(0)
+
+running 1 test
+test tests::service::crash::crash_peer ... SYS01 recovered: H=1 ledger=1 anchor=1; original source key charged once; process-local temporary root verified
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 31 filtered out; finished in 3.25s
+
+
+SYS01 child after-sql-initial: exit=Some(86)
+
+running 1 test
+test tests::service::crash::crash_peer ... W02_INJECT IngressSqlCommitted object=None plan=Crash(IngressSqlCommitted)
+
+SYS01 child after-sql-recovery: exit=Some(0)
+
+running 1 test
+test tests::service::crash::crash_peer ... SYS01 recovered: H=1 ledger=1 anchor=1; original source key charged once; process-local temporary root verified
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 31 filtered out; finished in 3.90s
+
+
+SYS01 child uncommitted-initial: exit=Some(1)
+
+running 1 test
+test tests::service::crash::crash_peer ... 
+SYS01 child uncommitted-recovery: exit=Some(0)
+
+running 1 test
+test tests::service::crash::crash_peer ... SYS01 recovered: H=1 ledger=1 anchor=1; original source key charged once; process-local temporary root verified
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 31 filtered out; finished in 3.87s
+
+
+SYS01 actual process crash/kill: pre-SQL rollback, post-SQL receipt-witness recovery, acknowledged-but-uncommitted D recovery all verified; no physical power cut claimed
+ok
+test tests::service::permissions::every_concurrent_pipe_instance_has_the_current_sid_dacl ... ok
+test tests::service::permissions::t1_revocation_is_checked_on_the_same_authenticated_connection ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 34.86s
+

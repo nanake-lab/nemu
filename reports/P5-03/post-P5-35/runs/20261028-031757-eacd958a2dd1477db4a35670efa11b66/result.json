@@ -1,0 +1,20 @@
+[
+  {
+    "command": "cargo fmt --all -- --check",
+    "exit_code": 0,
+    "started": "2026-10-28T03:17:58.4272297+08:00",
+    "elapsed_seconds": 0.4934577
+  },
+  {
+    "command": "cargo clippy --workspace --all-targets --locked -- -D warnings",
+    "exit_code": 0,
+    "started": "2026-10-28T03:17:59.9042445+08:00",
+    "elapsed_seconds": 0.9163787
+  },
+  {
+    "command": "cargo test -p gateway --locked -- --test-threads=1 --nocapture",
+    "exit_code": 0,
+    "started": "2026-10-28T03:18:01.6942366+08:00",
+    "elapsed_seconds": 68.1032798
+  }
+]
