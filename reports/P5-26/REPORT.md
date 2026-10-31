@@ -1,10 +1,12 @@
+风险档位：重档；修改 core-kernel 的成长故障处理，按 AGENTS.md §6 保留完整验证和失败证据。
+
 # P5-26 重算、来源更正、暂停与复核 — 报告
 
 ## 当前状态
 
-**部分完成，卡未结项。** 交付通用纯函数机制和旧规律上的条件性验证；完整独立第二实现、真实 H 投影与 H/L 同事务接线、正式探测校准及 V2→V3 迁移/SYS17 尚未完成，见 [BLOCKED.md](BLOCKED.md)。不能用于生产。未新增规律、身份设定或默认校准数值。
+**R1 已修复，待复审；整卡仍为部分交付，PR 保持草稿。** 已确认的计算故障持续保留完整旧状态，普通事件、恢复成长、复核或版本切换不能隐式解除；必须提供绑定当前故障的显式 Repair，成功从 H 补算后才能继续成长。完整独立第二实现、真实 H 投影与 H/L 同事务接线、完整 C 规范导出、正式探测校准及 V2→V3 迁移/回退/SYS17 尚未完成，见 [BLOCKED.md](BLOCKED.md)。旧规律仅作条件性验证，不能用于生产。本次未新增规律、身份设定或默认参数。需要用户做什么：安排复审当前修复；无新增决定项。
 
-分支 `task/P5-26-recompute`；[PR #121](https://github.com/nanake-lab/nemu/pull/121)。开工前 fetch 后固定基线 B=`02948dc11aa1b43dc0dfe67c9da2e61676427385`；#117 的合并提交 `2adc03bac3aa1053c70b6f442793af030e813de3` 在 B 中。#49、P5-12、P5-25 的实现以及 ADR 0032 已在基线中。
+分支 `task/P5-26-recompute`；[PR #121](https://github.com/nanake-lab/nemu/pull/121)。本次 fetch 后以 `db8802f317b5b4dd5fe57699ef724fbac0d940f1` 为 main 验证基线 B，用 merge 提交 `624eb309c303360651542dc1ecd42088a8c4dd96` 同步。已读最新 AGENTS §5/§6、任务卡与相关 ADR/规格变化；原基线到 B 只涉及规则与文档，不含 Rust、锁文件或工具链变化。#117 合并提交 `2adc03bac3aa1053c70b6f442793af030e813de3` 仍在 B 中。
 
 本次仅修改卡目录、`reports/P5-26/` 和一个请求文件。按用户限定，未追加卡外 `lib.rs` 登记；因此工作区原有构建不编译本模块。目录内独立 harness 直接编译同一源码及 P5-24 evidence，链接同树实际 G/C/J；工作区检查另外执行，不互相冒充覆盖。
 
@@ -20,20 +22,31 @@
 
 不增加运行时依赖。临时 harness 使用仓库已有 `serde_json = 1.0.154`（MIT OR Apache-2.0）作为测试依赖；复用工作区 `libm = 0.2.16` 的实际 C，不另选数值库。
 
+## R1 修复与回归
+
+对应 [R1 审查评论](https://github.com/nanake-lab/nemu/pull/121#issuecomment-6514135179)。`engine.rs`/`types.rs` 用一个已有 `CheckRecord` 的可选值保存未解决故障，与待重算和手动暂停分开。普通提交继续保留 H，审计保留故障，此时不执行 G/C。Repair 引用当前报警 ID、谱系、H 前缀及规律/解释/来源绑定，使用当前目标资源；手动暂停期间拒绝 Repair，Resume 仅解除手动暂停。修复补算再次失败会保留新的故障，旧引用不能解除它。条件就近注明 V2-97(3)、V2-101、AC2-18，不新增阈值或框架。
+
+[`tests/fault_retention.rs`](../../core/crates/core-kernel/src/recompute/tests/fault_retention.rs) 的四项回归分别覆盖不一致/计算故障后追加普通事件与暂停/恢复。**修复前四项全失败（退出 101）**：增量和重放都把第 4 条经历的状态错误推进到 6；修复后直接对照完整最后正确状态，均保持在 4。回归提交 `2aedc70970006ca46bd8826c3ac07b1f697d4223` 先于修复提交 `bcd035d91af73b6c7dd9ce5bb195bff5c082b042`。
+
+另三项测试覆盖错绑定、手动暂停、成功修复后补算及后续成长、新检查/两种复核结论/新版本不能代替修复，以及修复再次失败与过期引用。`tests/boundaries.rs` 还验证内核仍有真实计算故障时普通事件不会重新调用它；`tests/properties.rs` 将未解决故障纳入 I23 全控制记录比较；`tests/controls.rs` 更新显式修复输入。`verify.ps1` 仅增加可选 TestFilter，最终全量测试不使用过滤器。README 说明机制边界，正式修复记录的认证与 H/L 接线追加到请求文件。
+
 ## 验收与证据
 
-本机检查已完成。每次运行的命令、工具链、基线、源码 SHA-256、stdout/stderr 和锁文件保留于 [`verification/`](verification/)。验证命令为目录内 `verify.ps1` 的对应 Mode；所有数据为合成数据或临时存储。原始日志另存 ZIP 以避免 Git 换行转换影响字节证据，见 `artifacts-sha256.json`；最终源码亦单独归档。
+检查串行执行。每次命令、工具链、基线、开始/结束 HEAD、源码 SHA-256、stdout/stderr 和锁文件保留于 [`verification/`](verification/)。入口为 `pwsh -NoProfile -File core/crates/core-kernel/src/recompute/verify.ps1 -Mode <模式> -RunId <目录名>`；所有数据为合成数据或临时存储。最终源码和原始日志另存新 ZIP，旧归档不改写。
 
 | 命令或检查 | 当前结果 | 证据 |
 | --- | --- | --- |
-| 同树 harness `cargo test --offline` | **61/61 通过**；40 项上游 evidence，21 项本卡，无忽略 | `verification/test-04/` |
-| 同树 harness Clippy `--all-targets -- -D warnings` | 通过，退出码 0 | `verification/clippy-02/` |
-| 模块 `rustfmt --edition 2024 --check` | 通过 | `verification/format-01/` |
-| `cargo test --workspace --locked --offline -- --nocapture --test-threads=1` | **通过，退出码 0** | `verification/workspace-test-01/` |
-| 工作区 Clippy `--all-targets -- -D warnings` | 通过，退出码 0 | `verification/workspace-clippy-01/` |
-| 工作区 `cargo fmt --all -- --check` | 通过 | `verification/workspace-format-01/` |
-| P5-23 Python 标量/份额对照 | 2,539,894 状态、261,581 份额向量、7 种显式故障，零位差异 | `workspace-test-01/stdout.log` 中 `Same-input parity` |
-| P5-23 Python 事件对照 | 13,339 个事件、5 个原子故障，R/分配/反事实零差异 | 同日志 `Full event parity` |
+| 原问题回归 Test + `-TestFilter recompute::tests::fault_retention::r1_` | 预期失败：0 通过、4 失败，退出 101 | `verification/r1-20261101-red/` |
+| 同四项回归，修复后 | 4/4 通过 | `verification/r1-20261101-green/` |
+| R1 全部七项回归/边界 | 7/7 通过 | `verification/r1-20261101-boundaries/` |
+| 同树 harness `cargo test --offline` | **68/68 通过**；40 项上游 evidence、28 项本卡，无忽略 | `verification/r1-20261101-test-final/` |
+| 同树 harness Clippy `--all-targets -- -D warnings` | 通过，退出码 0 | `verification/r1-20261101-clippy/` |
+| 模块 `rustfmt --edition 2024 --check` | 通过 | `verification/r1-20261101-format/` |
+| `cargo test --workspace --locked --offline -- --nocapture --test-threads=1` | **通过，退出码 0** | `verification/r1-20261101-workspace-test/` |
+| 工作区 Clippy `--workspace --all-targets -- -D warnings` | 通过，退出码 0 | `verification/r1-20261101-workspace-clippy/` |
+| 工作区 `cargo fmt --all -- --check` | 通过 | `verification/r1-20261101-workspace-format/` |
+| P5-23 Python 标量/份额对照 | 2,539,894 状态、261,581 份额向量、7 种显式故障，零位差异 | 同工作区 stdout 的 `Same-input parity` |
+| P5-23 Python 事件对照 | 13,339 个事件、5 个原子故障，R/分配/反事实零差异 | 同工作区 stdout 的 `Full event parity` |
 | 完整第二套有效 H→(R,θ) 实现 | **未完成**；已有 Python 对照仅覆盖子集 | `BLOCKED.md` |
 | 真实迁移/失败回退/SYS17、H/L 事务、真实通知、生产 F/J 探测 | **not_run**，接口/目录边界尚未闭合 | 请求文件 |
 
@@ -41,17 +54,17 @@ P5-23 Python 入口保持原样：`law::tests::reference_parity::adr0019_python_
 
 工作区原有 `theta_1_original_500_streams_zero_violations` 按 V2-93 保持忽略（旧 Python `**2` 舍入诊断，原失败证据在 P5-25）；本卡未增加 ignore、改变阈值或删除断言。stderr 的 `E0308` 等是现有谱系隔离 `compile_fail` 文档测试的预期输出，对应 doctest 均通过，不能误读成工作区编译失败。
 
-原始失败保留：`test-01` 编译退出 101，原因是测试夹具调用不存在的 `Limits::default()`，已改为与上游一致的显式 Limits；同时去除未用导入。`test-02` 54/54、`test-03` 59/59 为中间版本证据，不替代最终源码验证。随后检查发现普通浮点 PartialEq 可掩盖有符号零变化，已改成规律提供的逐位身份比较，并增加两个能暴露错误缓存/历史复用的反例。
+原始失败保留：`test-01` 的夹具编译失败（不存在的 `Limits::default()`）、中间 54/59 项与旧最终 61 项结果、原 `source-final.zip` 和 `raw-verification.zip` 均不改写。R1 的原始失败永久保留，不用绿色结果覆盖。
 
 ## 规格对照与验收边界
 
 | 规格/卡条款 | 实现与验证 | 状态/限制 |
 | --- | --- | --- |
-| v2 §2.2、§5.4；AC2-08、I23 | `step` 在投影前缀逐位一致时续算；`replay` 在每个有效历史前缀从 genesis 折叠。固定种子 1–16、每条 24 前缀；包括暂停/恢复、复核、来源更正、新规律、不可用/不一致/故障记录；比较 R、全部组、完整 θ 和控制记录 | 384 次条件性比较；真实 H/存储入口未验收 |
-| v2 §2.5；AC2-18 | 暂停不调用 G/C，继续保留 H；暂停期改来源/规律仅推进目标版本；显式恢复后全 H 补算，等于相同经历未暂停的结果 | 机制测试通过；`GROWTH_PAUSED` 正式合同及 H/L 事务待接线 |
+| v2 §2.2、§5.4；AC2-08、I23 | `step` 在投影前缀逐位一致时续算；`replay` 在每个有效历史前缀从 genesis 折叠。固定种子 1–16、每条 24 前缀；包括暂停/恢复、复核、来源更正、新规律、不可用/不一致/故障记录；比较 R、全部组、完整 θ 和控制记录（含未解决故障） | 384 次条件性比较；共享控制逻辑，R1 另以最后正确状态断言；真实 H/存储入口未验收 |
+| v2 §2.5；AC2-18 | 暂停不调用 G/C，继续保留 H；暂停期仅推进目标版本；无故障时恢复全 H 补算，有故障时 Resume 仅解除手动暂停，暂停期间拒绝 Repair | 机制测试通过；`GROWTH_PAUSED` 正式合同及 H/L 事务待接线 |
 | v2 §2.2、§5.4；AC2-19 | 更正选择新的有效来源投影，从 genesis 重建 q/V 与 C；移除事件等于从未出现。账号合并从四组重算为一组，不改旧原始事件 | 条件性验证；真实更正认证/原文保全/说话撤回语义由 H 投影层提供 |
-| 新规律版本、重新解释；AC2-20 核心 | 显式版本事件强制全算，暂存前后完整状态与版本；旧解释留在合成输入中，新解释显式选择；两种复核结论均无否决结果入口 | 版本机制通过；新解释实际追加与持久差异记录未接线 |
-| v2 §12；V2-97；AC2-20/21 | 核验一致/缺失/失败/超时均应用并报警；明确不一致或计算故障保持整个旧状态，修复后补算；历史重放读取旧结论，不重启核验服务/时钟 | 分流与故障原子性通过；**完整独立实现未交付**，不能据此接受整卡 |
+| 新规律版本、重新解释；AC2-20 核心 | 显式版本事件强制全算；故障未修复时仅推进目标版本，绑定 Repair 成功后才应用；两种复核结论均无否决结果入口 | 版本机制通过；新解释实际追加与持久差异记录未接线 |
+| v2 §12；V2-97、V2-101；AC2-20/21 | 无既有故障时，一致/缺失/失败/超时均应用并报警；明确不一致或计算故障持续保留整个旧状态，只有绑定修复补算成功才解除；历史重放读取旧结论 | R1 已修复，待复审；**完整独立实现未交付**，不可用分支不是验收替代 |
 | AC2-21 探测 | 四通道各正负一次，共八个探测；真实数值 J 输出的系数/身体比较；阈值相等不报警、超过报警，拒绝非有限/重复系数/错序/错资源 | 仅比较器与 J 条件验证；未验收实际 F→J 投影、校准或每次运行时提交触发 |
 | AC2-09 | 重算/G/C 输入无 x/m；在真实 G/C 合成历史中改变 g/λ 先验范围，R 与证据组不变、θ 确有变化 | 纯算子边界验证；调用方改变 x/m 的完整生产管线 not_run |
 | ADR 0019、V2-96 | 使用真实 G 的有限 binary64、固定顺序与下溢拒绝；中途计算失败不泄漏半个候选，记录故障后才可重放拒绝 | G 的数学/Python 子集对照通过；不新增容错 clamp/epsilon |
@@ -74,8 +87,10 @@ P5-23 Python 入口保持原样：`law::tests::reference_parity::adr0019_python_
 
 ## 基线、证据与剩余工作
 
-收尾 fetch 所见 M 仍为 B=`02948dc11aa1b43dc0dfe67c9da2e61676427385`，B→M 无新增变化，无需同步重测。最终以源码清单逐文件绑定测试结果；报告性后续提交不改变被测 Rust。
+最终源码清单与六项本机检查记录逐文件一致（15 个文件，含 13 个 Rust 文件），见 [source-check.json](review-r1-20261101/source-check.json)。原问题复现使用的 engine/types/旧适配与旧 test-04 清单一致，见 [regression-origin.json](review-r1-20261101/regression-origin.json)。原基线到本次 B 的文件变化及 #117 前置条件见 [baseline.json](review-r1-20261101/baseline.json)。收尾 fetch 所见 M 仍等于 B，无新增影响，见 [main-closeout.json](review-r1-20261101/main-closeout.json)。
 
-工作区测试在认领提交 `b38b3f36` 开始，期间新增的文件均限于尚未登记的 recompute 和报告/请求；工作区实际编译的 upstream 源码、依赖、锁文件与 B 相同。该次旧版包装脚本在结束时记录 HEAD，不能把它误读为工作区在编译本模块。最终 harness 的实际源码另见 `test-04/source-sha256.json`；12 个 Rust 文件均与最终测试和 Clippy 清单相同，代码提交为 `9d6bed742c432466c44dae9ef2f493ce9f925d69`。随后仅改包装脚本的运行元数据，分别记录开始与结束 HEAD，并经 PowerShell 语法解析和工作区 Clippy 执行验证；未改变测试命令或 Rust 源码。
+本轮汇总见 [result.json](review-r1-20261101/result.json)。新 [源码归档](review-r1-20261101/source.zip) 与 [原始日志归档](review-r1-20261101/raw-verification.zip) 共 60 个文件已逐文件核对原始字节，见 [archive-check.json](review-r1-20261101/archive-check.json) 和 [归档哈希](review-r1-20261101/artifacts-sha256.json)。日志 ZIP 保留 Git 换行规范化前的字节；上次审查的日志与归档均未改写。
+
+本次最终源码提交为 `bcd035d91af73b6c7dd9ce5bb195bff5c082b042`，全部最终本机检查在该 HEAD 上开始；源码清单包括 13 个 Rust 文件及 README/验证脚本。工作区检查与本模块 harness 检查各自覆盖自己的范围，不互相冒充。
 
 完整第二实现及必要 C/H 接口、迁移扩围、真实事务/探测接线列于 BLOCKED 和请求文件，未用 Missing 分支替代验收，未把它们默默改派他卡。按无人值守要求选保守边界完成其余工作，不替用户作规律/身份决定，不改设置、不操作 runner。因整卡验收未完成，按 AGENTS.md §2“部分完成时保持草稿”保留 draft，留言“请审查”请求审查当前机制，不宣称已达到转 ready 或合并条件。结束后停止本卡，不接下一张卡。
