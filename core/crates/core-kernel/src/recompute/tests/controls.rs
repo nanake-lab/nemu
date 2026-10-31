@@ -195,7 +195,10 @@ fn v2_97_mismatch_or_math_fault_retains_whole_state_and_repair_replays_h() {
             6,
             Command::Rebuild {
                 scope: scope(),
-                reason: RebuildReason::Repair,
+                reason: RebuildReason::Repair {
+                    alarm_id: "alarm-5".into(),
+                    binding: h[4].check.as_ref().unwrap().binding.clone(),
+                },
             },
         ));
         let repaired = replay(&kernel, "experiment", scope(), &h).unwrap();

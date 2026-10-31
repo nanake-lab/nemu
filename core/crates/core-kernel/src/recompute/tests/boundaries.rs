@@ -184,19 +184,27 @@ fn local_fault_requires_record_and_never_leaks_part_of_candidate() {
     assert_eq!(rejected.state(), &[1, 1]);
     assert!(rejected.needs_recompute());
     assert!(!rejected.paused());
+    // R1: even with the implementation still broken, a later event is retained
+    // without rerunning the known-bad recurrence or requiring another check.
+    h.push(commit(3, Command::Event(3)));
+    let held = step(&broken, &rejected, &h).unwrap();
+    assert_eq!(held.state(), rejected.state());
     let fixed = FailingKernel { broken: false };
     // Structural replay honors the historical rejection even with a fixed implementation.
     let historical = replay(&fixed, "experiment", scope(), &h).unwrap();
     assert_eq!(historical.state(), rejected.state());
     h.push(commit(
-        3,
+        4,
         Command::Rebuild {
             scope: scope(),
-            reason: RebuildReason::Repair,
+            reason: RebuildReason::Repair {
+                alarm_id: "fault-2".into(),
+                binding: h[1].check.as_ref().unwrap().binding.clone(),
+            },
         },
     ));
     let repaired = step(&fixed, &historical, &h).unwrap();
-    assert_eq!(repaired.state(), &[3, 2]);
+    assert_eq!(repaired.state(), &[6, 3]);
     assert!(!repaired.needs_recompute());
 }
 

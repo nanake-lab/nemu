@@ -84,6 +84,7 @@ fn ac2_08_i23_random_histories_every_prefix_zero_bit_differences() {
             );
             assert_eq!(incremental.paused(), full.paused());
             assert_eq!(incremental.needs_recompute(), full.needs_recompute());
+            assert_eq!(incremental.unresolved_fault(), full.unresolved_fault());
             assert_eq!(incremental.applied_scope(), full.applied_scope());
             assert_eq!(incremental.target_scope(), full.target_scope());
             assert_eq!(incremental.audits().len(), full.audits().len());
@@ -91,6 +92,7 @@ fn ac2_08_i23_random_histories_every_prefix_zero_bit_differences() {
                 assert_eq!(a.binding, b.binding);
                 assert_eq!(a.kind, b.kind);
                 assert_eq!(a.check, b.check);
+                assert_eq!(a.unresolved_fault, b.unresolved_fault);
                 assert_eq!(a.changed, b.changed);
             }
             comparisons += 1;

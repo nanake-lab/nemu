@@ -39,12 +39,17 @@ pub struct Binding {
     pub scope: Scope,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum RebuildReason {
     SourceCorrection,
     Reinterpretation,
     LawVersion,
-    Repair,
+    /// V2-97(3)/V2-101: an accepted repair refers to the unresolved fault,
+    /// including its law and H prefix. This is not a result-veto command.
+    Repair {
+        alarm_id: String,
+        binding: Binding,
+    },
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -151,6 +156,8 @@ pub enum AuditKind {
     Resume,
     Rebuild(RebuildReason),
     Deferred,
+    /// A confirmed calculation fault still needs an explicit bound repair.
+    FaultHeld,
     Review {
         alarm_id: String,
         verdict: ReviewVerdict,
@@ -171,6 +178,8 @@ pub struct Audit<S> {
     pub after: S,
     pub changed: bool,
     pub check: Option<CheckRecord>,
+    /// V2-101: keeps fault retention visible even on later ordinary commits.
+    pub unresolved_fault: Option<CheckRecord>,
     /// Both recipients, as required by V2-97; this is not network delivery.
     pub notify_developer_and_caretaker: bool,
 }

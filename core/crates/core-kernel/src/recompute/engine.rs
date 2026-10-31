@@ -14,6 +14,8 @@ pub struct Progress<E, K: Kernel<E>> {
     inputs: Vec<K::Input>,
     paused: bool,
     dirty: bool,
+    // V2-97(3): pending recomputation is not proof that a fault was repaired.
+    unresolved_fault: Option<CheckRecord>,
     alarms: BTreeMap<String, Binding>,
     audits: Vec<Audit<K::State>>,
 }
@@ -37,6 +39,9 @@ impl<E, K: Kernel<E>> Progress<E, K> {
     pub fn needs_recompute(&self) -> bool {
         self.dirty
     }
+    pub fn unresolved_fault(&self) -> Option<&CheckRecord> {
+        self.unresolved_fault.as_ref()
+    }
 }
 
 pub fn start<E, K: Kernel<E>>(kernel: &K, lineage: &str, scope: Scope) -> Result<Progress<E, K>> {
@@ -53,6 +58,7 @@ pub fn start<E, K: Kernel<E>>(kernel: &K, lineage: &str, scope: Scope) -> Result
         inputs: Vec::new(),
         paused: false,
         dirty: false,
+        unresolved_fault: None,
         alarms: BTreeMap::new(),
         audits: Vec::new(),
     })
@@ -60,7 +66,7 @@ pub fn start<E, K: Kernel<E>>(kernel: &K, lineage: &str, scope: Scope) -> Result
 
 /// Pure append of exactly one immutable commit. Err leaves `old` unchanged.
 /// Calculation faults produce a rejection audit and preserve the *whole*
-/// previously applied state; the next attempt rebuilds from H, not that cursor.
+/// previously applied state until a bound repair explicitly rebuilds from H.
 pub fn step<E: Clone, K: Kernel<E>>(
     kernel: &K,
     old: &Progress<E, K>,
@@ -90,6 +96,7 @@ fn step_mode<E: Clone, K: Kernel<E>>(
     let mut paused = old.paused;
     let mut force = old.dirty || full;
     let mut calculate = false;
+    let mut repairing = false;
     let mut kind = match &entry.command {
         Command::Event(_) => {
             calculate = !paused;
@@ -107,11 +114,25 @@ fn step_mode<E: Clone, K: Kernel<E>>(
         }
         Command::Rebuild { scope, reason } => {
             scope.validate()?;
-            validate_change(&target, scope, *reason)?;
+            validate_change(&target, scope, reason)?;
+            if let RebuildReason::Repair { alarm_id, binding } = reason {
+                // V2-97(3), V2-101 and AC2-18: only the accepted repair of the
+                // current fault may release it; manual pause still prevents G/C.
+                if paused
+                    || !old.unresolved_fault.as_ref().is_some_and(|fault| {
+                        &fault.alarm_id == alarm_id && &fault.binding == binding
+                    })
+                {
+                    return Err(Fault::Binding(
+                        "repair requires current fault and resumed growth",
+                    ));
+                }
+                repairing = true;
+            }
             target = scope.clone();
             force = true;
             calculate = !paused;
-            AuditKind::Rebuild(*reason)
+            AuditKind::Rebuild(reason.clone())
         }
         Command::Review {
             alarm_id,
@@ -153,22 +174,27 @@ fn step_mode<E: Clone, K: Kernel<E>>(
     let mut inputs = old.inputs.clone();
     let mut applied = old.applied.clone();
     let mut dirty = old.dirty;
-    let mut rejection = None;
-    if calculate {
+    let mut unresolved_fault = old.unresolved_fault.clone();
+    let rejection = entry.check.as_ref().and_then(|check| match &check.outcome {
+        outcome @ (CheckOutcome::Inconsistent | CheckOutcome::ComputationFault(_)) => {
+            Some(outcome.clone())
+        }
+        _ => None,
+    });
+    if calculate && unresolved_fault.is_some() && !repairing {
+        // R1 / V2-97(3): keep collecting H, but neither a normal event, Resume,
+        // resource change nor a fresh check can silently repair prior failure.
+        kind = AuditKind::FaultHeld;
+    } else if calculate {
         match candidate(kernel, old, history, &target, force) {
-            Ok((value, consumed)) => match entry.check.as_ref().map(|c| &c.outcome) {
-                Some(
-                    outcome @ (CheckOutcome::Inconsistent | CheckOutcome::ComputationFault(_)),
-                ) => {
-                    rejection = Some(outcome.clone());
-                }
-                _ => {
-                    state = value;
-                    inputs = consumed;
-                    applied = target.clone();
-                    dirty = false;
-                }
-            },
+            Ok((value, consumed)) if rejection.is_none() => {
+                state = value;
+                inputs = consumed;
+                applied = target.clone();
+                dirty = false;
+                unresolved_fault = None;
+            }
+            Ok(_) => {}
             Err(Fault::Computation(reason)) => {
                 if !matches!(entry.check.as_ref().map(|c| &c.outcome),
                     Some(CheckOutcome::ComputationFault(recorded)) if *recorded == reason)
@@ -177,7 +203,6 @@ fn step_mode<E: Clone, K: Kernel<E>>(
                     // prefix, before a rejection can become replayable H.
                     return Err(Fault::Computation(reason));
                 }
-                rejection = Some(CheckOutcome::ComputationFault(reason));
             }
             Err(error) => return Err(error),
         }
@@ -188,6 +213,7 @@ fn step_mode<E: Clone, K: Kernel<E>>(
     if let Some(outcome) = rejection {
         kind = AuditKind::Rejected(outcome);
         dirty = true;
+        unresolved_fault = entry.check.clone();
     }
     let notify = entry.check.is_some() || matches!(kind, AuditKind::Rejected(_));
     let audit = Audit {
@@ -199,6 +225,7 @@ fn step_mode<E: Clone, K: Kernel<E>>(
         after: state.clone(),
         changed: !kernel.same_bits(&old.state, &state),
         check: entry.check.clone(),
+        unresolved_fault: unresolved_fault.clone(),
         notify_developer_and_caretaker: notify,
     };
     let mut alarms = old.alarms.clone();
@@ -216,6 +243,7 @@ fn step_mode<E: Clone, K: Kernel<E>>(
         inputs,
         paused,
         dirty,
+        unresolved_fault,
         alarms,
         audits,
     })
@@ -317,7 +345,7 @@ fn same_commit<E, K: Kernel<E>>(kernel: &K, a: &Commit<E>, b: &Commit<E>) -> boo
     }
 }
 
-fn validate_change(old: &Scope, new: &Scope, reason: RebuildReason) -> Result<()> {
+fn validate_change(old: &Scope, new: &Scope, reason: &RebuildReason) -> Result<()> {
     let valid = match reason {
         RebuildReason::SourceCorrection => {
             old.law == new.law
@@ -330,7 +358,7 @@ fn validate_change(old: &Scope, new: &Scope, reason: RebuildReason) -> Result<()
                 && old.interpretation != new.interpretation
         }
         RebuildReason::LawVersion => old.law != new.law,
-        RebuildReason::Repair => old == new,
+        RebuildReason::Repair { .. } => old == new,
     };
     if valid {
         Ok(())
