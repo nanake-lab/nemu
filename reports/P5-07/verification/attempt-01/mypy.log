@@ -1,0 +1,9 @@
+workers\irl\tests\test_worker.py:71: error: Function is missing a return type annotation  [no-untyped-def]
+workers\irl\tests\test_worker.py:91: error: Unsupported right operand type for in ("bool | int | float | str | list[Json] | dict[str, Json] | None")  [operator]
+workers\irl\tests\test_worker.py:135: error: Argument 2 to "replace" of "ProposalBindingV2" has incompatible type "**dict[str, str | bytes]"; expected "int"  [arg-type]
+workers\irl\tests\test_worker.py:135: error: Argument 2 to "replace" of "ProposalBindingV2" has incompatible type "**dict[str, str | bytes]"; expected "str"  [arg-type]
+workers\irl\tests\test_worker.py:135: error: Argument 2 to "replace" of "ProposalBindingV2" has incompatible type "**dict[str, str | bytes]"; expected "bytes"  [arg-type]
+workers\irl\tests\test_worker.py:135: error: Argument 2 to "replace" of "ProposalBindingV2" has incompatible type "**dict[str, str | bytes]"; expected "ObjectRef"  [arg-type]
+workers\irl\tests\test_worker.py:135: error: Argument 2 to "replace" of "ProposalBindingV2" has incompatible type "**dict[str, str | bytes]"; expected "list[ObjectRef]"  [arg-type]
+workers\irl\tests\test_worker.py:135: error: Argument 2 to "replace" of "ProposalBindingV2" has incompatible type "**dict[str, str | bytes]"; expected "VersionedEnvironmentV2"  [arg-type]
+Found 8 errors in 1 file (checked 6 source files)
