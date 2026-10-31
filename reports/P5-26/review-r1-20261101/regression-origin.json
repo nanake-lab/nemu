@@ -1,0 +1,24 @@
+{
+  "reviewed_head": "45f2e1ae9bd10dc603e21d14b00a3417853c85af",
+  "red_run_head": "624eb309c303360651542dc1ecd42088a8c4dd96",
+  "regression_commit": "2aedc70970006ca46bd8826c3ac07b1f697d4223",
+  "fix_commit": "bcd035d91af73b6c7dd9ce5bb195bff5c082b042",
+  "red_result": "4 failed, exit 101",
+  "sources": [
+    {
+      "path": "core/crates/core-kernel/src/recompute/engine.rs",
+      "sha256": "88A87FFEB736CBD24842A92AA7EC36488CE9E7AFC84BC4A4500462EE8BDA2FC2",
+      "red_matches_old_test04": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/recompute/types.rs",
+      "sha256": "B03E7D90E82E64EB1201A9A0730D7D1BD05D77B193D202427D0997F13AB2417C",
+      "red_matches_old_test04": true
+    },
+    {
+      "path": "core/crates/core-kernel/src/recompute/tests/legacy.rs",
+      "sha256": "96585A5EBDE27ED20A4072974E028F25BB3837D3B638DB91D6030D328871960D",
+      "red_matches_old_test04": true
+    }
+  ]
+}
