@@ -13,10 +13,35 @@ pub struct Snapshot {
     pub theta: ThetaSnapshot,
 }
 /// In-process R+ projection. No concepts, predicates, evidence or audit text.
+#[cfg_attr(test, derive(Debug, PartialEq))]
 pub struct ActiveTendency {
     pub tendency_id: String,
     pub direction: NatureVector,
     pub strength: f64,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use core_types::{WireMessage, scalar::unhex};
+
+    /// Review R1 / v2.0 §6: r_k is an observable F input even when s_k and d_k agree.
+    #[test]
+    fn review_r1_active_view_preserves_differences_in_typical_magnitude() {
+        let limits = Limits { max_bytes: 4 << 20, max_items: 4096, max_depth: 64 };
+        let mut low = RSnapshotV3::from_canonical(
+            &unhex(include_str!("../tests/fixtures/RSnapshotV3.hex").trim()).unwrap(), limits,
+        ).unwrap();
+        let mut tendency = TendencyV3::from_canonical(
+            &unhex(include_str!("../tests/fixtures/TendencyV3.hex").trim()).unwrap(), limits,
+        ).unwrap();
+        tendency.pi = 0.75;
+        tendency.typical_magnitude = 0.1;
+        low.tendencies = vec![tendency];
+        let mut high = low.clone();
+        high.tendencies[0].typical_magnitude = 0.8;
+        assert_ne!(active(&low), active(&high), "F cannot distinguish r=0.1 from r=0.8");
+    }
 }
 pub(crate) fn active(r: &RSnapshotV3) -> Vec<ActiveTendency> {
     r.tendencies
