@@ -1,9 +1,11 @@
 param(
     [ValidateSet('Test','Clippy','WorkspaceTest','WorkspaceClippy','Format','WorkspaceFormat')][string]$Mode = 'Test',
-    [Parameter(Mandatory=$true)][string]$RunId
+    [Parameter(Mandatory=$true)][string]$RunId,
+    [string]$TestFilter = ''
 )
 $ErrorActionPreference = 'Stop'
 if ($RunId -notmatch '^[a-zA-Z0-9-]+$') { throw 'Invalid run ID' }
+if ($TestFilter -and $Mode -ne 'Test') { throw 'TestFilter requires Test mode' }
 $root = (Resolve-Path (Join-Path $PSScriptRoot '../../../../..')).Path
 $cache = 'D:\Dev\cache\P5-26'
 $harness = Join-Path $cache 'harness'
@@ -44,7 +46,11 @@ $env:TMP = $env:TEMP
 New-Item -ItemType Directory -Path $env:TEMP -Force | Out-Null
 $command = if ($Mode -eq 'Format') { 'rustfmt' } else { 'cargo' }
 $arguments = switch ($Mode) {
-    'Test' { @('test','--offline','--manifest-path',(Join-Path $harness 'Cargo.toml'),'--','--nocapture','--test-threads=1') }
+    'Test' {
+        @('test','--offline','--manifest-path',(Join-Path $harness 'Cargo.toml'))
+        if ($TestFilter) { $TestFilter }
+        @('--','--nocapture','--test-threads=1')
+    }
     'Clippy' { @('clippy','--offline','--locked','--manifest-path',(Join-Path $harness 'Cargo.toml'),'--all-targets','--','-D','warnings') }
     'WorkspaceTest' { @('test','--workspace','--locked','--offline','--','--nocapture','--test-threads=1') }
     'WorkspaceClippy' { @('clippy','--workspace','--all-targets','--locked','--offline','--','-D','warnings') }

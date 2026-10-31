@@ -1,0 +1,17 @@
+   Compiling p5-26-recompute-verifier v0.0.0 (D:\Dev\cache\P5-26\harness)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.77s
+     Running unittests harness.rs (D:\Dev\cache\P5-26\target-harness\debug\deps\p5_26_recompute_verifier-c84b722247f362f7.exe)
+
+thread 'recompute::tests::fault_retention::r1_inconsistent_then_ordinary_events_keep_last_good_state' (20676) panicked at D:\Dev\nemu-wt\P5-26\core\crates\core-kernel\src\recompute\tests\fault_retention.rs:59:9:
+R1: incremental reapplied rejected history without repair
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'recompute::tests::fault_retention::r1_inconsistent_then_pause_resume_keeps_last_good_state' (39188) panicked at D:\Dev\nemu-wt\P5-26\core\crates\core-kernel\src\recompute\tests\fault_retention.rs:59:9:
+R1: incremental reapplied rejected history without repair
+
+thread 'recompute::tests::fault_retention::r1_math_fault_then_ordinary_events_keep_last_good_state' (40768) panicked at D:\Dev\nemu-wt\P5-26\core\crates\core-kernel\src\recompute\tests\fault_retention.rs:59:9:
+R1: incremental reapplied rejected history without repair
+
+thread 'recompute::tests::fault_retention::r1_math_fault_then_pause_resume_keeps_last_good_state' (40156) panicked at D:\Dev\nemu-wt\P5-26\core\crates\core-kernel\src\recompute\tests\fault_retention.rs:59:9:
+R1: incremental reapplied rejected history without repair
+error: test failed, to rerun pass `--lib`
