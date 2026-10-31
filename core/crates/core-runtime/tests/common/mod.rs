@@ -56,6 +56,22 @@ pub fn fixture<T: WireMessage>() -> T {
     let hex = std::fs::read_to_string(path).unwrap();
     T::from_canonical(&core_types::scalar::unhex(hex.trim()).unwrap(), limits()).unwrap()
 }
+// Golden vectors test encoding, not semantic legality. Use positive divisors
+// for stage fixtures (v2.0 §§6/8); do not alter the frozen codec golden bytes.
+pub fn theta_fixture() -> ThetaSnapshot {
+    let mut theta: ThetaSnapshot = fixture();
+    let positive = NatureScale {
+        schema_version: 1,
+        connection: 1.0,
+        empathy: 1.0,
+        curiosity: 1.0,
+        achievement: 1.0,
+    };
+    theta.values.recovery_per_s = positive.clone();
+    theta.sigma = positive.clone();
+    theta.tau_s = positive;
+    theta
+}
 // Structural storage fixtures only. Generated canonical data is changed through
 // the schema codec; these synthetic resources are never production L/Q/U roots.
 pub fn with_refs<T: WireMessage>(reference: &ObjectRef) -> T {
@@ -138,7 +154,7 @@ impl Case {
         let mut base = Snapshot {
             x: fixture(),
             r: fixture(),
-            theta: fixture(),
+            theta: theta_fixture(),
         };
         base.x.anchor_time_ns = DecimalU64(10);
         base.x.nature.connection = 0.1;

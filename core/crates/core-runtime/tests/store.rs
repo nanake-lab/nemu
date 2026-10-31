@@ -79,6 +79,10 @@ fn seed(
     r.law_version = law.reference().clone();
     let r = store.prepare_r(&r).unwrap();
     let mut theta: ThetaSnapshot = with_refs(leaf.reference());
+    let positive = theta_fixture();
+    theta.values = positive.values;
+    theta.sigma = positive.sigma;
+    theta.tau_s = positive.tau_s;
     theta.law_version = law.reference().clone();
     let theta = store.prepare(&theta, "1").unwrap();
     let mut x: FastStateSnapshotV2 = fixture();

@@ -18,31 +18,10 @@ pub struct ActiveTendency {
     pub tendency_id: String,
     pub direction: NatureVector,
     pub strength: f64,
+    /// r_k in f_k = s_k * mu_k * r_k * d_k (v2.0 §6).
+    pub typical_magnitude: f64,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use core_types::{WireMessage, scalar::unhex};
-
-    /// Review R1 / v2.0 §6: r_k is an observable F input even when s_k and d_k agree.
-    #[test]
-    fn review_r1_active_view_preserves_differences_in_typical_magnitude() {
-        let limits = Limits { max_bytes: 4 << 20, max_items: 4096, max_depth: 64 };
-        let mut low = RSnapshotV3::from_canonical(
-            &unhex(include_str!("../tests/fixtures/RSnapshotV3.hex").trim()).unwrap(), limits,
-        ).unwrap();
-        let mut tendency = TendencyV3::from_canonical(
-            &unhex(include_str!("../tests/fixtures/TendencyV3.hex").trim()).unwrap(), limits,
-        ).unwrap();
-        tendency.pi = 0.75;
-        tendency.typical_magnitude = 0.1;
-        low.tendencies = vec![tendency];
-        let mut high = low.clone();
-        high.tendencies[0].typical_magnitude = 0.8;
-        assert_ne!(active(&low), active(&high), "F cannot distinguish r=0.1 from r=0.8");
-    }
-}
 pub(crate) fn active(r: &RSnapshotV3) -> Vec<ActiveTendency> {
     r.tendencies
         .iter()
@@ -51,6 +30,7 @@ pub(crate) fn active(r: &RSnapshotV3) -> Vec<ActiveTendency> {
             tendency_id: t.tendency_id.clone(),
             direction: t.direction.clone(),
             strength: 2.0 * t.pi - 1.0,
+            typical_magnitude: t.typical_magnitude,
         })
         .collect()
 }
@@ -82,6 +62,10 @@ pub struct MatchOutput {
     pub record: SituationMatchRecord,
     pub candidates: Vec<TendencyCandidateRecord>,
 }
+/// Partial stage interface: the full F adapter also needs authoritative event
+/// class/count, empathy weight and a bound law resource. Their ownership is
+/// pending in tasks/requests/P5-08-stage-inputs-and-law.md; never infer them from
+/// free text or supply defaults here (ADR 0032 D05/D09/D10/D11).
 pub struct Pulse<'a> {
     pub theta: &'a ThetaValues,
     pub active: &'a [ActiveTendency],
@@ -134,6 +118,10 @@ pub trait Fast {
 pub trait Learn {
     fn learn(&mut self, input: Learning<'_>) -> StageResult<Bound<Change<RSnapshotV3>>>;
 }
+/// Runtime checks law-independent theta semantics at ingress and on return.
+/// The C adapter must additionally resolve the exact bound LawVersion and run
+/// check_theta_within on input/output; stage presence is not that proof.
+/// The production resource-binding path is pending in the stage-inputs request.
 pub trait Dynamics {
     fn update(&mut self, input: DynamicsInput<'_>) -> StageResult<Bound<Change<ThetaSnapshot>>>;
 }
@@ -217,5 +205,41 @@ impl StageSet<Rehearsal> {
             environment,
             _lineage: PhantomData,
         })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use core_types::{WireMessage, scalar::unhex};
+
+    /// Review R1 / v2.0 §6: r_k is an observable F input even when s_k and d_k agree.
+    #[test]
+    fn review_r1_active_view_preserves_differences_in_typical_magnitude() {
+        let limits = Limits {
+            max_bytes: 4 << 20,
+            max_items: 4096,
+            max_depth: 64,
+        };
+        let mut low = RSnapshotV3::from_canonical(
+            &unhex(include_str!("../tests/fixtures/RSnapshotV3.hex").trim()).unwrap(),
+            limits,
+        )
+        .unwrap();
+        let mut tendency = TendencyV3::from_canonical(
+            &unhex(include_str!("../tests/fixtures/TendencyV3.hex").trim()).unwrap(),
+            limits,
+        )
+        .unwrap();
+        tendency.pi = 0.75;
+        tendency.typical_magnitude = 0.1;
+        low.tendencies = vec![tendency];
+        let mut high = low.clone();
+        high.tendencies[0].typical_magnitude = 0.8;
+        assert_ne!(
+            active(&low),
+            active(&high),
+            "F cannot distinguish r=0.1 from r=0.8"
+        );
     }
 }

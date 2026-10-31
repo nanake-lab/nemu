@@ -2,7 +2,15 @@ use crate::{
     Error, Result, binding::digest, check, clock::ProcessTime, same, stages::Snapshot,
     status::Status, validate,
 };
-use core_types::{contract::Limits, generated::*};
+use core_types::{contract::Limits, generated::*, semantic::check_theta};
+
+/// Operators §5.3 / v2.0 §§6, 8: encoding alone permits zero time divisors.
+/// This is the law-independent check, not check_theta_within: resolving and
+/// binding the authoritative law is tracked in P5-08-stage-inputs-and-law.md.
+pub(crate) fn validate_theta(theta: &ThetaSnapshot, limits: Limits) -> Result<()> {
+    validate(theta, limits)?;
+    check_theta(theta).map_err(Error::Contract)
+}
 
 pub(crate) fn validate_inputs(
     event: &EventEnvelope,
@@ -19,7 +27,7 @@ pub(crate) fn validate_inputs(
     validate(binding, limits)?;
     validate(&base.x, limits)?;
     validate(&base.r, limits)?;
-    validate(&base.theta, limits)?;
+    validate_theta(&base.theta, limits)?;
     check(
         attributes.event_id == event.id
             && binding.event_id == event.id

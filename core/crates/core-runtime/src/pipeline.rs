@@ -11,7 +11,10 @@ use crate::{
     stages::*,
     status::Status,
     validate,
-    validation::{failure, recoverable, stage_error, validate_inputs, validate_resize, validate_x},
+    validation::{
+        failure, recoverable, stage_error, validate_inputs, validate_resize, validate_theta,
+        validate_x,
+    },
 };
 use core_store::LineageKind;
 use core_types::generated::*;
@@ -378,7 +381,7 @@ impl<L: LineageKind> StageSet<L> {
                 })
                 .map_err(stage_error)?
                 .check(&binding, limits)?;
-            validate(&response.value, limits)?;
+            validate_theta(&response.value, limits)?;
             check(
                 same(&response.value, &base.theta, limits)? || !response.ledger.is_empty(),
                 "C changed theta without ledger evidence",
@@ -435,6 +438,7 @@ impl<L: LineageKind> StageSet<L> {
     }
     /// Read-only maintenance. No H append, evidence, G/C, or clock-anchor write.
     pub fn maintenance(&self, base: &Snapshot, time: &ProcessTime) -> Result<Snapshot> {
+        validate_theta(&base.theta, self.limits)?;
         check(
             time.ns() >= base.x.anchor_time_ns.0,
             "maintenance before anchor",

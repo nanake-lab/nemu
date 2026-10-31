@@ -1,17 +1,12 @@
 mod common;
-use common::{*, adapters::*};
-use core_runtime::{binding::Bound, pipeline::Step, stages::*};
+use common::{adapters::*, *};
+use core_runtime::{Error, binding::Bound, pipeline::Step, stages::*};
 use core_store::Experiment;
 use core_types::{WireMessage, generated::*, semantic::check_theta};
 
-// Codec golden vectors permit zero divisors; these test inputs deliberately
-// start semantically valid before mutating exactly one reviewed boundary.
+// Start semantically valid before mutating exactly one reviewed boundary.
 fn valid_case() -> Case {
-    let mut case = Case::new();
-    let positive = NatureScale { schema_version: 1, connection: 1.0, empathy: 1.0, curiosity: 1.0, achievement: 1.0 };
-    case.base.theta.values.recovery_per_s = positive.clone();
-    case.base.theta.sigma = positive.clone();
-    case.base.theta.tau_s = positive;
+    let case = Case::new();
     check_theta(&case.base.theta).unwrap();
     case
 }
@@ -22,12 +17,19 @@ fn zero_divisor(theta: &mut ThetaSnapshot, field: usize) {
         _ => theta.tau_s.curiosity = 0.0,
     }
 }
-struct InvalidC { inner: C, field: usize }
+struct InvalidC {
+    inner: C,
+    field: usize,
+}
 impl Dynamics for InvalidC {
     fn update(&mut self, input: DynamicsInput<'_>) -> StageResult<Bound<Change<ThetaSnapshot>>> {
         let mut response = self.inner.update(input)?;
         zero_divisor(&mut response.value.value, self.field);
-        response.value.ledger[0].theta_change.as_mut().unwrap().after = response.value.value.values.clone();
+        response.value.ledger[0]
+            .theta_change
+            .as_mut()
+            .unwrap()
+            .after = response.value.value.values.clone();
         // Reproduce the review: valid encoding and a matching ledger do not
         // imply positive time constants/divisors (operators §5.3; v2 §§6/8).
         response.value.value.canonical_bytes(limits()).unwrap();
@@ -42,9 +44,20 @@ fn review_r2_baseline_theta_rejects_zero_recovery_sigma_and_tau() {
         let mut case = valid_case();
         zero_divisor(&mut case.base.theta, field);
         let log = Log::default();
-        let mut stages = StageSet::<Experiment>::complete(parts(&log), case.binding.environment.clone(), limits()).unwrap();
+        let mut stages = StageSet::<Experiment>::complete(
+            parts(&log),
+            case.binding.environment.clone(),
+            limits(),
+        )
+        .unwrap();
         let result = stages.process_head(case.input(false));
-        assert!(result.is_err(), "invalid baseline theta accepted: field={field}");
+        assert!(
+            result.is_err(),
+            "invalid baseline theta accepted: field={field}"
+        );
+        assert!(
+            matches!(result, Err(Error::Contract(message)) if message == check_theta(&case.base.theta).unwrap_err())
+        );
         assert!(log.borrow().is_empty());
     }
 }
@@ -55,10 +68,26 @@ fn review_r2_c_output_rejects_zero_recovery_sigma_and_tau_before_fout() {
         let case = valid_case();
         let log = Log::default();
         let mut components = parts(&log);
-        components.c = Some(Box::new(InvalidC { inner: C(log.clone()), field }));
-        let mut stages = StageSet::<Experiment>::complete(components, case.binding.environment.clone(), limits()).unwrap();
+        components.c = Some(Box::new(InvalidC {
+            inner: C(log.clone()),
+            field,
+        }));
+        let mut stages = StageSet::<Experiment>::complete(
+            components,
+            case.binding.environment.clone(),
+            limits(),
+        )
+        .unwrap();
         let result = stages.process_head(case.input(false));
-        assert!(result.is_err(), "invalid C output crossed STAGED: field={field}");
+        assert!(
+            result.is_err(),
+            "invalid C output crossed STAGED: field={field}"
+        );
+        let mut rejected = case.base.theta.clone();
+        zero_divisor(&mut rejected, field);
+        assert!(
+            matches!(result, Err(Error::Contract(message)) if message == check_theta(&rejected).unwrap_err())
+        );
         assert!(log.borrow().contains(&Step::C));
         assert!(!log.borrow().contains(&Step::FOut));
     }
@@ -67,7 +96,12 @@ fn review_r2_c_output_rejects_zero_recovery_sigma_and_tau_before_fout() {
 #[test]
 fn review_r2_valid_c_output_still_reaches_staged() {
     let case = valid_case();
-    let mut stages = StageSet::<Experiment>::complete(parts(&Log::default()), case.binding.environment.clone(), limits()).unwrap();
+    let mut stages = StageSet::<Experiment>::complete(
+        parts(&Log::default()),
+        case.binding.environment.clone(),
+        limits(),
+    )
+    .unwrap();
     let staged = stages.process_head(case.input(false)).unwrap();
     check_theta(&staged.snapshot().theta).unwrap();
     assert_eq!(staged.snapshot().theta.values.baseline.connection, 0.3);
@@ -79,7 +113,9 @@ fn review_r2_maintenance_rejects_invalid_theta_before_projection() {
     let mut case = valid_case();
     zero_divisor(&mut case.base.theta, 0);
     let log = Log::default();
-    let stages = StageSet::<Experiment>::complete(parts(&log), case.binding.environment.clone(), limits()).unwrap();
+    let stages =
+        StageSet::<Experiment>::complete(parts(&log), case.binding.environment.clone(), limits())
+            .unwrap();
     assert!(stages.maintenance(&case.base, &time(30)).is_err());
     assert!(log.borrow().is_empty());
 }
