@@ -1,0 +1,21 @@
+{
+  "head": "9a3858ba1d31506cf2a7b2d34dd46f913c9d5594",
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "core/Cargo.toml",
+    "-p",
+    "gateway",
+    "--locked",
+    "tests::service::acceptance::sys01_queued_duplicate_backlog_never_reaches_a_second_core_step",
+    "--",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "start": "2026-10-30T03:28:46.0071548Z",
+  "fixture_sha256": "B806E55E4E2720CA21840E38122ACFD47B14672FC821B6546F29D69219A4CE1B",
+  "exit_code": 0,
+  "end": "2026-10-30T03:28:54.8614333Z"
+}

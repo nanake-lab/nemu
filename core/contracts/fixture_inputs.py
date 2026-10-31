@@ -12,6 +12,10 @@ LIMITS = dict(max_bytes=1048576, max_items=4096, max_depth=32)
 
 
 def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
+    from fixture_theta import NAMES, sample_theta
+
+    if name in NAMES:
+        return sample_theta(name, seed)
     message = SCHEMA["messages"][name]
 
     def atom(f: dict[str, Any], n: int) -> Any:
@@ -521,4 +525,6 @@ def targeted_illegal() -> list[dict[str, Any]]:
         )
     from fixture_retention import illegal_retention
 
-    return targeted_illegal_existing() + out + illegal_retention()
+    from fixture_theta import illegal_theta
+
+    return targeted_illegal_existing() + out + illegal_retention() + illegal_theta()

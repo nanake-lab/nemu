@@ -36,6 +36,7 @@ fn probe(schema: &Schema, request: &Value) -> Result<Value, String> {
         _ => return Err("operation".into()),
     };
     core_types::generated::verify_typed(name, &value, limits)?;
+    core_types::semantic::check_theta_message(name, &value, limits)?;
     Ok(
         json!({"ok":true,"value":value,"canonical":hex(&schema.encode_canonical(name,&value,limits)?),
         "protobuf":hex(&schema.encode_protobuf(name,&value,limits)?),"digest":schema.digest(name,&value,limits)?}),

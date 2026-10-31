@@ -1,0 +1,95 @@
+{
+  "repository": "https://github.com/nanake-lab/nemu",
+  "first_snapshot_time_utc": "2026-10-27 17:29:46 UTC",
+  "recheck_time_utc": "2026-10-27 17:30:56 UTC",
+  "base_commit": "f24f1256259c998bc213a9dc93103fcfb9cfe89a",
+  "target_selectors": [
+    "core/contracts/",
+    "core/crates/core-types/",
+    "workers/*/generated/",
+    "packages/contracts/src/generated/",
+    "core/crates/core-kernel/src/dynamics/storage.rs",
+    "core/crates/core-kernel/src/dynamics/storage/tests.rs",
+    "core/crates/core-kernel/src/dynamics/mod.rs"
+  ],
+  "prs": [
+    {
+      "number": 108,
+      "url": "https://github.com/nanake-lab/nemu/pull/108",
+      "head": "ab618a16ae645b0c13f53c0f58ab8206c869d410",
+      "changed_file_count": 25,
+      "target_matches": [],
+      "adr0029_paths": [
+        "docs/adr/0029-theta-estimator-storage.md"
+      ],
+      "diff_register_changed": false,
+      "proto_paths": []
+    },
+    {
+      "number": 104,
+      "url": "https://github.com/nanake-lab/nemu/pull/104",
+      "head": "8f0d1335283693297602868491a34b0ffeb85088",
+      "changed_file_count": 1,
+      "target_matches": [],
+      "adr0029_paths": [],
+      "diff_register_changed": false,
+      "proto_paths": []
+    },
+    {
+      "number": 97,
+      "url": "https://github.com/nanake-lab/nemu/pull/97",
+      "head": "d2257c7c05390d4f4d2647e15c2ddf3ec3d36548",
+      "changed_file_count": 13,
+      "target_matches": [],
+      "adr0029_paths": [],
+      "diff_register_changed": false,
+      "proto_paths": []
+    },
+    {
+      "number": 96,
+      "url": "https://github.com/nanake-lab/nemu/pull/96",
+      "head": "9094be988011296fe07636fdbbb5ca4d5ec6bc8b",
+      "changed_file_count": 99,
+      "target_matches": [],
+      "adr0029_paths": [],
+      "diff_register_changed": false,
+      "proto_paths": []
+    },
+    {
+      "number": 64,
+      "url": "https://github.com/nanake-lab/nemu/pull/64",
+      "head": "0e4db7299fee7bcd312092b3bb11dfbba3080444",
+      "changed_file_count": 62,
+      "target_matches": [],
+      "adr0029_paths": [],
+      "diff_register_changed": false,
+      "proto_paths": []
+    },
+    {
+      "number": 49,
+      "url": "https://github.com/nanake-lab/nemu/pull/49",
+      "head": "1880755bb9752be972a83a0466c8bfbc9b2ebc37",
+      "changed_file_count": 269,
+      "target_matches": [],
+      "adr0029_paths": [],
+      "diff_register_changed": true,
+      "proto_paths": []
+    },
+    {
+      "number": 45,
+      "url": "https://github.com/nanake-lab/nemu/pull/45",
+      "head": "76a718ce91892f013a08dc2b59b2d0c6fafb9ed9",
+      "changed_file_count": 694,
+      "target_matches": [],
+      "adr0029_paths": [],
+      "diff_register_changed": false,
+      "proto_paths": []
+    }
+  ],
+  "adr108_text_lines": [
+    "+2026-10-28 \u66f4\u65b0\uff1amain `32a5888e` \u5df2\u5305\u542b PR #95\u3001#65\uff0c\u4e8c\u8005\u4e0d\u518d\u6784\u6210\u76ee\u5f55\u963b\u585e\uff1b#110\uff08`4c8dd453`\uff09\u4ecd\u5f00\u653e\u5e76\u5360\u7528\u5951\u7ea6\u76ee\u5f55\uff0c\u672c\u8f6e\u7ee7\u7eed\u53ea\u505a\u6062\u590d\u51c6\u5907\u3002P5-36 \u5c1a\u672a\u4fee\u6539 IDL\u3001\u751f\u6210\u5668\u3001\u8bed\u4e49\u68c0\u67e5\u3001\u5411\u91cf\u6216\u57fa\u7ebf\u3002\u672c\u63d0\u6848\u8bb0\u5f55\u5b57\u6bb5\u9700\u6c42\u4e0e\u5b9e\u73b0\u7ea6\u675f\u3002\u6d88\u606f\u540d\u79f0\u3001\u7c7b\u578b\u6807\u7b7e\u53ca\u5b57\u6bb5\u53f7\u5f85\u76ee\u5f55\u91ca\u653e\u540e\u4f9d ADR 0007 \u5206\u914d\uff1b\u4e0d\u628a\u6b64\u63d0\u6848\u5f53\u6210\u53ef\u8bfb\u53d6\u65e7\u8d44\u6e90\u7684\u683c\u5f0f\u5b9a\u4e49\u3002",
+    "+\u672c\u63d0\u6848\u4e0d\u6539\u53d8\u4efb\u4f55\u8fd0\u884c\u884c\u4e3a\u3002ADR \u6279\u51c6\u3001V2-107 \u81f3 V2-109 \u7684\u6b63\u5f0f\u6761\u76ee\u3001\u7cbe\u786e IDL \u5206\u914d\u3001\u8bed\u4e49\u5b9e\u73b0\u3001\u9010\u6d88\u606f\u5411\u91cf\u3001\u6b63\u5f0f\u57fa\u7ebf\u51bb\u7ed3\u548c\u771f\u5b9e\u5f80\u8fd4\u5747\u672a\u5b8c\u6210\u3002\u7f16\u53f7\u622a\u81f3\u672c\u6b21\u4e3b\u7ebf\u4e0e\u5f00\u653e PR \u6838\u5bf9\u4ecd\u4e3a\u672c\u5361\u9884\u7559\uff1b\u5b9e\u65bd\u548c\u5408\u5e76\u524d\u518d\u6b21\u6838\u5bf9\u3002\u5b9e\u73b0\u76ee\u5f55\u91ca\u653e\u548c\u6062\u590d\u63a5\u53e3\u662f\u72ec\u7acb\u963b\u585e\uff0c\u4e0d\u80fd\u7531\u672c\u63d0\u6848\u6216\u65e7\u57fa\u7ebf\u6d4b\u8bd5\u66ff\u4ee3\u3002"
+  ],
+  "diff49_v2_107_109_lines": [],
+  "recheck_heads_same": true
+}

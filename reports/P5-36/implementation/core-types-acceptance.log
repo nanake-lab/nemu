@@ -1,0 +1,78 @@
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-types)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.95s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_types-b474e5a7791e2837.exe)
+
+running 9 tests
+test numeric::tests::sys21_count_accepts_boundaries_rejects_limit_and_overflow ... ok
+test numeric::tests::sys21_finite_values_preserve_binary64_bits ... ok
+test numeric::tests::sys21_intervals_are_explicitly_bounded_and_never_wrap ... ok
+test numeric::tests::sys21_normalizes_negative_zero_only ... ok
+test numeric::tests::sys21_rejects_all_nonfinite_categories ... ok
+test semantic::tests::tendency_order_is_canonical_set_order ... ok
+test semantic::tests::unit_directions_pass_and_others_fail ... ok
+test codec_cache_tests::codec_keys_bind_tag_schema_version_hash_and_share_only_immutable_graph ... ok
+test codec_cache_tests::all_legal_and_illegal_golden_vectors_are_equal_cold_hot_and_uncached ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 30.21s
+
+     Running tests\canonical_boundaries.rs (D:\Dev\cache\P5-36\target\debug\deps\canonical_boundaries-9495cc149307eb33.exe)
+
+running 5 tests
+
+running 1 test
+test frozen_tag_is_independent_of_message_name ... ok
+test sys21_canonical_count_overflow_negative_zero_and_bad_presence ... ok
+test optional_nonfinite_is_rejected_before_json_can_erase_it ... ok
+test nested_encoding_repeats_header_and_vector_order_is_significant ... ok
+test first_codec_call_and_later_calls_are_equivalent_and_owned_schemas_stay_independent ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.14s
+
+test first_codec_call_and_later_calls_are_equivalent_and_owned_schemas_stay_independent ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests\p5_32_contract.rs (D:\Dev\cache\P5-36\target\debug\deps\p5_32_contract-810de11967a4105d.exe)
+
+running 5 tests
+test successors_are_live_and_predecessors_superseded ... ok
+test subnormal_edge_u_zero_with_m_nonzero_is_valid ... ok
+test teaching_allocation_has_no_projection_and_roundtrips ... ok
+test tendency_v2_semantics_include_the_magnitude_sums ... ok
+test allocation_ordinals_are_exactly_zero_to_n_minus_one ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\p5_34_contract.rs (D:\Dev\cache\P5-36\target\debug\deps\p5_34_contract-48544d7de6e5769e.exe)
+
+running 7 tests
+test attachment_denominator_uses_the_normative_grouping ... ok
+test rounded_b_does_not_erase_v_or_the_subnormal_m_u_edge ... ok
+test v_semantics_reject_both_signs_and_nonfinite_native_values ... ok
+test q_boundaries_and_current_support_do_not_redefine_historical_q ... ok
+test ordinals_and_nested_containers_are_checked ... ok
+test successor_fields_reserved_numbers_and_lifecycle ... ok
+test json_roundtrip_preserves_adjacent_q_v_values ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests\v2_contract.rs (D:\Dev\cache\P5-36\target\debug\deps\v2_contract-091f7effd0dc2407.exe)
+
+running 8 tests
+test tendency_change_needs_an_endpoint ... ok
+test superseded_registry ... ok
+test law_parameter_inequalities ... ok
+test genesis_has_no_free_text_fields ... ok
+test tendency_order_matches_codec_set_order ... ok
+test adr_0014_values_are_live ... ok
+test genesis_semantics ... ok
+test tendency_semantics_beyond_the_codec ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+   Doc-tests core_types
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

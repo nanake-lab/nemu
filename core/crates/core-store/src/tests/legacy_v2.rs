@@ -67,7 +67,19 @@ pub(super) fn seed(
     let group_ref = raw(store, &group, "1");
     value.staged_r = r_ref.clone();
     value.accepted_results.push(group_ref.clone());
-    let manifest = raw(store, &value, "1");
+    let id = publish(store, &e, &value, Some((&child, &group_ref)));
+    (id, r_ref, group_ref)
+}
+
+// Reuse the historical publication fixture for old theta with a current R.
+// This is deliberately unavailable to production callers.
+pub(super) fn publish(
+    store: &mut Store<Rehearsal>,
+    e: &EventEnvelope,
+    value: &CoreTransactionV2,
+    legacy_r: Option<(&ObjectRef, &ObjectRef)>,
+) -> String {
+    let manifest = raw(store, value, "1");
     let mut refs = store.objects.closure(&manifest).unwrap();
     for entry in &value.staged_ledger {
         refs.push(raw(store, entry, "1"));
@@ -99,88 +111,92 @@ pub(super) fn seed(
     .unwrap();
     crate::ingress::record_decision(
         &tx,
-        &e,
+        e,
         &id,
         "accepted",
-        &crate::ingress::fingerprint(&e, config().encoding).unwrap(),
+        &crate::ingress::fingerprint(e, config().encoding).unwrap(),
     )
     .unwrap();
     tx.execute("INSERT INTO snapshots VALUES(?1,?2)", params![id, encoded])
         .unwrap();
-    // Reproduce historical indexes without adding a production V2 writer.
-    for (role, reference) in [
-        ("H", &value.staged_h),
-        ("x", &value.staged_x),
-        ("R", &value.staged_r),
-        ("theta", &value.staged_theta),
-        ("L", &value.staged_l),
-        ("Q", &value.staged_q),
-        ("U", &value.staged_u),
-    ] {
-        tx.execute(
-            "INSERT INTO snapshot_objects VALUES(?1,?2,'',?3)",
-            params![
-                id,
-                role,
-                reference.canonical_bytes(config().encoding).unwrap()
-            ],
-        )
-        .unwrap();
-    }
-    tx.execute(
-        "INSERT INTO snapshot_objects VALUES(?1,'tendency','legacy-t',?2)",
-        params![id, child.canonical_bytes(config().encoding).unwrap()],
-    )
-    .unwrap();
-    for reference in &value.staged_concepts {
-        tx.execute(
-            "INSERT INTO snapshot_objects VALUES(?1,'concept',?2,?3)",
-            params![
-                id,
-                hex(&reference.digest.0),
-                reference.canonical_bytes(config().encoding).unwrap()
-            ],
-        )
-        .unwrap();
-    }
-    for reference in &value.accepted_results {
-        tx.execute(
-            "INSERT INTO accepted_results VALUES(?1,?2)",
-            params![id, reference.canonical_bytes(config().encoding).unwrap()],
-        )
-        .unwrap();
-    }
-    let group_bytes = group_ref.canonical_bytes(config().encoding).unwrap();
-    tx.execute(
-        "INSERT INTO evidence_groups VALUES(?1,'legacy-g',?2)",
-        params![id, group_bytes],
-    )
-    .unwrap();
-    tx.execute(
-        "INSERT INTO evidence_index VALUES(?1,'legacy-t','legacy-g',?2)",
-        params![id, group_bytes],
-    )
-    .unwrap();
-    let schema = core_types::contract::Schema::builtin().unwrap();
-    for reference in &refs {
-        let (name, _) = schema
-            .messages
-            .iter()
-            .find(|(_, m)| m.tag == reference.object_type)
-            .unwrap();
-        let bytes = store.objects.read(reference).unwrap();
-        let object = schema
-            .decode_canonical(name, &bytes, config().encoding, 0)
-            .unwrap();
-        let mut dependencies = Vec::new();
-        crate::objects::collect_refs(&schema, name, &object, &mut dependencies).unwrap();
-        for dependency in dependencies {
+    if let Some((child, group_ref)) = legacy_r {
+        // Reproduce historical indexes without adding a production V2 writer.
+        for (role, reference) in [
+            ("H", &value.staged_h),
+            ("x", &value.staged_x),
+            ("R", &value.staged_r),
+            ("theta", &value.staged_theta),
+            ("L", &value.staged_l),
+            ("Q", &value.staged_q),
+            ("U", &value.staged_u),
+        ] {
             tx.execute(
-                "INSERT OR IGNORE INTO dependency_index VALUES(?1,?2,?3)",
-                params![id, hex(&reference.digest.0), hex(&dependency.digest.0)],
+                "INSERT INTO snapshot_objects VALUES(?1,?2,'',?3)",
+                params![
+                    id,
+                    role,
+                    reference.canonical_bytes(config().encoding).unwrap()
+                ],
             )
             .unwrap();
         }
+        tx.execute(
+            "INSERT INTO snapshot_objects VALUES(?1,'tendency','legacy-t',?2)",
+            params![id, child.canonical_bytes(config().encoding).unwrap()],
+        )
+        .unwrap();
+        for reference in &value.staged_concepts {
+            tx.execute(
+                "INSERT INTO snapshot_objects VALUES(?1,'concept',?2,?3)",
+                params![
+                    id,
+                    hex(&reference.digest.0),
+                    reference.canonical_bytes(config().encoding).unwrap()
+                ],
+            )
+            .unwrap();
+        }
+        for reference in &value.accepted_results {
+            tx.execute(
+                "INSERT INTO accepted_results VALUES(?1,?2)",
+                params![id, reference.canonical_bytes(config().encoding).unwrap()],
+            )
+            .unwrap();
+        }
+        let group_bytes = group_ref.canonical_bytes(config().encoding).unwrap();
+        tx.execute(
+            "INSERT INTO evidence_groups VALUES(?1,'legacy-g',?2)",
+            params![id, group_bytes],
+        )
+        .unwrap();
+        tx.execute(
+            "INSERT INTO evidence_index VALUES(?1,'legacy-t','legacy-g',?2)",
+            params![id, group_bytes],
+        )
+        .unwrap();
+        let schema = core_types::contract::Schema::builtin().unwrap();
+        for reference in &refs {
+            let (name, _) = schema
+                .messages
+                .iter()
+                .find(|(_, m)| m.tag == reference.object_type)
+                .unwrap();
+            let bytes = store.objects.read(reference).unwrap();
+            let object = schema
+                .decode_canonical(name, &bytes, config().encoding, 0)
+                .unwrap();
+            let mut dependencies = Vec::new();
+            crate::objects::collect_refs(&schema, name, &object, &mut dependencies).unwrap();
+            for dependency in dependencies {
+                tx.execute(
+                    "INSERT OR IGNORE INTO dependency_index VALUES(?1,?2,?3)",
+                    params![id, hex(&reference.digest.0), hex(&dependency.digest.0)],
+                )
+                .unwrap();
+            }
+        }
+    } else {
+        crate::publication::index(&tx, &store.objects, &id, value, &refs).unwrap();
     }
     for entry in &value.staged_ledger {
         let r = store.objects.reference(entry, "1").unwrap();
@@ -211,5 +227,5 @@ pub(super) fn seed(
     )
     .unwrap();
     store.verify().unwrap();
-    (id, r_ref, group_ref)
+    id
 }

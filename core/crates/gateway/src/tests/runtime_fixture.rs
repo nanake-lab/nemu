@@ -60,7 +60,7 @@ pub(super) fn commit_result(
             .revision;
         binding.r_revision = reader.read::<RSnapshotV3>(&old.staged_r).unwrap().revision;
         binding.theta_revision = reader
-            .read::<ThetaSnapshot>(&old.staged_theta)
+            .read::<ThetaSnapshotV2>(&old.staged_theta)
             .unwrap()
             .revision;
         binding.read_set.extend([
@@ -78,8 +78,9 @@ pub(super) fn commit_result(
         .sort_by_key(|r| core_types::scalar::hex(&r.digest.0));
     binding.read_set.dedup();
     let ticket = store.bind(binding.clone()).unwrap();
+    let mut theta: ThetaSnapshotV2 = fixture();
     let law: LawVersion = with_refs(leaf.reference());
-    let law = store.prepare(&law, "1").unwrap();
+    let law = store.prepare(&law, &theta.parameters.law_id).unwrap();
     let r = RSnapshotV3 {
         schema_version: 1,
         revision: format!("synthetic-r-{n}"),
@@ -87,7 +88,6 @@ pub(super) fn commit_result(
         tendencies: vec![],
     };
     let r = store.prepare_r(&r).unwrap();
-    let mut theta: ThetaSnapshot = with_refs(leaf.reference());
     theta.revision = format!("synthetic-theta-{n}");
     theta.law_version = law.reference().clone();
     let theta = store.prepare(&theta, "1").unwrap();

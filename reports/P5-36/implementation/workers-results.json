@@ -1,0 +1,47 @@
+[
+  {
+    "exit": 0,
+    "project": "irl",
+    "command": "ruff check src tests generated/echo"
+  },
+  {
+    "exit": 0,
+    "project": "irl",
+    "command": "mypy --strict src tests generated/echo"
+  },
+  {
+    "exit": 0,
+    "project": "irl",
+    "command": "pytest"
+  },
+  {
+    "exit": 0,
+    "project": "drive",
+    "command": "ruff check src tests generated/echo"
+  },
+  {
+    "exit": 0,
+    "project": "drive",
+    "command": "mypy --strict src tests generated/echo"
+  },
+  {
+    "exit": 0,
+    "project": "drive",
+    "command": "pytest"
+  },
+  {
+    "exit": 0,
+    "project": "model-adapter",
+    "command": "ruff check src tests generated/echo"
+  },
+  {
+    "exit": 0,
+    "project": "model-adapter",
+    "command": "mypy --strict src tests generated/echo"
+  },
+  {
+    "exit": 0,
+    "project": "model-adapter",
+    "command": "pytest"
+  }
+]

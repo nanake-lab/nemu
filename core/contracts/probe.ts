@@ -1,5 +1,6 @@
 // Test-only JSON-lines adapter, run with Node's TypeScript stripping.
 import { ingressProbe } from './ingress_probe.js';
+import { checkThetaMessage } from '../../packages/contracts/src/generated/echo/theta.js';
 import { createInterface } from 'node:readline';
 import { fromJson, toJson } from '../../packages/contracts/src/generated/echo/bridge.js';
 import {
@@ -32,6 +33,7 @@ for await (const line of createInterface({ input: process.stdin })) {
         : q.op === 'canonical'
           ? decodeCanonicalData(q.name, Buffer.from(q.hex, 'hex'), q.limits)
           : decodeProtobufData(q.name, Buffer.from(q.hex, 'hex'), q.limits);
+    checkThetaMessage(q.name, v, q.limits);
     console.log(
       JSON.stringify({
         ok: true,

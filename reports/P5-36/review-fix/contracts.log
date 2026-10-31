@@ -1,0 +1,42 @@
+$ python core/contracts/verify.py
+0 generated files stale
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 1.077s
+
+OK
+Compatibility against p5-01, p5-21, p5-32, p5-34, p5-35, current: 0 violations; 158 messages (47 superseded), 56 enums
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-types)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.78s
+Official protoc and protobuf runtime: 515 transport vectors PASS
+P5-34 browser-safe schema: 106 checks PASS
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.18s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_kernel-22b56710e11de0ca.exe)
+
+running 1 test
+exported 65 actual C states
+test dynamics::storage::tests::actual_states_all_prefixes_roundtrip_and_continuation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 90 filtered out; finished in 3.50s
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.11s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_kernel-22b56710e11de0ca.exe)
+
+running 1 test
+restored and continued 260 independently re-encoded Python/TypeScript states
+test dynamics::storage::tests::actual_states_all_prefixes_roundtrip_and_continuation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 90 filtered out; finished in 7.61s
+
+{"result": "passed", "actual_prefixes": 65, "returned_states": 260, "languages": ["python", "typescript"], "encodings": ["canonical", "protobuf"], "state_oracle": "exhaustive fields, f64::to_bits", "continuation": "same remaining events, changes, signals, bounds"}
+Rust: 13224 cases PASS
+Python: 13224 cases PASS
+TypeScript: 13224 cases PASS
+{"messages": 158, "cases_per_language": 13224, "legal": 2983, "illegal": 10241}
+{"theta_limits": "ThetaLastEvent", "event_or_law_id_bytes": 1048576, "canonical_bytes": 1048629, "protobuf_bytes": 1048591, "result": "passed"}
+{"theta_limits": "ThetaSnapshotV2", "event_or_law_id_bytes": 1048576, "canonical_bytes": 1050475, "protobuf_bytes": 1049786, "result": "passed"}
+{"theta_limits": "ThetaEstimatorParameters", "event_or_law_id_bytes": 1048576, "canonical_bytes": 1049034, "protobuf_bytes": 1048905, "result": "passed"}
+{"theta_limits": "ThetaLastEvent", "event_or_law_id_bytes": 1048577, "canonical_bytes": 1048630, "protobuf_bytes": 1048592, "result": "passed"}
+{"theta_limits": "ThetaSnapshotV2", "event_or_law_id_bytes": 1048577, "canonical_bytes": 1050476, "protobuf_bytes": 1049787, "result": "passed"}
+{"theta_limits": "ThetaEstimatorParameters", "event_or_law_id_bytes": 1048577, "canonical_bytes": 1049035, "protobuf_bytes": 1048906, "result": "passed"}
+{"theta_limits_checks": 150, "languages": ["Rust", "Python", "TypeScript"], "result": "passed"}
