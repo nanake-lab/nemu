@@ -1,0 +1,20 @@
+{
+  "acceptance_id": "F01",
+  "result": "passed",
+  "scope": "P5-10 pure functions and structural fixtures only; runtime integration and behavior qualification excluded",
+  "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "command": "cargo test -p core-kernel --locked --offline",
+  "log": "../review-2-2026-10-26/kernel-20261026-165501.log",
+  "log_sha256": "03782ce522cfcec1fd099ad54dd509c5314a166f1bc888aa5d947cb71d3e2d86",
+  "log_sha256_scope": "UTF-8 with LF line endings (repository blob)",
+  "captured_log_sha256": "a59583de4fea6b416a92ec627189792b8c1e81feb619c967592a070a32903d8b",
+  "test_count": 4,
+  "tests": [
+    "fast::tests::f01_piecewise_projection_and_no_accumulated_decay",
+    "fast::tests::rates::learned_rate_review_counterexample_agrees_through_public_projection",
+    "fast::tests::state_boundaries::negative_zero_recovery_and_snapshot_preserve_canonical_zero_delta",
+    "fast::tests::zero_delta_is_identity_bit_for_bit"
+  ],
+  "fixture": "../../../profiles/structural_fixture/fast/fixture.json",
+  "rate_reference_vectors": "../../../profiles/structural_fixture/fast/rate-reference-vectors.json"
+}

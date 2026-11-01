@@ -5,7 +5,7 @@ use crate::{
 use core_types::{
     WireMessage,
     contract::Schema,
-    generated::{ActionLifecycle, CoreTransactionV2, EvidenceGroupV2, ObjectRef, RSnapshotV2},
+    generated::{ActionLifecycle, CoreTransactionV2, EvidenceGroupV3, ObjectRef, RSnapshotV3},
     scalar::hex,
 };
 use rusqlite::{Connection, params};
@@ -33,7 +33,7 @@ pub(crate) fn index(
             params![commit, role, r.canonical_bytes(limits)?],
         )?;
     }
-    let r = RSnapshotV2::from_canonical(&objects.read(&value.staged_r)?, limits)?;
+    let r = RSnapshotV3::from_canonical(&objects.read(&value.staged_r)?, limits)?;
     for tendency in &r.tendencies {
         let reference = objects.reference(tendency, "1")?;
         db.execute(
@@ -70,8 +70,8 @@ pub(crate) fn index(
     let schema = Schema::builtin()?;
     // Index only groups accepted in this transaction, never unaccepted candidates.
     for reference in &value.accepted_results {
-        if reference.object_type == schema.message(EvidenceGroupV2::NAME)?.tag {
-            let group = EvidenceGroupV2::from_canonical(&objects.read(reference)?, limits)?;
+        if reference.object_type == schema.message(EvidenceGroupV3::NAME)?.tag {
+            let group = EvidenceGroupV3::from_canonical(&objects.read(reference)?, limits)?;
             db.execute(
                 "INSERT INTO evidence_groups VALUES(?1,?2,?3)",
                 params![commit, group.group_id, reference.canonical_bytes(limits)?],

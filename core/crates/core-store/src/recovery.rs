@@ -37,6 +37,7 @@ pub(crate) fn verify(
         objects.closure(&r)?;
     }
     let limits = objects.config.encoding;
+    crate::terminal_ingress::verify_audit(db, limits)?;
     let mut input = db.prepare("SELECT position,event FROM raw_ingress ORDER BY position")?;
     let mut rows = input.query([])?;
     let mut count = 0u64;
@@ -92,6 +93,7 @@ pub(crate) fn verify(
                 .ok_or(crate::Error::Rejected("accepted commit lacks snapshot"))?;
             let reference = ObjectRef::from_canonical(bytes, limits)?;
             let value = CoreTransactionV2::from_canonical(&objects.read(&reference)?, limits)?;
+            crate::theta::read(objects, &value.staged_theta)?;
             require(
                 hex(&reference.digest.0) == id
                     && value.binding.base_commit == parent.as_ref().unwrap_or(&initial).as_str()

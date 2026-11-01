@@ -1,0 +1,15 @@
+$ python core/contracts/verify.py
+0 generated files stale
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.973s
+
+OK
+Compatibility against p5-01, p5-21, p5-32, current: 0 violations; 141 messages (46 superseded), 51 enums
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.09s
+Official protoc and protobuf runtime: 464 transport vectors PASS
+P5-34 browser-safe schema: 106 checks PASS
+Rust: 11592 cases PASS
+Python: 11592 cases PASS
+TypeScript: 11592 cases PASS
+{"messages": 141, "cases_per_language": 11592, "legal": 2659, "illegal": 8933}

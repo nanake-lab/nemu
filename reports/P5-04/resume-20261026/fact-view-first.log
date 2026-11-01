@@ -1,0 +1,25 @@
+   Compiling fact-view v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\fact-view)
+warning: unused import: `Budgets`
+ --> crates\fact-view\src\retrieval.rs:2:13
+  |
+2 |     Access, Budgets, Embedder, Error, FactQuery, FactView, INDEX_VERSION, Purpose, QUERY_VERSION,
+  |             ^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `fact-view` (lib) generated 1 warning (run `cargo fix --lib -p fact-view` to apply 1 suggestion)
+warning: `fact-view` (lib test) generated 1 warning (1 duplicate)
+    Finished `release` profile [optimized] target(s) in 11.57s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\fact_view-4e7f8fd353319a09.exe)
+
+running 15 tests
+test tests::deterministic_rrf_filters_corrections_and_budgets ... ok
+test tests::edge_cases::p522_active_memory_messages_never_emit_growth_or_serve_other_services ... ok
+test tests::edge_cases::panel_time_and_payload_filters_are_compatible_and_invalid_dates_fail ... ok
+test tests::edge_cases::withdrawing_object_reference_also_suppresses_correction_replacements ... ok
+test tests::memory_pages::v276_continuations_bind_query_permissions_budget_and_prefix ... ok
+error: test failed, to rerun pass `-p fact-view --lib`
+
+Caused by:
+  process didn't exit successfully: `D:\Dev\cache\cargo-target\P5-04\release\deps\fact_view-4e7f8fd353319a09.exe --test-threads=1 --nocapture` (exit code: 0xffffffff)
+test tests::memory_pages::v276_pages_reach_beyond_old_top64_with_tied_exact_times_and_no_state ... 

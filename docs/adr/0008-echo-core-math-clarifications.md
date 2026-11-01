@@ -93,3 +93,11 @@ CompileAuthorizedEffects(stored_R, stored_θ, process_time, validity) -> E_eff
 - 本 ADR 保留。第 1 节正是 v2.0 对快状态的要求：情境作用 f_k(e) 对每个事件是常数，不读 x̄。第 1 节第 4 点中的「witness/χ/K 路径」读作 v2.0 中 R 的倾向。
 - 第 2、3 节的签名不变。v2.0 取消了 q 包络和 ValidityContract，validity 为空。
 - 「不在本 ADR 内」一节的 P-2、X-1（W00-C06、W00-C07）已由 ADR 0009 消解，D-7 不再需要回答。
+
+## 追加（2026-10-29）：DOC-PRESETS-01 有效性说明
+
+§1(4) 用于要求无新外源后统一定时回落的读法按 ADR 0032 §5 取代；固定 R/θ、同一事件序列下的局部非扩张/收缩仍保留，不能据此证明完整内生闭环安全。无事件松弛、时间投影与 §2/§3 未被该决定一并取消；历史 NO-GROWTH 范围沿 ADR 0009/0010 取代。旧公式和反例保持原样，新防循环规律另卡。
+
+当前说明使用「乎」，复数四个「乎」；历史旧称、公式和 Nature* 等标识符不改，术语对应见 [ADR 0032 §10](0032-presets-as-starting-points.md)。
+
+[当前有效读法与验收映射](../traceability/DOC-PRESETS-01.md)；[报告及未决项](../../reports/DOC-PRESETS-01/REPORT.md)。

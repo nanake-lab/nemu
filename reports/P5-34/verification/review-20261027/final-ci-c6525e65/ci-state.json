@@ -1,0 +1,223 @@
+{
+  "head": "c6525e650a7d0be7a1278e9586ae5c3b696b2592",
+  "captured_at_utc": "2026-10-27T06:23:31.089Z",
+  "runs": {
+    "workflow_runs": [
+      {
+        "id": 40456116455,
+        "name": "CI",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 325,
+        "jobs_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/40456116455/jobs",
+        "logs_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/40456116455/logs",
+        "workflow_id": 383480231
+      },
+      {
+        "id": 40456116456,
+        "name": "Windows",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_number": 206,
+        "jobs_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/40456116456/jobs",
+        "logs_url": "https://api.github.com/repos/nanake-lab/nemu/actions/runs/40456116456/logs",
+        "workflow_id": 390724148
+      }
+    ]
+  },
+  "windows_jobs": {
+    "jobs": [
+      {
+        "id": 122029713840,
+        "name": "Windows self-hosted checks",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_id": 40456116456,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Decide scope",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run npm install --global pnpm@12.11.2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run pnpm install --frozen-lockfile",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Detect installed .NET SDK",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Run actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 8
+          },
+          {
+            "name": "Run pnpm exec playwright install chromium",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Initialize current-run Windows evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Evidence provenance regression tests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Snapshot timing and repository filtering checks",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check e2e",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          },
+          {
+            "name": "Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check visual",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16
+          },
+          {
+            "name": "Verify Windows evidence provenance",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17
+          },
+          {
+            "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18
+          },
+          {
+            "name": "W02 NTFS storage checks",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19
+          },
+          {
+            "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 20
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 39
+          },
+          {
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 40
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 41
+          }
+        ]
+      },
+      {
+        "id": 122043122361,
+        "name": "Windows desktop and isolation",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_id": 40456116456,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Require successful Windows checks",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 2
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          }
+        ]
+      }
+    ]
+  },
+  "windows_artifacts": {
+    "content": [
+      {
+        "type": "text",
+        "text": "tool call error: tool call failed for `codex_apps/github.fetch_workflow_run_artifacts`\n\nCaused by:\n    Transport send error: Transport [codex_rmcp_client::tool_list_changes::ToolListChanges<codex_rmcp_client::event_notification_transport::EventNotificationTransport<rmcp::transport::worker::WorkerTransport<rmcp::transport::streamable_http_client::StreamableHttpClientWorker<codex_rmcp_client::http_client_adapter::StreamableHttpClientAdapter>>>>] error: Client error: HTTP request failed: http/request failed: error sending request for url (https://chatgpt.com/backend-api/ps/mcp)"
+      }
+    ],
+    "isError": true
+  },
+  "log_provenance": "Local toolchain.log, clippy.log and tests.log preserve original bytes. GitHub job logs were obtained through the GitHub connector after gh downloads returned EOF; decoded log text is archived as UTF-8 with LF line endings. Empty failed downloads and their error metadata are retained.",
+  "decoded_logs": [
+    "ubuntu-job-decoded.log",
+    "windows-job-decoded.log",
+    "windows-gate-decoded.log"
+  ]
+}

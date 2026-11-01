@@ -1,0 +1,74 @@
+﻿2026-10-26T13:44:24.8102101Z Current runner version: '2.338.0'
+2026-10-26T13:44:24.8127285Z ##[group]Runner Image Provisioner
+2026-10-26T13:44:24.8128169Z Hosted Compute Agent
+2026-10-26T13:44:24.8128855Z Version: 20261021.618
+2026-10-26T13:44:24.8129896Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-26T13:44:24.8130849Z Build Date: 2026-10-21T00:45:21Z
+2026-10-26T13:44:24.8131646Z Worker ID: {03c119e6-ae5c-41cd-bc49-a783987a85f4}
+2026-10-26T13:44:24.8132369Z Region: westus
+2026-10-26T13:44:24.8132987Z Cloud: Azure
+2026-10-26T13:44:24.8133535Z ##[endgroup]
+2026-10-26T13:44:24.8135072Z ##[group]Operating System
+2026-10-26T13:44:24.8135791Z Ubuntu
+2026-10-26T13:44:24.8136310Z 24.04.5
+2026-10-26T13:44:24.8136845Z LTS
+2026-10-26T13:44:24.8137416Z ##[endgroup]
+2026-10-26T13:44:24.8138089Z ##[group]Runner Image
+2026-10-26T13:44:24.8138730Z Image: ubuntu-24.04
+2026-10-26T13:44:24.8139306Z Version: 20261012.334.1
+2026-10-26T13:44:24.8141078Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-26T13:44:24.8142699Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-26T13:44:24.8143744Z ##[endgroup]
+2026-10-26T13:44:24.8144764Z ##[group]GITHUB_TOKEN Permissions
+2026-10-26T13:44:24.8147082Z Metadata: read
+2026-10-26T13:44:24.8147686Z ##[endgroup]
+2026-10-26T13:44:24.8150030Z Secret source: Actions
+2026-10-26T13:44:24.8151135Z Cache mode: write
+2026-10-26T13:44:24.8152187Z Prepare workflow directory
+2026-10-26T13:44:24.8557299Z Prepare all required actions
+2026-10-26T13:44:24.8622823Z Complete job name: Windows desktop and isolation
+2026-10-26T13:44:24.9459235Z ##[group]Run if [[ "$REPOSITORY" != 'nanake-lab/nemu' || "$ACTOR" != "$OWNER" || "$TRIGGERING_ACTOR" != "$OWNER" ]]; then
+2026-10-26T13:44:24.9462232Z [36;1mif [[ "$REPOSITORY" != 'nanake-lab/nemu' || "$ACTOR" != "$OWNER" || "$TRIGGERING_ACTOR" != "$OWNER" ]]; then[0m
+2026-10-26T13:44:24.9464826Z [36;1m  echo '::error::Windows checks require the repository owner in nanake-lab/nemu.'[0m
+2026-10-26T13:44:24.9466676Z [36;1m  exit 1[0m
+2026-10-26T13:44:24.9467668Z [36;1mfi[0m
+2026-10-26T13:44:24.9468653Z [36;1mcase "$EVENT" in[0m
+2026-10-26T13:44:24.9469855Z [36;1m  pull_request)[0m
+2026-10-26T13:44:24.9471516Z [36;1m    if [[ "$HEAD_REPOSITORY" != "$REPOSITORY" || "$DRAFT" != 'false' ]]; then[0m
+2026-10-26T13:44:24.9473589Z [36;1m      echo '::error::Windows checks are blocked for fork or draft PRs; skipped is not a pass.'[0m
+2026-10-26T13:44:24.9475259Z [36;1m      exit 1[0m
+2026-10-26T13:44:24.9476272Z [36;1m    fi[0m
+2026-10-26T13:44:24.9477370Z [36;1m    ;;[0m
+2026-10-26T13:44:24.9478326Z [36;1m  push|workflow_dispatch)[0m
+2026-10-26T13:44:24.9479501Z [36;1m    if [[ "$REF" != refs/heads/* ]]; then[0m
+2026-10-26T13:44:24.9481533Z [36;1m      echo '::error::Windows checks require a branch in this repository.'[0m
+2026-10-26T13:44:24.9482971Z [36;1m      exit 1[0m
+2026-10-26T13:44:24.9484064Z [36;1m    fi[0m
+2026-10-26T13:44:24.9484985Z [36;1m    ;;[0m
+2026-10-26T13:44:24.9485791Z [36;1m  *)[0m
+2026-10-26T13:44:24.9487136Z [36;1m    echo '::error::This event is not allowed to run Windows checks.'[0m
+2026-10-26T13:44:24.9488501Z [36;1m    exit 1[0m
+2026-10-26T13:44:24.9489500Z [36;1m    ;;[0m
+2026-10-26T13:44:24.9490716Z [36;1mesac[0m
+2026-10-26T13:44:24.9491671Z [36;1mif [[ "$WINDOWS_RESULT" != 'success' ]]; then[0m
+2026-10-26T13:44:24.9493359Z [36;1m  echo "::error::Windows checks did not succeed (result: $WINDOWS_RESULT)."[0m
+2026-10-26T13:44:24.9494887Z [36;1m  exit 1[0m
+2026-10-26T13:44:24.9495970Z [36;1mfi[0m
+2026-10-26T13:44:24.9497432Z [36;1mecho 'Windows checks completed successfully on the trusted self-hosted runner.'[0m
+2026-10-26T13:44:25.0439886Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-26T13:44:25.0441598Z env:
+2026-10-26T13:44:25.0442337Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-26T13:44:25.0443255Z   UV_LINK_MODE: copy
+2026-10-26T13:44:25.0444063Z   EVENT: pull_request
+2026-10-26T13:44:25.0445251Z   REPOSITORY: nanake-lab/nemu
+2026-10-26T13:44:25.0446100Z   ACTOR: nanake-lab
+2026-10-26T13:44:25.0446908Z   TRIGGERING_ACTOR: nanake-lab
+2026-10-26T13:44:25.0447856Z   OWNER: nanake-lab
+2026-10-26T13:44:25.0448624Z   REF: refs/pull/65/merge
+2026-10-26T13:44:25.0449478Z   HEAD_REPOSITORY: nanake-lab/nemu
+2026-10-26T13:44:25.0450661Z   DRAFT: false
+2026-10-26T13:44:25.0451427Z   WINDOWS_RESULT: failure
+2026-10-26T13:44:25.0452251Z ##[endgroup]
+2026-10-26T13:44:25.0816614Z ##[error]Windows checks did not succeed (result: failure).
+2026-10-26T13:44:25.0843494Z ##[error]Process completed with exit code 1.
+2026-10-26T13:44:25.1077452Z Cleaning up orphan processes

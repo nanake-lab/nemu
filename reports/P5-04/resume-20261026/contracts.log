@@ -1,0 +1,26 @@
+$ vitest run --config packages/contracts/vitest.config.ts --coverage
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P5-04
+      Coverage enabled with v8
+
+
+ Test Files  8 passed (8)
+      Tests  354 passed (354)
+   Start at  20:10:26
+   Duration  964ms (import 52%, transform 25%, tests 16%, worker 6%)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |     100 |    97.46 |     100 |     100 |                   
+ performance.ts    |     100 |    97.05 |     100 |     100 | 185,204,233,238   
+ queries.ts        |     100 |       90 |     100 |     100 | 32                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 235/235 )
+Branches     : 97.46% ( 192/197 )
+Functions    : 100% ( 41/41 )
+Lines        : 100% ( 208/208 )
+================================================================================

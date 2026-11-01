@@ -1,0 +1,24 @@
+{
+  "name": "budget-regression-red",
+  "tool": "cargo",
+  "arguments": [
+    "test",
+    "--manifest-path",
+    "core/Cargo.toml",
+    "-p",
+    "fact-view",
+    "--release",
+    "--features",
+    "cpu-embedding",
+    "sys05_empty_panel_statuses_enforce_the_entire_response_envelope",
+    "--locked",
+    "--",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+  "started_at": "2026-10-27T00:05:36.8879167+08:00",
+  "finished_at": "2026-10-27T00:05:55.5426475+08:00",
+  "exit_code": 101,
+  "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+}

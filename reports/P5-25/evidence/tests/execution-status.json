@@ -1,0 +1,10 @@
+{
+  "dynamics_attempt_1": {"exit_code": 1, "status": "not_run", "reason": "Called cargo from repository root; rustup selects toolchain by working directory, not --manifest-path. No default configured. Corrected cwd to core without changing toolchain."},
+  "dynamics_attempt_2": {"exit_code": 101, "passed": 9, "failed": 1, "failed_test": "theta_1_original_500_streams_zero_violations"},
+  "cargo_fmt": {"status": "passed", "evidence": "cargo-fmt-final.log", "basis": "Empty diagnostic output; following command executed."},
+  "cargo_clippy_attempt_1": {"exit_code": 101, "reason": "collapsible_if lint; nested ingress check rewritten as equivalent let-chain; no assertion or numeric change"},
+  "cargo_clippy_final": {"status": "passed", "evidence": "cargo-clippy-final.log", "basis": "Finished dev profile, no errors; subsequent workspace test started."},
+  "cargo_workspace": {"status": "failed", "complete": false, "exit_code": null, "observed_kernel_passed": 26, "observed_kernel_failed": 1, "reason": "Known THETA-1 assertion failed; --no-fail-fast continued. Session 13644 later became unavailable before command-exits.txt was produced. Log ends with three existing core-store crash tests running >60s. No final workspace summary or exit code captured; cause unknown; no retry or skipped tests."},
+  "session_poll_error": "write_stdin failed: Unknown process id 13644",
+  "separate_process_inspection": "ps -eo pid,ppid,comm | rg cargo|rustc|core_|bash returned fatal library error, lookup self; not a cargo diagnostic and not attributed as the interruption cause"
+}

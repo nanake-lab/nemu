@@ -1,0 +1,100 @@
+{
+  "base_main": "317dde9cc260effc9df736348af00acfe6fc38d3",
+  "runtime_diff": [],
+  "at": "2026-10-26T20:29:47.7293168+08:00",
+  "merge": "b1fd135fb52c80d053e7fd57d9efdff8e8bf77ef",
+  "checks": [
+    {
+      "name": "fmt",
+      "tool": "cargo",
+      "arguments": [
+        "fmt",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:27:24.5457598+08:00",
+      "finished_at": "2026-10-26T20:27:24.8903423+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "clippy",
+      "tool": "cargo",
+      "arguments": [
+        "clippy",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--all-targets",
+        "--features",
+        "fact-view/cpu-embedding",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:27:24.9193362+08:00",
+      "finished_at": "2026-10-26T20:27:25.3970574+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "fact-view",
+      "tool": "cargo",
+      "arguments": [
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "-p",
+        "fact-view",
+        "--release",
+        "--features",
+        "cpu-embedding",
+        "--locked",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:27:25.4367457+08:00",
+      "finished_at": "2026-10-26T20:28:29.5838816+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "cpu-model",
+      "tool": "cargo",
+      "arguments": [
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "-p",
+        "fact-view",
+        "--release",
+        "--features",
+        "cpu-embedding",
+        "real_cpu_multilingual",
+        "--locked",
+        "--",
+        "--ignored",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:28:29.6175419+08:00",
+      "finished_at": "2026-10-26T20:28:48.8387148+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    }
+  ],
+  "status": "passed",
+  "frozen_diff": [],
+  "main_workflow_blob": "65b29f2a8a73a7bb08c44492646f3952d8a17435",
+  "prior_full_workspace": "../resume-20261026/workspace-tests-final.log",
+  "workflow_blob": "65b29f2a8a73a7bb08c44492646f3952d8a17435",
+  "note": "Latest main changed docs/tasks only; all runtime source blobs equal validated implementation 185bdde."
+}

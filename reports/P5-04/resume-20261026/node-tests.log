@@ -1,0 +1,38 @@
+$ vitest run
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P5-04
+
+stderr | apps/desktop/src/supervisor/supervisor.test.ts > SupervisedProcess Exponential Backoff and Restart > detects hung process missing heartbeats and restarts it without leaving orphan processes
+[Supervisor] Process hung-process failed health check (stdout-heartbeat). Killing process tree for restart.
+
+stderr | apps/desktop/src/supervisor/supervisor.test.ts > SupervisedProcess Exponential Backoff and Restart > detects hung process missing heartbeats and restarts it without leaving orphan processes
+[Supervisor] Process hung-process failed health check (stdout-heartbeat). Killing process tree for restart.
+
+ ❯ apps/desktop/src/supervisor/supervisor.test.ts (6 tests | 1 failed) 5457ms
+   ❯ SupervisedProcess Exponential Backoff and Restart (6)
+     × detects hung process missing heartbeats and restarts it without leaving orphan processes 1604ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/desktop/src/supervisor/supervisor.test.ts > SupervisedProcess Exponential Backoff and Restart > detects hung process missing heartbeats and restarts it without leaving orphan processes
+AssertionError: expected 2 to be less than or equal to 1
+ ❯ apps/desktop/src/supervisor/supervisor.test.ts:182:32
+    180|       // Check how many of the observed PIDs are alive right now
+    181|       const alivePids = Array.from(observedPids).filter(isPidAlive);
+    182|       expect(alivePids.length).toBeLessThanOrEqual(1);
+       |                                ^
+    183|
+    184|       await wait(25);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 51 passed (52)
+      Tests  1 failed | 579 passed (580)
+   Start at  20:03:02
+   Duration  6.30s (import 38%, tests 37%, transform 24%, worker 1%)
+
+    Isolate  52 workers spawned · ~277ms startup each (spawn + environment, per file)
+             at least ~682ms faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Test failed. See above for more details.

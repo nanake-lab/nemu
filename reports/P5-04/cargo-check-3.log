@@ -1,0 +1,28 @@
+    Checking fact-view v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\fact-view)
+warning: unused `std::result::Result` that must be used
+  --> crates\fact-view\src\retrieval.rs:54:9
+   |
+54 |         self.db.progress_handler(1,Some(move ||spend(&hook,1).is_err()));
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` (part of `#[warn(unused)]`) on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+54 |         let _ = self.db.progress_handler(1,Some(move ||spend(&hook,1).is_err()));
+   |         +++++++
+
+warning: unused `std::result::Result` that must be used
+  --> crates\fact-view\src\retrieval.rs:56:9
+   |
+56 |         self.db.progress_handler(0,None::<fn()->bool>);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this `Result` may be an `Err` variant, which should be handled
+help: use `let _ = ...` to ignore the resulting value
+   |
+56 |         let _ = self.db.progress_handler(0,None::<fn()->bool>);
+   |         +++++++
+
+warning: `fact-view` (lib) generated 2 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.60s

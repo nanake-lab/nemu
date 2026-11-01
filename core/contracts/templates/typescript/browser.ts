@@ -118,6 +118,11 @@ function build(name: string, resource = false): z.ZodType {
     return z.strictObject(fields).superRefine((data, ctx) => {
       if (resource) return; // Resource constraints above come from the same field descriptors.
       const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
+      for (const key of m.rules.positive ?? [])
+        if (!((data[key] as number) > 0)) fail('Positive field required');
+      for (const [key, signed] of Object.entries(m.rules.at_least_abs ?? {}))
+        if (!((data[key] as number) >= Math.abs(data[signed] as number)))
+          fail('Absolute evidence below signed magnitude');
       for (const group of Object.values(m.rules.oneofs ?? {})) {
         if (group.fields.filter((k) => data[k] !== undefined).length !== 1) fail('Required oneof');
       }

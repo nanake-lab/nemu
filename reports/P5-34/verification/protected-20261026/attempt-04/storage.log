@@ -1,0 +1,69 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling typenum v1.20.1
+   Compiling hybrid-array v0.4.15
+   Compiling serde_core v1.0.229
+   Compiling find-msvc-tools v0.1.15
+   Compiling shlex v2.0.1
+   Compiling cc v1.9.0
+   Compiling zmij v1.0.23
+   Compiling cfg-if v1.0.5
+   Compiling pkg-config v0.3.34
+   Compiling vcpkg v0.2.15
+   Compiling libsqlite3-sys v0.38.2
+   Compiling crypto-common v0.2.2
+   Compiling block-buffer v0.12.1
+   Compiling syn v3.0.9
+   Compiling serde_json v1.0.154
+   Compiling once_cell v1.21.4
+   Compiling getrandom v0.4.3
+   Compiling const-oid v0.10.2
+   Compiling serde v1.0.229
+   Compiling digest v0.11.3
+   Compiling serde_derive v1.0.229
+   Compiling syn v2.0.119
+   Compiling windows-link v0.2.1
+   Compiling memchr v2.8.3
+   Compiling itoa v1.0.18
+   Compiling cpufeatures v0.3.1
+   Compiling sha2 v0.11.1
+   Compiling windows-sys v0.61.2
+   Compiling tracing-attributes v0.1.31
+   Compiling tracing-core v0.1.36
+   Compiling fallible-iterator v0.3.0
+   Compiling bitflags v2.13.2
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling smallvec v1.16.3
+   Compiling pin-project-lite v0.2.17
+   Compiling fastrand v2.5.0
+   Compiling tempfile v3.27.0
+   Compiling tracing v0.1.44
+   Compiling rusqlite v0.40.2
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-types)
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-store)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 46.01s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-34\target\debug\deps\core_store-a8329e3b1dbabe6a.exe)
+
+running 4 tests
+test tests::retention_versions::p534_old_messages_and_flat_r_cannot_enter_new_writes ... ok
+test tests::retention_versions::p534_v2_history_readable_writer_refused_without_migration ... ok
+test tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer ... FAILED
+test tests::retention_versions::p534_v3_q_v_survive_commit_reopen_gc_and_continued_writes ... ok
+
+failures:
+
+---- tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer stdout ----
+P534_WAL sqlite=3.53.2 segmented=false db_before=4096 db_after=159744 wal_before=284312 wal_after=0 db_unchanged=false wal_unchanged=false
+
+thread 'tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer' (6972) panicked at crates\core-store\src\tests\retention_versions.rs:135:9:
+rejected writer changed persistent DB/WAL bytes
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 31 filtered out; finished in 27.73s
+
+error: test failed, to rerun pass `-p core-store --lib`

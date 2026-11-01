@@ -1,0 +1,83 @@
+{
+  "gitHead": "a6e59262c7958451a9ece6e3b94d0bdea7f6edc9",
+  "originMain": "317dde9cc260effc9df736348af00acfe6fc38d3",
+  "fileCount": 14,
+  "commands": [
+    {
+      "name": "ruff",
+      "executable": "D:/Dev/nemu-wt/P4-02/services/voice-sidecar/.venv/Scripts/python.exe",
+      "arguments": [
+        "-m",
+        "ruff",
+        "check",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\archive_evidence.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\benchmark_native.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\benchmark_plan.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\compact_codec.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\download_conversion_source.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\download_engine.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\download_model.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\full_window.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\http_probe.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\schema_validation.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\summarize_injection.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\summarize_smoke.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\test_compact_codec.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\test_http_probe.py"
+      ],
+      "startedUtc": "2026-10-26T13:19:12.6583374Z",
+      "endedUtc": "2026-10-26T13:19:13.6831195Z",
+      "exitCode": 0,
+      "log": "ruff.log"
+    },
+    {
+      "name": "mypy",
+      "executable": "D:/Dev/nemu-wt/P4-02/services/voice-sidecar/.venv/Scripts/python.exe",
+      "arguments": [
+        "-m",
+        "mypy",
+        "--strict",
+        "--python-executable",
+        "D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe",
+        "--cache-dir",
+        "D:/Dev/cache/P0-10/mypy",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\archive_evidence.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\benchmark_native.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\benchmark_plan.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\compact_codec.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\download_conversion_source.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\download_engine.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\download_model.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\full_window.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\http_probe.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\schema_validation.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\summarize_injection.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\summarize_smoke.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\test_compact_codec.py",
+        "D:\\Dev\\nemu-wt\\P0-10\\spikes\\carrier-engine\\test_http_probe.py"
+      ],
+      "startedUtc": "2026-10-26T13:19:13.6867055Z",
+      "endedUtc": "2026-10-26T13:19:14.6754872Z",
+      "exitCode": 0,
+      "log": "mypy.log"
+    },
+    {
+      "name": "unittest",
+      "executable": "D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "spikes/carrier-engine",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "startedUtc": "2026-10-26T13:19:14.6755296Z",
+      "endedUtc": "2026-10-26T13:19:16.0521167Z",
+      "exitCode": 0,
+      "log": "unittest.log"
+    }
+  ]
+}

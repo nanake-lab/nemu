@@ -1,0 +1,390 @@
+{
+  "implementation_commit": "3f57afcab189b93ca7b53c5fc355baf81dd75087",
+  "main": "7f962b2f9cc77983cb5318c690b5ac30c7b06422",
+  "sources": {
+    "core/contracts/check_retention_browser.ts": {
+      "git_blob": "017e206dafdc5340e376a8f937bb35d8dd22c222",
+      "physical_sha256": "b4d90df9f16af54e6b72d0f8e5e3d8e7551aad71034ae331ee4391943a28e2b2"
+    },
+    "core/contracts/fixture_inputs.py": {
+      "git_blob": "f171b310cb89946393c3d28e5256d3612b085a0e",
+      "physical_sha256": "94f9057530ae7797e6c734b78875bea89d43f9df3648ba49ab8eec916187bd07"
+    },
+    "core/contracts/fixture_retention.py": {
+      "git_blob": "d5477cf2421330fc1722d2755f8fc9590048e2fc",
+      "physical_sha256": "84a283b346c121e27ad9458959817d7f8845aa74b83d11abf5a63c0bfa9b156d"
+    },
+    "core/contracts/generate.py": {
+      "git_blob": "eb19868b73a33d01ac8e69eb6141dc7f90245884",
+      "physical_sha256": "d601a3923e601b3e4d83fead0e498a92860855decbbe25ed98a4a3fcf3330711"
+    },
+    "core/contracts/generated/schema.json": {
+      "git_blob": "f809e9d6251497be36d65fac15c1ce566a8b51ec",
+      "physical_sha256": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643"
+    },
+    "core/contracts/golden/illegal.json": {
+      "git_blob": "e127881a0107132c50e8c9f1246365cea2294c3b",
+      "physical_sha256": "5bba963d2ce53d59b68f5b0f145af354f74f3935711e83bda09cec6fa0ac755d"
+    },
+    "core/contracts/golden/legal.json": {
+      "git_blob": "70422ba1d8ec556514c6e4ed48afc8f9064d40be",
+      "physical_sha256": "e09d8954515794845d3c35dedf263039738c06f4abadb5c01dae9e0a01c6317a"
+    },
+    "core/contracts/law.proto": {
+      "git_blob": "6cabba832962ca70e2bbdd61735305ee6d19d888",
+      "physical_sha256": "1ee4819470af77110384091c8f51dad32dd5952df302a28ccf18d0a1949f5310"
+    },
+    "core/contracts/templates/python/runtime.py": {
+      "git_blob": "d1445acd7aa1cb5f8b4e8c2556fda6f33f1db646",
+      "physical_sha256": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8"
+    },
+    "core/contracts/templates/typescript/browser.ts": {
+      "git_blob": "68700970d0b786d8916b9ff334e8f037862f9a52",
+      "physical_sha256": "562cdacb162ff7d33c29fef46073b2029d3d62508e8bc17879d8993b4313ca04"
+    },
+    "core/contracts/templates/typescript/runtime.ts": {
+      "git_blob": "4a79709d22b2e7e8c16d6cd90a2d4de55073829a",
+      "physical_sha256": "4d6d120ad37a3990f46edff2395651b6440c6fc43752c44ded21644d325b2916"
+    },
+    "core/contracts/test_retention_schema.py": {
+      "git_blob": "790f3942aed46ef7c8d37e60a5f8a0e243fe7b29",
+      "physical_sha256": "9b8ddf4f385a8af1a6d3ee4260d72d440f7168973df33a90bf7e6e2a67e32767"
+    },
+    "core/contracts/verify.py": {
+      "git_blob": "3d2161f41913568d439d18f566999ad0f0b6d1c0",
+      "physical_sha256": "6f7218073af68028679075844630d53db857f4e35dcefd7d48c07986614e9c61"
+    },
+    "core/crates/core-store/src/lib.rs": {
+      "git_blob": "1fe01bbc999dcd8025d1cd1fd7f0f53fcd7cfd24",
+      "physical_sha256": "0681bcf9273ee903d9f36bd919792ee0c668eede8112da9a76bb0d5208c43ffe"
+    },
+    "core/crates/core-store/src/objects.rs": {
+      "git_blob": "f44d5e99dab629e39d1ae02c981e0a5c1080894d",
+      "physical_sha256": "d2f06391b1a1a461c7b9296cffd96be41711a2f817803807a1cf45ffe352296d"
+    },
+    "core/crates/core-store/src/publication.rs": {
+      "git_blob": "6ccb1a471960ed464f20f2c4ccece5c879b32777",
+      "physical_sha256": "36e5829e43b711c7befd439a1e5d9d25a67a76591a55fb6f3cd3e534638d3729"
+    },
+    "core/crates/core-store/src/queries.rs": {
+      "git_blob": "e7f96fc9f6be57965fd01b18cfecd94fd95ae2dc",
+      "physical_sha256": "f879618f65aa0188e29f2eecd73ec9262431b86f6d8db6c38818bc1b65d25091"
+    },
+    "core/crates/core-store/src/r_replay.rs": {
+      "git_blob": "892d9190c8b88bcee60a05cfe21ade64e1bbc390",
+      "physical_sha256": "f92ea83cb5374be9e44dcc41fdb2f6edb419ada9193c466ab1a1d6b410a2df4b"
+    },
+    "core/crates/core-store/src/r_state.rs": {
+      "git_blob": "fe7f6de703409b969d2c7a9ee20d07995025f004",
+      "physical_sha256": "b570799002676052643f008dc087553efbff667fe22009907f617796afa3be80"
+    },
+    "core/crates/core-store/src/r_validation.rs": {
+      "git_blob": "d727431b52ebdbc24be23d226bbe000fcaae64f8",
+      "physical_sha256": "78dc880daff8e96d03e75324b175d6de3e0e1ce50403cea8ad67f6d13fd30c6d"
+    },
+    "core/crates/core-store/src/recovery.rs": {
+      "git_blob": "a2dde74a502c5641089234969492fa3ee8acacec",
+      "physical_sha256": "7f46739f646e6a536e54a665bf5557611c5c5bd89a861e4e87e0f632da572c9e"
+    },
+    "core/crates/core-store/src/store.rs": {
+      "git_blob": "aa2c5068aab9240d79e894c20e6c7eca53790bec",
+      "physical_sha256": "48d9d6295ac28d5c41de2f5b3b728ca4fee0911f4651a5c25dfd1bcc12f9e42b"
+    },
+    "core/crates/core-store/src/tests/crash.rs": {
+      "git_blob": "8f33086835edb9c95111d34cfeaffa419ef6f7c5",
+      "physical_sha256": "6ca19ffc7c6199f0dbb1462e76dd684c3838efe5aedd8d4b22a1410ebfcc492e"
+    },
+    "core/crates/core-store/src/tests/crash_harness.rs": {
+      "git_blob": "6d54bdbf7a8d6517c6511438a1b01c9347d0ca12",
+      "physical_sha256": "ba65ba1c92ac1fdcd995a6507c3c90dd366bb510e12459a6148fc147394ef61e"
+    },
+    "core/crates/core-store/src/tests/mod.rs": {
+      "git_blob": "26e2251e4e68b9cf374f745de0ab68e973069eb5",
+      "physical_sha256": "2ad7a43f4df42a7c636bd18b8e610b48805eba33718bb95f5e61ba59c320b4cc"
+    },
+    "core/crates/core-store/src/tests/objects.rs": {
+      "git_blob": "e48e92e00ead54984e17eedb51fd8c160331f063",
+      "physical_sha256": "aeddc05dec96d61978615c8d45b93b1b0d53ed0198412f482bdebeccb819a9aa"
+    },
+    "core/crates/core-store/src/tests/r_fixtures.rs": {
+      "git_blob": "7f52e1aa3ec515d792760b43e3c8ffc417ee3591",
+      "physical_sha256": "0772ff4f5f6fa50b6b1f24e697a6fccc707ae99ae2cc375c73385fa136469bd5"
+    },
+    "core/crates/core-store/src/tests/r_legacy_fixture.rs": {
+      "git_blob": "22b6876311dd3ece987b6138df8851b4ea993b7a",
+      "physical_sha256": "e6ec8ef0b6191260f67c5ffeec27032e4dc7eae1d077bc58880858fe7e22dd5c"
+    },
+    "core/crates/core-store/src/tests/r_migration.rs": {
+      "git_blob": "d61cd7fe49bce280a94494198f60bb49a58d6515",
+      "physical_sha256": "176939b342c193cd4f83a032591fbd5388afe907c1867138e13bdfebc5e2c1a3"
+    },
+    "core/crates/core-store/src/tests/r_review.rs": {
+      "git_blob": "e745821eca8ded4eda66aea3a317abc9edb4f82c",
+      "physical_sha256": "7ffc90883f136365acee5211e88a84afdf61f484c720347eefc1098ecdced8ea"
+    },
+    "core/crates/core-store/src/transaction.rs": {
+      "git_blob": "babf3e2f361086d6e88b685b4b99c91c0c585a87",
+      "physical_sha256": "750dc532a0ff40c64ca27719515d3f6b33f7d98c9c6552801b9b8cdad295a047"
+    },
+    "core/crates/core-types/Cargo.toml": {
+      "git_blob": "0a81a9b238b23cf758a73608ed636576d0c08b82",
+      "physical_sha256": "285d0886d9f6d7ea090dbc303595722e6c1e48ff7df1be5f7e519859e77f21d7"
+    },
+    "core/crates/core-types/src/contract.rs": {
+      "git_blob": "a5b656ce38b8aab416f68b5339a02e4897c03900",
+      "physical_sha256": "a41776c05455a23be90531d368f2ccf59a0767bc57a473ac12a95201fa56e43a"
+    },
+    "core/crates/core-types/src/generated.rs": {
+      "git_blob": "5189dd390efcf15d3e9b13f4e67ed5eab6f862c3",
+      "physical_sha256": "d43a054c3a1e926306b0a14ee72aed333128882a4ab8c3572b1d9f20acfbd2d5"
+    },
+    "core/crates/core-types/src/semantic.rs": {
+      "git_blob": "18f11080187080f843a6f4fafa95cd623640e8de",
+      "physical_sha256": "b0e69d5da19cf904d4579ebd47b30240bedf03b67fb51b27bf508494056dd000"
+    },
+    "core/crates/core-types/tests/p5_32_contract.rs": {
+      "git_blob": "c0e9dc92487bbfb93febbd0e09d857d515db43bf",
+      "physical_sha256": "3f3c025ea4fb315ec5e2239d342a0b0ceb88e87a5d4cb8b7e888fef5a04dcda6"
+    },
+    "core/crates/core-types/tests/p5_34_contract.rs": {
+      "git_blob": "7bae96d0f7a6f41b55adf26637e626fff01d4f68",
+      "physical_sha256": "ee03728a0b28cd0e6c04a4f2fd7730bc7b5fc5a5da034dd8cc80b7caac670db0"
+    },
+    "core/crates/core-types/tests/v2_contract.rs": {
+      "git_blob": "d8dcd7e16f4b76ec81bbef56a33d740a7f97fb74",
+      "physical_sha256": "4a74d8c8f21a03405e15163614a2a622a7d94a91a57c62d744defb5bf28315e6"
+    },
+    "packages/contracts/src/generated/echo/browser.ts": {
+      "git_blob": "68700970d0b786d8916b9ff334e8f037862f9a52",
+      "physical_sha256": "562cdacb162ff7d33c29fef46073b2029d3d62508e8bc17879d8993b4313ca04"
+    },
+    "packages/contracts/src/generated/echo/runtime.ts": {
+      "git_blob": "4a79709d22b2e7e8c16d6cd90a2d4de55073829a",
+      "physical_sha256": "4d6d120ad37a3990f46edff2395651b6440c6fc43752c44ded21644d325b2916"
+    },
+    "packages/contracts/src/generated/echo/schema.ts": {
+      "git_blob": "1feb69aee9014887b0c6ae3390e8dd7df66bed1f",
+      "physical_sha256": "821ec1b280b9d83b99ccb3828b1a92031c895a8aa7a5c5f267a0167d64c2d4c1"
+    },
+    "workers/drive/generated/echo/runtime.py": {
+      "git_blob": "d1445acd7aa1cb5f8b4e8c2556fda6f33f1db646",
+      "physical_sha256": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8"
+    },
+    "workers/drive/generated/echo/schema.json": {
+      "git_blob": "f809e9d6251497be36d65fac15c1ce566a8b51ec",
+      "physical_sha256": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643"
+    },
+    "workers/drive/generated/echo/types.py": {
+      "git_blob": "21dd24c494f7404380f94d347d9b6240593be255",
+      "physical_sha256": "df0e9856352b1a4e83082246a883adb00ba682b00e7391bc8dcbe6c602d10cd7"
+    },
+    "workers/irl/generated/echo/runtime.py": {
+      "git_blob": "d1445acd7aa1cb5f8b4e8c2556fda6f33f1db646",
+      "physical_sha256": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8"
+    },
+    "workers/irl/generated/echo/schema.json": {
+      "git_blob": "f809e9d6251497be36d65fac15c1ce566a8b51ec",
+      "physical_sha256": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643"
+    },
+    "workers/irl/generated/echo/types.py": {
+      "git_blob": "21dd24c494f7404380f94d347d9b6240593be255",
+      "physical_sha256": "df0e9856352b1a4e83082246a883adb00ba682b00e7391bc8dcbe6c602d10cd7"
+    },
+    "workers/model-adapter/generated/echo/runtime.py": {
+      "git_blob": "d1445acd7aa1cb5f8b4e8c2556fda6f33f1db646",
+      "physical_sha256": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8"
+    },
+    "workers/model-adapter/generated/echo/schema.json": {
+      "git_blob": "f809e9d6251497be36d65fac15c1ce566a8b51ec",
+      "physical_sha256": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643"
+    },
+    "workers/model-adapter/generated/echo/types.py": {
+      "git_blob": "21dd24c494f7404380f94d347d9b6240593be255",
+      "physical_sha256": "df0e9856352b1a4e83082246a883adb00ba682b00e7391bc8dcbe6c602d10cd7"
+    }
+  },
+  "commands": [
+    {
+      "metadata": "reports/P5-34/verification/review-20261024/attempt-01/bytes.json",
+      "step": "bytes",
+      "command": [
+        "python",
+        "reports/P5-21/review_vectors.py",
+        "--base",
+        "origin/main"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-24T17:54:32.6746387+08:00",
+      "head": "3f57afcab189b93ca7b53c5fc355baf81dd75087",
+      "main": "7f962b2f9cc77983cb5318c690b5ac30c7b06422",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-24T17:54:33.0449109+08:00",
+      "exitCode": 0,
+      "logSha256": "a5e944816d2200426918458890843e880c2d3d36cdf2e846db1b4cf3eb7c0b5d"
+    },
+    {
+      "metadata": "reports/P5-34/verification/review-20261024/attempt-01/clippy.json",
+      "step": "clippy",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "clippy",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "-j",
+        "1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-24T17:52:27.0358338+08:00",
+      "head": "3f57afcab189b93ca7b53c5fc355baf81dd75087",
+      "main": "7f962b2f9cc77983cb5318c690b5ac30c7b06422",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-24T17:52:29.2207287+08:00",
+      "exitCode": 0,
+      "logSha256": "36b8cc04bb4a7ef25c4d6361de367cc16cf8ed03ff382eedeb4b842caeea46c6"
+    },
+    {
+      "metadata": "reports/P5-34/verification/review-20261024/attempt-01/compatibility.json",
+      "step": "compatibility",
+      "command": [
+        "python",
+        "core/contracts/check_compat.py",
+        "--ref",
+        "origin/main"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-24T17:54:31.3887075+08:00",
+      "head": "3f57afcab189b93ca7b53c5fc355baf81dd75087",
+      "main": "7f962b2f9cc77983cb5318c690b5ac30c7b06422",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-24T17:54:32.5049586+08:00",
+      "exitCode": 0,
+      "logSha256": "a81c986a7f48428e694551538027a11824b591583649939c12f5795f4455e7bc"
+    },
+    {
+      "metadata": "reports/P5-34/verification/review-20261024/attempt-01/contracts.json",
+      "step": "contracts",
+      "command": [
+        "pnpm",
+        "test:core-contracts"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-24T17:52:29.9402244+08:00",
+      "head": "3f57afcab189b93ca7b53c5fc355baf81dd75087",
+      "main": "7f962b2f9cc77983cb5318c690b5ac30c7b06422",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-24T17:54:31.2103044+08:00",
+      "exitCode": 0,
+      "logSha256": "a9b188b470243a3be8746c86a2186f301dc334128fb29a5dfb615f1fe389500e"
+    },
+    {
+      "metadata": "reports/P5-34/verification/review-20261024/attempt-01/fmt.json",
+      "step": "fmt",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "fmt",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-24T17:52:29.4304395+08:00",
+      "head": "3f57afcab189b93ca7b53c5fc355baf81dd75087",
+      "main": "7f962b2f9cc77983cb5318c690b5ac30c7b06422",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-24T17:52:29.7656298+08:00",
+      "exitCode": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "metadata": "reports/P5-34/verification/review-20261024/attempt-01/regression.json",
+      "step": "regression",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "-p",
+        "core-store",
+        "--locked",
+        "-j",
+        "1",
+        "tests::r_review::",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-24T17:47:23.3608130+08:00",
+      "head": "3f57afcab189b93ca7b53c5fc355baf81dd75087",
+      "main": "7f962b2f9cc77983cb5318c690b5ac30c7b06422",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-24T17:52:10.2857897+08:00",
+      "exitCode": 0,
+      "logSha256": "62247e1455af8dbff872e14f262bc1db04879d235d845e2e8cd08e9d7f8ec7fb"
+    },
+    {
+      "metadata": "reports/P5-34/verification/review-20261024/attempt-01/workspace.json",
+      "step": "workspace",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-24T17:54:33.2236650+08:00",
+      "head": "3f57afcab189b93ca7b53c5fc355baf81dd75087",
+      "main": "7f962b2f9cc77983cb5318c690b5ac30c7b06422",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-24T18:20:17.2424607+08:00",
+      "exitCode": 0,
+      "logSha256": "77bc65f7aadcc0439aa251fc7962753a9d78b2088e149052f3fbd2c524dd5e40"
+    }
+  ],
+  "workspace": {
+    "summary_lines": 29,
+    "passed": 101,
+    "failed": 0,
+    "ignored": 0
+  }
+}

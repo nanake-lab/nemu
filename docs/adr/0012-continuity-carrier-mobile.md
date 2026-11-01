@@ -190,3 +190,11 @@ v1.0 只做 Windows 桌面。以后做手机 app 时：
 - [llama.cpp CLI：control vector 选项](https://docs.rs/crate/llama-cpp-sys-4/0.4.4/source/llama.cpp/tools/cli/README.md)
 - [DeepSeek API 价格整理](https://www.morphllm.com/deepseek-api)（morphllm，2026-10-18 核对；以官方为准）
 - P0-07 数据：PR #27 的 `reports/P0-07/evidence-20261020/REPORT.md`、`BLOCKED.md`
+
+## 追加（2026-10-29）：DOC-PRESETS-01 有效性说明
+
+校准、迁移、三语判断一致性和覆盖报告继续沿既定范围，AC2-16 不因主动验收改写而削减。基础模型先验须报告；身份方向移除仍先看报告再由用户决定，不自动启用。四个「乎」的结构/评价按 ADR 0032 §§1–2 作为可改变起点；不从旧覆盖报告自动增删通道。
+
+当前说明使用「乎」，复数四个「乎」；历史旧称、公式和 Nature* 等标识符不改，术语对应见 [ADR 0032 §10](0032-presets-as-starting-points.md)。
+
+[当前有效读法与验收映射](../traceability/DOC-PRESETS-01.md)；[报告及未决项](../../reports/DOC-PRESETS-01/REPORT.md)。

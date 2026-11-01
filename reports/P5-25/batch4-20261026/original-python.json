@@ -1,0 +1,27 @@
+{
+  "start_utc": "2026-10-26T03:28:04.213822+00:00",
+  "end_utc": "2026-10-26T03:28:04.386178+00:00",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "source": "reports/echo-core-v2-draft/check_law.py (unchanged)",
+  "functions": [
+    "check_theta",
+    "check_feedback_loop"
+  ],
+  "results": [
+    {
+      "check_id": "THETA-1",
+      "spec_ref": "\u00a78 reference form: b stays in [\u22121, 1], g in range, events she caused leave \u03b8 unchanged",
+      "kind": "property",
+      "ok": true,
+      "detail": "500 random exogenous/endogenous streams (constant \u03c1_\u03b8): 0 violations"
+    },
+    {
+      "check_id": "THETA-2",
+      "spec_ref": "\u00a78 reply loop: b amplifies the world's bias by 1/(1 \u2212 k_eff); anchoring n_b \u2248 1/\u0125_\u03b8 halves k_eff",
+      "kind": "scenario",
+      "ok": true,
+      "detail": "world bias \u22120.1, \u03c1_\u03b8 = 0.99; n_b=10 k=0: k_eff=0.00, b=-0.10, after burst -0.10; n_b=10 k=0.3: k_eff=0.27, b=-0.14, after burst -0.14; n_b=10 k=0.6: k_eff=0.55, b=-0.22, after burst -0.22; n_b=10 k=0.9: k_eff=0.82, b=-0.51, after burst -0.51; n_b=10 k=1.2: k_eff=1.09, b=-0.89, after burst -0.89; n_b=100 k=1: k_eff=0.50, b=-0.11, after burst -0.11; n_b=100 k=1.5: k_eff=0.75, b=-0.21, after burst -0.21"
+    }
+  ],
+  "exit_code": 0
+}

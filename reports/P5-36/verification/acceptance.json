@@ -1,0 +1,14 @@
+{
+  "task": "P5-36",
+  "source_commit": "3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf",
+  "overall": "partial",
+  "checks": [
+    {"name": "generate --check", "status": "passed", "scope": "unchanged baseline", "stale": 0},
+    {"name": "compatibility", "status": "passed", "scope": "p5-01/p5-21/p5-32/current/origin-main", "violations": 0},
+    {"name": "test:core-contracts", "status": "passed", "scope": "unchanged baseline", "exit_code": 0, "cases_each_language": 10766, "legal": 2527, "illegal": 8239, "protoc_transport": 445, "dependency_precheck": "installation failed for junction; existing warn mode continued; see original log"},
+    {"name": "new message coverage >=3 legal and >=3 illegal each", "status": "not_run", "reason": "successor messages not implemented; directory exclusion"},
+    {"name": "actual P5-25 state bitwise round trip and continuation", "status": "not_run", "reason": "successor messages and kernel bridge not implemented"},
+    {"name": "new frozen baseline", "status": "not_run", "reason": "observation hashes are not a frozen successor baseline"},
+    {"name": "contract approval and independent cross review", "status": "not_run", "reason": "ADR is a proposal; implementation is incomplete"}
+  ]
+}
