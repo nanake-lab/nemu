@@ -7273,7 +7273,104 @@
         }
       ],
       "file": "terminal.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "TouchObservationV2",
+        "reason": "P6-17; ADR 0025 §4.3, frozen bytes retained"
+      }
+    },
+    "TouchObservationV2": {
+      "tag": "echo.touch-v2",
+      "source": "ADR 0025 §4.3; V2-72; v2.0 §4 EV2, §8; ADR 0033 §3",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "region",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "speed",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "kind",
+          "type": "TouchKindV2",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "contact_id",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "elapsed_ms",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "terminal.proto",
+      "rules": {
+        "common": [
+          "region",
+          "speed"
+        ],
+        "cases": {
+          "1": {},
+          "2": {},
+          "3": {},
+          "4": {},
+          "5": {},
+          "6": {},
+          "7": {
+            "required": [
+              "contact_id",
+              "elapsed_ms"
+            ]
+          },
+          "8": {
+            "required": [
+              "contact_id",
+              "elapsed_ms"
+            ]
+          },
+          "9": {
+            "required": [
+              "contact_id",
+              "elapsed_ms"
+            ]
+          }
+        }
+      },
+      "supersedes": "TouchObservation",
+      "reserved": [
+        3
+      ]
     },
     "DesktopObservation": {
       "tag": "echo.desktop-observation",
@@ -11710,6 +11807,18 @@
       "ALLOW_ONCE": 1,
       "ALLOW_ALWAYS": 2,
       "DENY": 3
+    },
+    "TouchKindV2": {
+      "TOUCH_V2_UNSPECIFIED": 0,
+      "TOUCH_V2_CLICK": 1,
+      "TOUCH_V2_DOUBLE_CLICK": 2,
+      "TOUCH_V2_PAT": 3,
+      "TOUCH_V2_DRAG_START": 4,
+      "TOUCH_V2_DRAG_END": 5,
+      "TOUCH_V2_FLING": 6,
+      "DWELL_START": 7,
+      "DWELL_CONTINUE": 8,
+      "DWELL_END": 9
     },
     "TerminalLineage": {
       "TERMINAL_LINEAGE_UNSPECIFIED": 0,

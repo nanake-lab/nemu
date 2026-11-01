@@ -957,6 +957,36 @@ impl ApprovalChoice {
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
+pub enum TouchKindV2 {
+    TOUCH_V2_CLICK = 1,
+    TOUCH_V2_DOUBLE_CLICK = 2,
+    TOUCH_V2_PAT = 3,
+    TOUCH_V2_DRAG_START = 4,
+    TOUCH_V2_DRAG_END = 5,
+    TOUCH_V2_FLING = 6,
+    DWELL_START = 7,
+    DWELL_CONTINUE = 8,
+    DWELL_END = 9,
+}
+impl TryFrom<u32> for TouchKindV2 { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::TOUCH_V2_CLICK),
+2 => Ok(Self::TOUCH_V2_DOUBLE_CLICK),
+3 => Ok(Self::TOUCH_V2_PAT),
+4 => Ok(Self::TOUCH_V2_DRAG_START),
+5 => Ok(Self::TOUCH_V2_DRAG_END),
+6 => Ok(Self::TOUCH_V2_FLING),
+7 => Ok(Self::DWELL_START),
+8 => Ok(Self::DWELL_CONTINUE),
+9 => Ok(Self::DWELL_END),
+_ => Err("unknown enum".into()), }}}
+impl From<TouchKindV2> for u32 {fn from(v:TouchKindV2)->Self{v as u32}}
+impl TouchKindV2 {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
 pub enum TerminalLineage {
     TERMINAL_REHEARSAL = 1,
     TERMINAL_LIFE = 2,
@@ -2672,7 +2702,7 @@ pub r#target_refs: Vec<String>,
 pub r#note: Option<String>,
 }
 impl super::WireMessage for UserRetraction {const NAME: &'static str = "UserRetraction";}
-/// CONTRACTS 4.2; frozen tag `echo.touch`.
+/// CONTRACTS 4.2; frozen tag `echo.touch`. Superseded (successor TouchObservationV2): P6-17; ADR 0025 §4.3, frozen bytes retained
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct TouchObservation {
@@ -2683,7 +2713,24 @@ pub r#kind: TouchKind,
 #[serde(serialize_with = "super::scalar::finite_option")]
 pub r#speed: Option<f64>,
 }
-impl super::WireMessage for TouchObservation {const NAME: &'static str = "TouchObservation";}
+impl super::WireMessage for TouchObservation {const NAME: &'static str = "TouchObservation"; const SUPERSEDED: bool = true;}
+/// ADR 0025 §4.3; V2-72; v2.0 §4 EV2, §8; ADR 0033 §3; frozen tag `echo.touch-v2`. Supersedes [`TouchObservation`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TouchObservationV2 {
+pub r#schema_version: u32,
+pub r#region: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#speed: Option<f64>,
+pub r#kind: TouchKindV2,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#contact_id: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#elapsed_ms: Option<f64>,
+}
+impl super::WireMessage for TouchObservationV2 {const NAME: &'static str = "TouchObservationV2";}
 /// CONTRACTS 4.2; frozen tag `echo.desktop-observation`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -3661,6 +3708,7 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "UserText" => super::verify_typed::<UserText>(value, limits),
 "UserRetraction" => super::verify_typed::<UserRetraction>(value, limits),
 "TouchObservation" => super::verify_typed::<TouchObservation>(value, limits),
+"TouchObservationV2" => super::verify_typed::<TouchObservationV2>(value, limits),
 "DesktopObservation" => super::verify_typed::<DesktopObservation>(value, limits),
 "CodexSessionObservation" => super::verify_typed::<CodexSessionObservation>(value, limits),
 "SpeechDelivery" => super::verify_typed::<SpeechDelivery>(value, limits),
@@ -3724,4 +3772,4 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "ThetaSnapshotV2" => super::verify_typed::<ThetaSnapshotV2>(value, limits),
 _ => Err("unknown message".into()), }}
 /// Message types kept only to read old data and for tests; no runtime path may produce them.
-pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "ThetaSnapshot", "EvidenceAllocationV2", "EvidenceGroupV2", "TendencyV2", "RSnapshotV2", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "ApprovalRequest", "RunState", "Readout", "Query", "QueryResult", "ApprovalDecision", "HookCoefficients", "ModulationEnvelope"];
+pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "ThetaSnapshot", "EvidenceAllocationV2", "EvidenceGroupV2", "TendencyV2", "RSnapshotV2", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "TouchObservation", "ApprovalRequest", "RunState", "Readout", "Query", "QueryResult", "ApprovalDecision", "HookCoefficients", "ModulationEnvelope"];

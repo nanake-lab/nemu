@@ -444,7 +444,7 @@ interface LatencyMarks {
 | `observation` | `user_utterance` | `text`、`lang`、`asr_confidence`、`duration_ms`、`audio_ref?` | 用户陈述（由 IRL 细分为 user_assertion 或 user_self_report） |
 | `observation` | `user_text` | `text` | 同上 |
 | `observation` | `user_retraction` | `target_refs[]`（事件或记录的引用）、`note?` | 用户陈述（纠错）。由事实视图的纠错链确定性处理，不需要 IRL（E10） |
-| `observation` | `touch` | `region`、`kind`（click、doubleClick、pat、dragStart、dragEnd、fling）、`speed?` | system_record |
+| `observation` | `touch` | `region`、`kind`（click、doubleClick、pat、dragStart、dragEnd、fling）、`speed?`；后继 `TouchObservationV2`（`echo.touch-v2`）新增 kind=dwellStart/dwellContinue/dwellEnd，三者均必填同次接触共用的非空 `contact_id` 与有限且 ≥0 的累计 `elapsed_ms`；非停留不带这两字段。旧 `TouchObservation`/`TouchKind` 保留历史解码，旧字段号 3 在后继 reserved，新 kind=5、contact_id=6、elapsed_ms=7；每条报告的 stable_source_key 仍各自独立，同次接触对 G 归一组、对 C 只计一次（ADR 0025 §4.3、V2-72）。鼠标停留视为触摸，不自动躲开（ADR 0033 §3）；门限、节奏和转换由 P6-02 实现 | system_record |
 | `observation` | `desktop` | `kind`（foreground_changed、idle_started、idle_ended、dnd_changed、session_locked、session_unlocked、meeting_started、meeting_ended）、`process_name?`、`title?`（需要 T1 授权）、`dnd?`、`idle_ms?` | system_record |
 | `observation` | `codex_session`（可选，需授权） | `event`（SessionStart、PermissionRequest、Stop）、`session_id`、`cwd_label?`、`summary?` | tool_output |
 | `execution_result` | `speech_delivery` | `action_id`、`output_id`、`delivered_chunks`、`played_chars`、`status`（DELIVERED、PARTIAL、CANCELLED、UNKNOWN_DELIVERY） | system_record |
