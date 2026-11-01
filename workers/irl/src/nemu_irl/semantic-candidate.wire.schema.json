@@ -1,0 +1,319 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sourceRef",
+    "nodes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "p0-08-candidate-v1"
+    },
+    "sourceRef": {
+      "type": "string",
+      "pattern": "^p0-08-[0-9]{4}$"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/refCandidate"
+          },
+          {
+            "$ref": "#/$defs/claimCandidate"
+          },
+          {
+            "$ref": "#/$defs/actCandidate"
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "refCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "sourceSpan": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "derivation": {
+          "enum": [
+            "verbatim",
+            "normalized",
+            "resolved",
+            "inferred"
+          ]
+        },
+        "epistemicType": {
+          "enum": [
+            "user_assertion",
+            "user_self_report",
+            "quotation",
+            "tool_output",
+            "system_record",
+            "model_inference",
+            "unknown"
+          ]
+        },
+        "resolutionState": {
+          "enum": [
+            "resolved",
+            "unresolved",
+            "provisional"
+          ]
+        },
+        "representationVersion": {
+          "const": "p0-08-candidate-v1"
+        },
+        "kind": {
+          "const": "Ref"
+        },
+        "mention": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "sourceRefs",
+        "sourceSpan",
+        "derivation",
+        "epistemicType",
+        "resolutionState",
+        "representationVersion",
+        "kind",
+        "mention"
+      ]
+    },
+    "claimCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "sourceSpan": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "derivation": {
+          "enum": [
+            "verbatim",
+            "normalized",
+            "resolved",
+            "inferred"
+          ]
+        },
+        "epistemicType": {
+          "enum": [
+            "user_assertion",
+            "user_self_report",
+            "quotation",
+            "tool_output",
+            "system_record",
+            "model_inference",
+            "unknown"
+          ]
+        },
+        "resolutionState": {
+          "enum": [
+            "resolved",
+            "unresolved",
+            "provisional"
+          ]
+        },
+        "representationVersion": {
+          "const": "p0-08-candidate-v1"
+        },
+        "kind": {
+          "const": "Claim"
+        },
+        "predicateLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "value"
+            ],
+            "properties": {
+              "role": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "polarity": {
+          "enum": [
+            "positive",
+            "negative"
+          ]
+        },
+        "modality": {
+          "enum": [
+            "asserted",
+            "possible",
+            "conditional",
+            "desired",
+            "reported",
+            "unknown"
+          ]
+        },
+        "time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "sourceRefs",
+        "sourceSpan",
+        "derivation",
+        "epistemicType",
+        "resolutionState",
+        "representationVersion",
+        "kind",
+        "predicateLabel",
+        "roles",
+        "value",
+        "polarity",
+        "modality",
+        "time"
+      ]
+    },
+    "actCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "sourceSpan": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "derivation": {
+          "enum": [
+            "verbatim",
+            "normalized",
+            "resolved",
+            "inferred"
+          ]
+        },
+        "epistemicType": {
+          "enum": [
+            "user_assertion",
+            "user_self_report",
+            "quotation",
+            "tool_output",
+            "system_record",
+            "model_inference",
+            "unknown"
+          ]
+        },
+        "resolutionState": {
+          "enum": [
+            "resolved",
+            "unresolved",
+            "provisional"
+          ]
+        },
+        "representationVersion": {
+          "const": "p0-08-candidate-v1"
+        },
+        "kind": {
+          "const": "Act"
+        },
+        "actType": {
+          "enum": [
+            "request",
+            "question",
+            "correction",
+            "commitment",
+            "quotation",
+            "other"
+          ]
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "sourceRefs",
+        "sourceSpan",
+        "derivation",
+        "epistemicType",
+        "resolutionState",
+        "representationVersion",
+        "kind",
+        "actType",
+        "content"
+      ]
+    }
+  }
+}

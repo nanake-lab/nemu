@@ -1,0 +1,86 @@
+{
+  "status": "passed_for_authorized_offline_foundation_only",
+  "whole_card": "partial_delivery",
+  "date_local": "2026-11-01",
+  "cwd": "D:\\Dev\\nemu-wt\\P5-07",
+  "main": "acc71dadc5ba8982392d0aded64b9bf6772b514a",
+  "tested_checkout_parent": "a176c281df0bd0abc44b093ad701280afeaf0922",
+  "actual_tested_source_sha256": "artifact-check.json",
+  "runtime_versions": {
+    "python": "3.12.14",
+    "node": "24.21.0",
+    "pnpm": "12.11.2",
+    "uv": "0.12.15"
+  },
+  "process_only_environment": {
+    "UV_CACHE_DIR": "D:/Dev/cache/uv",
+    "UV_PROJECT_ENVIRONMENT": "D:/Dev/cache/P5-07/venv",
+    "PYTHONPYCACHEPREFIX": "D:/Dev/cache/P5-07/pycache",
+    "TEMP_TMP_for_ts": "D:/Dev/cache/P5-07/tmp"
+  },
+  "checks": [
+    {
+      "cwd": "repository root",
+      "command": "pnpm lint",
+      "exit_code": 0,
+      "log": "final/lint.log"
+    },
+    {
+      "cwd": "repository root",
+      "command": "pnpm typecheck",
+      "exit_code": 0,
+      "log": "final/typecheck.log"
+    },
+    {
+      "cwd": "repository root",
+      "command": "pnpm test",
+      "exit_code": 0,
+      "log": "final/test.log"
+    },
+    {
+      "cwd": "repository root",
+      "command": "pnpm exec tsc -p executors/codex-bridge/tsconfig.json --outDir D:/Dev/cache/P5-07/bridge-dist-20261101",
+      "exit_code": 0,
+      "log": "final/bridge-build.log"
+    },
+    {
+      "cwd": "workers/irl",
+      "command": "uv run --offline ruff check .",
+      "exit_code": 0,
+      "log": "python-final/ruff.log"
+    },
+    {
+      "cwd": "workers/irl",
+      "command": "uv run --offline mypy --strict src tests",
+      "exit_code": 0,
+      "log": "python-final/mypy.log"
+    },
+    {
+      "cwd": "workers/irl",
+      "command": "uv run --offline pytest",
+      "exit_code": 0,
+      "log": "python-final/pytest.log"
+    },
+    {
+      "cwd": "workers/irl",
+      "command": "uv build --offline --out-dir D:/Dev/cache/P5-07/dist-complete-20261101",
+      "exit_code": 0,
+      "log": "python-complete/build.log"
+    }
+  ],
+  "ts": {
+    "files": 54,
+    "tests": 598
+  },
+  "python": {
+    "tests": 28
+  },
+  "artifact_check": "artifact-check.json",
+  "limitations": [
+    "No production wiring",
+    "No IPC contract invented",
+    "No real model call or semantic accuracy acceptance",
+    "No full SYS02 or OS isolation acceptance",
+    "Human labels require user participation"
+  ]
+}

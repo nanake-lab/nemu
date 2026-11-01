@@ -1,1 +1,1 @@
-"""P0-01 package scaffold; no model, storage, or Proposal implementation."""
+"""Offline IRL candidate foundation; no production endpoint or authority writes."""

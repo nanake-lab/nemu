@@ -36,5 +36,8 @@ excludes the post-turn inventory; the overall deadline includes it.
 behavior without inference or quota use; they are not online measurements, a real
 provider recording, or proof that every future provider response is safe.
 
-Core/worker named-pipe service and Python/backend endpoint contracts remain blocked.
+The independently reviewable delivery is limited to this library and the process-local
+IRL candidate library. P5-07 as a whole remains partially delivered. Formal core/worker
+named pipes, backend integration and recorded-provider acceptance are follow-up work
+listed in `tasks/requests/P5-07-ipc-contract.md`; model/human-gold acceptance is separate.
 No private message schema, unauthenticated listener or authority-store handle is added.
