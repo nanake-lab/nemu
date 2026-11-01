@@ -1,0 +1,155 @@
+{
+  "status": "preparation_only",
+  "startedUtc": "2026-10-25T13:07:37.1789443+00:00",
+  "endedUtc": "2026-10-25T13:07:37.5043124+00:00",
+  "repository": "D:\\Dev\\nemu-wt\\P0-10",
+  "head": "f42cb0df7b3c839c30371ba71f6a5cdf6f93657a",
+  "powershell": "7.6.5",
+  "scriptSha256": "84f02ded97a4cf59f7b9cb4b37773970ef0b2e81b1b7cec645a76dff20e8784e",
+  "runnerProcesses": [
+    {
+      "ProcessName": "Runner.Listener",
+      "Id": 43336
+    }
+  ],
+  "runnerAbsentAtObservation": false,
+  "userQuietWindowConfirmationReceived": false,
+  "gpuMeasurementStarted": false,
+  "commands": [
+    {
+      "name": "llama-cli",
+      "found": false
+    },
+    {
+      "name": "llama-server",
+      "found": false
+    },
+    {
+      "name": "llama-bench",
+      "found": false
+    },
+    {
+      "name": "llama-quantize",
+      "found": false
+    }
+  ],
+  "expectedEngineFiles": [
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\llama.cpp\\llama-cli.exe",
+      "exists": false
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\llama.cpp\\llama-server.exe",
+      "exists": false
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\llama.cpp\\llama-bench.exe",
+      "exists": false
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\llama.cpp\\llama-quantize.exe",
+      "exists": false
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\llama.cpp\\llama.dll",
+      "exists": false
+    }
+  ],
+  "expectedModelFiles": [
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\models\\Q4_K_M.gguf",
+      "exists": false
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\models\\Q8_0.gguf",
+      "exists": false
+    }
+  ],
+  "driveDFreeBytes": 79426654208,
+  "fixtureCount": 200,
+  "fixtureLanguages": [
+    {
+      "language": "en",
+      "count": 67
+    },
+    {
+      "language": "ja",
+      "count": 66
+    },
+    {
+      "language": "zh",
+      "count": 67
+    }
+  ],
+  "inputBindings": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "5c68481160257b74879b7ebe6de46948bb0c54185be52ce9e60e757091518781"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "694c8a9ef70e7a522c498d90e782a63188f8cfd4871c1a4b2dd962139e6e98fb"
+    },
+    {
+      "path": "docs/CONTRACTS.md",
+      "sha256": "cafb845c0f114ca3c55764e215f0a761f30763cb8721fb99ae30ac76476e08de"
+    },
+    {
+      "path": "docs/echo-core/README.md",
+      "sha256": "10e8093efa7499d6549f6ad8f74fc3c7b0e56eed351bfc1057244e92c0e24266"
+    },
+    {
+      "path": "tasks/P0-foundation.md",
+      "sha256": "f4091508fb4c2f221fd244333e32877cf21f28b68bf04ff4814b518ff9a3880b"
+    },
+    {
+      "path": "reports/P0-09/DECISION.md",
+      "sha256": "78c85a2a9943650afa4141c53c5be3c22bee97eb32fcf34c248dd81f11dce56d"
+    },
+    {
+      "path": "reports/P0-07/decision.md",
+      "sha256": "6d52e65d12c188bf5c7d66c0b8e8b1ad4e3a3d9ccd5614c4dfe33820257e4dce"
+    },
+    {
+      "path": "reports/P0-08/REVIEW-R1-REPORT.md",
+      "sha256": "bf4ebbd4ef1a748852462bb33a55905d3971ae5741ac41f300ed049b7752489f"
+    },
+    {
+      "path": "docs/adr/0012-continuity-carrier-mobile.md",
+      "sha256": "5d361a6aac17f5c491aa60a00ca30be115a0a1af8aab1635ede7f72b1fedf266"
+    },
+    {
+      "path": "docs/adr/0027-voice-model-breeze-target-gsv-interim.md",
+      "sha256": "2a4ee0beddc3553f39473af671ce7d0d1b5995064e1e425cbfef9eadd0de030c"
+    },
+    {
+      "path": "workers/model-adapter/probe/injection.py",
+      "sha256": "f0c72866ecd483036d027259fb0d64b29f062f25b60394786af1c07ba9459316"
+    },
+    {
+      "path": "spikes/codex-app-server/fixtures/irl-cases.json",
+      "sha256": "0163e74d3a034cbb519b526f866c7beabc5d572dc86161100baca098c7e3f3fc"
+    },
+    {
+      "path": "spikes/codex-app-server/semantic-candidate.schema.json",
+      "sha256": "ac68fa9f0831a1f1e788b91086317d3589427b40dcf1b7f01fe35676185fe9f7"
+    },
+    {
+      "path": "spikes/codex-app-server/semantic-candidate.wire.schema.json",
+      "sha256": "9e07fc5dadcda07b7b068f1ee6a9e9e304572b00b67b65c415240e6fb3a8cf71"
+    },
+    {
+      "path": "spikes/codex-app-server/src/local_breakdown.py",
+      "sha256": "88851f887335ba7862f50f2858c468d0ee4636796f9cda9a52ebd335a09245f4"
+    },
+    {
+      "path": "workers/model-adapter/probe/latency_probe.py",
+      "sha256": "14996f8e27763ad2f1cac9fcf6a053aa92ee4171354e40c64dbfab1346f6953f"
+    }
+  ],
+  "limitations": [
+    "Expected paths and PATH are checked, not a whole-machine model search.",
+    "No engine, injection, schema decoding, latency or VRAM measurement was run.",
+    "Runner absence alone is not user authorization for a GPU window."
+  ]
+}

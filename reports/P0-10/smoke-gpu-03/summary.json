@@ -1,0 +1,359 @@
+{
+  "status": "minimal-execution-analyzed-not-full-acceptance",
+  "requests": 21,
+  "apiUpdates": 18,
+  "apiNonzeroReturns": 0,
+  "languages": [
+    {
+      "language": "zh",
+      "promptTokens": 17,
+      "zeroLogitsByteIdentical": true,
+      "clearLogitsByteIdentical": true,
+      "zeroGreedyTokensEqual": true,
+      "clearGreedyTokensEqual": true,
+      "generatedTokensIncludingEos": 3,
+      "zeroMaxAbs": 0.0,
+      "clearMaxAbs": 0.0,
+      "repeatAMaxAbs": 0.0,
+      "freshAMaxAbs": 0.0,
+      "aVsPlainMaxAbs": 0.6668210029602051,
+      "bVsAMaxAbs": 0.6772985458374023
+    },
+    {
+      "language": "en",
+      "promptTokens": 16,
+      "zeroLogitsByteIdentical": true,
+      "clearLogitsByteIdentical": true,
+      "zeroGreedyTokensEqual": true,
+      "clearGreedyTokensEqual": true,
+      "generatedTokensIncludingEos": 3,
+      "zeroMaxAbs": 0.0,
+      "clearMaxAbs": 0.0,
+      "repeatAMaxAbs": 0.0,
+      "freshAMaxAbs": 0.0,
+      "aVsPlainMaxAbs": 0.642493724822998,
+      "bVsAMaxAbs": 0.5328326225280762
+    },
+    {
+      "language": "ja",
+      "promptTokens": 22,
+      "zeroLogitsByteIdentical": true,
+      "clearLogitsByteIdentical": true,
+      "zeroGreedyTokensEqual": true,
+      "clearGreedyTokensEqual": true,
+      "generatedTokensIncludingEos": 3,
+      "zeroMaxAbs": 0.0,
+      "clearMaxAbs": 0.0,
+      "repeatAMaxAbs": 0.0,
+      "freshAMaxAbs": 0.0,
+      "aVsPlainMaxAbs": 0.7970752716064453,
+      "bVsAMaxAbs": 0.669365644454956
+    }
+  ],
+  "cudaBackendReported": true,
+  "offloadLogLines": [
+    "load_tensors: offloaded 37/37 layers to GPU"
+  ],
+  "memory": {
+    "scope": "native carrier PID, sampled short inputs; no TTS or renderer",
+    "samples": 38,
+    "samplesWithPid": 33,
+    "dedicatedMaxBytes": 3196669952,
+    "sharedMaxBytes": 100663296,
+    "sumOfIndependentMaximaBytes": 3297333248
+  },
+  "limitations": [
+    "Three synthetic prompts; at most eight greedy tokens, EOS may end earlier.",
+    "Raw logits cover only the last prefill position, not every position.",
+    "A/B are +/- unit basis vectors, not learned directions.",
+    "KV explicitly cleared per request; no automatic invalidation claim.",
+    "No paired injection positions, IRL benchmark or full speed acceptance."
+  ],
+  "files": [
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\comparisons.tsv",
+      "bytes": 258,
+      "sha256": "9b74149a2c93bcf9d143d458fb5a0e9fba2072a56d3ef59409e65b779bc2fb75"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\configuration.tsv",
+      "bytes": 104,
+      "sha256": "d9d89515a5e824ce1657121ba045fd049199246de4f66f54a3dcca49a3a7fae4"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-A-again.f32",
+      "bytes": 607744,
+      "sha256": "dce73f384fc9161315284e21c210dc491d37c484834f2973f38784e12abf5006"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-A-again.txt",
+      "bytes": 6,
+      "sha256": "334d016f755cd6dc58c53a86e183882f8ec14f52fb05345887c8a5edd42c87b7"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-A.f32",
+      "bytes": 607744,
+      "sha256": "dce73f384fc9161315284e21c210dc491d37c484834f2973f38784e12abf5006"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-A.txt",
+      "bytes": 6,
+      "sha256": "334d016f755cd6dc58c53a86e183882f8ec14f52fb05345887c8a5edd42c87b7"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-B.f32",
+      "bytes": 607744,
+      "sha256": "4584b2a5780e0f75321b78e735eba22fa81abe634f8795cf44c76e079a22020f"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-B.txt",
+      "bytes": 6,
+      "sha256": "334d016f755cd6dc58c53a86e183882f8ec14f52fb05345887c8a5edd42c87b7"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-clear.f32",
+      "bytes": 607744,
+      "sha256": "d9ed8eb83c204a19d2130d416daa2a985bed36b7dd2b958fd13a9a64e87e032f"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-clear.txt",
+      "bytes": 6,
+      "sha256": "334d016f755cd6dc58c53a86e183882f8ec14f52fb05345887c8a5edd42c87b7"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-fresh-A.f32",
+      "bytes": 607744,
+      "sha256": "dce73f384fc9161315284e21c210dc491d37c484834f2973f38784e12abf5006"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-fresh-A.txt",
+      "bytes": 6,
+      "sha256": "334d016f755cd6dc58c53a86e183882f8ec14f52fb05345887c8a5edd42c87b7"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-plain.f32",
+      "bytes": 607744,
+      "sha256": "d9ed8eb83c204a19d2130d416daa2a985bed36b7dd2b958fd13a9a64e87e032f"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-plain.txt",
+      "bytes": 6,
+      "sha256": "334d016f755cd6dc58c53a86e183882f8ec14f52fb05345887c8a5edd42c87b7"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-zero.f32",
+      "bytes": 607744,
+      "sha256": "d9ed8eb83c204a19d2130d416daa2a985bed36b7dd2b958fd13a9a64e87e032f"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\en-zero.txt",
+      "bytes": 6,
+      "sha256": "334d016f755cd6dc58c53a86e183882f8ec14f52fb05345887c8a5edd42c87b7"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\execution-completed.txt",
+      "bytes": 52,
+      "sha256": "0fbc4d7c1c6e2fd610fce39a88cb0e422339bd8c8eacd03a1474429c70377adf"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-A-again.f32",
+      "bytes": 607744,
+      "sha256": "0fbcab9c4b95c22a307d2693ac700e1318f0f642f6f25c728d1aa97212c0478b"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-A-again.txt",
+      "bytes": 18,
+      "sha256": "4427d0b0e72940e3caa881c7b21e48136cbd002b7dcd8c991a38686fabe39929"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-A.f32",
+      "bytes": 607744,
+      "sha256": "0fbcab9c4b95c22a307d2693ac700e1318f0f642f6f25c728d1aa97212c0478b"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-A.txt",
+      "bytes": 18,
+      "sha256": "4427d0b0e72940e3caa881c7b21e48136cbd002b7dcd8c991a38686fabe39929"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-B.f32",
+      "bytes": 607744,
+      "sha256": "4bc2a23d2628582ba047b63907b386e7e99942838daee13136c4f492462204e6"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-B.txt",
+      "bytes": 18,
+      "sha256": "4427d0b0e72940e3caa881c7b21e48136cbd002b7dcd8c991a38686fabe39929"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-clear.f32",
+      "bytes": 607744,
+      "sha256": "d2b5fb424e3609a26fc7c75ab8d193e7197bcf2b29f0992481273fe8ca7146cb"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-clear.txt",
+      "bytes": 18,
+      "sha256": "4427d0b0e72940e3caa881c7b21e48136cbd002b7dcd8c991a38686fabe39929"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-fresh-A.f32",
+      "bytes": 607744,
+      "sha256": "0fbcab9c4b95c22a307d2693ac700e1318f0f642f6f25c728d1aa97212c0478b"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-fresh-A.txt",
+      "bytes": 18,
+      "sha256": "4427d0b0e72940e3caa881c7b21e48136cbd002b7dcd8c991a38686fabe39929"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-plain.f32",
+      "bytes": 607744,
+      "sha256": "d2b5fb424e3609a26fc7c75ab8d193e7197bcf2b29f0992481273fe8ca7146cb"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-plain.txt",
+      "bytes": 18,
+      "sha256": "4427d0b0e72940e3caa881c7b21e48136cbd002b7dcd8c991a38686fabe39929"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-zero.f32",
+      "bytes": 607744,
+      "sha256": "d2b5fb424e3609a26fc7c75ab8d193e7197bcf2b29f0992481273fe8ca7146cb"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\ja-zero.txt",
+      "bytes": 18,
+      "sha256": "4427d0b0e72940e3caa881c7b21e48136cbd002b7dcd8c991a38686fabe39929"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\requests.tsv",
+      "bytes": 966,
+      "sha256": "ff99a2e634989092eb30ac3539cacf9c78ae0bfba1ea991de24567463ec5f015"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-A-again.f32",
+      "bytes": 607744,
+      "sha256": "7e5fdce1a05990eba08ad5a4c27723fbbb73e5583411cbd8ba78c1992df6a6df"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-A-again.txt",
+      "bytes": 9,
+      "sha256": "ecde115cdca96a1a181db6b9e88c1e1f6e208ca77916627cc8a9fa02b39d0692"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-A.f32",
+      "bytes": 607744,
+      "sha256": "7e5fdce1a05990eba08ad5a4c27723fbbb73e5583411cbd8ba78c1992df6a6df"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-A.txt",
+      "bytes": 9,
+      "sha256": "ecde115cdca96a1a181db6b9e88c1e1f6e208ca77916627cc8a9fa02b39d0692"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-B.f32",
+      "bytes": 607744,
+      "sha256": "b226943bedafd3cad79bf958b7f42da4db37e9b3f5a4d67c38428aa1201ea720"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-B.txt",
+      "bytes": 9,
+      "sha256": "ecde115cdca96a1a181db6b9e88c1e1f6e208ca77916627cc8a9fa02b39d0692"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-clear.f32",
+      "bytes": 607744,
+      "sha256": "97fb664c7087c444b4f58d39e43dabb4cabcf9becd548d04b7165da5a3b526a9"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-clear.txt",
+      "bytes": 9,
+      "sha256": "ecde115cdca96a1a181db6b9e88c1e1f6e208ca77916627cc8a9fa02b39d0692"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-fresh-A.f32",
+      "bytes": 607744,
+      "sha256": "7e5fdce1a05990eba08ad5a4c27723fbbb73e5583411cbd8ba78c1992df6a6df"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-fresh-A.txt",
+      "bytes": 9,
+      "sha256": "ecde115cdca96a1a181db6b9e88c1e1f6e208ca77916627cc8a9fa02b39d0692"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-plain.f32",
+      "bytes": 607744,
+      "sha256": "97fb664c7087c444b4f58d39e43dabb4cabcf9becd548d04b7165da5a3b526a9"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-plain.txt",
+      "bytes": 9,
+      "sha256": "ecde115cdca96a1a181db6b9e88c1e1f6e208ca77916627cc8a9fa02b39d0692"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-zero.f32",
+      "bytes": 607744,
+      "sha256": "97fb664c7087c444b4f58d39e43dabb4cabcf9becd548d04b7165da5a3b526a9"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03\\zh-zero.txt",
+      "bytes": 9,
+      "sha256": "ecde115cdca96a1a181db6b9e88c1e1f6e208ca77916627cc8a9fa02b39d0692"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\binding.json",
+      "bytes": 611,
+      "sha256": "e31efc0931fc5aca4fa0284beafef88b6a4993db89ebdb502b4bfa46c6d77987"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\completion.json",
+      "bytes": 104,
+      "sha256": "22e37ec9faf2a0ccd6d93202872af292a755e97b1b5f7406d7922455a1241e81"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\gpu-before.csv",
+      "bytes": 115,
+      "sha256": "e86214a8ccf4710ada9d013e646803e7501ae7e34a07356be3a535355b7eb469"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\memory-watch.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\memory-watch.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\memory.jsonl",
+      "bytes": 239946,
+      "sha256": "e38e67951c6eb703a86f5d7c77bd2f19992d541e54d065a373b29875ccbda90b"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\processes.json",
+      "bytes": 104,
+      "sha256": "2e7b5b87fc33df896c953392ca3febf9a286e8943c57ce2d5a399ebf28fa412a"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\source.cpp",
+      "bytes": 12751,
+      "sha256": "be19fe839b54973601250e59803cb5793d638fb56cb1fbd0bac3ae45947bc2b5"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\stderr.log",
+      "bytes": 2852517,
+      "sha256": "451a522a18995275a2c9fdcb457fe98f98949fced62cab342eb2c4ae86887cc7"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D:\\Dev\\cache\\P0-10\\smoke-runs\\run-03-metadata\\stop",
+      "bytes": 9,
+      "sha256": "4ddb3e96801a1ee2b77dc5247c0db478d5f97a93b90e7cdb09f5f51d43764b08"
+    }
+  ]
+}

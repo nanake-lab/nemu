@@ -1,0 +1,26 @@
+   Compiling fact-view v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\fact-view)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.86s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\debug\deps\fact_view-0ec62b2c0f72aa43.exe)
+
+running 5 tests
+test tests::deterministic_rrf_filters_corrections_and_budgets ... ok
+test tests::retraction_zero_in_one_hundred_task_queries_and_audit_preserves_original ... ok
+test tests::structural_allowlist_excludes_all_explanations_even_when_wrapped_as_event_payload ... ok
+test tests::sys05_five_distinct_results_and_real_positive_control ... FAILED
+test tests::trigram_and_short_unicode_literal_queries_are_not_fts_syntax ... ok
+
+failures:
+
+---- tests::sys05_five_distinct_results_and_real_positive_control stdout ----
+
+thread 'tests::sys05_five_distinct_results_and_real_positive_control' (24580) panicked at crates\fact-view\src\tests\mod.rs:25:5:
+assertion failed: world.store.path().starts_with(world.root.path())
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tests::sys05_five_distinct_results_and_real_positive_control
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 115.99s
+
+error: test failed, to rerun pass `-p fact-view --lib`

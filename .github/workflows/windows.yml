@@ -8,6 +8,7 @@ name: Windows
 #   the Node toolchain files and this workflow. spikes/* are left to the Ubuntu build.
 # - storage: W02 NTFS checks of core-store and what it depends on (core-types, the contracts
 #   that generate core-types, the Cargo workspace files) and this workflow.
+# - gateway: W18 native auth/upload/dispatch/SYS01, its storage/contract dependencies.
 # Pure Rust crates that only need Linux (core-kernel law/dynamics and the like) do not start
 # this workflow. A manual run (`gh workflow run windows.yml --ref <branch>`) runs everything
 # by default. A change that adds a Windows check adds its group here and in the scope step.
@@ -22,6 +23,7 @@ on:
       - 'workers/*/src/**'
       - 'services/*/src/**'
       - 'core/crates/core-store/**'
+      - 'core/crates/gateway/**'
       - 'core/crates/core-types/**'
       - 'core/contracts/**'
       - 'core/Cargo.toml'
@@ -51,6 +53,7 @@ on:
       - 'workers/*/src/**'
       - 'services/*/src/**'
       - 'core/crates/core-store/**'
+      - 'core/crates/gateway/**'
       - 'core/crates/core-types/**'
       - 'core/contracts/**'
       - 'core/Cargo.toml'
@@ -85,18 +88,26 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: '1'
   UV_LINK_MODE: copy
 jobs:
-  windows:
-    name: Windows desktop and isolation
-    # Only owner-triggered, same-repository code may run on the user's machine.
+  windows-tests:
+    name: Windows self-hosted checks
+    # This job-level allowlist is evaluated before a self-hosted runner is assigned.
+    # Require approval for ALL outside collaborators and never approve fork workflow runs:
+    # a fork can edit this YAML, so this allowlist alone is not a security boundary.
+    # Only owner-triggered, same-repository branch code may run on the user's machine.
     # Draft PRs skip this job: it runs once the PR is ready for review, or on demand with
-    # `gh workflow run windows.yml --ref <branch>`.
+    # `gh workflow run windows.yml --ref <branch>`, restricted to the repository owner.
     if: >-
+      github.repository == 'nanake-lab/nemu' &&
       github.actor == github.repository_owner &&
-      (github.event_name != 'pull_request' ||
-       (github.event.pull_request.head.repo.full_name == github.repository &&
-        !github.event.pull_request.draft))
+      github.triggering_actor == github.repository_owner &&
+      ((github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')) ||
+       (github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        !github.event.pull_request.draft) ||
+       (github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/heads/')))
     runs-on: [self-hosted, Windows, X64, nemu]
-    timeout-minutes: 20
+    # W02 core-store crash-recovery tests take over 20 minutes on the user's machine.
+    timeout-minutes: 60
     defaults:
       run:
         shell: pwsh
@@ -148,17 +159,24 @@ jobs:
             '^core/(Cargo\.toml|Cargo\.lock|rust-toolchain\.toml)$',
             '^\.github/workflows/windows\.yml$'
           )
+          $gatewayPatterns = @(
+            '^core/crates/gateway/', '^core/crates/core-store/', '^core/crates/core-types/', '^core/contracts/',
+            '^core/(Cargo\.toml|Cargo\.lock|rust-toolchain\.toml)$',
+            '^\.github/workflows/windows\.yml$'
+          )
           function Test-Group([string[]]$patterns) {
             foreach ($f in $files) { foreach ($p in $patterns) { if ($f -match $p) { return $true } } }
             return $false
           }
           $desktop = $full -or (Test-Group $desktopPatterns)
           $storage = $full -or (Test-Group $storagePatterns)
-          "full=$full; base=$base; desktop=$desktop; storage=$storage"
+          $gateway = $full -or (Test-Group $gatewayPatterns)
+          "full=$full; base=$base; desktop=$desktop; storage=$storage; gateway=$gateway"
           "changed files: $($files.Count)"
           $files | ForEach-Object { "  $_" }
           "desktop=$($desktop.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
           "storage=$($storage.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "gateway=$($gateway.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         if: steps.scope.outputs.desktop == 'true'
         with:
@@ -223,9 +241,134 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
           exit $LASTEXITCODE
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: always() && env.NEMU_W02_EVIDENCE != ''
+      # Retry only the upload: W02 logs stay in the same run-specific directory.
+      # The final gate below is mandatory; exhausted retries must still fail CI.
+      - name: Upload W02 evidence (attempt 1)
+        id: w02_upload_1
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' }}
+        continue-on-error: true
+        timeout-minutes: 6
         with:
           name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ env.NEMU_W02_EVIDENCE }}/
           if-no-files-found: error
+      - name: Wait before W02 upload retry 2
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' }}
+        run: Start-Sleep -Seconds 20
+      - name: Upload W02 evidence (attempt 2)
+        id: w02_upload_2
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' }}
+        continue-on-error: true
+        timeout-minutes: 6
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}-retry-2
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
+          if-no-files-found: error
+      - name: Wait before W02 upload retry 3
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' && steps.w02_upload_2.outcome != 'success' }}
+        run: Start-Sleep -Seconds 40
+      - name: Upload W02 evidence (attempt 3)
+        id: w02_upload_3
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' && steps.w02_upload_2.outcome != 'success' }}
+        continue-on-error: true
+        timeout-minutes: 6
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}-retry-3
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
+          if-no-files-found: error
+      - name: Require W02 evidence upload
+        if: always() && env.NEMU_W02_EVIDENCE != ''
+        env:
+          UPLOAD_1_OUTCOME: ${{ steps.w02_upload_1.outcome }}
+          UPLOAD_1_ID: ${{ steps.w02_upload_1.outputs.artifact-id }}
+          UPLOAD_2_OUTCOME: ${{ steps.w02_upload_2.outcome }}
+          UPLOAD_2_ID: ${{ steps.w02_upload_2.outputs.artifact-id }}
+          UPLOAD_3_OUTCOME: ${{ steps.w02_upload_3.outcome }}
+          UPLOAD_3_ID: ${{ steps.w02_upload_3.outputs.artifact-id }}
+        run: |
+          $outcomes = @($env:UPLOAD_1_OUTCOME, $env:UPLOAD_2_OUTCOME, $env:UPLOAD_3_OUTCOME)
+          $artifactIds = @($env:UPLOAD_1_ID, $env:UPLOAD_2_ID, $env:UPLOAD_3_ID)
+          for ($attempt = 0; $attempt -lt $outcomes.Count; $attempt++) {
+            if ($outcomes[$attempt] -eq 'success' -and $artifactIds[$attempt] -match '^[1-9][0-9]*$') {
+              "W02 evidence uploaded: attempt $($attempt + 1), artifact $($artifactIds[$attempt])" >> $env:GITHUB_STEP_SUMMARY
+              exit 0
+            }
+          }
+          throw 'W02 evidence upload did not succeed after three attempts; retained local logs do not replace an uploaded artifact.'
+
+      - name: W18 gateway Windows components (temporary stores only)
+        if: steps.scope.outputs.gateway == 'true'
+        working-directory: core
+        run: |
+          $env:CARGO_HOME = 'D:\Dev\cache\cargo'
+          $env:CARGO_TARGET_DIR = 'D:\Dev\cache\cargo-target\ci-gateway'
+          $env:TEMP = 'D:\Dev\cache\tmp\gateway-ci'
+          $env:TMP = $env:TEMP
+          $evidence = Join-Path $env:TEMP "w18-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          New-Item -ItemType Directory -Path $evidence -Force | Out-Null
+          "NEMU_W18_EVIDENCE=$evidence" >> $env:GITHUB_ENV
+          $env:NEMU_W18_EVIDENCE_DIR = $evidence
+          cargo clippy -p gateway --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo test -p gateway --locked -- --test-threads=1 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
+          exit $LASTEXITCODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always() && env.NEMU_W18_EVIDENCE != ''
+        with:
+          name: windows-P5-03-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.NEMU_W18_EVIDENCE }}/
+          if-no-files-found: error
+
+  windows:
+    # Preserve the existing required-check name, but never report skipped tests as green.
+    # This hosted job does not check out or execute any PR files and needs no token access.
+    name: Windows desktop and isolation
+    needs: windows-tests
+    if: always()
+    runs-on: ubuntu-latest
+    permissions: {}
+    timeout-minutes: 5
+    steps:
+      - name: Require successful Windows checks
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          REPOSITORY: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+          OWNER: ${{ github.repository_owner }}
+          REF: ${{ github.ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          DRAFT: ${{ github.event.pull_request.draft }}
+          WINDOWS_RESULT: ${{ needs.windows-tests.result }}
+        run: |
+          if [[ "$REPOSITORY" != 'nanake-lab/nemu' || "$ACTOR" != "$OWNER" || "$TRIGGERING_ACTOR" != "$OWNER" ]]; then
+            echo '::error::Windows checks require the repository owner in nanake-lab/nemu.'
+            exit 1
+          fi
+          case "$EVENT" in
+            pull_request)
+              if [[ "$HEAD_REPOSITORY" != "$REPOSITORY" || "$DRAFT" != 'false' ]]; then
+                echo '::error::Windows checks are blocked for fork or draft PRs; skipped is not a pass.'
+                exit 1
+              fi
+              ;;
+            push|workflow_dispatch)
+              if [[ "$REF" != refs/heads/* ]]; then
+                echo '::error::Windows checks require a branch in this repository.'
+                exit 1
+              fi
+              ;;
+            *)
+              echo '::error::This event is not allowed to run Windows checks.'
+              exit 1
+              ;;
+          esac
+          if [[ "$WINDOWS_RESULT" != 'success' ]]; then
+            echo "::error::Windows checks did not succeed (result: $WINDOWS_RESULT)."
+            exit 1
+          fi
+          echo 'Windows checks completed successfully on the trusted self-hosted runner.'

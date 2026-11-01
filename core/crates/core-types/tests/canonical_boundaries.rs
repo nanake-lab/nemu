@@ -14,6 +14,77 @@ fn limits() -> Limits {
 }
 
 #[test]
+fn first_codec_call_and_later_calls_are_equivalent_and_owned_schemas_stay_independent() {
+    const CHILD: &str = "NEMU_CODEC_FIRST_CALL_TEST";
+    if std::env::var_os(CHILD).is_none() {
+        // A dedicated process proves the public trait's first call is cold,
+        // regardless of which other tests the parent ran concurrently.
+        let status = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", "first_codec_call_and_later_calls_are_equivalent_and_owned_schemas_stay_independent", "--nocapture"])
+            .env(CHILD, "1")
+            .status().unwrap();
+        assert!(status.success());
+        return;
+    }
+    use core_types::generated::UserText;
+    let value = UserText {
+        schema_version: 1,
+        text: "synthetic cold/hot control".into(),
+    };
+    let json = serde_json::to_value(&value).unwrap();
+    let mut owned = Schema::builtin().unwrap();
+    let canonical = owned
+        .encode_canonical(UserText::NAME, &json, limits())
+        .unwrap();
+    let protobuf = owned
+        .encode_protobuf(UserText::NAME, &json, limits())
+        .unwrap();
+    let first = value.canonical_bytes(limits()).unwrap();
+    assert_eq!(first, canonical);
+    owned.messages.clear();
+    assert!(
+        owned
+            .encode_canonical(UserText::NAME, &json, limits())
+            .is_err()
+    );
+    for _ in 0..16 {
+        assert_eq!(value.canonical_bytes(limits()).unwrap(), first);
+        assert_eq!(value.protobuf_bytes(limits()).unwrap(), protobuf);
+        assert_eq!(
+            UserText::from_canonical(&canonical, limits()).unwrap(),
+            value
+        );
+        assert_eq!(UserText::from_protobuf(&protobuf, limits()).unwrap(), value);
+        let mut invalid = value.clone();
+        invalid.schema_version = 2;
+        let fresh = Schema::builtin().unwrap();
+        let invalid_json = serde_json::to_value(&invalid).unwrap();
+        assert_eq!(
+            invalid.canonical_bytes(limits()),
+            fresh.encode_canonical(UserText::NAME, &invalid_json, limits())
+        );
+        assert_eq!(
+            invalid.protobuf_bytes(limits()),
+            fresh.encode_protobuf(UserText::NAME, &invalid_json, limits())
+        );
+        let tiny = Limits {
+            max_bytes: 1,
+            ..limits()
+        };
+        assert_eq!(
+            value.canonical_bytes(tiny),
+            fresh.encode_canonical(UserText::NAME, &json, tiny)
+        );
+        assert_eq!(
+            UserText::from_canonical(&canonical[..3], limits()).unwrap_err(),
+            fresh
+                .decode_canonical(UserText::NAME, &canonical[..3], limits(), 0)
+                .unwrap_err()
+        );
+    }
+}
+
+#[test]
 fn frozen_tag_is_independent_of_message_name() {
     let mut s = Schema::builtin().unwrap();
     let v = json!({"schema_version":1,"output_id":"A","reason":1});

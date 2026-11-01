@@ -120,6 +120,10 @@ def normalize(name: str, value: Any, limits: Limits, depth: int = 0) -> dict[str
             fail(out[key] in values, "variant enum")
     for group in SCHEMA["messages"][name]["rules"].get("oneofs", {}).values():
         fail(sum(k in out for k in group["fields"]) == 1, "required oneof")
+    for key in SCHEMA["messages"][name]["rules"].get("positive", []):
+        fail(out[key] > 0, "positive field required")
+    for key, signed in SCHEMA["messages"][name]["rules"].get("at_least_abs", {}).items():
+        fail(out[key] >= abs(out[signed]), "absolute evidence below signed magnitude")
     return out
 
 

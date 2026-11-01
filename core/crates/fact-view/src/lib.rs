@@ -1,2 +1,23 @@
-#![forbid(unsafe_code)]
-//! P0-01 scaffold. No domain types, state transitions, or storage access yet.
+#![deny(unsafe_code)]
+//! W19. Read-only authority access through core-store; rebuildable derived indexes.
+mod embedding;
+mod error;
+mod index;
+mod memory;
+mod paging;
+mod query;
+mod retrieval;
+mod source;
+#[allow(unsafe_code)]
+mod sqlite_vec;
+#[cfg(feature = "cpu-embedding")]
+pub use embedding::CpuEmbedder;
+pub use embedding::Embedder;
+pub use error::{Error, Result};
+pub use index::FactView;
+pub use memory::{MemoryEntry, PAST_REACTION_MARKER};
+pub use paging::PageCursor;
+pub use query::{Access, Budget, Budgets, FactQuery, INDEX_VERSION, Purpose, QUERY_VERSION};
+pub use retrieval::{Execution, RetrievalTrace};
+#[cfg(test)]
+mod tests;

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "cpu-environment",
+    "program": "D:\\Dev\\cache\\P0-10\\convert-venv\\Scripts\\python.exe",
+    "arguments": [
+      "-c",
+      "import torch; assert torch.version.cuda is None; print('torch', torch.__version__, 'CUDA build', torch.version.cuda)"
+    ],
+    "startedUtc": "2026-10-25T16:12:20.4590410+00:00",
+    "endedUtc": "2026-10-25T16:12:24.3442696+00:00",
+    "exitCode": 0,
+    "log": "D:\\Dev\\cache\\P0-10\\gguf\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\evidence\\cpu-environment.log"
+  },
+  {
+    "name": "convert-bf16",
+    "program": "D:\\Dev\\cache\\P0-10\\convert-venv\\Scripts\\python.exe",
+    "arguments": [
+      "D:\\Dev\\cache\\P0-10\\source\\llama.cpp-b11669\\convert_hf_to_gguf.py",
+      "D:\\Dev\\cache\\P0-10\\models\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554",
+      "--outfile",
+      "D:\\Dev\\cache\\P0-10\\gguf\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\carrier-BF16.gguf.partial",
+      "--outtype",
+      "bf16"
+    ],
+    "startedUtc": "2026-10-25T16:12:24.3604039+00:00",
+    "endedUtc": "2026-10-25T16:13:32.1559790+00:00",
+    "exitCode": 0,
+    "log": "D:\\Dev\\cache\\P0-10\\gguf\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\evidence\\convert-bf16.log"
+  },
+  {
+    "name": "quantize-Q4_K_M",
+    "program": "D:\\Dev\\cache\\P0-10\\llama.cpp\\b11669-cpu-quantize\\llama-quantize.exe",
+    "arguments": [
+      "D:\\Dev\\cache\\P0-10\\gguf\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\carrier-BF16.gguf",
+      "D:\\Dev\\cache\\P0-10\\gguf\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\carrier-Q4_K_M.gguf.partial",
+      "Q4_K_M",
+      "4"
+    ],
+    "startedUtc": "2026-10-25T16:13:40.8845895+00:00",
+    "endedUtc": "2026-10-25T16:14:52.0985110+00:00",
+    "exitCode": 0,
+    "log": "D:\\Dev\\cache\\P0-10\\gguf\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\evidence\\quantize-Q4_K_M.log"
+  },
+  {
+    "name": "quantize-Q8_0",
+    "program": "D:\\Dev\\cache\\P0-10\\llama.cpp\\b11669-cpu-quantize\\llama-quantize.exe",
+    "arguments": [
+      "D:\\Dev\\cache\\P0-10\\gguf\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\carrier-BF16.gguf",
+      "D:\\Dev\\cache\\P0-10\\gguf\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\carrier-Q8_0.gguf.partial",
+      "Q8_0",
+      "4"
+    ],
+    "startedUtc": "2026-10-25T16:14:54.7603999+00:00",
+    "endedUtc": "2026-10-25T16:15:25.9640975+00:00",
+    "exitCode": 0,
+    "log": "D:\\Dev\\cache\\P0-10\\gguf\\Qwen--Qwen3-4B-Instruct-2507\\cdbee75f17c01a7cc42f958dc650907174af0554\\evidence\\quantize-Q8_0.log"
+  }
+]

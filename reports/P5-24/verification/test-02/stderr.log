@@ -1,0 +1,17 @@
+   Compiling p5-24-evidence-verifier v0.0.0 (D:\Dev\cache\P5-24\harness)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.96s
+     Running unittests harness.rs (D:\Dev\cache\P5-24\target\debug\deps\p5_24_evidence_verifier-830935bf5431c73c.exe)
+
+thread 'evidence::tests::integration::ac2_03_assembled_repeated_experience_does_not_add_g_weight' (49952) panicked at D:\Dev\nemu-wt\P5-24\core\crates\core-kernel\src\evidence\tests\integration.rs:11:54:
+called `Result::unwrap()` on an `Err` value: InvalidInput("lambda_min must be positive")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'evidence::tests::integration::ac2_12_teaching_uses_g_trust_and_repetition_does_not_refresh' (32680) panicked at D:\Dev\nemu-wt\P5-24\core\crates\core-kernel\src\evidence\tests\integration.rs:11:54:
+called `Result::unwrap()` on an `Err` value: InvalidInput("lambda_min must be positive")
+
+thread 'evidence::tests::integration::ev9_supplied_verification_reaches_g_discount_without_local_guessing' (13756) panicked at D:\Dev\nemu-wt\P5-24\core\crates\core-kernel\src\evidence\tests\integration.rs:11:54:
+called `Result::unwrap()` on an `Err` value: InvalidInput("lambda_min must be positive")
+
+thread 'evidence::tests::integration::i23_all_prefixes_are_identical_when_recomputed_with_fresh_assembly' (48384) panicked at D:\Dev\nemu-wt\P5-24\core\crates\core-kernel\src\evidence\tests\integration.rs:11:54:
+called `Result::unwrap()` on an `Err` value: InvalidInput("lambda_min must be positive")
+error: test failed, to rerun pass `--lib`

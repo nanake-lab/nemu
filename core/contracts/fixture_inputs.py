@@ -12,6 +12,10 @@ LIMITS = dict(max_bytes=1048576, max_items=4096, max_depth=32)
 
 
 def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
+    from fixture_theta import NAMES, sample_theta
+
+    if name in NAMES:
+        return sample_theta(name, seed)
     message = SCHEMA["messages"][name]
 
     def atom(f: dict[str, Any], n: int) -> Any:
@@ -32,7 +36,10 @@ def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
         if t == "sint64":
             return str([0, -(2**63), 2**63 - 1][n % 3])
         if t == "uint32":
-            return max(int(f.get("min", 0)), [0, 2**32 - 1, 17][n % 3])
+            return min(
+                int(f.get("max", 2**32 - 1)),
+                max(int(f.get("min", 0)), [0, 2**32 - 1, 17][n % 3]),
+            )
         return max(
             f.get("min", -1e300),
             min(
@@ -84,6 +91,10 @@ def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
         out[chosen] = atom(
             next(f for f in message["fields"] if f["name"] == chosen), seed
         )
+    for key in message["rules"].get("positive", []):
+        out[key] = max(out[key], 0.5)
+    for key, signed in message["rules"].get("at_least_abs", {}).items():
+        out[key] = max(out[key], abs(out[signed]))
     return out
 
 
@@ -112,6 +123,8 @@ def unit(c: float, e: float, q: float, a: float) -> dict[str, Any]:
 def targeted_legal() -> list[dict[str, Any]]:
     """P5-21 vectors for values that seeded samples do not reach (new enum codes) and
     semantically realistic v2 records. Additional vectors only; never replace frozen ones."""
+    from fixture_retention import legal_retention
+
     e = SCHEMA["enums"]
     rs, fc = e["RunStatus"], e["FailureCode"]
     reason = dict(schema_version=1, code=fc["GROWTH_OFF_REHEARSAL"])
@@ -166,6 +179,7 @@ def targeted_legal() -> list[dict[str, Any]]:
         ]
         + targeted_legal_p5_32(tendency)
         + targeted_legal_p5_22()
+        + legal_retention()
     )
 
 
@@ -509,4 +523,8 @@ def targeted_illegal() -> list[dict[str, Any]]:
                 ),
             )
         )
-    return targeted_illegal_existing() + out
+    from fixture_retention import illegal_retention
+
+    from fixture_theta import illegal_theta
+
+    return targeted_illegal_existing() + out + illegal_retention() + illegal_theta()

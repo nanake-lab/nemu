@@ -80,17 +80,33 @@ pub(crate) fn persist_noclobber(temp: tempfile::NamedTempFile, target: &Path) ->
     Ok(())
 }
 
-pub(crate) fn writer_lock(root: &Path) -> Result<File> {
+/// Own the lock lifetime, not just one descriptor's lifetime. On Unix an
+/// in-flight fork can retain the same open file description until exec/exit.
+/// Closing our descriptor alone would leave its flock held by that child.
+pub(crate) struct WriterLock(File);
+impl Drop for WriterLock {
+    fn drop(&mut self) {
+        if let Err(error) = self.0.unlock() {
+            // Drop cannot return an error. Keep the original error observable;
+            // closing the descriptor follows, and a later open still fails closed.
+            tracing::error!(?error, "authority writer unlock failed");
+        }
+    }
+}
+
+pub(crate) fn writer_lock(root: &Path) -> Result<WriterLock> {
     let lock = OpenOptions::new()
         .read(true)
         .write(true)
         .create(true)
         .truncate(false)
         .open(root.join("writer.lock"))?;
-    lock.try_lock()
-        .map_err(|_| crate::Error::Rejected("another authority writer owns this store"))?;
-    Ok(lock)
+    lock.try_lock().map_err(crate::Error::WriterLock)?;
+    Ok(WriterLock(lock))
 }
+
+#[cfg(test)]
+mod tests;
 
 #[cfg(windows)]
 pub(crate) fn local_volume(path: &Path, _temporary: bool) -> Result<()> {

@@ -1,0 +1,300 @@
+{
+  "checked_at_utc": "2026-10-26T15:28:56.1837213Z",
+  "result": "passed",
+  "mock_boundary": "git diff only",
+  "cases": [
+    {
+      "name": "stage-only",
+      "event": "pull_request",
+      "paths": [
+        "apps/stage/src/main.ts"
+      ],
+      "scope": {
+        "python": "false",
+        "rust": "false",
+        "dotnet": "false",
+        "contracts": "false",
+        "node": "true",
+        "status": "false",
+        "storage": "false"
+      },
+      "output": [
+        "contracts: 无相关改动",
+        "dotnet: 无相关改动",
+        "node: run",
+        "python: 无相关改动",
+        "rust: 无相关改动",
+        "status: 无相关改动",
+        "storage: 无相关改动",
+        "full=False; changed files=1"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "desktop-only",
+      "event": "pull_request",
+      "paths": [
+        "apps/desktop/src/main.ts"
+      ],
+      "scope": {
+        "python": "false",
+        "rust": "false",
+        "dotnet": "false",
+        "contracts": "false",
+        "node": "true",
+        "status": "false",
+        "storage": "false"
+      },
+      "output": [
+        "contracts: 无相关改动",
+        "dotnet: 无相关改动",
+        "node: run",
+        "python: 无相关改动",
+        "rust: 无相关改动",
+        "status: 无相关改动",
+        "storage: 无相关改动",
+        "full=False; changed files=1"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "fact-view",
+      "event": "pull_request",
+      "paths": [
+        "core/crates/fact-view/src/paging.rs"
+      ],
+      "scope": {
+        "python": "false",
+        "rust": "true",
+        "dotnet": "false",
+        "contracts": "false",
+        "node": "false",
+        "status": "false",
+        "storage": "false"
+      },
+      "output": [
+        "contracts: 无相关改动",
+        "dotnet: 无相关改动",
+        "node: 无相关改动",
+        "python: 无相关改动",
+        "rust: run",
+        "status: 无相关改动",
+        "storage: 无相关改动",
+        "full=False; changed files=1"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "cargo-manifest",
+      "event": "pull_request",
+      "paths": [
+        "core/Cargo.toml"
+      ],
+      "scope": {
+        "python": "true",
+        "rust": "true",
+        "dotnet": "false",
+        "contracts": "true",
+        "node": "true",
+        "status": "false",
+        "storage": "true"
+      },
+      "output": [
+        "contracts: run",
+        "dotnet: 无相关改动",
+        "node: run",
+        "python: run",
+        "rust: run",
+        "status: 无相关改动",
+        "storage: run",
+        "full=False; changed files=1"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "cargo-lock",
+      "event": "pull_request",
+      "paths": [
+        "core/Cargo.lock"
+      ],
+      "scope": {
+        "python": "true",
+        "rust": "true",
+        "dotnet": "false",
+        "contracts": "true",
+        "node": "true",
+        "status": "false",
+        "storage": "true"
+      },
+      "output": [
+        "contracts: run",
+        "dotnet: 无相关改动",
+        "node: run",
+        "python: run",
+        "rust: run",
+        "status: 无相关改动",
+        "storage: run",
+        "full=False; changed files=1"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "rust-toolchain",
+      "event": "pull_request",
+      "paths": [
+        "core/rust-toolchain.toml"
+      ],
+      "scope": {
+        "python": "true",
+        "rust": "true",
+        "dotnet": "false",
+        "contracts": "true",
+        "node": "true",
+        "status": "false",
+        "storage": "true"
+      },
+      "output": [
+        "contracts: run",
+        "dotnet: 无相关改动",
+        "node: run",
+        "python: run",
+        "rust: run",
+        "status: 无相关改动",
+        "storage: run",
+        "full=False; changed files=1"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "workflow",
+      "event": "pull_request",
+      "paths": [
+        ".github/workflows/ci.yml"
+      ],
+      "scope": {
+        "python": "true",
+        "rust": "true",
+        "dotnet": "true",
+        "contracts": "true",
+        "node": "true",
+        "status": "true",
+        "storage": "true"
+      },
+      "output": [
+        "contracts: run",
+        "dotnet: run",
+        "node: run",
+        "python: run",
+        "rust: run",
+        "status: run",
+        "storage: run",
+        "full=True; changed files=1"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "shared-root",
+      "event": "pull_request",
+      "paths": [
+        "package.json"
+      ],
+      "scope": {
+        "python": "true",
+        "rust": "true",
+        "dotnet": "true",
+        "contracts": "true",
+        "node": "true",
+        "status": "true",
+        "storage": "true"
+      },
+      "output": [
+        "contracts: run",
+        "dotnet: run",
+        "node: run",
+        "python: run",
+        "rust: run",
+        "status: run",
+        "storage: run",
+        "full=True; changed files=1"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "manual-full",
+      "event": "workflow_dispatch",
+      "paths": [],
+      "scope": {
+        "python": "true",
+        "rust": "true",
+        "dotnet": "true",
+        "contracts": "true",
+        "node": "true",
+        "status": "true",
+        "storage": "true"
+      },
+      "output": [
+        "contracts: run",
+        "dotnet: run",
+        "node: run",
+        "python: run",
+        "rust: run",
+        "status: run",
+        "storage: run",
+        "full=True; changed files=0"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "diff-unavailable",
+      "event": "pull_request",
+      "paths": [],
+      "scope": {
+        "python": "true",
+        "rust": "true",
+        "dotnet": "true",
+        "contracts": "true",
+        "node": "true",
+        "status": "true",
+        "storage": "true"
+      },
+      "output": [
+        "contracts: run",
+        "dotnet: run",
+        "node: run",
+        "python: run",
+        "rust: run",
+        "status: run",
+        "storage: run",
+        "full=True; changed files=0"
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "docs-only",
+      "event": "pull_request",
+      "paths": [
+        "reports/P5-04/REPORT.md"
+      ],
+      "scope": {
+        "python": "false",
+        "rust": "false",
+        "dotnet": "false",
+        "contracts": "false",
+        "node": "false",
+        "status": "false",
+        "storage": "false"
+      },
+      "output": [
+        "contracts: 无相关改动",
+        "dotnet: 无相关改动",
+        "node: 无相关改动",
+        "python: 无相关改动",
+        "rust: 无相关改动",
+        "status: 无相关改动",
+        "storage: 无相关改动",
+        "full=False; changed files=1"
+      ],
+      "result": "passed"
+    }
+  ]
+}

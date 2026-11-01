@@ -1,0 +1,470 @@
+﻿2026-10-26T13:38:28.6293318Z Current runner version: '2.338.0'
+2026-10-26T13:38:28.6298482Z Runner name: 'DESKTOP-8LBF84O'
+2026-10-26T13:38:28.6299041Z Runner group name: 'Default'
+2026-10-26T13:38:28.6299671Z Machine name: 'DESKTOP-8LBF84O'
+2026-10-26T13:38:28.6301807Z ##[group]GITHUB_TOKEN Permissions
+2026-10-26T13:38:28.6303258Z Contents: read
+2026-10-26T13:38:28.6303648Z Metadata: read
+2026-10-26T13:38:28.6304052Z ##[endgroup]
+2026-10-26T13:38:28.6305463Z Secret source: Actions
+2026-10-26T13:38:28.6306085Z Cache mode: write
+2026-10-26T13:38:28.6306579Z Prepare workflow directory
+2026-10-26T13:38:28.7024416Z Prepare all required actions
+2026-10-26T13:38:28.7061460Z Getting action download info
+2026-10-26T13:38:30.3094829Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-26T13:38:32.5650534Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-26T13:38:36.6460302Z Download action repository 'actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+2026-10-26T13:38:40.3940071Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-26T13:38:45.7862139Z Complete job name: Windows self-hosted checks
+2026-10-26T13:38:45.9033427Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-26T13:38:45.9034031Z with:
+2026-10-26T13:38:45.9034189Z   lfs: true
+2026-10-26T13:38:45.9034367Z   persist-credentials: false
+2026-10-26T13:38:45.9034578Z   fetch-depth: 2
+2026-10-26T13:38:45.9034773Z   repository: nanake-lab/nemu
+2026-10-26T13:38:45.9037315Z   token: ***
+2026-10-26T13:38:45.9037589Z   ssh-strict: true
+2026-10-26T13:38:45.9037766Z   ssh-user: git
+2026-10-26T13:38:45.9037933Z   clean: true
+2026-10-26T13:38:45.9038127Z   sparse-checkout-cone-mode: true
+2026-10-26T13:38:45.9038360Z   fetch-tags: false
+2026-10-26T13:38:45.9038544Z   show-progress: true
+2026-10-26T13:38:45.9038730Z   submodules: false
+2026-10-26T13:38:45.9038915Z   set-safe-directory: true
+2026-10-26T13:38:45.9039134Z   allow-unsafe-pr-checkout: false
+2026-10-26T13:38:45.9039479Z env:
+2026-10-26T13:38:45.9039646Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-26T13:38:45.9039860Z   UV_LINK_MODE: copy
+2026-10-26T13:38:45.9040067Z ##[endgroup]
+2026-10-26T13:38:46.1435869Z Syncing repository: nanake-lab/nemu
+2026-10-26T13:38:46.1437018Z ##[group]Getting Git version info
+2026-10-26T13:38:46.1437418Z Working directory is 'D:\actions-runner\_work\nemu\nemu'
+2026-10-26T13:38:46.1711835Z [command]"C:\Program Files\Git\cmd\git.exe" version
+2026-10-26T13:38:46.1934809Z git version 2.54.0.windows.1
+2026-10-26T13:38:46.2318509Z [command]"C:\Program Files\Git\cmd\git.exe" lfs version
+2026-10-26T13:38:46.3454202Z git-lfs/3.7.1 (GitHub; windows amd64; go 1.25.1; git b84b3384)
+2026-10-26T13:38:46.3496230Z ##[endgroup]
+2026-10-26T13:38:46.3507860Z Copying 'C:\Users\nanake\.gitconfig' to 'D:\actions-runner\_work\_temp\65e8eec6-eb9d-4bcc-93c9-8e96648736aa\.gitconfig'
+2026-10-26T13:38:46.3524400Z Temporarily overriding HOME='D:\actions-runner\_work\_temp\65e8eec6-eb9d-4bcc-93c9-8e96648736aa' before making global git config changes
+2026-10-26T13:38:46.3525228Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-26T13:38:46.3534816Z [command]"C:\Program Files\Git\cmd\git.exe" config --global --add safe.directory D:\actions-runner\_work\nemu\nemu
+2026-10-26T13:38:46.3813082Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --get remote.origin.url
+2026-10-26T13:38:46.4028937Z https://github.com/nanake-lab/nemu
+2026-10-26T13:38:46.4061584Z ##[group]Removing previously created refs, to avoid conflicts
+2026-10-26T13:38:46.4071815Z [command]"C:\Program Files\Git\cmd\git.exe" rev-parse --symbolic-full-name --verify --quiet HEAD
+2026-10-26T13:38:46.4295346Z HEAD
+2026-10-26T13:38:46.4600868Z ##[endgroup]
+2026-10-26T13:38:46.4612953Z [command]"C:\Program Files\Git\cmd\git.exe" submodule status
+2026-10-26T13:38:46.8376839Z -e62dc1e7e76847f08bd5dbf14eb352ad6f1f8a26 content
+2026-10-26T13:38:46.8439408Z ##[group]Cleaning the repository
+2026-10-26T13:38:46.8449874Z [command]"C:\Program Files\Git\cmd\git.exe" clean -ffdx
+2026-10-26T13:38:54.2569199Z Removing apps/desktop/node_modules/
+2026-10-26T13:38:54.2569580Z Removing apps/desktop/out/
+2026-10-26T13:38:54.2569908Z Removing apps/panel/dist/
+2026-10-26T13:38:54.2570191Z Removing apps/panel/node_modules/
+2026-10-26T13:38:54.2570468Z Removing apps/stage/dist/
+2026-10-26T13:38:54.2570743Z Removing apps/stage/node_modules/
+2026-10-26T13:38:54.2571008Z Removing core/target/
+2026-10-26T13:38:54.2571275Z Removing executors/codex-bridge/dist/
+2026-10-26T13:38:54.2571803Z Removing node_modules/
+2026-10-26T13:38:54.2572113Z Removing packages/avatar-runtime/dist/
+2026-10-26T13:38:54.2572468Z Removing packages/avatar-runtime/node_modules/
+2026-10-26T13:38:54.2572827Z Removing packages/body/dist/
+2026-10-26T13:38:54.2573134Z Removing packages/body/node_modules/
+2026-10-26T13:38:54.2573433Z Removing packages/contracts/dist/
+2026-10-26T13:38:54.2573761Z Removing packages/contracts/node_modules/
+2026-10-26T13:38:54.2589578Z Removing packages/desktop-sense/dist/
+2026-10-26T13:38:54.2590014Z Removing packages/desktop-sense/node_modules/
+2026-10-26T13:38:54.2591702Z Removing packages/log/dist/
+2026-10-26T13:38:54.2592029Z Removing packages/terminal/dist/
+2026-10-26T13:38:54.2592329Z Removing packages/voice/dist/
+2026-10-26T13:38:54.2592624Z Removing packages/voice/node_modules/
+2026-10-26T13:38:54.2592950Z Removing spikes/stage-overlay/node_modules/
+2026-10-26T13:38:54.2593273Z Removing spikes/stage-overlay/out/
+2026-10-26T13:38:54.2593563Z Removing tools/asset-lint/dist/
+2026-10-26T13:38:54.2593862Z Removing tools/asset-lint/node_modules/
+2026-10-26T13:38:54.2594202Z Removing tools/scaffold/windows-isolation/bin/
+2026-10-26T13:38:54.2594593Z Removing tools/scaffold/windows-isolation/obj/
+2026-10-26T13:38:54.2618495Z [command]"C:\Program Files\Git\cmd\git.exe" reset --hard HEAD
+2026-10-26T13:38:54.4751004Z HEAD is now at 98e69ad Merge da2e7a0f7703797aed1e544d27854369b46b3f22 into 86779b1eae4760c6e91d05d67ef780c51bf20a26
+2026-10-26T13:38:54.4784416Z ##[endgroup]
+2026-10-26T13:38:54.4789120Z ##[group]Disabling automatic garbage collection
+2026-10-26T13:38:54.4800505Z [command]"C:\Program Files\Git\cmd\git.exe" config --local gc.auto 0
+2026-10-26T13:38:54.5062606Z ##[endgroup]
+2026-10-26T13:38:54.5062995Z ##[group]Setting up auth
+2026-10-26T13:38:54.5074640Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T13:38:54.5339339Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-26T13:38:54.9220575Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T13:38:54.9501209Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-26T13:38:55.3505134Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T13:38:55.3770326Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-26T13:38:55.7603083Z [command]"C:\Program Files\Git\cmd\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-26T13:38:55.7933102Z ##[endgroup]
+2026-10-26T13:38:55.7943112Z [command]"C:\Program Files\Git\cmd\git.exe" lfs install --local
+2026-10-26T13:38:56.0806965Z Updated Git hooks.
+2026-10-26T13:38:56.0807239Z Git LFS initialized.
+2026-10-26T13:38:56.0854723Z ##[group]Fetching the repository
+2026-10-26T13:38:56.0868212Z [command]"C:\Program Files\Git\cmd\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=2 origin +ff4afbd110b5103c2e745d375c9089719b255e0c:refs/remotes/pull/65/merge
+2026-10-26T13:39:08.6808247Z From https://github.com/nanake-lab/nemu
+2026-10-26T13:39:08.6808744Z  * [new ref]         ff4afbd110b5103c2e745d375c9089719b255e0c -> pull/65/merge
+2026-10-26T13:39:09.0345308Z ##[endgroup]
+2026-10-26T13:39:09.0345742Z ##[group]Determining the checkout info
+2026-10-26T13:39:09.0346648Z ##[endgroup]
+2026-10-26T13:39:09.0347028Z ##[group]Fetching LFS objects
+2026-10-26T13:39:09.0357849Z [command]"C:\Program Files\Git\cmd\git.exe" lfs fetch origin refs/remotes/pull/65/merge
+2026-10-26T13:39:09.2631997Z Fetching reference refs/remotes/pull/65/merge
+2026-10-26T13:39:09.7962603Z ##[endgroup]
+2026-10-26T13:39:09.7973161Z [command]"C:\Program Files\Git\cmd\git.exe" sparse-checkout disable
+2026-10-26T13:39:09.8377365Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-26T13:39:09.8640144Z ##[group]Checking out the ref
+2026-10-26T13:39:09.8650033Z [command]"C:\Program Files\Git\cmd\git.exe" checkout --progress --force refs/remotes/pull/65/merge
+2026-10-26T13:39:09.9840079Z Previous HEAD position was 98e69ad Merge da2e7a0f7703797aed1e544d27854369b46b3f22 into 86779b1eae4760c6e91d05d67ef780c51bf20a26
+2026-10-26T13:39:09.9855249Z HEAD is now at ff4afbd Merge fbcb7cc14ee492893729833237bf955cc57462b6 into 317dde9cc260effc9df736348af00acfe6fc38d3
+2026-10-26T13:39:10.3038152Z ##[endgroup]
+2026-10-26T13:39:10.3336666Z [command]"C:\Program Files\Git\cmd\git.exe" log -1 --format=%H
+2026-10-26T13:39:10.3585992Z ff4afbd110b5103c2e745d375c9089719b255e0c
+2026-10-26T13:39:10.3620328Z ##[group]Removing auth
+2026-10-26T13:39:10.3633710Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T13:39:10.3880431Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-26T13:39:10.7641968Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T13:39:10.7851089Z http.https://github.com/.extraheader
+2026-10-26T13:39:10.7889314Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-10-26T13:39:10.8175086Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-26T13:39:11.2115080Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T13:39:11.2366688Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-26T13:39:11.6268836Z ##[endgroup]
+2026-10-26T13:39:11.6533781Z ##[group]Run # Anything that cannot be determined runs every group.
+2026-10-26T13:39:11.6534284Z [36;1m# Anything that cannot be determined runs every group.[0m
+2026-10-26T13:39:11.6534596Z [36;1m$full = $false[0m
+2026-10-26T13:39:11.6534793Z [36;1m$base = $null[0m
+2026-10-26T13:39:11.6535027Z [36;1mif ($env:EVENT -eq 'workflow_dispatch') {[0m
+2026-10-26T13:39:11.6535320Z [36;1m  $full = $env:FULL_INPUT -ne 'false'[0m
+2026-10-26T13:39:11.6535595Z [36;1m  if (-not $full) { $base = 'HEAD^1' }[0m
+2026-10-26T13:39:11.6535885Z [36;1m} elseif ($env:EVENT -eq 'pull_request') {[0m
+2026-10-26T13:39:11.6536151Z [36;1m  $base = 'HEAD^1'[0m
+2026-10-26T13:39:11.6536500Z [36;1m} elseif ($env:EVENT -eq 'push' -and $env:BEFORE -and $env:BEFORE -notmatch '^0+$') {[0m
+2026-10-26T13:39:11.6537108Z [36;1m  git cat-file -e "$($env:BEFORE)^{commit}" 2>$null[0m
+2026-10-26T13:39:11.6537438Z [36;1m  if ($LASTEXITCODE -eq 0) { $base = $env:BEFORE }[0m
+2026-10-26T13:39:11.6537739Z [36;1m}[0m
+2026-10-26T13:39:11.6537904Z [36;1m$files = @()[0m
+2026-10-26T13:39:11.6538094Z [36;1mif (-not $full) {[0m
+2026-10-26T13:39:11.6538320Z [36;1m  if (-not $base) { $full = $true }[0m
+2026-10-26T13:39:11.6538558Z [36;1m  else {[0m
+2026-10-26T13:39:11.6538774Z [36;1m    $files = @(git diff --name-only $base HEAD)[0m
+2026-10-26T13:39:11.6539112Z [36;1m    if ($LASTEXITCODE -ne 0) { $full = $true; $files = @() }[0m
+2026-10-26T13:39:11.6539407Z [36;1m  }[0m
+2026-10-26T13:39:11.6539562Z [36;1m}[0m
+2026-10-26T13:39:11.6539814Z [36;1m$files = @($files | Where-Object { $_ -and $_ -notmatch '\.md$' })[0m
+2026-10-26T13:39:11.6540154Z [36;1m$desktopPatterns = @([0m
+2026-10-26T13:39:11.6540432Z [36;1m  '^apps/', '^packages/', '^executors/codex-bridge/',[0m
+2026-10-26T13:39:11.6540761Z [36;1m  '^workers/[^/]+/src/', '^services/[^/]+/src/',[0m
+2026-10-26T13:39:11.6541151Z [36;1m  '^tools/(?!status/|asset-pipeline/|texture-fix/|scaffold/ci-budget\.mjs$)',[0m
+2026-10-26T13:39:11.6541773Z [36;1m  '^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|\.nvmrc|\.npmrc|\.gitattributes)$',[0m
+2026-10-26T13:39:11.6542303Z [36;1m  '^tsconfig[^/]*\.json$', '^executors/office-connector/global\.json$',[0m
+2026-10-26T13:39:11.6542666Z [36;1m  '^\.github/workflows/windows\.yml$'[0m
+2026-10-26T13:39:11.6542906Z [36;1m)[0m
+2026-10-26T13:39:11.6543078Z [36;1m$storagePatterns = @([0m
+2026-10-26T13:39:11.6543416Z [36;1m  '^core/crates/core-store/', '^core/crates/core-types/', '^core/contracts/',[0m
+2026-10-26T13:39:11.6543896Z [36;1m  '^core/(Cargo\.toml|Cargo\.lock|rust-toolchain\.toml)$',[0m
+2026-10-26T13:39:11.6544243Z [36;1m  '^\.github/workflows/windows\.yml$'[0m
+2026-10-26T13:39:11.6544486Z [36;1m)[0m
+2026-10-26T13:39:11.6544696Z [36;1mfunction Test-Group([string[]]$patterns) {[0m
+2026-10-26T13:39:11.6545118Z [36;1m  foreach ($f in $files) { foreach ($p in $patterns) { if ($f -match $p) { return $true } } }[0m
+2026-10-26T13:39:11.6545506Z [36;1m  return $false[0m
+2026-10-26T13:39:11.6545692Z [36;1m}[0m
+2026-10-26T13:39:11.6545912Z [36;1m$desktop = $full -or (Test-Group $desktopPatterns)[0m
+2026-10-26T13:39:11.6546254Z [36;1m$storage = $full -or (Test-Group $storagePatterns)[0m
+2026-10-26T13:39:11.6546614Z [36;1m"full=$full; base=$base; desktop=$desktop; storage=$storage"[0m
+2026-10-26T13:39:11.6546946Z [36;1m"changed files: $($files.Count)"[0m
+2026-10-26T13:39:11.6547204Z [36;1m$files | ForEach-Object { "  $_" }[0m
+2026-10-26T13:39:11.6547570Z [36;1m"desktop=$($desktop.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT[0m
+2026-10-26T13:39:11.6548044Z [36;1m"storage=$($storage.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT[0m
+2026-10-26T13:39:11.6595616Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-26T13:39:11.6596004Z env:
+2026-10-26T13:39:11.6596183Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-26T13:39:11.6596401Z   UV_LINK_MODE: copy
+2026-10-26T13:39:11.6597553Z   EVENT: pull_request
+2026-10-26T13:39:11.6597751Z   BEFORE: 
+2026-10-26T13:39:11.6597909Z   FULL_INPUT: 
+2026-10-26T13:39:11.6598075Z ##[endgroup]
+2026-10-26T13:39:12.1729538Z full=False; base=HEAD^1; desktop=False; storage=True
+2026-10-26T13:39:12.1749132Z changed files: 174
+2026-10-26T13:39:12.1771182Z   .github/workflows/ci.yml
+2026-10-26T13:39:12.1772343Z   core/Cargo.lock
+2026-10-26T13:39:12.1773435Z   core/crates/core-store/src/queries.rs
+2026-10-26T13:39:12.1774152Z   core/crates/core-store/src/tests/reader.rs
+2026-10-26T13:39:12.1774767Z   core/crates/core-types/src/lib.rs
+2026-10-26T13:39:12.1775269Z   core/crates/core-types/tests/canonical_boundaries.rs
+2026-10-26T13:39:12.1775753Z   core/crates/fact-view/Cargo.toml
+2026-10-26T13:39:12.1776418Z   core/crates/fact-view/models/manifest.json
+2026-10-26T13:39:12.1776911Z   core/crates/fact-view/scripts/download-model.ps1
+2026-10-26T13:39:12.1777549Z   core/crates/fact-view/scripts/env.ps1
+2026-10-26T13:39:12.1778219Z   core/crates/fact-view/src/embedding.rs
+2026-10-26T13:39:12.1778671Z   core/crates/fact-view/src/embedding/cpu.rs
+2026-10-26T13:39:12.1779614Z   core/crates/fact-view/src/error.rs
+2026-10-26T13:39:12.1780254Z   core/crates/fact-view/src/index.rs
+2026-10-26T13:39:12.1781100Z   core/crates/fact-view/src/lib.rs
+2026-10-26T13:39:12.1781848Z   core/crates/fact-view/src/memory.rs
+2026-10-26T13:39:12.1782844Z   core/crates/fact-view/src/paging.rs
+2026-10-26T13:39:12.1783506Z   core/crates/fact-view/src/query.rs
+2026-10-26T13:39:12.1784030Z   core/crates/fact-view/src/retrieval.rs
+2026-10-26T13:39:12.1784632Z   core/crates/fact-view/src/source.rs
+2026-10-26T13:39:12.1785399Z   core/crates/fact-view/src/sqlite_vec.rs
+2026-10-26T13:39:12.1785778Z   core/crates/fact-view/src/tests/cpu_eval.rs
+2026-10-26T13:39:12.1786292Z   core/crates/fact-view/src/tests/edge_cases.rs
+2026-10-26T13:39:12.1786921Z   core/crates/fact-view/src/tests/fixture.rs
+2026-10-26T13:39:12.1787532Z   core/crates/fact-view/src/tests/memory_pages.rs
+2026-10-26T13:39:12.1787992Z   core/crates/fact-view/src/tests/mod.rs
+2026-10-26T13:39:12.1788623Z   reports/P5-04/SYS05/result-main-sync-20261024.json
+2026-10-26T13:39:12.1789077Z   reports/P5-04/SYS05/result-resume-20261026.json
+2026-10-26T13:39:12.1789683Z   reports/P5-04/SYS05/result.json
+2026-10-26T13:39:12.1790152Z   reports/P5-04/cargo-check-2.log
+2026-10-26T13:39:12.1790723Z   reports/P5-04/cargo-check-3.log
+2026-10-26T13:39:12.1791282Z   reports/P5-04/cargo-check-cpu-2.log
+2026-10-26T13:39:12.1791868Z   reports/P5-04/cargo-check-cpu-initial.log
+2026-10-26T13:39:12.1792797Z   reports/P5-04/cargo-check-initial.log
+2026-10-26T13:39:12.1793365Z   reports/P5-04/ci-first-failure.log
+2026-10-26T13:39:12.1793956Z   reports/P5-04/ci/runner-state.json
+2026-10-26T13:39:12.1794547Z   reports/P5-04/ci/ubuntu-954918f.json
+2026-10-26T13:39:12.1795079Z   reports/P5-04/ci/windows-954918f-pending.json
+2026-10-26T13:39:12.1795603Z   reports/P5-04/clippy-2.log
+2026-10-26T13:39:12.1796164Z   reports/P5-04/clippy-acceptance.log
+2026-10-26T13:39:12.1796715Z   reports/P5-04/clippy-cache.log
+2026-10-26T13:39:12.1797305Z   reports/P5-04/clippy-current.log
+2026-10-26T13:39:12.1797841Z   reports/P5-04/clippy-diagnostic.log
+2026-10-26T13:39:12.1798389Z   reports/P5-04/clippy-final.log
+2026-10-26T13:39:12.1798910Z   reports/P5-04/clippy-initial.log
+2026-10-26T13:39:12.1799472Z   reports/P5-04/contracts-acceptance.log
+2026-10-26T13:39:12.1800072Z   reports/P5-04/core-contracts-acceptance-2.log
+2026-10-26T13:39:12.1800854Z   reports/P5-04/core-contracts-acceptance.log
+2026-10-26T13:39:12.1801329Z   reports/P5-04/core-types-cache-tests.log
+2026-10-26T13:39:12.1801880Z   reports/P5-04/coverage-summary.json
+2026-10-26T13:39:12.1802348Z   reports/P5-04/cpu-eval-2.log
+2026-10-26T13:39:12.1802923Z   reports/P5-04/cpu-eval-acceptance.log
+2026-10-26T13:39:12.1803429Z   reports/P5-04/cpu-eval-fp32-cache.log
+2026-10-26T13:39:12.1803873Z   reports/P5-04/cpu-eval-fp32-current.log
+2026-10-26T13:39:12.1805128Z   reports/P5-04/cpu-eval-initial.log
+2026-10-26T13:39:12.1805469Z   reports/P5-04/cpu-eval-qint8-current.log
+2026-10-26T13:39:12.1805828Z   reports/P5-04/cpu-eval-release.log
+2026-10-26T13:39:12.1806167Z   reports/P5-04/descriptor-profile-after.log
+2026-10-26T13:39:12.1806508Z   reports/P5-04/descriptor-profile-before.log
+2026-10-26T13:39:12.1806945Z   reports/P5-04/fact-tests-2.log
+2026-10-26T13:39:12.1838529Z   reports/P5-04/fact-tests-current.log
+2026-10-26T13:39:12.1838860Z   reports/P5-04/fact-tests-initial.log
+2026-10-26T13:39:12.1839162Z   reports/P5-04/fmt-acceptance.log
+2026-10-26T13:39:12.1839546Z   reports/P5-04/frozen-resources-acceptance.log
+2026-10-26T13:39:12.1839968Z   reports/P5-04/generated-check.log
+2026-10-26T13:39:12.1841203Z   reports/P5-04/main-sync-20261023/ubuntu-b88da38.json
+2026-10-26T13:39:12.1841565Z   reports/P5-04/main-sync-20261024/clippy.log
+2026-10-26T13:39:12.1841906Z   reports/P5-04/main-sync-20261024/context.json
+2026-10-26T13:39:12.1842286Z   reports/P5-04/main-sync-20261024/contracts.log
+2026-10-26T13:39:12.1842643Z   reports/P5-04/main-sync-20261024/core-contracts.log
+2026-10-26T13:39:12.1843033Z   reports/P5-04/main-sync-20261024/coverage-summary.json
+2026-10-26T13:39:12.1843412Z   reports/P5-04/main-sync-20261024/cpu-model.log
+2026-10-26T13:39:12.1843763Z   reports/P5-04/main-sync-20261024/cpu-result.json
+2026-10-26T13:39:12.1844173Z   reports/P5-04/main-sync-20261024/execution-environment.json
+2026-10-26T13:39:12.1844550Z   reports/P5-04/main-sync-20261024/fmt.log
+2026-10-26T13:39:12.1844864Z   reports/P5-04/main-sync-20261024/lint.log
+2026-10-26T13:39:12.1845227Z   reports/P5-04/main-sync-20261024/local-start.log
+2026-10-26T13:39:12.1845581Z   reports/P5-04/main-sync-20261024/node-tests.log
+2026-10-26T13:39:12.1845945Z   reports/P5-04/main-sync-20261024/pnpm-install.log
+2026-10-26T13:39:12.1846350Z   reports/P5-04/main-sync-20261024/temp-acl-observation.json
+2026-10-26T13:39:12.1846743Z   reports/P5-04/main-sync-20261024/typecheck.log
+2026-10-26T13:39:12.1847124Z   reports/P5-04/main-sync-20261024/ubuntu-785a1bb.json
+2026-10-26T13:39:12.1847570Z   reports/P5-04/main-sync-20261024/windows-39986857254-failure.log
+2026-10-26T13:39:12.1847985Z   reports/P5-04/main-sync-20261024/windows-785a1bb.json
+2026-10-26T13:39:12.1848418Z   reports/P5-04/main-sync-20261024/windows-artifact-integrity.json
+2026-10-26T13:39:12.1848879Z   reports/P5-04/main-sync-20261024/windows-evidence-original.zip
+2026-10-26T13:39:12.1849364Z   reports/P5-04/main-sync-20261024/windows-evidence/isolation-after.json
+2026-10-26T13:39:12.1849886Z   reports/P5-04/main-sync-20261024/windows-evidence/isolation-before.json
+2026-10-26T13:39:12.1850399Z   reports/P5-04/main-sync-20261024/windows-evidence/isolation-result.json
+2026-10-26T13:39:12.1850894Z   reports/P5-04/main-sync-20261024/windows-evidence/isolation.log
+2026-10-26T13:39:12.1851351Z   reports/P5-04/main-sync-20261024/windows-evidence/manifest.json
+2026-10-26T13:39:12.1851790Z   reports/P5-04/main-sync-20261024/windows-evidence/run.json
+2026-10-26T13:39:12.1852272Z   reports/P5-04/main-sync-20261024/windows-evidence/transport-after.json
+2026-10-26T13:39:12.1852788Z   reports/P5-04/main-sync-20261024/windows-evidence/transport-before.json
+2026-10-26T13:39:12.1853298Z   reports/P5-04/main-sync-20261024/windows-evidence/transport-result.json
+2026-10-26T13:39:12.1853776Z   reports/P5-04/main-sync-20261024/windows-evidence/transport.log
+2026-10-26T13:39:12.1854189Z   reports/P5-04/main-sync-20261024/workspace-tests.log
+2026-10-26T13:39:12.1854560Z   reports/P5-04/main-sync-20261026/.gitattributes
+2026-10-26T13:39:12.1854902Z   reports/P5-04/main-sync-20261026/SHA256.json
+2026-10-26T13:39:12.1855240Z   reports/P5-04/main-sync-20261026/clippy.json
+2026-10-26T13:39:12.1855578Z   reports/P5-04/main-sync-20261026/clippy.log
+2026-10-26T13:39:12.1855921Z   reports/P5-04/main-sync-20261026/context.json
+2026-10-26T13:39:12.1856271Z   reports/P5-04/main-sync-20261026/cpu-model.json
+2026-10-26T13:39:12.1856760Z   reports/P5-04/main-sync-20261026/cpu-model.log
+2026-10-26T13:39:12.1857116Z   reports/P5-04/main-sync-20261026/cpu-result.json
+2026-10-26T13:39:12.1857467Z   reports/P5-04/main-sync-20261026/fact-view.json
+2026-10-26T13:39:12.1857813Z   reports/P5-04/main-sync-20261026/fact-view.log
+2026-10-26T13:39:12.1858139Z   reports/P5-04/main-sync-20261026/fmt.json
+2026-10-26T13:39:12.1858455Z   reports/P5-04/main-sync-20261026/fmt.log
+2026-10-26T13:39:12.1858780Z   reports/P5-04/main-sync-20261026/run-check.ps1
+2026-10-26T13:39:12.1859139Z   reports/P5-04/main-sync-20261026/verification.json
+2026-10-26T13:39:12.1859473Z   reports/P5-04/pnpm-install.log
+2026-10-26T13:39:12.1859759Z   reports/P5-04/recall/latency.json
+2026-10-26T13:39:12.1860052Z   reports/P5-04/recall/result.json
+2026-10-26T13:39:12.1860456Z   reports/P5-04/resume-20261026/.gitattributes
+2026-10-26T13:39:12.1860783Z   reports/P5-04/resume-20261026/SHA256.json
+2026-10-26T13:39:12.1861120Z   reports/P5-04/resume-20261026/clippy-final.json
+2026-10-26T13:39:12.1861471Z   reports/P5-04/resume-20261026/clippy-final.log
+2026-10-26T13:39:12.1861804Z   reports/P5-04/resume-20261026/clippy.json
+2026-10-26T13:39:12.1862125Z   reports/P5-04/resume-20261026/clippy.log
+2026-10-26T13:39:12.1862442Z   reports/P5-04/resume-20261026/context.json
+2026-10-26T13:39:12.1862774Z   reports/P5-04/resume-20261026/contracts.json
+2026-10-26T13:39:12.1863103Z   reports/P5-04/resume-20261026/contracts.log
+2026-10-26T13:39:12.1863450Z   reports/P5-04/resume-20261026/core-contracts.json
+2026-10-26T13:39:12.1863810Z   reports/P5-04/resume-20261026/core-contracts.log
+2026-10-26T13:39:12.1864180Z   reports/P5-04/resume-20261026/coverage-summary.json
+2026-10-26T13:39:12.1864635Z   reports/P5-04/resume-20261026/cpu-model-core-projection.json
+2026-10-26T13:39:12.1865084Z   reports/P5-04/resume-20261026/cpu-model-core-projection.log
+2026-10-26T13:39:12.1865488Z   reports/P5-04/resume-20261026/cpu-model-final.json
+2026-10-26T13:39:12.1865858Z   reports/P5-04/resume-20261026/cpu-model-final.log
+2026-10-26T13:39:12.1866261Z   reports/P5-04/resume-20261026/cpu-model-source-recall.json
+2026-10-26T13:39:12.1866682Z   reports/P5-04/resume-20261026/cpu-model-source-recall.log
+2026-10-26T13:39:12.1867058Z   reports/P5-04/resume-20261026/cpu-model.json
+2026-10-26T13:39:12.1867390Z   reports/P5-04/resume-20261026/cpu-model.log
+2026-10-26T13:39:12.1867727Z   reports/P5-04/resume-20261026/cpu-result.json
+2026-10-26T13:39:12.1868083Z   reports/P5-04/resume-20261026/fact-view-final.json
+2026-10-26T13:39:12.1868446Z   reports/P5-04/resume-20261026/fact-view-final.log
+2026-10-26T13:39:12.1868806Z   reports/P5-04/resume-20261026/fact-view-first.json
+2026-10-26T13:39:12.1869172Z   reports/P5-04/resume-20261026/fact-view-first.log
+2026-10-26T13:39:12.1869556Z   reports/P5-04/resume-20261026/fact-view-optimized.json
+2026-10-26T13:39:12.1869946Z   reports/P5-04/resume-20261026/fact-view-optimized.log
+2026-10-26T13:39:12.1870367Z   reports/P5-04/resume-20261026/fixture-setup-interruption.json
+2026-10-26T13:39:12.1870758Z   reports/P5-04/resume-20261026/fmt-final.json
+2026-10-26T13:39:12.1871091Z   reports/P5-04/resume-20261026/fmt-final.log
+2026-10-26T13:39:12.1871404Z   reports/P5-04/resume-20261026/fmt.json
+2026-10-26T13:39:12.1871705Z   reports/P5-04/resume-20261026/fmt.log
+2026-10-26T13:39:12.1872014Z   reports/P5-04/resume-20261026/lint.json
+2026-10-26T13:39:12.1872338Z   reports/P5-04/resume-20261026/lint.log
+2026-10-26T13:39:12.1872687Z   reports/P5-04/resume-20261026/main-node-install.json
+2026-10-26T13:39:12.1873074Z   reports/P5-04/resume-20261026/main-node-install.log
+2026-10-26T13:39:12.1873445Z   reports/P5-04/resume-20261026/main-node-tests.json
+2026-10-26T13:39:12.1873810Z   reports/P5-04/resume-20261026/main-node-tests.log
+2026-10-26T13:39:12.1874170Z   reports/P5-04/resume-20261026/node-install.json
+2026-10-26T13:39:12.1874522Z   reports/P5-04/resume-20261026/node-install.log
+2026-10-26T13:39:12.1874886Z   reports/P5-04/resume-20261026/node-tests-recheck.json
+2026-10-26T13:39:12.1875370Z   reports/P5-04/resume-20261026/node-tests-recheck.log
+2026-10-26T13:39:12.1875732Z   reports/P5-04/resume-20261026/node-tests.json
+2026-10-26T13:39:12.1876072Z   reports/P5-04/resume-20261026/node-tests.log
+2026-10-26T13:39:12.1876456Z   reports/P5-04/resume-20261026/resource-interruption.json
+2026-10-26T13:39:12.1876822Z   reports/P5-04/resume-20261026/run-check.ps1
+2026-10-26T13:39:12.1877152Z   reports/P5-04/resume-20261026/typecheck.json
+2026-10-26T13:39:12.1877479Z   reports/P5-04/resume-20261026/typecheck.log
+2026-10-26T13:39:12.1877819Z   reports/P5-04/resume-20261026/verification.json
+2026-10-26T13:39:12.1878188Z   reports/P5-04/resume-20261026/windows-isolation.json
+2026-10-26T13:39:12.1878562Z   reports/P5-04/resume-20261026/windows-isolation.log
+2026-10-26T13:39:12.1879050Z   reports/P5-04/resume-20261026/workspace-tests-final.json
+2026-10-26T13:39:12.1879453Z   reports/P5-04/resume-20261026/workspace-tests-final.log
+2026-10-26T13:39:12.1879863Z   reports/P5-04/resume-20261026/workspace-tests.json
+2026-10-26T13:39:12.1880233Z   reports/P5-04/resume-20261026/workspace-tests.log
+2026-10-26T13:39:12.1880558Z   reports/P5-04/sys05-repair.log
+2026-10-26T13:39:12.1880873Z   reports/P5-04/windows-954918f-failure.log
+2026-10-26T13:39:12.1881240Z   reports/P5-04/workspace-tests-acceptance.log
+2026-10-26T13:39:12.1881610Z   reports/P5-04/workspace-tests-current.log
+2026-10-26T13:39:12.1881959Z   reports/P5-04/workspace-tests-final.log
+2026-10-26T13:39:12.3253339Z ##[group]Run $evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+2026-10-26T13:39:12.3254003Z [36;1m$evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"[0m
+2026-10-26T13:39:12.3254514Z [36;1mNew-Item -ItemType Directory -Path $evidence -Force | Out-Null[0m
+2026-10-26T13:39:12.3254896Z [36;1m"NEMU_W02_EVIDENCE=$evidence" >> $env:GITHUB_ENV[0m
+2026-10-26T13:39:12.3255269Z [36;1mrustup show 2>&1 | Tee-Object (Join-Path $evidence 'toolchain.log')[0m
+2026-10-26T13:39:12.3255650Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-26T13:39:12.3256174Z [36;1mcargo clippy -p core-store --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')[0m
+2026-10-26T13:39:12.3256754Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-10-26T13:39:12.3257297Z [36;1mcargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')[0m
+2026-10-26T13:39:12.3257779Z [36;1mexit $LASTEXITCODE[0m
+2026-10-26T13:39:12.3304238Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+2026-10-26T13:39:12.3304608Z env:
+2026-10-26T13:39:12.3304775Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-26T13:39:12.3304996Z   UV_LINK_MODE: copy
+2026-10-26T13:39:12.3305175Z ##[endgroup]
+2026-10-26T13:39:12.8017949Z Default host: x86_64-pc-windows-msvc
+2026-10-26T13:39:12.8019156Z rustup home:  C:\Users\nanake\.rustup
+2026-10-26T13:39:12.8019948Z 
+2026-10-26T13:39:12.8188799Z installed toolchains
+2026-10-26T13:39:12.8189112Z --------------------
+2026-10-26T13:39:12.8190129Z stable-x86_64-pc-windows-msvc (default)
+2026-10-26T13:39:12.8276406Z 1.99.0-x86_64-pc-windows-msvc (active)
+2026-10-26T13:39:12.8277411Z 
+2026-10-26T13:39:12.8278617Z active toolchain
+2026-10-26T13:39:12.8279338Z ----------------
+2026-10-26T13:39:12.8280479Z name: 1.99.0-x86_64-pc-windows-msvc
+2026-10-26T13:39:12.8281406Z active because: overridden by 'D:\actions-runner\_work\nemu\nemu\core\rust-toolchain.toml'
+2026-10-26T13:39:12.8281949Z installed targets:
+2026-10-26T13:39:12.8373180Z   x86_64-pc-windows-msvc
+2026-10-26T13:39:13.0643450Z [31;1m    Updating crates.io index[0m
+2026-10-26T13:42:24.6728970Z [31;1mwarning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:42:24.6734037Z [31;1mwarning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:42:24.6738739Z [31;1mwarning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:42:24.6743776Z [31;1mwarning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:42:24.6752454Z [31;1mwarning: spurious network error (3 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:42:55.7957862Z [31;1mwarning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:42:55.7961847Z [31;1mwarning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:42:55.7965584Z [31;1mwarning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:42:55.7969038Z [31;1mwarning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:42:55.7974246Z [31;1mwarning: spurious network error (2 tries remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:43:29.3625516Z [31;1mwarning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:43:29.3627667Z [31;1mwarning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:43:29.3630287Z [31;1mwarning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:43:29.3632814Z [31;1mwarning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:43:29.3636015Z [31;1mwarning: spurious network error (1 try remaining): transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:44:05.9375303Z [31;1merror: failed to get `ppv-lite86` as a dependency of package `rand_chacha v0.9.0`[0m
+2026-10-26T13:44:05.9378529Z [31;1m    ... which satisfies dependency `rand_chacha = "^0.9.0"` (locked to 0.9.0) of package `rand v0.9.5`[0m
+2026-10-26T13:44:05.9380769Z [31;1m    ... which satisfies dependency `rand = "^0.9"` (locked to 0.9.5) of package `tokenizers v0.23.2`[0m
+2026-10-26T13:44:05.9382797Z [31;1m    ... which satisfies dependency `tokenizers = "^0.23.2"` (locked to 0.23.2) of package `fastembed v7.3.0`[0m
+2026-10-26T13:44:05.9385213Z [31;1m    ... which satisfies dependency `fastembed = "=7.3.0"` (locked to 7.3.0) of package `fact-view v0.0.0 (D:\actions-runner\_work\nemu\nemu\core\crates\fact-view)`[0m
+2026-10-26T13:44:05.9392176Z [31;1m[0m
+2026-10-26T13:44:05.9394366Z [31;1mCaused by:[0m
+2026-10-26T13:44:05.9396511Z [31;1m  failed to load source for dependency `ppv-lite86`[0m
+2026-10-26T13:44:05.9398637Z [31;1m[0m
+2026-10-26T13:44:05.9400791Z [31;1mCaused by:[0m
+2026-10-26T13:44:05.9403201Z [31;1m  unable to update registry `crates-io`[0m
+2026-10-26T13:44:05.9405483Z [31;1m[0m
+2026-10-26T13:44:05.9407623Z [31;1mCaused by:[0m
+2026-10-26T13:44:05.9409774Z [31;1m  download of pp/v-/ppv-lite86 failed[0m
+2026-10-26T13:44:05.9412479Z [31;1m[0m
+2026-10-26T13:44:05.9414705Z [31;1mCaused by:[0m
+2026-10-26T13:44:05.9417864Z [31;1m  transfer too slow: failed to transfer more than 10 bytes in 30s (transferred 0 bytes)[0m
+2026-10-26T13:44:05.9646746Z ##[error]Process completed with exit code 1.
+2026-10-26T13:44:05.9851875Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-26T13:44:05.9852293Z with:
+2026-10-26T13:44:05.9852498Z   name: windows-P5-02-40323615588-1
+2026-10-26T13:44:05.9852775Z   path: D:\actions-runner\_work\_temp\w02-40323615588-1/
+2026-10-26T13:44:05.9853052Z   if-no-files-found: error
+2026-10-26T13:44:05.9853262Z   compression-level: 6
+2026-10-26T13:44:05.9853449Z   overwrite: false
+2026-10-26T13:44:05.9853639Z   include-hidden-files: false
+2026-10-26T13:44:05.9853838Z env:
+2026-10-26T13:44:05.9854004Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-10-26T13:44:05.9854218Z   UV_LINK_MODE: copy
+2026-10-26T13:44:05.9854486Z   NEMU_W02_EVIDENCE: D:\actions-runner\_work\_temp\w02-40323615588-1
+2026-10-26T13:44:05.9854790Z ##[endgroup]
+2026-10-26T13:44:06.4681979Z (node:4052) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-26T13:44:06.4683599Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-26T13:44:06.4723813Z With the provided path, there will be 2 files uploaded
+2026-10-26T13:44:06.4727708Z Artifact name is valid!
+2026-10-26T13:44:06.4730360Z Root directory input is valid!
+2026-10-26T13:44:07.3421651Z Beginning upload of artifact content to blob storage
+2026-10-26T13:44:07.3701254Z (node:4052) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-26T13:44:09.4940828Z Uploaded bytes 894
+2026-10-26T13:44:09.8695415Z Finished uploading artifact content to blob storage!
+2026-10-26T13:44:09.8696067Z SHA256 digest of uploaded artifact zip is 20c648f230b27a177cf8182d3488e35cd7e07d93a4c6db065c9cc6b8f5de1dec
+2026-10-26T13:44:09.8696965Z Finalizing artifact upload
+2026-10-26T13:44:10.5927664Z Artifact windows-P5-02-40323615588-1.zip successfully finalized. Artifact ID 12654764805
+2026-10-26T13:44:10.5928616Z Artifact windows-P5-02-40323615588-1 has been successfully uploaded! Final size is 894 bytes. Artifact ID is 12654764805
+2026-10-26T13:44:10.5938446Z Artifact download URL: https://github.com/nanake-lab/nemu/actions/runs/40323615588/artifacts/12654764805
+2026-10-26T13:44:10.6221482Z Post job cleanup.
+2026-10-26T13:44:10.7380927Z [command]"C:\Program Files\Git\cmd\git.exe" version
+2026-10-26T13:44:10.7602028Z git version 2.54.0.windows.1
+2026-10-26T13:44:10.7645697Z Copying 'C:\Users\nanake\.gitconfig' to 'D:\actions-runner\_work\_temp\9377114c-6ae7-48af-a291-176074b033ac\.gitconfig'
+2026-10-26T13:44:10.7663489Z Temporarily overriding HOME='D:\actions-runner\_work\_temp\9377114c-6ae7-48af-a291-176074b033ac' before making global git config changes
+2026-10-26T13:44:10.7664288Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-26T13:44:10.7677178Z [command]"C:\Program Files\Git\cmd\git.exe" config --global --add safe.directory D:\actions-runner\_work\nemu\nemu
+2026-10-26T13:44:10.7949875Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T13:44:10.8215948Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-26T13:44:11.2191233Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T13:44:11.2477861Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-26T13:44:11.6375105Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T13:44:11.6633815Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-26T13:44:12.0576693Z Cleaning up orphan processes
+2026-10-26T13:44:12.1134378Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

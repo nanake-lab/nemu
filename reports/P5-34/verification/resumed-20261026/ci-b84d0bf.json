@@ -1,0 +1,39 @@
+{
+  "head": "b84d0bf4b550c8f1e73b8883a271f5266c387ad2",
+  "runId": 40271343235,
+  "job": {
+    "id": 121404620851,
+    "head_sha": "b84d0bf4b550c8f1e73b8883a271f5266c387ad2",
+    "name": "Ubuntu static checks and unit tests",
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "url": "https://github.com/nanake-lab/nemu/actions/runs/40271343235/jobs/121404620851",
+  "originalLogTruncated": false,
+  "savedLogIsExcerpt": true,
+  "rawFailureExcerpt": "---- tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete stdout ----\n2026-10-26T05:10:28.7748806Z \n2026-10-26T05:10:28.7749996Z thread 'tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete' (5294) panicked at crates/core-store/src/tests/objects.rs:172:49:\n2026-10-26T05:10:28.7752093Z called `Result::unwrap()` on an `Err` value: Rejected(\"new writes must use the active successor message\")\n2026-10-26T05:10:28.7753448Z note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n2026-10-26T05:10:28.7754149Z \n2026-10-26T05:10:28.7754307Z \n2026-10-26T05:10:28.7754610Z failures:\n2026-10-26T05:10:28.7755308Z     tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete\n2026-10-26T05:10:28.7756744Z error: test failed, to rerun pass `-p core-store --lib`\n2026-10-26T05:10:28.7757155Z \n2026-10-26T05:10:28.7762456Z test result: FAILED. 30 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 825.17s\n2026-10-26T05:10:28.7763431Z \n2026-10-26T05:10:28.7780715Z ##[error]Process completed with exit code 101.\n2026-10-26T05:10:28.7927515Z ",
+  "annotations": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"headRevision\":\"b84d0bf4b550c8f1e73b8883a271f5266c387ad2\",\"checks\":[{\"id\":121404620851,\"name\":\"Ubuntu static checks and unit tests\",\"head_sha\":\"b84d0bf4b550c8f1e73b8883a271f5266c387ad2\",\"status\":\"completed\",\"conclusion\":\"failure\",\"details_url\":\"https://github.com/nanake-lab/nemu/actions/runs/40271343235/job/121404620851\",\"output\":{\"title\":null,\"summary\":null,\"text\":null,\"annotations_count\":3}}],\"statuses\":[],\"annotations\":[{\"path\":\".github\",\"start_line\":2,\"end_line\":2,\"annotation_level\":\"warning\",\"message\":\"Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02, astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\",\"title\":\"\",\"raw_details\":\"\"},{\"path\":\".github\",\"start_line\":275,\"end_line\":275,\"annotation_level\":\"failure\",\"message\":\"Process completed with exit code 101.\",\"title\":\"\",\"raw_details\":\"\"},{\"path\":\".github\",\"start_line\":1,\"end_line\":1,\"annotation_level\":\"notice\",\"message\":\"\\\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\\\"\",\"title\":\"\",\"raw_details\":\"\"}],\"hasMore\":false,\"job\":null,\"jobs\":[],\"log\":null,\"logTruncated\":false}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "jobs": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"headRevision\":\"b84d0bf4b550c8f1e73b8883a271f5266c387ad2\",\"checks\":[],\"statuses\":[],\"annotations\":[],\"hasMore\":false,\"job\":null,\"jobs\":[{\"id\":121404620851,\"head_sha\":\"b84d0bf4b550c8f1e73b8883a271f5266c387ad2\",\"name\":\"Ubuntu static checks and unit tests\",\"status\":\"completed\",\"conclusion\":\"failure\"}],\"log\":null,\"logTruncated\":false}"
+        }
+      ],
+      "isError": false
+    }
+  }
+}

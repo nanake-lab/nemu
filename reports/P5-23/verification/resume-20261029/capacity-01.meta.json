@@ -1,0 +1,12 @@
+{
+  "cause": "test fixture reached pi=0.5 rather than pi>0.5; sigma stimulus corrected, assertions unchanged",
+  "tests_failed": 1,
+  "tests_passed": 5,
+  "command": "cargo test -p core-kernel --locked capacity_v3 -- --nocapture --test-threads=1",
+  "evidence": [
+    "capacity-01.stdout.log",
+    "capacity-01.stderr.log"
+  ],
+  "exit_code": 101,
+  "timing": "not captured by initial invocation"
+}

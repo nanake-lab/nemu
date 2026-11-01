@@ -1,0 +1,33 @@
+$ python core/contracts/verify.py
+0 generated files stale
+Compatibility against p5-01, p5-21, current: 0 violations; 124 messages (36 superseded), 44 enums
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling syn v3.0.9
+   Compiling serde_derive v1.0.229
+   Compiling serde v1.0.229
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\core-types)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.13s
+Using CPython 3.12.14
+Creating virtual environment at: core\contracts\.venv
+Installed 16 packages in 420ms
+Official protoc and protobuf runtime: 396 transport vectors PASS
+Traceback (most recent call last):
+  File "D:\Dev\nemu-wt\P5-04\core\contracts\verify.py", line 265, in <module>
+    main()
+  File "D:\Dev\nemu-wt\P5-04\core\contracts\verify.py", line 246, in main
+    actual = probe(command, queries)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu-wt\P5-04\core\contracts\verify.py", line 32, in probe
+    result = subprocess.run(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\nanake\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] ϵͳ�Ҳ���ָ�����ļ���
+[ELIFECYCLE] Command failed with exit code 1.

@@ -1,0 +1,11 @@
+# llama.cpp b11669 / 620d2225cc436ab0b001e3200e590e3b286ef9ab.
+# Upstream converter requirements; gguf is imported from that exact local source.
+# Its runtime dependencies are expanded here rather than installing PyPI gguf.
+numpy~=2.2.6
+sentencepiece>=0.1.98,<0.3.0
+transformers==4.57.6
+protobuf>=4.21.0,<5.0.0
+torch==2.11.0+cpu
+tqdm>=4.27
+pyyaml>=5.1
+requests>=2.25

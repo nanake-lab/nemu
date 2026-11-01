@@ -1,4 +1,5 @@
 //! Test-only JSON-lines adapter. Never opens authority storage.
+mod ingress_probe;
 use core_types::contract::{Limits, Schema};
 use core_types::scalar::{hex, unhex};
 use serde_json::{Value, json};
@@ -14,6 +15,9 @@ fn probe(schema: &Schema, request: &Value) -> Result<Value, String> {
         max_items: limit("max_items")?,
         max_depth: limit("max_depth")?,
     };
+    if request["op"] == "ingress" {
+        return ingress_probe::check(request, limits);
+    }
     let name = request["name"].as_str().ok_or("name")?;
     let value = match request["op"].as_str().ok_or("op")? {
         "encode" => schema.normalize(name, &request["value"], limits, 0)?,
@@ -32,6 +36,7 @@ fn probe(schema: &Schema, request: &Value) -> Result<Value, String> {
         _ => return Err("operation".into()),
     };
     core_types::generated::verify_typed(name, &value, limits)?;
+    core_types::semantic::check_theta_message(name, &value, limits)?;
     Ok(
         json!({"ok":true,"value":value,"canonical":hex(&schema.encode_canonical(name,&value,limits)?),
         "protobuf":hex(&schema.encode_protobuf(name,&value,limits)?),"digest":schema.digest(name,&value,limits)?}),

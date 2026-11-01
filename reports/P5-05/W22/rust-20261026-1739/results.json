@@ -1,0 +1,20 @@
+[
+  {
+    "command": "cargo fmt --all -- --check",
+    "exit_code": 0
+  },
+  {
+    "command": "cargo test -p action-gate --locked --offline",
+    "exit_code": 0,
+    "passed": 6
+  },
+  {
+    "command": "cargo clippy --workspace --all-targets --locked --offline -- -D warnings",
+    "exit_code": 0
+  },
+  {
+    "command": "cargo test --workspace --locked --offline --exclude core-store",
+    "exit_code": 0,
+    "passed": 42
+  }
+]

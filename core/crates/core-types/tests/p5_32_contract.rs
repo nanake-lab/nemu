@@ -57,8 +57,8 @@ fn successors_are_live_and_predecessors_superseded() {
     const {
         assert!(Tendency::SUPERSEDED && EvidenceAllocation::SUPERSEDED);
         assert!(EvidenceGroup::SUPERSEDED && RSnapshot::SUPERSEDED);
-        assert!(!TendencyV2::SUPERSEDED && !EvidenceAllocationV2::SUPERSEDED);
-        assert!(!EvidenceGroupV2::SUPERSEDED && !RSnapshotV2::SUPERSEDED);
+        assert!(TendencyV2::SUPERSEDED && EvidenceAllocationV2::SUPERSEDED);
+        assert!(EvidenceGroupV2::SUPERSEDED && RSnapshotV2::SUPERSEDED);
     };
     let s = Schema::builtin().unwrap();
     // Each successor keeps its predecessor's fields and adds exactly the ADR 0016 fields;

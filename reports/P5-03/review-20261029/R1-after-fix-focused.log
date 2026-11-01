@@ -1,0 +1,21 @@
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.35s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-03\debug\deps\gateway-eef0200df3cbeedf.exe)
+
+running 5 tests
+test tests::service::idle::authenticated_partial_header_and_body_timeout_are_still_audited ... partial_header_body: timed_out=true INVALID_FRAME=2 audit_max_records=2 subsequent_auth=AUDIT_FULL D_empty=true
+ok
+test tests::service::idle::authenticated_zero_request_idle_reconnects_do_not_consume_audit ... authenticated_idle_cycle=1 idle_ms=2200 request_bytes_sent=0 connection_still_open=true
+authenticated_idle_cycle=2 idle_ms=2200 request_bytes_sent=0 connection_still_open=true
+authenticated_idle_cycle=3 idle_ms=2200 request_bytes_sent=0 connection_still_open=true
+idle_reconnects: persistent_rejection_records=0 fourth_valid_auth=AUTHENTICATED query=NO_MATCH D_empty=true H_anchor_unchanged=true
+ok
+test tests::service::idle::session_expiry_closes_idle_connection_without_rejection_audit ... session_expiry: idle_survives_frame_deadline=true session_lifetime_ms=900 closed=true audit=0 reauthentication=true
+ok
+test tests::service::idle::unauthenticated_zero_byte_handshake_remains_time_bounded ... preauthentication_zero_bytes: deadline_ms=2000 timed_out=true invalid_auth_frame_audit=1 D_empty=true
+ok
+test tests::service::idle::waiting_for_delayed_commit_and_next_request_is_legal_idle ... delayed_receipt: each_idle_ms=2200 frame_deadline_ms=2000 CORE_COMMITTED_then_same_connection_query=true audit=0 commits=1
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 37 filtered out; finished in 20.71s
+

@@ -1,0 +1,45 @@
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-types)
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\core-store)
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.31s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-03\debug\deps\gateway-aa550eb25d27a620.exe)
+
+running 21 tests
+test tests::frames::fragmented_frames_roundtrip_and_preserve_receipt_stages ... ok
+test tests::frames::oversize_empty_truncated_and_invalid_messages_poison_connection ... ok
+test tests::frames::slow_header_body_writer_and_cancelled_read_are_bounded ... ok
+test tests::frames::wire_bytes_are_length_prefixed_protobuf ... ok
+test tests::ingress::experiment_cannot_ingest_terminal_data ... ok
+test tests::ingress::queue_and_byte_limits_reject_before_success ... ok
+test tests::ingress::received_durable_survives_reopen_without_claiming_core_commit ... ok
+test tests::sys01_pipe::sys01_pipe_disconnect_before_commit_reopens_durable_input ... SYS01 structural pipe: RECEIVED_DURABLE survives uncommitted close/reopen; CORE_COMMITTED only after actual store.commit; not a physical power-cut test
+ok
+test tests::sys01_pipe::sys01_pipe_retransmission_conflict_reconnect_and_interleaved_receipts ... SYS01 structural pipe: D=e1,e2,e2,conflict; H=e1,e2; processed=4; anchor=2; ledger=2; delayed commits delivered e2 then e1 across reconnect and bound by event/key
+ok
+test tests::terminal::p522_approval_snapshot_binds_payload_action_digest_decision_and_expiry ... ok
+test tests::terminal::p522_growth_query_preserves_ledger_and_rejects_mixed_or_mismatched_results ... ok
+test tests::terminal::p522_old_types_remain_decodable_but_cannot_enter_or_leave_live_frames ... ok
+test tests::terminal::p522_rejects_experiment_votes_unknown_fields_versions_and_invalid_oneof ... ok
+
+thread 'tests::terminal::p522_successors_and_notice_growth_control_roundtrip_all_golden_variants' (45348) panicked at crates\gateway\src\tests\terminal.rs:31:9:
+assertion `left == right` failed
+  left: QueryV2 { schema_version: 1, query_id: "\u{feff}zero\02", filter: Some(QueryFilter { schema_version: 1, text: Some("\u{feff}zero\02"), from: Some("\u{feff}zero\02"), to: Some("\u{feff}zero\02"), kinds: ["A3", "\u{feff}zero\02"], include_retracted: Some(true) }), limit: DecimalU64(9007199254740993), kind: QUERY_RUN_HISTORY }
+ right: QueryV2 { schema_version: 1, query_id: "\u{feff}zero\02", filter: Some(QueryFilter { schema_version: 1, text: Some("\u{feff}zero\02"), from: Some("\u{feff}zero\02"), to: Some("\u{feff}zero\02"), kinds: ["\u{feff}zero\02", "A3"], include_retracted: Some(true) }), limit: DecimalU64(9007199254740993), kind: QUERY_RUN_HISTORY }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test tests::terminal::p522_successors_and_notice_growth_control_roundtrip_all_golden_variants ... FAILED
+test tests::validation::all_nine_terminal_payloads_validate_and_bind_generated_objects ... ok
+test tests::validation::authentication_never_accepts_short_wrong_or_empty_identity ... ok
+test tests::validation::permissions_are_checked_per_event_after_revocation_on_same_session ... ok
+test tests::validation::rejects_bad_fields_unknown_protobuf_and_nonfinite_values ... ok
+test tests::validation::rejects_source_spoofing_payload_changes_and_privilege_claims ... ok
+test tests::windows::actual_pipe_acl_current_user_connects_squatting_and_experiment_refused ... ok
+test tests::windows::dpapi_create_reload_reject_corruption_and_protect_actual_file_acl ... ok
+
+failures:
+
+failures:
+    tests::terminal::p522_successors_and_notice_growth_control_roundtrip_all_golden_variants
+
+test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 23.88s
+
+error: test failed, to rerun pass `-p gateway --lib`

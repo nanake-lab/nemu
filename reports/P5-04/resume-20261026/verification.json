@@ -1,0 +1,251 @@
+{
+  "at": "2026-10-26T20:22:06.2524972+08:00",
+  "base_main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+  "merge_commit": "7ec25020635aaffbcf7d0f67c5fd44c5cb583d13",
+  "status": "passed",
+  "workflow_blob": "65b29f2a8a73a7bb08c44492646f3952d8a17435",
+  "main_workflow_blob": "65b29f2a8a73a7bb08c44492646f3952d8a17435",
+  "frozen_diff": [],
+  "protected_uncommitted_diff": [],
+  "checks": [
+    {
+      "name": "fmt-final",
+      "tool": "cargo",
+      "arguments": [
+        "fmt",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:12:13.8988903+08:00",
+      "finished_at": "2026-10-26T20:12:14.2450252+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "clippy-final",
+      "tool": "cargo",
+      "arguments": [
+        "clippy",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--all-targets",
+        "--features",
+        "fact-view/cpu-embedding",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:12:14.2867944+08:00",
+      "finished_at": "2026-10-26T20:12:15.1488838+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "workspace-tests-final",
+      "tool": "cargo",
+      "arguments": [
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--release",
+        "--features",
+        "fact-view/cpu-embedding",
+        "--locked",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:12:15.1896085+08:00",
+      "finished_at": "2026-10-26T20:15:06.1570089+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "cpu-model-core-projection",
+      "tool": "cargo",
+      "arguments": [
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "-p",
+        "fact-view",
+        "--release",
+        "--features",
+        "cpu-embedding",
+        "real_cpu_multilingual",
+        "--locked",
+        "--",
+        "--ignored",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:01:10.7746592+08:00",
+      "finished_at": "2026-10-26T20:01:40.7222628+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "windows-isolation",
+      "tool": "pwsh",
+      "arguments": [
+        "-NoProfile",
+        "-File",
+        "tools/scaffold/test-windows-isolation.ps1"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T19:39:22.8629931+08:00",
+      "finished_at": "2026-10-26T19:39:27.7855014+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "lint",
+      "tool": "pnpm",
+      "arguments": [
+        "lint"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:02:35.7434035+08:00",
+      "finished_at": "2026-10-26T20:02:56.3358966+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "typecheck",
+      "tool": "pnpm",
+      "arguments": [
+        "typecheck"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:02:56.373557+08:00",
+      "finished_at": "2026-10-26T20:03:01.6563311+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "node-tests-recheck",
+      "tool": "pnpm",
+      "arguments": [
+        "test"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:10:18.9869438+08:00",
+      "finished_at": "2026-10-26T20:10:25.0601777+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "contracts",
+      "tool": "pnpm",
+      "arguments": [
+        "test:contracts"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:10:25.1116726+08:00",
+      "finished_at": "2026-10-26T20:10:27.5634142+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    },
+    {
+      "name": "core-contracts",
+      "tool": "pnpm",
+      "arguments": [
+        "test:core-contracts"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-04",
+      "started_at": "2026-10-26T20:10:27.5973029+08:00",
+      "finished_at": "2026-10-26T20:10:49.5607485+08:00",
+      "exit_code": 0,
+      "temporary_directory": "C:\\Users\\nanake\\AppData\\Local\\Temp\\"
+    }
+  ],
+  "sources": [
+    {
+      "path": "core/crates/fact-view/README.md",
+      "blob": "5937cd7ec8deb405b42fba9d1c42f836ac46110b",
+      "lines": 44
+    },
+    {
+      "path": "core/crates/fact-view/scripts/env.ps1",
+      "blob": "b93e7f5f0a8e05bd1de313c24b9ccf61670d4c83",
+      "lines": 13
+    },
+    {
+      "path": "core/crates/fact-view/src/index.rs",
+      "blob": "b09a8facc2caa800dd980f771dc43e5c06c5a1b1",
+      "lines": 118
+    },
+    {
+      "path": "core/crates/fact-view/src/lib.rs",
+      "blob": "edb287ac1f7b8d6e69d23c2f0fa6c5473bfffa1d",
+      "lines": 23
+    },
+    {
+      "path": "core/crates/fact-view/src/memory.rs",
+      "blob": "9bc595a94e5da5072d457be9301d46de7280005f",
+      "lines": 155
+    },
+    {
+      "path": "core/crates/fact-view/src/paging.rs",
+      "blob": "ff445348203af16b43b29fae1f1636b0d3f8430e",
+      "lines": 132
+    },
+    {
+      "path": "core/crates/fact-view/src/query.rs",
+      "blob": "26c89dfffbebaf950d52e64b30db3312783d4e57",
+      "lines": 182
+    },
+    {
+      "path": "core/crates/fact-view/src/retrieval.rs",
+      "blob": "c30d1c33fd0ae6957fe711a293b9ec3ce8c33c26",
+      "lines": 371
+    },
+    {
+      "path": "core/crates/fact-view/src/source.rs",
+      "blob": "032c438a49697441bb225d2fe37db9134d2258fa",
+      "lines": 233
+    },
+    {
+      "path": "core/crates/fact-view/src/tests/cpu_eval.rs",
+      "blob": "7a75357afaa50bf69d0acb6798443c33fe0d3400",
+      "lines": 246
+    },
+    {
+      "path": "core/crates/fact-view/src/tests/edge_cases.rs",
+      "blob": "0a36a006c252f29a9d91ad76ba5e6e0cde6d547a",
+      "lines": 146
+    },
+    {
+      "path": "core/crates/fact-view/src/tests/fixture.rs",
+      "blob": "b19484390991bd71fc7e736343d7f000ae6e6d2c",
+      "lines": 308
+    },
+    {
+      "path": "core/crates/fact-view/src/tests/memory_pages.rs",
+      "blob": "74737702551259f4d150a655f20bd15af38f9749",
+      "lines": 388
+    },
+    {
+      "path": "core/crates/fact-view/src/tests/mod.rs",
+      "blob": "c3fd88e618a1b875bd12dea6a71712d76e602594",
+      "lines": 374
+    }
+  ],
+  "prior_failures": [
+    "cpu-model.log",
+    "node-tests.log",
+    "fact-view-first.log",
+    "fact-view-final.log"
+  ],
+  "node_baseline": "main-node-tests.json",
+  "limits": "Local validation only; no CI queried or awaited. Cursor transport remains with its owning integration/contract card."
+}

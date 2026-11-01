@@ -1,0 +1,940 @@
+Windows desktop and isolation	UNKNOWN STEP	﻿2026-10-23T08:59:42.1080137Z Current runner version: '2.338.0'
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1086479Z Runner name: 'DESKTOP-8LBF84O'
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1087024Z Runner group name: 'Default'
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1087755Z Machine name: 'DESKTOP-8LBF84O'
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1089907Z ##[group]GITHUB_TOKEN Permissions
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1091577Z Contents: read
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1091970Z Metadata: read
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1092356Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1093923Z Secret source: Actions
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1094566Z Cache mode: write
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.1095044Z Prepare workflow directory
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.2104107Z Prepare all required actions
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:42.2142526Z Getting action download info
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:44.2225643Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:48.9560986Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:52.9576686Z Download action repository 'actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T08:59:58.7814088Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.6970881Z Complete job name: Windows desktop and isolation
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8417855Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8418471Z with:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8418624Z   lfs: true
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8418794Z   persist-credentials: false
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8419021Z   repository: nanake-lab/nemu
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8421788Z   token: ***
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8421954Z   ssh-strict: true
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8422117Z   ssh-user: git
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8422272Z   clean: true
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8422456Z   sparse-checkout-cone-mode: true
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8422686Z   fetch-depth: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8422874Z   fetch-tags: false
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8423051Z   show-progress: true
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8423229Z   submodules: false
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8423406Z   set-safe-directory: true
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8423621Z   allow-unsafe-pr-checkout: false
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8423962Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8424127Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8424338Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8424550Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8424786Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8425058Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8425292Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8425516Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8425762Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8426042Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8426296Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8426512Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8426702Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8426927Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8427208Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8427484Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8427767Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:02.8428036Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.3846148Z Syncing repository: nanake-lab/nemu
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.3847387Z ##[group]Getting Git version info
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.3847793Z Working directory is 'D:\actions-runner\_work\nemu\nemu'
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.4129135Z [command]"C:\Program Files\Git\cmd\git.exe" version
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.4361789Z git version 2.54.0.windows.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.4802153Z [command]"C:\Program Files\Git\cmd\git.exe" lfs version
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6059259Z git-lfs/3.7.1 (GitHub; windows amd64; go 1.25.1; git b84b3384)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6108370Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6119924Z Copying 'C:\Users\nanake\.gitconfig' to 'D:\actions-runner\_work\_temp\57d0a64e-2a3f-4576-81b5-6df236e49467\.gitconfig'
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6135545Z Temporarily overriding HOME='D:\actions-runner\_work\_temp\57d0a64e-2a3f-4576-81b5-6df236e49467' before making global git config changes
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6136433Z Adding repository directory to the temporary git global config as a safe directory
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6146452Z [command]"C:\Program Files\Git\cmd\git.exe" config --global --add safe.directory D:\actions-runner\_work\nemu\nemu
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6436347Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --get remote.origin.url
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6675332Z https://github.com/nanake-lab/nemu
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6718851Z ##[group]Removing previously created refs, to avoid conflicts
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6728718Z [command]"C:\Program Files\Git\cmd\git.exe" rev-parse --symbolic-full-name --verify --quiet HEAD
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.6977540Z refs/heads/main
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:03.7019613Z [command]"C:\Program Files\Git\cmd\git.exe" checkout --detach
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:04.6265229Z HEAD is now at 876cff7 feat(P5-02): 单写事务与对象存储（W02） (#58)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:05.0018493Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:05.0028318Z [command]"C:\Program Files\Git\cmd\git.exe" submodule status
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:05.4204494Z -513df15175673c1ac06b57d485f7986562e0aa31 content
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:05.4279155Z ##[group]Cleaning the repository
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:05.4291769Z [command]"C:\Program Files\Git\cmd\git.exe" clean -ffdx
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:09.2214515Z warning: failed to remove node_modules/.pnpm/@esbuild+win32-x64@0.28.2/node_modules/@esbuild/win32-x64/esbuild.exe: Invalid argument
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:09.5428376Z warning: failed to remove node_modules/.pnpm/@rollup+rollup-win32-x64-msvc@4.64.5/node_modules/@rollup/rollup-win32-x64-msvc/rollup.win32-x64-msvc.node: Invalid argument
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7878826Z Removing apps/desktop/node_modules/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7879401Z Removing apps/desktop/out/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7879758Z Removing apps/panel/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7880090Z Removing apps/panel/node_modules/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7880380Z Removing apps/stage/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7880653Z Removing apps/stage/node_modules/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7881087Z Removing executors/codex-bridge/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7881675Z Removing node_modules/.pnpm/@esbuild+win32-x64@0.28.2/node_modules/@esbuild/win32-x64/package.json
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7882428Z Removing node_modules/.pnpm/@esbuild+win32-x64@0.28.2/node_modules/@esbuild/win32-x64/README.md
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7883265Z Removing node_modules/.pnpm/@rollup+rollup-win32-x64-msvc@4.64.5/node_modules/@rollup/rollup-win32-x64-msvc/package.json
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7884166Z Removing node_modules/.pnpm/@rollup+rollup-win32-x64-msvc@4.64.5/node_modules/@rollup/rollup-win32-x64-msvc/README.md
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7884944Z Removing node_modules/.pnpm/@babel+code-frame@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7885364Z Removing node_modules/.pnpm/@babel+compat-data@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7885767Z Removing node_modules/.pnpm/@babel+core@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7886159Z Removing node_modules/.pnpm/@babel+generator@7.29.8
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7886632Z Removing node_modules/.pnpm/@babel+helper-compilation-targets@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7887124Z Removing node_modules/.pnpm/@babel+helper-globals@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7887620Z Removing node_modules/.pnpm/@babel+helper-module-imports@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7888202Z Removing node_modules/.pnpm/@babel+helper-module-transforms@7.29.7_@babel+core@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7888764Z Removing node_modules/.pnpm/@babel+helper-plugin-utils@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7889251Z Removing node_modules/.pnpm/@babel+helper-string-parser@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7889802Z Removing node_modules/.pnpm/@babel+helper-validator-identifier@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7890356Z Removing node_modules/.pnpm/@babel+helper-validator-option@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7890799Z Removing node_modules/.pnpm/@babel+helpers@7.29.10
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7891394Z Removing node_modules/.pnpm/@babel+parser@7.29.9
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7892751Z Removing node_modules/.pnpm/@babel+plugin-transform-arr_84af030c39923bcdcded8bae6f5cd34d
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7893324Z Removing node_modules/.pnpm/@babel+template@7.29.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7893733Z Removing node_modules/.pnpm/@babel+traverse@7.29.10
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7894124Z Removing node_modules/.pnpm/@babel+types@7.29.8
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7894526Z Removing node_modules/.pnpm/@bcoe+v8-coverage@1.0.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7894931Z Removing node_modules/.pnpm/@cacheable+memory@2.2.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7895332Z Removing node_modules/.pnpm/@cacheable+utils@2.5.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7895723Z Removing node_modules/.pnpm/@electron+get@5.1.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7896185Z Removing node_modules/.pnpm/@electron-internal+extract-zip@1.0.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7896668Z Removing node_modules/.pnpm/@esbuild+win32-x64@0.25.12
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7897114Z Removing node_modules/.pnpm/@eslint+config-array@0.23.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7897566Z Removing node_modules/.pnpm/@eslint+config-helpers@0.7.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7897985Z Removing node_modules/.pnpm/@eslint+core@1.2.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7898414Z Removing node_modules/.pnpm/@eslint+js@10.0.1_eslint@10.12.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7898871Z Removing node_modules/.pnpm/@eslint+object-schema@3.0.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7899300Z Removing node_modules/.pnpm/@eslint+plugin-kit@0.7.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7900354Z Removing node_modules/.pnpm/@eslint-community+eslint-utils@4.10.1_eslint@10.12.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7900990Z Removing node_modules/.pnpm/@eslint-community+regexpp@4.12.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7901473Z Removing node_modules/.pnpm/@gltf-transform+core@4.5.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7901888Z Removing node_modules/.pnpm/@humanfs+core@0.19.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7902282Z Removing node_modules/.pnpm/@humanfs+node@0.16.8
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7902665Z Removing node_modules/.pnpm/@humanfs+types@0.15.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7903122Z Removing node_modules/.pnpm/@humanwhocodes+module-importer@1.0.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7903594Z Removing node_modules/.pnpm/@humanwhocodes+retry@0.4.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7904040Z Removing node_modules/.pnpm/@jridgewell+gen-mapping@0.3.13
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7904487Z Removing node_modules/.pnpm/@jridgewell+remapping@2.3.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7904928Z Removing node_modules/.pnpm/@jridgewell+resolve-uri@3.1.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7905406Z Removing node_modules/.pnpm/@jridgewell+sourcemap-codec@1.6.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7905890Z Removing node_modules/.pnpm/@jridgewell+trace-mapping@0.3.31
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7906341Z Removing node_modules/.pnpm/@keyv+bigmap@1.3.1_keyv@5.6.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7906749Z Removing node_modules/.pnpm/@keyv+serialize@1.1.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7907246Z Removing node_modules/.pnpm/@pixiv+three-vrm-animation@3.5.5_three@0.174.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7907795Z Removing node_modules/.pnpm/@pixiv+three-vrm-core@3.5.5_three@0.174.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7908378Z Removing node_modules/.pnpm/@pixiv+three-vrm-materials-mtoon@3.5.5_three@0.174.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7909013Z Removing node_modules/.pnpm/@pixiv+three-vrm-materials-v0compat@3.5.5_three@0.174.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7909689Z Removing node_modules/.pnpm/@pixiv+three-vrm-materials-_b29c3aebbf27144f3db74522459fa8c7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7910335Z Removing node_modules/.pnpm/@pixiv+three-vrm-node-constraint@3.5.5_three@0.174.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7910946Z Removing node_modules/.pnpm/@pixiv+three-vrm-springbone@3.5.5_three@0.174.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7911478Z Removing node_modules/.pnpm/@pixiv+three-vrm@3.5.5_three@0.174.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7911929Z Removing node_modules/.pnpm/@pixiv+types-vrm-0.0@3.5.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7912446Z Removing node_modules/.pnpm/@pixiv+types-vrmc-materials-mtoon-1.0@3.5.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7913097Z Removing node_modules/.pnpm/@pixiv+types-vrmc-materials_5cf0c1a6f45a7a998a6f3bbf78a07b9a
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7913709Z Removing node_modules/.pnpm/@pixiv+types-vrmc-node-constraint-1.0@3.5.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7914248Z Removing node_modules/.pnpm/@pixiv+types-vrmc-springbone-1.0@3.5.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7914967Z Removing node_modules/.pnpm/@pixiv+types-vrmc-springbone-extended-collider-1.0@3.5.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7915537Z Removing node_modules/.pnpm/@pixiv+types-vrmc-vrm-1.0@3.5.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7916043Z Removing node_modules/.pnpm/@pixiv+types-vrmc-vrm-animation-1.0@3.5.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7916516Z Removing node_modules/.pnpm/@playwright+test@1.64.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7916969Z Removing node_modules/.pnpm/@rollup+rollup-win32-x64-gnu@4.64.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7917422Z Removing node_modules/.pnpm/@tweenjs+tween.js@23.1.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7917810Z Removing node_modules/.pnpm/@types+chai@5.2.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7918230Z Removing node_modules/.pnpm/@types+deep-eql@4.0.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7918658Z Removing node_modules/.pnpm/@types+esrecurse@4.3.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7919043Z Removing node_modules/.pnpm/@types+estree@1.0.9
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7919444Z Removing node_modules/.pnpm/@types+json-schema@7.0.15
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7919841Z Removing node_modules/.pnpm/@types+node@24.19.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7920237Z Removing node_modules/.pnpm/@types+pixelmatch@7.1.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7920623Z Removing node_modules/.pnpm/@types+pngjs@6.0.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7921103Z Removing node_modules/.pnpm/@types+react-dom@19.3.0_@types+react@19.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7921558Z Removing node_modules/.pnpm/@types+react@19.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7921939Z Removing node_modules/.pnpm/@types+stats.js@0.17.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7922423Z Removing node_modules/.pnpm/@types+three@0.174.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7922808Z Removing node_modules/.pnpm/@types+webxr@0.5.24
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7923361Z Removing node_modules/.pnpm/@typescript-eslint+eslint-p_48977ac878e72fdc2c90983f8386a66c
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7924046Z Removing node_modules/.pnpm/@typescript-eslint+parser@8_e3b1861394bbf1e695fed6209653e94a
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7924726Z Removing node_modules/.pnpm/@typescript-eslint+project-service@8.71.2_typescript@6.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7925337Z Removing node_modules/.pnpm/@typescript-eslint+scope-manager@8.71.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7925959Z Removing node_modules/.pnpm/@typescript-eslint+tsconfig-utils@8.71.2_typescript@6.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7926632Z Removing node_modules/.pnpm/@typescript-eslint+type-uti_23e05f38497580b7791f56d4c18ceb55
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7927201Z Removing node_modules/.pnpm/@typescript-eslint+types@8.71.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7927799Z Removing node_modules/.pnpm/@typescript-eslint+typescript-estree@8.71.2_typescript@6.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7928485Z Removing node_modules/.pnpm/@typescript-eslint+utils@8._0ccd7815a2f0d13351eae29a6bf257ba
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7929084Z Removing node_modules/.pnpm/@typescript-eslint+visitor-keys@8.71.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7929597Z Removing node_modules/.pnpm/@vitest+coverage-v8@5.0.4_vitest@5.0.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7930100Z Removing node_modules/.pnpm/@vitest+istanbul-lib-coverage@1.0.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7930595Z Removing node_modules/.pnpm/@vitest+istanbul-lib-report@1.0.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7931151Z Removing node_modules/.pnpm/@vitest+mocker@5.0.4_vite@7.3.7_@types+node@24.19.2_
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7931630Z Removing node_modules/.pnpm/@vitest+spy@5.0.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7932010Z Removing node_modules/.pnpm/@webgpu+types@0.1.74
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7932423Z Removing node_modules/.pnpm/acorn-jsx@5.3.2_acorn@8.19.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7932800Z Removing node_modules/.pnpm/acorn@8.19.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7933131Z Removing node_modules/.pnpm/ajv@6.15.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7933459Z Removing node_modules/.pnpm/ajv@8.20.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7933814Z Removing node_modules/.pnpm/assertion-error@2.0.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7934221Z Removing node_modules/.pnpm/ast-v8-to-istanbul@1.0.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7934615Z Removing node_modules/.pnpm/balanced-match@4.0.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7935053Z Removing node_modules/.pnpm/baseline-browser-mapping@2.11.28
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7935487Z Removing node_modules/.pnpm/brace-expansion@5.0.12
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7935874Z Removing node_modules/.pnpm/browserslist@4.29.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7936226Z Removing node_modules/.pnpm/cac@6.7.14
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7936676Z Removing node_modules/.pnpm/cacheable@2.5.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7937064Z Removing node_modules/.pnpm/caniuse-lite@1.0.30001815
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7937427Z Removing node_modules/.pnpm/chai@6.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7937797Z Removing node_modules/.pnpm/convert-source-map@2.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7938181Z Removing node_modules/.pnpm/cross-spawn@7.0.6
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7938535Z Removing node_modules/.pnpm/csstype@3.2.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7938867Z Removing node_modules/.pnpm/debug@4.4.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7939203Z Removing node_modules/.pnpm/deep-is@0.1.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7939598Z Removing node_modules/.pnpm/electron-to-chromium@1.5.452
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7940125Z Removing node_modules/.pnpm/electron-vite@5.0.0_vite@7.3.7_@types+node@24.19.2_
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7940595Z Removing node_modules/.pnpm/electron@44.7.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7940983Z Removing node_modules/.pnpm/env-paths@3.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7941384Z Removing node_modules/.pnpm/es-module-lexer@2.3.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7941756Z Removing node_modules/.pnpm/esbuild@0.25.12
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7942097Z Removing node_modules/.pnpm/esbuild@0.28.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7942434Z Removing node_modules/.pnpm/escalade@3.2.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7942820Z Removing node_modules/.pnpm/escape-string-regexp@4.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7943219Z Removing node_modules/.pnpm/eslint-scope@9.1.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7943730Z Removing node_modules/.pnpm/eslint-visitor-keys@3.4.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7944160Z Removing node_modules/.pnpm/eslint-visitor-keys@5.0.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7944544Z Removing node_modules/.pnpm/eslint@10.12.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7944879Z Removing node_modules/.pnpm/espree@11.2.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7945212Z Removing node_modules/.pnpm/esquery@1.7.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7945548Z Removing node_modules/.pnpm/esrecurse@4.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7945900Z Removing node_modules/.pnpm/estraverse@5.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7946266Z Removing node_modules/.pnpm/estree-walker@3.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7946624Z Removing node_modules/.pnpm/esutils@2.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7946974Z Removing node_modules/.pnpm/expect-type@1.4.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7947481Z Removing node_modules/.pnpm/fast-deep-equal@3.1.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7947938Z Removing node_modules/.pnpm/fast-json-stable-stringify@2.1.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7948500Z Removing node_modules/.pnpm/fast-levenshtein@2.0.6
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7949144Z Removing node_modules/.pnpm/fast-uri@3.1.8
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7949609Z Removing node_modules/.pnpm/fdir@6.5.0_picomatch@4.0.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7949990Z Removing node_modules/.pnpm/fflate@0.8.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7950365Z Removing node_modules/.pnpm/file-entry-cache@11.1.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7950742Z Removing node_modules/.pnpm/find-up@5.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7951114Z Removing node_modules/.pnpm/flat-cache@6.1.23
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7951468Z Removing node_modules/.pnpm/flatted@3.4.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7951827Z Removing node_modules/.pnpm/gensync@1.0.0-beta.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7952225Z Removing node_modules/.pnpm/glob-parent@6.0.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7952599Z Removing node_modules/.pnpm/graceful-fs@4.2.11
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7952957Z Removing node_modules/.pnpm/hashery@1.5.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7953310Z Removing node_modules/.pnpm/hookified@1.15.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7953669Z Removing node_modules/.pnpm/hookified@2.2.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7954018Z Removing node_modules/.pnpm/ignore@5.3.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7954355Z Removing node_modules/.pnpm/ignore@7.0.12
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7954714Z Removing node_modules/.pnpm/imurmurhash@0.1.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7955083Z Removing node_modules/.pnpm/is-extglob@2.1.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7955439Z Removing node_modules/.pnpm/is-glob@4.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7955777Z Removing node_modules/.pnpm/isexe@2.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7956117Z Removing node_modules/.pnpm/js-tokens@10.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7956464Z Removing node_modules/.pnpm/js-tokens@4.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7956795Z Removing node_modules/.pnpm/jsesc@3.1.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7958006Z Removing node_modules/.pnpm/json-schema-traverse@0.4.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7958432Z Removing node_modules/.pnpm/json-schema-traverse@1.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7958930Z Removing node_modules/.pnpm/json-stable-stringify-without-jsonify@1.0.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7959370Z Removing node_modules/.pnpm/json5@2.2.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7959688Z Removing node_modules/.pnpm/keyv@5.6.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7960006Z Removing node_modules/.pnpm/levn@0.4.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7960341Z Removing node_modules/.pnpm/locate-path@6.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7960682Z Removing node_modules/.pnpm/lock.yaml
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7961050Z Removing node_modules/.pnpm/lru-cache@5.1.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7961416Z Removing node_modules/.pnpm/magic-string@0.30.21
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7961784Z Removing node_modules/.pnpm/magic-string@1.4.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7962137Z Removing node_modules/.pnpm/magicast@0.5.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7962499Z Removing node_modules/.pnpm/meshoptimizer@0.18.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7962863Z Removing node_modules/.pnpm/minimatch@10.2.6
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7963194Z Removing node_modules/.pnpm/ms@2.1.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7963510Z Removing node_modules/.pnpm/nanoid@3.3.20
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7963868Z Removing node_modules/.pnpm/natural-compare@1.4.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7964250Z Removing node_modules/.pnpm/node-releases@2.0.58
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7964610Z Removing node_modules/.pnpm/node_modules
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7965423Z Removing node_modules/.pnpm/obug@3.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7965787Z Removing node_modules/.pnpm/optionator@0.9.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7966138Z Removing node_modules/.pnpm/p-limit@3.1.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7966477Z Removing node_modules/.pnpm/p-locate@5.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7966827Z Removing node_modules/.pnpm/path-exists@4.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7967176Z Removing node_modules/.pnpm/path-key@3.1.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7967539Z Removing node_modules/.pnpm/picocolors@1.1.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7967894Z Removing node_modules/.pnpm/picomatch@4.0.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7968251Z Removing node_modules/.pnpm/pixelmatch@8.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7968629Z Removing node_modules/.pnpm/playwright-core@1.64.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7969006Z Removing node_modules/.pnpm/playwright@1.64.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7969349Z Removing node_modules/.pnpm/pngjs@7.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7969678Z Removing node_modules/.pnpm/postcss@8.5.29
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7970030Z Removing node_modules/.pnpm/prelude-ls@1.2.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7970376Z Removing node_modules/.pnpm/prettier@3.9.10
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7970717Z Removing node_modules/.pnpm/progress@2.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7971094Z Removing node_modules/.pnpm/property-graph@4.1.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7971455Z Removing node_modules/.pnpm/punycode@2.3.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7971789Z Removing node_modules/.pnpm/qified@0.10.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7972178Z Removing node_modules/.pnpm/react-dom@19.3.0_react@19.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7972561Z Removing node_modules/.pnpm/react@19.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7972939Z Removing node_modules/.pnpm/require-from-string@2.0.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7973315Z Removing node_modules/.pnpm/rollup@4.64.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7973657Z Removing node_modules/.pnpm/scheduler@0.28.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7973995Z Removing node_modules/.pnpm/semver@6.3.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7974321Z Removing node_modules/.pnpm/semver@7.8.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7974679Z Removing node_modules/.pnpm/shebang-command@2.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7975063Z Removing node_modules/.pnpm/shebang-regex@3.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7975438Z Removing node_modules/.pnpm/source-map-js@1.2.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7975793Z Removing node_modules/.pnpm/std-env@4.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7976143Z Removing node_modules/.pnpm/sumchecker@3.0.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7976488Z Removing node_modules/.pnpm/three@0.174.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7976831Z Removing node_modules/.pnpm/tinybench@6.2.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7977176Z Removing node_modules/.pnpm/tinyexec@1.3.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7977529Z Removing node_modules/.pnpm/tinyglobby@0.2.17
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7977895Z Removing node_modules/.pnpm/tinyrainbow@3.2.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7978716Z Removing node_modules/.pnpm/ts-api-utils@2.5.0_typescript@6.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7979137Z Removing node_modules/.pnpm/type-check@0.4.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7979650Z Removing node_modules/.pnpm/typescript-eslint@8.71.2_eslint@10.12.0_typescript@6.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7980135Z Removing node_modules/.pnpm/typescript@6.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7980501Z Removing node_modules/.pnpm/undici-types@7.24.6
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.7980852Z Removing node_modules/.pnpm/undici@7.30.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8290775Z Removing node_modules/.pnpm/update-browserslist-db@1.3.4_browserslist@4.29.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8291283Z Removing node_modules/.pnpm/uri-js@4.4.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8291676Z Removing node_modules/.pnpm/vite@7.3.7_@types+node@24.19.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8292236Z Removing node_modules/.pnpm/vitest@5.0.4_@types+node@24_d0226b839cd8a4530b88a10cd1d47bfc
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8292755Z Removing node_modules/.pnpm/which@2.0.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8293141Z Removing node_modules/.pnpm/why-is-node-running@3.2.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8293549Z Removing node_modules/.pnpm/wlipsync@1.3.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8293930Z Removing node_modules/.pnpm/word-wrap@1.2.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8294272Z Removing node_modules/.pnpm/xstate@5.33.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8294606Z Removing node_modules/.pnpm/yallist@3.1.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8295212Z Removing node_modules/.pnpm/yocto-queue@0.1.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8295564Z Removing node_modules/.pnpm/zod@4.6.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8295861Z Removing node_modules/.bin
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8296140Z Removing node_modules/.modules.yaml
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8296473Z Removing node_modules/.pnpm-task-run-state-v1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8296865Z Removing node_modules/.pnpm-workspace-state-v1.json
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8297217Z Removing node_modules/@eslint
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8297502Z Removing node_modules/@playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8297788Z Removing node_modules/@types
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8298060Z Removing node_modules/@vitest
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8298324Z Removing node_modules/ajv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8298584Z Removing node_modules/electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8298883Z Removing node_modules/electron-vite
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8299169Z Removing node_modules/eslint
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8299444Z Removing node_modules/pixelmatch
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8299742Z Removing node_modules/pngjs
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8300010Z Removing node_modules/prettier
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8300290Z Removing node_modules/typescript
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8300593Z Removing node_modules/typescript-eslint
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8300890Z Removing node_modules/vite
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8301152Z Removing node_modules/vitest
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8301443Z Removing packages/avatar-runtime/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8301789Z Removing packages/avatar-runtime/node_modules/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8302110Z Removing packages/body/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8302391Z Removing packages/body/node_modules/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8302893Z Removing packages/contracts/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8303235Z Removing packages/contracts/node_modules/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8303573Z Removing packages/desktop-sense/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8303869Z Removing packages/log/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8304195Z Removing packages/terminal/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8304477Z Removing packages/voice/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8304781Z Removing spikes/stage-overlay/node_modules/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8305112Z Removing spikes/stage-overlay/out/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8305402Z Removing tools/asset-lint/dist/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8305697Z Removing tools/asset-lint/node_modules/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8306040Z Removing tools/scaffold/windows-isolation/bin/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8306408Z Removing tools/scaffold/windows-isolation/obj/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8341487Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8355744Z ##[warning]Unable to clean or reset the repository. The repository will be recreated instead.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:12.8361179Z Deleting the contents of 'D:\actions-runner\_work\nemu\nemu'
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.6539868Z ##[group]Initializing the repository
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.6549298Z [command]"C:\Program Files\Git\cmd\git.exe" init D:\actions-runner\_work\nemu\nemu
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.6956989Z Initialized empty Git repository in D:/actions-runner/_work/nemu/nemu/.git/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.7000691Z [command]"C:\Program Files\Git\cmd\git.exe" remote add origin https://github.com/nanake-lab/nemu
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.7316315Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.7316771Z ##[group]Disabling automatic garbage collection
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.7326689Z [command]"C:\Program Files\Git\cmd\git.exe" config --local gc.auto 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.7581383Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.7581756Z ##[group]Setting up auth
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.7593876Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:13.7858951Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:14.2082809Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:14.2381777Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:14.6796784Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:14.7071579Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:15.1146825Z [command]"C:\Program Files\Git\cmd\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:15.1500001Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:15.1510189Z [command]"C:\Program Files\Git\cmd\git.exe" lfs install --local
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:15.5306590Z Updated Git hooks.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:15.5306964Z Git LFS initialized.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:15.5366830Z ##[group]Fetching the repository
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:00:15.5381018Z [command]"C:\Program Files\Git\cmd\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +954918fae3f9db245fc9a92ca646c090d655510f:refs/remotes/origin/task/P5-04-fact-view
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:01:54.1311191Z From https://github.com/nanake-lab/nemu
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:01:54.1311764Z  * [new ref]         954918fae3f9db245fc9a92ca646c090d655510f -> origin/task/P5-04-fact-view
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:01:54.1515623Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:01:54.1516034Z ##[group]Determining the checkout info
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:01:54.1517056Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:01:54.1517501Z ##[group]Fetching LFS objects
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:01:54.1529522Z [command]"C:\Program Files\Git\cmd\git.exe" lfs fetch origin refs/remotes/origin/task/P5-04-fact-view
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:01:54.4156782Z Fetching reference refs/remotes/origin/task/P5-04-fact-view
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:23.2950157Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:23.2961858Z [command]"C:\Program Files\Git\cmd\git.exe" sparse-checkout disable
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:23.3290708Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --unset-all extensions.worktreeConfig
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:23.3558362Z ##[group]Checking out the ref
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:23.3569757Z [command]"C:\Program Files\Git\cmd\git.exe" checkout --progress --force -B task/P5-04-fact-view refs/remotes/origin/task/P5-04-fact-view
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.3928662Z Updating files:  22% (988/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.4095989Z Updating files:  23% (999/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.4602660Z Updating files:  24% (1042/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.4741800Z Updating files:  25% (1086/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.4885622Z Updating files:  26% (1129/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.5015249Z Updating files:  27% (1173/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.5146081Z Updating files:  28% (1216/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.5276829Z Updating files:  29% (1259/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.5406224Z Updating files:  30% (1303/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.5540594Z Updating files:  31% (1346/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.5668230Z Updating files:  32% (1390/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.5826807Z Updating files:  33% (1433/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.5970916Z Updating files:  34% (1476/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.6165040Z Updating files:  35% (1520/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.6302772Z Updating files:  36% (1563/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.6435666Z Updating files:  37% (1607/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.6571914Z Updating files:  38% (1650/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.6701380Z Updating files:  39% (1693/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.6834601Z Updating files:  40% (1737/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.6969613Z Updating files:  41% (1780/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.7113066Z Updating files:  42% (1824/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.7244046Z Updating files:  43% (1867/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.7364776Z Updating files:  44% (1911/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.7497148Z Updating files:  45% (1954/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.7625251Z Updating files:  46% (1997/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.7761940Z Updating files:  47% (2041/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.7907002Z Updating files:  48% (2084/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.8052365Z Updating files:  49% (2128/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.8180093Z Updating files:  50% (2171/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.8315166Z Updating files:  51% (2214/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.8448249Z Updating files:  52% (2258/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.8577641Z Updating files:  53% (2301/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.8727683Z Updating files:  54% (2345/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.8867649Z Updating files:  55% (2388/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.9001441Z Updating files:  56% (2431/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.9142086Z Updating files:  57% (2475/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.9296728Z Updating files:  58% (2518/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.9495917Z Updating files:  59% (2562/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.9778278Z Updating files:  60% (2605/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:24.9931110Z Updating files:  61% (2649/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.0057971Z Updating files:  62% (2692/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.0192606Z Updating files:  63% (2735/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.0473558Z Updating files:  64% (2779/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.0650352Z Updating files:  65% (2822/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.0764363Z Updating files:  66% (2866/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.0887394Z Updating files:  67% (2909/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.1023054Z Updating files:  68% (2952/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.1179750Z Updating files:  69% (2996/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.1307062Z Updating files:  70% (3039/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.1421655Z Updating files:  71% (3083/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.1543162Z Updating files:  72% (3126/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.1670622Z Updating files:  73% (3169/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.1899161Z Updating files:  74% (3213/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.2048194Z Updating files:  75% (3256/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.2177115Z Updating files:  76% (3300/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.2316159Z Updating files:  77% (3343/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.2442198Z Updating files:  78% (3386/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.2571588Z Updating files:  79% (3430/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.2701058Z Updating files:  80% (3473/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.2825731Z Updating files:  81% (3517/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.2939068Z Updating files:  82% (3560/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3053431Z Updating files:  83% (3604/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3166369Z Updating files:  84% (3647/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3281587Z Updating files:  85% (3690/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3391625Z Updating files:  86% (3734/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3504935Z Updating files:  87% (3777/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3617485Z Updating files:  88% (3821/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3726405Z Updating files:  89% (3864/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3839270Z Updating files:  90% (3907/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3882358Z Updating files:  91% (3951/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.3954859Z Updating files:  91% (3966/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.4070161Z Updating files:  92% (3994/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.4185364Z Updating files:  93% (4038/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.4296046Z Updating files:  94% (4081/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.4420137Z Updating files:  95% (4124/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.4759637Z Updating files:  96% (4168/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.4904081Z Updating files:  97% (4211/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.5069209Z Updating files:  98% (4255/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.5214803Z Updating files:  99% (4298/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.5215132Z Updating files: 100% (4341/4341)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.5215422Z Updating files: 100% (4341/4341), done.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.5356888Z Switched to a new branch 'task/P5-04-fact-view'
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.5393290Z branch 'task/P5-04-fact-view' set up to track 'origin/task/P5-04-fact-view'.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.8709013Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.9025104Z [command]"C:\Program Files\Git\cmd\git.exe" log -1 --format=%H
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.9269278Z 954918fae3f9db245fc9a92ca646c090d655510f
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.9309621Z ##[group]Removing auth
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.9321063Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:25.9588701Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:26.3645666Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:26.3866026Z http.https://github.com/.extraheader
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:26.3907386Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --unset-all http.https://github.com/.extraheader
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:26.4193993Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:26.8295300Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:26.8570632Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.2806762Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3140110Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3140532Z with:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3140697Z   node-version-file: .nvmrc
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3140899Z   always-auth: false
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3141076Z   check-latest: false
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3143800Z   token: ***
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3143952Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3144111Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3144323Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3144500Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3144736Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3145005Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3145254Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3145480Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3145718Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3145985Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3146235Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3146447Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3146633Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3146859Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3147143Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3147424Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3147709Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.3147940Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.7689174Z Resolved .nvmrc as 24
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.7723639Z Found in cache @ D:\actions-runner\_work\_tool\node\24.21.0\x64
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.7729607Z (node:41360) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.7730529Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:27.7732052Z ##[group]Environment details
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:28.2937633Z [warning]This project is configured to use pnpm because D:\actions-runner\_work\nemu\nemu\package.json has a "packageManager" field
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:28.2938131Z 
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6023805Z node: v24.21.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6024041Z npm: 11.19.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6024220Z yarn: 
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6024700Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6341421Z ##[group]Run npm install --global pnpm@12.11.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6341773Z ^[[36;1mnpm install --global pnpm@12.11.2^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6391158Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6391548Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6391715Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6391932Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6392126Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6392368Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6392637Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6392873Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6393096Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6393334Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6393599Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6393819Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6394026Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6394244Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6394470Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6394751Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6395029Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6395312Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:29.6395525Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.1848334Z 
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.1854308Z changed 2 packages in 18s
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.1868165Z npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.1869001Z npm warn install-scripts   pnpm@12.11.2 (preinstall: node install.js; postinstall: node install.js)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.1869508Z npm warn install-scripts
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.1870538Z npm warn install-scripts Run `npm install -g --allow-scripts=pnpm` to allow these scripts once, or `npm config set allow-scripts=pnpm --location=user` to allow them for all global installs.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6264542Z ##[group]Run pnpm install --frozen-lockfile
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6264878Z ^[[36;1mpnpm install --frozen-lockfile^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6309421Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6309807Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6309969Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6310182Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6310363Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6310610Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6310877Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6311112Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6311336Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6311578Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6311840Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6312062Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6312271Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6312487Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6312715Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6312996Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6313271Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6313554Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:49.6313764Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:50.9260075Z Scope: all 14 workspace projects
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:50.9838847Z ✓ Lockfile passes supply-chain policies (verified 3d ago)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:50.9839379Z Lockfile is up to date, resolution step is skipped
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:51.1812629Z Packages are hard linked from the content-addressable store to the virtual store.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:51.1813244Z   Content-addressable store is at: D:\.pnpm-store\v11
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:51.1813809Z   Virtual store is at:             node_modules/.pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:52.4534131Z Progress: resolved 141, reused 141, downloaded 0, added 126
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:53.5792015Z Progress: resolved 229, reused 229, downloaded 0, added 217
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:53.6425417Z Packages: +230
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:53.6425833Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.0306506Z Progress: resolved 230, reused 230, downloaded 0, added 230, done
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.0351711Z .../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.0356170Z .../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.2208682Z .../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.2413295Z .../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3089931Z 
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3090546Z devDependencies:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3090834Z + @eslint/js 10.0.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3091138Z + @playwright/test 1.64.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3091414Z + @types/node 24.19.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3091667Z + @types/pixelmatch 7.1.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3092110Z + @types/pngjs 6.0.5
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3092678Z + @types/react 19.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3093078Z + @types/react-dom 19.3.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3093527Z + @vitest/coverage-v8 5.0.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3093900Z + ajv 8.20.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3094226Z + electron 44.7.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3094559Z + electron-vite 5.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3094902Z + eslint 10.12.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3095222Z + pixelmatch 8.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3095572Z + pngjs 7.0.0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3095912Z + prettier 3.9.10
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3096267Z + typescript 6.0.3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3096633Z + typescript-eslint 8.71.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3097005Z + vite 7.3.7
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3097291Z + vitest 5.0.4
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3097455Z 
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3097715Z Done in 3.4s using pnpm v12.11.2
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3822637Z ##[group]Run $required = (Get-Content global.json | ConvertFrom-Json).sdk.version
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3823212Z ^[[36;1m$required = (Get-Content global.json | ConvertFrom-Json).sdk.version^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3823745Z ^[[36;1m$available = (dotnet --list-sdks) -match ("^" + [regex]::Escape($required) + " ")^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3824271Z ^[[36;1m"available=$([bool]$available)".ToLowerInvariant() >> $env:GITHUB_OUTPUT^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3871621Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3872009Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3872178Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3872406Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3872589Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3872834Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3873102Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3873339Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3873601Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3873885Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3874177Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3874402Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3874612Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3874798Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3875027Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3875313Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3875602Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3875889Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.3876105Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9716297Z ##[group]Run pnpm exec playwright install chromium
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9716653Z ^[[36;1mpnpm exec playwright install chromium^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9763985Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9764372Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9764537Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9764751Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9764936Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9765175Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9765448Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9765683Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9765906Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9766146Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9766410Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9766634Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9766870Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9767069Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9767305Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9767590Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9767871Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9768155Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:54.9768370Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:56.5178357Z Downloading Chrome for Testing 156.0.8078.4 (playwright chromium v1248)^[[2m from https://cdn.playwright.dev/builds/cft/156.0.8078.4/win64/chrome-win64.zip^[[22m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:02:58.8369930Z |                                                                                |   0% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:03:11.4894763Z |■■■■■■■■                                                                        |  10% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:03:20.8903549Z |■■■■■■■■■■■■■■■■                                                                |  20% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:03:27.7699774Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:03:33.4770862Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:03:40.4833544Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:03:50.1024137Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:03:57.7231948Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:10.6647521Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:21.1317132Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:28.1151266Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 197.5 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:30.5642459Z Chrome for Testing 156.0.8078.4 (playwright chromium v1248) downloaded to D:\Dev\cache\playwright\chromium-1248
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:30.5647894Z Downloading FFmpeg (playwright ffmpeg v1013)^[[2m from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1013/ffmpeg-win64.zip^[[22m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:32.8942106Z |                                                                                |   0% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:33.8707457Z |■■■■■■■■                                                                        |  10% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:35.1335599Z |■■■■■■■■■■■■■■■■                                                                |  20% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:36.1971189Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:36.4672305Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:36.9749195Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:37.1226130Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:37.2332380Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:37.9122036Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:37.9139436Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:37.9156080Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 1.6 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:37.9648529Z FFmpeg (playwright ffmpeg v1013) downloaded to D:\Dev\cache\playwright\ffmpeg-1013
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:37.9654067Z Downloading Chrome Headless Shell 156.0.8078.4 (playwright chromium-headless-shell v1248)^[[2m from https://cdn.playwright.dev/builds/cft/156.0.8078.4/win64/chrome-headless-shell-win64.zip^[[22m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:39.5816117Z |                                                                                |   0% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:46.6130845Z |■■■■■■■■                                                                        |  10% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:51.4647563Z |■■■■■■■■■■■■■■■■                                                                |  20% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:55.1080642Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:04:59.1159900Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:04.0223493Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:08.1522978Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:12.5986592Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:17.0512364Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:21.0543006Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:26.6257730Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 118.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:28.1442377Z Chrome Headless Shell 156.0.8078.4 (playwright chromium-headless-shell v1248) downloaded to D:\Dev\cache\playwright\chromium_headless_shell-1248
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:28.1448189Z Downloading Winldd (playwright winldd v1007)^[[2m from https://cdn.playwright.dev/dbazure/download/playwright/builds/winldd/1007/winldd-win64.zip^[[22m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.6690490Z |■■■■■■■■                                                                        |  12% of 0.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.6693891Z |■■■■■■■■■■■■■■■■                                                                |  25% of 0.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.6695701Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  38% of 0.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.8518710Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 0.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9127722Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  63% of 0.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9129142Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  76% of 0.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9130666Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  89% of 0.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9131757Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 0.1 MiB
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9409224Z Winldd (playwright winldd v1007) downloaded to D:\Dev\cache\playwright\winldd-1007
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9918540Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Init
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9918986Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Init^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9963940Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9964414Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9964616Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9964882Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9965108Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9965407Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9965739Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9966029Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9966310Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9966609Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9966931Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9967205Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9967497Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9967682Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9968071Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9968354Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9968632Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9968917Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:30.9969131Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6078378Z D:\actions-runner\_work\_temp\nemu-evidence\39901710241\1\windows
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6866488Z ##[group]Run pwsh -NoProfile -File tools/scaffold/windows-evidence.tests.ps1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6867074Z ^[[36;1mpwsh -NoProfile -File tools/scaffold/windows-evidence.tests.ps1^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6915494Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6915882Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6916046Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6916259Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6916440Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6916690Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6916971Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6917203Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6917431Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6917691Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6917992Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6918218Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6918450Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6918637Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6918862Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6919141Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6919417Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6919698Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6920130Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39901710241\1\windows
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:31.6920536Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:32.9629724Z D:\Dev\cache\tmp\nemu-evidence-tests-e3feb916-f63c-44eb-abbe-1952e8ece879\nemu-evidence\fixture\1\windows
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:33.5611161Z ^[[31;1mException: ^[[0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\windows-evidence.ps1:14^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:33.5611692Z ^[[31;1m^[[0m^[[36;1mLine |^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:33.5612368Z ^[[31;1m^[[0m^[[36;1m^[[36;1m  14 | ^[[0m … teralPath $root) { ^[[36;1mthrow "Evidence directory already exists: $root"^[[0m }^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:33.5613147Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m     | ^[[31;1m                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:33.5613866Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m^[[31;1m^[[31;1m^[[36;1m     | ^[[31;1mEvidence directory already exists:^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:33.5615010Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m^[[31;1m^[[31;1m^[[36;1m^[[31;1m^[[36;1m     | ^[[31;1mD:\Dev\cache\tmp\nemu-evidence-tests-e3feb916-f63c-44eb-abbe-1952e8ece879\nemu-evidence\fixture\1\windows^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:34.1544175Z Verified 2 current-attempt evidence files
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:34.7759024Z ^[[31;1mException: ^[[0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\windows-evidence.ps1:112^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:34.7759553Z ^[[31;1m^[[0m^[[36;1mLine |^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:34.7760223Z ^[[31;1m^[[0m^[[36;1m^[[36;1m 112 | ^[[0m $manifest = @(^[[36;1mGet-ChildItem -LiteralPath $root -Recurse -File^[[0m | Where …^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:34.7768081Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m     | ^[[31;1m               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:34.7768877Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m^[[31;1m^[[31;1m^[[36;1m     | ^[[31;1mNot generated in this attempt: fixture.txt^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:35.3329802Z ^[[31;1mException: ^[[0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\windows-evidence.ps1:108^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:35.3330350Z ^[[31;1m^[[0m^[[36;1mLine |^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:35.3330997Z ^[[31;1m^[[0m^[[36;1m^[[36;1m 108 | ^[[0m … .sha -ne (git rev-parse HEAD)) { ^[[36;1mthrow 'Evidence identity mismatch'^[[0m }^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:35.3331995Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m     | ^[[31;1m                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:35.3332684Z ^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m^[[31;1m^[[31;1m^[[36;1m     | ^[[31;1mEvidence identity mismatch^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:35.8850402Z Verified 2 current-attempt evidence files
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:35.9680407Z PASS: fresh evidence accepted; duplicate directory, stale timestamp and wrong attempt rejected.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1093916Z ##[group]Run node --test tools/scaffold/window-wait-diagnostics.test.mjs
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1094405Z ^[[36;1mnode --test tools/scaffold/window-wait-diagnostics.test.mjs^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1138298Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1138674Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1138840Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1139048Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1139239Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1139481Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1139748Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1139981Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1140207Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1140444Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1140704Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1140924Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1141157Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1141344Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1141570Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1141851Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1142133Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1142415Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1142771Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39901710241\1\windows
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.1143139Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.9977308Z ✔ snapshot starts after window wait settles (success) (2.0133ms)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.9979077Z ✔ snapshot starts after window wait settles (failure) (1.1593ms)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:36.9980442Z ✔ repository snapshots contain only related processes and matching derivative hashes (126.9642ms)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.0091949Z ℹ tests 3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.0092171Z ℹ suites 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.0092367Z ℹ pass 3
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.0092577Z ℹ fail 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.0092768Z ℹ cancelled 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.0092992Z ℹ skipped 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.0093187Z ℹ todo 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.0093410Z ℹ duration_ms 459.2823
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1039687Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1040231Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check transport^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1087589Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1087989Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1088158Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1088387Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1088568Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1088805Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1089068Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1089300Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1089519Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1089759Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1090020Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1090266Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1090476Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1090661Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1090884Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1091165Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1091440Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1092435Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1092788Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39901710241\1\windows
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:37.1093149Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8018591Z ^[[31;1m$ node --test tools/scaffold/transport.test.mjs^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8777007Z ✔ local byte transport: Windows named pipe / Unix socket (7.5669ms)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8850596Z ℹ tests 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8851168Z ℹ suites 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8852450Z ℹ pass 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8853461Z ℹ fail 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8854800Z ℹ cancelled 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8855784Z ℹ skipped 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8856904Z ℹ todo 0
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:38.8858011Z ℹ duration_ms 80.7887
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2946197Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2946741Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Run -Check isolation^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2990902Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2991329Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2991509Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2991720Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2991902Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2992144Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2992411Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2992643Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2992867Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2993104Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2993369Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2993613Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2993821Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2994003Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2994233Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2994513Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2994796Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2995076Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2995430Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39901710241\1\windows
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:39.2995798Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:40.9650321Z ^[[31;1mD:\Dev\cache\tmp\nemu-isolation-f6bb1b89-299e-4bb0-b8f7-e9c0476a6352: Access is denied.^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:40.9651690Z Successfully processed 0 files; Failed processing 1 files
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.0295243Z ^[[31;1m^[[31;1mException: ^[[0mD:\actions-runner\_work\nemu\nemu\tools\scaffold\test-windows-isolation.ps1:7^[[0m^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.0304943Z ^[[31;1m^[[31;1m^[[0m^[[36;1mLine |^[[0m^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.0310321Z ^[[31;1m^[[31;1m^[[0m^[[36;1m^[[36;1m   7 | ^[[0m … DE -ne 0) { ^[[36;1mthrow 'Could not set medium integrity on test directory'^[[0m  …^[[0m^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.0315132Z ^[[31;1m^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m     | ^[[31;1m               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[[0m^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.0320040Z ^[[31;1m^[[31;1m^[[0m^[[36;1m^[[36;1m^[[0m^[[36;1m^[[0m^[[36;1m^[[31;1m^[[31;1m^[[36;1m     | ^[[31;1mCould not set medium integrity on test directory^[[0m^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4714197Z ##[error]Process completed with exit code 1.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4823480Z ##[group]Run ./tools/scaffold/windows-evidence.ps1 -Mode Verify
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4823911Z ^[[36;1m./tools/scaffold/windows-evidence.ps1 -Mode Verify^[[0m
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4869644Z shell: C:\Users\nanake\AppData\Local\Microsoft\WindowsApps\pwsh.EXE -command ". '{0}'"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4870036Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4870202Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4870411Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4870588Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4870822Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4871085Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4871481Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4871705Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4871940Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4872200Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4872417Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4872657Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4872840Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4873065Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4873343Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4873616Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4873895Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4874246Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39901710241\1\windows
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:41.4874613Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.0966573Z Verified 9 current-attempt evidence files
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1695597Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1695982Z with:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1696170Z   name: windows-P0-01-evidence-39901710241-1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1696528Z   path: D:\actions-runner\_work\_temp\nemu-evidence\39901710241\1\windows/
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1696881Z   if-no-files-found: error
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1697080Z   compression-level: 6
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1697258Z   overwrite: false
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1697435Z   include-hidden-files: false
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1697626Z env:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1697781Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1697986Z   UV_LINK_MODE: copy
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1698163Z   UV_CACHE_DIR: D:\Dev\cache\uv
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1698394Z   UV_PYTHON_INSTALL_DIR: D:\Dev\cache\uv-python
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1698661Z   npm_config_cache: D:\Dev\cache\npm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1698897Z   PNPM_STORE_DIR: D:\Dev\cache\pnpm
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1699139Z   CARGO_HOME: D:\Dev\cache\cargo
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1699380Z   CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1699646Z   HF_HOME: D:\Dev\cache\huggingface
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1699865Z   ORT_CACHE_DIR: D:\Dev\cache\ort
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1700070Z   TEMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1700250Z   TMP: D:\Dev\cache\tmp
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1707331Z   PLAYWRIGHT_BROWSERS_PATH: D:\Dev\cache\playwright
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1707619Z   ELECTRON_CACHE: D:\Dev\cache\electron
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1707903Z   ELECTRON_BUILDER_CACHE: D:\Dev\cache\electron-builder
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1708193Z   NUGET_PACKAGES: D:\Dev\cache\nuget
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1708555Z   NEMU_EVIDENCE_DIR: D:\actions-runner\_work\_temp\nemu-evidence\39901710241\1\windows
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.1708918Z ##[endgroup]
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.6661711Z (node:37256) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.6662542Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.6727332Z With the provided path, there will be 10 files uploaded
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.6731274Z Artifact name is valid!
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:42.6733221Z Root directory input is valid!
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:44.4421698Z Beginning upload of artifact content to blob storage
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:44.4759606Z (node:37256) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:47.1596972Z Uploaded bytes 19007
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:47.4979208Z Finished uploading artifact content to blob storage!
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:47.4979935Z SHA256 digest of uploaded artifact zip is 8fc8c26c01666286319aff14240153f28d2ed359f34167c7c0b075c1d0705645
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:47.4980748Z Finalizing artifact upload
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.2684689Z Artifact windows-P0-01-evidence-39901710241-1.zip successfully finalized. Artifact ID 12490129496
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.2685777Z Artifact windows-P0-01-evidence-39901710241-1 has been successfully uploaded! Final size is 19007 bytes. Artifact ID is 12490129496
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.2694534Z Artifact download URL: https://github.com/nanake-lab/nemu/actions/runs/39901710241/artifacts/12490129496
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.2975577Z Post job cleanup.
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.4117758Z [command]"C:\Program Files\Git\cmd\git.exe" version
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.4343062Z git version 2.54.0.windows.1
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.4387493Z Copying 'C:\Users\nanake\.gitconfig' to 'D:\actions-runner\_work\_temp\31b3ef56-d02e-406a-9f9b-307663a954d6\.gitconfig'
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.4402216Z Temporarily overriding HOME='D:\actions-runner\_work\_temp\31b3ef56-d02e-406a-9f9b-307663a954d6' before making global git config changes
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.4403115Z Adding repository directory to the temporary git global config as a safe directory
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.4415978Z [command]"C:\Program Files\Git\cmd\git.exe" config --global --add safe.directory D:\actions-runner\_work\nemu\nemu
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.4683489Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp core\.sshCommand
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.4952799Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.8910423Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:48.9191403Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:49.3094336Z [command]"C:\Program Files\Git\cmd\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:49.3374964Z [command]"C:\Program Files\Git\cmd\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:49.7558964Z Cleaning up orphan processes
+Windows desktop and isolation	UNKNOWN STEP	2026-10-23T09:05:49.8597028Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

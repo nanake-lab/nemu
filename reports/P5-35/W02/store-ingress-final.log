@@ -1,0 +1,39 @@
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-35\core\crates\core-types)
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-35\core\crates\core-store)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.14s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-35\debug\deps\core_store-a8329e3b1dbabe6a.exe)
+
+running 10 tests
+test tests::terminal_ingress::authentication_token_is_redacted_and_cannot_be_stored ... ok
+test tests::terminal_ingress::migration_checks::acknowledged_audit_detects_old_database_restore ... ok
+running 1 test
+W02_INJECT IngressAllocated object=None plan=Nth(NthFault { point: IngressAllocated, occurrence: 1, object_type: None, seen: 1 })
+test tests::terminal_ingress::migration_checks::sys17_precommit_failure_retains_complete_previous_physical_format ... ok
+test tests::terminal_ingress::capacity_is_typed_and_retry_keeps_key_without_consuming_position ... ok
+running 1 test
+W02_INJECT IngressBeforeSql object=None plan=Nth(NthFault { point: IngressBeforeSql, occurrence: 1, object_type: None, seen: 1 })
+test tests::terminal_ingress::terminal_positions_follow_durable_tail_after_restart_and_same_key_retry ... ok
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+test tests::terminal_ingress::allocation_and_audit_io_failures_never_issue_success ... ok
+running 1 test
+W02_INJECT AuditBeforeSql object=None plan=Nth(NthFault { point: AuditBeforeSql, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT AuditSqlCommitted object=None plan=Nth(NthFault { point: AuditSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+test tests::terminal_ingress::migration_checks::v2_head_remains_byte_preserving_and_cannot_use_structure_migration ... ok
+test tests::terminal_ingress::audit_is_bounded_append_only_and_preserves_every_authority_row ... ok
+running 1 test
+W02_INJECT MigrationBeforeSql object=None plan=Nth(NthFault { point: MigrationBeforeSql, occurrence: 1, object_type: None, seen: 1 })
+test tests::terminal_ingress::migration_checks::sys17_physical_format_roundtrip_preserves_v3_and_pending_data ... ok
+running 1 test
+W02_INJECT MigrationSqlCommitted object=None plan=Nth(NthFault { point: MigrationSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT MigrationBeforeSql object=None plan=Nth(NthFault { point: MigrationBeforeSql, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT MigrationSqlCommitted object=None plan=Nth(NthFault { point: MigrationSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+test tests::terminal_ingress::process_crashes_recover_allocation_audit_and_both_migration_directions ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 36 filtered out; finished in 13.12s
+

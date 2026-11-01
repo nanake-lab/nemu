@@ -1,0 +1,28 @@
+{
+  "commands": [
+    {
+      "command": "cargo fmt --all -- --check",
+      "output": "none",
+      "exit_code": 0
+    },
+    {
+      "command": "cargo clippy --workspace --all-targets --locked --offline -- -D warnings",
+      "log": "clippy.log",
+      "exit_code": 0
+    },
+    {
+      "command": "cargo test --workspace --locked --offline --exclude core-store",
+      "log": "workspace.log",
+      "exit_code": 0
+    }
+  ],
+  "counts": {
+    "unit": 67,
+    "failed": 0,
+    "doc": 1,
+    "integration": 17,
+    "ignored": 0
+  },
+  "source_head": "111443eb598062668afbe5bf5b5999921e86601e",
+  "note": "Before merging main 86779b1; final rerun is separately archived."
+}

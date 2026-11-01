@@ -1,0 +1,30 @@
+{
+  "step": "migration",
+  "start": "2026-10-24T01:41:19.8348890+08:00",
+  "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+  "command": [
+    "cargo",
+    "+1.99.0",
+    "test",
+    "--manifest-path",
+    "core/Cargo.toml",
+    "-p",
+    "core-store",
+    "--locked",
+    "-j",
+    "1",
+    "tests::r_migration::",
+    "--",
+    "--test-threads=1",
+    "--nocapture"
+  ],
+  "head": "6c6227e3af588ba392c1bb05fdfc0c3d207b0040",
+  "main": "0b5412e95caab447c70148c473e544dbab28c57c",
+  "target": "D:\\Dev\\cache\\P5-34\\target",
+  "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+  "jobs": 1,
+  "testThreads": 1,
+  "end": "2026-10-24T01:43:59.3454403+08:00",
+  "exitCode": 0,
+  "logSha256": "b7d6338a4a71e5fb737f70e882044d9b8ad2041764e36fefb627a814941f79e1"
+}

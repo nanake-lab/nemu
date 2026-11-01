@@ -1,0 +1,40 @@
+Source: GitHub connector read-only API excerpts; collected 2026-10-26 05:09:26 UTC
+Repository: nanake-lab/nemu
+PR code head requested: 43da867d42dbb7ce86ee0ff23cd480225b5d1a0a
+API: fetch_commit_workflow_runs(commit_sha=43da867d42dbb7ce86ee0ff23cd480225b5d1a0a)
+Run: id=40272465565 name=CI status=completed conclusion=failure run_number=274
+API: fetch_workflow_run_jobs(run_id=40272465565)
+Job: id=121408034364 name="Ubuntu static checks and unit tests" status=completed conclusion=failure
+Steps (number: conclusion; names retained from API):
+1 success Set up job
+2 success actions/checkout
+3 success actions/setup-node
+4 success npm install --global pnpm@12.11.2
+5 success pnpm install --frozen-lockfile
+6 success pnpm lint && pnpm typecheck && pnpm test && pnpm build
+7 success pnpm test:contracts
+8 success actions/upload-artifact
+9 success pnpm test:transport
+10 success astral-sh/setup-uv
+11 success Python checks (all four projects)
+12 failure Rust checks
+13 skipped actions/setup-dotnet
+14 skipped dotnet build executors/office-connector/OfficeConnector.csproj --configuration Release
+15 skipped Hosted minutes estimate
+16 skipped P5-01 IDL and three-language conformance (D10.8 / SYS21)
+17 skipped P5-21 contract compatibility tooling (no reuse; checked by test:core-contracts)
+18 skipped P2-05 residual signal metrics (no browser or private assets)
+19 skipped Status board pause and reminder regressions
+36 skipped Post Run astral-sh/setup-uv
+37 skipped Post Run actions/setup-node
+38 success Post Run actions/checkout
+39 success Complete job
+
+Raw Actions log excerpts (times UTC):
+2026-10-26T05:06:25Z repository nanake-lab/nemu checked out pull/77/merge
+2026-10-26T05:06:33Z HEAD is now at 4b2ca3f Merge 43da867d42dbb7ce86ee0ff23cd480225b5d1a0a into 2bc04bad4902657eef49d3225cafa7945e7cfae6
+2026-10-26T05:08:05Z Rust command block listed: cargo fmt --all -- --check; cargo clippy --workspace --all-targets -- -D warnings; cargo test --workspace --locked
+2026-10-26T05:08:29.247Z error[E0433]: cannot find module or crate `libm` in this scope (duration.rs:16,20; interval.rs:36,41; update.rs:45; 7 previous errors total)
+2026-10-26T05:08:29.311Z error: could not compile `core-kernel` (lib) due to 7 previous errors
+2026-10-26T05:08:29.507Z ##[error]Process completed with exit code 101.
+Rust test summary: no test summary present; the sequential Rust command block stopped at the Clippy/compiler failure before cargo test.

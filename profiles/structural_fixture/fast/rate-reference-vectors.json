@@ -1,0 +1,2135 @@
+{
+  "purpose": "Synthetic structural tests only; no behavior or life-lineage evidence",
+  "oracle": "Exact Fraction(binary64 inputs), sum(abs(d_i)*lambda_i)/sum(abs(d_i)), one final binary64 rounding",
+  "generator": "reports/P5-10/review-2-2026-10-26/generate_rate_references.py",
+  "cases": [
+    {
+      "name": "review-counterexample",
+      "direction_bits": [
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000001",
+        "8000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-1",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "8000000000000000",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-2",
+      "direction_bits": [
+        "3fe999999999999a",
+        "0000000000000001",
+        "bfe3333333333333",
+        "8000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-3",
+      "direction_bits": [
+        "3fe999999999999a",
+        "0000000000000001",
+        "8000000000000000",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-4",
+      "direction_bits": [
+        "3fe999999999999a",
+        "8000000000000000",
+        "bfe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-5",
+      "direction_bits": [
+        "3fe999999999999a",
+        "8000000000000000",
+        "0000000000000001",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-6",
+      "direction_bits": [
+        "bfe3333333333333",
+        "3fe999999999999a",
+        "0000000000000001",
+        "8000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-7",
+      "direction_bits": [
+        "bfe3333333333333",
+        "3fe999999999999a",
+        "8000000000000000",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-8",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000001",
+        "3fe999999999999a",
+        "8000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-9",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000001",
+        "8000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-10",
+      "direction_bits": [
+        "bfe3333333333333",
+        "8000000000000000",
+        "3fe999999999999a",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-11",
+      "direction_bits": [
+        "bfe3333333333333",
+        "8000000000000000",
+        "0000000000000001",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-12",
+      "direction_bits": [
+        "0000000000000001",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "8000000000000000"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-13",
+      "direction_bits": [
+        "0000000000000001",
+        "3fe999999999999a",
+        "8000000000000000",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-14",
+      "direction_bits": [
+        "0000000000000001",
+        "bfe3333333333333",
+        "3fe999999999999a",
+        "8000000000000000"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-15",
+      "direction_bits": [
+        "0000000000000001",
+        "bfe3333333333333",
+        "8000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-16",
+      "direction_bits": [
+        "0000000000000001",
+        "8000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-17",
+      "direction_bits": [
+        "0000000000000001",
+        "8000000000000000",
+        "bfe3333333333333",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-18",
+      "direction_bits": [
+        "8000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-19",
+      "direction_bits": [
+        "8000000000000000",
+        "3fe999999999999a",
+        "0000000000000001",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-20",
+      "direction_bits": [
+        "8000000000000000",
+        "bfe3333333333333",
+        "3fe999999999999a",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-21",
+      "direction_bits": [
+        "8000000000000000",
+        "bfe3333333333333",
+        "0000000000000001",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-22",
+      "direction_bits": [
+        "8000000000000000",
+        "0000000000000001",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "review-permutation-23",
+      "direction_bits": [
+        "8000000000000000",
+        "0000000000000001",
+        "bfe3333333333333",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "mixed-1-0-0-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "mixed-1-0-0-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "mixed-1-0-0-2",
+      "direction_bits": [
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "mixed-1-0-0-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cb96dee2d07b0f9"
+    },
+    {
+      "name": "mixed-1-0-1-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc6db6db6db6dc0"
+    },
+    {
+      "name": "mixed-1-0-1-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc6db6db6db6dc0"
+    },
+    {
+      "name": "mixed-1-0-1-2",
+      "direction_bits": [
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc6db6db6db6dc0"
+    },
+    {
+      "name": "mixed-1-0-1-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "3cc6db6db6db6dc0"
+    },
+    {
+      "name": "mixed-1-1-0-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cb4dacced167eab"
+    },
+    {
+      "name": "mixed-1-1-0-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000001",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb4dacced167eab"
+    },
+    {
+      "name": "mixed-1-1-0-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "8000000000000001",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb4dacced167eab"
+    },
+    {
+      "name": "mixed-1-1-0-3",
+      "direction_bits": [
+        "8000000000000001",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cb4dacced167eab"
+    },
+    {
+      "name": "mixed-1-1-1-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "3cc2bec333018870"
+    },
+    {
+      "name": "mixed-1-1-1-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000001",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc2bec333018870"
+    },
+    {
+      "name": "mixed-1-1-1-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "8000000000000001",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc2bec333018870"
+    },
+    {
+      "name": "mixed-1-1-1-3",
+      "direction_bits": [
+        "8000000000000001",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc2bec333018870"
+    },
+    {
+      "name": "mixed-2-0-0-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000002",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc96dee2d07b0ef"
+    },
+    {
+      "name": "mixed-2-0-0-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000002",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc96dee2d07b0ef"
+    },
+    {
+      "name": "mixed-2-0-0-2",
+      "direction_bits": [
+        "0000000000000002",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc96dee2d07b0ef"
+    },
+    {
+      "name": "mixed-2-0-0-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000002"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cc96dee2d07b0ef"
+    },
+    {
+      "name": "mixed-2-0-1-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000002",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd6db6db6db6dbb"
+    },
+    {
+      "name": "mixed-2-0-1-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000002",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd6db6db6db6dbb"
+    },
+    {
+      "name": "mixed-2-0-1-2",
+      "direction_bits": [
+        "0000000000000002",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd6db6db6db6dbb"
+    },
+    {
+      "name": "mixed-2-0-1-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000002"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "3cd6db6db6db6dbb"
+    },
+    {
+      "name": "mixed-2-1-0-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000002"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cc4dacced167ea1"
+    },
+    {
+      "name": "mixed-2-1-0-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000002",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc4dacced167ea1"
+    },
+    {
+      "name": "mixed-2-1-0-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "8000000000000002",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc4dacced167ea1"
+    },
+    {
+      "name": "mixed-2-1-0-3",
+      "direction_bits": [
+        "8000000000000002",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cc4dacced167ea1"
+    },
+    {
+      "name": "mixed-2-1-1-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000002"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "3cd2bec33301886b"
+    },
+    {
+      "name": "mixed-2-1-1-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000002",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd2bec33301886b"
+    },
+    {
+      "name": "mixed-2-1-1-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "8000000000000002",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd2bec33301886b"
+    },
+    {
+      "name": "mixed-2-1-1-3",
+      "direction_bits": [
+        "8000000000000002",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd2bec33301886b"
+    },
+    {
+      "name": "mixed-3-0-0-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000003",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd31272a1c5c4b0"
+    },
+    {
+      "name": "mixed-3-0-0-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000003",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd31272a1c5c4b0"
+    },
+    {
+      "name": "mixed-3-0-0-2",
+      "direction_bits": [
+        "0000000000000003",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd31272a1c5c4b0"
+    },
+    {
+      "name": "mixed-3-0-0-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000003"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cd31272a1c5c4b0"
+    },
+    {
+      "name": "mixed-3-0-1-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000003",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ce124924924924b"
+    },
+    {
+      "name": "mixed-3-0-1-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000003",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ce124924924924b"
+    },
+    {
+      "name": "mixed-3-0-1-2",
+      "direction_bits": [
+        "0000000000000003",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ce124924924924b"
+    },
+    {
+      "name": "mixed-3-0-1-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000003"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "3ce124924924924b"
+    },
+    {
+      "name": "mixed-3-1-0-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000003"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3ccf483363a1bdec"
+    },
+    {
+      "name": "mixed-3-1-0-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000003",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ccf483363a1bdec"
+    },
+    {
+      "name": "mixed-3-1-0-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "8000000000000003",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ccf483363a1bdec"
+    },
+    {
+      "name": "mixed-3-1-0-3",
+      "direction_bits": [
+        "8000000000000003",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ccf483363a1bdec"
+    },
+    {
+      "name": "mixed-3-1-1-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000003"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "3cdc1e24cc824c9e"
+    },
+    {
+      "name": "mixed-3-1-1-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000003",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cdc1e24cc824c9e"
+    },
+    {
+      "name": "mixed-3-1-1-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "8000000000000003",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cdc1e24cc824c9e"
+    },
+    {
+      "name": "mixed-3-1-1-3",
+      "direction_bits": [
+        "8000000000000003",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cdc1e24cc824c9e"
+    },
+    {
+      "name": "mixed-17-0-0-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000011",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cfb04cd0fd82bf4"
+    },
+    {
+      "name": "mixed-17-0-0-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000011",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cfb04cd0fd82bf4"
+    },
+    {
+      "name": "mixed-17-0-0-2",
+      "direction_bits": [
+        "0000000000000011",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cfb04cd0fd82bf4"
+    },
+    {
+      "name": "mixed-17-0-0-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000011"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cfb04cd0fd82bf4"
+    },
+    {
+      "name": "mixed-17-0-1-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000011",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3d08492492492492"
+    },
+    {
+      "name": "mixed-17-0-1-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "0000000000000011",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3d08492492492492"
+    },
+    {
+      "name": "mixed-17-0-1-2",
+      "direction_bits": [
+        "0000000000000011",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3d08492492492492"
+    },
+    {
+      "name": "mixed-17-0-1-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "0000000000000011"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "3d08492492492492"
+    },
+    {
+      "name": "mixed-17-1-0-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000011"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3cf62879bbe7e681"
+    },
+    {
+      "name": "mixed-17-1-0-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000011",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cf62879bbe7e681"
+    },
+    {
+      "name": "mixed-17-1-0-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "8000000000000011",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cf62879bbe7e681"
+    },
+    {
+      "name": "mixed-17-1-0-3",
+      "direction_bits": [
+        "8000000000000011",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cf62879bbe7e681"
+    },
+    {
+      "name": "mixed-17-1-1-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000011"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "3d03eaaf6631a0ed"
+    },
+    {
+      "name": "mixed-17-1-1-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "8000000000000011",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3d03eaaf6631a0ed"
+    },
+    {
+      "name": "mixed-17-1-1-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "8000000000000011",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3d03eaaf6631a0ed"
+    },
+    {
+      "name": "mixed-17-1-1-3",
+      "direction_bits": [
+        "8000000000000011",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3d03eaaf6631a0ed"
+    },
+    {
+      "name": "mixed-4503599627370495-0-0-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "000fffffffffffff",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ff96dee2d07b0e3"
+    },
+    {
+      "name": "mixed-4503599627370495-0-0-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "000fffffffffffff",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ff96dee2d07b0e3"
+    },
+    {
+      "name": "mixed-4503599627370495-0-0-2",
+      "direction_bits": [
+        "000fffffffffffff",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ff96dee2d07b0e3"
+    },
+    {
+      "name": "mixed-4503599627370495-0-0-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "000fffffffffffff"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3ff96dee2d07b0e3"
+    },
+    {
+      "name": "mixed-4503599627370495-0-1-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "000fffffffffffff",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "4006db6db6db6db5"
+    },
+    {
+      "name": "mixed-4503599627370495-0-1-1",
+      "direction_bits": [
+        "bfe3333333333333",
+        "000fffffffffffff",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "4006db6db6db6db5"
+    },
+    {
+      "name": "mixed-4503599627370495-0-1-2",
+      "direction_bits": [
+        "000fffffffffffff",
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "4006db6db6db6db5"
+    },
+    {
+      "name": "mixed-4503599627370495-0-1-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "bfe3333333333333",
+        "000fffffffffffff"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "4006db6db6db6db5"
+    },
+    {
+      "name": "mixed-4503599627370495-1-0-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "800fffffffffffff"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "3ff4dacced167e95"
+    },
+    {
+      "name": "mixed-4503599627370495-1-0-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "800fffffffffffff",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ff4dacced167e95"
+    },
+    {
+      "name": "mixed-4503599627370495-1-0-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "800fffffffffffff",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ff4dacced167e95"
+    },
+    {
+      "name": "mixed-4503599627370495-1-0-3",
+      "direction_bits": [
+        "800fffffffffffff",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3ff4dacced167e95"
+    },
+    {
+      "name": "mixed-4503599627370495-1-1-0",
+      "direction_bits": [
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "800fffffffffffff"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "4002bec333018865"
+    },
+    {
+      "name": "mixed-4503599627370495-1-1-1",
+      "direction_bits": [
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd",
+        "800fffffffffffff",
+        "3fe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "4002bec333018865"
+    },
+    {
+      "name": "mixed-4503599627370495-1-1-2",
+      "direction_bits": [
+        "3fe6a09e667f3bcd",
+        "800fffffffffffff",
+        "3fe0000000000000",
+        "bfe0000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "4002bec333018865"
+    },
+    {
+      "name": "mixed-4503599627370495-1-1-3",
+      "direction_bits": [
+        "800fffffffffffff",
+        "3fe0000000000000",
+        "bfe0000000000000",
+        "3fe6a09e667f3bcd"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "4002bec333018865"
+    },
+    {
+      "name": "overflowing-direct-sum-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "7fdfffffffffffff",
+        "7fefffffffffffff",
+        "3ff0000000000000"
+      ],
+      "expected_bits": "7fe9249249249248"
+    },
+    {
+      "name": "subnormal-output-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "0000000000000001",
+        "0000000000000002",
+        "0000000000000003",
+        "0000000000000001"
+      ],
+      "expected_bits": "0000000000000001"
+    },
+    {
+      "name": "unit-tolerance-0",
+      "direction_bits": [
+        "3ff0000000000001",
+        "0000000000000001",
+        "0000000000000000",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd0000000000004"
+    },
+    {
+      "name": "common-rate-0-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000001"
+      ],
+      "expected_bits": "0000000000000001"
+    },
+    {
+      "name": "common-rate-1-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "0010000000000000",
+        "0010000000000000",
+        "0010000000000000",
+        "0010000000000000"
+      ],
+      "expected_bits": "0010000000000000"
+    },
+    {
+      "name": "common-rate-2-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "7fe1ccf385ebc8a0"
+    },
+    {
+      "name": "common-rate-3-0",
+      "direction_bits": [
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "7fefffffffffffff",
+        "7fefffffffffffff",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "7fefffffffffffff"
+    },
+    {
+      "name": "overflowing-direct-sum-1",
+      "direction_bits": [
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "7fdfffffffffffff",
+        "7fefffffffffffff",
+        "3ff0000000000000",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "7fe9249249249248"
+    },
+    {
+      "name": "subnormal-output-1",
+      "direction_bits": [
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "0000000000000002",
+        "0000000000000003",
+        "0000000000000001",
+        "0000000000000001"
+      ],
+      "expected_bits": "0000000000000001"
+    },
+    {
+      "name": "unit-tolerance-1",
+      "direction_bits": [
+        "0000000000000001",
+        "0000000000000000",
+        "0000000000000000",
+        "3ff0000000000001"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd0000000000004"
+    },
+    {
+      "name": "common-rate-0-1",
+      "direction_bits": [
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000001"
+      ],
+      "expected_bits": "0000000000000001"
+    },
+    {
+      "name": "common-rate-1-1",
+      "direction_bits": [
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "0010000000000000",
+        "0010000000000000",
+        "0010000000000000",
+        "0010000000000000"
+      ],
+      "expected_bits": "0010000000000000"
+    },
+    {
+      "name": "common-rate-2-1",
+      "direction_bits": [
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "7fe1ccf385ebc8a0"
+    },
+    {
+      "name": "common-rate-3-1",
+      "direction_bits": [
+        "3fe3333333333333",
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "7fefffffffffffff",
+        "7fefffffffffffff",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "7fefffffffffffff"
+    },
+    {
+      "name": "overflowing-direct-sum-2",
+      "direction_bits": [
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "3ff0000000000000",
+        "7fefffffffffffff",
+        "7fdfffffffffffff"
+      ],
+      "expected_bits": "7fe9249249249248"
+    },
+    {
+      "name": "subnormal-output-2",
+      "direction_bits": [
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333"
+      ],
+      "lambda_bits": [
+        "0000000000000003",
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000002"
+      ],
+      "expected_bits": "0000000000000001"
+    },
+    {
+      "name": "unit-tolerance-2",
+      "direction_bits": [
+        "0000000000000000",
+        "0000000000000000",
+        "3ff0000000000001",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "3cd0000000000004"
+    },
+    {
+      "name": "common-rate-0-2",
+      "direction_bits": [
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333"
+      ],
+      "lambda_bits": [
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000001"
+      ],
+      "expected_bits": "0000000000000001"
+    },
+    {
+      "name": "common-rate-1-2",
+      "direction_bits": [
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333"
+      ],
+      "lambda_bits": [
+        "0010000000000000",
+        "0010000000000000",
+        "0010000000000000",
+        "0010000000000000"
+      ],
+      "expected_bits": "0010000000000000"
+    },
+    {
+      "name": "common-rate-2-2",
+      "direction_bits": [
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "7fe1ccf385ebc8a0"
+    },
+    {
+      "name": "common-rate-3-2",
+      "direction_bits": [
+        "0000000000000001",
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "7fefffffffffffff",
+        "7fefffffffffffff",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "7fefffffffffffff"
+    },
+    {
+      "name": "overflowing-direct-sum-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "3ff0000000000000",
+        "7fefffffffffffff",
+        "7fdfffffffffffff",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "7fe9249249249248"
+    },
+    {
+      "name": "subnormal-output-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000002",
+        "0000000000000003"
+      ],
+      "expected_bits": "0000000000000001"
+    },
+    {
+      "name": "unit-tolerance-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3ff0000000000001",
+        "0000000000000001",
+        "0000000000000000"
+      ],
+      "lambda_bits": [
+        "39b4484bfeebc2a0",
+        "39b4484bfeebc2a0",
+        "7fefffffffffffff",
+        "39b4484bfeebc2a0"
+      ],
+      "expected_bits": "3cd0000000000004"
+    },
+    {
+      "name": "common-rate-0-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000001",
+        "0000000000000001"
+      ],
+      "expected_bits": "0000000000000001"
+    },
+    {
+      "name": "common-rate-1-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "0010000000000000",
+        "0010000000000000",
+        "0010000000000000",
+        "0010000000000000"
+      ],
+      "expected_bits": "0010000000000000"
+    },
+    {
+      "name": "common-rate-2-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0",
+        "7fe1ccf385ebc8a0"
+      ],
+      "expected_bits": "7fe1ccf385ebc8a0"
+    },
+    {
+      "name": "common-rate-3-3",
+      "direction_bits": [
+        "0000000000000000",
+        "3fe999999999999a",
+        "3fe3333333333333",
+        "0000000000000001"
+      ],
+      "lambda_bits": [
+        "7fefffffffffffff",
+        "7fefffffffffffff",
+        "7fefffffffffffff",
+        "7fefffffffffffff"
+      ],
+      "expected_bits": "7fefffffffffffff"
+    }
+  ]
+}
