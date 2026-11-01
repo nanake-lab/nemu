@@ -162,6 +162,9 @@ mod codec_cache_tests {
             _ => return Err("operation".into()),
         };
         generated::verify_typed(name, &value, limits)?;
+        // Golden acceptance includes the explicit P5-36 semantic boundary, as
+        // do all three language probes. Structural codecs alone are insufficient.
+        semantic::check_theta_message(name, &value, limits)?;
         Ok(
             json!({"ok":true,"value":value,"canonical":hex(&schema.encode_canonical(name,&value,limits)?),"protobuf":hex(&schema.encode_protobuf(name,&value,limits)?),"digest":schema.digest(name,&value,limits)?}),
         )

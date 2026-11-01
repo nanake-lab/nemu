@@ -182,3 +182,7 @@ jobs:
       - name: Status board pause and reminder regressions
         if: steps.scope.outputs.status == 'true'
         run: python -m unittest discover -s tools/status -p 'test_*.py' -v
+      - name: P5-36 bounded writer lock lifecycle evidence (Linux)
+        if: steps.scope.outputs.storage == 'true'
+        working-directory: core
+        run: cargo test -p core-store --locked platform::tests::writer_lock -- --nocapture

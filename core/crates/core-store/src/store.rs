@@ -10,7 +10,7 @@ use core_types::{
 };
 use rusqlite::{Connection, OpenFlags, OptionalExtension, params};
 use std::{
-    fs::{self, File},
+    fs,
     marker::PhantomData,
     path::{Path, PathBuf},
 };
@@ -23,7 +23,8 @@ pub struct Store<L: LineageKind> {
     pub(crate) header: LineageHeaderV2,
     pub(crate) fault: Fault,
     pub(crate) capability_issued: bool,
-    _writer: File,
+    // Declared after db/objects: they finish dropping before unlock.
+    _writer: platform::WriterLock,
     _lineage: PhantomData<L>,
 }
 
@@ -348,10 +349,10 @@ pub(crate) fn current(db: &Connection, objects: &Objects) -> Result<Option<CoreT
     bytes
         .map(|b| -> Result<_> {
             let r = ObjectRef::from_canonical(&b, objects.config.encoding)?;
-            Ok(CoreTransactionV2::from_canonical(
-                &objects.read(&r)?,
-                objects.config.encoding,
-            )?)
+            let value =
+                CoreTransactionV2::from_canonical(&objects.read(&r)?, objects.config.encoding)?;
+            crate::theta::read(objects, &value.staged_theta)?;
+            Ok(value)
         })
         .transpose()
 }
@@ -390,6 +391,7 @@ pub(crate) fn require_writable_head(db: &Connection, objects: &Objects) -> Resul
                     .tag,
             "V2 R head is read-only; P5-26 G/H replay is required before writing",
         )?;
+        crate::theta::writable(objects, &head.staged_theta)?;
     }
     Ok(())
 }

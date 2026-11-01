@@ -18995,5 +18995,7916 @@
         "max_depth": 32
       }
     }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 100.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 100.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 2,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 100.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ThetaRunningTime",
+      "op": "encode",
+      "value": {
+        "origin_ns": "0",
+        "event_ns": "0",
+        "stopped_ns": "0",
+        "running_ns": "0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ThetaRunningTime",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "origin_ns": "0",
+        "event_ns": "0",
+        "stopped_ns": "0",
+        "running_ns": "0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ThetaRunningTime",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "origin_ns": "0",
+        "event_ns": "0",
+        "stopped_ns": "0",
+        "running_ns": "0",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ThetaLastEvent",
+      "op": "encode",
+      "value": {
+        "ordinal": "0",
+        "time_ns": "0",
+        "event_id": "synthetic-first"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ThetaLastEvent",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "ordinal": "0",
+        "time_ns": "0",
+        "event_id": "synthetic-first"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ThetaLastEvent",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "ordinal": "0",
+        "time_ns": "0",
+        "event_id": "synthetic-first",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "0",
+        "detector_mean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "0",
+        "drift_count": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "drift_sign": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "duration_log_mean": [
+          2.302585092994046,
+          -1.2039728043259361,
+          0.6931471805599453,
+          1.945910149055313
+        ],
+        "duration_log_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "duration_mass": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "event_count": "0",
+        "h": 0.05,
+        "reaction_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "run_sign": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "run_start_ns": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "sigma": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tau_s": {
+          "achievement": 6.999999999999998,
+          "connection": 10.000000000000002,
+          "curiosity": 2.0,
+          "empathy": 0.29999999999999993,
+          "schema_version": 1
+        },
+        "variance": [
+          0.09,
+          0.16000000000000003,
+          0.04000000000000001,
+          0.25
+        ],
+        "weight": 0.0,
+        "zero_duration_count": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "0",
+        "detector_mean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "0",
+        "drift_count": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "drift_sign": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "duration_log_mean": [
+          2.302585092994046,
+          -1.2039728043259361,
+          0.6931471805599453,
+          1.945910149055313
+        ],
+        "duration_log_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "duration_mass": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "event_count": "0",
+        "h": 0.05,
+        "reaction_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "run_sign": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "run_start_ns": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "schema_version": 2,
+        "sigma": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tau_s": {
+          "achievement": 6.999999999999998,
+          "connection": 10.000000000000002,
+          "curiosity": 2.0,
+          "empathy": 0.29999999999999993,
+          "schema_version": 1
+        },
+        "variance": [
+          0.09,
+          0.16000000000000003,
+          0.04000000000000001,
+          0.25
+        ],
+        "weight": 0.0,
+        "zero_duration_count": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "0",
+        "detector_mean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "0",
+        "drift_count": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "drift_sign": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "duration_log_mean": [
+          2.302585092994046,
+          -1.2039728043259361,
+          0.6931471805599453,
+          1.945910149055313
+        ],
+        "duration_log_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "duration_mass": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "event_count": "0",
+        "h": 0.05,
+        "reaction_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "run_sign": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "run_start_ns": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tau_s": {
+          "achievement": 6.999999999999998,
+          "connection": 10.000000000000002,
+          "curiosity": 2.0,
+          "empathy": 0.29999999999999993,
+          "schema_version": 1
+        },
+        "variance": [
+          0.09,
+          0.16000000000000003,
+          0.04000000000000001,
+          0.25
+        ],
+        "weight": 0.0,
+        "zero_duration_count": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "0",
+          "detector_mean": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "0",
+          "drift_count": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "drift_sign": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "duration_log_mean": [
+            2.302585092994046,
+            -1.2039728043259361,
+            0.6931471805599453,
+            1.945910149055313
+          ],
+          "duration_log_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "duration_mass": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "event_count": "0",
+          "h": 0.05,
+          "reaction_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "run_sign": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "run_start_ns": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "tau_s": {
+            "achievement": 6.999999999999998,
+            "connection": 10.000000000000002,
+            "curiosity": 2.0,
+            "empathy": 0.29999999999999993,
+            "schema_version": 1
+          },
+          "variance": [
+            0.09,
+            0.16000000000000003,
+            0.04000000000000001,
+            0.25
+          ],
+          "weight": 0.0,
+          "zero_duration_count": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-0",
+        "values": {
+          "baseline": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.1428571428571429,
+            "connection": 0.09999999999999998,
+            "curiosity": 0.5,
+            "empathy": 3.333333333333334,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "0",
+          "detector_mean": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "0",
+          "drift_count": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "drift_sign": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "duration_log_mean": [
+            2.302585092994046,
+            -1.2039728043259361,
+            0.6931471805599453,
+            1.945910149055313
+          ],
+          "duration_log_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "duration_mass": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "event_count": "0",
+          "h": 0.05,
+          "reaction_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "run_sign": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "run_start_ns": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "tau_s": {
+            "achievement": 6.999999999999998,
+            "connection": 10.000000000000002,
+            "curiosity": 2.0,
+            "empathy": 0.29999999999999993,
+            "schema_version": 1
+          },
+          "variance": [
+            0.09,
+            0.16000000000000003,
+            0.04000000000000001,
+            0.25
+          ],
+          "weight": 0.0,
+          "zero_duration_count": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-0",
+        "schema_version": 2,
+        "values": {
+          "baseline": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.1428571428571429,
+            "connection": 0.09999999999999998,
+            "curiosity": 0.5,
+            "empathy": 3.333333333333334,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "0",
+          "detector_mean": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "0",
+          "drift_count": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "drift_sign": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "duration_log_mean": [
+            2.302585092994046,
+            -1.2039728043259361,
+            0.6931471805599453,
+            1.945910149055313
+          ],
+          "duration_log_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "duration_mass": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "event_count": "0",
+          "h": 0.05,
+          "reaction_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "run_sign": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "run_start_ns": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "tau_s": {
+            "achievement": 6.999999999999998,
+            "connection": 10.000000000000002,
+            "curiosity": 2.0,
+            "empathy": 0.29999999999999993,
+            "schema_version": 1
+          },
+          "variance": [
+            0.09,
+            0.16000000000000003,
+            0.04000000000000001,
+            0.25
+          ],
+          "weight": 0.0,
+          "zero_duration_count": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-0",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.1428571428571429,
+            "connection": 0.09999999999999998,
+            "curiosity": 0.5,
+            "empathy": 3.333333333333334,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-numerics_id",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "unknown",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-baseline_weight",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-variance_weight",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": -1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-duration_weight",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 9007199254740992,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-change_prior",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 1,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-change_min",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 1e-300,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-gain_min",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 4,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-recovery_min",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 6,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-gain_prior.connection",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 9,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-sigma_prior.connection",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 1e-300,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-tau_prior_s.connection",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-detector_threshold",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-jump_notice",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-drift_run",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "9007199254740992",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-drift_margin",
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": -1,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-origin_ns",
+    "request": {
+      "name": "ThetaRunningTime",
+      "op": "encode",
+      "value": {
+        "event_ns": "800000100",
+        "origin_ns": "18446744073709551615",
+        "running_ns": "800000000",
+        "schema_version": 1,
+        "stopped_ns": "0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-stopped_ns",
+    "request": {
+      "name": "ThetaRunningTime",
+      "op": "encode",
+      "value": {
+        "event_ns": "800000100",
+        "origin_ns": "100",
+        "running_ns": "800000000",
+        "schema_version": 1,
+        "stopped_ns": "18446744073709551615"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-running_ns",
+    "request": {
+      "name": "ThetaRunningTime",
+      "op": "encode",
+      "value": {
+        "event_ns": "800000100",
+        "origin_ns": "100",
+        "running_ns": "1",
+        "schema_version": 1,
+        "stopped_ns": "0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-event_id",
+    "request": {
+      "name": "ThetaLastEvent",
+      "op": "encode",
+      "value": {
+        "event_id": "",
+        "ordinal": "1048",
+        "schema_version": 1,
+        "time_ns": "800000100"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-ordinal",
+    "request": {
+      "name": "ThetaLastEvent",
+      "op": "encode",
+      "value": {
+        "event_id": "synthetic-16",
+        "ordinal": "-1",
+        "schema_version": 1,
+        "time_ns": "800000100"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-time_ns",
+    "request": {
+      "name": "ThetaLastEvent",
+      "op": "encode",
+      "value": {
+        "event_id": "synthetic-16",
+        "ordinal": "1048",
+        "schema_version": 1,
+        "time_ns": "18446744073709551616"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-weight",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": -1,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-reaction_sum",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0,
+          0,
+          0
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-square_sum",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-sigma.connection",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-variance",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-duration_mass",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-zero_duration_count",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "999",
+          "999",
+          "999",
+          "999"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-tau_s.connection",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 0,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-run_sign",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "2",
+          "2",
+          "2",
+          "2"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-run_start_ns",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "18446744073709551615",
+          "18446744073709551615",
+          "18446744073709551615",
+          "18446744073709551615"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-detector_segment_count",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "999",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-detector_changes",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "999",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-detector_mean",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-detector_positive",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-detector_negative",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-event_count",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "9007199254740992",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-h",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-last_event",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-last_running_time",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-last_event.time_ns",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "1"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-drift_sign",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-drift_count",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-weight",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "0",
+        "detector_mean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "0",
+        "drift_count": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "drift_sign": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "duration_log_mean": [
+          2.302585092994046,
+          -1.2039728043259361,
+          0.6931471805599453,
+          1.945910149055313
+        ],
+        "duration_log_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "duration_mass": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "event_count": "0",
+        "h": 0.05,
+        "reaction_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "run_sign": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "run_start_ns": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tau_s": {
+          "achievement": 6.999999999999998,
+          "connection": 10.000000000000002,
+          "curiosity": 2.0,
+          "empathy": 0.29999999999999993,
+          "schema_version": 1
+        },
+        "variance": [
+          0.09,
+          0.16000000000000003,
+          0.04000000000000001,
+          0.25
+        ],
+        "weight": 1,
+        "zero_duration_count": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-reaction_sum",
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "0",
+        "detector_mean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "0",
+        "drift_count": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "drift_sign": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "duration_log_mean": [
+          2.302585092994046,
+          -1.2039728043259361,
+          0.6931471805599453,
+          1.945910149055313
+        ],
+        "duration_log_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "duration_mass": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "event_count": "0",
+        "h": 0.05,
+        "reaction_sum": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "run_sign": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "run_start_ns": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tau_s": {
+          "achievement": 6.999999999999998,
+          "connection": 10.000000000000002,
+          "curiosity": 2.0,
+          "empathy": 0.29999999999999993,
+          "schema_version": 1
+        },
+        "variance": [
+          0.09,
+          0.16000000000000003,
+          0.04000000000000001,
+          0.25
+        ],
+        "weight": 0.0,
+        "zero_duration_count": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-parameters_digest",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-parameters.detector_threshold",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 99,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-parameters.drift_run",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "11",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-law_version.resource_version",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "wrong",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-law_version.object_type",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.other",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-estimator.h",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.001,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-values.gain.connection",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 4,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-values.recovery_per_s.connection",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 6,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "theta-estimator.h",
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "0",
+          "detector_mean": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "0",
+          "drift_count": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "drift_sign": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "duration_log_mean": [
+            2.302585092994046,
+            -1.2039728043259361,
+            0.6931471805599453,
+            1.945910149055313
+          ],
+          "duration_log_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "duration_mass": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "event_count": "0",
+          "h": 0.1,
+          "reaction_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "run_sign": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "run_start_ns": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "tau_s": {
+            "achievement": 6.999999999999998,
+            "connection": 10.000000000000002,
+            "curiosity": 2.0,
+            "empathy": 0.29999999999999993,
+            "schema_version": 1
+          },
+          "variance": [
+            0.09,
+            0.16000000000000003,
+            0.04000000000000001,
+            0.25
+          ],
+          "weight": 0.0,
+          "zero_duration_count": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-0",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.1428571428571429,
+            "connection": 0.09999999999999998,
+            "curiosity": 0.5,
+            "empathy": 3.333333333333334,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
   }
 ]

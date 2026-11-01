@@ -1,0 +1,465 @@
+   Compiling once_cell v1.21.4
+   Compiling windows-link v0.2.1
+   Compiling smallvec v1.16.3
+   Compiling fastrand v2.5.0
+   Compiling bitflags v2.13.2
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling pin-project-lite v0.2.17
+   Compiling core-policy v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-policy)
+   Compiling fallible-iterator v0.3.0
+   Compiling getrandom v0.4.3
+   Compiling libsqlite3-sys v0.38.2
+   Compiling serde v1.0.229
+   Compiling powerfmt v0.2.1
+   Compiling time-core v0.1.6
+   Compiling num-conv v0.1.0
+   Compiling sqlite-vec v0.1.9
+   Compiling windows-sys v0.61.2
+   Compiling tracing-core v0.1.36
+   Compiling deranged v0.5.9
+   Compiling rusqlite v0.40.2
+   Compiling tracing v0.1.44
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-types)
+   Compiling tempfile v3.27.0
+   Compiling time v0.3.44
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-store)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-kernel)
+   Compiling task-layer v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\task-layer)
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\gateway)
+   Compiling action-gate v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\action-gate)
+   Compiling semantic-core v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\semantic-core)
+   Compiling core-replay v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-replay)
+   Compiling core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-runtime)
+   Compiling fact-view v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\fact-view)
+   Compiling echoctl v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\echoctl)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.84s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\action_gate-472aee472b5c3e46.exe)
+
+running 15 tests
+test permissions::growth::tests::worker_helper_and_network_cannot_manage_growth_even_with_user_claims ... ok
+test permissions::tier::tests::confirmation_matrix_and_revoked_grant ... ok
+test permissions::tier::tests::denial_and_t3_trust_cannot_be_overridden ... ok
+test permissions::approval::tests::raw_sha256_known_answers_and_no_text_normalization ... ok
+test permissions::growth::tests::local_user_identity_and_panel_confirmation_are_required ... ok
+test permissions::growth::tests::malformed_and_over_budget_commands_fail_closed ... ok
+test permissions::growth::tests::review_requires_echoctl_and_both_typed_fields ... ok
+test permissions::approval::tests::consumption_owns_the_verified_bytes_even_after_source_mutation ... ok
+test permissions::approval::tests::wrong_action_or_approval_ids_are_rejected ... ok
+test permissions::approval::tests::callback_failure_is_returned_and_snapshot_debug_does_not_dump_payload ... ok
+test permissions::approval::tests::generated_contract_and_input_budget_are_enforced ... ok
+test permissions::approval::tests::request_has_gate_owned_metadata_and_original_binary_payload ... ok
+test permissions::approval::tests::expiry_is_rechecked_at_consumption_and_never_calls_the_executor ... ok
+test permissions::approval::tests::mutation_of_request_digest_decision_or_execution_payload_is_rejected ... ok
+test permissions::approval::tests::denied_choices_and_t3_remembering_are_rejected ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_kernel-950144fe979e9e01.exe)
+
+running 89 tests
+test dynamics::tests::batch4::v2_95_geometric_mean_uses_each_external_event_retention ... ok
+test dynamics::tests::batch4::v2_96_legal_subnormal_variance_uses_proven_range_not_a_false_fault ... ok
+test dynamics::tests::ac2_09_has_only_stored_unmodulated_reaction_and_stages_existing_idl ... ok
+test dynamics::tests::batch4::v2_96_equality_is_allowed_and_strictly_above_bound_is_a_fault ... ok
+test dynamics::tests::batch4::v2_96_prior_decay_changes_baseline_even_when_reaction_equals_current ... ok
+test dynamics::tests::batch4::v2_95_rejects_invalid_or_inconsistent_recorded_time ... ok
+test dynamics::tests::batch4::v2_97_computation_fault_rejects_whole_candidate_without_clipping ... ok
+test dynamics::tests::ac2_14_i13_external_changes_and_all_self_sources_are_whole_state_identity ... ok
+test dynamics::tests::batch4::v2_95_recorded_downtime_is_subtracted_and_replay_is_bitwise ... ok
+test dynamics::tests::gaussian_detector_uses_magnitude_not_reaction_sign_changes ... ok
+test dynamics::tests::reference::theta_1_original_500_streams_zero_violations ... ignored, V2-93: legacy Python **2 rounding diagnostic; failure evidence: reports/P5-25/rounding-20261024/REPORT.md
+test dynamics::tests::numerical_and_ingress_faults_do_not_publish_partial_state ... ok
+test dynamics::tests::pure_boundary::i13_c_only_stages_theta_change_and_cannot_commit_or_mutate_the_input ... ok
+test dynamics::tests::jump_and_directional_drift_apply_and_stage_notices_before_boundary ... ok
+test effects::tests::direction_validation_is_passed_through_without_changing_drive ... ok
+test effects::tests::f_sum_is_summed_in_canonical_order ... ok
+test effects::tests::adr0008_composition_law_and_no_time_dependence ... ok
+test effects::tests::i06_candidates_have_no_effect_on_x_or_m ... ok
+test dynamics::tests::variance_uses_baseline_before_event_and_duration_completes_same_sign_run ... ok
+test effects::tests::evaluate_uses_fixed_product_order ... ok
+test effects::tests::effects_are_in_canonical_tendency_order_whatever_the_input_order ... ok
+test effects::tests::i21_inputs_are_only_borrowed_and_repeated_calls_agree ... ok
+test effects::tests::situation_match_outside_its_domain_is_refused ... ok
+test effects::tests::stored_values_outside_their_domain_are_refused ... ok
+test effects::tests::theta_outside_its_domain_is_refused ... ok
+test effects::tests::strength_matches_v2_formula_and_has_no_negative_zero ... ok
+test effects::tests::unlisted_match_is_zero_and_negative_zero_is_normalized ... ok
+test fast::tests::drive_bounds::f02_contributions_are_summed_in_canonical_order ... ok
+test fast::tests::drive_bounds::f02_inconsistent_sum_is_rejected_even_when_within_bound ... ok
+test fast::tests::drive_signature_has_no_fast_state ... ok
+test fast::tests::drive_bounds::f02_learned_out_of_range_or_nonfinite_is_rejected_before_weighting ... ok
+test fast::tests::empathy_weight_takes_the_closest_person ... ok
+test fast::tests::drive_bounds::f02_nonfinite_eta_contributions_and_sum_are_rejected ... ok
+test fast::tests::event_map::direct_event_map_has_independent_reference_with_saturation ... ok
+test fast::tests::f02_invalid_inputs_are_refused_not_repaired ... ok
+test fast::tests::f03_lambda_zero_is_rejected ... ok
+test fast::tests::f03_two_histories_converge_after_driving_stops ... ok
+test fast::tests::f05_f_out_is_identity_when_r_plus_is_unchanged_and_aligns_otherwise ... ok
+test fast::tests::ac2_15_without_events_x_relaxes_to_rest ... ok
+test fast::tests::internal_count_follows_the_event_classes ... ok
+test fast::tests::f05_same_event_gives_the_same_pulse ... ok
+test fast::tests::kappa_power_matches_direct_products_and_vanishes_for_large_n ... ok
+test dynamics::tests::batch4::v2_95_zero_duration_counts_separately_and_open_run_is_censored ... ok
+test fast::tests::missing_appraisal_keeps_only_the_tendency_effects ... ok
+test fast::tests::rates::f02_projection_refuses_invalid_derived_rate_and_baseline ... ok
+test fast::tests::rates::learned_rate_mixed_scales_match_exact_rational_vectors ... ok
+test fast::tests::recovery_reset_and_washout ... ok
+test fast::tests::self_caused_events_are_weighted_by_kappa_powers ... ok
+test fast::tests::f01_piecewise_projection_and_no_accumulated_decay ... ok
+test fast::tests::snapshot_with_unknown_representation_is_refused ... ok
+test fast::tests::rates::f02_extreme_finite_rates_through_authorized_compiler ... ok
+test fast::tests::state_boundaries::f02_negative_zero_is_rejected_by_validator_and_normalized_at_construction ... ok
+test fast::tests::state_boundaries::negative_zero_recovery_and_snapshot_preserve_canonical_zero_delta ... ok
+test fast::tests::state_boundaries::snapshot_decoder_rejects_noncanonical_negative_zero_bytes ... ok
+test fast::tests::zero_delta_is_identity_bit_for_bit ... ok
+test modulation::tests::boundaries::changed_concept_and_misaligned_x_are_not_silently_repaired ... ok
+test modulation::tests::boundaries::invalid_state_and_reversed_time_fail_without_reusing_a_previous_result ... ok
+test modulation::tests::boundaries::j06_budget_rounding_matches_independent_exact_rational_vectors ... ok
+test modulation::tests::boundaries::j06_cancellation_and_zero_state_do_not_evade_configuration_budget ... ok
+test modulation::tests::boundaries::j06_individual_beta_and_nonfinite_inputs_are_rejected ... ok
+test fast::tests::rates::learned_rate_matches_independent_reference_and_range ... ok
+test modulation::tests::boundaries::j06_outward_sum_catches_sub_ulp_over_budget_without_inflating_exact_sum ... ok
+test modulation::tests::boundaries::validation_cannot_be_reused_for_another_model_tokenizer_carrier_or_direction_set ... ok
+test modulation::tests::boundaries::malformed_references_duplicate_ids_and_empty_concepts_are_refused ... ok
+test modulation::tests::deterministic_projection_replay_and_input_immutability ... ok
+test modulation::tests::generated_numeric_and_body_types_pass_existing_canonical_codec ... ok
+test modulation::tests::j06_candidates_cannot_affect_m_even_with_available_direction ... ok
+test modulation::tests::j06_positive_two_layers_match_independent_exact_coefficients ... ok
+test modulation::tests::j06_unvalidated_and_missing_directions_are_excluded_and_reported ... ok
+test modulation::tests::readouts::body_clamps_all_three_axes_and_has_no_learned_component ... ok
+test modulation::tests::readouts::body_nonfinite_or_overflow_is_not_hidden_by_clipping ... ok
+test modulation::tests::readouts::f_disabled_is_explicitly_rehearsal_only_and_matches_zero_readout ... ok
+test modulation::tests::readouts::numerical_zero_modulation_keeps_body_neutral_even_for_nonzero_x ... ok
+test modulation::tests::storage_and_configuration_order_do_not_change_numeric_results ... ok
+test modulation::tests::zero_and_rest_are_distinct_and_do_not_subtract_baseline ... ok
+test fast::tests::snapshot_round_trip_is_bit_exact ... ok
+test dynamics::tests::adaptive_h_respects_floor_and_ignores_wall_clock_and_excluded_events ... ok
+test modulation::tests::fixed_dyadic_samples_obey_absolute_bound_and_nonconstant_j ... ok
+test dynamics::tests::batch4::v2_96_legal_extremes_and_changing_retention_stay_inside_derived_bounds ... ok
+test fast::tests::ac2_15_contraction_holds_on_intervals_with_events ... ok
+test dynamics::tests::pure_boundary::ac2_09_changing_caller_x_initial_and_m_preserves_every_theta_and_estimator_bit ... ok
+test dynamics::storage::tests::rejects_corruption_and_wrong_trusted_context_without_mutation ... ok
+test fast::tests::rates::learned_rate_review_counterexample_agrees_through_public_projection ... ok
+test fast::tests::event_map::ac2_15_zero_delta_direct_event_map_is_nonexpansive ... ok
+test fast::tests::f02_projection_and_drive_stay_in_x ... ok
+test dynamics::tests::ac2_05_replay_every_prefix_including_detector_open_runs_and_drift ... ok
+test dynamics::tests::binary64::theta_1_binary64_500_original_streams_zero_bit_differences ... ok
+test dynamics::storage::tests::actual_states_all_prefixes_roundtrip_and_continuation ... ok
+test dynamics::tests::reference::theta_2_original_feedback_and_independent_adaptive_detector_check ... ok
+
+test result: ok. 88 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 5.44s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_policy-cecff13cbca70ecd.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_replay-29e09c116cfd287f.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_runtime-d41a4b86510a71fb.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_store-795912f244dd72a4.exe)
+
+running 46 tests
+test tests::crash_harness::crash_worker ... ok
+test tests::crash_harness::stray_environment_or_missing_permit_never_touches_target ... ok
+test tests::isolation::malformed_headers_and_existing_directories_never_initialize ... ok
+test tests::atomic::d101_d102_stale_and_mutated_bindings_rejected ... FAILED
+test tests::atomic::disk_full_rolls_back_ledger_and_all_state ... FAILED
+test tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch ... FAILED
+test tests::crash::x03_receipt_publish_and_repair_can_crash_again ... FAILED
+test tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger ... FAILED
+test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects ... FAILED
+test tests::atomic::duplicate_and_conflict_only_advance_processed_frontier ... FAILED
+test tests::objects::publication_primitive_never_replaces_existing_target ... ok
+test tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge ... FAILED
+test tests::atomic::all_binding_fields_are_immutable_after_dispatch ... FAILED
+test tests::crash::x03_ingress_and_transaction_publication_boundaries ... FAILED
+test tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger ... FAILED
+test tests::atomic::atomic_publication_and_append_only_history ... FAILED
+test tests::isolation::i29_all_six_cross_lineage_opens_rejected ... FAILED
+test tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind ... FAILED
+test tests::objects::at01_canonical_identity_and_superseded_writes ... ok
+test tests::atomic::later_ingress_cannot_overtake_uncommitted_input ... FAILED
+test tests::objects::object_capacity_and_io_failures_never_acknowledge_d ... ok
+test tests::objects::sys22_capacity_and_busy_wait_are_bounded ... ok
+test tests::objects::at02_corrupt_or_missing_object_never_publishes ... FAILED
+test tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete ... FAILED
+test tests::objects::at03_pins_close_prepare_gc_publish_race ... FAILED
+test tests::objects::published_closure_damage_refuses_recovery ... FAILED
+test tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc ... FAILED
+test tests::terminal_ingress::authentication_token_is_redacted_and_cannot_be_stored ... ok
+test tests::reader::complete_transaction_prefix_is_verified_and_bounded ... FAILED
+test tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends ... FAILED
+test tests::retention_versions::p534_old_messages_and_flat_r_cannot_enter_new_writes ... FAILED
+test tests::retention_versions::p534_v2_history_readable_writer_refused_without_migration ... FAILED
+test tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer ... FAILED
+test tests::retention_versions::p534_v3_q_v_survive_commit_reopen_gc_and_continued_writes ... FAILED
+test tests::objects::r_index_reassembles_canonical_and_reuses_unchanged_tendencies ... ok
+test tests::terminal_ingress::migration_checks::acknowledged_audit_detects_old_database_restore ... ok
+test tests::terminal_ingress::migration_checks::sys17_precommit_failure_retains_complete_previous_physical_format ... ok
+test tests::terminal_ingress::capacity_is_typed_and_retry_keeps_key_without_consuming_position ... ok
+test tests::terminal_ingress::audit_is_bounded_append_only_and_preserves_every_authority_row ... FAILED
+test tests::terminal_ingress::migration_checks::sys17_physical_format_roundtrip_preserves_v3_and_pending_data ... FAILED
+test tests::terminal_ingress::migration_checks::v2_head_remains_byte_preserving_and_cannot_use_structure_migration ... FAILED
+test tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations ... FAILED
+test tests::terminal_ingress::terminal_positions_follow_durable_tail_after_restart_and_same_key_retry ... ok
+test tests::terminal_ingress::allocation_and_audit_io_failures_never_issue_success ... ok
+test tests::reader::live_readers_open_during_ingress_without_false_rollback ... ok
+test tests::terminal_ingress::process_crashes_recover_allocation_audit_and_both_migration_directions ... FAILED
+
+failures:
+
+---- tests::atomic::d101_d102_stale_and_mutated_bindings_rejected stdout ----
+
+thread 'tests::atomic::d101_d102_stale_and_mutated_bindings_rejected' (44936) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- tests::atomic::disk_full_rolls_back_ledger_and_all_state stdout ----
+
+thread 'tests::atomic::disk_full_rolls_back_ledger_and_all_state' (19944) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch stdout ----
+
+thread 'tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch' (31500) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::crash::x03_receipt_publish_and_repair_can_crash_again stdout ----
+
+thread 'tests::crash::x03_receipt_publish_and_repair_can_crash_again' (32920) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger stdout ----
+
+thread 'tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger' (17040) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::crash::x03_targeted_r_segments_manifest_and_reused_objects stdout ----
+
+thread 'tests::crash::x03_targeted_r_segments_manifest_and_reused_objects' (28804) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::atomic::duplicate_and_conflict_only_advance_processed_frontier stdout ----
+
+thread 'tests::atomic::duplicate_and_conflict_only_advance_processed_frontier' (21520) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge stdout ----
+
+thread 'tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge' (11312) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::atomic::all_binding_fields_are_immutable_after_dispatch stdout ----
+
+thread 'tests::atomic::all_binding_fields_are_immutable_after_dispatch' (1568) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::crash::x03_ingress_and_transaction_publication_boundaries stdout ----
+
+thread 'tests::crash::x03_ingress_and_transaction_publication_boundaries' (43588) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger stdout ----
+
+thread 'tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger' (35164) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::atomic::atomic_publication_and_append_only_history stdout ----
+
+thread 'tests::atomic::atomic_publication_and_append_only_history' (27072) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::isolation::i29_all_six_cross_lineage_opens_rejected stdout ----
+
+thread 'tests::isolation::i29_all_six_cross_lineage_opens_rejected' (23824) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind stdout ----
+
+thread 'tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind' (26464) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::atomic::later_ingress_cannot_overtake_uncommitted_input stdout ----
+
+thread 'tests::atomic::later_ingress_cannot_overtake_uncommitted_input' (41036) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::objects::at02_corrupt_or_missing_object_never_publishes stdout ----
+
+thread 'tests::objects::at02_corrupt_or_missing_object_never_publishes' (20380) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete stdout ----
+
+thread 'tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete' (20244) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::objects::at03_pins_close_prepare_gc_publish_race stdout ----
+
+thread 'tests::objects::at03_pins_close_prepare_gc_publish_race' (31852) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::objects::published_closure_damage_refuses_recovery stdout ----
+
+thread 'tests::objects::published_closure_damage_refuses_recovery' (19352) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc stdout ----
+
+thread 'tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc' (21344) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::reader::complete_transaction_prefix_is_verified_and_bounded stdout ----
+
+thread 'tests::reader::complete_transaction_prefix_is_verified_and_bounded' (26012) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends stdout ----
+
+thread 'tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends' (44952) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::retention_versions::p534_old_messages_and_flat_r_cannot_enter_new_writes stdout ----
+
+thread 'tests::retention_versions::p534_old_messages_and_flat_r_cannot_enter_new_writes' (26436) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::retention_versions::p534_v2_history_readable_writer_refused_without_migration stdout ----
+
+thread 'tests::retention_versions::p534_v2_history_readable_writer_refused_without_migration' (32188) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer stdout ----
+
+thread 'tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer' (21712) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::retention_versions::p534_v3_q_v_survive_commit_reopen_gc_and_continued_writes stdout ----
+
+thread 'tests::retention_versions::p534_v3_q_v_survive_commit_reopen_gc_and_continued_writes' (11896) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::terminal_ingress::audit_is_bounded_append_only_and_preserves_every_authority_row stdout ----
+
+thread 'tests::terminal_ingress::audit_is_bounded_append_only_and_preserves_every_authority_row' (16864) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::terminal_ingress::migration_checks::sys17_physical_format_roundtrip_preserves_v3_and_pending_data stdout ----
+
+thread 'tests::terminal_ingress::migration_checks::sys17_physical_format_roundtrip_preserves_v3_and_pending_data' (28188) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::terminal_ingress::migration_checks::v2_head_remains_byte_preserving_and_cannot_use_structure_migration stdout ----
+
+thread 'tests::terminal_ingress::migration_checks::v2_head_remains_byte_preserving_and_cannot_use_structure_migration' (30004) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations stdout ----
+running 1 test
+W02_INJECT InitRootCreated object=None plan=Nth(NthFault { point: InitRootCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT InitRootCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitRootSynced object=None plan=Nth(NthFault { point: InitRootSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT InitRootSynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitObjectsCreated object=None plan=Nth(NthFault { point: InitObjectsCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT InitObjectsCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitObjectsSynced object=None plan=Nth(NthFault { point: InitObjectsSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT InitObjectsSynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitSqlCommitted object=None plan=Nth(NthFault { point: InitSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+INIT InitSqlCommitted/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitDbDirectorySynced object=None plan=Nth(NthFault { point: InitDbDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+INIT InitDbDirectorySynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptRootCreated object=None plan=Nth(NthFault { point: ReceiptRootCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptRootCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptKindCreated object=None plan=Nth(NthFault { point: ReceiptKindCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptKindCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptKindCreated object=None plan=Nth(NthFault { point: ReceiptKindCreated, occurrence: 2, object_type: None, seen: 2 })
+INIT ReceiptKindCreated/2: exit=86; verified empty store
+running 1 test
+W02_INJECT ReceiptKindSynced object=None plan=Nth(NthFault { point: ReceiptKindSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptKindSynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptKindSynced object=None plan=Nth(NthFault { point: ReceiptKindSynced, occurrence: 2, object_type: None, seen: 2 })
+INIT ReceiptKindSynced/2: exit=86; verified empty store
+running 1 test
+W02_INJECT ReceiptRootSynced object=None plan=Nth(NthFault { point: ReceiptRootSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptRootSynced/1: exit=86; verified empty store
+running 1 test
+W02_INJECT ReceiptParentSynced object=None plan=Nth(NthFault { point: ReceiptParentSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptParentSynced/1: exit=86; verified empty store
+
+thread 'tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations' (26244) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+---- tests::terminal_ingress::process_crashes_recover_allocation_audit_and_both_migration_directions stdout ----
+running 1 test
+W02_INJECT IngressAllocated object=None plan=Nth(NthFault { point: IngressAllocated, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT IngressBeforeSql object=None plan=Nth(NthFault { point: IngressBeforeSql, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT AuditBeforeSql object=None plan=Nth(NthFault { point: AuditBeforeSql, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT AuditSqlCommitted object=None plan=Nth(NthFault { point: AuditSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+
+thread 'tests::terminal_ingress::process_crashes_recover_allocation_audit_and_both_migration_directions' (15816) panicked at crates\core-store\src\tests\mod.rs:178:42:
+called `Result::unwrap()` on an `Err` value: Rejected("new writes must use the active successor message")
+
+
+failures:
+    tests::atomic::all_binding_fields_are_immutable_after_dispatch
+    tests::atomic::atomic_publication_and_append_only_history
+    tests::atomic::d101_d102_stale_and_mutated_bindings_rejected
+    tests::atomic::disk_full_rolls_back_ledger_and_all_state
+    tests::atomic::duplicate_and_conflict_only_advance_processed_frontier
+    tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge
+    tests::atomic::later_ingress_cannot_overtake_uncommitted_input
+    tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger
+    tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations
+    tests::crash::x03_ingress_and_transaction_publication_boundaries
+    tests::crash::x03_receipt_publish_and_repair_can_crash_again
+    tests::crash::x03_targeted_r_segments_manifest_and_reused_objects
+    tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger
+    tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch
+    tests::isolation::i29_all_six_cross_lineage_opens_rejected
+    tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind
+    tests::objects::at02_corrupt_or_missing_object_never_publishes
+    tests::objects::at03_pins_close_prepare_gc_publish_race
+    tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete
+    tests::objects::published_closure_damage_refuses_recovery
+    tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc
+    tests::reader::complete_transaction_prefix_is_verified_and_bounded
+    tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends
+    tests::retention_versions::p534_old_messages_and_flat_r_cannot_enter_new_writes
+    tests::retention_versions::p534_v2_history_readable_writer_refused_without_migration
+    tests::retention_versions::p534_v2_uncheckpointed_wal_preserved_on_rejected_writer
+    tests::retention_versions::p534_v3_q_v_survive_commit_reopen_gc_and_continued_writes
+    tests::terminal_ingress::audit_is_bounded_append_only_and_preserves_every_authority_row
+    tests::terminal_ingress::migration_checks::sys17_physical_format_roundtrip_preserves_v3_and_pending_data
+    tests::terminal_ingress::migration_checks::v2_head_remains_byte_preserving_and_cannot_use_structure_migration
+    tests::terminal_ingress::process_crashes_recover_allocation_audit_and_both_migration_directions
+
+test result: FAILED. 15 passed; 31 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.30s
+
+error: test failed, to rerun pass `-p core-store --lib`

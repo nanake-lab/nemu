@@ -726,6 +726,7 @@ class RSnapshot:
     tendencies: list[Tendency]
 @dataclass(frozen=True)
 class ThetaSnapshot:
+    # Superseded (successor ThetaSnapshotV2): P5-36; ADR 0029: inline complete recursive estimator state
     schema_version: int
     revision: str
     law_version: ObjectRef
@@ -1779,3 +1780,75 @@ class IngressRejection:
     recorded_at_ns: int
     reason: IngressReason
     request_kind: IngressKind | None
+@dataclass(frozen=True)
+class ThetaEstimatorParameters:
+    schema_version: int
+    law_id: str
+    numerics_id: str
+    baseline_prior: NatureVector
+    gain_prior: NatureScale
+    sigma_prior: NatureScale
+    tau_prior_s: NatureScale
+    baseline_weight: float
+    variance_weight: float
+    duration_weight: float
+    change_prior: float
+    change_prior_weight: float
+    change_min: float
+    gain_min: float
+    gain_max: float
+    recovery_min: float
+    recovery_max: float
+    detector_shift_sigma: float
+    detector_threshold: float
+    jump_notice: float
+    drift_run: int
+    drift_margin: float
+@dataclass(frozen=True)
+class ThetaRunningTime:
+    schema_version: int
+    origin_ns: int
+    event_ns: int
+    stopped_ns: int
+    running_ns: int
+@dataclass(frozen=True)
+class ThetaLastEvent:
+    schema_version: int
+    ordinal: int
+    time_ns: int
+    event_id: str
+@dataclass(frozen=True)
+class ThetaEstimatorState:
+    schema_version: int
+    weight: float
+    reaction_sum: list[float]
+    square_sum: list[float]
+    sigma: NatureScale
+    variance: list[float]
+    duration_log_sum: list[float]
+    duration_mass: list[float]
+    duration_log_mean: list[float]
+    zero_duration_count: list[int]
+    tau_s: NatureScale
+    run_sign: list[int]
+    run_start_ns: list[int]
+    detector_segment_count: int
+    detector_changes: int
+    detector_mean: list[float]
+    detector_positive: list[float]
+    detector_negative: list[float]
+    event_count: int
+    h: float
+    last_event: ThetaLastEvent | None
+    last_running_time: ThetaRunningTime | None
+    drift_sign: list[int]
+    drift_count: list[int]
+@dataclass(frozen=True)
+class ThetaSnapshotV2:
+    schema_version: int
+    revision: str
+    law_version: ObjectRef
+    values: ThetaValues
+    parameters: ThetaEstimatorParameters
+    parameters_digest: bytes
+    estimator: ThetaEstimatorState
