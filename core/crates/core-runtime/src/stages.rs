@@ -10,7 +10,7 @@ use std::marker::PhantomData;
 pub struct Snapshot {
     pub x: FastStateSnapshotV2,
     pub r: RSnapshotV3,
-    pub theta: ThetaSnapshot,
+    pub theta: ThetaSnapshotV2,
 }
 /// In-process R+ projection. No concepts, predicates, evidence or audit text.
 #[cfg_attr(test, derive(Debug, PartialEq))]
@@ -86,7 +86,7 @@ pub struct Learning<'a> {
     pub binding: &'a ProposalBindingV2,
 }
 pub struct DynamicsInput<'a> {
-    pub theta: &'a ThetaSnapshot,
+    pub theta: &'a ThetaSnapshotV2,
     pub event: &'a EventEnvelope,
     pub appraisal: &'a NatureAppraisalRecord,
     pub binding: &'a ProposalBindingV2,
@@ -118,12 +118,12 @@ pub trait Fast {
 pub trait Learn {
     fn learn(&mut self, input: Learning<'_>) -> StageResult<Bound<Change<RSnapshotV3>>>;
 }
-/// Runtime checks law-independent theta semantics at ingress and on return.
-/// The C adapter must additionally resolve the exact bound LawVersion and run
-/// check_theta_within on input/output; stage presence is not that proof.
-/// The production resource-binding path is pending in the stage-inputs request.
+/// ADR 0029: runtime checks complete V2 state and embedded parameter consistency
+/// at ingress and on return. The C adapter must additionally authenticate the
+/// exact law resource and H prefix; stage presence is not that proof. The
+/// production binding path is pending in the stage-inputs request.
 pub trait Dynamics {
-    fn update(&mut self, input: DynamicsInput<'_>) -> StageResult<Bound<Change<ThetaSnapshot>>>;
+    fn update(&mut self, input: DynamicsInput<'_>) -> StageResult<Bound<Change<ThetaSnapshotV2>>>;
 }
 pub struct JInput<'a> {
     pub snapshot_id: &'a str,

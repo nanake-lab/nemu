@@ -37,7 +37,9 @@ pub fn read_state<L: LineageKind>(store: &Store<L>) -> Result<Snapshot> {
     Ok(Snapshot {
         x: reader.read(&current.staged_x)?,
         r: reader.read(&current.staged_r)?,
-        theta: reader.read(&current.staged_theta)?,
+        // W02 validates the digest and complete V2 semantics. Legacy heads are
+        // read-only through Reader; this writable runtime never upgrades them.
+        theta: reader.read::<ThetaSnapshotV2>(&current.staged_theta)?,
     })
 }
 
@@ -90,7 +92,11 @@ pub fn prepare_existing_head<L: LineageKind>(
     let r_pin = store.prepare_r(&staged.state.r)?;
     let r = r_pin.reference().clone();
     pins.push(r_pin);
-    let theta = pin(store, &staged.state.theta, &mut pins)?;
+    // No growth here: preserve the committed reference version as well as all
+    // estimator bytes (ADR 0029); Store::prepare enforces the successor gate.
+    let theta_pin = store.prepare(&staged.state.theta, &old.staged_theta.resource_version)?;
+    let theta = theta_pin.reference().clone();
+    pins.push(theta_pin);
     let status = staged.status.value();
     let audit = pin(store, &status, &mut pins)?;
     let mut accepted = vec![];

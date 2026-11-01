@@ -343,7 +343,7 @@ impl<L: LineageKind> StageSet<L> {
                 .learn(Learning {
                     r: &base.r,
                     baseline: &base.theta.values.baseline,
-                    sigma: &base.theta.sigma,
+                    sigma: &base.theta.estimator.sigma,
                     event: &event,
                     attributes,
                     graph: &z.graph,

@@ -2,14 +2,14 @@ use crate::{
     Error, Result, binding::digest, check, clock::ProcessTime, same, stages::Snapshot,
     status::Status, validate,
 };
-use core_types::{contract::Limits, generated::*, semantic::check_theta};
+use core_types::{contract::Limits, generated::*, semantic::check_theta_snapshot_v2};
 
-/// Operators §5.3 / v2.0 §§6, 8: encoding alone permits zero time divisors.
-/// This is the law-independent check, not check_theta_within: resolving and
-/// binding the authoritative law is tracked in P5-08-stage-inputs-and-law.md.
-pub(crate) fn validate_theta(theta: &ThetaSnapshot, limits: Limits) -> Result<()> {
+/// ADR 0029: validate complete V2 state and embedded parameter bounds/digest.
+/// Authenticating those parameters against the authoritative law/H prefix is
+/// still tracked in P5-08-stage-inputs-and-law.md; self-consistency is not trust.
+pub(crate) fn validate_theta(theta: &ThetaSnapshotV2, limits: Limits) -> Result<()> {
     validate(theta, limits)?;
-    check_theta(theta).map_err(Error::Contract)
+    check_theta_snapshot_v2(theta, limits).map_err(Error::Contract)
 }
 
 pub(crate) fn validate_inputs(

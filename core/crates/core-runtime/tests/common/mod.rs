@@ -9,19 +9,63 @@ pub fn limits() -> Limits {
         max_depth: 64,
     }
 }
-pub fn theta_bits(t: &ThetaSnapshot) -> Vec<u64> {
+pub fn theta_bits(t: &ThetaSnapshotV2) -> Vec<u64> {
     let b = &t.values.baseline;
     let mut out = vec![
         b.connection.to_bits(),
         b.empathy.to_bits(),
         b.curiosity.to_bits(),
         b.achievement.to_bits(),
-        t.weight_sum.to_bits(),
-        t.h_hat_theta.to_bits(),
+        t.estimator.weight.to_bits(),
+        t.estimator.h.to_bits(),
     ];
-    for s in [&t.values.gain, &t.values.recovery_per_s, &t.sigma, &t.tau_s] {
+    for s in [
+        &t.values.gain,
+        &t.values.recovery_per_s,
+        &t.estimator.sigma,
+        &t.estimator.tau_s,
+    ] {
         out.extend([s.connection, s.empathy, s.curiosity, s.achievement].map(f64::to_bits));
     }
+    // ADR 0029: include all stored estimator floats, not just its public summary.
+    let e = &t.estimator;
+    for values in [
+        &e.reaction_sum,
+        &e.square_sum,
+        &e.variance,
+        &e.duration_log_sum,
+        &e.duration_mass,
+        &e.duration_log_mean,
+        &e.detector_mean,
+        &e.detector_positive,
+        &e.detector_negative,
+    ] {
+        out.extend(values.iter().map(|v| v.to_bits()));
+    }
+    let p = &t.parameters;
+    out.extend(core_types::semantic::nature(&p.baseline_prior).map(f64::to_bits));
+    for s in [&p.gain_prior, &p.sigma_prior, &p.tau_prior_s] {
+        out.extend(core_types::semantic::scale(s).map(f64::to_bits));
+    }
+    out.extend(
+        [
+            p.baseline_weight,
+            p.variance_weight,
+            p.duration_weight,
+            p.change_prior,
+            p.change_prior_weight,
+            p.change_min,
+            p.gain_min,
+            p.gain_max,
+            p.recovery_min,
+            p.recovery_max,
+            p.detector_shift_sigma,
+            p.detector_threshold,
+            p.jump_notice,
+            p.drift_margin,
+        ]
+        .map(f64::to_bits),
+    );
     out
 }
 pub fn r_bits(r: &RSnapshotV3) -> Vec<u64> {
@@ -55,22 +99,6 @@ pub fn fixture<T: WireMessage>() -> T {
         .join(format!("{}.hex", T::NAME));
     let hex = std::fs::read_to_string(path).unwrap();
     T::from_canonical(&core_types::scalar::unhex(hex.trim()).unwrap(), limits()).unwrap()
-}
-// Golden vectors test encoding, not semantic legality. Use positive divisors
-// for stage fixtures (v2.0 §§6/8); do not alter the frozen codec golden bytes.
-pub fn theta_fixture() -> ThetaSnapshot {
-    let mut theta: ThetaSnapshot = fixture();
-    let positive = NatureScale {
-        schema_version: 1,
-        connection: 1.0,
-        empathy: 1.0,
-        curiosity: 1.0,
-        achievement: 1.0,
-    };
-    theta.values.recovery_per_s = positive.clone();
-    theta.sigma = positive.clone();
-    theta.tau_s = positive;
-    theta
 }
 // Structural storage fixtures only. Generated canonical data is changed through
 // the schema codec; these synthetic resources are never production L/Q/U roots.
@@ -154,7 +182,7 @@ impl Case {
         let mut base = Snapshot {
             x: fixture(),
             r: fixture(),
-            theta: theta_fixture(),
+            theta: fixture(),
         };
         base.x.anchor_time_ns = DecimalU64(10);
         base.x.nature.connection = 0.1;

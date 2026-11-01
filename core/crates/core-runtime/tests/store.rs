@@ -74,14 +74,17 @@ fn seed(
     // ADR 0029: retain the complete real-C fixture, including nonempty state.
     let mut theta: ThetaSnapshotV2 = fixture();
     let law = store
-        .prepare(&with_refs::<LawVersion>(leaf.reference()), &theta.parameters.law_id)
+        .prepare(
+            &with_refs::<LawVersion>(leaf.reference()),
+            &theta.parameters.law_id,
+        )
         .unwrap();
     let mut r: RSnapshotV3 = with_refs(leaf.reference());
     r.tendencies.clear();
     r.law_version = law.reference().clone();
     let r = store.prepare_r(&r).unwrap();
     theta.law_version = law.reference().clone();
-    let theta = store.prepare(&theta, "1").unwrap();
+    let theta = store.prepare(&theta, &theta.revision).unwrap();
     let mut x: FastStateSnapshotV2 = fixture();
     x.anchor_time_ns = DecimalU64(10);
     let x = store.prepare(&x, "1").unwrap();
@@ -185,15 +188,38 @@ fn review_r3_v2_head_survives_no_growth_commit_reopen_with_complete_estimator() 
     let e = ingress(&mut store, 1);
     let c = case(&store, e, leaf.reference());
     let computation = staged(&c);
-    assert_eq!(computation.snapshot().theta.canonical_bytes(limits()).unwrap(), expected);
+    assert_eq!(
+        computation
+            .snapshot()
+            .theta
+            .canonical_bytes(limits())
+            .unwrap(),
+        expected
+    );
     let prepared = runtime::prepare_existing_head(
-        &store, store.bind(c.binding.clone()).unwrap(), computation, limits(),
-    ).unwrap();
-    store.commit(&cap, prepared.transaction, prepared.status).unwrap();
-    assert_eq!(store.current().unwrap().unwrap().staged_theta, old.staged_theta);
+        &store,
+        store.bind(c.binding.clone()).unwrap(),
+        computation,
+        limits(),
+    )
+    .unwrap();
+    store
+        .commit(&cap, prepared.transaction, prepared.status)
+        .unwrap();
+    assert_eq!(
+        store.current().unwrap().unwrap().staged_theta,
+        old.staged_theta
+    );
     drop((leaf, cap, store));
     let reopened = Store::<Rehearsal>::open_temporary(&root, "runtime", config()).unwrap();
-    assert_eq!(runtime::read_state(&reopened).unwrap().theta.canonical_bytes(limits()).unwrap(), expected);
+    assert_eq!(
+        runtime::read_state(&reopened)
+            .unwrap()
+            .theta
+            .canonical_bytes(limits())
+            .unwrap(),
+        expected
+    );
     reopened.verify().unwrap();
 }
 
@@ -203,7 +229,12 @@ fn review_r3_legacy_theta_new_write_is_refused_without_publishing_a_head() {
     let root = TemporaryRoot::new().unwrap();
     let store = open(&root);
     let legacy: ThetaSnapshot = fixture();
-    assert!(matches!(store.prepare(&legacy, "legacy"), Err(core_store::Error::Rejected("new writes must use the active successor message"))));
+    assert!(matches!(
+        store.prepare(&legacy, "legacy"),
+        Err(core_store::Error::Rejected(
+            "new writes must use the active successor message"
+        ))
+    ));
     assert!(store.current().unwrap().is_none());
     store.verify().unwrap();
 }

@@ -105,7 +105,7 @@ impl Learn for G {
 }
 pub struct C(pub Log);
 impl Dynamics for C {
-    fn update(&mut self, i: DynamicsInput<'_>) -> StageResult<Bound<Change<ThetaSnapshot>>> {
+    fn update(&mut self, i: DynamicsInput<'_>) -> StageResult<Bound<Change<ThetaSnapshotV2>>> {
         self.0.borrow_mut().push(Step::C);
         let mut theta = i.theta.clone();
         theta.values.baseline.connection = 0.3;
