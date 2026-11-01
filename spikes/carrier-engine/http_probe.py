@@ -55,7 +55,7 @@ class Server(AbstractContextManager["Server"]):
         quiet()
         self.output.mkdir(parents=True, exist_ok=False)
         with socket.socket() as port_socket:
-            port_socket.bind(("127.0.0.1", 0))
+            port_socket.bind(("127.0.0.1", 57359 if self.visual_carrier else 0))
             port = port_socket.getsockname()[1]
         self.endpoint = f"http://127.0.0.1:{port}"
         args = [str(self.engine / "llama-server.exe"), "--log-verbosity", "4", "-m", str(self.model), "--host", "127.0.0.1",
@@ -64,6 +64,11 @@ class Server(AbstractContextManager["Server"]):
                 "--no-webui", "--no-ui-mcp-proxy", "--offline", "--perf"]
         if self.visual_carrier:
             args.extend(["--cache-ram", "0", "--slots"])
+            slot_directory = self.output / "slot-erase-only"
+            if not slot_directory.is_relative_to(Path("D:/Dev/cache/P0-12").resolve()):
+                raise ValueError("P0-12 slot directory must stay in its cache")
+            slot_directory.mkdir(exist_ok=False)
+            args.extend(["--slot-save-path", str(slot_directory)])
         if self.mmproj is not None:
             args.extend(["--mmproj", str(self.mmproj)])
         env = {key: value for key, value in os.environ.items()

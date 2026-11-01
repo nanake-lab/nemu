@@ -12,9 +12,9 @@ CACHE = Path('D:/Dev/cache/P0-12')
 
 
 def main() -> None:
-    window = json.loads((CACHE / 'gpu-01/window.json').read_text(encoding='utf-8'))
+    window = json.loads((CACHE / 'gpu-02/window.json').read_text(encoding='utf-8'))
     deadline = datetime.fromisoformat(window['deadlineUtc'])
-    output = CACHE / 'gpu-01/item-4'
+    output = CACHE / 'gpu-02/item-4'
     output.mkdir(exist_ok=False)
     prepared = ROOT / 'reports/P0-12/inputs'
     with gzip.open(prepared / 'jobs.json.gz', 'rt', encoding='utf-8') as stream:

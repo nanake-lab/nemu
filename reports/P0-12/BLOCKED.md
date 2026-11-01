@@ -1,22 +1,15 @@
-# P0-12 BLOCKED — 第四项 slot erase 返回 HTTP 501
+# P0-12 阻塞状态
 
-## 当前阻塞
+## 测量运行阻塞已解除
 
-2026-11-02 本地时间，前三项采集结束后，第四项启动的固定 b11669 server 已就绪，但第一次 `POST /slots/0?action=erase` 返回 **HTTP 501 Not Implemented**。4 条预热与 270 条正式文字请求均未发送，第五至七项未运行。原始 traceback、启动 argv、server 日志和 shutdown 记录均在 [raw-filemap.json](raw/raw-filemap.json) 中。
+原 curl 56 下载中断，经用户批准续传后完成。原第四项 `POST /slots/0?action=erase` 的 HTTP 501 来自本代理漏传 `--slot-save-path`；用户本次明确批准修正后，实际命令仅增加该参数对，指向 P0-12 缓存的新建空目录。没有 save/restore，旧命令和原始失败不覆盖。
 
-**本代理的测量配置遗漏：** 只传入 `--slots`，漏了启用 slot action 所需的 `--slot-save-path`。固定提交源码的 guard 与实际 argv 支持此原因，见 [server-failure-diagnosis.json](results/server-failure-diagnosis.json)。HTTP 响应正文没有捕获，不能将源码推断冒充响应正文。当前证据不证明 Qwen3.5/b11669 有硬性模型兼容问题。
+本次④–⑦预定请求均已执行完毕，无新的运行失败。前三项没有重跑，GPU 已退出，已通知恢复 runner。证据与原始失败见 [REPORT.md](REPORT.md)、[新旧命令](continuation-02/command-comparison.json)、[raw](raw/raw-filemap.json)、[raw-02](raw-02/raw-filemap.json)。
 
-用户要求“任一步失败即停……不自行换工具、引擎或方法重试”，因此未修改参数或换方法重跑。模型及采样进程均已退出，已通知恢复 runner。
+## 尚未完成的验证与观测
 
-## 已保存的结果
+- `mypy --strict` 未运行：既有环境没有 mypy；没有自行安装新依赖。因此不声称全部工程验证完成，PR 仍为 draft。
+- PNG 解码/resize/归一化没有独立计时；图像编码只给出可观测日志区间，包含主机开销。未做图片识别/OCR准确率或 TTS/渲染同驻验收。
+- 不为来源检查计数、显存、速度或稳定性设阈值，不判定模型通过，不触发回退。
 
-官方 14 个文件全部下载、核验；BF16、Q4_K_M、F16 mmproj 均转换成功。三语零注入各 12/11/12 个位置，所有零注入、清零/撤除配对完整 logits 字节一致；清状态重复及 fresh context 配对一致，保留状态诊断有差异。两个注入位置均保存实际回调和固定 e0 加法证据。这些是观测结果，不签发模型通过结论。
-
-详见 [REPORT.md](REPORT.md)。原先 curl 56 下载阻塞已在用户“继续下载，网络波动时有发生”授权后解决；原失败 partial、日志、哈希均保留，实际续传没有再遇到重试。
-
-## 用户可决定的后续（本次不执行）
-
-1. 授权修正同一 b11669 server 的启动参数，以新输出目录和新的 GPU 安静窗口继续第四至七项；先记录 slot erase 实际状态覆盖与证据，不覆盖本次失败。
-2. 保持部分交付，暂不继续本卡；生产仍保留原基线，Qwen3-VL 没有获准下载。
-
-本次不更换工具/引擎、不删缓存、不自动取下一卡。已推送的部分交付可审查，任务仍阻塞。
+用户可审查已有测量与这些限制，另行决定是否要求补静态检查或额外观测；本次不再运行，不取下一卡。
