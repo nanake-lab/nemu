@@ -1,71 +1,109 @@
-已认领 P0-12，官方权重下载中途断开，已保留文件和证据并停止。
-尚未转换或运行模型，七项测量全部未测，不能据此判断模型是否适用。
-需要用户决定是否另行授权恢复下载；本次不再使用 GPU，可以恢复 runner。
+官方权重已下载并核验，固定 b11669 已完成 BF16、Q4_K_M 和视觉编码器转换。
+前三项注入数据已取得；第四项因测量脚本缺少 server 参数而停止，后三项未测。
+本次不判定模型通过、不切换生产模型；GPU 已退出，可以恢复 runner。
 
-## 当前状态
+## 状态与边界
 
-**重档：用户指定，本卡计划包含正式 GPU 测量；本次止于准备步骤。** 部分完成，保持 draft，见 [BLOCKED.md](BLOCKED.md)。不取下一卡，不合并，不等待或报告 CI。
+**重档；部分交付，阻塞于第四项。** [BLOCKED.md](BLOCKED.md) 记录原因与待用户决定事项。[Draft PR #128](https://github.com/nanake-lab/nemu/pull/128)，分支 `task/P0-12-visual-carrier`，基于 `origin/main` 的 `ee5c2b6068b9a2200ad5fd48ebbc8e337458c0d5`。续做时 fetch 后必读文件无变化。
 
-任务分支 `task/P0-12-visual-carrier` 从 main `ee5c2b6068b9a2200ad5fd48ebbc8e337458c0d5` 建立（含 ADR 0034）；[PR #128](https://github.com/nanake-lab/nemu/pull/128)。只写本卡允许的两个目录；模型文件在获准的 D 盘缓存中。
+用户“继续下载，网络波动时有发生”授权后，沿同一 curl 方法续传。原失败 partial 另存并保留，恢复过程实际网络重试次数为 0；14 个官方文件均完成大小和上游摘要核验。随后严格沿准备、合成输入、注入、七项测量顺序执行；第四项第一次请求 slot erase 返回 HTTP 501 后停止，未更改参数重试。
 
-步骤 2 下载第一份权重时 `curl` 退出 56：`schannel: server closed abruptly (missing close_notify)`。下载进程退出 1；6 个小文件已按上游摘要核验。第一份权重仅有 2,418,060,864 bytes 的 `.partial`，预期 5,329,398,688 bytes，未通过完整性认证；第二份权重未下载。没有重试、换下载工具或关闭 TLS 校验。原始 [download.log](preparation/download.log)、[失败记录](preparation/download-failure.json)、[已核验文件](preparation/download-files.json)均保留。
+没有删除文件、下载 Qwen3-VL、提取概念方向、选择注入位置、设新阈值或改生产代码/配置。仅两个允许目录产生仓库改动，权重、构建和原始数据位于 D 盘缓存。本报告逐项交回用户判断，不签发通过结论，也不把脚本退出 0 等同于模型通过。
 
-BF16、Q4_K_M、mmproj、合成输入生成、注入探针适配及七项 GPU 测量全部未执行。GPU 使用时间为 0；三小时测量上限未开始计时。未下载 Qwen3-VL-4B-Instruct。下载故障不证明 Qwen3.5 有模型或引擎兼容性问题，也不触发自动回退。
+## 七项结果与 P0-10 对照
 
-## 空间
+旧值来自 P0-10 [REPORT](../P0-10/REPORT.md)、[INJECTION-REPORT](../P0-10/INJECTION-REPORT.md)、[BENCHMARK-REPORT](../P0-10/BENCHMARK-REPORT.md)，未重测旧模型；不同词表/模板/生成长度不能作同条件性能比较。
 
-D 盘初次盘点可用 **189,794,258,944 bytes（189.79 GB，176.76 GiB）**。本次预算约 40 GB：原权重约 9 GB、下载暂存副本最多约 9 GB、BF16/mmproj 约 9 GB、Q4 约 3 GB、证据和余量约 10 GB。实际采用直接下载，没有分段副本；40 GB 是准备预算而非模型验收阈值。官方两份原始权重实际合计 **9,319,828,096 bytes**。空间充足，未删除任何文件，无需提供清理候选。第二次空间快照见 [plan-binding.json](preparation/plan-binding.json)，停止时文件占用及哈希见 [manifest.json](manifest.json)。
-
-## 七项结果及 P0-10 对照
-
-旧值只来自 P0-10 的 [REPORT](../P0-10/REPORT.md)、[INJECTION-REPORT](../P0-10/INJECTION-REPORT.md)、[BENCHMARK-REPORT](../P0-10/BENCHMARK-REPORT.md)，本次没有重测旧模型，也不把旧值作为新模型阈值。
-
-| 项目 | P0-10 Qwen3-4B / Q4_K_M 的已有记录 | P0-12 Qwen3.5-4B |
+| 项目 | P0-10 Qwen3-4B / Q4_K_M | 本次 Qwen3.5-4B / Q4_K_M |
 | --- | --- | --- |
-| 1. 零注入逐位置 logits | 中/英/日 24/11/16，合计 51/51 位置完整字节一致，最大差 0 | 未测；无 logits 或 token 轨迹 |
-| 2. 每请求更新 m | 显式清 KV 后 A 重复、fresh-A/B 各 51/51 一致；保留 KV 的诊断不一致 | 未测；循环状态清除与不清除对照均无实测 |
-| 3. 两个注入位置可用性 | 36 层中零起算 17 层；attention 后与整层位置均有观测，原生广播覆盖全部 prefill 行 | 未测；只取得固定源码，不能声称回调或原生注入已可用 |
-| 4. 中英日速度 / 首 token | 50 条无约束 P50：原生 prefill 432.02 ms、客户端 TTFT 3737.55 ms、decode 127.99 token/s；原 wire 200 条，三语 67/67/66 | 未测；4 预热、20 固定句、50 无约束、200 原 wire 输入尚未生成；不使用紧凑 schema |
-| 5. 单张图片处理时间 | 旧载体为纯文本，无对应测量 | 未测；三种分辨率合成图片尚未生成 |
-| 6. 载体 + 视觉编码器显存 | 旧载体单独、context 8192，专用和共享独立峰值之和 4,723,433,472 bytes；无 mmproj | 未测；无加载及采样，不能作 TTS/渲染同驻结论 |
-| 7. 不思考输出稳定性 | 旧模型非思考配置；零注入自由 token 对照一致；20 固定句额外加顿号，精确匹配 0/20；没有与本卡完全对应的重复稳定性专项结论 | 未测；仅固定官方模板，没有模型输出 |
+| 1. 零注入逐位置 logits | 中/英/日 24/11/16，共 51/51 位置字节一致，最大差 0 | 中/英/日 12/11/12，共 35 个位置；每组零注入、非零后清零、原生撤除配对均 35/35 字节一致，最大差 0；共 11 组、385 个位置配对 |
+| 2. 每请求更新 m | 显式清 KV 后 A 重复、fresh-A/B 各 51/51 一致；保留 KV 诊断不一致 | attention/full/native 各自 A 重复及 fresh-A/B 各 35/35 一致；显式同时清 KV 和 recurrent。保留两类状态的诊断共 9 个首位置，0/9 字节一致，最大绝对差 3.190608–5.494915 |
+| 3. 两个位置可用性 | 36 层零起算 17，attention 后与整层均有观测；原生覆盖全部 prefill 行 | 32 层零起算 15，`attn_residual-15` 与 `l_out-15` 实测可访问；2560 维 F32，末行与全行掩码均产生预设加法，原生 control vector 覆盖全行；不选择位置 |
+| 4. 三语速度 / 首 token | 无约束 50 条 P50：内部 prefill 432.02 ms、客户端 TTFT 3737.55 ms、decode 127.99 token/s；原 wire 200 条三语 67/67/66 | **失败于请求前准备**：server 启动后第一次 slot erase 返回 HTTP 501。4 预热、270 正式请求均未发送；没有可报告的 HTTP TTFT、prefill、decode 统计 |
+| 5. 单图处理时间 | 纯文本，无对应测量 | 未测；21 张合成 PNG 已生成，未送入模型 |
+| 6. 载体 + mmproj 显存峰值 | context 8192 载体单独专用/共享独立峰值之和 4,723,433,472 bytes；无 mmproj | 未测；mmproj 已转换但未加载。失败 server 的载体单独采样已保留，不能冒充本项结果 |
+| 7. 不思考输出稳定性 | 固定句精确匹配 0/20；没有与本卡完全对应的重复稳定性专项结论 | 未测专项重复请求。前三项使用官方非思考模板，已留 token 轨迹，但不将其替代本项输出稳定性或思考内容判断 |
 
-逐项交回用户判断；本报告不签发“通过/不通过”。下载失败与上述未测状态不支持条件切换；生产基线未改变。
+## 注入证据和限制
 
-## 已取得的准备证据
+完整逐位置数据见 [injection-summary.json](results/injection-summary.json)。每个位置保存全部 **248,320 个 float32 logits**，比较完整字节及最大绝对差，同时保留预测 token 和实际喂入 token。step 0 是最后一个 prefill 位置，其余为 decode。每条最多 24 个位置，遇 EOG 停；实际三语各 12/11/12。非零组沿同语种基线轨迹 teacher forcing，零注入另有自由生成轨迹，三种零注入的自由 token 与各自基线相同。
 
-- 官方仓库 `Qwen/Qwen3.5-4B`，固定修订 `851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a`；[完整官方元数据](preparation/model-metadata.json)。许可 Apache-2.0，已下载 LICENSE；权重尚未完整取得，不能把元数据中的预期哈希写成实测哈希。
-- [config.json](preparation/model/config.json) 为 32 层、hidden size 2560、词表 248320。用户公式 `round(17/36 × 32) = 15`，零起算第 15 层是配置中的 full_attention；只是固定换算，未进行择层或实测。
-- [官方模板](preparation/model/chat_template.jinja) 的 `enable_thinking=false` 分支预填 `<think>\n\n</think>\n\n`。实际输入模板尚未渲染，未声称生成内容稳定或无思考。
-- llama.cpp 固定 b11669 / `620d2225cc436ab0b001e3200e590e3b286ef9ab`：[189 源文件哈希](preparation/converter-source-check.json)、[字段比较更正](preparation/converter-source-comparison.json)、[55 引擎文件哈希](preparation/engine-check.json)。源码与引擎均匹配旧清单；未启动引擎验证兼容。
-- 固定提交的 [qwen35.cpp](preparation/upstream/qwen35.cpp) 有 `attn_residual` 和 `l_out` 节点，整层处调用 `build_cvec`；[hybrid clear](preparation/upstream/llama-memory-hybrid.cpp) 调用 attention/recurrent 的 clear，[recurrent clear](preparation/upstream/llama-memory-recurrent.cpp) 在 data=true 时清缓冲。仅为静态依据，不能代替 fresh context 配对实测。原文 Git blob 与已缓存的固定提交树一致，见 [upstream-inventory.json](preparation/upstream-inventory.json)。上游两个文件超过 400 行，为保留固定源码与 MIT 许可而完整归档，不是新增产品实现。
+层换算严格为 `round(17/36 × 32) = 15`，不搜索层。该层是 full_attention；模型还有 linear_attention 层。只用预先固定的 2560 维 `e0=(1,0,...)`，A=+e0、B=-e0、零向量/撤除，不复用旧概念方向。
 
-## 交付与可复现入口
+直接调用 `llama_memory_clear(llama_get_memory(ctx), true)` 后安装本次向量再 prefill。固定 [hybrid 源码](preparation/upstream/llama-memory-hybrid.cpp) 同时调用 attention/recurrent clear；[recurrent 源码](preparation/upstream/llama-memory-recurrent.cpp) 清理 cells、位置、src/tail、索引并清零缓冲。实测同一 context 的 A→B→0→A、fresh-A/B 配对补充静态依据。保留状态的诊断只比较首位置，不能称为全轨迹配对，summary 中 `samePositionSet=false` 如实保留。
 
-- [prepare_visual_model.ps1](../../spikes/carrier-engine/prepare_visual_model.ps1)：固定修订、单次下载、上游 SHA-256/Git blob 校验，失败即停并保留 partial。本次已执行一次并失败。
-- [convert_visual_model.ps1](../../spikes/carrier-engine/convert_visual_model.ps1)：CPU 环境、源码/模型/引擎绑定检查，BF16 → Q4_K_M → F16 mmproj；排除推测解码 MTP 草稿层，保留主模型 32 层。**尚未执行，不能视为已验证转换入口。**
+| 语种 | prefill 行数 | attention 末行/全行实际改变行数 | full 末行/全行实际改变行数 | 原生改变行数 |
+| --- | ---: | ---: | ---: | ---: |
+| 中 | 35 | 1 / 35 | 1 / 35 | 35 |
+| 英 | 28 | 1 / 28 | 1 / 28 | 28 |
+| 日 | 30 | 1 / 30 | 1 / 30 | 30 |
 
-本次命令如下；下载目录已存在，入口会拒绝覆盖，后续恢复方式须用户另行决定，不能直接重跑。
+预设加法与实际 float32 差值的最大误差为 4.76837158203125e-7，逐模式数值及 decode 回调记录见 summary / raw。原生注入在 `l_out` 回调之前发生，以无向量观测配对测量。`old` 是旧公共探针保留的字段名，本次明确指 `attn_residual-15`，不是旧模型节点。这里不比较位置优劣，不将固定基向量可写入推断为行为概念方向有效。
+
+## 第四项停止原因
+
+b11669 已加载 CUDA、完成全层卸载、建立 context 8192，并明确记录 prompt cache disabled。实际参数包含 `--cache-ram 0`、`--slots`；待发送 completion 的 payload 固定 `cache_prompt=false`。官方模板的实际非思考输入已经离线渲染，server 的默认 chat 示例 `thinking=1` 不代表本次预渲染输入；本次未发送 completion。
+
+测量脚本漏加 `--slot-save-path`，而固定源码 `post_slots` 在该参数为空时对所有 slot action 返回 501（即使 action=erase）。**这是本代理编写的测量配置遗漏，不能归因于模型或 b11669 不支持 Qwen3.5。** [诊断证据](results/server-failure-diagnosis.json) 保存源码摘要与行号片段；原始 traceback 在 raw 的 `item-4.stderr.log`。HTTP 错误响应正文未被保存，具体原因由固定源码和实际 argv 对照得出，不伪称捕获到了正文。
+
+异常后 harness 终止自己启动的 server，采样器退出 0。未修参数重跑、未改引擎、未转直接调用绕过第四项。第五至七项没有启动，也没有提前实现/声称已验证其测量入口。
+
+## 输入、模板、空间与来源
+
+文字输入见 [inputs/plan.json](inputs/plan.json)、[jobs.json.gz](inputs/jobs.json.gz)、[schemas.json](inputs/schemas.json)。沿用 P0-10 的 20 条固定句、前 50 条无约束、全部 200 条原 wire schema；200 条中/英/日为 67/67/66，50 条为 17/17/16，固定句 20 条为旧方案的中文原句。四条预热中原第四条 compact 改为原 wire 重复预热，以遵守本次禁止紧凑 schema；其余原消息内容保持不变。新模型 tokenizer/template 导致 token IDs 与旧模型不同。
+
+[官方模板](preparation/model/chat_template.jinja) 的 `enable_thinking=false` 已用于实际渲染，模板 SHA-256 `a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715`。实际 prompt 在 jobs 和三个 `inputs/injection-*.txt`，末尾预填 `<think>\n\n</think>\n\n`，这些是模板前缀，不是实测生成的思考内容。
+
+[图片清单](inputs/images/manifest.json)：256、512、1024 三种正方形分辨率，每种包含红/绿/蓝纯色、几何组合、中文/英文/日文文本，共 21 张 PNG。System.Drawing 脚本绘制，字体 `msyh.ttc` 的哈希已登记；无下载图片、用户照片或屏幕输入。图片未进行模型识别测试，不作 OCR 成功声明。
+
+D 盘首次可用 **189,794,258,944 bytes（189.79 GB / 176.76 GiB）**，本次预算 40 GB（原权重约 9 GB、下载暂存最多约 9 GB、BF16/mmproj 约 9 GB、Q4 约 3 GB、证据余量约 10 GB）。续做检查可用 185,794,899,968 bytes，足够；没有执行删除。原失败 2,418,060,864 bytes partial 保留在 `D:/Dev/cache/P0-12/failed-download-01/shard-01.partial`，哈希见 [续传完成记录](preparation/resume-01/completion.json)。
+
+官方仓库 `Qwen/Qwen3.5-4B` 固定修订 **851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a**；14 文件实测摘要和上游核验结果见 [model-inventory.json](preparation/model-inventory.json)，完整 [官方元数据](preparation/model-metadata.json)。两份权重合计 **9,319,828,096 bytes**。许可 Apache-2.0，原文 LICENSE 已保存。首次网络失败的日志、哈希和历史清单 [manifest.json](manifest.json) 不覆盖；它描述旧停止点，不是本次最终清单。
+
+固定 llama.cpp **b11669 / 620d2225cc436ab0b001e3200e590e3b286ef9ab**，MIT。转换使用原 CPU venv（torch 2.11.0+cpu、transformers 4.57.6），量化使用同版 CPU 独立目录；未安装新依赖。源码/引擎校验沿 [converter-source-check.json](preparation/converter-source-check.json)、[比较更正](preparation/converter-source-comparison.json)、[engine-check.json](preparation/engine-check.json)。版本/许可见 [environment.json](preparation/environment.json)。CUDA 二进制等仍按 P0-10 本机使用范围，不作整包分发批准。
+
+| 自转换产物 | bytes | SHA-256 |
+| --- | ---: | --- |
+| BF16（`--no-mtp`，仅主模型 32 层） | 8,424,393,728 | `1409508b90b58f536bc0dda4b1c3e1d54528f008f0ee53b08a4a6f976ab15388` |
+| Q4_K_M | 2,708,804,608 | `045b7d309c8021d4d7bcebe1156ae94a1e3e128df271d05f5adfcea38ee20b27` |
+| mmproj F16 | 672,423,520 | `73a88d2d689250d44e14bf7504476f287ca7a04ac2594592263251217e581069` |
+
+[转换 argv、时间、退出码](preparation/conversion-commands.json) 与 [产物清单](preparation/gguf-inventory.json) 完整保留，三步退出均 0。成功转换和本次文本/注入加载不等于视觉运行兼容性已经验证。
+
+## 安静窗口与原始数据
+
+开始前确认 Runner.Listener / Runner.Worker 均未运行，原生探针每次请求和 decode 再检查，server 入口也检查。窗口 UTC **2026-11-01 16:11:04.945 → 16:13:41.202**（本地 11 月 2 日 00:11–00:13），约 **156.26 秒**，这是含阶段间准备的窗口墙钟时间，并非 GPU 忙碌计数器。硬截止 19:11:04.945 UTC；父进程按剩余时间 WaitForExit，超时终止自己启动的进程树；未触发上限。异常后没有继续 GPU 工作，已通知用户恢复 runner。
+
+6807 份原始文件共 1,394,458,102 bytes；SHA-256 去重后 824 个 gzip 对象共 244,324,309 bytes，逐个解压往返核验。见 [raw-inventory.json](results/raw-inventory.json)、[raw-filemap.json](raw/raw-filemap.json)、[归档日志](preparation/archive.log)。完整 logits、激活、token 轨迹、进程日志、失败 server 的采样都能按 filemap 恢复；缓存原文件未删除。当前交付文件摘要见 [manifest-resume.json](manifest-resume.json)，排除清单自身与最终 closeout 记录。
+
+## 可复现入口（记录本次运行，不是批准再次运行）
 
 ```powershell
 Set-Location D:/Dev/nemu-wt/P0-12
-pwsh -NoProfile -File spikes/carrier-engine/prepare_visual_model.ps1 *> reports/P0-12/preparation/download.log
-# 以下未执行；只有准备成功且无阻塞时才可运行
+pwsh -NoProfile -File spikes/carrier-engine/prepare_visual_model.ps1 -EvidenceDirectory reports/P0-12/preparation/resume-01
 pwsh -NoProfile -File spikes/carrier-engine/convert_visual_model.ps1
+& D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe spikes/carrier-engine/prepare_visual_inputs.py
+pwsh -NoProfile -File spikes/carrier-engine/prepare_visual_images.ps1
+pwsh -NoProfile -File spikes/carrier-engine/build_probe.ps1 -VisualCarrier -OutputDirectory D:/Dev/cache/P0-12/build-visual-01
+pwsh -NoProfile -File spikes/carrier-engine/run_visual_injection.ps1
+pwsh -NoProfile -File spikes/carrier-engine/run_visual_http.ps1 # 本次在第一次 slot erase 失败
+# 停止 GPU 后，仅整理已保存数据：
+& D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe spikes/carrier-engine/summarize_visual_injection.py
+& D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe spikes/carrier-engine/archive_evidence.py --source D:/Dev/cache/P0-12/gpu-01 --inventory reports/P0-12/results/raw-inventory.json --output reports/P0-12/raw
 ```
 
-没有可复现的 GPU 结果命令，因为尚未实现/执行本卡 GPU 入口；不把 P0-10 旧入口伪装成本卡测量。原始记录与文件摘要清单在本报告目录。
+现有输出目录受到防覆盖保护，重放应使用新目录且需用户解除本次失败停止状态。原生各阶段精确 argv、开始/结束时间和 exit code 均在 raw 根目录。恢复原始文件可遍历 filemap 的 files，将 `gzip.decompress(raw/object)` 写入新目录的 path，并核对 bytes/sha256。文件分块为逐文件无损 gzip，不是仅保留摘要。
 
-## 检查、失误与限制
+## 验证与已知限制
 
-两个 PowerShell 入口 AST 语法错误 0，见 [script-parse.json](preparation/script-parse.json)；只有下载入口在真实边界执行，转换入口仅作语法检查。哈希、JSON 完整解析、Markdown 相对文件链接和 diff 检查见 [closeout-check.json](closeout-check.json)。本次没有改动生产语言包，不运行其工作区测试；准备失败后没有继续执行转换或 GPU 测试。
+- 官方文件摘要核验、三步 CPU 转换退出 0；新探针 MSVC 14.44.35207 `/W4 /WX /O2 /fp:precise` 编译退出 0，[构建绑定](preparation/build-visual.json)、[日志](preparation/build-visual.log)。前三项执行退出 0，只说明采集完成。
+- 第四项退出 1：HTTP 501；停止后只做离线统计、哈希、归档及交付检查，不运行后续测量或以重跑替换失败。
+- 公共 Native/Trace/build/http/compare 的新参数保留 P0-10 默认行为；本次只实测新模型路径。未重跑旧模型或整个生产工作区，也没有声称完成 Python mypy 全套检查。整卡仍未完成，不能合并或当作模型切换验收。
+- 初次汇总的 `Where-Object` 字段比较错误已有独立更正，历史原记录未覆盖；本次两次只读源码搜索使用不存在目录/Windows 通配形式，未取得内容，随后从已固定的实际源路径读取，没有更换引擎或测量方法。
+- 原始 preparation 证据保持 CRLF；历史 diff whitespace 检查退出 2，原因包括原始日志/官方 LICENSE，不篡改原始字节消除提示。最终交付检查单独记录于 closeout-resume.json。
+- 首次交付字节核对将 Git LFS 指针误当图片内容，并发现 JSON 暂存换行转换，记录保留在 preparation/closeout-resume-attempt01.json。最终改用 LFS oid/size 核对图片，并按 -text 属性重新暂存 JSON；不改实验值、不重跑测量。
+- 完整上游源码和机器生成 JSON 清单可能超过 400 行，为保存原文和逐文件/逐位置证据；新增手写脚本均小于 400 行。
 
-归档时给 preparation 原始证据设置 `-text`，避免 Git 转换 CRLF、破坏实测哈希；逐文件工作文件与暂存 blob 已核对相同。此前默认文本规范化下 diff 检查退出 0，保留原始 CRLF 后最终 `git diff --cached --check` 退出 2，报原始证据行尾 whitespace（包含官方 LICENSE）。最终 diff 检查不记通过；不修改原始字节或关闭 whitespace 检查来消除提示。该归档检查结果与下载故障、未测状态分开记录。
+## 下一步
 
-源码哈希首次汇总误用 `Where-Object expected -ne actual`，将 actual 当字面值，错误报告 189 个差异。原始逐文件 expected/actual 均保留；用 `Where-Object { $_.expected -ne $_.actual }` 比较既有记录，两列实际差异为 0。首次错误汇总未覆盖，单独追加更正。一次只读 `rg` 的 Windows 通配路径写法报路径错误，改为目录加 `-g '*.cpp'` 后读到源码；这两项不是转换或 GPU 结果。
-
-## 依赖与下一步
-
-没有新增安装或产品运行时依赖。复用的 CPU 工具环境版本与许可见 [environment.json](preparation/environment.json)；固定 llama.cpp 源码为 MIT，二进制 CUDA/LLVM 组件仍沿 P0-10 的本地使用范围，不作整包分发批准。模型 Apache-2.0 许可不等于本次已下载完整模型。
-
-等待用户就 [BLOCKED.md](BLOCKED.md) 决定后续；本次停止。已通知恢复 runner。推送后仅请求审查当前部分交付，不把整卡标为完成。
+等待用户决定是否授权修正本次测量配置后继续；本次保持 draft / needs-user，推送后请审查。未测项如实保留，不自动回退、不等待或报告 CI、不取下一卡。

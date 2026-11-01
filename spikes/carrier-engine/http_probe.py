@@ -42,8 +42,10 @@ def write_json(path: Path, value: object) -> None:
 
 
 class Server(AbstractContextManager["Server"]):
-    def __init__(self, engine: Path, model: Path, output: Path) -> None:
+    def __init__(self, engine: Path, model: Path, output: Path,
+                 visual_carrier: bool = False, mmproj: Path | None = None) -> None:
         self.engine, self.model, self.output = engine.resolve(), model.resolve(), output.resolve()
+        self.visual_carrier, self.mmproj = visual_carrier, mmproj
         self.process: subprocess.Popen[bytes] | None = None
         self.watcher: subprocess.Popen[bytes] | None = None
         self.handles: list[BinaryIO] = []
@@ -60,6 +62,10 @@ class Server(AbstractContextManager["Server"]):
                 "--port", str(port), "-ngl", "999", "-c", "8192", "-np", "1", "-b", "512", "-ub", "512",
                 "-t", "4", "-tb", "4", "--flash-attn", "off", "--no-cache-prompt", "--no-context-shift",
                 "--no-webui", "--no-ui-mcp-proxy", "--offline", "--perf"]
+        if self.visual_carrier:
+            args.extend(["--cache-ram", "0", "--slots"])
+        if self.mmproj is not None:
+            args.extend(["--mmproj", str(self.mmproj)])
         env = {key: value for key, value in os.environ.items()
                if not key.startswith("LLAMA_") and key != "GGML_BACKEND_PATH"}
         env.update(HF_HUB_OFFLINE="1", HF_HUB_DISABLE_TELEMETRY="1", OMP_NUM_THREADS="4", MKL_NUM_THREADS="4")
@@ -150,7 +156,7 @@ class Server(AbstractContextManager["Server"]):
             # b11669 tokens_cached is the final KV occupancy, not the reused prefix.
             # The request explicitly disables reuse; timings.prompt_n counts processed input.
             processed = final.get("timings", {}).get("prompt_n")
-            if (processed != len(payload["prompt"]) or final.get("timings", {}).get("cache_n") != 0
+            if ((isinstance(payload["prompt"], list) and processed != len(payload["prompt"])) or final.get("timings", {}).get("cache_n") != 0
                     or final.get("truncated") is True):
                 raise ValueError("Cached/truncated prompt invalidates the registered comparison")
             cumulative = ""
