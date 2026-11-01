@@ -122,4 +122,6 @@ R1 历史汇总见 [result.json](review-r1-20261101/result.json)。其 [源码�
 
 本轮被测组合提交为 `000e3c0990b04016d7ebc6180c10ddfab4232f78`；recompute 源码与已复审交付 `7142adc4` 相同，上游 C/契约/存储来自 M。后续报告提交不改变被测源码。[本轮汇总](conditional-20261101/result.json) 记录六项完整通过结果，八次运行的 15 个源码文件清单均与已复审源码一致；两次不完整运行不计为通过。[本轮原始归档](conditional-20261101/raw-verification.zip) 内 36 个文件逐字节核对通过，见 [归档核对](conditional-20261101/archive-check.json) 和 [原始文件哈希](conditional-20261101/raw-sha256.json)。源码继续引用未改动的 R1 归档，不重写旧证据。
 
+`verification/.gitattributes` 仅对本轮 `conditional-20261101-*` 证据关闭 Git 换行转换，恢复首个报告提交中被 Git 规范化的字节；磁盘原始文件、ZIP 与哈希清单未改写。36 个仓库文件与原始 ZIP/哈希逐字节一致，见 [仓库字节核对](conditional-20261101/repository-byte-check.json)。
+
 真实 H 接线、V2→V3 迁移/回退、完整独立第二实现、SYS17 与 ADR 0032 新规律保留为后继项；整卡未完成，禁止据此接入生产。受影响检查已通过；按本轮用户明确授权，本次条件性交付转为可审查、标 `needs-user` 并留言“请审查”，请求审批当前限定交付；不以此自行合并、登记整卡完成或启用生产。结束后停止本卡。
