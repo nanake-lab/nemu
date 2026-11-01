@@ -93,6 +93,7 @@ pub(crate) fn verify(
                 .ok_or(crate::Error::Rejected("accepted commit lacks snapshot"))?;
             let reference = ObjectRef::from_canonical(bytes, limits)?;
             let value = CoreTransactionV2::from_canonical(&objects.read(&reference)?, limits)?;
+            crate::theta::read(objects, &value.staged_theta)?;
             require(
                 hex(&reference.digest.0) == id
                     && value.binding.base_commit == parent.as_ref().unwrap_or(&initial).as_str()

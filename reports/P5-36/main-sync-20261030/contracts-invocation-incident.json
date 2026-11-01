@@ -1,0 +1,13 @@
+{
+  "attempt": "contracts.json",
+  "raw_output": "contracts.log",
+  "process_exit_code": 0,
+  "acceptance_valid": false,
+  "actual_startup": "vitest run e s t : c o r e - c o n t r a c t s",
+  "reason": "The temporary PowerShell runner splatted a scalar single argument; the requested contract verification did not execute.",
+  "fix": "Explicitly type the argument list as string[] in the task-cache runner.",
+  "corrected_attempt": "contracts-corrected.json",
+  "corrected_output": "contracts-corrected.log",
+  "repository_implementation_changed": false,
+  "old_log_retained": true
+}

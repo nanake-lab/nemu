@@ -2870,7 +2870,11 @@
         }
       ],
       "file": "law.proto",
-      "rules": {}
+      "rules": {},
+      "superseded": {
+        "by": "ThetaSnapshotV2",
+        "reason": "P5-36; ADR 0029: inline complete recursive estimator state"
+      }
     },
     "GrowthCommand": {
       "tag": "echo.growth-command",
@@ -10796,6 +10800,577 @@
       ],
       "file": "terminal_ingress.proto",
       "rules": {}
+    },
+    "ThetaEstimatorParameters": {
+      "tag": "echo.theta-estimator-parameters",
+      "source": "P5-36; ADR 0029; V2-94/95/98/100/103",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "law_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "numerics_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "baseline_prior",
+          "type": "NatureVector",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "gain_prior",
+          "type": "NatureScale",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "sigma_prior",
+          "type": "NatureScale",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tau_prior_s",
+          "type": "NatureScale",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "baseline_weight",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "variance_weight",
+          "type": "double",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "duration_weight",
+          "type": "double",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "change_prior",
+          "type": "double",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "change_prior_weight",
+          "type": "double",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "change_min",
+          "type": "double",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "gain_min",
+          "type": "double",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "gain_max",
+          "type": "double",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "recovery_min",
+          "type": "double",
+          "number": 16,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "recovery_max",
+          "type": "double",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "detector_shift_sigma",
+          "type": "double",
+          "number": 18,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "detector_threshold",
+          "type": "double",
+          "number": 19,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "jump_notice",
+          "type": "double",
+          "number": 20,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "drift_run",
+          "type": "uint64",
+          "number": 21,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "drift_margin",
+          "type": "double",
+          "number": 22,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "theta.proto",
+      "rules": {}
+    },
+    "ThetaRunningTime": {
+      "tag": "echo.theta-running-time",
+      "source": "P5-36; ADR 0029; V2-95 recorded running time",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "origin_ns",
+          "type": "uint64",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_ns",
+          "type": "uint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "stopped_ns",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "running_ns",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "theta.proto",
+      "rules": {}
+    },
+    "ThetaLastEvent": {
+      "tag": "echo.theta-last-event",
+      "source": "P5-36; ADR 0029; last accepted external learning event",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ordinal",
+          "type": "uint64",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "time_ns",
+          "type": "uint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "theta.proto",
+      "rules": {}
+    },
+    "ThetaEstimatorState": {
+      "tag": "echo.theta-estimator-state",
+      "source": "P5-36; ADR 0029; I18 complete P5-25 recursion",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "weight",
+          "type": "double",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "reaction_sum",
+          "type": "double",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "square_sum",
+          "type": "double",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "sigma",
+          "type": "NatureScale",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "variance",
+          "type": "double",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "duration_log_sum",
+          "type": "double",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "duration_mass",
+          "type": "double",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "duration_log_mean",
+          "type": "double",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "zero_duration_count",
+          "type": "uint64",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tau_s",
+          "type": "NatureScale",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "run_sign",
+          "type": "sint64",
+          "number": 12,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "run_start_ns",
+          "type": "uint64",
+          "number": 13,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "detector_segment_count",
+          "type": "uint64",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "detector_changes",
+          "type": "uint64",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "detector_mean",
+          "type": "double",
+          "number": 16,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "min": -1.0,
+          "max": 1.0
+        },
+        {
+          "name": "detector_positive",
+          "type": "double",
+          "number": 17,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "detector_negative",
+          "type": "double",
+          "number": 18,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "event_count",
+          "type": "uint64",
+          "number": 19,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "h",
+          "type": "double",
+          "number": 20,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "last_event",
+          "type": "ThetaLastEvent",
+          "number": 21,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "last_running_time",
+          "type": "ThetaRunningTime",
+          "number": 22,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "drift_sign",
+          "type": "sint64",
+          "number": 23,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "drift_count",
+          "type": "uint64",
+          "number": 24,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "theta.proto",
+      "rules": {}
+    },
+    "ThetaSnapshotV2": {
+      "tag": "echo.theta-snapshot-v2",
+      "source": "P5-36; ADR 0029; inline estimator and bound complete parameters",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "values",
+          "type": "ThetaValues",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parameters",
+          "type": "ThetaEstimatorParameters",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parameters_digest",
+          "type": "bytes",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "estimator",
+          "type": "ThetaEstimatorState",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "theta.proto",
+      "rules": {},
+      "supersedes": "ThetaSnapshot",
+      "reserved": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
     }
   },
   "enums": {

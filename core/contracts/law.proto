@@ -69,6 +69,7 @@ message RSnapshot {
 
 // @message echo.theta-snapshot | v2.0 §8 θ and the statistics of C
 message ThetaSnapshot {
+  // @superseded ThetaSnapshotV2 | P5-36; ADR 0029: inline complete recursive estimator state
   // sigma is σ̂, tau_s is τ̂ in seconds, weight_sum is Σω_e, h_hat_theta is ĥ_θ. estimator_state
   // holds the remaining recursion state (change-point detector, current same-sign runs), whose
   // format the law version defines (P5-25; V2-30).
