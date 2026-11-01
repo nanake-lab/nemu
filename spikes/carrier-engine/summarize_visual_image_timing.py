@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import re
+from typing import Any, cast
 
 from http_probe import ROOT, write_json
 from summarize_visual_remaining import statistics
@@ -27,14 +28,14 @@ def main() -> None:
         row['encoderStartToImageDecodeStartMs'] = (
             stamp_ms(decode[0]) - stamp_ms(encode[0]) if len(encode) == 1 and decode else None)
         row['imageEmbeddingDecodeLogMs'] = (
-            sum(int(re.search(r'in (\d+) ms', line)[1]) for line in finished) if finished else None)
+            sum(int(cast(re.Match[str], re.search(r'in (\d+) ms', line))[1]) for line in finished) if finished else None)
         row['imageEmbeddingTokens'] = (
-            sum(int(re.search(r'n_tokens_batch = (\d+)', line)[1]) for line in decode) if decode else None)
+            sum(int(cast(re.Match[str], re.search(r'n_tokens_batch = (\d+)', line))[1]) for line in decode) if decode else None)
         row['imageEmbeddingBatches'] = len(decode)
     groups = []
     for resolution in [256, 512, 1024]:
         group = [row for row in rows if row['resolution'] == resolution]
-        entry = dict(resolution=resolution, n=len(group))
+        entry: dict[str, Any] = dict(resolution=resolution, n=len(group))
         for key in ['encoderStartToImageDecodeStartMs', 'imageEmbeddingDecodeLogMs', 'ttftClientMs', 'completedClientMs']:
             entry[key] = statistics([row[key] for row in group if row[key] is not None])
         entry['nativePromptMs'] = statistics([row['timings']['prompt_ms'] for row in group])

@@ -59,6 +59,7 @@ def main() -> None:
             folder = output / f'item-{stage}'
             folder.mkdir()
             write_json(folder / 'started.json', dict(startedUtc=now()))
+            jobs: list[tuple[str, str | None, str | None]]
             if stage == 5:
                 jobs = [(entry['file'], entry['file'], None) for entry in images]
             elif stage == 6:

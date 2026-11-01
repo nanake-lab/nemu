@@ -1,6 +1,6 @@
-按重档完成本次④–⑦的预定测量请求，前三项沿用已有数据，没有重跑。
-文字首 token、图片处理、显存和重复输出都有记录；来源检查及计时局限也完整保留，不判定模型是否通过。
-请逐项审查；GPU 已退出并通知恢复 runner，生产模型不切换，PR 仍保留草稿。
+按重档完成七项测量记录，并补齐现有工具的 Ruff 与 strict mypy 检查；本次未使用 GPU。
+类型修复后的报告数字全部不变，用户已判定 Qwen3.5-4B 通过 P0-12、ADR 0034 条件切换生效。
+请审查；本卡未改生产代码或配置，已知计时与原始证据空白检查局限保留。
 
 ## 当前状态与改动
 
@@ -10,7 +10,7 @@
 
 `http_probe.py` 补启动参数；`visual_http_benchmark.py` 接续第四项；`run_visual_http.ps1` 保留累计截止并每五秒记录 runner 检查；`visual_remaining.py` 顺序执行⑤–⑦；两个 summarize 脚本只读已保存数据。仅修改 `spikes/carrier-engine/` 与 `reports/P0-12/`，没有新安装依赖、生产代码/配置变更、方向提取或位置选择。
 
-④的 274 请求、⑤的 21 图片请求、⑥的 3 图片采样请求、⑦的 9 重复请求共 **307 次 completion** 均返回完整结束事件，`cache_n=0`、无 context truncation；④和⑦全部 EOS，⑤有 **9/21 达到既定 64-token 输出上限**，没有删去这些样本或增加上限。独立 PNG 预处理时间未测；mypy 未运行，因此不声称全部工程验证完成，保持 draft。详见 [执行核对](continuation-02/execution-audit.json)与 [BLOCKED.md](BLOCKED.md)。
+④的 274 请求、⑤的 21 图片请求、⑥的 3 图片采样请求、⑦的 9 重复请求共 **307 次 completion** 均返回完整结束事件，`cache_n=0`、无 context truncation；④和⑦全部 EOS，⑤有 **9/21 达到既定 64-token 输出上限**，没有删去这些样本或增加上限。独立 PNG 预处理时间未测；Ruff 与 strict mypy 已由既有 D 盘工具补齐，类型修复未改变报告数字。详见 [执行核对](continuation-02/execution-audit.json)与 [BLOCKED.md](BLOCKED.md)。
 
 ## 七项逐项结果与 P0-10 对照
 
@@ -115,7 +115,34 @@ pwsh -NoProfile -File spikes/carrier-engine/run_visual_http.ps1 -ScriptName visu
 
 - [HTTP 流/缓存/截断边界测试](continuation-02/unittest.log)：`python -m unittest discover -s spikes/carrier-engine -p test_http_probe.py -v`，3/3，无失败；GPU 退出后才运行。
 - Python AST、PowerShell AST、JSON 解析、Markdown 链接、修改范围、当前文件与暂存摘要见 [closeout](closeout-continuation-02.json)。没有通过删除断言、剔除样本或改阈值消除错误。
-- 环境没有 mypy，`mypy --strict` **未运行**；没有自动安装新依赖。图像预处理独立计时、图片识别/OCR准确率、TTS/渲染同驻和更广输入稳定性均没有实测结论。
+- 前次仅检查转换 venv，错误地将其中没有 mypy 当作整体检查缺口；本次已使用 D 盘既有 mypy 1.20.2 / Ruff 0.15.6 完成检查，无新安装。图像预处理独立计时、图片识别/OCR准确率、TTS/渲染同驻和更广输入稳定性仍无新增实测结论。
 - 原始 CRLF、模板末尾空行等如实保留；全量 diff-check 的 whitespace 结果与源码/报告检查分别记录，不篡改原始字节消除提示。机器生成清单/逐位置数据和原文归档超过 400 行是为保持证据；新增手写入口均小于 400 行。
 
-请审查本次测量与上述限制，逐项由用户判断是否满足切换条件。保持 draft / needs-user，不合并、不自动回退、不等待或报告 CI，不取下一卡。
+请审查本次测量、类型检查及用户判定；按用户要求转为可审查，不合并、不复测、不取下一卡。
+
+## 类型检查与数字不变核对（2026-11-02）
+
+从 `origin/main...HEAD` 确定本卡新增/修改的 8 个 Python 脚本，全部使用既有 `D:/Dev/nemu-wt/P4-02/services/voice-sidecar/.venv/Scripts/python.exe` 的 **Ruff 0.15.6、mypy 1.20.2** 检查。strict mypy 的被检查环境指定为原 `D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe`；缓存均在 D 盘，无安装。精确命令、文件列表和退出码见 [commands.json](typecheck-03/commands.json)。首轮 Ruff 的 2 个提示和 mypy 的 11 个类型错误原日志保留；最终 [Ruff](typecheck-03/ruff-02.log) 退出 0、[strict mypy](typecheck-03/mypy-02.log) 退出 0（8 files）。
+
+只修改四个文件的类型表达：tokenizer 未标注工厂的 Callable cast；注入汇总异构字典列表标注；图像日志正则 Match cast 和异构统计字典标注；图文任务 tuple 的 Optional 标注。另外移除未使用 csv 导入、将分号分开的两条原语句换行。没有改算式、分位数、计时边界、过滤规则、输入、模型、采样或状态清除。
+
+[AST 核对](typecheck-03/ast-comparison.json)：去除 typing 导入、类型标注、无运行时作用的 cast 和未使用 csv 导入后，8 个脚本的 AST 均与 `a7cd18764a5d557818a2d9d5be9ee650db0b3af8` 一致。保守地将两个触及的 summarize 从保存数据离线复算到新目录，未加载模型或使用 GPU；仅重定向输出路径，原始文件不覆盖。[复算入口](typecheck-03/verify_replay.py)与[逐项对照](typecheck-03/numeric-comparison.json)可复核。
+
+| 汇总范围 | 前后核对 | 结论 |
+| --- | --- | --- |
+| ①–③ 注入统计 | 2,591 个数值；JSON 内容及完整文件字节比较 | 全部一致；差异 0 |
+| ⑤ 图片计时及各分辨率统计 | 459 个数值；JSON 内容及完整文件字节比较 | 全部一致；差异 0 |
+| ④ 文字 / ⑥ 显存 / ⑦ 稳定性 | 原汇总文件 SHA-256 与检查前比较 | 全部一致，未改汇总计算 |
+| 既有 REPORT 数字 | 追加本节及用户判定前，整个原 REPORT 哈希与检查前相同；原测量表格不改 | 全部不变 |
+
+用户要求的“第 1 步后报告数字全部不变”条件已满足。原始 PNG 预处理计时缺口、证据 CRLF/空白提示与历史失败仍保留；历史 closeout/manifest 仅描述对应提交，本次文件与检查绑定见 [typecheck-03](typecheck-03/closeout.json)。
+
+## 用户判定
+
+以下为用户提供的判定原文；本次未新增语义人工标注、显存归因实验或 GPU 复测。
+
+(1) Qwen3.5-4B 通过 P0-12，ADR 0034 的条件切换生效；不回退，不测 Qwen3-VL-4B。
+(2) 依据：零注入逐位置 logits 字节一致；清除 KV 与循环状态后每请求更新可复现，保留状态的诊断对照有差异；三语速度与首 token 时间满足使用；不思考模式重复输出稳定；固定句 20/20。
+(3) 显存 9.36 GB 主要来自视觉 compute buffer（默认最大图片约 2048²），属于视觉编码器配置与整体显存分配问题，与选哪个载体无关，交给 DESIGN-VRAM-01；本卡不复测。
+(4) 原 wire 来源检查 100/200：100 条不合格全部为 sourceSpan 终点超出原文长度（模型数错字符位置），语义字段未见错误；属于 IRL 让模型数字符的设计问题，交后续处理。语义准确率未测，仍以三语 300 条人工标注为准。
+(5) PNG 预处理未单独计时、原始证据空白检查提示，作为已知局限保留。

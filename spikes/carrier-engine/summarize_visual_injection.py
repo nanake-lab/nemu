@@ -1,10 +1,10 @@
 """Read frozen P0-12 evidence only; no model loading or new experiments."""
 from __future__ import annotations
 
-import csv
 import hashlib
 import json
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 
@@ -17,7 +17,7 @@ OUT = ROOT / 'reports/P0-12/results'
 
 def main() -> None:
     OUT.mkdir(exist_ok=False)
-    results = []
+    results: list[dict[str, Any]] = []
     for lang in ['zh', 'en', 'ja']:
         one, two, three = (RAW / f'item-{i}' / lang for i in [1, 2, 3])
         zero = [compare(one / mode, one / 'plain', 248320) for mode in
@@ -47,7 +47,8 @@ def main() -> None:
         baseline = floats(one / 'observe/full-prefill-all-before.f32').reshape(-1, 2560)
         native = floats(three / 'native-basis-all/full-prefill-all-before.f32').reshape(-1, 2560)
         delta = native.astype('float64') - baseline.astype('float64')
-        expected = np.zeros_like(delta); expected[:, 0] = 1
+        expected = np.zeros_like(delta)
+        expected[:, 0] = 1
         masks.append(dict(mode='native-basis-all', rows=len(delta), changedRows=int(np.any(delta != 0, axis=1).sum()),
                           maximumAddError=float(np.abs(delta - expected).max())))
         greedy = {mode: [int(row['predicted']) for row in table(one / mode / 'tokens.tsv')]

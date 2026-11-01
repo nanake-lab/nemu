@@ -5,6 +5,7 @@ import gzip
 import hashlib
 import json
 from pathlib import Path
+from typing import Any, Callable, cast
 
 from transformers import AutoTokenizer
 
@@ -19,7 +20,8 @@ def main() -> None:
     output = ROOT / 'reports/P0-12/inputs'
     output.mkdir(exist_ok=False)
     model = CACHE / 'models/Qwen--Qwen3.5-4B' / REVISION
-    tokenizer = AutoTokenizer.from_pretrained(model, local_files_only=True, trust_remote_code=False)
+    tokenizer = cast(Callable[..., Any], AutoTokenizer.from_pretrained)(
+        model, local_files_only=True, trust_remote_code=False)
     source = ROOT / 'spikes/codex-app-server'
     fixtures = json.loads((source / 'fixtures/irl-cases.json').read_text(encoding='utf-8'))['cases']
     wire = json.loads((source / 'semantic-candidate.wire.schema.json').read_text(encoding='utf-8'))
