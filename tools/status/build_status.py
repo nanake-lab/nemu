@@ -18,6 +18,7 @@ Rules, first match wins:
     open ready PR                        -> review
     merged PR with label unverified      -> unverified (merged, review unfinished;
                                             dependants stay blocked)
+    merged PR with partial report/blockers -> partial
     merged PR                            -> done
     branch task/<id>-* without any PR    -> in_progress (claimed)
     all dependencies done, card is yours -> needs_you
@@ -41,6 +42,8 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+from delivery import load_deliveries
+
 REPO = "nanake-lab/nemu"
 CARD = re.compile(r"\((P\d-\d{2})\)")
 BRANCH = re.compile(r"^task/(P\d-\d{2})\b")
@@ -61,6 +64,7 @@ GUARDED = (
 LABELS = {
     "paused": "暂停",
     "done": "已完成",
+    "partial": "部分交付",
     "review": "等审查",
     "in_progress": "进行中",
     "needs_you": "等你",
@@ -263,6 +267,14 @@ def compute(repo: str, catalog: dict) -> dict:
         for cid in cards_of_pr(pr) & cards.keys():
             cards[cid]["prs"].append(entry)
     claimed = {m.group(1) for b in branches if (m := BRANCH.match(b))}
+    try:
+        deliveries = load_deliveries(
+            repo,
+            {cid for cid, c in cards.items() if any(p["state"] == "merged" for p in c["prs"])},
+            gh_raw,
+        )
+    except RuntimeError as exc:
+        raise GitHubError(str(exc)) from exc
 
     def direct(c: dict) -> str | None:
         if c.get("status_override"):
@@ -281,7 +293,7 @@ def compute(repo: str, catalog: dict) -> dict:
         ):
             return "unverified"
         if any(p["state"] == "merged" for p in c["prs"]):
-            return "done"
+            return "partial" if c["id"] in deliveries else "done"
         if c["id"] in claimed:
             return "in_progress"
         return None
@@ -303,6 +315,7 @@ def compute(repo: str, catalog: dict) -> dict:
     for cid, card in cards.items():
         card["status"] = status.setdefault(cid, "blocked")
         card["waiting_on"] = [d for d in card["deps"] if status.get(d) != "done"]
+        card["waiting_on"] = list(dict.fromkeys(card["waiting_on"] + deliveries.get(cid, [])))
         card["status_label"] = label_of(card)
 
     attention = []

@@ -37,7 +37,8 @@ def pr(number: int, *, labels: list[str], draft: bool = False,
 
 
 class PauseTests(unittest.TestCase):
-    def compute(self, prs: list[dict], cards: list[dict] | None = None) -> dict:
+    def compute(self, prs: list[dict], cards: list[dict] | None = None,
+                deliveries: dict[str, list[str]] | None = None) -> dict:
         catalog = {
             "cards": cards if cards is not None else [card()],
             "milestones": [{"id": "N1", "name": "Test"}],
@@ -54,7 +55,7 @@ class PauseTests(unittest.TestCase):
         info = {"waiting_runner": True, "guarded": True, "verdict": None}
         with patch.object(status, "gh", side_effect=github), patch.object(
             status, "open_pr_details", return_value=info
-        ):
+        ), patch.object(status, "load_deliveries", return_value=deliveries or {}):
             return status.compute("example/test", catalog)
 
     def test_pause_wins_over_needs_user_for_draft_and_ready(self) -> None:
@@ -66,6 +67,29 @@ class PauseTests(unittest.TestCase):
                 self.assertEqual(row["attention"], [])
                 self.assertEqual(out["attention"], [])
                 self.assertEqual(out["next_up"], {})
+
+    def test_merged_delivery_controls_completion_and_dependencies(self) -> None:
+        # BOARD-PARTIAL-01: a merged slice must not complete its card or unlock dependants.
+        for deliveries, expected in (({}, "done"), ({"P5-23": ["P5-06"]}, "partial")):
+            with self.subTest(expected=expected):
+                out = self.compute([pr(49, labels=[], merged=True)],
+                                   [card(), card("P5-24", ["P5-23"])], deliveries)
+                row = status.board_rows(out)[0]
+                self.assertEqual(row["status"], expected)
+                self.assertEqual(row["status_label"], status.LABELS[expected])
+                self.assertEqual(row["waiting_on"], "P5-06" if deliveries else "")
+                self.assertEqual(out["cards"][1]["status"], "blocked" if deliveries else "ready")
+                self.assertEqual(out["milestones"][0]["done"], 0 if deliveries else 1)
+
+    def test_partial_does_not_hide_open_work_or_unverified_merge(self) -> None:
+        for prs, expected in (
+            ([pr(49, labels=["unverified"], merged=True)], "unverified"),
+            ([pr(49, labels=[], merged=True), pr(50, labels=[], draft=True)], "in_progress"),
+        ):
+            with self.subTest(expected=expected):
+                out = self.compute(prs, deliveries={"P5-23": ["P5-06"]})
+                self.assertEqual(out["cards"][0]["status"], expected)
+                self.assertEqual(out["cards"][0]["waiting_on"], ["P5-06"])
 
     def test_paused_non_card_pr_has_no_reminders_and_remains_visible(self) -> None:
         for draft in (True, False):
