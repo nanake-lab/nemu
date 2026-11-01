@@ -1,0 +1,543 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "state.proto";
+import "ledger.proto";
+
+enum Lang { LANG_UNSPECIFIED = 0; ZH = 1; EN = 2; JA = 3; }
+enum TouchKind { TOUCH_UNSPECIFIED = 0; CLICK = 1; DOUBLE_CLICK = 2; PAT = 3; DRAG_START = 4; DRAG_END = 5; FLING = 6; }
+enum DesktopKind { DESKTOP_UNSPECIFIED = 0; FOREGROUND_CHANGED = 1; IDLE_STARTED = 2; IDLE_ENDED = 3; DND_CHANGED = 4; SESSION_LOCKED = 5; SESSION_UNLOCKED = 6; MEETING_STARTED = 7; MEETING_ENDED = 8; }
+enum DndState { DND_UNSPECIFIED = 0; NONE = 1; FULLSCREEN = 2; PRESENTATION = 3; BUSY = 4; MEETING = 5; QUIET_HOURS = 6; }
+enum SessionEvent { SESSION_UNSPECIFIED = 0; SESSION_START = 1; PERMISSION_REQUEST = 2; STOP = 3; }
+enum DeliveryStatus { DELIVERY_UNSPECIFIED = 0; DELIVERED = 1; PARTIAL = 2; CANCELLED_DELIVERY = 3; UNKNOWN_DELIVERY = 4; }
+enum MaintenanceKind { MAINTENANCE_UNSPECIFIED = 0; STARTED = 1; STOPPING = 2; MODE_SWITCHED = 3; CLOCK_EPOCH = 4; }
+enum ReceiptStage { RECEIPT_UNSPECIFIED = 0; RECEIVED_DURABLE = 1; CORE_COMMITTED = 2; FILTERED = 3; REJECTED = 4; }
+enum OutputEndReason { OUTPUT_END_UNSPECIFIED = 0; DONE = 1; CANCELLED = 2; ERROR = 3; }
+enum AnchorKind { ANCHOR_UNSPECIFIED = 0; FREE = 1; WINDOW_EDGE = 2; SCREEN_EDGE = 3; TASKBAR = 4; }
+enum Side { SIDE_UNSPECIFIED = 0; LEFT = 1; RIGHT = 2; BOTTOM = 3; }
+enum GazeKind { GAZE_UNSPECIFIED = 0; USER = 1; CURSOR = 2; AWAY = 3; WINDOW = 4; POINT = 5; }
+enum BodyActionKind { BODY_UNSPECIFIED = 0; MOTION = 1; GO_TO = 2; SIT = 3; SLEEP = 4; WAKE = 5; PEEK = 6; GAZE = 7; }
+enum ToolTier { TIER_UNSPECIFIED = 0; T0 = 1; T1 = 2; T2 = 3; T3 = 4; }
+enum Autonomy { AUTONOMY_UNSPECIFIED = 0; ACTIVE_AUTONOMY = 1; PAUSED = 2; }
+enum Emotion { EMOTION_UNSPECIFIED = 0; NEUTRAL = 1; HAPPY = 2; ANGRY = 3; SAD = 4; RELAXED = 5; SURPRISED = 6; SMUG = 7; SHY = 8; SLEEPY = 9; POUT = 10; EXCITED = 11; WORRIED = 12; }
+enum QueryKind { QUERY_KIND_UNSPECIFIED = 0; MEMORY = 1; ACTIONS = 2; RUN_HISTORY = 3; }
+enum ApprovalChoice { APPROVAL_UNSPECIFIED = 0; ALLOW_ONCE = 1; ALLOW_ALWAYS = 2; DENY = 3; }
+
+// @message echo.user-utterance | CONTRACTS 4.2
+message UserUtterance {
+  optional uint32 schema_version = 1; // required
+  optional string text = 2; // required
+  optional Lang lang = 3; // required
+  optional double asr_confidence = 4; // required,min=0,max=1
+  optional uint64 duration_ms = 5; // required
+  optional ObjectRef audio_ref = 6; // optional
+}
+
+// @message echo.user-text | CONTRACTS 4.2
+message UserText {
+  optional uint32 schema_version = 1; // required
+  optional string text = 2; // required
+}
+
+// @message echo.user-retraction | CONTRACTS 4.2
+message UserRetraction {
+  optional uint32 schema_version = 1; // required
+  repeated string target_refs = 2; // required,set=self
+  optional string note = 3; // optional
+}
+
+// @message echo.touch | CONTRACTS 4.2
+message TouchObservation {
+  optional uint32 schema_version = 1; // required
+  optional string region = 2; // required,nonempty
+  optional TouchKind kind = 3; // required
+  optional double speed = 4; // optional,min=0
+}
+
+// @message echo.desktop-observation | CONTRACTS 4.2
+message DesktopObservation {
+  optional uint32 schema_version = 1; // required
+  optional DesktopKind kind = 2; // required
+  optional string process_name = 3; // optional
+  optional string title = 4; // optional
+  optional DndState dnd = 5; // optional
+  optional uint64 idle_ms = 6; // optional
+}
+
+// @message echo.codex-session | CONTRACTS 4.2
+message CodexSessionObservation {
+  optional uint32 schema_version = 1; // required
+  optional SessionEvent event = 2; // required
+  optional string session_id = 3; // required,nonempty
+  optional string cwd_label = 4; // optional
+  optional string summary = 5; // optional
+}
+
+// @message echo.speech-delivery | CONTRACTS 4.2
+message SpeechDelivery {
+  optional uint32 schema_version = 1; // required
+  optional string action_id = 2; // required,nonempty
+  optional string output_id = 3; // required,nonempty
+  optional uint64 delivered_chunks = 4; // required
+  optional uint64 played_chars = 5; // required
+  optional DeliveryStatus status = 6; // required
+}
+
+// @message echo.body-action-result | CONTRACTS 4.2
+message BodyActionResult {
+  optional uint32 schema_version = 1; // required
+  optional string action_id = 2; // required,nonempty
+  optional ActionStatus status = 3; // required
+  optional string detail = 4; // optional
+}
+
+// @message echo.terminal-maintenance | CONTRACTS 4.2
+message TerminalMaintenance {
+  optional uint32 schema_version = 1; // required
+  optional MaintenanceKind kind = 2; // required
+  optional string detail = 3; // required
+}
+
+// @message echo.receipt | CONTRACTS 4.3
+message Receipt {
+  // P5-35: retained for internal callers and historical bytes. TerminalResponse uses ReceiptV2.
+  optional uint32 schema_version = 1; // required
+  optional string stable_source_key = 2; // required,nonempty
+  optional ReceiptStage stage = 3; // required
+  optional string event_id = 4; // optional
+  optional string reason = 5; // optional
+}
+
+// @message echo.output-chunk | CONTRACTS 4.3
+message OutputChunk {
+  optional uint32 schema_version = 1; // required
+  optional string output_id = 2; // required,nonempty
+  optional string action_id = 3; // required,nonempty
+  optional uint64 chunk_index = 4; // required
+  optional string text = 5; // required
+  optional Lang lang = 6; // required
+  optional string snapshot_id = 7; // required,nonempty
+  optional SpeechMode speech_mode = 8; // required
+  optional bool strict = 9; // required
+}
+
+// @message echo.output-end | CONTRACTS 4.3; ADR 0007 hand example
+message OutputEnd {
+  optional uint32 schema_version = 1; // required
+  optional string output_id = 2; // required,nonempty
+  optional OutputEndReason reason = 3; // required
+}
+
+// @message echo.anchor | CONTRACTS 2.1
+message Anchor {
+  // @rules {"cases":{"1":{"required":["x","y"]},"2":{"required":["hwnd","offset_x"]},"3":{"required":["side","along"]},"4":{"required":["along"]}}}
+  optional uint32 schema_version = 1; // required
+  optional AnchorKind kind = 2; // required
+  optional double x = 3; // optional
+  optional double y = 4; // optional
+  optional string hwnd = 5; // optional
+  optional double offset_x = 6; // optional
+  optional Side side = 7; // optional
+  optional double along = 8; // optional
+}
+
+// @message echo.gaze-target | CONTRACTS 2.1
+message GazeTarget {
+  // @rules {"cases":{"1":{},"2":{},"3":{},"4":{},"5":{"required":["x","y"]}}}
+  optional uint32 schema_version = 1; // required
+  optional GazeKind kind = 2; // required
+  optional double x = 3; // optional
+  optional double y = 4; // optional
+}
+
+// @message echo.body-action | CONTRACTS 2.1,4.3
+message BodyAction {
+  // @rules {"cases":{"1":{"required":["motion_id"]},"2":{"required":["anchor"]},"3":{"required":["platform_id"]},"4":{},"5":{},"6":{"required":["side"],"values":{"side":[1,2]}},"7":{"required":["target"],"optional":["hold_ms"]}}}
+  optional uint32 schema_version = 1; // required
+  optional BodyActionKind kind = 2; // required
+  optional string motion_id = 3; // optional
+  optional Anchor anchor = 4; // optional
+  optional string platform_id = 5; // optional
+  optional Side side = 6; // optional
+  optional GazeTarget target = 7; // optional
+  optional uint64 hold_ms = 8; // optional
+}
+
+// @message echo.action-request | CONTRACTS 4.3; O 16.3
+message ActionRequest {
+  optional uint32 schema_version = 1; // required
+  optional string action_id = 2; // required,nonempty
+  optional ObjectRef credential = 3; // required
+  optional BodyAction action = 4; // required
+  optional sint64 expires_at_ns = 5; // required
+}
+
+// @message echo.approval-request | CONTRACTS 4.3
+message ApprovalRequest {
+  // @superseded ApprovalRequestV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
+  optional uint32 schema_version = 1; // required
+  optional string approval_id = 2; // required,nonempty
+  optional string action_id = 3; // required,nonempty
+  optional ToolTier tier = 4; // required
+  optional string title = 5; // required
+  optional string detail = 6; // required
+  optional sint64 expires_at_ns = 7; // required
+}
+
+// @message echo.run-state | CONTRACTS 4.3
+message RunState {
+  // @superseded RunStateV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
+  optional uint32 schema_version = 1; // required
+  repeated RunStatus states = 2; // required,set=self
+  optional SpeechMode speech_mode = 3; // required
+  optional bool strict = 4; // required
+  optional Lineage lineage = 5; // required
+  optional string born_at = 6; // optional
+  optional Autonomy autonomy = 7; // required
+  repeated string reasons = 8; // required
+}
+
+// @message echo.expression-weight | CONTRACTS 7
+message ExpressionWeight {
+  optional uint32 schema_version = 1; // required
+  optional Emotion emotion = 2; // required
+  optional double weight = 3; // required,min=0,max=0.4
+}
+
+// @message echo.body-readout | CONTRACTS 7
+message BodyReadout {
+  // Superseded for production by BodyReadoutV2. Legacy type stays supported as
+  // a compatibility oneof arm until the P3-06 stage migration; no producer after P5-19.
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  repeated ExpressionWeight expression_baseline = 3; // required,set=emotion
+  optional double idle_tempo = 4; // required,min=0.5,max=1.5
+  optional double ear_pose = 5; // required,min=-1,max=1
+  optional double tail_amplitude = 6; // required,min=0,max=1
+  optional double gaze_sociability = 7; // required,min=0,max=1
+  optional double posture = 8; // required,min=-1,max=1
+}
+
+// @message echo.readout | CONTRACTS 4.3
+message Readout {
+  // @superseded ReadoutV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
+  optional uint32 schema_version = 1; // required
+  optional BodyReadout readout = 2; // required
+  optional string snapshot_id = 3; // required,nonempty
+  optional uint64 projected_at_ns = 4; // required
+}
+
+// @message echo.query-filter | CONTRACTS 4.1
+message QueryFilter {
+  optional uint32 schema_version = 1; // required
+  optional string text = 2; // optional
+  optional string from = 3; // optional
+  optional string to = 4; // optional
+  repeated string kinds = 5; // required,set=self
+  optional bool include_retracted = 6; // optional
+}
+
+// @message echo.query-item | CONTRACTS 4.1
+message QueryItem {
+  optional uint32 schema_version = 1; // required
+  optional string ref = 2; // required,nonempty
+  optional string at = 3; // required
+  optional string kind = 4; // required
+  optional string summary = 5; // required
+  optional string source = 6; // required
+  optional bool retracted = 7; // required
+}
+
+// @message echo.query | CONTRACTS 4.3
+message Query {
+  // @superseded QueryV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
+  optional uint32 schema_version = 1; // required
+  optional string query_id = 2; // required,nonempty
+  optional QueryKind kind = 3; // required
+  optional QueryFilter filter = 4; // optional
+  optional uint64 limit = 5; // required
+}
+
+// @message echo.query-result | CONTRACTS 4.3
+message QueryResult {
+  // @superseded QueryResultV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
+  optional uint32 schema_version = 1; // required
+  optional string query_id = 2; // required,nonempty
+  optional QueryStatus status = 3; // required
+  repeated QueryItem items = 4; // required
+}
+
+// @message echo.approval-decision | CONTRACTS 4.3
+message ApprovalDecision {
+  // @superseded ApprovalDecisionV2 | P5-22; CONTRACTS v2.2 successor, frozen bytes retained
+  optional uint32 schema_version = 1; // required
+  optional string approval_id = 2; // required,nonempty
+  optional ApprovalChoice decision = 3; // required
+}
+
+// @message echo.output-cancel | CONTRACTS 4.3
+message OutputCancel {
+  optional uint32 schema_version = 1; // required
+  optional string output_id = 2; // required,nonempty
+}
+
+// @message echo.hook-coefficients | O 13.1,13.2
+message HookCoefficients {
+  // @superseded - | P5-21; v2.0 §9.1: per-direction coefficients are carried by ModulationEnvelopeV2
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef hook = 2; // required
+  repeated double coefficients = 3 [packed = false]; // required
+  repeated uint32 shape = 4 [packed = false]; // required
+  optional string dtype = 5; // required,nonempty
+  optional double conversion_tolerance = 6; // required,min=0
+}
+
+// @message echo.modulation | O 13.2; S 19
+message ModulationEnvelope {
+  // @superseded ModulationEnvelopeV2 | P5-21; v2.0 §9.1: direction set, nature and learned coefficients
+  optional uint32 schema_version = 1; // required
+  optional string snapshot_id = 2; // required,nonempty
+  optional uint64 projected_at_ns = 3; // required
+  optional bytes x_digest = 4; // required,size=32
+  optional bytes r_digest = 5; // required,size=32
+  optional bytes theta_digest = 6; // required,size=32
+  optional ObjectRef carrier = 7; // required
+  optional ObjectRef model = 8; // required
+  optional ObjectRef tokenizer = 9; // required
+  repeated HookCoefficients hooks = 10; // required
+  optional double total_bound = 11; // required,min=0
+  optional bytes effect_receipt_digest = 12; // required,size=32
+}
+
+// @message echo.task-input | CONTRACTS 5.1
+message TaskInput {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef current_input = 2; // required
+  optional string protocol_version = 3; // required,nonempty
+  optional string protocol_content = 4; // required
+  optional FactProjection c_task = 5; // required
+  optional string snapshot_id = 6; // required,nonempty
+  optional uint64 max_tokens = 7; // required
+  optional uint64 max_duration_ns = 8; // required
+}
+
+// @message echo.action-plan | S 11,20
+message ActionPlan {
+  optional uint32 schema_version = 1; // required
+  optional string plan_id = 2; // required,nonempty
+  optional string snapshot_id = 3; // required,nonempty
+  optional string task_version = 4; // required,nonempty
+  optional string protocol_version = 5; // required,nonempty
+  optional ObjectRef output_or_tool_parameters = 6; // required
+  optional ObjectRef expected_scope = 7; // required
+  repeated ObjectRef dependencies = 8; // required
+  optional sint64 deadline_ns = 9; // required
+}
+
+// @message echo.action-lifecycle | S 20; O 16.3
+message ActionLifecycle {
+  optional uint32 schema_version = 1; // required
+  optional string action_id = 2; // required,nonempty
+  optional ActionStatus status = 3; // required
+  optional ActionPlan plan = 4; // required
+  optional ObjectRef request = 5; // optional
+  optional ObjectRef actual_result = 6; // optional
+}
+
+// @message echo.plan-carrier-receipt | CONTRACTS 5.1
+message PlanAndCarrierReceipt {
+  optional uint32 schema_version = 1; // required
+  repeated OutputChunk output_chunks = 2; // required
+  optional ActionPlan action_plan = 3; // optional
+  optional SpeechMode speech_mode = 4; // required
+  optional bool strict = 5; // required
+  optional bytes model_hash = 6; // required,size=32
+  optional bytes tokenizer_hash = 7; // required,size=32
+  optional ObjectRef carrier_receipt = 8; // optional
+  optional string projection_version = 9; // optional
+  repeated ObjectRef intermediate_results = 10; // required
+  optional ObjectRef usage = 11; // required
+}
+
+
+// ---- Echo Core v2.0 (P5-21). Only ModulationEnvelope changes in this file; terminal messages
+// (readout, notice, query, approval) are P5-22. ----
+
+// @message echo.learned-coefficient | v2.0 §9.1 β_k·x_k for k ∈ R⁺, §9.2
+message LearnedCoefficient {
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double coefficient = 3; // required
+}
+
+// @message echo.modulation-v2 | v2.0 §9.1, §9.2; O 13.2; S 19; ADR 0008 §3
+message ModulationEnvelopeV2 {
+  // @supersedes ModulationEnvelope
+  // Field 10 (HookCoefficients) is replaced by one coefficient per extracted direction:
+  // nature_coefficients are β_i·x_i, learned_coefficients are β_k·x_k for validated k ∈ R⁺ in
+  // CanonicalV1 set order of tendency_id. total_bound is Σβ, with ‖h′ − h‖₂ ≤ Σβ (v2.0 §9.1).
+  reserved 10;
+  optional uint32 schema_version = 1; // required
+  optional string snapshot_id = 2; // required,nonempty
+  optional uint64 projected_at_ns = 3; // required
+  optional bytes x_digest = 4; // required,size=32
+  optional bytes r_digest = 5; // required,size=32
+  optional bytes theta_digest = 6; // required,size=32
+  optional ObjectRef carrier = 7; // required
+  optional ObjectRef model = 8; // required
+  optional ObjectRef tokenizer = 9; // required
+  optional double total_bound = 11; // required,min=0
+  optional bytes effect_receipt_digest = 12; // required,size=32
+  optional ObjectRef direction_set = 13; // required
+  optional NatureReal nature_coefficients = 14; // required
+  repeated LearnedCoefficient learned_coefficients = 15; // required,set=tendency_id
+}
+
+// ---- P5-22 / ADR 0007, 0009-0011: additive terminal successors. ----
+enum TerminalLineage { TERMINAL_LINEAGE_UNSPECIFIED = 0; TERMINAL_REHEARSAL = 1; TERMINAL_LIFE = 2; }
+enum QueryKindV2 { QUERY_V2_UNSPECIFIED = 0; QUERY_MEMORY = 1; QUERY_ACTIONS = 2; QUERY_RUN_HISTORY = 3; QUERY_GROWTH = 4; }
+enum NoticeKind { NOTICE_UNSPECIFIED = 0; REVIEW_HOLD = 1; SLOW_DRIFT = 2; NOTICE_GROWTH_PAUSED = 3; NOTICE_GROWTH_RESUMED = 4; NOTICE_MIGRATION = 5; NOTICE_LAW_VERSION = 6; }
+enum TerminalGrowthAction { TERMINAL_GROWTH_UNSPECIFIED = 0; TERMINAL_PAUSE = 1; TERMINAL_RESUME = 2; }
+enum SocialActionKind { SOCIAL_UNSPECIFIED = 0; SOCIAL_MESSAGE = 1; SOCIAL_COMMIT = 2; }
+
+// @message echo.body-readout-v2 | CONTRACTS 7; v2.0 §9.3; P5-22
+message BodyReadoutV2 {
+  reserved 3, 4, 5, 6, 7, 8;
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional double facing = 9; // required,min=0,max=1
+  optional double tension = 10; // required,min=-1,max=1
+  optional double energy = 11; // required,min=0,max=1
+}
+
+// @message echo.readout-v2 | CONTRACTS 4.3,7; ADR 0007 §6; P5-22
+message ReadoutV2 {
+  // @supersedes Readout
+  reserved 2;
+  optional uint32 schema_version = 1; // required
+  optional string snapshot_id = 3; // required,nonempty
+  optional uint64 projected_at_ns = 4; // required
+  oneof body { // required
+    BodyReadout v1 = 5; // optional
+    BodyReadoutV2 v2 = 6; // optional
+  }
+}
+
+// @message echo.run-state-v2 | CONTRACTS 4.1,4.3; v2.0 §13; I29
+message RunStateV2 {
+  // @supersedes RunState
+  reserved 5;
+  optional uint32 schema_version = 1; // required
+  repeated RunStatus states = 2; // required,set=self
+  optional SpeechMode speech_mode = 3; // required
+  optional bool strict = 4; // required
+  optional string born_at = 6; // optional
+  optional Autonomy autonomy = 7; // required
+  repeated string reasons = 8; // required
+  optional TerminalLineage lineage = 9; // required
+}
+
+// @message echo.notice | CONTRACTS 4.3; v2.0 §5.4,12; AC2-20
+message Notice {
+  // summary is generated deterministically from L by the core; no response or vote.
+  optional uint32 schema_version = 1; // required
+  optional string notice_id = 2; // required,nonempty
+  optional NoticeKind kind = 3; // required
+  optional string at = 4; // required,nonempty
+  optional string summary = 5; // required
+  optional ObjectRef l_ref = 6; // required
+}
+
+// @message echo.query-v2 | CONTRACTS 4.3; v2.0 §2.5,5.4; user_view only
+message QueryV2 {
+  // @supersedes Query
+  reserved 3;
+  optional uint32 schema_version = 1; // required
+  optional string query_id = 2; // required,nonempty
+  optional QueryFilter filter = 4; // optional
+  optional uint64 limit = 5; // required
+  optional QueryKindV2 kind = 6; // required
+}
+
+// @message echo.query-result-v2 | CONTRACTS 4.3; v2.0 §2.5; L with evidence references
+message QueryResultV2 {
+  // @supersedes QueryResult
+  optional uint32 schema_version = 1; // required
+  optional string query_id = 2; // required,nonempty
+  optional QueryStatus status = 3; // required
+  repeated QueryItem items = 4; // required
+  repeated LedgerEntry growth_entries = 5; // required
+}
+
+// @message echo.growth-control | CONTRACTS 4.3; v2.0 §5.4; ADR 0010 §5
+message GrowthControl {
+  // Panel confirms twice before sending; P5-05 authenticates. Review is echoctl-only.
+  optional uint32 schema_version = 1; // required
+  optional TerminalGrowthAction action = 2; // required
+}
+
+// @message echo.approval-request-v2 | CONTRACTS 4.3,6; I26; ADR 0011 §9
+message ApprovalRequestV2 {
+  // @supersedes ApprovalRequest
+  // Exact execution payload bytes, not an object reference. Digest = SHA256(action_payload).
+  // title/detail are generated by the gate, never by the model.
+  optional uint32 schema_version = 1; // required
+  optional string approval_id = 2; // required,nonempty
+  optional string action_id = 3; // required,nonempty
+  optional ToolTier tier = 4; // required
+  optional string title = 5; // required
+  optional string detail = 6; // required
+  optional sint64 expires_at_ns = 7; // required
+  optional bytes action_payload = 8; // required
+  optional bytes payload_digest = 9; // required,size=32
+}
+
+// @message echo.approval-decision-v2 | CONTRACTS 4.3,6; I26
+message ApprovalDecisionV2 {
+  // @supersedes ApprovalDecision
+  optional uint32 schema_version = 1; // required
+  optional string approval_id = 2; // required,nonempty
+  optional ApprovalChoice decision = 3; // required
+  optional bytes payload_digest = 4; // required,size=32
+}
+
+// @message echo.social-action | CONTRACTS 5.3,6; ADR 0011 §3,9,10; P6-14/P6-15 execute
+message SocialAction {
+  optional uint32 schema_version = 1; // required
+  optional SocialActionKind kind = 2; // required
+  optional bytes action_payload = 3; // required
+}
+
+// @json-values {"PROACTIVE_SPEAK":"speak","PROACTIVE_MOTION":"motion","PROACTIVE_GO_TO":"goTo","PROACTIVE_SIT":"sit","PROACTIVE_SLEEP":"sleep","PROACTIVE_WAKE":"wake","PROACTIVE_PEEK":"peek","PROACTIVE_GAZE":"gaze","PROACTIVE_HELPER_ASK":"helper.ask"}
+enum ProactiveKind { PROACTIVE_UNSPECIFIED = 0; PROACTIVE_SPEAK = 1; PROACTIVE_MOTION = 2; PROACTIVE_GO_TO = 3; PROACTIVE_SIT = 4; PROACTIVE_SLEEP = 5; PROACTIVE_WAKE = 6; PROACTIVE_PEEK = 7; PROACTIVE_GAZE = 8; PROACTIVE_HELPER_ASK = 9; }
+// @json-values {"GATE_DND":"dnd","GATE_QUIET_HOURS":"quietHours","GATE_BUDGET":"budget","GATE_MODE":"mode","GATE_MIN_INTERVAL":"minInterval"}
+enum ProactiveGate { GATE_UNSPECIFIED = 0; GATE_DND = 1; GATE_QUIET_HOURS = 2; GATE_BUDGET = 3; GATE_MODE = 4; GATE_MIN_INTERVAL = 5; }
+
+// @message echo.proactivity-cooldown | CONTRACTS 8; P5-22 D1 revision; per-action cooldown in seconds
+message ProactivityCooldown {
+  optional uint32 schema_version = 1; // required
+  optional string kind = 2; // required,nonempty
+  optional double seconds = 3; // required,min=0
+}
+
+// @message echo.proactivity-budgets | CONTRACTS 8; P5-22 D1 revision
+message ProactivityBudgets {
+  // @resource
+  optional uint32 schema_version = 1; // required
+  optional double min_interval_s = 2; // required,min=0,json_name=minIntervalS
+  optional uint32 speak_per_hour = 3; // required,json_name=speakPerHour
+  optional double quiet_day_factor = 4; // required,min=0,max=1,json_name=quietDayFactor
+  optional uint32 autonomous_helper_per_day = 5; // required,json_name=autonomousHelperPerDay
+}
+
+// @message echo.proactivity-boundaries | CONTRACTS 8; v2.0 9.4; P5-22 D1 revision
+message ProactivityBoundaries {
+  // @resource
+  // JSON spelling and map projection are metadata only, not authority encoding rules.
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  repeated ProactiveKind allowed_kinds = 3 [packed = false]; // required,set=self,json_name=allowedKinds
+  repeated ProactivityCooldown cooldowns = 4; // required,set=kind,json_name=cooldownS,json_map=kind:seconds
+  repeated ProactiveGate gates = 5 [packed = false]; // required,set=self
+  optional ProactivityBudgets budgets = 6; // required
+}

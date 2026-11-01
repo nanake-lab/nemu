@@ -18,6 +18,7 @@ mod recovery;
 mod schema;
 mod store;
 mod terminal_ingress;
+mod theta;
 mod transaction;
 mod witness;
 

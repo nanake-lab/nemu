@@ -14,6 +14,11 @@ use crate::generated::{
 };
 use std::cmp::Ordering;
 
+mod theta;
+pub use theta::{
+    THETA_NUMERICS_ID, check_theta_message, check_theta_snapshot_v2, theta_parameters_digest,
+};
+
 /// Allowed |‖d‖₂ − 1| for a direction d_k ∈ ℝ⁴. A few binary64 ulps; producers
 /// normalize in binary64 before proposing (reading registered as V2-32).
 pub const UNIT_NORM_TOLERANCE: f64 = 1e-12;

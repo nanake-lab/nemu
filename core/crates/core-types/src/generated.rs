@@ -1772,7 +1772,7 @@ pub r#law_version: ObjectRef,
 pub r#tendencies: Vec<Tendency>,
 }
 impl super::WireMessage for RSnapshot {const NAME: &'static str = "RSnapshot"; const SUPERSEDED: bool = true;}
-/// v2.0 §8 θ and the statistics of C; frozen tag `echo.theta-snapshot`.
+/// v2.0 §8 θ and the statistics of C; frozen tag `echo.theta-snapshot`. Superseded (successor ThetaSnapshotV2): P5-36; ADR 0029: inline complete recursive estimator state
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ThetaSnapshot {
@@ -1788,7 +1788,7 @@ pub r#weight_sum: f64,
 pub r#h_hat_theta: f64,
 pub r#estimator_state: ObjectRef,
 }
-impl super::WireMessage for ThetaSnapshot {const NAME: &'static str = "ThetaSnapshot";}
+impl super::WireMessage for ThetaSnapshot {const NAME: &'static str = "ThetaSnapshot"; const SUPERSEDED: bool = true;}
 /// v2.0 §5.4, §10; ADR 0010 decision 5; permissions P5-05; frozen tag `echo.growth-command`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -3443,6 +3443,125 @@ pub r#reason: IngressReason,
 pub r#request_kind: Option<IngressKind>,
 }
 impl super::WireMessage for IngressRejection {const NAME: &'static str = "IngressRejection";}
+/// P5-36; ADR 0029; V2-94/95/98/100/103; frozen tag `echo.theta-estimator-parameters`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaEstimatorParameters {
+pub r#schema_version: u32,
+pub r#law_id: String,
+pub r#numerics_id: String,
+pub r#baseline_prior: NatureVector,
+pub r#gain_prior: NatureScale,
+pub r#sigma_prior: NatureScale,
+pub r#tau_prior_s: NatureScale,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#baseline_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#variance_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#duration_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#change_prior: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#change_prior_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#change_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#gain_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#gain_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#recovery_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#recovery_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#detector_shift_sigma: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#detector_threshold: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#jump_notice: f64,
+pub r#drift_run: DecimalU64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#drift_margin: f64,
+}
+impl super::WireMessage for ThetaEstimatorParameters {const NAME: &'static str = "ThetaEstimatorParameters";}
+/// P5-36; ADR 0029; V2-95 recorded running time; frozen tag `echo.theta-running-time`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaRunningTime {
+pub r#schema_version: u32,
+pub r#origin_ns: DecimalU64,
+pub r#event_ns: DecimalU64,
+pub r#stopped_ns: DecimalU64,
+pub r#running_ns: DecimalU64,
+}
+impl super::WireMessage for ThetaRunningTime {const NAME: &'static str = "ThetaRunningTime";}
+/// P5-36; ADR 0029; last accepted external learning event; frozen tag `echo.theta-last-event`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaLastEvent {
+pub r#schema_version: u32,
+pub r#ordinal: DecimalU64,
+pub r#time_ns: DecimalU64,
+pub r#event_id: String,
+}
+impl super::WireMessage for ThetaLastEvent {const NAME: &'static str = "ThetaLastEvent";}
+/// P5-36; ADR 0029; I18 complete P5-25 recursion; frozen tag `echo.theta-estimator-state`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaEstimatorState {
+pub r#schema_version: u32,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#weight: f64,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#reaction_sum: Vec<f64>,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#square_sum: Vec<f64>,
+pub r#sigma: NatureScale,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#variance: Vec<f64>,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#duration_log_sum: Vec<f64>,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#duration_mass: Vec<f64>,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#duration_log_mean: Vec<f64>,
+pub r#zero_duration_count: Vec<DecimalU64>,
+pub r#tau_s: NatureScale,
+pub r#run_sign: Vec<DecimalI64>,
+pub r#run_start_ns: Vec<DecimalU64>,
+pub r#detector_segment_count: DecimalU64,
+pub r#detector_changes: DecimalU64,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#detector_mean: Vec<f64>,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#detector_positive: Vec<f64>,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#detector_negative: Vec<f64>,
+pub r#event_count: DecimalU64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#h: f64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#last_event: Option<ThetaLastEvent>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#last_running_time: Option<ThetaRunningTime>,
+pub r#drift_sign: Vec<DecimalI64>,
+pub r#drift_count: Vec<DecimalU64>,
+}
+impl super::WireMessage for ThetaEstimatorState {const NAME: &'static str = "ThetaEstimatorState";}
+/// P5-36; ADR 0029; inline estimator and bound complete parameters; frozen tag `echo.theta-snapshot-v2`. Supersedes [`ThetaSnapshot`].
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaSnapshotV2 {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#law_version: ObjectRef,
+pub r#values: ThetaValues,
+pub r#parameters: ThetaEstimatorParameters,
+pub r#parameters_digest: HexBytes,
+pub r#estimator: ThetaEstimatorState,
+}
+impl super::WireMessage for ThetaSnapshotV2 {const NAME: &'static str = "ThetaSnapshotV2";}
 /// Conformance dispatch through every generated DTO and both typed codecs.
 pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contract::Limits) -> Result<(), String> {match name {
 "ObjectRef" => super::verify_typed::<ObjectRef>(value, limits),
@@ -3598,6 +3717,11 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "TerminalResponse" => super::verify_typed::<TerminalResponse>(value, limits),
 "IngressAuditBudget" => super::verify_typed::<IngressAuditBudget>(value, limits),
 "IngressRejection" => super::verify_typed::<IngressRejection>(value, limits),
+"ThetaEstimatorParameters" => super::verify_typed::<ThetaEstimatorParameters>(value, limits),
+"ThetaRunningTime" => super::verify_typed::<ThetaRunningTime>(value, limits),
+"ThetaLastEvent" => super::verify_typed::<ThetaLastEvent>(value, limits),
+"ThetaEstimatorState" => super::verify_typed::<ThetaEstimatorState>(value, limits),
+"ThetaSnapshotV2" => super::verify_typed::<ThetaSnapshotV2>(value, limits),
 _ => Err("unknown message".into()), }}
 /// Message types kept only to read old data and for tests; no runtime path may produce them.
-pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "EvidenceAllocationV2", "EvidenceGroupV2", "TendencyV2", "RSnapshotV2", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "ApprovalRequest", "RunState", "Readout", "Query", "QueryResult", "ApprovalDecision", "HookCoefficients", "ModulationEnvelope"];
+pub const SUPERSEDED_MESSAGES: &[&str] = &["VersionedEnvironment", "LineageHeader", "EffectContract", "QualificationCertificate", "ConsolidationSlice", "ThetaModule", "ResponsibilityBinding", "TrialResult", "DistinctionRevision", "CouplingRevision", "PlasticEvidenceLink", "MechanismContext", "DescendantReviewMarker", "PlasticTraceRevision", "TraceHead", "RepresentationInadequacyWitness", "FrozenPrediction", "ShadowTrial", "EffectBudgetLedger", "SingleRootLedger", "EffectiveCausalProjection", "ConsolidationBinding", "ThetaModuleSourceBinding", "EvidenceAllocation", "EvidenceGroup", "Tendency", "RSnapshot", "ThetaSnapshot", "EvidenceAllocationV2", "EvidenceGroupV2", "TendencyV2", "RSnapshotV2", "ProposalBinding", "SemanticCandidate", "ConceptProposal", "FastStateSnapshot", "FastDriveProposal", "CoreTransaction", "CoreCommitResult", "ApprovalRequest", "RunState", "Readout", "Query", "QueryResult", "ApprovalDecision", "HookCoefficients", "ModulationEnvelope"];

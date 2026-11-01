@@ -1,14 +1,16 @@
 //! Pure, atomic staging of Echo Core v2.0 §8 C. No x, R, model, clock or storage.
-//! The estimator resource is temporary and has no authority to serialize a new IDL type.
+//! P5-36 exposes validated snapshots; authority publication remains outside this module.
 mod bounds;
 mod detector;
 mod duration;
 mod interval;
 mod numeric;
+mod storage;
 mod time;
 mod types;
 mod update;
 pub use bounds::StepBounds;
+pub use storage::{SnapshotError, export_snapshot, restore_snapshot};
 pub use time::{Downtime, RunningTime};
 pub use types::{
     DynamicsFuses, DynamicsLaw, DynamicsState, ReactionEvent, ReactionSource, ReviewSignal,

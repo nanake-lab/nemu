@@ -43102,5 +43102,2698 @@
         "session_id": "﻿zero\u00002"
       }
     }
+  },
+  {
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 100.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001f0000006563686f2e74686574612d657374696d61746f722d706172616d65746572731500000073796e7468657469632d73746f726167652d6c61771a00000050352d32352d76322d39332d39382d6c69626d2d302e322e31363e0000004e43563101000000120000006563686f2e6e61747572652d766563746f729a9999999999b93f9a9999999999c9bf0000000000000000333333333333d33f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65000000000000f03f9a9999999999e93f333333333333f33fcdccccccccccec3f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65333333333333d33f9a9999999999d93f9a9999999999c93f000000000000e03f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650000000000002440333333333333d33f00000000000000400000000000001c400000000000005940000000000000244000000000000024409a9999999999a93f00000000000024407b14ae47e17a843f9a9999999999c93f0000000000000840fca9f1d24d62503f0000000000001440000000000000f03f0000000000000040fca9f1d24d62503f03000000000000000000000000000000",
+      "digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+      "ok": true,
+      "protobuf": "0801121573796e7468657469632d73746f726167652d6c61771a1a50352d32352d76322d39332d39382d6c69626d2d302e322e313622260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f2a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f3226080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f3a26080111000000000000244019333333333333d33f210000000000000040290000000000001c40410000000000005940490000000000002440510000000000002440599a9999999999a93f610000000000002440697b14ae47e17a843f719a9999999999c93f7900000000000008408101fca9f1d24d62503f890100000000000014409101000000000000f03f99010000000000000040a101fca9f1d24d62503fa80103b1010000000000000000",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 100.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001f0000006563686f2e74686574612d657374696d61746f722d706172616d65746572731500000073796e7468657469632d73746f726167652d6c61771a00000050352d32352d76322d39332d39382d6c69626d2d302e322e31363e0000004e43563101000000120000006563686f2e6e61747572652d766563746f729a9999999999b93f9a9999999999c9bf0000000000000000333333333333d33f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65000000000000f03f9a9999999999e93f333333333333f33fcdccccccccccec3f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65333333333333d33f9a9999999999d93f9a9999999999c93f000000000000e03f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650000000000002440333333333333d33f00000000000000400000000000001c400000000000405940000000000000244000000000000024409a9999999999a93f00000000000024407b14ae47e17a843f9a9999999999c93f0000000000000840fca9f1d24d62503f0000000000001440000000000000f03f0000000000000040fca9f1d24d62503f03000000000000000000000000000000",
+      "digest": "89ca5ec55d8eb1655e2f78dc87544bc8fde7c2395c29a782dc33ef4bb89e7cf1",
+      "ok": true,
+      "protobuf": "0801121573796e7468657469632d73746f726167652d6c61771a1a50352d32352d76322d39332d39382d6c69626d2d302e322e313622260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f2a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f3226080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f3a26080111000000000000244019333333333333d33f210000000000000040290000000000001c40410000000000405940490000000000002440510000000000002440599a9999999999a93f610000000000002440697b14ae47e17a843f719a9999999999c93f7900000000000008408101fca9f1d24d62503f890100000000000014409101000000000000f03f99010000000000000040a101fca9f1d24d62503fa80103b1010000000000000000",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaEstimatorParameters",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 102.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001f0000006563686f2e74686574612d657374696d61746f722d706172616d65746572731500000073796e7468657469632d73746f726167652d6c61771a00000050352d32352d76322d39332d39382d6c69626d2d302e322e31363e0000004e43563101000000120000006563686f2e6e61747572652d766563746f729a9999999999b93f9a9999999999c9bf0000000000000000333333333333d33f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65000000000000f03f9a9999999999e93f333333333333f33fcdccccccccccec3f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65333333333333d33f9a9999999999d93f9a9999999999c93f000000000000e03f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650000000000002440333333333333d33f00000000000000400000000000001c400000000000805940000000000000244000000000000024409a9999999999a93f00000000000024407b14ae47e17a843f9a9999999999c93f0000000000000840fca9f1d24d62503f0000000000001440000000000000f03f0000000000000040fca9f1d24d62503f03000000000000000000000000000000",
+      "digest": "75d07087f5c8c03bb1367ce84d12c63b5373d8db8e6a7d51dd8765c75bb99e3d",
+      "ok": true,
+      "protobuf": "0801121573796e7468657469632d73746f726167652d6c61771a1a50352d32352d76322d39332d39382d6c69626d2d302e322e313622260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f2a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f3226080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f3a26080111000000000000244019333333333333d33f210000000000000040290000000000001c40410000000000805940490000000000002440510000000000002440599a9999999999a93f610000000000002440697b14ae47e17a843f719a9999999999c93f7900000000000008408101fca9f1d24d62503f890100000000000014409101000000000000f03f99010000000000000040a101fca9f1d24d62503fa80103b1010000000000000000",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 102.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-storage-law",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaRunningTime",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "origin_ns": "0",
+        "event_ns": "0",
+        "stopped_ns": "0",
+        "running_ns": "0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000170000006563686f2e74686574612d72756e6e696e672d74696d650000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "3c8da28ce4dcebd0692f3ec088b32fe7f594e297bfecfa894f1c84d0f273caba",
+      "ok": true,
+      "protobuf": "08011000180020002800",
+      "value": {
+        "event_ns": "0",
+        "origin_ns": "0",
+        "running_ns": "0",
+        "schema_version": 1,
+        "stopped_ns": "0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaRunningTime",
+      "op": "encode",
+      "value": {
+        "event_ns": "800000100",
+        "origin_ns": "100",
+        "running_ns": "800000000",
+        "schema_version": 1,
+        "stopped_ns": "0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000170000006563686f2e74686574612d72756e6e696e672d74696d6564000000000000006408af2f0000000000000000000000000008af2f00000000",
+      "digest": "09be205d28f9b6dc1d6a883b17bea06229d0e009727b90d18ae8a01572baa21d",
+      "ok": true,
+      "protobuf": "0801106418e490bcfd022000288090bcfd02",
+      "value": {
+        "event_ns": "800000100",
+        "origin_ns": "100",
+        "running_ns": "800000000",
+        "schema_version": 1,
+        "stopped_ns": "0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaRunningTime",
+      "op": "encode",
+      "value": {
+        "event_ns": "8100000100",
+        "origin_ns": "100",
+        "running_ns": "3100000000",
+        "schema_version": 1,
+        "stopped_ns": "5000000000"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000170000006563686f2e74686574612d72756e6e696e672d74696d6564000000000000006431cce20100000000f2052a01000000003fc6b800000000",
+      "digest": "c06dfed04fa789e253fc6f1e4f2f3ff39aea7225306beb34b9001ba89b6ad23a",
+      "ok": true,
+      "protobuf": "0801106418e4e2b0961e2080e497d0122880fe98c60b",
+      "value": {
+        "event_ns": "8100000100",
+        "origin_ns": "100",
+        "running_ns": "3100000000",
+        "schema_version": 1,
+        "stopped_ns": "5000000000"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaLastEvent",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "ordinal": "0",
+        "time_ns": "0",
+        "event_id": "synthetic-first"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e74686574612d6c6173742d6576656e74000000000000000000000000000000000f00000073796e7468657469632d6669727374",
+      "digest": "7b5688fa7a80b06f85b33fcb671c16733d11a758dab7883cfaf82da53ab47c18",
+      "ok": true,
+      "protobuf": "080110001800220f73796e7468657469632d6669727374",
+      "value": {
+        "event_id": "synthetic-first",
+        "ordinal": "0",
+        "schema_version": 1,
+        "time_ns": "0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaLastEvent",
+      "op": "encode",
+      "value": {
+        "event_id": "synthetic-16",
+        "ordinal": "1048",
+        "schema_version": 1,
+        "time_ns": "800000100"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e74686574612d6c6173742d6576656e7418040000000000006408af2f000000000c00000073796e7468657469632d3136",
+      "digest": "271136bbae16df175de07ef6186106b289e247d935281168f6c8e06e526679cd",
+      "ok": true,
+      "protobuf": "080110980818e490bcfd02220c73796e7468657469632d3136",
+      "value": {
+        "event_id": "synthetic-16",
+        "ordinal": "1048",
+        "schema_version": 1,
+        "time_ns": "800000100"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaLastEvent",
+      "op": "encode",
+      "value": {
+        "event_id": "synthetic-63",
+        "ordinal": "1189",
+        "schema_version": 1,
+        "time_ns": "8100000100"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000150000006563686f2e74686574612d6c6173742d6576656e74a5040000000000006431cce2010000000c00000073796e7468657469632d3633",
+      "digest": "733692abd19a14b2dde0f52f2208b356e8831bfbed0e489162f4e9ad6cad08e8",
+      "ok": true,
+      "protobuf": "080110a50918e4e2b0961e220c73796e7468657469632d3633",
+      "value": {
+        "event_id": "synthetic-63",
+        "ordinal": "1189",
+        "schema_version": 1,
+        "time_ns": "8100000100"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "0",
+        "detector_mean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "0",
+        "drift_count": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "drift_sign": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "duration_log_mean": [
+          2.302585092994046,
+          -1.2039728043259361,
+          0.6931471805599453,
+          1.945910149055313
+        ],
+        "duration_log_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "duration_mass": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "event_count": "0",
+        "h": 0.05,
+        "reaction_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "run_sign": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "run_start_ns": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tau_s": {
+          "achievement": 6.999999999999998,
+          "connection": 10.000000000000002,
+          "curiosity": 2.0,
+          "empathy": 0.29999999999999993,
+          "schema_version": 1
+        },
+        "variance": [
+          0.09,
+          0.16000000000000003,
+          0.04000000000000001,
+          0.25
+        ],
+        "weight": 0.0,
+        "zero_duration_count": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e74686574612d657374696d61746f722d737461746500000000000000000400000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65333333333333d33f9a9999999999d93f9a9999999999c93f000000000000e03f040000000ad7a3703d0ab73f7c14ae47e17ac43f7c14ae47e17aa43f000000000000d03f040000000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000040000001655b5bbb16b024021a7bdfc7843f3bfef39fafe422ee63f565a32ae7222ff3f0400000000000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650100000000002440323333333333d33f0000000000000040feffffffffff1b400400000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a9999999999a93f00000c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "aa664652919e72f8d326e13208d6f83aab72cdad21606833ba1bd8a0b387f615",
+      "ok": true,
+      "protobuf": "08011100000000000000001900000000000000001900000000000000001900000000000000001900000000000000002100000000000000002100000000000000002100000000000000002100000000000000002a26080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f310ad7a3703d0ab73f317c14ae47e17ac43f317c14ae47e17aa43f31000000000000d03f390000000000000000390000000000000000390000000000000000390000000000000000410000000000000000410000000000000000410000000000000000410000000000000000491655b5bbb16b02404921a7bdfc7843f3bf49ef39fafe422ee63f49565a32ae7222ff3f50005000500050005a26080111010000000000244019323333333333d33f21000000000000004029feffffffffff1b406000600060006000680068006800680070007800810100000000000000008101000000000000000081010000000000000000810100000000000000008901000000000000000089010000000000000000890100000000000000008901000000000000000091010000000000000000910100000000000000009101000000000000000091010000000000000000980100a1019a9999999999a93fb80100b80100b80100b80100b80100b80100b80100b80100b80100b80100b80100b80100c00100c00100c00100c00100c00100c00100c00100c00100c00100c00100c00100c00100",
+      "value": {
+        "detector_changes": "0",
+        "detector_mean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "0",
+        "drift_count": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "drift_sign": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "duration_log_mean": [
+          2.302585092994046,
+          -1.2039728043259361,
+          0.6931471805599453,
+          1.945910149055313
+        ],
+        "duration_log_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "duration_mass": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "event_count": "0",
+        "h": 0.05,
+        "reaction_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "run_sign": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "run_start_ns": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tau_s": {
+          "achievement": 6.999999999999998,
+          "connection": 10.000000000000002,
+          "curiosity": 2.0,
+          "empathy": 0.29999999999999993,
+          "schema_version": 1
+        },
+        "variance": [
+          0.09,
+          0.16000000000000003,
+          0.04000000000000001,
+          0.25
+        ],
+        "weight": 0.0,
+        "zero_duration_count": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e74686574612d657374696d61746f722d73746174657e699d43d6adfa3f0400000011a58ce9caffe33f185096ae141cdfbfbeab0d70da02f83f625d9eeabbdbcebf040000003f4673389ad8ec3f0a5d94862538ef3fe0f5ee8f02def43f60e8be065112d93f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650f17e76ede25d93f4f0a29b3e311de3f07960f95b475d83f18516824a7dcdf3f04000000b4aeb35d58c3c33fb1882ff09441cc3fa97214d43fb2c23fa3bb275475b9cf3f0400000025010c96e10106c0a3d058b29b86f3bf0000000000000000a8b77719d7f0d0bf04000000ab1171eb861df33fd39bf6f14e37f03f0000000000000000ea9fc751210bc53f04000000dd47f74a56fafc3f870f86ac8543f3bfef39fafe422ee63fcc523537dd36fe3f0400000008000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65d20eca1518781840a558e2f92333d33f0000000000000040391d8a375c6f1a40040000000100000000000000ffffffffffffffff0100000000000000ffffffffffffffff040000000008af2f000000000008af2f0000000000000000000000000027b9290000000001000000000000001000000000000000040000009a9999999999e93fcdccccccccccecbfcdccccccccccec3f9a9999999999c9bf0400000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000001100000000000000e4388ee3388ee33f01410000004e43563101000000150000006563686f2e74686574612d6c6173742d6576656e7418040000000000006408af2f000000000c00000073796e7468657469632d313601430000004e43563101000000170000006563686f2e74686574612d72756e6e696e672d74696d6564000000000000006408af2f0000000000000000000000000008af2f000000000c0000000100000000000000ffffffffffffffffffffffffffffffffffffffffffffffff010000000000000001000000000000000100000000000000ffffffffffffffff0100000000000000ffffffffffffffff0000000000000000ffffffffffffffff0c000000010000000000000001000000000000000c000000000000000300000000000000010000000000000003000000000000000c00000000000000030000000000000001000000000000000b0000000000000000000000000000000200000000000000",
+      "digest": "6170c5ff153ef39b738e8b8f6603bb40b65a545fff2488a8e6f5cfbcd1e8b67c",
+      "ok": true,
+      "protobuf": "0801117e699d43d6adfa3f1911a58ce9caffe33f19185096ae141cdfbf19beab0d70da02f83f19625d9eeabbdbcebf213f4673389ad8ec3f210a5d94862538ef3f21e0f5ee8f02def43f2160e8be065112d93f2a260801110f17e76ede25d93f194f0a29b3e311de3f2107960f95b475d83f2918516824a7dcdf3f31b4aeb35d58c3c33f31b1882ff09441cc3f31a97214d43fb2c23f31a3bb275475b9cf3f3925010c96e10106c039a3d058b29b86f3bf39000000000000000039a8b77719d7f0d0bf41ab1171eb861df33f41d39bf6f14e37f03f41000000000000000041ea9fc751210bc53f49dd47f74a56fafc3f49870f86ac8543f3bf49ef39fafe422ee63f49cc523537dd36fe3f50085000500050005a26080111d20eca151878184019a558e2f92333d33f21000000000000004029391d8a375c6f1a406002600160026001688090bcfd02688090bcfd0268006880cee4cd027001781081019a9999999999e93f8101cdccccccccccecbf8101cdccccccccccec3f81019a9999999999c9bf8901000000000000000089010000000000000000890100000000000000008901000000000000000091010000000000000000910100000000000000009101000000000000000091010000000000000000980111a101e4388ee3388ee33faa0119080110980818e490bcfd02220c73796e7468657469632d3136b201120801106418e490bcfd022000288090bcfd02b80102b80101b80101b80101b80102b80102b80102b80101b80102b80101b80100b80101c00101c00101c0010cc00103c00101c00103c0010cc00103c00101c0010bc00100c00102",
+      "value": {
+        "detector_changes": "16",
+        "detector_mean": [
+          0.8,
+          -0.9,
+          0.9,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "1",
+          "12",
+          "3",
+          "1",
+          "3",
+          "12",
+          "3",
+          "1",
+          "11",
+          "0",
+          "2"
+        ],
+        "drift_sign": [
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "1",
+          "-1",
+          "1",
+          "-1",
+          "0",
+          "-1"
+        ],
+        "duration_log_mean": [
+          1.811117451511101,
+          -1.2039849032598526,
+          0.6931471805599453,
+          1.8883945614408502
+        ],
+        "duration_log_sum": [
+          -2.7509185526288484,
+          -1.2203633276631443,
+          0.0,
+          -0.2646997212131006
+        ],
+        "duration_mass": [
+          1.1947087475719893,
+          1.0135030223552703,
+          0.0,
+          0.1644021653476096
+        ],
+        "event_count": "17",
+        "h": 0.6111111111111112,
+        "last_event": {
+          "event_id": "synthetic-16",
+          "ordinal": "1048",
+          "schema_version": 1,
+          "time_ns": "800000100"
+        },
+        "last_running_time": {
+          "event_ns": "800000100",
+          "origin_ns": "100",
+          "running_ns": "800000000",
+          "schema_version": 1,
+          "stopped_ns": "0"
+        },
+        "reaction_sum": [
+          0.6249746858131023,
+          -0.48608891534354504,
+          1.5006965996824273,
+          -0.24108075099932608
+        ],
+        "run_sign": [
+          "1",
+          "-1",
+          "1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "800000000",
+          "800000000",
+          "0",
+          "700000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.49784258418482485,
+          "connection": 0.39293633299199454,
+          "curiosity": 0.3821841674492536,
+          "empathy": 0.46984188552975054,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.9014407255692233,
+          0.9756038311487896,
+          1.3042016622924777,
+          0.3917429509998609
+        ],
+        "tau_s": {
+          "achievement": 6.608750217251605,
+          "connection": 6.117279377420077,
+          "curiosity": 2.0,
+          "empathy": 0.29999637034178256,
+          "schema_version": 1
+        },
+        "variance": [
+          0.15439896178519563,
+          0.22075139739815122,
+          0.1460647378488791,
+          0.2478472386278244
+        ],
+        "weight": 1.6674406663138082,
+        "zero_duration_count": [
+          "8",
+          "0",
+          "0",
+          "0"
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaEstimatorState",
+      "op": "encode",
+      "value": {
+        "detector_changes": "63",
+        "detector_mean": [
+          -0.7,
+          -0.9,
+          -0.8,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "5",
+          "28",
+          "1",
+          "1",
+          "7",
+          "59",
+          "1",
+          "1",
+          "14",
+          "0",
+          "1"
+        ],
+        "drift_sign": [
+          "-1",
+          "-1",
+          "1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "0",
+          "1"
+        ],
+        "duration_log_mean": [
+          2.23679323398329,
+          -1.203972804326138,
+          0.6931471805599453,
+          1.6225391702945409
+        ],
+        "duration_log_sum": [
+          -0.33372709407855655,
+          -0.0035837109533592196,
+          3.895522281854201e-24,
+          -1.6104539196238492
+        ],
+        "duration_mass": [
+          0.14493583541992452,
+          0.002976571346514918,
+          8.288281280095128e-24,
+          1.0004417136439299
+        ],
+        "event_count": "64",
+        "h": 0.8581081081081081,
+        "last_event": {
+          "event_id": "synthetic-63",
+          "ordinal": "1189",
+          "schema_version": 1,
+          "time_ns": "8100000100"
+        },
+        "last_running_time": {
+          "event_ns": "8100000100",
+          "origin_ns": "100",
+          "running_ns": "3100000000",
+          "schema_version": 1,
+          "stopped_ns": "5000000000"
+        },
+        "reaction_sum": [
+          -0.5986530276291852,
+          -1.0484129189942355,
+          -0.9326363208675109,
+          -0.10058485770497161
+        ],
+        "run_sign": [
+          "-1",
+          "-1",
+          "-1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "3100000000",
+          "3000000000",
+          "1600000000",
+          "3100000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.4979020441813508,
+          "connection": 0.3827177580379259,
+          "curiosity": 0.3179771050815652,
+          "empathy": 0.43967825764826873,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.7354862357651696,
+          0.5585377373535791,
+          0.7289673129680346,
+          0.2680726501792976
+        ],
+        "tau_s": {
+          "achievement": 5.0659372767987785,
+          "connection": 9.363257317750266,
+          "curiosity": 2.0,
+          "empathy": 0.2999999999999394,
+          "schema_version": 1
+        },
+        "variance": [
+          0.1464728823175764,
+          0.19331697024861738,
+          0.10110943935605275,
+          0.2479064455999678
+        ],
+        "weight": 1.1657954010843885,
+        "zero_duration_count": [
+          "32",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000001a0000006563686f2e74686574612d657374696d61746f722d737461746522c1171419a7f23f040000001333ea642a28e3bfd58bfc9f4cc6f0bfd101262028d8edbf88cf50e2edbfb9bf0400000025a0286e1a89e73fa67e70888adfe13f619f2142b353e73f68375e301a28d13f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65ebc3979f727ed83f10245746b023dc3fd8eecca4bc59d43f6fb51789a0dddf3f040000003d05a7979fbfc23f14647d489cbec83f6fe459e74ee2b93f39e428fe65bbcf3f0400000027d1b6e2c85bd5bf4bd0f92a965b6dbf2bb2294a6cd6123bbafd47546bc4f9bf040000005dd192e8418dc23f8fbccc925262683ff894aa97320a243b5f7a9a2bcf01f03f040000007cfaded9f3e40140aeaabdfc7843f3bfef39fafe422ee63ff04d0ea2ebf5f93f0400000020000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65478af7dcfcb92240f02e33333333d33f000000000000004091c0bd0f8543144004000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff04000000003fc6b800000000005ed0b20000000000105e5f00000000003fc6b80000000001000000000000003f0000000000000004000000666666666666e6bfcdccccccccccecbf9a9999999999e9bf9a9999999999c9bf04000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000040000000000000005a3798229f75eb3f01410000004e43563101000000150000006563686f2e74686574612d6c6173742d6576656e74a5040000000000006431cce2010000000c00000073796e7468657469632d363301430000004e43563101000000170000006563686f2e74686574612d72756e6e696e672d74696d6564000000000000006431cce20100000000f2052a01000000003fc6b8000000000c000000ffffffffffffffffffffffffffffffff0100000000000000ffffffffffffffffffffffffffffffff01000000000000000100000000000000ffffffffffffffffffffffffffffffffffffffffffffffff000000000000000001000000000000000c000000010000000000000005000000000000001c000000000000000100000000000000010000000000000007000000000000003b00000000000000010000000000000001000000000000000e0000000000000000000000000000000100000000000000",
+      "digest": "ea8fa2634c6ee00dfc50593a060cc0fd28791aab35e4bb5d7001c90c9e57fc66",
+      "ok": true,
+      "protobuf": "08011122c1171419a7f23f191333ea642a28e3bf19d58bfc9f4cc6f0bf19d101262028d8edbf1988cf50e2edbfb9bf2125a0286e1a89e73f21a67e70888adfe13f21619f2142b353e73f2168375e301a28d13f2a26080111ebc3979f727ed83f1910245746b023dc3f21d8eecca4bc59d43f296fb51789a0dddf3f313d05a7979fbfc23f3114647d489cbec83f316fe459e74ee2b93f3139e428fe65bbcf3f3927d1b6e2c85bd5bf394bd0f92a965b6dbf392bb2294a6cd6123b39bafd47546bc4f9bf415dd192e8418dc23f418fbccc925262683f41f894aa97320a243b415f7a9a2bcf01f03f497cfaded9f3e4014049aeaabdfc7843f3bf49ef39fafe422ee63f49f04d0ea2ebf5f93f50205000500050005a26080111478af7dcfcb9224019f02e33333333d33f2100000000000000402991c0bd0f8543144060016001600160016880fe98c60b6880bcc1960b6880a0f8fa056880fe98c60b7001783f8101666666666666e6bf8101cdccccccccccecbf81019a9999999999e9bf81019a9999999999c9bf8901000000000000000089010000000000000000890100000000000000008901000000000000000091010000000000000000910100000000000000009101000000000000000091010000000000000000980140a1015a3798229f75eb3faa0119080110a50918e4e2b0961e220c73796e7468657469632d3633b201160801106418e4e2b0961e2080e497d0122880fe98c60bb80101b80101b80102b80101b80101b80102b80102b80101b80101b80101b80100b80102c00101c00105c0011cc00101c00101c00107c0013bc00101c00101c0010ec00100c00101",
+      "value": {
+        "detector_changes": "63",
+        "detector_mean": [
+          -0.7,
+          -0.9,
+          -0.8,
+          -0.2
+        ],
+        "detector_negative": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_positive": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "detector_segment_count": "1",
+        "drift_count": [
+          "1",
+          "5",
+          "28",
+          "1",
+          "1",
+          "7",
+          "59",
+          "1",
+          "1",
+          "14",
+          "0",
+          "1"
+        ],
+        "drift_sign": [
+          "-1",
+          "-1",
+          "1",
+          "-1",
+          "-1",
+          "1",
+          "1",
+          "-1",
+          "-1",
+          "-1",
+          "0",
+          "1"
+        ],
+        "duration_log_mean": [
+          2.23679323398329,
+          -1.203972804326138,
+          0.6931471805599453,
+          1.6225391702945409
+        ],
+        "duration_log_sum": [
+          -0.33372709407855655,
+          -0.0035837109533592196,
+          3.895522281854201e-24,
+          -1.6104539196238492
+        ],
+        "duration_mass": [
+          0.14493583541992452,
+          0.002976571346514918,
+          8.288281280095128e-24,
+          1.0004417136439299
+        ],
+        "event_count": "64",
+        "h": 0.8581081081081081,
+        "last_event": {
+          "event_id": "synthetic-63",
+          "ordinal": "1189",
+          "schema_version": 1,
+          "time_ns": "8100000100"
+        },
+        "last_running_time": {
+          "event_ns": "8100000100",
+          "origin_ns": "100",
+          "running_ns": "3100000000",
+          "schema_version": 1,
+          "stopped_ns": "5000000000"
+        },
+        "reaction_sum": [
+          -0.5986530276291852,
+          -1.0484129189942355,
+          -0.9326363208675109,
+          -0.10058485770497161
+        ],
+        "run_sign": [
+          "-1",
+          "-1",
+          "-1",
+          "-1"
+        ],
+        "run_start_ns": [
+          "3100000000",
+          "3000000000",
+          "1600000000",
+          "3100000000"
+        ],
+        "schema_version": 1,
+        "sigma": {
+          "achievement": 0.4979020441813508,
+          "connection": 0.3827177580379259,
+          "curiosity": 0.3179771050815652,
+          "empathy": 0.43967825764826873,
+          "schema_version": 1
+        },
+        "square_sum": [
+          0.7354862357651696,
+          0.5585377373535791,
+          0.7289673129680346,
+          0.2680726501792976
+        ],
+        "tau_s": {
+          "achievement": 5.0659372767987785,
+          "connection": 9.363257317750266,
+          "curiosity": 2.0,
+          "empathy": 0.2999999999999394,
+          "schema_version": 1
+        },
+        "variance": [
+          0.1464728823175764,
+          0.19331697024861738,
+          0.10110943935605275,
+          0.2479064455999678
+        ],
+        "weight": 1.1657954010843885,
+        "zero_duration_count": [
+          "32",
+          "0",
+          "0",
+          "0"
+        ]
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "0",
+          "detector_mean": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "0",
+          "drift_count": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "drift_sign": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "duration_log_mean": [
+            2.302585092994046,
+            -1.2039728043259361,
+            0.6931471805599453,
+            1.945910149055313
+          ],
+          "duration_log_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "duration_mass": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "event_count": "0",
+          "h": 0.05,
+          "reaction_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "run_sign": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "run_start_ns": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "tau_s": {
+            "achievement": 6.999999999999998,
+            "connection": 10.000000000000002,
+            "curiosity": 2.0,
+            "empathy": 0.29999999999999993,
+            "schema_version": 1
+          },
+          "variance": [
+            0.09,
+            0.16000000000000003,
+            0.04000000000000001,
+            0.25
+          ],
+          "weight": 0.0,
+          "zero_duration_count": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-0",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.1428571428571429,
+            "connection": 0.09999999999999998,
+            "curiosity": 0.5,
+            "empathy": 3.333333333333334,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e74686574612d736e617073686f742d76321200000073796e7468657469632d7072656669782d30740000004e435631010000000f0000006563686f2e6f626a6563742d726566200000002a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a100000006563686f2e6c61772d76657273696f6e1500000073796e7468657469632d73746f726167652d6c61777b00000000000000e10000004e43563101000000110000006563686f2e74686574612d76616c7565733e0000004e43563101000000120000006563686f2e6e61747572652d766563746f729a9999999999b93f9a9999999999c9bf0000000000000000333333333333d33f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65000000000000f03f9a9999999999e93f333333333333f33fcdccccccccccec3f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65989999999999b93facaaaaaaaaaa0a40000000000000e03f942449922449c23fdf0100004e435631010000001f0000006563686f2e74686574612d657374696d61746f722d706172616d65746572731500000073796e7468657469632d73746f726167652d6c61771a00000050352d32352d76322d39332d39382d6c69626d2d302e322e31363e0000004e43563101000000120000006563686f2e6e61747572652d766563746f729a9999999999b93f9a9999999999c9bf0000000000000000333333333333d33f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65000000000000f03f9a9999999999e93f333333333333f33fcdccccccccccec3f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65333333333333d33f9a9999999999d93f9a9999999999c93f000000000000e03f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650000000000002440333333333333d33f00000000000000400000000000001c400000000000005940000000000000244000000000000024409a9999999999a93f00000000000024407b14ae47e17a843f9a9999999999c93f0000000000000840fca9f1d24d62503f0000000000001440000000000000f03f0000000000000040fca9f1d24d62503f03000000000000000000000000000000200000008acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef4a0300004e435631010000001a0000006563686f2e74686574612d657374696d61746f722d737461746500000000000000000400000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65333333333333d33f9a9999999999d93f9a9999999999c93f000000000000e03f040000000ad7a3703d0ab73f7c14ae47e17ac43f7c14ae47e17aa43f000000000000d03f040000000000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000040000001655b5bbb16b024021a7bdfc7843f3bfef39fafe422ee63f565a32ae7222ff3f0400000000000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650100000000002440323333333333d33f0000000000000040feffffffffff1b400400000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a9999999999a93f00000c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "digest": "5c201408c8f0509d2fef2c1ac9192c3b73a155796dc8a820f18706b6df8ef29b",
+      "ok": true,
+      "protobuf": "0801121273796e7468657469632d7072656669782d301a4f080112202a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a1a106563686f2e6c61772d76657273696f6e221573796e7468657469632d73746f726167652d6c6177287b227a080112260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f1a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f2226080111989999999999b93f19acaaaaaaaaaa0a4021000000000000e03f29942449922449c23f52dc020801121573796e7468657469632d73746f726167652d6c61771a1a50352d32352d76322d39332d39382d6c69626d2d302e322e313622260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f2a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f3226080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f3a26080111000000000000244019333333333333d33f210000000000000040290000000000001c40410000000000005940490000000000002440510000000000002440599a9999999999a93f610000000000002440697b14ae47e17a843f719a9999999999c93f7900000000000008408101fca9f1d24d62503f890100000000000014409101000000000000f03f99010000000000000040a101fca9f1d24d62503fa80103b10100000000000000005a208acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef629c0408011100000000000000001900000000000000001900000000000000001900000000000000001900000000000000002100000000000000002100000000000000002100000000000000002100000000000000002a26080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f310ad7a3703d0ab73f317c14ae47e17ac43f317c14ae47e17aa43f31000000000000d03f390000000000000000390000000000000000390000000000000000390000000000000000410000000000000000410000000000000000410000000000000000410000000000000000491655b5bbb16b02404921a7bdfc7843f3bf49ef39fafe422ee63f49565a32ae7222ff3f50005000500050005a26080111010000000000244019323333333333d33f21000000000000004029feffffffffff1b406000600060006000680068006800680070007800810100000000000000008101000000000000000081010000000000000000810100000000000000008901000000000000000089010000000000000000890100000000000000008901000000000000000091010000000000000000910100000000000000009101000000000000000091010000000000000000980100a1019a9999999999a93fb80100b80100b80100b80100b80100b80100b80100b80100b80100b80100b80100b80100c00100c00100c00100c00100c00100c00100c00100c00100c00100c00100c00100c00100",
+      "value": {
+        "estimator": {
+          "detector_changes": "0",
+          "detector_mean": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "0",
+          "drift_count": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "drift_sign": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "duration_log_mean": [
+            2.302585092994046,
+            -1.2039728043259361,
+            0.6931471805599453,
+            1.945910149055313
+          ],
+          "duration_log_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "duration_mass": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "event_count": "0",
+          "h": 0.05,
+          "reaction_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "run_sign": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "run_start_ns": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "tau_s": {
+            "achievement": 6.999999999999998,
+            "connection": 10.000000000000002,
+            "curiosity": 2.0,
+            "empathy": 0.29999999999999993,
+            "schema_version": 1
+          },
+          "variance": [
+            0.09,
+            0.16000000000000003,
+            0.04000000000000001,
+            0.25
+          ],
+          "weight": 0.0,
+          "zero_duration_count": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-0",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.1428571428571429,
+            "connection": 0.09999999999999998,
+            "curiosity": 0.5,
+            "empathy": 3.333333333333334,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e74686574612d736e617073686f742d76321300000073796e7468657469632d7072656669782d3137740000004e435631010000000f0000006563686f2e6f626a6563742d726566200000002a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a100000006563686f2e6c61772d76657273696f6e1500000073796e7468657469632d73746f726167652d6c61777b00000000000000e10000004e43563101000000110000006563686f2e74686574612d76616c7565733e0000004e43563101000000120000006563686f2e6e61747572652d766563746f72f4e77c10fbc0ba3fc9c654bbc8cac9bfa9ca611cee3a8e3f114eeb3bbcbbd23f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65ce9124c7726ee83fa020fdad68cbe53f68c6697d5318e43f204e6c10c0ecec3f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c655110c62fa1ecc43fb1baabcfbfaa0a40000000000000e03f83cba55c465ec33fdf0100004e435631010000001f0000006563686f2e74686574612d657374696d61746f722d706172616d65746572731500000073796e7468657469632d73746f726167652d6c61771a00000050352d32352d76322d39332d39382d6c69626d2d302e322e31363e0000004e43563101000000120000006563686f2e6e61747572652d766563746f729a9999999999b93f9a9999999999c9bf0000000000000000333333333333d33f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65000000000000f03f9a9999999999e93f333333333333f33fcdccccccccccec3f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65333333333333d33f9a9999999999d93f9a9999999999c93f000000000000e03f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650000000000002440333333333333d33f00000000000000400000000000001c400000000000005940000000000000244000000000000024409a9999999999a93f00000000000024407b14ae47e17a843f9a9999999999c93f0000000000000840fca9f1d24d62503f0000000000001440000000000000f03f0000000000000040fca9f1d24d62503f03000000000000000000000000000000200000008acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839efd60300004e435631010000001a0000006563686f2e74686574612d657374696d61746f722d73746174657e699d43d6adfa3f0400000011a58ce9caffe33f185096ae141cdfbfbeab0d70da02f83f625d9eeabbdbcebf040000003f4673389ad8ec3f0a5d94862538ef3fe0f5ee8f02def43f60e8be065112d93f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650f17e76ede25d93f4f0a29b3e311de3f07960f95b475d83f18516824a7dcdf3f04000000b4aeb35d58c3c33fb1882ff09441cc3fa97214d43fb2c23fa3bb275475b9cf3f0400000025010c96e10106c0a3d058b29b86f3bf0000000000000000a8b77719d7f0d0bf04000000ab1171eb861df33fd39bf6f14e37f03f0000000000000000ea9fc751210bc53f04000000dd47f74a56fafc3f870f86ac8543f3bfef39fafe422ee63fcc523537dd36fe3f0400000008000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65d20eca1518781840a558e2f92333d33f0000000000000040391d8a375c6f1a40040000000100000000000000ffffffffffffffff0100000000000000ffffffffffffffff040000000008af2f000000000008af2f0000000000000000000000000027b9290000000001000000000000001000000000000000040000009a9999999999e93fcdccccccccccecbfcdccccccccccec3f9a9999999999c9bf0400000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000001100000000000000e4388ee3388ee33f01410000004e43563101000000150000006563686f2e74686574612d6c6173742d6576656e7418040000000000006408af2f000000000c00000073796e7468657469632d313601430000004e43563101000000170000006563686f2e74686574612d72756e6e696e672d74696d6564000000000000006408af2f0000000000000000000000000008af2f000000000c0000000100000000000000ffffffffffffffffffffffffffffffffffffffffffffffff010000000000000001000000000000000100000000000000ffffffffffffffff0100000000000000ffffffffffffffff0000000000000000ffffffffffffffff0c000000010000000000000001000000000000000c000000000000000300000000000000010000000000000003000000000000000c00000000000000030000000000000001000000000000000b0000000000000000000000000000000200000000000000",
+      "digest": "a90fc2e3dd1fbb0819c7228e88c41e4cc7e2c73a03e51bddd62d080af1b067bf",
+      "ok": true,
+      "protobuf": "0801121373796e7468657469632d7072656669782d31371a4f080112202a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a1a106563686f2e6c61772d76657273696f6e221573796e7468657469632d73746f726167652d6c6177287b227a08011226080111f4e77c10fbc0ba3f19c9c654bbc8cac9bf21a9ca611cee3a8e3f29114eeb3bbcbbd23f1a26080111ce9124c7726ee83f19a020fdad68cbe53f2168c6697d5318e43f29204e6c10c0ecec3f22260801115110c62fa1ecc43f19b1baabcfbfaa0a4021000000000000e03f2983cba55c465ec33f52dc020801121573796e7468657469632d73746f726167652d6c61771a1a50352d32352d76322d39332d39382d6c69626d2d302e322e313622260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f2a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f3226080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f3a26080111000000000000244019333333333333d33f210000000000000040290000000000001c40410000000000005940490000000000002440510000000000002440599a9999999999a93f610000000000002440697b14ae47e17a843f719a9999999999c93f7900000000000008408101fca9f1d24d62503f890100000000000014409101000000000000f03f99010000000000000040a101fca9f1d24d62503fa80103b10100000000000000005a208acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef62d9040801117e699d43d6adfa3f1911a58ce9caffe33f19185096ae141cdfbf19beab0d70da02f83f19625d9eeabbdbcebf213f4673389ad8ec3f210a5d94862538ef3f21e0f5ee8f02def43f2160e8be065112d93f2a260801110f17e76ede25d93f194f0a29b3e311de3f2107960f95b475d83f2918516824a7dcdf3f31b4aeb35d58c3c33f31b1882ff09441cc3f31a97214d43fb2c23f31a3bb275475b9cf3f3925010c96e10106c039a3d058b29b86f3bf39000000000000000039a8b77719d7f0d0bf41ab1171eb861df33f41d39bf6f14e37f03f41000000000000000041ea9fc751210bc53f49dd47f74a56fafc3f49870f86ac8543f3bf49ef39fafe422ee63f49cc523537dd36fe3f50085000500050005a26080111d20eca151878184019a558e2f92333d33f21000000000000004029391d8a375c6f1a406002600160026001688090bcfd02688090bcfd0268006880cee4cd027001781081019a9999999999e93f8101cdccccccccccecbf8101cdccccccccccec3f81019a9999999999c9bf8901000000000000000089010000000000000000890100000000000000008901000000000000000091010000000000000000910100000000000000009101000000000000000091010000000000000000980111a101e4388ee3388ee33faa0119080110980818e490bcfd02220c73796e7468657469632d3136b201120801106418e490bcfd022000288090bcfd02b80102b80101b80101b80101b80102b80102b80102b80101b80102b80101b80100b80101c00101c00101c0010cc00103c00101c00103c0010cc00103c00101c0010bc00100c00102",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "ThetaSnapshotV2",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "63",
+          "detector_mean": [
+            -0.7,
+            -0.9,
+            -0.8,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "5",
+            "28",
+            "1",
+            "1",
+            "7",
+            "59",
+            "1",
+            "1",
+            "14",
+            "0",
+            "1"
+          ],
+          "drift_sign": [
+            "-1",
+            "-1",
+            "1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "0",
+            "1"
+          ],
+          "duration_log_mean": [
+            2.23679323398329,
+            -1.203972804326138,
+            0.6931471805599453,
+            1.6225391702945409
+          ],
+          "duration_log_sum": [
+            -0.33372709407855655,
+            -0.0035837109533592196,
+            3.895522281854201e-24,
+            -1.6104539196238492
+          ],
+          "duration_mass": [
+            0.14493583541992452,
+            0.002976571346514918,
+            8.288281280095128e-24,
+            1.0004417136439299
+          ],
+          "event_count": "64",
+          "h": 0.8581081081081081,
+          "last_event": {
+            "event_id": "synthetic-63",
+            "ordinal": "1189",
+            "schema_version": 1,
+            "time_ns": "8100000100"
+          },
+          "last_running_time": {
+            "event_ns": "8100000100",
+            "origin_ns": "100",
+            "running_ns": "3100000000",
+            "schema_version": 1,
+            "stopped_ns": "5000000000"
+          },
+          "reaction_sum": [
+            -0.5986530276291852,
+            -1.0484129189942355,
+            -0.9326363208675109,
+            -0.10058485770497161
+          ],
+          "run_sign": [
+            "-1",
+            "-1",
+            "-1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "3100000000",
+            "3000000000",
+            "1600000000",
+            "3100000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.4979020441813508,
+            "connection": 0.3827177580379259,
+            "curiosity": 0.3179771050815652,
+            "empathy": 0.43967825764826873,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.7354862357651696,
+            0.5585377373535791,
+            0.7289673129680346,
+            0.2680726501792976
+          ],
+          "tau_s": {
+            "achievement": 5.0659372767987785,
+            "connection": 9.363257317750266,
+            "curiosity": 2.0,
+            "empathy": 0.2999999999999394,
+            "schema_version": 1
+          },
+          "variance": [
+            0.1464728823175764,
+            0.19331697024861738,
+            0.10110943935605275,
+            0.2479064455999678
+          ],
+          "weight": 1.1657954010843885,
+          "zero_duration_count": [
+            "32",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-64",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.29554865875126146,
+            "connection": 0.09293009495055127,
+            "curiosity": -0.009218889815178717,
+            "empathy": -0.20805859169638494,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.903792232345398,
+            "connection": 0.7838674681258744,
+            "curiosity": 0.7547713221001774,
+            "empathy": 0.7278049219709013,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.19739683801057856,
+            "connection": 0.10680043985379573,
+            "curiosity": 0.5,
+            "empathy": 3.3333333333340063,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000160000006563686f2e74686574612d736e617073686f742d76321300000073796e7468657469632d7072656669782d3634740000004e435631010000000f0000006563686f2e6f626a6563742d726566200000002a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a100000006563686f2e6c61772d76657273696f6e1500000073796e7468657469632d73746f726167652d6c61777b00000000000000e10000004e43563101000000110000006563686f2e74686574612d76616c7565733e0000004e43563101000000120000006563686f2e6e61747572652d766563746f727875a04644cab73feb6f7ef7a9a1cabf44cc17725ae182bf3ca7edeb44ead23f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c656cf77f3a7115e93f8873378c2d4ae73f4f200c301627e83f96ac09b0ddebec3f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65f8d65e0c4657bb3f96b0aaaaaaaa0a40000000000000e03f5e6ccbb14c44c93fdf0100004e435631010000001f0000006563686f2e74686574612d657374696d61746f722d706172616d65746572731500000073796e7468657469632d73746f726167652d6c61771a00000050352d32352d76322d39332d39382d6c69626d2d302e322e31363e0000004e43563101000000120000006563686f2e6e61747572652d766563746f729a9999999999b93f9a9999999999c9bf0000000000000000333333333333d33f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65000000000000f03f9a9999999999e93f333333333333f33fcdccccccccccec3f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65333333333333d33f9a9999999999d93f9a9999999999c93f000000000000e03f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c650000000000002440333333333333d33f00000000000000400000000000001c400000000000005940000000000000244000000000000024409a9999999999a93f00000000000024407b14ae47e17a843f9a9999999999c93f0000000000000840fca9f1d24d62503f0000000000001440000000000000f03f0000000000000040fca9f1d24d62503f03000000000000000000000000000000200000008acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839efd60300004e435631010000001a0000006563686f2e74686574612d657374696d61746f722d737461746522c1171419a7f23f040000001333ea642a28e3bfd58bfc9f4cc6f0bfd101262028d8edbf88cf50e2edbfb9bf0400000025a0286e1a89e73fa67e70888adfe13f619f2142b353e73f68375e301a28d13f3d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65ebc3979f727ed83f10245746b023dc3fd8eecca4bc59d43f6fb51789a0dddf3f040000003d05a7979fbfc23f14647d489cbec83f6fe459e74ee2b93f39e428fe65bbcf3f0400000027d1b6e2c85bd5bf4bd0f92a965b6dbf2bb2294a6cd6123bbafd47546bc4f9bf040000005dd192e8418dc23f8fbccc925262683ff894aa97320a243b5f7a9a2bcf01f03f040000007cfaded9f3e40140aeaabdfc7843f3bfef39fafe422ee63ff04d0ea2ebf5f93f0400000020000000000000000000000000000000000000000000000000000000000000003d0000004e43563101000000110000006563686f2e6e61747572652d7363616c65478af7dcfcb92240f02e33333333d33f000000000000004091c0bd0f8543144004000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff04000000003fc6b800000000005ed0b20000000000105e5f00000000003fc6b80000000001000000000000003f0000000000000004000000666666666666e6bfcdccccccccccecbf9a9999999999e9bf9a9999999999c9bf04000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000040000000000000005a3798229f75eb3f01410000004e43563101000000150000006563686f2e74686574612d6c6173742d6576656e74a5040000000000006431cce2010000000c00000073796e7468657469632d363301430000004e43563101000000170000006563686f2e74686574612d72756e6e696e672d74696d6564000000000000006431cce20100000000f2052a01000000003fc6b8000000000c000000ffffffffffffffffffffffffffffffff0100000000000000ffffffffffffffffffffffffffffffff01000000000000000100000000000000ffffffffffffffffffffffffffffffffffffffffffffffff000000000000000001000000000000000c000000010000000000000005000000000000001c000000000000000100000000000000010000000000000007000000000000003b00000000000000010000000000000001000000000000000e0000000000000000000000000000000100000000000000",
+      "digest": "de0b38b3c23ce6b566e997f3ea5ec4d767d7d52cd6bbab97715472b6d085ccfe",
+      "ok": true,
+      "protobuf": "0801121373796e7468657469632d7072656669782d36341a4f080112202a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a1a106563686f2e6c61772d76657273696f6e221573796e7468657469632d73746f726167652d6c6177287b227a080112260801117875a04644cab73f19eb6f7ef7a9a1cabf2144cc17725ae182bf293ca7edeb44ead23f1a260801116cf77f3a7115e93f198873378c2d4ae73f214f200c301627e83f2996ac09b0ddebec3f2226080111f8d65e0c4657bb3f1996b0aaaaaaaa0a4021000000000000e03f295e6ccbb14c44c93f52dc020801121573796e7468657469632d73746f726167652d6c61771a1a50352d32352d76322d39332d39382d6c69626d2d302e322e313622260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f2a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f3226080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f3a26080111000000000000244019333333333333d33f210000000000000040290000000000001c40410000000000005940490000000000002440510000000000002440599a9999999999a93f610000000000002440697b14ae47e17a843f719a9999999999c93f7900000000000008408101fca9f1d24d62503f890100000000000014409101000000000000f03f99010000000000000040a101fca9f1d24d62503fa80103b10100000000000000005a208acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef62e10408011122c1171419a7f23f191333ea642a28e3bf19d58bfc9f4cc6f0bf19d101262028d8edbf1988cf50e2edbfb9bf2125a0286e1a89e73f21a67e70888adfe13f21619f2142b353e73f2168375e301a28d13f2a26080111ebc3979f727ed83f1910245746b023dc3f21d8eecca4bc59d43f296fb51789a0dddf3f313d05a7979fbfc23f3114647d489cbec83f316fe459e74ee2b93f3139e428fe65bbcf3f3927d1b6e2c85bd5bf394bd0f92a965b6dbf392bb2294a6cd6123b39bafd47546bc4f9bf415dd192e8418dc23f418fbccc925262683f41f894aa97320a243b415f7a9a2bcf01f03f497cfaded9f3e4014049aeaabdfc7843f3bf49ef39fafe422ee63f49f04d0ea2ebf5f93f50205000500050005a26080111478af7dcfcb9224019f02e33333333d33f2100000000000000402991c0bd0f8543144060016001600160016880fe98c60b6880bcc1960b6880a0f8fa056880fe98c60b7001783f8101666666666666e6bf8101cdccccccccccecbf81019a9999999999e9bf81019a9999999999c9bf8901000000000000000089010000000000000000890100000000000000008901000000000000000091010000000000000000910100000000000000009101000000000000000091010000000000000000980140a1015a3798229f75eb3faa0119080110a50918e4e2b0961e220c73796e7468657469632d3633b201160801106418e4e2b0961e2080e497d0122880fe98c60bb80101b80101b80102b80101b80101b80102b80102b80101b80101b80101b80100b80102c00101c00105c0011cc00101c00101c00107c0013bc00101c00101c0010ec00100c00101",
+      "value": {
+        "estimator": {
+          "detector_changes": "63",
+          "detector_mean": [
+            -0.7,
+            -0.9,
+            -0.8,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "5",
+            "28",
+            "1",
+            "1",
+            "7",
+            "59",
+            "1",
+            "1",
+            "14",
+            "0",
+            "1"
+          ],
+          "drift_sign": [
+            "-1",
+            "-1",
+            "1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "0",
+            "1"
+          ],
+          "duration_log_mean": [
+            2.23679323398329,
+            -1.203972804326138,
+            0.6931471805599453,
+            1.6225391702945409
+          ],
+          "duration_log_sum": [
+            -0.33372709407855655,
+            -0.0035837109533592196,
+            3.895522281854201e-24,
+            -1.6104539196238492
+          ],
+          "duration_mass": [
+            0.14493583541992452,
+            0.002976571346514918,
+            8.288281280095128e-24,
+            1.0004417136439299
+          ],
+          "event_count": "64",
+          "h": 0.8581081081081081,
+          "last_event": {
+            "event_id": "synthetic-63",
+            "ordinal": "1189",
+            "schema_version": 1,
+            "time_ns": "8100000100"
+          },
+          "last_running_time": {
+            "event_ns": "8100000100",
+            "origin_ns": "100",
+            "running_ns": "3100000000",
+            "schema_version": 1,
+            "stopped_ns": "5000000000"
+          },
+          "reaction_sum": [
+            -0.5986530276291852,
+            -1.0484129189942355,
+            -0.9326363208675109,
+            -0.10058485770497161
+          ],
+          "run_sign": [
+            "-1",
+            "-1",
+            "-1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "3100000000",
+            "3000000000",
+            "1600000000",
+            "3100000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.4979020441813508,
+            "connection": 0.3827177580379259,
+            "curiosity": 0.3179771050815652,
+            "empathy": 0.43967825764826873,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.7354862357651696,
+            0.5585377373535791,
+            0.7289673129680346,
+            0.2680726501792976
+          ],
+          "tau_s": {
+            "achievement": 5.0659372767987785,
+            "connection": 9.363257317750266,
+            "curiosity": 2.0,
+            "empathy": 0.2999999999999394,
+            "schema_version": 1
+          },
+          "variance": [
+            0.1464728823175764,
+            0.19331697024861738,
+            0.10110943935605275,
+            0.2479064455999678
+          ],
+          "weight": 1.1657954010843885,
+          "zero_duration_count": [
+            "32",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "byte_length": "123",
+          "digest": "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-storage-law",
+          "schema_version": 1
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-storage-law",
+          "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8acb0a319e62f566927e73431ea774cfb71ce7c1d736f9ae72335602283839ef",
+        "revision": "synthetic-prefix-64",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.29554865875126146,
+            "connection": 0.09293009495055127,
+            "curiosity": -0.009218889815178717,
+            "empathy": -0.20805859169638494,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.903792232345398,
+            "connection": 0.7838674681258744,
+            "curiosity": 0.7547713221001774,
+            "empathy": 0.7278049219709013,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.19739683801057856,
+            "connection": 0.10680043985379573,
+            "curiosity": 0.5,
+            "empathy": 3.3333333333340063,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      }
+    }
   }
 ]
