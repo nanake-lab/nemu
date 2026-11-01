@@ -8,9 +8,10 @@ from unittest.mock import patch
 
 import build_status as status
 import serve_board
+from status_types import Board, Card, Catalog, RawPr
 
 
-def card(cid: str = "P5-23", deps: list[str] | None = None) -> dict:
+def card(cid: str = "P5-23", deps: list[str] | None = None) -> Card:
     return {
         "id": cid,
         "title": "Test card",
@@ -22,7 +23,7 @@ def card(cid: str = "P5-23", deps: list[str] | None = None) -> dict:
 
 
 def pr(number: int, *, labels: list[str], draft: bool = False,
-       branch: str = "task/P5-23-test", merged: bool = False) -> dict:
+       branch: str = "task/P5-23-test", merged: bool = False) -> RawPr:
     return {
         "number": number,
         "title": "Test PR",
@@ -37,14 +38,14 @@ def pr(number: int, *, labels: list[str], draft: bool = False,
 
 
 class PauseTests(unittest.TestCase):
-    def compute(self, prs: list[dict], cards: list[dict] | None = None,
-                deliveries: dict[str, list[str]] | None = None) -> dict:
-        catalog = {
+    def compute(self, prs: list[RawPr], cards: list[Card] | None = None,
+                deliveries: dict[str, list[str]] | None = None) -> Board:
+        catalog: Catalog = {
             "cards": cards if cards is not None else [card()],
             "milestones": [{"id": "N1", "name": "Test"}],
         }
 
-        def github(path: str) -> list:
+        def github(path: str) -> list[RawPr] | list[dict[str, str]]:
             if "/pulls?" in path:
                 return prs
             if "/branches?" in path:
