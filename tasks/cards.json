@@ -1625,7 +1625,38 @@
     "P7-04",
     "P5-40",
     "P5-41",
-    "P5-42"
+    "P5-42",
+    "P0-12",
+    "P5-43",
+    "P5-44",
+    "P5-45",
+    "P5-46",
+    "P5-47",
+    "P5-48",
+    "P5-49",
+    "P5-50",
+    "P5-51",
+    "P5-52",
+    "P5-53",
+    "P5-54",
+    "P5-55",
+    "P5-56",
+    "P5-57",
+    "P5-58",
+    "P5-59",
+    "P0-13",
+    "P5-60",
+    "P5-61",
+    "P3-07",
+    "P4-08",
+    "P5-62",
+    "P5-63",
+    "P5-64",
+    "P6-21",
+    "P6-22",
+    "P6-23",
+    "P6-24",
+    "P6-25"
    ],
    "difficulty": "—",
    "suggested": "你",
@@ -1644,6 +1675,488 @@
    "suggested": "Codex",
    "you": null,
    "effort": "3 天"
+  },
+  {
+   "id": "P0-13",
+   "title": "视觉读取与常驻组合 GPU 实测",
+   "phase": "P0",
+   "milestone": "E3",
+   "deps": [
+    "P0-12",
+    "P1-01",
+    "P4-02"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": "安排 GPU 安静窗口；对不足时的资源安排作决定",
+   "effort": "待开工时估算",
+   "note": "来源：[DESIGN-VRAM-01 REPORT「用户决定」](https://github.com/nanake-lab/nemu/blob/761e6f11a2a47c4c24bc0b49d143b3aab2a401cb/reports/DESIGN-VRAM-01/REPORT.md#用户决定)；[DESIGN-VRAM-01 请求](https://github.com/nanake-lab/nemu/blob/761e6f11a2a47c4c24bc0b49d143b3aab2a401cb/tasks/requests/DESIGN-VRAM-01.md)；[ADR 0034](../docs/adr/0034-qwen35-4b-conditional-carrier.md)；前置：DESIGN-VRAM-01 完成独立审查并由用户批准；用户另行安排 GPU 安静窗口"
+  },
+  {
+   "id": "P3-07",
+   "title": "身体、待机与社交反射的调控接线",
+   "phase": "P3",
+   "milestone": "E2",
+   "deps": [
+    "P3-01",
+    "P3-03",
+    "P3-04",
+    "P3-06",
+    "P5-59"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": "选择视觉候选",
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§8、11（D15、D17、D18）；[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §3"
+  },
+  {
+   "id": "P4-08",
+   "title": "声音 B 层经历调控的契约与接线",
+   "phase": "P4",
+   "milestone": "E3",
+   "deps": [
+    "P4-07",
+    "P5-58",
+    "P5-59"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§8、11（D16）；[P4-07](P4-voice.md#p4-07-声音读出与风格契约v2-106)"
+  },
+  {
+   "id": "P5-43",
+   "title": "契约变更：P5-06 五项正式语义边界",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-21",
+    "P5-35",
+    "P5-36"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §6「补齐 P5-06 G01–G05」；[P5-06 正式语义边界请求](https://github.com/nanake-lab/nemu/blob/650e9f138e6bf534450f5a5163571e88b3ce1303/tasks/requests/P5-06-formal-semantic-boundaries.md)"
+  },
+  {
+   "id": "P5-44",
+   "title": "契约变更：选定证据规则的记录与组装输入",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-43"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§4、6；[DESIGN-EV-01 REPORT](../reports/DESIGN-EV-01/REPORT.md) §§3–8；[DESIGN-EV-01 请求](requests/DESIGN-EV-01.md)「接续请求」；[P5-24 输入请求](requests/P5-24-inputs.md)"
+  },
+  {
+   "id": "P5-45",
+   "title": "证据规则落地：D12-B、D04-A、D20-A、D13-A",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-23",
+    "P5-44"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§4、6；[DESIGN-EV-01 REPORT](../reports/DESIGN-EV-01/REPORT.md) 的 D12-B、D04-A、D20-A、D13-A；[P5-24 输入请求](requests/P5-24-inputs.md)"
+  },
+  {
+   "id": "P5-46",
+   "title": "选定证据规则的实验验证",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-45",
+    "P5-47"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §6「所选四项的实现与实验」；[DESIGN-EV-01 REPORT](../reports/DESIGN-EV-01/REPORT.md) §§3–8；[DESIGN-EV-01 实验计划](../reports/DESIGN-EV-01/EXPERIMENTS.md)"
+  },
+  {
+   "id": "P5-47",
+   "title": "完整证据组装与 G/C 的独立重算核验",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-25",
+    "P5-36",
+    "P5-45"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[P5-26 接线请求](requests/P5-26-integration.md)「完整第二实现」及 2026-11-01 接续；[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §11"
+  },
+  {
+   "id": "P5-48",
+   "title": "新规律占位：待 DESIGN-LAW-01 决定后拆分",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§4、5、7、11（D07、D09/D10、D11、D05）；[P5-08 时间语义请求](requests/P5-08-result-time-semantics.md)；[DESIGN-LAW-01](https://github.com/nanake-lab/nemu/pull/131)；CARDS-SYNC-01 用户指派（2026-11-02）；前置：DESIGN-LAW-01 完成且用户作出决定",
+   "status_override": {
+    "status": "blocked",
+    "note": "待 DESIGN-LAW-01 决定后拆分；当前不实施、不预拆。"
+   }
+  },
+  {
+   "id": "P5-49",
+   "title": "契约变更：IRL、bridge 与本地端点命名管道",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-35",
+    "P5-43"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[P5-07 IPC 请求](https://github.com/nanake-lab/nemu/blob/bc1fab99834ababef21a59b5214e674e2c7c6188/tasks/requests/P5-07-ipc-contract.md)；[P5-06 G01–G05 请求](https://github.com/nanake-lab/nemu/blob/650e9f138e6bf534450f5a5163571e88b3ce1303/tasks/requests/P5-06-formal-semantic-boundaries.md)；CARDS-SYNC-01 原文片段指派（2026-11-02）"
+  },
+  {
+   "id": "P5-50",
+   "title": "IRL 照抄原文片段，由程序计算位置",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-49"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：CARDS-SYNC-01 用户指派（2026-11-02）；[P0-12 REPORT「用户判定」](../reports/P0-12/REPORT.md#用户判定)；[P5-07 IPC 请求](https://github.com/nanake-lab/nemu/blob/bc1fab99834ababef21a59b5214e674e2c7c6188/tasks/requests/P5-07-ipc-contract.md)；前置：#96 基础层完成独立审查并可供后继使用；仍遵守同目录串行"
+  },
+  {
+   "id": "P5-51",
+   "title": "P5-07 正式模型测量与三语人工金标准",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-13",
+    "P5-49",
+    "P5-50"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": "参与人工标注/复核，并安排 GPU 安静窗口",
+   "effort": "待开工时估算",
+   "note": "来源：[P5-07 正式模型/人工标注请求](https://github.com/nanake-lab/nemu/blob/bc1fab99834ababef21a59b5214e674e2c7c6188/tasks/requests/P5-07-model-and-human-gold.md)；[ADR 0034](../docs/adr/0034-qwen35-4b-conditional-carrier.md)；[P0-12 用户判定](../reports/P0-12/REPORT.md#用户判定)；前置：人工标签先冻结；GPU 实测须用户安排安静窗口，不能由本次登记代为批准"
+  },
+  {
+   "id": "P5-52",
+   "title": "契约变更：时钟恢复、初始根与权威发布",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-35",
+    "P5-36",
+    "P5-37"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[P5-08 权威发布请求](requests/P5-08-runtime-publication.md)「请求与归属」第 1–3 项；[P5-08 时间语义请求](requests/P5-08-result-time-semantics.md)；[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§7、11"
+  },
+  {
+   "id": "P5-53",
+   "title": "真实 H 投影、可信输入与运行时发布接线",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-02",
+    "P5-03",
+    "P5-04",
+    "P5-43",
+    "P5-52"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[P5-06 请求「完成接口后的连接方向」](https://github.com/nanake-lab/nemu/blob/650e9f138e6bf534450f5a5163571e88b3ce1303/tasks/requests/P5-06-formal-semantic-boundaries.md)；[P5-08 权威发布请求](requests/P5-08-runtime-publication.md)；[P5-08 阶段输入请求](requests/P5-08-stage-inputs-and-law.md)；[P5-24 输入请求](requests/P5-24-inputs.md)"
+  },
+  {
+   "id": "P5-54",
+   "title": "P5-26 真实 H 重算、迁移回退与 H/L 提交",
+   "phase": "P5",
+   "milestone": "E4",
+   "deps": [
+    "P5-36",
+    "P5-40",
+    "P5-45",
+    "P5-47",
+    "P5-53"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[P5-26 接线请求](requests/P5-26-integration.md) 第 1–6 项及 2026-11-01 两项接续；[P5-24 输入请求](requests/P5-24-inputs.md)「候选次序、纠正和 C 接线」"
+  },
+  {
+   "id": "P5-55",
+   "title": "D20/D13 升级 B 的解释器资格测量",
+   "phase": "P5",
+   "milestone": "E4",
+   "deps": [
+    "P5-28",
+    "P5-45",
+    "P5-51"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": "批准升级判定标准",
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§4、6「D20/D13 升级 B」；[DESIGN-EV-01 REPORT](../reports/DESIGN-EV-01/REPORT.md) §8 用户选择；[P5-07 测量请求](https://github.com/nanake-lab/nemu/blob/bc1fab99834ababef21a59b5214e674e2c7c6188/tasks/requests/P5-07-model-and-human-gold.md)"
+  },
+  {
+   "id": "P5-56",
+   "title": "有条件升级 D20/D13-B 的契约、实现与历史重算",
+   "phase": "P5",
+   "milestone": "E4",
+   "deps": [
+    "P5-44",
+    "P5-54",
+    "P5-55"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§4、6「D20/D13 升级 B 与历史重算」；[DESIGN-EV-01 REPORT](../reports/DESIGN-EV-01/REPORT.md) D20-B、D13-B 及 §8；前置：P5-55 标准经用户批准且测试达标；升级合同须另获批准"
+  },
+  {
+   "id": "P5-57",
+   "title": "契约变更：助手防失控与通知恢复",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-22",
+    "P5-40"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§2、5、6「助手防失控契约及资源迁移」"
+  },
+  {
+   "id": "P5-58",
+   "title": "契约变更：身体预设反应的经历调控",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-22",
+    "P5-42"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§8、11（D15–D18）；[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§3、6「插入点让开与鼠标触摸分工」"
+  },
+  {
+   "id": "P5-59",
+   "title": "核心身体读出接入获批调控路径",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-12",
+    "P5-58"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§8、11（D15）；[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §6 的身体读出接续"
+  },
+  {
+   "id": "P5-60",
+   "title": "视觉读取与资源状态的 ADR/契约",
+   "phase": "P5",
+   "milestone": "E3",
+   "deps": [
+    "P0-13",
+    "P5-37",
+    "P5-43"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[DESIGN-VRAM-01 REPORT「用户决定」D4](https://github.com/nanake-lab/nemu/blob/761e6f11a2a47c4c24bc0b49d143b3aab2a401cb/reports/DESIGN-VRAM-01/REPORT.md#用户决定)；[后继接口请求](https://github.com/nanake-lab/nemu/blob/761e6f11a2a47c4c24bc0b49d143b3aab2a401cb/tasks/requests/DESIGN-VRAM-01.md#后继接口请求本卡不实施)；前置：DESIGN-VRAM-01 设计批准；具体部署由实测后用户决定"
+  },
+  {
+   "id": "P5-61",
+   "title": "视觉读取与资源安排接线",
+   "phase": "P5",
+   "milestone": "E3",
+   "deps": [
+    "P4-02",
+    "P5-13",
+    "P5-39",
+    "P5-60"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[DESIGN-VRAM-01 REPORT「资源设施怎样分工」](https://github.com/nanake-lab/nemu/blob/761e6f11a2a47c4c24bc0b49d143b3aab2a401cb/reports/DESIGN-VRAM-01/REPORT.md)；[DESIGN-VRAM-01 后继接口请求](https://github.com/nanake-lab/nemu/blob/761e6f11a2a47c4c24bc0b49d143b3aab2a401cb/tasks/requests/DESIGN-VRAM-01.md)"
+  },
+  {
+   "id": "P5-62",
+   "title": "起点及经历改变路径的验证接续",
+   "phase": "P5",
+   "milestone": "E4",
+   "deps": [
+    "P5-11",
+    "P5-25",
+    "P5-36",
+    "P5-45"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§1、2、11（D01、D02、D03、D06）；[DESIGN-LAW-01 的固定 A 附带分析](https://github.com/nanake-lab/nemu/pull/131)"
+  },
+  {
+   "id": "P5-63",
+   "title": "D08/D14 的实验谱系规律版本对照",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-45",
+    "P5-47"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§9、11（D08、D14）"
+  },
+  {
+   "id": "P5-64",
+   "title": "ADR 0033 已定分工的文档接续",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-22"
+   ],
+   "difficulty": "低",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§5、6「后续文档同步」；[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §11 的文档路由"
+  },
+  {
+   "id": "P6-21",
+   "title": "默认语言偏好与三种模式验收接续",
+   "phase": "P6",
+   "milestone": "E5",
+   "deps": [
+    "P6-01",
+    "P6-03",
+    "P6-04",
+    "P6-05"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§3、11（D22）"
+  },
+  {
+   "id": "P6-22",
+   "title": "插入点让开与鼠标触摸分工接线",
+   "phase": "P6",
+   "milestone": "E5",
+   "deps": [
+    "P3-07",
+    "P6-09",
+    "P6-17"
+   ],
+   "difficulty": "中",
+   "suggested": "Antigravity",
+   "you": "选择视觉候选",
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§3、6；[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §11（D18）"
+  },
+  {
+   "id": "P6-23",
+   "title": "助手防失控的执行、通知与恢复接线",
+   "phase": "P6",
+   "milestone": "E4",
+   "deps": [
+    "P5-14",
+    "P5-57",
+    "P6-06",
+    "P6-10",
+    "P6-24"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§2、6「助手防失控契约及资源迁移」"
+  },
+  {
+   "id": "P6-24",
+   "title": "助手正常用量实测与总量保险丝校准",
+   "phase": "P6",
+   "milestone": "E4",
+   "deps": [
+    "P5-57",
+    "P6-06",
+    "P6-12"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": "参与排练并批准校准后的总量保险丝",
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0033](../docs/adr/0033-helper-fuses-cursor-evidence.md) §§2、6「校准正常用量并批准总量上限」"
+  },
+  {
+   "id": "P6-25",
+   "title": "采样、检索与证据归组的敏感性报告",
+   "phase": "P6",
+   "milestone": "E4",
+   "deps": [
+    "P5-04",
+    "P5-24",
+    "P5-28",
+    "P5-30",
+    "P5-45",
+    "P6-02",
+    "P6-17"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§9、11（R04、R07、R14）"
   }
  ]
 }
