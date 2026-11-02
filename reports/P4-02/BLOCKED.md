@@ -1,3 +1,7 @@
+# 当前状态（2026-11-03）
+
+等待集中数据审计 A/B/C 的许可与来源决定。fastText 已批准；请看 [统一审计表](gsv-v5-resume-08/RUNTIME-DATA-AUDIT.md)。bin 尚为部分文件，真实禁网合成未运行。下文保留历史状态；最新细节见文件末尾。
+
 # 当前阻塞：参考音频读取失败（2026-11-02，后续恢复第二阶段）
 
 以下最新状态取代后文历史状态。PyTorch TLS 下载阻塞已由本地缓存复用绕过，网络设置未改变。
@@ -135,3 +139,16 @@ CPU 真实中文/中英混合推理未运行，GPU 未运行。当前不是 GPU 
 [fastText 官方模型页](https://fasttext.cc/docs/en/language-identification.html)于本日核对：lid.176.bin 与压缩版模型均为 Creative Commons Attribution-Share-Alike 3.0，即 CC-BY-SA-3.0。这是预训练语言识别权重许可，不能以 fastText 或 Python 包代码许可代替，也不属于本轮 MIT/BSD/Zlib 等预授权。新增模型未固定完整哈希、未获许可批准，因此停止。正式 provider 也需控制这条自动下载/回退路径。
 
 中文尚未产生输出，中英混合未执行；真实合成仍未通过。没有进入 GPU 步骤，不申请 GPU 窗口。下一步由用户决定：批准独立使用该 CC-BY-SA-3.0 语言识别模型及其固定下载/署名/分发条件，随后先取完整文件与 SHA-256，禁止运行中隐式下载再重测；或要求另行研究不使用该模型的路线（不得静默改第三方源码/分段行为）。PR 保持草稿，报告所有阶段证据。
+## 2026-11-03 集中数据审计：等待三组许可/来源决定
+
+已按用户要求集中核对运行时下载与随包数据，完整统一表见 [RUNTIME-DATA-AUDIT.md](gsv-v5-resume-08/RUNTIME-DATA-AUDIT.md)。表列文件/来源/用途/数据许可/中文与混合路径，未将 Python 包代码许可代替模型或语料许可。静态搜索原始结果和 173 个随包数据文件的 SHA-256 已入证据目录；未宣称穷尽所有可能动态执行，真实禁网冒烟仍是最终漏项检查。
+
+fastText lid.176.bin 与包内 lid.176.ftz 的 CC-BY-SA-3.0 已获用户批准：不修改、独立文件、保留署名和许可声明、P7 打包前复审。补正原 fast-langdetect 0.3.2 清单漏登记模型许可的问题；ftz 为 938013 B，SHA-256 8f3472cfe8738a7b6099e8e999c3cbfae0dcd15696aac7d7738a8039db603e83。署名及许可证链接在审计表。bin 使用用户批准的固定 URL 和上游 cache_dir 续传；集中发现其他未决项后主动停止，现保留 17219584 B 部分文件，未计算/声称完整固定哈希，不可供推理加载。停止退出 -1，非网络失败，恢复应从断点继续。
+
+两个 MIT NLTK tagger 包已按 nltk_data 固定提交 550b6625bcef1f2abff2ff770a5a0d272c9c6b2a 准备在 D:\Dev\cache\p4-02\nltk_data\taggers，保留 ZIP 和解压目录；实际当前 NLTK pos_tag 需要 _eng JSON，g2p_en 导入还检查旧 zip，两者均备齐。XML 与 ZIP SHA-256 在 nltk-hashes.jsonl。
+
+一次性交回 A/B/C：A NLTK CMUdict 0.6 是自定义宽松许可，不在明确 SPDX 预授权内；B wordsegment 的随包词频数据独立许可范围未明确（来源页仅明确代码 MIT）；C GPT-SoVITS 派生热词/姓名/拼音/多音字词表尚缺逐文件来源与许可追溯。详细文件、已有声明与边界均集中在表中，未逐项试错，不把来源不明等同于已确认禁止使用。
+
+CPU 禁网脚本已准备：在第三方导入前替换 socket connect/connect_ex/create_connection/getaddrinfo/sendto，拒绝并记录目标地址；保留 HF offline、进程内 G2PW CPU provider 及 CUDA 未初始化断言，完成时若出现任何网络请求日志也视为失败。三项守卫自检均在发起真实连接前阻止成功，日志已保留；未运行真实禁网合成。该 Python socket 守卫不是系统防火墙，对未识别的原生库直接联网不能作绝对保证。
+
+现按“其他许可一次性列出后再停”停止，等待 A/B/C 的集中决定；未进入 GPU 阶段，不停 runner、不申请窗口。PR 保持草稿；原权重核验、G2PW 隔离和 CPU 模型加载结果仍有效，中文/混合真实合成未通过。

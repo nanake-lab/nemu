@@ -512,3 +512,7 @@ q/V 在 P5-34 合并前只由 `law/pending.rs` 的进程内临时结构承载，
 ### P4-02：frozendict 条件许可批准（2026-11-02）
 
 用户明确批准 frozendict 2.5.1（LGPL-3.0-only）：不修改，独立安装并动态导入，保留许可证文本，可被替换，P7 打包前复审。仅许可条件已批准；GPT-SoVITS V5 推理及打包验证未完成。见 reports/P4-02/REPORT.md 后续恢复记录。
+
+### P4-02：fastText 模型条件许可批准（2026-11-03）
+
+用户批准独立使用未修改的 lid.176.bin 及 fast-langdetect 0.3.2 内置 lid.176.ftz，模型许可 CC-BY-SA-3.0，保留署名与许可证声明，P7 打包前复审。包代码 MIT 与模型许可分别登记；补正此前遗漏。其他数据许可与来源集中见 reports/P4-02/gsv-v5-resume-08/RUNTIME-DATA-AUDIT.md。

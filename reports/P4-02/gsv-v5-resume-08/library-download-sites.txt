@@ -1,0 +1,591 @@
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\robust_downloader\downloader.py:272:        with urllib.request.urlopen(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\pytorch_lightning\__setup__.py:71:        "download_url": "https://github.com/Lightning-AI/lightning",
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\_internal\__init__.py:2:    from .fb import download_url_to_file, load_state_dict_from_url
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\_internal\__init__.py:4:    from torch.hub import download_url_to_file, load_state_dict_from_url
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\_internal\__init__.py:8:    "load_state_dict_from_url",
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\_internal\__init__.py:9:    "download_url_to_file",
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\pytorch_lightning\demos\transformer.py:150:            f.write(requests.get(url).text)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\pytorch_lightning\demos\mnist_datamodule.py:100:            urllib.request.urlretrieve(url, fpath)  # noqa: S310
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\__init__.py:86:    "_snapshot_download": [
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\__init__.py:87:        "snapshot_download",
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\__init__.py:144:        "hf_hub_download",
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\__init__.py:891:    "hf_hub_download",
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\__init__.py:961:    "snapshot_download",
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\__init__.py:1114:    from ._snapshot_download import snapshot_download  # noqa: F401
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\__init__.py:1168:        hf_hub_download,  # noqa: F401
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\_snapshot_download.py:17:from .file_download import REGEX_COMMIT_HASH, hf_hub_download, repo_folder_name
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\_snapshot_download.py:29:def snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\_snapshot_download.py:162:        # try/except logic to handle different errors => taken from `hf_hub_download`
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\_snapshot_download.py:225:                    f"Returning existing local_dir `{local_dir}` as remote repo cannot be accessed in `snapshot_download` ({api_call_error})."
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\_snapshot_download.py:302:    # we pass the commit_hash to hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\_snapshot_download.py:305:    def _inner_hf_hub_download(repo_file: str):
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\_snapshot_download.py:306:        return hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\_snapshot_download.py:330:            _inner_hf_hub_download(file)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\_snapshot_download.py:333:            _inner_hf_hub_download,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\utils\download.py:8:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\utils\download.py:21:    download_url_to_file(url, path, progress=progress)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\__init__.py:191:from nltk.downloader import download, download_shell
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\__init__.py:198:        from nltk.downloader import download_gui
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\video_utils.py:688:        file_obj = BytesIO(requests.get(video).content)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\video_processing_utils.py:44:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\video_processing_utils.py:670:            resolved_video_processor_file = download_url(pretrained_model_name_or_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_wav2vec2\utils.py:6:from torchaudio._internal import load_state_dict_from_url
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_wav2vec2\utils.py:83:    state_dict = load_state_dict_from_url(url, **dl_kwargs)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_wav2vec2\impl.py:65:        :func:`torch.hub.load_state_dict_from_url`
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_wav2vec2\impl.py:68:            dl_kwargs (dictionary of keyword arguments): Passed to :func:`torch.hub.load_state_dict_from_url`.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_wav2vec2\impl.py:1593:        :func:`torch.hub.load_state_dict_from_url`
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_wav2vec2\impl.py:1598:            dl_kwargs (dictionary of keyword arguments): Passed to :func:`torch.hub.load_state_dict_from_url`.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\utils\_auth.py:64:    # (typically when using `snapshot_download`)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\utils.py:5:from torchaudio._internal import download_url_to_file, module_utils as _mod_utils
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\utils.py:177:            download_url_to_file(url, path, **dl_kwargs)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\interface.py:166:        :func:`torch.hub.download_url_to_file` is used to downloaded it.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\interface.py:170:                Passed to :func:`torch.hub.download_url_to_file`.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\interface.py:231:        :func:`torch.hub.load_state_dict_from_url` is used to downloaded it.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\interface.py:235:                Passed to :func:`torch.hub.load_state_dict_from_url`.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\interface.py:250:                Passed to :func:`torch.hub.load_state_dict_from_url`.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\pytorch_lightning\serve\servable_module_validator.py:107:                resp = requests.get(f"http://{self.host}:{self.port}/ping")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\impl.py:7:from torchaudio._internal import load_state_dict_from_url
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\impl.py:152:        state_dict = load_state_dict_from_url(url, **dl_kwargs)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\pipelines\_tts\impl.py:171:        state_dict = load_state_dict_from_url(url, **dl_kwargs)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\cmuarctic.py:8:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\cmuarctic.py:120:                    download_url_to_file(url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\cmudict.py:7:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\cmudict.py:148:            download_url_to_file(url, dict_file, checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\cmudict.py:156:            download_url_to_file(url_symbols, symbol_file, checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\__init__.py:103:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\repocard.py:9:from huggingface_hub.file_download import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\repocard.py:176:                hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\dr_vctk.py:7:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\dr_vctk.py:54:                download_url_to_file(url, archive, hash_prefix=_CHECKSUM)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\keras_mixin.py:10:from huggingface_hub import ModelHubMixin, snapshot_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\keras_mixin.py:474:                snapshot_download instead of hf_hub_download.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\keras_mixin.py:481:            storage_folder = snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\gtzan.py:8:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\gtzan.py:1054:                    download_url_to_file(url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\data.py:58:from nltk.pathsec import urlopen as _secure_urlopen
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\data.py:1080:    (``nltk.downloader``) against tiny archives that exhaust RAM or disk.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\data.py:1570:            f">>> nltk.download('{resource_zipname}')\n"
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\data.py:1577:            f">>> nltk.download('{resource_zipname}')\n"
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\data.py:1602:                "\n    python -m nltk.downloader --extract -d %r %s"
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\data.py:1606:            + "\n  or nltk.download(%r, extract=True)\n" % resource_zipname
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\data.py:2021:    otherwise, delegate to ``urllib2.urlopen``.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\data.py:2050:        return _secure_urlopen(resource_url)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librispeech_biasing.py:7:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librispeech_biasing.py:39:    download_url = os.path.join(base_url, filename)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librispeech_biasing.py:41:        checksum = _CHECKSUMS.get(download_url, None)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librispeech_biasing.py:42:        download_url_to_file(download_url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librilight_limited.py:8:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librilight_limited.py:80:                download_url_to_file(_URL, archive, hash_prefix=_CHECKSUM)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\hub.py:41:    hf_hub_download,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\hub.py:44:    snapshot_download,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\hub.py:185:        snapshot_dir = snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\hub.py:203:        instance_data = requests.get(os.environ["ECS_CONTAINER_METADATA_URI"]).json()
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\hub.py:479:            hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\hub.py:494:            snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\hub.py:539:        # not entering this Except block, as it may also happen when `snapshot_download` does not raise
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\hub.py:558:        # snapshot_download will not raise EntryNotFoundError, but hf_hub_download can. If this is the case, it will be treated
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\hub.py:596:def download_url(url, proxies=None):
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librispeech.py:7:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librispeech.py:39:    download_url = os.path.join(base_url, filename)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librispeech.py:41:        checksum = _CHECKSUMS.get(download_url, None)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\librispeech.py:42:        download_url_to_file(download_url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\ljspeech.py:9:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\ljspeech.py:61:                    download_url_to_file(url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchmetrics\functional\text\sacre_bleu.py:452:            with open(file_path, "wb") as out_file, urllib.request.urlopen(model_url) as remote_file:
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\libritts.py:8:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\libritts.py:123:                    download_url_to_file(url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchmetrics\functional\text\rouge.py:54:            nltk.download("punkt_tab", quiet=True, force=False, halt_on_error=False, raise_on_error=True)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\quesst14.py:8:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\quesst14.py:64:                download_url_to_file(URL, archive, hash_prefix=_CHECKSUM)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\musdb_hq.py:8:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\musdb_hq.py:75:                download_url_to_file(_URL, archive, hash_prefix=_CHECKSUM)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\speechcommands.py:7:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\speechcommands.py:109:                    download_url_to_file(url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\corpus\__init__.py:20:Install corpora using nltk.download().
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\tedlium.py:8:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\tedlium.py:108:                    download_url_to_file(url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\vctk.py:7:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\vctk.py:61:                    download_url_to_file(url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchmetrics\functional\text\bert.py:209:    with urllib.request.urlopen(baseline_url) as http_request:
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\voxceleb1.py:7:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\voxceleb1.py:50:                    download_url_to_file(url, file_path, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\voxceleb1.py:56:            download_url_to_file(url, archive_path, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\voxceleb1.py:161:            download_url_to_file(meta_url, meta_list_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\voxceleb1.py:249:            download_url_to_file(meta_url, meta_list_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\yesno.py:8:from torchaudio._internal import download_url_to_file
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchaudio\datasets\yesno.py:54:                    download_url_to_file(url, archive, hash_prefix=checksum)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\doc.py:702:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\doc.py:721:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\utils\attention_visualizer.py:183:            img = Image.open(requests.get(img, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\corpus\reader\childes.py:655:        # from nltk.pathsec import urlopen, ZipFile
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\corpus\reader\childes.py:656:        # corpus_root_http = urlopen('https://childes.talkbank.org/data-xml/Eng-USA/Bates.zip')
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\corpus\reader\crubadan.py:72:                "Please install the 'crubadan' corpus first, use nltk.download()"
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\tokenization_utils_base.py:49:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\tokenization_utils_base.py:2073:                    resolved_vocab_files[file_id] = download_url(file_path, proxies=proxies)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\downloader.py:63:    python nltk/downloader.py [-d DATADIR] [-q] [-f] [-k] PACKAGE_IDS
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\downloader.py:67:    python -m nltk.downloader [-d DATADIR] [-q] [-f] [-k] PACKAGE_IDS
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\downloader.py:187:from nltk.pathsec import urlopen, validate_path
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\downloader.py:1341:                    infile = urlopen(info.url, timeout=NETWORK_TIMEOUT)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\downloader.py:1813:                urlopen(self._url, timeout=NETWORK_TIMEOUT),
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\huggingface\dataset.py:16:    nltk.download('stopwords', hf=True)            # download to HF cache
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\huggingface\dataset.py:189:    ``nltk.download(..., hf=True)``.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\huggingface\dataset.py:333:            f"Run: nltk.download({corpus_id!r}, hf=True)"
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\pathsec.py:772:                f"filesystem path check: {raw!r}. Use nltk.pathsec.urlopen() "
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\pathsec.py:1882:            msg = f"Security Violation [pathsec.urlopen]: SSRF attempt to restricted IP {ip}"
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\pathsec.py:1912:            f"pathsec.urlopen: no validated address for host {host!r}; "
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\pathsec.py:1987:        f"Security Violation [pathsec.urlopen]: refusing a proxied fetch of "
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\pathsec.py:2016:def urlopen(url, *args, **kwargs):
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\pathsec.py:2018:    Secure wrapper for urllib.request.urlopen with redirect validation.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\pathsec.py:2023:    validate_network_url(url_str, context="pathsec.urlopen")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\pathsec.py:2622:    first (see ``nltk.downloader._canonical_dir``).
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\pathsec.py:3141:    "urlopen",
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\safetensors_conversion.py:50:    with requests.get(f"{sse_url}/{event_id}", stream=True) as sse_connection:
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\corpus\reader\verbnet.py:50:            NLTK ships VerbNet 2.1 via ``nltk.download('verbnet')``.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\inference\_mcp\utils.py:11:from huggingface_hub import snapshot_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\inference\_mcp\utils.py:118:            snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\parse\corenlp.py:417:                response = requests.get(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\parse\corenlp.py:439:                response = requests.get(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\parse\bllip.py:31:    # sudo python -m nltk.downloader bllip_wsj_no_aux
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\parse\bllip.py:297:    # sudo python -m nltk.downloader bllip_wsj_no_aux
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\tokenize\punkt.py:1886:            "reinstall it with nltk.download('punkt_tab')"
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\processing_utils.py:64:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\processing_utils.py:947:            resolved_processor_file = download_url(pretrained_model_name_or_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\nltk\tokenize\__init__.py:116:    (fixed by ``nltk.download('punkt_tab')``). A name that is not one model
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\fastai_utils.py:9:from huggingface_hub import constants, snapshot_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\fastai_utils.py:308:            Revision at which the repo's files are downloaded. See documentation of `snapshot_download`.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\fastai_utils.py:316:    # `snapshot_download` returns the folder where the model was stored.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\fastai_utils.py:319:        storage_folder = snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\errors.py:248:    >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\errors.py:249:    >>> hf_hub_download('bert-base-cased', 'config.json', revision='<non-existent-revision>')
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\errors.py:267:    >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\errors.py:268:    >>> hf_hub_download('bert-base-cased', '<non-existent-file>')
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\errors.py:289:    >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\errors.py:290:    >>> hf_hub_download('bert-base-cased', '<non-cached-file>',  local_files_only=True)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hub_mixin.py:12:from .file_download import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hub_mixin.py:513:                config_file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hub_mixin.py:603:        Use [`hf_hub_download`] or [`snapshot_download`] to download files from the Hub before loading them. Most
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hub_mixin.py:798:                model_file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hub_mixin.py:811:                model_file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hf_file_system.py:852:        > Note: When possible, use `HfApi.hf_hub_download()` for better performance.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hf_api.py:5351:    def hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hf_api.py:5461:        from .file_download import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hf_api.py:5467:        return hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hf_api.py:5491:    def snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hf_api.py:5586:        from ._snapshot_download import snapshot_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hf_api.py:5592:        return snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\hf_api.py:5716:            index_file = self.hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\file_download.py:816:def hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\file_download.py:994:        return _hf_hub_download_to_local_dir(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\file_download.py:1014:        return _hf_hub_download_to_cache_dir(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\file_download.py:1034:def _hf_hub_download_to_cache_dir(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\file_download.py:1055:    Method should not be called directly. Please use `hf_hub_download` instead.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\file_download.py:1193:def _hf_hub_download_to_local_dir(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\file_download.py:1215:    Method should not be called directly. Please use `hf_hub_download` instead.
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\cli\download.py:44:from huggingface_hub._snapshot_download import snapshot_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\cli\download.py:46:from huggingface_hub.file_download import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\cli\download.py:147:        # Single file to download: use `hf_hub_download`
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\cli\download.py:149:            return hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\cli\download.py:161:        # Otherwise: use `snapshot_download` to ensure all files comes from same revision
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\cli\download.py:169:        return snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\commands\download.py:44:from huggingface_hub._snapshot_download import snapshot_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\commands\download.py:46:from huggingface_hub.file_download import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\commands\download.py:168:        # Single file to download: use `hf_hub_download`
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\commands\download.py:170:            return hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\commands\download.py:183:        # Otherwise: use `snapshot_download` to ensure all files comes from same revision
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\huggingface_hub\commands\download.py:191:        return snapshot_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\audio_utils.py:135:        audio = librosa.load(BytesIO(requests.get(audio, timeout=timeout).content), sr=sampling_rate)[0]
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\audio_utils.py:177:            response = requests.get(audio, timeout=timeout)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\configuration_utils.py:33:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\configuration_utils.py:715:            resolved_config_file = download_url(pretrained_model_name_or_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\feature_extraction_utils.py:34:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\feature_extraction_utils.py:503:            resolved_feature_extractor_file = download_url(pretrained_model_name_or_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\image_processing_base.py:32:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\image_processing_base.py:328:            resolved_image_processor_file = download_url(pretrained_model_name_or_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\torchmetrics\functional\audio\dnsmos.py:74:        myfile = requests.get(urlf)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\pipelines\zero_shot_audio_classification.py:114:                audio = requests.get(audio).content
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\pipelines\video_classification.py:145:            video = BytesIO(requests.get(video).content)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\generation\configuration_utils.py:32:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\generation\configuration_utils.py:898:            resolved_config_file = download_url(config_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\image_utils.py:471:            image = PIL.Image.open(BytesIO(requests.get(image, timeout=timeout).content))
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\modeling_flax_utils.py:50:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\modeling_flax_utils.py:760:                resolved_archive_file = download_url(pretrained_model_name_or_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\modeling_utils.py:94:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\modeling_utils.py:1007:            resolved_archive_file = download_url(pretrained_model_name_or_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\pipelines\audio_classification.py:174:                inputs = requests.get(inputs).content
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\modeling_tf_utils.py:60:    download_url,
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\modeling_tf_utils.py:2787:                resolved_archive_file = download_url(pretrained_model_name_or_path)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\align\modeling_align.py:1058:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\aimv2\modular_aimv2.py:511:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\aimv2\modular_aimv2.py:654:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\aimv2\modeling_aimv2.py:467:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\aimv2\modeling_aimv2.py:699:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\pipelines\automatic_speech_recognition.py:363:                inputs = requests.get(inputs).content
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\pipelines\image_to_image.py:54:    >>> img = Image.open(requests.get("http://images.cocodataset.org/val2017/000000039769.jpg", stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\altclip\modeling_altclip.py:943:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\altclip\modeling_altclip.py:1304:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\bit\modeling_bit.py:786:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\autoformer\modeling_autoformer.py:1515:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\autoformer\modeling_autoformer.py:1519:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\autoformer\modeling_autoformer.py:1790:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\autoformer\modeling_autoformer.py:1794:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\autoformer\modeling_autoformer.py:1836:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\autoformer\modeling_autoformer.py:1840:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\clipseg\modeling_clipseg.py:786:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\beit\modeling_flax_beit.py:760:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\beit\modeling_flax_beit.py:847:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\beit\modeling_flax_beit.py:931:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\beit\modeling_beit.py:922:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\beit\modeling_beit.py:1348:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\beit\modeling_beit.py:1473:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip_2\modeling_blip_2.py:1389:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip_2\modeling_blip_2.py:1843:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip_2\modeling_blip_2.py:2106:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_blip.py:650:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_blip.py:690:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_blip.py:743:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_blip.py:852:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_blip.py:917:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_blip.py:1020:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_blip.py:1127:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_blip.py:1251:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_tf_blip.py:977:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_tf_blip.py:1060:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_tf_blip.py:1139:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_tf_blip.py:1219:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_tf_blip.py:1356:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_tf_blip.py:1469:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\blip\modeling_tf_blip.py:1610:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\clip\modeling_clip.py:803:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\clip\modeling_tf_clip.py:1272:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\clip\modeling_tf_clip.py:1375:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\clip\modeling_tf_clip.py:1421:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\clip\modeling_flax_clip.py:956:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\clip\modeling_flax_clip.py:1155:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\clip\modeling_flax_clip.py:1282:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\bridgetower\modeling_bridgetower.py:1262:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\bridgetower\modeling_bridgetower.py:1562:        >>> image = Image.open(requests.get(url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\bridgetower\modeling_bridgetower.py:1663:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\bridgetower\modeling_bridgetower.py:1781:        >>> images = [Image.open(requests.get(url, stream=True).raw) for url in image_urls]
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\chinese_clip\modeling_chinese_clip.py:982:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\detr\modeling_detr.py:1101:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\detr\modeling_detr.py:1287:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\detr\modeling_detr.py:1439:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\chameleon\modeling_chameleon.py:1087:        >>> image = Image.open(requests.get("https://nineplanets.org/wp-content/uploads/2020/12/the-big-dipper-1.jpg", stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\chameleon\modeling_chameleon.py:1088:        >>> image_2 = Image.open(requests.get("https://www.kxan.com/wp-content/uploads/sites/40/2020/10/ORION.jpg", stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\conditional_detr\modeling_conditional_detr.py:1367:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\conditional_detr\modeling_conditional_detr.py:1561:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\conditional_detr\modeling_conditional_detr.py:1736:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\data2vec\modeling_tf_data2vec_vision.py:1620:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\depth_anything\modeling_depth_anything.py:365:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\data2vec\modeling_data2vec_vision.py:1275:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\convnextv2\modeling_convnextv2.py:420:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\depth_pro\modeling_depth_pro.py:666:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\depth_pro\modeling_depth_pro.py:1056:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\edgetam\modeling_edgetam.py:1111:        >>> raw_image = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\convnext\modeling_tf_convnext.py:519:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\convnext\modeling_tf_convnext.py:612:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\convnext\modeling_convnext.py:397:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\d_fine\modeling_d_fine.py:1274:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dab_detr\modeling_dab_detr.py:1245:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dab_detr\modeling_dab_detr.py:1505:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\cvt\modeling_tf_cvt.py:946:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\cvt\modeling_tf_cvt.py:1038:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dpt\modeling_dpt.py:1010:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dpt\modeling_dpt.py:1159:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deprecated\deta\modeling_deta.py:1606:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deprecated\deta\modeling_deta.py:1929:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deprecated\nat\modeling_nat.py:874:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deit\modeling_tf_deit.py:932:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deit\modeling_tf_deit.py:1072:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deit\modeling_deit.py:557:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deit\modeling_deit.py:658:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deprecated\realm\retrieval_realm.py:21:from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deprecated\realm\retrieval_realm.py:115:            block_records_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deformable_detr\modeling_deformable_detr.py:1496:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\deformable_detr\modeling_deformable_detr.py:1780:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dinov2_with_registers\modeling_dinov2_with_registers.py:665:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dinat\modeling_dinat.py:798:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dinov2_with_registers\modular_dinov2_with_registers.py:387:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dinov2\modeling_dinov2.py:642:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dinov2\modeling_flax_dinov2.py:689:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\dinov2\modeling_flax_dinov2.py:780:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\efficientloftr\modeling_efficientloftr.py:701:        >>> image1 = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\efficientloftr\modeling_efficientloftr.py:703:        >>> image2 = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\efficientloftr\modeling_efficientloftr.py:1269:        >>> image1 = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\efficientloftr\modeling_efficientloftr.py:1271:        >>> image2 = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\emu3\modular_emu3.py:1146:        >>> image = Image.open(requests.get("https://www.ilankelman.org/stopsigns/australia.jpg", stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\emu3\modeling_emu3.py:1562:        >>> image = Image.open(requests.get("https://www.ilankelman.org/stopsigns/australia.jpg", stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\focalnet\modeling_focalnet.py:737:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\focalnet\modeling_focalnet.py:896:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\flava\modeling_flava.py:1230:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\flava\modeling_flava.py:1459:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\flava\modeling_flava.py:1492:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\flava\modeling_flava.py:1729:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\git\modeling_git.py:909:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\git\modeling_git.py:1063:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\git\modeling_git.py:1262:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\git\modeling_git.py:1276:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\git\modeling_git.py:1282:        >>> file_path = hf_hub_download(repo_id="nielsr/textvqa-sample", filename="bus.png", repo_type="dataset")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\git\modeling_git.py:1304:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\git\modeling_git.py:1354:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\fuyu\modeling_fuyu.py:321:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\gemma3\modeling_gemma3.py:871:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\florence2\modular_florence2.py:1691:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\florence2\modeling_florence2.py:910:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\glpn\modeling_glpn.py:664:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\glm4v\modeling_glm4v.py:1408:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\got_ocr2\modular_got_ocr2.py:417:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\glm4v_moe\modeling_glm4v_moe.py:1524:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\got_ocr2\modeling_got_ocr2.py:750:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\gemma3n\modular_gemma3n.py:2352:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\gemma3n\modeling_gemma3n.py:2041:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\glm4v\modular_glm4v.py:1370:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\groupvit\modeling_tf_groupvit.py:1948:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\groupvit\modeling_tf_groupvit.py:2052:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\groupvit\modeling_tf_groupvit.py:2100:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\informer\modular_informer.py:776:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\informer\modular_informer.py:780:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\informer\modular_informer.py:936:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\informer\modular_informer.py:940:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\groupvit\modeling_groupvit.py:1158:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\groupvit\modeling_groupvit.py:1315:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\informer\modeling_informer.py:1583:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\informer\modeling_informer.py:1587:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\informer\modeling_informer.py:1885:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\informer\modeling_informer.py:1889:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\imagegpt\modeling_imagegpt.py:609:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\imagegpt\modeling_imagegpt.py:970:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\grounding_dino\modeling_grounding_dino.py:2083:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\grounding_dino\modeling_grounding_dino.py:2500:        >>> image = Image.open(requests.get(image_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\hiera\modeling_hiera.py:1186:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\hiera\modeling_hiera.py:1383:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\kosmos2_5\modeling_kosmos2_5.py:1433:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\kosmos2_5\modeling_kosmos2_5.py:1737:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\instructblip\modeling_instructblip.py:1383:        >>> image = Image.open(requests.get(url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\hgnet_v2\modular_hgnet_v2.py:566:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\hgnet_v2\modeling_hgnet_v2.py:443:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\instructblipvideo\modeling_instructblipvideo.py:1353:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\instructblipvideo\modeling_instructblipvideo.py:1380:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\kosmos2\modeling_kosmos2.py:1589:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\kosmos2\modeling_kosmos2.py:1728:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\instructblipvideo\modular_instructblipvideo.py:418:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\instructblipvideo\modular_instructblipvideo.py:445:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\maskformer\modeling_maskformer.py:1511:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\maskformer\modeling_maskformer.py:1694:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\maskformer\modeling_maskformer.py:1725:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\zoedepth\modeling_zoedepth.py:1279:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llava\modeling_llava.py:401:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mgp_str\modeling_mgp_str.py:409:        >>> image = Image.open(requests.get(url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mask2former\modeling_mask2former.py:2331:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mask2former\modeling_mask2former.py:2364:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mask2former\modeling_mask2former.py:2398:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modeling_metaclip_2.py:823:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modeling_metaclip_2.py:934:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modeling_metaclip_2.py:977:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modeling_metaclip_2.py:1120:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modeling_metaclip_2.py:1163:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modeling_metaclip_2.py:1227:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modeling_metaclip_2.py:1273:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llama4\modeling_llama4.py:1062:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llama4\modeling_llama4.py:1260:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modular_metaclip_2.py:508:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modular_metaclip_2.py:568:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modular_metaclip_2.py:644:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modular_metaclip_2.py:686:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modular_metaclip_2.py:714:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modular_metaclip_2.py:758:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\metaclip_2\modular_metaclip_2.py:785:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mistral3\modular_mistral3.py:281:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mobilevitv2\modeling_mobilevitv2.py:887:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mistral3\modeling_mistral3.py:454:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mm_grounding_dino\modeling_mm_grounding_dino.py:1978:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mm_grounding_dino\modeling_mm_grounding_dino.py:2470:        >>> image = Image.open(requests.get(image_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mlcd\modular_mlcd.py:500:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mllama\modeling_mllama.py:1032:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mllama\modeling_mllama.py:1642:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mlcd\modeling_mlcd.py:586:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mobilevit\modeling_mobilevit.py:938:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mobilevit\modeling_tf_mobilevit.py:1307:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llava_onevision\modular_llava_onevision.py:634:        >>> raw_image = Image.open(requests.get(image_file, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\mobilenet_v2\modeling_mobilenet_v2.py:725:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llava_onevision\modeling_llava_onevision.py:788:        >>> raw_image = Image.open(requests.get(image_file, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\yolos\modeling_yolos.py:643:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llava_next_video\modeling_llava_next_video.py:800:        >>> video_path = hf_hub_download(repo_id="raushan-testing-hf/videos-test", filename="sample_demo_1.mp4", repo_type="dataset")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llava_next_video\modeling_llava_next_video.py:812:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\pvt_v2\modeling_pvt_v2.py:568:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\x_clip\modeling_x_clip.py:939:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\x_clip\modeling_x_clip.py:984:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\x_clip\modeling_x_clip.py:1254:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\x_clip\modeling_x_clip.py:1299:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\x_clip\modeling_x_clip.py:1355:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\x_clip\modeling_x_clip.py:1400:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llava_next_video\modular_llava_next_video.py:598:        >>> video_path = hf_hub_download(repo_id="raushan-testing-hf/videos-test", filename="sample_demo_1.mp4", repo_type="dataset")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llava_next_video\modular_llava_next_video.py:610:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\llava_next\modeling_llava_next.py:643:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\paligemma\modeling_paligemma.py:308:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\paligemma\modeling_paligemma.py:469:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\perceiver\modeling_perceiver.py:742:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\perceiver\modeling_perceiver.py:1180:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\perceiver\modeling_perceiver.py:1304:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\perceiver\modeling_perceiver.py:1427:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlvit\modeling_owlvit.py:894:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlvit\modeling_owlvit.py:1047:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlvit\modeling_owlvit.py:1450:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlvit\modeling_owlvit.py:1452:        >>> query_image = Image.open(requests.get(query_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlvit\modeling_owlvit.py:1561:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\perception_lm\modeling_perception_lm.py:377:        from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\perception_lm\modeling_perception_lm.py:382:        test_image_file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\patchtst\modeling_patchtst.py:1120:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\patchtst\modeling_patchtst.py:1124:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\patchtst\modeling_patchtst.py:1254:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\patchtst\modeling_patchtst.py:1258:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\patchtst\modeling_patchtst.py:1623:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\patchtst\modeling_patchtst.py:1627:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\oneformer\modeling_oneformer.py:2893:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\oneformer\modeling_oneformer.py:3093:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlv2\modeling_owlv2.py:912:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlv2\modeling_owlv2.py:1066:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlv2\modeling_owlv2.py:1497:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlv2\modeling_owlv2.py:1499:        >>> query_image = Image.open(requests.get(query_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\owlv2\modeling_owlv2.py:1622:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\oneformer\image_processing_oneformer.py:23:from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\oneformer\image_processing_oneformer.py:365:            fname = hf_hub_download(repo_id, class_info_file, repo_type="dataset")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\oneformer\image_processing_oneformer.py:367:            fname = hf_hub_download(repo_id, class_info_file)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\perception_lm\modular_perception_lm.py:346:        from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\perception_lm\modular_perception_lm.py:351:        test_image_file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\prompt_depth_anything\modular_prompt_depth_anything.py:257:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\prompt_depth_anything\modular_prompt_depth_anything.py:263:        >>> prompt_depth = Image.open(requests.get(prompt_depth_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\prompt_depth_anything\modeling_prompt_depth_anything.py:414:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\prompt_depth_anything\modeling_prompt_depth_anything.py:420:        >>> prompt_depth = Image.open(requests.get(prompt_depth_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\pix2struct\image_processing_pix2struct.py:22:from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\pix2struct\image_processing_pix2struct.py:129:        font = hf_hub_download(DEFAULT_FONT_PATH, "Arial.TTF")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\pix2struct\modeling_pix2struct.py:532:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\pix2struct\modeling_pix2struct.py:1497:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\pix2struct\modeling_pix2struct.py:1528:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\sam_hq\modular_sam_hq.py:563:        >>> raw_image = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\sam_hq\modeling_sam_hq.py:1411:        >>> raw_image = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\regnet\modeling_flax_regnet.py:705:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\regnet\modeling_flax_regnet.py:799:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\omdet_turbo\modeling_omdet_turbo.py:1544:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\ovis2\modular_ovis2.py:384:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\ovis2\modeling_ovis2.py:748:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\rt_detr\modeling_rt_detr.py:1618:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\rt_detr\modeling_rt_detr.py:1888:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen3_omni_moe\modeling_qwen3_omni_moe.py:2030:        >>> from urllib.request import urlopen
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen3_omni_moe\modeling_qwen3_omni_moe.py:2047:        >>> audios = [ librosa.load(BytesIO(urlopen( conversations[1]['content'][1]['audio_url'] ).read()), sr=self.processor.feature_extractor.sampling_rate) ]
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_audio\modeling_qwen2_audio.py:576:                audio1, _ = librosa.load(BytesIO(urlopen(url1).read()), sr=processor.feature_extractor.sampling_rate)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_audio\modeling_qwen2_audio.py:578:                audio2, _ = librosa.load(BytesIO(urlopen(url2).read()), sr=processor.feature_extractor.sampling_rate)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_audio\modeling_qwen2_audio.py:746:        >>> from urllib.request import urlopen
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_audio\modeling_qwen2_audio.py:755:        >>> audio, _ = librosa.load(BytesIO(urlopen(url).read()), sr=self.processor.feature_extractor.sampling_rate)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_vl\modular_qwen2_5_vl.py:716:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_vl\modeling_qwen2_5_vl.py:1460:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\resnet\modeling_flax_resnet.py:595:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\resnet\modeling_flax_resnet.py:683:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\sam2\modular_sam2.py:1363:        >>> raw_image = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\sam2\modeling_sam2.py:1470:        >>> raw_image = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_vl\modeling_qwen2_vl.py:1340:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\resnet\modeling_resnet.py:392:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\sam\modeling_sam.py:1280:        >>> raw_image = Image.open(requests.get(img_url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\superglue\modeling_superglue.py:743:        >>> image1 = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\superglue\modeling_superglue.py:745:        >>> image2 = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\rt_detr_v2\modeling_rt_detr_v2.py:1514:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\rt_detr_v2\modeling_rt_detr_v2.py:1877:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_omni\modular_qwen2_5_omni.py:2307:        >>> from urllib.request import urlopen
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_omni\modular_qwen2_5_omni.py:2324:        >>> audios = [ librosa.load(BytesIO(urlopen( conversations[1]['content'][1]['audio_url'] ).read()), sr=self.processor.feature_extractor.sampling_rate) ]
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_omni\modular_qwen2_5_omni.py:2611:        >>> from urllib.request import urlopen
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_omni\modular_qwen2_5_omni.py:2620:        >>> audio, _ = librosa.load(BytesIO(urlopen(url).read()), sr=self.processor.feature_extractor.sampling_rate)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_omni\modeling_qwen2_5_omni.py:1860:        >>> from urllib.request import urlopen
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_omni\modeling_qwen2_5_omni.py:1877:        >>> audios = [ librosa.load(BytesIO(urlopen( conversations[1]['content'][1]['audio_url'] ).read()), sr=self.processor.feature_extractor.sampling_rate) ]
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_omni\modeling_qwen2_5_omni.py:2313:        >>> from urllib.request import urlopen
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\qwen2_5_omni\modeling_qwen2_5_omni.py:2322:        >>> audio, _ = librosa.load(BytesIO(urlopen(url).read()), sr=self.processor.feature_extractor.sampling_rate)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\time_series_transformer\modeling_time_series_transformer.py:1359:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\time_series_transformer\modeling_time_series_transformer.py:1363:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\time_series_transformer\modeling_time_series_transformer.py:1629:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\time_series_transformer\modeling_time_series_transformer.py:1633:        >>> file = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\seggpt\modeling_seggpt.py:710:        >>> image_input = Image.open(requests.get(image_input_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\seggpt\modeling_seggpt.py:711:        >>> image_prompt = Image.open(requests.get(image_prompt_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\seggpt\modeling_seggpt.py:712:        >>> mask_prompt = Image.open(requests.get(mask_prompt_url, stream=True).raw).convert("L")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\seggpt\modeling_seggpt.py:906:        >>> image_input = Image.open(requests.get(image_input_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\seggpt\modeling_seggpt.py:907:        >>> image_prompt = Image.open(requests.get(image_prompt_url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\seggpt\modeling_seggpt.py:908:        >>> mask_prompt = Image.open(requests.get(mask_prompt_url, stream=True).raw).convert("L")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\timesformer\modeling_timesformer.py:517:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\timesformer\modeling_timesformer.py:562:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\timesformer\modeling_timesformer.py:653:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\timesformer\modeling_timesformer.py:698:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\segformer\modeling_segformer.py:695:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\segformer\modeling_tf_segformer.py:973:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\siglip\modeling_siglip.py:780:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\siglip\modeling_siglip.py:937:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\siglip\modeling_siglip.py:1051:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\siglip2\modeling_siglip2.py:836:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\siglip2\modeling_siglip2.py:1006:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\siglip2\modeling_siglip2.py:1136:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\siglip2\modular_siglip2.py:342:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\siglip2\modular_siglip2.py:440:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\siglip2\modular_siglip2.py:543:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\swin2sr\modeling_swin2sr.py:1042:         >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\swinv2\modeling_swinv2.py:1102:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\swinv2\modeling_swinv2.py:1282:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\swin\modeling_swin.py:1028:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\swin\modeling_swin.py:1214:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\swin\modeling_tf_swin.py:1471:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\upernet\modeling_upernet.py:322:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\upernet\modeling_upernet.py:327:        >>> filepath = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\superpoint\modeling_superpoint.py:403:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\textnet\modeling_textnet.py:316:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\textnet\modeling_textnet.py:378:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vit\modeling_vit.py:561:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\table_transformer\modeling_table_transformer.py:1062:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\table_transformer\modeling_table_transformer.py:1065:        >>> file_path = hf_hub_download(repo_id="nielsr/example-pdf", repo_type="dataset", filename="example_pdf.png")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\table_transformer\modeling_table_transformer.py:1225:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\table_transformer\modeling_table_transformer.py:1230:        >>> file_path = hf_hub_download(repo_id="nielsr/example-pdf", repo_type="dataset", filename="example_pdf.png")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vit\modeling_flax_vit.py:572:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vit\modeling_flax_vit.py:656:    >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vilt\modeling_vilt.py:630:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vilt\modeling_vilt.py:792:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vilt\modeling_vilt.py:968:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vilt\modeling_vilt.py:1072:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vilt\modeling_vilt.py:1176:        >>> image1 = Image.open(requests.get("https://lil.nlp.cornell.edu/nlvr/exs/ex0_0.jpg", stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vilt\modeling_vilt.py:1177:        >>> image2 = Image.open(requests.get("https://lil.nlp.cornell.edu/nlvr/exs/ex0_1.jpg", stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\trocr\modeling_trocr.py:799:        >>> image = Image.open(requests.get(url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\timm_wrapper\modeling_timm_wrapper.py:190:        >>> from urllib.request import urlopen
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\timm_wrapper\modeling_timm_wrapper.py:194:        >>> image = Image.open(urlopen(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\timm_wrapper\modeling_timm_wrapper.py:319:        >>> from urllib.request import urlopen
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\timm_wrapper\modeling_timm_wrapper.py:323:        >>> image = Image.open(urlopen(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\udop\modeling_udop.py:1964:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\videomae\modeling_videomae.py:478:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\videomae\modeling_videomae.py:523:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\videomae\modeling_videomae.py:814:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\videomae\modeling_videomae.py:859:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\video_llava\modeling_video_llava.py:517:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\video_llava\modeling_video_llava.py:545:        >>> video_path = hf_hub_download(repo_id="raushan-testing-hf/videos-test", filename="sample_demo_1.mp4", repo_type="dataset")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\video_llava\modeling_video_llava.py:562:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\wav2vec2_with_lm\processing_wav2vec2_with_lm.py:161:            # snapshot_download has no `trust_remote_code` flag
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_text_dual_encoder\modeling_vision_text_dual_encoder.py:213:        >>> images = [Image.open(requests.get(url, stream=True).raw) for url in urls]
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_text_dual_encoder\modeling_tf_vision_text_dual_encoder.py:326:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_text_dual_encoder\modeling_tf_vision_text_dual_encoder.py:387:        >>> images = [Image.open(requests.get(url, stream=True).raw) for url in urls]
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vit_mae\modeling_vit_mae.py:623:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vit_mae\modeling_vit_mae.py:931:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vivit\modeling_vivit.py:470:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vivit\modeling_vivit.py:515:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vivit\modeling_vivit.py:602:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vivit\modeling_vivit.py:647:        >>> file_path = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_encoder_decoder\modeling_tf_vision_encoder_decoder.py:491:        >>> img = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_encoder_decoder\modeling_flax_vision_encoder_decoder.py:417:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_encoder_decoder\modeling_flax_vision_encoder_decoder.py:496:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_encoder_decoder\modeling_flax_vision_encoder_decoder.py:624:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vitpose\modeling_vitpose.py:242:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_text_dual_encoder\modeling_flax_vision_text_dual_encoder.py:570:    >>> images = [Image.open(requests.get(url, stream=True).raw) for url in urls]
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vit_mae\modeling_tf_vit_mae.py:964:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vit_mae\modeling_tf_vit_mae.py:1315:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_encoder_decoder\modeling_vision_encoder_decoder.py:176:        >>> img = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vision_encoder_decoder\modeling_vision_encoder_decoder.py:493:        >>> image = Image.open(requests.get(url, stream=True).raw).convert("RGB")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\voxtral\processing_voxtral.py:125:        from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\voxtral\processing_voxtral.py:129:        audio_path = hf_hub_download(repo_id="hf-internal-testing/dummy-audio-samples", filename="bcn_weather.mp3", repo_type="dataset")
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vipllava\modeling_vipllava.py:378:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vipllava\modular_vipllava.py:224:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vitmatte\modeling_vitmatte.py:245:        >>> from huggingface_hub import hf_hub_download
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vitmatte\modeling_vitmatte.py:250:        >>> filepath = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vitmatte\modeling_vitmatte.py:254:        >>> filepath = hf_hub_download(
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vit_msn\modeling_vit_msn.py:465:        >>> image = Image.open(requests.get(url, stream=True).raw)
+D:\Dev\cache\p4-02\gsv-v5-venv\Lib\site-packages\transformers\models\vit_msn\modeling_vit_msn.py:533:        >>> image = Image.open(requests.get(url, stream=True).raw)
