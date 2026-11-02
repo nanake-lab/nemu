@@ -62,11 +62,18 @@ export class Bridge {
     this.ready = true;
   }
 
-  private async checkInventory(threadId?: string, timeoutMs = this.rpcTimeoutMs): Promise<void> {
+  private async checkInventory(threadId?: string, timeoutMs = this.rpcTimeoutMs, turnId?: string): Promise<void> {
     const result = await this.rpc.request('mcpServerStatus/list', {
       ...(threadId === undefined ? {} : { threadId }), limit: 100,
-    }, inventoryResult, timeoutMs);
-    if (result.data.length !== 0 || result.nextCursor !== null) throw new Error('mcp_inventory_not_empty');
+    }, z.unknown(), timeoutMs);
+    const parsed = inventoryResult.safeParse(result);
+    if (!parsed.success || parsed.data.data.length !== 0 || parsed.data.nextCursor !== null) {
+      // One decoded response, bounded by RpcClient.maxFrameBytes; caller owns retention.
+      throw new Error('mcp_inventory_not_empty', { cause: {
+        method: 'mcpServerStatus/list', threadId: threadId ?? null, turnId: turnId ?? null,
+        evidence: structuredClone(result),
+      } });
+    }
   }
 
   usage(): readonly UsageRecord[] { return structuredClone(this.ledger); }
@@ -126,17 +133,24 @@ export class Bridge {
       if (Buffer.byteLength(text) > input.maxOutputBytes) throw new Error('output_limit');
     };
     const listen = (event: Message): void => {
+      if (notificationFailure !== null) return;
       try {
         if (event.id !== undefined || event.method === 'bridge/disconnected') throw new Error('unsafe_or_disconnected_server');
         if (event.method === 'rawResponseItem/completed') {
           const raw = object.parse(event.params?.item);
-          if (typeof raw.type !== 'string' || raw.type.endsWith('_call') || raw.type === 'mcp_list_tools') throw new Error('tool_surface_violation');
+          if (typeof raw.type !== 'string') throw new Error('invalid_raw_item');
+          if (raw.type.endsWith('_call') || raw.type === 'mcp_list_tools') throw new Error('tool_surface_violation');
         }
         if (event.method === 'model/rerouted') throw new Error('model_rerouted');
         if (event.method === 'item/started' || event.method === 'item/completed') {
           const parsed = item.parse(event.params);
           checkIdentity(parsed.threadId, parsed.turnId);
-          if (!['agentMessage', 'reasoning'].includes(String(parsed.item.type))) throw new Error('tool_surface_violation');
+          const type = z.string().parse(parsed.item.type);
+          // Tool surfaces in locked 0.162.1 ThreadItem; ordinary lifecycle items are not tools.
+          if (type.endsWith('ToolCall') || ['functionCallOutput', 'commandExecution', 'fileChange',
+            'subAgentActivity', 'webSearch', 'imageView', 'sleep', 'imageGeneration'].includes(type)) {
+            throw new Error('tool_surface_violation');
+          }
           if (event.method === 'item/completed' && parsed.item.type === 'agentMessage' &&
             (parsed.item.phase === 'final_answer' || parsed.item.phase === null || parsed.item.phase === undefined)) {
             if (typeof parsed.item.text !== 'string') throw new Error('invalid_final_message');
@@ -160,7 +174,12 @@ export class Bridge {
           completed();
         }
       } catch (error) {
-        notificationFailure = error instanceof Error ? error : new Error('invalid_notification');
+        // Retain only the first offending decoded frame (already bounded by RPC), never log it.
+        notificationFailure = new Error(error instanceof Error ? error.message : 'invalid_notification', { cause: {
+          threadId: event.params?.threadId ?? threadId,
+          turnId: event.params?.turnId ?? turnId ?? eventTurnId,
+          evidence: structuredClone(event),
+        } });
         rejected(notificationFailure);
       }
     };
@@ -182,7 +201,7 @@ export class Bridge {
       this.active = { threadId, turnId };
       await done;
       if (notificationFailure !== null) throw notificationFailure;
-      await this.checkInventory(threadId, remaining());
+      await this.checkInventory(threadId, remaining(), turnId);
       if (notificationFailure !== null) throw notificationFailure;
       // Include post-turn inventory in the request deadline, but keep inference timing separate.
       remaining();

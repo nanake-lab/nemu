@@ -36,6 +36,14 @@ excludes the post-turn inventory; the overall deadline includes it.
 behavior without inference or quota use; they are not online measurements, a real
 provider recording, or proof that every future provider response is safe.
 
+The zero-tool guard classifies tool surfaces rather than rejecting ordinary item
+lifecycle notifications (including userMessage). The first notification failure
+stops subsequent delta callbacks, including events in the same receive batch.
+Rejected notifications and MCP inventories are available in the thrown Error's
+`cause` as `evidence`, with thread/turn IDs when known. Evidence is one original
+decoded frame or response, bounded by the RPC frame limit; it is not a byte-exact
+transport recording. Callers own retention and must not put it in ordinary logs.
+
 The independently reviewable delivery is limited to this library and the process-local
 IRL candidate library. P5-07 as a whole remains partially delivered. Formal core/worker
 named pipes, backend integration and recorded-provider acceptance are follow-up work

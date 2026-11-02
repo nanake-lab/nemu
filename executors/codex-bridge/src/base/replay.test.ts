@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
+import { readFileSync } from 'node:fs';
 import { Bridge, type RunInput } from './bridge.js';
 import { isolatedEnvironment, checkCatalog } from './isolation.js';
 import { RpcClient, type Transport } from './rpc.js';
@@ -62,6 +63,65 @@ async function setup(replay = new Replay()): Promise<{ replay: Replay; bridge: B
 }
 
 describe('P5-07 synthetic app-server replay', () => {
+  it('R1-P1 accepts user-message lifecycle observed in the real P0-08 success audit', async () => {
+    const audit = JSON.parse(readFileSync(new URL('../../../../reports/P0-08/review-r1/resource-surface-audit-v3.json', import.meta.url), 'utf8')) as {
+      records: { status: string; observedItemTypes: string[]; rawToolCallNames: string[]; mcpServerCountAfter: number }[];
+    };
+    expect(audit.records.every((r) => r.status === 'completed' && r.observedItemTypes.includes('userMessage') &&
+      r.rawToolCallNames.length === 0 && r.mcpServerCountAfter === 0)).toBe(true);
+    const replay = new Replay();
+    // Reconstructed lifecycle, not a claimed recording of raw provider frames.
+    replay.frames.unshift(...['item/started', 'item/completed'].map((method) => ({ method,
+      params: { threadId: 'th1', turnId: 'tu1', item: { type: 'userMessage', id: 'u1', clientId: null,
+        content: [{ type: 'text', text: 'Synthetic input', text_elements: [] }] } },
+    })));
+    const { bridge } = await setup(replay);
+    expect((await bridge.run(input)).text).toBe('{"ok":true}');
+    expect(replay.closed).toBe(false); await bridge.close();
+  });
+  it.each(['plan', 'hookPrompt', 'contextCompaction', 'enteredReviewMode', 'exitedReviewMode'])('R1-P1 does not classify non-tool %s as a tool', async (type) => {
+    const replay = new Replay();
+    replay.frames.unshift({ method: 'item/started', params: { threadId: 'th1', turnId: 'tu1', item: { type, id: 'n1' } } });
+    const { bridge } = await setup(replay); await expect(bridge.run(input)).resolves.toMatchObject({ toolCalls: 0 }); await bridge.close();
+  });
+  it('R1-P2 latches the first failure before later notifications in the same batch', async () => {
+    const replay = new Replay();
+    replay.frames.unshift({ method: 'rawResponseItem/completed', params: { item: { type: 'function_call', name: 'blocked' } } });
+    replay.frames.push({ method: 'model/rerouted', params: {} });
+    const { bridge } = await setup(replay); const deltas: string[] = [];
+    await expect(bridge.run({ ...input, onDelta: (text) => deltas.push(text) })).rejects.toThrow('tool_surface_violation');
+    expect(deltas).toEqual([]); expect(replay.closed).toBe(true);
+    expect(replay.sent.filter((r) => r.method === 'turn/start')).toHaveLength(1);
+  });
+  it.each(['functionCallOutput', 'commandExecution', 'fileChange', 'mcpToolCall', 'dynamicToolCall',
+    'collabAgentToolCall', 'subAgentActivity', 'webSearch', 'imageView', 'sleep', 'imageGeneration'])('R1-P1 still rejects tool surface %s', async (type) => {
+    const replay = new Replay();
+    replay.frames.unshift({ method: 'item/completed', params: { threadId: 'th1', turnId: 'tu1', item: { type } } });
+    const { bridge } = await setup(replay);
+    await expect(bridge.run(input)).rejects.toThrow('tool_surface_violation');
+  });
+  it('R1-P1 still validates identity on a userMessage', async () => {
+    const replay = new Replay();
+    replay.frames.unshift({ method: 'item/started', params: { threadId: 'other', turnId: 'tu1', item: { type: 'userMessage' } } });
+    const { bridge } = await setup(replay);
+    await expect(bridge.run(input)).rejects.toThrow('turn_identity_mismatch');
+  });
+  it('R1-P3 returns the original offending frame and association without logging it', async () => {
+    const replay = new Replay();
+    const frame = { method: 'rawResponseItem/completed', params: { threadId: 'th1', turnId: 'tu1',
+      item: { type: 'function_call', name: 'blocked', call_id: 'call1', arguments: '{"synthetic":true}' } } };
+    replay.frames.unshift(frame);
+    const { bridge } = await setup(replay);
+    await expect(bridge.run(input)).rejects.toMatchObject({ cause: { threadId: 'th1', turnId: 'tu1', evidence: frame } });
+    expect(JSON.stringify(bridge.usage())).not.toContain('synthetic');
+  });
+  it.each([{ data: [{ name: 'unexpected', tools: ['synthetic_tool'] }], nextCursor: null, marker: 'retain' }, {}])('R1-P3 retains rejected inventory including unparsed fields: %j', async (inventory) => {
+    const replay = new Replay(); replay.afterInventory = inventory;
+    const { bridge } = await setup(replay);
+    await expect(bridge.run(input)).rejects.toMatchObject({ cause: {
+      method: 'mcpServerStatus/list', threadId: 'th1', turnId: 'tu1', evidence: inventory,
+    } });
+  });
   it('initializes, isolates a thread and handles completion preceding the start response', async () => {
     const { replay, bridge } = await setup();
     const deltas: string[] = [];
