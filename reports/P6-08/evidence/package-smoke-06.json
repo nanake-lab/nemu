@@ -1,0 +1,201 @@
+{
+  "scope": "ASAR smoke distribution; full shell before/current with supervisor auto-start disabled, renderer windows suppressed, settings writes intercepted; synthetic sensing only",
+  "baseline": "0b5412e:apps/desktop/src/main/index.ts",
+  "dependencies": [
+    "koffi",
+    "@koromix/koffi-win32-x64",
+    "zod",
+    "sherpa-onnx-node",
+    "sherpa-onnx-win-x64"
+  ],
+  "hashes": {
+    "distribution/resources/app.asar": "b2c88a417f0b7f702e814e8e034a47b19c88e22f7271d34b00d46ed47d830bfd",
+    "app/out/main/index.js": "adba5200818a63aadef983b23f19ba93f0c3ede5d1aea0c45cdccb1d82125673",
+    "app/native-probe.js": "ca982d244d3e04adfdc221029e1350c2a45ae1382142dcb0020b8bdef9dc194c"
+  },
+  "results": [
+    {
+      "mode": "native",
+      "code": 0,
+      "signal": null,
+      "exitedAt": 13837.4226,
+      "marker": {
+        "kind": "native",
+        "isPackaged": true,
+        "runtime": {
+          "versions": {
+            "node": "24.21.0",
+            "acorn": "8.18.0",
+            "ada": "4.0.0",
+            "amaro": "1.1.11",
+            "ares": "1.34.8",
+            "brotli": "1.2.0",
+            "cldr": "48.0",
+            "icu": "78.2",
+            "llhttp": "9.4.3",
+            "merve": "1.2.2",
+            "modules": "149",
+            "napi": "10",
+            "nbytes": "0.1.4",
+            "ncrypto": "0.0.1",
+            "nghttp2": "1.70.0",
+            "nghttp3": "",
+            "ngtcp2": "",
+            "openssl": "0.0.0",
+            "simdjson": "4.6.7",
+            "simdutf": "7.7.0",
+            "sqlite": "3.53.4",
+            "tz": "2026d",
+            "undici": "7.29.1",
+            "unicode": "17.0",
+            "uv": "1.52.1",
+            "uvwasi": "0.0.23",
+            "v8": "15.2.124.28-electron.0",
+            "zlib": "1.3.2.1-motley",
+            "zstd": "1.6.0",
+            "electron": "44.7.0",
+            "chrome": "152.0.7977.130"
+          },
+          "binaries": [
+            {
+              "virtualPath": "D:\\Dev\\cache\\P6-08\\package-smoke-06\\distribution\\resources\\app.asar\\node_modules\\@koromix\\koffi-win32-x64\\win32_x64\\koffi.node",
+              "diskPath": "D:\\Dev\\cache\\P6-08\\package-smoke-06\\distribution\\resources\\app.asar.unpacked\\node_modules\\@koromix\\koffi-win32-x64\\win32_x64\\koffi.node",
+              "exists": true
+            }
+          ],
+          "tick": 428683453
+        },
+        "cleanupMs": 12.918099999999981
+      },
+      "shutdownToExitMs": 33.552200000000084,
+      "survivors": [],
+      "stderr": ""
+    },
+    {
+      "mode": "baseline",
+      "code": 0,
+      "signal": null,
+      "exitedAt": 16609.725,
+      "marker": {
+        "kind": "shutdown",
+        "mode": "baseline",
+        "children": [
+          46888,
+          43156,
+          44228,
+          5812,
+          53568
+        ],
+        "loginItemCalls": 1
+      },
+      "shutdownToExitMs": 76.72059999999692,
+      "survivors": [],
+      "stderr": "[Desktop] Voice utility exited { code: 0 }\n"
+    },
+    {
+      "mode": "current",
+      "code": 0,
+      "signal": null,
+      "exitedAt": 19085.8883,
+      "marker": {
+        "kind": "shutdown",
+        "mode": "current",
+        "children": [
+          26844,
+          62272,
+          20848,
+          45428,
+          55920
+        ],
+        "loginItemCalls": 0
+      },
+      "shutdownToExitMs": 58.65129999999772,
+      "survivors": [],
+      "stderr": "[Desktop] Voice utility exited { code: 0 }\n"
+    },
+    {
+      "mode": "current",
+      "code": 0,
+      "signal": null,
+      "exitedAt": 21570.6099,
+      "marker": {
+        "kind": "shutdown",
+        "mode": "current",
+        "children": [
+          37292,
+          66192,
+          60472,
+          26340,
+          60004
+        ],
+        "loginItemCalls": 0
+      },
+      "shutdownToExitMs": 61.09969999999885,
+      "survivors": [],
+      "stderr": "[Desktop] Voice utility exited { code: 0 }\n"
+    },
+    {
+      "mode": "baseline",
+      "code": 0,
+      "signal": null,
+      "exitedAt": 23994.6547,
+      "marker": {
+        "kind": "shutdown",
+        "mode": "baseline",
+        "children": [
+          62776,
+          47436,
+          58740,
+          11112,
+          64736
+        ],
+        "loginItemCalls": 1
+      },
+      "shutdownToExitMs": 57.68379999999888,
+      "survivors": [],
+      "stderr": "[Desktop] Voice utility exited { code: 0 }\n"
+    },
+    {
+      "mode": "baseline",
+      "code": 0,
+      "signal": null,
+      "exitedAt": 26437.7738,
+      "marker": {
+        "kind": "shutdown",
+        "mode": "baseline",
+        "children": [
+          11052,
+          26404,
+          28912,
+          62832,
+          66372
+        ],
+        "loginItemCalls": 1
+      },
+      "shutdownToExitMs": 92.12419999999838,
+      "survivors": [],
+      "stderr": "[Desktop] Voice utility exited { code: 0 }\n"
+    },
+    {
+      "mode": "current",
+      "code": 0,
+      "signal": null,
+      "exitedAt": 28906.3937,
+      "marker": {
+        "kind": "shutdown",
+        "mode": "current",
+        "children": [
+          1376,
+          55344,
+          46004,
+          10560,
+          65740
+        ],
+        "loginItemCalls": 0
+      },
+      "shutdownToExitMs": 60.59440000000177,
+      "survivors": [],
+      "stderr": "[Desktop] Voice utility exited { code: 0 }\n"
+    }
+  ]
+}

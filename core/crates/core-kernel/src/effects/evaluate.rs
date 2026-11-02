@@ -1,143 +1,58 @@
-//! EvaluateEffects (O 3.2; S 12): evaluation only. It charges nothing and
-//! writes nothing; the receipt is for audit, not a new memory.
+//! EvaluateEffects for v2.0 (v2.0 §6).
 
 use std::collections::BTreeMap;
 
-use core_policy::scope::evaluate;
-use core_policy::{Catalog, Endpoint, FieldId, FieldKind, FieldValue, ScopeMatch};
+use super::types::{EffectiveEffects, EvaluateError, Evaluation, SituationMatch, TendencyDrive};
 
-use super::types::{AuthorizedEffectSet, Owner};
-
-/// Context for one endpoint, holding only whitelisted, typed fields.
-#[derive(Clone, Debug, PartialEq)]
-pub struct TypedContext {
-    endpoint: Endpoint,
-    catalog_version: String,
-    values: BTreeMap<FieldId, FieldValue>,
-}
-
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub enum ContextError {
-    FieldNotAllowed(String),
-    KindMismatch(String),
-    NonFinite(String),
-}
-
-impl TypedContext {
-    /// Builds a context; any field outside the endpoint whitelist is rejected
-    /// rather than silently dropped.
-    pub fn new(
-        endpoint: Endpoint,
-        catalog: &Catalog,
-        values: BTreeMap<FieldId, FieldValue>,
-    ) -> Result<Self, ContextError> {
-        for (field, value) in &values {
-            let spec = catalog
-                .fields
-                .get(field)
-                .filter(|s| s.endpoints.contains(&endpoint))
-                .ok_or_else(|| ContextError::FieldNotAllowed(field.clone()))?;
-            let ok = matches!(
-                (&spec.kind, value),
-                (FieldKind::Enum { .. }, FieldValue::Enum(_))
-                    | (FieldKind::Concept { .. }, FieldValue::Concept(_))
-                    | (FieldKind::Numeric { .. }, FieldValue::Number(_))
-            );
-            if !ok {
-                return Err(ContextError::KindMismatch(field.clone()));
-            }
-            if let FieldValue::Number(v) = value
-                && !v.is_finite()
-            {
-                return Err(ContextError::NonFinite(field.clone()));
-            }
-        }
-        Ok(Self {
-            endpoint,
-            catalog_version: catalog.version.clone(),
-            values,
-        })
-    }
-
-    pub fn endpoint(&self) -> Endpoint {
-        self.endpoint
-    }
-}
-
-/// One hit, recorded for audit.
-#[derive(Clone, Debug, PartialEq)]
-pub struct ReceiptEntry {
-    pub responsibility_id: String,
-    pub causal_revision: String,
-    pub owner: Owner,
-    pub endpoint: Endpoint,
-    /// Actual magnitude applied: factor · L1(parameters).
-    pub magnitude: f64,
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct Evaluation {
-    /// Sparse sum of hit effects, accumulated in the set's canonical order.
-    pub values: BTreeMap<u32, f64>,
-    pub receipt: Vec<ReceiptEntry>,
-}
-
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub enum EvaluateError {
-    /// The endpoint context lacks an input the scope needs (O 3.2).
-    UnsupportedScope {
-        responsibility_id: String,
-        field: String,
-    },
-    /// Set and context were built under different interpreter versions, or
-    /// evaluation produced a non-finite value.
-    DependencyFault(String),
-}
-
-/// Evaluates the authorised effects of `context.endpoint()`.
+/// Combine E_eff with the situation match μ(e) of one event:
+/// f_k(e) = s_k μ_k(e) r_k d_k and D_k(e) = s_k μ_k(e) for every k ∈ R⁺.
+///
+/// The products are taken in the fixed order ((s·μ)·r)·d_i, and Σ_k f_k is
+/// summed in canonical tendency order, so the result is bit-for-bit
+/// reproducible. Pure: it borrows its inputs and writes nothing back (I21).
 pub fn evaluate_effects(
-    set: &AuthorizedEffectSet,
-    context: &TypedContext,
-    catalog: &Catalog,
+    effects: &EffectiveEffects,
+    situation: &SituationMatch,
 ) -> Result<Evaluation, EvaluateError> {
-    if set.catalog_version != context.catalog_version || catalog.version != set.catalog_version {
-        return Err(EvaluateError::DependencyFault(
-            "interpreter version mismatch".into(),
-        ));
-    }
-    let mut values: BTreeMap<u32, f64> = BTreeMap::new();
-    let mut receipt = Vec::new();
-    for effect in set
-        .effects
-        .iter()
-        .filter(|e| e.endpoint == context.endpoint)
-    {
-        let matched = evaluate(&effect.scope.expr, &context.values, catalog)
-            .map_err(|e| EvaluateError::DependencyFault(e.to_string()))?;
-        match matched {
-            ScopeMatch::Miss => {}
-            ScopeMatch::MissingField(field) => {
-                return Err(EvaluateError::UnsupportedScope {
-                    responsibility_id: effect.responsibility_id.clone(),
-                    field,
-                });
-            }
-            ScopeMatch::Hit => {
-                for (index, coefficient) in &effect.parameters.entries {
-                    *values.entry(*index).or_insert(0.0) += effect.factor * coefficient;
-                }
-                receipt.push(ReceiptEntry {
-                    responsibility_id: effect.responsibility_id.clone(),
-                    causal_revision: effect.causal_revision.clone(),
-                    owner: effect.owner,
-                    endpoint: effect.endpoint,
-                    magnitude: effect.factor * effect.parameters.l1(),
-                });
-            }
+    let mut mu_by_id: BTreeMap<&str, f64> = BTreeMap::new();
+    for (id, mu) in &situation.mu {
+        if !(mu.is_finite() && (0.0..=1.0).contains(mu)) {
+            return Err(EvaluateError::MuOutOfRange {
+                tendency_id: id.clone(),
+            });
+        }
+        if mu_by_id.insert(id.as_str(), *mu).is_some() {
+            return Err(EvaluateError::DuplicateMatch {
+                tendency_id: id.clone(),
+            });
         }
     }
-    if values.values().any(|v| !v.is_finite()) {
-        return Err(EvaluateError::DependencyFault("non-finite sum".into()));
+    let mut drives = Vec::with_capacity(effects.effects.len());
+    let mut f_sum = [0.0_f64; 4];
+    for e in &effects.effects {
+        // A listed −0 is the same match as 0; keep the stored bytes canonical.
+        let mu = match mu_by_id.get(e.tendency_id.as_str()) {
+            Some(m) if *m != 0.0 => *m,
+            _ => 0.0,
+        };
+        let drive = e.s * mu;
+        let scale = drive * e.r;
+        let mut f = [0.0_f64; 4];
+        for i in 0..4 {
+            f[i] = plus_zero(scale * e.d[i]);
+            f_sum[i] = plus_zero(f_sum[i] + f[i]);
+        }
+        drives.push(TendencyDrive {
+            tendency_id: e.tendency_id.clone(),
+            mu,
+            f,
+            drive: plus_zero(drive),
+        });
     }
-    Ok(Evaluation { values, receipt })
+    Ok(Evaluation { drives, f_sum })
+}
+
+/// Normalize −0 to +0 (ADR 0019 §8: stored results carry no negative zero).
+fn plus_zero(x: f64) -> f64 {
+    if x == 0.0 { 0.0 } else { x }
 }

@@ -100,61 +100,9 @@
           </div>
         </div>
 
-        <!-- Tab 2: Body Readout -->
+        <!-- Tab 2: Body Readout v2; controls live in a separate module. -->
         <div class="tab-content" id="tab-readout">
-          <div class="panel-section">
-            <h3>身体读出参数 (BodyReadout)</h3>
-
-            <div class="slider-group">
-              <div class="slider-label">
-                <span>姿态 posture (-1 收拢 ~ +1 舒展)</span>
-                <span class="slider-value" id="val-posture">0.0</span>
-              </div>
-              <input type="range" id="slider-posture" min="-1" max="1" step="0.05" value="0.0" />
-            </div>
-
-            <div class="slider-group">
-              <div class="slider-label">
-                <span>待机呼吸节奏 idleTempo (0.5 ~ 1.5)</span>
-                <span class="slider-value" id="val-idleTempo">1.0</span>
-              </div>
-              <input type="range" id="slider-idleTempo" min="0.5" max="1.5" step="0.05" value="1.0" />
-            </div>
-
-            <div class="slider-group">
-              <div class="slider-label">
-                <span>耳朵朝向 earPose (-1 贴脑 ~ +1 竖起)</span>
-                <span class="slider-value" id="val-earPose">0.0</span>
-              </div>
-              <input type="range" id="slider-earPose" min="-1" max="1" step="0.05" value="0.0" />
-            </div>
-
-            <div class="slider-group">
-              <div class="slider-label">
-                <span>尾巴摆幅 tailAmplitude (0 ~ 1)</span>
-                <span class="slider-value" id="val-tailAmp">0.5</span>
-              </div>
-              <input type="range" id="slider-tailAmp" min="0" max="1" step="0.05" value="0.5" />
-            </div>
-
-            <div class="slider-group">
-              <div class="slider-label">
-                <span>视线社交倾向 gazeSociability (0 ~ 1)</span>
-                <span class="slider-value" id="val-gazeSoc">0.5</span>
-              </div>
-              <input type="range" id="slider-gazeSoc" min="0" max="1" step="0.05" value="0.5" />
-            </div>
-
-            <div class="slider-group">
-              <div class="slider-label">
-                <span>表情基线 expressionBaseline (0 ~ 0.4)</span>
-                <span class="slider-value" id="val-exprBase">0.0</span>
-              </div>
-              <input type="range" id="slider-exprBase" min="0" max="0.4" step="0.02" value="0.0" />
-            </div>
-
-            <button class="action-btn secondary" id="btn-reset-readout">重置为中性读出</button>
-          </div>
+          <div class="panel-section" id="body-readout-v2-controls"></div>
         </div>
 
         <!-- Tab 3: Motions -->

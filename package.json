@@ -57,7 +57,13 @@
     "tts:schema": "pnpm --filter @nemu/contracts build && node services/voice-sidecar/export-schema.mjs --check",
     "test:tts": "uv run --project services/voice-sidecar pytest services/voice-sidecar/tests -ra",
     "tts:bench": "node services/voice-sidecar/launch-benchmark.mjs",
-    "test:p205:metrics": "node --test apps/stage/test/jitter/settling-metrics.test.mjs"
+    "test:p205:metrics": "node --test apps/stage/test/jitter/settling-metrics.test.mjs",
+    "test:desktop-sense": "vitest run packages/desktop-sense/src apps/desktop/src/sense",
+    "sense:geometry": "tsx packages/desktop-sense/test/native-acceptance.ts",
+    "sense:cpu:build": "node packages/desktop-sense/test/build-cpu.mjs",
+    "test:p306:visual": "node apps/stage/src/review/visual-regression.mjs",
+    "test:p306:preview": "node apps/stage/src/review/accept-readout.mjs",
+    "record:p306": "node apps/stage/src/review/accept-readout.mjs --videos"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

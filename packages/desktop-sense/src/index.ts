@@ -1,2 +1,6 @@
-/** P0-01 scaffold; domain implementation belongs to the owning task. */
-export {};
+export * from './types.js';
+export * from './geometry.js';
+export * from './semantics.js';
+export * from './engine.js';
+export { createWin32Source } from './win32.js';
+export { createSyntheticSource } from './synthetic.js';

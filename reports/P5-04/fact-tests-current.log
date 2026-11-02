@@ -1,0 +1,23 @@
+   Compiling fact-view v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\fact-view)
+    Finished `release` profile [optimized] target(s) in 9.70s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-04\release\deps\fact_view-5cce19ede946e26b.exe)
+
+running 8 tests
+test tests::cpu_eval::real_cpu_multilingual_restart_recall_and_100_retractions ... ignored, explicit pinned local CPU model required; see fact-view README
+test tests::deterministic_rrf_filters_corrections_and_budgets ... ok
+test tests::edge_cases::panel_time_and_payload_filters_are_compatible_and_invalid_dates_fail ... ok
+test tests::edge_cases::withdrawing_object_reference_also_suppresses_correction_replacements ... ok
+test tests::retraction_zero_in_one_hundred_task_queries_and_audit_preserves_original ... ok
+test tests::structural_allowlist_excludes_all_explanations_even_when_wrapped_as_event_payload ... ok
+test tests::sys05_five_distinct_results_and_real_positive_control ... ok
+test tests::trigram_and_short_unicode_literal_queries_are_not_fts_syntax ... ok
+
+test result: ok. 7 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 23.76s
+
+   Doc-tests fact_view
+
+running 1 test
+test crates\fact-view\src\index.rs - index::FactView (line 12) - compile fail ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+

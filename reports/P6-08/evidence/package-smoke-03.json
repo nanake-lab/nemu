@@ -1,0 +1,25 @@
+{
+  "scope": "ASAR smoke distribution; full shell before/current with supervisor auto-start disabled, renderer windows suppressed, settings writes intercepted; synthetic sensing only",
+  "baseline": "0b5412e:apps/desktop/src/main/index.ts",
+  "dependencies": [
+    "koffi",
+    "zod",
+    "sherpa-onnx-node"
+  ],
+  "hashes": {
+    "distribution/resources/app.asar": "6a7621a1a65ae955973bdd43bd4ab8b47b01784163e8a009e3e08677c445c4b4",
+    "app/out/main/index.js": "04c49989b012095a10854b98970cc3efc92f456b581a8cabcfb918c453d2af91",
+    "app/native-probe.js": "cbd8c0a77aca13d4329767cd3a380910bafc4b609002670953d85d203dfa2186"
+  },
+  "results": [
+    {
+      "mode": "native",
+      "code": 3,
+      "signal": null,
+      "exitedAt": 8271.7064,
+      "shutdownToExitMs": null,
+      "survivors": [],
+      "stderr": "Error: Cannot find the native Koffi module; did you bundle it correctly?\n    at wrapNative (D:\\Dev\\cache\\P6-08\\package-smoke-03\\distribution\\resources\\app.asar\\node_modules\\koffi\\src\\koffi\\index.cjs:241:11)\n    at Object.<anonymous> (D:\\Dev\\cache\\P6-08\\package-smoke-03\\distribution\\resources\\app.asar\\node_modules\\koffi\\src\\koffi\\index.cjs:282:1)\n    at Module._compile (node:internal/modules/cjs/loader:1937:14)\n    at Object..js (node:internal/modules/cjs/loader:2070:10)\n    at Module.load (node:internal/modules/cjs/loader:1658:32)\n    at Module._load (node:internal/modules/cjs/loader:1450:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:268:19)\n    at Module.require (node:internal/modules/cjs/loader:1681:12)\n    at require (node:internal/modules/helpers:157:16)\n    at Object.<anonymous> (D:\\Dev\\cache\\P6-08\\package-smoke-03\\distribution\\resources\\app.asar\\node_modules\\koffi\\index.cjs:1:18)"
+    }
+  ]
+}

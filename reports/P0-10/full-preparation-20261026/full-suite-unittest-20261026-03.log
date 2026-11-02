@@ -1,0 +1,22 @@
+test_enum_and_value_variants_preserve_information (test_compact_codec.CompactTests.test_enum_and_value_variants_preserve_information) ... ok
+test_roundtrip_all_node_kinds_and_external_refs (test_compact_codec.CompactTests.test_roundtrip_all_node_kinds_and_external_refs) ... ok
+test_unknown_fields_and_bad_codes_rejected (test_compact_codec.CompactTests.test_unknown_fields_and_bad_codes_rejected) ... ok
+test_final_empty_content_does_not_drop_stream_or_count_final_kv_as_reuse (test_http_probe.StreamingTests.test_final_empty_content_does_not_drop_stream_or_count_final_kv_as_reuse) ... ERROR
+test_reuse_truncation_and_incomplete_stream_retain_failures (test_http_probe.StreamingTests.test_reuse_truncation_and_incomplete_stream_retain_failures) ... ok
+
+======================================================================
+ERROR: test_final_empty_content_does_not_drop_stream_or_count_final_kv_as_reuse (test_http_probe.StreamingTests.test_final_empty_content_does_not_drop_stream_or_count_final_kv_as_reuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\nemu-wt\P0-10\spikes\carrier-engine\test_http_probe.py", line 35, in test_final_empty_content_does_not_drop_stream_or_count_final_kv_as_reuse
+    self.assertEqual(len((output / "events.jsonl").read_text().splitlines()), 3)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1028, in read_text
+    return f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xa0 in position 58: illegal multibyte sequence
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.156s
+
+FAILED (errors=1)

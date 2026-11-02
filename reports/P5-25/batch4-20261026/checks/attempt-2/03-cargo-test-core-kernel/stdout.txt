@@ -1,0 +1,68 @@
+
+running 36 tests
+test dynamics::tests::batch4::v2_95_geometric_mean_uses_each_external_event_retention ... ok
+V2-96 prior-decay: delta=4.4507924433645485e-4 bound=4.450792443374784e-4
+test dynamics::tests::ac2_09_has_only_stored_unmodulated_reaction_and_stages_existing_idl ... ok
+test dynamics::tests::batch4::v2_96_equality_is_allowed_and_strictly_above_bound_is_a_fault ... ok
+test dynamics::tests::batch4::v2_96_prior_decay_changes_baseline_even_when_reaction_equals_current ... ok
+test dynamics::tests::batch4::v2_97_computation_fault_rejects_whole_candidate_without_clipping ... ok
+test dynamics::tests::gaussian_detector_uses_magnitude_not_reaction_sign_changes ... ok
+test dynamics::tests::batch4::v2_95_rejects_invalid_or_inconsistent_recorded_time ... ok
+test dynamics::tests::numerical_and_ingress_faults_do_not_publish_partial_state ... ok
+test dynamics::tests::batch4::v2_95_recorded_downtime_is_subtracted_and_replay_is_bitwise ... ok
+test dynamics::tests::ac2_14_i13_external_changes_and_all_self_sources_are_whole_state_identity ... ok
+test dynamics::tests::variance_uses_baseline_before_event_and_duration_completes_same_sign_run ... ok
+test dynamics::tests::jump_and_directional_drift_apply_and_stage_notices_before_boundary ... ok
+test effects::tests::i08_new_evidence_revision_does_not_release_a_taken_over_responsibility ... ok
+test effects::tests::compile_budget_overflow_in_stored_state_is_a_fault ... ok
+test effects::tests::evaluate_rejects_missing_inputs_foreign_fields_and_version_mismatch ... ok
+test effects::tests::i12_failure_barrier_blocks_effects_immediately ... ok
+test effects::tests::f06_drive_proposal_may_not_reencode_an_r_or_theta_effect ... ok
+test effects::tests::i07_theta_takeover_suppresses_r_even_after_legal_disable ... ok
+test effects::tests::effects_sum_in_canonical_order_with_receipts ... ok
+test effects::tests::i06_only_active_r_effects_are_authorised ... ok
+test effects::tests::j06_candidate_with_non_whitelisted_field_is_rejected ... ok
+test effects::tests::i07_two_owners_for_one_responsibility_and_domain_is_a_structural_fault ... ok
+test effects::tests::parameter_canonical_bytes_golden_layout ... ok
+test effects::tests::i21_compile_is_pure_and_repeated_reads_do_not_accumulate_decay ... ok
+test effects::tests::i22_theta_outside_validity_contract_quarantines_instead_of_local_disable ... ok
+test effects::tests::integrity_and_time_faults_are_structural ... ok
+test effects::tests::j06_out_of_scope_and_unauthorised_effects_contribute_zero ... ok
+test effects::tests::r_certificate_expiry_and_dependency_faults_withhold_authorisation ... ok
+test effects::tests::j06_candidate_over_budget_or_cancelling_is_rejected_and_existing_kept ... ok
+test dynamics::tests::batch4::v2_95_zero_duration_counts_separately_and_open_run_is_censored ... ok
+THETA-2 adaptive=false nb=10.00000000000000000 k=0 k_eff=0.00000000000000000 predicted=-0.09090909090909091 final=-0.09993824763030805 after=-0.09993824763030805 changes=0/0
+test dynamics::tests::adaptive_h_respects_floor_and_ignores_wall_clock_and_excluded_events ... ok
+test dynamics::tests::batch4::v2_96_legal_extremes_and_changing_retention_stay_inside_derived_bounds ... ok
+THETA-2 adaptive=false nb=10.00000000000000000 k=0.3 k_eff=0.27272727272727271 predicted=-0.12500000000000000 final=-0.13638358401382342 after=-0.13638358401383052 changes=0/0
+test dynamics::tests::reference::theta_1_original_500_streams_zero_violations ... FAILED
+THETA-2 adaptive=false nb=10.00000000000000000 k=0.6 k_eff=0.54545454545454541 predicted=-0.19999999999999998 final=-0.21503075132405447 after=-0.21503075227651183 changes=0/0
+THETA-2 adaptive=false nb=10.00000000000000000 k=0.9 k_eff=0.81818181818181812 predicted=-0.49999999999999983 final=-0.51437598256354833 after=-0.51443121537356074 changes=0/0
+THETA-2 adaptive=false nb=10.00000000000000000 k=1.2 k_eff=1.09090909090909083 predicted=-inf final=-0.89035532984152543 after=-0.89035532984152532 changes=0/0
+THETA-2 adaptive=false nb=99.99999999999991473 k=1 k_eff=0.50000000000000000 predicted=-0.10000000000000002 final=-0.10787663190885012 after=-0.10787663198277127 changes=0/0
+THETA-2 adaptive=false nb=99.99999999999991473 k=1.5 k_eff=0.75000000000000000 predicted=-0.20000000000000004 final=-0.20979172962556911 after=-0.20979470829009211 changes=0/0
+test dynamics::tests::ac2_05_replay_every_prefix_including_detector_open_runs_and_drift ... ok
+THETA-1 V2-93: 500 original streams, 72822 events, strict b/variance/sigma/g bits, 0 differences
+test dynamics::tests::binary64::theta_1_binary64_500_original_streams_zero_bit_differences ... ok
+THETA-2 adaptive=true nb=10.00000000000000000 k=0 k_eff=0.00000000000000000 predicted=-0.09090909090909091 final=-0.09993824763030805 after=-0.09993824763030805 changes=0/2
+THETA-2 adaptive=true nb=10.00000000000000000 k=0.3 k_eff=0.27272727272727271 predicted=-0.12500000000000000 final=-0.13638358401382342 after=-0.13638358401383052 changes=0/2
+THETA-2 adaptive=true nb=10.00000000000000000 k=0.6 k_eff=0.54545454545454541 predicted=-0.19999999999999998 final=-0.21503075132404073 after=-0.21503075227650925 changes=0/2
+THETA-2 adaptive=true nb=10.00000000000000000 k=0.9 k_eff=0.81818181818181812 predicted=-0.49999999999999983 final=-0.51437592917403496 after=-0.51443121175741646 changes=0/1
+THETA-2 adaptive=true nb=10.00000000000000000 k=1.2 k_eff=1.09090909090909083 predicted=-inf final=-0.89035532984152543 after=-0.89035532984152532 changes=1/1
+THETA-2 adaptive=true nb=99.99999999999991473 k=1 k_eff=0.50000000000000000 predicted=-0.10000000000000002 final=-0.10787663190884930 after=-0.10787663198277110 changes=0/2
+THETA-2 adaptive=true nb=99.99999999999991473 k=1.5 k_eff=0.75000000000000000 predicted=-0.20000000000000004 final=-0.20979172826407080 after=-0.20979470815698756 changes=0/2
+THETA-2: original and adaptive detector feedback cases, 0 violations
+test dynamics::tests::reference::theta_2_original_feedback_and_independent_adaptive_detector_check ... ok
+
+failures:
+
+failures:
+    dynamics::tests::reference::theta_1_original_500_streams_zero_violations
+
+test result: FAILED. 35 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.23s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

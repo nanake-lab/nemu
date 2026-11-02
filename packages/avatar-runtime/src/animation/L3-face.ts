@@ -8,7 +8,7 @@ export interface FacialLayerOptions {
   profile?: NemuProfile | undefined;
   prng?: (() => number) | undefined;
   speechExpressionLimit?: number | undefined; // default 0.6
-  speakingRecoveryMs?: number | undefined;    // default 300ms
+  speakingRecoveryMs?: number | undefined; // default 300ms
 }
 
 type BlinkPhase = 'open' | 'closing' | 'opening' | 'double_pause';
@@ -20,16 +20,13 @@ export class FacialLayer {
   // PRNG (defaults to Math.random)
   private readonly prng: () => number;
 
-  // Dual-channel expression inputs
-  // 1. Baseline from BodyReadout (0..0.4)
-  private expressionBaseline: Partial<Record<Emotion, number>> = {};
-
-  // 2. Performance cue (emo)
+  // Performance cue (emo) is the only expression input.
+  private appliedExpressionNames = new Set<string>();
   private activeCue: FacialPerformanceCue | null = null;
   private cueWeight = 0;
   private cueDecaying = false;
   private cueDecayElapsedSec = 0;
-  private readonly cueDecayDurationSec = 0.35; // ~350ms return to baseline
+  private readonly cueDecayDurationSec = 0.35; // ~350ms return to neutral
 
   // Speech & Lip-sync channel
   private visemes: VisemeWeights = { aa: 0, ih: 0, ou: 0, ee: 0, oh: 0 };
@@ -48,9 +45,9 @@ export class FacialLayer {
   private blinkWeight = 0;
 
   // Blink timing constants
-  private readonly blinkCloseDuration = 0.06;  // 60ms
-  private readonly blinkOpenDuration = 0.08;   // 80ms
-  private readonly doubleBlinkPause = 0.07;    // 70ms between blinks
+  private readonly blinkCloseDuration = 0.06; // 60ms
+  private readonly blinkOpenDuration = 0.08; // 80ms
+  private readonly doubleBlinkPause = 0.07; // 70ms between blinks
 
   constructor(options?: FacialLayerOptions) {
     this.prng = options?.prng ?? Math.random;
@@ -86,23 +83,6 @@ export class FacialLayer {
   }
 
   /**
-   * Sets the expression baseline (from BodyReadout or manual stub).
-   * Values are clamped to 0..0.4 per CONTRACTS.md 7.
-   */
-  setExpressionBaseline(baseline: Partial<Record<Emotion, number>>): void {
-    this.expressionBaseline = {};
-    for (const [emotion, weight] of Object.entries(baseline)) {
-      if (weight !== undefined) {
-        this.expressionBaseline[emotion as Emotion] = Math.max(0, Math.min(0.4, weight));
-      }
-    }
-  }
-
-  getExpressionBaseline(): Partial<Record<Emotion, number>> {
-    return { ...this.expressionBaseline };
-  }
-
-  /**
    * Sets performance cue (emo) expanded via profile.emotionMap.
    */
   setPerformanceCue(cue: FacialPerformanceCue): void {
@@ -113,7 +93,7 @@ export class FacialLayer {
   }
 
   /**
-   * Triggered at sentence end: decays cue back to baseline along a fixed curve.
+   * Triggered at sentence end: decays cue back to neutral along a fixed curve.
    */
   onSentenceEnd(): void {
     if (this.activeCue) {
@@ -188,7 +168,7 @@ export class FacialLayer {
     // 2. Update performance cue decay
     this.updatePerformanceCue(deltaSec);
 
-    // 3. Compute active expression weights (baseline + cue)
+    // 3. Compute active performance expression weights
     const expressionWeights = this.computeExpressionWeights();
 
     // 4. Update blink controller (inhibited when surprised)
@@ -234,14 +214,7 @@ export class FacialLayer {
   private computeExpressionWeights(): Map<string, number> {
     const result = new Map<string, number>();
 
-    // 1. Add baseline expressions
-    for (const [emotion, weight] of Object.entries(this.expressionBaseline)) {
-      if (weight !== undefined && weight > 0) {
-        this.addEmotionToWeights(emotion as Emotion, weight, result);
-      }
-    }
-
-    // 2. Blend performance cue (dominates when active)
+    // Performance cue only; no body readout route into L3.
     if (this.activeCue && this.cueWeight > 0) {
       this.addEmotionToWeights(this.activeCue.emotion, this.cueWeight, result);
     }
@@ -336,6 +309,8 @@ export class FacialLayer {
     for (const exp of standardPresets) {
       manager.setValue(exp, 0);
     }
+    for (const name of this.appliedExpressionNames) manager.setValue(name, 0);
+    this.appliedExpressionNames = new Set(expressionWeights.keys());
 
     // 2. Set blended expressions
     for (const [name, weight] of expressionWeights.entries()) {
@@ -356,7 +331,8 @@ export class FacialLayer {
   }
 
   dispose(): void {
+    for (const name of this.appliedExpressionNames) this.vrm?.expressionManager?.setValue(name, 0);
+    this.appliedExpressionNames.clear();
     this.activeCue = null;
-    this.expressionBaseline = {};
   }
 }

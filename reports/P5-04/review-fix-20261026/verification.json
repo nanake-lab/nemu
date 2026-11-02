@@ -1,0 +1,50 @@
+{
+  "checked_at_utc": "2026-10-26T17:37:12.0813028Z",
+  "result": "passed",
+  "baseline": "092cb2fe1979beec6b537290173684f5ea6ed86c",
+  "main_sync_commit": "c4162dec56b8d515b507f325fdea53dbf507f140",
+  "merged_main": "65052c0c45f932b601340fca43318ba7db814f71",
+  "tested_implementation_commit": "918b8dc85f0ef481f3d6f7433d7fac9f4f110df5",
+  "local_checks": [
+    "panel-budget-green",
+    "fmt",
+    "clippy",
+    "workspace-tests",
+    "fmt-main",
+    "clippy-main",
+    "workspace-tests-main"
+  ],
+  "negative_control_expected_failure": 101,
+  "empty_response_combinations": 45,
+  "new_rust_tests": 3,
+  "fact_view_passed": 18,
+  "fact_view_existing_ignored": 2,
+  "core_store_passed": 32,
+  "ci_scope_scenarios": 11,
+  "source_files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "lines": 184,
+      "sha256": "7d4d5b73c12224beb8cbdea3aa43c8f2ca6a40638ace56deb74f579668a637dd"
+    },
+    {
+      "path": "core/crates/fact-view/src/paging.rs",
+      "lines": 142,
+      "sha256": "5995d42bf613b9e0f1e601a0210cdc36979d51033dcac5d200d3de3c85c1e61c"
+    },
+    {
+      "path": "core/crates/fact-view/src/tests/mod.rs",
+      "lines": 375,
+      "sha256": "d904adf1b1778b3d8cc373fc9db36d724c2d82a305cda6feb801678b7711b5e5"
+    },
+    {
+      "path": "core/crates/fact-view/src/tests/panel_budget.rs",
+      "lines": 148,
+      "sha256": "c191ffb3c2d1c28eb8b2a9f349352afc9de062335132fc6c1219666b5ed0a466"
+    }
+  ],
+  "windows_workflow_blob": "a686643b9c6f7508e949157c36ddaf97e946e8fc",
+  "frozen_and_protected_files_changed": 0,
+  "original_failure_evidence_changed": 0,
+  "ci_retried": false
+}

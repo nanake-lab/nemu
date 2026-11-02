@@ -1,0 +1,23 @@
+     Locking 48 packages to highest Rust 1.99.0 compatible versions
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-34\core\crates\core-types)
+   Compiling pr95-storage-review-probe v0.0.0 (D:\Dev\cache\nemu-pr95-review\wal-probe)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.25s
+     Running unittests lib.rs (D:\Dev\cache\P5-34\target\debug\deps\pr95_storage_review_probe-677b60281be89129.exe)
+
+running 1 test
+test tests::review_v2_dirty_wal_is_preserved_on_rejected_open ... sqlite=3.53.2 segmented=false rejected=true db_before=4096 db_after=159744 wal_before=284312 wal_after=0 db_bytes_changed=true wal_bytes_changed=true
+canonical_v2_objects_unchanged=true
+
+thread 'tests::review_v2_dirty_wal_is_preserved_on_rejected_open' (1284) panicked at D:\Dev\cache\nemu-pr95-review\wal-probe\tests.rs:266:9:
+rejected writer changed persistent DB/WAL bytes
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    tests::review_v2_dirty_wal_is_preserved_on_rejected_open
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 34 filtered out; finished in 4.79s
+
+error: test failed, to rerun pass `--lib`

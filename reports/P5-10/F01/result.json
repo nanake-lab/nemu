@@ -1,0 +1,19 @@
+{
+  "acceptance_id": "F01",
+  "result": "passed",
+  "scope": "P5-10 pure functions and structural fixtures only; runtime integration and behavior qualification excluded",
+  "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "command": "cargo test -p core-kernel --locked --offline",
+  "log": "../review-fixes-2026-10-26/kernel-20261026-131607.log",
+  "log_sha256": "09abdf0392de7d7996ca2ed6f6713df6842adf356ff9d066d7f531a881b37e82",
+  "test_count": 3,
+  "tests": [
+    "fast::tests::f01_piecewise_projection_and_no_accumulated_decay",
+    "fast::tests::state_boundaries::negative_zero_recovery_and_snapshot_preserve_canonical_zero_delta",
+    "fast::tests::zero_delta_is_identity_bit_for_bit"
+  ],
+  "fixture": "../../../profiles/structural_fixture/fast/fixture.json",
+  "note": "See REPORT.md and docs/traceability/P5-10.md for properties, tolerances and integration boundaries.",
+  "captured_log_sha256": "3872483fa1f52a0f298ab7fff8d56d94cfe37d7dd19b5164feedba63ebd06eea",
+  "log_sha256_scope": "UTF-8 with LF line endings (repository blob); captured_log_sha256 covers original Windows CRLF bytes."
+}

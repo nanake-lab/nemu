@@ -1,4 +1,5 @@
 import './style.css';
+import { mountReadoutControls } from './readout-controls.js';
 import { ReviewApp } from './review-app.js';
 import type { TurntablePreset } from './turntable.js';
 import type { LightingPreset, BackgroundPreset } from './lighting-bg.js';
@@ -109,51 +110,7 @@ sliderExprWeight?.addEventListener('input', () => {
   app.setExpressionWeight(weight);
 });
 
-// 8. Body Readout Sliders
-function setupReadoutSlider(sliderId: string, valId: string, paramName: string) {
-  const slider = document.getElementById(sliderId) as HTMLInputElement | null;
-  const valSpan = document.getElementById(valId);
-  slider?.addEventListener('input', () => {
-    const val = parseFloat(slider.value);
-    if (valSpan) valSpan.textContent = val.toFixed(2);
-    app.applyBodyReadout({ [paramName]: val });
-  });
-}
-
-setupReadoutSlider('slider-posture', 'val-posture', 'posture');
-setupReadoutSlider('slider-idleTempo', 'val-idleTempo', 'idleTempo');
-setupReadoutSlider('slider-earPose', 'val-earPose', 'earPose');
-setupReadoutSlider('slider-tailAmp', 'val-tailAmp', 'tailAmplitude');
-setupReadoutSlider('slider-gazeSoc', 'val-gazeSoc', 'gazeSociability');
-setupReadoutSlider('slider-exprBase', 'val-exprBase', 'expressionBaseline');
-
-// Reset Readout
-document.getElementById('btn-reset-readout')?.addEventListener('click', () => {
-  app.applyBodyReadout({
-    posture: 0,
-    idleTempo: 1.0,
-    earPose: 0,
-    tailAmplitude: 0.5,
-    gazeSociability: 0.5,
-    expressionBaseline: 0,
-  });
-
-  const sliders = [
-    { id: 'slider-posture', val: 'val-posture', def: '0.0' },
-    { id: 'slider-idleTempo', val: 'val-idleTempo', def: '1.0' },
-    { id: 'slider-earPose', val: 'val-earPose', def: '0.0' },
-    { id: 'slider-tailAmp', val: 'val-tailAmp', def: '0.5' },
-    { id: 'slider-gazeSoc', val: 'val-gazeSoc', def: '0.5' },
-    { id: 'slider-exprBase', val: 'val-exprBase', def: '0.0' },
-  ];
-
-  for (const s of sliders) {
-    const input = document.getElementById(s.id) as HTMLInputElement | null;
-    const label = document.getElementById(s.val);
-    if (input) input.value = s.def;
-    if (label) label.textContent = s.def;
-  }
-});
+// 8. Body Readout v2 controls are mounted after profile loading.
 
 // 9. Motion Player Controls
 const btnMotionPlay = document.getElementById('btn-motion-play');
@@ -255,8 +212,10 @@ document.getElementById('btn-save-review-log')?.addEventListener('click', handle
 
 // Initialize model and start loop
 app
-  .loadModel('/sample.vrm', '/sample.profile.json')
+  .loadModel(new URLSearchParams(location.search).get('model') ?? '/sample.vrm',
+    new URLSearchParams(location.search).get('profile') ?? '/sample.profile.json')
   .then(() => {
+    mountReadoutControls(app);
     app.start();
     window.__REVIEW_READY__ = true;
   })

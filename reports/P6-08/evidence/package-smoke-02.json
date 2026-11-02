@@ -1,0 +1,79 @@
+{
+  "scope": "ASAR smoke distribution; full shell before/current with supervisor auto-start disabled, renderer windows suppressed, settings writes intercepted; synthetic sensing only",
+  "baseline": "0b5412e:apps/desktop/src/main/index.ts",
+  "dependencies": [
+    "koffi",
+    "zod",
+    "sherpa-onnx-node"
+  ],
+  "hashes": {
+    "distribution/resources/app.asar": "6a7621a1a65ae955973bdd43bd4ab8b47b01784163e8a009e3e08677c445c4b4",
+    "app/out/main/index.js": "04c49989b012095a10854b98970cc3efc92f456b581a8cabcfb918c453d2af91",
+    "app/native-probe.js": "cbd8c0a77aca13d4329767cd3a380910bafc4b609002670953d85d203dfa2186"
+  },
+  "results": [
+    {
+      "mode": "native",
+      "code": 9,
+      "signal": null,
+      "exitedAt": 15359.503,
+      "shutdownToExitMs": null,
+      "survivors": [],
+      "stderr": "D:\\Dev\\cache\\P6-08\\package-smoke-02\\distribution\\electron.exe: bad option: --no-sandbox\r\n"
+    },
+    {
+      "mode": "baseline",
+      "code": 9,
+      "signal": null,
+      "exitedAt": 17386.1952,
+      "shutdownToExitMs": null,
+      "survivors": [],
+      "stderr": "D:\\Dev\\cache\\P6-08\\package-smoke-02\\distribution\\electron.exe: bad option: --no-sandbox\r\n"
+    },
+    {
+      "mode": "current",
+      "code": 9,
+      "signal": null,
+      "exitedAt": 19410.2377,
+      "shutdownToExitMs": null,
+      "survivors": [],
+      "stderr": "D:\\Dev\\cache\\P6-08\\package-smoke-02\\distribution\\electron.exe: bad option: --no-sandbox\r\n"
+    },
+    {
+      "mode": "current",
+      "code": 9,
+      "signal": null,
+      "exitedAt": 21435.3693,
+      "shutdownToExitMs": null,
+      "survivors": [],
+      "stderr": "D:\\Dev\\cache\\P6-08\\package-smoke-02\\distribution\\electron.exe: bad option: --no-sandbox\r\n"
+    },
+    {
+      "mode": "baseline",
+      "code": 9,
+      "signal": null,
+      "exitedAt": 23459.601,
+      "shutdownToExitMs": null,
+      "survivors": [],
+      "stderr": "D:\\Dev\\cache\\P6-08\\package-smoke-02\\distribution\\electron.exe: bad option: --no-sandbox\r\n"
+    },
+    {
+      "mode": "baseline",
+      "code": 9,
+      "signal": null,
+      "exitedAt": 25484.7763,
+      "shutdownToExitMs": null,
+      "survivors": [],
+      "stderr": "D:\\Dev\\cache\\P6-08\\package-smoke-02\\distribution\\electron.exe: bad option: --no-sandbox\r\n"
+    },
+    {
+      "mode": "current",
+      "code": 9,
+      "signal": null,
+      "exitedAt": 27507.4408,
+      "shutdownToExitMs": null,
+      "survivors": [],
+      "stderr": "D:\\Dev\\cache\\P6-08\\package-smoke-02\\distribution\\electron.exe: bad option: --no-sandbox\r\n"
+    }
+  ]
+}

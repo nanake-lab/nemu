@@ -49,13 +49,19 @@ impl<L: LineageKind> Store<L> {
             [integer(processed)?],
             |r| r.get(0),
         )?)?;
-        require(
-            count - processed < cfg.max_pending_records
-                && pending_bytes
-                    .checked_add(bytes.len() as u64)
-                    .is_some_and(|n| n <= cfg.max_pending_bytes),
-            "durable ingress backpressure",
-        )?;
+        if count - processed >= cfg.max_pending_records {
+            return Err(crate::Error::Backpressure(
+                core_types::generated::IngressReason::PENDING_RECORDS_FULL,
+            ));
+        }
+        if pending_bytes
+            .checked_add(bytes.len() as u64)
+            .is_none_or(|n| n > cfg.max_pending_bytes)
+        {
+            return Err(crate::Error::Backpressure(
+                core_types::generated::IngressReason::PENDING_BYTES_FULL,
+            ));
+        }
         publish_refs(&tx, &prepared.closure, cfg)?;
         tx.execute(
             "INSERT INTO raw_ingress VALUES(?1,?2,?3)",

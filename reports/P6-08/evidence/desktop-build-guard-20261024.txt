@@ -1,0 +1,53 @@
+$ electron-vite build
+vite v7.3.7 building ssr environment for production...
+transforming...
+✓ 58 modules transformed.
+rendering chunks...
+out/main/voice.js                         16.26 kB
+out/main/index.js                         83.30 kB
+out/main/chunks/proactivity-DnWR_khO.js  170.61 kB
+✓ built in 436ms
+vite v7.3.7 building ssr environment for production...
+transforming...
+../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+
+"// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+
+in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+
+"/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+ * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+ * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+
+in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 115 modules transformed.
+rendering chunks...
+out/preload/panel.cjs    0.31 kB
+out/preload/stage.cjs  375.82 kB
+✓ built in 585ms
+vite v7.3.7 building client environment for production...
+transforming...
+../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js (400:0): A comment
+
+"// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+
+in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js (74:0): A comment
+
+"/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+ * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+ * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+
+in "../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 186 modules transformed.
+rendering chunks...
+desktop/out/renderer/panel/index.html                    0.72 kB
+desktop/out/renderer/stage/index.html                    0.77 kB
+desktop/out/renderer/stage/asr-mic-worklet.js            1.37 kB
+desktop/out/renderer/assets/stage-DABzvroO.css           0.66 kB
+desktop/out/renderer/assets/panel-Bf-HAcZX.css          11.36 kB
+desktop/out/renderer/assets/proactivity-BuYNr81M.js    371.28 kB
+desktop/out/renderer/assets/panel-C5sVOcLl.js          698.28 kB
+desktop/out/renderer/assets/stage-CcL5pzlp.js        1,557.39 kB
+✓ built in 2.46s

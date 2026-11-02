@@ -1,0 +1,5 @@
+COMMAND: uv run --project core/contracts ruff check core/contracts/fixture_ingress_rejections.py
+All checks passed!
+COMMAND: uv run --project core/contracts mypy --strict core/contracts/fixture_ingress.py core/contracts/fixture_ingress_rejections.py workers/irl/generated/echo reports/P5-35/verify_evidence.py
+Success: no issues found in 9 source files
+PASS: explicit mutation typing; unchanged 63 golden ingress cases

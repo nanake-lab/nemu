@@ -1,0 +1,80 @@
+{
+  "no_recall": {
+    "final": 0.0,
+    "max_abs": 0.0,
+    "event_count": 0,
+    "step_10": 0.0,
+    "step_30": 0.0,
+    "step_90": 0.0,
+    "step_91": 0.0
+  },
+  "repeated_same_cue": {
+    "final": 0.5516655565918733,
+    "max_abs": 0.5516655565918733,
+    "event_count": 120,
+    "step_10": 0.4770057422566363,
+    "step_30": 0.5502981144134539,
+    "step_90": 0.5516655482108441,
+    "step_91": 0.5516655497338421
+  },
+  "recall_then_stop": {
+    "final": 8.381029136070456e-09,
+    "max_abs": 0.5502981144134539,
+    "event_count": 30,
+    "step_10": 0.4770057422566363,
+    "step_30": 0.5502981144134539,
+    "step_90": 3.381148472592364e-06,
+    "step_91": 2.7682502352340113e-06
+  },
+  "mixed_valence": {
+    "final": 0.00568149590293246,
+    "max_abs": 0.104651615419131,
+    "event_count": 120,
+    "step_10": 0.0049125890458869,
+    "step_30": 0.005667412882810294,
+    "step_90": 0.005681495816617865,
+    "step_91": 0.10465161534854896
+  },
+  "warming_memory": {
+    "final": -0.5516655565918733,
+    "max_abs": 0.5516655565918733,
+    "event_count": 120,
+    "step_10": -0.4770057422566363,
+    "step_30": -0.5502981144134539,
+    "step_90": -0.5516655482108441,
+    "step_91": -0.5516655497338421
+  },
+  "offline_gap": {
+    "final": 0.5504494922837818,
+    "max_abs": 0.5504494922837818,
+    "event_count": 40,
+    "step_10": 0.4770057422566363,
+    "step_30": 0.00873666492302516,
+    "step_90": 5.367992454694045e-08,
+    "step_91": 0.15000004394940505
+  },
+  "fixed_tape": {
+    "final_distance": 7.549794123207221e-13,
+    "max_bound_excess": 5.5312341686215506e-17,
+    "bound_applies": true
+  },
+  "forbidden_local_feedback": {
+    "final_distance": 2.0,
+    "max_bound_excess": 1.999999999999245,
+    "bound_applies": false
+  },
+  "adaptive_content": {
+    "final_distance": 1.1033311131845016,
+    "max_bound_excess": 1.1033311131837467,
+    "bound_applies": false
+  },
+  "diagnostics": {
+    "replay_bitwise_matches": 430,
+    "constant_impulse_limit": 0.5516655566126994,
+    "closed_form_abs_error": 0.0,
+    "offline_events_11_to_90": 0,
+    "assertions": "finite/box, recurrence oracle, exact stored-tape replay, no offline events",
+    "tolerance_note": "1e-12 is only a floating-point illustration check; no Nemu threshold changed",
+    "scope": "No G/C/R/theta/IDL implementation; not evidence of AC2 or product acceptance"
+  }
+}

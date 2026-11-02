@@ -1,0 +1,37 @@
+[
+  {
+    "command": "cargo fmt --manifest-path core/Cargo.toml --all -- --check",
+    "exit": 0,
+    "evidence": "fmt-final.log"
+  },
+  {
+    "command": "cargo clippy --manifest-path core/Cargo.toml --workspace --all-targets --locked -- -D warnings",
+    "exit": 0,
+    "evidence": "clippy.log"
+  },
+  {
+    "command": "pnpm test:core-contracts",
+    "exit": 0,
+    "evidence": "contracts.log"
+  },
+  {
+    "command": "uv run --project core/contracts --locked ruff check core/contracts",
+    "exit": 0,
+    "evidence": "python-ruff-final.log"
+  },
+  {
+    "command": "uv run --project core/contracts --locked mypy --strict core/contracts/verify.py core/contracts/verify_theta_limits.py",
+    "exit": 0,
+    "evidence": "python-mypy-02.log"
+  },
+  {
+    "command": "cargo test --manifest-path core/Cargo.toml -p core-kernel caller_limits --locked -- --nocapture",
+    "exit": 0,
+    "evidence": "kernel-limits.log"
+  },
+  {
+    "command": "cargo test --manifest-path core/Cargo.toml -p core-store --locked caller_limits -- --nocapture",
+    "exit": 0,
+    "evidence": "store-limits.log"
+  }
+]

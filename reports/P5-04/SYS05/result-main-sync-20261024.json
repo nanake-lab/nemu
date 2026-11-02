@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "test_commit": "785a1bb424ba3ae9367661cae106d6a4663de88b",
+  "test": "sys05_five_distinct_results_and_real_positive_control",
+  "command": "cargo test --workspace --release --locked -- --test-threads=1",
+  "store": "TemporaryRoot EXPERIMENT on D:",
+  "checked_states": [
+    "NO_MATCH",
+    "INDEX_LAGGING",
+    "DENIED",
+    "OBJECT_MISSING",
+    "BUDGET_EXHAUSTED"
+  ],
+  "positive_control": "OK with original fact",
+  "evidence": "../main-sync-20261024/workspace-tests.log",
+  "schema_sha256": "c24393b63665dde9c29e9da2278430f7a45c0a75c0cb4d65ce350149c1933a88"
+}

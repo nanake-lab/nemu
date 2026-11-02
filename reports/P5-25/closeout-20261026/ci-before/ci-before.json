@@ -1,0 +1,44 @@
+{
+  "retrieved_utc": "2026-10-26 04:54:09 UTC",
+  "repository": "nanake-lab/nemu",
+  "pull_request": 77,
+  "expected_head_sha": "abebb851206249c4751022531cae6d33d4c06579",
+  "workflow_run": {
+    "id": 40264985040,
+    "name": "CI",
+    "status": "completed",
+    "conclusion": "failure",
+    "run_number": 266,
+    "head_sha": "abebb851206249c4751022531cae6d33d4c06579",
+    "head_branch": "task/P5-25-dynamics",
+    "url": "https://github.com/nanake-lab/nemu/actions/runs/40264985040",
+    "updated_at": "2026-10-26T03:41:00Z"
+  },
+  "job": {
+    "id": 121385307854,
+    "name": "Ubuntu static checks and unit tests",
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "steps": [
+    {
+      "name": "Run pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+      "number": 6,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Python checks (all four projects)",
+      "number": 11,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Rust checks",
+      "number": 12,
+      "status": "completed",
+      "conclusion": "failure"
+    }
+  ],
+  "test_log_excerpt": "2026-10-26T03:39:46.7189001Z \u001b[36;1mcargo fmt --all -- --check\u001b[0m\n2026-10-26T03:39:46.7189550Z \u001b[36;1mcargo clippy --workspace --all-targets -- -D warnings\u001b[0m\n2026-10-26T03:39:46.7189926Z \u001b[36;1mcargo test --workspace --locked\u001b[0m\n2026-10-26T03:39:56.7779689Z warn: the missing active toolchain `1.99.0-x86_64-unknown-linux-gnu` has been auto-installed\n2026-10-26T03:39:56.7783835Z warn: to install the active toolchain, use `rustup install` instead\n2026-10-26T03:39:56.7792462Z active toolchain\n2026-10-26T03:39:56.7793605Z name: 1.99.0-x86_64-unknown-linux-gnu\n2026-10-26T03:40:49.8112741Z running 37 tests\n2026-10-26T03:40:50.7428112Z test dynamics::tests::reference::theta_1_original_500_streams_zero_violations ... FAILED\n2026-10-26T03:40:51.4304140Z test dynamics::tests::binary64::theta_1_binary64_500_original_streams_zero_bit_differences ... ok\n2026-10-26T03:40:57.8223937Z ---- dynamics::tests::reference::theta_1_original_500_streams_zero_violations stdout ----\n2026-10-26T03:40:57.8226040Z thread 'dynamics::tests::reference::theta_1_original_500_streams_zero_violations' (5128) panicked at crates/core-kernel/src/dynamics/tests/reference.rs:56:13:\n2026-10-26T03:40:57.8228170Z   left: 4602808250010281358\n2026-10-26T03:40:57.8228719Z  right: 4602808250010281359\n2026-10-26T03:40:57.8231555Z     dynamics::tests::reference::theta_1_original_500_streams_zero_violations\n2026-10-26T03:40:57.8233017Z test result: FAILED. 36 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.01s\n2026-10-26T03:40:57.8250064Z ##[error]Process completed with exit code 101."
+}

@@ -1,0 +1,33 @@
+   Compiling core-kernel v0.0.0 (C:\Users\nanake\.codex\worktrees\pr49-review\nemu\core\crates\core-kernel)
+   Compiling core-replay v0.0.0 (C:\Users\nanake\.codex\worktrees\pr49-review\nemu\core\crates\core-replay)
+   Compiling core-runtime v0.0.0 (C:\Users\nanake\.codex\worktrees\pr49-review\nemu\core\crates\core-runtime)
+   Compiling echoctl v0.0.0 (C:\Users\nanake\.codex\worktrees\pr49-review\nemu\core\crates\echoctl)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.83s
+     Running unittests src\lib.rs (target\debug\deps\action_gate-ac675a4710f9ccae.exe)
+     Running unittests src\lib.rs (target\debug\deps\core_kernel-4df46f3327408afa.exe)
+
+thread 'law::tests::engine::ac2_21_capacity_with_resharing_keeps_i25_in_small_worlds' (48300) panicked at crates\core-kernel\src\law\tests\engine.rs:161:25:
+seed 2400: invalid law input: new alias rec-1 needs a canonical candidate for c-tidy
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'law::tests::boundaries::stored_state_is_checked_before_use' (11072) panicked at crates\core-kernel\src\law\tests\engine.rs:161:25:
+seed 2900: invalid law input: new alias rec-11 needs a canonical candidate for c-tidy
+
+thread 'law::tests::engine::step_order_of_inputs_does_not_matter' (28748) panicked at crates\core-kernel\src\law\tests\engine.rs:161:25:
+seed 2600: invalid law input: new alias rec-14 needs a canonical candidate for c-tidy
+
+thread 'law::tests::engine::ac2_05_without_new_evidence_r_is_bitwise_unchanged' (25868) panicked at crates\core-kernel\src\law\tests\engine.rs:161:25:
+seed 2700: invalid law input: new alias rec-27 needs a canonical candidate for c-tidy
+
+thread 'law::tests::engine::ac2_03_the_same_group_arriving_again_changes_nothing' (46576) panicked at crates\core-kernel\src\law\tests\engine.rs:161:25:
+seed 2500: invalid law input: new alias rec-80 needs a canonical candidate for c-music
+
+thread 'law::tests::boundaries::alias_adr_0014_any_number_of_synonyms_leaves_pi_and_r_unchanged' (54100) panicked at crates\core-kernel\src\law\tests\engine.rs:161:25:
+seed 2801: invalid law input: new alias rec-13 needs a canonical candidate for c-music
+
+thread 'law::tests::engine::ac2_02_i25_and_replay_identity_hold_after_every_step_of_random_worlds' (45252) panicked at crates\core-kernel\src\law\tests\engine.rs:161:25:
+seed 2302: invalid law input: new alias rec-2 needs a canonical candidate for c-tidy
+
+thread 'law::tests::replay_h::i23_random_h_prefixes_survive_canonical_reload_and_full_recomputation' (15868) panicked at crates\core-kernel\src\law\tests\replay_h.rs:191:29:
+invalid law input: new alias rec-6 needs a canonical candidate for c-tidy
+error: test failed, to rerun pass `-p core-kernel --lib`

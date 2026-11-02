@@ -1,0 +1,28 @@
+COMMAND: python core/contracts/generate.py --check
+0 generated files stale
+COMMAND: python core/contracts/check_compat.py
+Compatibility against p5-01, p5-21, p5-32, p5-34, current: 0 violations; 153 messages (46 superseded), 56 enums
+COMMAND: cargo fmt --manifest-path core/Cargo.toml --all --check
+COMMAND: cargo clippy --manifest-path core/Cargo.toml -p core-types --all-targets --locked -- -D warnings
+    Checking serde_core v1.0.229
+    Checking zmij v1.0.23
+    Checking serde_json v1.0.154
+    Checking serde v1.0.229
+    Checking core-types v0.0.0 (D:\Dev\nemu-wt\P5-35\core\crates\core-types)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.35s
+COMMAND: C:\Users\nanake\AppData\Local\fnm_multishells\42800_1793078779699\pnpm.CMD typecheck
+$ tsc --noEmit
+COMMAND: C:\Users\nanake\AppData\Local\fnm_multishells\42800_1793078779699\pnpm.CMD exec eslint core/contracts/templates/typescript/ingress.ts packages/contracts/src/generated/echo/ingress.ts
+COMMAND: uv run --project core/contracts ruff check core/contracts/templates/python/ingress.py core/contracts/fixture_ingress.py core/contracts/fixture_ingress_rejections.py reports/P5-35/verify_evidence.py workers/irl/generated/echo/ingress.py workers/drive/generated/echo/ingress.py workers/model-adapter/generated/echo/ingress.py
+All checks passed!
+COMMAND: uv run --project core/contracts mypy --strict core/contracts/fixture_ingress.py core/contracts/fixture_ingress_rejections.py workers/irl/generated/echo
+core\contracts\fixture_ingress_rejections.py:95: error: No overload variant of "__or__" of "dict" matches argument type "object"  [operator]
+core\contracts\fixture_ingress_rejections.py:95: note: Possible overload variants:
+core\contracts\fixture_ingress_rejections.py:95: note:     def __or__(self, dict[Any, Any], /) -> dict[Any, Any]
+core\contracts\fixture_ingress_rejections.py:95: note:     def [_T1, _T2] __or__(self, dict[_T1, _T2], /) -> dict[Any | _T1, Any | _T2]
+Found 1 error in 1 file (checked 8 source files)
+Traceback (most recent call last):
+  File "<stdin>", line 14, in <module>
+  File "C:\Users\nanake\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['uv', 'run', '--project', 'core/contracts', 'mypy', '--strict', 'core/contracts/fixture_ingress.py', 'core/contracts/fixture_ingress_rejections.py', 'workers/irl/generated/echo']' returned non-zero exit status 1.

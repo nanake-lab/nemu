@@ -1,0 +1,37 @@
+   Compiling libm v0.2.16
+    Checking core-types v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\core-types)
+    Checking core-policy v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\core-policy)
+    Checking core-store v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\core-store)
+    Checking gateway v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\gateway)
+    Checking task-layer v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\task-layer)
+    Checking core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\core-kernel)
+    Checking semantic-core v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\semantic-core)
+    Checking action-gate v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\action-gate)
+    Checking core-replay v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\core-replay)
+    Checking core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\core-runtime)
+    Checking fact-view v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\fact-view)
+    Checking echoctl v0.0.0 (D:\Dev\nemu-wt\P5-04\core\crates\echoctl)
+error: this `if` statement can be collapsed
+   --> crates\fact-view\src\source.rs:125:21
+    |
+125 | /                     if let Some(mention) = text(reader, &node.metadata.source_span)? {
+126 | |                         if !mention.is_empty() && original.contains(&mention) {
+127 | |                             mentions.push((c.concept_id.clone(), mention));
+128 | |                         }
+129 | |                     }
+    | |_____________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+125 ~                     if let Some(mention) = text(reader, &node.metadata.source_span)?
+126 ~                         && !mention.is_empty() && original.contains(&mention) {
+127 |                             mentions.push((c.concept_id.clone(), mention));
+128 ~                         }
+    |
+
+error: could not compile `fact-view` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `fact-view` (lib test) due to 1 previous error

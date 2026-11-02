@@ -1,0 +1,24 @@
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-store)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.85s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_store-a8329e3b1dbabe6a.exe)
+
+running 3 tests
+test tests::theta::actual_states_commit_close_reopen ... P536_STORE committed, closed, reopened and read 3 actual C prefixes
+ok
+
+thread 'tests::theta::invalid_new_and_legacy_staging_never_publish' (28480) panicked at crates\core-store\src\tests\legacy_v2.rs:8:61:
+called `Result::unwrap()` on an `Err` value: Contract("below minimum")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test tests::theta::invalid_new_and_legacy_staging_never_publish ... FAILED
+test tests::theta::legacy_theta_readable_writer_refused_without_touching_history ... P536_LEGACY uncheckpointed=false old_bytes_readable=true rejected_writer_unchanged=true
+P536_LEGACY uncheckpointed=true old_bytes_readable=true rejected_writer_unchanged=true
+ok
+
+failures:
+
+failures:
+    tests::theta::invalid_new_and_legacy_staging_never_publish
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 46 filtered out; finished in 27.82s
+
+error: test failed, to rerun pass `-p core-store --lib`

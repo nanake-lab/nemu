@@ -19,9 +19,10 @@ import type {
   Anchor,
   GazeTarget,
   StagePayloads,
-  BodyReadout,
+  BodyReadoutV2,
   Emotion,
 } from '@nemu/contracts';
+import { ReadoutApplicator, StageReadoutInput } from '@nemu/body';
 
 export type StageEventHandler = <T extends keyof StagePayloads>(
   type: T,
@@ -45,6 +46,8 @@ export class StageApp {
   readonly cameraManager: AvatarCamera;
   readonly scheduler: FrameScheduler;
   readonly compositor: AnimationCompositor;
+  readonly readoutApplicator: ReadoutApplicator;
+  readonly readoutInput: StageReadoutInput;
   private hitTestManager: HitTestManager | null = null;
 
   private currentVrm: VRM | null = null;
@@ -107,6 +110,10 @@ export class StageApp {
 
     this.cameraManager = new AvatarCamera(20.0, this.canvasWidth / this.canvasHeight);
     this.compositor = new AnimationCompositor({ deterministic: this.isDeterministic });
+    this.readoutApplicator = new ReadoutApplicator({
+      onReadoutUpdated: (readout) => { this.compositor.applyReadout(readout); },
+    });
+    this.readoutInput = new StageReadoutInput(this.readoutApplicator);
 
     // 3. WebGL2 Async PBO Hit Test
     this.hitTestManager = new HitTestManager(this.renderer.renderer, {
@@ -304,8 +311,8 @@ export class StageApp {
     this.cameraManager.applyHeadGaze(this.currentVrm, this.currentProfile, targetWorldPos);
   }
 
-  applyReadout(readout: BodyReadout): void {
-    this.compositor.applyReadout(readout);
+  applyReadout(readout: BodyReadoutV2): void {
+    this.readoutApplicator.applyReadout(readout);
   }
 
   setLayerEnabled(layer: AnimationLayerId, enabled: boolean): void {
@@ -335,6 +342,7 @@ export class StageApp {
     if (this.currentVrm) {
       // In deterministic mode, freeze time step
       const stepDelta = this.isDeterministic ? 0.01667 : deltaSec;
+      this.readoutApplicator.update(stepDelta);
       this.compositor.update(stepDelta);
       if (!this.compositor.isLayerEnabled('L3')) {
         this.currentVrm.expressionManager?.update();

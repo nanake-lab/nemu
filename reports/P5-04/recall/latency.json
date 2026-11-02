@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "scope": "fixed nine-query synthetic recall skeleton only",
+  "cpu": "AMD Ryzen 7 3700X",
+  "threads": 4,
+  "profile": "release",
+  "query_target_ms": 50,
+  "query_p50_ms": 43.3271,
+  "query_max_ms": 45.18429999999999,
+  "all_nine_below_50_ms": true,
+  "before_p50_ms": 91.1341,
+  "withdrawal_queries": 100,
+  "withdrawal_leaks": 0,
+  "test_commit": "954918fae3f9db245fc9a92ca646c090d655510f",
+  "evidence": "cpu-eval-acceptance.log",
+  "limits": "Small synthetic restart skeleton, not the P6-13 multi-year/full-answer 90% acceptance. Latencies are observational on this host, not an exclusive CPU benchmark."
+}

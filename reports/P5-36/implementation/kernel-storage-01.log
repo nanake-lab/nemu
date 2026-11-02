@@ -1,0 +1,27 @@
+   Compiling serde_json v1.0.154
+   Compiling libm v0.2.16
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-types)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-36\core\crates\core-kernel)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.71s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-36\target\debug\deps\core_kernel-22b56710e11de0ca.exe)
+
+running 2 tests
+
+thread 'dynamics::storage::tests::actual_states_all_prefixes_roundtrip_and_continuation' (19172) panicked at crates\core-kernel\src\dynamics\storage\tests.rs:113:98:
+called `Result::unwrap()` on an `Err` value: Invalid("below minimum")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'dynamics::storage::tests::rejects_corruption_and_wrong_trusted_context_without_mutation' (18740) panicked at crates\core-kernel\src\dynamics\storage\tests.rs:146:79:
+called `Result::unwrap()` on an `Err` value: Invalid("below minimum")
+test dynamics::storage::tests::actual_states_all_prefixes_roundtrip_and_continuation ... FAILED
+test dynamics::storage::tests::rejects_corruption_and_wrong_trusted_context_without_mutation ... FAILED
+
+failures:
+
+failures:
+    dynamics::storage::tests::actual_states_all_prefixes_roundtrip_and_continuation
+    dynamics::storage::tests::rejects_corruption_and_wrong_trusted_context_without_mutation
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 87 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p core-kernel --lib`

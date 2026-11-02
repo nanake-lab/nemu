@@ -1,0 +1,31 @@
+{
+  "step": "mypy",
+  "command": [
+    "uv",
+    "run",
+    "--project",
+    "core/contracts",
+    "--locked",
+    "mypy",
+    "--strict",
+    "core/contracts/generate.py",
+    "core/contracts/fixture_inputs.py",
+    "core/contracts/fixture_retention.py",
+    "core/contracts/adversarial.py",
+    "core/contracts/verify.py",
+    "core/contracts/check_compat.py",
+    "core/contracts/freeze_vectors.py",
+    "workers/irl/generated/echo"
+  ],
+  "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+  "start": "2026-10-26T10:55:59.9493039Z",
+  "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+  "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+  "target": "D:\\Dev\\cache\\P5-34\\target",
+  "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+  "jobs": 1,
+  "testThreads": 1,
+  "end": "2026-10-26T10:56:01.3561926Z",
+  "exitCode": 0,
+  "logSha256": "99774ae94d9c061d2ee8a3c00a79bb1c6dfd2b0998f7cb389be50e19a0dc7d15"
+}

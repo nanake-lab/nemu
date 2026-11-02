@@ -78,9 +78,9 @@ window.addEventListener('message', (event) => {
       }
       break;
     case 'stage.readout':
-      if (data.payload?.readout) {
-        stageApp.applyReadout(data.payload.readout);
-      }
+    case 'stage.readout.v2':
+    case 'stage.event':
+      stageApp.readoutInput.handle(data);
       break;
     case 'stage.setLayerEnabled':
       if (data.payload?.layer && typeof data.payload.enabled === 'boolean') {

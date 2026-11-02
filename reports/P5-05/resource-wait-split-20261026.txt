@@ -1,0 +1,6 @@
+2026-10-26 18:41–18:53 +08:00: local validation waited for another heavy job.
+The 12-minute resource wait ended before any P5-05 build/test started.
+Observed job: cargo test --workspace --locked --offline, with a core_store test
+executable under D:/Dev/cache/P5-12/target. The process was not interrupted.
+No assertion failed and no validation result was produced during this wait.
+The same validation sequence remains queued for an idle resource window.

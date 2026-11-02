@@ -1,0 +1,10 @@
+preparation/** -text whitespace=cr-at-eol
+smoke-*/** -text whitespace=cr-at-eol
+smoke-*/metadata/*.log -whitespace
+conversion-*/** -text whitespace=cr-at-eol
+conversion-*/logs/*.log -whitespace
+full-preparation-*/** -text whitespace=cr-at-eol
+full-run-*/** -text whitespace=cr-at-eol
+rerun-preparation-*/** -text whitespace=cr-at-eol
+benchmark-run-*/** -text whitespace=cr-at-eol
+benchmark-run-*/raw/**/*.log -whitespace

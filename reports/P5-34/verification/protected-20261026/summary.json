@@ -1,0 +1,1031 @@
+{
+  "recordedUtc": "2026-10-26T11:48:24.358112+00:00",
+  "head": "2fa1bc9b575dd2aaad04921a6968bc5fc913a5cd",
+  "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+  "checks": [
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/build.json",
+      "step": "build",
+      "command": [
+        "pnpm",
+        "build"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:29:59.1368021Z",
+      "head": "43420652fa9604ee137c656693065b619a1dfd34",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:30:14.3542159Z",
+      "exitCode": 0,
+      "logSha256": "677dbd95ca2cdfaf3c8101baaeb2e82208ddd3414f673f003931af9b62e77ee2"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/bytes.json",
+      "step": "bytes",
+      "command": [
+        "python",
+        "reports/P5-21/review_vectors.py",
+        "--base",
+        "origin/main"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:55:24.7132489Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:55:25.2800470Z",
+      "exitCode": 0,
+      "logSha256": "a5e944816d2200426918458890843e880c2d3d36cdf2e846db1b4cf3eb7c0b5d"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/clippy.json",
+      "step": "clippy",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "clippy",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "-j",
+        "1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:05:21.0804039Z",
+      "head": "43420652fa9604ee137c656693065b619a1dfd34",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:05:24.3890632Z",
+      "exitCode": 0,
+      "logSha256": "64fc37a169616b57f291c8593a3d54cd99829862f535c79cea3b437bd28b4cb8"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/compatibility.json",
+      "step": "compatibility",
+      "command": [
+        "python",
+        "core/contracts/check_compat.py",
+        "--ref",
+        "origin/main"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:55:22.1970981Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:55:24.0564103Z",
+      "exitCode": 0,
+      "logSha256": "a81c986a7f48428e694551538027a11824b591583649939c12f5795f4455e7bc"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/contracts.json",
+      "step": "contracts",
+      "command": [
+        "pnpm",
+        "test:core-contracts"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:30:15.5342890Z",
+      "head": "43420652fa9604ee137c656693065b619a1dfd34",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:32:30.2903590Z",
+      "exitCode": 0,
+      "logSha256": "18a486b93de1f4a4afdf0b0aa9d4054bed047f93ba0acea14432445895e1135b"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/drive-mypy.json",
+      "step": "drive-mypy",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "workers/drive",
+        "--locked",
+        "mypy",
+        "--strict",
+        "workers/drive/src",
+        "workers/drive/tests"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:56:04.8832527Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:56:05.5801963Z",
+      "exitCode": 0,
+      "logSha256": "0c37c4158c91ef55c724ba017bf6465f26018199badb08e3ff13f98acdf056c2"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/drive-pytest.json",
+      "step": "drive-pytest",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "workers/drive",
+        "--locked",
+        "pytest",
+        "workers/drive/tests"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:46:23.6407430Z",
+      "head": "2fa1bc9b575dd2aaad04921a6968bc5fc913a5cd",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:46:24.5599562Z",
+      "exitCode": 0,
+      "logSha256": "bf0af7be65971617ef455429db3a2a90b3d38643b01ffd1ae603b409a07c7bb8"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/drive-ruff.json",
+      "step": "drive-ruff",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "workers/drive",
+        "--locked",
+        "ruff",
+        "check",
+        "workers/drive/src",
+        "workers/drive/tests",
+        "workers/drive/generated"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:56:04.0269428Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:56:04.2623737Z",
+      "exitCode": 0,
+      "logSha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/fmt.json",
+      "step": "fmt",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "fmt",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:55:27.1305343Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:55:27.7865446Z",
+      "exitCode": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/generate.json",
+      "step": "generate",
+      "command": [
+        "python",
+        "core/contracts/generate.py",
+        "--check"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:53:56.5188681Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:53:57.1542525Z",
+      "exitCode": 0,
+      "logSha256": "f195b1a68a485d5b6c678cc59ed2fb83e02720685dcf2ab0ea04bdc86f077b9c"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/inputs.json",
+      "step": "inputs",
+      "command": [
+        "python",
+        "reports/P5-34/check_retention_inputs.py"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:55:26.0169391Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:55:26.5225919Z",
+      "exitCode": 0,
+      "logSha256": "3b0c8512414c83f440dc8844b98d461b246f78d4620d9fb402e23db4c553191e"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/irl-mypy.json",
+      "step": "irl-mypy",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "workers/irl",
+        "--locked",
+        "mypy",
+        "--strict",
+        "workers/irl/src",
+        "workers/irl/tests"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:56:02.7763546Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:56:03.4952714Z",
+      "exitCode": 0,
+      "logSha256": "0c37c4158c91ef55c724ba017bf6465f26018199badb08e3ff13f98acdf056c2"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/irl-pytest.json",
+      "step": "irl-pytest",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "workers/irl",
+        "--locked",
+        "pytest",
+        "workers/irl/tests"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:46:21.0350325Z",
+      "head": "2fa1bc9b575dd2aaad04921a6968bc5fc913a5cd",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:46:22.4394316Z",
+      "exitCode": 0,
+      "logSha256": "7afb1433817e77a16f9efa5ec55b600ebd6f39d05b8dad70ef5a39f3dae955cc"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/irl-ruff.json",
+      "step": "irl-ruff",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "workers/irl",
+        "--locked",
+        "ruff",
+        "check",
+        "workers/irl/src",
+        "workers/irl/tests",
+        "workers/irl/generated"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:56:01.9662565Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:56:02.2273718Z",
+      "exitCode": 0,
+      "logSha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/lint.json",
+      "step": "lint",
+      "command": [
+        "pnpm",
+        "lint"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:55:28.3359937Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:55:57.8426779Z",
+      "exitCode": 0,
+      "logSha256": "cc5a0b39c7052d24c24888403c48018b4fcccc9d799f81be6c9c30c9e19c85fc"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/model-adapter-mypy.json",
+      "step": "model-adapter-mypy",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "workers/model-adapter",
+        "--locked",
+        "mypy",
+        "--strict",
+        "workers/model-adapter/src",
+        "workers/model-adapter/tests"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:56:06.9178965Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:56:07.5863171Z",
+      "exitCode": 0,
+      "logSha256": "0c37c4158c91ef55c724ba017bf6465f26018199badb08e3ff13f98acdf056c2"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/model-adapter-pytest.json",
+      "step": "model-adapter-pytest",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "workers/model-adapter",
+        "--locked",
+        "pytest",
+        "workers/model-adapter/tests"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:46:25.5951847Z",
+      "head": "2fa1bc9b575dd2aaad04921a6968bc5fc913a5cd",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:46:26.4335344Z",
+      "exitCode": 0,
+      "logSha256": "f8920be3c73948440940695aa5e8f5e90d81c9c90f1b88ea6865a682444f3eae"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/model-adapter-ruff.json",
+      "step": "model-adapter-ruff",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "workers/model-adapter",
+        "--locked",
+        "ruff",
+        "check",
+        "workers/model-adapter/src",
+        "workers/model-adapter/tests",
+        "workers/model-adapter/generated"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:56:06.1081851Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:56:06.3446810Z",
+      "exitCode": 0,
+      "logSha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/mypy.json",
+      "step": "mypy",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "core/contracts",
+        "--locked",
+        "mypy",
+        "--strict",
+        "core/contracts/generate.py",
+        "core/contracts/fixture_inputs.py",
+        "core/contracts/fixture_retention.py",
+        "core/contracts/adversarial.py",
+        "core/contracts/verify.py",
+        "core/contracts/check_compat.py",
+        "core/contracts/freeze_vectors.py",
+        "workers/irl/generated/echo"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:55:59.9493039Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:56:01.3561926Z",
+      "exitCode": 0,
+      "logSha256": "99774ae94d9c061d2ee8a3c00a79bb1c6dfd2b0998f7cb389be50e19a0dc7d15"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/ruff.json",
+      "step": "ruff",
+      "command": [
+        "uv",
+        "run",
+        "--project",
+        "core/contracts",
+        "--locked",
+        "ruff",
+        "check",
+        "core/contracts",
+        "workers/irl/generated/echo",
+        "workers/drive/generated/echo",
+        "workers/model-adapter/generated/echo"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T10:55:58.3948346Z",
+      "head": "341815994c5a1a50667ed38d23baa87258edcfa1",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T10:55:59.3725732Z",
+      "exitCode": 0,
+      "logSha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/storage.json",
+      "step": "storage",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "-p",
+        "core-store",
+        "--locked",
+        "-j",
+        "1",
+        "p534_",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:02:32.1363564Z",
+      "head": "2c970acdb54c1046c125d12f8217af4c2a8f6851",
+      "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:02:55.1563351Z",
+      "exitCode": 101,
+      "logSha256": "e9d60828c2c2c93da211d01cad3727360f094b2797e06976ae53aea94e12863d"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/test.json",
+      "step": "test",
+      "command": [
+        "pnpm",
+        "test"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:29:48.4945047Z",
+      "head": "43420652fa9604ee137c656693065b619a1dfd34",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:29:58.0184554Z",
+      "exitCode": 0,
+      "logSha256": "cc5073d79cd77ecf4ef93797c2d4b003570a57b8df30a4a9d02c9995fd3001ed"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/typecheck.json",
+      "step": "typecheck",
+      "command": [
+        "pnpm",
+        "typecheck"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:26:34.6427679Z",
+      "head": "43420652fa9604ee137c656693065b619a1dfd34",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:26:51.6121765Z",
+      "exitCode": 0,
+      "logSha256": "5a3973f79ed9becd5f23c4feff467513814de7ea381d75a4d2e339aa8b8edca9"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/workspace-without-storage.json",
+      "step": "workspace-without-storage",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--exclude",
+        "core-store",
+        "--locked",
+        "-j",
+        "1",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:45:59.5238572Z",
+      "head": "2fa1bc9b575dd2aaad04921a6968bc5fc913a5cd",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:46:19.9072581Z",
+      "exitCode": 0,
+      "logSha256": "e0ee8f8247ce2b36d4ac97d247f4c843baf20f3826a23f4915d1ff87eb7c8d6e"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-01/workspace.json",
+      "step": "workspace",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "-j",
+        "1",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:05:25.4330432Z",
+      "head": "43420652fa9604ee137c656693065b619a1dfd34",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:26:33.3296474Z",
+      "exitCode": 0,
+      "logSha256": "ea92dd4df00d68bd7c89c90723db032a38cbf81eea52d7b2af16f55a7ba979b2"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-02/clippy.json",
+      "step": "clippy",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "clippy",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "-j",
+        "1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:45:55.7061160Z",
+      "head": "2fa1bc9b575dd2aaad04921a6968bc5fc913a5cd",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:45:57.9531766Z",
+      "exitCode": 0,
+      "logSha256": "71f6fd8adcd381badcc74e268fb0cdba07998b68644bc56a5fe9d8c126e89226"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-02/compatibility.json",
+      "step": "compatibility",
+      "command": [
+        "python",
+        "core/contracts/check_compat.py",
+        "--ref",
+        "origin/main"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:36:18.8045621Z",
+      "head": "2fa1bc9b575dd2aaad04921a6968bc5fc913a5cd",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:36:21.1222466Z",
+      "exitCode": 0,
+      "logSha256": "a81c986a7f48428e694551538027a11824b591583649939c12f5795f4455e7bc"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-02/fmt.json",
+      "step": "fmt",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "fmt",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:12:44.5868697Z",
+      "head": "43420652fa9604ee137c656693065b619a1dfd34",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:12:44.9897045Z",
+      "exitCode": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "metadata": "reports/P5-34/verification/protected-20261026/attempt-02/storage.json",
+      "step": "storage",
+      "command": [
+        "cargo",
+        "+1.99.0",
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "-p",
+        "core-store",
+        "--locked",
+        "-j",
+        "1",
+        "p534_",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "D:\\Dev\\nemu-wt\\P5-34",
+      "start": "2026-10-26T11:03:50.4568954Z",
+      "head": "43420652fa9604ee137c656693065b619a1dfd34",
+      "main": "86779b1eae4760c6e91d05d67ef780c51bf20a26",
+      "target": "D:\\Dev\\cache\\P5-34\\target",
+      "temp": "D:\\Dev\\cache\\P5-34\\tmp",
+      "jobs": 1,
+      "testThreads": 1,
+      "end": "2026-10-26T11:04:19.4799219Z",
+      "exitCode": 0,
+      "logSha256": "df3a7d34947068f1241907809cdd8ee7d18dd38f5e60fdc7c97f2a475392050b"
+    }
+  ],
+  "goldenVectors": {
+    "legal": {
+      "total": 464,
+      "v3": {
+        "EvidenceAllocationV3": 6,
+        "TendencyV3": 5,
+        "EvidenceGroupV3": 4,
+        "RSnapshotV3": 4
+      },
+      "sha256": "e09d8954515794845d3c35dedf263039738c06f4abadb5c01dae9e0a01c6317a"
+    },
+    "illegal": {
+      "total": 492,
+      "v3": {
+        "EvidenceAllocationV3": 10,
+        "TendencyV3": 11,
+        "EvidenceGroupV3": 7,
+        "RSnapshotV3": 7
+      },
+      "sha256": "5bba963d2ce53d59b68f5b0f145af354f74f3935711e83bda09cec6fa0ac755d"
+    },
+    "unicode": {
+      "total": 18,
+      "v3": {
+        "EvidenceAllocationV3": 0,
+        "TendencyV3": 0,
+        "EvidenceGroupV3": 0,
+        "RSnapshotV3": 0
+      },
+      "sha256": "ed95319c94362c16204c5ed9c547f9a563e1c826b2a2cb8f89250f70dc821c91"
+    }
+  },
+  "unchangedP532Baseline": {
+    "core/contracts/baselines/p5-32/base.proto": "a2bfda9f40a34c9493c756969efeca931b8ecf7cc3446b7d5b1e7e6530341eb5",
+    "core/contracts/baselines/p5-32/golden.json": "d4ec052550c709c302b35c9e0513fc7a73b48177dbfcb1ba19e996f6e3a55056",
+    "core/contracts/baselines/p5-32/growth.proto": "175c525bc42f95e394a9a80a91b0affee0a11d96b13de0137cf5c8ad9bdc92b3",
+    "core/contracts/baselines/p5-32/law.proto": "0c7a72be570bd3fa80804b24be0137f9a20028bc513f97397937f0545db0e484",
+    "core/contracts/baselines/p5-32/ledger.proto": "07ccba7b3a45fc6381c9489cbab906efc0a3f9960c5b9a9b755f70e5c204d71e",
+    "core/contracts/baselines/p5-32/records.proto": "39cae58297fe4e8aa115cc3958695159843f5ea7ec85f11e877869d3cd648d4d",
+    "core/contracts/baselines/p5-32/state.proto": "30a04a89a2b0ff6747a8f9409ecd01f5d02f2f2f163ce935a8fd27b85028a67f",
+    "core/contracts/baselines/p5-32/terminal.proto": "abc7994d010931dd52765ccebf03b822351be21db61366e14ee5c08b808f8745"
+  },
+  "sourceSha256": {
+    "core/contracts/check_retention_browser.ts": "b4d90df9f16af54e6b72d0f8e5e3d8e7551aad71034ae331ee4391943a28e2b2",
+    "core/contracts/fixture_inputs.py": "94f9057530ae7797e6c734b78875bea89d43f9df3648ba49ab8eec916187bd07",
+    "core/contracts/fixture_retention.py": "84a283b346c121e27ad9458959817d7f8845aa74b83d11abf5a63c0bfa9b156d",
+    "core/contracts/generate.py": "d601a3923e601b3e4d83fead0e498a92860855decbbe25ed98a4a3fcf3330711",
+    "core/contracts/generated/schema.json": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643",
+    "core/contracts/golden/illegal.json": "5bba963d2ce53d59b68f5b0f145af354f74f3935711e83bda09cec6fa0ac755d",
+    "core/contracts/golden/legal.json": "e09d8954515794845d3c35dedf263039738c06f4abadb5c01dae9e0a01c6317a",
+    "core/contracts/law.proto": "1ee4819470af77110384091c8f51dad32dd5952df302a28ccf18d0a1949f5310",
+    "core/contracts/templates/python/runtime.py": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8",
+    "core/contracts/templates/typescript/browser.ts": "562cdacb162ff7d33c29fef46073b2029d3d62508e8bc17879d8993b4313ca04",
+    "core/contracts/templates/typescript/runtime.ts": "4d6d120ad37a3990f46edff2395651b6440c6fc43752c44ded21644d325b2916",
+    "core/contracts/test_retention_schema.py": "9b8ddf4f385a8af1a6d3ee4260d72d440f7168973df33a90bf7e6e2a67e32767",
+    "core/contracts/verify.py": "6f7218073af68028679075844630d53db857f4e35dcefd7d48c07986614e9c61",
+    "core/crates/core-store/src/lib.rs": "e58b22e2c611fbe2c7dda169a6e28029c09eaa2c0eb762600321b3fc2e99bd19",
+    "core/crates/core-store/src/objects.rs": "0621721674ec8cb26a50b64c4c0e0ad4f9ce30e2fb4ddf3697e8daf965f8148d",
+    "core/crates/core-store/src/publication.rs": "10ea5ab62011c70f993304e7360e344167b7243d8daf70f0d1dd564d3d33d1ea",
+    "core/crates/core-store/src/queries.rs": "403bf9080944e1c9d8b806d500adce03389b4620493745f9ed6a95aaace4bb2d",
+    "core/crates/core-store/src/store.rs": "1740b53159ae1dac98786fca3601e7f56180989b2cb2f57ecf8a71a6cd19c59d",
+    "core/crates/core-store/src/tests/crash.rs": "6ca19ffc7c6199f0dbb1462e76dd684c3838efe5aedd8d4b22a1410ebfcc492e",
+    "core/crates/core-store/src/tests/crash_harness.rs": "15540e429fde34f5944fc4b0ed377b3ddf7a34ef773e6bb9c73915c5048898de",
+    "core/crates/core-store/src/tests/legacy_v2.rs": "698d6a946c82731223e53a5edcda85be93f13729234cd096c054f5516d579e93",
+    "core/crates/core-store/src/tests/mod.rs": "f7bb95c3409970bf60e92517921550d94365c9224df74444a6f022feebb02bf9",
+    "core/crates/core-store/src/tests/objects.rs": "0577d53d2fac31e625ab5cecb3a5a44656a4ea8a73ed678aa677d7021560ed63",
+    "core/crates/core-store/src/tests/retention_versions.rs": "8ebcec2378657add223836ca722cac141f88342080c84df324501bf9e0e80f4e",
+    "core/crates/core-store/src/transaction.rs": "57a9186fe0f0bfb9bc7905d4daefe39aeb8631902cd33f697c971be1e5ffbd5a",
+    "core/crates/core-types/Cargo.toml": "285d0886d9f6d7ea090dbc303595722e6c1e48ff7df1be5f7e519859e77f21d7",
+    "core/crates/core-types/src/contract.rs": "a41776c05455a23be90531d368f2ccf59a0767bc57a473ac12a95201fa56e43a",
+    "core/crates/core-types/src/generated.rs": "d43a054c3a1e926306b0a14ee72aed333128882a4ab8c3572b1d9f20acfbd2d5",
+    "core/crates/core-types/src/semantic.rs": "b0e69d5da19cf904d4579ebd47b30240bedf03b67fb51b27bf508494056dd000",
+    "core/crates/core-types/tests/p5_32_contract.rs": "3f3c025ea4fb315ec5e2239d342a0b0ceb88e87a5d4cb8b7e888fef5a04dcda6",
+    "core/crates/core-types/tests/p5_34_contract.rs": "ee03728a0b28cd0e6c04a4f2fd7730bc7b5fc5a5da034dd8cc80b7caac670db0",
+    "core/crates/core-types/tests/v2_contract.rs": "4a74d8c8f21a03405e15163614a2a622a7d94a91a57c62d744defb5bf28315e6",
+    "packages/contracts/src/generated/echo/browser.ts": "562cdacb162ff7d33c29fef46073b2029d3d62508e8bc17879d8993b4313ca04",
+    "packages/contracts/src/generated/echo/runtime.ts": "4d6d120ad37a3990f46edff2395651b6440c6fc43752c44ded21644d325b2916",
+    "packages/contracts/src/generated/echo/schema.ts": "821ec1b280b9d83b99ccb3828b1a92031c895a8aa7a5c5f267a0167d64c2d4c1",
+    "workers/drive/generated/echo/runtime.py": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8",
+    "workers/drive/generated/echo/schema.json": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643",
+    "workers/drive/generated/echo/types.py": "df0e9856352b1a4e83082246a883adb00ba682b00e7391bc8dcbe6c602d10cd7",
+    "workers/irl/generated/echo/runtime.py": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8",
+    "workers/irl/generated/echo/schema.json": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643",
+    "workers/irl/generated/echo/types.py": "df0e9856352b1a4e83082246a883adb00ba682b00e7391bc8dcbe6c602d10cd7",
+    "workers/model-adapter/generated/echo/runtime.py": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8",
+    "workers/model-adapter/generated/echo/schema.json": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643",
+    "workers/model-adapter/generated/echo/types.py": "df0e9856352b1a4e83082246a883adb00ba682b00e7391bc8dcbe6c602d10cd7"
+  },
+  "generatedParity": {
+    "__init__.py": {
+      "irl": "4675868c7cead76ce236b811c861508eaf5c0f787b55ef2f87f815a313d7bb34",
+      "drive": "4675868c7cead76ce236b811c861508eaf5c0f787b55ef2f87f815a313d7bb34",
+      "model-adapter": "4675868c7cead76ce236b811c861508eaf5c0f787b55ef2f87f815a313d7bb34"
+    },
+    "bridge.py": {
+      "irl": "941bd81b375b2a932cfaa06e715f719fa52164e3ac4ab33112d0c1d87d14bd31",
+      "drive": "941bd81b375b2a932cfaa06e715f719fa52164e3ac4ab33112d0c1d87d14bd31",
+      "model-adapter": "941bd81b375b2a932cfaa06e715f719fa52164e3ac4ab33112d0c1d87d14bd31"
+    },
+    "runtime.py": {
+      "irl": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8",
+      "drive": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8",
+      "model-adapter": "ba8a2cc098d9777204789e4ce43434c2d5bbe39cd085502c60786807b766a7b8"
+    },
+    "typed_api.py": {
+      "irl": "6e99d04c3ecb19e11234b7f7a8ccb3e3bd575f9f5d8beca03a290884508b5888",
+      "drive": "6e99d04c3ecb19e11234b7f7a8ccb3e3bd575f9f5d8beca03a290884508b5888",
+      "model-adapter": "6e99d04c3ecb19e11234b7f7a8ccb3e3bd575f9f5d8beca03a290884508b5888"
+    },
+    "types.py": {
+      "irl": "df0e9856352b1a4e83082246a883adb00ba682b00e7391bc8dcbe6c602d10cd7",
+      "drive": "df0e9856352b1a4e83082246a883adb00ba682b00e7391bc8dcbe6c602d10cd7",
+      "model-adapter": "df0e9856352b1a4e83082246a883adb00ba682b00e7391bc8dcbe6c602d10cd7"
+    },
+    "schema.json": {
+      "irl": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643",
+      "drive": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643",
+      "model-adapter": "25ca05dcedae1433a5a985429979161a0b414b53e7ecd5b4d66ac0462db8b643"
+    }
+  },
+  "coreStoreDiff": [
+    "core/crates/core-store/src/lib.rs",
+    "core/crates/core-store/src/objects.rs",
+    "core/crates/core-store/src/publication.rs",
+    "core/crates/core-store/src/queries.rs",
+    "core/crates/core-store/src/store.rs",
+    "core/crates/core-store/src/tests/crash.rs",
+    "core/crates/core-store/src/tests/crash_harness.rs",
+    "core/crates/core-store/src/tests/legacy_v2.rs",
+    "core/crates/core-store/src/tests/mod.rs",
+    "core/crates/core-store/src/tests/objects.rs",
+    "core/crates/core-store/src/tests/retention_versions.rs",
+    "core/crates/core-store/src/transaction.rs"
+  ],
+  "codeChangesSinceWorkspaceStarted": [
+    "core/crates/core-kernel/src/dynamics/bounds.rs",
+    "core/crates/core-kernel/src/dynamics/detector.rs",
+    "core/crates/core-kernel/src/dynamics/duration.rs",
+    "core/crates/core-kernel/src/dynamics/interval.rs",
+    "core/crates/core-kernel/src/dynamics/mod.rs",
+    "core/crates/core-kernel/src/dynamics/numeric.rs",
+    "core/crates/core-kernel/src/dynamics/tests.rs",
+    "core/crates/core-kernel/src/dynamics/tests/batch4.rs",
+    "core/crates/core-kernel/src/dynamics/tests/binary64.rs",
+    "core/crates/core-kernel/src/dynamics/tests/pure_boundary.rs",
+    "core/crates/core-kernel/src/dynamics/tests/reference.rs",
+    "core/crates/core-kernel/src/dynamics/time.rs",
+    "core/crates/core-kernel/src/dynamics/types.rs",
+    "core/crates/core-kernel/src/dynamics/update.rs",
+    "core/crates/core-kernel/src/lib.rs"
+  ],
+  "historicalEvidence": "Other verification directories are prior runs. resumed-20261026 records PR #95 original failures; older folders and top-level result.json describe closed PR #72. Nothing is overwritten.",
+  "supervisorComparison": {
+    "comparisonHead": "43420652fa9604ee137c656693065b619a1dfd34",
+    "main": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+    "identicalGitBlobs": {
+      "apps/desktop/src/supervisor/index.ts": {
+        "failedHead": "1b05622030c75ae1821b8765965ca1bb46b67881",
+        "baseline": "1b05622030c75ae1821b8765965ca1bb46b67881",
+        "current": "1b05622030c75ae1821b8765965ca1bb46b67881"
+      },
+      "apps/desktop/src/supervisor/low-integrity-launcher.ts": {
+        "failedHead": "ca204c2182b55342ae45c061b2fc3dec26acd443",
+        "baseline": "ca204c2182b55342ae45c061b2fc3dec26acd443",
+        "current": "ca204c2182b55342ae45c061b2fc3dec26acd443"
+      },
+      "apps/desktop/src/supervisor/process-config.ts": {
+        "failedHead": "2c7ad65918ea51ca818f30955602e592e4dd3778",
+        "baseline": "2c7ad65918ea51ca818f30955602e592e4dd3778",
+        "current": "2c7ad65918ea51ca818f30955602e592e4dd3778"
+      },
+      "apps/desktop/src/supervisor/supervised-process.ts": {
+        "failedHead": "9fa6791a258243c5696c87294fc6386559686c45",
+        "baseline": "9fa6791a258243c5696c87294fc6386559686c45",
+        "current": "9fa6791a258243c5696c87294fc6386559686c45"
+      },
+      "apps/desktop/src/supervisor/supervisor.test.ts": {
+        "failedHead": "03fcd3f60c49c4ccff6e50c70c3b0a435fb81f17",
+        "baseline": "03fcd3f60c49c4ccff6e50c70c3b0a435fb81f17",
+        "current": "03fcd3f60c49c4ccff6e50c70c3b0a435fb81f17"
+      },
+      "apps/desktop/src/supervisor/supervisor.ts": {
+        "failedHead": "e476a56f8d8cdaa14f7b84ca1c881e8184fa10e1",
+        "baseline": "e476a56f8d8cdaa14f7b84ca1c881e8184fa10e1",
+        "current": "e476a56f8d8cdaa14f7b84ca1c881e8184fa10e1"
+      },
+      "apps/desktop/src/supervisor/types.ts": {
+        "failedHead": "5513d310697fcca939fc6dfd0bc5e866eb64ee9b",
+        "baseline": "5513d310697fcca939fc6dfd0bc5e866eb64ee9b",
+        "current": "5513d310697fcca939fc6dfd0bc5e866eb64ee9b"
+      },
+      "package.json": {
+        "failedHead": "51cb477cb475e7e97898fa4d455db8ceab3db4a6",
+        "baseline": "51cb477cb475e7e97898fa4d455db8ceab3db4a6",
+        "current": "51cb477cb475e7e97898fa4d455db8ceab3db4a6"
+      },
+      "pnpm-lock.yaml": {
+        "failedHead": "e358806286632b5626452d783c0cbfccaa624c30",
+        "baseline": "e358806286632b5626452d783c0cbfccaa624c30",
+        "current": "e358806286632b5626452d783c0cbfccaa624c30"
+      },
+      "vitest.config.ts": {
+        "failedHead": "e01eaa80f04581e04aa8c4955147e0c41faa200d",
+        "baseline": "e01eaa80f04581e04aa8c4955147e0c41faa200d",
+        "current": "e01eaa80f04581e04aa8c4955147e0c41faa200d"
+      }
+    },
+    "supervisorImports": {
+      "apps/desktop/src/supervisor/index.ts": [
+        "export * from './types.js';",
+        "export * from './low-integrity-launcher.js';",
+        "export * from './supervised-process.js';",
+        "export * from './supervisor.js';"
+      ],
+      "apps/desktop/src/supervisor/low-integrity-launcher.ts": [
+        "import { spawn, type ChildProcess, type SpawnOptions } from 'node:child_process';"
+      ],
+      "apps/desktop/src/supervisor/process-config.ts": [
+        "import { existsSync, readFileSync } from 'node:fs';",
+        "import { resolve } from 'node:path';",
+        "import type { ProcessConfig, HealthCheckConfig } from './types.js';",
+        "import type { DesktopSettings } from '../settings/migrations.js';"
+      ],
+      "apps/desktop/src/supervisor/supervised-process.ts": [
+        "import { spawn, type ChildProcess, type StdioOptions, exec } from 'node:child_process';",
+        "import { existsSync, appendFileSync, mkdirSync } from 'node:fs';",
+        "import { join } from 'node:path';",
+        "import { launchLowIntegrityProcess } from './low-integrity-launcher.js';",
+        "import type { ProcessConfig, ProcessState, ProcessStatus } from './types.js';"
+      ],
+      "apps/desktop/src/supervisor/supervisor.test.ts": [
+        "import { describe, it, expect, afterEach } from 'vitest';",
+        "import { SupervisedProcess, ProcessSupervisor } from './index.js';"
+      ],
+      "apps/desktop/src/supervisor/supervisor.ts": [
+        "import { SupervisedProcess } from './supervised-process.js';",
+        "import { createProcessConfigs } from './process-config.js';",
+        "import type { ProcessConfig, ProcessStatus } from './types.js';",
+        "import type { DesktopSettings } from '../settings/migrations.js';"
+      ],
+      "apps/desktop/src/supervisor/types.ts": []
+    },
+    "baselineRuns": [
+      {
+        "command": [
+          "pnpm",
+          "test"
+        ],
+        "cwd": "D:\\Dev\\nemu-wt\\P5-34-main-check",
+        "head": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "startUtc": "2026-10-26T11:01:37.9336910Z",
+        "resourceGuard": "no Runner.Worker/cargo/rustc/core_store before start",
+        "comparison": "Predeclared 3 full pnpm test runs on unchanged main. Attempts 01-03 exposed scalar argument splatting (vitest run e s t); retained as harness-error evidence. Attempts 04-06 are the corrected fixed-size comparison, not run-until-pass.",
+        "endUtc": "2026-10-26T11:01:44.1227821Z",
+        "exitCode": 0,
+        "logSha256": "ae5e4a98c886dea0c2b17865a2f2953c9d720ae840734e4f245cc1d8d1ceb90a"
+      },
+      {
+        "command": [
+          "pnpm",
+          "test"
+        ],
+        "cwd": "D:\\Dev\\nemu-wt\\P5-34-main-check",
+        "head": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "startUtc": "2026-10-26T11:01:45.3208653Z",
+        "resourceGuard": "no Runner.Worker/cargo/rustc/core_store before start",
+        "comparison": "Predeclared 3 full pnpm test runs on unchanged main. Attempts 01-03 exposed scalar argument splatting (vitest run e s t); retained as harness-error evidence. Attempts 04-06 are the corrected fixed-size comparison, not run-until-pass.",
+        "endUtc": "2026-10-26T11:01:51.2107733Z",
+        "exitCode": 0,
+        "logSha256": "ee802421eb2da23e8381927ffa0e5fdcda4438d454d4b4c9519962bfc20ed8e6"
+      },
+      {
+        "command": [
+          "pnpm",
+          "test"
+        ],
+        "cwd": "D:\\Dev\\nemu-wt\\P5-34-main-check",
+        "head": "b4eb7fd52f848eb042b2446c3f4ebf2416108c6c",
+        "node": "v24.21.0",
+        "pnpm": "12.11.2",
+        "startUtc": "2026-10-26T11:01:52.3375661Z",
+        "resourceGuard": "no Runner.Worker/cargo/rustc/core_store before start",
+        "comparison": "Predeclared 3 full pnpm test runs on unchanged main. Attempts 01-03 exposed scalar argument splatting (vitest run e s t); retained as harness-error evidence. Attempts 04-06 are the corrected fixed-size comparison, not run-until-pass.",
+        "endUtc": "2026-10-26T11:01:58.6009088Z",
+        "exitCode": 0,
+        "logSha256": "16274ea90ee36a67ae76c0e1f938f17d827263b4854464ae927fb3f02b95a85f"
+      }
+    ],
+    "harnessIssue": "main-test-01 through 03 ran vitest run e s t due to scalar splatting. Logs retained; corrected fixed-size runs are 04 through 06. No source test/config change.",
+    "priorFailure": "resumed-20261026/attempt-01/test.log: supervisor.test.ts:199, PID 87292, 579 passed/1 failed; later process exit does not revoke failure.",
+    "ciCoverage": {
+      "ubuntu": "ci.yml root pnpm test; vitest.config.ts includes apps/desktop/src/**/*.test.ts",
+      "windows": "windows.yml runs transport/isolation/e2e/visual and W02; not root pnpm test"
+    },
+    "conclusionBoundary": "Correct main runs did not reproduce the prior failure (3/3 passed). Do not claim a main failure, prove a root cause, or replace original failure with a later pass. Supervisor code, test, config and dependency lock match the failing head; its runtime imports are local supervisor modules and Node built-ins, not retention IDL/Rust storage."
+  },
+  "phasedStorageDecision": "User approved V3 writes, read-only V2 history, explicit V2-head writer rejection. No V2-to-V3 migration now; P5-26 must replay G over H when needed; no separate migration card.",
+  "runtimeAcceptance": {
+    "AC2-08": "not_run; complete G/H replay and migration belong to P5-26 or downstream runtime acceptance",
+    "AC2-19": "not_run; complete G/H replay and migration belong to P5-26 or downstream runtime acceptance",
+    "AC2-21": "not_run; complete G/H replay and migration belong to P5-26 or downstream runtime acceptance",
+    "I23": "not_run; complete G/H replay and migration belong to P5-26 or downstream runtime acceptance",
+    "SYS17": "not_run; complete G/H replay and migration belong to P5-26 or downstream runtime acceptance"
+  }
+}

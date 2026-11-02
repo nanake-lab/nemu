@@ -1,0 +1,301 @@
+{
+  "contrasts": [
+    [
+      "A historian encounters a date with two conflicting citations.",
+      "She consults the original manuscript before concluding.",
+      "She adopts the first citation without resolving the conflict."
+    ],
+    [
+      "A translator encounters an unfamiliar phrase with two possible meanings.",
+      "He examines its source passage before interpreting it.",
+      "He selects the first meaning without examining its source passage."
+    ],
+    [
+      "A curator receives a painting with an uncertain attribution.",
+      "She examines the provenance records before assigning an artist.",
+      "She assigns an artist without examining the provenance records."
+    ],
+    [
+      "An astronomer notices a faint unexplained point in an image.",
+      "He compares a second exposure before classifying the point.",
+      "He classifies the point without comparing a second exposure."
+    ],
+    [
+      "A botanist sees a leaf whose species is ambiguous.",
+      "She examines its vein pattern before identifying the species.",
+      "She identifies the species without examining its vein pattern."
+    ],
+    [
+      "An editor finds two versions of a quotation.",
+      "He opens the cited original before choosing the wording.",
+      "He chooses the wording without opening the cited original."
+    ],
+    [
+      "An archaeologist finds an object of uncertain age.",
+      "She examines the excavation record before dating the object.",
+      "She dates the object without examining the excavation record."
+    ],
+    [
+      "A musician hears a note that could come from two instruments.",
+      "He listens to the isolated recording before identifying the instrument.",
+      "He identifies the instrument without listening to the isolated recording."
+    ],
+    [
+      "A geologist finds a mineral that resembles two known types.",
+      "She measures its hardness before naming the mineral.",
+      "She names the mineral without measuring its hardness."
+    ],
+    [
+      "A lexicographer finds an ambiguous usage in an old letter.",
+      "He reads the surrounding paragraph before defining the usage.",
+      "He defines the usage without reading the surrounding paragraph."
+    ],
+    [
+      "A photographer sees an unexpected patch of color.",
+      "She examines the original negative before explaining the patch.",
+      "She explains the patch without examining the original negative."
+    ],
+    [
+      "A conservator finds an unfamiliar surface on an antique.",
+      "He examines a material sample before describing the surface.",
+      "He describes the surface without examining a material sample."
+    ]
+  ],
+  "cases": [
+    {
+      "id": "stock0",
+      "family": "stock",
+      "missing": true,
+      "context": "Bin S0: restock if and only if current count is below 8. The old estimate was 9; current count is unreported.",
+      "relevant": "read the current bin count",
+      "evidence": "Current count = 6.",
+      "answer_a": "RESTOCK",
+      "answer_b": "KEEP",
+      "correct": "A",
+      "hidden": 6
+    },
+    {
+      "id": "route0",
+      "family": "route",
+      "missing": true,
+      "context": "For parcel R0, choose the faster route. North takes 14 minutes plus today's delay. South takes 19 minutes. The prior delay estimate is 5; today's delay is unreported.",
+      "relevant": "read today's North delay",
+      "evidence": "Today's North delay = 2 minutes.",
+      "answer_a": "NORTH",
+      "answer_b": "SOUTH",
+      "correct": "A",
+      "hidden": 2
+    },
+    {
+      "id": "device0",
+      "family": "device",
+      "missing": true,
+      "context": "For unit D0, select RESET if the current diagnostic is 1; otherwise select RESEAT. The old diagnostic was 1; current diagnostic is unreported.",
+      "relevant": "read the current diagnostic",
+      "evidence": "Current diagnostic = 0.",
+      "answer_a": "RESET",
+      "answer_b": "RESEAT",
+      "correct": "B",
+      "hidden": 0
+    },
+    {
+      "id": "stock1",
+      "family": "stock",
+      "missing": true,
+      "context": "Bin S1: restock if and only if current count is below 9. The old estimate was 8; current count is unreported.",
+      "relevant": "read the current bin count",
+      "evidence": "Current count = 11.",
+      "answer_a": "RESTOCK",
+      "answer_b": "KEEP",
+      "correct": "B",
+      "hidden": 11
+    },
+    {
+      "id": "route1",
+      "family": "route",
+      "missing": true,
+      "context": "For parcel R1, choose the faster route. North takes 15 minutes plus today's delay. South takes 20 minutes. The prior delay estimate is 5; today's delay is unreported.",
+      "relevant": "read today's North delay",
+      "evidence": "Today's North delay = 8 minutes.",
+      "answer_a": "NORTH",
+      "answer_b": "SOUTH",
+      "correct": "B",
+      "hidden": 8
+    },
+    {
+      "id": "device1",
+      "family": "device",
+      "missing": true,
+      "context": "For unit D1, select RESET if the current diagnostic is 1; otherwise select RESEAT. The old diagnostic was 0; current diagnostic is unreported.",
+      "relevant": "read the current diagnostic",
+      "evidence": "Current diagnostic = 1.",
+      "answer_a": "RESET",
+      "answer_b": "RESEAT",
+      "correct": "A",
+      "hidden": 1
+    },
+    {
+      "id": "stock2",
+      "family": "stock",
+      "missing": true,
+      "context": "Bin S2: restock if and only if current count is below 10. The old estimate was 11; current count is unreported.",
+      "relevant": "read the current bin count",
+      "evidence": "Current count = 8.",
+      "answer_a": "RESTOCK",
+      "answer_b": "KEEP",
+      "correct": "A",
+      "hidden": 8
+    },
+    {
+      "id": "route2",
+      "family": "route",
+      "missing": true,
+      "context": "For parcel R2, choose the faster route. North takes 16 minutes plus today's delay. South takes 21 minutes. The prior delay estimate is 5; today's delay is unreported.",
+      "relevant": "read today's North delay",
+      "evidence": "Today's North delay = 2 minutes.",
+      "answer_a": "NORTH",
+      "answer_b": "SOUTH",
+      "correct": "A",
+      "hidden": 2
+    },
+    {
+      "id": "device2",
+      "family": "device",
+      "missing": true,
+      "context": "For unit D2, select RESET if the current diagnostic is 1; otherwise select RESEAT. The old diagnostic was 1; current diagnostic is unreported.",
+      "relevant": "read the current diagnostic",
+      "evidence": "Current diagnostic = 0.",
+      "answer_a": "RESET",
+      "answer_b": "RESEAT",
+      "correct": "B",
+      "hidden": 0
+    },
+    {
+      "id": "stock3",
+      "family": "stock",
+      "missing": true,
+      "context": "Bin S3: restock if and only if current count is below 11. The old estimate was 10; current count is unreported.",
+      "relevant": "read the current bin count",
+      "evidence": "Current count = 13.",
+      "answer_a": "RESTOCK",
+      "answer_b": "KEEP",
+      "correct": "B",
+      "hidden": 13
+    },
+    {
+      "id": "route3",
+      "family": "route",
+      "missing": true,
+      "context": "For parcel R3, choose the faster route. North takes 17 minutes plus today's delay. South takes 22 minutes. The prior delay estimate is 5; today's delay is unreported.",
+      "relevant": "read today's North delay",
+      "evidence": "Today's North delay = 8 minutes.",
+      "answer_a": "NORTH",
+      "answer_b": "SOUTH",
+      "correct": "B",
+      "hidden": 8
+    },
+    {
+      "id": "device3",
+      "family": "device",
+      "missing": true,
+      "context": "For unit D3, select RESET if the current diagnostic is 1; otherwise select RESEAT. The old diagnostic was 0; current diagnostic is unreported.",
+      "relevant": "read the current diagnostic",
+      "evidence": "Current diagnostic = 1.",
+      "answer_a": "RESET",
+      "answer_b": "RESEAT",
+      "correct": "A",
+      "hidden": 1
+    },
+    {
+      "id": "stock4",
+      "family": "stock",
+      "missing": false,
+      "context": "Bin S4: restock if and only if current count is below 12. The current count is 10, already confirmed.",
+      "relevant": "read the current bin count",
+      "evidence": "Current count = 10.",
+      "answer_a": "RESTOCK",
+      "answer_b": "KEEP",
+      "correct": "A",
+      "hidden": 10
+    },
+    {
+      "id": "route4",
+      "family": "route",
+      "missing": false,
+      "context": "For parcel R4, choose the faster route. North takes 18 minutes plus today's delay. South takes 23 minutes. Today's delay is 2, already confirmed.",
+      "relevant": "read today's North delay",
+      "evidence": "Today's North delay = 2 minutes.",
+      "answer_a": "NORTH",
+      "answer_b": "SOUTH",
+      "correct": "A",
+      "hidden": 2
+    },
+    {
+      "id": "device4",
+      "family": "device",
+      "missing": false,
+      "context": "For unit D4, select RESET if the current diagnostic is 1; otherwise select RESEAT. The current diagnostic is 0, already confirmed.",
+      "relevant": "read the current diagnostic",
+      "evidence": "Current diagnostic = 0.",
+      "answer_a": "RESET",
+      "answer_b": "RESEAT",
+      "correct": "B",
+      "hidden": 0
+    },
+    {
+      "id": "stock5",
+      "family": "stock",
+      "missing": false,
+      "context": "Bin S5: restock if and only if current count is below 13. The current count is 15, already confirmed.",
+      "relevant": "read the current bin count",
+      "evidence": "Current count = 15.",
+      "answer_a": "RESTOCK",
+      "answer_b": "KEEP",
+      "correct": "B",
+      "hidden": 15
+    },
+    {
+      "id": "route5",
+      "family": "route",
+      "missing": false,
+      "context": "For parcel R5, choose the faster route. North takes 19 minutes plus today's delay. South takes 24 minutes. Today's delay is 8, already confirmed.",
+      "relevant": "read today's North delay",
+      "evidence": "Today's North delay = 8 minutes.",
+      "answer_a": "NORTH",
+      "answer_b": "SOUTH",
+      "correct": "B",
+      "hidden": 8
+    },
+    {
+      "id": "device5",
+      "family": "device",
+      "missing": false,
+      "context": "For unit D5, select RESET if the current diagnostic is 1; otherwise select RESEAT. The current diagnostic is 1, already confirmed.",
+      "relevant": "read the current diagnostic",
+      "evidence": "Current diagnostic = 1.",
+      "answer_a": "RESET",
+      "answer_b": "RESEAT",
+      "correct": "A",
+      "hidden": 1
+    }
+  ],
+  "orders": [
+    0,
+    1
+  ],
+  "seeds": [
+    0,
+    11,
+    29,
+    47
+  ],
+  "temperature": 0.7,
+  "amplitudes": [
+    1.0,
+    4.0
+  ],
+  "random_directions": [
+    1907,
+    2718
+  ]
+}

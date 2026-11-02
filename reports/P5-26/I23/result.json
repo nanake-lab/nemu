@@ -1,0 +1,14 @@
+{
+  "task": "P5-26",
+  "check": "I23",
+  "status": "incomplete",
+  "mechanism_status": "passed",
+  "evidence": "../verification/test-04/stdout.log",
+  "boundary": "固定种子 1..16 × 24 前缀，384 次、零差异；含暂停、复核、来源更正、新版本及故障/超时。不是完整第二实现或真实 H 接线验收。",
+  "law_scope": "conditional legacy only; ADR0032 successor laws and superseded AC2-25/COG-A12 claims excluded",
+  "test_name_search_keys": [
+    "ac2_08_i23_random_histories_every_prefix_zero_bit_differences",
+    "zero_sign_change_in_projection_invalidates_incremental_cache",
+    "zero_sign_change_in_old_history_is_not_an_immutable_extension"
+  ]
+}

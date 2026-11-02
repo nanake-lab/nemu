@@ -1,0 +1,3 @@
+$ tsc --noEmit
+apps/panel/src/debug/schema-validator.ts(11,14): error TS2741: Property '"stage.readout.v2"' is missing in type '{ 'stage.perform': { cue: { kind: string; value: string; intensity: number; }; }; 'stage.setPhysicalState': { state: string; reason: string; }; 'stage.setPlacement': { displayId: number; anchor: { kind: string; x: number; y: number; }; transitionMs: number; }; ... 7 more ...; 'stage.desktop.update': { ...; }; }' but required in type 'Record<"stage.loadAvatar" | "stage.setPlacement" | "stage.setPhysicalState" | "stage.perform" | "stage.action" | "stage.readout" | "stage.readout.v2" | "stage.event" | "stage.gaze" | "stage.setQuality" | "stage.mic.set" | "stage.desktop.update", Record<...>>'.
+[ELIFECYCLE] Command failed with exit code 2.

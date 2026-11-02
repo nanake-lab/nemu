@@ -1,0 +1,24 @@
+
+running 7 tests
+test recompute::tests::fault_retention::r1_checks_reviews_and_version_changes_do_not_substitute_for_repair ... ok
+test recompute::tests::fault_retention::r1_failed_repair_retains_fault_and_requires_new_bound_repair ... ok
+test recompute::tests::fault_retention::r1_inconsistent_then_ordinary_events_keep_last_good_state ... R1 position=6: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=false
+R1 position=7: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=false
+R1 position=8: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=false
+ok
+test recompute::tests::fault_retention::r1_inconsistent_then_pause_resume_keeps_last_good_state ... R1 position=6: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=true
+R1 position=7: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=true
+R1 position=8: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=false
+ok
+test recompute::tests::fault_retention::r1_math_fault_then_ordinary_events_keep_last_good_state ... R1 position=6: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=false
+R1 position=7: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=false
+R1 position=8: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=false
+ok
+test recompute::tests::fault_retention::r1_math_fault_then_pause_resume_keeps_last_good_state ... R1 position=6: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=true
+R1 position=7: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=true
+R1 position=8: before_theta_events=4, incremental_theta_events=4, replay_theta_events=4, dirty=true, paused=false
+ok
+test recompute::tests::fault_retention::r1_repair_requires_current_fault_binding_and_resumed_growth ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 61 filtered out; finished in 5.14s
+

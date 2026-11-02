@@ -1,0 +1,20 @@
+{
+  "acceptance_id": "AC2-15",
+  "result": "passed",
+  "scope": "P5-10 pure functions and structural fixtures only; runtime integration and behavior qualification excluded",
+  "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "command": "cargo test -p core-kernel --locked --offline",
+  "log": "../review-fixes-2026-10-26/kernel-20261026-131607.log",
+  "log_sha256": "09abdf0392de7d7996ca2ed6f6713df6842adf356ff9d066d7f531a881b37e82",
+  "test_count": 4,
+  "tests": [
+    "fast::tests::ac2_15_contraction_holds_on_intervals_with_events",
+    "fast::tests::ac2_15_without_events_x_relaxes_to_rest",
+    "fast::tests::event_map::ac2_15_zero_delta_direct_event_map_is_nonexpansive",
+    "fast::tests::event_map::direct_event_map_has_independent_reference_with_saturation"
+  ],
+  "fixture": "../../../profiles/structural_fixture/fast/fixture.json",
+  "note": "See REPORT.md and docs/traceability/P5-10.md for properties, tolerances and integration boundaries.",
+  "captured_log_sha256": "3872483fa1f52a0f298ab7fff8d56d94cfe37d7dd19b5164feedba63ebd06eea",
+  "log_sha256_scope": "UTF-8 with LF line endings (repository blob); captured_log_sha256 covers original Windows CRLF bytes."
+}

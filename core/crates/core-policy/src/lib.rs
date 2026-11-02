@@ -1,16 +1,9 @@
 #![forbid(unsafe_code)]
-//! Echo Core policy: frozen scope rules and their interpretation (S 3, 12;
-//! O 3). Pure functions only: no storage, network, clock or model access.
-
-pub mod canonical;
-pub mod catalog;
-pub mod endpoint;
-pub mod error;
-pub mod overlap;
-pub mod scope;
-
-pub use catalog::{Catalog, FieldId, FieldKind, FieldSpec, ScopeLimits};
-pub use endpoint::Endpoint;
-pub use error::PolicyError;
-pub use overlap::{Overlap, overlap};
-pub use scope::{Atom, FieldValue, Scope, ScopeExpr, ScopeMatch};
+//! Echo Core policy crate.
+//!
+//! The v1.0 scope DSL, its field catalog, endpoint whitelist and overlap
+//! check lived here (P5-09). Echo Core v2.0 §15 removed them: an effect of a
+//! learned tendency applies wherever its situation match μ says it applies,
+//! and there is no scope algebra left to interpret (P5-27). The crate is kept
+//! as the home of future pure policy rules so that directory ownership in
+//! AGENTS.md stays stable; it currently exports nothing.

@@ -1,0 +1,26 @@
+{
+  "kind": "primary-agent checked summary of routine_reporter read-only evidence",
+  "workspace": "D:\\Dev\\nemu-wt\\P5-33",
+  "command_family": "PowerShell here-string piped to python -B -; stdlib csv/hashlib/itertools/statistics",
+  "agent_command_exit": 0,
+  "baseline_files": 10,
+  "baseline_sha256_mismatches": 0,
+  "baseline_manifest_only_files": 0,
+  "life": {"rows": 1152, "unique_combinations": 1152, "missing": 0, "extra": 0, "duplicates": 0},
+  "e2": {"rows": 256, "unique_combinations": 256, "missing": 0, "extra": 0, "duplicates": 0},
+  "tapes": {"rows": 25520, "seeds": 16, "rows_per_seed": 1595, "duplicates": 0},
+  "abrupt_five_prediction": {
+    "flips": {"observed": 16, "mean": 13.8125, "sample_sd": 8.588509765960564},
+    "changepoint": {"observed": 16, "mean": 27.5, "sample_sd": 12.263767773404714},
+    "mixture": {"observed": 16, "mean": 21.75, "sample_sd": 11.275341827782134},
+    "fixed": {"observed": 16, "mean": 15.8125, "sample_sd": 7.652613932506983}
+  },
+  "mixture_minus_flips_law_mse_paired_by_seed": {
+    "stable": {"mean": -0.01563793473853847, "se": 0.0006082724616867607},
+    "abrupt": {"mean": -0.011168394391724977, "se": 0.00044384977091965126},
+    "gradual": {"mean": -0.010971646727309048, "se": 0.0003508683281649399},
+    "cycle": {"mean": -0.005287362279174056, "se": 0.0007148964251283816}
+  },
+  "independence_note": "Different worlds reuse the same seeds. No pooled independent-sample significance claim is made.",
+  "judgment": "Mechanical counts and statistics only. Scientific interpretation remains with primary agent."
+}

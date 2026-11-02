@@ -1,0 +1,19 @@
+injection_probe.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.44.35207\include\utility(274): error C2220: 以下警告被视为错误
+C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.44.35207\include\utility(274): warning C4244: “初始化”: 从“_Ty”转换到“_Ty2”，可能丢失数据
+        with
+        [
+            _Ty=int
+        ]
+        and
+        [
+            _Ty2=float
+        ]
+C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.44.35207\include\utility(274): note: 模板实例化上下文(最早的实例化上下文)为
+D:\Dev\nemu-wt\P0-10\spikes\carrier-engine\injection_probe.cpp(150): note: 查看对正在编译的函数 模板 实例化“std::pair<const char *,float>::pair<const char(&)[8],int,0>(_Other1,_Other2 &&) noexcept”的引用
+        with
+        [
+            _Other1=const char (&)[8],
+            _Other2=int
+        ]
+D:\Dev\nemu-wt\P0-10\spikes\carrier-engine\injection_probe.cpp(150): note: 请参阅 "main" 中对 "std::pair<const char *,float>::pair" 的第一个引用

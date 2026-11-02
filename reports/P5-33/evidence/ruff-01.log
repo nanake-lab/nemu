@@ -1,0 +1,49 @@
+F401 [*] `math` imported but unused
+  --> reports\P5-33\check_properties.py:8:8
+   |
+ 6 | import itertools
+ 7 | import json
+ 8 | import math
+   |        ^^^^
+ 9 | import random
+10 | from pathlib import Path
+   |
+help: Remove unused import: `math`
+
+F401 [*] `integration.bits` imported but unused
+  --> reports\P5-33\check_properties.py:13:71
+   |
+12 | from detectors import METHODS, ChangePoint, make_detector
+13 | from integration import Controlled, Event, ResearchEngine, Reference, bits
+   |                                                                       ^^^^
+14 | from law_v2_event_checks import oracle_counterfactual
+15 | from law_v2_model import NumericFault, exact_shares
+   |
+help: Remove unused import: `integration.bits`
+
+F401 [*] `law_v2_events.Event` imported but unused
+  --> reports\P5-33\integration.py:12:27
+   |
+10 | sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "echo-core-v2-draft"))
+11 | from law_v2_events import Engine as ReferenceEngine  # noqa: E402
+12 | from law_v2_events import Event  # noqa: E402
+   |                           ^^^^^
+13 | from law_v2_model import Tendency as Reference  # noqa: E402
+14 | from law_v2_model import bits  # noqa: E402
+   |
+help: Remove unused import: `law_v2_events.Event`
+
+F401 [*] `sys` imported but unused
+  --> reports\P5-33\run_study.py:14:8
+   |
+12 | import platform
+13 | import statistics
+14 | import sys
+   |        ^^^
+15 | from pathlib import Path
+16 | from typing import TypeAlias
+   |
+help: Remove unused import: `sys`
+
+Found 4 errors.
+[*] 4 fixable with the `--fix` option.

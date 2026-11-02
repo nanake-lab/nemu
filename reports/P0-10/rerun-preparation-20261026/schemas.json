@@ -1,0 +1,659 @@
+{
+  "wire": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schemaVersion",
+      "sourceRef",
+      "nodes"
+    ],
+    "properties": {
+      "schemaVersion": {
+        "const": "p0-08-candidate-v1"
+      },
+      "sourceRef": {
+        "type": "string",
+        "pattern": "^p0-08-[0-9]{4}$"
+      },
+      "nodes": {
+        "type": "array",
+        "items": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/refCandidate"
+            },
+            {
+              "$ref": "#/$defs/claimCandidate"
+            },
+            {
+              "$ref": "#/$defs/actCandidate"
+            }
+          ]
+        }
+      }
+    },
+    "$defs": {
+      "refCandidate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceRefs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "sourceSpan": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "derivation": {
+            "enum": [
+              "verbatim",
+              "normalized",
+              "resolved",
+              "inferred"
+            ]
+          },
+          "epistemicType": {
+            "enum": [
+              "user_assertion",
+              "user_self_report",
+              "quotation",
+              "tool_output",
+              "system_record",
+              "model_inference",
+              "unknown"
+            ]
+          },
+          "resolutionState": {
+            "enum": [
+              "resolved",
+              "unresolved",
+              "provisional"
+            ]
+          },
+          "representationVersion": {
+            "const": "p0-08-candidate-v1"
+          },
+          "kind": {
+            "const": "Ref"
+          },
+          "mention": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "sourceRefs",
+          "sourceSpan",
+          "derivation",
+          "epistemicType",
+          "resolutionState",
+          "representationVersion",
+          "kind",
+          "mention"
+        ]
+      },
+      "claimCandidate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceRefs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "sourceSpan": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "derivation": {
+            "enum": [
+              "verbatim",
+              "normalized",
+              "resolved",
+              "inferred"
+            ]
+          },
+          "epistemicType": {
+            "enum": [
+              "user_assertion",
+              "user_self_report",
+              "quotation",
+              "tool_output",
+              "system_record",
+              "model_inference",
+              "unknown"
+            ]
+          },
+          "resolutionState": {
+            "enum": [
+              "resolved",
+              "unresolved",
+              "provisional"
+            ]
+          },
+          "representationVersion": {
+            "const": "p0-08-candidate-v1"
+          },
+          "kind": {
+            "const": "Claim"
+          },
+          "predicateLabel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "role",
+                "value"
+              ],
+              "properties": {
+                "role": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "value": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "polarity": {
+            "enum": [
+              "positive",
+              "negative"
+            ]
+          },
+          "modality": {
+            "enum": [
+              "asserted",
+              "possible",
+              "conditional",
+              "desired",
+              "reported",
+              "unknown"
+            ]
+          },
+          "time": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "sourceRefs",
+          "sourceSpan",
+          "derivation",
+          "epistemicType",
+          "resolutionState",
+          "representationVersion",
+          "kind",
+          "predicateLabel",
+          "roles",
+          "value",
+          "polarity",
+          "modality",
+          "time"
+        ]
+      },
+      "actCandidate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceRefs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "sourceSpan": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "derivation": {
+            "enum": [
+              "verbatim",
+              "normalized",
+              "resolved",
+              "inferred"
+            ]
+          },
+          "epistemicType": {
+            "enum": [
+              "user_assertion",
+              "user_self_report",
+              "quotation",
+              "tool_output",
+              "system_record",
+              "model_inference",
+              "unknown"
+            ]
+          },
+          "resolutionState": {
+            "enum": [
+              "resolved",
+              "unresolved",
+              "provisional"
+            ]
+          },
+          "representationVersion": {
+            "const": "p0-08-candidate-v1"
+          },
+          "kind": {
+            "const": "Act"
+          },
+          "actType": {
+            "enum": [
+              "request",
+              "question",
+              "correction",
+              "commitment",
+              "quotation",
+              "other"
+            ]
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sourceRefs",
+          "sourceSpan",
+          "derivation",
+          "epistemicType",
+          "resolutionState",
+          "representationVersion",
+          "kind",
+          "actType",
+          "content"
+        ]
+      }
+    }
+  },
+  "compact": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "v",
+      "s",
+      "n"
+    ],
+    "properties": {
+      "v": {
+        "const": 1
+      },
+      "s": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9999
+      },
+      "n": {
+        "type": "array",
+        "items": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/n0"
+            },
+            {
+              "$ref": "#/$defs/n1"
+            },
+            {
+              "$ref": "#/$defs/n2"
+            }
+          ]
+        }
+      }
+    },
+    "$defs": {
+      "n0": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "i",
+          "f",
+          "b",
+          "d",
+          "e",
+          "q",
+          "k",
+          "m"
+        ],
+        "properties": {
+          "i": {
+            "type": "string",
+            "minLength": 1
+          },
+          "f": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "b": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "d": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "e": {
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "q": {
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "k": {
+            "const": 0
+          },
+          "m": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "n1": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "i",
+          "f",
+          "b",
+          "d",
+          "e",
+          "q",
+          "k",
+          "p",
+          "r",
+          "v",
+          "o",
+          "m",
+          "t"
+        ],
+        "properties": {
+          "i": {
+            "type": "string",
+            "minLength": 1
+          },
+          "f": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "b": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "d": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "e": {
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "q": {
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "k": {
+            "const": 1
+          },
+          "p": {
+            "type": "string",
+            "minLength": 1
+          },
+          "r": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "k",
+                "v"
+              ],
+              "properties": {
+                "k": {
+                  "type": "string"
+                },
+                "v": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "v": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "o": {
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "m": {
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "t": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "n2": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "i",
+          "f",
+          "b",
+          "d",
+          "e",
+          "q",
+          "k",
+          "a",
+          "c"
+        ],
+        "properties": {
+          "i": {
+            "type": "string",
+            "minLength": 1
+          },
+          "f": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "b": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "d": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "e": {
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "q": {
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "k": {
+            "const": 2
+          },
+          "a": {
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "c": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

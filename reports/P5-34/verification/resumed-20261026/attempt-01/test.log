@@ -1,0 +1,47 @@
+$ vitest run
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P5-34
+
+stderr | apps/desktop/src/supervisor/supervisor.test.ts > SupervisedProcess Exponential Backoff and Restart > detects hung process missing heartbeats and restarts it without leaving orphan processes
+[Supervisor] Process hung-process failed health check (stdout-heartbeat). Killing process tree for restart.
+
+stderr | apps/desktop/src/supervisor/supervisor.test.ts > SupervisedProcess Exponential Backoff and Restart > detects hung process missing heartbeats and restarts it without leaving orphan processes
+[Supervisor] Process hung-process failed health check (stdout-heartbeat). Killing process tree for restart.
+
+ ❯ apps/desktop/src/supervisor/supervisor.test.ts (6 tests | 1 failed) 5959ms
+   ❯ SupervisedProcess Exponential Backoff and Restart (6)
+     × detects hung process missing heartbeats and restarts it without leaving orphan processes 1677ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/desktop/src/supervisor/supervisor.test.ts > SupervisedProcess Exponential Backoff and Restart > detects hung process missing heartbeats and restarts it without leaving orphan processes
+AssertionError: expected [ 87292 ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   87292,
++ ]
+
+ ❯ apps/desktop/src/supervisor/supervisor.test.ts:199:24
+    197|     // Verify 0 orphan processes remain from all observed children
+    198|     const leakedPids = Array.from(observedPids).filter(isPidAlive);
+    199|     expect(leakedPids).toEqual([]);
+       |                        ^
+    200|   });
+    201|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 51 passed (52)
+      Tests  1 failed | 579 passed (580)
+   Start at  13:15:33
+   Duration  7.23s (import 39%, tests 35%, transform 23%, worker 2%)
+
+    Isolate  52 workers spawned · ~495ms startup each (spawn + environment, per file)
+             at least ~1.22s faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Test failed. See above for more details.

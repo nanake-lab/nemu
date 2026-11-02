@@ -6,3 +6,4 @@ export * from './L2-procedural.js';
 export * from './L3-face.js';
 export * from './L4-secondary.js';
 export * from './compositor.js';
+export * from './readout-mapping.js';

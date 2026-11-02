@@ -9,8 +9,12 @@ mod atomic;
 mod crash;
 mod crash_harness;
 mod isolation;
+mod legacy_v2;
 mod objects;
 mod reader;
+mod retention_versions;
+mod terminal_ingress;
+mod theta;
 fn normal() -> DegradedStatus {
     DegradedStatus {
         schema_version: 1,
@@ -135,13 +139,13 @@ fn proposal<L: LineageKind>(
         )
         .unwrap()
         .revision;
-        binding.r_revision = RSnapshotV2::from_canonical(
+        binding.r_revision = RSnapshotV3::from_canonical(
             &store.objects.read(&old.staged_r).unwrap(),
             config().encoding,
         )
         .unwrap()
         .revision;
-        binding.theta_revision = ThetaSnapshot::from_canonical(
+        binding.theta_revision = ThetaSnapshotV2::from_canonical(
             &store.objects.read(&old.staged_theta).unwrap(),
             config().encoding,
         )
@@ -163,13 +167,13 @@ fn proposal<L: LineageKind>(
     binding.read_set.dedup();
     let ticket = store.bind(binding.clone()).unwrap();
     let mut pins = vec![leaf];
+    let mut theta: ThetaSnapshotV2 = fixture();
     let law: LawVersion = with_refs(pins[0].reference());
-    pins.push(store.prepare(&law, "1").unwrap());
-    let mut r: RSnapshotV2 = with_refs(pins[0].reference());
+    pins.push(store.prepare(&law, &theta.parameters.law_id).unwrap());
+    let mut r: RSnapshotV3 = with_refs(pins[0].reference());
     r.revision = format!("r-{n}");
     r.law_version = pins[1].reference().clone();
     pins.push(store.prepare_r(&r).unwrap());
-    let mut theta: ThetaSnapshot = with_refs(pins[0].reference());
     theta.revision = format!("theta-{n}");
     theta.law_version = pins[1].reference().clone();
     pins.push(store.prepare(&theta, "1").unwrap());

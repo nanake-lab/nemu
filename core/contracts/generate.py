@@ -140,6 +140,11 @@ def schema(directory: Path = HERE) -> dict[str, Any]:
                 file=path.name,
                 rules=json.loads(rules[0]) if rules else {},
             )
+            retained = re.findall(r"// @retains (\w+)", body)
+            if retained:
+                messages[name]["retains"] = retained[0]
+            if "// @transient" in body:
+                messages[name]["transient"] = True
             if re.search(r"// @resource\s*$", body, re.MULTILINE):
                 messages[name]["resource"] = True
             if messages[name]["rules"].get("cases"):
@@ -175,6 +180,15 @@ def schema(directory: Path = HERE) -> dict[str, Any]:
     assert len({m["tag"] for m in messages.values()}) == len(messages)
     scalars = {"uint32", "uint64", "sint64", "double", "bool", "string", "bytes"}
     for m in messages.values():
+        # Numeric cross-field rules are explicit IDL metadata, on required doubles only.
+        numeric = {
+            f["name"]
+            for f in m["fields"]
+            if f["type"] == "double" and f["required"] and not f["repeated"]
+        }
+        assert set(m["rules"].get("positive", [])) <= numeric
+        absolute = m["rules"].get("at_least_abs", {})
+        assert set(absolute) | set(absolute.values()) <= numeric
         for f in m["fields"]:
             assert f["type"] in scalars | messages.keys() | enums.keys(), f
         by = m.get("superseded", {}).get("by", "-")
@@ -309,11 +323,18 @@ def outputs(s: dict[str, Any]) -> dict[Path, str]:
             f"/// {m['source']}; frozen tag `{m['tag']}`."
             + (f" {note(gone)}" if gone else "")
             + (f" Supersedes [`{m['supersedes']}`]." if "supersedes" in m else ""),
-            "#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]",
+            "#[derive(Clone, PartialEq, serde::Serialize, serde::Deserialize)]"
+            if m.get("transient")
+            else "#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]",
             "#[serde(deny_unknown_fields)]",
             f"pub struct {name} {{",
         ]
-        py += ["@dataclass(frozen=True)", f"class {name}:"]
+        py += [
+            "@dataclass(frozen=True, repr=False)"
+            if m.get("transient")
+            else "@dataclass(frozen=True)",
+            f"class {name}:",
+        ]
         if gone:
             py += [f"    # {note(gone)}"]
         for f in m["fields"]:
@@ -346,9 +367,14 @@ def outputs(s: dict[str, Any]) -> dict[Path, str]:
             py += [f"    {pname}: {p}"]
         ts += ["}"]
         rust += ["}"]
+        if m.get("transient"):
+            rust += [
+                f'impl std::fmt::Debug for {name} {{fn fmt(&self, f: &mut std::fmt::Formatter<\'_>) -> std::fmt::Result {{f.write_str("{name}([REDACTED])")}}}}'
+            ]
         rust += [
             f'impl super::WireMessage for {name} {{const NAME: &\'static str = "{name}";'
             + (" const SUPERSEDED: bool = true;" if gone else "")
+            + (" const PERSISTABLE: bool = false;" if m.get("transient") else "")
             + "}"
         ]
     ts += (

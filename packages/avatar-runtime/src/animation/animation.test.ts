@@ -208,7 +208,7 @@ describe('P3-01 Animation Runtime (Five Layers)', () => {
       for (let i = 0; i < 60; i++) {
         const val = spring.update(target, 0.016);
         expect(val).toBeGreaterThanOrEqual(prevVal); // Monotonic increase
-        expect(val).toBeLessThanOrEqual(target);      // Zero overshoot
+        expect(val).toBeLessThanOrEqual(target); // Zero overshoot
         prevVal = val;
       }
 
@@ -238,8 +238,14 @@ describe('P3-01 Animation Runtime (Five Layers)', () => {
         THREE.MathUtils.degToRad(10.0),
       );
       const track = new THREE.QuaternionKeyframeTrack('spine.quaternion', times, [
-        qStart.x, qStart.y, qStart.z, qStart.w,
-        qEnd.x, qEnd.y, qEnd.z, qEnd.w,
+        qStart.x,
+        qStart.y,
+        qStart.z,
+        qStart.w,
+        qEnd.x,
+        qEnd.y,
+        qEnd.z,
+        qEnd.w,
       ]);
       const clip = new THREE.AnimationClip('unaligned_loop', 1.0, [track]);
 
@@ -392,11 +398,11 @@ describe('P3-01 Animation Runtime (Five Layers)', () => {
       expect(l1.getState()).toBe('fadingOut');
 
       // Halfway through fade-out (100ms)
-      l1.update(0.10);
+      l1.update(0.1);
       expect(l1.getCurrentWeight()).toBeCloseTo(0.5, 1);
 
       // Complete fade-out (200ms)
-      l1.update(0.10);
+      l1.update(0.1);
       expect(l1.getState()).toBe('idle');
       expect(l1.getCurrentWeight()).toBe(0);
     });
@@ -451,6 +457,8 @@ describe('P3-01 Animation Runtime (Five Layers)', () => {
       // Step to settle initial target
       for (let i = 0; i < 30; i++) l2.update(0.016);
 
+      // Isolate the fixed delay from the v2 tendency to look toward the user.
+      l2.setReadoutParameters({ gazeUserWeight: 0 });
       // Abrupt target change
       l2.setGazeWorldPosition(0.5, 1.45, 2.0);
 
@@ -548,7 +556,7 @@ describe('P3-01 Animation Runtime (Five Layers)', () => {
       expect(l3.getCurrentExpressionCeiling()).toBeLessThan(1.0);
 
       // After 300ms recovery complete
-      l3.update(0.20);
+      l3.update(0.2);
       expect(l3.getCurrentExpressionCeiling()).toBeCloseTo(1.0, 4);
     });
   });
@@ -581,6 +589,86 @@ describe('P3-01 Animation Runtime (Five Layers)', () => {
   });
 
   describe('Animation Compositor', () => {
+    test('v2 stays bounded through 10,800 frames without a base clip, and duplicate apply does not drift', () => {
+      const { vrm, boneNodes } = createMockVRM();
+      const compositor = new AnimationCompositor({ vrm, profile: testProfile });
+      const readout = { version: 'v2-test', facing: 0.5, tension: 1, energy: 1 };
+      for (let i = 0; i < 10800; i++) {
+        compositor.applyReadout(readout);
+        compositor.update(1 / 60);
+        expect(Math.abs(boneNodes.get('hips')!.position.x)).toBeLessThanOrEqual(0.0075);
+        expect(boneNodes.get('spine')!.quaternion.angleTo(new THREE.Quaternion())).toBeLessThan(
+          0.06,
+        );
+      }
+      compositor.applyReadout({ ...readout, tension: 0 });
+      compositor.update(1 / 60);
+      expect(boneNodes.get('spine')!.rotation.x).toBeCloseTo(0, 8);
+      expect(
+        vrm.scene.getObjectByName('earRoot_L')!.quaternion.angleTo(new THREE.Quaternion()),
+      ).toBeCloseTo(0, 8);
+    });
+
+    test('L0 external pose writes survive offset restoration and toggling L2/L4 removes their offsets', () => {
+      const { vrm, boneNodes } = createMockVRM();
+      const compositor = new AnimationCompositor({ vrm, profile: testProfile });
+      compositor.applyReadout({ version: 'v2', facing: 0.5, tension: 1, energy: 0.5 });
+      compositor.update(1 / 60);
+      const spine = boneNodes.get('spine')!;
+      spine.rotation.set(0.2, 0, 0);
+      compositor.setLayerEnabled('L2', false);
+      compositor.setLayerEnabled('L4', false);
+      compositor.update(1 / 60);
+      expect(spine.rotation.x).toBeCloseTo(0.2, 8);
+      expect(
+        vrm.scene.getObjectByName('earRoot_L')!.quaternion.angleTo(new THREE.Quaternion()),
+      ).toBeCloseTo(0, 8);
+    });
+
+    test('facing changes gaze toward user; energy changes breathing phase and sway amplitude', () => {
+      const low = createMockVRM();
+      const high = createMockVRM();
+      const a = new AnimationCompositor({ vrm: low.vrm, profile: testProfile });
+      const b = new AnimationCompositor({ vrm: high.vrm, profile: testProfile });
+      a.setGaze('away');
+      b.setGaze('away');
+      a.applyReadout({ version: 'v2', facing: 0, tension: 0, energy: 0 });
+      b.applyReadout({ version: 'v2', facing: 1, tension: 0, energy: 1 });
+      for (let i = 0; i < 60; i++) {
+        a.update(1 / 60);
+        b.update(1 / 60);
+      }
+      expect(Math.abs(a.l2.getGazeAngles().headYaw)).toBeGreaterThan(
+        Math.abs(b.l2.getGazeAngles().headYaw),
+      );
+      expect(b.l2.getBreathingPhase()).toBeCloseTo(a.l2.getBreathingPhase() * 3, 8);
+      expect(Math.abs(high.boneNodes.get('hips')!.position.x)).toBeGreaterThan(
+        Math.abs(low.boneNodes.get('hips')!.position.x),
+      );
+    });
+
+    test('emo custom bindings clear at sentence end, with blink and visemes retained', () => {
+      const { vrm } = createMockVRM();
+      const profile = {
+        ...testProfile,
+        emotionMap: {
+          ...testProfile.emotionMap,
+          happy: [{ expression: 'nemuBlush', weight: 1 }],
+        },
+      };
+      const compositor = new AnimationCompositor({ vrm, profile, prng: () => 0.5 });
+      compositor.setPerformanceEmotion({ emotion: 'happy', weight: 0.8 });
+      compositor.setVisemes({ aa: 0.9 });
+      compositor.update(1 / 60);
+      expect(vrm.expressionManager!.getValue('nemuBlush')).toBe(0.6);
+      expect(vrm.expressionManager!.getValue('aa')).toBe(0.9);
+      compositor.onSentenceEnd();
+      for (let i = 0; i < 30; i++) compositor.update(1 / 60);
+      expect(vrm.expressionManager!.getValue('nemuBlush')).toBe(0);
+      expect(vrm.expressionManager!.getValue('aa')).toBe(0.9);
+      expect('setExpressionBaseline' in compositor.l3).toBe(false);
+    });
+
     test('coordinates L0 to L4 in order and supports layer toggles', () => {
       const { vrm } = createMockVRM();
       const compositor = new AnimationCompositor({ vrm, profile: testProfile });
@@ -604,17 +692,13 @@ describe('P3-01 Animation Runtime (Five Layers)', () => {
 
       compositor.applyReadout({
         version: '1.0',
-        expressionBaseline: { relaxed: 0.3 },
-        idleTempo: 1.2,
-        earPose: -0.4,
-        tailAmplitude: 0.7,
-        gazeSociability: 0.8,
-        posture: 0.5,
+        facing: 0.8,
+        tension: 0.6,
+        energy: 0.7,
       });
 
-      expect(compositor.l3.getExpressionBaseline().relaxed).toBe(0.3);
-      expect(compositor.l4.getEffectiveEarPose()).toBe(-0.4);
-      expect(compositor.l4.getEffectiveTailAmplitude()).toBe(0.7);
+      expect(compositor.l4.getEffectiveEarPose()).toBeCloseTo(-0.3);
+      expect(compositor.l4.getEffectiveTailAmplitude()).toBeCloseTo(0.35);
     });
   });
 });

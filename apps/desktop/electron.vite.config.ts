@@ -4,10 +4,10 @@ import { resolve } from 'node:path';
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts', '@nemu/voice'] })],
+    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts', '@nemu/voice', '@nemu/desktop-sense'] })],
     build: {
       rollupOptions: {
-        external: ['sherpa-onnx-node'],
+        external: ['sherpa-onnx-node', 'koffi'],
         input: {
           index: resolve(import.meta.dirname, 'src/main/index.ts'),
           voice: resolve(import.meta.dirname, 'src/voice/utility.ts'),

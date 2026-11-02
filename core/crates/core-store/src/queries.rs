@@ -1,11 +1,71 @@
-use crate::{LineageKind, Reader, Result, error::require};
+use crate::{Error, LineageKind, Reader, Result, error::require};
 use core_types::{
     WireMessage,
-    generated::{EvidenceGroupV2, LedgerEntry, ObjectRef},
+    contract::Schema,
+    generated::{EvidenceGroupV2, EvidenceGroupV3, LedgerEntry, ObjectRef},
 };
 use rusqlite::params;
 
+/// Decoded historical message, retaining its original version. V2 has no q;
+/// reading history never invents it or converts the stored bytes to V3.
+#[derive(Debug, PartialEq)]
+pub enum EvidenceGroupRecord {
+    V2(EvidenceGroupV2),
+    V3(EvidenceGroupV3),
+}
+
 impl<L: LineageKind> Reader<L> {
+    /// Complete accepted transaction prefix, after the same recovery and receipt
+    /// checks as opening a Reader. Filtered ingress has no new H transaction.
+    /// Unknown commits, damaged indexes and insufficient budgets fail explicitly.
+    /// The receipt capture precedes the SQL snapshot (W02 review A1/B2).
+    ///
+    /// ```compile_fail
+    /// use core_store::{Reader, Rehearsal, Life};
+    /// fn cross_lineage(reader: &Reader<Rehearsal>) {
+    ///     let other: &Reader<Life> = reader;
+    ///     other.transactions_at("commit", 10).unwrap();
+    /// }
+    /// ```
+    pub fn transactions_at(
+        &self,
+        commit: &str,
+        limit: usize,
+    ) -> Result<Vec<core_types::generated::CoreTransactionV2>> {
+        require(
+            limit < self.objects.config.encoding.max_items && limit < i64::MAX as usize,
+            "query budget exceeded",
+        )?;
+        let root = self
+            .objects
+            .root
+            .parent()
+            .ok_or(crate::Error::Rejected("missing store root"))?;
+        let receipts = crate::witness::capture(root, &self.objects)?;
+        let snapshot = self.db.unchecked_transaction()?;
+        // This first SQL read pins the snapshot. Header, recovery, indexes,
+        // prefix resolution and object visibility all use this one connection.
+        let temporary: bool = snapshot.query_row(
+            "SELECT temporary FROM metadata WHERE singleton=1",
+            [],
+            |r| r.get(0),
+        )?;
+        let (header, branch) =
+            crate::store::check_header::<L>(&snapshot, root, self.objects.config, temporary)?;
+        crate::recovery::verify(&snapshot, &self.objects, &header, &branch)?;
+        crate::witness::check(&snapshot, &self.objects, &receipts)?;
+        let position = self.query_prefix(commit, limit)?;
+        let refs = {
+            let mut stmt = snapshot.prepare("SELECT snapshot FROM commits WHERE position<=?1 AND decision='accepted' ORDER BY position LIMIT ?2")?;
+            stmt.query_map(params![position, (limit + 1) as i64], |r| {
+                r.get::<_, Vec<u8>>(0)
+            })?
+            .collect::<std::result::Result<Vec<_>, _>>()?
+        };
+        let result = self.decode_complete(refs, limit)?;
+        snapshot.rollback()?;
+        Ok(result)
+    }
     /// Complete ledger prefix or an explicit budget error; never an empty/truncated
     /// result masquerading as evidence that no prior cost was recorded.
     pub fn ledger_at(&self, commit: &str, limit: usize) -> Result<Vec<LedgerEntry>> {
@@ -25,7 +85,7 @@ impl<L: LineageKind> Reader<L> {
         tendency: &str,
         commit: &str,
         limit: usize,
-    ) -> Result<Vec<EvidenceGroupV2>> {
+    ) -> Result<Vec<EvidenceGroupRecord>> {
         let position = self.query_prefix(commit, limit)?;
         let mut stmt = self.db.prepare("WITH latest AS (SELECT g.commit_id,g.group_id,g.reference,row_number() OVER (PARTITION BY g.group_id ORDER BY c.position DESC) AS rank FROM evidence_groups g JOIN commits c ON c.id=g.commit_id WHERE c.position<=?1) SELECT l.reference FROM latest l JOIN evidence_index i ON i.commit_id=l.commit_id AND i.group_id=l.group_id WHERE l.rank=1 AND i.tendency_id=?2 ORDER BY l.group_id LIMIT ?3")?;
         let refs = stmt
@@ -33,7 +93,23 @@ impl<L: LineageKind> Reader<L> {
                 r.get::<_, Vec<u8>>(0)
             })?
             .collect::<std::result::Result<Vec<_>, _>>()?;
-        self.decode_complete(refs, limit)
+        require(
+            refs.len() <= limit,
+            "incomplete query: result exceeds budget",
+        )?;
+        let schema = Schema::builtin()?;
+        refs.into_iter()
+            .map(|bytes| {
+                let reference = ObjectRef::from_canonical(&bytes, self.objects.config.encoding)?;
+                if reference.object_type == schema.message(EvidenceGroupV3::NAME)?.tag {
+                    Ok(EvidenceGroupRecord::V3(self.read(&reference)?))
+                } else if reference.object_type == schema.message(EvidenceGroupV2::NAME)?.tag {
+                    Ok(EvidenceGroupRecord::V2(self.read(&reference)?))
+                } else {
+                    Err(Error::Rejected("evidence index has wrong message type"))
+                }
+            })
+            .collect()
     }
     fn query_prefix(&self, commit: &str, limit: usize) -> Result<i64> {
         require(

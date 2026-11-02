@@ -1,0 +1,326 @@
+Ubuntu static checks and unit tests	Rust checks	﻿2026-10-23T03:47:49.2701327Z ##[group]Run rustup show
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2701736Z ^[[36;1mrustup show^[[0m
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2702080Z ^[[36;1mcargo fmt --all -- --check^[[0m
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2702539Z ^[[36;1mcargo clippy --workspace --all-targets -- -D warnings^[[0m
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2703013Z ^[[36;1mcargo test --workspace --locked^[[0m
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2767244Z shell: /usr/bin/bash -e {0}
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2767511Z env:
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2767707Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2767944Z   UV_LINK_MODE: copy
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2768145Z   UV_PYTHON: 3.12
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2768471Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.2768750Z ##[endgroup]
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.3599226Z Default host: x86_64-unknown-linux-gnu
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.3599655Z rustup home:  /home/runner/.rustup
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.3599822Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.3624268Z info: syncing channel updates for 1.99.0-x86_64-unknown-linux-gnu
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.7925563Z info: latest update on 2026-10-01 for version 1.99.0 (b940084d7 2026-09-28)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:49.7927598Z info: downloading 5 components
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1188022Z warn: the missing active toolchain `1.99.0-x86_64-unknown-linux-gnu` has been auto-installed
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1188906Z installed toolchains
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1189839Z warn: auto-installation is deprecated for most `rustup` commands
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1190873Z warn: scripts relying on this behavior in `rustup` may stop working in the future
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1191828Z warn: to install the active toolchain, use `rustup install` instead
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1192801Z warn: see <https://github.com/rust-lang/rustup/issues/4836> for more info
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1208940Z --------------------
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1229050Z stable-x86_64-unknown-linux-gnu (default)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1229509Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1229799Z active toolchain
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1230316Z ----------------
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1230841Z name: 1.99.0-x86_64-unknown-linux-gnu
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1231753Z active because: overridden by '/home/runner/work/nemu/nemu/core/rust-toolchain.toml'
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1232568Z installed targets:
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.1317907Z   x86_64-unknown-linux-gnu
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:47:59.3402299Z     Updating crates.io index
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:00.9913722Z  Downloading crates ...
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0567021Z   Downloaded itoa v1.0.18
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0584476Z   Downloaded cfg-if v1.0.5
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0762951Z   Downloaded proc-macro2 v1.0.107
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0798863Z   Downloaded bitflags v2.13.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0834187Z   Downloaded block-buffer v0.12.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0845809Z   Downloaded const-oid v0.10.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0866584Z   Downloaded cc v1.9.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0905850Z   Downloaded pin-project-lite v0.2.17
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0957561Z   Downloaded pkg-config v0.3.34
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.0972838Z   Downloaded getrandom v0.4.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1005705Z   Downloaded num-conv v0.1.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1013035Z   Downloaded tracing-attributes v0.1.31
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1038438Z   Downloaded libm v0.2.16
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1143963Z   Downloaded deranged v0.5.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1155859Z   Downloaded serde_core v1.0.229
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1180082Z   Downloaded find-msvc-tools v0.1.15
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1202187Z   Downloaded powerfmt v0.2.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1208993Z   Downloaded time-macros v0.2.24
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1231468Z   Downloaded once_cell v1.21.4
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1254246Z   Downloaded errno v0.3.14
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1268389Z   Downloaded memchr v2.8.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1326072Z   Downloaded tracing-core v0.1.36
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1354178Z   Downloaded cpufeatures v0.3.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1388998Z   Downloaded crypto-common v0.2.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1390248Z   Downloaded hybrid-array v0.4.15
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1408988Z   Downloaded fallible-streaming-iterator v0.1.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1416067Z   Downloaded unicode-ident v1.0.27
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1445850Z   Downloaded digest v0.11.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1476567Z   Downloaded fallible-iterator v0.3.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1492400Z   Downloaded smallvec v1.16.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1508137Z   Downloaded fastrand v2.5.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1537034Z   Downloaded quote v1.0.47
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1576581Z   Downloaded shlex v2.0.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1591803Z   Downloaded time-core v0.1.6
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1610667Z   Downloaded zmij v1.0.23
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1632945Z   Downloaded sha2 v0.11.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1663151Z   Downloaded tempfile v3.27.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1685482Z   Downloaded serde v1.0.229
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1714542Z   Downloaded typenum v1.20.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1748838Z   Downloaded time v0.3.44
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1817699Z   Downloaded rusqlite v0.40.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1896282Z   Downloaded serde_derive v1.0.229
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1926395Z   Downloaded serde_json v1.0.154
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.1988884Z   Downloaded syn v2.0.119
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.2079631Z   Downloaded syn v3.0.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.2169584Z   Downloaded sqlite-vec v0.1.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.2199616Z   Downloaded vcpkg v0.2.15
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.2662421Z   Downloaded rustix v1.1.5
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.2889544Z   Downloaded libc v0.2.190
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.3292670Z   Downloaded tracing v0.1.44
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.3425064Z   Downloaded libsqlite3-sys v0.38.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.3946954Z   Downloaded linux-raw-sys v0.12.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.4910953Z    Compiling proc-macro2 v1.0.107
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.4911708Z    Compiling quote v1.0.47
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.7379975Z    Compiling unicode-ident v1.0.27
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:01.8154408Z     Checking typenum v1.20.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:02.3623640Z    Compiling serde_core v1.0.229
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:02.4650193Z     Checking hybrid-array v0.4.15
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:02.4980084Z    Compiling zmij v1.0.23
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:02.5976442Z     Checking cfg-if v1.0.5
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:02.8422052Z     Checking block-buffer v0.12.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:02.9032668Z     Checking crypto-common v0.2.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:03.3309751Z    Compiling syn v3.0.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:04.0622469Z    Compiling serde_json v1.0.154
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:04.1199523Z    Compiling serde v1.0.229
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:04.2369405Z     Checking const-oid v0.10.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:04.3049306Z     Checking digest v0.11.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:04.5709333Z     Checking itoa v1.0.18
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:04.6364468Z     Checking memchr v2.8.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:04.9179412Z     Checking cpufeatures v0.3.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:04.9394481Z     Checking sha2 v0.11.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:05.0958945Z    Compiling serde_derive v1.0.229
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:05.8392348Z    Compiling shlex v2.0.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:05.9179573Z    Compiling find-msvc-tools v0.1.15
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:06.0339439Z    Compiling cc v1.9.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:07.2519448Z    Compiling vcpkg v0.2.15
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:07.6110000Z     Checking core-types v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-types)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:07.6690283Z    Compiling pkg-config v0.3.34
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:07.9949616Z    Compiling libc v0.2.190
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:08.2179522Z    Compiling libsqlite3-sys v0.38.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:08.3710056Z    Compiling getrandom v0.4.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:08.4559532Z    Compiling rustix v1.1.5
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:08.6019599Z     Checking bitflags v2.13.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:08.6773102Z     Checking once_cell v1.21.4
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:11.2600193Z     Checking core-policy v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-policy)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:11.8580516Z    Compiling syn v2.0.119
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:15.2090549Z     Checking linux-raw-sys v0.12.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:16.4889833Z    Compiling tracing-attributes v0.1.31
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:17.2909521Z     Checking tracing-core v0.1.36
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:17.4789469Z     Checking smallvec v1.16.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:17.5759384Z     Checking fallible-streaming-iterator v0.1.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:17.6279281Z     Checking fallible-iterator v0.3.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:17.7979174Z     Checking fastrand v2.5.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:17.8629703Z     Checking pin-project-lite v0.2.17
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:17.8850799Z     Checking tracing v0.1.44
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:17.9492283Z     Checking tempfile v3.27.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:18.0213056Z    Compiling libm v0.2.16
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:18.5019616Z     Checking core-kernel v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-kernel)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:18.5993785Z    Compiling sqlite-vec v0.1.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:18.6610487Z     Checking powerfmt v0.2.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:18.7072423Z     Checking deranged v0.5.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:24.6009888Z     Checking time-core v0.1.6
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:24.6480847Z     Checking num-conv v0.1.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:24.6999382Z     Checking time v0.3.44
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:24.7469498Z     Checking rusqlite v0.40.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:25.3201235Z     Checking core-store v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-store)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:25.6729692Z     Checking core-replay v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-replay)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:25.6969975Z     Checking echoctl v0.0.0 (/home/runner/work/nemu/nemu/core/crates/echoctl)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:25.7450092Z     Checking fact-view v0.0.0 (/home/runner/work/nemu/nemu/core/crates/fact-view)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:26.0024510Z     Checking core-runtime v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-runtime)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:26.2520222Z     Checking action-gate v0.0.0 (/home/runner/work/nemu/nemu/core/crates/action-gate)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:26.2770134Z     Checking semantic-core v0.0.0 (/home/runner/work/nemu/nemu/core/crates/semantic-core)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:26.4014241Z     Checking gateway v0.0.0 (/home/runner/work/nemu/nemu/core/crates/gateway)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:26.5829651Z     Checking task-layer v0.0.0 (/home/runner/work/nemu/nemu/core/crates/task-layer)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:29.2747455Z     Finished `dev` profile [unoptimized + debuginfo] target(s) in 29.96s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:29.4061565Z    Compiling typenum v1.20.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:29.4099142Z    Compiling cfg-if v1.0.5
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:29.4279528Z    Compiling serde_core v1.0.229
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:30.1209741Z    Compiling hybrid-array v0.4.15
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:30.5119956Z    Compiling block-buffer v0.12.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:30.5777974Z    Compiling crypto-common v0.2.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:31.1440028Z    Compiling const-oid v0.10.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:31.2529538Z    Compiling digest v0.11.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:31.3271746Z    Compiling zmij v1.0.23
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:31.3729374Z    Compiling memchr v2.8.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:31.5739827Z    Compiling cpufeatures v0.3.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:31.5924382Z    Compiling itoa v1.0.18
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:31.6870751Z    Compiling sha2 v0.11.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:31.9163724Z    Compiling serde_json v1.0.154
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:32.3852917Z    Compiling serde v1.0.229
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:32.7760560Z    Compiling core-types v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-types)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:32.8460944Z    Compiling once_cell v1.21.4
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:32.9570234Z    Compiling bitflags v2.13.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:33.0809998Z    Compiling libc v0.2.190
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:33.8574220Z    Compiling linux-raw-sys v0.12.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:34.1220116Z    Compiling rustix v1.1.5
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:35.6579383Z    Compiling libsqlite3-sys v0.38.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:35.7839454Z    Compiling getrandom v0.4.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:35.8635661Z    Compiling tracing-core v0.1.36
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:36.2676406Z    Compiling fastrand v2.5.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:36.3940133Z    Compiling smallvec v1.16.3
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:36.5119903Z    Compiling pin-project-lite v0.2.17
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:36.5419368Z    Compiling fallible-streaming-iterator v0.1.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:36.5989302Z    Compiling fallible-iterator v0.3.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:36.7949840Z    Compiling rusqlite v0.40.2
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:37.7847441Z    Compiling core-policy v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-policy)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:38.5070122Z    Compiling tracing v0.1.44
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:38.6379825Z    Compiling tempfile v3.27.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:38.9210948Z    Compiling core-store v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-store)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:40.0440128Z    Compiling libm v0.2.16
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:41.0270549Z    Compiling core-kernel v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-kernel)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:41.7949834Z    Compiling powerfmt v0.2.1
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:41.8749489Z    Compiling deranged v0.5.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.2289774Z    Compiling num-conv v0.1.0
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.2939337Z    Compiling time-core v0.1.6
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.3639557Z    Compiling sqlite-vec v0.1.9
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.3867042Z    Compiling core-replay v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-replay)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.4081759Z    Compiling core-runtime v0.0.0 (/home/runner/work/nemu/nemu/core/crates/core-runtime)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.4293561Z    Compiling semantic-core v0.0.0 (/home/runner/work/nemu/nemu/core/crates/semantic-core)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.4513956Z    Compiling action-gate v0.0.0 (/home/runner/work/nemu/nemu/core/crates/action-gate)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.4739902Z    Compiling task-layer v0.0.0 (/home/runner/work/nemu/nemu/core/crates/task-layer)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.4959809Z    Compiling gateway v0.0.0 (/home/runner/work/nemu/nemu/core/crates/gateway)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.5170744Z    Compiling echoctl v0.0.0 (/home/runner/work/nemu/nemu/core/crates/echoctl)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:42.7079612Z    Compiling time v0.3.44
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:44.0269580Z    Compiling fact-view v0.0.0 (/home/runner/work/nemu/nemu/core/crates/fact-view)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4347550Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 22.09s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4403120Z      Running unittests src/lib.rs (target/debug/deps/action_gate-c838b72aefd36444)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4414258Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4414615Z running 0 tests
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4415159Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4415819Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4418742Z      Running unittests src/lib.rs (target/debug/deps/core_kernel-7f79490855447363)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4419188Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4427047Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4427387Z running 17 tests
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4435646Z test effects::tests::compile_budget_overflow_in_stored_state_is_a_fault ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4443719Z test effects::tests::evaluate_rejects_missing_inputs_foreign_fields_and_version_mismatch ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4444867Z test effects::tests::effects_sum_in_canonical_order_with_receipts ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4445909Z test effects::tests::f06_drive_proposal_may_not_reencode_an_r_or_theta_effect ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4446894Z test effects::tests::i06_only_active_r_effects_are_authorised ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4447900Z test effects::tests::i07_theta_takeover_suppresses_r_even_after_legal_disable ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4449348Z test effects::tests::i08_new_evidence_revision_does_not_release_a_taken_over_responsibility ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4450421Z test effects::tests::i12_failure_barrier_blocks_effects_immediately ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4456519Z test effects::tests::i21_compile_is_pure_and_repeated_reads_do_not_accumulate_decay ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4459731Z test effects::tests::i07_two_owners_for_one_responsibility_and_domain_is_a_structural_fault ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4463713Z test effects::tests::integrity_and_time_faults_are_structural ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4465301Z test effects::tests::i22_theta_outside_validity_contract_quarantines_instead_of_local_disable ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4470105Z test effects::tests::j06_candidate_over_budget_or_cancelling_is_rejected_and_existing_kept ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4471235Z test effects::tests::j06_candidate_with_non_whitelisted_field_is_rejected ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4473418Z test effects::tests::j06_out_of_scope_and_unauthorised_effects_contribute_zero ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4474414Z test effects::tests::parameter_canonical_bytes_golden_layout ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4476731Z test effects::tests::r_certificate_expiry_and_dependency_faults_withhold_authorisation ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4477408Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4478100Z test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4479341Z      Running unittests src/lib.rs (target/debug/deps/core_policy-dbd078cf22437141)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4479992Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4492723Z      Running tests/overlap_cases.rs (target/debug/deps/overlap_cases-f72a1842467d115d)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4493197Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4494091Z running 0 tests
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4494281Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4504773Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4505449Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4505674Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4506014Z running 5 tests
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4506647Z test foreign_catalog_version_is_unknown_not_disjoint ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4507379Z test dnf_limit_reports_unknown_overlap ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4509960Z test pair_limit_reports_unknown_overlap ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4511593Z test product_limit_reports_unknown_overlap ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4523512Z test intersection_cases_hold_in_both_directions ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4523995Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4524611Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4526052Z      Running tests/scope_rules.rs (target/debug/deps/scope_rules-e4523894362bb30a)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4538910Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4539867Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4540407Z running 6 tests
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4541166Z test depth_node_and_set_limits_are_enforced ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4541984Z test canonical_bytes_are_stable_and_order_independent_for_sets ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4543851Z test evaluation_is_closed_interval_and_never_defaults_to_hit ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4544653Z test malformed_scopes_are_rejected ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4545262Z test scope_digest_golden_vector ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4546012Z      Running unittests src/lib.rs (target/debug/deps/core_replay-e07b7c8afb94d9cb)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4546872Z test whitelist_rejects_fields_outside_endpoint ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4547314Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4547873Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4548697Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4555996Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4556435Z running 0 tests
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4556818Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4557578Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4558766Z      Running unittests src/lib.rs (target/debug/deps/core_runtime-2c6c540b9dc4b6cc)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4559405Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4567575Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4567888Z running 0 tests
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4568665Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4569338Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4570300Z      Running unittests src/lib.rs (target/debug/deps/core_store-b027cf7a550a286e)
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4570933Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4582132Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:51.4582454Z running 32 tests
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:55.4768645Z test tests::atomic::atomic_publication_and_append_only_history ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:48:56.0752608Z test tests::atomic::all_binding_fields_are_immutable_after_dispatch ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:49:04.7340154Z test tests::atomic::disk_full_rolls_back_ledger_and_all_state ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:49:11.2939782Z test tests::atomic::d101_d102_stale_and_mutated_bindings_rejected ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:49:11.4430465Z test tests::atomic::duplicate_and_conflict_only_advance_processed_frontier ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:49:12.8239538Z test tests::atomic::later_ingress_cannot_overtake_uncommitted_input ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:49:25.2490985Z test tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:49:51.7797352Z test tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:50:03.6579306Z test tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:50:51.7799860Z test tests::crash::x03_ingress_and_transaction_publication_boundaries has been running for over 60 seconds
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:51:03.6599861Z test tests::crash::x03_receipt_publish_and_repair_can_crash_again has been running for over 60 seconds
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:52:26.8530202Z test tests::crash::x03_ingress_and_transaction_publication_boundaries ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:53:26.8517235Z test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects has been running for over 60 seconds
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:55:22.9783692Z test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:55:22.9799444Z test tests::crash_harness::crash_worker ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:55:22.9833400Z test tests::crash_harness::stray_environment_or_missing_permit_never_touches_target ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:55:32.8437742Z test tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:55:36.9027668Z test tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:55:53.7619603Z test tests::isolation::i29_all_six_cross_lineage_opens_rejected ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:55:53.9029931Z test tests::isolation::malformed_headers_and_existing_directories_never_initialize ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:01.6239771Z test tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:01.8069740Z test tests::objects::at01_canonical_identity_and_superseded_writes ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:03.8280661Z test tests::objects::at02_corrupt_or_missing_object_never_publishes ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:07.3033719Z test tests::objects::at03_pins_close_prepare_gc_publish_race ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:07.7284942Z test tests::objects::object_capacity_and_io_failures_never_acknowledge_d ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:17.0980446Z test tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:17.1010015Z test tests::objects::publication_primitive_never_replaces_existing_target ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:19.9162274Z test tests::objects::published_closure_damage_refuses_recovery ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:20.7820294Z test tests::objects::r_index_reassembles_canonical_and_reuses_unchanged_tendencies ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:27.7475304Z test tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:28.3037685Z test tests::objects::sys22_capacity_and_busy_wait_are_bounded ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:44.4827058Z test tests::reader::complete_transaction_prefix_is_verified_and_bounded ... FAILED
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:56:50.4422985Z test tests::reader::live_readers_open_during_ingress_without_false_rollback ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:57:16.5496913Z test tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9844707Z test tests::crash::x03_receipt_publish_and_repair_can_crash_again ... ok
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9845561Z error: test failed, to rerun pass `-p core-store --lib`
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9846160Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9846453Z failures:
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9846746Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9847272Z ---- tests::reader::complete_transaction_prefix_is_verified_and_bounded stdout ----
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9847842Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9848810Z thread 'tests::reader::complete_transaction_prefix_is_verified_and_bounded' (5155) panicked at crates/core-store/src/tests/reader.rs:26:10:
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9850772Z called `Result::unwrap()` on an `Err` value: SqliteFailure(Error { code: ConstraintViolation, extended_code: 787 }, Some("FOREIGN KEY constraint failed"))
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9851958Z note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9852481Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9852610Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9852838Z failures:
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9853439Z     tests::reader::complete_transaction_prefix_is_verified_and_bounded
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9853967Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9854513Z test result: FAILED. 31 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 572.53s
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9855320Z 
+Ubuntu static checks and unit tests	Rust checks	2026-10-23T03:58:23.9880384Z ##[error]Process completed with exit code 101.
