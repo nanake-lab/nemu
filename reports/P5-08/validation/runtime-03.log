@@ -1,0 +1,47 @@
+   Compiling core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.29s
+     Running unittests src\lib.rs (D:/Dev/cache/cargo-target\debug\deps\core_runtime-5322019b1d49efcf.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\clock.rs (D:/Dev/cache/cargo-target\debug\deps\clock-6b000ee906ec3802.exe)
+
+running 3 tests
+test sys23_backward_jump_epoch_and_overflow_are_faults_without_plus_one_repair ... ok
+test sys23_capture_once_completion_is_separate_and_does_not_retime_process ... ok
+test sys23_restart_uses_bounded_wall_time_and_refuses_unknown_downtime ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\pipeline.rs (D:/Dev/cache/cargo-target\debug\deps\pipeline-84a78cf1911c24b6.exe)
+
+running 7 tests
+test status_intersection_never_clears_storage_or_carrier_fault ... ok
+test adr0031_every_m_update_clears_installs_prefills_and_stops_at_failure ... ok
+test rehearsal_missing_stages_is_explicit_and_all_other_lineages_require_every_stage ... ok
+test d11_old_occurrence_and_queue_delay_do_not_filter_pulse ... ok
+test x02_same_head_different_time_interpreter_or_payload_binding_is_stale ... ok
+test x06_positive_nonidentity_g_c_fout_fixed_order_and_no_staged_j ... ok
+test paused_growth_still_records_a_m_and_maintenance_preserves_r_theta ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests\store.rs (D:/Dev/cache/cargo-target\debug\deps\store-bdd5dde97d703e3e.exe)
+
+running 3 tests
+test uninitialized_store_is_refused_without_fabricating_runtime_roots ... ok
+test same_revision_forged_base_and_old_ticket_are_rejected ... ok
+test staged_visibility_rollback_commit_and_duplicate_filter_use_real_w02 ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.26s
+
+   Doc-tests core_runtime
+
+running 2 tests
+test crates\core-runtime\src\pipeline.rs - pipeline::StagedEvent (line 73) - compile fail ... ok
+test crates\core-runtime\src\stages.rs - stages::StageSet<Rehearsal>::rehearsal (line 155) - compile fail ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+

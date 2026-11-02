@@ -124,6 +124,7 @@ def targeted_legal() -> list[dict[str, Any]]:
     """P5-21 vectors for values that seeded samples do not reach (new enum codes) and
     semantically realistic v2 records. Additional vectors only; never replace frozen ones."""
     from fixture_retention import legal_retention
+    from fixture_touch import legal_touch
 
     e = SCHEMA["enums"]
     rs, fc = e["RunStatus"], e["FailureCode"]
@@ -180,6 +181,7 @@ def targeted_legal() -> list[dict[str, Any]]:
         + targeted_legal_p5_32(tendency)
         + targeted_legal_p5_22()
         + legal_retention()
+        + legal_touch()
     )
 
 
@@ -527,4 +529,12 @@ def targeted_illegal() -> list[dict[str, Any]]:
 
     from fixture_theta import illegal_theta
 
-    return targeted_illegal_existing() + out + illegal_retention() + illegal_theta()
+    from fixture_touch import illegal_touch
+
+    return (
+        targeted_illegal_existing()
+        + out
+        + illegal_retention()
+        + illegal_theta()
+        + illegal_touch()
+    )

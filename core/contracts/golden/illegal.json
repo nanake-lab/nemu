@@ -26906,5 +26906,437 @@
         "max_depth": 32
       }
     }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "region": "A0",
+        "kind": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "region": "A0",
+        "kind": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "A0",
+        "kind": 1,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 7 missing contact_id",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 7,
+        "elapsed_ms": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 7 missing elapsed_ms",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 7,
+        "contact_id": "contact-A"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 7 empty contact",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 7,
+        "contact_id": "",
+        "elapsed_ms": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 7 negative duration",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 7,
+        "contact_id": "contact-A",
+        "elapsed_ms": -0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 8 missing contact_id",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 8,
+        "elapsed_ms": 1000.25
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 8 missing elapsed_ms",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 8,
+        "contact_id": "contact-A"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 8 empty contact",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 8,
+        "contact_id": "",
+        "elapsed_ms": 1000.25
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 8 negative duration",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 8,
+        "contact_id": "contact-A",
+        "elapsed_ms": -0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 9 missing contact_id",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 9,
+        "elapsed_ms": 3000.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 9 missing elapsed_ms",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 9,
+        "contact_id": "contact-A"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 9 empty contact",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 9,
+        "contact_id": "",
+        "elapsed_ms": 3000.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 dwell 9 negative duration",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 9,
+        "contact_id": "contact-A",
+        "elapsed_ms": -0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 nonfinite elapsed_ms 7ff8000000000001",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "protobuf",
+      "hex": "080112046865616428083209636f6e746163742d4139010000000000f87f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 nonfinite elapsed_ms 7ff0000000000000",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "protobuf",
+      "hex": "080112046865616428083209636f6e746163742d4139000000000000f07f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 nonfinite elapsed_ms fff0000000000000",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "protobuf",
+      "hex": "080112046865616428083209636f6e746163742d4139000000000000f0ff",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 mixed touch protobuf as TouchObservationV2",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "protobuf",
+      "hex": "08011204686561641801",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 mixed touch protobuf as TouchObservation",
+    "request": {
+      "name": "TouchObservation",
+      "op": "protobuf",
+      "hex": "08011204686561642801",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 mixed touch protobuf as TouchObservationV2",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "protobuf",
+      "hex": "080112046865616428011801",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 wrong touch canonical tag as TouchObservationV2",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "canonical",
+      "hex": "4e435631010000000a0000006563686f2e746f75636804000000686561640100000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 wrong touch canonical tag as TouchObservation",
+    "request": {
+      "name": "TouchObservation",
+      "op": "canonical",
+      "hex": "4e435631010000000d0000006563686f2e746f7563682d7632040000006865616400010000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 old touch cannot express dwell",
+    "request": {
+      "name": "TouchObservation",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 7
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 drag 4 identity not authorized",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "hand",
+        "kind": 4,
+        "contact_id": "contact-A",
+        "elapsed_ms": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P6-17 drag 5 identity not authorized",
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "hand",
+        "kind": 5,
+        "contact_id": "contact-A",
+        "elapsed_ms": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
   }
 ]
