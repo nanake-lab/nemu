@@ -1,0 +1,24 @@
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-types)
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-store)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-kernel)
+   Compiling core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.70s
+     Running tests\store.rs (D:/Dev/cache/cargo-target\debug\deps\store-bdd5dde97d703e3e.exe)
+
+running 2 tests
+test review_r3_legacy_theta_new_write_is_refused_without_publishing_a_head ... ok
+
+thread 'review_r3_v2_head_survives_no_growth_commit_reopen_with_complete_estimator' (39356) panicked at crates\core-runtime\tests\store.rs:183:46:
+runtime must read the active V2 theta tag: Store(Contract("type tag"))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test review_r3_v2_head_survives_no_growth_commit_reopen_with_complete_estimator ... FAILED
+
+failures:
+
+failures:
+    review_r3_v2_head_survives_no_growth_commit_reopen_with_complete_estimator
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 2.00s
+
+error: test failed, to rerun pass `-p core-runtime --test store`
+exit_code=101

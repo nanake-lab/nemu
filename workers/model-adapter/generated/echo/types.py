@@ -267,6 +267,16 @@ class ApprovalChoice(IntEnum):
     ALLOW_ONCE = 1
     ALLOW_ALWAYS = 2
     DENY = 3
+class TouchKindV2(IntEnum):
+    TOUCH_V2_CLICK = 1
+    TOUCH_V2_DOUBLE_CLICK = 2
+    TOUCH_V2_PAT = 3
+    TOUCH_V2_DRAG_START = 4
+    TOUCH_V2_DRAG_END = 5
+    TOUCH_V2_FLING = 6
+    DWELL_START = 7
+    DWELL_CONTINUE = 8
+    DWELL_END = 9
 class TerminalLineage(IntEnum):
     TERMINAL_REHEARSAL = 1
     TERMINAL_LIFE = 2
@@ -1314,10 +1324,19 @@ class UserRetraction:
     note: str | None
 @dataclass(frozen=True)
 class TouchObservation:
+    # Superseded (successor TouchObservationV2): P6-17; ADR 0025 §4.3, frozen bytes retained
     schema_version: int
     region: str
     kind: TouchKind
     speed: float | None
+@dataclass(frozen=True)
+class TouchObservationV2:
+    schema_version: int
+    region: str
+    speed: float | None
+    kind: TouchKindV2
+    contact_id: str | None
+    elapsed_ms: float | None
 @dataclass(frozen=True)
 class DesktopObservation:
     schema_version: int

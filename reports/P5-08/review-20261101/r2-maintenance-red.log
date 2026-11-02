@@ -1,0 +1,20 @@
+   Compiling core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.88s
+     Running tests\review_theta.rs (D:/Dev/cache/cargo-target\debug\deps\review_theta-1f5d19e494fbae26.exe)
+
+running 1 test
+
+thread 'review_r2_maintenance_rejects_invalid_theta_before_projection' (27092) panicked at crates\core-runtime\tests\review_theta.rs:83:5:
+assertion failed: stages.maintenance(&case.base, &time(30)).is_err()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test review_r2_maintenance_rejects_invalid_theta_before_projection ... FAILED
+
+failures:
+
+failures:
+    review_r2_maintenance_rejects_invalid_theta_before_projection
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p core-runtime --test review_theta`
+exit_code=101

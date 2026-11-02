@@ -1,0 +1,68 @@
+ Downloading crates ...
+  Downloaded bytes v1.12.1
+  Downloaded tokio-macros v2.7.2
+  Downloaded subtle v2.6.1
+  Downloaded socket2 v0.6.5
+  Downloaded mio v1.2.4
+  Downloaded zeroize v1.9.1
+  Downloaded tokio v1.54.1
+    Checking windows-sys v0.61.2
+    Checking core-policy v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-policy)
+   Compiling serde_core v1.0.229
+   Compiling serde_json v1.0.154
+   Compiling syn v3.0.9
+   Compiling zmij v1.0.23
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling sqlite-vec v0.1.9
+    Checking bytes v1.12.1
+    Checking powerfmt v0.2.1
+    Checking time-core v0.1.6
+    Checking rusqlite v0.40.2
+    Checking subtle v2.6.1
+    Checking zeroize v1.9.1
+    Checking num-conv v0.1.0
+    Checking deranged v0.5.9
+    Checking time v0.3.44
+   Compiling serde_derive v1.0.229
+   Compiling tokio-macros v2.7.2
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\gateway)
+    Checking serde v1.0.229
+    Checking tempfile v3.27.0
+    Checking socket2 v0.6.5
+    Checking mio v1.2.4
+    Checking tokio v1.54.1
+    Checking core-types v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-types)
+    Checking core-store v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-store)
+    Checking core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-kernel)
+    Checking action-gate v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\action-gate)
+    Checking task-layer v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\task-layer)
+    Checking semantic-core v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\semantic-core)
+    Checking fact-view v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\fact-view)
+    Checking core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-runtime)
+    Checking core-replay v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-replay)
+    Checking echoctl v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\echoctl)
+error: large size difference between variants
+  --> crates\core-runtime\src\store.rs:17:1
+   |
+17 | / pub enum Next {
+18 | |     Idle,
+19 | |     Settled(Receipt),
+   | |     ---------------- the second-largest variant contains at least 80 bytes
+20 | |     Event(EventEnvelope),
+   | |     -------------------- the largest variant contains at least 424 bytes
+21 | | }
+   | |_^ the entire enum is at least 424 bytes
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#large_enum_variant
+   = note: `-D clippy::large-enum-variant` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::large_enum_variant)]`
+help: consider boxing the large fields or introducing indirection in some other way to reduce the total size of the enum
+   |
+20 -     Event(EventEnvelope),
+20 +     Event(Box<EventEnvelope>),
+   |
+
+error: could not compile `core-runtime` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `core-runtime` (lib) due to 1 previous error
