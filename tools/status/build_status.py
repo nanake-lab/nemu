@@ -18,6 +18,7 @@ Rules, first match wins:
     open ready PR                        -> review
     merged PR with label unverified      -> unverified (merged, review unfinished;
                                             dependants stay blocked)
+    merged PR with partial report/blockers -> partial
     merged PR                            -> done
     branch task/<id>-* without any PR    -> in_progress (claimed)
     all dependencies done, card is yours -> needs_you
@@ -40,6 +41,13 @@ import re
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from typing import cast
+
+from delivery import load_deliveries
+from status_types import (
+    Attention, AttentionRef, Board, Card, CardPr, Catalog, Milestone, PrDetails, RawPr,
+    Reminder, WorkflowJob, WorkflowRun,
+)
 
 REPO = "nanake-lab/nemu"
 CARD = re.compile(r"\((P\d-\d{2})\)")
@@ -61,6 +69,7 @@ GUARDED = (
 LABELS = {
     "paused": "暂停",
     "done": "已完成",
+    "partial": "部分交付",
     "review": "等审查",
     "in_progress": "进行中",
     "needs_you": "等你",
@@ -94,14 +103,15 @@ def gh_raw(args: list[str]) -> str:
     return done.stdout
 
 
-def gh(path: str) -> list | dict:
-    pages = json.loads(gh_raw(["api", "--paginate", "--slurp", path]))
+def gh(path: str) -> list[object] | dict[str, object]:
+    pages = cast(list[list[object] | dict[str, object]],
+                 json.loads(gh_raw(["api", "--paginate", "--slurp", path])))
     if pages and isinstance(pages[0], list):
         return [item for page in pages for item in page]
     return pages[0] if pages else {}
 
 
-def load_catalog(repo: str, local: Path) -> dict:
+def load_catalog(repo: str, local: Path) -> Catalog:
     """The catalog on main, so the board is right whichever branch is checked out.
 
     Falls back to the local file (before the catalog reaches main, or offline).
@@ -115,12 +125,12 @@ def load_catalog(repo: str, local: Path) -> dict:
                 f"repos/{repo}/contents/tasks/cards.json?ref=main",
             ]
         )
-        return json.loads(raw)
+        return cast(Catalog, json.loads(raw))
     except (GitHubError, json.JSONDecodeError):
-        return json.loads(local.read_text(encoding="utf-8"))
+        return cast(Catalog, json.loads(local.read_text(encoding="utf-8")))
 
 
-def cards_of_pr(pr: dict) -> set[str]:
+def cards_of_pr(pr: RawPr) -> set[str]:
     found = set()
     m = BRANCH.match(pr["head"]["ref"])
     if m:
@@ -135,13 +145,13 @@ def windows_waiting(repo: str, sha: str) -> bool:
     The Windows job has its own workflow (windows.yml), so every run for the
     commit is checked, not only the newest one.
     """
-    runs = gh(f"repos/{repo}/actions/runs?head_sha={sha}&per_page=10")
-    runs = runs.get("workflow_runs", []) if isinstance(runs, dict) else []
+    runs_response = gh(f"repos/{repo}/actions/runs?head_sha={sha}&per_page=10")
+    runs = cast(list[WorkflowRun], runs_response.get("workflow_runs", [])) if isinstance(runs_response, dict) else []
     for run in runs:
         if run.get("status") == "completed":
             continue
-        jobs = gh(f"repos/{repo}/actions/runs/{run['id']}/jobs")
-        jobs = jobs.get("jobs", []) if isinstance(jobs, dict) else []
+        jobs_response = gh(f"repos/{repo}/actions/runs/{run['id']}/jobs")
+        jobs = cast(list[WorkflowJob], jobs_response.get("jobs", [])) if isinstance(jobs_response, dict) else []
         if any(
             "Windows" in j["name"] and j["status"] in ("queued", "waiting")
             for j in jobs
@@ -154,7 +164,7 @@ def review_verdict(repo: str, number: int) -> str | None:
     """'pass', 'block' or None, from the latest review comment on the PR."""
     comments = gh(f"repos/{repo}/issues/{number}/comments?per_page=100")
     verdict = None
-    for cm in comments if isinstance(comments, list) else []:
+    for cm in cast(list[dict[str, str | None]], comments) if isinstance(comments, list) else []:
         body = (cm.get("body") or "").lstrip()
         if body.startswith(VERDICT):
             verdict = "pass" if body.startswith(VERDICT + "通过") else "block"
@@ -164,23 +174,23 @@ def review_verdict(repo: str, number: int) -> str | None:
 def touches_guarded(repo: str, number: int) -> bool:
     path = f"repos/{repo}/pulls/{number}/files?per_page=100"
     try:
-        files = gh(path)
+        files = cast(list[dict[str, str]], gh(path))
     except GitHubError:  # pagination refused: judge from the first page
         files = json.loads(gh_raw(["api", path]))
     return any(f["filename"].startswith(GUARDED) for f in files)
 
 
-def open_pr_details(repo: str, pr: dict) -> dict:
+def open_pr_details(repo: str, pr: RawPr) -> PrDetails:
     if any(label["name"] == "paused" for label in pr.get("labels", [])):
         return {}
-    details = {"waiting_runner": windows_waiting(repo, pr["head"]["sha"])}
+    details: PrDetails = {"waiting_runner": windows_waiting(repo, pr["head"]["sha"])}
     if not pr.get("draft"):
         details["verdict"] = review_verdict(repo, pr["number"])
         details["guarded"] = touches_guarded(repo, pr["number"])
     return details
 
 
-def needs_user_item(number: int, draft: bool, title: str = "") -> dict:
+def needs_user_item(number: int, draft: bool, title: str = "") -> Reminder:
     """AGENTS.md section 6: a draft waits for a decision; a ready PR waits for the merge."""
     suffix = f"：{title}" if title else ""
     if draft:
@@ -191,7 +201,7 @@ def needs_user_item(number: int, draft: bool, title: str = "") -> dict:
     }
 
 
-def reviewer(card: dict | None, branch: str = "") -> str:
+def reviewer(card: Card | None, branch: str = "") -> str:
     """The other executor: by branch prefix for rule PRs, else by the card."""
     if branch.startswith("claude/"):
         return "Codex"
@@ -200,7 +210,7 @@ def reviewer(card: dict | None, branch: str = "") -> str:
     return "Codex" if card and card["suggested"] == "Claude" else "Claude"
 
 
-def review_due(card: dict | None, pr: dict) -> bool:
+def review_due(card: Card | None, pr: PrDetails) -> bool:
     """A ready PR that needs a cross review and has not passed one yet."""
     if pr.get("draft"):
         return False
@@ -208,11 +218,11 @@ def review_due(card: dict | None, pr: dict) -> bool:
     return needed and pr.get("verdict") != "pass"
 
 
-def review_item(number: int, who: str, why: str) -> dict:
+def review_item(number: int, who: str, why: str) -> Reminder:
     return {"kind": "cross_review", "text": f"PR #{number}（{why}）请转给 {who} 审查，通过前不要合并"}
 
 
-def label_of(card: dict) -> str:
+def label_of(card: Card) -> str:
     if card["status"] != "review":
         return LABELS[card["status"]]
     live = [p for p in card["prs"] if p["state"] == "open" and not p["draft"]]
@@ -228,10 +238,10 @@ def label_of(card: dict) -> str:
     return f"等 {reviewer(card, live[0]['branch'] if live else '')} 审查"
 
 
-def compute(repo: str, catalog: dict) -> dict:
-    cards = {c["id"]: dict(c) for c in catalog["cards"]}
-    prs = gh(f"repos/{repo}/pulls?state=all&per_page=100")
-    branches = [b["name"] for b in gh(f"repos/{repo}/branches?per_page=100")]
+def compute(repo: str, catalog: Catalog) -> Board:
+    cards = {c["id"]: cast(Card, dict(c)) for c in catalog["cards"]}
+    prs = cast(list[RawPr], gh(f"repos/{repo}/pulls?state=all&per_page=100"))
+    branches = [b["name"] for b in cast(list[dict[str, str]], gh(f"repos/{repo}/branches?per_page=100"))]
 
     relevant = [pr for pr in prs if cards_of_pr(pr) & cards.keys()]
     open_prs = [pr for pr in prs if pr["state"] == "open" and not pr.get("merged_at")]
@@ -249,7 +259,7 @@ def compute(repo: str, catalog: dict) -> dict:
         state = "merged" if pr.get("merged_at") else pr["state"]
         if state == "closed":
             continue
-        entry = {
+        entry: CardPr = {
             "number": pr["number"],
             "url": pr["html_url"],
             "title": pr["title"],
@@ -262,9 +272,17 @@ def compute(repo: str, catalog: dict) -> dict:
         }
         for cid in cards_of_pr(pr) & cards.keys():
             cards[cid]["prs"].append(entry)
-    claimed = {m.group(1) for b in branches if (m := BRANCH.match(b))}
+    claimed = {match.group(1) for b in branches if (match := BRANCH.match(b))}
+    try:
+        deliveries = load_deliveries(
+            repo,
+            {cid for cid, c in cards.items() if any(p["state"] == "merged" for p in c["prs"])},
+            gh_raw,
+        )
+    except RuntimeError as exc:
+        raise GitHubError(str(exc)) from exc
 
-    def direct(c: dict) -> str | None:
+    def direct(c: Card) -> str | None:
         if c.get("status_override"):
             return c["status_override"]["status"]
         live = [p for p in c["prs"] if p["state"] == "open"]
@@ -281,7 +299,7 @@ def compute(repo: str, catalog: dict) -> dict:
         ):
             return "unverified"
         if any(p["state"] == "merged" for p in c["prs"]):
-            return "done"
+            return "partial" if c["id"] in deliveries else "done"
         if c["id"] in claimed:
             return "in_progress"
         return None
@@ -303,14 +321,15 @@ def compute(repo: str, catalog: dict) -> dict:
     for cid, card in cards.items():
         card["status"] = status.setdefault(cid, "blocked")
         card["waiting_on"] = [d for d in card["deps"] if status.get(d) != "done"]
+        card["waiting_on"] = list(dict.fromkeys(card["waiting_on"] + deliveries.get(cid, [])))
         card["status_label"] = label_of(card)
 
-    attention = []
+    attention: list[Attention] = []
     for c in sorted(cards.values(), key=lambda c: c["id"]):
         for p in (p for p in c["prs"] if p["state"] == "open"):
             if "paused" in p["labels"]:
                 continue
-            item = {"card": c["id"], "pr": p["number"], "url": p["url"]}
+            item: AttentionRef = {"card": c["id"], "pr": p["number"], "url": p["url"]}
             due = review_due(c, p)
             if "needs-user" in p["labels"] and not due:
                 attention.append({**item, **needs_user_item(p["number"], p["draft"])})
@@ -347,7 +366,7 @@ def compute(repo: str, catalog: dict) -> dict:
 
     # Open PRs that belong to no card (rule changes, tooling) still need the
     # user when they wait for approval or for the Windows runner.
-    other_attention = []
+    other_attention: list[Attention] = []
     for pr in open_prs:
         if any(label["name"] == "paused" for label in pr.get("labels", [])):
             continue
@@ -355,7 +374,7 @@ def compute(repo: str, catalog: dict) -> dict:
             continue
         item = {"card": "", "pr": pr["number"], "url": pr["html_url"]}
         labels = [lbl["name"] for lbl in pr.get("labels", [])]
-        info = {"draft": bool(pr.get("draft")), **details.get(pr["number"], {})}
+        info: PrDetails = {"draft": bool(pr.get("draft")), **details.get(pr["number"], {})}
         due = review_due(None, info)
         if "needs-user" in labels and not due:
             other_attention.append({**item, **needs_user_item(pr["number"], info["draft"], pr["title"])})
@@ -371,7 +390,7 @@ def compute(repo: str, catalog: dict) -> dict:
                 }
             )
 
-    milestones = []
+    milestones: list[Milestone] = []
     for m in catalog["milestones"]:
         ids = [cid for cid, c in cards.items() if c["milestone"] == m["id"]]
         milestones.append(
@@ -406,16 +425,16 @@ def compute(repo: str, catalog: dict) -> dict:
     }
 
 
-def board_rows(out: dict) -> list[dict]:
+def board_rows(out: Board) -> list[dict[str, object]]:
     """One flat row per card. The board derives milestones, the attention list
     and the totals from these rows itself."""
     names = {m["id"]: m["name"] for m in out["milestones"]}
-    attention: dict[str, list[dict]] = {}
+    attention: dict[str, list[dict[str, str]]] = {}
     for a in out["attention"]:
         attention.setdefault(a["card"], []).append(
             {"kind": a["kind"], "text": a["text"], "url": a.get("url", "")}
         )
-    rows = []
+    rows: list[dict[str, object]] = []
     for c in out["cards"]:
         live = [p for p in c["prs"] if p["state"] == "open"] or c["prs"]
         pr = max(live, key=lambda p: p["number"]) if live else None

@@ -1,0 +1,73 @@
+
+running 59 tests
+test evidence::tests::integration::ac2_03_assembled_repeated_experience_does_not_add_g_weight ... ok
+test evidence::tests::integration::ac2_12_prior_reliance_changes_teaching_weight_and_later_repeats_keep_it ... ok
+test evidence::tests::integration::ac2_12_teaching_uses_g_trust_and_repetition_does_not_refresh ... ok
+test evidence::tests::integration::capacity_deferred_candidate_reenters_g_with_original_historical_evidence ... ok
+test evidence::tests::integration::ev9_supplied_verification_reaches_g_discount_without_local_guessing ... ok
+test evidence::tests::integration::i23_incremental_matches_single_g_call_on_complete_synthetic_prefix ... I23 incremental vs full-sequence G: 16 synthetic prefixes (not production H replay)
+ok
+test evidence::tests::properties::ac2_03_multiple_accounts_map_to_one_source_and_one_teaching_group ... ok
+test evidence::tests::properties::ac2_11_comparable_action_variation_required_and_missing_result_cannot_supply_it ... ok
+test evidence::tests::properties::adr0014_arbitrary_synonym_labels_do_not_change_groups_or_proposal_order ... ok
+test evidence::tests::properties::capacity_reproposal_uses_same_identity_and_all_history_alias_does_not_refresh ... ok
+test evidence::tests::properties::ev5_late_match_and_new_candidate_backfill_old_event_without_rejudging ... ok
+test evidence::tests::properties::ev5_sign_inversion_preserves_group_set_and_order_for_128_histories ... EV5: 128 sign-inverted synthetic histories; group identity/order/membership equal
+ok
+test evidence::tests::properties::external_delta_appends_once_and_requires_recompute_for_late_appraisal ... ok
+test evidence::tests::properties::i27_lies_exclude_self_same_conversation_and_cross_conversation_descendants ... ok
+test evidence::tests::properties::relation_proposal_order_uses_first_actual_reliance ... ok
+test evidence::tests::review::r1_ev3_narratives_cannot_bridge_two_independent_experiences ... ok
+test evidence::tests::review::r2_rejected_relation_reentry_matches_full_history_g ... R2 actual N=2 pi=0.0040120361083249515; full N=2 pi=0.0040120361083249515
+ok
+test evidence::tests::review_capacity::r2_closeness_and_trust_eviction_reentry_backfill_and_k_order ... ok
+test evidence::tests::review_capacity::r2_future_relation_cannot_justify_an_earlier_admission ... ok
+test evidence::tests::review_capacity::r2_history_does_not_readmit_unrequested_relations_and_order_cannot_be_guessed ... ok
+test evidence::tests::review_capacity::r2_retained_relation_ordinary_update_does_not_refresh_k_order ... ok
+test evidence::tests::review_capacity::r2_trust_rejection_then_reentry_uses_both_signed_groups ... ok
+test evidence::tests::review_graph::ev5_nonzero_baseline_four_channel_reflection_preserves_matches_and_groups ... ok
+test evidence::tests::review_graph::r1_excluded_vertices_cannot_bridge_source_conversation_or_same_matter ... ok
+test evidence::tests::review_graph::r1_real_experience_without_a_still_supplies_conversation_identity ... ok
+test evidence::tests::rules::ac2_03_same_source_conversation_and_transitive_matter_form_one_group ... ok
+test evidence::tests::rules::ac2_10_i24_narratives_and_candidates_alone_create_no_evidence ... ok
+test evidence::tests::rules::adr0014_late_known_result_is_a_new_event ... ok
+test evidence::tests::rules::adr0014_self_report_requests_facts_and_quotation_do_not_teach ... ok
+test evidence::tests::rules::adr0014_unknown_excludes_only_result_basis_zero_is_not_unknown ... ok
+test evidence::tests::rules::application_session_does_not_merge_unrelated_conversations ... ok
+test evidence::tests::rules::ev1_missing_attributes_semantics_binding_and_future_parents_fail_closed ... ok
+test evidence::tests::rules::ev1_schema_nonfinite_and_unknown_match_are_rejected ... ok
+test evidence::tests::rules::ev7_repetition_keeps_first_position_and_verification ... ok
+test evidence::tests::rules::ev8_read_content_is_not_evidence_but_reading_reaction_is ... ok
+test evidence::tests::rules::ev9_mixed_group_properties_and_mu_are_explicit_gaps ... ok
+test evidence::tests::rules::external_sequence_excludes_self_tool_maintenance_and_a_degraded ... ok
+test evidence::tests::rules::forged_teaching_speaker_and_alias_cycles_are_rejected ... ok
+test evidence::tests::rules::relations_use_participants_and_reliance_not_appraisal_sign ... ok
+test evidence::tests::rules::unknown_outcome_cannot_leak_via_another_tendencys_group_mean ... ok
+test recompute::tests::boundaries::account_merge_rebuilds_groups_instead_of_editing_cached_counts ... ok
+test recompute::tests::boundaries::local_fault_requires_record_and_never_leaks_part_of_candidate ... ok
+test recompute::tests::boundaries::paused_source_and_law_changes_wait_for_explicit_resume ... ok
+test recompute::tests::boundaries::recorded_downtime_is_replayed_without_reading_a_clock ... ok
+test recompute::tests::boundaries::review_cannot_target_an_unrecorded_alarm_or_other_prefix ... ok
+test recompute::tests::controls::ac2_18_pause_preserves_every_field_and_resume_catches_up ... ok
+test recompute::tests::controls::ac2_19_source_correction_rebuilds_q_and_theta_as_if_absent ... ok
+test recompute::tests::controls::ac2_20_21_unavailable_or_consistent_checks_alarm_and_apply ... ok
+test recompute::tests::controls::ac2_20_new_law_recalculates_entire_h_and_records_diff ... ok
+test recompute::tests::controls::immutable_prefix_check_bindings_and_missing_versions_fail_closed ... ok
+test recompute::tests::controls::reinterpretation_uses_explicit_new_records_without_mutating_old ... ok
+test recompute::tests::controls::v2_97_mismatch_or_math_fault_retains_whole_state_and_repair_replays_h ... ok
+test recompute::tests::probes::ac2_21_exact_eight_neutral_probes_real_j_coefficients_and_body ... ok
+test recompute::tests::probes::learned_coefficients_are_matched_by_identity_missing_is_zero ... ok
+test recompute::tests::probes::probes_reject_nan_overflow_stale_resources_and_reordered_rows ... ok
+test recompute::tests::properties::ac2_08_i23_random_histories_every_prefix_zero_bit_differences ... AC2-08/I23: 384 complete-state prefix comparisons; 0 differences; fixed seeds 1..=16
+ok
+test recompute::tests::properties::ac2_09_real_g_c_inputs_cannot_read_fast_state_or_modulation ... ok
+test recompute::tests::properties::capacity_zero_does_not_pause_c_and_reproposal_recovers_h_evidence ... ok
+test recompute::tests::properties::independent_comparison_binds_all_resources_and_does_not_mislabel_absence ... ok
+
+test result: ok. 59 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 325.01s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
