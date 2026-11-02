@@ -62,6 +62,9 @@
     "test:p306:preview": "node apps/stage/src/review/accept-readout.mjs",
     "record:p306": "node apps/stage/src/review/accept-readout.mjs --videos"
   },
+  "dependencies": {
+    "zod": "4.6.7"
+  },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@playwright/test": "1.64.0",
