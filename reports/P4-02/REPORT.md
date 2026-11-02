@@ -130,3 +130,13 @@ CPU 真实中文/中英混合推理未运行，GPU 未运行。当前不是 GPU 
 已安装固定版本 matplotlib 3.10.8（Matplotlib License）、contourpy 1.3.3（BSD-3-Clause）、cycler 0.12.1（BSD）、fonttools 4.61.1（MIT）、kiwisolver 1.4.9（BSD）、Pillow 12.0.0（MIT-CMU）、pyparsing 3.2.5（MIT）、python-dateutil 2.9.0.post0（BSD/Apache-2.0）、six 1.17.0（MIT）。采用 --no-deps 显式固定上述安装项，未整体安装上游 requirements。完整环境元数据在 [installed-dependencies.json](gsv-v5-resume-06/installed-dependencies.json)。Distance 仍有意排除，原因及元数据不满足边界保持不变。
 
 [安装日志](gsv-v5-resume-06/install-matplotlib.log) exit 0；[TTS 模块导入](gsv-v5-resume-06/tts-import-01.log) exit 0，CUDA 未初始化；上游 SyntaxWarning 原样保留。这只是导入，不是模型加载或真实合成。权重续传仍在进行，后续 CPU 中文/中英混合推理待完整哈希核验。PR 保持草稿，本阶段推送。
+
+## 最新阻塞：CPU G2PW provider 隔离准备的 TLS EOF（2026-11-02）
+
+依赖安装与 TTS 导入阶段已推送 90075936。随后 CPU 冒烟静态核对发现：固定上游 text/g2pw/onnx_api.py:343–353 检查 get_available_providers；存在 CUDAExecutionProvider 就创建 CUDA 优先 session，不受 TTS 的 device=cpu 参数控制。当前安装 onnxruntime-gpu 1.19.2，因此只检查 torch.cuda.is_initialized 不足以证明整个推理未碰 CUDA。未启动这条真实推理路径。
+
+拟为 CPU 冒烟另备同版本 CPU onnxruntime（独立缓存路径加载，保留原 GPU 环境、不改第三方源码）。在核对 https://pypi.org/pypi/onnxruntime/1.19.2/json 元数据时，Invoke-RestMethod 报 Received an unexpected EOF or 0 bytes from the transport stream。PowerShell 非终止错误导致 shell exit 0，但 HTTP 请求失败；后续空元数据不算许可核验。见 [原错误转录](gsv-v5-resume-06/onnxruntime-metadata-failure.txt)。没有重试/更换访问工具/安装 CPU 包；这不是用户授权自动续传的权重请求，故按其他失败停下。
+
+权重第 1 次续传仍在进行时由代理终止本轮已核对归属的下载进程，非网络错误；部分 s2Gv5turbo.pth 保留 554826208 bytes，未完整校验。完整脚本/日志/终止归属记录已保存。此次将新尝试上限保守设为 19，加上前轮因许可停止的 1 次不超过 20；未用自动重试隐藏原始失败。
+
+下一步等待用户授权重取 ONNX Runtime CPU 包元数据并准备 CPU-only provider（核对固定版本与许可），随后继续已有权重断点及 CPU 真实中文/混合推理。尚不满足申请 GPU 窗口的前置。仍为草稿，GPU 与真实合成全部 not_run；未改用户或系统网络设置。
