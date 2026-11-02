@@ -91,3 +91,11 @@ Pillow 12.0.0 的 PyPI 元数据明确使用 MIT-CMU；补查 11.2.1 同为 MIT-
 Distance 仍为有意排除：g2p_en 声明了它但已检查代码未导入，因 AGENTS 3.8 的 GPL 禁令排除，未修改第三方元数据。已有 frozendict 条件批准与 FFmpeg LGPL 批准继续有效。
 
 CPU 真实中文/中英混合推理未运行，GPU 未运行。当前不是 GPU 窗口等待；先等 Pillow MIT-CMU 许可决定。保持 PR 草稿，推送本阶段证据。
+
+## 2026-11-02：依赖补齐与 TTS CPU 导入通过
+
+用户已明确批准 Pillow 12.0.0（MIT-CMU），并将 MIT/BSD 家族变体及 Zlib 纳入后续宽松许可预授权。许可清单按实际 SPDX MIT-CMU 登记，不把不同 SPDX 标识静默改写为 HPND。随包版权与许可文本保留在独立缓存环境。
+
+已安装固定版本 matplotlib 3.10.8（Matplotlib License）、contourpy 1.3.3（BSD-3-Clause）、cycler 0.12.1（BSD）、fonttools 4.61.1（MIT）、kiwisolver 1.4.9（BSD）、Pillow 12.0.0（MIT-CMU）、pyparsing 3.2.5（MIT）、python-dateutil 2.9.0.post0（BSD/Apache-2.0）、six 1.17.0（MIT）。采用 --no-deps 显式固定上述安装项，未整体安装上游 requirements。完整环境元数据在 [installed-dependencies.json](gsv-v5-resume-06/installed-dependencies.json)。Distance 仍有意排除，原因及元数据不满足边界保持不变。
+
+[安装日志](gsv-v5-resume-06/install-matplotlib.log) exit 0；[TTS 模块导入](gsv-v5-resume-06/tts-import-01.log) exit 0，CUDA 未初始化；上游 SyntaxWarning 原样保留。这只是导入，不是模型加载或真实合成。权重续传仍在进行，后续 CPU 中文/中英混合推理待完整哈希核验。PR 保持草稿，本阶段推送。
