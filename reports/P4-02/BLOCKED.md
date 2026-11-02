@@ -77,3 +77,17 @@ FFmpeg 阶段已推送 d63c90c5，保持有效。Distance 0.1.3 已卸载；以 
 固定权重续传同时未完成：curl 返回 exit 56，schannel: server closed abruptly (missing close_notify)。停止时检查本轮 curl 进程，未找到仍活跃的匹配进程，不能说是主动终止导致网络退出；原始日志保留。s2Gv5turbo.pth 现为 337652192 bytes 部分文件，未通过完整哈希；没有删除或重下。vocoder/s1 尚未下载。
 
 当前停工，未转选项 2、未换镜像、未更改网络或系统设置、未申请或进入 GPU 窗口。下一步需用户授权补入固定版本 matplotlib 及许可登记、重跑 CPU 冒烟，并继续同一固定权重的断点续传；新失败继续保留。所有真实合成与 GPU 指标仍 not_run，PR 草稿。
+
+## 最新状态：Pillow 许可需确认（2026-11-02）
+
+用户已预授权缺失宽松许可包自动补齐和每文件最多 20 次权重续传，已取代此前逐次网络恢复授权。fetch/merge 后 main 无新增变化。
+
+matplotlib 3.10.8 已核对为 Matplotlib License；其必需传递依赖候选固定为 contourpy 1.3.3（BSD-3-Clause）、cycler 0.12.1（BSD）、fonttools 4.61.1（MIT）、kiwisolver 1.4.9（BSD）、pyparsing 3.2.5（MIT）、python-dateutil 2.9.0.post0（BSD/Apache-2.0）、six 1.17.0（MIT），已有 numpy/packaging 可满足。尚未安装任何上述新增包。
+
+Pillow 12.0.0 的 PyPI 元数据明确使用 MIT-CMU；补查 11.2.1 同为 MIT-CMU，不是 HPND。MIT-CMU 是独立 SPDX 标识，本轮不能自动把它归入用户列出的 MIT；按“其他许可停下”边界，等待用户确认是否允许该许可。没有安装后回退、没有修改第三方源码。见 [候选元数据](gsv-v5-resume-05/matplotlib-dependency-metadata.json)及[补查](gsv-v5-resume-05/pillow-approved-metadata.json)（文件名中的 approved 不代表用户已经批准）。如批准，可采用原候选 Pillow 12.0.0；或用户指定其他许可/版本路线，重新核验。
+
+权重续传已按授权写入脚本：同 revision，curl --continue-at -；网络错误间隔 30 秒，最多 20 次尝试（保守地将首次也计入上限）；成功后同时核对大小与 SHA-256。此次第 1 次尚在传输时因上述许可边界停止本卡，由代理终止已核对归属的本轮 PowerShell/curl，不是新的网络失败。s2Gv5turbo.pth 保留 420141536 bytes，未完整校验；其余文件未开始。脚本、原日志和终止进程记录在本节证据目录，未换镜像、未改全局设置。
+
+Distance 仍为有意排除：g2p_en 声明了它但已检查代码未导入，因 AGENTS 3.8 的 GPL 禁令排除，未修改第三方元数据。已有 frozendict 条件批准与 FFmpeg LGPL 批准继续有效。
+
+CPU 真实中文/中英混合推理未运行，GPU 未运行。当前不是 GPU 窗口等待；先等 Pillow MIT-CMU 许可决定。保持 PR 草稿，推送本阶段证据。
