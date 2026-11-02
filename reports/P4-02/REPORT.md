@@ -64,3 +64,15 @@ GPU 从未启动。runner 检查仍见 Listener；安静窗口尚未进入。没
 证据：[复制程序与核验](gsv-v5-resume-02/torch-reuse.json)、[九个依赖的来源](gsv-v5-resume-02/torch-dependencies-reuse.json)、[CPU 导入原始输出](gsv-v5-resume-02/torch-import.log)。本轮 uv 对依赖的离线解析仍失败，保留 [日志](gsv-v5-resume-02/torch-dependencies.log)，随后按用户批准的直接复用路径处理，不下载替代 PyTorch。
 
 PyTorch 下载不再是当前阻塞；其余 GPT-SoVITS 依赖、完整权重、音频读取依赖、最小 GPU 合成和正式测量仍未完成。torchcodec 0.10 与 torch 2.10 的对应按官方兼容表，尚未安装。
+
+## 2026-11-02 后续恢复第二阶段：依赖安装成功，音频读取阻塞
+
+本节为最新状态，取代上文历史的“其余依赖未安装”和“先修复 PyTorch 网络”待办。仍为部分交付。
+
+其余依赖安装 exit 0，uv pip check 对 115 个包通过；所有实际包名、版本和许可证元数据已登记在 [installed-dependencies.json](gsv-v5-resume-02/installed-dependencies.json)。该清单是代码依赖，预训练权重来源/版本/许可仍单列在上文。TorchCodec 0.10.0 为 BSD-3-Clause；音频依赖真实加载尚不通过。
+
+首次以 torchaudio.load 读取缓存中的合成 zh.wav，exit 1，无法加载 libtorchcodec 或其 DLL 依赖。CUDA 未初始化。现有 ffmpeg 目录只有三个可执行文件，缺少共享 DLL 是待核实方向。未更换读取工具或重试；按用户要求停止。见 [完整原始日志](gsv-v5-resume-02/audio-read-check.log)。全部 GPU 指标、30 分钟稳定性、provider 替换及回归仍 not_run，权重下载仍部分完成。
+
+许可登记发现 Distance 0.1.3 的元数据为 GPL，frozendict 2.5.1 为 LGPL-3.0-only，soxr 1.1.0 为 LGPL-2.1-or-later；当前仅缓存实验环境，产品未新增依赖。不得直接将含 GPL 的该环境接入应用；新增许可边界及恢复选项见 [BLOCKED.md](BLOCKED.md)。报告不将元数据收集等同于许可审核通过。
+
+PyTorch 复用阶段已推送 684bee46；本阶段证据随后单独推送。仅报告与证据有变更，保持草稿和 needs-user。下一步等待用户授权处理 DLL 阻塞及依赖许可范围；不合并、不取新卡。

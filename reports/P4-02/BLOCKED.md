@@ -1,3 +1,25 @@
+# 当前阻塞：参考音频读取失败（2026-11-02，后续恢复第二阶段）
+
+以下最新状态取代后文历史状态。PyTorch TLS 下载阻塞已由本地缓存复用绕过，网络设置未改变。
+
+- torch / torchaudio 2.10.0+cu128 缓存哈希核对及 CPU 运算通过。
+- 其余推理依赖安装退出 0；uv pip check 检查 115 个包通过。
+- 首次 CPU 读取合成 zh.wav 退出 1：`RuntimeError: Could not load libtorchcodec`。原始错误列出 FFmpeg 4–8 对应 DLL 或依赖无法加载。TorchCodec 0.10.0 的 core DLL 实际存在；D:\Tools\ffmpeg\bin 只有 ffmpeg/ffplay/ffprobe 三个 exe，没有共享 DLL。缺少共享库是待核实方向，尚未定位全部缺失依赖。没有换音频库、降级或重试。
+- CUDA 未初始化；权重未补完，provider 未切换，全部 GPU 测量 not_run。Runner.Listener 仍在运行。
+- 安装后许可清单另发现 Distance 0.1.3 标为 GPL，frozendict 2.5.1 为 LGPL-3.0-only；仅在缓存实验环境中，尚未加入产品。AGENTS 第 3.8 条禁止应用引入 GPL，因此不能把这份环境直接作为产品依赖交付。既有 LGPL 批准不能自动覆盖新增依赖。
+
+证据：[安装日志](gsv-v5-resume-02/install-gsv-dependencies.log)、[依赖检查](gsv-v5-resume-02/dependency-check.log)、[音频读取原始错误](gsv-v5-resume-02/audio-read-check.log)、[检查程序](gsv-v5-resume-02/audio-read-check.py)、[实际版本与许可证元数据](gsv-v5-resume-02/installed-dependencies.json)。元数据登记不等于完整分发许可审核通过。
+
+## 恢复选项（尚未执行）
+
+1. 用户授权后，检查 DLL 依赖链并在缓存内准备许可合规的 FFmpeg 共享库，固定版本/哈希，仅进程内配置加载路径；同时核对中文最小推理是否依赖 Distance，提出符合 GPL 禁令的依赖裁剪方案，再重新验证。
+2. 用户授权后，恢复官方 2.7.1 wheel 断点续传及哈希核验，按上游参考版本重新准备独立环境；先解决现有 TLS 问题，不假定降级一定解决音频和许可问题。
+
+按用户“遇到失败即停”要求，现停在此处，等待恢复方向。D 盘最近可用 137.66 GiB；没有删除文件。此次推送阶段证据，PR 保持草稿；不请求完整验收审查。当前无需为本卡停止 runner，正式 GPU 窗口仍待环境就绪后安排。
+
+---
+
+以下保留前阶段原文，供历史追溯，不代表当前待办。
 # 最新状态：PyTorch 缓存复用已解决（2026-11-02 后续恢复）
 
 已按用户批准直接复用本机 2.10.0+cu128，源/目标文件哈希核对、CPU 导入与运算通过；CUDA 未初始化。当前继续准备其余 GPT-SoVITS 依赖与权重，不能声称完整环境或 GPU 验收通过。用户新指示允许每阶段推送一次，保持草稿。下文是已保留的原下载阻塞及失败证据，不再要求先修好 PyTorch 网络才能继续；不代表 TLS 问题已修复。详见 [报告](REPORT.md#2026-11-02-后续恢复pytorch-本地复用阶段)。
