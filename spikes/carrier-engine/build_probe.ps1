@@ -1,13 +1,15 @@
 param(
     [Parameter(Mandatory)][string]$OutputDirectory,
     [string]$SourceDirectory = 'D:/Dev/cache/P0-10/source/llama.cpp-b11669',
-    [string]$SourceInventory = 'source-inventory-20261025T171354189657Z.json'
+    [string]$SourceInventory = 'source-inventory-20261025T171354189657Z.json',
+    [switch]$VisualCarrier
 )
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 $output = [IO.Path]::GetFullPath($OutputDirectory)
 if (Test-Path -LiteralPath $output) { throw 'Use a new build directory; preserve previous evidence' }
-if (!$output.StartsWith('D:\Dev\cache\P0-10\', [StringComparison]::OrdinalIgnoreCase)) { throw 'Build outside task cache' }
+$cacheRoot = if ($VisualCarrier) { 'D:\Dev\cache\P0-12\' } else { 'D:\Dev\cache\P0-10\' }
+if (!$output.StartsWith($cacheRoot, [StringComparison]::OrdinalIgnoreCase)) { throw 'Build outside task cache' }
 $source = [IO.Path]::GetFullPath($SourceDirectory)
 $inventory = Get-Content -LiteralPath (Join-Path $source $SourceInventory) -Raw | ConvertFrom-Json
 if ($inventory.commit -ne '620d2225cc436ab0b001e3200e590e3b286ef9ab') { throw 'Wrong pinned headers' }
@@ -23,7 +25,8 @@ foreach ($path in @($root, $source, $output, $vcvars, $compiler)) {
     if ($path.Contains('"') -or $path.Contains("`n") -or $path.Contains('%')) { throw 'Unsafe command path' }
 }
 New-Item -ItemType Directory -Path $output | Out-Null
-$unit = Join-Path $PSScriptRoot 'injection_probe.cpp'
+$unitName = if ($VisualCarrier) { 'visual_injection_probe.cpp' } else { 'injection_probe.cpp' }
+$unit = Join-Path $PSScriptRoot $unitName
 $include = Join-Path $source 'include'
 $ggmlInclude = Join-Path $source 'ggml/include'
 $command = @"
@@ -48,7 +51,7 @@ $binding = [ordered]@{
     compiler = $compiler; compilerVersion = (Get-Item -LiteralPath $compiler).VersionInfo.FileVersion
     compilerSha256 = (Get-FileHash -LiteralPath $compiler).Hash.ToLowerInvariant()
     upstreamInventory = $SourceInventory
-    sources = @('injection_probe.cpp', 'native_probe.hpp', 'activation_trace.hpp', 'build_probe.ps1') | ForEach-Object {
+    sources = @($unitName, 'native_probe.hpp', 'activation_trace.hpp', 'build_probe.ps1') | ForEach-Object {
         [ordered]@{path = "spikes/carrier-engine/$_"; sha256 = (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot $_)).Hash.ToLowerInvariant()}
     }
 }

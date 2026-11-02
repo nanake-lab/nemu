@@ -1,0 +1,32 @@
+{
+  "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+  "jobs": 274,
+  "formal": {
+    "speech": 20,
+    "unconstrained": 50,
+    "wire": 200
+  },
+  "warmups": 4,
+  "context": 8192,
+  "threads": 4,
+  "batch": 512,
+  "ubatch": 512,
+  "seed": 731,
+  "sampling": "greedy",
+  "flashAttention": "off",
+  "enable_thinking": false,
+  "fourthWarmup": "Original compact warmup replaced by original wire, per user prohibition.",
+  "actualTemplate": "D:\\Dev\\cache\\P0-12\\models\\Qwen--Qwen3.5-4B\\851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a\\chat_template.jinja",
+  "templateSha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+  "layerMapping": "round(17/36 * 32) = 15 (zero based)",
+  "bindings": [
+    {
+      "path": "spikes\\codex-app-server\\fixtures\\irl-cases.json",
+      "sha256": "0163e74d3a034cbb519b526f866c7beabc5d572dc86161100baca098c7e3f3fc"
+    },
+    {
+      "path": "spikes\\codex-app-server\\semantic-candidate.wire.schema.json",
+      "sha256": "9e07fc5dadcda07b7b068f1ee6a9e9e304572b00b67b65c415240e6fb3a8cf71"
+    }
+  ]
+}
