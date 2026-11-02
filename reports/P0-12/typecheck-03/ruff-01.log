@@ -1,0 +1,25 @@
+F401 [*] `csv` imported but unused
+ --> spikes\carrier-engine\summarize_visual_injection.py:4:8
+  |
+2 | from __future__ import annotations
+3 |
+4 | import csv
+  |        ^^^
+5 | import hashlib
+6 | import json
+  |
+help: Remove unused import: `csv`
+
+E702 Multiple statements on one line (semicolon)
+  --> spikes\carrier-engine\summarize_visual_injection.py:50:40
+   |
+48 |         native = floats(three / 'native-basis-all/full-prefill-all-before.f32').reshape(-1, 2560)
+49 |         delta = native.astype('float64') - baseline.astype('float64')
+50 |         expected = np.zeros_like(delta); expected[:, 0] = 1
+   |                                        ^
+51 |         masks.append(dict(mode='native-basis-all', rows=len(delta), changedRows=int(np.any(delta != 0, axis=1).sum()),
+52 |                           maximumAddError=float(np.abs(delta - expected).max())))
+   |
+
+Found 2 errors.
+[*] 1 fixable with the `--fix` option.

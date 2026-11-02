@@ -17,6 +17,7 @@ struct Trace {
     std::array<int, 2> counts{};
     std::array<std::vector<float>, 2> last;
     std::string error;
+    std::string attention_node = "ffn_inp-17", full_node = "l_out-17";
 
     explicit Trace(Native & engine) : api(engine) {}
     void begin(const fs::path & path, const std::string & inject_site,
@@ -28,8 +29,8 @@ struct Trace {
     }
     static bool callback(ggml_tensor * tensor, bool ask, void * user) noexcept {
         auto & self = *static_cast<Trace *>(user);
-        const int index = !std::strcmp(tensor->name, "ffn_inp-17") ? 0 :
-            !std::strcmp(tensor->name, "l_out-17") ? 1 : -1;
+        const int index = self.attention_node == tensor->name ? 0 :
+            self.full_node == tensor->name ? 1 : -1;
         if (ask) return index >= 0;
         if (index < 0) return true;
         try { self.observe(tensor, index); }

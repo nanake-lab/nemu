@@ -1,0 +1,25 @@
+{
+  "failure": "HTTP 501 before first /completion; POST /slots/0?action=erase",
+  "cause": "Harness omitted --slot-save-path. --slots alone does not enable slot actions.",
+  "evidenceBoundary": "HTTP status and traceback captured; error response body was not captured. Cause inferred from pinned source guard and recorded startup args.",
+  "source": "D:\\Dev\\cache\\P0-10\\source\\llama.cpp-b11669\\tools\\server\\server-context.cpp",
+  "sha256": "4ed2e401a9e566b2caf2dd208582fbd42a6b230d516b1b9d56be130cbad3caa6",
+  "engineCommit": "620d2225cc436ab0b001e3200e590e3b286ef9ab",
+  "excerpts": [
+    {
+      "firstLine": 343,
+      "lastLine": 350,
+      "text": "    void prompt_clear() {\n        SLT_TRC(*this, \"clearing prompt with %zu tokens\\n\", prompt.tokens.size());\n\n        mem.seq_rm(id, -1, -1);\n\n        prompt.clear();\n    }\n"
+    },
+    {
+      "firstLine": 3137,
+      "lastLine": 3146,
+      "text": "\n                    // Erase token cache\n                    const size_t n_erased = slot->prompt.tokens.size();\n\n                    slot->prompt_clear();\n\n                    auto res = std::make_unique<server_task_result_slot_erase>();\n                    res->id       = task.id;\n                    res->id_slot  = id_slot;\n                    res->n_erased = n_erased;"
+    },
+    {
+      "firstLine": 5397,
+      "lastLine": 5404,
+      "text": "\n    this->post_slots = [this](const server_http_req & req) {\n        auto res = create_response();\n        if (params.slot_save_path.empty()) {\n            res->error(format_error_response(\"This server does not support slots action. Start it with `--slot-save-path`\", ERROR_TYPE_NOT_SUPPORTED));\n            return res;\n        }\n"
+    }
+  ]
+}

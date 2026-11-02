@@ -1,0 +1,967 @@
+reports/P0-12/inputs/injection-en.txt:7: new blank line at EOF.
+reports/P0-12/inputs/injection-ja.txt:7: new blank line at EOF.
+reports/P0-12/inputs/injection-zh.txt:7: new blank line at EOF.
+reports/P0-12/preparation/build-visual.json:1: trailing whitespace.
++{
+reports/P0-12/preparation/build-visual.json:2: trailing whitespace.
++  "exitCode": 0,
+reports/P0-12/preparation/build-visual.json:3: trailing whitespace.
++  "startedUtc": "2026-11-01T16:10:29.9128739+00:00",
+reports/P0-12/preparation/build-visual.json:4: trailing whitespace.
++  "endedUtc": "2026-11-01T16:10:33.8867163+00:00",
+reports/P0-12/preparation/build-visual.json:5: trailing whitespace.
++  "compiler": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe",
+reports/P0-12/preparation/build-visual.json:6: trailing whitespace.
++  "compilerVersion": "19.44.35229.0",
+reports/P0-12/preparation/build-visual.json:7: trailing whitespace.
++  "compilerSha256": "fe251ef50a1545b1b0835ee17b1e785459712b38d79e45b5c1d3d28970a36619",
+reports/P0-12/preparation/build-visual.json:8: trailing whitespace.
++  "upstreamInventory": "source-inventory-20261025T171354189657Z.json",
+reports/P0-12/preparation/build-visual.json:9: trailing whitespace.
++  "sources": [
+reports/P0-12/preparation/build-visual.json:10: trailing whitespace.
++    {
+reports/P0-12/preparation/build-visual.json:11: trailing whitespace.
++      "path": "spikes/carrier-engine/visual_injection_probe.cpp",
+reports/P0-12/preparation/build-visual.json:12: trailing whitespace.
++      "sha256": "e91528b4c231e2da06d6b7099fb4513f062961c0f6fd72bb205d4533820fb24c"
+reports/P0-12/preparation/build-visual.json:13: trailing whitespace.
++    },
+reports/P0-12/preparation/build-visual.json:14: trailing whitespace.
++    {
+reports/P0-12/preparation/build-visual.json:15: trailing whitespace.
++      "path": "spikes/carrier-engine/native_probe.hpp",
+reports/P0-12/preparation/build-visual.json:16: trailing whitespace.
++      "sha256": "0cace27231646d91ebc7e88c3bf222178a458b0491249d395bdec1c7ba051d88"
+reports/P0-12/preparation/build-visual.json:17: trailing whitespace.
++    },
+reports/P0-12/preparation/build-visual.json:18: trailing whitespace.
++    {
+reports/P0-12/preparation/build-visual.json:19: trailing whitespace.
++      "path": "spikes/carrier-engine/activation_trace.hpp",
+reports/P0-12/preparation/build-visual.json:20: trailing whitespace.
++      "sha256": "e0100a42f993d55b41120f14c10ee72edad8866c2ea7a0f4e1a52ef27a2cd7cc"
+reports/P0-12/preparation/build-visual.json:21: trailing whitespace.
++    },
+reports/P0-12/preparation/build-visual.json:22: trailing whitespace.
++    {
+reports/P0-12/preparation/build-visual.json:23: trailing whitespace.
++      "path": "spikes/carrier-engine/build_probe.ps1",
+reports/P0-12/preparation/build-visual.json:24: trailing whitespace.
++      "sha256": "eff2cb6c4dd1ee5f354d706f18e7228eb4da1d4d4311533a30af89962a8bb672"
+reports/P0-12/preparation/build-visual.json:25: trailing whitespace.
++    }
+reports/P0-12/preparation/build-visual.json:26: trailing whitespace.
++  ],
+reports/P0-12/preparation/build-visual.json:27: trailing whitespace.
++  "executableSha256": "969dcc0aad7548ca9ce78e401bbc4cb0e09f3e17b5d2053d4f0acae761f3b870"
+reports/P0-12/preparation/build-visual.json:28: trailing whitespace.
++}
+reports/P0-12/preparation/conversion-commands.json:1: trailing whitespace.
++[
+reports/P0-12/preparation/conversion-commands.json:2: trailing whitespace.
++  {
+reports/P0-12/preparation/conversion-commands.json:3: trailing whitespace.
++    "name": "cpu-environment",
+reports/P0-12/preparation/conversion-commands.json:4: trailing whitespace.
++    "program": "D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe",
+reports/P0-12/preparation/conversion-commands.json:5: trailing whitespace.
++    "arguments": [
+reports/P0-12/preparation/conversion-commands.json:6: trailing whitespace.
++      "-c",
+reports/P0-12/preparation/conversion-commands.json:7: trailing whitespace.
++      "import torch; assert torch.version.cuda is None; print(torch.__version__)"
+reports/P0-12/preparation/conversion-commands.json:8: trailing whitespace.
++    ],
+reports/P0-12/preparation/conversion-commands.json:9: trailing whitespace.
++    "startedUtc": "2026-11-01T16:01:38.2496364+00:00",
+reports/P0-12/preparation/conversion-commands.json:10: trailing whitespace.
++    "endedUtc": "2026-11-01T16:01:49.8991092+00:00",
+reports/P0-12/preparation/conversion-commands.json:11: trailing whitespace.
++    "exitCode": 0
+reports/P0-12/preparation/conversion-commands.json:12: trailing whitespace.
++  },
+reports/P0-12/preparation/conversion-commands.json:13: trailing whitespace.
++  {
+reports/P0-12/preparation/conversion-commands.json:14: trailing whitespace.
++    "name": "convert-bf16",
+reports/P0-12/preparation/conversion-commands.json:15: trailing whitespace.
++    "program": "D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe",
+reports/P0-12/preparation/conversion-commands.json:16: trailing whitespace.
++    "arguments": [
+reports/P0-12/preparation/conversion-commands.json:17: trailing whitespace.
++      "D:\\Dev\\cache\\P0-10\\source\\llama.cpp-b11669\\convert_hf_to_gguf.py",
+reports/P0-12/preparation/conversion-commands.json:18: trailing whitespace.
++      "D:\\Dev\\cache\\P0-12\\models\\Qwen--Qwen3.5-4B\\851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+reports/P0-12/preparation/conversion-commands.json:19: trailing whitespace.
++      "--outfile",
+reports/P0-12/preparation/conversion-commands.json:20: trailing whitespace.
++      "D:\\Dev\\cache\\P0-12\\gguf\\carrier-BF16.gguf",
+reports/P0-12/preparation/conversion-commands.json:21: trailing whitespace.
++      "--outtype",
+reports/P0-12/preparation/conversion-commands.json:22: trailing whitespace.
++      "bf16",
+reports/P0-12/preparation/conversion-commands.json:23: trailing whitespace.
++      "--no-mtp"
+reports/P0-12/preparation/conversion-commands.json:24: trailing whitespace.
++    ],
+reports/P0-12/preparation/conversion-commands.json:25: trailing whitespace.
++    "startedUtc": "2026-11-01T16:01:49.9115994+00:00",
+reports/P0-12/preparation/conversion-commands.json:26: trailing whitespace.
++    "endedUtc": "2026-11-01T16:03:13.7613014+00:00",
+reports/P0-12/preparation/conversion-commands.json:27: trailing whitespace.
++    "exitCode": 0
+reports/P0-12/preparation/conversion-commands.json:28: trailing whitespace.
++  },
+reports/P0-12/preparation/conversion-commands.json:29: trailing whitespace.
++  {
+reports/P0-12/preparation/conversion-commands.json:30: trailing whitespace.
++    "name": "quantize-Q4_K_M",
+reports/P0-12/preparation/conversion-commands.json:31: trailing whitespace.
++    "program": "D:\\Dev\\cache\\P0-10\\llama.cpp\\b11669-cpu-quantize\\llama-quantize.exe",
+reports/P0-12/preparation/conversion-commands.json:32: trailing whitespace.
++    "arguments": [
+reports/P0-12/preparation/conversion-commands.json:33: trailing whitespace.
++      "D:\\Dev\\cache\\P0-12\\gguf\\carrier-BF16.gguf",
+reports/P0-12/preparation/conversion-commands.json:34: trailing whitespace.
++      "D:\\Dev\\cache\\P0-12\\gguf\\carrier-Q4_K_M.gguf",
+reports/P0-12/preparation/conversion-commands.json:35: trailing whitespace.
++      "Q4_K_M",
+reports/P0-12/preparation/conversion-commands.json:36: trailing whitespace.
++      "4"
+reports/P0-12/preparation/conversion-commands.json:37: trailing whitespace.
++    ],
+reports/P0-12/preparation/conversion-commands.json:38: trailing whitespace.
++    "startedUtc": "2026-11-01T16:03:13.7664078+00:00",
+reports/P0-12/preparation/conversion-commands.json:39: trailing whitespace.
++    "endedUtc": "2026-11-01T16:04:27.7829816+00:00",
+reports/P0-12/preparation/conversion-commands.json:40: trailing whitespace.
++    "exitCode": 0
+reports/P0-12/preparation/conversion-commands.json:41: trailing whitespace.
++  },
+reports/P0-12/preparation/conversion-commands.json:42: trailing whitespace.
++  {
+reports/P0-12/preparation/conversion-commands.json:43: trailing whitespace.
++    "name": "convert-mmproj",
+reports/P0-12/preparation/conversion-commands.json:44: trailing whitespace.
++    "program": "D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe",
+reports/P0-12/preparation/conversion-commands.json:45: trailing whitespace.
++    "arguments": [
+reports/P0-12/preparation/conversion-commands.json:46: trailing whitespace.
++      "D:\\Dev\\cache\\P0-10\\source\\llama.cpp-b11669\\convert_hf_to_gguf.py",
+reports/P0-12/preparation/conversion-commands.json:47: trailing whitespace.
++      "D:\\Dev\\cache\\P0-12\\models\\Qwen--Qwen3.5-4B\\851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+reports/P0-12/preparation/conversion-commands.json:48: trailing whitespace.
++      "--mmproj",
+reports/P0-12/preparation/conversion-commands.json:49: trailing whitespace.
++      "--outfile",
+reports/P0-12/preparation/conversion-commands.json:50: trailing whitespace.
++      "D:\\Dev\\cache\\P0-12\\gguf\\mmproj-F16.gguf",
+reports/P0-12/preparation/conversion-commands.json:51: trailing whitespace.
++      "--outtype",
+reports/P0-12/preparation/conversion-commands.json:52: trailing whitespace.
++      "f16"
+reports/P0-12/preparation/conversion-commands.json:53: trailing whitespace.
++    ],
+reports/P0-12/preparation/conversion-commands.json:54: trailing whitespace.
++    "startedUtc": "2026-11-01T16:04:27.7860195+00:00",
+reports/P0-12/preparation/conversion-commands.json:55: trailing whitespace.
++    "endedUtc": "2026-11-01T16:04:40.2737355+00:00",
+reports/P0-12/preparation/conversion-commands.json:56: trailing whitespace.
++    "exitCode": 0
+reports/P0-12/preparation/conversion-commands.json:57: trailing whitespace.
++  }
+reports/P0-12/preparation/conversion-commands.json:58: trailing whitespace.
++]
+reports/P0-12/preparation/gguf-inventory.json:1: trailing whitespace.
++{
+reports/P0-12/preparation/gguf-inventory.json:2: trailing whitespace.
++  "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+reports/P0-12/preparation/gguf-inventory.json:3: trailing whitespace.
++  "engineCommit": "620d2225cc436ab0b001e3200e590e3b286ef9ab",
+reports/P0-12/preparation/gguf-inventory.json:4: trailing whitespace.
++  "files": [
+reports/P0-12/preparation/gguf-inventory.json:5: trailing whitespace.
++    {
+reports/P0-12/preparation/gguf-inventory.json:6: trailing whitespace.
++      "path": "D:\\Dev\\cache\\P0-12\\gguf\\carrier-BF16.gguf",
+reports/P0-12/preparation/gguf-inventory.json:7: trailing whitespace.
++      "bytes": 8424393728,
+reports/P0-12/preparation/gguf-inventory.json:8: trailing whitespace.
++      "sha256": "1409508b90b58f536bc0dda4b1c3e1d54528f008f0ee53b08a4a6f976ab15388"
+reports/P0-12/preparation/gguf-inventory.json:9: trailing whitespace.
++    },
+reports/P0-12/preparation/gguf-inventory.json:10: trailing whitespace.
++    {
+reports/P0-12/preparation/gguf-inventory.json:11: trailing whitespace.
++      "path": "D:\\Dev\\cache\\P0-12\\gguf\\carrier-Q4_K_M.gguf",
+reports/P0-12/preparation/gguf-inventory.json:12: trailing whitespace.
++      "bytes": 2708804608,
+reports/P0-12/preparation/gguf-inventory.json:13: trailing whitespace.
++      "sha256": "045b7d309c8021d4d7bcebe1156ae94a1e3e128df271d05f5adfcea38ee20b27"
+reports/P0-12/preparation/gguf-inventory.json:14: trailing whitespace.
++    },
+reports/P0-12/preparation/gguf-inventory.json:15: trailing whitespace.
++    {
+reports/P0-12/preparation/gguf-inventory.json:16: trailing whitespace.
++      "path": "D:\\Dev\\cache\\P0-12\\gguf\\mmproj-F16.gguf",
+reports/P0-12/preparation/gguf-inventory.json:17: trailing whitespace.
++      "bytes": 672423520,
+reports/P0-12/preparation/gguf-inventory.json:18: trailing whitespace.
++      "sha256": "73a88d2d689250d44e14bf7504476f287ca7a04ac2594592263251217e581069"
+reports/P0-12/preparation/gguf-inventory.json:19: trailing whitespace.
++    }
+reports/P0-12/preparation/gguf-inventory.json:20: trailing whitespace.
++  ]
+reports/P0-12/preparation/gguf-inventory.json:21: trailing whitespace.
++}
+reports/P0-12/preparation/model-inventory.json:1: trailing whitespace.
++{
+reports/P0-12/preparation/model-inventory.json:2: trailing whitespace.
++  "repository": "Qwen/Qwen3.5-4B",
+reports/P0-12/preparation/model-inventory.json:3: trailing whitespace.
++  "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+reports/P0-12/preparation/model-inventory.json:4: trailing whitespace.
++  "target": "D:\\Dev\\cache\\P0-12\\models\\Qwen--Qwen3.5-4B\\851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+reports/P0-12/preparation/model-inventory.json:5: trailing whitespace.
++  "status": "downloaded-and-verified",
+reports/P0-12/preparation/model-inventory.json:6: trailing whitespace.
++  "files": [
+reports/P0-12/preparation/model-inventory.json:7: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:8: trailing whitespace.
++      "path": ".gitattributes",
+reports/P0-12/preparation/model-inventory.json:9: trailing whitespace.
++      "bytes": 1570,
+reports/P0-12/preparation/model-inventory.json:10: trailing whitespace.
++      "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930",
+reports/P0-12/preparation/model-inventory.json:11: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/.gitattributes",
+reports/P0-12/preparation/model-inventory.json:12: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.7787458+00:00",
+reports/P0-12/preparation/model-inventory.json:13: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8045424+00:00"
+reports/P0-12/preparation/model-inventory.json:14: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:15: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:16: trailing whitespace.
++      "path": "LICENSE",
+reports/P0-12/preparation/model-inventory.json:17: trailing whitespace.
++      "bytes": 11544,
+reports/P0-12/preparation/model-inventory.json:18: trailing whitespace.
++      "sha256": "bbedc3fda3305820b977265f01b8619d87570a6739de3a5582c3464840f1e57a",
+reports/P0-12/preparation/model-inventory.json:19: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/LICENSE",
+reports/P0-12/preparation/model-inventory.json:20: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8217414+00:00",
+reports/P0-12/preparation/model-inventory.json:21: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8273340+00:00"
+reports/P0-12/preparation/model-inventory.json:22: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:23: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:24: trailing whitespace.
++      "path": "README.md",
+reports/P0-12/preparation/model-inventory.json:25: trailing whitespace.
++      "bytes": 77661,
+reports/P0-12/preparation/model-inventory.json:26: trailing whitespace.
++      "sha256": "1406be1b6b8fd8a6545870da516912804756593628a1d0fb0a7965211e82a7bb",
+reports/P0-12/preparation/model-inventory.json:27: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+reports/P0-12/preparation/model-inventory.json:28: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8297332+00:00",
+reports/P0-12/preparation/model-inventory.json:29: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8689272+00:00"
+reports/P0-12/preparation/model-inventory.json:30: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:31: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:32: trailing whitespace.
++      "path": "chat_template.jinja",
+reports/P0-12/preparation/model-inventory.json:33: trailing whitespace.
++      "bytes": 7756,
+reports/P0-12/preparation/model-inventory.json:34: trailing whitespace.
++      "sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+reports/P0-12/preparation/model-inventory.json:35: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/chat_template.jinja",
+reports/P0-12/preparation/model-inventory.json:36: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8709574+00:00",
+reports/P0-12/preparation/model-inventory.json:37: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8744630+00:00"
+reports/P0-12/preparation/model-inventory.json:38: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:39: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:40: trailing whitespace.
++      "path": "config.json",
+reports/P0-12/preparation/model-inventory.json:41: trailing whitespace.
++      "bytes": 3161,
+reports/P0-12/preparation/model-inventory.json:42: trailing whitespace.
++      "sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+reports/P0-12/preparation/model-inventory.json:43: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+reports/P0-12/preparation/model-inventory.json:44: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8767924+00:00",
+reports/P0-12/preparation/model-inventory.json:45: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8788067+00:00"
+reports/P0-12/preparation/model-inventory.json:46: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:47: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:48: trailing whitespace.
++      "path": "merges.txt",
+reports/P0-12/preparation/model-inventory.json:49: trailing whitespace.
++      "bytes": 3353259,
+reports/P0-12/preparation/model-inventory.json:50: trailing whitespace.
++      "sha256": "a9d356d7bdf1ef4949e3e748e95b8e10ad9d4e2e838eddc38a0a7b6b94d1db8d",
+reports/P0-12/preparation/model-inventory.json:51: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/merges.txt",
+reports/P0-12/preparation/model-inventory.json:52: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8830411+00:00",
+reports/P0-12/preparation/model-inventory.json:53: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:19.9612238+00:00"
+reports/P0-12/preparation/model-inventory.json:54: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:55: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:56: trailing whitespace.
++      "path": "model.safetensors-00001-of-00002.safetensors",
+reports/P0-12/preparation/model-inventory.json:57: trailing whitespace.
++      "bytes": 5329398688,
+reports/P0-12/preparation/model-inventory.json:58: trailing whitespace.
++      "sha256": "26a93f066e1916adb13453dae5a0c707c0fbc71299ed98779571a907b8e74c61",
+reports/P0-12/preparation/model-inventory.json:59: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/model.safetensors-00001-of-00002.safetensors",
+reports/P0-12/preparation/model-inventory.json:60: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:19.9644675+00:00",
+reports/P0-12/preparation/model-inventory.json:61: trailing whitespace.
++      "endedUtc": "2026-11-01T15:48:50.8480801+00:00"
+reports/P0-12/preparation/model-inventory.json:62: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:63: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:64: trailing whitespace.
++      "path": "model.safetensors-00002-of-00002.safetensors",
+reports/P0-12/preparation/model-inventory.json:65: trailing whitespace.
++      "bytes": 3990429408,
+reports/P0-12/preparation/model-inventory.json:66: trailing whitespace.
++      "sha256": "cb544bd9bfae93dc59b0f22b292f5933573854a7f9b97835c67060d7d910e188",
+reports/P0-12/preparation/model-inventory.json:67: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/model.safetensors-00002-of-00002.safetensors",
+reports/P0-12/preparation/model-inventory.json:68: trailing whitespace.
++      "startedUtc": "2026-11-01T15:48:50.8495842+00:00",
+reports/P0-12/preparation/model-inventory.json:69: trailing whitespace.
++      "endedUtc": "2026-11-01T16:00:56.6488668+00:00"
+reports/P0-12/preparation/model-inventory.json:70: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:71: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:72: trailing whitespace.
++      "path": "model.safetensors.index.json",
+reports/P0-12/preparation/model-inventory.json:73: trailing whitespace.
++      "bytes": 76196,
+reports/P0-12/preparation/model-inventory.json:74: trailing whitespace.
++      "sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+reports/P0-12/preparation/model-inventory.json:75: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/model.safetensors.index.json",
+reports/P0-12/preparation/model-inventory.json:76: trailing whitespace.
++      "startedUtc": "2026-11-01T16:00:56.6502813+00:00",
+reports/P0-12/preparation/model-inventory.json:77: trailing whitespace.
++      "endedUtc": "2026-11-01T16:00:59.5645599+00:00"
+reports/P0-12/preparation/model-inventory.json:78: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:79: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:80: trailing whitespace.
++      "path": "preprocessor_config.json",
+reports/P0-12/preparation/model-inventory.json:81: trailing whitespace.
++      "bytes": 390,
+reports/P0-12/preparation/model-inventory.json:82: trailing whitespace.
++      "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+reports/P0-12/preparation/model-inventory.json:83: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/preprocessor_config.json",
+reports/P0-12/preparation/model-inventory.json:84: trailing whitespace.
++      "startedUtc": "2026-11-01T16:00:59.5658936+00:00",
+reports/P0-12/preparation/model-inventory.json:85: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:02.1175250+00:00"
+reports/P0-12/preparation/model-inventory.json:86: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:87: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:88: trailing whitespace.
++      "path": "tokenizer.json",
+reports/P0-12/preparation/model-inventory.json:89: trailing whitespace.
++      "bytes": 12807982,
+reports/P0-12/preparation/model-inventory.json:90: trailing whitespace.
++      "sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+reports/P0-12/preparation/model-inventory.json:91: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/tokenizer.json",
+reports/P0-12/preparation/model-inventory.json:92: trailing whitespace.
++      "startedUtc": "2026-11-01T16:01:02.1249772+00:00",
+reports/P0-12/preparation/model-inventory.json:93: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:09.8792020+00:00"
+reports/P0-12/preparation/model-inventory.json:94: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:95: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:96: trailing whitespace.
++      "path": "tokenizer_config.json",
+reports/P0-12/preparation/model-inventory.json:97: trailing whitespace.
++      "bytes": 16710,
+reports/P0-12/preparation/model-inventory.json:98: trailing whitespace.
++      "sha256": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8",
+reports/P0-12/preparation/model-inventory.json:99: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/tokenizer_config.json",
+reports/P0-12/preparation/model-inventory.json:100: trailing whitespace.
++      "startedUtc": "2026-11-01T16:01:09.8804234+00:00",
+reports/P0-12/preparation/model-inventory.json:101: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:11.9201586+00:00"
+reports/P0-12/preparation/model-inventory.json:102: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:103: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:104: trailing whitespace.
++      "path": "video_preprocessor_config.json",
+reports/P0-12/preparation/model-inventory.json:105: trailing whitespace.
++      "bytes": 385,
+reports/P0-12/preparation/model-inventory.json:106: trailing whitespace.
++      "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+reports/P0-12/preparation/model-inventory.json:107: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/video_preprocessor_config.json",
+reports/P0-12/preparation/model-inventory.json:108: trailing whitespace.
++      "startedUtc": "2026-11-01T16:01:11.9214096+00:00",
+reports/P0-12/preparation/model-inventory.json:109: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:13.6533108+00:00"
+reports/P0-12/preparation/model-inventory.json:110: trailing whitespace.
++    },
+reports/P0-12/preparation/model-inventory.json:111: trailing whitespace.
++    {
+reports/P0-12/preparation/model-inventory.json:112: trailing whitespace.
++      "path": "vocab.json",
+reports/P0-12/preparation/model-inventory.json:113: trailing whitespace.
++      "bytes": 6722759,
+reports/P0-12/preparation/model-inventory.json:114: trailing whitespace.
++      "sha256": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003",
+reports/P0-12/preparation/model-inventory.json:115: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/vocab.json",
+reports/P0-12/preparation/model-inventory.json:116: trailing whitespace.
++      "startedUtc": "2026-11-01T16:01:13.6545922+00:00",
+reports/P0-12/preparation/model-inventory.json:117: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:17.6224666+00:00"
+reports/P0-12/preparation/model-inventory.json:118: trailing whitespace.
++    }
+reports/P0-12/preparation/model-inventory.json:119: trailing whitespace.
++  ],
+reports/P0-12/preparation/model-inventory.json:120: trailing whitespace.
++  "metadataSha256": "edcf0026499d7c2bdac1ec697f5268cbf3d0d38197c2ccbaf557728cc539221e"
+reports/P0-12/preparation/model-inventory.json:121: trailing whitespace.
++}
+reports/P0-12/preparation/resume-01/attempts.jsonl:1: trailing whitespace.
++{"file":"model.safetensors-00001-of-00002.safetensors","attempt":1,"exitCode":0,"bytes":5329398688,"endedUtc":"2026-11-01T15:48:45.4284598+00:00"}
+reports/P0-12/preparation/resume-01/attempts.jsonl:2: trailing whitespace.
++{"file":"model.safetensors-00002-of-00002.safetensors","attempt":1,"exitCode":0,"bytes":3990429408,"endedUtc":"2026-11-01T16:00:52.6302956+00:00"}
+reports/P0-12/preparation/resume-01/attempts.jsonl:3: trailing whitespace.
++{"file":"model.safetensors.index.json","attempt":1,"exitCode":0,"bytes":76196,"endedUtc":"2026-11-01T16:00:59.5424772+00:00"}
+reports/P0-12/preparation/resume-01/attempts.jsonl:4: trailing whitespace.
++{"file":"preprocessor_config.json","attempt":1,"exitCode":0,"bytes":390,"endedUtc":"2026-11-01T16:01:02.1077787+00:00"}
+reports/P0-12/preparation/resume-01/attempts.jsonl:5: trailing whitespace.
++{"file":"tokenizer.json","attempt":1,"exitCode":0,"bytes":12807982,"endedUtc":"2026-11-01T16:01:09.8574236+00:00"}
+reports/P0-12/preparation/resume-01/attempts.jsonl:6: trailing whitespace.
++{"file":"tokenizer_config.json","attempt":1,"exitCode":0,"bytes":16710,"endedUtc":"2026-11-01T16:01:11.9069878+00:00"}
+reports/P0-12/preparation/resume-01/attempts.jsonl:7: trailing whitespace.
++{"file":"video_preprocessor_config.json","attempt":1,"exitCode":0,"bytes":385,"endedUtc":"2026-11-01T16:01:13.6448886+00:00"}
+reports/P0-12/preparation/resume-01/attempts.jsonl:8: trailing whitespace.
++{"file":"vocab.json","attempt":1,"exitCode":0,"bytes":6722759,"endedUtc":"2026-11-01T16:01:16.6715201+00:00"}
+reports/P0-12/preparation/resume-01/completion.json:1: trailing whitespace.
++{
+reports/P0-12/preparation/resume-01/completion.json:2: trailing whitespace.
++  "authorization": "用户：继续下载，网络波动时有发生",
+reports/P0-12/preparation/resume-01/completion.json:3: trailing whitespace.
++  "method": "Same system curl, -C -, up to 12 attempts on specified transient network errors; no TLS bypass",
+reports/P0-12/preparation/resume-01/completion.json:4: trailing whitespace.
++  "originalFailureBackup": "D:/Dev/cache/P0-12/failed-download-01/shard-01.partial",
+reports/P0-12/preparation/resume-01/completion.json:5: trailing whitespace.
++  "originalFailureSha256": "2f1bf81c249f42ac46159b38d2a90fa64ff0d632916e1402c5e24fbd25e811bb",
+reports/P0-12/preparation/resume-01/completion.json:6: trailing whitespace.
++  "downloaderExitCode": 0,
+reports/P0-12/preparation/resume-01/completion.json:7: trailing whitespace.
++  "actualRetries": 0,
+reports/P0-12/preparation/resume-01/completion.json:8: trailing whitespace.
++  "completeFiles": 14,
+reports/P0-12/preparation/resume-01/completion.json:9: trailing whitespace.
++  "mainChecked": "ee5c2b6068b9a2200ad5fd48ebbc8e337458c0d5",
+reports/P0-12/preparation/resume-01/completion.json:10: trailing whitespace.
++  "endedUtc": "2026-11-01T16:01:27.4306171+00:00"
+reports/P0-12/preparation/resume-01/completion.json:11: trailing whitespace.
++}
+reports/P0-12/preparation/resume-01/download-files.json:1: trailing whitespace.
++[
+reports/P0-12/preparation/resume-01/download-files.json:2: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:3: trailing whitespace.
++    "path": ".gitattributes",
+reports/P0-12/preparation/resume-01/download-files.json:4: trailing whitespace.
++    "bytes": 1570,
+reports/P0-12/preparation/resume-01/download-files.json:5: trailing whitespace.
++    "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930",
+reports/P0-12/preparation/resume-01/download-files.json:6: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/.gitattributes",
+reports/P0-12/preparation/resume-01/download-files.json:7: trailing whitespace.
++    "startedUtc": "2026-11-01T15:40:18.7787458+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:8: trailing whitespace.
++    "endedUtc": "2026-11-01T15:40:18.8045424+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:9: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:10: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:11: trailing whitespace.
++    "path": "LICENSE",
+reports/P0-12/preparation/resume-01/download-files.json:12: trailing whitespace.
++    "bytes": 11544,
+reports/P0-12/preparation/resume-01/download-files.json:13: trailing whitespace.
++    "sha256": "bbedc3fda3305820b977265f01b8619d87570a6739de3a5582c3464840f1e57a",
+reports/P0-12/preparation/resume-01/download-files.json:14: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/LICENSE",
+reports/P0-12/preparation/resume-01/download-files.json:15: trailing whitespace.
++    "startedUtc": "2026-11-01T15:40:18.8217414+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:16: trailing whitespace.
++    "endedUtc": "2026-11-01T15:40:18.8273340+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:17: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:18: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:19: trailing whitespace.
++    "path": "README.md",
+reports/P0-12/preparation/resume-01/download-files.json:20: trailing whitespace.
++    "bytes": 77661,
+reports/P0-12/preparation/resume-01/download-files.json:21: trailing whitespace.
++    "sha256": "1406be1b6b8fd8a6545870da516912804756593628a1d0fb0a7965211e82a7bb",
+reports/P0-12/preparation/resume-01/download-files.json:22: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+reports/P0-12/preparation/resume-01/download-files.json:23: trailing whitespace.
++    "startedUtc": "2026-11-01T15:40:18.8297332+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:24: trailing whitespace.
++    "endedUtc": "2026-11-01T15:40:18.8689272+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:25: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:26: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:27: trailing whitespace.
++    "path": "chat_template.jinja",
+reports/P0-12/preparation/resume-01/download-files.json:28: trailing whitespace.
++    "bytes": 7756,
+reports/P0-12/preparation/resume-01/download-files.json:29: trailing whitespace.
++    "sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+reports/P0-12/preparation/resume-01/download-files.json:30: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/chat_template.jinja",
+reports/P0-12/preparation/resume-01/download-files.json:31: trailing whitespace.
++    "startedUtc": "2026-11-01T15:40:18.8709574+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:32: trailing whitespace.
++    "endedUtc": "2026-11-01T15:40:18.8744630+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:33: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:34: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:35: trailing whitespace.
++    "path": "config.json",
+reports/P0-12/preparation/resume-01/download-files.json:36: trailing whitespace.
++    "bytes": 3161,
+reports/P0-12/preparation/resume-01/download-files.json:37: trailing whitespace.
++    "sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+reports/P0-12/preparation/resume-01/download-files.json:38: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+reports/P0-12/preparation/resume-01/download-files.json:39: trailing whitespace.
++    "startedUtc": "2026-11-01T15:40:18.8767924+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:40: trailing whitespace.
++    "endedUtc": "2026-11-01T15:40:18.8788067+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:41: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:42: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:43: trailing whitespace.
++    "path": "merges.txt",
+reports/P0-12/preparation/resume-01/download-files.json:44: trailing whitespace.
++    "bytes": 3353259,
+reports/P0-12/preparation/resume-01/download-files.json:45: trailing whitespace.
++    "sha256": "a9d356d7bdf1ef4949e3e748e95b8e10ad9d4e2e838eddc38a0a7b6b94d1db8d",
+reports/P0-12/preparation/resume-01/download-files.json:46: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/merges.txt",
+reports/P0-12/preparation/resume-01/download-files.json:47: trailing whitespace.
++    "startedUtc": "2026-11-01T15:40:18.8830411+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:48: trailing whitespace.
++    "endedUtc": "2026-11-01T15:40:19.9612238+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:49: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:50: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:51: trailing whitespace.
++    "path": "model.safetensors-00001-of-00002.safetensors",
+reports/P0-12/preparation/resume-01/download-files.json:52: trailing whitespace.
++    "bytes": 5329398688,
+reports/P0-12/preparation/resume-01/download-files.json:53: trailing whitespace.
++    "sha256": "26a93f066e1916adb13453dae5a0c707c0fbc71299ed98779571a907b8e74c61",
+reports/P0-12/preparation/resume-01/download-files.json:54: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/model.safetensors-00001-of-00002.safetensors",
+reports/P0-12/preparation/resume-01/download-files.json:55: trailing whitespace.
++    "startedUtc": "2026-11-01T15:40:19.9644675+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:56: trailing whitespace.
++    "endedUtc": "2026-11-01T15:48:50.8480801+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:57: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:58: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:59: trailing whitespace.
++    "path": "model.safetensors-00002-of-00002.safetensors",
+reports/P0-12/preparation/resume-01/download-files.json:60: trailing whitespace.
++    "bytes": 3990429408,
+reports/P0-12/preparation/resume-01/download-files.json:61: trailing whitespace.
++    "sha256": "cb544bd9bfae93dc59b0f22b292f5933573854a7f9b97835c67060d7d910e188",
+reports/P0-12/preparation/resume-01/download-files.json:62: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/model.safetensors-00002-of-00002.safetensors",
+reports/P0-12/preparation/resume-01/download-files.json:63: trailing whitespace.
++    "startedUtc": "2026-11-01T15:48:50.8495842+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:64: trailing whitespace.
++    "endedUtc": "2026-11-01T16:00:56.6488668+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:65: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:66: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:67: trailing whitespace.
++    "path": "model.safetensors.index.json",
+reports/P0-12/preparation/resume-01/download-files.json:68: trailing whitespace.
++    "bytes": 76196,
+reports/P0-12/preparation/resume-01/download-files.json:69: trailing whitespace.
++    "sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+reports/P0-12/preparation/resume-01/download-files.json:70: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/model.safetensors.index.json",
+reports/P0-12/preparation/resume-01/download-files.json:71: trailing whitespace.
++    "startedUtc": "2026-11-01T16:00:56.6502813+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:72: trailing whitespace.
++    "endedUtc": "2026-11-01T16:00:59.5645599+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:73: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:74: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:75: trailing whitespace.
++    "path": "preprocessor_config.json",
+reports/P0-12/preparation/resume-01/download-files.json:76: trailing whitespace.
++    "bytes": 390,
+reports/P0-12/preparation/resume-01/download-files.json:77: trailing whitespace.
++    "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+reports/P0-12/preparation/resume-01/download-files.json:78: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/preprocessor_config.json",
+reports/P0-12/preparation/resume-01/download-files.json:79: trailing whitespace.
++    "startedUtc": "2026-11-01T16:00:59.5658936+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:80: trailing whitespace.
++    "endedUtc": "2026-11-01T16:01:02.1175250+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:81: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:82: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:83: trailing whitespace.
++    "path": "tokenizer.json",
+reports/P0-12/preparation/resume-01/download-files.json:84: trailing whitespace.
++    "bytes": 12807982,
+reports/P0-12/preparation/resume-01/download-files.json:85: trailing whitespace.
++    "sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+reports/P0-12/preparation/resume-01/download-files.json:86: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/tokenizer.json",
+reports/P0-12/preparation/resume-01/download-files.json:87: trailing whitespace.
++    "startedUtc": "2026-11-01T16:01:02.1249772+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:88: trailing whitespace.
++    "endedUtc": "2026-11-01T16:01:09.8792020+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:89: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:90: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:91: trailing whitespace.
++    "path": "tokenizer_config.json",
+reports/P0-12/preparation/resume-01/download-files.json:92: trailing whitespace.
++    "bytes": 16710,
+reports/P0-12/preparation/resume-01/download-files.json:93: trailing whitespace.
++    "sha256": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8",
+reports/P0-12/preparation/resume-01/download-files.json:94: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/tokenizer_config.json",
+reports/P0-12/preparation/resume-01/download-files.json:95: trailing whitespace.
++    "startedUtc": "2026-11-01T16:01:09.8804234+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:96: trailing whitespace.
++    "endedUtc": "2026-11-01T16:01:11.9201586+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:97: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:98: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:99: trailing whitespace.
++    "path": "video_preprocessor_config.json",
+reports/P0-12/preparation/resume-01/download-files.json:100: trailing whitespace.
++    "bytes": 385,
+reports/P0-12/preparation/resume-01/download-files.json:101: trailing whitespace.
++    "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+reports/P0-12/preparation/resume-01/download-files.json:102: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/video_preprocessor_config.json",
+reports/P0-12/preparation/resume-01/download-files.json:103: trailing whitespace.
++    "startedUtc": "2026-11-01T16:01:11.9214096+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:104: trailing whitespace.
++    "endedUtc": "2026-11-01T16:01:13.6533108+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:105: trailing whitespace.
++  },
+reports/P0-12/preparation/resume-01/download-files.json:106: trailing whitespace.
++  {
+reports/P0-12/preparation/resume-01/download-files.json:107: trailing whitespace.
++    "path": "vocab.json",
+reports/P0-12/preparation/resume-01/download-files.json:108: trailing whitespace.
++    "bytes": 6722759,
+reports/P0-12/preparation/resume-01/download-files.json:109: trailing whitespace.
++    "sha256": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003",
+reports/P0-12/preparation/resume-01/download-files.json:110: trailing whitespace.
++    "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/vocab.json",
+reports/P0-12/preparation/resume-01/download-files.json:111: trailing whitespace.
++    "startedUtc": "2026-11-01T16:01:13.6545922+00:00",
+reports/P0-12/preparation/resume-01/download-files.json:112: trailing whitespace.
++    "endedUtc": "2026-11-01T16:01:17.6224666+00:00"
+reports/P0-12/preparation/resume-01/download-files.json:113: trailing whitespace.
++  }
+reports/P0-12/preparation/resume-01/download-files.json:114: trailing whitespace.
++]
+reports/P0-12/preparation/resume-01/model-inventory.json:1: trailing whitespace.
++{
+reports/P0-12/preparation/resume-01/model-inventory.json:2: trailing whitespace.
++  "repository": "Qwen/Qwen3.5-4B",
+reports/P0-12/preparation/resume-01/model-inventory.json:3: trailing whitespace.
++  "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+reports/P0-12/preparation/resume-01/model-inventory.json:4: trailing whitespace.
++  "target": "D:\\Dev\\cache\\P0-12\\models\\Qwen--Qwen3.5-4B\\851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+reports/P0-12/preparation/resume-01/model-inventory.json:5: trailing whitespace.
++  "status": "downloaded-and-verified",
+reports/P0-12/preparation/resume-01/model-inventory.json:6: trailing whitespace.
++  "files": [
+reports/P0-12/preparation/resume-01/model-inventory.json:7: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:8: trailing whitespace.
++      "path": ".gitattributes",
+reports/P0-12/preparation/resume-01/model-inventory.json:9: trailing whitespace.
++      "bytes": 1570,
+reports/P0-12/preparation/resume-01/model-inventory.json:10: trailing whitespace.
++      "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930",
+reports/P0-12/preparation/resume-01/model-inventory.json:11: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/.gitattributes",
+reports/P0-12/preparation/resume-01/model-inventory.json:12: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.7787458+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:13: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8045424+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:14: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:15: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:16: trailing whitespace.
++      "path": "LICENSE",
+reports/P0-12/preparation/resume-01/model-inventory.json:17: trailing whitespace.
++      "bytes": 11544,
+reports/P0-12/preparation/resume-01/model-inventory.json:18: trailing whitespace.
++      "sha256": "bbedc3fda3305820b977265f01b8619d87570a6739de3a5582c3464840f1e57a",
+reports/P0-12/preparation/resume-01/model-inventory.json:19: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/LICENSE",
+reports/P0-12/preparation/resume-01/model-inventory.json:20: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8217414+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:21: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8273340+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:22: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:23: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:24: trailing whitespace.
++      "path": "README.md",
+reports/P0-12/preparation/resume-01/model-inventory.json:25: trailing whitespace.
++      "bytes": 77661,
+reports/P0-12/preparation/resume-01/model-inventory.json:26: trailing whitespace.
++      "sha256": "1406be1b6b8fd8a6545870da516912804756593628a1d0fb0a7965211e82a7bb",
+reports/P0-12/preparation/resume-01/model-inventory.json:27: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+reports/P0-12/preparation/resume-01/model-inventory.json:28: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8297332+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:29: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8689272+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:30: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:31: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:32: trailing whitespace.
++      "path": "chat_template.jinja",
+reports/P0-12/preparation/resume-01/model-inventory.json:33: trailing whitespace.
++      "bytes": 7756,
+reports/P0-12/preparation/resume-01/model-inventory.json:34: trailing whitespace.
++      "sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+reports/P0-12/preparation/resume-01/model-inventory.json:35: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/chat_template.jinja",
+reports/P0-12/preparation/resume-01/model-inventory.json:36: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8709574+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:37: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8744630+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:38: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:39: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:40: trailing whitespace.
++      "path": "config.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:41: trailing whitespace.
++      "bytes": 3161,
+reports/P0-12/preparation/resume-01/model-inventory.json:42: trailing whitespace.
++      "sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+reports/P0-12/preparation/resume-01/model-inventory.json:43: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:44: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8767924+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:45: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:18.8788067+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:46: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:47: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:48: trailing whitespace.
++      "path": "merges.txt",
+reports/P0-12/preparation/resume-01/model-inventory.json:49: trailing whitespace.
++      "bytes": 3353259,
+reports/P0-12/preparation/resume-01/model-inventory.json:50: trailing whitespace.
++      "sha256": "a9d356d7bdf1ef4949e3e748e95b8e10ad9d4e2e838eddc38a0a7b6b94d1db8d",
+reports/P0-12/preparation/resume-01/model-inventory.json:51: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/merges.txt",
+reports/P0-12/preparation/resume-01/model-inventory.json:52: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:18.8830411+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:53: trailing whitespace.
++      "endedUtc": "2026-11-01T15:40:19.9612238+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:54: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:55: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:56: trailing whitespace.
++      "path": "model.safetensors-00001-of-00002.safetensors",
+reports/P0-12/preparation/resume-01/model-inventory.json:57: trailing whitespace.
++      "bytes": 5329398688,
+reports/P0-12/preparation/resume-01/model-inventory.json:58: trailing whitespace.
++      "sha256": "26a93f066e1916adb13453dae5a0c707c0fbc71299ed98779571a907b8e74c61",
+reports/P0-12/preparation/resume-01/model-inventory.json:59: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/model.safetensors-00001-of-00002.safetensors",
+reports/P0-12/preparation/resume-01/model-inventory.json:60: trailing whitespace.
++      "startedUtc": "2026-11-01T15:40:19.9644675+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:61: trailing whitespace.
++      "endedUtc": "2026-11-01T15:48:50.8480801+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:62: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:63: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:64: trailing whitespace.
++      "path": "model.safetensors-00002-of-00002.safetensors",
+reports/P0-12/preparation/resume-01/model-inventory.json:65: trailing whitespace.
++      "bytes": 3990429408,
+reports/P0-12/preparation/resume-01/model-inventory.json:66: trailing whitespace.
++      "sha256": "cb544bd9bfae93dc59b0f22b292f5933573854a7f9b97835c67060d7d910e188",
+reports/P0-12/preparation/resume-01/model-inventory.json:67: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/model.safetensors-00002-of-00002.safetensors",
+reports/P0-12/preparation/resume-01/model-inventory.json:68: trailing whitespace.
++      "startedUtc": "2026-11-01T15:48:50.8495842+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:69: trailing whitespace.
++      "endedUtc": "2026-11-01T16:00:56.6488668+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:70: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:71: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:72: trailing whitespace.
++      "path": "model.safetensors.index.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:73: trailing whitespace.
++      "bytes": 76196,
+reports/P0-12/preparation/resume-01/model-inventory.json:74: trailing whitespace.
++      "sha256": "cf3f798ee02ba45f9622aa8892a47369ab667d0afbf154ee7c2212de42e6302d",
+reports/P0-12/preparation/resume-01/model-inventory.json:75: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/model.safetensors.index.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:76: trailing whitespace.
++      "startedUtc": "2026-11-01T16:00:56.6502813+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:77: trailing whitespace.
++      "endedUtc": "2026-11-01T16:00:59.5645599+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:78: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:79: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:80: trailing whitespace.
++      "path": "preprocessor_config.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:81: trailing whitespace.
++      "bytes": 390,
+reports/P0-12/preparation/resume-01/model-inventory.json:82: trailing whitespace.
++      "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+reports/P0-12/preparation/resume-01/model-inventory.json:83: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/preprocessor_config.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:84: trailing whitespace.
++      "startedUtc": "2026-11-01T16:00:59.5658936+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:85: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:02.1175250+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:86: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:87: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:88: trailing whitespace.
++      "path": "tokenizer.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:89: trailing whitespace.
++      "bytes": 12807982,
+reports/P0-12/preparation/resume-01/model-inventory.json:90: trailing whitespace.
++      "sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+reports/P0-12/preparation/resume-01/model-inventory.json:91: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/tokenizer.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:92: trailing whitespace.
++      "startedUtc": "2026-11-01T16:01:02.1249772+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:93: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:09.8792020+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:94: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:95: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:96: trailing whitespace.
++      "path": "tokenizer_config.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:97: trailing whitespace.
++      "bytes": 16710,
+reports/P0-12/preparation/resume-01/model-inventory.json:98: trailing whitespace.
++      "sha256": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8",
+reports/P0-12/preparation/resume-01/model-inventory.json:99: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/tokenizer_config.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:100: trailing whitespace.
++      "startedUtc": "2026-11-01T16:01:09.8804234+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:101: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:11.9201586+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:102: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:103: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:104: trailing whitespace.
++      "path": "video_preprocessor_config.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:105: trailing whitespace.
++      "bytes": 385,
+reports/P0-12/preparation/resume-01/model-inventory.json:106: trailing whitespace.
++      "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+reports/P0-12/preparation/resume-01/model-inventory.json:107: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/video_preprocessor_config.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:108: trailing whitespace.
++      "startedUtc": "2026-11-01T16:01:11.9214096+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:109: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:13.6533108+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:110: trailing whitespace.
++    },
+reports/P0-12/preparation/resume-01/model-inventory.json:111: trailing whitespace.
++    {
+reports/P0-12/preparation/resume-01/model-inventory.json:112: trailing whitespace.
++      "path": "vocab.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:113: trailing whitespace.
++      "bytes": 6722759,
+reports/P0-12/preparation/resume-01/model-inventory.json:114: trailing whitespace.
++      "sha256": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003",
+reports/P0-12/preparation/resume-01/model-inventory.json:115: trailing whitespace.
++      "source": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/vocab.json",
+reports/P0-12/preparation/resume-01/model-inventory.json:116: trailing whitespace.
++      "startedUtc": "2026-11-01T16:01:13.6545922+00:00",
+reports/P0-12/preparation/resume-01/model-inventory.json:117: trailing whitespace.
++      "endedUtc": "2026-11-01T16:01:17.6224666+00:00"
+reports/P0-12/preparation/resume-01/model-inventory.json:118: trailing whitespace.
++    }
+reports/P0-12/preparation/resume-01/model-inventory.json:119: trailing whitespace.
++  ],
+reports/P0-12/preparation/resume-01/model-inventory.json:120: trailing whitespace.
++  "metadataSha256": "edcf0026499d7c2bdac1ec697f5268cbf3d0d38197c2ccbaf557728cc539221e"
+reports/P0-12/preparation/resume-01/model-inventory.json:121: trailing whitespace.
++}
