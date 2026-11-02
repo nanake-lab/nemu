@@ -1,0 +1,24 @@
+   Compiling core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-runtime)
+error[E0599]: no method named `decode` found for struct `Schema` in the current scope
+  --> crates\core-runtime\tests\common\mod.rs:14:28
+   |
+14 |     let mut value = schema.decode(T::NAME, &fixture::<T>().canonical_bytes(limits()).unwrap(), limits()).unwrap();
+   |                            ^^^^^^ method not found in `Schema`
+
+error[E0599]: no method named `decode` found for struct `Schema` in the current scope
+  --> crates\core-runtime\tests\common\mod.rs:15:23
+   |
+15 |     let leaf = schema.decode(ObjectRef::NAME, &reference.canonical_bytes(limits()).unwrap(), limits()).unwrap();
+   |                       ^^^^^^ method not found in `Schema`
+
+error[E0599]: no method named `encode` found for struct `Schema` in the current scope
+  --> crates\core-runtime\tests\common\mod.rs:22:31
+   |
+22 |     T::from_canonical(&schema.encode(T::NAME, &value, limits()).unwrap(), limits()).unwrap()
+   |                               ^^^^^^ method not found in `Schema`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `core-runtime` (test "clock") due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `core-runtime` (test "store") due to 3 previous errors
+error: could not compile `core-runtime` (test "pipeline") due to 3 previous errors
