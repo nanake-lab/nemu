@@ -125,3 +125,13 @@ CPU 真实中文/中英混合推理未运行，GPU 未运行。当前不是 GPU 
 固定 HuggingFace revision 8f8857563c040d542de108a2c18b0425abd6c9c5 的剩余三文件均完成：s2Gv5turbo.pth 766406144 B、vocoder.pth 57761163 B、s1v3.ckpt 155284856 B；完整大小和 SHA-256 均与原 download-plan.json 一致，见 [verification.jsonl](gsv-v5-resume-07/verification.jsonl)。加上先前已核验的六个文件，计划内权重已齐。
 
 本轮主权重与 s1v3 各 1 次，vocoder 第 1 次 exit 56/missing close_notify 后等待 30 秒，第 2 次从断点成功，失败原日志和退出码保留。未换镜像或全局设置。本阶段推送后再做 CPU 真实合成，仍非 GPU 验收。
+
+## 最新阻塞：语言识别模型 CC-BY-SA-3.0（2026-11-02）
+
+权重阶段已推送 5b8f4790。CPU 真实冒烟已启动：G2PW session 仅 CPUExecutionProvider，torch.cuda.is_initialized=False；TTS 全模型加载成功，耗时 4.251378700006171 秒。v5turbo/vocoder 加载 keys 全匹配。日志与脚本见 [cpu-smoke.log](gsv-v5-resume-07/cpu-smoke.log)、[cpu-smoke.py](gsv-v5-resume-07/cpu-smoke.py)、[事件](gsv-v5-resume-07/cpu-smoke.jsonl)。事件文件含先前隔离检查的开头两条，后续新 isolation/model_loaded 属真实冒烟；不是两个成功合成。
+
+首条中文进入参考文本处理后，text/LangSegmenter/langsegmenter.py 配置的 fast_langdetect 自动请求 https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin，日志出现两次 Falling back to low-memory model 后仍下载同一 bin。底层异常被库捕获，原日志没有完整原因，不能将其擅自归为获准的 TLS 重试。代理发现后终止本轮拥有的 CPU 冒烟 Python 进程，退出 -1；未换模型/工具重跑，部分下载保留。HF_HUB_OFFLINE 对 fast_langdetect 自己的下载器不起作用；本轮代码依赖的自动下载与回退行为已如实记录。
+
+[fastText 官方模型页](https://fasttext.cc/docs/en/language-identification.html)于本日核对：lid.176.bin 与压缩版模型均为 Creative Commons Attribution-Share-Alike 3.0，即 CC-BY-SA-3.0。这是预训练语言识别权重许可，不能以 fastText 或 Python 包代码许可代替，也不属于本轮 MIT/BSD/Zlib 等预授权。新增模型未固定完整哈希、未获许可批准，因此停止。正式 provider 也需控制这条自动下载/回退路径。
+
+中文尚未产生输出，中英混合未执行；真实合成仍未通过。没有进入 GPU 步骤，不申请 GPU 窗口。下一步由用户决定：批准独立使用该 CC-BY-SA-3.0 语言识别模型及其固定下载/署名/分发条件，随后先取完整文件与 SHA-256，禁止运行中隐式下载再重测；或要求另行研究不使用该模型的路线（不得静默改第三方源码/分段行为）。PR 保持草稿，报告所有阶段证据。
