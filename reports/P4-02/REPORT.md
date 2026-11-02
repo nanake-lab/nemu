@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-**部分完成，阻塞在 PyTorch 环境准备。** 2026-11-02 已按用户要求移除 PR #45 的 paused 标签；保持 draft / needs-user。已 fetch 并将 main `8fed313b7ca9c31423d0ad442789ddef7e6b063b` merge 到任务分支，合并提交 `960ce7b9`，不 rebase、不强推。仅 package.json 有冲突，保留双方追加脚本。原本地 `d5b83d0c` 已包含远端 `76a718ce`。
+**部分完成；2026-11-02 后续恢复已完成 PyTorch 缓存直接复用，GPT-SoVITS 其余环境与测量待完成。** 2026-11-02 已按用户要求移除 PR #45 的 paused 标签；保持 draft / needs-user。已 fetch 并将 main `8fed313b7ca9c31423d0ad442789ddef7e6b063b` merge 到任务分支，合并提交 `960ce7b9`，不 rebase、不强推。仅 package.json 有冲突，保留双方追加脚本。原本地 `d5b83d0c` 已包含远端 `76a718ce`。
 
 已读最新 AGENTS（含第 5、6 节）、ARCHITECTURE、CONTRACTS、Echo Core README、ADR 0012/0027/0034、P4-02 全卡与追加、旧报告/阻塞及 PR 暂停评论。DESIGN-VRAM-01 不在本次 main 树中。本轮不做载体同驻，不再沿用旧三语/250 ms 门槛；只报告用户要求的单模型测量。
 
@@ -53,4 +53,14 @@ GPU 从未启动。runner 检查仍见 Listener；安静窗口尚未进入。没
 
 ## 下一步
 
-见 [BLOCKED.md](BLOCKED.md)。请用户检查网络链路后明确恢复；镜像需要另行批准且必须匹配官方 SHA-256。本机验收没有通过，因此本轮改动仅保留本地，不推送、不写“请审查”、不合并、不取下一张卡。
+见 [BLOCKED.md](BLOCKED.md)。请用户检查网络链路后明确恢复；镜像需要另行批准且必须匹配官方 SHA-256。用户后续授权每阶段推送一次：当前先推送恢复、缓存复用证据，保持草稿；完整完成前不写“请审查”、不合并、不取下一张卡。
+
+## 2026-11-02 后续恢复：PyTorch 本地复用阶段
+
+已 merge main 0a66e3fa，规则新增设计/研究发散要求，CONTRACTS 新增 touch 后继说明，不改变本卡 TTS 读法。DESIGN-VRAM-01 仍未合入。
+
+上次 uv 离线解析失败不能证明解包缓存不可用。本轮直接逐文件验证缓存与复制后的 RECORD 内容，将 torch/torchaudio 2.10.0+cu128 库文件及九个固定版本依赖复制到本卡独立环境，未改共享缓存，未构造或冒充原始 wheel。Python 库入口可用，未创建 torchrun 等命令行包装。CPU 导入和求和检查通过（exit 0），CUDA 尚未初始化；NumPy 尚未安装的告警保留，模型运行未验证。
+
+证据：[复制程序与核验](gsv-v5-resume-02/torch-reuse.json)、[九个依赖的来源](gsv-v5-resume-02/torch-dependencies-reuse.json)、[CPU 导入原始输出](gsv-v5-resume-02/torch-import.log)。本轮 uv 对依赖的离线解析仍失败，保留 [日志](gsv-v5-resume-02/torch-dependencies.log)，随后按用户批准的直接复用路径处理，不下载替代 PyTorch。
+
+PyTorch 下载不再是当前阻塞；其余 GPT-SoVITS 依赖、完整权重、音频读取依赖、最小 GPU 合成和正式测量仍未完成。torchcodec 0.10 与 torch 2.10 的对应按官方兼容表，尚未安装。
