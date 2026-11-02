@@ -1,0 +1,15 @@
+{
+  "task": "P5-26",
+  "check": "AC2-20",
+  "status": "incomplete",
+  "mechanism_status": "passed",
+  "source_head": "bcd035d91af73b6c7dd9ce5bb195bff5c082b042",
+  "evidence": "../verification/r1-20261101-test-final/stdout.log",
+  "regression_before_fix": "../verification/r1-20261101-red/stdout.log",
+  "boundary": "已确认故障跨普通提交保留，只有引用当前故障的修复成功才释放；完整独立 H→(R,θ)、真实 H/L 事务、通知仍未完成。",
+  "law_scope": "conditional legacy only; ADR0032 successor laws and superseded AC2-25/COG-A12 claims excluded",
+  "test_name_search_keys": [
+    "fault_retention::r1_",
+    "local_fault_requires_record_and_never_leaks_part_of_candidate"
+  ]
+}

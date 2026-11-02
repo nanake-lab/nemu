@@ -1,0 +1,56 @@
+{
+  "checkerPython": "D:/Dev/nemu-wt/P4-02/services/voice-sidecar/.venv/Scripts/python.exe",
+  "versions": {
+    "ruff": "ruff 0.15.6",
+    "mypy": "mypy 1.20.2 (compiled: yes)"
+  },
+  "commands": {
+    "ruff": [
+      "D:/Dev/nemu-wt/P4-02/services/voice-sidecar/.venv/Scripts/python.exe",
+      "-m",
+      "ruff",
+      "check",
+      "spikes/carrier-engine/http_probe.py",
+      "spikes/carrier-engine/prepare_visual_inputs.py",
+      "spikes/carrier-engine/summarize_injection.py",
+      "spikes/carrier-engine/summarize_visual_image_timing.py",
+      "spikes/carrier-engine/summarize_visual_injection.py",
+      "spikes/carrier-engine/summarize_visual_remaining.py",
+      "spikes/carrier-engine/visual_http_benchmark.py",
+      "spikes/carrier-engine/visual_remaining.py"
+    ],
+    "mypy": [
+      "D:/Dev/nemu-wt/P4-02/services/voice-sidecar/.venv/Scripts/python.exe",
+      "-m",
+      "mypy",
+      "--strict",
+      "--python-executable",
+      "D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe",
+      "--cache-dir",
+      "D:/Dev/cache/P0-12/mypy",
+      "spikes/carrier-engine/http_probe.py",
+      "spikes/carrier-engine/prepare_visual_inputs.py",
+      "spikes/carrier-engine/summarize_injection.py",
+      "spikes/carrier-engine/summarize_visual_image_timing.py",
+      "spikes/carrier-engine/summarize_visual_injection.py",
+      "spikes/carrier-engine/summarize_visual_remaining.py",
+      "spikes/carrier-engine/visual_http_benchmark.py",
+      "spikes/carrier-engine/visual_remaining.py"
+    ]
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "ruffExit": 1,
+      "mypyExit": 1
+    },
+    {
+      "attempt": 2,
+      "ruffExit": 0,
+      "mypyExit": 0
+    }
+  ],
+  "newPackagesInstalled": false,
+  "gpuUsed": false,
+  "baselineMain": "ee5c2b6068b9a2200ad5fd48ebbc8e337458c0d5"
+}

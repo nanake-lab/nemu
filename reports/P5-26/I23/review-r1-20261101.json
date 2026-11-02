@@ -1,0 +1,15 @@
+{
+  "task": "P5-26",
+  "check": "I23",
+  "status": "incomplete",
+  "mechanism_status": "passed",
+  "source_head": "bcd035d91af73b6c7dd9ce5bb195bff5c082b042",
+  "evidence": "../verification/r1-20261101-test-final/stdout.log",
+  "regression_before_fix": "../verification/r1-20261101-red/stdout.log",
+  "boundary": "384 个前缀逐位比较通过，包含未解决故障及审计；与重放共享控制逻辑，R1 另外直接断言最后正确状态；不是独立第二实现或生产验收。",
+  "law_scope": "conditional legacy only; ADR0032 successor laws and superseded AC2-25/COG-A12 claims excluded",
+  "test_name_search_keys": [
+    "ac2_08_i23_random_histories_every_prefix_zero_bit_differences",
+    "fault_retention::r1_"
+  ]
+}

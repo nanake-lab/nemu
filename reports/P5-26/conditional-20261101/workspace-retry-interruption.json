@@ -1,0 +1,10 @@
+{
+  "status": "incomplete",
+  "observed_utc": "2026-11-01T15:01:44.6540521+00:00",
+  "run": "conditional-20261101-workspace-test-retry",
+  "reason": "Tool host generation became stale again. The exec session and its P5-26 process tree no longer exist; result.json was not written. Exact termination cause is unknown.",
+  "counted_as_pass": false,
+  "next_run": "conditional-20261101-workspace-test-detached",
+  "strategy": "Launch the same verify.ps1 command in a hidden independent PowerShell process; poll result.json instead of relying on a long-lived tool session",
+  "tests_or_thresholds_changed": false
+}
