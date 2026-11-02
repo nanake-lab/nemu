@@ -1008,7 +1008,8 @@
    "difficulty": "高",
    "suggested": "Claude",
    "you": null,
-   "effort": "7 天"
+   "effort": "7 天",
+   "note": "基础设施部分（合成世界、重放、运行器）可先行；规律校准部分等待 P5-48（新规律）与 P5-45（证据规则）完成后进行。两项只作为校准前置，不加入整卡依赖，以免阻塞基础设施。"
   },
   {
    "id": "P5-31",
@@ -1839,13 +1840,13 @@
    "phase": "P5",
    "milestone": "E2",
    "deps": [
-    "P5-49"
+    "P5-07"
    ],
    "difficulty": "高",
    "suggested": "Codex",
    "you": null,
    "effort": "待开工时估算",
-   "note": "来源：CARDS-SYNC-01 用户指派（2026-11-02）；[P0-12 REPORT「用户判定」](../reports/P0-12/REPORT.md#用户判定)；[P5-07 IPC 请求](https://github.com/nanake-lab/nemu/blob/bc1fab99834ababef21a59b5214e674e2c7c6188/tasks/requests/P5-07-ipc-contract.md)；前置：#96 基础层完成独立审查并可供后继使用；仍遵守同目录串行"
+   "note": "来源：CARDS-SYNC-01 用户指派（2026-11-02）；[P0-12 REPORT「用户判定」](../reports/P0-12/REPORT.md#用户判定)；[P5-07 IPC 请求](https://github.com/nanake-lab/nemu/blob/bc1fab99834ababef21a59b5214e674e2c7c6188/tasks/requests/P5-07-ipc-contract.md)；前置：P5-07 基础层（#96）完成独立审查并可供后继使用；仍遵守同目录串行；worker 内部改动，不涉及跨进程契约；若实现中发现确需改动跨进程契约，再写请求文件。"
   },
   {
    "id": "P5-51",
