@@ -3,7 +3,7 @@
 - 类型：高难度设计卡；用户于 2026-11-02（Australia/Perth）指派 Codex。
 - 分支：`task/DESIGN-LAW-01`；阅读与开工基线：`origin/main` 的 `8fed313b7ca9c31423d0ad442789ddef7e6b063b`。
 - 写入范围：仅 `reports/DESIGN-LAW-01/` 和本新建请求文件。不改代码、契约、规格正文、已发布规律、配置或 cards.json；不实现任何选项。
-- 认领状态：设计进行中；以草稿 PR 认领并标 `needs-user`。
+- 认领状态：设计交付完成；[PR #131](https://github.com/nanake-lab/nemu/pull/131) 保持 `needs-user` 草稿，等待用户选型及独立交叉审查。
 
 ## 用户已定目标
 
@@ -23,3 +23,11 @@
 完整读取 AGENTS（含 §§5–6）、ARCHITECTURE、CONTRACTS、Echo Core README、v2.0；ADR 0008、0026、0032、0033；V2-95–97、115、118–143；R-KAPPA-01 DEVLOG；设计审计 D05/D07/D09/D10/D11；参照 DESIGN-EV-01 的写法。
 
 设计完成后提交报告和接续请求，在 PR 写「请审查」，保留 `needs-user`；不等待或报告 CI，不合并，不取下一卡。用户尚未选项不阻碍设计交付，但阻塞后继实施；等用户决定时按 AGENTS §6 保持草稿。
+
+## 交付与接续请求
+
+[REPORT](../../reports/DESIGN-LAW-01/REPORT.md) 提供一页总览、四项先发散后收敛的 A/B 比较与待用户决定清单；[PROOFS](../../reports/DESIGN-LAW-01/PROOFS.md) 给出条件推导、反例和不可识别边界；[EXPERIMENTS](../../reports/DESIGN-LAW-01/EXPERIMENTS.md) 给出各项及组合的谱系验证计划，全部 `not_run`。固定 A 的研究不选最终方案。
+
+原因：ADR 0032 的目标不能由旧永久出生锚定、κ 尾部、提交截止或固定亲疏函数直接满足；实际输入/状态合同也尚未承载新方案。用户选型后请另卡冻结所选规律、可信时间/支持身份、F 快状态、G 作用/激活、θ 统计与迁移接口，再实现并校准。本文件仅提出接续请求，不发布这些接口。具体职责和每处“位置 / 依据 / 新读法”见 [SOURCES-AND-HANDOFF](../../reports/DESIGN-LAW-01/SOURCES-AND-HANDOFF.md)，未决项见 [BLOCKED](../../reports/DESIGN-LAW-01/BLOCKED.md)。
+
+续作已核对本地未提交草稿并保全，合入 main `0a66e3fa30bf5571c476ca830528030843f1c7ff`；按用户要求分别推送 D07、D09+D10、D11、D05、附带研究。本卡结束于「请审查」，不自行领取接续工作。
