@@ -140,3 +140,13 @@ CPU 真实中文/中英混合推理未运行，GPU 未运行。当前不是 GPU 
 权重第 1 次续传仍在进行时由代理终止本轮已核对归属的下载进程，非网络错误；部分 s2Gv5turbo.pth 保留 554826208 bytes，未完整校验。完整脚本/日志/终止归属记录已保存。此次将新尝试上限保守设为 19，加上前轮因许可停止的 1 次不超过 20；未用自动重试隐藏原始失败。
 
 下一步等待用户授权重取 ONNX Runtime CPU 包元数据并准备 CPU-only provider（核对固定版本与许可），随后继续已有权重断点及 CPU 真实中文/混合推理。尚不满足申请 GPU 窗口的前置。仍为草稿，GPU 与真实合成全部 not_run；未改用户或系统网络设置。
+
+## 2026-11-02：G2PW 进程内 CPU 隔离通过
+
+用户已批准进程内替换 ort.get_available_providers，只返回 CPUExecutionProvider；不另装 CPU 包、不改第三方源码。固定上游 GPT_SoVITS 下 InferenceSession 搜索仅发现 text/g2pw/onnx_api.py 两个互斥分支和不在推理路径中的 onnx_export.py。
+
+实测 onnxruntime 1.19.2 原 provider 列表包含 TensorRT/CUDA/CPU，preload_dlls 属性不存在；上游 onnx_api.py:23 调用由 except Exception 跳过。替换后初始化 G2PW，断言 session_g2pw.get_providers() == ['CPUExecutionProvider'] 通过，同时 torch.cuda.is_initialized() == False。见 [原始日志](gsv-v5-resume-07/g2pw-isolation.log)与[脚本](gsv-v5-resume-07/g2pw-isolation.py)。本阶段尚未加载 TTS 权重或合成。
+
+后续 provider/显存设计输入：G2PW 自动按可见 CUDA provider 选 GPU，不受 TTS device 参数控制，正式 provider 必须显式指定 G2PW 的 provider；升级 ORT 时重新核对 preload_dlls，不能沿用 1.19.2 的跳过结论。当前替换仅在 CPU 冒烟进程内生效，未实施正式 provider。
+
+此前 CPU 隔离阻塞已解除。剩余固定权重续传进行中，真实 CPU 推理待完整大小/哈希通过。用户已扩大固定来源瞬时网络重试授权，每请求最多 5 次、间隔 30 秒并逐次留日志；权重仍最多 20 次。PR 继续草稿。
