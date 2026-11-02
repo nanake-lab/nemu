@@ -150,3 +150,9 @@ CPU 真实中文/中英混合推理未运行，GPU 未运行。当前不是 GPU 
 后续 provider/显存设计输入：G2PW 自动按可见 CUDA provider 选 GPU，不受 TTS device 参数控制，正式 provider 必须显式指定 G2PW 的 provider；升级 ORT 时重新核对 preload_dlls，不能沿用 1.19.2 的跳过结论。当前替换仅在 CPU 冒烟进程内生效，未实施正式 provider。
 
 此前 CPU 隔离阻塞已解除。剩余固定权重续传进行中，真实 CPU 推理待完整大小/哈希通过。用户已扩大固定来源瞬时网络重试授权，每请求最多 5 次、间隔 30 秒并逐次留日志；权重仍最多 20 次。PR 继续草稿。
+
+## 2026-11-02：固定权重补齐通过
+
+固定 HuggingFace revision 8f8857563c040d542de108a2c18b0425abd6c9c5 的剩余三文件均完成：s2Gv5turbo.pth 766406144 B、vocoder.pth 57761163 B、s1v3.ckpt 155284856 B；完整大小和 SHA-256 均与原 download-plan.json 一致，见 [verification.jsonl](gsv-v5-resume-07/verification.jsonl)。加上先前已核验的六个文件，计划内权重已齐。
+
+本轮主权重与 s1v3 各 1 次，vocoder 第 1 次 exit 56/missing close_notify 后等待 30 秒，第 2 次从断点成功，失败原日志和退出码保留。未换镜像或全局设置。本阶段推送后再做 CPU 真实合成，仍非 GPU 验收。
