@@ -45795,5 +45795,357 @@
         }
       }
     }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "A0",
+        "kind": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d763202000000413000010000000000",
+      "digest": "a29b47de579f63b9963ba79308a95bba9dd9fc688d1e8bf950cbf174e40666c2",
+      "ok": true,
+      "protobuf": "0801120241302801",
+      "value": {
+        "kind": 1,
+        "region": "A0",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "中文🙂1",
+        "speed": 0.0,
+        "kind": 2
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d76320b000000e4b8ade69687f09f998231010000000000000000020000000000",
+      "digest": "60ebb99ddc3dd50412f07f9a0e759b4226a7e11a01eed7645ca317b08eedae49",
+      "ok": true,
+      "protobuf": "0801120be4b8ade69687f09f9982312100000000000000002802",
+      "value": {
+        "kind": 2,
+        "region": "中文🙂1",
+        "schema_version": 1,
+        "speed": 0.0
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "﻿zero\u00002",
+        "speed": 2.5,
+        "kind": 3
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d763209000000efbbbf7a65726f0032010000000000000440030000000000",
+      "digest": "362b6f85b1811db9e9832f81ed5e709257bb0c30ebe175a3c64c002a40450250",
+      "ok": true,
+      "protobuf": "08011209efbbbf7a65726f00322100000000000004402803",
+      "value": {
+        "kind": 3,
+        "region": "﻿zero\u00002",
+        "schema_version": 1,
+        "speed": 2.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 7,
+        "contact_id": "contact-A",
+        "elapsed_ms": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d7632040000006865616400070000000109000000636f6e746163742d41010000000000000000",
+      "digest": "5a292c338e351859bf83512be32f3c897408d034c077577e0fc455a61a58b2d2",
+      "ok": true,
+      "protobuf": "080112046865616428073209636f6e746163742d41390000000000000000",
+      "value": {
+        "contact_id": "contact-A",
+        "elapsed_ms": 0.0,
+        "kind": 7,
+        "region": "head",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 8,
+        "contact_id": "contact-A",
+        "elapsed_ms": 1000.25
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d7632040000006865616400080000000109000000636f6e746163742d41010000000000428f40",
+      "digest": "53df410f02ae86586307377ef69e7564ad6bb3d6be768baf671e4963f0cb9a87",
+      "ok": true,
+      "protobuf": "080112046865616428083209636f6e746163742d41390000000000428f40",
+      "value": {
+        "contact_id": "contact-A",
+        "elapsed_ms": 1000.25,
+        "kind": 8,
+        "region": "head",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "head",
+        "kind": 9,
+        "contact_id": "contact-A",
+        "elapsed_ms": 3000.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d7632040000006865616400090000000109000000636f6e746163742d4101000000000071a740",
+      "digest": "5dea4bcc9ee00692c07d41ac56ff72db3f63d6a7f1b4a4e2109ee72e645128be",
+      "ok": true,
+      "protobuf": "080112046865616428093209636f6e746163742d4139000000000071a740",
+      "value": {
+        "contact_id": "contact-A",
+        "elapsed_ms": 3000.5,
+        "kind": 9,
+        "region": "head",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "hand",
+        "kind": 1,
+        "speed": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d76320400000068616e6401000000000000e03f010000000000",
+      "digest": "251a033f62d05503bceae1aeb0dc524d4c483cb3220af93545c243b8555891a1",
+      "ok": true,
+      "protobuf": "0801120468616e6421000000000000e03f2801",
+      "value": {
+        "kind": 1,
+        "region": "hand",
+        "schema_version": 1,
+        "speed": 0.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "hand",
+        "kind": 2,
+        "speed": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d76320400000068616e6401000000000000e03f020000000000",
+      "digest": "06c48e2ca993e096682f97e7b0c600995aa93a1854539cd1800505e977c35e6e",
+      "ok": true,
+      "protobuf": "0801120468616e6421000000000000e03f2802",
+      "value": {
+        "kind": 2,
+        "region": "hand",
+        "schema_version": 1,
+        "speed": 0.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "hand",
+        "kind": 3,
+        "speed": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d76320400000068616e6401000000000000e03f030000000000",
+      "digest": "3b491db2b709584cb54ee044f7d9a26b161cefe1e9b5109fa7a788bf17a35257",
+      "ok": true,
+      "protobuf": "0801120468616e6421000000000000e03f2803",
+      "value": {
+        "kind": 3,
+        "region": "hand",
+        "schema_version": 1,
+        "speed": 0.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "hand",
+        "kind": 4,
+        "speed": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d76320400000068616e6401000000000000e03f040000000000",
+      "digest": "3f91780ceaaa0135a795eca04bfc3ef3256944408adb68bbb77f8d7d1b9673e5",
+      "ok": true,
+      "protobuf": "0801120468616e6421000000000000e03f2804",
+      "value": {
+        "kind": 4,
+        "region": "hand",
+        "schema_version": 1,
+        "speed": 0.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "hand",
+        "kind": 5,
+        "speed": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d76320400000068616e6401000000000000e03f050000000000",
+      "digest": "ebf26a0157b927bf549d3c693795d80c5d6b8cc565c720579fe9bd980519f3f5",
+      "ok": true,
+      "protobuf": "0801120468616e6421000000000000e03f2805",
+      "value": {
+        "kind": 5,
+        "region": "hand",
+        "schema_version": 1,
+        "speed": 0.5
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "TouchObservationV2",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "region": "hand",
+        "kind": 6,
+        "speed": 0.5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e746f7563682d76320400000068616e6401000000000000e03f060000000000",
+      "digest": "d2bc671a67ab20df25aa9b3bcf3ee0e57b114131860587608173db78f31dbed0",
+      "ok": true,
+      "protobuf": "0801120468616e6421000000000000e03f2806",
+      "value": {
+        "kind": 6,
+        "region": "hand",
+        "schema_version": 1,
+        "speed": 0.5
+      }
+    }
   }
 ]

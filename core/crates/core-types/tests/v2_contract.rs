@@ -234,7 +234,11 @@ fn superseded_registry() {
     // P5-22 adds six terminal predecessors, all kept readable with frozen bytes.
     // P5-34 adds four V2 predecessors, retained for decoding.
     // P5-36 adds ThetaSnapshot; its V2 successor embeds the complete estimator.
-    assert_eq!(marked.len(), 47);
+    // P6-17 adds TouchObservation; its successor carries dwell identity and duration.
+    assert_eq!(marked.len(), 48);
+    const { assert!(core_types::generated::TouchObservation::SUPERSEDED) };
+    const { assert!(!core_types::generated::TouchObservationV2::SUPERSEDED) };
+    assert!(marked.contains("TouchObservation"));
     const { assert!(core_types::generated::ThetaSnapshot::SUPERSEDED) };
     const { assert!(!core_types::generated::ThetaSnapshotV2::SUPERSEDED) };
     assert!(marked.contains("ThetaSnapshot"));
