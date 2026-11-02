@@ -1,0 +1,101 @@
+{
+  "task": "P5-08",
+  "date": "2026-11-02",
+  "delivery": "conditional_partial",
+  "whole_card_complete": false,
+  "production_allowed": false,
+  "reviewed_head": "063894aae52799f6083cb1a6dee2747e724ec6f1",
+  "review_url": "https://github.com/nanake-lab/nemu/pull/120#issuecomment-6560079382",
+  "prior_rust_validated_main_B": "67cc296c8b960ae429aceb1f1e0110ef0dbc2f9e",
+  "merged_main_M": "8fed313b7ca9c31423d0ad442789ddef7e6b063b",
+  "merge_commit": "8d03f934cf602fb2ff31e3a47c315269d123b4a8",
+  "core_tree": "5f03d138709c0528f834ce76b94595b06cd2beef",
+  "runtime_tree": "9b2dfacf0b2f4c7ba8241be91e343107d4f9b9e8",
+  "main_delta_groups": {
+    "core/crates": 15,
+    "docs/adr": 2,
+    "reports/ADR-0034": 1,
+    "reports/P0-12": 1957,
+    "reports/P5-26": 173,
+    "spikes/carrier-engine": 17,
+    "tasks/P0-foundation.md": 1,
+    "tasks/P5-echo-core.md": 1,
+    "tasks/cards.json": 1,
+    "tasks/requests": 1,
+    "tools/status": 7
+  },
+  "unchanged_core_files": 365,
+  "only_new_core_files": [
+    "core/crates/core-kernel/src/recompute/README.md",
+    "core/crates/core-kernel/src/recompute/engine.rs",
+    "core/crates/core-kernel/src/recompute/inspection.rs",
+    "core/crates/core-kernel/src/recompute/mod.rs",
+    "core/crates/core-kernel/src/recompute/tests/bit_identity.rs",
+    "core/crates/core-kernel/src/recompute/tests/boundaries.rs",
+    "core/crates/core-kernel/src/recompute/tests/controls.rs",
+    "core/crates/core-kernel/src/recompute/tests/fault_retention.rs",
+    "core/crates/core-kernel/src/recompute/tests/fixture.rs",
+    "core/crates/core-kernel/src/recompute/tests/legacy.rs",
+    "core/crates/core-kernel/src/recompute/tests/mod.rs",
+    "core/crates/core-kernel/src/recompute/tests/probes.rs",
+    "core/crates/core-kernel/src/recompute/tests/properties.rs",
+    "core/crates/core-kernel/src/recompute/types.rs",
+    "core/crates/core-kernel/src/recompute/verify.ps1"
+  ],
+  "registered_kernel_lib_unchanged": true,
+  "recompute_registered": false,
+  "other_unchanged_inputs": [
+    ".github/workflows",
+    "AGENTS.md",
+    ".agents/skills/echo-core-work/SKILL.md",
+    "docs/ARCHITECTURE.md",
+    "docs/CONTRACTS.md",
+    "docs/echo-core/README.md",
+    ".cargo",
+    "package.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml"
+  ],
+  "prior_r3_logs_verified": 8,
+  "prior_rust_evidence": "../review-r3-20261101/manifest.json",
+  "rust_checks_this_round": "not_run: registered build/test inputs unchanged; resource guard stopped before cargo started. Prior Rust validation baseline remains B; source comparison is not a new execution at M.",
+  "document_checks": {
+    "relative_links": "passed",
+    "json_parse": "passed",
+    "diff_check": "passed",
+    "board_delivery_waiting": [
+      "权威发布请求",
+      "D11 时间语义请求",
+      "阶段输入及 law 请求"
+    ],
+    "relative_links_checked": 19,
+    "log": "checks-03.log"
+  },
+  "failure": "checks.log: 5 labels for 3 successor requests; normalized labels. checks-02.log: validation log self-link checked before Tee created it; precreated fresh checks-03.log. Assertions unchanged; original logs preserved.",
+  "commands": [
+    "git merge --no-edit --no-stat origin/main",
+    "git diff --check",
+    "Python: compare git ls-tree blobs for registered core/build inputs; verify R3 log lengths and SHA-256",
+    "Python: delivery.delivery_waiting(P5-08, REPORT, BLOCKED), assert three successor requests and incomplete status",
+    "Python: parse result.json and resolve every changed Markdown relative link"
+  ],
+  "scope": "Only P5-08 report files changed after merge; source, tests and prior raw evidence unchanged; ready plus needs-user by explicit user instruction, no PR merge.",
+  "validation_logs": [
+    {
+      "file": "checks-02.log",
+      "bytes": 172,
+      "sha256": "b83504d8aca68bef18944a1c7c5f785505166a2b78bb7236a79f0d75d79b9b77"
+    },
+    {
+      "file": "checks-03.log",
+      "bytes": 299,
+      "sha256": "417ccb33a6c5765efa887908fb16f023336082c3814f149fbfc62bb48dbf9cd2"
+    },
+    {
+      "file": "checks.log",
+      "bytes": 326,
+      "sha256": "0aec8d7acf074e107811687831c2f6cc9f1881471c0f7567c3ebb4068ff86159"
+    }
+  ],
+  "final_fetch_M": "8fed313b7ca9c31423d0ad442789ddef7e6b063b"
+}

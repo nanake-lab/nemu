@@ -1,51 +1,57 @@
-风险分级：重档；本 PR 修改 core-runtime 的状态编排和存储、数值输入边界。
+风险分级：重档；本 PR 包含 core-runtime 状态编排与存储边界，本轮仅调整条件性交付说明并合入 main。
 
-# P5-08 编排、阶段接口与时钟（W03）
+# P5-08 编排、阶段接口与时钟（W03）— 条件性交付
 
-**部分交付，保持 draft；全卡未验收。** 本轮修复 [PR #120 复审 R3](https://github.com/nanake-lab/nemu/pull/120#issuecomment-6558896765)：接入 #108 已合并的完整 θ 后继类型与现有 W02 接口。该评论已关闭 R1/R2，本轮保留并适配其回归。用户下一步：安排复审；完整 W03、持久时钟、Q 和真实阶段接线等仍见 [BLOCKED.md](BLOCKED.md)，不代选、不合并、不领取下一卡。
+## 当前状态
 
-## 本轮修改与证据
+**条件性交付（部分交付）。P5-08 整卡未完成，禁止据此接入生产。** 按用户 2026-11-02 指示，参照 [#121 条件性交付先例](https://github.com/nanake-lab/nemu/pull/121) 将本次限定范围提交为可审查并标 `needs-user`，由用户审查并决定是否接受。转可审查或接受本次交付均不代表整卡完成、后继验收通过、生产接入许可或依赖已满足。本会话不合并、不领取下一卡。
 
-- **R3 读写类型：** `stages.rs` 的 Snapshot、C 输入/输出直接使用生成的 `ThetaSnapshotV2`；`store.rs` 按 V2 读取和准备，保留原 θ 对象引用版本。无成长路径保留完整估计器，不转换旧摘要、不补零、不绕过 superseded 门禁。`pipeline.rs` 从 V2 的 estimator 读取 G 原来获准的 sigma，未扩大 G 输入。
-- **R3 回归先行：** 先提交测试及 [red 日志](review-r3-20261101/r3-red.log)（`45ed7cf9dcbeaa22488fe3b545f59e371596090e`）；合法 V2 head 的运行时读取实测报 `Store(Contract("type tag"))`，exit 101。随后修复提交 `966fef5a83dee60507f1018a56959cf301c2b54c`；同一公开读→无成长准备→commit→重开路径验证 canonical 字节和引用相等。另测旧型新写被拒绝且不发布 head；旧 head 原字节可读、拒绝可写打开及 DB/WAL/历史不变复用 main 的 core-store 测试，不复制存储内部实现。
-- **完整状态与 R2：** `validation.rs` 在原三个外部边界复用 `check_theta_snapshot_v2(theta, limits)`，包含内嵌参数范围/摘要和完整估计器自洽；R2 的零 λ/σ/τ 回归继续保留，并加入缺估计器分量、错误参数摘要两种边界，验证 C 的非法输出到不了 F_out/STAGED，合法非恒等 C 仍成功。维护逐位对照扩展到所有 V2 估计器与参数浮点字段。
-- **夹具与责任：** V2 夹具直接取已合并黄金向量的合成 C 轨迹前缀 17，含非空计数、累计量和末事件；测试只有合成 law 引用与 L/Q/U 根，不声称生产启动、真实 C 接线或来源认证。消息自洽不能证明独立 law/H/停机时段来源；真实 F 的类别/权威计数、关系权重也仍未接线，已在 [请求的 R3 接续](../../tasks/requests/P5-08-stage-inputs-and-law.md) 澄清新旧责任。
+[R3 复审已通过并关闭](https://github.com/nanake-lab/nemu/pull/120#issuecomment-6560079382)，结论绑定 `063894aae52799f6083cb1a6dee2747e724ec6f1`，仅覆盖已实现的部分。当前 runtime 源码/测试与该审查 head 逐文件相同。后继项见 [BLOCKED.md](BLOCKED.md)、[权威发布请求](../../tasks/requests/P5-08-runtime-publication.md)、[D11 时间语义请求](../../tasks/requests/P5-08-result-time-semantics.md) 与 [阶段输入及 law 请求](../../tasks/requests/P5-08-stage-inputs-and-law.md)。
 
-本轮产品修改仅在 `core/crates/core-runtime/`；其余是本卡报告、证据与请求。没有自行修改契约、其他 crate、黄金向量或新增依赖。复用生成类型及 W02 现有 API，没有新增迁移、配置、抽象层或行为阈值。
+## 本次交付范围
 
-## 主线同步与验证范围
-
-上一轮实际验证基线为 `db8802f317b5b4dd5fe57699ef724fbac0d940f1`。本轮 fetch 后 main B 为 `67cc296c8b960ae429aceb1f1e0110ef0dbc2f9e`，merge 提交 `aa73ad62d875060713f809a777406314ec6245bf`，无冲突、无 rebase/强推。增量 #108 修改 θ 生成类型、core-store/core-kernel 及相关调用方，属于直接依赖变化，已纳入组合验证；#119/#124/#126 是设计/研究文档，采用新边界但不在本卡代做后继规律。AGENTS/本卡技能未变化，继续按简单优先、重档及原目录范围执行。收尾 fetch 的 M 仍为 B。
-
-本轮被测源码提交 `966fef5a83dee60507f1018a56959cf301c2b54c`，`core/` tree 为 `8a7a0f9e45852d5c247b9c52b256033acc96d7d1`。后续提交只归档报告/证据，不改被测产品或测试。命令、日志哈希、运行中断及分段覆盖见 [manifest.json](review-r3-20261101/manifest.json)。
-
-## 本机验收
-
-Windows 本机，命令在 `core/` 执行；仅进程级 `CARGO_HOME=D:/Dev/cache/cargo`、`CARGO_TARGET_DIR=D:/Dev/cache/cargo-target`、`TEMP/TMP=D:/Dev/cache/P5-08/tmp`。所有存储测试使用临时合成谱系。工作区全部单元/集成与文档套件已分段覆盖通过；首次整条命令中断仍单列，不记录为 exit 0。
-
-| 检查 | 结果 | 原始证据 |
+| 模块 | 条件性交付的能力 | 证据边界 |
 | --- | --- | --- |
-| 修复前 `cargo test --offline --locked -p core-runtime --test store review_r3 -- --nocapture` | 预期失败，exit 101；V2 读取 type tag 错误，旧型拒写正例通过 | [R3 red](review-r3-20261101/r3-red.log) |
-| 修复后 `cargo test --offline --locked -p core-runtime` | 28 项 + 2 项 compile-fail 文档测试通过，exit 0 | [runtime](review-r3-20261101/runtime-green-01.log) |
-| `cargo test --offline --locked --workspace` 首次 | 会话中断，无最终退出码，不记整条命令通过。中断前 action-gate、core-kernel、core-policy/replay/runtime/store/types、echoctl 的单元/集成套件均有通过结果 | [workspace 首次原始日志](review-r3-20261101/workspace-test.log) |
-| `cargo test --offline --locked -p fact-view -p gateway -p semantic-core -p task-layer --lib --tests` | 通过，exit 0；fact-view 18、gateway 42 项通过，另两 crate 当前无测试 | [剩余套件](review-r3-20261101/workspace-remaining.log) |
-| `cargo test --offline --locked --workspace --doc` | 7 项 compile-fail 测试通过，exit 0 | [workspace doc](review-r3-20261101/workspace-doc.log) |
-| `cargo fmt --all --check` | 通过，exit 0 | [fmt](review-r3-20261101/fmt.log) |
-| `cargo clippy --offline --locked --workspace --all-targets -- -D warnings` | 通过，exit 0 | [Clippy](review-r3-20261101/clippy.log) |
+| `stages.rs`、`pipeline.rs`、`binding.rs`、`validation.rs` | 受限阶段接口、至 `StagedEvent<L>` 的顺序/绑定校验、谱系能力、降级与 STAGED 隔离；R⁺ 保留典型幅度，θ 使用完整生成 V2 并校验语义 | 同步可信适配器与合成输入上的结构机制；不是完整 Commit/J 服务或真实 F/C/J 接线 |
+| `clock.rs`、维护入口 | 显式时钟输入的计算与故障检查、单次 process 取样、独立 completion 输入、只读 x 投影及 R/θ 保留 | 没有 OS provider、原子时钟 checkpoint、初始 L/Q/U 或真实跨进程重启验收 |
+| `store.rs` | 使用现有 W02 API 读取已有 V2 head，准备无成长事务；提交/重开保留完整估计器和引用版本，旧 θ 原字节只读/拒写 | 临时合成谱系的实际存储回归；不生成初始根、不做旧历史迁移、不构成生产运行循环 |
+| `status.rs`、载体更新接口 | 结构化降级状态、排练默认 m=0、既有 clear KV → install → prefill 顺序 | 没有 Q 权威通知或新载体接线；现有接口测试不证明 ADR0034 的循环状态清除 |
 
-首次工作区日志停在 fact-view 的长时测试，没有最终结果；恢复工具会话时返回 `Unknown process id 91662`，只读核对已无本任务测试进程，终止原因不明。保留原日志，不把中断算通过或代码失败；已补齐未完成套件及全部文档测试，期间产品源码/测试不变。core-store 的 `legacy_theta_readable_writer_refused_without_touching_history` 已在首次运行通过（51 项存储测试通过）；此检查覆盖旧 head 可读/拒写、DB/WAL/历史不变。core-kernel 保留 1 项既有 ignored：`theta_1_original_500_streams_zero_violations`（V2-93 诊断），本轮未改判定。
+没有新增行为规则、阈值、依赖或身份设定；原验收与失败证据不放宽。`pipeline.rs` 超过 400 行，保留单一事件顺序便于审计，校验集中于 `validation.rs`。本轮自有改动仅在本卡报告目录；主线内容通过 merge 合入。
 
-历史失败仍保留：[R1](review-20261101/r1-red.log)、[R2](review-20261101/r2-red.log) 及 [维护入口](review-20261101/r2-maintenance-red.log) 的失败已在上一轮修复；旧 `validation/runtime-02.log` helper 编译错误、`validation/clippy-01.log` large_enum_variant 也已修复。旧开发期三处 enum 拼写错误仅存于当时工具输出，不能作为通过证据；此前 fetch TLS 失败仍保留于旧目录，本轮未发生同类错误。
+## 后继项与生产禁用边界
 
-最终文档检查：`git diff --check`、改动 Markdown 相对链接、manifest 完整解析与日志哈希核对通过；最终 core tree 与被测树相同。
+下列项目仍是整卡未完成工作，不能因写入请求或本次条件性交付而改记为通过：
 
-## 既有交付边界与未完成项
+- **持久化时钟与初始 L/Q/U：** boot/epoch、可信墙钟、独立提交时间及原子恢复发布，完整 bootstrap 与正式启动/封存尚未接通。
+- **异步绑定：** 派发与完成后的绑定转换、真实异步 IRL 结果收集及资源认证尚未接通。
+- **真实终端冒烟：** user_text 与结构化事件经 gateway → runtime → fact-view 的完整链路未验收；Reader::facts 与合成根测试不替代它。
+- **Q 通知与权限：** 运行状态/能力、暂停/复核授权、恢复补算与 `run_state` 通知仍未接通。
+- **ADR0032 D11 时间语义：** 发生、观察、提交时间的完整持久语义及可信来源、资格规则均属后继设计；接收时间不冒充观察时间，队列延迟不作为丢弃感受的理由。
+- **完整阶段与新载体：** 真实 F/C/J、F 的类别/权威计数/关系输入、独立 law/H 来源认证、载体 KV/循环状态清除的运行时接线及校准仍属后继。P0-12 上游测量通过不代替本卡端到端接线验收。旧 θ 迁移也不在本次范围。
 
-阶段编排只到 `StagedEvent<L>`；W02 只为已有 head 准备无成长事务。`pipeline.rs` 超过 400 行，保留单一顺序便于审计，校验拆在 `validation.rs`。时钟仅是显式输入的计算，没有 OS provider/原子 checkpoint/Q 恢复发布；排练 m=0 与 clear KV → install → prefill 只有结构验收。
+D09/D10 不加入定时强制平复，不实现被 ADR0032 取代的旧读法。上述后继实现及其正式验收完成前，**禁止据此接入生产**；补登记、补默认值或将桩替换为真实实现均不能自动解除此边界。
 
-未完成：完整 Commit/J 服务；原子时钟与初始 L/Q/U；Q 状态/暂停/复核授权及通知；异步 IRL 绑定；真实 gateway→runtime→fact-view 冒烟；真实 F/C/J 适配与独立 law/H 来源认证；正式启动/封存接线。ADR0032 D11 发生/观察/提交语义仍**待后继设计**，接收时间不冒充观察时间，队列延迟不触发丢弃感受；D09/D10 无定时强制平复。旧 θ 历史迁移保持后继范围。
+## 主线同步与受影响检查
 
-对应请求：[权威发布](../../tasks/requests/P5-08-runtime-publication.md)、[D11 时间语义](../../tasks/requests/P5-08-result-time-semantics.md)、[F 输入与 law](../../tasks/requests/P5-08-stage-inputs-and-law.md)。这些缺口不因本轮 R3 修复而消失。
+上一轮 Rust 验证基线 B 为 `67cc296c8b960ae429aceb1f1e0110ef0dbc2f9e`，被测源码 `966fef5a`、审查 head `063894aa`；原始证据见 [R3 manifest](review-r3-20261101/manifest.json)。本轮 fetch 的 M 为 `8fed313b7ca9c31423d0ad442789ddef7e6b063b`，已按用户要求 merge，提交 `8d03f934cf602fb2ff31e3a47c315269d123b4a8`，无冲突、无 rebase/强推。
+
+B→M 增量为 #127 条件载体及状态清除要求、#128 载体测量/用户判定、#121 显式重算机制、#129 部分交付看板识别。已核对所有变动路径和相关语义：唯一 Rust 增量是未登记的 `core-kernel/src/recompute/`，不参与当前 workspace/runtime 编译；其余 core 文件、契约、锁文件、工具链、工作流与已验证组合一致。载体 spike/测量记录及看板工具不进入 runtime 构建。新载体状态清除要求已列入后继，未把旧接口测试扩充为该项通过。
+
+因此本轮受影响的是交付说明、链接及看板识别；不重复未受影响的 Rust 套件，也不将此次文件一致性核对冒称新的 Rust 实测。合入后的 core tree 为 `5f03d138709c0528f834ce76b94595b06cd2beef`，runtime tree 仍为 `9b2dfacf0b2f4c7ba8241be91e343107d4f9b9e8`。检查命令、main 增量分类及同文件/原始证据核对见 [本轮记录](conditional-20261102/result.json)。
+
+| 检查 | 结果与依据 |
+| --- | --- |
+| 本轮 `git diff --check`、Markdown 相对链接、JSON 完整解析 | 通过，见本轮记录与 [checks-03.log](conditional-20261102/checks-03.log) |
+| 使用现有 `delivery_waiting()` 读取本轮 REPORT/BLOCKED | 通过：识别部分交付，并返回三份后继请求 |
+| runtime 与已登记 core 编译输入相对审查 head 的逐文件核对；R3 原始日志哈希 | 通过：仅新增未登记的 recompute 目录；原 8 份日志长度/哈希相符 |
+| 既有 runtime 测试 | R3 轮 28 项 + 2 项 compile-fail 通过；本轮代码不变，沿用该证据 |
+| 既有 workspace 单元/集成/文档测试 | R3 轮分段完整覆盖通过，保留 1 项既有 ignored；本轮未重跑 |
+| 既有 fmt / 全 workspace Clippy `-D warnings` | R3 轮通过；相关输入不变，本轮未重跑 |
+
+本轮文档检查首次因同一后继请求使用不同链接标签，看板返回 5 个名称而失败（[原始记录](conditional-20261102/checks.log)）；统一为三份请求的固定标签后该检查通过。另一次检查因验证日志尚未落盘导致自链接不存在（[记录](conditional-20261102/checks-02.log)），本次预创建新的日志文件后复查；未修改检查断言或看板代码。
+
+既有失败与中断全部保留：[R3 red](review-r3-20261101/r3-red.log) 先在合法 V2 读取处以 type tag 错误失败，随后修复；[R1](review-20261101/r1-red.log)、[R2](review-20261101/r2-red.log) 和 [维护入口](review-20261101/r2-maintenance-red.log) 的失败均已修复。首次 [R3 workspace](review-r3-20261101/workspace-test.log) 会话中断、无最终退出码，后以相同源码补齐剩余包与全部文档测试，未把中断记为 exit 0。旧 `validation/runtime-02.log` helper 编译错误、`validation/clippy-01.log` large_enum_variant 已修复；旧开发期三处 enum 拼写错误仅存于当时工具输出。历史 fetch TLS 失败也仍保留。core-kernel 的 `theta_1_original_500_streams_zero_violations` 是既有 V2-93 ignored，本轮未改判定。
 
 ## 规格对照与逐项验收
 
@@ -67,7 +73,7 @@ Windows 本机，命令在 `core/` 执行；仅进程级 `CARGO_HOME=D:/Dev/cach
 | 正式/实验缺阶段拒绝启动；ADR0010 | complete 检查七阶段及资源；Life 不可调用 rehearsal；STAGED 不可跨谱系 | 类型/配置边界通过；未启动真实服务/诞生 |
 | 维护 R/θ 逐位不变；AC2-05 运行时部分；LP5/I11/I21 | 非空 R、多个维护时刻、所有 R/θ 数值 to_bits 与结构对照 | 本次只读运行时边界通过，不声称完整 AC2-05 |
 | 暂停成长；v2 §5.4/§13 | IRL/A/M 照常、G/C 恒等，记录 GROWTH_PAUSED | 结构通过；Q 授权/持久通知/恢复补算/复核待接线；布尔输入不是用户授权 |
-| ADR0031 E2/KV | 排练默认禁用调制；含相同 envelope 的每次更新均清 KV，失败不继续 | 结构通过；无真实载体/P5-31 校准 |
+| ADR0031/0034 E2/推理状态 | 排练默认禁用调制；既有 clear KV → install → prefill 及失败停止结构测试 | 仅既有接口结构通过；新载体 KV/循环状态清除的运行时接线与 P5-31 校准均属后继 |
 | ADR0032 D11 | 不按排队时间或 τ 丢弃；发生、接收、process 分别保留；不拿 ingress 冒充 observation | **待后继设计**：没有新时间资格规则，观察/提交持久字段仍缺 |
 | ADR0032 D09/D10、D07 等 | 无定时强制平复、无新成长公式、不接旧结果期限逻辑 | 未实现后继规律；既有 workspace 算子回归通过不等于新版 ADR 全部落地 |
 | ADR0024/0028；I18/I29 | 生成终端类型、唯一 Store writer API、拥有的临时根 | run_state 推送、封存/正式单实例启动接线待接口 |
