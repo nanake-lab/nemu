@@ -1,3 +1,7 @@
+# 当前状态（2026-11-03）：CPU 禁网真实合成通过，等待 GPU 窗口
+
+中文和中英混合真实推理均通过，CUDA 未初始化、G2PW CPU-only、无联网请求。先前 A/B/C 与下载阻塞已解除；P7 待决项仍保留。当前等待用户确认约 45–60 分钟独立 TTS GPU 窗口；尚未实施 provider 替换或 GPU 验收。详细结果见文件末尾和 REPORT。以下历史原文保留，不代表当前阻塞。
+
 # 当前状态（2026-11-03）
 
 等待集中数据审计 A/B/C 的许可与来源决定。fastText 已批准；请看 [统一审计表](gsv-v5-resume-08/RUNTIME-DATA-AUDIT.md)。bin 尚为部分文件，真实禁网合成未运行。下文保留历史状态；最新细节见文件末尾。
@@ -167,3 +171,14 @@ lid.176.bin 固定地址 https://dl.fbaipublicfiles.com/fasttext/supervised-mode
 英文前处理在 socket 禁网、无 Distance 环境通过：本地三份 NLTK 资源可找到，hello world 转为音素成功、无网络请求。见 english-offline.log。SyntaxWarning 保留，不改上游。真实中文与中英混合 TTS 待下一阶段。
 
 前阶段 f0390565 的 git push 遇 TLS 握手失败（原工具输出：schannel: failed to receive handshake, SSL/TLS connection failed）；本阶段产生新资源证据后再次按阶段推送，并携带此前本地提交，不宣称上次已推送。
+## 2026-11-03：禁网 CPU 中文/中英混合真实推理通过，等待 GPU 窗口
+
+进程退出 0，固定 v5turbo、float32 CPU、4 线程、seed 42、speed_factor 1.0、非流式/parallel_infer=False，参考为缓存里的纯合成 zh.wav。模型加载 4.319383 秒；中文句“你好，今天的天空很明亮。”生成 48000 Hz / 138240 samples / 2.88 秒音频，合成总耗时 14.566990 秒；混合句“你好，hello world。”生成 48000 Hz / 94080 samples / 1.96 秒音频，总耗时 12.867973 秒。单次 CPU 样本，不代表 P50/P90、GPU 速度或语音质量验收。
+
+G2PW 实际 session provider 断言为 ['CPUExecutionProvider']，全过程记录 torch.cuda.is_initialized=False；无 Distance；socket 连接/解析阻断守卫从第三方导入前启用，完成断言未出现 blocked-network.jsonl，日志无下载/低内存回退。证据 [cpu-smoke.jsonl](gsv-v5-resume-09/cpu-smoke.jsonl) 和 [完整日志](gsv-v5-resume-09/cpu-smoke-offline.log)。输出 WAV 仅在 D:\Dev\cache\p4-02\gsv-v5-resume-09，未入库，SHA-256 在事件中；没有人工听感质量或跨语言能力泛化结论。
+
+A/B/C 本机许可阻塞、资源下载阻塞和 CPU 冒烟阻塞现已解除。P7 待决清单继续有效。正式旁路 provider 替换、取消/健康/离线回归、3080 显存/首个声音分位数/速度/30 分钟稳定性均未完成，PR 保持草稿，不请求整卡完成审查。
+
+下一步申请约 45–60 分钟 GPU 安静窗口（含连续 30 分钟合成；仅独立 TTS，不含载体同驻、不新增阈值）。本次只读进程检查未发现 Runner.Listener/Runner.Worker，但按用户要求仍在 GPU 步骤停下，等待用户确认窗口；执行前再核对，代理不自行停 runner。测完通知用户恢复 runner。
+
+f45406a3 阶段推送另遇 Git LFS locks/verify EOF，未关闭校验。当前再按 CPU 阶段提交并推送，若成功将携带此前本地提交；不等待或查询 CI。
