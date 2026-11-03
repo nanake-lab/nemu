@@ -152,3 +152,8 @@ fastText lid.176.bin 与包内 lid.176.ftz 的 CC-BY-SA-3.0 已获用户批准�
 CPU 禁网脚本已准备：在第三方导入前替换 socket connect/connect_ex/create_connection/getaddrinfo/sendto，拒绝并记录目标地址；保留 HF offline、进程内 G2PW CPU provider 及 CUDA 未初始化断言，完成时若出现任何网络请求日志也视为失败。三项守卫自检均在发起真实连接前阻止成功，日志已保留；未运行真实禁网合成。该 Python socket 守卫不是系统防火墙，对未识别的原生库直接联网不能作绝对保证。
 
 现按“其他许可一次性列出后再停”停止，等待 A/B/C 的集中决定；未进入 GPU 阶段，不停 runner、不申请窗口。PR 保持草稿；原权重核验、G2PW 隔离和 CPU 模型加载结果仍有效，中文/混合真实合成未通过。
+
+
+## 2026-11-03 A/B/C 用户决定生效
+
+用户已批准 CMUdict 0.6，wordsegment 数据仅本机测试（P7 三选一待决），上游派生词表以固定仓库 MIT 为使用依据并在 P7 复审。完整文件/来源/原因/影响面见 [P7-PENDING.md](gsv-v5-resume-09/P7-PENDING.md)。此前 A/B/C 本机阻塞解除。明确禁止的仍停；其他灰色项登记后继续。本轮继续 lid.176.bin 断点和 CMUdict 预置，随后禁网 CPU 冒烟，尚未执行 GPU。
