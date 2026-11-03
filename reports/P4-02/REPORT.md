@@ -185,3 +185,13 @@ CPU 禁网脚本已准备：在第三方导入前替换 socket connect/connect_e
 ## 2026-11-03 A/B/C 用户决定生效
 
 用户已批准 CMUdict 0.6，wordsegment 数据仅本机测试（P7 三选一待决），上游派生词表以固定仓库 MIT 为使用依据并在 P7 复审。完整文件/来源/原因/影响面见 [P7-PENDING.md](gsv-v5-resume-09/P7-PENDING.md)。此前 A/B/C 本机阻塞解除。明确禁止的仍停；其他灰色项登记后继续。本轮继续 lid.176.bin 断点和 CMUdict 预置，随后禁网 CPU 冒烟，尚未执行 GPU。
+
+## 2026-11-03 资源预置完成
+
+lid.176.bin 固定地址 https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin 已从原断点完成，大小 131266198 B，SHA-256 7e69ec5451bc261cc7844e49e4792a85d7f09c06789ec800fc4a44aec362764e；源 URL 无版本，按本地完整哈希固定，不把它说成发布者公布的 SHA。文件长期保存在上游 pretrained_models/fast_langdetect 缓存目录，不修改、不入仓库。CC-BY-SA-3.0 署名及许可链接沿用统一审计表。
+
+前四次连接分别 exit 28/35/35/35，第五次成功；间隔 30 秒，未超过五次，原始日志齐全。CMUdict 固定 revision XML 第三次成功，ZIP 第二次成功；ZIP SHA-256 d07cca47fd72ad32ea9d8ad1219f85301eeaf4568f8b6b73747506a71fb5afd6，已解压到独立 nltk_data/corpora。CMU 出处声明保留在固定 XML 和包内材料。
+
+英文前处理在 socket 禁网、无 Distance 环境通过：本地三份 NLTK 资源可找到，hello world 转为音素成功、无网络请求。见 english-offline.log。SyntaxWarning 保留，不改上游。真实中文与中英混合 TTS 待下一阶段。
+
+前阶段 f0390565 的 git push 遇 TLS 握手失败（原工具输出：schannel: failed to receive handshake, SSL/TLS connection failed）；本阶段产生新资源证据后再次按阶段推送，并携带此前本地提交，不宣称上次已推送。
