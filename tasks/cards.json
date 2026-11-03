@@ -1657,7 +1657,8 @@
     "P6-22",
     "P6-23",
     "P6-24",
-    "P6-25"
+    "P6-25",
+    "P6-26"
    ],
    "difficulty": "—",
    "suggested": "你",
@@ -2158,6 +2159,20 @@
    "you": null,
    "effort": "待开工时估算",
    "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§9、11（R04、R07、R14）"
+  },
+  {
+   "id": "P6-26",
+   "title": "契约变更：拖动加入同次接触标识",
+   "phase": "P6",
+   "milestone": "E2",
+   "deps": [
+    "P6-17"
+   ],
+   "difficulty": "中",
+   "suggested": "Codex",
+   "you": "批准契约变更并合并",
+   "effort": "待开工时估算",
+   "note": "来源：[P6-17 拖动自查](../reports/P6-17/REPORT.md#边界迁移与拖动自查)；用户 2026-11-04 决定：拖动开始/结束算同次触摸，共用接触标识，对 C 只计一次，理由同 V2-72；须 ADR、交叉审查，needs-user，由用户合并"
   }
  ]
 }
