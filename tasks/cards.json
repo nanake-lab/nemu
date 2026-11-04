@@ -1009,7 +1009,7 @@
    "suggested": "Claude",
    "you": null,
    "effort": "7 天",
-   "note": "基础设施部分（合成世界、重放、运行器）可先行；规律校准部分等待 P5-48（新规律）与 P5-45（证据规则）完成后进行。两项只作为校准前置，不加入整卡依赖，以免阻塞基础设施。"
+   "note": "基础设施部分（合成世界、重放、运行器）可先行；规律校准部分等待 P5-69、P5-70（由 P5-48 拆出的新规律实现）与 P5-45（证据规则）完成后进行，新规律参数清单见 P5-66 的 ADR 0035。两项只作为校准前置，不加入整卡依赖，以免阻塞基础设施。"
   },
   {
    "id": "P5-31",
@@ -1814,11 +1814,7 @@
    "suggested": "Codex",
    "you": null,
    "effort": "待开工时估算",
-   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§4、5、7、11（D07、D09/D10、D11、D05）；[P5-08 时间语义请求](requests/P5-08-result-time-semantics.md)；[DESIGN-LAW-01](https://github.com/nanake-lab/nemu/pull/131)；CARDS-SYNC-01 用户指派（2026-11-02）；前置：DESIGN-LAW-01 完成且用户作出决定",
-   "status_override": {
-    "status": "blocked",
-    "note": "待 DESIGN-LAW-01 决定后拆分；当前不实施、不预拆。"
-   }
+   "note": "来源：[ADR 0032](../docs/adr/0032-presets-as-starting-points.md) §§4、5、7、11（D07、D09/D10、D11、D05）；[P5-08 时间语义请求](requests/P5-08-result-time-semantics.md)；[DESIGN-LAW-01](https://github.com/nanake-lab/nemu/pull/131)；CARDS-SYNC-01 用户指派（2026-11-02）；前置：DESIGN-LAW-01 完成且用户作出决定；2026-11-04 已拆为 P5-66 至 P5-74（见本卡拆分表与 reports/P5-48/REPORT.md）"
   },
   {
    "id": "P5-49",
@@ -2188,6 +2184,134 @@
    "you": "批准契约变更并合并",
    "effort": "待开工时估算",
    "note": "来源：[P6-17 拖动自查](../reports/P6-17/REPORT.md#边界迁移与拖动自查)；用户 2026-11-04 决定：拖动开始/结束算同次触摸，共用接触标识，对 C 只计一次，理由同 V2-72；须 ADR、交叉审查，needs-user，由用户合并"
+  },
+  {
+   "id": "P5-66",
+   "title": "ADR 0035：新规律的精确定义（D07-A、D09-A1、D11-A）",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": "合并即批准 ADR 0035；需独立交叉审查",
+   "effort": "待开工时估算",
+   "note": "来源：[DESIGN-LAW-01 报告](../reports/DESIGN-LAW-01/REPORT.md) §§2–4、8、9；P5-48 拆分（2026-11-04）。预占 ADR 0035、V2-144 至 V2-149；闭合遗留证明义务与参数清单，不给数值"
+  },
+  {
+   "id": "P5-67",
+   "title": "设计卡：D05-A 亲疏曲线定稿",
+   "phase": "P5",
+   "milestone": "E4",
+   "deps": [],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": "选定拟合目标、激活、多人组合与输入扩展",
+   "effort": "待开工时估算",
+   "note": "来源：[DESIGN-LAW-01 报告](../reports/DESIGN-LAW-01/REPORT.md) §5、§8；按设计卡写法先发散再收敛，可提前做"
+  },
+  {
+   "id": "P5-68",
+   "title": "契约变更：D07 与 D09 新规律的状态",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-66"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": "批准契约变更；需独立交叉审查",
+   "effort": "待开工时估算",
+   "note": "来源：P5-66 的 ADR 0035；与其他占用 core/contracts/ 的卡串行"
+  },
+  {
+   "id": "P5-69",
+   "title": "C：生活基线的共同折扣（D07-A）",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-68"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：ADR 0035；P07-A、E07。在 P5-25 已合入的 C 上修改，与 P5-25/P5-36 后继同目录串行"
+  },
+  {
+   "id": "P5-70",
+   "title": "F：依据替换与截断归属 A1（D09/D10）",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-68"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：ADR 0035；P09-A1、E09；无事件时 x 严格按现行 Φ"
+  },
+  {
+   "id": "P5-71",
+   "title": "新规律机制实验：E07、E09 与两者的交互",
+   "phase": "P5",
+   "milestone": "E1",
+   "deps": [
+    "P5-69",
+    "P5-70"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：DESIGN-LAW-01 EXPERIMENTS；固定 H 机制层，闭环部分交 P5-74"
+  },
+  {
+   "id": "P5-72",
+   "title": "契约变更：D11 结果的时间事实与一次作用",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-52",
+    "P5-68"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": "批准契约变更；需独立交叉审查",
+   "effort": "待开工时估算",
+   "note": "来源：ADR 0035；P11；P5-08 时间语义请求。复用 P5-52 的时钟域与 epoch"
+  },
+  {
+   "id": "P5-73",
+   "title": "D11-A 接线：按发生与观察判资格，理解时一次作用",
+   "phase": "P5",
+   "milestone": "E2",
+   "deps": [
+    "P5-72",
+    "P5-53"
+   ],
+   "difficulty": "高",
+   "suggested": "Codex",
+   "you": null,
+   "effort": "待开工时估算",
+   "note": "来源：ADR 0035；E11；含真实时间的端到端测量（AGENTS 第 6 节）"
+  },
+  {
+   "id": "P5-74",
+   "title": "D05-A 验证（E05）与全组合 E-C",
+   "phase": "P5",
+   "milestone": "E4",
+   "deps": [
+    "P5-30",
+    "P5-67",
+    "P5-71",
+    "P5-73"
+   ],
+   "difficulty": "高",
+   "suggested": "Claude",
+   "you": "决定是否采用 D05-A",
+   "effort": "待开工时估算",
+   "note": "来源：DESIGN-LAW-01 EXPERIMENTS E05、E-C；本卡不实现 D05 规律"
   }
  ]
 }
