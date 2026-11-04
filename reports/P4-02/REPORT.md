@@ -214,3 +214,16 @@ f45406a3 阶段推送另遇 Git LFS locks/verify EOF，未关闭校验。当前�
 因此按本次明确预检条件停止，没有加载 TTS 或初始化 CUDA，没有进行显存、首声 P50/P90、速度或 30 分钟稳定性测量。证据：[nvidia-smi 原始输出](gsv-v5-gpu-preflight-20261104/nvidia-smi.txt)、[预检结果](gsv-v5-gpu-preflight-20261104/result.json)。git fetch origin / git merge origin/main 返回 Already up to date。只记录本次阻塞，保留此前 CPU 通过结果及草稿状态；没有停止其他进程或改变全局设置。
 
 待用户决定：① 用户关闭可关闭的 GPU 应用后重新安排窗口（Windows 桌面进程可能仍常驻）；② 用户允许常驻桌面/交互界面作为明确记录的背景基线，同时排除其他计算与主动渲染负载，再复核开始。选择②会改变本次“没有其他占用进程”的字面条件，代理不自行采用。本次没有启动测量进程，用户可恢复 runner；再次测量前需要重新确认窗口。首声仍按请求发出到第一段可播放音频的墙钟耗时，不以内部生成 token 或排除前处理的耗时替代。
+## 2026-11-04：允许桌面基线后的首轮 GPU 测量因监视脚本错误停止
+
+用户已允许常驻桌面/交互程序作为背景，只排除其他推理、游戏和视频播放。前检未发现 runner、其他推理/游戏进程或活动视频解码/处理计数器；Video.UI 常驻无窗口，不据进程存在判作播放。已有 Python 命令为桥接、商务服务、工具或该项目测试，没有 GPU 推理证据。D 盘剩余约 131 GiB，预计本轮证据不足 100 MiB。git fetch/merge 返回 Already up to date。
+
+本轮失败属于代理编写的监视器错误：Start-Process 返回启动器 PID 34876，真实 Python 在 imports_ready 事件报告 PID 26476。监视器只排除 34876，随后把 26476 的 CUDA 引擎 5% 利用率误判为外部重负载，停止本轮。相同错误也使 RSS/Private 采样落在启动器，不能作为 TTS 内存数据。原始日志保留，未自行重跑；这不是 GPT-SoVITS 推理失败或已确认的外部干扰。
+
+证据：[启动脚本](gsv-v5-gpu-20261104/run.ps1)、[事件](gsv-v5-gpu-20261104/events.jsonl)、[负载守卫](gsv-v5-gpu-20261104/load-guard.jsonl)、[原始内存样本](gsv-v5-gpu-20261104/memory.jsonl)、[修正后的部分摘要](gsv-v5-gpu-20261104/partial-summary-corrected.json)。最初 partial-summary.json 同样按错误启动器 PID 统计，保留作失败诊断，不作为测量结果；修正版仅离线从已存 WDDM 行提取实际 Python PID 的加载期间部分值。
+
+[nvidia-smi 开始前](gsv-v5-gpu-20261104/nvidia-before.txt)：背景 1091 MiB / 12%；[停止后](gsv-v5-gpu-20261104/nvidia-after.txt)：1117 MiB / 12%，含完整进程表。这两个值都是整卡桌面背景观察，不能用它们的差值代替 TTS 占用。实际 TTS 的部分 WDDM 专用/共享值单独见修正摘要；未得到 model_loaded 事件，不宣称加载后驻留或完整峰值。未产生首声样本，P50/P90、合成速度与 30 分钟稳定性全部未完成；此前 CPU 通过不受影响。
+
+准备的请求计时从调用 model.run 前开始，到首段完整音频转成 24 kHz little-endian float32 PCM bytes 可供播放为止，包含前处理、非流式整句合成与重采样，不包含尚未接入的 WebSocket/声卡启动。中文与混合各 20 个短句，冷请求另列，连续阶段计划 1800 秒；这些均尚未执行完成。G2PW 保持 CPU provider，TTS 拟用 CUDA float16，speed_factor=1.0，合成参考音频仍仅缓存。
+
+待恢复方案：修正监视器为追踪实际 Python PID/子进程树，先用无 GPU 的进程夹具验证自身排除、外部负载检测和内存归属，再申请重跑同一测量。另一选项是先仅完成监视器修复验收，将 GPU 测量另安排窗口。按“失败即停”，本轮不继续 GPU；已确认没有本轮 Python 残留，通知用户可恢复 runner。PR 保持草稿。
