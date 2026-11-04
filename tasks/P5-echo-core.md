@@ -2273,3 +2273,25 @@ ADR/契约批准、生成和兼容/黄金向量检查后，交由 P5-07 名下�
 | P5-08 权威发布/阶段输入；P5-26 接线请求 | P5-52/53、P5-47/54；已有完整 C 状态接口不重做，P5-17/42/19/29 仍提供校准资源、装载及阶段/事务接线 |
 | DESIGN-VRAM-01 用户决定与后继接口请求 | P0-13、P5-60/61；设计批准、GPU 窗口及实测后的部署决定分别保留前置 |
 | ADR 0033 §6：助手及校准 | P5-57、P6-24/23；先核对真实路径并校准，批准后接正式总量保险丝，不给 E2 增加依赖 |
+
+## P5-65 把 P5-24、P5-26 的条件性模块纳入构建与 CI
+
+- **来源：** 用户 2026-11-04 指派；本 PR 同时登记与实现，用户合并即批准开卡。
+- **建议执行者：** Codex
+- **难度：** 高；风险重档（core-kernel），需要独立交叉审查，PR 标 `needs-user`。
+- **里程碑：** E1 核心闭环
+- **依赖：** P5-24、P5-26 已合入的条件性交付；不以原卡整卡完成为前置。
+- **工期：** 本次小范围登记与 Windows 复核
+- **分支：** `task/P5-65-test-registration`
+- **目录：** `core/crates/core-kernel/src/lib.rs`（仅追加登记）、`tasks/cards.json`、`tasks/P5-echo-core.md`、`tasks/requests/P5-24-inputs.md`、`tasks/requests/P5-26-integration.md`、`docs/traceability/P5-65.md`、`reports/P5-65/`
+
+### 目标与约束
+
+在 lib.rs 末尾以 `#[cfg(test)] pub mod evidence;` 和 `#[cfg(test)] pub mod recompute;` 登记，并就近注明条件性交付只进测试构建、不暴露生产。两个模块的代码、测试和 verify.ps1 全部保留；crate 内编译或测试失败即停下报告，不修模块、不改断言。生产登记与接线仍属 P5-54 等后继，生产禁用不变。
+
+### 完成条件
+
+1. Windows 运行 `cargo clippy -p core-kernel --all-targets -- -D warnings`、`cargo fmt --all -- --check`、`cargo test -p core-kernel`，记录实测结果和时长。Linux 已报 241 passed、1 ignored（既有 V2-93），作为核对预期，不作为 Windows 证据。
+2. 所涉 Rust 工作区静态检查与测试通过；确认现有 CI 工作区测试及 `clippy --all-targets` 覆盖两模块，记录 CI 总时长变化及比较局限，优先不改 workflow。
+3. 报告注明工作区测试已覆盖后，verify.ps1 仅作历史证据；更新两份输入/集成请求的测试登记状态，生产后继责任保留。
+4. 模块目录与基线逐文件一致；报告与规格对照齐备；独立交叉审查后由用户合并。

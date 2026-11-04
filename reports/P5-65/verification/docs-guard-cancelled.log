@@ -1,0 +1,110 @@
+Frozen specs and task catalog	Set up job	﻿2026-11-03T17:16:38.3615903Z Current runner version: '2.338.2'
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3647275Z ##[group]Runner Image Provisioner
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3648812Z Hosted Compute Agent
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3649506Z Version: 20261021.618
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3650171Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3651020Z Build Date: 2026-10-21T00:45:21Z
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3651800Z Worker ID: {73a0d2f8-a197-4457-9afa-f19d3eab1ef9}
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3652604Z Region: eastus
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3653280Z Cloud: Azure
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3653868Z ##[endgroup]
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3655639Z ##[group]Operating System
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3656393Z Ubuntu
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3657046Z 24.04.5
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3657626Z LTS
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3658186Z ##[endgroup]
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3659342Z ##[group]Runner Image
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3660027Z Image: ubuntu-24.04
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3660675Z Version: 20261025.353.1
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3662053Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3664013Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3665036Z ##[endgroup]
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3666304Z ##[group]GITHUB_TOKEN Permissions
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3668950Z Contents: read
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3669693Z Metadata: read
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3670352Z ##[endgroup]
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3672702Z Secret source: Actions
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3673805Z Cache mode: write
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.3674545Z Prepare workflow directory
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.4035122Z Prepare all required actions
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.4089182Z Getting action download info
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.6567920Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Frozen specs and task catalog	Set up job	2026-11-03T17:16:38.8832174Z Complete job name: Frozen specs and task catalog
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-11-03T17:16:38.9800279Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9801596Z with:
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9802221Z   fetch-depth: 0
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9802733Z   persist-credentials: false
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9803302Z   repository: nanake-lab/nemu
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9807749Z   token: ***
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9808237Z   ssh-strict: true
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9809027Z   ssh-user: git
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9809500Z   clean: true
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9809988Z   sparse-checkout-cone-mode: true
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9810577Z   fetch-tags: false
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9811067Z   show-progress: true
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9811551Z   lfs: false
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9812016Z   submodules: false
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9812518Z   set-safe-directory: true
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9813077Z   allow-unsafe-pr-checkout: false
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:38.9813976Z ##[endgroup]
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3207671Z Syncing repository: nanake-lab/nemu
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3212032Z ##[group]Getting Git version info
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3213846Z Working directory is '/home/runner/work/nemu/nemu'
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3216992Z [command]/usr/bin/git version
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3337673Z git version 2.56.0
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3371491Z ##[endgroup]
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3392346Z Temporarily overriding HOME='/home/runner/work/_temp/0e629bbb-b72f-40be-8d37-8430e56df6fb' before making global git config changes
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3399115Z Adding repository directory to the temporary git global config as a safe directory
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3403029Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nemu/nemu
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3471792Z Deleting the contents of '/home/runner/work/nemu/nemu'
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3478057Z ##[group]Initializing the repository
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3486837Z [command]/usr/bin/git init /home/runner/work/nemu/nemu
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3636041Z hint: Using 'master' as the name for the initial branch. This default branch name
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3640183Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3643895Z hint: to use in all of your new repositories, which will suppress this warning,
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3647230Z hint: call:
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3648911Z hint:
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3650728Z hint: 	git config --global init.defaultBranch <name>
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3653027Z hint:
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3655102Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3657694Z hint: 'development'. The just-created branch can be renamed via this command:
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3661061Z hint:
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3662535Z hint: 	git branch -m <name>
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3664248Z hint:
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3666553Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3670753Z Initialized empty Git repository in /home/runner/work/nemu/nemu/.git/
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3676378Z [command]/usr/bin/git remote add origin https://github.com/nanake-lab/nemu
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3719562Z ##[endgroup]
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3722245Z ##[group]Disabling automatic garbage collection
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3724598Z [command]/usr/bin/git config --local gc.auto 0
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3780603Z ##[endgroup]
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3783860Z ##[group]Setting up auth
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3790309Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.3849784Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.4393009Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.4446507Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.4751263Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.4802539Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.5091454Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.5154498Z ##[endgroup]
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.5156666Z ##[group]Fetching the repository
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:16:39.5175922Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +6fe0eaf19dd9685fedab1d632c00aacfe34b2e98:refs/remotes/pull/134/merge
+Frozen specs and task catalog	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.5738728Z ##[error]The operation was canceled.
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-11-03T17:21:38.6021913Z Post job cleanup.
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.6986390Z [command]/usr/bin/git version
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7040745Z git version 2.56.0
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7092810Z Temporarily overriding HOME='/home/runner/work/_temp/0ca60da8-48f2-4684-aed6-6e72a62fee24' before making global git config changes
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7101673Z Adding repository directory to the temporary git global config as a safe directory
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7119563Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nemu/nemu
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7190641Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7261137Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7664259Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7746814Z http.https://github.com/.extraheader
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7752542Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.7841936Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.8369348Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Frozen specs and task catalog	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-03T17:21:38.8478733Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Frozen specs and task catalog	Complete job	﻿2026-11-03T17:21:38.9151555Z Cleaning up orphan processes
+Frozen specs and task catalog	Complete job	2026-11-03T17:21:38.9485576Z Terminate orphan process: pid (2299) (git)
+Frozen specs and task catalog	Complete job	2026-11-03T17:21:38.9579473Z Terminate orphan process: pid (2300) (git)
+Frozen specs and task catalog	Complete job	2026-11-03T17:21:38.9673980Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
