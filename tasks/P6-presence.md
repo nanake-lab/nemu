@@ -806,3 +806,33 @@
 ### 完成条件
 
 按 AC2-03/08/19、SYS05、COG-A08 的适用范围记录结果、失败和未测项，需改机制时另交用户决定。
+
+## P6-26 契约变更：拖动加入同次接触标识
+
+> **用户决定（2026-11-04）：** 拖动的开始与结束算同一次触摸，共用接触标识，对 C 只计一次，理由与 V2-72 停留相同。依据是 P6-17 报告的拖动自查。本次只登记后续任务；实现须按契约变更规则先写 ADR、交叉审查，PR 标 `needs-user`，由用户合并。
+
+- **来源：** [P6-17 报告「边界、迁移与拖动自查」](../reports/P6-17/REPORT.md#边界迁移与拖动自查)；[V2-72](../docs/traceability/diff-register.md)；用户 2026-11-04 决定
+- **建议执行者：** Codex
+- **难度：** 中
+- **里程碑：** E2 她能想、能说（文字排练版）
+- **依赖：** P6-17
+- **工期：** 待开工时估算
+- **分支：** `task/P6-26-drag-contact`
+- **目录：** `core/contracts/`、`core/crates/core-types/`；生成到 `workers/*/generated/`、`packages/contracts/src/generated/`；`docs/CONTRACTS.md`（4.2 的 `touch` 一行）；`reports/P6-26/`
+- **类型：** 契约变更
+- **必读：** [ADR 0007](../docs/adr/0007-initial-idl-canonical-encoding.md)、[ADR 0025](../docs/adr/0025-desktop-perception-and-history.md) §4.3；V2-72；CONTRACTS.md §4.2；P6-17 报告
+- **开工条件：** 按 AGENTS.md 第 2 节，与其他占用契约及生成目录的卡串行。
+
+### 交付物
+
+- 只增的触摸观察后继消息或版本，为同一次拖动的开始与结束提供共用的接触标识。每条报告仍有各自的 `stable_source_key`，重投幂等与同次接触关联分别表达；不能仅凭部位或时间猜测同一次接触。
+- 明确同次拖动对 G 归为一组（EV2），对 C 只计一个外源事件、不重复增加 N_e；按 v2.0 §4 EV2、§8、V2-72 与本次用户决定写入契约说明和规格对照。
+- Rust、Python、TypeScript 生成类型与黄金向量同步；保留旧 `TouchObservation` / `TouchObservationV2` 的定义、标签、字节及既有拒绝边界，不静默扩宽 V2 的非停留字段语义。
+- CONTRACTS.md §4.2 的 `touch` 行补充后继字段、同次关联与计数语义；报告写明兼容、迁移/回退及消费者接线边界。
+
+### 验收
+
+- `python core/contracts/generate.py --check`、`pnpm test:core-contracts` 通过；`python core/contracts/check_compat.py --ref origin/main` 为 0 违例。
+- 黄金向量覆盖同次拖动开始/结束共用标识、缺失/空标识、旧消息与后继混用；三种语言结论一致，旧字节与停留契约回归通过。
+- 核对同次接触标识与逐条重投 key 的分工；实际 G/C 归组与单次计数由终端/核心消费者接线落实，未测的端到端行为写 `not_run`，不能用契约向量宣称行为验收通过。
+- [ ] 先提交契约变更 ADR，完成独立交叉审查；PR 标 `needs-user`，由用户批准并合并。
