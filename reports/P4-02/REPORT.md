@@ -1,3 +1,9 @@
+重档：本卡包含 GPU 正式测量；当前仍为部分交付。
+
+## 最新状态（2026-11-06）
+
+监视器修复自检通过，独立 TTS GPU 原始测量完成（1800.56 秒、连续 2016 次）。离线汇总遇退出后 null 内存行而停止，正式统计和 provider 集成尚未完成。见本文件末尾 2026-11-06 证据及 BLOCKED；历史失败保留。
+
 验证档位：重档；本卡含 GPU 正式测量，当前仅完成恢复与资源准备，GPU 未运行。
 
 # P4-02 GPT-SoVITS V5 恢复 — 报告
@@ -232,3 +238,18 @@ f45406a3 阶段推送另遇 Git LFS locks/verify EOF，未关闭校验。当前�
 已 merge 最新 origin/main。监视器以 imports_ready 的实际 PID 为根，先沿父链核对至 Start-Process 返回的启动器，再展开实际根的子进程树；启动器只作父链证明，不替代实际进程。内存逐 PID 读取后汇总；负载判定排除整棵已核验子树。
 
 [无 GPU 自检](gsv-v5-gpu-20261106/selftest/result.json)通过三项：自身根/两级子进程排除、外部进程及模拟 GPU 引擎检出、实际 Python 内存归属。夹具仅 Python 标准库，实际根分配 64 MiB、子进程 32 MiB；GPU 引擎行明确是模拟输入，未导入 torch 或初始化 CUDA。根 PID 38092、启动器 19808，父链核对通过，根 RSS 79888384 B / private 75124736 B。脚本与实际证据均保留。此结果验证监视器，不代表 GPU 测量通过。按用户授权，同窗口继续重跑前先核对 runner/负载与背景基线。
+## 2026-11-06：独立 GPU 原始测量完成，离线汇总失败后停止
+
+中文/混合各 20 句与单列冷请求均已执行；连续阶段实际 1800.561739 秒、2016 次合成，Python 与监视器退出 0。实际 PID 31808、启动器 19984，父链核验通过，内存和负载监控按实际根及其子树执行。运行中没有触发 runner/外部重负载停止条件，没有网络请求日志。开始前背景 1158 MiB / 20%，退出后背景 1086 MiB / 2%；两次 nvidia-smi 均保留完整进程表，不把整卡前后差值当作 TTS 占用。
+
+当前阻塞是离线报告脚本，而非模型/测量失败：2686 条内存样本中，最后一条时间 1793950220.812（晚于 complete=1793950219.406）采样时实际进程已退出，process_memory=[]、rss/private=null。summarize.py 对整段峰值直接比较 None 和 float，退出 1。没有删除该行、改脚本或再次计算；原始数据保留。首声 P50/P90、速度、WDDM 专用/共享独立峰值与内存趋势尚未汇总，因此不宣布这些指标通过，也不宣布 30 分钟稳定性通过。
+
+可直接核验的原始事件：model_loaded 耗时 5.479259 秒，torch allocated=1824529920 B、reserved=2338324480 B；complete 事件记录 allocator max_allocated=2322021376 B、max_reserved=2369781760 B。它们是 torch 口径，不能代替 ADR 0012 的 WDDM 进程专用/共享显存。冷请求首段 PCM 就绪约 6.09 秒，完整请求约 6.29 秒、音频 2.92 秒；正式分位数仍待统计。
+
+[原始证据 ZIP](gsv-v5-gpu-20261106/raw-evidence.zip)、[逐文件 SHA-256](gsv-v5-gpu-20261106/raw-manifest.json)、[压缩包哈希](gsv-v5-gpu-20261106/archive.json)、[父链证明](gsv-v5-gpu-20261106/ownership.json)、[汇总失败](gsv-v5-gpu-20261106/summary-failure.log)、[退出边界空行诊断](gsv-v5-gpu-20261106/summary-failure-diagnosis.json)。ZIP 中完整保存 events、memory、load-guard、stdout/stderr、运行配置与前后 nvidia-smi；缓存原件仍在 D:\Dev\cache\p4-02\gsv-v5-gpu-20261106。没有音频入仓库。
+
+首声口径：调用 model.run 前到首段 24 kHz float32 PCM bytes 可播放；非流式整句合成，含前处理和重采样，不含 WebSocket 和声卡启动。v5turbo CUDA float16、G2PW CPU、speed_factor=1.0、固定合成参考音与禁网守卫。仅独立 TTS，没有载体同驻，没有新增阈值。具体 40 句输入与脚本见同目录。
+
+按用户“遇到失败照旧停下”停止离线汇总。推荐恢复只修复汇总器：将进程退出后的空样本显式登记为未采到，不将 null 填成 0；运行期数值采样用于统计，保留各指标的样本数与覆盖时间，并核验空样本确实全部在 complete 后。然后从现有原始数据重算，不需要再次 GPU 窗口或重跑 30 分钟。另一选项是用户直接从原始数据独立统计。测量进程已退出，已通知用户可恢复 runner。
+
+本卡仍为部分交付、PR 保持草稿：除本次统计待修复外，正式 GPT-SoVITS provider 替换及取消/健康/离线回归仍未完成。没有等待或查询 CI。
