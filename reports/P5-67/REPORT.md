@@ -426,7 +426,7 @@ F 读出生曲线、修正的作用视图、事件前当事人的 q 与当事人
 | 检查 | 结果 |
 | --- | --- |
 | `git diff --check origin/main` | 通过 |
-| 本次新增或改动 Markdown 的本地相对链接逐个确认存在 | 通过：REPORT、E05-PREREG、接续请求与差异登记新增节共 33 处本地链接、11 个不同目标，全部存在（脚本排除行内代码与外部网址） |
+| 本次新增或改动 Markdown 的本地相对链接逐个确认存在 | 通过：REPORT、E05-PREREG、接续请求与差异登记新增节共 35 处本地链接、11 个不同目标，全部存在（脚本排除行内代码与外部网址） |
 | JSON / YAML / TOML 改动 | 无 |
 | 改动范围 | `reports/P5-67/`、`tasks/requests/P5-67-d05-design.md`（卡的目录内），以及 `docs/traceability/diff-register.md` 末尾追加一节（只追加，未改旧行） |
 | main 增量 | 修订前 `git fetch`，`origin/main` 仍为 `571aff24`，无新提交；开放 PR 中只有 #138（P5-66）用 V2-144 至 V2-149，没有 PR 用 V2-150 及以上 |
