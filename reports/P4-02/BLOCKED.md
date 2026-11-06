@@ -210,3 +210,8 @@ f45406a3 阶段推送另遇 Git LFS locks/verify EOF，未关闭校验。当前�
 准备的请求计时从调用 model.run 前开始，到首段完整音频转成 24 kHz little-endian float32 PCM bytes 可供播放为止，包含前处理、非流式整句合成与重采样，不包含尚未接入的 WebSocket/声卡启动。中文与混合各 20 个短句，冷请求另列，连续阶段计划 1800 秒；这些均尚未执行完成。G2PW 保持 CPU provider，TTS 拟用 CUDA float16，speed_factor=1.0，合成参考音频仍仅缓存。
 
 待恢复方案：修正监视器为追踪实际 Python PID/子进程树，先用无 GPU 的进程夹具验证自身排除、外部负载检测和内存归属，再申请重跑同一测量。另一选项是先仅完成监视器修复验收，将 GPU 测量另安排窗口。按“失败即停”，本轮不继续 GPU；已确认没有本轮 Python 残留，通知用户可恢复 runner。PR 保持草稿。
+## 2026-11-06：进程归属修复与无 GPU 自检通过
+
+已 merge 最新 origin/main。监视器以 imports_ready 的实际 PID 为根，先沿父链核对至 Start-Process 返回的启动器，再展开实际根的子进程树；启动器只作父链证明，不替代实际进程。内存逐 PID 读取后汇总；负载判定排除整棵已核验子树。
+
+[无 GPU 自检](gsv-v5-gpu-20261106/selftest/result.json)通过三项：自身根/两级子进程排除、外部进程及模拟 GPU 引擎检出、实际 Python 内存归属。夹具仅 Python 标准库，实际根分配 64 MiB、子进程 32 MiB；GPU 引擎行明确是模拟输入，未导入 torch 或初始化 CUDA。根 PID 38092、启动器 19808，父链核对通过，根 RSS 79888384 B / private 75124736 B。脚本与实际证据均保留。此结果验证监视器，不代表 GPU 测量通过。按用户授权，同窗口继续重跑前先核对 runner/负载与背景基线。
