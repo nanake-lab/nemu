@@ -1,0 +1,71 @@
+{"ort_version": "1.19.2", "original_providers": ["TensorrtExecutionProvider", "CUDAExecutionProvider", "CPUExecutionProvider"], "preload_dlls_present": false, "event": "isolation", "cuda_initialized": false}
+{"providers": ["CPUExecutionProvider"], "event": "g2pw_initialized", "cuda_initialized": false}
+Loading Text2Semantic weights from D:\Dev\cache\p4-02\gpt-sovits-v5-official\GPT_SoVITS\pretrained_models\s1v3.ckpt
+Removing weight norm...
+loading vocoder <All keys matched successfully>
+Loading VITS weights from D:\Dev\cache\p4-02\gpt-sovits-v5-official\GPT_SoVITS\pretrained_models\gsv-v5-pretrained\s2Gv5turbo.pth. <All keys matched successfully>
+Loading BERT weights from D:\Dev\cache\p4-02\gpt-sovits-v5-official\GPT_SoVITS\pretrained_models\chinese-roberta-wwm-ext-large
+Loading CNHuBERT weights from D:\Dev\cache\p4-02\gpt-sovits-v5-official\GPT_SoVITS\pretrained_models\chinese-hubert-base
+{"elapsed_seconds": 4.251378700006171, "event": "model_loaded", "cuda_initialized": false}
+Set seed to 42
+��������ģʽ�ѿ���
+��Ͱ����ģʽ�ѿ���
+ʵ������Ĳο��ı�: �������պ�������������һ��΢�硣���ǿ�������˵��������ǰ��С��һ��һ�����á�
+INFO:fast_langdetect.infer:fast-langdetect: Downloading model from https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin
+INFO:fast_langdetect.infer:fast-langdetect: Falling back to low-memory model...
+INFO:fast_langdetect.infer:fast-langdetect: Downloading model from https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin
+INFO:fast_langdetect.infer:fast-langdetect: Falling back to low-memory model...
+INFO:fast_langdetect.infer:fast-langdetect: Downloading model from https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin
+INFO:robust_downloader.downloader:Downloading https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin to lid.176.bin (125.2M)
+[2026-11-02 23:24:24,468][INFO] - Downloading https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin to lid.176.bin (125.2M)
+
+  0%|          | 0.00/125M [00:00<?, ?B/s]
+  0%|          | 1.00k/125M [00:00<27:53:41, 1.31kB/s]
+  0%|          | 49.0k/125M [00:00<29:12, 74.9kB/s]   
+  0%|          | 129k/125M [00:01<18:26, 119kB/s]  
+  0%|          | 193k/125M [00:01<17:31, 125kB/s]
+  0%|          | 272k/125M [00:02<12:56, 169kB/s]
+  0%|          | 322k/125M [00:02<13:52, 157kB/s]
+  0%|          | 341k/125M [00:02<17:57, 121kB/s]
+  0%|          | 428k/125M [00:03<11:05, 197kB/s]
+  0%|          | 547k/125M [00:03<07:00, 311kB/s]
+  0%|          | 595k/125M [00:03<08:59, 242kB/s]
+  1%|          | 672k/125M [00:03<07:15, 300kB/s]
+  1%|          | 715k/125M [00:04<09:31, 228kB/s]
+  1%|          | 834k/125M [00:04<06:10, 352kB/s]
+  1%|          | 953k/125M [00:04<06:59, 310kB/s]
+  1%|          | 1.11M/125M [00:04<05:25, 400kB/s]
+  1%|          | 1.25M/125M [00:05<04:25, 489kB/s]
+  1%|          | 1.42M/125M [00:05<03:35, 601kB/s]
+  1%|��         | 1.60M/125M [00:05<04:09, 520kB/s]
+  1%|��         | 1.72M/125M [00:06<04:45, 454kB/s]
+  2%|��         | 1.88M/125M [00:06<03:44, 576kB/s]
+  2%|��         | 2.19M/125M [00:06<03:38, 591kB/s]
+  2%|��         | 2.49M/125M [00:07<03:18, 647kB/s]
+  2%|��         | 2.66M/125M [00:07<03:43, 576kB/s]
+  2%|��         | 2.72M/125M [00:07<03:45, 570kB/s]
+  3%|��         | 3.19M/125M [00:08<02:23, 892kB/s]
+  3%|��         | 3.47M/125M [00:08<02:34, 826kB/s]
+  3%|��         | 3.72M/125M [00:08<02:29, 853kB/s]
+  3%|��         | 3.80M/125M [00:09<04:03, 523kB/s]
+  3%|��         | 4.17M/125M [00:09<03:14, 653kB/s]
+  4%|��         | 4.64M/125M [00:10<02:10, 965kB/s]
+  4%|��         | 4.76M/125M [00:10<02:07, 992kB/s]
+  4%|��         | 4.88M/125M [00:10<02:43, 772kB/s]
+  4%|��         | 4.97M/125M [00:10<03:32, 592kB/s]
+  4%|��         | 5.33M/125M [00:11<03:37, 578kB/s]
+  5%|��         | 6.04M/125M [00:11<01:47, 1.17MB/s]
+  5%|��         | 6.23M/125M [00:12<02:20, 889kB/s] 
+  5%|��         | 6.64M/125M [00:12<01:41, 1.23MB/s]
+  5%|��         | 6.86M/125M [00:12<02:04, 1.00MB/s]
+  6%|��         | 7.03M/125M [00:13<02:37, 787kB/s] 
+  6%|��         | 7.22M/125M [00:13<02:28, 833kB/s]
+  6%|��         | 7.45M/125M [00:13<02:12, 931kB/s]
+  6%|��         | 7.64M/125M [00:14<03:13, 638kB/s]
+  6%|��         | 7.89M/125M [00:14<03:19, 615kB/s]
+  6%|��         | 7.97M/125M [00:15<05:08, 398kB/s]
+  7%|��         | 8.45M/125M [00:16<04:19, 471kB/s]
+  7%|��         | 9.18M/125M [00:16<02:14, 907kB/s]
+  8%|��         | 9.75M/125M [00:16<01:56, 1.04MB/s]
+  8%|��         | 9.93M/125M [00:17<02:17, 877kB/s] 
+  8%|��         | 10.1M/125M [00:17<02:18, 873kB/s]

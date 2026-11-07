@@ -1,0 +1,31 @@
+D:\Dev\cache\tmp\nemu-evidence-tests-2d6b9697-6614-4633-94f6-74696464dd4c\nemu-evidence\fixture\1\windows
+Exception: D:\Dev\nemu-wt\P4-02\tools\scaffold\windows-evidence.ps1:14
+Line |
+  14 |  … teralPath $root) { throw "Evidence directory already exists: $root" }
+     |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Evidence directory already exists:
+     | D:\Dev\cache\tmp\nemu-evidence-tests-2d6b9697-6614-4633-94f6-74696464dd4c\nemu-evidence\fixture\1\windows
+Verified 2 current-attempt evidence files
+Exception: D:\Dev\nemu-wt\P4-02\tools\scaffold\windows-evidence.ps1:112
+Line |
+ 112 |  $manifest = @(Get-ChildItem -LiteralPath $root -Recurse -File | Where …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Not generated in this attempt: fixture.txt
+Exception: D:\Dev\nemu-wt\P4-02\tools\scaffold\windows-evidence.ps1:108
+Line |
+ 108 |  … .sha -ne (git rev-parse HEAD)) { throw 'Evidence identity mismatch' }
+     |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Evidence identity mismatch
+Verified 2 current-attempt evidence files
+PASS: fresh evidence accepted; duplicate directory, stale timestamp and wrong attempt rejected.
+✔ snapshot starts after window wait settles (success) (1.9909ms)
+✔ snapshot starts after window wait settles (failure) (1.3088ms)
+✔ repository snapshots contain only related processes and matching derivative hashes (129.5941ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 351.9976

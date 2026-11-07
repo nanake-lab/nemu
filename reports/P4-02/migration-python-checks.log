@@ -1,0 +1,53 @@
+**********************
+PowerShell transcript start
+Start time: 20261023111656
+Username: DESKTOP-8LBF84O\nanake
+RunAs User: DESKTOP-8LBF84O\nanake
+Configuration Name: 
+Machine: DESKTOP-8LBF84O (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\Users\nanake\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+$env:UV_CACHE_DIR='D:\Dev\cache\uv'; $env:UV_PYTHON_INSTALL_DIR='D:\Dev\cache\uv-python'; $env:TEMP='D:\Dev\cache\tmp'; $env:TMP=$env:TEMP; Start-Transcript -Path reports/P4-02/migration-python-checks.log; foreach($project in @('workers/irl','workers/drive','workers/model-adapter','services/voice-sidecar')) { $env:UV_PROJECT_ENVIRONMENT=if($project -eq 'services/voice-sidecar'){'D:\Dev\nemu-wt\P4-02\services\voice-sidecar\.venv'}else{"D:\Dev\cache\p4-02\check-envs\$($project.Replace('/','-'))"}; Write-Output $project; Push-Location $project; try { uv sync --locked; if($LASTEXITCODE){exit $LASTEXITCODE}; uv run ruff check .; if($LASTEXITCODE){exit $LASTEXITCODE}; uv run mypy --strict src tests; if($LASTEXITCODE){exit $LASTEXITCODE}; uv run mypy --strict --platform linux src tests; if($LASTEXITCODE){exit $LASTEXITCODE}; uv run pytest; if($LASTEXITCODE){exit $LASTEXITCODE}; uv build; if($LASTEXITCODE){exit $LASTEXITCODE} } finally {Pop-Location} }; Stop-Transcript
+Process ID: 40784
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.19045
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is reports/P4-02/migration-python-checks.log
+workers/irl
+
+
+
+
+
+
+workers/drive
+
+
+
+
+
+
+workers/model-adapter
+
+
+
+
+
+
+services/voice-sidecar
+
+
+
+
+
+
+**********************
+PowerShell transcript end
+End time: 20261023111751
+**********************

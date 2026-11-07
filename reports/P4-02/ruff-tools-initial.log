@@ -1,0 +1,14 @@
+F401 [*] `gpu_common.ROOT` imported but unused
+  --> services\voice-sidecar\benchmark.py:21:24
+   |
+19 | from typing import Any
+20 |
+21 | from gpu_common import ROOT, add_service_packages, load_carrier, quiet_gate
+   |                        ^^^^
+22 |
+23 | BASE = {
+   |
+help: Remove unused import: `gpu_common.ROOT`
+
+Found 1 error.
+[*] 1 fixable with the `--fix` option.

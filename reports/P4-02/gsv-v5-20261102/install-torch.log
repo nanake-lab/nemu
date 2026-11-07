@@ -1,0 +1,17 @@
+Using Python 3.12.14 environment at: D:\Dev\cache\p4-02\gsv-v5-venv
+Resolved 11 packages in 1.75s
+Downloading torch (3.0GiB)
+Downloading networkx (2.0MiB)
+Downloading torchaudio (4.4MiB)
+ Downloaded networkx
+ Downloaded torchaudio
+Downloading torch (3.0GiB)
+WARN Retry attempt #0. Sleeping 1.3147117s before the next attempt
+WARN Retry attempt #1. Sleeping 1.4624594s before the next attempt
+WARN Retry attempt #2. Sleeping 5.7562593s before the next attempt
+error: Failed to download `torch==2.7.1+cu128`
+  cause: Request failed after 5 retries in 22.8s
+  cause: Failed to fetch: `https://download-r2.pytorch.org/whl/cu128/torch-2.7.1%2Bcu128-cp312-cp312-win_amd64.whl`
+  cause: error sending request for url (https://download-r2.pytorch.org/whl/cu128/torch-2.7.1%2Bcu128-cp312-cp312-win_amd64.whl)
+  cause: client error (Connect)
+  cause: tls handshake eof

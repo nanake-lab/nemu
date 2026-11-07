@@ -1,0 +1,41 @@
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]
+Loading checkpoint shards:  33%|��������      | 1/3 [00:02<00:05,  2.54s/it]
+Loading checkpoint shards:  67%|��������������   | 2/3 [00:05<00:02,  2.62s/it]
+Loading checkpoint shards: 100%|��������������������| 3/3 [00:05<00:00,  1.76s/it]
+The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+
+********
+Warning: flash-attn is not installed. Will only run the manual PyTorch version. Please install flash-attn for faster inference.
+********
+ 
+graph2 zh {'lang': 'zh', 'cancelled': False, 'failed': False, 'first_emit_ms': 2901.872900023591, 'last_emit_ms': 4221.734500024468, 'audio_seconds': 1.76, 'first_to_last_seconds': 1.319861600000877, 'audio_per_stream_second': 1.3334731459713887, 'metric_note': 'audio duration / first-to-last engine emission; report only; WS arrival measured separately', 'codec_sha256': 'ef4b1543c16f221d42b77e1ec4b681f8566a69dc544a577f7ef953fff75b54a5', 'frame_count': 22, 'trace': 'e8c29a2d82024308b66ba58d35400001.json', 'packet_boundary_jump_max': 0.01519775390625, 'all_sample_jump_max': 0.1279296875, 'torch': {'allocatedBytes': 7485089792, 'reservedBytes': 8499757056, 'peakAllocatedBytes': 7784585728, 'peakReservedBytes': 8499757056}, 'captured_talker_positions': 16, 'graph_generation_length': 512, 'codec_equal_upstream': True}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+graph2 en {'lang': 'en', 'cancelled': False, 'failed': False, 'first_emit_ms': 1365.846100001363, 'last_emit_ms': 5736.468400020385, 'audio_seconds': 5.04, 'first_to_last_seconds': 4.370622300019022, 'audio_per_stream_second': 1.1531538655211786, 'metric_note': 'audio duration / first-to-last engine emission; report only; WS arrival measured separately', 'codec_sha256': '046b5b323556c7f4a55487d4dea5e9e9764a7424ac7e027a2e860cae931c31df', 'frame_count': 63, 'trace': 'afd2aba860a54755bda593ba45bcf5de.json', 'packet_boundary_jump_max': 5.543231964111328e-05, 'all_sample_jump_max': 0.00013494491577148438, 'torch': {'allocatedBytes': 7493669376, 'reservedBytes': 8686403584, 'peakAllocatedBytes': 7911318528, 'peakReservedBytes': 8686403584}, 'captured_talker_positions': 23, 'graph_generation_length': 512, 'codec_equal_upstream': True}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+graph2 ja {'lang': 'ja', 'cancelled': False, 'failed': False, 'first_emit_ms': 2806.6074999806006, 'last_emit_ms': 7343.8289999903645, 'audio_seconds': 5.04, 'first_to_last_seconds': 4.537221500009764, 'audio_per_stream_second': 1.1108119804133771, 'metric_note': 'audio duration / first-to-last engine emission; report only; WS arrival measured separately', 'codec_sha256': '69ddabcd294904194cc2fe532395ebbf9a6332075d00ade51458ea981fac65d8', 'frame_count': 63, 'trace': 'cc4e14befcdd438aab7a084e12593b1d.json', 'packet_boundary_jump_max': 0.00011265277862548828, 'all_sample_jump_max': 0.00013256072998046875, 'torch': {'allocatedBytes': 7493772800, 'reservedBytes': 8910798848, 'peakAllocatedBytes': 7973305344, 'peakReservedBytes': 8910798848}, 'captured_talker_positions': 39, 'graph_generation_length': 512, 'codec_equal_upstream': False}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+graph2-async zh {'lang': 'zh', 'cancelled': False, 'failed': False, 'first_emit_ms': 235.87229999247938, 'last_emit_ms': 1585.0319000019226, 'audio_seconds': 1.76, 'first_to_last_seconds': 1.3491596000094432, 'audio_per_stream_second': 1.3045157889308878, 'metric_note': 'audio duration / first-to-last engine emission; report only; WS arrival measured separately', 'codec_sha256': 'ef4b1543c16f221d42b77e1ec4b681f8566a69dc544a577f7ef953fff75b54a5', 'frame_count': 22, 'trace': '72ea0894807945ec92645a6cc77546fc.json', 'packet_boundary_jump_max': 0.01519775390625, 'all_sample_jump_max': 0.1279296875, 'torch': {'allocatedBytes': 7503341056, 'reservedBytes': 9003073536, 'peakAllocatedBytes': 7973305344, 'peakReservedBytes': 9003073536}, 'captured_talker_positions': 39, 'graph_generation_length': 512, 'codec_equal_upstream': True}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+graph2-async en {'lang': 'en', 'cancelled': False, 'failed': False, 'first_emit_ms': 206.71119997859932, 'last_emit_ms': 4725.126799981808, 'audio_seconds': 5.04, 'first_to_last_seconds': 4.518415600003209, 'audio_per_stream_second': 1.115435242388155, 'metric_note': 'audio duration / first-to-last engine emission; report only; WS arrival measured separately', 'codec_sha256': '046b5b323556c7f4a55487d4dea5e9e9764a7424ac7e027a2e860cae931c31df', 'frame_count': 63, 'trace': '663e44a8bb7c4cf984e37c1ca4cd8e57.json', 'packet_boundary_jump_max': 5.543231964111328e-05, 'all_sample_jump_max': 0.00013494491577148438, 'torch': {'allocatedBytes': 7503341056, 'reservedBytes': 9003073536, 'peakAllocatedBytes': 7973305344, 'peakReservedBytes': 9003073536}, 'captured_talker_positions': 39, 'graph_generation_length': 512, 'codec_equal_upstream': True}
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+graph2-async ja {'lang': 'ja', 'cancelled': False, 'failed': False, 'first_emit_ms': 198.10559999314137, 'last_emit_ms': 4015.209200006211, 'audio_seconds': 5.04, 'first_to_last_seconds': 3.81710360001307, 'audio_per_stream_second': 1.320372860716367, 'metric_note': 'audio duration / first-to-last engine emission; report only; WS arrival measured separately', 'codec_sha256': '69ddabcd294904194cc2fe532395ebbf9a6332075d00ade51458ea981fac65d8', 'frame_count': 63, 'trace': 'c635c50282a74da2817a1bf3518f3d55.json', 'packet_boundary_jump_max': 0.00011265277862548828, 'all_sample_jump_max': 0.00013256072998046875, 'torch': {'allocatedBytes': 7503341056, 'reservedBytes': 9003073536, 'peakAllocatedBytes': 7982873600, 'peakReservedBytes': 9003073536}, 'captured_talker_positions': 39, 'graph_generation_length': 512, 'codec_equal_upstream': False}
+Traceback (most recent call last):
+  File "C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\optimization_probe.py", line 80, in <module>
+    main(short_probe)
+  File "C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\benchmark.py", line 209, in main
+    result.update(asyncio.run(measurement(args, engine, destination)))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\optimization_probe.py", line 75, in short_probe
+    raise RuntimeError("CODEC_PARITY_FAILED; development.json retains exact comparisons")
+RuntimeError: CODEC_PARITY_FAILED; development.json retains exact comparisons

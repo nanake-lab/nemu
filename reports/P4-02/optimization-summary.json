@@ -1,0 +1,894 @@
+{
+  "optimization-0.6B-v9": {
+    "memory_upper_bound_bytes": 7816069120,
+    "memory": {
+      "status": "sampled-not-accepted",
+      "observations": 175,
+      "maximum_start_interval_s": 0.803211,
+      "maximum_acquisition_s": 0.550762,
+      "no_owned_gpu_counter_samples": 2,
+      "errors": [],
+      "sampled_peaks": {
+        "dedicated_bytes": 7539003392,
+        "shared_bytes": 277065728,
+        "total_committed_bytes": 7816773632
+      },
+      "processes": [
+        {
+          "ProcessId": 47532,
+          "ParentProcessId": 31724,
+          "Name": "python.exe",
+          "CreationDate": "/Date(1792593444073)/"
+        },
+        {
+          "ProcessId": 47444,
+          "ParentProcessId": 47532,
+          "Name": "powershell.exe",
+          "CreationDate": "/Date(1792593444726)/"
+        },
+        {
+          "ProcessId": 34688,
+          "ParentProcessId": 47532,
+          "Name": "node.exe",
+          "CreationDate": "/Date(1792593444737)/"
+        },
+        {
+          "ProcessId": 2012,
+          "ParentProcessId": 47444,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792593444746)/"
+        },
+        {
+          "ProcessId": 40188,
+          "ParentProcessId": 34688,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792593444747)/"
+        },
+        {
+          "ProcessId": 43528,
+          "ParentProcessId": 34688,
+          "Name": "node.exe",
+          "CreationDate": "/Date(1792593445572)/"
+        },
+        {
+          "ProcessId": 35864,
+          "ParentProcessId": 43528,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792593445578)/"
+        },
+        {
+          "ProcessId": 40724,
+          "ParentProcessId": 43528,
+          "Name": "esbuild.exe",
+          "CreationDate": "/Date(1792593445924)/"
+        },
+        {
+          "ProcessId": 23416,
+          "ParentProcessId": 34688,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792593446140)/"
+        },
+        {
+          "ProcessId": 39968,
+          "ParentProcessId": 23416,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792593446200)/"
+        },
+        {
+          "ProcessId": 4256,
+          "ParentProcessId": 23416,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792593446212)/"
+        },
+        {
+          "ProcessId": 14684,
+          "ParentProcessId": 23416,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792593446231)/"
+        },
+        {
+          "ProcessId": 23464,
+          "ParentProcessId": 47532,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593449065)/"
+        },
+        {
+          "ProcessId": 41116,
+          "ParentProcessId": 47532,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593484637)/"
+        },
+        {
+          "ProcessId": 3732,
+          "ParentProcessId": 47532,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593485738)/"
+        },
+        {
+          "ProcessId": 36256,
+          "ParentProcessId": 47532,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593495615)/"
+        },
+        {
+          "ProcessId": 29204,
+          "ParentProcessId": 47532,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593501633)/"
+        },
+        {
+          "ProcessId": 27860,
+          "ParentProcessId": 47532,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593506584)/"
+        },
+        {
+          "ProcessId": 3952,
+          "ParentProcessId": 47532,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593507062)/"
+        },
+        {
+          "ProcessId": 34140,
+          "ParentProcessId": 47532,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593511767)/"
+        },
+        {
+          "ProcessId": 36768,
+          "ParentProcessId": 47532,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593516602)/"
+        }
+      ],
+      "adapters": [
+        "luid_0x00000000_0x0000BE91_phys_0"
+      ],
+      "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+    },
+    "langs": {
+      "zh": {
+        "first_emit_ms": 233.20479999529198,
+        "last_emit_ms": 4171.792499982985,
+        "audio_seconds": 5.04,
+        "realtime_ratio": 1.2796465088274533,
+        "codec_equal_upstream": true,
+        "codec_frames": 63,
+        "cuda_stages": {
+          "upstream_prefill": {
+            "count": 1,
+            "sum_ms": 44.19993591308594,
+            "median_ms": 44.19993591308594
+          },
+          "graph_prepare": {
+            "count": 1,
+            "sum_ms": 0.0030720001086592674,
+            "median_ms": 0.0030720001086592674
+          },
+          "prefill": {
+            "count": 1,
+            "sum_ms": 46.540672302246094,
+            "median_ms": 46.540672302246094
+          },
+          "code_predictor": {
+            "count": 945,
+            "sum_ms": 937.1203524470329,
+            "median_ms": 0.8714240193367004
+          },
+          "talker": {
+            "count": 63,
+            "sum_ms": 1924.2510075569153,
+            "median_ms": 37.222110748291016
+          },
+          "tokenizer_decode": {
+            "count": 17,
+            "sum_ms": 1298.8268775939941,
+            "median_ms": 77.45404815673828
+          },
+          "decode": {
+            "count": 17,
+            "sum_ms": 1253.744665145874,
+            "median_ms": 77.51350402832031
+          },
+          "generate_and_final_decode": {
+            "count": 1,
+            "sum_ms": 4140.609375,
+            "median_ms": 4140.609375
+          }
+        },
+        "seams_2_frame_first": {
+          "count": 16,
+          "maximum_jump": 3.1888484954833984e-05,
+          "positions_samples": [
+            3840,
+            11520,
+            19200,
+            26880,
+            34560,
+            42240,
+            49920,
+            57600,
+            65280,
+            72960,
+            80640,
+            88320,
+            96000,
+            103680,
+            111360,
+            119040
+          ]
+        },
+        "seams_original_4_frame_first": {
+          "count": 15,
+          "maximum_jump": 3.616511821746826e-05,
+          "positions_samples": [
+            7680,
+            15360,
+            23040,
+            30720,
+            38400,
+            46080,
+            53760,
+            61440,
+            69120,
+            76800,
+            84480,
+            92160,
+            99840,
+            107520,
+            115200
+          ]
+        },
+        "two_vs_four_frame_pcm_max_abs_diff": 0.0001201629638671875,
+        "same_partition_eager_pcm_equal": true,
+        "same_partition_eager_pcm_max_abs_diff": 0.0,
+        "sync_vs_async_pcm_equal": true,
+        "sync_vs_async_pcm_max_abs_diff": 0.0,
+        "sample_rate": 24000,
+        "torch": {
+          "allocatedBytes": 5121306624,
+          "reservedBytes": 6096420864,
+          "peakAllocatedBytes": 5530028032,
+          "peakReservedBytes": 6096420864
+        }
+      },
+      "en": {
+        "first_emit_ms": 196.40260000596754,
+        "last_emit_ms": 4320.007700007409,
+        "audio_seconds": 5.04,
+        "realtime_ratio": 1.222231488654973,
+        "codec_equal_upstream": true,
+        "codec_frames": 63,
+        "cuda_stages": {
+          "upstream_prefill": {
+            "count": 1,
+            "sum_ms": 38.65804672241211,
+            "median_ms": 38.65804672241211
+          },
+          "graph_prepare": {
+            "count": 1,
+            "sum_ms": 0.002047999994829297,
+            "median_ms": 0.002047999994829297
+          },
+          "prefill": {
+            "count": 1,
+            "sum_ms": 40.57088088989258,
+            "median_ms": 40.57088088989258
+          },
+          "code_predictor": {
+            "count": 945,
+            "sum_ms": 927.4682573080063,
+            "median_ms": 0.8714240193367004
+          },
+          "talker": {
+            "count": 63,
+            "sum_ms": 2177.968789577484,
+            "median_ms": 38.27711868286133
+          },
+          "tokenizer_decode": {
+            "count": 17,
+            "sum_ms": 1356.1152801513672,
+            "median_ms": 82.59209442138672
+          },
+          "decode": {
+            "count": 17,
+            "sum_ms": 1311.225944519043,
+            "median_ms": 82.6428451538086
+          },
+          "generate_and_final_decode": {
+            "count": 1,
+            "sum_ms": 4287.71044921875,
+            "median_ms": 4287.71044921875
+          }
+        },
+        "seams_2_frame_first": {
+          "count": 16,
+          "maximum_jump": 3.719329833984375e-05,
+          "positions_samples": [
+            3840,
+            11520,
+            19200,
+            26880,
+            34560,
+            42240,
+            49920,
+            57600,
+            65280,
+            72960,
+            80640,
+            88320,
+            96000,
+            103680,
+            111360,
+            119040
+          ]
+        },
+        "seams_original_4_frame_first": {
+          "count": 15,
+          "maximum_jump": 4.38690185546875e-05,
+          "positions_samples": [
+            7680,
+            15360,
+            23040,
+            30720,
+            38400,
+            46080,
+            53760,
+            61440,
+            69120,
+            76800,
+            84480,
+            92160,
+            99840,
+            107520,
+            115200
+          ]
+        },
+        "two_vs_four_frame_pcm_max_abs_diff": 9.870529174804688e-05,
+        "same_partition_eager_pcm_equal": true,
+        "same_partition_eager_pcm_max_abs_diff": 0.0,
+        "sync_vs_async_pcm_equal": true,
+        "sync_vs_async_pcm_max_abs_diff": 0.0,
+        "sample_rate": 24000,
+        "torch": {
+          "allocatedBytes": 5121306624,
+          "reservedBytes": 6222249984,
+          "peakAllocatedBytes": 5538415104,
+          "peakReservedBytes": 6222249984
+        }
+      },
+      "ja": {
+        "first_emit_ms": 223.6718999920413,
+        "last_emit_ms": 1781.1337000166532,
+        "audio_seconds": 2.32,
+        "realtime_ratio": 1.4896031478674712,
+        "codec_equal_upstream": true,
+        "codec_frames": 29,
+        "cuda_stages": {
+          "upstream_prefill": {
+            "count": 1,
+            "sum_ms": 46.98828887939453,
+            "median_ms": 46.98828887939453
+          },
+          "graph_prepare": {
+            "count": 1,
+            "sum_ms": 0.0010239999974146485,
+            "median_ms": 0.0010239999974146485
+          },
+          "prefill": {
+            "count": 1,
+            "sum_ms": 49.43974304199219,
+            "median_ms": 49.43974304199219
+          },
+          "code_predictor": {
+            "count": 435,
+            "sum_ms": 438.81129693984985,
+            "median_ms": 0.8724480271339417
+          },
+          "talker": {
+            "count": 29,
+            "sum_ms": 684.5922904014587,
+            "median_ms": 6.151167869567871
+          },
+          "tokenizer_decode": {
+            "count": 8,
+            "sum_ms": 722.6772842407227,
+            "median_ms": 93.3327522277832
+          },
+          "decode": {
+            "count": 8,
+            "sum_ms": 710.1178245544434,
+            "median_ms": 93.43510437011719
+          },
+          "generate_and_final_decode": {
+            "count": 1,
+            "sum_ms": 1720.7850341796875,
+            "median_ms": 1720.7850341796875
+          }
+        },
+        "seams_2_frame_first": {
+          "count": 7,
+          "maximum_jump": 0.037994384765625,
+          "positions_samples": [
+            3840,
+            11520,
+            19200,
+            26880,
+            34560,
+            42240,
+            49920
+          ]
+        },
+        "seams_original_4_frame_first": {
+          "count": 7,
+          "maximum_jump": 0.011566162109375,
+          "positions_samples": [
+            7680,
+            15360,
+            23040,
+            30720,
+            38400,
+            46080,
+            53760
+          ]
+        },
+        "two_vs_four_frame_pcm_max_abs_diff": 0.0048828125,
+        "same_partition_eager_pcm_equal": true,
+        "same_partition_eager_pcm_max_abs_diff": 0.0,
+        "sync_vs_async_pcm_equal": true,
+        "sync_vs_async_pcm_max_abs_diff": 0.0,
+        "sample_rate": 24000,
+        "torch": {
+          "allocatedBytes": 5121306624,
+          "reservedBytes": 6222249984,
+          "peakAllocatedBytes": 5538415104,
+          "peakReservedBytes": 6222249984
+        }
+      }
+    }
+  },
+  "optimization-1.7B-v4": {
+    "memory_upper_bound_bytes": 9653751808,
+    "memory": {
+      "status": "sampled-not-accepted",
+      "observations": 190,
+      "maximum_start_interval_s": 0.510893,
+      "maximum_acquisition_s": 0.280418,
+      "no_owned_gpu_counter_samples": 3,
+      "errors": [],
+      "sampled_peaks": {
+        "dedicated_bytes": 9382764544,
+        "shared_bytes": 270987264,
+        "total_committed_bytes": 9654456320
+      },
+      "processes": [
+        {
+          "ProcessId": 1428,
+          "ParentProcessId": 37868,
+          "Name": "python.exe",
+          "CreationDate": "/Date(1792593520434)/"
+        },
+        {
+          "ProcessId": 21044,
+          "ParentProcessId": 1428,
+          "Name": "powershell.exe",
+          "CreationDate": "/Date(1792593521069)/"
+        },
+        {
+          "ProcessId": 41456,
+          "ParentProcessId": 1428,
+          "Name": "node.exe",
+          "CreationDate": "/Date(1792593521081)/"
+        },
+        {
+          "ProcessId": 40572,
+          "ParentProcessId": 21044,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792593521089)/"
+        },
+        {
+          "ProcessId": 39732,
+          "ParentProcessId": 41456,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792593521090)/"
+        },
+        {
+          "ProcessId": 35988,
+          "ParentProcessId": 41456,
+          "Name": "node.exe",
+          "CreationDate": "/Date(1792593521897)/"
+        },
+        {
+          "ProcessId": 47944,
+          "ParentProcessId": 35988,
+          "Name": "conhost.exe",
+          "CreationDate": "/Date(1792593521903)/"
+        },
+        {
+          "ProcessId": 24184,
+          "ParentProcessId": 35988,
+          "Name": "esbuild.exe",
+          "CreationDate": "/Date(1792593522196)/"
+        },
+        {
+          "ProcessId": 38148,
+          "ParentProcessId": 41456,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792593522456)/"
+        },
+        {
+          "ProcessId": 16332,
+          "ParentProcessId": 38148,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792593522507)/"
+        },
+        {
+          "ProcessId": 2552,
+          "ParentProcessId": 38148,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792593522519)/"
+        },
+        {
+          "ProcessId": 39616,
+          "ParentProcessId": 38148,
+          "Name": "chrome-headless-shell.exe",
+          "CreationDate": "/Date(1792593522532)/"
+        },
+        {
+          "ProcessId": 45488,
+          "ParentProcessId": 1428,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593525211)/"
+        },
+        {
+          "ProcessId": 38052,
+          "ParentProcessId": 1428,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593562493)/"
+        },
+        {
+          "ProcessId": 23236,
+          "ParentProcessId": 1428,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593563829)/"
+        },
+        {
+          "ProcessId": 28392,
+          "ParentProcessId": 1428,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593570652)/"
+        },
+        {
+          "ProcessId": 46124,
+          "ParentProcessId": 1428,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593578135)/"
+        },
+        {
+          "ProcessId": 11568,
+          "ParentProcessId": 1428,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593587371)/"
+        },
+        {
+          "ProcessId": 20544,
+          "ParentProcessId": 1428,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593587903)/"
+        },
+        {
+          "ProcessId": 36248,
+          "ParentProcessId": 1428,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593589901)/"
+        },
+        {
+          "ProcessId": 32124,
+          "ParentProcessId": 1428,
+          "Name": "tasklist.exe",
+          "CreationDate": "/Date(1792593595250)/"
+        }
+      ],
+      "adapters": [
+        "luid_0x00000000_0x0000BE91_phys_0"
+      ],
+      "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+    },
+    "langs": {
+      "zh": {
+        "first_emit_ms": 269.54789998126216,
+        "last_emit_ms": 1445.3544999996666,
+        "audio_seconds": 1.76,
+        "realtime_ratio": 1.496844804215635,
+        "codec_equal_upstream": true,
+        "codec_frames": 22,
+        "cuda_stages": {
+          "upstream_prefill": {
+            "count": 1,
+            "sum_ms": 51.07302474975586,
+            "median_ms": 51.07302474975586
+          },
+          "graph_prepare": {
+            "count": 1,
+            "sum_ms": 0.001888000057078898,
+            "median_ms": 0.001888000057078898
+          },
+          "prefill": {
+            "count": 1,
+            "sum_ms": 53.374977111816406,
+            "median_ms": 53.374977111816406
+          },
+          "code_predictor": {
+            "count": 330,
+            "sum_ms": 368.2783044576645,
+            "median_ms": 1.0828800201416016
+          },
+          "talker": {
+            "count": 22,
+            "sum_ms": 466.14726638793945,
+            "median_ms": 11.083775997161865
+          },
+          "tokenizer_decode": {
+            "count": 7,
+            "sum_ms": 711.2271423339844,
+            "median_ms": 103.47200012207031
+          },
+          "decode": {
+            "count": 6,
+            "sum_ms": 608.9057235717773,
+            "median_ms": 105.24361419677734
+          },
+          "generate_and_final_decode": {
+            "count": 1,
+            "sum_ms": 1443.4754638671875,
+            "median_ms": 1443.4754638671875
+          }
+        },
+        "seams_2_frame_first": {
+          "count": 5,
+          "maximum_jump": 0.01171875,
+          "positions_samples": [
+            3840,
+            11520,
+            19200,
+            26880,
+            34560
+          ]
+        },
+        "seams_original_4_frame_first": {
+          "count": 5,
+          "maximum_jump": 0.0126953125,
+          "positions_samples": [
+            7680,
+            15360,
+            23040,
+            30720,
+            38400
+          ]
+        },
+        "two_vs_four_frame_pcm_max_abs_diff": 0.0052490234375,
+        "same_partition_eager_pcm_equal": true,
+        "same_partition_eager_pcm_max_abs_diff": 0.0,
+        "sync_vs_async_pcm_equal": true,
+        "sync_vs_async_pcm_max_abs_diff": 0.0,
+        "sample_rate": 24000,
+        "torch": {
+          "allocatedBytes": 7151142912,
+          "reservedBytes": 8042577920,
+          "peakAllocatedBytes": 7621484032,
+          "peakReservedBytes": 8042577920
+        }
+      },
+      "en": {
+        "first_emit_ms": 249.45140001364052,
+        "last_emit_ms": 4790.028599993093,
+        "audio_seconds": 5.04,
+        "realtime_ratio": 1.109991038148808,
+        "codec_equal_upstream": true,
+        "codec_frames": 63,
+        "cuda_stages": {
+          "upstream_prefill": {
+            "count": 1,
+            "sum_ms": 45.715614318847656,
+            "median_ms": 45.715614318847656
+          },
+          "graph_prepare": {
+            "count": 1,
+            "sum_ms": 0.002047999994829297,
+            "median_ms": 0.002047999994829297
+          },
+          "prefill": {
+            "count": 1,
+            "sum_ms": 48.43315124511719,
+            "median_ms": 48.43315124511719
+          },
+          "code_predictor": {
+            "count": 945,
+            "sum_ms": 1054.8329582810402,
+            "median_ms": 1.0762239694595337
+          },
+          "talker": {
+            "count": 63,
+            "sum_ms": 2335.885251045227,
+            "median_ms": 44.56345748901367
+          },
+          "tokenizer_decode": {
+            "count": 17,
+            "sum_ms": 1240.1295318603516,
+            "median_ms": 71.66867065429688
+          },
+          "decode": {
+            "count": 17,
+            "sum_ms": 1201.4040908813477,
+            "median_ms": 49.95084762573242
+          },
+          "generate_and_final_decode": {
+            "count": 1,
+            "sum_ms": 4757.9423828125,
+            "median_ms": 4757.9423828125
+          }
+        },
+        "seams_2_frame_first": {
+          "count": 16,
+          "maximum_jump": 2.676248550415039e-05,
+          "positions_samples": [
+            3840,
+            11520,
+            19200,
+            26880,
+            34560,
+            42240,
+            49920,
+            57600,
+            65280,
+            72960,
+            80640,
+            88320,
+            96000,
+            103680,
+            111360,
+            119040
+          ]
+        },
+        "seams_original_4_frame_first": {
+          "count": 15,
+          "maximum_jump": 3.540515899658203e-05,
+          "positions_samples": [
+            7680,
+            15360,
+            23040,
+            30720,
+            38400,
+            46080,
+            53760,
+            61440,
+            69120,
+            76800,
+            84480,
+            92160,
+            99840,
+            107520,
+            115200
+          ]
+        },
+        "two_vs_four_frame_pcm_max_abs_diff": 0.00010198354721069336,
+        "same_partition_eager_pcm_equal": true,
+        "same_partition_eager_pcm_max_abs_diff": 0.0,
+        "sync_vs_async_pcm_equal": true,
+        "sync_vs_async_pcm_max_abs_diff": 0.0,
+        "sample_rate": 24000,
+        "torch": {
+          "allocatedBytes": 7151142912,
+          "reservedBytes": 8065646592,
+          "peakAllocatedBytes": 7621484032,
+          "peakReservedBytes": 8065646592
+        }
+      },
+      "ja": {
+        "first_emit_ms": 210.6698999996297,
+        "last_emit_ms": 4562.625000020489,
+        "audio_seconds": 5.04,
+        "realtime_ratio": 1.158100183518861,
+        "codec_equal_upstream": true,
+        "codec_frames": 63,
+        "cuda_stages": {
+          "upstream_prefill": {
+            "count": 1,
+            "sum_ms": 40.367103576660156,
+            "median_ms": 40.367103576660156
+          },
+          "graph_prepare": {
+            "count": 1,
+            "sum_ms": 0.002047999994829297,
+            "median_ms": 0.002047999994829297
+          },
+          "prefill": {
+            "count": 1,
+            "sum_ms": 42.14067077636719,
+            "median_ms": 42.14067077636719
+          },
+          "code_predictor": {
+            "count": 945,
+            "sum_ms": 980.0967988967896,
+            "median_ms": 0.8888319730758667
+          },
+          "talker": {
+            "count": 63,
+            "sum_ms": 2285.7099628448486,
+            "median_ms": 41.52320098876953
+          },
+          "tokenizer_decode": {
+            "count": 17,
+            "sum_ms": 1336.0964317321777,
+            "median_ms": 87.95769500732422
+          },
+          "decode": {
+            "count": 17,
+            "sum_ms": 1286.2132530212402,
+            "median_ms": 88.08598327636719
+          },
+          "generate_and_final_decode": {
+            "count": 1,
+            "sum_ms": 4530.70849609375,
+            "median_ms": 4530.70849609375
+          }
+        },
+        "seams_2_frame_first": {
+          "count": 16,
+          "maximum_jump": 8.678436279296875e-05,
+          "positions_samples": [
+            3840,
+            11520,
+            19200,
+            26880,
+            34560,
+            42240,
+            49920,
+            57600,
+            65280,
+            72960,
+            80640,
+            88320,
+            96000,
+            103680,
+            111360,
+            119040
+          ]
+        },
+        "seams_original_4_frame_first": {
+          "count": 15,
+          "maximum_jump": 0.0001048743724822998,
+          "positions_samples": [
+            7680,
+            15360,
+            23040,
+            30720,
+            38400,
+            46080,
+            53760,
+            61440,
+            69120,
+            76800,
+            84480,
+            92160,
+            99840,
+            107520,
+            115200
+          ]
+        },
+        "two_vs_four_frame_pcm_max_abs_diff": 0.0003452301025390625,
+        "same_partition_eager_pcm_equal": true,
+        "same_partition_eager_pcm_max_abs_diff": 0.0,
+        "sync_vs_async_pcm_equal": true,
+        "sync_vs_async_pcm_max_abs_diff": 0.0,
+        "sample_rate": 24000,
+        "torch": {
+          "allocatedBytes": 7151142912,
+          "reservedBytes": 8065646592,
+          "peakAllocatedBytes": 7631052288,
+          "peakReservedBytes": 8065646592
+        }
+      }
+    }
+  }
+}

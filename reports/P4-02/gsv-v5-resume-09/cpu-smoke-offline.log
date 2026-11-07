@@ -1,0 +1,92 @@
+{"ort_version": "1.19.2", "original_providers": ["TensorrtExecutionProvider", "CUDAExecutionProvider", "CPUExecutionProvider"], "preload_dlls_present": false, "event": "isolation", "cuda_initialized": false}
+{"providers": ["CPUExecutionProvider"], "event": "g2pw_initialized", "cuda_initialized": false}
+Loading Text2Semantic weights from D:\Dev\cache\p4-02\gpt-sovits-v5-official\GPT_SoVITS\pretrained_models\s1v3.ckpt
+Removing weight norm...
+loading vocoder <All keys matched successfully>
+Loading VITS weights from D:\Dev\cache\p4-02\gpt-sovits-v5-official\GPT_SoVITS\pretrained_models\gsv-v5-pretrained\s2Gv5turbo.pth. <All keys matched successfully>
+Loading BERT weights from D:\Dev\cache\p4-02\gpt-sovits-v5-official\GPT_SoVITS\pretrained_models\chinese-roberta-wwm-ext-large
+Loading CNHuBERT weights from D:\Dev\cache\p4-02\gpt-sovits-v5-official\GPT_SoVITS\pretrained_models\chinese-hubert-base
+{"elapsed_seconds": 4.319382999994559, "event": "model_loaded", "cuda_initialized": false}
+Set seed to 42
+串行推理模式已开启
+分桶处理模式已开启
+实际输入的参考文本: 今天的天空很明亮，窗边有一点微风。我们可以慢慢说话，把眼前的小事一件一件做好。
+############ 切分文本 ############
+实际输入的目标文本:
+。你好，今天的天空很明亮。
+实际输入的目标文本(切句后):
+['。你好，今天的天空很明亮。']
+############ 提取文本Bert特征 ############
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:00<00:00,  6.27it/s]
+100%|██████████| 1/1 [00:00<00:00,  6.27it/s]
+############ 推理 ############
+前端处理后的文本(每句): ['.你好,今天的天空很明亮.']
+############ 预测语义Token ############
+
+  0%|          | 0/1500 [00:00<?, ?it/s]
+  0%|          | 1/1500 [00:00<07:27,  3.35it/s]
+  0%|          | 5/1500 [00:00<01:39, 14.97it/s]
+  1%|          | 9/1500 [00:00<01:06, 22.53it/s]
+  1%|          | 13/1500 [00:00<00:54, 27.20it/s]
+  1%|          | 17/1500 [00:00<00:50, 29.56it/s]
+  1%|▏         | 21/1500 [00:00<00:47, 31.12it/s]
+  2%|▏         | 25/1500 [00:00<00:45, 32.74it/s]
+  2%|▏         | 29/1500 [00:01<00:43, 33.58it/s]
+  2%|▏         | 33/1500 [00:01<00:42, 34.45it/s]
+  2%|▏         | 37/1500 [00:01<00:41, 34.93it/s]
+  3%|▎         | 41/1500 [00:01<00:41, 34.79it/s]
+  3%|▎         | 45/1500 [00:01<00:41, 35.09it/s]
+  3%|▎         | 49/1500 [00:01<00:40, 35.74it/s]
+  4%|▎         | 53/1500 [00:01<00:41, 35.15it/s]
+  4%|▍         | 57/1500 [00:01<00:41, 34.48it/s]
+  4%|▍         | 61/1500 [00:01<00:41, 34.88it/s]
+  4%|▍         | 65/1500 [00:02<00:40, 35.54it/s]
+  4%|▍         | 67/1500 [00:02<00:46, 30.87it/s]
+############ 合成音频 ############
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:09<00:00,  9.11s/it]
+100%|██████████| 1/1 [00:09<00:00,  9.11s/it]
+2.856	0.162	2.174	9.111
+{"case": "zh", "chunk": 0, "sample_rate": 48000, "samples": 138240, "audio_seconds": 2.88, "elapsed_seconds": 14.566990299994359, "sha256": "680afb5c03a06d204eee9c2468204a05d2e68f9f372659e582ec7a6818917519", "providers": ["CPUExecutionProvider"], "event": "synthesis", "cuda_initialized": false}
+Set seed to 42
+串行推理模式已开启
+分桶处理模式已开启
+实际输入的参考文本: 今天的天空很明亮，窗边有一点微风。我们可以慢慢说话，把眼前的小事一件一件做好。
+############ 切分文本 ############
+实际输入的目标文本:
+。你好，hello world。
+实际输入的目标文本(切句后):
+['。你好，hello world。']
+############ 提取文本Bert特征 ############
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:03<00:00,  3.62s/it]
+100%|██████████| 1/1 [00:03<00:00,  3.62s/it]
+############ 推理 ############
+前端处理后的文本(每句): ['.你好,hello world.']
+############ 预测语义Token ############
+
+  0%|          | 0/1500 [00:00<?, ?it/s]
+  0%|          | 1/1500 [00:00<06:37,  3.77it/s]
+  0%|          | 5/1500 [00:00<01:33, 16.07it/s]
+  1%|          | 9/1500 [00:00<01:05, 22.67it/s]
+  1%|          | 13/1500 [00:00<00:55, 26.99it/s]
+  1%|          | 17/1500 [00:00<00:49, 29.98it/s]
+  1%|▏         | 21/1500 [00:00<00:45, 32.56it/s]
+  2%|▏         | 25/1500 [00:00<00:43, 34.10it/s]
+  2%|▏         | 29/1500 [00:01<00:42, 34.99it/s]
+  2%|▏         | 33/1500 [00:01<00:40, 36.29it/s]
+  3%|▎         | 38/1500 [00:01<00:38, 37.52it/s]
+  3%|▎         | 42/1500 [00:01<00:38, 38.06it/s]
+  3%|▎         | 44/1500 [00:01<00:47, 30.70it/s]
+############ 合成音频 ############
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:07<00:00,  7.57s/it]
+100%|██████████| 1/1 [00:07<00:00,  7.57s/it]
+0.000	3.625	1.436	7.571
+{"case": "mixed", "chunk": 0, "sample_rate": 48000, "samples": 94080, "audio_seconds": 1.96, "elapsed_seconds": 12.867972500011092, "sha256": "52e4443d06eabe647539efde1f95b2792a4cea9b336a86344089478459810257", "providers": ["CPUExecutionProvider"], "event": "synthesis", "cuda_initialized": false}
+{"event": "complete", "cuda_initialized": false}

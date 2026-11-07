@@ -1,0 +1,172 @@
+{
+  "variant": "0.6B",
+  "status": "measured",
+  "reference": "C:\\Users\\nanake\\.codex\\worktrees\\p4-02-tts\\nemu\\reports\\P4-02\\optimization-0.6B-v2\\eager4\\64c2df4106a142fe83042f663e2575e2.json",
+  "reference_sha256": "db8760c04daf7bd0a81ee5ad0d6dec8054c40667bcf977bbcb98e5571a1cc032",
+  "actual_sha256": "db8760c04daf7bd0a81ee5ad0d6dec8054c40667bcf977bbcb98e5571a1cc032",
+  "expected_frames": 511,
+  "actual_frames": 511,
+  "codec_equal_upstream": true,
+  "timing": {
+    "lang": "zh",
+    "cancelled": false,
+    "failed": false,
+    "first_emit_ms": 2805.9118000091985,
+    "last_emit_ms": 36255.87920000544,
+    "audio_seconds": 40.88,
+    "first_to_last_seconds": 33.44996739999624,
+    "audio_per_stream_second": 1.2221237620699326,
+    "metric_note": "audio duration / first-to-last engine emission; report only; WS arrival measured separately"
+  },
+  "acceptance": false,
+  "carrier": {
+    "prefill_tokens": 16,
+    "decode_steps": 48,
+    "m": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "carrier_config": {
+      "version": 1,
+      "layer_index_zero_based": 17,
+      "rank": 8,
+      "hook": "after attention residual, before post_attention_layernorm",
+      "precision": "NF4",
+      "compute_dtype": "bfloat16",
+      "attention": "eager",
+      "double_quantization": false,
+      "kernel_name": "aten::_fused_rms_norm",
+      "kernel_api": "torch.nn.functional.rms_norm",
+      "kernel_wrapper": "native_norm.NativeRMSNorm",
+      "torch_version": "2.10.0+cu128",
+      "transformers_version": "4.57.3",
+      "bitsandbytes_version": "0.50.2",
+      "zero_modulation_reference": "same carrier configuration without wrapper; ADR 0012 section 2.1",
+      "cross_kernel_reference": "Transformers 4.57.3 Qwen3RMSNorm",
+      "cross_kernel_logits_max_abs": {
+        "zh": 0.34375,
+        "en": 0.4375,
+        "ja": 0.546875
+      },
+      "cross_kernel_argmax_changes": 0,
+      "cross_kernel_positions": 27,
+      "cross_kernel_evidence": "reports/P0-07/evidence-20261020/kernels-v1/Qwen--Qwen3-4B-Instruct-2507/result.json",
+      "kernel_change_policy": "carrier migration per v2.0 section 9.5 / I17"
+    }
+  },
+  "render_exit": 0,
+  "memory_watch_exit": 0,
+  "memory": {
+    "status": "sampled-not-accepted",
+    "observations": 193,
+    "maximum_start_interval_s": 0.743176,
+    "maximum_acquisition_s": 0.506984,
+    "no_owned_gpu_counter_samples": 3,
+    "errors": [],
+    "sampled_peaks": {
+      "dedicated_bytes": 8753618944,
+      "shared_bytes": 270987264,
+      "total_committed_bytes": 9025310720
+    },
+    "processes": [
+      {
+        "ProcessId": 46272,
+        "ParentProcessId": 46864,
+        "Name": "python.exe",
+        "CreationDate": "/Date(1792593087625)/"
+      },
+      {
+        "ProcessId": 46464,
+        "ParentProcessId": 46272,
+        "Name": "powershell.exe",
+        "CreationDate": "/Date(1792593088264)/"
+      },
+      {
+        "ProcessId": 44964,
+        "ParentProcessId": 46272,
+        "Name": "node.exe",
+        "CreationDate": "/Date(1792593088276)/"
+      },
+      {
+        "ProcessId": 37220,
+        "ParentProcessId": 46464,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792593088288)/"
+      },
+      {
+        "ProcessId": 33520,
+        "ParentProcessId": 44964,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792593088294)/"
+      },
+      {
+        "ProcessId": 40448,
+        "ParentProcessId": 44964,
+        "Name": "node.exe",
+        "CreationDate": "/Date(1792593089005)/"
+      },
+      {
+        "ProcessId": 39652,
+        "ParentProcessId": 40448,
+        "Name": "conhost.exe",
+        "CreationDate": "/Date(1792593089011)/"
+      },
+      {
+        "ProcessId": 44060,
+        "ParentProcessId": 40448,
+        "Name": "esbuild.exe",
+        "CreationDate": "/Date(1792593089312)/"
+      },
+      {
+        "ProcessId": 42768,
+        "ParentProcessId": 44964,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792593089565)/"
+      },
+      {
+        "ProcessId": 3588,
+        "ParentProcessId": 42768,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792593089619)/"
+      },
+      {
+        "ProcessId": 1564,
+        "ParentProcessId": 42768,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792593089630)/"
+      },
+      {
+        "ProcessId": 11436,
+        "ParentProcessId": 42768,
+        "Name": "chrome-headless-shell.exe",
+        "CreationDate": "/Date(1792593089643)/"
+      },
+      {
+        "ProcessId": 30196,
+        "ParentProcessId": 46272,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792593092310)/"
+      },
+      {
+        "ProcessId": 19104,
+        "ParentProcessId": 46272,
+        "Name": "tasklist.exe",
+        "CreationDate": "/Date(1792593118363)/"
+      }
+    ],
+    "adapters": [
+      "luid_0x00000000_0x0000BE91_phys_0"
+    ],
+    "limitation": "CIM/provider sampling; unknown refresh, transient allocations and driver scope; sum across owned process instances and adapters, not an exact continuous peak"
+  },
+  "nemu_memory_upper_bound_bytes": 9024606208,
+  "adr0012_limit_bytes": 8000000000,
+  "memory_evidence_available": true,
+  "vram_within_limit": false
+}

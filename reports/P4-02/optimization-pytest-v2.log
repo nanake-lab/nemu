@@ -1,0 +1,25 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar
+configfile: pyproject.toml
+plugins: anyio-4.15.1
+collected 34 items
+
+services\voice-sidecar\tests\test_decode_worker.py ...                   [  8%]
+services\voice-sidecar\tests\test_gpu.py s                               [ 11%]
+services\voice-sidecar\tests\test_models.py ..                           [ 17%]
+services\voice-sidecar\tests\test_pressure.py ..                         [ 23%]
+services\voice-sidecar\tests\test_qwen_adapter.py .......                [ 44%]
+services\voice-sidecar\tests\test_qwen_import.py ..                      [ 50%]
+services\voice-sidecar\tests\test_scaffold.py .                          [ 52%]
+services\voice-sidecar\tests\test_service.py ................            [100%]
+
+============================== warnings summary ===============================
+services\voice-sidecar\.venv\Lib\site-packages\starlette\testclient.py:37
+  C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\.venv\Lib\site-packages\starlette\testclient.py:37: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+SKIPPED [1] services\voice-sidecar\tests\test_gpu.py:14: GPU test not requested; CI never downloads models or allocates CUDA
+================== 33 passed, 1 skipped, 1 warning in 1.35s ===================

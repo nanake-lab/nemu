@@ -2,14 +2,43 @@
 name = "nemu-voice-sidecar"
 version = "0.0.0"
 requires-python = ">=3.12,<3.13"
-dependencies = []
+dependencies = [
+    "fastapi==0.115.12",
+    "jsonschema==4.23.0",
+    "structlog==25.3.0",
+    "uvicorn==0.34.2",
+    "websockets==15.0.1",
+]
+
+[project.optional-dependencies]
+inference = [
+    "torch==2.10.0+cu128",
+    "torchaudio==2.10.0+cu128",
+    "transformers==4.57.3",
+    "qwen-tts==0.1.1",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+torchaudio = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
 
 [build-system]
 requires = ["hatchling==1.29.0"]
 build-backend = "hatchling.build"
 
 [dependency-groups]
-dev = ["pytest==9.1.1", "mypy==1.20.2", "ruff==0.15.6"]
+dev = [
+    "pytest==9.1.1",
+    "mypy==1.20.2",
+    "ruff==0.15.6",
+    "httpx==0.28.1",
+    "types-jsonschema==4.26.0.20261006",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/nemu_voice_sidecar"]

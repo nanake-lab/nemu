@@ -1,0 +1,35 @@
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]
+Loading checkpoint shards:  33%|��������      | 1/3 [00:02<00:04,  2.27s/it]
+Loading checkpoint shards:  67%|��������������   | 2/3 [00:04<00:02,  2.27s/it]
+Loading checkpoint shards: 100%|��������������������| 3/3 [00:04<00:00,  1.53s/it]
+Traceback (most recent call last):
+  File "C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\benchmark.py", line 213, in <module>
+    main()
+  File "C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\benchmark.py", line 185, in main
+    result.update(asyncio.run(measure(args, engine, destination)))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\.codex\worktrees\p4-02-tts\nemu\services\voice-sidecar\benchmark.py", line 111, in measure
+    health = (await client.post(f"http://127.0.0.1:{args.port}/warmup")).json()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu-p007\workers\model-adapter\probe\.venv\Lib\site-packages\httpx\_models.py", line 832, in json
+    return jsonlib.loads(self.content, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\json\decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\json\decoder.py", line 356, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

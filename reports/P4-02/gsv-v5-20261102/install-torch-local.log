@@ -1,0 +1,10 @@
+Using Python 3.12.14 environment at: D:\Dev\cache\p4-02\gsv-v5-venv
+WARN torch==2.10.0+cu128 needs to be downloaded from a registry
+WARN torch needs to be downloaded from a registry
+WARN torchaudio==2.10.0+cu128 needs to be downloaded from a registry
+error: No solution found when resolving dependencies
+  cause: Because torch==2.10.0+cu128 needs to be downloaded from a registry and you require torch==2.10.0+cu128, we can conclude that your requirements are unsatisfiable.
+
+hint: Packages were unavailable because the network was disabled. When the network is disabled, registry packages may only be read from the cache.
+
+hint: `torch` was found on https://download.pytorch.org/whl/cu128, but not at the requested version (torch==2.10.0+cu128). A compatible version may be available on a subsequent index (e.g., https://pypi.org/simple). By default, uv will only consider versions that are published on the first index that contains a given package, to avoid dependency confusion attacks. If all indexes are equally trusted, use `--index-strategy unsafe-best-match` to consider all versions from all indexes, regardless of the order in which they were defined.
