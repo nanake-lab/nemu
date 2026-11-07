@@ -24,4 +24,5 @@
 
 ## 别处的阅读顺序
 
-想直接读规格原文时，从 [`docs/echo-core/README.md`](../echo-core/README.md) 第 5 节的顺序开始。
+- 想直接读规格原文时，从 [`docs/echo-core/README.md`](../echo-core/README.md) 第 5 节的顺序开始。
+- 每个决定为什么这样定、走过哪些弯路、当时的心情，记在 [开发手记](../journal/README.md)。
