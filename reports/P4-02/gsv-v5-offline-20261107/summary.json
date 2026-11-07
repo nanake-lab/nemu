@@ -1,0 +1,1115 @@
+{
+  "complete_event": {
+    "max_allocated": 2322021376,
+    "max_reserved": 2369781760,
+    "event": "complete",
+    "utc": 1793950219.4061828,
+    "perf": 407153.1966941,
+    "pid": 31808
+  },
+  "exit_code": 0,
+  "percentile_method": "linear interpolation at (n-1)*p",
+  "rtf_method": "total_seconds/audio_seconds; aggregate=sum(total)/sum(audio)",
+  "time_coverage_basis": "UTC event completion timestamps; memory UTC is sampler start",
+  "missing_memory": [
+    {
+      "raw_line": 2686,
+      "utc": 1793950220.812,
+      "owned": [
+        31808
+      ],
+      "status": "未采到：complete 后进程已退出",
+      "wddm_by_pid": {
+        "31808": {
+          "instances": 1,
+          "dedicated": 2286444544,
+          "shared": 75497472
+        }
+      },
+      "dedicated": null,
+      "shared": null,
+      "rss": null,
+      "private": null
+    }
+  ],
+  "wddm_missing_coverage": {
+    "n": 36,
+    "first_utc": 1793948325.514,
+    "last_utc": 1793950220.812,
+    "span_s": 1895.2980000972748
+  },
+  "load_event": {
+    "elapsed_seconds": 5.479258999985177,
+    "allocated": 1824529920,
+    "reserved": 2338324480,
+    "max_allocated": 2322021376,
+    "max_reserved": 2338324480,
+    "g2pw": [
+      "CPUExecutionProvider"
+    ],
+    "event": "model_loaded",
+    "utc": 1793948355.5195935,
+    "perf": 405289.310069,
+    "pid": 31808
+  },
+  "post_load": {
+    "row_coverage": {
+      "n": 14,
+      "first_utc": 1793948356.132,
+      "last_utc": 1793948365.096,
+      "span_s": 8.96399998664856
+    },
+    "metrics": {
+      "dedicated": {
+        "coverage": {
+          "n": 14,
+          "first_utc": 1793948356.132,
+          "last_utc": 1793948365.096,
+          "span_s": 8.96399998664856
+        },
+        "missing_n": 0,
+        "first_bytes": 2577944576.0,
+        "last_bytes": 2577944576.0,
+        "delta_bytes": 0.0,
+        "min_bytes": 2577944576.0,
+        "peak_bytes": 2577944576.0,
+        "mean_bytes": 2577944576.0,
+        "peak_utc": 1793948356.132,
+        "ols_MiB_per_hour": 0.0
+      },
+      "shared": {
+        "coverage": {
+          "n": 14,
+          "first_utc": 1793948356.132,
+          "last_utc": 1793948365.096,
+          "span_s": 8.96399998664856
+        },
+        "missing_n": 0,
+        "first_bytes": 73400320.0,
+        "last_bytes": 73400320.0,
+        "delta_bytes": 0.0,
+        "min_bytes": 73400320.0,
+        "peak_bytes": 73400320.0,
+        "mean_bytes": 73400320.0,
+        "peak_utc": 1793948356.132,
+        "ols_MiB_per_hour": 0.0
+      },
+      "rss": {
+        "coverage": {
+          "n": 14,
+          "first_utc": 1793948356.132,
+          "last_utc": 1793948365.096,
+          "span_s": 8.96399998664856
+        },
+        "missing_n": 0,
+        "first_bytes": 3766452224.0,
+        "last_bytes": 3766452224.0,
+        "delta_bytes": 0.0,
+        "min_bytes": 3766452224.0,
+        "peak_bytes": 3766452224.0,
+        "mean_bytes": 3766452224.0,
+        "peak_utc": 1793948356.132,
+        "ols_MiB_per_hour": 0.0
+      },
+      "private": {
+        "coverage": {
+          "n": 14,
+          "first_utc": 1793948356.132,
+          "last_utc": 1793948365.096,
+          "span_s": 8.96399998664856
+        },
+        "missing_n": 0,
+        "first_bytes": 8863444992.0,
+        "last_bytes": 8861085696.0,
+        "delta_bytes": -2359296.0,
+        "min_bytes": 8861085696.0,
+        "peak_bytes": 8863444992.0,
+        "mean_bytes": 8861254217.142857,
+        "peak_utc": 1793948356.132,
+        "ols_MiB_per_hour": -335.6103669466298
+      }
+    },
+    "dedicated_plus_shared_independent_peaks_bytes": 2651344896.0
+  },
+  "whole_run": {
+    "row_coverage": {
+      "n": 2686,
+      "first_utc": 1793948325.514,
+      "last_utc": 1793950220.812,
+      "span_s": 1895.2980000972748
+    },
+    "metrics": {
+      "dedicated": {
+        "coverage": {
+          "n": 2650,
+          "first_utc": 1793948349.873,
+          "last_utc": 1793950220.15,
+          "span_s": 1870.2770001888275
+        },
+        "missing_n": 36,
+        "first_bytes": 24576.0,
+        "last_bytes": 2286444544.0,
+        "delta_bytes": 2286419968.0,
+        "min_bytes": 24576.0,
+        "peak_bytes": 2638766080.0,
+        "mean_bytes": 2306903776.5071697,
+        "peak_utc": 1793948370.644,
+        "ols_MiB_per_hour": 14.952284096650162
+      },
+      "shared": {
+        "coverage": {
+          "n": 2650,
+          "first_utc": 1793948349.873,
+          "last_utc": 1793950220.15,
+          "span_s": 1870.2770001888275
+        },
+        "missing_n": 36,
+        "first_bytes": 0.0,
+        "last_bytes": 75497472.0,
+        "delta_bytes": 75497472.0,
+        "min_bytes": 0.0,
+        "peak_bytes": 75497472.0,
+        "mean_bytes": 75447615.17886792,
+        "peak_utc": 1793948367.038,
+        "ols_MiB_per_hour": 0.5416946909010466
+      },
+      "rss": {
+        "coverage": {
+          "n": 2685,
+          "first_utc": 1793948325.514,
+          "last_utc": 1793950220.15,
+          "span_s": 1894.6360001564026
+        },
+        "missing_n": 1,
+        "first_bytes": 571908096.0,
+        "last_bytes": 5236883456.0,
+        "delta_bytes": 4664975360.0,
+        "min_bytes": 571908096.0,
+        "peak_bytes": 5378334720.0,
+        "mean_bytes": 5264174316.835754,
+        "peak_utc": 1793948408.862,
+        "ols_MiB_per_hour": 835.1731268287833
+      },
+      "private": {
+        "coverage": {
+          "n": 2685,
+          "first_utc": 1793948325.514,
+          "last_utc": 1793950220.15,
+          "span_s": 1894.6360001564026
+        },
+        "missing_n": 1,
+        "first_bytes": 1971015680.0,
+        "last_bytes": 10249437184.0,
+        "delta_bytes": 8278421504.0,
+        "min_bytes": 1971015680.0,
+        "peak_bytes": 10393067520.0,
+        "mean_bytes": 10227830773.321415,
+        "peak_utc": 1793948456.145,
+        "ols_MiB_per_hour": 1379.9300967372437
+      }
+    },
+    "dedicated_plus_shared_independent_peaks_bytes": 2714263552.0
+  },
+  "cold": {
+    "completed_event_coverage": {
+      "n": 1,
+      "first_utc": 1793948371.816788,
+      "last_utc": 1793948371.816788,
+      "span_s": 0.0
+    },
+    "first_playable_s": {
+      "n": 1,
+      "p50": 6.0884577999822795,
+      "p90": 6.0884577999822795,
+      "min": 6.0884577999822795,
+      "max": 6.0884577999822795,
+      "mean": 6.0884577999822795
+    },
+    "rtf": {
+      "n": 1,
+      "p50": 2.1526140068563606,
+      "p90": 2.1526140068563606,
+      "min": 2.1526140068563606,
+      "max": 2.1526140068563606,
+      "mean": 2.1526140068563606
+    },
+    "aggregate_rtf": 2.1526140068563606,
+    "audio_seconds_per_synthesis_second": 0.46455146942966435,
+    "total_synthesis_s": 6.285632900020573,
+    "audio_s": 2.92,
+    "max_request": {
+      "phase": "cold",
+      "index": 0,
+      "case": "zh",
+      "first_playable_seconds": 6.0884577999822795,
+      "total_seconds": 6.285632900020573,
+      "audio_seconds": 2.92,
+      "rtf": 2.1526140068563606,
+      "pcm_sha256": "3ca51548a6eaa797c7057bfa83698802073c00313b84a75d14ba32d1f8cc5a78",
+      "chunks": 1,
+      "allocated": 1907588096,
+      "reserved": 2034237440,
+      "max_allocated": 2322021376,
+      "max_reserved": 2369781760,
+      "event": "request",
+      "utc": 1793948371.816788,
+      "perf": 405305.6073396,
+      "pid": 31808,
+      "request_ordinal": 1,
+      "case_id": 0,
+      "text": "你好，今天的天空很明亮。",
+      "case_ordinal_in_language": 1
+    }
+  },
+  "latency": {
+    "zh": {
+      "completed_event_coverage": {
+        "n": 20,
+        "first_utc": 1793948372.931869,
+        "last_utc": 1793948417.6661904,
+        "span_s": 44.7343213558197
+      },
+      "first_playable_s": {
+        "n": 20,
+        "p50": 0.8159194500185549,
+        "p90": 1.1848079800198321,
+        "min": 0.5291513000265695,
+        "max": 1.275857199972961,
+        "mean": 0.8385386950103566
+      },
+      "rtf": {
+        "n": 20,
+        "p50": 0.5652029052246259,
+        "p90": 0.7828456478986054,
+        "min": 0.38118969177833617,
+        "max": 0.8367863157840666,
+        "mean": 0.5977741319361403
+      },
+      "aggregate_rtf": 0.5833513476412382,
+      "audio_seconds_per_synthesis_second": 1.7142327759136355,
+      "total_synthesis_s": 21.21065500023542,
+      "audio_s": 36.36,
+      "max_request": {
+        "phase": "latency",
+        "index": 38,
+        "case": "zh",
+        "first_playable_seconds": 1.275857199972961,
+        "total_seconds": 1.4974068999872543,
+        "audio_seconds": 2.52,
+        "rtf": 0.5942090872965294,
+        "pcm_sha256": "74fa6dc95df032289d550683699da23dff219a94a0e9e4877b0ed7347310dfa2",
+        "chunks": 1,
+        "allocated": 1907454976,
+        "reserved": 2021654528,
+        "max_allocated": 2322021376,
+        "max_reserved": 2369781760,
+        "event": "request",
+        "utc": 1793948417.6661904,
+        "perf": 405351.4572928,
+        "pid": 31808,
+        "request_ordinal": 40,
+        "case_id": 38,
+        "text": "晚安，祝你睡个好觉。",
+        "case_ordinal_in_language": 20
+      }
+    },
+    "mixed": {
+      "completed_event_coverage": {
+        "n": 20,
+        "first_utc": 1793948378.641173,
+        "last_utc": 1793948418.8400426,
+        "span_s": 40.198869705200195
+      },
+      "first_playable_s": {
+        "n": 20,
+        "p50": 0.9077459000109229,
+        "p90": 1.1704545499756933,
+        "min": 0.566376400005538,
+        "max": 5.484368700010236,
+        "mean": 1.061705584995798
+      },
+      "rtf": {
+        "n": 20,
+        "p50": 0.5992452960587935,
+        "p90": 0.849454584523218,
+        "min": 0.4757948809475195,
+        "max": 2.7976683333548076,
+        "mean": 0.7535245764265993
+      },
+      "aggregate_rtf": 0.7682347789742253,
+      "audio_seconds_per_synthesis_second": 1.3016854057756093,
+      "total_synthesis_s": 25.720500400057063,
+      "audio_s": 33.48,
+      "max_request": {
+        "phase": "latency",
+        "index": 1,
+        "case": "mixed",
+        "first_playable_seconds": 5.484368700010236,
+        "total_seconds": 5.707243400043808,
+        "audio_seconds": 2.04,
+        "rtf": 2.7976683333548076,
+        "pcm_sha256": "648b052f9e1196b71c5188bb124dcecf486571993836fe3e4b82ab788afc1b88",
+        "chunks": 1,
+        "allocated": 1907325440,
+        "reserved": 2036334592,
+        "max_allocated": 2322021376,
+        "max_reserved": 2369781760,
+        "event": "request",
+        "utc": 1793948378.641173,
+        "perf": 405312.4325167,
+        "pid": 31808,
+        "request_ordinal": 3,
+        "case_id": 1,
+        "text": "你好，hello world。",
+        "case_ordinal_in_language": 1
+      }
+    }
+  },
+  "stability": {
+    "duration_seconds": 1800.561739399971,
+    "start_utc": 1793948418.8410416,
+    "end_utc": 1793950219.4041831,
+    "all": {
+      "completed_event_coverage": {
+        "n": 2016,
+        "first_utc": 1793948420.2353857,
+        "last_utc": 1793950219.4031847,
+        "span_s": 1799.1677989959717
+      },
+      "first_playable_s": {
+        "n": 2016,
+        "p50": 0.6242733999679331,
+        "p90": 0.8496130000276025,
+        "min": 0.4874753999756649,
+        "max": 1.2016381000285037,
+        "mean": 0.6633062331344147
+      },
+      "rtf": {
+        "n": 2016,
+        "p50": 0.5264655853020414,
+        "p90": 0.5893200402349039,
+        "min": 0.38225859589396327,
+        "max": 0.7119350757971971,
+        "mean": 0.5208500987440753
+      },
+      "aggregate_rtf": 0.5098419343341561,
+      "audio_seconds_per_synthesis_second": 1.9613922132670019,
+      "total_synthesis_s": 1795.8672294986318,
+      "audio_s": 3522.4,
+      "max_request": {
+        "phase": "stability",
+        "index": 1960,
+        "case": "zh",
+        "first_playable_seconds": 1.2016381000285037,
+        "total_seconds": 1.4325242000049911,
+        "audio_seconds": 2.92,
+        "rtf": 0.4905904794537641,
+        "pcm_sha256": "ab86502cd06bc4551e9eb9d226a1125229f6f6aa3b1a339f3dda64883ac4498b",
+        "chunks": 1,
+        "allocated": 1907588096,
+        "reserved": 2019557376,
+        "max_allocated": 2322021376,
+        "max_reserved": 2369781760,
+        "event": "request",
+        "utc": 1793950168.8177752,
+        "perf": 407102.608357,
+        "pid": 31808,
+        "request_ordinal": 2002,
+        "case_id": 0,
+        "text": "你好，今天的天空很明亮。",
+        "case_ordinal_in_language": 1
+      }
+    },
+    "per_language": {
+      "zh": {
+        "completed_event_coverage": {
+          "n": 1008,
+          "first_utc": 1793948420.2353857,
+          "last_utc": 1793950218.5474932,
+          "span_s": 1798.3121075630188
+        },
+        "first_playable_s": {
+          "n": 1008,
+          "p50": 0.6226550499850418,
+          "p90": 0.8832144900283311,
+          "min": 0.5127244999748655,
+          "max": 1.2016381000285037,
+          "mean": 0.6778884795626615
+        },
+        "rtf": {
+          "n": 1008,
+          "p50": 0.5213333246741367,
+          "p90": 0.581305835539273,
+          "min": 0.38225859589396327,
+          "max": 0.6883716176483122,
+          "mean": 0.511051603036336
+        },
+        "aggregate_rtf": 0.4978318625650708,
+        "audio_seconds_per_synthesis_second": 2.008710320081796,
+        "total_synthesis_s": 912.8245031993138,
+        "audio_s": 1833.6,
+        "max_request": {
+          "phase": "stability",
+          "index": 1960,
+          "case": "zh",
+          "first_playable_seconds": 1.2016381000285037,
+          "total_seconds": 1.4325242000049911,
+          "audio_seconds": 2.92,
+          "rtf": 0.4905904794537641,
+          "pcm_sha256": "ab86502cd06bc4551e9eb9d226a1125229f6f6aa3b1a339f3dda64883ac4498b",
+          "chunks": 1,
+          "allocated": 1907588096,
+          "reserved": 2019557376,
+          "max_allocated": 2322021376,
+          "max_reserved": 2369781760,
+          "event": "request",
+          "utc": 1793950168.8177752,
+          "perf": 407102.608357,
+          "pid": 31808,
+          "request_ordinal": 2002,
+          "case_id": 0,
+          "text": "你好，今天的天空很明亮。",
+          "case_ordinal_in_language": 1
+        }
+      },
+      "mixed": {
+        "completed_event_coverage": {
+          "n": 1008,
+          "first_utc": 1793948421.2132409,
+          "last_utc": 1793950219.4031847,
+          "span_s": 1798.1899437904358
+        },
+        "first_playable_s": {
+          "n": 1008,
+          "p50": 0.6253190499846824,
+          "p90": 0.7952999600034673,
+          "min": 0.4874753999756649,
+          "max": 1.1298951000208035,
+          "mean": 0.6487239867061679
+        },
+        "rtf": {
+          "n": 1008,
+          "p50": 0.5327369660289105,
+          "p90": 0.5949591256202856,
+          "min": 0.3989717045359694,
+          "max": 0.7119350757971971,
+          "mean": 0.5306485944518146
+        },
+        "aggregate_rtf": 0.5228817659280661,
+        "audio_seconds_per_synthesis_second": 1.9124782410897305,
+        "total_synthesis_s": 883.042726299318,
+        "audio_s": 1688.8,
+        "max_request": {
+          "phase": "stability",
+          "index": 1485,
+          "case": "mixed",
+          "first_playable_seconds": 1.1298951000208035,
+          "total_seconds": 1.3537100999965332,
+          "audio_seconds": 2.64,
+          "rtf": 0.5127689772714141,
+          "pcm_sha256": "a23d582e43e5c82da26ca217a598d046325506edb05416cb42ccc2ed8788ce90",
+          "chunks": 1,
+          "allocated": 1907493888,
+          "reserved": 2021654528,
+          "max_allocated": 2322021376,
+          "max_reserved": 2369781760,
+          "event": "request",
+          "utc": 1793949743.0917087,
+          "perf": 406676.883067,
+          "pid": 31808,
+          "request_ordinal": 1527,
+          "case_id": 5,
+          "text": "请打开 README 文件。",
+          "case_ordinal_in_language": 3
+        }
+      }
+    },
+    "first_time_10pct": {
+      "completed_event_coverage": {
+        "n": 200,
+        "first_utc": 1793948420.2353857,
+        "last_utc": 1793948598.5710988,
+        "span_s": 178.33571314811707
+      },
+      "first_playable_s": {
+        "n": 200,
+        "p50": 0.6289249500259757,
+        "p90": 0.8513041599828284,
+        "min": 0.4874753999756649,
+        "max": 1.1718650999828242,
+        "mean": 0.6708097534970148
+      },
+      "rtf": {
+        "n": 200,
+        "p50": 0.5326661260250236,
+        "p90": 0.5981194324251831,
+        "min": 0.38313349315813705,
+        "max": 0.7119350757971971,
+        "mean": 0.5244834456868829
+      },
+      "aggregate_rtf": 0.5133835879143303,
+      "audio_seconds_per_synthesis_second": 1.9478612552898222,
+      "total_synthesis_s": 179.2735488996841,
+      "audio_s": 349.2,
+      "max_request": {
+        "phase": "stability",
+        "index": 0,
+        "case": "zh",
+        "first_playable_seconds": 1.1718650999828242,
+        "total_seconds": 1.3922899999888614,
+        "audio_seconds": 2.92,
+        "rtf": 0.47681164383180186,
+        "pcm_sha256": "ab86502cd06bc4551e9eb9d226a1125229f6f6aa3b1a339f3dda64883ac4498b",
+        "chunks": 1,
+        "allocated": 1907588096,
+        "reserved": 2021654528,
+        "max_allocated": 2322021376,
+        "max_reserved": 2369781760,
+        "event": "request",
+        "utc": 1793948420.2353857,
+        "perf": 405354.0266612,
+        "pid": 31808,
+        "request_ordinal": 42,
+        "case_id": 0,
+        "text": "你好，今天的天空很明亮。",
+        "case_ordinal_in_language": 1
+      }
+    },
+    "last_time_10pct": {
+      "completed_event_coverage": {
+        "n": 200,
+        "first_utc": 1793950039.4830616,
+        "last_utc": 1793950219.4031847,
+        "span_s": 179.92012310028076
+      },
+      "first_playable_s": {
+        "n": 200,
+        "p50": 0.6398271000070963,
+        "p90": 0.8675049300014507,
+        "min": 0.49232700001448393,
+        "max": 1.2016381000285037,
+        "mean": 0.6757563390006545
+      },
+      "rtf": {
+        "n": 200,
+        "p50": 0.5324087658542946,
+        "p90": 0.5925119155312352,
+        "min": 0.38853554794252276,
+        "max": 0.7114499218459969,
+        "mean": 0.526718292611736
+      },
+      "aggregate_rtf": 0.5161445083045351,
+      "audio_seconds_per_synthesis_second": 1.937441906114365,
+      "total_synthesis_s": 180.23766229994362,
+      "audio_s": 349.2,
+      "max_request": {
+        "phase": "stability",
+        "index": 1960,
+        "case": "zh",
+        "first_playable_seconds": 1.2016381000285037,
+        "total_seconds": 1.4325242000049911,
+        "audio_seconds": 2.92,
+        "rtf": 0.4905904794537641,
+        "pcm_sha256": "ab86502cd06bc4551e9eb9d226a1125229f6f6aa3b1a339f3dda64883ac4498b",
+        "chunks": 1,
+        "allocated": 1907588096,
+        "reserved": 2019557376,
+        "max_allocated": 2322021376,
+        "max_reserved": 2369781760,
+        "event": "request",
+        "utc": 1793950168.8177752,
+        "perf": 407102.608357,
+        "pid": 31808,
+        "request_ordinal": 2002,
+        "case_id": 0,
+        "text": "你好，今天的天空很明亮。",
+        "case_ordinal_in_language": 1
+      }
+    },
+    "first_count_10pct": {
+      "completed_event_coverage": {
+        "n": 202,
+        "first_utc": 1793948420.2353857,
+        "last_utc": 1793948600.8791811,
+        "span_s": 180.6437954902649
+      },
+      "first_playable_s": {
+        "n": 202,
+        "p50": 0.6293281000398565,
+        "p90": 0.855307839968009,
+        "min": 0.4874753999756649,
+        "max": 1.1718650999828242,
+        "mean": 0.6733600613834004
+      },
+      "rtf": {
+        "n": 202,
+        "p50": 0.5311407427847697,
+        "p90": 0.5980413079841846,
+        "min": 0.38313349315813705,
+        "max": 0.7119350757971971,
+        "mean": 0.5239497504820771
+      },
+      "aggregate_rtf": 0.5126990072276607,
+      "audio_seconds_per_synthesis_second": 1.95046213451308,
+      "total_synthesis_s": 181.5774803997483,
+      "audio_s": 354.16,
+      "max_request": {
+        "phase": "stability",
+        "index": 0,
+        "case": "zh",
+        "first_playable_seconds": 1.1718650999828242,
+        "total_seconds": 1.3922899999888614,
+        "audio_seconds": 2.92,
+        "rtf": 0.47681164383180186,
+        "pcm_sha256": "ab86502cd06bc4551e9eb9d226a1125229f6f6aa3b1a339f3dda64883ac4498b",
+        "chunks": 1,
+        "allocated": 1907588096,
+        "reserved": 2021654528,
+        "max_allocated": 2322021376,
+        "max_reserved": 2369781760,
+        "event": "request",
+        "utc": 1793948420.2353857,
+        "perf": 405354.0266612,
+        "pid": 31808,
+        "request_ordinal": 42,
+        "case_id": 0,
+        "text": "你好，今天的天空很明亮。",
+        "case_ordinal_in_language": 1
+      }
+    },
+    "last_count_10pct": {
+      "completed_event_coverage": {
+        "n": 202,
+        "first_utc": 1793950037.8520846,
+        "last_utc": 1793950219.4031847,
+        "span_s": 181.55110001564026
+      },
+      "first_playable_s": {
+        "n": 202,
+        "p50": 0.6398271000070963,
+        "p90": 0.8660862700024154,
+        "min": 0.49232700001448393,
+        "max": 1.2016381000285037,
+        "mean": 0.6759644138619838
+      },
+      "rtf": {
+        "n": 202,
+        "p50": 0.5291909990429351,
+        "p90": 0.5921537653749427,
+        "min": 0.38853554794252276,
+        "max": 0.7114499218459969,
+        "mean": 0.5260115740144177
+      },
+      "aggregate_rtf": 0.5153691352466409,
+      "audio_seconds_per_synthesis_second": 1.9403567881911066,
+      "total_synthesis_s": 182.06960809993325,
+      "audio_s": 353.28,
+      "max_request": {
+        "phase": "stability",
+        "index": 1960,
+        "case": "zh",
+        "first_playable_seconds": 1.2016381000285037,
+        "total_seconds": 1.4325242000049911,
+        "audio_seconds": 2.92,
+        "rtf": 0.4905904794537641,
+        "pcm_sha256": "ab86502cd06bc4551e9eb9d226a1125229f6f6aa3b1a339f3dda64883ac4498b",
+        "chunks": 1,
+        "allocated": 1907588096,
+        "reserved": 2019557376,
+        "max_allocated": 2322021376,
+        "max_reserved": 2369781760,
+        "event": "request",
+        "utc": 1793950168.8177752,
+        "perf": 407102.608357,
+        "pid": 31808,
+        "request_ordinal": 2002,
+        "case_id": 0,
+        "text": "你好，今天的天空很明亮。",
+        "case_ordinal_in_language": 1
+      }
+    },
+    "memory": {
+      "row_coverage": {
+        "n": 2548,
+        "first_utc": 1793948418.921,
+        "last_utc": 1793950218.798,
+        "span_s": 1799.87700009346
+      },
+      "metrics": {
+        "dedicated": {
+          "coverage": {
+            "n": 2548,
+            "first_utc": 1793948418.921,
+            "last_utc": 1793950218.798,
+            "span_s": 1799.87700009346
+          },
+          "missing_n": 0,
+          "first_bytes": 2309513216.0,
+          "last_bytes": 2311610368.0,
+          "delta_bytes": 2097152.0,
+          "min_bytes": 2284347392.0,
+          "peak_bytes": 2332581888.0,
+          "mean_bytes": 2308281098.047096,
+          "peak_utc": 1793949989.28,
+          "ols_MiB_per_hour": -0.07383928801402945
+        },
+        "shared": {
+          "coverage": {
+            "n": 2548,
+            "first_utc": 1793948418.921,
+            "last_utc": 1793950218.798,
+            "span_s": 1799.87700009346
+          },
+          "missing_n": 0,
+          "first_bytes": 75497472.0,
+          "last_bytes": 75497472.0,
+          "delta_bytes": 0.0,
+          "min_bytes": 75497472.0,
+          "peak_bytes": 75497472.0,
+          "mean_bytes": 75497472.0,
+          "peak_utc": 1793948418.921,
+          "ols_MiB_per_hour": 0.0
+        },
+        "rss": {
+          "coverage": {
+            "n": 2548,
+            "first_utc": 1793948418.921,
+            "last_utc": 1793950218.798,
+            "span_s": 1799.87700009346
+          },
+          "missing_n": 0,
+          "first_bytes": 5357801472.0,
+          "last_bytes": 5342257152.0,
+          "delta_bytes": -15544320.0,
+          "min_bytes": 5335072768.0,
+          "peak_bytes": 5360721920.0,
+          "mean_bytes": 5343391948.156986,
+          "peak_utc": 1793948423.171,
+          "ols_MiB_per_hour": -1.6715434990320759
+        },
+        "private": {
+          "coverage": {
+            "n": 2548,
+            "first_utc": 1793948418.921,
+            "last_utc": 1793950218.798,
+            "span_s": 1799.87700009346
+          },
+          "missing_n": 0,
+          "first_bytes": 10364837888.0,
+          "last_bytes": 10355240960.0,
+          "delta_bytes": -9596928.0,
+          "min_bytes": 10342633472.0,
+          "peak_bytes": 10393067520.0,
+          "mean_bytes": 10358084251.12716,
+          "peak_utc": 1793948456.145,
+          "ols_MiB_per_hour": 1.682428298614884
+        }
+      },
+      "dedicated_plus_shared_independent_peaks_bytes": 2408079360.0
+    },
+    "first_time_10pct_memory": {
+      "row_coverage": {
+        "n": 260,
+        "first_utc": 1793948418.921,
+        "last_utc": 1793948598.897,
+        "span_s": 179.9760000705719
+      },
+      "metrics": {
+        "dedicated": {
+          "coverage": {
+            "n": 260,
+            "first_utc": 1793948418.921,
+            "last_utc": 1793948598.897,
+            "span_s": 179.9760000705719
+          },
+          "missing_n": 0,
+          "first_bytes": 2309513216.0,
+          "last_bytes": 2309513216.0,
+          "delta_bytes": 0.0,
+          "min_bytes": 2286444544.0,
+          "peak_bytes": 2330484736.0,
+          "mean_bytes": 2308254924.8,
+          "peak_utc": 1793948419.875,
+          "ols_MiB_per_hour": -34.8942235083777
+        },
+        "shared": {
+          "coverage": {
+            "n": 260,
+            "first_utc": 1793948418.921,
+            "last_utc": 1793948598.897,
+            "span_s": 179.9760000705719
+          },
+          "missing_n": 0,
+          "first_bytes": 75497472.0,
+          "last_bytes": 75497472.0,
+          "delta_bytes": 0.0,
+          "min_bytes": 75497472.0,
+          "peak_bytes": 75497472.0,
+          "mean_bytes": 75497472.0,
+          "peak_utc": 1793948418.921,
+          "ols_MiB_per_hour": 0.0
+        },
+        "rss": {
+          "coverage": {
+            "n": 260,
+            "first_utc": 1793948418.921,
+            "last_utc": 1793948598.897,
+            "span_s": 179.9760000705719
+          },
+          "missing_n": 0,
+          "first_bytes": 5357801472.0,
+          "last_bytes": 5340516352.0,
+          "delta_bytes": -17285120.0,
+          "min_bytes": 5335072768.0,
+          "peak_bytes": 5360721920.0,
+          "mean_bytes": 5344436491.815385,
+          "peak_utc": 1793948423.171,
+          "ols_MiB_per_hour": -423.2251795403379
+        },
+        "private": {
+          "coverage": {
+            "n": 260,
+            "first_utc": 1793948418.921,
+            "last_utc": 1793948598.897,
+            "span_s": 179.9760000705719
+          },
+          "missing_n": 0,
+          "first_bytes": 10364837888.0,
+          "last_bytes": 10350776320.0,
+          "delta_bytes": -14061568.0,
+          "min_bytes": 10342633472.0,
+          "peak_bytes": 10393067520.0,
+          "mean_bytes": 10356771083.815384,
+          "peak_utc": 1793948456.145,
+          "ols_MiB_per_hour": -501.6299930951088
+        }
+      },
+      "dedicated_plus_shared_independent_peaks_bytes": 2405982208.0
+    },
+    "last_time_10pct_memory": {
+      "row_coverage": {
+        "n": 252,
+        "first_utc": 1793950040.16,
+        "last_utc": 1793950218.798,
+        "span_s": 178.6380000114441
+      },
+      "metrics": {
+        "dedicated": {
+          "coverage": {
+            "n": 252,
+            "first_utc": 1793950040.16,
+            "last_utc": 1793950218.798,
+            "span_s": 178.6380000114441
+          },
+          "missing_n": 0,
+          "first_bytes": 2309513216.0,
+          "last_bytes": 2311610368.0,
+          "delta_bytes": 2097152.0,
+          "min_bytes": 2286444544.0,
+          "peak_bytes": 2330484736.0,
+          "mean_bytes": 2308656046.730159,
+          "peak_utc": 1793950060.426,
+          "ols_MiB_per_hour": 42.84243446346745
+        },
+        "shared": {
+          "coverage": {
+            "n": 252,
+            "first_utc": 1793950040.16,
+            "last_utc": 1793950218.798,
+            "span_s": 178.6380000114441
+          },
+          "missing_n": 0,
+          "first_bytes": 75497472.0,
+          "last_bytes": 75497472.0,
+          "delta_bytes": 0.0,
+          "min_bytes": 75497472.0,
+          "peak_bytes": 75497472.0,
+          "mean_bytes": 75497472.0,
+          "peak_utc": 1793950040.16,
+          "ols_MiB_per_hour": 0.0
+        },
+        "rss": {
+          "coverage": {
+            "n": 252,
+            "first_utc": 1793950040.16,
+            "last_utc": 1793950218.798,
+            "span_s": 178.6380000114441
+          },
+          "missing_n": 0,
+          "first_bytes": 5343694848.0,
+          "last_bytes": 5342257152.0,
+          "delta_bytes": -1437696.0,
+          "min_bytes": 5339348992.0,
+          "peak_bytes": 5345300480.0,
+          "mean_bytes": 5343203214.222222,
+          "peak_utc": 1793950165.764,
+          "ols_MiB_per_hour": -10.600479005368527
+        },
+        "private": {
+          "coverage": {
+            "n": 252,
+            "first_utc": 1793950040.16,
+            "last_utc": 1793950218.798,
+            "span_s": 178.6380000114441
+          },
+          "missing_n": 0,
+          "first_bytes": 10357075968.0,
+          "last_bytes": 10355240960.0,
+          "delta_bytes": -1835008.0,
+          "min_bytes": 10349666304.0,
+          "peak_bytes": 10378944512.0,
+          "mean_bytes": 10358127811.047619,
+          "peak_utc": 1793950205.097,
+          "ols_MiB_per_hour": 15.615515908415036
+        }
+      },
+      "dedicated_plus_shared_independent_peaks_bytes": 2405982208.0
+    },
+    "last_10min_memory": {
+      "row_coverage": {
+        "n": 843,
+        "first_utc": 1793949620.333,
+        "last_utc": 1793950218.798,
+        "span_s": 598.4650001525879
+      },
+      "metrics": {
+        "dedicated": {
+          "coverage": {
+            "n": 843,
+            "first_utc": 1793949620.333,
+            "last_utc": 1793950218.798,
+            "span_s": 598.4650001525879
+          },
+          "missing_n": 0,
+          "first_bytes": 2309513216.0,
+          "last_bytes": 2311610368.0,
+          "delta_bytes": 2097152.0,
+          "min_bytes": 2284347392.0,
+          "peak_bytes": 2332581888.0,
+          "mean_bytes": 2308386276.6690392,
+          "peak_utc": 1793949989.28,
+          "ols_MiB_per_hour": 3.639616742028047
+        },
+        "shared": {
+          "coverage": {
+            "n": 843,
+            "first_utc": 1793949620.333,
+            "last_utc": 1793950218.798,
+            "span_s": 598.4650001525879
+          },
+          "missing_n": 0,
+          "first_bytes": 75497472.0,
+          "last_bytes": 75497472.0,
+          "delta_bytes": 0.0,
+          "min_bytes": 75497472.0,
+          "peak_bytes": 75497472.0,
+          "mean_bytes": 75497472.0,
+          "peak_utc": 1793949620.333,
+          "ols_MiB_per_hour": 0.0
+        },
+        "rss": {
+          "coverage": {
+            "n": 843,
+            "first_utc": 1793949620.333,
+            "last_utc": 1793950218.798,
+            "span_s": 598.4650001525879
+          },
+          "missing_n": 0,
+          "first_bytes": 5344714752.0,
+          "last_bytes": 5342257152.0,
+          "delta_bytes": -2457600.0,
+          "min_bytes": 5339283456.0,
+          "peak_bytes": 5345300480.0,
+          "mean_bytes": 5343053243.36892,
+          "peak_utc": 1793950165.764,
+          "ols_MiB_per_hour": 2.6133482809539985
+        },
+        "private": {
+          "coverage": {
+            "n": 843,
+            "first_utc": 1793949620.333,
+            "last_utc": 1793950218.798,
+            "span_s": 598.4650001525879
+          },
+          "missing_n": 0,
+          "first_bytes": 10357735424.0,
+          "last_bytes": 10355240960.0,
+          "delta_bytes": -2494464.0,
+          "min_bytes": 10349527040.0,
+          "peak_bytes": 10378944512.0,
+          "mean_bytes": 10358300147.245552,
+          "peak_utc": 1793949882.939,
+          "ols_MiB_per_hour": -1.7278991828627805
+        }
+      },
+      "dedicated_plus_shared_independent_peaks_bytes": 2408079360.0
+    }
+  },
+  "errors": {
+    "failure_events": 0,
+    "guard_forbidden_observations": 0,
+    "traceback_headers": 0,
+    "logged_error_lines": 0
+  },
+  "warnings": {
+    "INFO:tools.acceleration:FlashAttention is unavailable: No module named 'flash_attn'": 1,
+    "WARNING:tools.acceleration:AR acceleration is unavailable; using ordinary inference: No module named 'rich'": 2057
+  },
+  "guard_coverage": {
+    "n": 351,
+    "first_utc": 1793948325.514,
+    "last_utc": 1793950217.074,
+    "span_s": 1891.5599999427795
+  },
+  "hash_cases_all_identical": 38,
+  "hash_cases_stability_identical": 40,
+  "request_count": 2057,
+  "raw_memory_count": 2686,
+  "derived_memory_count": 2686,
+  "sample_interval_s": {
+    "n": 2685,
+    "p50": 0.6630001068115234,
+    "p90": 0.9539999961853027,
+    "min": 0.625,
+    "max": 1.5859999656677246,
+    "mean": 0.7058837989189105
+  },
+  "upstream_stage_times": [
+    {
+      "phase": "cold",
+      "index": 0,
+      "stdout_event_line": 27,
+      "upstream_4_stage_s": "3.531\t0.125\t0.913\t1.447"
+    },
+    {
+      "phase": "latency",
+      "index": 0,
+      "stdout_event_line": 44,
+      "upstream_4_stage_s": "0.002\t0.058\t0.683\t0.172"
+    },
+    {
+      "phase": "latency",
+      "index": 1,
+      "stdout_event_line": 61,
+      "upstream_4_stage_s": "0.002\t3.973\t0.664\t0.837"
+    },
+    {
+      "phase": "latency",
+      "index": 2,
+      "stdout_event_line": 78,
+      "upstream_4_stage_s": "0.002\t0.043\t0.390\t0.602"
+    },
+    {
+      "phase": "latency",
+      "index": 3,
+      "stdout_event_line": 95,
+      "upstream_4_stage_s": "0.002\t0.045\t0.367\t0.524"
+    },
+    {
+      "phase": "latency",
+      "index": 4,
+      "stdout_event_line": 112,
+      "upstream_4_stage_s": "0.002\t0.043\t0.400\t0.547"
+    }
+  ]
+}
