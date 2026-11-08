@@ -21,6 +21,10 @@ Rules, first match wins:
     merged PR with partial report/blockers -> partial
     merged PR                            -> done
     branch task/<id>-* without any PR    -> in_progress (claimed)
+    PR labelled card-edit                -> ignored for every card: it only edits
+                                            card text, so neither the PR nor its
+                                            task/<id>-* branch claims or finishes
+                                            that card
     all dependencies done, card is yours -> needs_you
     all dependencies done                -> ready
         (a partially delivered dependency counts as done for this card when
@@ -133,7 +137,16 @@ def load_catalog(repo: str, local: Path) -> Catalog:
         return cast(Catalog, json.loads(local.read_text(encoding="utf-8")))
 
 
+CARD_EDIT = "card-edit"
+
+
+def is_card_edit(pr: RawPr) -> bool:
+    return any(label["name"] == CARD_EDIT for label in pr.get("labels", []))
+
+
 def cards_of_pr(pr: RawPr) -> set[str]:
+    if is_card_edit(pr):
+        return set()
     found = set()
     m = BRANCH.match(pr["head"]["ref"])
     if m:
@@ -275,7 +288,10 @@ def compute(repo: str, catalog: Catalog) -> Board:
         }
         for cid in cards_of_pr(pr) & cards.keys():
             cards[cid]["prs"].append(entry)
-    claimed = {match.group(1) for b in branches if (match := BRANCH.match(b))}
+    edit_branches = {pr["head"]["ref"] for pr in prs if is_card_edit(pr)}
+    claimed = {
+        match.group(1) for b in branches if b not in edit_branches and (match := BRANCH.match(b))
+    }
     try:
         deliveries = load_deliveries(
             repo,

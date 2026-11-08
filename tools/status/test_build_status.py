@@ -127,6 +127,19 @@ class PauseTests(unittest.TestCase):
                 self.assertEqual(out["other_attention"], [])
                 self.assertEqual([p["number"] for p in out["paused_prs"]], [82])
 
+    def test_card_edit_pr_neither_claims_nor_finishes_card(self) -> None:
+        for merged in (False, True):
+            with self.subTest(merged=merged):
+                out = self.compute(
+                    [pr(139, labels=["needs-user", "card-edit"], merged=merged,
+                        branch="task/P5-23-card-sync")],
+                    cards=[card(), card("P5-24", ["P5-23"])],
+                )
+                cards = {c["id"]: c for c in out["cards"]}
+                self.assertEqual(cards["P5-23"]["status"], "ready")
+                self.assertEqual(cards["P5-23"]["prs"], [])
+                self.assertEqual(cards["P5-24"]["status"], "blocked")
+
     def test_pause_does_not_satisfy_dependencies(self) -> None:
         out = self.compute([pr(49, labels=["paused"])],
                            [card(), card("P5-24", ["P5-23"])])
