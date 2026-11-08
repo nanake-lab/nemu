@@ -23,6 +23,9 @@ Rules, first match wins:
     branch task/<id>-* without any PR    -> in_progress (claimed)
     all dependencies done, card is yours -> needs_you
     all dependencies done                -> ready
+        (a partially delivered dependency counts as done for this card when
+        its own remainder waits on this card, directly or through a card that
+        depends on it: that remainder cannot be finished first)
     otherwise                            -> blocked
 
 Review (AGENTS.md section 6, 2026-10-22): high cards, and any PR that touches a
@@ -304,6 +307,24 @@ def compute(repo: str, catalog: Catalog) -> Board:
             return "in_progress"
         return None
 
+    # Transitive dependencies, to tell when a partial card's remainder can only
+    # be finished after one of its own dependants.
+    closure: dict[str, set[str]] = {}
+
+    def ancestors(cid: str) -> set[str]:
+        if cid not in closure:
+            closure[cid] = set()
+            for d in cards[cid]["deps"] if cid in cards else []:
+                closure[cid] |= {d} | ancestors(d)
+        return closure[cid]
+
+    def satisfied(cid: str, dep: str) -> bool:
+        if status.get(dep) == "done":
+            return True
+        return status.get(dep) == "partial" and any(
+            w == cid or cid in ancestors(w) for w in deliveries.get(dep, []) if w in cards
+        )
+
     status: dict[str, str] = {}
     for cid in sorted(cards):
         s = direct(cards[cid])
@@ -315,13 +336,16 @@ def compute(repo: str, catalog: Catalog) -> Board:
         for cid, c in sorted(cards.items()):
             if cid in status:
                 continue
-            if all(status.get(d) == "done" for d in c["deps"]):
+            if all(satisfied(cid, d) for d in c["deps"]):
                 status[cid] = "needs_you" if c["suggested"] == "你" else "ready"
                 changed = True
     for cid, card in cards.items():
         card["status"] = status.setdefault(cid, "blocked")
-        card["waiting_on"] = [d for d in card["deps"] if status.get(d) != "done"]
-        card["waiting_on"] = list(dict.fromkeys(card["waiting_on"] + deliveries.get(cid, [])))
+        card["waiting_on"] = [d for d in card["deps"] if not satisfied(cid, d)]
+        # A status_override (e.g. a card closed by the user) is final: its old
+        # report remainders are no longer something the card waits on.
+        remainder = [] if card.get("status_override") else deliveries.get(cid, [])
+        card["waiting_on"] = list(dict.fromkeys(card["waiting_on"] + remainder))
         card["status_label"] = label_of(card)
 
     attention: list[Attention] = []
