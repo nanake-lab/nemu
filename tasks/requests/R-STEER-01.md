@@ -24,4 +24,6 @@ GPU 窗口申请须附预注册摘要、内容和预计时长；用户停 runner
 
 ## 当前状态
 
+2026-11-08用户批准继续原卡，包括重新设计并预注册测量接口。已fetch并merge `origin/main` `a7e8ae87`（`bba90f48`），PR #144仍draft/needs-user。Base侧对话完整下载，本轮实物13文件、9,342,824,751字节全量核验通过；只使用`base-download-03/model`，不再下载。见 [交接与转换](../../reports/R-STEER-01/BASE-HANDOFF-03.md)。CPU转换准备中，新GPU窗口未获授权；C0_insufficient_stop不改，后续采用新场景根、新预注册。以下为上一次窗口结束时的历史状态。
+
 认领为 [PR #144](https://github.com/nanake-lab/nemu/pull/144)，保持 draft / needs-user。C0在用户批准的窗口完成462/462请求、退出0，但测量门失败（C0_insufficient_stop），独立复算与无损归档核对一致；GPU已释放并告知恢复runner。按预注册停止方向提取、选层和混合，不判方向无效。Base首次curl28超时、本轮另批的单次续传curl56连接提前关闭均保留，新partial约1.18GB，完整模型/转换/身份专项仍未完成。外部评判未调用。后继路线仅为建议，未经决定不启动替代试验；本轮部分交付已逐次推送并核对远端哈希，写「请审查」后停下，不合并、不领下一卡。
