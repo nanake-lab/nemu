@@ -66,6 +66,8 @@
 
 概念/文风区分：同概念用不同表面实现，不同概念匹配表面形式；共同礼貌附语只是一个有限控制，另需长度、词汇、一般正负情感、错概念和随机方向。只有目标效应跨三语/表面版本重复、强于一般扰动且未被共同情感解释才有支持。文字自述、词频或激活可分都不足，独立语义和连贯评分缺失时只能判不足。
 
+后继盲评的 [语义口径候选](SEMANTIC-RUBRIC.md) 进一步分开概念证据、一般情感、连贯、事实能力与厂商人格；缺失/中性/无法判定分别保留，不造“越不像助手越好”的口味总分。它是设计交付，具体样本、标注者与数值判据仍须后继运行前冻结，当前没有人工评分。
+
 能力：C0的48次oracle只是4个简单根的接口检查。后继能力集独立覆盖计算、规则、事实忠实、约束格式、三语理解，INVALID/拒答/到上限全部保留；报下降区间，不以“不显著”宣称无损。当前无外部评判授权，不调用，也不让载体自评签发通过。
 
 ### Base与身份操作
@@ -73,6 +75,8 @@
 2026-11-08只读官方接口确认 [Qwen3.5-4B-Base固定修订](https://huggingface.co/Qwen/Qwen3.5-4B-Base/tree/1001bb4d826a52d1f399e183466143f4da7b741b) `1001bb4d826a52d1f399e183466143f4da7b741b`，Apache-2.0；两个权重片共9,319,828,056字节。不是当前模型851bf6e8修订。实际下载/派生哈希归档后才能运行；同P0-12 CPU转换器 `--outtype bf16 --no-mtp`、CPU量化器 `Q4_K_M 4`，视觉产物如准备则同 `--mmproj --outtype f16`，文字测量不加载mmproj。
 
 Base对照候选用同一合成事实p/任务，在共同聊天格式和共同纯文本续写格式下组成模型×格式2×2。不存在适合Base的官方chat模板时明确不适用，不加性格提示、不挑有利few-shot；报告模板、长度与失配。Base不响应只支持该配置结果，不能因少说“助手”就称人格更干净。[Assistant Axis研究](https://www.anthropic.com/research/assistant-axis) 在所测Base也观察到相关方向，并发现远离助手方向可影响身份稳定；不能外推为当前4B已证实。
+
+官方固定修订的 [Base说明](https://huggingface.co/Qwen/Qwen3.5-4B-Base/blob/1001bb4d826a52d1f399e183466143f4da7b741b/README.md) 明确它是仅预训练权重，面向研究等用途而非直接交互；同时说控制token在训练中见过。因此“含聊天控制token”与“已经会稳定按聊天指令回答”必须分开核对。已下载config的text_config与当前载体逐内容相同，含32层、2560维、每第四层full_attention；[配置对照](preparation/base-config-comparison.json)只证明配置声明相符，不证明权重、模板行为或引擎运行相符。后续层扫描还应分列full/linear attention层型，但不能把层间差异直接归因为层型因果作用。
 
 ADR0012的操作是 `h' = h − u(uᵀh)`，系数随每层每位置h变化；固定 `h' = h − αu` 不能替代。[native_probe.hpp](../../spikes/carrier-engine/native_probe.hpp)只安装固定加法；[activation_trace.hpp](../../spikes/carrier-engine/activation_trace.hpp)提供张量读取/写回先例。更好的办法是在报告目录做最小投影探针、先核对零操作和数值通路，再测行为；若位置/布局/回调不支持，保留失败交用户决定，不改引擎。身份提取只用第一人称事实陈述材料，不写扮演人格的提示，不把拒绝方向当身份方向。
 
@@ -130,7 +134,7 @@ ADR0012的操作是 `h' = h − u(uᵀh)`，系数随每层每位置h变化；�
 | 当前载体SHA256、55个引擎文件 | 全匹配P0-12 | 首轮机械记录；未加载模型/GPU |
 | 冻结输入、类型修复前后比较、CPU tokenizer检查 | 462请求；非guard456项内容/顺序完全相同；最长84个prompt tokens，全部在460/512限制内 | [完整实际提示](inputs/c0-jobs.json)、[token数](inputs/c0-token-counts.json)、[执行绑定](inputs/c0-preparation.json)、最终机械记录 |
 | 最后一次准备入口核对 | 调整冻结文件清单后，calibrate.py Ruff/strict mypy与prepare均退出0；绑定PREREG、代码与完整实际提示，允许REPORT独立记录Base准备进度 | [检查记录](preparation/checks-03/raw-filemap.json) |
-| 两个PowerShell AST、Markdown相对目标、`git diff --check` | 准备时通过；提交前再核对新增文件 | [首批链接](preparation/markdown-links-01.json)，最终结果随当前提交记录 |
+| 两个PowerShell AST、Markdown相对目标、`git diff --check` | 准备时通过；提交前再核对新增文件；独立解压46个归档文件全匹配，执行绑定与实际源码匹配 | [首批链接](preparation/markdown-links-01.json)、[提交后核对](preparation/final-check-01.json) |
 | 全工作区CI/Windows/GPU | not_run；研究目录按现有路径规则不触发CI，跳过不能写成通过 | 本卡无产品实现变更；实际测量仍按重档 |
 
 机械核验子代理按当前项目配置显式传入`gpt-6.1-terra/max`；未验证按角色名自动加载。主代理判断范围/门/结论，子代理只跑命令与报证据，未委派规格解读。原始检查、失败与构建无损gzip归档并逐文件回查；模型权重只留D盘缓存。生成的完整语料、token计数及映射超过400行是为保留证据，不属于手写实现。
