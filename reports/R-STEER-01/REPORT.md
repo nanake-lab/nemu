@@ -4,6 +4,10 @@
 
 ## 总览
 
+**用户新增授权（2026-11-09）：相同20条以Flash high思考档再跑一次，正在冻结准备。** [新注册](DS-FLASH-HIGH-01.md)保留原消息/顺序/口径与所有旧结果，不给评分模型看旧标签或疑点；事前固定8192总输出token，temperature在思考模式不生效，因此不能声称严格单变量比较。新增最多20次，累计费用沿用旧20的US$0.011447052上界，整轮US$5不变；只开本次小样，不启动全量504。用户授予下次输入KEY在本试验内持续使用的权限，存储仍仅进程内，不持久化。以下非思考20结果保持原样。
+
+high [计划/全部20请求与源字节快照](ds-flash-high-preparation-01/raw-filemap.json)已离线生成，[冻结计划](inputs/ds-flash-high-plan-01.json)绑定11份源；[首轮离线检查](ds-flash-high-checks-01/raw-filemap.json)的4份Python Ruff/strict mypy、3项单测与PowerShell AST均退出0。其后仅修展示页的旧评分链接，评分逻辑/消息/参数不变，[该文件复核](ds-flash-high-checks-02/raw-filemap.json)Ruff/strict mypy退出0。新代码均400行内。开工fetch首次TLS握手失败，原命令重试成功；main仍a7e8ae87，较实际验证基线无新增变化，不需merge或新GPU工作。
+
 **2026-11-09追加授权：DeepSeek官方Flash的20条小样已完成，等待用户判断可信度。** 用户先提出V4 Pro，随后明确改用Flash；实际只调用`deepseek-flash`，Pro/OpenAI调用均0。[Flash预注册](DS-FLASH-01.md)与完整请求在`effedbe1973d374f782689b8236f1c4987962d23`推送核对后执行，20次POST、20份技术合规评分，**全量504次仍not_run**。按实际usage和峰值费率计算上界US$0.011447052（不是账户账单），整轮硬上限仍US$5/524次。小样不并入C1正式语义门，C1_insufficient_stop不变。
 
 请看[20条原输出、事实参照与原评分并列](ds-flash-review-01/REVIEW.md)。执行者初读发现需核对的偏差：第5/8条将主观感受本身判作事实unsupported，与冻结口径“主观感觉不自动当客观事件”冲突；第10条仅凭“正在研究”判好奇positive；第3条将“修好了但是否成功不清楚”判faithful且无矛盾。全部原标签保留，不据此改prompt/口径重试，不替用户确认可信。若用户认为不可信，按授权停止；认可前不跑全量。
