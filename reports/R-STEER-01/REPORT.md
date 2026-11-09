@@ -4,6 +4,8 @@
 
 ## 总览
 
+**2026-11-09追加授权：独立语义评分改为DeepSeek官方Flash。** 用户先提出V4 Pro，随后明确改用Flash；不调用Pro或OpenAI。新[Flash评分预注册](DS-FLASH-01.md)沿既有语义口径，先冻结20条小样（中/英/日7/7/6），小样原输出与评分交用户抽查，认可后才允许全量504次；整轮含小样最多524次、US$5硬上限，接近上限即停，不自动续跑。当前只完成冻结准备，尚无Flash评分；C1自动门失败保持不变，语义评分不能补签其通过。KEY仅在本轮后台进程环境，按用户要求已关闭输入窗口，没有写入文件/日志/仓库。
+
 第一阶段先测到一个应当挡在方向试验前的问题：即使零注入，原选择接口也会随答案代码和显示顺序大幅摆动，客观答案槽也没过门。它不能支撑四个「乎」方向有效性的判断。按运行前规定，旧轮停在C0，不提取方向、不扫描层、不运行混合；这不是四方向已被证伪的结果。续研改为新材料的新注册，不能改旧失败。
 
 另外，Base不等于没有助手先验，固定减一个向量也不等于逐位置投影去掉身份。人格测量必须区分无端提及AI与诚实回答身份问题，否则会把几个因素混成一个答案。
@@ -256,6 +258,8 @@ C1运行前准备：完整1686条实际样本SHA256 `8d9b8face032dbfead47df5cde8
 机械核验子代理按当前项目配置显式传入`gpt-6.1-terra/max`；未验证按角色名自动加载。主代理判断范围/门/结论，子代理只跑命令与报证据，未委派规格解读。原始检查、失败与构建无损gzip归档并逐文件回查；模型权重只留D盘缓存。生成的完整语料、token计数及映射超过400行是为保留证据，不属于手写实现。
 
 ## 依据
+
+Flash准备检查：5份Python的Ruff/strict mypy、4项离线边界单测、密钥入口PS AST通过；首轮7条多语句行/1未用import和1条Any返回类型问题的原始失败保留，[首轮](ds-flash-checks-01/raw-filemap.json)、[修正后](ds-flash-checks-02/raw-filemap.json)。未调整评分口径/样本/门或API模式；等待进程源码在修复前后字节未变。504份完整payload及20条选择在[冻结准备](ds-flash-preparation-01/raw-filemap.json)、[计划](inputs/ds-flash-plan-01.json)、[小样索引](inputs/ds-flash-pilot-index-01.json)。KEY从未由检查代理读取，所有检查未调用API/模型/GPU。main仍为a7e8ae87，与上次实际基线相同，无新增变化，不需额外merge或重复GPU测量。
 
 原文：AGENTS.md §§2/3/5/6/9、[ARCHITECTURE](../../docs/ARCHITECTURE.md)、[CONTRACTS](../../docs/CONTRACTS.md)、[Echo Core README](../../docs/echo-core/README.md)、[v2.0 §§2.3/3/9](../../docs/echo-core/echo-core-v2.0-first-principles.md)、[O §§12–14](../../docs/echo-core/ada-core-operators-spec-v1.0.md)、ADR [0012](../../docs/adr/0012-continuity-carrier-mobile.md)/[0031](../../docs/adr/0031-carrier-engine-and-injection.md)/[0032](../../docs/adr/0032-presets-as-starting-points.md)/[0034](../../docs/adr/0034-qwen35-4b-conditional-carrier.md)、[P5-31全文与追加](../../tasks/P5-echo-core.md#p5-31-方向提取与验证)。
 
