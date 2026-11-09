@@ -3,7 +3,7 @@
 param()
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
-$queue = 'D:/Dev/cache/R-STEER-01/ds-flash-full-02-windowless'
+$queue = 'D:/Dev/cache/R-STEER-01/ds-flash-full-02-windowless-v2'
 $marker = [IO.File]::Open((Join-Path $queue 'entry-started'), [IO.FileMode]::CreateNew)
 $marker.Dispose()
 $Host.UI.RawUI.WindowTitle = 'R-STEER-01 Flash HIGH V2 remaining434 KEY - process only'

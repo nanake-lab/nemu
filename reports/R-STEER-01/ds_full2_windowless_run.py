@@ -49,12 +49,12 @@ def supervise(command: list[str], folder: Path, deadline: float) -> tuple[int, b
 
 def preflight(head: str) -> dict[str, Any]:
     root = HERE.parents[1]
-    actual = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
-    remote = subprocess.check_output(['git', 'ls-remote', 'origin', 'refs/heads/task/R-STEER-01'], cwd=root, text=True).split()[0]
-    if actual != head or remote != head or subprocess.check_output(['git', 'status', '--porcelain'], cwd=root, text=True).strip():
+    actual = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True, creationflags=subprocess.CREATE_NO_WINDOW).strip()
+    remote = subprocess.check_output(['git', 'ls-remote', 'origin', 'refs/heads/task/R-STEER-01'], cwd=root, text=True, creationflags=subprocess.CREATE_NO_WINDOW).split()[0]
+    if actual != head or remote != head or subprocess.check_output(['git', 'status', '--porcelain'], cwd=root, text=True, creationflags=subprocess.CREATE_NO_WINDOW).strip():
         raise ValueError('Clean pushed head required')
     plan = load(SESSION / 'plan.json')
-    if sha(SESSION / 'plan.json') != sha(HERE / 'inputs/ds-full-plan-02-windowless.json') or sha(BASE) != plan['base_executable_sha256']:
+    if sha(SESSION / 'plan.json') != sha(HERE / 'inputs/ds-full-plan-02-windowless-02.json') or sha(BASE) != plan['base_executable_sha256']:
         raise ValueError('Frozen plan/interpreter differs')
     for row in plan['sources']:
         if sha(HERE / row['path']) != row['sha256']:

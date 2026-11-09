@@ -10,6 +10,8 @@ FULL-02的[31源/504请求/原20 ID计划](inputs/ds-full-plan-02.json)、[请�
 
 [原FULL-02冻结独立审计](ds-full2-audit-01/raw-filemap.json)退出0；一次错误路径预读保留，原工具没有给出UTC/独立输出流，明确标缺。无窗口封装的[首轮检查](ds-full2-windowless-checks-01/raw-filemap.json)保留1未用导入/4显式导出类型错误；2项离线测试通过，其中真实6秒子进程3次MainWindowHandle=0、输出/终态正常，另验证只复制已完成项不重发；两个PS入口AST通过。只修正3处导入/输入目录适配声明后，[第二轮静态检查](ds-full2-windowless-checks-02/raw-filemap.json)Ruff/strict mypy四源均0，测试源未变，未重复已通过的测试/AST。[原始fixture](ds-full2-windowless-offline-fixtures-01/raw-filemap.json)、[37源/70携入条目哈希/同504与20计划](inputs/ds-full-plan-02-windowless.json)及[新封装快照](ds-full2-windowless-preparation-01/raw-filemap.json)保留；这证明本机窗口创建修复的离线行为，不是API/语义通过。原31冻结源均未改。
 
+续段首次API前的准备修订2同时将三次git启动检查设为CREATE_NO_WINDOW，避免启动时也闪窗；修订1仅准备not_run、未打开KEY或发送API，不复用其缓存为已运行。当前使用[修订2计划](inputs/ds-full-plan-02-windowless-02.json)和[37源快照](ds-full2-windowless-preparation-02/raw-filemap.json)，全新缓存ds-flash-full-02-windowless-v2；[四源Ruff/strict mypy及改后入口AST](ds-full2-windowless-checks-03/raw-filemap.json)均通过。仅执行包装/路径改变，原70/434、504提示字节和全部评分规则保持，先推送核远端再运行。
+
 **前一正式阶段按预注册技术停止，未完成全量。** 7次尝试都正常返回HTTP响应，其中6份评分通过冻结校验，第3项的`valence.label=both`不在效价字段允许枚举内。主管正常留下终态，失败发生后没有新发送，在途完成后全部退出，没有重试或修分；另497项not_run。由于该阶段504总体未完成，其固定随机20与正式分析均not_run，没有拿已完成子集另抽20。见[本轮摘要](results/ds-full-stop-summary-01.json)和[失败原文/原评分并列](ds-full-failure-01/FAILED.md)。
 
 这暴露了执行者准备评分接口时应提前补齐的说明缺口：[原提示](DS-RUBRIC-01.txt)列出了概念通道的both，却没有明确列出一般效价的mixed；[冻结校验器](ds_protocol.py)要求效价为positive/negative/mixed/neutral/uncertain。此次API返回完整合法JSON，问题是字段枚举不匹配，不是网络/进程消失，也不是四方向效果失败。原响应不将both替换成mixed。候选理由在[提案](VALENCE-SCHEMA-PROPOSAL.md)保留；用户已选择全新504的枚举说明并授权逐项invalid处理，不倒改旧停止。
