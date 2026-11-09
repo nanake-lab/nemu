@@ -102,6 +102,19 @@ jobs:
         run: npm install --global pnpm@12.11.2
       - if: steps.scope.outputs.node == 'true'
         run: pnpm install --frozen-lockfile
+      - name: Install locked Electron binary before tests
+        if: steps.scope.outputs.node == 'true'
+        shell: pwsh
+        timeout-minutes: 5
+        run: |
+          # Bound release-download retries to three attempts, 15 seconds apart.
+          # The locked package installer retains its bundled checksum validation.
+          foreach ($attempt in 1..3) {
+            node node_modules/electron/install.js
+            if ($LASTEXITCODE -eq 0) { exit 0 }
+            if ($attempt -lt 3) { Start-Sleep -Seconds 15 }
+          }
+          exit 1
       - if: steps.scope.outputs.node == 'true'
         run: pnpm lint && pnpm typecheck && pnpm test && pnpm build
       - if: steps.scope.outputs.node == 'true'

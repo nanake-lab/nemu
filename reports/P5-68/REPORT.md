@@ -4,9 +4,15 @@
 
 ## 当前状态
 
-已按 [针对 1a4b751f 的首审](https://github.com/nanake-lab/nemu/pull/146#issuecomment-6733725890) 修复内部依据重访的阻塞项，等待原审查方复审。PR [#146](https://github.com/nanake-lab/nemu/pull/146) 保持 draft / needs-user，未合并；当前提交的 CI 与复审通过前不称整卡完成。
+7c82ac22 的[独立代码与契约复审已通过](https://github.com/nanake-lab/nemu/pull/146#issuecomment-6735202232)，原 P1 解除。当前只处理 CI/Windows 门禁；PR [#146](https://github.com/nanake-lab/nemu/pull/146) 保持 draft / needs-user，未合并。该复审不覆盖之后追加的 CI 下载准备步骤，不代表门禁已通过或整卡完成。
 
-CI 当前被 Electron 下载 HTTP 504 阻塞：实现 head ae7b2e14 的 #409 首次与同提交重跑均失败，原始日志及后续选项见 [BLOCKED.md](BLOCKED.md)。没有把本机检查通过当作远端通过；本报告之后的自动 CI 结果以 PR 当前 head 为准。
+CI #410 已结束且 failed（Electron 下载 HTTP 504），不再是正在运行，原日志见 [ci-410-download-failure.log](evidence/ci-410-download-failure.log)。现追加显式安装与有限重试，等待新 head 远端验证，详见 [BLOCKED.md](BLOCKED.md)。用户已启动 Windows runner，将保持草稿手动触发相同 head 的真实检查。
+
+## CI 门禁处理
+
+锁定的 Electron 44.7.0 包在首次 require 时同步调用自带 install.js，单次下载 504 会使 settings 测试加载失败。按共享 CI 只追加规则，在测试之前调用同一个安装器，最多 3 次、间隔 15 秒、步骤上限 5 分钟；这是避免瞬时下载失败导致整轮重跑的工程预算。依赖版本、下载源、内置 checksums.json、原测试及阈值均不变，三次失败仍退出 1。
+
+[控制流复现脚本](evidence/validate-electron-retry.ps1) 直接提取工作流代码块，以确定性失败替身验证首次成功、失败两次再成功、连续三次失败；[结果](evidence/electron-retry-control-flow.log) 全部通过。它只证明重试/失败传播，不证明远端网络恢复。锁定安装器在本机已安装环境退出 0；YAML 经 Prettier 解析和格式检查通过。真实下载与全套检查结果以新 head 的远端作业为准。
 
 首审 head `1a4b751faa7725c2fd9ca8c503e496207923621e`；本轮只改三语言 law_state 语义层、生成物、夹具/黄金向量及角色注释/报告。main 基线 B=M=`a7e8ae8790d297ac697956f6f1256d2e2b9403d5`，2026-11-09 再 fetch 后没有增量，无需 merge。
 
@@ -66,7 +72,7 @@ Rust 分批补验命令：`cargo test --workspace --locked --exclude core-kernel
 
 ## 待用户确认
 
-- [ ] （阻塞）请原审查方复审本轮修复，通过后由用户决定合并。
+- [x] 7c82ac22 的代码与契约复审通过；后续仅追加 CI 下载准备与证据，最终增量及门禁仍待核验，由用户决定合并。
 - [ ] （阻塞）合并前确认当前 head 的必要 CI/Windows 检查通过；本报告不豁免失败或 skipped。
 
 ## 后续建议（不在本任务范围内）
