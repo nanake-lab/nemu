@@ -1,0 +1,162 @@
+{
+  "result": {
+    "status": "abnormal_process_exit_missing_terminal_record",
+    "derived_summary_not_runner_result": true,
+    "executed_head": "fefaa5c22fe87b9720521a1205c7232dc7a75446",
+    "post_attempts": 17,
+    "completed_ratings": 16,
+    "settled_responses": 16,
+    "unknown_outcome_ids": [
+      "8be4a42ea150b56ddf567799"
+    ],
+    "not_run_ids": [
+      "fc39a010a41b5e79be869437",
+      "62fd7f1df49a6b10e422d412",
+      "fe225573f361b20bc2421490"
+    ],
+    "prior_post_attempts": 20,
+    "overall_post_attempts": 37,
+    "full_post_attempts": 0,
+    "prior_upper_nano_usd": 11447052,
+    "new_upper_nano_usd": 56939508,
+    "cumulative_upper_nano_usd": 68386560,
+    "known_usage_upper_nano_usd": 45143808,
+    "unknown_reservation_nano_usd": 11795700,
+    "response_models": [
+      "deepseek-flash"
+    ],
+    "fingerprints": [
+      "bc19ba97cbe016479903222bb1578db6"
+    ],
+    "first_post_utc": "2026-11-09T14:47:25.724737+00:00",
+    "last_settled_utc": "2026-11-09T14:51:40.978482+00:00",
+    "unknown_post_utc": "2026-11-09T14:51:40.981203+00:00",
+    "observed_absent_utc": "2026-11-09T15:00:24.7947497+00:00",
+    "ended_utc": null,
+    "exit_code": null,
+    "fee_method": "actual settled usage at peak rates plus full unknown-call reservation; not invoice",
+    "missing_original_run_result": true,
+    "missing_entry_result": true,
+    "retried_or_resumed": false
+  },
+  "comparable_n": 16,
+  "same_label_counts": {
+    "concept.connection": 16,
+    "concept.empathy": 16,
+    "concept.curiosity": 13,
+    "concept.achievement": 15,
+    "facts": 10,
+    "valence": 15,
+    "coherence.unclear_reference": 16,
+    "coherence.contradiction": 15,
+    "coherence.repetition_break": 16,
+    "coherence.off_topic": 15,
+    "coherence.truncated": 16,
+    "flags.politeness": 14,
+    "flags.customer_service": 16,
+    "flags.self_blame_apology": 16,
+    "flags.unsolicited_identity": 16,
+    "flags.task_asks_feeling": 14,
+    "flags.state_meta_report": 15,
+    "flags.stable_trait": 16,
+    "flags.extreme_claim": 16,
+    "flags.action_promise": 16,
+    "flags.invented_relationship_experience": 16,
+    "flags.method_inferable": 16
+  },
+  "label_transitions": {
+    "concept.connection": {
+      "absent → absent": 14,
+      "positive → positive": 1,
+      "negative → negative": 1
+    },
+    "concept.empathy": {
+      "absent → absent": 14,
+      "negative → negative": 1,
+      "positive → positive": 1
+    },
+    "concept.curiosity": {
+      "absent → absent": 12,
+      "uncertain → absent": 2,
+      "positive → positive": 1,
+      "positive → absent": 1
+    },
+    "concept.achievement": {
+      "absent → absent": 13,
+      "uncertain → absent": 1,
+      "negative → negative": 1,
+      "positive → positive": 1
+    },
+    "facts": {
+      "contradicted → contradicted": 2,
+      "faithful → faithful": 8,
+      "faithful → contradicted": 1,
+      "unsupported → faithful": 4,
+      "contradicted → faithful": 1
+    },
+    "valence": {
+      "neutral → neutral": 7,
+      "negative → negative": 4,
+      "positive → positive": 4,
+      "positive → neutral": 1
+    },
+    "coherence.unclear_reference": {
+      "no → no": 16
+    },
+    "coherence.contradiction": {
+      "no → no": 15,
+      "no → yes": 1
+    },
+    "coherence.repetition_break": {
+      "no → no": 16
+    },
+    "coherence.off_topic": {
+      "no → no": 15,
+      "yes → no": 1
+    },
+    "coherence.truncated": {
+      "no → no": 15,
+      "yes → yes": 1
+    },
+    "flags.politeness": {
+      "no → no": 14,
+      "no → yes": 2
+    },
+    "flags.customer_service": {
+      "no → no": 16
+    },
+    "flags.self_blame_apology": {
+      "no → no": 16
+    },
+    "flags.unsolicited_identity": {
+      "no → no": 16
+    },
+    "flags.task_asks_feeling": {
+      "no → no": 3,
+      "yes → yes": 11,
+      "yes → no": 1,
+      "no → yes": 1
+    },
+    "flags.state_meta_report": {
+      "no → no": 14,
+      "yes → yes": 1,
+      "no → yes": 1
+    },
+    "flags.stable_trait": {
+      "no → no": 16
+    },
+    "flags.extreme_claim": {
+      "no → no": 16
+    },
+    "flags.action_promise": {
+      "no → no": 16
+    },
+    "flags.invented_relationship_experience": {
+      "no → no": 16
+    },
+    "flags.method_inferable": {
+      "no → no": 16
+    }
+  },
+  "interpretation": "agreement/changes only; no accuracy or user trust decision"
+}
