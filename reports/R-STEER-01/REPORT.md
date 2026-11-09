@@ -4,9 +4,11 @@
 
 ## 总览
 
-**当前：用户已批准FULL-02，准备全504新评分，尚未调用。** 新[预注册](DS-FULL-02.md)只在valence说明后追加确切枚举一句，旧rubric不改；schema/引证非法原样保留、在原分母计失败、继续采集，网络/进程/用量/预算异常仍停。deepseek-flash high、同504材料、同seed20261110/20 ID；旧6条合法和两轮小样均不进本阶段正式证据。初值仍US$0.100000992，总上限US$5。固定20交用户核对后才分析，不预判通过。main/PR最新提交评论已核对，仍draft/needs-user，无新增main变化或GPU工作。
+**当前：FULL-02因终端闪窗已停止新增并正常收尾70条，准备无窗口续测434条。** [原FULL-02注册](DS-FULL-02.md)推送到144e6b1a并核远端后才运行；70合规、0invalid，因用户两次反馈评分子进程不断弹窗，原阶段以user_stop正常结束，434未发，不杀进程/重试。创建后隐藏的首次补救仍会闪，未解决；现以[启动时CREATE_NO_WINDOW续段](DS-FULL-02-WINDOWLESS.md)另冻工程封装，不改提示/指标/参数，不复评已发70。累计费用峰值上界US$0.290715432、118次记录，含历史未知预留，硬上限US$5不变。[停止摘要](results/ds-full2-ui-stop-01.json)与[1180份原始文件](ds-flash-full-02/raw-filemap.json)保留。随机20及正式分析not_run；同seed/20 ID、含invalid交用户核对后才分析。
 
-FULL-02的[31源/504请求/原20 ID计划](inputs/ds-full-plan-02.json)、[请求与源快照](ds-full2-preparation-01/raw-filemap.json)已冻结；[六源Ruff/strict mypy、6项离线单测、入口PS AST](ds-full2-checks-01/raw-filemap.json)均退出0，9个检查源前后SHA不变，保留[离线fixture](ds-full2-offline-fixtures-01/raw-filemap.json)。620份准备/检查/fixture逐件无损归档。机械代理按gpt-6.1-terra/max显式参数试用，只报证据未判语义门。当前执行环境未继承KEY，推送后打开用户隐藏入口，交接独立主管后关闭；不持久化KEY。
+FULL-02的[31源/504请求/原20 ID计划](inputs/ds-full-plan-02.json)、[请求与源快照](ds-full2-preparation-01/raw-filemap.json)已冻结；[六源Ruff/strict mypy、6项离线单测、入口PS AST](ds-full2-checks-01/raw-filemap.json)均退出0，9个检查源前后SHA不变，保留[离线fixture](ds-full2-offline-fixtures-01/raw-filemap.json)。620份准备/检查/fixture逐件无损归档。机械代理按gpt-6.1-terra/max显式参数试用，只报证据未判语义门。原主管退出时KEY随进程清理，没有持久化；无窗口续段需新的隐藏输入交接。
+
+[原FULL-02冻结独立审计](ds-full2-audit-01/raw-filemap.json)退出0；一次错误路径预读保留，原工具没有给出UTC/独立输出流，明确标缺。无窗口封装的[首轮检查](ds-full2-windowless-checks-01/raw-filemap.json)保留1未用导入/4显式导出类型错误；2项离线测试通过，其中真实6秒子进程3次MainWindowHandle=0、输出/终态正常，另验证只复制已完成项不重发；两个PS入口AST通过。只修正3处导入/输入目录适配声明后，[第二轮静态检查](ds-full2-windowless-checks-02/raw-filemap.json)Ruff/strict mypy四源均0，测试源未变，未重复已通过的测试/AST。[原始fixture](ds-full2-windowless-offline-fixtures-01/raw-filemap.json)、[37源/70携入条目哈希/同504与20计划](inputs/ds-full-plan-02-windowless.json)及[新封装快照](ds-full2-windowless-preparation-01/raw-filemap.json)保留；这证明本机窗口创建修复的离线行为，不是API/语义通过。原31冻结源均未改。
 
 **前一正式阶段按预注册技术停止，未完成全量。** 7次尝试都正常返回HTTP响应，其中6份评分通过冻结校验，第3项的`valence.label=both`不在效价字段允许枚举内。主管正常留下终态，失败发生后没有新发送，在途完成后全部退出，没有重试或修分；另497项not_run。由于该阶段504总体未完成，其固定随机20与正式分析均not_run，没有拿已完成子集另抽20。见[本轮摘要](results/ds-full-stop-summary-01.json)和[失败原文/原评分并列](ds-full-failure-01/FAILED.md)。
 
@@ -342,4 +344,4 @@ Flash[12源原字节快照](ds-flash-source-snapshot-01/raw-filemap.json)在运�
 
 ## 下一步
 
-用户已批准FULL-02：枚举一句、全新504、逐项invalid保留计失败继续。先冻结/检查/推送核对，再调用；全量后交同种子20核对才正式分析。旧阶段不续497或修分，不合并、不领下一卡；PR保持draft/needs-user。
+FULL-02因用户反馈弹窗而正常收尾70，先检查/冻结/推送无窗口封装，再只发剩余434。全504后交同种子20核对才正式分析。旧FULL-01不续497或修分；两轮小样和FULL-01旧7只作方法材料，不进入FULL-02。PR保持draft/needs-user，不合并、不领下一卡。
