@@ -6,6 +6,8 @@
 
 已按 [针对 1a4b751f 的首审](https://github.com/nanake-lab/nemu/pull/146#issuecomment-6733725890) 修复内部依据重访的阻塞项，等待原审查方复审。PR [#146](https://github.com/nanake-lab/nemu/pull/146) 保持 draft / needs-user，未合并；当前提交的 CI 与复审通过前不称整卡完成。
 
+CI 当前被 Electron 下载 HTTP 504 阻塞：实现 head ae7b2e14 的 #409 首次与同提交重跑均失败，原始日志及后续选项见 [BLOCKED.md](BLOCKED.md)。没有把本机检查通过当作远端通过；本报告之后的自动 CI 结果以 PR 当前 head 为准。
+
 首审 head `1a4b751faa7725c2fd9ca8c503e496207923621e`；本轮只改三语言 law_state 语义层、生成物、夹具/黄金向量及角色注释/报告。main 基线 B=M=`a7e8ae8790d297ac697956f6f1256d2e2b9403d5`，2026-11-09 再 fetch 后没有增量，无需 merge。
 
 ## 首审修复与本轮验证
