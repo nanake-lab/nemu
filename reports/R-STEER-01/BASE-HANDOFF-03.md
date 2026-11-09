@@ -25,7 +25,7 @@
 
 沿 P0-12 `convert_visual_model.ps1`：源码 b11669/`620d2225cc436ab0b001e3200e590e3b286ef9ab`，现有 CPU venv；`--outtype bf16 --no-mtp`，`Q4_K_M 4`，mmproj `--outtype f16`。离线、CUDA隐藏、CPU torch、4线程，与 P0-12 一致；只对子 pwsh 设置环境。输出新建 `base-gguf-03`，日志 `base-convert-03`；存在即拒绝覆盖、非零退出即保留并停止。保留 argv、工作目录、UTC、退出码、实际输入/工具与产物哈希。CPU 转换不等于 Base 行为已测试，也不需要或沿用 GPU 窗口。
 
-## 转换结果（UTC 2026-11-08，Perth已跨至11月9日）
+## 转换结果（Perth 11月8日23:45–23:48；11月9日整理）
 
 第一次`base-convert-03`在环境记录步骤退出1：执行者误把源码内置gguf当成pip distribution，`importlib.metadata.version("gguf")`报PackageNotFoundError。CPU torch断言已通过，但三条转换均未开始，原环境日志、failure、外层日志保留。确认固定转换器第14–15行自行加载`gguf-py`后，新脚本 [convert_base04.ps1](convert_base04.ps1)只移除这一错误的版本查询，使用新输出/证据目录；不安装依赖、不换转换器或参数、不覆盖03。源码内gguf全部由189文件源码清单绑定。
 
