@@ -58,6 +58,8 @@ def check_law_state_message(name: str, value: dict[str, Any], limits: Limits) ->
         )
         fail(v["role"] != 4 or v["basis"]["kind"] == 2, "internal role")
         fail(v["role"] != 1 or v["basis"]["kind"] == 1, "new basis role")
+        # ADR 0035 §4.2–4.3; §5.2 still permits internal target updates.
+        fail(v["basis"]["kind"] != 2 or v["role"] != 3, "internal revisit")
     elif name == "FastStateMigrationRecord":
         fail(v["prior_decomposition_unknown"] is True, "unknown prior decomposition")
         fail(

@@ -22,7 +22,7 @@
 | FastBasisSlot.basis、current、target | §4.1、§4.6、§9 P5-68(2) | 坐标身份一致；无 h/目标幅度比较，无 y 或历史区间状态 |
 | FastStateSnapshotV3.revision、representation_version、anchor_time_ns、nature、learned | §4.1、§4.4、§4.8 | 原字段号、类型与限制保留；4、5 继续 reserved；共同锚点，无另设时钟 |
 | FastStateSnapshotV3.slots、law_version | §2、§4.1、§9 P5-68(2,4) | 新字段 9、10；依据规范键排序且唯一，槽与 x 同坐标；必填规律引用也令空槽 Protobuf 与旧消息分开 |
-| FastEffectRecord.basis、role、target | §4.1–4.3、§9 P5-68(3) | 四角色枚举；共同依据引用；每条作用记录一个依据，多个重访作用按 H 次序由 F/事务记录 |
+| FastEffectRecord.basis、role、target | §4.1–4.3、§5.2、§9 P5-68(3) | role 是本次 F 作用的角色，不是原记录的固定角色；内部依据不能以重访作用，但 §5.2 的补足可用目标更新，原记录角色不改。首次有效、现行目标仍来自原记录等历史条件由后继治理/消费边界验证，本卡不据身份代判；每条作用记录一个依据，多依据重访次序交 F/事务 |
 | theta_before、effects_before | §4.1、§4.3、§4.7 | 前态 θ 快照与 R⁺ 作用视图 ObjectRef；保存最近目标更新所用前态的引用由调用方负责 |
 | interpretation_refs、governance_refs、law_version | §4.1–4.3、§4.7、§9 P5-68(3) | 非空引用集合与规律引用；解释/治理格式由其拥有卡定义，不私造语义治理消息 |
 | FastStateMigrationRecord.previous_snapshot、migrated_snapshot、prior_decomposition_unknown | §4.8、§9 P5-68(4) | 前后标签检查与 unknown=true；H 系统记录、L 引用和原子发布交 P5-75 |

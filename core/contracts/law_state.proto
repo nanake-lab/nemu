@@ -12,7 +12,11 @@ enum FastBasisKind {
   FAST_BASIS_INTERNAL_BRANCH = 2;
 }
 
-// ADR 0035 §4.2: exactly one role per F application.
+// ADR 0035 §4.2, §5.2: role of this F application, not the original record's
+// fixed role. A first-effective supplement may apply as TARGET_UPDATE even
+// when that fixed role is INTERNAL_BRANCH; the original role is not rewritten.
+// First-effectiveness and current-target ownership are historical conditions
+// for the successor governance/consumption boundary, not inferred here.
 enum FastEffectRole {
   FAST_EFFECT_ROLE_UNSPECIFIED = 0;
   FAST_EFFECT_NEW_BASIS = 1;

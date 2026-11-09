@@ -45,6 +45,8 @@ export function checkLawStateMessage(name: string, value: unknown, limits: Limit
     require(obj(v.law_version).object_type === 'echo.law-version', 'effect law reference');
     require(v.role !== 4 || obj(v.basis).kind === 2, 'internal role');
     require(v.role !== 1 || obj(v.basis).kind === 1, 'new basis role');
+    // ADR 0035 §4.2–4.3; §5.2 still permits internal target updates.
+    require(obj(v.basis).kind !== 2 || v.role !== 3, 'internal revisit');
   } else if (name === 'FastStateMigrationRecord') {
     require(v.prior_decomposition_unknown === true, 'unknown prior decomposition');
     require(obj(v.previous_snapshot).object_type === 'echo.fast-state-v2', 'migration predecessor');

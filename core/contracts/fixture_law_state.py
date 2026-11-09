@@ -10,7 +10,7 @@ from fixture_theta import sample_theta
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "workers/irl/generated"))
 from echo.bridge import from_json  # noqa: E402
-from echo.runtime import Limits, digest, encode_protobuf  # noqa: E402
+from echo.runtime import Limits, digest, encode_canonical, encode_protobuf  # noqa: E402
 from echo.theta import LAW_STATE_NUMERICS_ID  # noqa: E402
 
 NAMES = {
@@ -168,6 +168,10 @@ def legal_law_state() -> list[dict[str, Any]]:
     r = sample_law_state("FastEffectRecord", 0)
     r.update(basis=sample_law_state("FastBasisIdentity", 2), role=4)
     add("FastEffectRecord", r)
+    # §5.2: this application supplements a record whose fixed role is internal.
+    r = copy.deepcopy(r)
+    r["role"] = 2
+    add("FastEffectRecord", r)
     # §7 P0: finite and >0, including subnormal and values beyond exact integers.
     for weight in (5e-324, float(2**53), float.fromhex("0x1.fffffffffffffp+1023")):
         p = sample_law_state("ThetaEstimatorParametersV2", 0)
@@ -192,6 +196,26 @@ def illegal_law_state() -> list[dict[str, Any]]:
         else:
             at[keys[-1]] = value
         rows.append(dict(label="P5-68-" + path, request=request(name, v)))
+
+    # §4.2–4.3: an internal basis cannot reuse a recorded external target.
+    # Encode structurally to test the semantic boundary on both wire inputs.
+    name = "FastEffectRecord"
+    v = sample_law_state(name, 2)
+    v["basis"] = sample_law_state("FastBasisIdentity", 2)
+    rows.append(dict(label="P5-68-internal-revisit", request=request(name, v)))
+    for op, encode in (("canonical", encode_canonical), ("protobuf", encode_protobuf)):
+        wire = encode(name, from_json(name, v), Limits(**LIMITS))
+        rows.append(
+            dict(
+                label="P5-68-internal-revisit",
+                request=dict(
+                    name=name,
+                    op=op,
+                    hex=wire.hex(),
+                    limits=LIMITS,
+                ),
+            )
+        )
 
     for name, path, val in [
         ("ThetaEstimatorParametersV2", "baseline_weight", 0),

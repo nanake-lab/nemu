@@ -59,6 +59,12 @@ pub fn check_law_state_message(name: &str, value: &Value, limits: Limits) -> Res
             )?;
             require(v["role"] != 4 || v["basis"]["kind"] == 2, "internal role")?;
             require(v["role"] != 1 || v["basis"]["kind"] == 1, "new basis role")?;
+            // ADR 0035 §4.2–4.3: internal targets cannot be revisited.
+            // §5.2 still permits a target-update application for this basis.
+            require(
+                v["basis"]["kind"] != 2 || v["role"] != 3,
+                "internal revisit",
+            )?;
         }
         "FastStateMigrationRecord" => {
             require(
