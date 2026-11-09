@@ -145,6 +145,14 @@ class GrowthCommandKind(IntEnum):
     GROWTH_PAUSE = 1
     GROWTH_RESUME = 2
     GROWTH_REVIEW_CONCLUSION = 3
+class FastBasisKind(IntEnum):
+    FAST_BASIS_RECORD = 1
+    FAST_BASIS_INTERNAL_BRANCH = 2
+class FastEffectRole(IntEnum):
+    FAST_EFFECT_NEW_BASIS = 1
+    FAST_EFFECT_TARGET_UPDATE = 2
+    FAST_EFFECT_REVISIT = 3
+    FAST_EFFECT_INTERNAL_BRANCH = 4
 class LedgerKind(IntEnum):
     LEDGER_TENDENCY_CHANGED = 1
     LEDGER_THETA_CHANGED = 2
@@ -909,6 +917,88 @@ class RSnapshotV3:
     revision: str
     law_version: ObjectRef
     tendencies: list[TendencyV3]
+@dataclass(frozen=True)
+class FastBasisIdentity:
+    schema_version: int
+    kind: FastBasisKind
+    record_id: str | None
+@dataclass(frozen=True)
+class LawLearnedCoordinate:
+    schema_version: int
+    tendency_id: str
+    value: float
+@dataclass(frozen=True)
+class LawStateVector:
+    schema_version: int
+    nature: NatureReal
+    learned: list[LawLearnedCoordinate]
+@dataclass(frozen=True)
+class FastBasisSlot:
+    schema_version: int
+    basis: FastBasisIdentity
+    current: LawStateVector
+    target: LawStateVector
+@dataclass(frozen=True)
+class FastStateSnapshotV3:
+    schema_version: int
+    revision: str
+    representation_version: str
+    anchor_time_ns: int
+    nature: NatureVector
+    learned: list[LearnedComponent]
+    slots: list[FastBasisSlot]
+    law_version: ObjectRef
+@dataclass(frozen=True)
+class FastEffectRecord:
+    schema_version: int
+    basis: FastBasisIdentity
+    role: FastEffectRole
+    target: LawStateVector
+    theta_before: ObjectRef
+    effects_before: ObjectRef
+    interpretation_refs: list[ObjectRef]
+    governance_refs: list[ObjectRef]
+    law_version: ObjectRef
+@dataclass(frozen=True)
+class FastStateMigrationRecord:
+    schema_version: int
+    previous_snapshot: ObjectRef
+    migrated_snapshot: ObjectRef
+    prior_decomposition_unknown: bool
+@dataclass(frozen=True)
+class ThetaSnapshotV3:
+    schema_version: int
+    revision: str
+    law_version: ObjectRef
+    values: ThetaValues
+    estimator: ThetaEstimatorState
+    parameters: ThetaEstimatorParametersV2
+    parameters_digest: bytes
+    prior_mass: float
+@dataclass(frozen=True)
+class ThetaEstimatorParametersV2:
+    schema_version: int
+    law_id: str
+    numerics_id: str
+    baseline_prior: NatureVector
+    gain_prior: NatureScale
+    sigma_prior: NatureScale
+    tau_prior_s: NatureScale
+    variance_weight: float
+    duration_weight: float
+    change_prior: float
+    change_prior_weight: float
+    change_min: float
+    gain_min: float
+    gain_max: float
+    recovery_min: float
+    recovery_max: float
+    detector_shift_sigma: float
+    detector_threshold: float
+    jump_notice: float
+    drift_run: int
+    drift_margin: float
+    baseline_weight: float
 @dataclass(frozen=True)
 class ThetaValues:
     schema_version: int

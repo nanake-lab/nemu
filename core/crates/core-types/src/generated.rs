@@ -493,6 +493,42 @@ impl GrowthCommandKind {
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
+pub enum FastBasisKind {
+    FAST_BASIS_RECORD = 1,
+    FAST_BASIS_INTERNAL_BRANCH = 2,
+}
+impl TryFrom<u32> for FastBasisKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::FAST_BASIS_RECORD),
+2 => Ok(Self::FAST_BASIS_INTERNAL_BRANCH),
+_ => Err("unknown enum".into()), }}}
+impl From<FastBasisKind> for u32 {fn from(v:FastBasisKind)->Self{v as u32}}
+impl FastBasisKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum FastEffectRole {
+    FAST_EFFECT_NEW_BASIS = 1,
+    FAST_EFFECT_TARGET_UPDATE = 2,
+    FAST_EFFECT_REVISIT = 3,
+    FAST_EFFECT_INTERNAL_BRANCH = 4,
+}
+impl TryFrom<u32> for FastEffectRole { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::FAST_EFFECT_NEW_BASIS),
+2 => Ok(Self::FAST_EFFECT_TARGET_UPDATE),
+3 => Ok(Self::FAST_EFFECT_REVISIT),
+4 => Ok(Self::FAST_EFFECT_INTERNAL_BRANCH),
+_ => Err("unknown enum".into()), }}}
+impl From<FastEffectRole> for u32 {fn from(v:FastEffectRole)->Self{v as u32}}
+impl FastEffectRole {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
 pub enum LedgerKind {
     LEDGER_TENDENCY_CHANGED = 1,
     LEDGER_THETA_CHANGED = 2,
@@ -2101,6 +2137,141 @@ pub r#law_version: ObjectRef,
 pub r#tendencies: Vec<TendencyV3>,
 }
 impl super::WireMessage for RSnapshotV3 {const NAME: &'static str = "RSnapshotV3";}
+/// ADR 0035 §4.1, §4.2, §9 P5-68(2,3); frozen tag `echo.fast-basis-identity`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastBasisIdentity {
+pub r#schema_version: u32,
+pub r#kind: FastBasisKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#record_id: Option<String>,
+}
+impl super::WireMessage for FastBasisIdentity {const NAME: &'static str = "FastBasisIdentity";}
+/// ADR 0035 §4.1, §4.3: finite signed h/target coordinate; frozen tag `echo.law-learned-coordinate`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LawLearnedCoordinate {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#value: f64,
+}
+impl super::WireMessage for LawLearnedCoordinate {const NAME: &'static str = "LawLearnedCoordinate";}
+/// ADR 0035 §4.1, §4.3, §4.6 B6': same coordinate identity as x; frozen tag `echo.law-state-vector`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LawStateVector {
+pub r#schema_version: u32,
+pub r#nature: NatureReal,
+pub r#learned: Vec<LawLearnedCoordinate>,
+}
+impl super::WireMessage for LawStateVector {const NAME: &'static str = "LawStateVector";}
+/// ADR 0035 §4.1, §4.6 B6': no current-target amplitude comparison; frozen tag `echo.fast-basis-slot`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastBasisSlot {
+pub r#schema_version: u32,
+pub r#basis: FastBasisIdentity,
+pub r#current: LawStateVector,
+pub r#target: LawStateVector,
+}
+impl super::WireMessage for FastBasisSlot {const NAME: &'static str = "FastBasisSlot";}
+/// ADR 0035 §4.1, §4.4, §4.8, §9 P5-68(2); frozen tag `echo.fast-state-v3`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastStateSnapshotV3 {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#representation_version: String,
+pub r#anchor_time_ns: DecimalU64,
+pub r#nature: NatureVector,
+pub r#learned: Vec<LearnedComponent>,
+pub r#slots: Vec<FastBasisSlot>,
+pub r#law_version: ObjectRef,
+}
+impl super::WireMessage for FastStateSnapshotV3 {const NAME: &'static str = "FastStateSnapshotV3";}
+/// ADR 0035 §4.1-4.3, §4.7, §9 P5-68(3); frozen tag `echo.fast-effect-record`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastEffectRecord {
+pub r#schema_version: u32,
+pub r#basis: FastBasisIdentity,
+pub r#role: FastEffectRole,
+pub r#target: LawStateVector,
+pub r#theta_before: ObjectRef,
+pub r#effects_before: ObjectRef,
+pub r#interpretation_refs: Vec<ObjectRef>,
+pub r#governance_refs: Vec<ObjectRef>,
+pub r#law_version: ObjectRef,
+}
+impl super::WireMessage for FastEffectRecord {const NAME: &'static str = "FastEffectRecord";}
+/// ADR 0035 §4.8, §9 P5-68(4); H system record and L reference; frozen tag `echo.fast-state-migration`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastStateMigrationRecord {
+pub r#schema_version: u32,
+pub r#previous_snapshot: ObjectRef,
+pub r#migrated_snapshot: ObjectRef,
+pub r#prior_decomposition_unknown: bool,
+}
+impl super::WireMessage for FastStateMigrationRecord {const NAME: &'static str = "FastStateMigrationRecord";}
+/// ADR 0035 §3.2, §3.6, §9 P5-68(1,4); ADR 0029 complete estimator; frozen tag `echo.theta-snapshot-v3`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaSnapshotV3 {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#law_version: ObjectRef,
+pub r#values: ThetaValues,
+pub r#estimator: ThetaEstimatorState,
+pub r#parameters: ThetaEstimatorParametersV2,
+pub r#parameters_digest: HexBytes,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#prior_mass: f64,
+}
+impl super::WireMessage for ThetaSnapshotV3 {const NAME: &'static str = "ThetaSnapshotV3";}
+/// ADR 0035 §3.2/3.3, §9 P5-68(1); ADR 0029 parameters; frozen tag `echo.theta-estimator-parameters-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaEstimatorParametersV2 {
+pub r#schema_version: u32,
+pub r#law_id: String,
+pub r#numerics_id: String,
+pub r#baseline_prior: NatureVector,
+pub r#gain_prior: NatureScale,
+pub r#sigma_prior: NatureScale,
+pub r#tau_prior_s: NatureScale,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#variance_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#duration_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#change_prior: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#change_prior_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#change_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#gain_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#gain_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#recovery_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#recovery_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#detector_shift_sigma: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#detector_threshold: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#jump_notice: f64,
+pub r#drift_run: DecimalU64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#drift_margin: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#baseline_weight: f64,
+}
+impl super::WireMessage for ThetaEstimatorParametersV2 {const NAME: &'static str = "ThetaEstimatorParametersV2";}
 /// v2.0 §8 θ = (b, g, λ); frozen tag `echo.theta-values`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -3664,6 +3835,15 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "EvidenceGroupV3" => super::verify_typed::<EvidenceGroupV3>(value, limits),
 "TendencyV3" => super::verify_typed::<TendencyV3>(value, limits),
 "RSnapshotV3" => super::verify_typed::<RSnapshotV3>(value, limits),
+"FastBasisIdentity" => super::verify_typed::<FastBasisIdentity>(value, limits),
+"LawLearnedCoordinate" => super::verify_typed::<LawLearnedCoordinate>(value, limits),
+"LawStateVector" => super::verify_typed::<LawStateVector>(value, limits),
+"FastBasisSlot" => super::verify_typed::<FastBasisSlot>(value, limits),
+"FastStateSnapshotV3" => super::verify_typed::<FastStateSnapshotV3>(value, limits),
+"FastEffectRecord" => super::verify_typed::<FastEffectRecord>(value, limits),
+"FastStateMigrationRecord" => super::verify_typed::<FastStateMigrationRecord>(value, limits),
+"ThetaSnapshotV3" => super::verify_typed::<ThetaSnapshotV3>(value, limits),
+"ThetaEstimatorParametersV2" => super::verify_typed::<ThetaEstimatorParametersV2>(value, limits),
 "ThetaValues" => super::verify_typed::<ThetaValues>(value, limits),
 "TendencyChange" => super::verify_typed::<TendencyChange>(value, limits),
 "ThetaChange" => super::verify_typed::<ThetaChange>(value, limits),

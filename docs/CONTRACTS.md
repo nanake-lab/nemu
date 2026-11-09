@@ -644,3 +644,13 @@ interface ProactivityBoundaries {
 - 既有 CanonicalV1 字节、类型标签与旧黄金向量不变；无存储被打开、重建或迁移。上线前依 ADR 0007 做备份并选择支持后继消息的双方版本；回退时恢复旧应用和备份，后继字节保留原标签，绝不冒充旧消息解码。
 - `ReadoutV2.body` 按 ADR 0007 §6 编码：选中字段号 u32 小端，再接该值，不写每个成员的 presence 字节；必填缺失、多选、未知字段号、尾随字节拒绝。其余编码规则不变。
 - 后继审批载荷字节与 SHA-256 绑定的具体表示在 PR 的规格对照和差异登记中供 Claude 与用户审查。
+
+## 追加（2026-11-09）：P5-68 新规律状态契约
+
+依据 [ADR 0035](adr/0035-law-definitions-d07-d09-d11.md) §9 的 P5-68 五项，新增 `core/contracts/law_state.proto`，旧消息、类型标签和黄金字节保留。字段逐项出处见 [P5-68 规格对照](../reports/P5-68/SPEC-MAPPING.md)。本追加不发布规律、不启用新状态的生产读写。
+
+- `ThetaEstimatorParametersV2` 的 `baseline_weight` 为 P₀：有限且严格正，使用新字段 23（旧永久质量字段 8 reserved）。`numerics_id` 为 `ADR0035-D07-gradual-underflow-v1`，标识 §3.2 的规范数值路径；参数没有默认值。`ThetaSnapshotV3` 保存完整 `ThetaEstimatorState` 和共享 `prior_mass` P（允许 +0、次正规），绑定新参数规范摘要及规律资源。
+- `FastStateSnapshotV3` 保留旧 x、锚点字段与编码，新增按依据规范字节排序的唯一槽和规律引用。`LawStateVector` 用四个 NatureReal 坐标和按 tendency_id 排序的学得坐标；槽的 current、target 与 x 的坐标身份一致。只要求有限，不检查 h 与当前目标的幅度或符号关系；目标的 η_x 检查属于带规律上下文的 F。
+- `FastBasisIdentity` 的记录分支必须有非空 record_id；内部支路是无自定义 ID 的唯一变体。`FastEffectRecord` 保存依据、角色、目标、前态 θ 与 R⁺ 作用视图引用、解释与治理引用、规律引用。记录身份须来自正式治理；这些编码检查不能证明引用存在、治理正确或作用资格。消费键交 P5-72。
+- 结构解码之后，消费前必须调用 Rust `semantic::check_theta_message` / `check_law_state_message`，Python `echo.theta.check_theta_message` / `echo.law_state.check_law_state_message`，TS `echo/theta.checkThetaMessage` / `echo/law_state.checkLawStateMessage`，并传递同一调用方 Limits。调用方还须解析可信资源、H 前缀与引用；本卡不接管 P5-75 的存储和事务边界。
+- 旧 θ 不补猜 P，换规律须按 §3.6 从 H 重算。旧快状态迁移保留 x 与锚点、槽为空，并在 H/L 引用 `FastStateMigrationRecord`（前后快照引用与必须为真的 prior_decomposition_unknown）。新快照在 CanonicalV1 和 Protobuf 下都不能作为旧消息读取；回退恢复旧应用与备份。测试只提供 SYS17 的契约前提，不冒充迁移执行、失败原子性或重启体验验收。

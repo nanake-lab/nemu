@@ -4188,6 +4188,643 @@
         5
       ]
     },
+    "FastBasisIdentity": {
+      "tag": "echo.fast-basis-identity",
+      "source": "ADR 0035 §4.1, §4.2, §9 P5-68(2,3)",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "FastBasisKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        }
+      ],
+      "file": "law_state.proto",
+      "rules": {
+        "cases": {
+          "1": {
+            "required": [
+              "record_id"
+            ]
+          },
+          "2": {
+            "required": []
+          }
+        }
+      }
+    },
+    "LawLearnedCoordinate": {
+      "tag": "echo.law-learned-coordinate",
+      "source": "ADR 0035 §4.1, §4.3: finite signed h/target coordinate",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "law_state.proto",
+      "rules": {}
+    },
+    "LawStateVector": {
+      "tag": "echo.law-state-vector",
+      "source": "ADR 0035 §4.1, §4.3, §4.6 B6': same coordinate identity as x",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "nature",
+          "type": "NatureReal",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "learned",
+          "type": "LawLearnedCoordinate",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "tendency_id"
+        }
+      ],
+      "file": "law_state.proto",
+      "rules": {}
+    },
+    "FastBasisSlot": {
+      "tag": "echo.fast-basis-slot",
+      "source": "ADR 0035 §4.1, §4.6 B6': no current-target amplitude comparison",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "basis",
+          "type": "FastBasisIdentity",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "current",
+          "type": "LawStateVector",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "target",
+          "type": "LawStateVector",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "law_state.proto",
+      "rules": {}
+    },
+    "FastStateSnapshotV3": {
+      "tag": "echo.fast-state-v3",
+      "source": "ADR 0035 §4.1, §4.4, §4.8, §9 P5-68(2)",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "representation_version",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "anchor_time_ns",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "nature",
+          "type": "NatureVector",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "learned",
+          "type": "LearnedComponent",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "tendency_id"
+        },
+        {
+          "name": "slots",
+          "type": "FastBasisSlot",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "basis"
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "law_state.proto",
+      "rules": {},
+      "retains": "FastStateSnapshotV2",
+      "reserved": [
+        4,
+        5
+      ]
+    },
+    "FastEffectRecord": {
+      "tag": "echo.fast-effect-record",
+      "source": "ADR 0035 §4.1-4.3, §4.7, §9 P5-68(3)",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "basis",
+          "type": "FastBasisIdentity",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "role",
+          "type": "FastEffectRole",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "target",
+          "type": "LawStateVector",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "theta_before",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "effects_before",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "interpretation_refs",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        },
+        {
+          "name": "governance_refs",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "law_state.proto",
+      "rules": {}
+    },
+    "FastStateMigrationRecord": {
+      "tag": "echo.fast-state-migration",
+      "source": "ADR 0035 §4.8, §9 P5-68(4); H system record and L reference",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "previous_snapshot",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "migrated_snapshot",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "prior_decomposition_unknown",
+          "type": "bool",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "law_state.proto",
+      "rules": {}
+    },
+    "ThetaSnapshotV3": {
+      "tag": "echo.theta-snapshot-v3",
+      "source": "ADR 0035 §3.2, §3.6, §9 P5-68(1,4); ADR 0029 complete estimator",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "values",
+          "type": "ThetaValues",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "estimator",
+          "type": "ThetaEstimatorState",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parameters",
+          "type": "ThetaEstimatorParametersV2",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parameters_digest",
+          "type": "bytes",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "prior_mass",
+          "type": "double",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "law_state.proto",
+      "rules": {},
+      "retains": "ThetaSnapshotV2",
+      "reserved": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    "ThetaEstimatorParametersV2": {
+      "tag": "echo.theta-estimator-parameters-v2",
+      "source": "ADR 0035 §3.2/3.3, §9 P5-68(1); ADR 0029 parameters",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "law_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "numerics_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "baseline_prior",
+          "type": "NatureVector",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "gain_prior",
+          "type": "NatureScale",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "sigma_prior",
+          "type": "NatureScale",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tau_prior_s",
+          "type": "NatureScale",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "variance_weight",
+          "type": "double",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "duration_weight",
+          "type": "double",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "change_prior",
+          "type": "double",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "change_prior_weight",
+          "type": "double",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "change_min",
+          "type": "double",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "gain_min",
+          "type": "double",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "gain_max",
+          "type": "double",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "recovery_min",
+          "type": "double",
+          "number": 16,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "recovery_max",
+          "type": "double",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "detector_shift_sigma",
+          "type": "double",
+          "number": 18,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "detector_threshold",
+          "type": "double",
+          "number": 19,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "jump_notice",
+          "type": "double",
+          "number": 20,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "drift_run",
+          "type": "uint64",
+          "number": 21,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "drift_margin",
+          "type": "double",
+          "number": 22,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "baseline_weight",
+          "type": "double",
+          "number": 23,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "law_state.proto",
+      "rules": {},
+      "retains": "ThetaEstimatorParameters",
+      "reserved": [
+        8
+      ]
+    },
     "ThetaValues": {
       "tag": "echo.theta-values",
       "source": "v2.0 §8 θ = (b, g, λ)",
@@ -11641,6 +12278,18 @@
       "GROWTH_PAUSE": 1,
       "GROWTH_RESUME": 2,
       "GROWTH_REVIEW_CONCLUSION": 3
+    },
+    "FastBasisKind": {
+      "FAST_BASIS_KIND_UNSPECIFIED": 0,
+      "FAST_BASIS_RECORD": 1,
+      "FAST_BASIS_INTERNAL_BRANCH": 2
+    },
+    "FastEffectRole": {
+      "FAST_EFFECT_ROLE_UNSPECIFIED": 0,
+      "FAST_EFFECT_NEW_BASIS": 1,
+      "FAST_EFFECT_TARGET_UPDATE": 2,
+      "FAST_EFFECT_REVISIT": 3,
+      "FAST_EFFECT_INTERNAL_BRANCH": 4
     },
     "LedgerKind": {
       "LEDGER_UNSPECIFIED": 0,
