@@ -1,0 +1,55 @@
+{
+  "startedUtc": "2026-11-09T06:10:08.224603+00:00",
+  "endedUtc": "2026-11-09T06:10:08.949158+00:00",
+  "errors": [],
+  "jsonParsed": 39,
+  "relativeLinks": 103,
+  "sourceBindingsMatch": 12,
+  "extraArchivesExact": {
+    "c1-source-snapshot-02": 13,
+    "c1-audit-02": 39
+  },
+  "blindPresentations": 504,
+  "blindOutputsExact": true,
+  "semanticRatings": 0,
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check",
+        "origin/main"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--exit-code",
+        "ea28ab67f3c7b84afd81911d140013f631cfdd1b",
+        "--",
+        "reports/R-STEER-01/fixtures.py",
+        "reports/R-STEER-01/calibrate.py",
+        "reports/R-STEER-01/analyze_c0.py",
+        "reports/R-STEER-01/test_c0.py",
+        "reports/R-STEER-01/calibration_probe.cpp",
+        "reports/R-STEER-01/build.ps1",
+        "reports/R-STEER-01/PREREG-C0.md",
+        "reports/R-STEER-01/inputs/c0-jobs.json"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "trackedDiffFiles": 7007,
+  "untrackedFiles": 51,
+  "scope": "only reports/R-STEER-01 and its request"
+}
