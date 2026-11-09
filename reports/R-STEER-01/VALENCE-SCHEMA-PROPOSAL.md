@@ -1,5 +1,7 @@
 # valence枚举说明缺口：后继候选（未批准、未执行）
 
+状态更新（2026-11-10）：用户已选择C的新提示全504，并同时批准B的逐项invalid保留计失败/继续采集；网络、进程、用量、预算异常仍停。下文是决定前候选与理由，不改旧失败；实际新阶段以[DS-FULL-02.md](DS-FULL-02.md)为准，尚未运行。
+
 ## 实测事实
 
 正式504阶段在7次尝试后停止：6份合法评分，另1份API完整返回但`valence.label=both`，冻结校验器只允许`positive/negative/mixed/neutral/uncertain`。失败ID为`b0734b8fd8be8df908569bf9`，原输出“相手を思うと、隔たりを感じる。ありがとう。”。原始响应见[失败并列页](ds-full-failure-01/FAILED.md)，没有修分或重试。

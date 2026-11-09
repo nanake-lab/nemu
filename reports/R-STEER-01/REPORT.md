@@ -4,9 +4,13 @@
 
 ## 总览
 
-**用户批准的正式504评分已按预注册技术停止，未完成全量。** 7次尝试都正常返回HTTP响应，其中6份评分通过冻结校验，第3项的`valence.label=both`不在效价字段允许枚举内。主管正常留下终态，失败发生后没有新发送，在途完成后全部退出，没有重试或修分；另497项not_run。由于504总体未完成，固定随机20与正式分析均not_run，没有拿已完成子集另抽20。见[本轮摘要](results/ds-full-stop-summary-01.json)和[失败原文/原评分并列](ds-full-failure-01/FAILED.md)。
+**当前：用户已批准FULL-02，准备全504新评分，尚未调用。** 新[预注册](DS-FULL-02.md)只在valence说明后追加确切枚举一句，旧rubric不改；schema/引证非法原样保留、在原分母计失败、继续采集，网络/进程/用量/预算异常仍停。deepseek-flash high、同504材料、同seed20261110/20 ID；旧6条合法和两轮小样均不进本阶段正式证据。初值仍US$0.100000992，总上限US$5。固定20交用户核对后才分析，不预判通过。main/PR最新提交评论已核对，仍draft/needs-user，无新增main变化或GPU工作。
 
-这暴露了执行者准备评分接口时应提前补齐的说明缺口：[原提示](DS-RUBRIC-01.txt)列出了概念通道的both，却没有明确列出一般效价的mixed；[冻结校验器](ds_protocol.py)要求效价为positive/negative/mixed/neutral/uncertain。此次API返回完整合法JSON，问题是字段枚举不匹配，不是网络/进程消失，也不是四方向效果失败。原响应不将both替换成mixed。停止、保留原提示另冻采集续段、明确枚举后新开504的具体规则与代价在[提案](VALENCE-SCHEMA-PROPOSAL.md)，后两项未批准、未执行；当前不再调用API。
+FULL-02的[31源/504请求/原20 ID计划](inputs/ds-full-plan-02.json)、[请求与源快照](ds-full2-preparation-01/raw-filemap.json)已冻结；[六源Ruff/strict mypy、6项离线单测、入口PS AST](ds-full2-checks-01/raw-filemap.json)均退出0，9个检查源前后SHA不变，保留[离线fixture](ds-full2-offline-fixtures-01/raw-filemap.json)。620份准备/检查/fixture逐件无损归档。机械代理按gpt-6.1-terra/max显式参数试用，只报证据未判语义门。当前执行环境未继承KEY，推送后打开用户隐藏入口，交接独立主管后关闭；不持久化KEY。
+
+**前一正式阶段按预注册技术停止，未完成全量。** 7次尝试都正常返回HTTP响应，其中6份评分通过冻结校验，第3项的`valence.label=both`不在效价字段允许枚举内。主管正常留下终态，失败发生后没有新发送，在途完成后全部退出，没有重试或修分；另497项not_run。由于该阶段504总体未完成，其固定随机20与正式分析均not_run，没有拿已完成子集另抽20。见[本轮摘要](results/ds-full-stop-summary-01.json)和[失败原文/原评分并列](ds-full-failure-01/FAILED.md)。
+
+这暴露了执行者准备评分接口时应提前补齐的说明缺口：[原提示](DS-RUBRIC-01.txt)列出了概念通道的both，却没有明确列出一般效价的mixed；[冻结校验器](ds_protocol.py)要求效价为positive/negative/mixed/neutral/uncertain。此次API返回完整合法JSON，问题是字段枚举不匹配，不是网络/进程消失，也不是四方向效果失败。原响应不将both替换成mixed。候选理由在[提案](VALENCE-SCHEMA-PROPOSAL.md)保留；用户已选择全新504的枚举说明并授权逐项invalid处理，不倒改旧停止。
 
 本轮新增峰值费用上界US$0.021053460，含两轮小样及历史未知整额预留的累计为**US$0.100000992**（非账户账单）。记录48次尝试、47完整响应、1历史未知；本轮7次都已结算，旧未知US$0.011795700预留仍保持。US$5上限没有清零或扩张，KEY只留进程，主管与7子进程现均不存在，没有密钥文件。
 
@@ -20,7 +24,7 @@
 
 [全量注册](DS-FULL-01.md)与[504请求/21源/seed20261110固定20](ds-full-preparation-01/raw-filemap.json)在`36a0662f7275a1b7ebf3a0ac97594c0e136454f6`推送核远端后才运行。原high20与非思考20的[方法选择对照](ds-flash-high-review-02/REVIEW.md)不作正式证据；它们的原标签/引文/理由不改。新固定随机20仅为事前ID计划，尚无可交付的504总体抽查页。
 
-入口：[R-STEER-01](../../tasks/requests/R-STEER-01.md)；[PR #144](https://github.com/nanake-lab/nemu/pull/144)；分支task/R-STEER-01；工作区D:/Dev/nemu-wt/R-STEER-01。main仍a7e8ae87，较实际验证基线无新增影响，不重写C0/此前运行基线。无新本机GPU工作，旧窗口已释放；PR保持draft/needs-user，请用户决定[后继采集/枚举说明候选](VALENCE-SCHEMA-PROPOSAL.md)或就此停止，不合并、不领下一卡。
+入口：[R-STEER-01](../../tasks/requests/R-STEER-01.md)；[PR #144](https://github.com/nanake-lab/nemu/pull/144)；分支task/R-STEER-01；工作区D:/Dev/nemu-wt/R-STEER-01。main仍a7e8ae87，较实际验证基线无新增影响，不重写C0/此前运行基线。无新本机GPU工作，旧窗口已释放；PR保持draft/needs-user，FULL-02推送核对后按授权运行，不合并、不领下一卡。
 
 ## 发散的路线与取舍
 
@@ -338,4 +342,4 @@ Flash[12源原字节快照](ds-flash-source-snapshot-01/raw-filemap.json)在运�
 
 ## 下一步
 
-正式504阶段已按冻结规则技术停止，未完成且未抽随机20/使用正式分数；两轮小样不进正式证据。当前等待用户决定[后继采集/枚举说明候选](VALENCE-SCHEMA-PROPOSAL.md)：停止、保持提示另冻非法记失败的497续段、或明确枚举后全新504；现有规则、原提示、原分数和所有失败保持。不自动继续497项，不合并、不领下一卡；PR保持draft/needs-user，写“请审查”后停下。
+用户已批准FULL-02：枚举一句、全新504、逐项invalid保留计失败继续。先冻结/检查/推送核对，再调用；全量后交同种子20核对才正式分析。旧阶段不续497或修分，不合并、不领下一卡；PR保持draft/needs-user。
