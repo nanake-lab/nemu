@@ -170,6 +170,9 @@ jobs:
           uv run --project core/contracts --locked mypy --strict core/contracts/generate.py core/contracts/fixture_inputs.py core/contracts/adversarial.py core/contracts/verify.py workers/irl/generated/echo
       - name: P5-21 contract compatibility tooling (no reuse; checked by test:core-contracts)
         if: steps.scope.outputs.contracts == 'true'
+        env:
+          # Match fixture_law_state's runtime search path for standalone mypy.
+          MYPYPATH: ${{ github.workspace }}/workers/irl/generated
         run: |
           uv run --project core/contracts --locked mypy --strict core/contracts/check_compat.py core/contracts/freeze_vectors.py
       - name: W19 optional CPU runtime compile checks (no model download)

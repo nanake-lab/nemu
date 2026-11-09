@@ -17,6 +17,8 @@
 - Rust：`cargo test -p core-types --locked`、该包 all-targets clippy、全工作区 fmt passed：[测试](evidence/review-core-types.log)、[clippy](evidence/review-clippy.log)、[fmt](evidence/review-fmt-02.log)。初次 fmt 要求新增调用换行，[失败输出](evidence/review-fmt.log) 保留，修正后复验通过。
 - Python：契约及三份生成包 ruff、严格 mypy，以及三个 worker 的严格 mypy/pytest passed：[ruff](evidence/review-ruff.log)、[mypy](evidence/review-mypy.log)，worker 日志为 evidence/review-*-mypy.log 与 review-*-pytest.log。
 - 全仓 TS lint/typecheck/test passed（54 文件、620 项），见 [lint](evidence/review-lint.log)、[类型](evidence/review-typecheck.log)、[测试](evidence/review-node-tests.log)。完整远端 CI 在推送修复 head 后重跑，结果与链接记录在 PR 的逐条回复；不把上一 head 的状态当本轮结果。
+- 修复 head `9e043fe2` 的 [CI #408](https://github.com/nanake-lab/nemu/actions/runs/42577591962) 已通过 Node/Python/Rust、存储和完整三语言验收，随后独立兼容工具 mypy 因找不到 `echo.*` 失败（[原日志](evidence/review-ci-408-failure.log)、[本机同命令失败](evidence/review-compat-mypy-red.log)）。此前本机的 MYPYPATH 掩盖了该 CI 配置遗漏。尝试全限定导入后，全量检查报重复模块名（[输出](evidence/review-full-mypy-02.log)），已撤回该方案。
+- 最终按 AGENTS §2 的共享 CI 只追加规则，在 `.github/workflows/ci.yml` 的 P5-21 步骤追加 MYPYPATH，指向现有 `workers/irl/generated`，与夹具的运行时路径一致；原命令、strict 要求及断言不变。两条原 mypy 命令均通过：[兼容工具](evidence/review-compat-mypy-final.log)、[全量契约](evidence/review-full-mypy-final.log)。契约源码、字节和向量仍是 `9e043fe2` 的版本，后续只追加 CI 配置及证据；新 head 再跑 CI，结果记录在 PR 回复。
 
 ## 交付物
 
