@@ -12,7 +12,7 @@ from typing import Any
 from ds_protocol import HERE, load, sha, write
 
 ORIGINAL = Path('D:/Dev/cache/R-STEER-01/ds-flash-full-02-windowless-v2')
-SESSION = ORIGINAL.parent / 'ds-flash-full-02-network-retry-01'
+SESSION = ORIGINAL.parent / 'ds-flash-full-02-network-retry-02'
 FAILED = '53dfb69ce6b166eae7a2f26e'
 EXTRA = ('FULL02-NETWORK-RETRY-01.md', 'ds_retry_http.py', 'ds_retry_budget.py', 'ds_retry_prepare.py',
          'ds_retry_run.py', 'ds_retry_review.py', 'ds_retry_analysis.py', 'ds_retry_entry.ps1', 'test_ds_retry.py')
@@ -24,7 +24,7 @@ def prepare() -> None:
     if (result['status'], result['post_attempts'], result['completed_ratings'], result['cumulative_upper_nano_usd']) != ('item_failure', 111, 110, 403365240):
         raise ValueError('Exact previous technical stop required')
     plan = copy.deepcopy(old)
-    plan.update({'phase': 'full02_network_retry', 'prior_attempts': 159, 'prior_upper_nano_usd': 403365240,
+    plan.update({'phase': 'full02_network_retry', 'registration_revision': 2, 'prior_attempts': 159, 'prior_upper_nano_usd': 403365240,
                  'new_max_attempts': 1181, 'overall_max_attempts': 1340, 'max_retries': 2, 'retry_seconds': 30,
                  'technical_streak_limit': 3, 'original_result_sha256': sha(ORIGINAL / 'run/result.json'),
                  'original_ledger_sha256': sha(ORIGINAL / 'run/ledger.jsonl'), 'expected_response_model': 'deepseek-flash'})
@@ -53,7 +53,7 @@ def prepare() -> None:
             raise ValueError('Original V2 request changed')
         shutil.copyfile(source, SESSION / 'requests' / source.name)
     write(SESSION / 'plan.json', plan)
-    shutil.copyfile(SESSION / 'plan.json', HERE / 'inputs/ds-full02-network-retry-plan-01.json')
+    shutil.copyfile(SESSION / 'plan.json', HERE / 'inputs/ds-full02-network-retry-plan-02.json')
     for row in plan['sources']:
         destination = SESSION / 'source-snapshot' / row['path']
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -67,7 +67,7 @@ def preflight(head: str) -> dict[str, Any]:
     if git('rev-parse', 'HEAD') != head or git('ls-remote', 'origin', 'refs/heads/task/R-STEER-01').split()[0] != head or git('status', '--porcelain'):
         raise ValueError('Clean pushed registration required')
     plan = load(SESSION / 'plan.json')
-    if sha(SESSION / 'plan.json') != sha(HERE / 'inputs/ds-full02-network-retry-plan-01.json'):
+    if sha(SESSION / 'plan.json') != sha(HERE / 'inputs/ds-full02-network-retry-plan-02.json'):
         raise ValueError('Plan differs')
     if sha(Path(plan['base_executable'])) != plan['base_executable_sha256']:
         raise ValueError('Interpreter differs')

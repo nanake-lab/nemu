@@ -20,12 +20,20 @@ class Ledger:
         self.reason: str | None = None
         self.until = time.monotonic() + plan['remaining_wall_seconds']
 
+    def _append(self, value: dict[str, Any]) -> None:
+        try:
+            event(self.path, value)
+        except Exception:
+            self.reason = 'ledger_io_failure'
+            self.stop.set()
+            raise
+
     def halt(self, reason: str) -> None:
         with self.lock:
             if not self.stop.is_set():
                 self.reason = reason
-                event(self.path, {'event': 'stop_new_posts', 'reason': reason})
                 self.stop.set()
+                self._append({'event': 'stop_new_posts', 'reason': reason})
 
     def book(self, identifier: str, attempt: int, body: bytes) -> int | None:
         with self.lock:
@@ -34,12 +42,12 @@ class Ledger:
             held = reserve(body)
             if time.monotonic() >= self.until or self.total + held >= self.plan['soft_nano_usd']:
                 self.reason = 'time_stop' if time.monotonic() >= self.until else 'budget_stop'
-                event(self.path, {'event': 'stop_new_posts', 'reason': self.reason})
                 self.stop.set()
+                self._append({'event': 'stop_new_posts', 'reason': self.reason})
                 return None
             self.total += held
             self.attempts += 1
-            event(self.path, {'event': 'reserve_before_post', 'id': identifier, 'attempt': attempt,
+            self._append({'event': 'reserve_before_post', 'id': identifier, 'attempt': attempt,
                   'overall_ordinal': self.attempts, 'retry': attempt > 1, 'reserved_nano_usd': held,
                   'cumulative_upper_nano_usd': self.total})
             return held
@@ -49,7 +57,7 @@ class Ledger:
             # User explicitly requested full reservation accounting for every retransmission.
             if attempt == 1:
                 self.total += actual - held
-            event(self.path, {'event': 'settle_usage' if attempt == 1 else 'retry_full_reservation_retained',
+            self._append({'event': 'settle_usage' if attempt == 1 else 'retry_full_reservation_retained',
                   'id': identifier, 'attempt': attempt, 'usage': usage, 'usage_peak_nano_usd': actual,
                   'budget_charge_nano_usd': actual if attempt == 1 else held,
                   'cumulative_upper_nano_usd': self.total})
@@ -57,10 +65,10 @@ class Ledger:
                 if attempt > 1:
                     self.total += max(0, actual - held)
                 self.reason = 'reservation_or_hard_budget_violation'
-                event(self.path, {'event': 'stop_new_posts', 'reason': self.reason,
-                                  'cumulative_upper_nano_usd': self.total})
                 self.stop.set()
+                self._append({'event': 'stop_new_posts', 'reason': self.reason,
+                              'cumulative_upper_nano_usd': self.total})
 
     def record(self, value: dict[str, Any]) -> None:
         with self.lock:
-            event(self.path, value)
+            self._append(value)

@@ -8,6 +8,8 @@
 
 新[46源/同504请求/110分携入/394工作项/同20 ID计划](inputs/ds-full02-network-retry-plan-01.json)与[完整原字节快照](ds-retry-preparation-01/raw-filemap.json)已冻结。初次[七源strict mypy、9单测与入口AST](ds-retry-checks-01/raw-filemap.json)通过，Ruff保留测试文件13条格式/未用导入错误；修正格式并补非2xx错误正文取证后，[七源Ruff/strict mypy及新增本机503取证测试](ds-retry-checks-02/raw-filemap.json)通过。原9单测AST逐方法未变，没有重跑已通过的30秒测量；[原始fixture与AST核对](ds-retry-offline-fixtures-01/raw-filemap.json)保留，真实loopback两请求间隔30.188秒，API调用0。664份准备/检查/fixture无损归档。实际续跑前需重新隐藏输入进程KEY，运行仍无窗口、无GPU。
 
+API前准备修订2补齐账本I/O失败立即触发全局停止的边界，避免工作线程在记账失败后继续重发；[七源静态、该新增边界单测与改后入口AST](ds-retry-checks-03/raw-filemap.json)通过。修订1仅准备not_run、未打开KEY/调用API，原源/计划不删改；实际使用[修订2计划](inputs/ds-full02-network-retry-plan-02.json)和[46源快照](ds-retry-preparation-02/raw-filemap.json)、新缓存ds-flash-full-02-network-retry-02。前两段实际执行411.492493秒从90分钟扣除，余4988秒，30秒等待计入；费用仍从US$0.403365240开始，未重置。
+
 此前FULL-02按网络规则停止：无窗口续段在0c66e05d推送核远端后新发41条，加原70共111尝试，110合规、0 schema/引证invalid，第107项HTTP正文读取IncompleteRead，393未发。主管留下item_failure终态，失败后新增0、在途收尾；该阶段没有重试。这与窗口或效价枚举无关。累计上界US$0.403365240（非账单，含两份未知预留），159记录尝试/157完整响应/2未知。[失败原文/终态](ds-full2-transport-failure-02/FAILED.md)、[摘要](results/ds-full2-transport-stop-summary-01.json)、[1552份续段原始文件](ds-flash-full-02-windowless-v2/raw-filemap.json)保留。随机20/正式分析not_run，不从110子集换抽。
 
 [独立冻结/携入审计](ds-full2-windowless-audit-01/raw-filemap.json)与[三段终态审计](ds-full2-windowless-final-audit-01/raw-filemap.json)均退出0：37源、504请求、630份原70携入字节一致，无重复POST；原70为70 reserve/settle，续41为41 reserve/40 settle+1新未知全额。111 worker都有终态、未过180秒，窗口观察限制为一次4进程句柄0。110响应的usage/schema/逐字引证与rating一致，但审计不判语义。FULL-02已知prompt140465（hit113408/miss27057）、completion235587含reasoning193070，已知费用US$0.291501948，新未知US$0.011862300；reasoning不双计。

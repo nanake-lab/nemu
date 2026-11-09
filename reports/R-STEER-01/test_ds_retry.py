@@ -130,6 +130,16 @@ class RetryBoundary(unittest.TestCase):
         self.assertEqual(transport.call_count, 1)
         self.assertTrue(ledger.stop.is_set())
 
+    def test_ledger_write_failure_prevents_other_threads_from_booking(self) -> None:
+        folder, plan, _ = fixture()
+        body = (folder / 'requests/offline.json').read_bytes()
+        ledger = Ledger(plan, folder / 'ledger.jsonl')
+        with patch('ds_retry_budget.event', side_effect=OSError('OFFLINE_ONLY')):
+            with self.assertRaises(OSError):
+                ledger.book('offline', 1, body)
+            self.assertTrue(ledger.stop.is_set())
+            self.assertIsNone(ledger.book('another', 1, body))
+
     def test_review_approval_required_before_any_formal_score_use(self) -> None:
         folder, _, _ = fixture()
         (folder / 'run').mkdir()
