@@ -4,7 +4,11 @@
 
 ## 总览
 
-**2026-11-09追加授权：独立语义评分改为DeepSeek官方Flash。** 用户先提出V4 Pro，随后明确改用Flash；不调用Pro或OpenAI。新[Flash评分预注册](DS-FLASH-01.md)沿既有语义口径，先冻结20条小样（中/英/日7/7/6），小样原输出与评分交用户抽查，认可后才允许全量504次；整轮含小样最多524次、US$5硬上限，接近上限即停，不自动续跑。当前只完成冻结准备，尚无Flash评分；C1自动门失败保持不变，语义评分不能补签其通过。KEY仅在本轮后台进程环境，按用户要求已关闭输入窗口，没有写入文件/日志/仓库。
+**2026-11-09追加授权：DeepSeek官方Flash的20条小样已完成，等待用户判断可信度。** 用户先提出V4 Pro，随后明确改用Flash；实际只调用`deepseek-flash`，Pro/OpenAI调用均0。[Flash预注册](DS-FLASH-01.md)与完整请求在`effedbe1973d374f782689b8236f1c4987962d23`推送核对后执行，20次POST、20份技术合规评分，**全量504次仍not_run**。按实际usage和峰值费率计算上界US$0.011447052（不是账户账单），整轮硬上限仍US$5/524次。小样不并入C1正式语义门，C1_insufficient_stop不变。
+
+请看[20条原输出、事实参照与原评分并列](ds-flash-review-01/REVIEW.md)。执行者初读发现需核对的偏差：第5/8条将主观感受本身判作事实unsupported，与冻结口径“主观感觉不自动当客观事件”冲突；第10条仅凭“正在研究”判好奇positive；第3条将“修好了但是否成功不清楚”判faithful且无矛盾。全部原标签保留，不据此改prompt/口径重试，不替用户确认可信。若用户认为不可信，按授权停止；认可前不跑全量。
+
+KEY仅经隐藏输入交给本轮进程环境，输入窗口按用户要求关闭；小样后评分与等待进程已退出。没有把KEY写入文件/日志/仓库、没有由代理检查读取KEY。原始[请求/响应/usage账](ds-flash-pilot-01/raw-filemap.json)保留，独立费用与字节复核进行中。
 
 第一阶段先测到一个应当挡在方向试验前的问题：即使零注入，原选择接口也会随答案代码和显示顺序大幅摆动，客观答案槽也没过门。它不能支撑四个「乎」方向有效性的判断。按运行前规定，旧轮停在C0，不提取方向、不扫描层、不运行混合；这不是四方向已被证伪的结果。续研改为新材料的新注册，不能改旧失败。
 
@@ -260,6 +264,8 @@ C1运行前准备：完整1686条实际样本SHA256 `8d9b8face032dbfead47df5cde8
 ## 依据
 
 Flash准备检查：5份Python的Ruff/strict mypy、4项离线边界单测、密钥入口PS AST通过；首轮7条多语句行/1未用import和1条Any返回类型问题的原始失败保留，[首轮](ds-flash-checks-01/raw-filemap.json)、[修正后](ds-flash-checks-02/raw-filemap.json)。未调整评分口径/样本/门或API模式；等待进程源码在修复前后字节未变。504份完整payload及20条选择在[冻结准备](ds-flash-preparation-01/raw-filemap.json)、[计划](inputs/ds-flash-plan-01.json)、[小样索引](inputs/ds-flash-pilot-index-01.json)。KEY从未由检查代理读取，所有检查未调用API/模型/GPU。main仍为a7e8ae87，与上次实际基线相同，无新增变化，不需额外merge或重复GPU测量。
+
+Flash实际调用：2026-11-09 UTC09:30–09:31（Perth17:30–17:31），响应model均`deepseek-flash`，system_fingerprint均`bc19ba97cbe016479903222bb1578db6`；官方价格页当时映射`DeepSeek-V4.1-Flash-1017`，API未返回独立日期版本字段，不冒称不可变权重。prompt 24,189 token（hit17,792/miss6,397），completion7,851；整数nano-USD累计11,447,052，20次全部结算、无重试/全量调用，未查询余额/账户。官方价格在调用前再次核对，证据与实际绑定/原始响应都在小样归档。可读审查页是运行后机械排版，输出/评分字节与原件相同，排版程序ds_review.py的Ruff/strict mypy通过；长审查页为生成证据，完整保留20条，不是手写实现。
 
 原文：AGENTS.md §§2/3/5/6/9、[ARCHITECTURE](../../docs/ARCHITECTURE.md)、[CONTRACTS](../../docs/CONTRACTS.md)、[Echo Core README](../../docs/echo-core/README.md)、[v2.0 §§2.3/3/9](../../docs/echo-core/echo-core-v2.0-first-principles.md)、[O §§12–14](../../docs/echo-core/ada-core-operators-spec-v1.0.md)、ADR [0012](../../docs/adr/0012-continuity-carrier-mobile.md)/[0031](../../docs/adr/0031-carrier-engine-and-injection.md)/[0032](../../docs/adr/0032-presets-as-starting-points.md)/[0034](../../docs/adr/0034-qwen35-4b-conditional-carrier.md)、[P5-31全文与追加](../../tasks/P5-echo-core.md#p5-31-方向提取与验证)。
 
