@@ -4,6 +4,57 @@
 
 ## 当前状态
 
-已认领，实施中，尚未运行验收。基线为 origin/main a7e8ae87。
-范围为 ADR 0035 §9 的 P5-68 五项：后继状态、作用记录、迁移记录与契约黄金向量。
-完成后保持 draft / needs-user，请独立交叉审查；不实现规律或 core-kernel，不领取下一卡。
+契约实现与本机验证完成，卡面三语言验收通过。PR [#146](https://github.com/nanake-lab/nemu/pull/146) 保持 draft / needs-user，尚未合并。按用户要求提交「请审查」后停下，等待独立交叉审查，不取下一卡；最终提交的 CI 与审查未完成前不称整卡完成。
+
+契约实现提交 `a85be8a0a6d55cd25ce9aa42b9ce81336b348d74`；后续只给 `core-types/src/lib.rs` 的缓存测试探针补一行新语义校验调用，并补报告。main 基线 B=M=`a7e8ae8790d297ac697956f6f1256d2e2b9403d5`，2026-11-09 再 fetch 后没有增量；契约、生成器、运行时代码未再改变。
+
+## 交付物
+
+- [law_state.proto](../../core/contracts/law_state.proto)：九种新消息、两个枚举；完整 θ 状态加 P、后继参数 P₀、依据身份/槽/快照、F 作用记录和迁移记录。旧 IDL 不变。
+- 三语言显式语义边界：Rust `semantic/law_state.rs`、Python/TS 模板及生成物；θ 校验沿现有函数区分消息版本。消费前调用语义检查，可信 H/资源解析归调用方。无规律实现、无 core-kernel 修改、无消费键。
+- [fixture_law_state.py](../../core/contracts/fixture_law_state.py)、[verify_law_state.py](../../core/contracts/verify_law_state.py)：接入正常契约 CI；新增 37 合法、70 非法黄金向量，每个新消息至少 3/3。R4 修订与合并、h 大于目标等是合法正例。
+- 冻结 main 的前代 IDL/黄金摘要基线，追加 [契约说明](../../docs/CONTRACTS.md) 与 [逐字段规格对照](SPEC-MAPPING.md)。没有新增差异登记或参数默认值。
+
+## 验收
+
+| 命令或检查 | 结果 | 证据 |
+| --- | --- | --- |
+| `python core/contracts/generate.py --check` | passed | [日志](SYS21/generate-check-01.log) |
+| `python core/contracts/check_compat.py` | passed：全部基线 0 违例 | [日志](SYS21/compat-01.log) |
+| `pnpm test:core-contracts` / SYS21 | passed：每语言 14,718 例；双编码、摘要、官方 protoc 一致 | [完整日志](SYS21/contracts-02.log)、[环境与向量说明](SYS21/README.md) |
+| SYS17 契约前提 | passed：3 个空槽迁移；每语言 36 项新旧互解拒绝、18 项旧字节回读 | [范围及证据](SYS17/README.md) |
+| `pnpm lint`、`pnpm typecheck`、`pnpm test` | passed：54 文件、620 tests | [lint](evidence/lint-01.log)、[类型](evidence/typecheck-01.log)、[测试](evidence/node-test-01.log) |
+| Python 契约 ruff / mypy --strict | passed：14 文件；包含新夹具、迁移检查与生成代码 | [ruff](evidence/ruff-01.log)、[mypy](evidence/mypy-02.log) |
+| 三个 worker 的 ruff / mypy --strict src tests | passed | evidence/ 下 irl、drive、model-adapter 的对应日志 |
+| `cargo fmt --all -- --check`、`cargo clippy --workspace --all-targets --locked -- -D warnings` | passed：修复后复验 | [fmt](evidence/cargo-fmt-02.log)、[clippy](evidence/cargo-clippy-02.log) |
+| Rust 工作区测试（分批完整覆盖） | passed：首轮 core-kernel/core-store 通过；探针修复后其余包及全部 doc-tests 通过。首轮整命令失败保留，不伪称一次全绿 | [首轮](evidence/cargo-test-01.log)、[其余工作区](evidence/cargo-test-remaining-02.log)、[kernel/store doc-tests](evidence/cargo-doc-02.log) |
+| 三个 worker 的 `uv run --locked pytest` | passed：28 / 1 / 1 项 | [irl](evidence/irl-pytest-01.log)、[drive](evidence/drive-pytest-01.log)、[model-adapter](evidence/model-adapter-pytest-01.log) |
+| 真实时间端到端/生产迁移 | not_run：本卡只编码时间锚点，不实现等待、推进或接线；后继 P5-75 验收 | [SYS17 边界](SYS17/README.md) |
+
+## 失败、阻塞与未完成项
+
+- 首轮 `cargo test --workspace --locked` failed：缓存测试探针只调用 θ 语义边界，遗漏新增快状态边界，接受了非法向量 false/660（槽坐标不一致）。补上与正式三语言探针一致的调用后，原缓存测试通过；未改断言或黄金向量。[原失败](evidence/cargo-test-01.log)、[定向回归 9/9](evidence/core-types-test-02.log)。首轮已通过的 core-kernel/core-store 产品及测试代码均未改，保留该证据；剩余工作区和这两包 doc-tests 分批补完。
+- 首轮契约验收的 TypeScript 启动找不到 zod；补 D 盘缓存输出的依赖链接后原命令通过，原失败日志保留。首次独立 mypy 调用未设生成包搜索路径，3 个 import-not-found；以完整生成包输入并设置 MYPYPATH 后严格检查通过。均未放宽检查。
+- 实现提交的 `git diff --check` 仅指出新冻结基线 growth.proto 原有末尾空行。为保留发布字节没有修剪；9 份基线 IDL 与 main Git blob 对照一致，除此冻结副本外代码 diff 检查通过。[原输出](evidence/diff-check-01.log)、[代码检查](evidence/diff-check-code-01.log)、[基线核对](evidence/baseline-copy-01.log)。原始日志也不做空白修整。
+- Ubuntu [CI #406](https://github.com/nanake-lab/nemu/actions/runs/42568888129) 首轮 failed：Electron 下载 HTTP 504，桌面设置测试加载失败，[原日志](evidence/ci-406-attempt1.log) 保留。同提交重跑后 Node lint/typecheck/test/build、契约 coverage、transport 及四个 Python 项目检查通过，但 Rust 复现同一缓存探针 false/660 失败，[第二轮日志](evidence/ci-406-attempt2.log) 保留。最终提交包含探针修复，需要新的 CI；本机结果不替代远端结论。
+- Windows [#267](https://github.com/nanake-lab/nemu/actions/runs/42568888098) 的 self-hosted 作业因 draft skipped，汇总检查 failed；没有 Windows CI 通过结论。保持用户要求的草稿状态。
+- 独立交叉审查尚未进行；合并必须由用户在审查和必要检查完成后执行。
+
+## 规格对照
+
+[SPEC-MAPPING.md](SPEC-MAPPING.md) 覆盖所有字段、ADR 0035 §9 五条以及 I18/I23/I16/I03/I21/I24/I29 的本卡检查方式。保存状态不等于证明规律或运行时接线。旧 θ 从 H 重算、真实存储迁移与故障回退、前态引用真实性均留给后继卡。
+
+Rust 分批补验命令：`cargo test --workspace --locked --exclude core-kernel --exclude core-store` 与 `cargo test -p core-kernel -p core-store --locked --doc`。只复用首轮中两个未受测试探针修复影响且已通过的包；没有删减断言、忽略失败测试或修改阈值。
+
+## 新增依赖
+
+无。大文件均为现有生成 schema、冻结黄金向量、发布基线或证据；手写新模块不超过 400 行。
+
+## 待用户确认
+
+- [ ] （阻塞）安排实现方之外的独立交叉审查（GPT-6 Astra，最高推理强度），通过后由用户决定合并。
+- [ ] （阻塞）合并前确认当前 head 的必要 CI/Windows 检查通过；本报告不豁免失败或 skipped。
+
+## 后续建议（不在本任务范围内）
+
+P5-69/P5-70 实现新规律；P5-72 定义消费键；P5-75 接入语义边界、版本切换与存储迁移。没有开展这些卡。
