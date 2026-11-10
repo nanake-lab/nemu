@@ -76,6 +76,9 @@ pub fn export_snapshot(
     fuses: &DynamicsFuses,
     limits: Limits,
 ) -> Result<ThetaSnapshotV2, SnapshotError> {
+    if state.prior_mass.is_some() {
+        return Err(SnapshotError::BindingMismatch);
+    }
     let parameters = parameters(&state.law, fuses)?;
     let parameters_digest = theta_parameters_digest(&parameters, limits)?;
     let s = state;
@@ -86,49 +89,53 @@ pub fn export_snapshot(
         values: s.values.clone(),
         parameters,
         parameters_digest,
-        estimator: ThetaEstimatorState {
-            schema_version: 1,
-            weight: s.weight,
-            reaction_sum: s.reaction_sum.to_vec(),
-            square_sum: s.square_sum.to_vec(),
-            sigma: scale(s.sigma),
-            variance: s.variance.to_vec(),
-            duration_log_sum: s.duration_log_sum.to_vec(),
-            duration_mass: s.duration_mass.to_vec(),
-            duration_log_mean: s.duration_log_mean.to_vec(),
-            zero_duration_count: s.zero_duration_count.map(U).to_vec(),
-            tau_s: scale(s.tau),
-            run_sign: s.runs.iter().map(|r| I(i64::from(r.sign))).collect(),
-            run_start_ns: s.runs.iter().map(|r| U(r.start_ns)).collect(),
-            detector_segment_count: U(s.detector.segment_count),
-            detector_changes: U(s.detector.changes),
-            detector_mean: s.detector.mean.to_vec(),
-            detector_positive: s.detector.positive.to_vec(),
-            detector_negative: s.detector.negative.to_vec(),
-            event_count: U(s.event_count),
-            h: s.h,
-            last_event: s
-                .last_event
-                .as_ref()
-                .map(|(ordinal, time, id)| ThetaLastEvent {
-                    schema_version: 1,
-                    ordinal: U(*ordinal),
-                    time_ns: U(*time),
-                    event_id: id.clone(),
-                }),
-            last_running_time: s.last_running_time.as_ref().map(|t| ThetaRunningTime {
-                schema_version: 1,
-                origin_ns: U(t.origin_ns),
-                event_ns: U(t.event_ns),
-                stopped_ns: U(t.stopped_ns),
-                running_ns: U(t.running_ns),
-            }),
-            drift_sign: s.drift_sign.map(|x| I(i64::from(x))).to_vec(),
-            drift_count: s.drift_count.map(U).to_vec(),
-        },
+        estimator: estimator(s),
     };
     check_theta_snapshot_v2(&snapshot, limits)?;
     Ok(snapshot)
+}
+
+pub(super) fn estimator(s: &DynamicsState) -> ThetaEstimatorState {
+    ThetaEstimatorState {
+        schema_version: 1,
+        weight: s.weight,
+        reaction_sum: s.reaction_sum.to_vec(),
+        square_sum: s.square_sum.to_vec(),
+        sigma: scale(s.sigma),
+        variance: s.variance.to_vec(),
+        duration_log_sum: s.duration_log_sum.to_vec(),
+        duration_mass: s.duration_mass.to_vec(),
+        duration_log_mean: s.duration_log_mean.to_vec(),
+        zero_duration_count: s.zero_duration_count.map(U).to_vec(),
+        tau_s: scale(s.tau),
+        run_sign: s.runs.iter().map(|r| I(i64::from(r.sign))).collect(),
+        run_start_ns: s.runs.iter().map(|r| U(r.start_ns)).collect(),
+        detector_segment_count: U(s.detector.segment_count),
+        detector_changes: U(s.detector.changes),
+        detector_mean: s.detector.mean.to_vec(),
+        detector_positive: s.detector.positive.to_vec(),
+        detector_negative: s.detector.negative.to_vec(),
+        event_count: U(s.event_count),
+        h: s.h,
+        last_event: s
+            .last_event
+            .as_ref()
+            .map(|(ordinal, time, id)| ThetaLastEvent {
+                schema_version: 1,
+                ordinal: U(*ordinal),
+                time_ns: U(*time),
+                event_id: id.clone(),
+            }),
+        last_running_time: s.last_running_time.as_ref().map(|t| ThetaRunningTime {
+            schema_version: 1,
+            origin_ns: U(t.origin_ns),
+            event_ns: U(t.event_ns),
+            stopped_ns: U(t.stopped_ns),
+            running_ns: U(t.running_ns),
+        }),
+        drift_sign: s.drift_sign.map(|x| I(i64::from(x))).to_vec(),
+        drift_count: s.drift_count.map(U).to_vec(),
+    }
 }
 
 fn fixed<T: Clone, const N: usize>(v: &[T]) -> Result<[T; N], SnapshotError> {
@@ -153,13 +160,23 @@ pub fn restore_snapshot(
     {
         return Err(SnapshotError::BindingMismatch);
     }
-    let s = &snapshot.estimator;
+    restore_estimator(&snapshot.estimator, &snapshot.values, law, None)
+}
+
+// Called only after the version-specific semantic and resource boundary.
+pub(super) fn restore_estimator(
+    s: &ThetaEstimatorState,
+    values: &core_types::generated::ThetaValues,
+    law: &DynamicsLaw,
+    prior_mass: Option<f64>,
+) -> Result<DynamicsState, SnapshotError> {
     let run_sign: [I; 4] = fixed(&s.run_sign)?;
     let run_start: [U; 4] = fixed(&s.run_start_ns)?;
     let drift: [I; 12] = fixed(&s.drift_sign)?;
     Ok(DynamicsState {
         law: law.clone(),
-        values: snapshot.values.clone(),
+        values: values.clone(),
+        prior_mass,
         weight: s.weight,
         reaction_sum: fixed(&s.reaction_sum)?,
         square_sum: fixed(&s.square_sum)?,

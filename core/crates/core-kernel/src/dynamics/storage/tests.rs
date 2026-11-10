@@ -165,6 +165,7 @@ fn identical(a: &DynamicsState, b: &DynamicsState) {
     let DynamicsState {
         law,
         values,
+        prior_mass,
         weight,
         reaction_sum,
         square_sum,
@@ -187,6 +188,7 @@ fn identical(a: &DynamicsState, b: &DynamicsState) {
     assert_eq!(law.version, b.law.version);
     assert_eq!(law_bits(law), law_bits(&b.law));
     theta(values, &b.values);
+    assert_eq!(prior_mass.map(f64::to_bits), b.prior_mass.map(f64::to_bits));
     floats(&[*weight, *h], &[b.weight, b.h]);
     for (x, y) in [
         (reaction_sum, &b.reaction_sum),

@@ -1,6 +1,11 @@
 //! Pure, atomic staging of Echo Core v2.0 §8 C. No x, R, model, clock or storage.
 //! P5-36 exposes validated snapshots; authority publication remains outside this module.
 mod bounds;
+mod common_discount;
+pub use common_discount::{
+    COMMON_DISCOUNT_NUMERICS_ID, common_discount_parameters, export_snapshot_v3,
+    restore_snapshot_v3,
+};
 mod detector;
 mod duration;
 mod interval;
