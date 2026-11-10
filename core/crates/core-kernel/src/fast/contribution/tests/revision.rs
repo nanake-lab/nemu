@@ -58,7 +58,7 @@ impl SyntheticH {
 
     fn target(&self, record: &FastEffectRecord) -> Target {
         let effects = EffectiveEffects {
-            theta: self.theta[&key(&record.theta_before)].clone(),
+            theta: self.theta[&key(&record.theta_before)],
             effects: self.views[&key(&record.effects_before)].clone(),
         };
         assert_eq!(record.interpretation_refs.len(), 1);
@@ -117,7 +117,7 @@ fn interpreter_revision_uses_latest_target_prestate_and_next_update_uses_current
     let first = h.effect(11, 21, update);
     let second = h.effect(12, 22, update);
     let view = EffectiveEffects {
-        theta: h.theta[&key(&initial.record().theta_before)].clone(),
+        theta: h.theta[&key(&initial.record().theta_before)],
         effects: h.views[&key(&initial.record().effects_before)].clone(),
     };
     let mut s = state(0.0).f_out(&view).unwrap();
