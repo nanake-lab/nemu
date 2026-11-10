@@ -83,5 +83,10 @@ def generate():
 
 
 if __name__ == '__main__':
-    Path(__file__).with_name('oracle.json').write_text(
-        json.dumps(generate(),indent=2)+'\n',encoding='utf-8')
+    data = generate()
+    vectors = data.pop('vectors')
+    lines = [json.dumps(data)[:-1] + ', \"vectors\": [']
+    lines += [json.dumps(v) + (',' if i + 1 < len(vectors) else '')
+              for i, v in enumerate(vectors)]
+    lines.append(']}')
+    Path(__file__).with_name('oracle.json').write_text('\n'.join(lines)+'\n',encoding='utf-8')
