@@ -30,3 +30,30 @@
 | `P5-70/kernel-final-run.json` | 269 | `6e3744e7494b539236a1cef03e8ffa7300c143cdda9529ace08c01c3e5993824` |
 | `P5-70/kernel-final.log` | 25382 | `629e5bbd7220e827eb06aa369b2aa8ad882d6669f894d4da68592ef0481b8c59` |
 | `P5-70/oracle-final.json` | 546 | `f573fe19b774dae59060e32be082a1b1147af07e89abd199070b01d629140768` |
+
+## 2026-11-11 审查建议增量
+
+私有证据提交：`b81383094901f4d37ad36ac0f863b3f417228bbc`，以下 16 个文件与 Git blob 逐字节核对一致；原版证据不改写。
+
+首轮代码 `31510bcdebd82db74d2632c8e63f7fb6914b8f45`：kernel 257/0/1、697.08 秒；clippy 与 CI 42857935159 因两处 clone_on_copy 失败。最终代码 `723b14f5fa913d60026fbcef76da804ce9824bb6` 去掉多余 clone 后，kernel 257/0/1、336.19 秒，clippy / fmt 退出码 0。kernel-final 为单一测试命令、4 个测试线程；其他重负载命令串行。全部数据为合成夹具。
+
+`inputs` 与 `final-inputs` 分别绑定两次代码；各 run JSON 记录命令、提交及退出码。`ci-failed.log` 为失败 job 129975955709 的 API 解码日志；`ci-observed.json` 是当时查询快照，不代表之后的 CI 状态。原有 ignored 没有改变。
+
+| 私有仓库路径 | 字节数 | SHA-256 |
+| --- | ---: | --- |
+| `P5-70/review-followup/ci-failed.log` | 52885 | `ed4597de9030e12c0ac623839146e00b754b1ea9a511ae8ddac2ad7f7c28024f` |
+| `P5-70/review-followup/ci-observed.json` | 479 | `f88e27034445b03959684eee61a293d38dbe8a485cb104a9f798a21cfbb9e7f5` |
+| `P5-70/review-followup/clippy-final-run.json` | 257 | `67402bc3c0340c4ba554ac464fa7682bba28a5a8da2436215f7f2420a725f427` |
+| `P5-70/review-followup/clippy-final.log` | 153 | `a7747e8c49d5cf67f8015c68a3a2ca065f8524728042ce5a1c74ca3ec5803aef` |
+| `P5-70/review-followup/clippy-run.json` | 302 | `b086ea198f5aa9c07620d9a799b07b928ab9cf92e04af1d7689c09d96d4f7481` |
+| `P5-70/review-followup/clippy.log` | 1557 | `2ad4976dd35319291ae5af56a1f97330fb122a0ed785ed904b223387031299f0` |
+| `P5-70/review-followup/final-inputs.json` | 3731 | `31d8011af0e12b8defad54eca9c5cdaed6c619a271a243a51c9fcf0e5c1d6db2` |
+| `P5-70/review-followup/fmt-final-run.json` | 155 | `110eff443368306893b31c7e2ff0f553ea4fe6ad0e52aa51f26fe14c73399517` |
+| `P5-70/review-followup/fmt-final.log` | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `P5-70/review-followup/fmt-run.json` | 208 | `ac4386d1137aaee77d557cffb660a31790d16a6e2a92f3569fd8d98554a22575` |
+| `P5-70/review-followup/fmt.log` | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `P5-70/review-followup/inputs.json` | 3973 | `fae710763407792f752aed49382b1d74ee08042aa5e73a07e095eae7c725f09b` |
+| `P5-70/review-followup/kernel-final-run.json` | 311 | `eb8bd6d0d83d55dc8cc38c52ae78ffb419be709db9e1be12e86ab23c7eca0878` |
+| `P5-70/review-followup/kernel-final.log` | 25787 | `e9919580d5da604b5acee91c381f919349b4617b049bd798f5795c51603a061f` |
+| `P5-70/review-followup/kernel-run.json` | 311 | `62f542c0ae39e8e7a4282ab8c1e2722fc58e07ae98bb52df0f4110b115247522` |
+| `P5-70/review-followup/kernel.log` | 26110 | `7dd086100cfd19fccd1e2709d22249121d39399005c4d5ed96ca0f5a2df195e6` |

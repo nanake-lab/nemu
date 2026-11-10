@@ -2,11 +2,20 @@
 
 ## 结果
 
-实现已提交，独立交叉审查待用户安排；不标记整卡完成。保持 draft / needs-user，由用户合并。
+原 head `38646315` 的独立交叉审查已通过（[评论](https://github.com/nanake-lab/nemu/pull/151#issuecomment-6771847710)）。两项非阻塞建议均已采纳，本轮代码提交 `723b14f5fa913d60026fbcef76da804ce9824bb6` 等待增量复审；不把原审查结论沿用为新 head 的通过。保持 draft / needs-user，由用户合并。
 
 同一件事只保留一个依据槽，重访替换实际份额；越界损失归本次分量，其他槽不动。可见 x 是主值，停止事件后直接使用原 Φ，不从各槽重建 x，不定时清零。旧快状态迁移只保留 x 与锚点，槽为空，并返回绑定新旧快照内容的迁移记录。
 
-基线：`51298e9ce5d571e8753d047eaac864fce007b867`（已合并 P5-68）；代码验收提交：`7a94bda3b527764f23d23e4de08e87adc73e2378`。分支 `task/P5-70-f-contribution`；[PR #151](https://github.com/nanake-lab/nemu/pull/151)。修改范围仅为 `core/crates/core-kernel/src/fast/` 与本报告目录。
+基线：`51298e9ce5d571e8753d047eaac864fce007b867`（已合并 P5-68）；初版代码验收提交：`7a94bda3b527764f23d23e4de08e87adc73e2378`。分支 `task/P5-70-f-contribution`；[PR #151](https://github.com/nanake-lab/nemu/pull/151)。修改范围仅为 `core/crates/core-kernel/src/fast/` 与本报告目录。
+
+## 2026-11-11 审查建议回应
+
+1. **采纳：复用边界规范字节。** `codec::check` 返回已做结构/语义校验的规范字节，State/Effect 构造复用；State 的字节入口直接校验输入，不再走“解码成消息→重新编码→再次校验”的路径。保留 Schema 语义检查和生成类型的最终解码（现有 API 的语义层使用 Schema value，类型层仍需 decode），不新增运行时 JSON 依赖或通用框架。既有有限性、角色、版本校验保留；补查 -0→+0、无效字节与空治理引用拒绝。
+2. **采纳：加强 §9(12) 夹具。** 移至 `tests/revision.rs`；合成 H 分别保存 θ、R⁺ 视图、解释和治理对象，以完整规范引用为键。θ₀…θ₃ 的 g 和 R⁺ 的 s 分别为 1/8、1/4、1/2、3/4；逐步解析对象并重新计算记录目标，连接目标为 0.09375→0.1875→0.375→修订重访 0.4375→当前更新 0.09375，后两步学得坐标为 0.125/0.5625。分别仅错配 θ₀/θ₁ 引用、仅错配 R₀/R₁ 引用，四个反例均需拒绝；输入不变。修订前重访、修订后重访及最后再重访也逐步核对引用。仍不是正式 H 存储验收。
+
+同步核对：实际基线 B=`51298e9ce5d571e8753d047eaac864fce007b867`，最新 M=`31e6f71231e68b8e5464603a68d0b55a10d4a906`。B 是 M 的祖先；全部新增变化仅 `tasks/P4-voice.md` 的 IndexTTS 候选登记，不改变本卡规格、契约、构建或测试，故未合入 main。本轮重跑 core-kernel、clippy、fmt，结果与私有证据见下方补充。
+
+本轮验收：最终代码 723b14f5 全包 257 passed / 0 failed / 1 原有 ignored（336.19 秒），clippy（1.32 秒）与 fmt 通过。首轮 31510bcd 全包 257 passed / 0 failed / 1 原有 ignored（697.08 秒），但本机 clippy 与 CI 42857935159 因夹具两处 StoredTheta 的 clone_on_copy 失败。去掉两处多余 clone 后重验，未放宽 lint；失败日志保留。最终测试使用 RUST_TEST_THREADS=4、构建 jobs=2，仍只运行一个重负载命令。证据见 EVIDENCE.md 的审查建议增量；当前代码 CI [42860287658](https://github.com/nanake-lab/nemu/actions/runs/42860287658) 仍在运行，不计作通过。
 
 ## 交付物
 
@@ -19,7 +28,7 @@
 
 新表示标识为 `echo-core-ADR0035/fast-state/1`；快照与作用绑定显式规律资源引用。盒边界、零与 schema_version 是结构常量，不是调参默认值。新增手写模块均不超过 400 行；oracle.json 为生成的测试数据。
 
-## 验收
+## 初版验收（7a94bda3；本轮结果见上方）
 
 最终运行信息与逐文件哈希见 [EVIDENCE.md](EVIDENCE.md)。
 
@@ -33,7 +42,7 @@
 | 真实时间、关机重启、H/L 原子发布、正式身份来源 | not_run | P5-75；本卡只有纯函数与规范序列化 |
 | 跨时间传输重发消费键 | not_run | P5-72/73/75；不是 F 跨时间幂等 |
 | 闭环、三语判断质量、真实载体 | not_run | P5-71/76/77 各自范围 |
-| 独立交叉审查 | not_run | 用户安排 |
+| 独立交叉审查 | passed（原 head）/ not_run（本轮增量） | 原 head 38646315 已通过；723b14f5 请求原审查方增量复审 |
 
 Windows、Rust 1.99.0、Python 3.12.10；全部合成状态，构建目录 `D:/Dev/cache/P5-70/target`，未打开排练或正式存储。重负载串行，`CARGO_BUILD_JOBS=2`、`RUST_TEST_THREADS=1`。第一轮与最终边界修改后的结果分开保留，不用第一轮代替最终代码验收。
 
@@ -56,7 +65,7 @@ Windows、Rust 1.99.0、Python 3.12.10；全部合成状态，构建目录 `D:/D
 | 9 §4.8 | `State::migrate` 空槽、原 x/锚点，校验新旧内容摘要及长度 | `migration_preserves_x_anchor_empty_slots_and_binds_record_to_content`：拒绝错误摘要、unknown 标记、跨版本解码；只是迁移准备，不声称 SYS17 存储回退通过 |
 | 10 AC2-15/I05，§4.6/§8 | 扩展状态 x/h；新目标无 κ；旧入口保留 | `ac2_15_i05_equal_slots_same_drive_and_different_decomposition_counterexample`；Fraction 3125 组 d◇ 比较、同槽 dyadic 同驱动比较、同 x 不同槽反例；`target_has_no_kappa_and_preserves_legacy_external_arithmetic` |
 | 11 接触/缺席 | 同一依据目标更新，不同依据各占槽 | `contact_report_cadence_fixed_and_changed_targets_respect_historical_interval`：密/疏时间表冻结 a、μ、人物/w、θ/R⁺；固定/变化目标分开；身份为合成真值，不是识别质量测量 |
-| 12 解释器前态序列 | selected 绑定最近目标更新 θ/R⁺；重访使用本次治理引用 | `interpreter_revision_uses_latest_target_prestate_and_next_update_uses_current`：θ₀→θ₁→θ₂→修订→重访→θ₃；错配 θ₀/θ₁ 拒绝；解释/前态引用与合成记录核对；真实 H 解引用归 P5-75 |
+| 12 解释器前态序列 | selected 绑定最近目标更新 θ/R⁺；重访使用本次治理引用 | `revision.rs::interpreter_revision_uses_latest_target_prestate_and_next_update_uses_current`：θ₀→θ₁→θ₂→修订→重访→θ₃；错配 θ₀/θ₁ 拒绝；解释/前态引用与合成记录核对；真实 H 解引用归 P5-75 |
 
 ## 其他不变量与证据边界
 
@@ -85,7 +94,7 @@ Windows、Rust 1.99.0、Python 3.12.10；全部合成状态，构建目录 `D:/D
 ## 待用户确认
 
 - [ ] （阻塞）新规律进入核心，由用户在独立审查通过后合并；决定已有 ADR 0035 和本卡承载，无新增规格读法。
-- [ ] （阻塞）独立交叉审查通过，目前只有实施方自检。
+- [ ] （阻塞）本轮增量复审通过；原 head 38646315 已通过独立交叉审查。
 
 ## 后续建议（不在本任务范围内）
 
