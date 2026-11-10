@@ -10,9 +10,9 @@
 | 4：AC2-14 自致结果、念头、桌面观察不改变 P/S/U | `types.rs::ReactionSource` / `learns` | 同上；观察类别与同次接触/缺席的身份判定由上游提供，纯 C 不认证这些声明 |
 | 5：E07 固定 H、出生差/有限扰动、冻结与动态 ρ 分报 | `update.rs` 与现有 `detector.rs` | `e07_fixed_h_frozen_rho_birth_difference_and_finite_perturbation`：P₀=2、ρ=1/2 的 32 步二进有理数精确等式，α=1/2；`e07_dynamic_same_h_birth_difference_rational_envelope`：128 步动态 ρ 的同历史不同出生值对照，独立 Fraction 检查逐步差异包络；`e07_dynamic_rho_sign_symmetry_and_permanent_world_change`：128 步动态检测器、正负对照和永久改变；不据此签发反馈世界 AC2-25 |
 | 6：§3.4 商缺陷恒等式、新包络、严格越界、旧项变异 | `bounds.rs::common_discount`、`StepBounds::check`；复用 `interval.rs` 外向舍入 | `d07_new_defect_bound_strict_rejection_and_old_prior_term_mutant`：a=b、δ=0，新界拒绝旧固定先验漂移；界上允许、next_up 拒绝；`d07_adaptive_extremes_stay_within_derived_bound`：9 条 ×128 步、全部12分量；`d07_outward_bound_covers_subnormal_quotient_and_range_fallback`：q/2 与大 P₀ 的范围回退 |
-| 7：AC2-08/I23、AC2-18/19、AC2-20 | 同一 `stage` 逐事件递推；V3 导出/恢复 | `ac2_08_18_19_v3_prefix_restore_and_replay`：32 前缀整段重算；每前缀两种编码恢复并续算；暂停不调用 C、补算记录输入；来源更正从 genesis 重算与从未使用该输入相同。新版本重算通过显式新 genesis + 同一输入序列；真实 H/L 写入、暂停/更正编排及迁移：not_run（P5-75），不拿此测试冒充 AC2-20 全项 |
+| 7：AC2-08/I23、AC2-18/19/20 | `tests/common_discount_controls.rs` 测试适配器接真实 C 与现有 `recompute::step/replay`，不改 recompute | 三项控制路径：Pause 后继续记 H、Resume 补算；Rebuild(SourceCorrection) 后等同证据从未出现；旧版→D07-A 的 Rebuild(LawVersion) 从完整 H 和新 genesis 重建。每个前缀增量/整段重算全状态（含 P）逐位一致，Audit 全记录相等；另外独立断言规律/lineage/prefix 绑定、kind、before_scope/after_scope、完整 before/after、changed。直接 C 递推提供控制路径外预期；检出旧 genesis、遗漏历史、遗漏 P。原 V3 两种编码恢复/续算测试保留，仅标作直接投影检查。纯待提交审计材料已测，生产 H/L 原子写入与 SYS17：not_run（P5-75） |
 | 8：旧版本黄金向量、THETA-1/THETA-2 保留 | `DynamicsState::genesis`、V2 导出/恢复、旧算术分支 | 旧测试及黄金文件不改断言；唯一旧测试修改是在穷举状态比对中增加 P 的 Option/位值检查。既有 `**2` 诊断 ignored 沿旧授权保留，不记 passed |
-| 9：五种最小变异分别检出 | 正式路径无变异开关 | 固定 n_b→出生差测试；重复质量→重复投影恒等测试及错误重新分类对照；x 替 a→反向信号对照且 API 无 x/m；按符号筛选→正负镜像同质量；截断继续→越界输入/候选返回 Err，强烈合法输入仍应用并报警 |
+| 9：五种最小变异分别检出 | 正式路径无变异开关 | 固定 n_b→出生差测试；重复质量→重复投影恒等测试及错误重新分类对照；x 替 a→API 无 x/m 的结构检查及反向 a 的输入敏感性对照（不是带 x 的闭环变异）；按符号筛选→正负镜像同质量；截断继续→越界输入/候选返回 Err，强烈合法输入仍应用并报警 |
 | 10：规范算术黄金向量、逐步有理数 oracle | `tests/d07-vectors.json`（测试夹具）、`tests/d07_oracle.py`（Python 标准库） | 1074 步每步严格比较 P/S/U/b 位值，并检查根据已舍入 P′/U′/S′ 构造的 N/T 精确有理数误差包络；q/2、(3/4)q、偶中点、最小正规数停滞分别断言。普通 cargo test 执行 Python `--check`，不写夹具 |
 
 ## 契约、版本及不变量

@@ -181,7 +181,7 @@ fn ac2_05_14_qualified_projection_only_and_duplicate_mutant() {
 }
 
 #[test]
-fn ac2_08_18_19_v3_prefix_restore_and_replay() {
+fn ac2_08_v3_prefix_restore_and_direct_projection_replay() {
     // §9(7), I23: canonical bytes compare all floats/integers/markers. Pausing
     // omits C calls; catch-up replays stored inputs. No L transaction is claimed.
     let genesis = initial(0.25, 4.0);

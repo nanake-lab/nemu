@@ -3,6 +3,7 @@ use super::*;
 
 mod common_discount;
 mod common_discount_bounds;
+mod common_discount_controls;
 mod common_discount_e07;
 
 fn law() -> DynamicsLaw {
