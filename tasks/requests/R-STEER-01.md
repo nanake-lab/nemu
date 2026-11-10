@@ -24,6 +24,8 @@ GPU 窗口申请须附预注册摘要、内容和预计时长；用户停 runner
 
 ## 当前状态
 
+FULL-02全部504最终记录已齐：501格式/引证合规、3invalid、0最终技术失败、0not_run。原seed20261110同20 ID的[原输出/评分并列页](../../reports/R-STEER-01/ds-full02-review-01/REVIEW.md)已生成，三invalid未抽中，另[全部附出](../../reports/R-STEER-01/ds-full02-review-01/INVALID.md)，未换样。费用总上界US$1.483366224（非账单），553记录尝试/551完整响应/2历史未知，含旧未知和成功重发整额保留，仍总US$5。全数据SHA清单与终态独立核对通过，但sample-review/formal-analysis均不存在；等用户确认新20后才正式使用，不再发API。原C0/C1失败与方向/层/混合/文字/人格/Base/投影等not_run不改。最终[报告](../../reports/R-STEER-01/REPORT.md)和[谱系/复算入口](../../reports/R-STEER-01/FULL02-PROVENANCE.md)已更新，保持draft/needs-user，请审查，不合并、不领下一卡。以下是旧阶段状态。
+
 有限网络续段启动后因完整空评分分类保护收尾265分/1pending/238未启动：HTTP200/进程0正常，8192输出全用于思考，content空、finish_reason=length。按用户已授权“完整无效不重发、单项计失败继续”修复封装分类，只在新目录将该条invalid入原分母、保留265并只续238，不增token/不重发。新[记录](../../reports/R-STEER-01/FULL02-COMPLETE-INVALID-01.md)与52源输入已检查冻结，待推送后继续；旧终态/原件保留。当前费用上界US$0.850617732、315尝试，仍总US$5，KEY沿用已给值不再索取；随机20/正式分析未运行。以下为旧阶段记录。
 
 用户已批准保留110分，续393并对既有IncompleteRead原样重发；仅未完整收到且无可解析评分内容的网络失败可最多重发2次、至少间隔30秒，耗尽计技术失败入原分母继续，连续3条最终技术失败/进程/预算异常停；完整响应一律不重发。新[注册](../../reports/R-STEER-01/FULL02-NETWORK-RETRY-01.md)、46源/同504请求/394工作项/同seed20已准备，检查原失败与通过分开保留，真实loopback间隔30.188秒。尚无新API，待推送核远端/KEY交接；费用初值US$0.403365240含旧未知，仍总US$5。以下为旧阶段状态。

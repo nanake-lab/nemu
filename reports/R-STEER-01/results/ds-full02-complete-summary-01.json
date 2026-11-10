@@ -1,0 +1,108 @@
+{
+  "status": "collection_complete_awaiting_user_random20_review",
+  "population": 504,
+  "ratings_format_and_quote_valid": 501,
+  "invalid": 3,
+  "final_technical_failures": 0,
+  "not_run": 0,
+  "overall_recorded_attempts": 553,
+  "overall_complete_http_responses": 551,
+  "historical_unknown_attempts": 2,
+  "cumulative_budget_upper_nano_usd": 1483366224,
+  "formal504_usage_peak_nano_usd": 1362065544,
+  "method_materials_budget_upper_nano_usd": 100000992,
+  "old_full02_unknown_reserve_nano_usd": 11862300,
+  "successful_retry_reserve_over_usage_nano_usd": 9437388,
+  "formal504_usage": {
+    "prompt_tokens": 645286,
+    "completion_tokens": 1104912,
+    "reasoning_tokens_in_completion": 909389,
+    "total_tokens": 1750198
+  },
+  "actual_active_seconds_all_full02_segments": 2062.055271,
+  "sample_seed": 20261110,
+  "random20_invalid_selected": 0,
+  "all_invalid_separately_published": 3,
+  "formal_input_inventory_sha256": "8e331da96f76feba9a0f0c3773f7d1c3b251f6a3c4b5df74efed672870bcf648",
+  "formal_analysis": "not_run_pending_user_review",
+  "user_random20_approval": "not_received",
+  "pilot_or_full01_ratings_used": false,
+  "invalid_items": [
+    {
+      "id": "26867ceb738bf2198db469d3",
+      "record": {
+        "status": "invalid",
+        "error_class": "ValueError",
+        "error": "Invalid rating fields",
+        "selected_attempt": 1,
+        "retry_allowed": false
+      },
+      "finish_reason": "stop",
+      "sampled": false
+    },
+    {
+      "id": "3bffc4de3ca549e250b0327c",
+      "record": {
+        "status": "invalid",
+        "reason": "complete_length_empty_grading_content",
+        "original_fatal_sha256": "a57cb104fbce073f4c2328b959311b83daf0ddc521fe2c5ead0a408f9a2e9689",
+        "response_sha256": "2aced057b331db0cfda167c6fbe92768d534fea1869f1cc1e22e720a5bf98f01",
+        "retransmitted": false,
+        "classification": "user-authorized whole-item invalid, original stop retained"
+      },
+      "finish_reason": "length",
+      "sampled": false
+    },
+    {
+      "id": "90ff09af0af4204419938de8",
+      "record": {
+        "status": "invalid",
+        "error_class": "ValueError",
+        "error": "Evidence is absent from allowed text",
+        "selected_attempt": 1,
+        "retry_allowed": false
+      },
+      "finish_reason": "stop",
+      "sampled": false
+    }
+  ],
+  "mixed_cue_diagnostics": {
+    "returned_valence": {
+      "negative:n": 187,
+      "negative:invalid": 1,
+      "positive:n": 178,
+      "positive:invalid": 0,
+      "mixed:n": 13,
+      "mixed:invalid": 0,
+      "neutral:n": 125,
+      "neutral:invalid": 1,
+      "unreadable:n": 1,
+      "unreadable:invalid": 1
+    },
+    "cue_group": {
+      "not_mixed_cue_candidate:n": 487,
+      "not_mixed_cue_candidate:invalid": 3,
+      "mixed_cue_candidate:n": 17,
+      "mixed_cue_candidate:invalid": 0
+    },
+    "language": {
+      "zh:n": 168,
+      "zh:invalid": 1,
+      "en:n": 168,
+      "en:invalid": 2,
+      "ja:n": 168,
+      "ja:invalid": 0
+    },
+    "kind": {
+      "free:n": 168,
+      "free:invalid": 3,
+      "target:n": 240,
+      "target:invalid": 0,
+      "generic:n": 48,
+      "generic:invalid": 0,
+      "fact:n": 48,
+      "fact:invalid": 0
+    }
+  },
+  "fee_is_invoice": false
+}
