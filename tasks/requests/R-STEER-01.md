@@ -1,5 +1,7 @@
 # R-STEER-01 载体方向摸底
 
+
+2026-11-10用户核对FULL-02固定随机20和全部3条invalid，确认可信并批准正式使用；[冻结正式分析](../../reports/R-STEER-01/FULL02-ANALYSIS.md)一次退出0，C1_semantic_insufficient_stop。泛情感/事实/重复一致性门过，三语目标综合门与自由门均未过。四项抽查残留错误原分保留，3条invalid计入原分母；无新API/GPU，累计预算上界仍US$1.483366224。方向/层强度/混合/文字/厂商人格/Base行为与身份投影not_run，E2仍m=0。按用户本次要求停下等决定，draft/needs-user，不合并、不领下一卡。下文为原阶段历史记录，不倒改。
 - 用户批准开卡：2026-11-08（Australia/Perth）。
 - 类型：信息性研究；难度高，报告本身为交付物。预注册研究实际运行按 AGENTS.md §6 重档；GPU 按 §9 另约安静窗口。
 - 分支：`task/R-STEER-01`；起点：`origin/main` `cb95af4d`。

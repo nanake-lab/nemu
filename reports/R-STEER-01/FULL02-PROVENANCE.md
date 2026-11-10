@@ -35,4 +35,4 @@ KEY仅一次性不回显交接到进程环境，不入研究日志、参数、�
 
 [固定随机20并列页](ds-full02-review-01/REVIEW.md) · [全部3个invalid](ds-full02-review-01/INVALID.md) · [原20 ID/抽样方法/数据SHA](ds-full02-review-01/sample-index.json)。同seed20261110、全504均匀无放回，不按质量/语言换样；3个invalid都未抽中，另完整附出。完整评分、对象、逐字证据、事实参照和理由不改。
 
-全504数据清单SHA256为`8e331da96f76feba9a0f0c3773f7d1c3b251f6a3c4b5df74efed672870bcf648`。尚无用户对新20的确认，sample-review.json/formal-analysis.json不存在；不会用旧小样确认代签。独立样本与终态审计只核字节和计费，不计算C1正式门。用户认为评分不可信则停，不调口径重试。
+全504数据清单SHA256为`8e331da96f76feba9a0f0c3773f7d1c3b251f6a3c4b5df74efed672870bcf648`。用户2026-11-10核对新20及全部3条invalid后确认可信、批准正式分析；[批准原件](ds-full02-formal-analysis-01/sample-review.json)绑定上述清单与原20 ID，四项已知错误保留不修分。[冻结分析一次退出0](ds-full02-formal-analysis-01/execution.json)，结果C1_semantic_insufficient_stop，完整门/计数见[正式分析](FULL02-ANALYSIS.md)。原采集/样本机械审计不承担语义裁决；分析无新API/GPU或费用，完成后停止等用户。
