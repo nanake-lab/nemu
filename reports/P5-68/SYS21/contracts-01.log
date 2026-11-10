@@ -1,0 +1,25 @@
+$ python core/contracts/verify.py
+0 generated files stale
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 1.232s
+
+OK
+Compatibility against p5-01, p5-21, p5-32, p5-34, p5-35, p5-36, current: 0 violations; 168 messages (48 superseded), 59 enums
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.41s
+Official protoc and protobuf runtime: 561 transport vectors PASS
+Rust: 14420 cases PASS
+Python: 14420 cases PASS
+Traceback (most recent call last):
+  File "D:\Dev\nemu-wt\P5-68\core\contracts\verify.py", line 279, in <module>
+    main()
+  File "D:\Dev\nemu-wt\P5-68\core\contracts\verify.py", line 254, in main
+    actual = probe(command, queries)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\nemu-wt\P5-68\core\contracts\verify.py", line 34, in probe
+    result = subprocess.run(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\nanake\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['node', 'D:\\Dev\\nemu-wt\\P5-68\\packages\\contracts\\src\\generated\\.test-build\\core\\contracts\\probe.js']' returned non-zero exit status 1.
+[ELIFECYCLE] Command failed with exit code 1.

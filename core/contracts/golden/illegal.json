@@ -27338,5 +27338,4219 @@
         "max_depth": 32
       }
     }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "FastBasisIdentity",
+      "op": "encode",
+      "value": {
+        "kind": 1,
+        "record_id": "event-A"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "FastBasisIdentity",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "kind": 1,
+        "record_id": "event-A"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "FastBasisIdentity",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1,
+        "record_id": "event-A",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "LawLearnedCoordinate",
+      "op": "encode",
+      "value": {
+        "tendency_id": "k",
+        "value": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "LawLearnedCoordinate",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "tendency_id": "k",
+        "value": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "LawLearnedCoordinate",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "tendency_id": "k",
+        "value": 0.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "LawStateVector",
+      "op": "encode",
+      "value": {
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "LawStateVector",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "LawStateVector",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": [],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "encode",
+      "value": {
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "current": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        },
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "current": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        },
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "current": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        },
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "FastStateSnapshotV3",
+      "op": "encode",
+      "value": {
+        "revision": "synthetic-0",
+        "representation_version": "ADR0035-A1-v1",
+        "anchor_time_ns": "9007199254740992",
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.5,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": [],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "slots": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "FastStateSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "revision": "synthetic-0",
+        "representation_version": "ADR0035-A1-v1",
+        "anchor_time_ns": "9007199254740992",
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.5,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": [],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "slots": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "FastStateSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "synthetic-0",
+        "representation_version": "ADR0035-A1-v1",
+        "anchor_time_ns": "9007199254740992",
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.5,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": [],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "slots": [],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "role": 1,
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "echo.semantic-record-v2",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "governance_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+            "object_type": "echo.basis-governance",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "role": 1,
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "echo.semantic-record-v2",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "governance_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+            "object_type": "echo.basis-governance",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "role": 1,
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "echo.semantic-record-v2",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "governance_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+            "object_type": "echo.basis-governance",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "FastStateMigrationRecord",
+      "op": "encode",
+      "value": {
+        "previous_snapshot": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.fast-state-v2",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "migrated_snapshot": {
+          "schema_version": 1,
+          "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+          "object_type": "echo.fast-state-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "prior_decomposition_unknown": true
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "FastStateMigrationRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "previous_snapshot": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.fast-state-v2",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "migrated_snapshot": {
+          "schema_version": 1,
+          "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+          "object_type": "echo.fast-state-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "prior_decomposition_unknown": true
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "FastStateMigrationRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "previous_snapshot": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.fast-state-v2",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "migrated_snapshot": {
+          "schema_version": 1,
+          "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+          "object_type": "echo.fast-state-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "prior_decomposition_unknown": true,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-adr0035",
+          "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8ba21f34d01e65264d164cfe3a07e347799dc086f7ed2b7102636bec28bdcb14",
+        "revision": "synthetic-prefix-17",
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "prior_mass": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-adr0035",
+          "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8ba21f34d01e65264d164cfe3a07e347799dc086f7ed2b7102636bec28bdcb14",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 2,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "prior_mass": 0.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 100.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-adr0035",
+          "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "8ba21f34d01e65264d164cfe3a07e347799dc086f7ed2b7102636bec28bdcb14",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "prior_mass": 0.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "ThetaEstimatorParametersV2",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 100.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-adr0035",
+        "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "ThetaEstimatorParametersV2",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 100.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-adr0035",
+        "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 2,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "ThetaEstimatorParametersV2",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 100.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-adr0035",
+        "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-baseline_weight",
+    "request": {
+      "name": "ThetaEstimatorParametersV2",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-adr0035",
+        "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-numerics_id",
+    "request": {
+      "name": "ThetaEstimatorParametersV2",
+      "op": "encode",
+      "value": {
+        "baseline_prior": {
+          "achievement": 0.3,
+          "connection": 0.1,
+          "curiosity": 0.0,
+          "empathy": -0.2,
+          "schema_version": 1
+        },
+        "baseline_weight": 101.0,
+        "change_min": 0.01,
+        "change_prior": 0.05,
+        "change_prior_weight": 10.0,
+        "detector_shift_sigma": 1.0,
+        "detector_threshold": 2.0,
+        "drift_margin": 0.0,
+        "drift_run": "3",
+        "duration_weight": 10.0,
+        "gain_max": 3.0,
+        "gain_min": 0.2,
+        "gain_prior": {
+          "achievement": 0.9,
+          "connection": 1.0,
+          "curiosity": 1.2,
+          "empathy": 0.8,
+          "schema_version": 1
+        },
+        "jump_notice": 0.001,
+        "law_id": "synthetic-adr0035",
+        "numerics_id": "P5-25-v2-93-98-libm-0.2.16",
+        "recovery_max": 5.0,
+        "recovery_min": 0.001,
+        "schema_version": 1,
+        "sigma_prior": {
+          "achievement": 0.5,
+          "connection": 0.3,
+          "curiosity": 0.2,
+          "empathy": 0.4,
+          "schema_version": 1
+        },
+        "tau_prior_s": {
+          "achievement": 7.0,
+          "connection": 10.0,
+          "curiosity": 2.0,
+          "empathy": 0.3,
+          "schema_version": 1
+        },
+        "variance_weight": 10.0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-prior_mass",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 101.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-adr0035",
+          "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "af568a8d61ea4c9fb11c9a87cbd7100bc070a8898f370a9e587961047daa981f",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "prior_mass": -5e-324
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-prior_mass",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 101.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-adr0035",
+          "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "af568a8d61ea4c9fb11c9a87cbd7100bc070a8898f370a9e587961047daa981f",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-parameters_digest",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 101.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-adr0035",
+          "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "prior_mass": 5e-324
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-law_version.resource_version",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0.6249746858131023,
+            -0.48608891534354504,
+            1.5006965996824273,
+            -0.24108075099932608
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.law-version",
+          "resource_version": "old-law",
+          "byte_length": "100"
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 101.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-adr0035",
+          "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "af568a8d61ea4c9fb11c9a87cbd7100bc070a8898f370a9e587961047daa981f",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "prior_mass": 5e-324
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-estimator.reaction_sum",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "encode",
+      "value": {
+        "estimator": {
+          "detector_changes": "16",
+          "detector_mean": [
+            0.8,
+            -0.9,
+            0.9,
+            -0.2
+          ],
+          "detector_negative": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_positive": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "detector_segment_count": "1",
+          "drift_count": [
+            "1",
+            "1",
+            "12",
+            "3",
+            "1",
+            "3",
+            "12",
+            "3",
+            "1",
+            "11",
+            "0",
+            "2"
+          ],
+          "drift_sign": [
+            "1",
+            "-1",
+            "-1",
+            "-1",
+            "1",
+            "1",
+            "1",
+            "-1",
+            "1",
+            "-1",
+            "0",
+            "-1"
+          ],
+          "duration_log_mean": [
+            1.811117451511101,
+            -1.2039849032598526,
+            0.6931471805599453,
+            1.8883945614408502
+          ],
+          "duration_log_sum": [
+            -2.7509185526288484,
+            -1.2203633276631443,
+            0.0,
+            -0.2646997212131006
+          ],
+          "duration_mass": [
+            1.1947087475719893,
+            1.0135030223552703,
+            0.0,
+            0.1644021653476096
+          ],
+          "event_count": "17",
+          "h": 0.6111111111111112,
+          "last_event": {
+            "event_id": "synthetic-16",
+            "ordinal": "1048",
+            "schema_version": 1,
+            "time_ns": "800000100"
+          },
+          "last_running_time": {
+            "event_ns": "800000100",
+            "origin_ns": "100",
+            "running_ns": "800000000",
+            "schema_version": 1,
+            "stopped_ns": "0"
+          },
+          "reaction_sum": [
+            0,
+            0,
+            0
+          ],
+          "run_sign": [
+            "1",
+            "-1",
+            "1",
+            "-1"
+          ],
+          "run_start_ns": [
+            "800000000",
+            "800000000",
+            "0",
+            "700000000"
+          ],
+          "schema_version": 1,
+          "sigma": {
+            "achievement": 0.49784258418482485,
+            "connection": 0.39293633299199454,
+            "curiosity": 0.3821841674492536,
+            "empathy": 0.46984188552975054,
+            "schema_version": 1
+          },
+          "square_sum": [
+            0.9014407255692233,
+            0.9756038311487896,
+            1.3042016622924777,
+            0.3917429509998609
+          ],
+          "tau_s": {
+            "achievement": 6.608750217251605,
+            "connection": 6.117279377420077,
+            "curiosity": 2.0,
+            "empathy": 0.29999637034178256,
+            "schema_version": 1
+          },
+          "variance": [
+            0.15439896178519563,
+            0.22075139739815122,
+            0.1460647378488791,
+            0.2478472386278244
+          ],
+          "weight": 1.6674406663138082,
+          "zero_duration_count": [
+            "8",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "parameters": {
+          "baseline_prior": {
+            "achievement": 0.3,
+            "connection": 0.1,
+            "curiosity": 0.0,
+            "empathy": -0.2,
+            "schema_version": 1
+          },
+          "baseline_weight": 101.0,
+          "change_min": 0.01,
+          "change_prior": 0.05,
+          "change_prior_weight": 10.0,
+          "detector_shift_sigma": 1.0,
+          "detector_threshold": 2.0,
+          "drift_margin": 0.0,
+          "drift_run": "3",
+          "duration_weight": 10.0,
+          "gain_max": 3.0,
+          "gain_min": 0.2,
+          "gain_prior": {
+            "achievement": 0.9,
+            "connection": 1.0,
+            "curiosity": 1.2,
+            "empathy": 0.8,
+            "schema_version": 1
+          },
+          "jump_notice": 0.001,
+          "law_id": "synthetic-adr0035",
+          "numerics_id": "ADR0035-D07-gradual-underflow-v1",
+          "recovery_max": 5.0,
+          "recovery_min": 0.001,
+          "schema_version": 1,
+          "sigma_prior": {
+            "achievement": 0.5,
+            "connection": 0.3,
+            "curiosity": 0.2,
+            "empathy": 0.4,
+            "schema_version": 1
+          },
+          "tau_prior_s": {
+            "achievement": 7.0,
+            "connection": 10.0,
+            "curiosity": 2.0,
+            "empathy": 0.3,
+            "schema_version": 1
+          },
+          "variance_weight": 10.0
+        },
+        "parameters_digest": "af568a8d61ea4c9fb11c9a87cbd7100bc070a8898f370a9e587961047daa981f",
+        "revision": "synthetic-prefix-17",
+        "schema_version": 1,
+        "values": {
+          "baseline": {
+            "achievement": 0.2927084527156874,
+            "connection": 0.10450715210473033,
+            "curiosity": 0.014760837784910068,
+            "empathy": -0.20150097987202845,
+            "schema_version": 1
+          },
+          "gain": {
+            "achievement": 0.9039001770747213,
+            "connection": 0.7634824647434983,
+            "curiosity": 0.6279694985843891,
+            "empathy": 0.6810801885813085,
+            "schema_version": 1
+          },
+          "recovery_per_s": {
+            "achievement": 0.15131454013643628,
+            "connection": 0.16347136337947402,
+            "curiosity": 0.5,
+            "empathy": 3.33337366335703,
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "prior_mass": 5e-324
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-record_id",
+    "request": {
+      "name": "FastBasisIdentity",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1,
+        "record_id": ""
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-record_id",
+    "request": {
+      "name": "FastBasisIdentity",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-kind",
+    "request": {
+      "name": "FastBasisIdentity",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 2,
+        "record_id": "事件-B"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-current.learned",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "事件-B"
+        },
+        "current": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": -1.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": [
+            {
+              "schema_version": 1,
+              "tendency_id": "k",
+              "value": 0.0
+            }
+          ]
+        },
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 0.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": []
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nature.connection",
+    "request": {
+      "name": "FastStateSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "synthetic-1",
+        "representation_version": "ADR0035-A1-v1",
+        "anchor_time_ns": "9007199254740993",
+        "nature": {
+          "schema_version": 1,
+          "connection": 1.0000000000000002,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": [],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "slots": [
+          {
+            "schema_version": 1,
+            "basis": {
+              "schema_version": 1,
+              "kind": 1,
+              "record_id": "event-A"
+            },
+            "current": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            },
+            "target": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-slots.0.basis.record_id",
+    "request": {
+      "name": "FastStateSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "synthetic-1",
+        "representation_version": "ADR0035-A1-v1",
+        "anchor_time_ns": "9007199254740993",
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.5,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": [],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "slots": [
+          {
+            "schema_version": 1,
+            "basis": {
+              "schema_version": 1,
+              "kind": 1,
+              "record_id": ""
+            },
+            "current": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            },
+            "target": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-learned",
+    "request": {
+      "name": "FastStateSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "synthetic-1",
+        "representation_version": "ADR0035-A1-v1",
+        "anchor_time_ns": "9007199254740993",
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.5,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": [
+          {
+            "schema_version": 1,
+            "tendency_id": "k",
+            "value": 0
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "slots": [
+          {
+            "schema_version": 1,
+            "basis": {
+              "schema_version": 1,
+              "kind": 1,
+              "record_id": "event-A"
+            },
+            "current": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            },
+            "target": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-role",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": -1.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": [
+            {
+              "schema_version": 1,
+              "tendency_id": "k",
+              "value": -1.0
+            }
+          ]
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "echo.semantic-record-v2",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "governance_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+            "object_type": "echo.basis-governance",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-role",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "role": 0,
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": -1.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": [
+            {
+              "schema_version": 1,
+              "tendency_id": "k",
+              "value": -1.0
+            }
+          ]
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "echo.semantic-record-v2",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "governance_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+            "object_type": "echo.basis-governance",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-role",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "role": 4,
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": -1.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": [
+            {
+              "schema_version": 1,
+              "tendency_id": "k",
+              "value": -1.0
+            }
+          ]
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "echo.semantic-record-v2",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "governance_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+            "object_type": "echo.basis-governance",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-interpretation_refs",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "role": 2,
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": -1.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": [
+            {
+              "schema_version": 1,
+              "tendency_id": "k",
+              "value": -1.0
+            }
+          ]
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [],
+        "governance_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+            "object_type": "echo.basis-governance",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-governance_refs",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "role": 2,
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": -1.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": [
+            {
+              "schema_version": 1,
+              "tendency_id": "k",
+              "value": -1.0
+            }
+          ]
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "echo.semantic-record-v2",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "governance_refs": [],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-theta_before.object_type",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 1,
+          "record_id": "event-A"
+        },
+        "role": 2,
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": -1.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": [
+            {
+              "schema_version": 1,
+              "tendency_id": "k",
+              "value": -1.0
+            }
+          ]
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v2",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "echo.semantic-record-v2",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "governance_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+            "object_type": "echo.basis-governance",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-prior_decomposition_unknown",
+    "request": {
+      "name": "FastStateMigrationRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "previous_snapshot": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.fast-state-v2",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "migrated_snapshot": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.fast-state-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "prior_decomposition_unknown": false
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-previous_snapshot.object_type",
+    "request": {
+      "name": "FastStateMigrationRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "previous_snapshot": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.fast-state-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "migrated_snapshot": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.fast-state-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "prior_decomposition_unknown": true
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-migrated_snapshot.object_type",
+    "request": {
+      "name": "FastStateMigrationRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "previous_snapshot": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.fast-state-v2",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "migrated_snapshot": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.fast-state-v2",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "prior_decomposition_unknown": true
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-slots",
+    "request": {
+      "name": "FastStateSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "synthetic-1",
+        "representation_version": "ADR0035-A1-v1",
+        "anchor_time_ns": "9007199254740993",
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.5,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": [],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "slots": [
+          {
+            "schema_version": 1,
+            "basis": {
+              "schema_version": 1,
+              "kind": 1,
+              "record_id": "event-A"
+            },
+            "current": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            },
+            "target": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            }
+          },
+          {
+            "schema_version": 1,
+            "basis": {
+              "schema_version": 1,
+              "kind": 1,
+              "record_id": "event-A"
+            },
+            "current": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            },
+            "target": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 0.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-slots",
+    "request": {
+      "name": "FastStateSnapshotV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "revision": "synthetic-1",
+        "representation_version": "ADR0035-A1-v1",
+        "anchor_time_ns": "9007199254740993",
+        "nature": {
+          "schema_version": 1,
+          "connection": 0.5,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "learned": [],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "slots": [
+          {
+            "schema_version": 1,
+            "basis": {
+              "schema_version": 1,
+              "kind": 2
+            },
+            "current": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 2.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            },
+            "target": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 1.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            }
+          },
+          {
+            "schema_version": 1,
+            "basis": {
+              "schema_version": 1,
+              "kind": 2
+            },
+            "current": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 2.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            },
+            "target": {
+              "schema_version": 1,
+              "nature": {
+                "schema_version": 1,
+                "connection": 1.0,
+                "empathy": 0.0,
+                "curiosity": 0.0,
+                "achievement": 0.0
+              },
+              "learned": []
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "protobuf",
+      "hex": "080179000000000000f07f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "08011a0f0801120b080111000000000000f07f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "0801220f0801120b080111000000000000f07f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "protobuf",
+      "hex": "080179000000000000f0ff",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "08011a0f0801120b080111000000000000f0ff",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "0801220f0801120b080111000000000000f0ff",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "protobuf",
+      "hex": "080179010000000000f87f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "08011a0f0801120b080111010000000000f87f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "0801220f0801120b080111010000000000f87f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "protobuf",
+      "hex": "0801121373796e7468657469632d7072656669782d31371a4b0801122002020202020202020202020202020202020202020202020202020202020202021a106563686f2e6c61772d76657273696f6e221173796e7468657469632d616472303033352864227a08011226080111f4e77c10fbc0ba3f19c9c654bbc8cac9bf21a9ca611cee3a8e3f29114eeb3bbcbbd23f1a26080111ce9124c7726ee83f19a020fdad68cbe53f2168c6697d5318e43f29204e6c10c0ecec3f22260801115110c62fa1ecc43f19b1baabcfbfaa0a4021000000000000e03f2983cba55c465ec33f62d9040801117e699d43d6adfa3f1911a58ce9caffe33f19185096ae141cdfbf19beab0d70da02f83f19625d9eeabbdbcebf213f4673389ad8ec3f210a5d94862538ef3f21e0f5ee8f02def43f2160e8be065112d93f2a260801110f17e76ede25d93f194f0a29b3e311de3f2107960f95b475d83f2918516824a7dcdf3f31b4aeb35d58c3c33f31b1882ff09441cc3f31a97214d43fb2c23f31a3bb275475b9cf3f3925010c96e10106c039a3d058b29b86f3bf39000000000000000039a8b77719d7f0d0bf41ab1171eb861df33f41d39bf6f14e37f03f41000000000000000041ea9fc751210bc53f49dd47f74a56fafc3f49870f86ac8543f3bf49ef39fafe422ee63f49cc523537dd36fe3f50085000500050005a26080111d20eca151878184019a558e2f92333d33f21000000000000004029391d8a375c6f1a406002600160026001688090bcfd02688090bcfd0268006880cee4cd027001781081019a9999999999e93f8101cdccccccccccecbf8101cdccccccccccec3f81019a9999999999c9bf8901000000000000000089010000000000000000890100000000000000008901000000000000000091010000000000000000910100000000000000009101000000000000000091010000000000000000980111a101e4388ee3388ee33faa0119080110980818e490bcfd02220c73796e7468657469632d3136b201120801106418e490bcfd022000288090bcfd02b80102b80101b80101b80101b80102b80102b80102b80101b80102b80101b80100b80101c00101c00101c0010cc00103c00101c00103c0010cc00103c00101c0010bc00100c001026adf020801121173796e7468657469632d616472303033351a20414452303033352d4430372d6772616475616c2d756e646572666c6f772d763122260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f2a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f3226080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f3a26080111000000000000244019333333333333d33f210000000000000040290000000000001c40490000000000002440510000000000002440599a9999999999a93f610000000000002440697b14ae47e17a843f719a9999999999c93f7900000000000008408101fca9f1d24d62503f890100000000000014409101000000000000f03f99010000000000000040a101fca9f1d24d62503fa80103b1010000000000000000b90100000000004059407220af568a8d61ea4c9fb11c9a87cbd7100bc070a8898f370a9e587961047daa981f79000000000000f07f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "0801120e080110011a08e4ba8be4bbb62d421a2a08011226080111000000000000f07f190000000000000000210000000000000000290000000000000000222a080112260801110000000000000000190000000000000000210000000000000000290000000000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "0801120e080110011a08e4ba8be4bbb62d421a2a08011226080111000000000000f0bf190000000000000000210000000000000000290000000000000000222a08011226080111000000000000f07f190000000000000000210000000000000000290000000000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "protobuf",
+      "hex": "0801121373796e7468657469632d7072656669782d31371a4b0801122002020202020202020202020202020202020202020202020202020202020202021a106563686f2e6c61772d76657273696f6e221173796e7468657469632d616472303033352864227a08011226080111f4e77c10fbc0ba3f19c9c654bbc8cac9bf21a9ca611cee3a8e3f29114eeb3bbcbbd23f1a26080111ce9124c7726ee83f19a020fdad68cbe53f2168c6697d5318e43f29204e6c10c0ecec3f22260801115110c62fa1ecc43f19b1baabcfbfaa0a4021000000000000e03f2983cba55c465ec33f62d9040801117e699d43d6adfa3f1911a58ce9caffe33f19185096ae141cdfbf19beab0d70da02f83f19625d9eeabbdbcebf213f4673389ad8ec3f210a5d94862538ef3f21e0f5ee8f02def43f2160e8be065112d93f2a260801110f17e76ede25d93f194f0a29b3e311de3f2107960f95b475d83f2918516824a7dcdf3f31b4aeb35d58c3c33f31b1882ff09441cc3f31a97214d43fb2c23f31a3bb275475b9cf3f3925010c96e10106c039a3d058b29b86f3bf39000000000000000039a8b77719d7f0d0bf41ab1171eb861df33f41d39bf6f14e37f03f41000000000000000041ea9fc751210bc53f49dd47f74a56fafc3f49870f86ac8543f3bf49ef39fafe422ee63f49cc523537dd36fe3f50085000500050005a26080111d20eca151878184019a558e2f92333d33f21000000000000004029391d8a375c6f1a406002600160026001688090bcfd02688090bcfd0268006880cee4cd027001781081019a9999999999e93f8101cdccccccccccecbf8101cdccccccccccec3f81019a9999999999c9bf8901000000000000000089010000000000000000890100000000000000008901000000000000000091010000000000000000910100000000000000009101000000000000000091010000000000000000980111a101e4388ee3388ee33faa0119080110980818e490bcfd02220c73796e7468657469632d3136b201120801106418e490bcfd022000288090bcfd02b80102b80101b80101b80101b80102b80102b80102b80101b80102b80101b80100b80101c00101c00101c0010cc00103c00101c00103c0010cc00103c00101c0010bc00100c001026adf020801121173796e7468657469632d616472303033351a20414452303033352d4430372d6772616475616c2d756e646572666c6f772d763122260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f2a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f3226080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f3a26080111000000000000244019333333333333d33f210000000000000040290000000000001c40490000000000002440510000000000002440599a9999999999a93f610000000000002440697b14ae47e17a843f719a9999999999c93f7900000000000008408101fca9f1d24d62503f890100000000000014409101000000000000f03f99010000000000000040a101fca9f1d24d62503fa80103b1010000000000000000b90100000000004059407220af568a8d61ea4c9fb11c9a87cbd7100bc070a8898f370a9e587961047daa981f79000000000000f0ff",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "0801120e080110011a08e4ba8be4bbb62d421a2a08011226080111000000000000f0ff190000000000000000210000000000000000290000000000000000222a080112260801110000000000000000190000000000000000210000000000000000290000000000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "0801120e080110011a08e4ba8be4bbb62d421a2a08011226080111000000000000f0bf190000000000000000210000000000000000290000000000000000222a08011226080111000000000000f0ff190000000000000000210000000000000000290000000000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "ThetaSnapshotV3",
+      "op": "protobuf",
+      "hex": "0801121373796e7468657469632d7072656669782d31371a4b0801122002020202020202020202020202020202020202020202020202020202020202021a106563686f2e6c61772d76657273696f6e221173796e7468657469632d616472303033352864227a08011226080111f4e77c10fbc0ba3f19c9c654bbc8cac9bf21a9ca611cee3a8e3f29114eeb3bbcbbd23f1a26080111ce9124c7726ee83f19a020fdad68cbe53f2168c6697d5318e43f29204e6c10c0ecec3f22260801115110c62fa1ecc43f19b1baabcfbfaa0a4021000000000000e03f2983cba55c465ec33f62d9040801117e699d43d6adfa3f1911a58ce9caffe33f19185096ae141cdfbf19beab0d70da02f83f19625d9eeabbdbcebf213f4673389ad8ec3f210a5d94862538ef3f21e0f5ee8f02def43f2160e8be065112d93f2a260801110f17e76ede25d93f194f0a29b3e311de3f2107960f95b475d83f2918516824a7dcdf3f31b4aeb35d58c3c33f31b1882ff09441cc3f31a97214d43fb2c23f31a3bb275475b9cf3f3925010c96e10106c039a3d058b29b86f3bf39000000000000000039a8b77719d7f0d0bf41ab1171eb861df33f41d39bf6f14e37f03f41000000000000000041ea9fc751210bc53f49dd47f74a56fafc3f49870f86ac8543f3bf49ef39fafe422ee63f49cc523537dd36fe3f50085000500050005a26080111d20eca151878184019a558e2f92333d33f21000000000000004029391d8a375c6f1a406002600160026001688090bcfd02688090bcfd0268006880cee4cd027001781081019a9999999999e93f8101cdccccccccccecbf8101cdccccccccccec3f81019a9999999999c9bf8901000000000000000089010000000000000000890100000000000000008901000000000000000091010000000000000000910100000000000000009101000000000000000091010000000000000000980111a101e4388ee3388ee33faa0119080110980818e490bcfd02220c73796e7468657469632d3136b201120801106418e490bcfd022000288090bcfd02b80102b80101b80101b80101b80102b80102b80102b80101b80102b80101b80100b80101c00101c00101c0010cc00103c00101c00103c0010cc00103c00101c0010bc00100c001026adf020801121173796e7468657469632d616472303033351a20414452303033352d4430372d6772616475616c2d756e646572666c6f772d763122260801119a9999999999b93f199a9999999999c9bf21000000000000000029333333333333d33f2a26080111000000000000f03f199a9999999999e93f21333333333333f33f29cdccccccccccec3f3226080111333333333333d33f199a9999999999d93f219a9999999999c93f29000000000000e03f3a26080111000000000000244019333333333333d33f210000000000000040290000000000001c40490000000000002440510000000000002440599a9999999999a93f610000000000002440697b14ae47e17a843f719a9999999999c93f7900000000000008408101fca9f1d24d62503f890100000000000014409101000000000000f03f99010000000000000040a101fca9f1d24d62503fa80103b1010000000000000000b90100000000004059407220af568a8d61ea4c9fb11c9a87cbd7100bc070a8898f370a9e587961047daa981f79010000000000f87f",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "0801120e080110011a08e4ba8be4bbb62d421a2a08011226080111010000000000f87f190000000000000000210000000000000000290000000000000000222a080112260801110000000000000000190000000000000000210000000000000000290000000000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-nonfinite",
+    "request": {
+      "name": "FastBasisSlot",
+      "op": "protobuf",
+      "hex": "0801120e080110011a08e4ba8be4bbb62d421a2a08011226080111000000000000f0bf190000000000000000210000000000000000290000000000000000222a08011226080111010000000000f87f190000000000000000210000000000000000290000000000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-internal-revisit",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "basis": {
+          "schema_version": 1,
+          "kind": 2
+        },
+        "role": 3,
+        "target": {
+          "schema_version": 1,
+          "nature": {
+            "schema_version": 1,
+            "connection": 1.0,
+            "empathy": 0.0,
+            "curiosity": 0.0,
+            "achievement": 0.0
+          },
+          "learned": [
+            {
+              "schema_version": 1,
+              "tendency_id": "k",
+              "value": 1.0
+            }
+          ]
+        },
+        "theta_before": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "echo.theta-snapshot-v3",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "effects_before": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "echo.authorized-effects",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "interpretation_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "echo.semantic-record-v2",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "governance_refs": [
+          {
+            "schema_version": 1,
+            "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+            "object_type": "echo.basis-governance",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          }
+        ],
+        "law_version": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "echo.law-version",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-internal-revisit",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "canonical",
+      "hex": "4e43563101000000170000006563686f2e666173742d6566666563742d7265636f7264290000004e43563101000000180000006563686f2e666173742d62617369732d6964656e746974790200000000030000009d0000004e43563101000000150000006563686f2e6c61772d73746174652d766563746f723c0000004e43563101000000100000006563686f2e6e61747572652d7265616c000000000000f03f00000000000000000000000000000000000000000000000001000000340000004e435631010000001b0000006563686f2e6c61772d6c6561726e65642d636f6f7264696e617465010000006b000000000000f03f760000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000101010101010101010101010101010101010101010101010101010101010101160000006563686f2e74686574612d736e617073686f742d76331100000073796e7468657469632d616472303033356400000000000000770000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000202020202020202020202020202020202020202020202020202020202020202170000006563686f2e617574686f72697a65642d656666656374731100000073796e7468657469632d61647230303335640000000000000001000000770000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000303030303030303030303030303030303030303030303030303030303030303170000006563686f2e73656d616e7469632d7265636f72642d76321100000073796e7468657469632d61647230303335640000000000000001000000750000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000404040404040404040404040404040404040404040404040404040404040404150000006563686f2e62617369732d676f7665726e616e63651100000073796e7468657469632d616472303033356400000000000000700000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000505050505050505050505050505050505050505050505050505050505050505100000006563686f2e6c61772d76657273696f6e1100000073796e7468657469632d616472303033356400000000000000",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "P5-68-internal-revisit",
+    "request": {
+      "name": "FastEffectRecord",
+      "op": "protobuf",
+      "hex": "08011204080110021803223a08011226080111000000000000f03f1900000000000000002100000000000000002900000000000000001a0e080112016b19000000000000f03f2a510801122001010101010101010101010101010101010101010101010101010101010101011a166563686f2e74686574612d736e617073686f742d7633221173796e7468657469632d61647230303335286432520801122002020202020202020202020202020202020202020202020202020202020202021a176563686f2e617574686f72697a65642d65666665637473221173796e7468657469632d6164723030333528643a520801122003030303030303030303030303030303030303030303030303030303030303031a176563686f2e73656d616e7469632d7265636f72642d7632221173796e7468657469632d61647230303335286442500801122004040404040404040404040404040404040404040404040404040404040404041a156563686f2e62617369732d676f7665726e616e6365221173796e7468657469632d6164723030333528644a4b0801122005050505050505050505050505050505050505050505050505050505050505051a106563686f2e6c61772d76657273696f6e221173796e7468657469632d616472303033352864",
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
   }
 ]

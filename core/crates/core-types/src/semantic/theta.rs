@@ -18,6 +18,7 @@ pub fn theta_parameters_digest(
         limits,
     )?)?))
 }
+pub const LAW_STATE_NUMERICS_ID: &str = "ADR0035-D07-gradual-underflow-v1";
 const EXACT: u64 = 1_u64 << 53;
 
 fn number(v: &Value, key: &str) -> f64 {
@@ -41,11 +42,8 @@ fn array<'a>(v: &'a Value, key: &str) -> &'a [Value] {
 fn scale(v: &Value) -> [f64; 4] {
     ["connection", "empathy", "curiosity", "achievement"].map(|k| number(v, k))
 }
-fn parameters(p: &Value) -> Result<()> {
-    require(
-        p["numerics_id"] == THETA_NUMERICS_ID,
-        "theta numerics version",
-    )?;
+fn parameters(p: &Value, numerics_id: &str) -> Result<()> {
+    require(p["numerics_id"] == numerics_id, "theta numerics version")?;
     for key in [
         "baseline_weight",
         "variance_weight",
@@ -59,8 +57,10 @@ fn parameters(p: &Value) -> Result<()> {
         "detector_threshold",
     ] {
         require(
-            number(p, key) > 0.0 && number(p, key) < EXACT as f64,
-            "theta positive exact parameter",
+            number(p, key) > 0.0
+                && (number(p, key) < EXACT as f64
+                    || (key == "baseline_weight" && numerics_id == LAW_STATE_NUMERICS_ID)),
+            "theta positive parameter",
         )?;
     }
     for key in ["change_prior", "change_min"] {
@@ -229,20 +229,33 @@ pub fn check_theta_message(name: &str, value: &Value, limits: Limits) -> Result<
             | "ThetaLastEvent"
             | "ThetaEstimatorState"
             | "ThetaSnapshotV2"
+            | "ThetaSnapshotV3"
+            | "ThetaEstimatorParametersV2"
     ) {
         return Ok(());
     }
     let schema = Schema::builtin()?;
     let v = schema.normalize(name, value, limits, 0)?;
+    let successor = matches!(name, "ThetaSnapshotV3" | "ThetaEstimatorParametersV2");
+    let numerics_id = if successor {
+        LAW_STATE_NUMERICS_ID
+    } else {
+        THETA_NUMERICS_ID
+    };
+    let parameter_name = if successor {
+        "ThetaEstimatorParametersV2"
+    } else {
+        "ThetaEstimatorParameters"
+    };
     match name {
-        "ThetaEstimatorParameters" => parameters(&v),
+        "ThetaEstimatorParameters" | "ThetaEstimatorParametersV2" => parameters(&v, numerics_id),
         "ThetaRunningTime" => running(&v),
         "ThetaLastEvent" => Ok(()),
         "ThetaEstimatorState" => state(&v),
         _ => {
             let p = &v["parameters"];
             let s = &v["estimator"];
-            parameters(p)?;
+            parameters(p, numerics_id)?;
             state(s)?;
             require(
                 v["law_version"]["object_type"] == "echo.law-version"
@@ -251,14 +264,16 @@ pub fn check_theta_message(name: &str, value: &Value, limits: Limits) -> Result<
             )?;
             require(
                 v["parameters_digest"].as_str()
-                    == Some(
-                        schema
-                            .digest("ThetaEstimatorParameters", p, limits)?
-                            .as_str(),
-                    ),
+                    == Some(schema.digest(parameter_name, p, limits)?.as_str()),
                 "theta parameter digest",
             )?;
             require(number(s, "h") >= number(p, "change_min"), "theta h floor")?;
+            if successor && integer(&s["event_count"]) == 0 {
+                require(
+                    number(&v, "prior_mass") == number(p, "baseline_weight"),
+                    "theta initial P",
+                )?;
+            }
             if integer(&s["event_count"]) == 0 {
                 require(
                     number(s, "h").to_bits()
