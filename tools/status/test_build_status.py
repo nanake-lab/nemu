@@ -82,6 +82,32 @@ class PauseTests(unittest.TestCase):
                 self.assertEqual(out["cards"][1]["status"], "blocked" if deliveries else "ready")
                 self.assertEqual(out["milestones"][0]["done"], 0 if deliveries else 1)
 
+    def test_partial_remainder_waiting_on_dependant_does_not_block_it(self) -> None:
+        # The remainder of P5-23 waits on P5-24 (directly) or on P5-25, which
+        # needs P5-24: P5-24 can only use the delivered part, so it may start.
+        cards = [card(), card("P5-24", ["P5-23"]), card("P5-25", ["P5-24"])]
+        for remainder in (["P5-24"], ["P5-25", "请求"]):
+            with self.subTest(remainder=remainder):
+                out = self.compute([pr(49, labels=[], merged=True)], cards,
+                                   {"P5-23": remainder})
+                by_id = {c["id"]: c for c in out["cards"]}
+                self.assertEqual(by_id["P5-23"]["status"], "partial")
+                self.assertEqual(by_id["P5-24"]["status"], "ready")
+                self.assertEqual(by_id["P5-24"]["waiting_on"], [])
+                self.assertEqual(by_id["P5-25"]["status"], "blocked")
+                self.assertEqual(by_id["P5-25"]["waiting_on"], ["P5-24"])
+                self.assertEqual(out["milestones"][0]["done"], 0)
+
+    def test_closed_card_override_drops_old_remainder(self) -> None:
+        closed = card()
+        closed["status_override"] = {"status": "done", "note": "用户结案"}
+        out = self.compute([pr(49, labels=[], merged=True)],
+                           [closed, card("P5-24", ["P5-23"])],
+                           {"P5-23": ["见 reports/P5-23/BLOCKED.md"]})
+        by_id = {c["id"]: c for c in out["cards"]}
+        self.assertEqual((by_id["P5-23"]["status"], by_id["P5-23"]["waiting_on"]), ("done", []))
+        self.assertEqual(by_id["P5-24"]["status"], "ready")
+
     def test_partial_does_not_hide_open_work_or_unverified_merge(self) -> None:
         for prs, expected in (
             ([pr(49, labels=["unverified"], merged=True)], "unverified"),
@@ -100,6 +126,19 @@ class PauseTests(unittest.TestCase):
                 ], cards=[])
                 self.assertEqual(out["other_attention"], [])
                 self.assertEqual([p["number"] for p in out["paused_prs"]], [82])
+
+    def test_card_edit_pr_neither_claims_nor_finishes_card(self) -> None:
+        for merged in (False, True):
+            with self.subTest(merged=merged):
+                out = self.compute(
+                    [pr(139, labels=["needs-user", "card-edit"], merged=merged,
+                        branch="task/P5-23-card-sync")],
+                    cards=[card(), card("P5-24", ["P5-23"])],
+                )
+                cards = {c["id"]: c for c in out["cards"]}
+                self.assertEqual(cards["P5-23"]["status"], "ready")
+                self.assertEqual(cards["P5-23"]["prs"], [])
+                self.assertEqual(cards["P5-24"]["status"], "blocked")
 
     def test_pause_does_not_satisfy_dependencies(self) -> None:
         out = self.compute([pr(49, labels=["paused"])],
