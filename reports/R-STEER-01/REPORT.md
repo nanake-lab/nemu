@@ -20,6 +20,8 @@
 
 [此前采集提交前核对](results/ds-full02-final-check-01.json)：52源不变，6325份新增归档还原与源相同，195份新增JSON可完整解析，241个相对目标存在；新增原文/解压内容密钥格式检出0，范围仅本报告目录和请求入口。评分主管已退出。
 
+[本次正式分析收尾核对](results/ds-full02-formal-final-check-01.json)：8份新JSON可解析、205个相对目标存在、23份执行/批准/独立复核原件gzip还原与缓存逐字节相同；范围、diff检查及含解压内容的密钥格式检查通过。未改研究程序，无新增API/GPU/费用，最新main仍a7e8ae87，无需额外merge或重复旧测量。
+
 ## 发散的路线与取舍
 
 以下是执行者候选或既有约束，不写成用户已决定的答案。保留备选不授权临时换路线。
@@ -346,6 +348,7 @@ C1运行前准备：完整1686条实际样本SHA256 `8d9b8face032dbfead47df5cde8
 | 命令/核对 | 结果 | 证据 |
 | --- | --- | --- |
 | 冻结`ds_length_collect.py analysis` | 用户新20批准后一次退出0；C1_semantic_insufficient_stop，API/GPU新增0，3invalid按原分母 | [完整正式分析](FULL02-ANALYSIS.md)、[实际命令/终态](ds-full02-formal-analysis-01/execution.json) |
+| 正式分析独立机械复核 | 完整性/数值两阶段各一次退出0；52源、5724清单artifact相符，432基项/72重复/12概念语言效应与null传播独立重算一致；不委派语义判定 | [摘要](results/ds-full02-formal-audit-summary-01.json)、[脚本/原始结果](ds-full02-formal-audit-01/raw-filemap.json) |
 | `pwsh -NoProfile -File reports/R-STEER-01/build.ps1 -OutputDirectory D:/Dev/cache/R-STEER-01/build-01` | `/W4 /WX /O2 /fp:precise`编译退出0 | [构建原记录与二进制归档](preparation/build-01/raw-filemap.json) |
 | 4个Python的Ruff、`mypy --strict` | 最终均退出0；首轮3条类型错误原样保留，修复循环变量复用/因子表类型，未改样本或门 | [首轮](preparation/checks-01/raw-filemap.json)、[最终](preparation/checks-02/raw-filemap.json)，含精确argv/UTC/退出码/stdout/stderr |
 | `python -m unittest discover -s reports/R-STEER-01 -p test_c0.py -v` | 3项通过；保护代码×位置全交叉、饱和不可被oracle掩盖、布局反转不可被均值掩盖 | 同上；不是概念效果或能力验收 |

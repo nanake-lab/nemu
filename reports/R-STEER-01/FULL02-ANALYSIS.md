@@ -13,6 +13,7 @@
 - [执行记录](ds-full02-formal-analysis-01/execution.json)：UTC06:01:08.5945131–06:01:09.8296947（Perth14:01），冻结head `19e500d076fcfbaad1b274182db45aad429bf4ce`，main `a7e8ae8790d297ac697956f6f1256d2e2b9403d5`，退出0；[stdout](ds-full02-formal-analysis-01/stdout.log)/[stderr](ds-full02-formal-analysis-01/stderr.log)为空。入口 `python -B reports/R-STEER-01/ds_length_collect.py analysis`；[源码/键表摘要](ds-full02-formal-analysis-01/analysis-input-hashes.json)。
 - 新API调用0、GPU运行0、费用增量0；累计保守预算上界仍US$1.483366224（非账单），总上限US$5。未需要KEY，也未启动新模型。
 - [执行与批准原始字节归档](ds-full02-formal-analysis-01/original-bytes/raw-filemap.json)逐文件gzip还原相等，独立保留PowerShell CRLF；可读JSON可能由Git规范化换行，原件以此清单为准。原评分与全数据清单不变。
+- [独立机械复核原件](ds-full02-formal-audit-01/raw-filemap.json)、[两阶段摘要](results/ds-full02-formal-audit-summary-01.json)：完整性与数值分别一次退出0、stderr空；52冻结源、504项的5724份清单内artifact逐件相符。未调用原metrics函数的独立计数与全部432基项、72重复、12个概念×语言效应及不可识别传播一致；只核对数值，不替主代理裁定语义门。代理按当前项目配置gpt-6.1-terra/max显式参数试用，未验证按角色名自动加载，无API/模型/GPU。
 
 ## 预注册四类门
 
