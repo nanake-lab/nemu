@@ -6,13 +6,13 @@
 
 测量发生于 2026-11-06（下表时间均 Perth / UTC+08）。独立 TTS，v5turbo、CUDA float16、G2PW CPU、4 个 torch CPU 线程、seed=42、speed_factor=1.0、固定合成参考音频。没有载体、ASR 或舞台同驻。非流式整句合成；首声从调用 model.run 前到第一段 24 kHz little-endian float32 PCM bytes 可播放，含前处理/合成/重采样，不含 WebSocket 与声卡启动。每条只返回一段 PCM，语音听感/语义正确性未验收。
 
-原始 ZIP、manifest 与失败汇总器均未改变。修复版逐文件验证大小/SHA-256后直接读 ZIP。[原始数据](../gsv-v5-gpu-20261106/raw-evidence.zip)；[原始 manifest](../gsv-v5-gpu-20261106/raw-manifest.json)；[完整统计](summary.json)；[逐 case 哈希](CASE-HASHES.md)。
+原始 ZIP、manifest 与失败汇总器均已逐字节迁入私有证据仓库，内容未变。修复版逐文件验证大小/SHA-256后直接读 ZIP。[原始数据](https://github.com/nanake-lab/nemu-evidence/blob/b526099269e6a31c2fe4f0c89e2c55946a893b23/P4-02/gsv-v5-gpu-20261106/raw-evidence.zip)；[原始 manifest](https://github.com/nanake-lab/nemu-evidence/blob/b526099269e6a31c2fe4f0c89e2c55946a893b23/P4-02/gsv-v5-gpu-20261106/raw-manifest.json)；[完整统计](summary.json)；[逐 case 哈希](CASE-HASHES.md)。
 
 ## 空样本与覆盖
 
 2686 行原始内存样本映射成 2686 行派生记录，不删行、不把缺失填 0。唯一 process_memory=[] 且 rss/private=null 的样本是第 2686 行，时间 15:30:20.812；complete 为 15:30:19.406，晚约 1.406 秒。登记为「未采到：complete 后进程已退出」。运行期空样本为 0；汇总器遇运行期空样本或不满足上述条件的空样本会抛错停止，负例测试已验证。
 
-RSS/private 有效 2685 行。WDDM 有效 2650 行：另外 35 行在 CUDA 注册计数器前未匹配到本进程实例，也保留 null，不当零占用；第 2686 行整条进程测量未采到。所有加载后/连续阶段指标无缺失。按每行 owned 实际子树，把 WDDM 实例先逐 PID 汇总再合计，排除桌面背景；本次实际子树只有 PID 31808。核验父链 31808→19984 的原始证据见 [ownership](../gsv-v5-gpu-20261106/ownership.json)。
+RSS/private 有效 2685 行。WDDM 有效 2650 行：另外 35 行在 CUDA 注册计数器前未匹配到本进程实例，也保留 null，不当零占用；第 2686 行整条进程测量未采到。所有加载后/连续阶段指标无缺失。按每行 owned 实际子树，把 WDDM 实例先逐 PID 汇总再合计，排除桌面背景；本次实际子树只有 PID 31808。核验父链 31808→19984 的原始证据见 [ownership](https://github.com/nanake-lab/nemu-evidence/blob/b526099269e6a31c2fe4f0c89e2c55946a893b23/P4-02/gsv-v5-gpu-20261106/ownership.json)。
 
 采样间隔中位数 0.663 秒，最大 1.586 秒。峰值均为观测峰值，不能排除间隙中更短峰值。请求覆盖时间取完成事件 UTC；内存覆盖取采样器开始 UTC，采样调用并非同一瞬间完成。完整每指标样本数、首末时刻见 [覆盖表](COVERAGE.md)。
 
@@ -78,7 +78,7 @@ torch allocator 全程 max_allocated=2322021376 B、max_reserved=2369781760 B；
 
 | 记录 | 范围/口径 | 数值或状态 |
 | --- | --- | --- |
-| 本次 nvidia-smi 开始前 / 退出后 | 整卡桌面背景；完整进程表在原证据 | 1158 MiB / 20%；1086 MiB / 2% |
+| 本次 nvidia-smi 开始前 / 退出后 | 整卡桌面背景；公开背景只保留总量；原件在私有证据仓库 | 1158 MiB / 20%；1086 MiB / 2% |
 | 本次 TTS 全程 WDDM | 实际 TTS 子树，专用/共享独立峰值和 | 2,714,263,552 B（2.714264 GB） |
 | DESIGN-VRAM-01 引用的 GPT-SoVITS 估计 | ADR 0027 第三方估计，非本机实测 | 约 3.5 GB |
 | DESIGN-VRAM-01 引用 P0-12 全视觉会话 | 旧固定配置，大脑+视觉，独立峰值和 | 9,356,083,200 B；没有 TTS/舞台 |
@@ -94,4 +94,4 @@ torch allocator 全程 max_allocated=2322021376 B、max_reserved=2369781760 B；
 
 ![连续 30 分钟的逐进程显存与内存采样](memory-trends.png)
 
-图中灰区为前后 10% 时间，纵轴分别缩放，全部为 MiB。派生行和作图脚本在 [derived-data.zip](derived-data.zip)，哈希见 [derived-manifest](derived-manifest.json)。图不插值填补缺失；本连续阶段没有缺失行。私有内存解释的官方资料查阅日期为 2026-11-07。
+图中灰区为前后 10% 时间，纵轴分别缩放，全部为 MiB。派生行和作图脚本在 [derived-data.zip](https://github.com/nanake-lab/nemu-evidence/blob/b526099269e6a31c2fe4f0c89e2c55946a893b23/P4-02/gsv-v5-offline-20261107/derived-data.zip)，哈希见 [derived-manifest](https://github.com/nanake-lab/nemu-evidence/blob/b526099269e6a31c2fe4f0c89e2c55946a893b23/P4-02/gsv-v5-offline-20261107/derived-manifest.json)。图不插值填补缺失；本连续阶段没有缺失行。私有内存解释的官方资料查阅日期为 2026-11-07。

@@ -1,5 +1,7 @@
 # 运行时下载与随包数据集中核对（2026-11-03）
 
+历史审计表；其中 A/B/C 已按 [P7 待决表](../gsv-v5-resume-09/P7-PENDING.md) 获批本机测试，下载与禁网 CPU 冒烟已完成。下表旧准备状态仅保留审计时点，当前状态见 [REPORT](../REPORT.md)。
+
 基线 GPT-SoVITS 04a44eb977586645f33594b72af13a035a2056c6；实际包版本见 resume-06/installed-dependencies.json。中文为 all_zh，中英混合为 zh，参考中文；不安装训练/UI/ASR。静态搜索覆盖 TTS_infer_pack、text、feature_extractor、module，以及 g2p_en、fast_langdetect、robust_downloader、split_lang、wordsegment、jieba/jieba_fast、pypinyin、cn2an、opencc；另检查 transformers/huggingface_hub、NLTK、librosa、torchaudio、torchmetrics、pytorch_lightning 下载接口。它不是对所有可能动态导入的数学证明，禁网运行负责发现漏项；当前尚未运行真实禁网合成。
 
 | 文件/入口 | 来源 | 用途 | 数据许可（不替代为代码许可） | 中文/混合路径与准备状态 |

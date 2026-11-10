@@ -1,0 +1,37 @@
+{
+  "source_run": "2026-11-06",
+  "before": {
+    "utc": "2026-11-06T06:58:32.6571056+00:00",
+    "process_count": 431,
+    "gpu_used_MiB": 1158,
+    "gpu_util_percent": 20,
+    "heavy_load_present": false,
+    "heavy_load_categories": []
+  },
+  "after": {
+    "process_count": null,
+    "process_count_status": "未采到退出后的完整系统进程快照；不以 GPU 进程数冒充",
+    "gpu_used_MiB": 1086,
+    "gpu_util_percent": 2
+  },
+  "guard": {
+    "n": 351,
+    "first_utc": 1793948325.514,
+    "last_utc": 1793950217.074,
+    "process_count_min": 434,
+    "process_count_max": 458,
+    "heavy_load_present": false,
+    "heavy_load_categories": []
+  },
+  "background_wddm": {
+    "n": 2686,
+    "first_utc": 1793948325.514,
+    "last_utc": 1793950220.812,
+    "dedicated_peak_bytes": 2138206208,
+    "shared_peak_bytes": 125337600,
+    "scope": "每次采样非 TTS owned PID 的计数器合计；独立峰值，不与 nvidia-smi 或 TTS 峰值相减"
+  },
+  "background_ram_total_bytes": null,
+  "background_ram_status": "未采到：原件只记录 TTS 子树 RSS/private，没有全系统背景物理内存汇总",
+  "after_heavy_load_status": "末次 guard 后未独立核验；不由 nvidia-smi C+G 条目推断类别"
+}
