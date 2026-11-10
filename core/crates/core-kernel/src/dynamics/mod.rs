@@ -62,7 +62,7 @@ pub fn stage(
     let Some(event) = event else {
         return Ok(unchanged());
     };
-    if !event.source.learns() {
+    if !event.source.learns(previous.prior_mass.is_some()) {
         return Ok(unchanged());
     }
     if event.id.is_empty() || !event.evaluation_unmodulated || event.reaction.schema_version != 1 {

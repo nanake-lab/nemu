@@ -65,4 +65,8 @@ fn e07_dynamic_same_h_birth_difference_rational_envelope() {
         "{}",
         String::from_utf8_lossy(&output.stderr)
     );
+    println!(
+        "D07-dynamic-birth bits={}",
+        serde_json::to_string(&trace).unwrap()
+    );
 }

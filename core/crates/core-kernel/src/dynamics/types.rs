@@ -62,8 +62,11 @@ pub enum ReactionSource {
     RepeatedExperience,
 }
 impl ReactionSource {
-    pub(super) fn learns(self) -> bool {
+    pub(super) fn learns(self, common_discount: bool) -> bool {
         matches!(self, Self::ExternalWorld | Self::OtherPersonReply)
+            // ADR 0035 §3.1 / ADR 0032 D20: a real external consequence is not
+            // excluded merely because deception preceded it. Retain old replay.
+            || (common_discount && self == Self::DeceptionInducedReply)
     }
 }
 

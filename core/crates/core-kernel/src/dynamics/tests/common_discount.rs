@@ -6,13 +6,11 @@ use core_types::{
     generated::{ObjectRef, ThetaSnapshotV3},
     scalar::{DecimalU64, HexBytes},
 };
-
 const LIMITS: Limits = Limits {
     max_bytes: 1_048_576,
     max_items: 4096,
     max_depth: 32,
 };
-
 fn initial(b0: f64, p0: f64) -> DynamicsState {
     let mut p = law();
     p.version = "synthetic-ADR0035-D07-A-v1".into();
@@ -62,6 +60,14 @@ fn d07_1074_step_rational_oracle_and_gradual_underflow_golden() {
         if old_p.is_normal() {
             assert!(s.prior_mass.unwrap() < old_p);
         }
+        println!(
+            "D07-underflow prefix={} P={} S={} U={} b={}",
+            i + 1,
+            s.prior_mass.unwrap().to_bits(),
+            s.weight.to_bits(),
+            s.reaction_sum[0].to_bits(),
+            b(&s).to_bits()
+        );
     }
     assert_eq!(s.prior_mass.unwrap().to_bits(), 1);
     assert_eq!(b(&s).to_bits(), 0);
@@ -165,6 +171,9 @@ fn ac2_05_14_qualified_projection_only_and_duplicate_mutant() {
     let duplicate_mutant = advance(&s, &event(2, -0.75));
     assert_ne!(duplicate_mutant.weight.to_bits(), s.weight.to_bits());
     assert_ne!(duplicate_mutant.prior_mass, s.prior_mass);
+    let mut consequence = event(2, -0.75);
+    consequence.source = ReactionSource::DeceptionInducedReply;
+    identical(&advance(&s, &consequence), &duplicate_mutant); // §3.1 / D20 real consequence
     assert_eq!(
         stage(&s, Some(&event(1, -0.75)), &s.law, &fuses()),
         Err(Fault::EventOrder)
