@@ -744,6 +744,998 @@
       },
       "supersedes": "LineageHeader"
     },
+    "CognitionBinding": {
+      "tag": "echo.cognition-binding",
+      "source": "ADR 0026 §§4-6; ADR 0030 field table",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "activity_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "step_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "round_index",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "branch_id",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "base_commit",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "q_revision",
+          "type": "string",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "input_frontier",
+          "type": "string",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "environment",
+          "type": "VersionedEnvironmentV2",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "protocol",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "permission_snapshot",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_validity_version",
+          "type": "string",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "read_set",
+          "type": "ObjectRef",
+          "number": 15,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "CognitiveMaterial": {
+      "tag": "echo.cognitive-material",
+      "source": "ADR 0026 §5.1; V2-88/102; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "content",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "metadata",
+          "type": "SourceMetadata",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "past_reaction",
+          "type": "bool",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "CognitiveReturnedResult": {
+      "tag": "echo.cognitive-returned-result",
+      "source": "ADR 0026 §§3,5.2,6.9; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "status",
+          "type": "CognitiveReturnStatus",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "result",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "CognitiveInput": {
+      "tag": "echo.cognitive-input",
+      "source": "ADR 0026 §§4.1-4.2,5.1-5.2; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "CognitionBinding",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "materials",
+          "type": "CognitiveMaterial",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "focus",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "new_inputs",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "results",
+          "type": "CognitiveReturnedResult",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "retrievals",
+          "type": "FactProjection",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "budget",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "CognitiveResultAndReceipt": {
+      "tag": "echo.cognitive-result-receipt",
+      "source": "ADR 0026 §§4.4-4.5,5,6.7,7; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "CognitionBinding",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "input",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "products",
+          "type": "CognitiveMaterial",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "next_focus",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "queries",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_plan",
+          "type": "ActionPlan",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "completion",
+          "type": "CognitiveCompletion",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "model_hash",
+          "type": "bytes",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "tokenizer_hash",
+          "type": "bytes",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "modulation",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "carrier_receipt",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "usage",
+          "type": "ObjectRef",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "InternalActivityRecord": {
+      "tag": "echo.internal-activity-record",
+      "source": "ADR 0026 §§5,6.7; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "previous",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "result",
+          "type": "CognitiveResultAndReceipt",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "started_at_ns",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "finished_at_ns",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "ActivityState": {
+      "tag": "echo.activity-state",
+      "source": "ADR 0026 §§3,5; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "activity_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "materials",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "focus",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "latest_step",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "waiting",
+          "type": "string",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "successor",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "status",
+          "type": "CognitiveActivityStatus",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "CognitiveInflightAction": {
+      "tag": "echo.cognitive-inflight-action",
+      "source": "ADR 0026 §6.9; retained outbox origin §6.3; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "origin_record",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "origin_step_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "round_index",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "registered_at_ns",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "plan",
+          "type": "ActionPlan",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "status",
+          "type": "ActionStatus",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "actual_result",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "credential",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "CognitionState": {
+      "tag": "echo.cognition-state",
+      "source": "ADR 0026 §§3,5-6; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "mode",
+          "type": "CognitiveMode",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "activities",
+          "type": "ActivityState",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "activity_id"
+        },
+        {
+          "name": "inflight",
+          "type": "CognitiveInflightAction",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "action_id"
+        },
+        {
+          "name": "active_request",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "runnable_successor",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "transition",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "InternalActivityCommit": {
+      "tag": "echo.internal-activity-commit",
+      "source": "ADR 0026 §§5,6.1-6.2,6.10; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "CognitionBinding",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record",
+          "type": "InternalActivityRecord",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "interpretations",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
+    "CoreTransactionV3": {
+      "tag": "echo.transaction-v3",
+      "source": "ADR 0026 §§5,6; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_h",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_x",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_r",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_theta",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_l",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_q",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_u",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "processed_position",
+          "type": "uint64",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "anchor_time_ns",
+          "type": "uint64",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_concepts",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "accepted_results",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "audit_refs",
+          "type": "ObjectRef",
+          "number": 14,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_ledger",
+          "type": "LedgerEntry",
+          "number": 16,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_binding",
+          "type": "ProposalBindingV2",
+          "number": 17,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "origin"
+        },
+        {
+          "name": "internal_commit",
+          "type": "InternalActivityCommit",
+          "number": 18,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "origin"
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {
+        "oneofs": {
+          "origin": {
+            "fields": [
+              "event_binding",
+              "internal_commit"
+            ],
+            "required": true
+          }
+        }
+      },
+      "retains": "CoreTransactionV2",
+      "reserved": [
+        2,
+        15
+      ]
+    },
+    "SystemMaintenanceRecord": {
+      "tag": "echo.system-maintenance-record",
+      "source": "V2-87/102; ADR 0030",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "CognitiveMaintenanceKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "details",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ledger_refs",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "related_commit",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "recorded_at_ns",
+          "type": "uint64",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "cognition.proto",
+      "rules": {}
+    },
     "EffectContract": {
       "tag": "echo.effect-contract",
       "source": "O 3.1; S 5",
@@ -12244,6 +13236,46 @@
       "RELATION_UNSPECIFIED": 0,
       "CLOSENESS": 1,
       "TRUST": 2
+    },
+    "CognitiveCompletion": {
+      "COG_COMPLETION_UNSPECIFIED": 0,
+      "COG_COMPLETED": 1,
+      "COG_TRUNCATED": 2,
+      "COG_CANCELLED": 3,
+      "COG_FAILED": 4
+    },
+    "CognitiveMode": {
+      "COG_MODE_UNSPECIFIED": 0,
+      "COG_RUNNING": 1,
+      "COG_PAUSED": 2,
+      "COG_FAULT": 3
+    },
+    "CognitiveActivityStatus": {
+      "COG_ACTIVITY_UNSPECIFIED": 0,
+      "COG_ACTIVITY_RUNNING": 1,
+      "COG_ACTIVITY_WAITING": 2,
+      "COG_ACTIVITY_COMPLETED": 3,
+      "COG_ACTIVITY_SUSPENDED": 4
+    },
+    "CognitiveReturnStatus": {
+      "COG_RETURN_UNSPECIFIED": 0,
+      "COG_RETURN_WAITING": 1,
+      "COG_RETURN_OK": 2,
+      "COG_RETURN_NO_MATCH": 3,
+      "COG_RETURN_DENIED": 4,
+      "COG_RETURN_INDEX_LAGGING": 5,
+      "COG_RETURN_MISSING": 6,
+      "COG_RETURN_BUDGET": 7,
+      "COG_RETURN_FAILED": 8,
+      "COG_RETURN_UNKNOWN": 9
+    },
+    "CognitiveMaintenanceKind": {
+      "COG_MAINTENANCE_UNSPECIFIED": 0,
+      "COG_MAINTENANCE_PAUSE": 1,
+      "COG_MAINTENANCE_RESUME": 2,
+      "COG_MAINTENANCE_REVIEW": 3,
+      "COG_MAINTENANCE_ALARM": 4,
+      "COG_MAINTENANCE_BACKUP_RESTORE": 5
     },
     "DistinctionForm": {
       "FORM_UNSPECIFIED": 0,

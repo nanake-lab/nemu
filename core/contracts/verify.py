@@ -19,6 +19,7 @@ from fixture_inputs import LIMITS, SCHEMA
 from adversarial import cases
 from verify_theta_limits import verify as verify_theta_limits
 from verify_law_state import verify as verify_law_state
+from verify_cognition import verify as verify_cognition
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -271,6 +272,7 @@ def main() -> None:
     )
     verify_theta_limits(commands, probe)
     verify_law_state(commands, probe, legal)
+    verify_cognition(commands, probe, legal)
     # P5-36: restore actual kernel states returned by both non-Rust codecs.
     run([sys.executable, "core/contracts/verify_theta_restore.py", "--output", str(HERE / ".test-build/theta-restore")])
 

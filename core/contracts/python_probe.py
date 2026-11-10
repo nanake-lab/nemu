@@ -11,6 +11,7 @@ from echo.bridge import from_json, to_json  # noqa: E402
 from echo.typed_api import from_value, to_value  # noqa: E402
 from echo.theta import check_theta_message  # noqa: E402
 from echo.law_state import check_law_state_message  # noqa: E402
+from echo.cognition import check_cognition_message  # noqa: E402
 
 for line in sys.stdin:
     try:
@@ -34,6 +35,7 @@ for line in sys.stdin:
         typed = from_value(name, v, limits)
         check_theta_message(name, v, limits)
         check_law_state_message(name, v, limits)
+        check_cognition_message(name, v, limits)
         assert r.normalize(name, to_value(typed), limits) == v
         print(
             json.dumps(

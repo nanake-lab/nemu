@@ -1,0 +1,133 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "state.proto";
+
+// Echo Core v2.0 interpretation records (P5-21). Each is produced at m = 0 and recorded in H
+// (v2.0 EV6); recomputation uses these records and never judges again. Every record names the
+// event it interprets (event_id), which can differ from binding.event_id for EV5 backfill and
+// reinterpretation. Records are proposals until governed by the semantic core (P5-06).
+
+// @message echo.nature-appraisal | v2.0 §1 a(e), §3, EV6, EV10
+message NatureAppraisalRecord {
+  // persons: the people the event involves, used by F for empathy weighting (v2.0 §6).
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional NatureVector appraisal = 4; // required
+  repeated string persons = 5; // required,set=self
+  optional ProposalBindingV2 binding = 6; // required
+  optional string producer = 7; // required,nonempty
+  optional string producer_version = 8; // required,nonempty
+}
+
+// @message echo.tendency-match | v2.0 §1 μ_k(e) ∈ [0,1]
+message TendencyMatch {
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double mu = 3; // required,min=0,max=1
+}
+
+// @message echo.situation-match | v2.0 §1 μ, §2.4 M, EV5, EV6
+message SituationMatchRecord {
+  // Only tendencies with μ > 0 are listed (semantic check), in CanonicalV1 set order of tendency_id.
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  repeated TendencyMatch matches = 4; // required,set=tendency_id
+  optional ProposalBindingV2 binding = 5; // required
+  optional string producer = 6; // required,nonempty
+  optional string producer_version = 7; // required,nonempty
+}
+
+// @message echo.tendency-concept | v2.0 §7 concept: name, definition, examples, three languages
+message TendencyConcept {
+  optional uint32 schema_version = 1; // required
+  optional TrilingualText name = 2; // required
+  optional TrilingualText definition = 3; // required
+  repeated TrilingualText positive_examples = 4; // required
+  repeated TrilingualText negative_examples = 5; // required
+}
+
+// @message echo.tendency-candidate | v2.0 §7 candidates, EV3, EV5; §5.2 κ, d_k; V2-13
+message TendencyCandidateRecord {
+  // A candidate is a hypothesis only (EV3). predicate lists the situation conditions; their count
+  // sets κ_k = κ₁ × count (v2.0 §5.2). direction is d_k, a unit vector checked in core-types.
+  // relation is present only for a tendency about a person (closeness or trust).
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional TendencyConcept concept = 4; // required
+  repeated TrilingualText predicate = 5; // required
+  optional NatureVector direction = 6; // required
+  optional PersonRelation relation = 7; // optional
+  optional ProposalBindingV2 binding = 8; // required
+  optional string producer = 9; // required,nonempty
+  optional string producer_version = 10; // required,nonempty
+}
+
+// @message echo.teaching-annotation | v2.0 EV7, §10
+message TeachingAnnotation {
+  // supports: true when the speaker teaches for the tendency (正), false when against it (反).
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional string speaker = 4; // required,nonempty
+  optional string tendency_id = 5; // required,nonempty
+  optional bool supports = 6; // required
+  optional ProposalBindingV2 binding = 7; // required
+  optional string producer = 8; // required,nonempty
+  optional string producer_version = 9; // required,nonempty
+}
+
+// @message echo.lie-annotation | v2.0 EV4, §10; I27
+message LieAnnotation {
+  // statement: her statement (a reference in H); contradicts: the fact it does not match.
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional string statement = 4; // required,nonempty
+  optional string contradicts = 5; // required,nonempty
+  optional ProposalBindingV2 binding = 6; // required
+  optional string producer = 7; // required,nonempty
+  optional string producer_version = 8; // required,nonempty
+}
+
+// @message echo.same-matter-annotation | v2.0 EV2
+message SameMatterAnnotation {
+  // same_as: events that retell the same matter as event_id (a hint for grouping, P5-24).
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  repeated string same_as = 4; // required,set=self
+  optional ProposalBindingV2 binding = 5; // required
+  optional string producer = 6; // required,nonempty
+  optional string producer_version = 7; // required,nonempty
+}
+
+// @message echo.reinterpretation | v2.0 EV5, EV6, §5.4
+message ReinterpretationLink {
+  // The new record points at the reinterpreted event and the prior records; prior records are
+  // never changed. interpreter_version is the version that produced new_record.
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional string new_record = 4; // required,nonempty
+  repeated string prior_records = 5; // required,set=self
+  optional string interpreter_version = 6; // required,nonempty
+  optional ProposalBindingV2 binding = 7; // required
+  optional string producer = 8; // required,nonempty
+  optional string producer_version = 9; // required,nonempty
+}
+
+// @message echo.event-attributes | v2.0 §1 exogenous, EV2, EV3, EV9; P5-06 rule table
+message EventAttributesRecord {
+  // Deterministic core output from a fixed, versioned rule table (P5-06); not a worker proposal.
+  optional uint32 schema_version = 1; // required
+  optional string event_id = 2; // required,nonempty
+  optional string rule_table_version = 3; // required,nonempty
+  optional bool exogenous = 4; // required
+  optional bool self_narrative = 5; // required
+  optional bool verifiable = 6; // required
+  optional string source_key = 7; // required,nonempty
+}

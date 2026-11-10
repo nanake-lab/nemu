@@ -1,0 +1,145 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "state.proto";
+import "theta.proto";
+import "ledger.proto";
+
+// ADR 0035 §4.2: recorded basis identity, not a P5-72 consumption key.
+enum FastBasisKind {
+  FAST_BASIS_KIND_UNSPECIFIED = 0;
+  FAST_BASIS_RECORD = 1;
+  FAST_BASIS_INTERNAL_BRANCH = 2;
+}
+
+// ADR 0035 §4.2, §5.2: role of this F application, not the original record's
+// fixed role. A first-effective supplement may apply as TARGET_UPDATE even
+// when that fixed role is INTERNAL_BRANCH; the original role is not rewritten.
+// First-effectiveness and current-target ownership are historical conditions
+// for the successor governance/consumption boundary, not inferred here.
+enum FastEffectRole {
+  FAST_EFFECT_ROLE_UNSPECIFIED = 0;
+  FAST_EFFECT_NEW_BASIS = 1;
+  FAST_EFFECT_TARGET_UPDATE = 2;
+  FAST_EFFECT_REVISIT = 3;
+  FAST_EFFECT_INTERNAL_BRANCH = 4;
+}
+
+// @message echo.fast-basis-identity | ADR 0035 §4.1, §4.2, §9 P5-68(2,3)
+message FastBasisIdentity {
+  // Internal branch is a singleton variant with no caller-chosen identity.
+  // @rules {"cases":{"1":{"required":["record_id"]},"2":{"required":[]}}}
+  optional uint32 schema_version = 1; // required
+  optional FastBasisKind kind = 2; // required
+  optional string record_id = 3; // optional,nonempty
+}
+
+// @message echo.law-learned-coordinate | ADR 0035 §4.1, §4.3: finite signed h/target coordinate
+message LawLearnedCoordinate {
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double value = 3; // required
+}
+
+// @message echo.law-state-vector | ADR 0035 §4.1, §4.3, §4.6 B6': same coordinate identity as x
+message LawStateVector {
+  optional uint32 schema_version = 1; // required
+  optional NatureReal nature = 2; // required
+  repeated LawLearnedCoordinate learned = 3; // required,set=tendency_id
+}
+
+// @message echo.fast-basis-slot | ADR 0035 §4.1, §4.6 B6': no current-target amplitude comparison
+message FastBasisSlot {
+  optional uint32 schema_version = 1; // required
+  optional FastBasisIdentity basis = 2; // required
+  optional LawStateVector current = 3; // required
+  optional LawStateVector target = 4; // required
+}
+
+// @message echo.fast-state-v3 | ADR 0035 §4.1, §4.4, §4.8, §9 P5-68(2)
+message FastStateSnapshotV3 {
+  // @retains FastStateSnapshotV2
+  // Old-version writers remain valid until explicit law switching (ADR 0035 §2).
+  reserved 4, 5;
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional string representation_version = 3; // required,nonempty
+  optional uint64 anchor_time_ns = 6; // required
+  optional NatureVector nature = 7; // required
+  repeated LearnedComponent learned = 8; // required,set=tendency_id
+  // §4.1: canonical identity order, unique; shared anchor, no derived y.
+  repeated FastBasisSlot slots = 9; // required,set=basis
+  // §2: explicit law binding also distinguishes empty-slot Protobuf snapshots.
+  optional ObjectRef law_version = 10; // required
+}
+
+// @message echo.fast-effect-record | ADR 0035 §4.1-4.3, §4.7, §9 P5-68(3)
+message FastEffectRecord {
+  optional uint32 schema_version = 1; // required
+  optional FastBasisIdentity basis = 2; // required
+  optional FastEffectRole role = 3; // required
+  optional LawStateVector target = 4; // required
+  // §4.1/4.7: full prestate references, not just theta values or the original event.
+  optional ObjectRef theta_before = 5; // required
+  optional ObjectRef effects_before = 6; // required
+  repeated ObjectRef interpretation_refs = 7; // required,set=digest
+  repeated ObjectRef governance_refs = 8; // required,set=digest
+  optional ObjectRef law_version = 9; // required
+}
+
+// @message echo.fast-state-migration | ADR 0035 §4.8, §9 P5-68(4); H system record and L reference
+message FastStateMigrationRecord {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef previous_snapshot = 2; // required
+  optional ObjectRef migrated_snapshot = 3; // required
+  // §4.8: must be true; empty slots are not a recovered decomposition.
+  optional bool prior_decomposition_unknown = 4; // required
+}
+
+// @message echo.theta-snapshot-v3 | ADR 0035 §3.2, §3.6, §9 P5-68(1,4); ADR 0029 complete estimator
+message ThetaSnapshotV3 {
+  // @retains ThetaSnapshotV2
+  reserved 5, 6, 7, 8, 9, 10, 11;
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional ObjectRef law_version = 3; // required
+  optional ThetaValues values = 4; // required
+  // §3.2/3.3: all existing saved statistics retain their encoding and units.
+  optional ThetaEstimatorState estimator = 12; // required
+  optional ThetaEstimatorParametersV2 parameters = 13; // required
+  optional bytes parameters_digest = 14; // required,size=32
+  // §3.2: shared P; finite, nonnegative, including subnormal and +0.
+  optional double prior_mass = 15; // required,min=0
+}
+
+// @message echo.theta-estimator-parameters-v2 | ADR 0035 §3.2/3.3, §9 P5-68(1); ADR 0029 parameters
+message ThetaEstimatorParametersV2 {
+  // @retains ThetaEstimatorParameters
+  // Old permanent prior field is reserved; initial P0 has a new field number.
+  reserved 8;
+  // ADR 0035 §3.2/3.3 retains all ADR 0029 parameters; no defaults.
+  // baseline_weight is now initial P0 (>0), not permanent mass.
+  // numerics_id binds ADR0035-D07-gradual-underflow-v1; law_id binds the resource.
+  optional uint32 schema_version = 1; // required
+  optional string law_id = 2; // required,nonempty
+  optional string numerics_id = 3; // required,nonempty
+  optional NatureVector baseline_prior = 4; // required
+  optional NatureScale gain_prior = 5; // required
+  optional NatureScale sigma_prior = 6; // required
+  optional NatureScale tau_prior_s = 7; // required
+  optional double variance_weight = 9; // required,min=0
+  optional double duration_weight = 10; // required,min=0
+  optional double change_prior = 11; // required,min=0,max=1
+  optional double change_prior_weight = 12; // required,min=0
+  optional double change_min = 13; // required,min=0,max=1
+  optional double gain_min = 14; // required,min=0
+  optional double gain_max = 15; // required,min=0
+  optional double recovery_min = 16; // required,min=0
+  optional double recovery_max = 17; // required,min=0
+  optional double detector_shift_sigma = 18; // required,min=0
+  optional double detector_threshold = 19; // required,min=0
+  optional double jump_notice = 20; // required,min=0
+  optional uint64 drift_run = 21; // required
+  optional double drift_margin = 22; // required,min=0
+  optional double baseline_weight = 23; // required,min=0
+}

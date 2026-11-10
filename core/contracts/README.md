@@ -127,3 +127,30 @@ budgets remain the responsibility of the unchanged codecs. Compatibility checks
 freeze JSON projection metadata too. Tests in test_browser_schema.py and the
 contracts package cover projection drift, nonempty growth results and approval
 snapshot consumption; see reports/P5-22/REVISION-1.md for evidence and limits.
+
+
+## P5-37 continuous cognition records (ADR 0030)
+
+`cognition.proto` defines separate internal records, bounded input/result contracts,
+Q activity/inflight state and an internal transaction origin. After structural
+validation/decoding, consumers must call `semantic::check_cognition_message`
+(Rust), `echo.cognition.check_cognition_message` (Python) or
+`echo/cognition.checkCognitionMessage` (TypeScript), with the same caller Limits.
+The probes and ordinary `test:core-contracts` CI run these checks for encode and
+both wire decoders, including nested internal commits.
+
+These checks validate local relationships only. Trusted consumers still resolve
+references, source/permission closure, current Q and input frontiers, actual
+carrier receipts, execution credentials and commit authority. An encoded proposal
+is not permission to execute. Type tags and action origin references distinguish
+internal records and self-issued action results; existing P5-68 basis identity is
+reused downstream. No kappa, psychological deadline, D11 time facts or staged
+consumption key is added here.
+
+CoreTransactionV3 uses the existing `@retains` compatibility discipline because
+store/runtime still write V2. Marking V2 machine-superseded now would break their
+write gate. P5-38 must wire the successor before retiring that path. Old bytes are
+never reinterpreted; `verify_cognition.py` checks same-version restoration and
+cross-version rejection in all three languages. This is a SYS17 prerequisite,
+not a migration or atomic-publish test. Published pre-change IDL/golden prefixes
+are frozen as `baselines/p5-68` at main `8839dcae`.

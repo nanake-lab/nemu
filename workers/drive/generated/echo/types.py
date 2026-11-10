@@ -119,6 +119,36 @@ class TrialOutcome(IntEnum):
 class RelationKind(IntEnum):
     CLOSENESS = 1
     TRUST = 2
+class CognitiveCompletion(IntEnum):
+    COG_COMPLETED = 1
+    COG_TRUNCATED = 2
+    COG_CANCELLED = 3
+    COG_FAILED = 4
+class CognitiveMode(IntEnum):
+    COG_RUNNING = 1
+    COG_PAUSED = 2
+    COG_FAULT = 3
+class CognitiveActivityStatus(IntEnum):
+    COG_ACTIVITY_RUNNING = 1
+    COG_ACTIVITY_WAITING = 2
+    COG_ACTIVITY_COMPLETED = 3
+    COG_ACTIVITY_SUSPENDED = 4
+class CognitiveReturnStatus(IntEnum):
+    COG_RETURN_WAITING = 1
+    COG_RETURN_OK = 2
+    COG_RETURN_NO_MATCH = 3
+    COG_RETURN_DENIED = 4
+    COG_RETURN_INDEX_LAGGING = 5
+    COG_RETURN_MISSING = 6
+    COG_RETURN_BUDGET = 7
+    COG_RETURN_FAILED = 8
+    COG_RETURN_UNKNOWN = 9
+class CognitiveMaintenanceKind(IntEnum):
+    COG_MAINTENANCE_PAUSE = 1
+    COG_MAINTENANCE_RESUME = 2
+    COG_MAINTENANCE_REVIEW = 3
+    COG_MAINTENANCE_ALARM = 4
+    COG_MAINTENANCE_BACKUP_RESTORE = 5
 # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class DistinctionForm(IntEnum):
     EXEMPLAR = 1
@@ -454,6 +484,139 @@ class LineageHeaderV2:
     genesis_manifest_digest: bytes | None
     world_id: str | None
     world_seed: int | None
+@dataclass(frozen=True)
+class CognitionBinding:
+    schema_version: int
+    activity_id: str
+    step_id: str
+    request_id: str
+    round_index: int
+    branch_id: str
+    base_commit: str
+    q_revision: str
+    input_frontier: list[str]
+    snapshot_id: str
+    environment: VersionedEnvironmentV2
+    protocol: ObjectRef
+    permission_snapshot: ObjectRef
+    source_validity_version: str
+    read_set: list[ObjectRef]
+@dataclass(frozen=True)
+class CognitiveMaterial:
+    schema_version: int
+    content: ObjectRef
+    metadata: SourceMetadata
+    past_reaction: bool
+@dataclass(frozen=True)
+class CognitiveReturnedResult:
+    schema_version: int
+    request_id: str
+    status: CognitiveReturnStatus
+    result: ObjectRef | None
+    action_id: str | None
+@dataclass(frozen=True)
+class CognitiveInput:
+    schema_version: int
+    binding: CognitionBinding
+    materials: list[CognitiveMaterial]
+    focus: ObjectRef | None
+    new_inputs: list[ObjectRef]
+    results: list[CognitiveReturnedResult]
+    retrievals: list[FactProjection]
+    budget: ObjectRef
+@dataclass(frozen=True)
+class CognitiveResultAndReceipt:
+    schema_version: int
+    binding: CognitionBinding
+    input: ObjectRef
+    products: list[CognitiveMaterial]
+    next_focus: ObjectRef | None
+    queries: list[ObjectRef]
+    action_plan: ActionPlan | None
+    completion: CognitiveCompletion
+    reason: str | None
+    model_hash: bytes
+    tokenizer_hash: bytes
+    modulation: ObjectRef
+    carrier_receipt: ObjectRef | None
+    usage: ObjectRef
+@dataclass(frozen=True)
+class InternalActivityRecord:
+    schema_version: int
+    record_id: str
+    previous: ObjectRef | None
+    result: CognitiveResultAndReceipt
+    started_at_ns: int
+    finished_at_ns: int
+@dataclass(frozen=True)
+class ActivityState:
+    schema_version: int
+    activity_id: str
+    revision: str
+    materials: list[ObjectRef]
+    focus: ObjectRef | None
+    latest_step: ObjectRef | None
+    waiting: list[str]
+    successor: ObjectRef | None
+    status: CognitiveActivityStatus
+@dataclass(frozen=True)
+class CognitiveInflightAction:
+    schema_version: int
+    action_id: str
+    origin_record: ObjectRef
+    origin_step_id: str
+    round_index: int
+    registered_at_ns: int
+    plan: ActionPlan
+    status: ActionStatus
+    request: ObjectRef
+    actual_result: ObjectRef | None
+    credential: ObjectRef | None
+@dataclass(frozen=True)
+class CognitionState:
+    schema_version: int
+    revision: str
+    mode: CognitiveMode
+    reason: str | None
+    activities: list[ActivityState]
+    inflight: list[CognitiveInflightAction]
+    active_request: ObjectRef | None
+    runnable_successor: ObjectRef | None
+    transition: ObjectRef
+@dataclass(frozen=True)
+class InternalActivityCommit:
+    schema_version: int
+    binding: CognitionBinding
+    record: InternalActivityRecord
+    interpretations: list[ObjectRef]
+@dataclass(frozen=True)
+class CoreTransactionV3:
+    schema_version: int
+    staged_h: ObjectRef
+    staged_x: ObjectRef
+    staged_r: ObjectRef
+    staged_theta: ObjectRef
+    staged_l: ObjectRef
+    staged_q: ObjectRef
+    staged_u: ObjectRef
+    processed_position: int
+    anchor_time_ns: int
+    staged_concepts: list[ObjectRef]
+    accepted_results: list[ObjectRef]
+    audit_refs: list[ObjectRef]
+    staged_ledger: list[LedgerEntry]
+    event_binding: ProposalBindingV2 | None
+    internal_commit: InternalActivityCommit | None
+@dataclass(frozen=True)
+class SystemMaintenanceRecord:
+    schema_version: int
+    record_id: str
+    kind: CognitiveMaintenanceKind
+    reason: str
+    details: ObjectRef
+    ledger_refs: list[ObjectRef]
+    related_commit: str
+    recorded_at_ns: int
 @dataclass(frozen=True)
 class EffectContract:
     # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
