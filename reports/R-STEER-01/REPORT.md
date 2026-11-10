@@ -4,7 +4,9 @@
 
 ## 总览
 
-**当前：保留265分，完整空评分按已授权的单项invalid规则修复分类，只续剩余238，尚未追加API。** 原网络续段于2026-11-10 Perth12:34按73c96dd2启动，12:45因完整性保护收尾；触发项HTTP200/进程exit0、finish_reason=length，8192输出token全用于思考，评分正文空，不是网络/进程异常。[原完整空响应与终态](ds-retry-length-stop-01/FAILED.md)、[停止摘要](results/ds-retry-length-stop-summary-01.json)、[3430份原件](ds-flash-full-02-network-retry-02/raw-filemap.json)保留。封装在schema检验前把非stop标记归入整段停止，与用户已授权的完整无效单项计失败继续处理不一致；现[分类修复](FULL02-COMPLETE-INVALID-01.md)只在新目录把它记invalid、原分母失败，不重发/补分或增加8192预算，原停止不倒改。
+**当前：52源分类修复续段已于2026-11-10 Perth12:56按2319988a启动，仅处理剩余238项。** 保留265分及完整空评分，后者在新目录按已授权的单项invalid/原分母失败处理，不重发、不增加8192预算。[独立冻结/携入审计](ds-length-freeze-audit-01/raw-filemap.json)退出0：52源/504请求/原265分/2866份携入原件逐字节一致，238工作项与携入266项完全不交；一次增长账快照没有已携入项重发，仅限该时点。当前采集仍在运行，完整504及原seed20用户核对未完成前，正式分析not_run。
+
+此前网络续段于Perth12:34按73c96dd2启动，12:45因完整性保护收尾；触发项HTTP200/进程exit0、finish_reason=length，8192输出token全用于思考，评分正文空，不是网络/进程异常。[原完整空响应与终态](ds-retry-length-stop-01/FAILED.md)、[停止摘要](results/ds-retry-length-stop-summary-01.json)、[3430份原件](ds-flash-full-02-network-retry-02/raw-filemap.json)保留。封装在schema检验前把非stop标记归入整段停止，与用户已授权的完整无效单项计失败继续处理不一致；[分类修复](FULL02-COMPLETE-INVALID-01.md)不重发/补分或增预算，原停止不倒改。[独立终态审计](ds-retry-final-audit-01/raw-filemap.json)确认156新HTTP响应均完整/进程0、155新分+1完整length，旧缺失项仅重发一次成功且预算账永久保留该次整额，旧两份未知另保留，累计上界US$0.850617732，未输出思考文本或计算语义门。
 
 [52源/同504请求/265分与1完整invalid携入/238工作项计划](inputs/ds-full02-complete-invalid-plan-01.json)与[原字节快照](ds-length-preparation-01/raw-filemap.json)冻结；[四源Ruff/strict mypy、局部完整length仅invalid且下一条可保存测试、入口AST](ds-length-checks-01/raw-filemap.json)通过，[原fixture](ds-length-offline-fixtures-01/raw-filemap.json)保留。模型high/提示/采样/网络最多2次重发/30秒/连续3条技术失败停/指标及原seed20不变；当前费用上界US$0.850617732（含旧未知及重发整额预留），315次记录，仍总US$5。用户已提供的密钥用一次性不回显交接至进程环境，不反复索取、不持久化；重新核价并推送核远端后只发238。全504与用户抽查未完成前正式分析not_run。
 
