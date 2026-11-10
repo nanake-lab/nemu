@@ -105,6 +105,10 @@ pub fn restore_snapshot_v3(
     fuses: &DynamicsFuses,
     limits: Limits,
 ) -> Result<DynamicsState, SnapshotError> {
+    // The owning codec's only value normalization is -0 -> +0. Apply it also
+    // when the caller supplies a typed message directly, rather than wire bytes.
+    let normalized = ThetaSnapshotV3::from_canonical(&snapshot.canonical_bytes(limits)?, limits)?;
+    let snapshot = &normalized;
     checked_value(snapshot, limits)?;
     let expected = common_discount_parameters(law, fuses, limits)?;
     if &snapshot.law_version != expected_law_ref

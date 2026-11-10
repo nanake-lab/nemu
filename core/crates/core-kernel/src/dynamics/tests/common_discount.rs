@@ -137,7 +137,7 @@ fn d07_birth_share_real_oracle_and_binary64_mass_paths() {
         if n == 1 {
             s = initial(0.0, f(0));
         }
-        s = frozen(&s, if n % 2 == 0 { 0.5 } else { -0.5 }, f(2), n);
+        s = frozen(&s, if n.is_multiple_of(2) { 0.5 } else { -0.5 }, f(2), n);
         assert_eq!(s.prior_mass.unwrap().to_bits(), f(3).to_bits());
         assert_eq!(s.weight.to_bits(), f(4).to_bits());
     }

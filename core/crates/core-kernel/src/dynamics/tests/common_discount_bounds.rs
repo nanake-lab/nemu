@@ -54,3 +54,37 @@ fn d07_outward_bound_covers_subnormal_quotient_and_range_fallback() {
     assert!(next.state().values.baseline.connection.is_subnormal());
     assert!(next.bounds.unwrap().range_only[..4].iter().all(|v| *v));
 }
+
+#[test]
+fn d07_v3_restore_normalizes_typed_zero_via_owning_codec() {
+    // ADR 0035 §2: zero is +0, including directly supplied typed messages.
+    use core_types::{
+        contract::Limits,
+        generated::ObjectRef,
+        scalar::{DecimalU64, HexBytes},
+    };
+    let mut resource = law();
+    resource.version = "synthetic-ADR0035-zero".into();
+    resource.baseline_weight = f64::from_bits(1);
+    resource.change_min = 0.5;
+    let s = DynamicsState::genesis_common_discount(resource).unwrap();
+    let s = advance(&s, &event(1, 0.75));
+    assert_eq!(s.prior_mass.unwrap().to_bits(), 0);
+    let limits = Limits {
+        max_bytes: 1_048_576,
+        max_items: 4096,
+        max_depth: 32,
+    };
+    let reference = ObjectRef {
+        schema_version: 1,
+        digest: HexBytes(vec![69; 32]),
+        object_type: "echo.law-version".into(),
+        resource_version: s.law.version.clone(),
+        byte_length: DecimalU64(69),
+    };
+    let mut snapshot = export_snapshot_v3(&s, "zero", &reference, &fuses(), limits).unwrap();
+    snapshot.prior_mass = -0.0;
+    let restored = restore_snapshot_v3(&snapshot, &reference, &s.law, &fuses(), limits).unwrap();
+    assert_eq!(restored.prior_mass.unwrap().to_bits(), 0);
+    identical(&restored, &s);
+}
