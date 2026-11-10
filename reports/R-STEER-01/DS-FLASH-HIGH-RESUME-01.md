@@ -17,7 +17,7 @@
 
 ## 冻结样本、口径与比较
 
-仅运行旧[high计划](inputs/ds-flash-high-plan-01.json)第17–20项，沿原顺序，逐字节使用已冻结请求。第一项`8be4a42ea150b56ddf567799`旧尝试结果未知；另3项原not_run。`deepseek-flash`、thinking enabled、reasoning_effort high、8192总输出、top_p1、temperature0（思考模式不生效）、system/user、事实参照、字段/证据校验全部不改。不发送旧评分/点评/ID或条件映射，无工具/历史。
+仅运行旧[high计划](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/inputs/ds-flash-high-plan-01.json)第17–20项，沿原顺序，逐字节使用已冻结请求。第一项`8be4a42ea150b56ddf567799`旧尝试结果未知；另3项原not_run。`deepseek-flash`、thinking enabled、reasoning_effort high、8192总输出、top_p1、temperature0（思考模式不生效）、system/user、事实参照、字段/证据校验全部不改。不发送旧评分/点评/ID或条件映射，无工具/历史。
 
 主要比较和全部停止门沿[high注册](DS-FLASH-HIGH-01.md)：四概念/事实/一般情感/连贯与标记的逐项标签转换和引证，不计算准确率或新通过门。新审查页合并旧16和续测最多4份有效评分，每项标来源；旧20非思考与high16的原响应/标签/失败页不改。若不足20，缺项仍列失败/not_run，不挑替代样本。用户确认可信前504全量不跑，C0/C1自动失败不变。
 

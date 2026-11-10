@@ -28,12 +28,12 @@
 
 ## 20条小样与全量的冻结关系
 
-原完整盲包 [504条](results/c1-blind-items-02.json) 和[本地映射](results/c1-blind-key-02.json)保持原样。选择器[ds_protocol.py](ds_protocol.py)只依据冻结元信息与固定SHA排序，不读取LL或评分：
+原完整盲包 [504条](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/results/c1-blind-items-02.json) 和[本地映射](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/results/c1-blind-key-02.json)保持原样。选择器[ds_protocol.py](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds_protocol.py)只依据冻结元信息与固定SHA排序，不读取LL或评分：
 
 - target 8：四概念各正/负1条；语言依次zh/en/ja循环，base/paraphrase/long/courtesy循环，各形式2条，语言3/3/2。
 - free 6：每语言2条，一条未定事件/order0，一条已定事件；日语明确纳入已知64token截断的c1-1234，作为诊断层，不是随机抽样。
 - fact 3：每语言1条，中为真、英日为冲突；generic 3：每语言1条，中日正、英负。其余合格条目取固定`SHA256('DS-FLASH-PILOT-01:'+盲ID)`最小者。
-- 最终沿原504条盲呈现顺序。共20条，语言中/英/日7/7/6，实际ID和全部504请求的SHA/字节/预留写入 [冻结计划](inputs/ds-flash-plan-01.json)。
+- 最终沿原504条盲呈现顺序。共20条，语言中/英/日7/7/6，实际ID和全部504请求的SHA/字节/预留写入 [冻结计划](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/inputs/ds-flash-plan-01.json)。
 
 小样20次是额外的评分器检查，不能混入正式504的门或当重复独立n。用户认可后，全量按同一payload/口径重新评分504条（432项+72个概念表顺序反转重复），不改prompt/模式/阈值；本轮程序没有全量执行入口。之后的全量执行器仍须推送，沿用同一请求字节与累计预算/524次总账，不能重置小样费用或另开预算。
 
@@ -55,7 +55,7 @@ quote必须逐字位于输出，task_asks_feeling的quote例外来自事实参�
 
 ## 密钥、执行与证据
 
-评分程序只从进程`DEEPSEEK_API_KEY`读取；不读文件、注册表、用户环境或其他服务密钥。用户自行输入隐藏窗口后，仅向无窗口子进程继承环境，输入窗口已按用户要求关闭；不在文件、日志、报告、CLI参数保存密钥，不改任何全局设置。等待进程只等冻结指令，本身不联网。真实网络程序[ds_pilot.py](ds_pilot.py)仅POST固定官方HTTPS地址，拒绝重定向，不使用自定义代理/其他厂商SDK；没有OpenAI调用。
+评分程序只从进程`DEEPSEEK_API_KEY`读取；不读文件、注册表、用户环境或其他服务密钥。用户自行输入隐藏窗口后，仅向无窗口子进程继承环境，输入窗口已按用户要求关闭；不在文件、日志、报告、CLI参数保存密钥，不改任何全局设置。等待进程只等冻结指令，本身不联网。真实网络程序[ds_pilot.py](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds_pilot.py)仅POST固定官方HTTPS地址，拒绝重定向，不使用自定义代理/其他厂商SDK；没有OpenAI调用。
 
 session的`ready.json`只是本地内存交接通知，其旧head不代表评分执行基线；实际API放行是新预注册推送后写的`execute.json`，实际head记录在`pilot-run/binding.json`并由评分程序重新核对。没有这个放行文件不会联网。
 

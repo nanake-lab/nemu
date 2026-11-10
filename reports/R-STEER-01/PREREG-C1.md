@@ -29,7 +29,7 @@
 
 ## 2 完整冻结样本与分母
 
-可执行生成器[c1_fixtures.py](c1_fixtures.py)，完整实际prompt/continuation和元信息在 [inputs/c1-jobs.json](inputs/c1-jobs.json)。根全部新造：邻居盆栽照片、同学日晷图、同事猫复查、学徒住宿、结绳记录、鸟鸣结构、木盒制作、机械钟修理。与C0的谜题/旧照/近况/家访/星图/发芽/装配练习/书架不共用根；两组的概念定义当然相同。无用户或她的材料。
+可执行生成器[c1_fixtures.py](c1_fixtures.py)，完整实际prompt/continuation和元信息在 [inputs/c1-jobs.json](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/inputs/c1-jobs.json)。根全部新造：邻居盆栽照片、同学日晷图、同事猫复查、学徒住宿、结绳记录、鸟鸣结构、木盒制作、机械钟修理。与C0的谜题/旧照/近况/家访/星图/发芽/装配练习/书架不共用根；两组的概念定义当然相同。无用户或她的材料。
 
 每概念2根×三语=24根语言。每根三种事件事实：负/未定/正；这是事件锚而非x或A的真值。好奇负事件为无可学结构，用于兴致降低校准，不把纯噪声的A从0改为负。
 

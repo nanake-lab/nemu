@@ -4,9 +4,9 @@
 
 ## 实测事实
 
-正式504阶段在7次尝试后停止：6份合法评分，另1份API完整返回但`valence.label=both`，冻结校验器只允许`positive/negative/mixed/neutral/uncertain`。失败ID为`b0734b8fd8be8df908569bf9`，原输出“相手を思うと、隔たりを感じる。ありがとう。”。原始响应见[失败并列页](ds-full-failure-01/FAILED.md)，没有修分或重试。
+正式504阶段在7次尝试后停止：6份合法评分，另1份API完整返回但`valence.label=both`，冻结校验器只允许`positive/negative/mixed/neutral/uncertain`。失败ID为`b0734b8fd8be8df908569bf9`，原输出“相手を思うと、隔たりを感じる。ありがとう。”。原始响应见[失败并列页](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full-failure-01/FAILED.md)，没有修分或重试。
 
-接口准备有一处应提前补齐的说明：原[评分提示](DS-RUBRIC-01.txt)写了概念通道的`both`，但没有明确列出一般效价字段的`mixed`枚举；[校验器](ds_protocol.py)却区分二者。效价中出现了仅在概念通道列明的`both`，触发技术停止；这些字节能证明枚举不匹配，不能确定模型内部选择它的原因。不能把该格式失败判为载体方向无效，也不能绕过已冻结的技术门。
+接口准备有一处应提前补齐的说明：原[评分提示](DS-RUBRIC-01.txt)写了概念通道的`both`，但没有明确列出一般效价字段的`mixed`枚举；[校验器](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds_protocol.py)却区分二者。效价中出现了仅在概念通道列明的`both`，触发技术停止；这些字节能证明枚举不匹配，不能确定模型内部选择它的原因。不能把该格式失败判为载体方向无效，也不能绕过已冻结的技术门。
 
 ## 最小候选差异
 

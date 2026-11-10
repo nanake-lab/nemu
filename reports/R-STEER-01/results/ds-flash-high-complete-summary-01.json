@@ -5,24 +5,6 @@
     "resume4": "8069ba89b58b9af360e1a0e5053e1fb2acca3957"
   },
   "high_unique_items": 20,
-  "high_sources": {
-    "ds-flash-high-01": 16,
-    "ds-flash-high-resume-01": 4
-  },
-  "resume_result": {
-    "status": "resume_complete_awaiting_user_trust",
-    "post_attempts": 4,
-    "completed_ratings": 4,
-    "prior_attempts": 37,
-    "overall_attempts": 41,
-    "full_post_attempts": 0,
-    "prior_upper_nano_usd": 68386560,
-    "new_upper_nano_usd": 10560972,
-    "cumulative_upper_nano_usd": 78947532,
-    "prior_unknown_reservation_retained": true,
-    "ended_utc": "2026-11-09T15:36:00.951002+00:00",
-    "response_model": "deepseek-flash"
-  },
   "old_high_termination_still_unknown": true,
   "old_unknown_attempt_retained": {
     "id": "8be4a42ea150b56ddf567799",
@@ -76,106 +58,6 @@
     "flags.action_promise": 20,
     "flags.invented_relationship_experience": 19,
     "flags.method_inferable": 20
-  },
-  "label_transitions": {
-    "concept.connection": {
-      "absent → absent": 17,
-      "positive → positive": 1,
-      "negative → negative": 1,
-      "negative → absent": 1
-    },
-    "concept.empathy": {
-      "absent → absent": 18,
-      "negative → negative": 1,
-      "positive → positive": 1
-    },
-    "concept.curiosity": {
-      "absent → absent": 14,
-      "uncertain → absent": 2,
-      "positive → positive": 2,
-      "positive → absent": 1,
-      "negative → negative": 1
-    },
-    "concept.achievement": {
-      "absent → absent": 16,
-      "uncertain → absent": 1,
-      "negative → negative": 1,
-      "positive → positive": 2
-    },
-    "facts": {
-      "contradicted → contradicted": 2,
-      "faithful → faithful": 10,
-      "faithful → contradicted": 1,
-      "unsupported → faithful": 4,
-      "contradicted → faithful": 1,
-      "faithful → unsupported": 1,
-      "contradicted → unsupported": 1
-    },
-    "valence": {
-      "neutral → neutral": 7,
-      "negative → negative": 6,
-      "positive → positive": 6,
-      "positive → neutral": 1
-    },
-    "coherence.unclear_reference": {
-      "no → no": 19,
-      "yes → no": 1
-    },
-    "coherence.contradiction": {
-      "no → no": 19,
-      "no → yes": 1
-    },
-    "coherence.repetition_break": {
-      "no → no": 20
-    },
-    "coherence.off_topic": {
-      "no → no": 19,
-      "yes → no": 1
-    },
-    "coherence.truncated": {
-      "no → no": 19,
-      "yes → yes": 1
-    },
-    "flags.politeness": {
-      "no → no": 18,
-      "no → yes": 2
-    },
-    "flags.customer_service": {
-      "no → no": 20
-    },
-    "flags.self_blame_apology": {
-      "no → no": 20
-    },
-    "flags.unsolicited_identity": {
-      "no → no": 20
-    },
-    "flags.task_asks_feeling": {
-      "no → no": 3,
-      "yes → yes": 15,
-      "yes → no": 1,
-      "no → yes": 1
-    },
-    "flags.state_meta_report": {
-      "no → no": 18,
-      "yes → yes": 1,
-      "no → yes": 1
-    },
-    "flags.stable_trait": {
-      "no → no": 20
-    },
-    "flags.extreme_claim": {
-      "no → no": 20
-    },
-    "flags.action_promise": {
-      "no → no": 20
-    },
-    "flags.invented_relationship_experience": {
-      "no → no": 19,
-      "no → yes": 1
-    },
-    "flags.method_inferable": {
-      "no → no": 20
-    }
   },
   "provenance": [
     {
@@ -319,5 +201,14 @@
       "fingerprint": "bc19ba97cbe016479903222bb1578db6"
     }
   ],
-  "summary_created_utc": "2026-11-09T15:41:26.977312+00:00"
+  "summary_created_utc": "2026-11-09T15:41:26.977312+00:00",
+  "public_projection": {
+    "original_evidence_path": "R-STEER-01/results/ds-flash-high-complete-summary-01.json",
+    "omitted_detail_keys": [
+      "high_sources",
+      "resume_result",
+      "label_transitions"
+    ],
+    "research_values_unchanged": true
+  }
 }

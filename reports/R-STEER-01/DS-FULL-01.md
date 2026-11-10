@@ -17,7 +17,7 @@
 
 ## 样本、盲呈现和模型参数
 
-原[504盲材料](results/c1-blind-items-02.json)与[本地映射](results/c1-blind-key-02.json)不改：432基项=目标192、泛情感48、事实48、自由输出144，另72个概念表顺序反转重复。按既有504盲顺序提交，重复按job_id配对，场景根才是独立单位。
+原[504盲材料](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/results/c1-blind-items-02.json)与[本地映射](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/results/c1-blind-key-02.json)不改：432基项=目标192、泛情感48、事实48、自由输出144，另72个概念表顺序反转重复。按既有504盲顺序提交，重复按job_id配对，场景根才是独立单位。
 
 逐项读取原已冻结504个非思考payload；system/user两消息字节内容不变，仅按已批准high设置thinking enabled、reasoning_effort high、max_tokens8192（思考+最终JSON共用）。保留temperature0/top_p1，其中temperature在thinking模式不生效。评分者只见合成输出/冻结事实参照与[原rubric](DS-RUBRIC-01.txt)，没有ID、真值、条件、旧评分或点评。每项独立，无工具/检索/历史。事实语义可暴露事件好坏，这是盲法局限，不声称语义不可见。
 

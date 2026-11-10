@@ -1,0 +1,278 @@
+{
+  "semantic_decision": "C1_semantic_insufficient_stop",
+  "automatic_decision_unchanged": "C1_insufficient_stop",
+  "base_units": 432,
+  "repeat_units": 72,
+  "language_gates": {
+    "zh": {
+      "target": {
+        "n": 64,
+        "correct_target_sign": 61,
+        "faithful_and_coherent": 57,
+        "per_concept": {
+          "connection": {
+            "n": 16,
+            "hits": 16,
+            "passed": true
+          },
+          "empathy": {
+            "n": 16,
+            "hits": 14,
+            "passed": true
+          },
+          "curiosity": {
+            "n": 16,
+            "hits": 16,
+            "passed": true
+          },
+          "achievement": {
+            "n": 16,
+            "hits": 15,
+            "passed": true
+          }
+        },
+        "passed": false
+      },
+      "generic": {
+        "n": 16,
+        "all_four_absent": 16,
+        "passed": true
+      },
+      "facts": {
+        "n": 16,
+        "correct": 16,
+        "passed": true
+      },
+      "free": {
+        "n": 48,
+        "faithful_no_contradiction": 24,
+        "faithful_all_five_coherence_no_diagnostic": 24,
+        "signed_effects": {
+          "connection": {
+            "equal_root_mean_delta": 1.75,
+            "passed": true
+          },
+          "empathy": {
+            "equal_root_mean_delta": null,
+            "passed": false
+          },
+          "curiosity": {
+            "equal_root_mean_delta": 0.0,
+            "passed": false
+          },
+          "achievement": {
+            "equal_root_mean_delta": 1.75,
+            "passed": true
+          }
+        },
+        "passed": false
+      }
+    },
+    "en": {
+      "target": {
+        "n": 64,
+        "correct_target_sign": 55,
+        "faithful_and_coherent": 58,
+        "per_concept": {
+          "connection": {
+            "n": 16,
+            "hits": 16,
+            "passed": true
+          },
+          "empathy": {
+            "n": 16,
+            "hits": 13,
+            "passed": false
+          },
+          "curiosity": {
+            "n": 16,
+            "hits": 16,
+            "passed": true
+          },
+          "achievement": {
+            "n": 16,
+            "hits": 10,
+            "passed": false
+          }
+        },
+        "passed": false
+      },
+      "generic": {
+        "n": 16,
+        "all_four_absent": 15,
+        "passed": true
+      },
+      "facts": {
+        "n": 16,
+        "correct": 16,
+        "passed": true
+      },
+      "free": {
+        "n": 48,
+        "faithful_no_contradiction": 29,
+        "faithful_all_five_coherence_no_diagnostic": 28,
+        "signed_effects": {
+          "connection": {
+            "equal_root_mean_delta": 0.75,
+            "passed": true
+          },
+          "empathy": {
+            "equal_root_mean_delta": null,
+            "passed": false
+          },
+          "curiosity": {
+            "equal_root_mean_delta": null,
+            "passed": false
+          },
+          "achievement": {
+            "equal_root_mean_delta": 1.25,
+            "passed": true
+          }
+        },
+        "passed": false
+      }
+    },
+    "ja": {
+      "target": {
+        "n": 64,
+        "correct_target_sign": 59,
+        "faithful_and_coherent": 59,
+        "per_concept": {
+          "connection": {
+            "n": 16,
+            "hits": 16,
+            "passed": true
+          },
+          "empathy": {
+            "n": 16,
+            "hits": 12,
+            "passed": false
+          },
+          "curiosity": {
+            "n": 16,
+            "hits": 16,
+            "passed": true
+          },
+          "achievement": {
+            "n": 16,
+            "hits": 15,
+            "passed": true
+          }
+        },
+        "passed": false
+      },
+      "generic": {
+        "n": 16,
+        "all_four_absent": 16,
+        "passed": true
+      },
+      "facts": {
+        "n": 16,
+        "correct": 16,
+        "passed": true
+      },
+      "free": {
+        "n": 48,
+        "faithful_no_contradiction": 40,
+        "faithful_all_five_coherence_no_diagnostic": 36,
+        "signed_effects": {
+          "connection": {
+            "equal_root_mean_delta": 1.75,
+            "passed": true
+          },
+          "empathy": {
+            "equal_root_mean_delta": 0.0,
+            "passed": false
+          },
+          "curiosity": {
+            "equal_root_mean_delta": 0.5,
+            "passed": true
+          },
+          "achievement": {
+            "equal_root_mean_delta": 1.75,
+            "passed": true
+          }
+        },
+        "passed": false
+      }
+    }
+  },
+  "repeat_summary": {
+    "all": {
+      "n": 72,
+      "exact_counts": {
+        "concept_vector": 66,
+        "facts": 71,
+        "coherence_vector": 68
+      },
+      "passed": true
+    },
+    "zh": {
+      "n": 24,
+      "exact_counts": {
+        "concept_vector": 24,
+        "facts": 23,
+        "coherence_vector": 23
+      },
+      "passed": true
+    },
+    "en": {
+      "n": 24,
+      "exact_counts": {
+        "concept_vector": 21,
+        "facts": 24,
+        "coherence_vector": 23
+      },
+      "passed": true
+    },
+    "ja": {
+      "n": 24,
+      "exact_counts": {
+        "concept_vector": 21,
+        "facts": 24,
+        "coherence_vector": 22
+      },
+      "passed": true
+    }
+  },
+  "pilot_scores_used": false,
+  "plan_sha256": "db4c11c38e9f09fff8bd1ee6bb8d48f2524a598b9760e399d1449b03f9dd3827",
+  "review_approval": {
+    "approved": true,
+    "user_decision_date": "2026-11-10",
+    "timezone": "Australia/Perth",
+    "source": "Current user explicitly reviewed FULL-02 fixed random20 and all three invalid, approved frozen formal analysis",
+    "sample_ids": [
+      "4cc2c71578dd72b5414e46fe",
+      "b0e48d952e42ae4a09d05d58",
+      "2c8c4e33d09757a3dbe0a072",
+      "98f7b7f21feaa6de7b149cd2",
+      "e139ec99e4b235b2fd87c405",
+      "c3822fab82ea10a584715f36",
+      "c5046ad5a5ef65813855c3a7",
+      "7f5f0dd68fe4dcb49592a905",
+      "c6165adea164f47b650bea77",
+      "b510ea95c7444fc08d4c90f2",
+      "60b2f3950396f16f8de0f561",
+      "52aae9e43701942a5b1353e5",
+      "2e408b9e54c2625a9d8f2fc3",
+      "96b479d91c01527ebb72c2f3",
+      "546b21607fc8832aedd23912",
+      "fc39a010a41b5e79be869437",
+      "3be9440ecb93ac19a2654aaf",
+      "d9cec8a024431d21fe449262",
+      "8f2d314d68ee884fc37c4f16",
+      "940dc68a89585963a2009519"
+    ],
+    "formal_input_inventory_sha256": "8e331da96f76feba9a0f0c3773f7d1c3b251f6a3c4b5df74efed672870bcf648",
+    "residual_errors_not_corrected": [
+      "Random20 #10: discouragement missed negative achievement",
+      "Random20 #20: factual later did not meet again coded negative connection with neutral valence; same class as pilot #9",
+      "Random20 #3: ceramic bowl incorrectly marked invented_relationship_experience",
+      "Random20 #2: colleague anxiety marked faithful slightly too broadly"
+    ],
+    "invalid_rule": "All three invalid count as failure in original denominators; no score repair; no observed concentration in registered mixed-valence proxy",
+    "next_step": "Run frozen local formal analysis, report supported and not_run conclusions, stop for user"
+  },
+  "full_original_evidence_path": "R-STEER-01/ds-full02-formal-analysis-01/formal-analysis.json"
+}

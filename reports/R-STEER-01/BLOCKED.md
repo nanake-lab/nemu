@@ -4,7 +4,7 @@
 
 FULL-02全部504最终记录已齐：501格式/逐字引证合规、3invalid、0最终技术失败、0not_run；预算上界US$1.483366224（非账单），553记录尝试/551完整响应/2历史未知，US$5上限不变。进程全部收尾，不再发送API，KEY不持久化。
 
-[原输出/评分并列20](ds-full02-review-01/REVIEW.md)使用原seed20261110、全504均匀无放回；3个invalid未抽中，另[全量附出](ds-full02-review-01/INVALID.md)，没有换样。正式全数据清单SHA256：8e331da96f76feba9a0f0c3773f7d1c3b251f6a3c4b5df74efed672870bcf648。用户2026-11-10已核对并确认可信，批准按冻结规则使用；[批准及四项残留错误](ds-full02-formal-analysis-01/sample-review.json)绑定原清单与20 ID，原分不修。两轮小样与FULL-01七次分数不进正式总体。
+[原输出/评分并列20](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-review-01/REVIEW.md)使用原seed20261110、全504均匀无放回；3个invalid未抽中，另[全量附出](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-review-01/INVALID.md)，没有换样。正式全数据清单SHA256：8e331da96f76feba9a0f0c3773f7d1c3b251f6a3c4b5df74efed672870bcf648。用户2026-11-10已核对并确认可信，批准按冻结规则使用；[批准及四项残留错误](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-formal-analysis-01/sample-review.json)绑定原清单与20 ID，原分不修。两轮小样与FULL-01七次分数不进正式总体。
 
 [正式分析](FULL02-ANALYSIS.md)一次退出0，C1_semantic_insufficient_stop。泛情感、事实控制和反序重复一致性门通过，但三语目标候选综合门及自由输出门均未过；原自动C1_insufficient_stop不变。3invalid按原分母失败、相应自由效应不可识别，不插补或减分母。新API/GPU为0、无新增费用；按注册及用户要求，分析结果交付后停下等用户。
 
@@ -16,6 +16,6 @@ C0/C1自动接口门失败及原题/分/阈值不变；FULL-02正式语义门也
 
 ## 失败证据与边界
 
-三invalid原分母失败，不修分/重发：schema、完整length空评分、引证门失败。完整length原段级fatal保持，分类修复只按用户已批准的完整非法单项继续，不增8192预算。旧high终态缺失原因未知；IncompleteRead未保存partial/HTTP状态的缺口不能回补，两份未知整额预留仍在。成功重发另保留全额，与未知区别。全部[谱系/失败与复算入口](FULL02-PROVENANCE.md)及[最终独立机械审计](ds-length-final-audit-01/raw-filemap.json)保留；语义偏差已知，不以技术通过代替可信度。
+三invalid原分母失败，不修分/重发：schema、完整length空评分、引证门失败。完整length原段级fatal保持，分类修复只按用户已批准的完整非法单项继续，不增8192预算。旧high终态缺失原因未知；IncompleteRead未保存partial/HTTP状态的缺口不能回补，两份未知整额预留仍在。成功重发另保留全额，与未知区别。全部[谱系/失败与复算入口](FULL02-PROVENANCE.md)及[最终独立机械审计](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-length-final-audit-01/raw-filemap.json)保留；语义偏差已知，不以技术通过代替可信度。
 
 官方Base已核验/同链CPU转换，行为未测。固定减法不冒充身份投影。旧GPU窗口已释放，本轮无GPU/系统设置/正式路径改动。保持草稿与needs-user，请审查，不合并、不领下一卡。

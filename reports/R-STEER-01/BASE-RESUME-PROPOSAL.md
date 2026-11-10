@@ -1,6 +1,6 @@
 # Base首分片续传候选（未批准、未执行）
 
-原方法单次900秒超时：curl退出28，保留869,961,948字节，SHA256为`f146443d3b46eefb12a0ca0d1f63ae69f388ee8d9a501c74e2393bb3faf57fdd`。这不是模型或引擎兼容性结果。元数据、已核验5个文件和失败日志见 [原记录](preparation/base-download-01/raw-filemap.json)；权重/partial留D盘，不提交权重。
+原方法单次900秒超时：curl退出28，保留869,961,948字节，SHA256为`f146443d3b46eefb12a0ca0d1f63ae69f388ee8d9a501c74e2393bb3faf57fdd`。这不是模型或引擎兼容性结果。元数据、已核验5个文件和失败日志见 [原记录](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/preparation/base-download-01/raw-filemap.json)；权重/partial留D盘，不提交权重。
 
 推荐先跑不依赖Base的C0，再决定是否给同一官方修订的首分片一次**30分钟上限**续传。下面是可核对的精确候选，不执行，也不自动重试：新建目录复制partial，保留首次失败字节；同一curl、同一官方URL用Range续传。若服务器不支持续传或再次失败就停；完整后须按官方SHA256验证。30分钟仍可能不够，不能把用完预算当完整下载；其余分片/转换/行为测量不由此标完成。
 

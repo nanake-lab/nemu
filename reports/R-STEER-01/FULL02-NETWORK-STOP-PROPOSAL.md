@@ -4,7 +4,7 @@
 
 ## 现有事实
 
-按用户要求的“网络、进程、用量或预算异常仍整段停止”，当前已停止。FULL-02原70与无窗口续段41共111次，110合规、0 schema/引证invalid；第107项`53dfb69ce6b166eae7a2f26e`读取HTTP正文时IncompleteRead，子进程正常exit2、未触发180秒期限。失败后新增预留0，在途均收尾，393未发。[失败原输出/实际请求/终态](ds-full2-transport-failure-02/FAILED.md)、[摘要](results/ds-full2-transport-stop-summary-01.json)。
+按用户要求的“网络、进程、用量或预算异常仍整段停止”，当前已停止。FULL-02原70与无窗口续段41共111次，110合规、0 schema/引证invalid；第107项`53dfb69ce6b166eae7a2f26e`读取HTTP正文时IncompleteRead，子进程正常exit2、未触发180秒期限。失败后新增预留0，在途均收尾，393未发。[失败原输出/实际请求/终态](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full2-transport-failure-02/FAILED.md)、[摘要](results/ds-full2-transport-stop-summary-01.json)。
 
 没有完整响应、用量或评分，且冻结HTTP程序没有保存IncompleteRead.partial及读前HTTP状态，不能补造已丢失片段或确定服务端/链路责任。该项US$0.011862300全额预留保留，连同历史未知US$0.011795700，当前累计峰值上界US$0.403365240（非账单）；159记录尝试、157完整响应、2未知。窗口修复已实际观察到4个评分子进程句柄均0；此次是HTTP读取失败，不是窗口/评分枚举错误。
 

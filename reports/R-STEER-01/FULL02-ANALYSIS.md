@@ -2,18 +2,20 @@
 
 ## 结果与意义
 
+证据按2026-11-10新规则迁入私有仓库，见[迁移与逐文件哈希](EVIDENCE-MIGRATION.md)；[公开聚合JSON](results/full02-formal-summary.json)保留门与计数，逐项原值只换位置。
+
 2026-11-10（Australia/Perth）用户核对固定随机20条及全部3条invalid后，明确批准正式使用。冻结分析器一次运行退出0：**C1_semantic_insufficient_stop**；原自动结果 **C1_insufficient_stop** 不变。泛情感、事实控制和反序重复一致性达到预注册门槛；三语的目标候选综合门与自由输出门均未通过。本轮没有获得可直接用于四方向扫描的测量接口，不能解释成四方向无效、注入只改文风，或文字状态路线优劣。
 
 只读本阶段501份合规评分；3条invalid保留原分母、整条计失败。432基项、72反序重复，后者不是独立场景；不读取两轮小样或FULL-01评分。所有统计沿用[原语义门](C1-BLIND-RUBRIC.md)、[具体操作化](DS-FULL-01.md)与[FULL-02非法项规则](DS-FULL-02.md)，未改题、评分、口径、阈值或分析器。
 
 ## 批准、输入与执行证据
 
-- [用户批准及残留错误](ds-full02-formal-analysis-01/sample-review.json)绑定原seed20261110的20个ID和完整504数据清单SHA256 `8e331da96f76feba9a0f0c3773f7d1c3b251f6a3c4b5df74efed672870bcf648`；抽样/清单[原件](ds-full02-review-01/sample-index.json)不改。
-- [正式完整结果](ds-full02-formal-analysis-01/formal-analysis.json)保留逐根/条件/顺序的分值、不可识别ID、72组重复的原始标签一致性及各语言标签分布。
-- [执行记录](ds-full02-formal-analysis-01/execution.json)：UTC06:01:08.5945131–06:01:09.8296947（Perth14:01），冻结head `19e500d076fcfbaad1b274182db45aad429bf4ce`，main `a7e8ae8790d297ac697956f6f1256d2e2b9403d5`，退出0；[stdout](ds-full02-formal-analysis-01/stdout.log)/[stderr](ds-full02-formal-analysis-01/stderr.log)为空。入口 `python -B reports/R-STEER-01/ds_length_collect.py analysis`；[源码/键表摘要](ds-full02-formal-analysis-01/analysis-input-hashes.json)。
+- [用户批准及残留错误](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-formal-analysis-01/sample-review.json)绑定原seed20261110的20个ID和完整504数据清单SHA256 `8e331da96f76feba9a0f0c3773f7d1c3b251f6a3c4b5df74efed672870bcf648`；抽样/清单[原件](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-review-01/sample-index.json)不改。
+- [正式完整结果](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-formal-analysis-01/formal-analysis.json)保留逐根/条件/顺序的分值、不可识别ID、72组重复的原始标签一致性及各语言标签分布。
+- [执行记录](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-formal-analysis-01/execution.json)：UTC06:01:08.5945131–06:01:09.8296947（Perth14:01），冻结head `19e500d076fcfbaad1b274182db45aad429bf4ce`，main `a7e8ae8790d297ac697956f6f1256d2e2b9403d5`，退出0；[stdout](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-formal-analysis-01/stdout.log)/[stderr](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-formal-analysis-01/stderr.log)为空。入口 `python -B reports/R-STEER-01/ds_length_collect.py analysis`；[源码/键表摘要](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-formal-analysis-01/analysis-input-hashes.json)。
 - 新API调用0、GPU运行0、费用增量0；累计保守预算上界仍US$1.483366224（非账单），总上限US$5。未需要KEY，也未启动新模型。
-- [执行与批准原始字节归档](ds-full02-formal-analysis-01/original-bytes/raw-filemap.json)逐文件gzip还原相等，独立保留PowerShell CRLF；可读JSON可能由Git规范化换行，原件以此清单为准。原评分与全数据清单不变。
-- [独立机械复核原件](ds-full02-formal-audit-01/raw-filemap.json)、[两阶段摘要](results/ds-full02-formal-audit-summary-01.json)：完整性与数值分别一次退出0、stderr空；52冻结源、504项的5724份清单内artifact逐件相符。未调用原metrics函数的独立计数与全部432基项、72重复、12个概念×语言效应及不可识别传播一致；只核对数值，不替主代理裁定语义门。代理按当前项目配置gpt-6.1-terra/max显式参数试用，未验证按角色名自动加载，无API/模型/GPU。
+- [执行与批准原始字节归档](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-formal-analysis-01/original-bytes/raw-filemap.json)逐文件gzip还原相等，独立保留PowerShell CRLF；可读JSON可能由Git规范化换行，原件以此清单为准。原评分与全数据清单不变。
+- [独立机械复核原件](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-formal-audit-01/raw-filemap.json)、[两阶段摘要](results/ds-full02-formal-audit-summary-01.json)：完整性与数值分别一次退出0、stderr空；52冻结源、504项的5724份清单内artifact逐件相符。未调用原metrics函数的独立计数与全部432基项、72重复、12个概念×语言效应及不可识别传播一致；只核对数值，不替主代理裁定语义门。代理按当前项目配置gpt-6.1-terra/max显式参数试用，未验证按角色名自动加载，无API/模型/GPU。
 
 ## 预注册四类门
 
@@ -70,7 +72,7 @@
 
 旧小样9/10的复述事实/效价不一致、18失落缺联结负向亦保留为方法局限；旧评分不进入正式总体。用户抽查认可不等于逐项金标准，单一外部模型仍可能漏标、泛化或混淆主观感受与事实。这批数据不能独立拆分“生成材料不足”“rubric边界”“评判器偏差”的各自贡献。
 
-3条invalid未集中于预注册字面混合线索代理组（0/17，其他3/487）；同评分器返回mixed的13项无invalid。与用户核对结论相符，但没有独立真实混合效价金标准，不外推真实混合效价的因果关系。[全部非法原文与错误](ds-full02-review-01/INVALID.md)不改。
+3条invalid未集中于预注册字面混合线索代理组（0/17，其他3/487）；同评分器返回mixed的13项无invalid。与用户核对结论相符，但没有独立真实混合效价金标准，不外推真实混合效价的因果关系。[全部非法原文与错误](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-full02-review-01/INVALID.md)不改。
 
 ## 对原研究问题与P5-31的边界
 

@@ -12,7 +12,7 @@
 | 仍用2048总输出额度 / 预先扩至8192 | 选8192：思考和最终JSON共用生成额度，给思考留余量；这是事前工程选择，非准确率门槛，不能保证不截断；不能在失败后增额重试 |
 | 自动认为high更可信 / 用户并列抽查 | 选后者：只统计标签变化，变了不等于改对了，不新造正确答案 |
 
-冻结输入来自[旧计划](inputs/ds-flash-plan-01.json)的同20个pilot_ids与[已保存实际请求](ds-flash-review-01/REVIEW.md)。新请求除`thinking.type=enabled`、增加`reasoning_effort=high`、`max_tokens=8192`外与旧JSON对象完全一致；两条messages及其字符串必须逐字节相同。不发送旧评分、研究者点评、ID/条件映射。独立无历史会话、无工具、官方HTTPS、同一JSON口径与[验证器](ds_protocol.py)。语义盲法局限沿[旧注册](DS-FLASH-01.md)：事实本身可能暴露事件好坏，但不提供真实条件标签。
+冻结输入来自[旧计划](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/inputs/ds-flash-plan-01.json)的同20个pilot_ids与[已保存实际请求](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds-flash-review-01/REVIEW.md)。新请求除`thinking.type=enabled`、增加`reasoning_effort=high`、`max_tokens=8192`外与旧JSON对象完全一致；两条messages及其字符串必须逐字节相同。不发送旧评分、研究者点评、ID/条件映射。独立无历史会话、无工具、官方HTTPS、同一JSON口径与[验证器](https://github.com/nanake-lab/nemu-evidence/blob/67bd1831d34cbc533ad354d46513b7ad56c1100d/R-STEER-01/ds_protocol.py)。语义盲法局限沿[旧注册](DS-FLASH-01.md)：事实本身可能暴露事件好坏，但不提供真实条件标签。
 
 [官方思考说明](https://api-docs.deepseek.com/guides/thinking_mode/)和[API参数](https://api-docs.deepseek.com/api/create-chat-completion/)明确：思考档low/high/max；思考模式temperature不生效。保留旧temperature=0与top_p=1字段，但不能宣称有效采样设置完全相同；本比较涉及思考机制、有效采样与总输出上限，不能严格归因为单一变量。旧轮同日已见结果，属于用户追加的探索性配对复测，非独立留出检验。
 
