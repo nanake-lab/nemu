@@ -3,7 +3,7 @@
 # P5-69 C：生活基线的共同折扣 — 报告
 
 ## 当前状态
-已按 PR #150 交叉审查补齐第 7 条的纯控制路径与审计材料测试：新增三项通过；本轮完整测试、clippy、fmt 正在重跑。PR 保持草稿、needs-user，待原审查方复审，不自判阻塞解除。实现仍在 dynamics/；仅另按用户指示追加一个常量导出请求。
+已按 PR #150 交叉审查补齐第 7 条的纯控制路径与审计材料测试：新增三项通过；本轮完整 core-kernel、clippy、fmt 与代码提交的 Ubuntu CI 全部通过。受测代码为 `11b08e40056475cff34f84a1fae88b931403c936`，后续收尾仅更新报告和证据索引。PR 保持草稿、needs-user，待原审查方复审，不自判阻塞解除。实现仍在 dynamics/；仅另按用户指示追加一个常量导出请求。
 
 ## 交付物
 
@@ -17,13 +17,14 @@
 
 | 检查 | 当前结果 |
 | --- | --- |
-| 最终 `cargo test --manifest-path core/Cargo.toml -p core-kernel --locked` | passed：254 passed、0 failed、1 既有 ignored；329.79 秒；doc-tests 0 项 |
-| D07 专项测试 `dynamics::tests::common_discount -- --nocapture` | passed：13 项、0 failed；4.71 秒；保存 1074 步 P/S/U/b 位值和 128 步动态出生差轨迹 |
+| 最终 `cargo test --manifest-path core/Cargo.toml -p core-kernel --locked` | passed：257 passed、0 failed、1 既有 ignored；314.32 秒；doc-tests 0 项（本轮修复代码） |
+| 原 D07 专项证据（b8fe03ac，保留） | 13 项通过；1074 步 P/S/U/b 位值和 128 步动态出生差轨迹；本轮完整测试继续执行这些断言 |
+| 新增控制路径 `dynamics::tests::common_discount_controls -- --nocapture` | 3 passed、0 failed；0.01 秒；保存合成 Audit 的绑定与完整前后状态 |
 | 有理数 oracle `d07_oracle.py --check` | passed：256 个出生份额前缀、1074 个 N/T 舍入包络前缀 |
 | Python mypy --strict / ruff check | passed；仅标准库，无新增依赖 |
 | `cargo clippy --manifest-path core/Cargo.toml -p core-kernel --all-targets --locked -- -D warnings` | passed |
 | `cargo fmt --manifest-path core/Cargo.toml --all -- --check` | passed |
-| [Ubuntu CI 42841073030](https://github.com/nanake-lab/nemu/actions/runs/42841073030)，受测代码提交 b8fe03ac | passed：工作区 fmt、clippy、tests（按既有工作流排除 core-store），可选 CPU 编译检查通过 |
+| [Ubuntu CI 42857570884](https://github.com/nanake-lab/nemu/actions/runs/42857570884)，受测代码 11b08e40 | passed：工作区 fmt、clippy、tests（既有工作流排除 core-store）、可选 CPU 编译检查；kernel 257 passed / 1 ignored，269.99 秒 |
 | Windows CI / Node、旁路 Python 项目检查 | 本卡路径不触发这些检查；Windows 本机 Rust 结果见上表，oracle 自身 Python 静态检查单独执行 |
 | 独立交叉审查 | e13fe250 的结论为有阻塞问题；本轮修复待原审查方复审 |
 
@@ -52,3 +53,5 @@
 2. 采纳常量单一来源建议；目前 `theta` 模块私有且常量未公开重导出，卡内无法引用。已按用户允许登记 [最小导出请求](../../tasks/requests/P5-69-law-state-numerics-export.md)，暂不改 core-types 或重构。现行 V3 语义边界仍验证相同数值版本标识。
 
 main 核对：最近受测 B=`51298e9ce5d571e8753d047eaac864fce007b867`；当前 M=`31e6f712` 为 B 的后继，只在 `tasks/P4-voice.md` 登记 IndexTTS 声音候选，未改变本卡规格、构建、测试或依赖。按现行 AGENTS 第 6 节不必合入；本轮本机测试基线仍是 B。生产接线不提前实现。
+
+本轮本机基线仍为 B=`51298e9c`；CI 实际 checkout `935ab428fb31edb218587d115109a7262654196d` 的父提交已核验为 main `31e6f71231e68b8e5464603a68d0b55a10d4a906` 和修复代码 `11b08e40056475cff34f84a1fae88b931403c936`。本轮未出现代码/测试失败；等待其他卡释放重负载窗口不计为验收失败。原失败日志与原测试结果仍保留。

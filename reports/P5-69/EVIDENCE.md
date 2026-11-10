@@ -27,3 +27,19 @@
 | [P5-69/validation-20261110/ruff-final-02.log](https://github.com/nanake-lab/nemu-evidence/blob/d98c72a136b8156ef76e72342a4818d4b500524b/P5-69/validation-20261110/ruff-final-02.log) | `a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0` |
 | [P5-69/validation-20261110/ruff-final.log](https://github.com/nanake-lab/nemu-evidence/blob/d98c72a136b8156ef76e72342a4818d4b500524b/P5-69/validation-20261110/ruff-final.log) | `a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0` |
 | [P5-69/validation-20261110/validation.json](https://github.com/nanake-lab/nemu-evidence/blob/d98c72a136b8156ef76e72342a4818d4b500524b/P5-69/validation-20261110/validation.json) | `0b80fda1ecd3b6b6bddcf8752b509a8cd98e1d4d8895b281c3d3d4dac4ecad62` |
+
+## 2026-11-11 交叉审查修复
+
+代码提交：`11b08e40056475cff34f84a1fae88b931403c936`；私有证据提交：`a13c6edc51162e5ccf5dc3091fb8f743e74d6137`。
+`controls.log` 共同覆盖 AC2-08/I23、AC2-18、AC2-19 和 AC2-20 的纯控制与 Audit；按新规律重建的 AC2-20 目录归档。生产 H/L 与 SYS17 不在本证据内。
+本轮七个文件均核验本机原始字节等于提交 blob，再计算 SHA-256。
+
+| 私有证据路径 | SHA-256 |
+| --- | --- |
+| [P5-69/AC2-20/review-fix-20261111/ci-42857570884.log](https://github.com/nanake-lab/nemu-evidence/blob/a13c6edc51162e5ccf5dc3091fb8f743e74d6137/P5-69/AC2-20/review-fix-20261111/ci-42857570884.log) | `85f028284ebb9ab5a86bc8a21c6d3bb850f38fce7c2ada503ad12a0ac3be72f2` |
+| [P5-69/AC2-20/review-fix-20261111/ci-checkout.json](https://github.com/nanake-lab/nemu-evidence/blob/a13c6edc51162e5ccf5dc3091fb8f743e74d6137/P5-69/AC2-20/review-fix-20261111/ci-checkout.json) | `8df55db0542ac2018140933bee71a22e195408e6a0350a90feb93fb6a110dbef` |
+| [P5-69/AC2-20/review-fix-20261111/clippy.log](https://github.com/nanake-lab/nemu-evidence/blob/a13c6edc51162e5ccf5dc3091fb8f743e74d6137/P5-69/AC2-20/review-fix-20261111/clippy.log) | `20b44b35324d0d87bf099549f6a2f8251737031bf13ca0ba46c35a498a2db3ef` |
+| [P5-69/AC2-20/review-fix-20261111/controls.log](https://github.com/nanake-lab/nemu-evidence/blob/a13c6edc51162e5ccf5dc3091fb8f743e74d6137/P5-69/AC2-20/review-fix-20261111/controls.log) | `05c202c72ae297fc59bedf2ecd7f6a4b92042bd7d1d8b83ad799c425e9bfa8bc` |
+| [P5-69/AC2-20/review-fix-20261111/fmt.log](https://github.com/nanake-lab/nemu-evidence/blob/a13c6edc51162e5ccf5dc3091fb8f743e74d6137/P5-69/AC2-20/review-fix-20261111/fmt.log) | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| [P5-69/AC2-20/review-fix-20261111/kernel.log](https://github.com/nanake-lab/nemu-evidence/blob/a13c6edc51162e5ccf5dc3091fb8f743e74d6137/P5-69/AC2-20/review-fix-20261111/kernel.log) | `8abba37eb5f5732732a62ffb4e1fd6f377d6993c440daf94a7f459b50ad019af` |
+| [P5-69/AC2-20/review-fix-20261111/validation.json](https://github.com/nanake-lab/nemu-evidence/blob/a13c6edc51162e5ccf5dc3091fb8f743e74d6137/P5-69/AC2-20/review-fix-20261111/validation.json) | `f153949a47999f928b9aad5a5ba9235c3378c0999c5f6a3d6346aeab69443b0a` |
