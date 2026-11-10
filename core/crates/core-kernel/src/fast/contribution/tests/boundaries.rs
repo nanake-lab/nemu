@@ -108,6 +108,38 @@ fn f_out_aligns_current_and_target_but_revisit_reads_recorded_coordinates() {
 fn numerical_and_contract_boundaries_reject_without_mutating_input() {
     let s = state(0.0);
     let before = s.clone();
+    // Boundary reuse must retain zero normalization and semantic rejection.
+    let mut negative_zero = s.snapshot.clone();
+    negative_zero.nature.connection = -0.0;
+    let normalized = State::from_snapshot(negative_zero, &law_ref(), limits()).unwrap();
+    bits(x(&normalized), 0.0);
+    same(
+        &s,
+        &State::from_canonical(
+            &normalized.canonical_bytes(limits()).unwrap(),
+            &law_ref(),
+            limits(),
+        )
+        .unwrap(),
+    );
+    assert!(State::from_canonical(b"invalid", &law_ref(), limits()).is_err());
+    let target = compute_target(
+        &effects(),
+        &Evaluation {
+            drives: vec![],
+            f_sum: [0.0; 4],
+        },
+        Some([0.0; 4]),
+        1.0,
+        &law(&law_ref()),
+    )
+    .unwrap();
+    let mut record = new("zero", 0.0).record().clone();
+    record.target.nature.connection = -0.0;
+    let normalized = Effect::new(record.clone(), &target, limits()).unwrap();
+    bits(normalized.record().target.nature.connection, 0.0);
+    record.governance_refs.clear();
+    assert!(Effect::new(record, &target, limits()).is_err());
     assert!(s.project_time(&effects(), 0).is_ok());
     let future = s.project_time(&effects(), 5).unwrap();
     assert!(future.project_time(&effects(), 4).is_err());

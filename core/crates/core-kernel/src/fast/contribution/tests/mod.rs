@@ -9,6 +9,7 @@ use core_types::{
 mod boundaries;
 mod histories;
 mod oracle;
+mod revision;
 
 // Synthetic algebra fixture only, never a deployment default (§9 / I29).
 fn limits() -> Limits {

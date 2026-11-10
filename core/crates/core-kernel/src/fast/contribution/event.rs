@@ -14,7 +14,7 @@ impl Effect {
         target: &Target,
         limits: Limits,
     ) -> Result<Self, FastError> {
-        codec::check(&record, limits)?;
+        let bytes = codec::check(&record, limits)?;
         if record.law_version != target.law_version || record.target != codec::vector(&target.drive)
         {
             return Err(FastError::OutOfRange("target binding"));
@@ -23,11 +23,7 @@ impl Effect {
         if record.role == FastEffectRole::FAST_EFFECT_REVISIT {
             return Err(FastError::OutOfRange("revisit needs history"));
         }
-        let record = FastEffectRecord::from_canonical(
-            &record.canonical_bytes(limits).map_err(FastError::Codec)?,
-            limits,
-        )
-        .map_err(FastError::Codec)?;
+        let record = FastEffectRecord::from_canonical(&bytes, limits).map_err(FastError::Codec)?;
         Ok(Self { record })
     }
     pub fn record(&self) -> &FastEffectRecord {

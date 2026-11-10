@@ -7,10 +7,15 @@ use core_types::{
 
 // Contract boundary with the same caller limits for structural and semantic
 // checks (P5-68). Decode to the schema value without a second runtime JSON dep.
-pub(super) fn check<T: WireMessage>(message: &T, limits: Limits) -> Result<(), FastError> {
+pub(super) fn check<T: WireMessage>(message: &T, limits: Limits) -> Result<Vec<u8>, FastError> {
     let bytes = message.canonical_bytes(limits).map_err(FastError::Codec)?;
+    check_canonical::<T>(&bytes, limits)?;
+    Ok(bytes)
+}
+
+fn check_canonical<T: WireMessage>(bytes: &[u8], limits: Limits) -> Result<(), FastError> {
     let value = Schema::builtin()
-        .and_then(|s| s.decode_canonical(T::NAME, &bytes, limits, 0))
+        .and_then(|s| s.decode_canonical(T::NAME, bytes, limits, 0))
         .map_err(FastError::Codec)?;
     core_types::semantic::check_law_state_message(T::NAME, &value, limits).map_err(FastError::Codec)
 }
@@ -21,7 +26,28 @@ impl State {
         law: &ObjectRef,
         limits: Limits,
     ) -> Result<Self, FastError> {
-        check(&snapshot, limits)?;
+        let bytes = check(&snapshot, limits)?;
+        Self::from_checked_bytes(&bytes, law, limits)
+    }
+
+    pub fn from_canonical(
+        bytes: &[u8],
+        law: &ObjectRef,
+        limits: Limits,
+    ) -> Result<Self, FastError> {
+        check_canonical::<FastStateSnapshotV3>(bytes, limits)?;
+        Self::from_checked_bytes(bytes, law, limits)
+    }
+
+    // Reuse the boundary bytes, including their zero/order normalization.
+    // The typed decode remains necessary: semantic validation uses Schema values.
+    fn from_checked_bytes(
+        bytes: &[u8],
+        law: &ObjectRef,
+        limits: Limits,
+    ) -> Result<Self, FastError> {
+        let snapshot =
+            FastStateSnapshotV3::from_canonical(bytes, limits).map_err(FastError::Codec)?;
         if snapshot.representation_version != REPRESENTATION_VERSION {
             return Err(FastError::RepresentationVersion(
                 snapshot.representation_version,
@@ -30,24 +56,7 @@ impl State {
         if &snapshot.law_version != law {
             return Err(FastError::OutOfRange("law binding"));
         }
-        let snapshot = FastStateSnapshotV3::from_canonical(
-            &snapshot.canonical_bytes(limits).map_err(FastError::Codec)?,
-            limits,
-        )
-        .map_err(FastError::Codec)?;
         Ok(Self { snapshot })
-    }
-
-    pub fn from_canonical(
-        bytes: &[u8],
-        law: &ObjectRef,
-        limits: Limits,
-    ) -> Result<Self, FastError> {
-        Self::from_snapshot(
-            FastStateSnapshotV3::from_canonical(bytes, limits).map_err(FastError::Codec)?,
-            law,
-            limits,
-        )
     }
 
     pub fn canonical_bytes(&self, limits: Limits) -> Result<Vec<u8>, FastError> {

@@ -54,68 +54,6 @@ fn revisit_order_is_first_effect_order_not_input_or_canonical_order() {
 }
 
 #[test]
-fn interpreter_revision_uses_latest_target_prestate_and_next_update_uses_current() {
-    let initial = make_effect("a", 0.125, FastEffectRole::FAST_EFFECT_NEW_BASIS, 10);
-    let first = make_effect("a", 0.25, FastEffectRole::FAST_EFFECT_TARGET_UPDATE, 11);
-    let second = make_effect("a", 0.5, FastEffectRole::FAST_EFFECT_TARGET_UPDATE, 12);
-    let s = state(0.0)
-        .apply(&initial, limits())
-        .unwrap()
-        .apply(&first, limits())
-        .unwrap()
-        .apply(&second, limits())
-        .unwrap();
-    let before = s.canonical_bytes(limits()).unwrap();
-    // Revision appends a new interpretation in H; no F call/commit is made.
-    let revised = make_effect("a", 0.75, FastEffectRole::FAST_EFFECT_TARGET_UPDATE, 12);
-    let current_governance = [reference("fixture.governance", 9)];
-    let hist = HistoryBasis {
-        first_position: 0,
-        target: &second,
-        reinterpreted: Some(&revised),
-        active: true,
-        revisit_governance: &current_governance,
-    };
-    assert_eq!(s.canonical_bytes(limits()).unwrap(), before);
-    same(&s, &s.revisit(&[history(&second, 0)], limits()).unwrap().0);
-    let (next, receipts) = s.revisit(&[hist], limits()).unwrap();
-    bits(x(&next), 0.75);
-    assert_eq!(receipts[0].governance_refs, current_governance);
-    assert_eq!(receipts[0].theta_before, second.record().theta_before);
-    assert_eq!(receipts[0].effects_before, second.record().effects_before);
-    assert_eq!(
-        receipts[0].interpretation_refs,
-        revised.record().interpretation_refs
-    );
-    for wrong in [&initial, &first] {
-        let hist = HistoryBasis {
-            first_position: 0,
-            target: &second,
-            reinterpreted: Some(wrong),
-            active: true,
-            revisit_governance: &second.record().governance_refs,
-        };
-        assert!(s.revisit(&[hist], limits()).is_err());
-    }
-    let current = make_effect("a", -0.25, FastEffectRole::FAST_EFFECT_TARGET_UPDATE, 13);
-    let next = next.apply(&current, limits()).unwrap();
-    bits(x(&next), -0.25);
-    let (_, receipts) = next.revisit(&[history(&current, 0)], limits()).unwrap();
-    assert_eq!(
-        receipts[0].theta_before,
-        reference("echo.theta-snapshot-v3", 13)
-    );
-    // Synthetic H contains every record/reference; no storage resolution claim.
-    let synthetic_h = [&initial, &first, &second, &revised, &current];
-    assert!(
-        synthetic_h
-            .iter()
-            .any(|r| r.record().theta_before == receipts[0].theta_before
-                && r.record().interpretation_refs == receipts[0].interpretation_refs)
-    );
-}
-
-#[test]
 fn invalidation_alias_merge_zero_removal_and_reentry() {
     let a = new("a", 0.1);
     let b = new("b", 0.2);
