@@ -1,11 +1,57 @@
-# P5-37 持续认知记录与工作状态契约
+重档：改动 Echo Core IDL、core-types 及跨语言生成产物，涉及持久契约与后继事务。
 
-重档，契约变更；当前为认领与实现阶段，尚未验收。
+# P5-37 持续认知记录与工作状态 — 报告
 
-基线 `8839dcae73c98437f61222f49d08cafd9ba8f4e6`，分支 `task/P5-37-cognition-idl`。开工检查所有开放 PR 的完整文件列表，没有修改 `core/contracts/` 或 `core/crates/core-types/` 的 PR。ADR 0030 未占用；V2-110 至 V2-114 仍是本卡预留，未发布定义。
+## 当前状态
 
-按 ADR 0026 与 DOC-PRESETS-01 当前有效读法施工：不恢复 COG-A12/统一无外源定时回落，不新增 D11 分阶段消费键或时间事实；后者归 P5-72。依据身份复用 P5-68。
+实现与缓存测试入口修复已提交 `a0e0d7ba92547c64caa6b9d013180aae58f1e38e`，PR [#155](https://github.com/nanake-lab/nemu/pull/155) 保持草稿、needs-user。契约层实现与本机验证完成；Ubuntu CI 已通过，Windows runner 离线导致门禁未完成（见 BLOCKED.md）。等待独立交叉审查及用户批准 ADR 0030/契约变更；不自行合并、不领取下一卡。
 
-原始验证日志保存到 `D:/Dev/cache/P5-37/`，收尾归档私有证据仓库；公开仓库只留报告和 EVIDENCE-INDEX。旧字节不重解释，无正式/排练存储访问。
+## 交付物
 
-本 PR 标 needs-user，由用户合并；完成后请求独立交叉审查并停止，不领取下一卡。
+- `core/contracts/cognition.proto`：12 条新消息、5 个枚举；独立内部记录、工作/在途状态、输入/回执、完整绑定、内部提交、事务 V3 与维护记录。由既有生成器输出 Rust/Python/TypeScript。
+- 三语言 `cognition` 语义入口及三种探针：检查嵌套回执、完整请求绑定、合法完成状态、后继与行动绑定；解码后由消费者显式调用，README 写明职责。
+- `fixture_cognition.py`、`verify_cognition.py` 和黄金向量：新增 51 合法、164 非法；原 565 合法、696 非法逐项保留。`baselines/p5-68/` 冻结开工 main 的 10 个 IDL 文件及全部黄金向量摘要。
+- [ADR 0030](../../docs/adr/0030-cognition-record-contracts.md)、[规格对照](../../docs/traceability/P5-37.md) 与 V2-110 至 V2-114。开工 main 和开放 PR 均未占用预留编号，无需顺延。
+
+## 验收
+
+| 命令 / 检查 | 当前结果 | 证据 |
+| --- | --- | --- |
+| `python core/contracts/generate.py --check` | passed，0 stale | contracts-02.log |
+| `pnpm test:core-contracts` | passed；180 消息，每语言 15,973 案例（3,533 接受 / 12,440 拒绝）；官方 protoc 616 向量；新事务各语言 12 恢复 / 12 跨版本拒绝 | contracts-02.log |
+| `python core/contracts/check_compat.py --ref 8839dcae73c98437f61222f49d08cafd9ba8f4e6` | passed，7 个已发布基线、current 与开工 main 均 0 违例 | compat-02.log |
+| `uv run --project core/contracts --locked ruff check core/contracts workers/irl/generated/echo` | passed | ruff-02.log |
+| `MYPYPATH=workers/irl/generated` 下锁定环境 `mypy --strict`（生成器、夹具、对抗/验证脚本、兼容/冻结脚本与 generated/echo，含导入的新模块） | passed，15 个入口文件 | mypy-03.log |
+| `cargo fmt --all -- --check`；`cargo clippy --workspace --all-targets --locked -- -D warnings` | passed，缓存入口修复后复跑通过 | rust-fmt-02.log、clippy-02.log |
+| `cargo test --workspace --locked`；修复后 `cargo test --workspace --locked --exclude core-kernel --exclude core-store` | 首轮在 core-types 缓存测试失败；修复后其余工作区全通过。未改动的 core-kernel 首轮 273 passed / 1 既有 ignored（V2-93 旧舍入诊断），core-store 51 passed；两包复用该有效结果 | cargo-test-01.log、cargo-test-02.log、rust-results-02.json |
+| `pnpm lint` / `pnpm typecheck` / `pnpm test` | passed；54 文件、620 测试 | pnpm-lint.log、pnpm-typecheck.log、pnpm-test.log |
+| Ubuntu CI / Windows CI | 修复后 CI passed；Windows not_run（runner 离线，draft 自动汇总门禁失败） | [CI #42877893094](https://github.com/nanake-lab/nemu/actions/runs/42877893094)、ci-02-full.log；[BLOCKED](BLOCKED.md) |
+| COG-A01–11/13、SYS17、持续认知真实时间/体验 | not_run，只有契约层合成验证；COG-A12 旧规则已被取代，不签发通过 | [规格对照及范围](../../docs/traceability/P5-37.md) |
+
+原始数据与失败日志归档私有 `nanake-lab/nemu-evidence/P5-37/`，公开仅留 [EVIDENCE-INDEX](EVIDENCE-INDEX.md)。全部输入为合成数据，没有读取正式或排练存储。生成产物、黄金向量及契约基线属于代码和验收，保留在主仓库。
+
+## 失败与修复
+
+首次生成因新维护枚举与既有 `MaintenanceKind` 重名失败，改为 `CognitiveMaintenanceKind`。首次兼容检查发现 `@supersedes` 缺少前任停用标记；检查现有 store 写入门禁后选择已有 `@retains`（见下），未放宽门禁。首次 mypy 报夹具字典推断过窄，补显式类型后通过。首轮 Ubuntu CI 与本机全工作区测试发现缓存一致性测试的独立探针漏调新语义检查（非法向量 732 被接受）；在原测试探针追加相同入口，保留所有断言，`a0e0d7b` 修复后该测试通过。Windows 自动工作流因草稿跳过 self-hosted 作业，汇总门禁按规定失败，不能当作测试通过。失败日志保留在证据索引；未删除旧断言或降低阈值。
+
+## 规格对照与边界
+
+逐条对照见 [P5-37](../../docs/traceability/P5-37.md)，逐字段出处见 [ADR 0030 字段表](../../docs/adr/0030-cognition-record-contracts.md#决策与字段出处)。I14/I16/I18 的本卡证据为完整绑定、规范编码与显式状态字段；I02/I23、原子发布与重放须运行时继续验收。三语言检查不能证明引用存在、来源可信、实际 m 注入、当前 Q 未过期或行动已获授权。
+
+`round_index` 仅为活动请求顺序；不实现已取代的 n/κ/心理期限。内部记录与自发行动类别用类型和来源关联表达；F 依据身份沿用 P5-68。D11 的发生/观察时间事实和消费键归 P5-72。保留 ActionPlan 既有执行期限并不赋予其心理作用期限含义。
+
+**需要批准的分阶段安排（V2-113）：** V3 采用现有 `@retains CoreTransactionV2`，仍检查保留/reserved 字段号；暂不机器停用 V2。当前 store/runtime 仍生产 V2，立即加 `@superseded` 会触发 Objects::prepare 拒写。P5-38 接线后再停用旧写入；本卡不提前改 store。旧对象保持原标签，回退按旧应用与兼容备份恢复，不从旧草稿或 Q 猜造内部历史。
+
+新手写实现文件均小于 400 行。原有大文件仅加探针/夹具登记；超过 400 行的新增基线与生成产物是已发布 IDL 的逐字节冻结或机械生成，无新增抽象层。无新增依赖。
+
+## 基线与待确认
+
+开工及最近 fetch 的 main 均为 `8839dcae73c98437f61222f49d08cafd9ba8f4e6`；契约 suite 与首次工作区检查的源码绑定 `ceea6722`；`a0e0d7b` 仅追加 cfg(test) 缓存探针的语义调用，已复跑受影响的工作区测试、fmt、clippy。清单与变更说明见私有 tested-source.json、toolchain-and-fix.json。本机 Rust/Cargo 1.99.0 与锁定工具链一致，Python 3.12.10、Node 24.21.0、pnpm 12.11.2；依赖按锁文件安装。开放 PR 完整文件列表核对未发现契约线占用。Ubuntu CI 实际 checkout 为 `eaa33c53f822faa5bcd4aeaacc7344c33825803a`，已核对两个父提交分别为上述 main 与 `a0e0d7b`；通过 Rust 工作区/存储、前端构建测试、Python 四项目与三语言契约门禁。收尾提交只更新报告、阻塞说明与证据索引，不改变被验证源码。
+
+- [ ] （阻塞）用户批准 ADR 0030、V2-110 至 V2-114，尤其 V2-113 的分阶段停用安排。
+- [ ] （阻塞）独立交叉审查通过；本执行会话不自审签发。
+- [ ] （阻塞）Windows runner 恢复在线并完成当前代码的工作流；见 [BLOCKED](BLOCKED.md)。
+
+## 后续建议
+
+P5-38/39 完成真实持续认知、H/Q 原子提交与恢复；P5-72/75 处理新规律消费、时间事实与运行时接线。COG 的行为、资源、持续时长与真实体验由相应卡实测，本卡不以编码测试替代。
