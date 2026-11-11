@@ -91,7 +91,8 @@ fn c_probe(q: &Value) -> Value {
             }
         })
         .collect();
-    let binding = reference(&q["resource_ref"], "echo.law-version");
+    let mut binding = reference(&q["resource_ref"], "echo.law-version");
+    binding.resource_version = law.version.clone();
     let snapshot = |s: &c::DynamicsState| -> (Value, Vec<u8>) {
         if new {
             let v = c::export_snapshot_v3(s, "probe", &binding, &fuses, limits()).unwrap();
