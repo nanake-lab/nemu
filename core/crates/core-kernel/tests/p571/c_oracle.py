@@ -25,6 +25,13 @@ def clamp(x: Q, lo: Q, hi: Q) -> Q:
     return max(lo, min(hi, x))
 
 
+def strict_product(a: Q, b: Q) -> Q:
+    value = r(a * b)
+    if a and b and not value:
+        raise ArithmeticError("Underflow")
+    return value
+
+
 class C:
     def __init__(
         self,
@@ -35,6 +42,11 @@ class C:
         self.p = {k: Q(v) for k, v in resource.items() if isinstance(v, (float, int))}
         self.p["b0"], self.p["p0"] = Q(case["b0"]), Q(case["p0"])
         self.version = case["version"]
+        self.fixed_rho = (
+            None if case.get("rho", "dynamic") == "dynamic" else Q(case["rho"])
+        )
+        self.lifetime_mass, self.lifetime_sum = Q(0), Q(0)
+        self.last_rho = Q(1)
         self.fn = primitive
         logmean = r(
             r(self.p["duration_weight"] * self.fn("log", self.p["tau_prior_s"]))
@@ -72,12 +84,12 @@ class C:
             drift_sign=["0"] * 12,
             drift_count=["0"] * 12,
         )
-        self.mass = self.p["p0"] if self.version == "A" else None
+        self.mass = self.p["p0"] if self.version != "old" else None
         self.exact = dict(P=self.p["p0"], S=Q(0), U=Q(0))
 
     def step(self, event: dict[str, Any]) -> None:
         p, e = self.p, self.e
-        a, t = Q(event["a"]), event["time_ns"]
+        a, t = Q(event["a"]), event.get("running_ns", event["time_ns"])
         n = int(e["event_count"]) + 1
         segments = int(e["detector_segment_count"]) + 1
         changed = False
@@ -117,7 +129,12 @@ class C:
             ),
         )
         rho = r(1 - h)
-        e["weight"] = r(r(rho * e["weight"]) + 1)
+        if self.fixed_rho is not None:
+            rho, h = self.fixed_rho, r(1 - self.fixed_rho)
+        self.last_rho = rho
+        self.lifetime_mass = r(self.lifetime_mass + 1)
+        self.lifetime_sum = r(self.lifetime_sum + a)
+        e["weight"] = r(strict_product(rho, e["weight"]) + 1)
         if self.mass is not None:
             self.mass = r(rho * self.mass)
         old = deepcopy(self.values)
@@ -125,12 +142,20 @@ class C:
         channels = ("connection", "empathy", "curiosity", "achievement")
         for j, name in enumerate(channels):
             residual = r(a - old["baseline"][name])
-            e["square_sum"][j] = r(r(rho * e["square_sum"][j]) + r(residual * residual))
+            e["square_sum"][j] = r(
+                strict_product(rho, e["square_sum"][j])
+                + strict_product(residual, residual)
+            )
             e["reaction_sum"][j] = r(r(rho * e["reaction_sum"][j]) + a)
             mass = p["p0"] if self.mass is None else self.mass
             new_b.append(
                 r(r(r(mass * p["b0"]) + e["reaction_sum"][j]) / r(mass + e["weight"]))
             )
+            if self.version == "B":
+                new_b[-1] = r(
+                    r(r(p["p0"] * p["b0"]) + self.lifetime_sum)
+                    / r(p["p0"] + self.lifetime_mass)
+                )
             variance = r(
                 r(
                     r(p["variance_weight"] * r(p["sigma_prior"] ** 2))
@@ -147,8 +172,10 @@ class C:
                     p["gain_max"],
                 )
             )
-            e["duration_log_sum"][j] = r(rho * e["duration_log_sum"][j])
-            e["duration_mass"][j] = r(rho * e["duration_mass"][j])
+            e["duration_log_sum"][j] = strict_product(rho, e["duration_log_sum"][j])
+            e["duration_mass"][j] = strict_product(rho, e["duration_mass"][j])
+            if "duration_baseline" in event:
+                residual = r(a - Q(event["duration_baseline"]))
             previous_sign, current_sign = int(e["run_sign"][j]), sign(residual)
             if previous_sign and current_sign != previous_sign:
                 duration = t - int(e["run_start_ns"][j])
@@ -204,14 +231,14 @@ class C:
         e["last_event"] = dict(
             schema_version=1,
             ordinal=str(event["ordinal"]),
-            time_ns=str(t),
+            time_ns=str(event["time_ns"]),
             event_id=event["id"],
         )
         e["last_running_time"] = dict(
             schema_version=1,
             origin_ns="0",
-            event_ns=str(t),
-            stopped_ns="0",
+            event_ns=str(event["time_ns"]),
+            stopped_ns=str(event.get("stopped_ns", 0)),
             running_ns=str(t),
         )
         # P07 conditional common-rho real reference, derived only from this oracle.

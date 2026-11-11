@@ -9,6 +9,15 @@ use core_types::{
 use serde_json::{Value, json};
 use std::time::Instant;
 
+#[path = "full_c.rs"]
+mod full_c;
+#[path = "full_driver.rs"]
+mod full_driver;
+#[path = "full_f.rs"]
+mod full_f;
+#[path = "full_g.rs"]
+mod full_g;
+
 fn limits() -> Limits {
     Limits {
         max_bytes: 1 << 20,
@@ -316,6 +325,7 @@ pub fn dispatch(q: &Value) -> Value {
         }
         "C" => c_probe(q),
         "F" => f_probe(q),
+        "matrix" => full_driver::run(q),
         _ => panic!("unknown protocol operation"),
     }
 }

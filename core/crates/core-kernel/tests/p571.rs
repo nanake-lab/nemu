@@ -26,6 +26,19 @@ fn p571_probe_tooling_one_step() {
 }
 
 #[test]
+fn p571_full_tooling_boundaries() {
+    let status = std::process::Command::new("python")
+        .arg(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/p571/smoke_full.py"
+        ))
+        .arg(std::env::current_exe().unwrap())
+        .status()
+        .expect("Python required by P5-71 full adapter tooling checks");
+    assert!(status.success());
+}
+
+#[test]
 fn p571_public_bridge() {
     // The external research driver opts into line-oriented I/O. Normal CI still
     // builds the complete adapter and checks its pure primitive dispatch.

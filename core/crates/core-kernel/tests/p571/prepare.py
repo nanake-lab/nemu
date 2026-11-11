@@ -117,7 +117,7 @@ def ledger() -> list[dict[str, Any]]:
         for version in refs + mutants:
             for layer in ("DUT", "independent_research"):
                 why = reason if not dut else ""
-                if version not in (
+                if not why and version not in (
                     "old",
                     "A",
                     "A1",
@@ -185,7 +185,23 @@ def ledger() -> list[dict[str, Any]]:
     ]:
         for world, b in itertools.product(range(w), range(branches)):
             add(f"07-{row:02}", "C", world, b, n, c_refs, c_mut[row])
-    add("07-08", "C", 0, 0, 0, [], [], False, "P5-76 feedback")
+    # W=0 is an explicit deferred claim, not an empty loop that disappears.
+    rows.append(
+        dict(
+            id="07-08",
+            family="C",
+            layer="DUT",
+            world=0,
+            branch=0,
+            version="not_applicable",
+            N=0,
+            sum_N=0,
+            prefix_recompute=0,
+            planned_status="not_run",
+            reason="P5-76 feedback",
+            recipe=f"PREREGISTRATION.md@{PREREG}:07-08",
+        )
+    )
     for k, n in enumerate([1074, 1, 1, 1, 1, 1]):
         add(
             "07-10",
