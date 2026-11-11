@@ -1,0 +1,91 @@
+{
+  "version": "C3-2A-PREP-01",
+  "status": "prepared_waiting_resource_clearance_and_build",
+  "private_repository": "nanake-lab/nemu-evidence",
+  "private_commit": "e9c3546f6ef743c57bd6cd41a9d175cdf05b5723",
+  "private_root": "R-STEER-01/c3-2a-01",
+  "public_start": "3bf79489af08d903179626a0eaa9be2ca2bd7cea",
+  "manifest_sha256": "15869303a25a6fe7f134480730491f504e12cff86eebbdffd9e5c7dec954ab4c",
+  "git_blobs_verified": 212,
+  "summary": {
+    "status": "prepared_not_run",
+    "selected_layers": {
+      "connection": [
+        0,
+        15,
+        21,
+        24
+      ],
+      "achievement": [
+        7,
+        15,
+        21,
+        24
+      ]
+    },
+    "unique_items": 3924,
+    "analysis_positions": 5220,
+    "reused_positions": 1296,
+    "conditions": 109,
+    "audit_items": 393,
+    "audit_fraction": 0.10015290519877676,
+    "windows": 4,
+    "free_per_window": 981,
+    "guards_per_window": 6,
+    "additional_guard_baseline_prefills": 3,
+    "generation_calls": 0,
+    "scoring_calls": 0,
+    "estimated_usd": {
+      "deepseek": 24.931931389499997,
+      "fallback_1pct": 0.631,
+      "fallback_5pct": 3.107675,
+      "audit": 6.199575
+    }
+  },
+  "budgets_nano_usd": {
+    "DeepSeek": {
+      "soft": 39900000000,
+      "hard": 42000000000
+    },
+    "Terra_fallback": {
+      "soft": 5700000000,
+      "hard": 6000000000
+    },
+    "Terra_independent_audit": {
+      "soft": 11400000000,
+      "hard": 12000000000
+    }
+  },
+  "entries": {
+    "protocol": "protocol/C3-2A-AMENDMENT-01.md",
+    "jobs": "inputs/jobs.json",
+    "windows": [
+      "inputs/window-1.json",
+      "inputs/window-2.json",
+      "inputs/window-3.json",
+      "inputs/window-4.json"
+    ],
+    "audit": "inputs/audit-sample.json",
+    "fixed20": "inputs/fixed20.json",
+    "source_binding": "source-binding.json",
+    "code": "code/",
+    "mechanical": "checks/offline-01.stdout.bin",
+    "resource_query": "checks/resource-query-01/snapshot.stdout.bin"
+  },
+  "native_build": "not_run",
+  "GPU": "not_run",
+  "API": "not_run",
+  "2b": "not_run",
+  "3": "not_run",
+  "4": "not_run",
+  "H": "not_run",
+  "resource_snapshot_utc": "2026-11-11T17:34:18.929381+00:00",
+  "heavy_load_categories": {
+    "native_unit_tests": 1
+  },
+  "runner_listener_exists": false,
+  "runner_worker_exists": false,
+  "next": "Other heavy work must clear; build and rebind native probe, fresh read-only preflight, then user confirmation for window 1. No GPU launch is authorized by this snapshot.",
+  "origin_main_checked": "eb9610e91abd6fcfe8cc0e8fc97533b561e9cee9",
+  "main_change_impact": "P5-30/P5-76 request append; P5-31, R-STEER rules, engine and frozen sources unchanged"
+}
