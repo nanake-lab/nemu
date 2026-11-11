@@ -1,5 +1,17 @@
 # P5-71 证据索引
 
+## 修复与自查（未开始第二轮实验）
+
+私有证据提交 [`6d2226a5efc05ded2ad9960a91840e5176485966`](https://github.com/nanake-lab/nemu-evidence/tree/6d2226a5efc05ded2ad9960a91840e5176485966/P5-71/20261111-repair-review)，绑定修复代码 `6062a36038752e19f41d3213c5b51d013e872612`。[逐文件索引 EVIDENCE-INDEX-repair.csv](EVIDENCE-INDEX-repair.csv) 记录归档内原始路径、SHA-256、字节数、代码/证据提交、ID和状态。
+
+归档65条原件，共92,743,027字节，压缩为 `evidence.zip` 4,293,536字节，SHA-256 `693ba322abcac8754cfa1582b2fb62b30179075b94ae6a9091e3973d718c1e7b`；流式解包65/65逐条哈希匹配。包含修复时32份测试源码、冻结预注册与构建锁定文件、重新物化的完整输入/资源、counts/totals、新旧多重集合对照、源码绑定和工具链登记、手算与正常测试/static检查日志。非锁定Ruff失败日志也保留，不以最终成功覆盖它。
+
+索引另列7个归档/核验文件，共72行。6个原始归档文件的 Git blob 与工作区原字节一致；核验补充提交 [`3d93acfd51aef19d69a301935d91ecbdf05dfcf3`](https://github.com/nanake-lab/nemu-evidence/blob/3d93acfd51aef19d69a301935d91ecbdf05dfcf3/P5-71/20261111-repair-review/GIT-VERIFICATION.json)。
+
+`repair-registration.json` 明确 `formal_run_started=false`，只是审查准备的文件登记，不是新的执行清单。32份源码与修复提交逐字节相同；counts/totals、五个资源与旧物化一致；除排序及 B 研究资格表之外，全部规范输入行多重集合一致。第二轮正式矩阵、成本探针、见证缩减均未启动；旧 `full-run-01` 原件及索引不变，不拼接。
+
+自查结论和局限见 [REFERENCE-SELF-AUDIT](REFERENCE-SELF-AUDIT.md)，软件验证见 [REPORT](REPORT.md)。下列旧标签只表示旧代码曾执行的检查；本轮发现的参考缺陷不会通过修改旧原件来掩盖。
+
 ## 正式执行 full-run-01（中断，部分结果）
 
 私有证据提交 [`f7f473a2c40cbdc04c69e2a24fbb790e80e64cad`](https://github.com/nanake-lab/nemu-evidence/tree/f7f473a2c40cbdc04c69e2a24fbb790e80e64cad/P5-71/20261111-full-v2-run01)，分支 `evidence/P5-71-probe`。原始执行代码 `8205b16fb3e5cbcda49165684b6620db89b036d9`；运行后只读汇总修正 `0bf0c92210d0d7ef69561bcee04e32be6045c000`。
