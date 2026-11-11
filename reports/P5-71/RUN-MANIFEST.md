@@ -68,3 +68,40 @@ python core/crates/core-kernel/tests/p571/probe.py D:/Dev/cache/P5-71/prepared-v
 r2 未执行；单步工具检查修正了日志句柄及 F 的 θ 引用类型，Python 补齐类型与格式检查。F 引用为代数夹具绑定，所指 F 资源含真实 θ 值；不是可恢复 ThetaSnapshotV3，不声称覆盖 H 解析或 09-19 引用验收。没有修改资源或冻结输入。
 
 本次正式成本探针代码 `bdd52e9fdb0d9dee7a908bcd6b4555d54a21eac4`；二进制 SHA-256 `668c1a6c3f1300788d07674db1c73a7be3a1b8cc91019cfee41b560f5b0b8cf1`；实际算术文件 SHA-256 `ab549e7c533bec311fb7cdea38803f0caac811c502953782761ff38eaecce40d`；清单 `prepared-v2-r3/RUN-MANIFEST.json` SHA-256 `fa3f215fc4c9170e57428c10290dfb97f5c6854f6eb6465ba2466623230c8503`。输入/资源/成本清单字节仍与 r1 相同。使用 r3 输入、输出 `probe-02`，不覆盖失败探针。运行前已完成 Rust 编译、新工具三项检查、clippy、fmt、Python mypy strict 与 ruff；原有 kernel 单元测试 273 passed、1 ignored，原全包命令因新工具故障退出，工具修复后单独重验。
+
+
+## 全量执行登记（16 小时授权）
+
+用户批准原冻结 v2 全量一次，不做工具优化；此登记发生在正式执行之前。代码提交 `8205b16fb3e5cbcda49165684b6620db89b036d9`，验证日志 full-kernel-test-01 / full-clippy-01 / full-fmt-check-01 全部退出 0。全量输入已物化，原准备文件保留。主内核源码 tree 与冻结基线相同：`4db8d68c86ce465d4ccdffec1d726b3d37448417`。
+
+完整清单暂存 `D:/Dev/cache/P5-71/prepared-full-v2-02/RUN-MANIFEST.json`，SHA-256 `a0bd02cb20b34b624b84d28af15fa0638aa3f7eb957c94c83a81a64c65a7a0a0`；正式运行入口逐文件核对其中的实际代码、完整输入/资源和二进制哈希。清单包含 Rust/Cargo 完整版本、Python、Cargo.lock、复用源和实际原语，以及逐行执行计划。
+
+| 项目 | SHA-256 | 字节 |
+| --- | --- | ---: |
+| matrix.jsonl | `bcdd35560845ca6db644b261e94ffac4379d99250b28fa896fd319c58c078483` | 85634810 |
+| C.json | `ce1d4fc7e59b99f3157e1a2d41248663928d0e1efefd36b15f42470e745762f5` | 494 |
+| C-alarm.json | `bd7e089cc5a07b3125ec7b856ef1780ee46bfbc4fbd9c259cd2931e2707aaefe` | 520 |
+| F.json | `8afe66b4e89cecc3a73bfa33594f2be0dccf185212a387d51312a0899615b9fb` | 224 |
+| F-interaction.json | `104a181b6e49e980607b30f17e4dc74464276716251670c0ec588956bda7826b` | 236 |
+| G.json | `a5e22008024a3ad07dc33887e4803aaf767c33d7e5568ace37daebf52f7cf488` | 847 |
+| 实际 arithmetic.py | `ab549e7c533bec311fb7cdea38803f0caac811c502953782761ff38eaecce40d` | 2352 |
+| 测试二进制 | `c074f02f64968bfadf7ce0dd1520d5585b21063e29f50b161e94b88e11c26d63` | 5359104 |
+
+| 层次/家族 | 计划行 | 固定 not_run 行 | ΣN | 逐前缀重算量 |
+| --- | ---: | ---: | ---: | ---: |
+| DUT/C | 560 | 432 | 19536 | 5994184 |
+| DUT/CF | 728 | 400 | 9216 | 230912 |
+| DUT/F | 21968 | 13368 | 17072 | 314088 |
+| DUT/G | 40 | 0 | 680 | 2040 |
+| DUT/arithmetic | 20 | 20 | 0 | 0 |
+| DUT/candidate | 2 | 2 | 0 | 0 |
+| independent_research/C | 559 | 0 | 130479 | 46587172 |
+| independent_research/CF | 728 | 0 | 20416 | 514272 |
+| independent_research/F | 21968 | 56 | 47424 | 938768 |
+| independent_research/G | 40 | 0 | 200 | 600 |
+| independent_research/arithmetic | 20 | 0 | 20 | 20 |
+| independent_research/baseline_subpath | 10 | 0 | 5375 | 2886380 |
+| production_wiring/handoff | 13 | 13 | 0 | 0 |
+| sensitivity_model/candidate | 2400 | 0 | 2400 | 2400 |
+
+G DUT 的正例含四条 F 路线各自的 G 调用，负对照仅 A1；07-10 baseline_subpath 是同一历史中分报的额外基线计算，不增加独立样本。固定 not_run 行的计算量为零。16 小时计时从正式 START 开始，包含矩阵与见证缩减；准备、编译和只读汇总不计为实验执行。中断、故障或到限不自动重启，保留每个已刷盘前缀，未完成的矩阵/缩减不报通过。
