@@ -65,6 +65,9 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 | `content/**` | 用户。代理可以提交管线生成的产物：`nemu.vrm`、`nemu.profile.json`、`lipsync/*.json`、`motions/*.vrma` 及其清单条目。其余内容在用户确认之前只能放进 `content/_candidates/`：设定集、源文件、`build.yaml` 里的审美参数、定稿的音色、协议 p、genesis 清单、语气样例库 |
 | `docs/**`、`tasks/**` | 只能追加报告、请求和 ADR；`docs/echo-core/original/` 永远不改。改已有文字或 `tasks/cards.json` 需要用户批准（PR 加 `needs-user`） |
 
+2026-11-11 用户决定一次性例外：仅移除上述两份 docx 的个人元数据，正文不变；原件在私有证据仓。
+此处两份指 `Ada Echo Core Math define.docx`、`Echo Core Implementation Plan.docx`；仅允许报告登记的旧哈希到新哈希转换。
+
 ## 3. 黄金规则
 
 1. **一次只做一张任务卡。** 任务卡以外的发现写进报告的「后续建议」，不要顺手做。

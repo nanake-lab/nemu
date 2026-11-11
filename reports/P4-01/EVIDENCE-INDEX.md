@@ -13,3 +13,7 @@
 | `resume-e2e-20261021T233633/electron-after-window-wait.json` | `d0d1eb6e441007fb455be8d55950d9c23bd9098839a12378239b88173b45d94c` | 脱敏：保留 56 个项目进程，去掉 487 个其他进程 |
 
 原件位置：`nanake-lab/nemu-evidence` 仓库的 `P4-01/` 下，路径与上表相同。主仓库 git 历史中的旧版本未改写。
+
+## PRIVACY-CLEANUP-01（2026-11-11）
+
+本次迁移原件的位置、SHA-256 与私有证据提交见 [逐项索引](../PRIVACY-CLEANUP-01/EVIDENCE-INDEX.md)。既有索引与原始证据保留。
