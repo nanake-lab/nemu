@@ -43,12 +43,29 @@ jobs:
             echo "Manual run: nothing to compare."
             exit 0
           fi
-          changed=$(git diff --name-only "$base" HEAD -- docs/echo-core/original)
-          if [ -n "$changed" ]; then
-            echo "::error::docs/echo-core/original/ must never be modified:"
-            echo "$changed"
-            exit 1
-          fi
+          python - "$base" <<'PY'
+          import hashlib
+          import subprocess
+          import sys
+
+          # One-time user decision, 2026-11-11: exact old -> new bytes only.
+          # No general permission to change originals or their metadata.
+          allowed = {
+              'docs/echo-core/original/Ada Echo Core Math define.docx': ('d735d030c5ee708d824d26c3f3993da0ffbabd3d1139c92f89d3f617ff18e638', 'dd252c5c4003fd8a0f8a480b791c14e01816eebbf10c6662c2355ba999e947f8'),
+              'docs/echo-core/original/Echo Core Implementation Plan.docx': ('7f7174078ba4e26f43fa0be66501660a19be6cc0d2b18568a39c074ff6113174', 'cebd8d9df31d8e9f7f92a2c87693570bb62777bc1fd8acbc515c92b288392256'),
+          }
+          base = sys.argv[1]
+          changed = subprocess.check_output(["git", "diff", "--name-only", "-z", base, "HEAD", "--", "docs/echo-core/original/"]).decode().split("\0")
+          for path in filter(None, changed):
+              if path not in allowed:
+                  sys.exit("::error::Frozen original changed: " + path)
+              expected_old, expected_new = allowed[path]
+              old = subprocess.check_output(["git", "show", base + ":" + path])
+              new = subprocess.check_output(["git", "show", "HEAD:" + path])
+              if (hashlib.sha256(old).hexdigest(), hashlib.sha256(new).hexdigest()) != (expected_old, expected_new):
+                  sys.exit("::error::Not the authorized one-time metadata transition: " + path)
+          print("Frozen originals guard passed")
+          PY
       - name: tasks/cards.json parses and its references resolve
         shell: python
         run: |
