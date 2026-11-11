@@ -65,3 +65,5 @@
 P5-08/19 接快照与发布；P5-13/31 接真实载体与验证；迁移接线在临时谱系通过 SYS17 后才可使用。字段约束不替代这些后继验收。
 
 最终报告/证据索引提交只改 reports/P5-42/，相对被测源码提交无代码、生成物、依赖或工作流变化；按 AGENTS §6/9 核对文档收尾，不把不同提交号混称为同一次 checkout。Ubuntu 实际 checkout 为 e164c4af35541271c5e95e627008a49cd9b1a67e（父提交 a6a0567f、5e04340f），Windows 直接测试 5e04340f。
+
+交叉审查补充的初轮证据边界：Windows 43047851482 的 e2e 为 3 passed / 2 skipped；click-through 50+50 与 voice-idle 60 秒没有实测，不将工作流成功写成这两项通过。B1 修复后的 Windows CI 因 runner 离线仍为 not_run，见 REVIEW-B1.md。

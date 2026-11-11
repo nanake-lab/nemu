@@ -10,3 +10,7 @@
 以 `*-final` 和两次成功 CI 为最终验证。早期检查针对当时未提交实现，不能只用辅助脚本记录的结束时 HEAD 冒充实际被测提交。`workspace-test-01` 的编译源早于最终 β=0 身体修正，并因 main CI 抢占资源中断，明确不计为完整工作区通过。最终源码由 `source-manifest.json` 及 CI checkout 绑定；其后仅报告收尾。
 
 旧 616 合法 / 860 非法向量保留，新消息增加 30 / 41；每种新消息至少 3 合法、3 非法。三语言资源/回执检查与 P5-12 数值往返只使用合成数据；真实载体、生产原子发布与谱系 SYS17 为 not_run。
+
+## B1 修复阶段
+
+本轮源码 02a4dc4c 的验证见 [REVIEW-B1.md](REVIEW-B1.md)。新增原始证据位于私有提交 [dcd25fab697c7dec98b3622fa74c58846e444bbf](https://github.com/nanake-lab/nemu-evidence/tree/dcd25fab697c7dec98b3622fa74c58846e444bbf/P5-42) 的 `2026-11-12-b1/` 和 `b1-ubuntu-43067969814/`，27 文件均已核对 Git blob 与本机原件逐字节相等。索引为 [B1-EVIDENCE.csv](B1-EVIDENCE.csv)，原阶段索引保持不变。Windows 本轮未运行；初轮通过不覆盖本轮修复。
