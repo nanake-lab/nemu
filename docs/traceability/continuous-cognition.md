@@ -20,4 +20,6 @@
 | ADR 0007 §10–11；terminal.proto 的 TaskInput/PlanAndCarrierReceipt；state.proto 的 CoreTransactionV2 | 新增有类型对象与内部提交后继；不将审计字段、普通输出块或 Mode C 草稿暗变因果状态 | core/contracts、注册表、canonical 编码、迁移 | COG-A09；保留 SYS17/SYS21 等原验收 |
 | S §11 的撤回/来源资格；I18；AGENTS §5 日志要求 | 工作引用、摘要、在途输入同样受撤回影响；内部内容只由获准核心查询查看 | task-layer、fact-view、观察接口 | COG-A08、A11 |
 
+> **状态更新（2026-11-11）：** 表中的递减加权（COG-06、COG-07）、行动结果期限与在途上限（COG-09 至 COG-11 的期限部分），以及 COG-A12 的统一回落与队列期限，在 [ADR 0035](../adr/0035-law-definitions-d07-d09-d11.md) 定义的新规律版本中被取代：κ^n 由依据替换取代（ADR 0035 §4.9），资格按发生与观察判定、理解时一次作用（ADR 0035 §5.6、§8；ADR 0032 §§5、7）。旧版本保留、可重放。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.5 节、第 3 节 E8。
+
 差异编号 COG-01 至 COG-11 见 [diff-register.md](diff-register.md)；COG-06 至 COG-11 是用户 2026-10-25 的确认与修改。这些编号与 COG-Axx 验收候选不同，不占用其他分支的 V2 编号，不改变既有登记。

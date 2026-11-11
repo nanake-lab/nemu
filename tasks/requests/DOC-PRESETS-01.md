@@ -1,6 +1,7 @@
 # DOC-PRESETS-01：预设决定的文档整理（后续卡）
 
 - 状态：待排期，未认领；依据用户 2026-10-29 决定与 [ADR 0032](../../docs/adr/0032-presets-as-starting-points.md)。本 PR 只建立卡，不执行下列整理。
+  > **状态更新（2026-11-11）：** 本卡已由 PR #122 执行并合并；有效读法见 [DOC-PRESETS-01 索引](../../docs/traceability/DOC-PRESETS-01.md)。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 D1。
 - 类型：文档；改规格/契约的读法须交叉审查、`needs-user`，由用户合并。
 - 前置：ADR 0032 审查与用户合并；开工核对 main、相关开放 PR 和目录重叠，正式编号/依赖登记另按 tasks/cards.json 审批规则处理。
 - 可改范围：`docs/ARCHITECTURE.md`、`docs/CONTRACTS.md`、`docs/echo-core/README.md`、`docs/echo-core/echo-core-v2.0-first-principles.md`、相关 `docs/adr/` 的追加有效性说明、`tasks/P3-body.md`、`tasks/P4-voice.md`、`tasks/P5-echo-core.md`、`tasks/P6-presence.md`、`docs/traceability/` 的追加记录、`reports/DOC-PRESETS-01/`。只同步已定决定，不改代码、配置、公式或已发布契约字节；原始规格归档与原始证据不改。

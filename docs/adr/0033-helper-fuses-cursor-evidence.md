@@ -5,6 +5,8 @@
 - 范围：只记录本次决定、取代范围和后续清单；不发布新契约、规律实现或配置值。
 - 关联：差异登记 V2-137–V2-143；[本卡请求](../../tasks/requests/DESIGN-ASSIST-EV-01.md)。
 
+> **状态更新（2026-11-11）：** 已采纳——PR #124 合并（AGENTS §6：needs-user PR 由用户合并，合并即批准）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 A15。
+
 ## 1. 背景与依据
 
 [ADR 0004](0004-codex-helpers.md) 保留助手用量显示和独立预算，[CONTRACTS §5.3、§8](../CONTRACTS.md) 与 `config/opportunities.json` 却仍有每日 30 次的值。[DOC-PRESETS-01 BLOCKED](../../reports/DOC-PRESETS-01/BLOCKED.md) 未自行判定其性质，也未解决 P6-09 将插入点靠近和鼠标停留一起自动躲开的冲突。用户本次明确：**每日 30 次不是用户设定，而是早期起草时写入的数值，作为行为上限予以取代。** 此来源说明依据本次用户决定，不把旧文档中的存在当作用户曾批准该数值的证据。
