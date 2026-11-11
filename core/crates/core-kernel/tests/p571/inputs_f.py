@@ -298,4 +298,23 @@ def f_case(row: dict[str, Any]) -> dict[str, Any]:
         add("noop", at=case["events"][-1]["time_ns"])
     if len(case["events"]) != row["N"]:
         raise ValueError("frozen N mismatch")
+    # §3.1 synthetic truth, separate from F roles and all numeric targets.
+    # This table is for independent B research only; request_for strips it
+    # before sending the case to the DUT.
+    admissions = {}
+    for e in case["events"]:
+        part, reason = None, "no genuinely new real part"
+        if e["kind"] == "record" and e["op"] == "new":
+            part, reason = "initial", "first eligible real root"
+        elif e["kind"] == "record" and e["op"] == "update" and num != 19:
+            # 09-09 repeats its step-2 revision at step 3. The other update
+            # scripts explicitly introduce a real condition/counterevidence or
+            # target revision (including a zero target); value equality is moot.
+            revision = 2 if num == 9 else e["ordinal"]
+            part = f"real-revision-{revision}"
+            reason = e.get("governance", "explicit real target revision")
+        elif num == 19 and e["op"] in ("update", "reinterpret", "revisit"):
+            reason = "theta/R/interpreter revision only; no new real part"
+        admissions[str(e["ordinal"])] = dict(real_part=part, reason=reason)
+    case["b_admissions"] = admissions
     return case

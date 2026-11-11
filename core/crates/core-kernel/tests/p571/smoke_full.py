@@ -23,6 +23,7 @@ from full_run import law_ref, request_for
 from materialize import expand
 from prepare import resources
 from summarize_full import resolved_status, sensitivity_status
+from reference_checks import run as reference_checks
 
 
 def summary_boundaries() -> None:
@@ -51,6 +52,7 @@ def summary_boundaries() -> None:
 
 
 def main() -> None:
+    reference_checks()
     summary_boundaries()
     c, f, g = resources()
     alarm = dict(c, version="P5-71-v2-C-alarm", jump_notice_bits="0000000000000001")

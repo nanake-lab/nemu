@@ -65,7 +65,7 @@ def request_for(
     request = dict(
         op="matrix",
         family=row["family"],
-        case=case,
+        case={k: v for k, v in case.items() if k != "b_admissions"},
         resource=resources[name],
         resource_ref=refs[name],
         input_ref=dict(

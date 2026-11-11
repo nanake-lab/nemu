@@ -84,25 +84,43 @@ class BaselinePath:
 
     def __init__(self, case: dict[str, Any]) -> None:
         initial = case.get("initial", {})
+        self.version = case["version"]
         self.p = (
-            scalar_bits(initial["P_bits"]) if "P_bits" in initial else Q(case["p0"])
+            scalar_bits(initial["P_bits"])
+            if "P_bits" in initial and self.version not in ("old", "B")
+            else Q(case["p0"])
         )
         self.s, self.u = Q(initial.get("S", 0)), Q(initial.get("U", 0))
         self.b0, self.rho = Q(case["b0"]), Q(case["rho"])
         self.exact = dict(P=self.p, S=self.s, U=self.u)
-        self.b = self.b0
+        self.b = r(r(r(self.p * self.b0) + self.u) / r(self.p + self.s))
+        self.fault: str | None = None
 
     def step(self, e: dict[str, Any]) -> None:
         a = Q(e["a"])
-        self.s = r(r(self.rho * self.s) + 1)
-        self.p = r(self.rho * self.p)
-        self.u = r(r(self.rho * self.u) + a)
+        # §3.1 old fixed n_b / P07-A common discount / P07-B lifetime mean.
+        # The separately reported b-path must not silently run A for all labels.
+        discount = Q(1) if self.version == "B" else self.rho
+        prior = self.p if self.version in ("old", "B") else r(discount * self.p)
+        self.fault = None
+        if self.version == "underflow-fault" and prior < Q(1, 2**1022):
+            self.fault = "Underflow"
+            return
+        if self.version == "flush-subnormal" and prior < Q(1, 2**1022):
+            prior = Q(0)
+        self.s = r(r(discount * self.s) + 1)
+        self.p = prior
+        self.u = r(r(discount * self.u) + a)
         self.b = r(r(r(self.p * self.b0) + self.u) / r(self.p + self.s))
         self.exact = dict(
-            P=self.rho * self.exact["P"],
-            S=self.rho * self.exact["S"] + 1,
-            U=self.rho * self.exact["U"] + a,
+            P=self.exact["P"]
+            if self.version in ("old", "B")
+            else self.rho * self.exact["P"],
+            S=discount * self.exact["S"] + 1,
+            U=discount * self.exact["U"] + a,
         )
 
     def state(self) -> dict[str, Any]:
-        return dict(P=self.p, S=self.s, U=self.u, b=self.b, exact=self.exact)
+        return dict(
+            P=self.p, S=self.s, U=self.u, b=self.b, exact=self.exact, fault=self.fault
+        )

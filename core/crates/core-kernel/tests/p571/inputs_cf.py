@@ -89,4 +89,19 @@ def cf_case(row: dict[str, Any]) -> dict[str, Any]:
                 substeps=["project_old_theta", "C", "F", "record_new_theta"],
             )
         )
+    # §3.1 and C-02: only step 7 is a new real revision; steps 8..16
+    # repeat that same revision, irrespective of target or request identity.
+    case["b_admissions"] = {}
+    for event in case["events"]:
+        fe = event["f"]
+        if fe is not None:
+            part = "initial" if fe["op"] == "new" else None
+            if num == 2 and fe["op"] == "update":
+                part = "real-revision-7"
+            case["b_admissions"][str(fe["ordinal"])] = dict(
+                real_part=part,
+                reason="first eligible root or explicit C-02 real revision"
+                if part is not None
+                else "revisit has no new real part",
+            )
     return case

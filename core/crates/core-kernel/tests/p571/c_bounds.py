@@ -105,7 +105,21 @@ def bounds(before: C, event: dict[str, Any], rho: Q) -> dict[str, object]:
     for j, name in enumerate(channels):
         b = before.values["baseline"][name]
         try:
-            if before.mass is None:
+            if before.version == "B":
+                # P07-B / prereg §3.1: fixed birth mass and lifetime evidence.
+                # Only the baseline uses rho=1; variance/duration below retain
+                # their registered discount and old residual convention.
+                _, limit = moment(
+                    p["p0"],
+                    P(p["b0"]),
+                    before.lifetime_sum,
+                    before.lifetime_mass,
+                    b,
+                    P(a),
+                    Q(1),
+                    Q(1),
+                )
+            elif before.mass is None:
                 _, limit = moment(
                     p["p0"],
                     P(p["b0"]),

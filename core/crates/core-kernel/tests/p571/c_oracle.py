@@ -135,7 +135,7 @@ class C:
         self.lifetime_mass = r(self.lifetime_mass + 1)
         self.lifetime_sum = r(self.lifetime_sum + a)
         e["weight"] = r(strict_product(rho, e["weight"]) + 1)
-        if self.mass is not None:
+        if self.mass is not None and self.version != "B":
             self.mass = r(rho * self.mass)
         old = deepcopy(self.values)
         new_b, new_g, new_l, sigma, tau = [], [], [], [], []

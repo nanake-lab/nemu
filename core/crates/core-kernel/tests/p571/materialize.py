@@ -177,6 +177,22 @@ def deferred() -> list[dict[str, Any]]:
     ]
 
 
+def ordered_plan() -> list[dict[str, Any]]:
+    """Frozen §2.1 row order; keep paired DUT/oracle and version order stable."""
+
+    def key(row: dict[str, Any]) -> tuple[int, int, int]:
+        id_ = row["id"]
+        for section, prefix in enumerate(("07-", "09-", "C-")):
+            if id_.startswith(prefix):
+                number = int(id_[len(prefix) :].split("-")[0])
+                # Subitems follow their parent row; no parameters or events
+                # are changed to achieve this ordering.
+                return section, number, int(id_ != f"{prefix}{number:02}")
+        return (3 if id_.startswith("NC-") else 4), 0, 0
+
+    return sorted(ledger() + deferred(), key=key)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("output", type=Path)
@@ -200,7 +216,7 @@ def main() -> None:
     totals: dict[str, dict[str, int]] = {}
     counts: dict[str, int] = {}
     with (out / "matrix.jsonl").open("x", encoding="utf-8", newline="\n") as stream:
-        for index, row in enumerate(ledger() + deferred()):
+        for index, row in enumerate(ordered_plan()):
             row = dict(row, run_index=index)
             if row["planned_status"] != "not_run":
                 row["planned_status"] = "ready"

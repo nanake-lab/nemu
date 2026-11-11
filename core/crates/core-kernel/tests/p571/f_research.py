@@ -39,7 +39,7 @@ class FResearch:
         self.history: dict[str, dict[str, Any]] = {}
         self.active: dict[str, bool] = {}
         self.anchor, self.internal_count = 0, 0
-        self.consumed: dict[str, list[Q]] = {}
+        self.consumed: dict[str, list[str]] = {}
         self.last: dict[str, Any] = {}
         self.fixture_c_mass = 0
         self.theta = deepcopy(case["theta"])
@@ -176,6 +176,10 @@ class FResearch:
                     self.targets.pop(key, None)
             return
         if op == "merge":
+            if self.base in ("old", "B"):
+                # These references have no contribution slots. In particular,
+                # maintenance must not discard B's already consumed identities.
+                return
             members = sorted(event["members"], key=lambda k: self.history[k]["ordinal"])
             values = [Q(0)] * self.size
             for key in members:
@@ -225,17 +229,37 @@ class FResearch:
             op = "new"
         if self.mutant == "unknown-new" and event["kind"] == "internal":
             root = event["id"]
+        if self.base == "B":
+            # Frozen §3.1 / P09-B: the synthetic truth table names real parts,
+            # not targets, request IDs or parameter/interpretation revisions.
+            admission = self.case["b_admissions"][str(event["ordinal"])]
+            part = admission["real_part"]
+            self.last["b_admission"] = admission
+            if (
+                op not in ("new", "update")
+                or event["kind"] != "record"
+                or part is None
+                or part in self.consumed.get(root, [])
+            ):
+                # No F pulse also means no new Phi anchor. Future reads still
+                # project from the last admitted pulse, not each rejected visit.
+                return
         self.project(event["time_ns"])
         if (
             op == "revisit"
             and event.get("target_mode") != "evaluate_recorded_inputs"
             and root in self.history
         ):
-            value = self.target(self.history[root])
+            # §6 C-02 / ADR0035 §4.3: current-theta targets were evaluated at
+            # their original submission, never re-evaluated on a later visit.
+            value = list(self.history[root]["recorded_target"])
         else:
             value = self.target(event)
         if op in ("new", "update"):
             self.history[root] = deepcopy(event)
+            # H's recorded target survives zero-slot eviction and migration;
+            # targets/h below represent the current fast-state slots only.
+            self.history[root]["recorded_target"] = list(value)
             self.active[root] = True
         if self.base == "old":
             if op != "revisit" and event.get("source") == "action_result":
@@ -253,11 +277,8 @@ class FResearch:
                 )
             self.x = [clip(r(x + r(weight * v))) for x, v in zip(self.x, value)]
         elif self.base == "B":
-            # P09-B: pure revisits/interpretation changes do not consume a new
-            # fact. A real target revision is a new input, duplicate revision is not.
-            if op != "revisit" and self.consumed.get(root) != value:
-                self.x = [clip(r(x + v)) for x, v in zip(self.x, value)]
-                self.consumed[root] = list(value)
+            self.x = [clip(r(x + v)) for x, v in zip(self.x, value)]
+            self.consumed.setdefault(root, []).append(part)
         else:
             old = self.h.get(root, [Q(0)] * self.size)
             if self.mutant == "add-not-replace":
@@ -293,6 +314,8 @@ class FResearch:
                 self.x = [Q(0)] * self.size
         if self.case.get("negative_control") == "x-zero":
             self.x = [Q(0)] * self.size
+        if op in ("new", "update"):
+            self.targets[root] = list(value)
         self.last["applied"] = True
 
     def state(self) -> dict[str, Any]:

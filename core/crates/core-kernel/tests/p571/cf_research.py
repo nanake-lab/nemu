@@ -51,7 +51,10 @@ class CFResearch:
             self.last["c"] = self.c.last
             if self.c.last["fault"]:
                 return
-        if ce is not None or fe is not None:
+        # A C change needs the old-theta projection before publishing new
+        # theta. F-only steps project inside F iff the role is admitted;
+        # rejected B repeats must not introduce an otherwise absent anchor.
+        if ce is not None:
             self.f.project(event["time_ns"])
         if fe is not None:
             if self.mutant == "revisit-current" and fe["op"] == "revisit":
@@ -79,6 +82,7 @@ class CFResearch:
                 for root, old in self.f.history.items():
                     e = dict(old, target_mode="current_theta", a=old["target"])
                     self.f.targets[root] = self.f.target(e)
+                    self.f.history[root]["recorded_target"] = list(self.f.targets[root])
             if self.mutant == "C-clears-x" or (
                 self.mutant == "alarm-clears" and self.c.last["signals"]
             ):

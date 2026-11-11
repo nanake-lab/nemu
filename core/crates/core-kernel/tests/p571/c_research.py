@@ -31,7 +31,16 @@ class CResearch:
         self.qualified: list[int] = []
         if "initial" in case and "S" in case["initial"]:
             initial = case["initial"]
-            self.c.mass = scalar_bits(initial["P_bits"]) if baseline != "old" else None
+            self.c.mass = (
+                Q(case["p0"])
+                if baseline == "B"
+                else scalar_bits(initial["P_bits"])
+                if baseline != "old"
+                else None
+            )
+            if baseline == "B":
+                self.c.lifetime_mass = Q(initial["S"])
+                self.c.lifetime_sum = Q(initial["U"])
             self.c.e["weight"] = Q(initial["S"])
             self.c.e["reaction_sum"] = [Q(initial["U"])] * 4
             mass = Q(case["p0"]) if self.c.mass is None else self.c.mass
@@ -180,8 +189,8 @@ class CResearch:
         stored_b = c.values["baseline"]["connection"]
         return dict(
             P=p,
-            S=c.e["weight"],
-            U=c.e["reaction_sum"],
+            S=mass,
+            U=[c.lifetime_sum] * 4 if self.version == "B" else c.e["reaction_sum"],
             rho=c.last_rho,
             beta=r(p / denominator),
             alpha=r(Q(1) / denominator),
