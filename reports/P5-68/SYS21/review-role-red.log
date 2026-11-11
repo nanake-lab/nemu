@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+Rust internal + revisit encode accepted= True
+Rust internal + revisit canonical accepted= True
+Rust internal + revisit protobuf accepted= True
+Rust internal + target update encode/canonical/protobuf PASS
+Python internal + revisit encode accepted= True
+Python internal + revisit canonical accepted= True
+Python internal + revisit protobuf accepted= True
+Python internal + target update encode/canonical/protobuf PASS
+TypeScript internal + revisit encode accepted= True
+TypeScript internal + revisit canonical accepted= True
+TypeScript internal + revisit protobuf accepted= True
+TypeScript internal + target update encode/canonical/protobuf PASS
+  File "D:\Dev\nemu-wt\P5-68\reports\P5-68\SYS21\review-role-regression.py", line 35, in <module>
+    assert not failures, failures
+           ^^^^^^^^^^^^
+AssertionError: [('Rust', 'encode'), ('Rust', 'canonical'), ('Rust', 'protobuf'), ('Python', 'encode'), ('Python', 'canonical'), ('Python', 'protobuf'), ('TypeScript', 'encode'), ('TypeScript', 'canonical'), ('TypeScript', 'protobuf')]

@@ -1,6 +1,6 @@
 # AGENTS.md — Nemu 3D 桌面伙伴
 
-本文件是 Codex、Antigravity 与 Claude 三个执行者共用的项目规则。开始任何任务之前，先完整读完本文件、`docs/ARCHITECTURE.md`、`docs/CONTRACTS.md` 和 `docs/echo-core/README.md`。做 Echo Core 相关的卡（P5、P6）前，还要按 `docs/echo-core/README.md` 第 5 节读规格原文。
+本文件是 Codex、Antigravity 与 Claude 三个执行者共用的项目规则。开始任何任务之前，先完整读完本文件，再按 `.agents/skills/echo-core-work/SKILL.md` 第 1 节的分级读法，读与本卡相关的章节（2026-11-11 用户决定）。做 Echo Core 相关的卡（P5、P6）前，按上述 SKILL.md 第 1 节读规格。
 
 ## 1. 项目一句话
 
@@ -65,6 +65,9 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 | `content/**` | 用户。代理可以提交管线生成的产物：`nemu.vrm`、`nemu.profile.json`、`lipsync/*.json`、`motions/*.vrma` 及其清单条目。其余内容在用户确认之前只能放进 `content/_candidates/`：设定集、源文件、`build.yaml` 里的审美参数、定稿的音色、协议 p、genesis 清单、语气样例库 |
 | `docs/**`、`tasks/**` | 只能追加报告、请求和 ADR；`docs/echo-core/original/` 永远不改。改已有文字或 `tasks/cards.json` 需要用户批准（PR 加 `needs-user`） |
 
+2026-11-11 用户决定一次性例外：仅移除上述两份 docx 的个人元数据，正文不变；原件在私有证据仓。
+此处两份指 `Ada Echo Core Math define.docx`、`Echo Core Implementation Plan.docx`；仅允许报告登记的旧哈希到新哈希转换。
+
 ## 3. 黄金规则
 
 1. **一次只做一张任务卡。** 任务卡以外的发现写进报告的「后续建议」，不要顺手做。
@@ -107,6 +110,8 @@ pnpm accept:core            # Echo Core v2.0 验收套件（P5-18）
 pnpm experiment:core        # 实验谱系：在合成世界里跑 v2.0 第 14 节的实验（P5-30）
 pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 ```
+
+> **状态更新（2026-11-11）：** 上面代码块 `echoctl` 一行注释「birth 只由用户在 N3 执行」：里程碑已于 2026-10-26 重排，N3（诞生）现为 E4（PR #93，[tasks/README.md](tasks/README.md) 第 5 节），读作「只由用户在 E4 执行」。依据：[清点报告](reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 F1。
 
 这些命令在 P0-01 里建立骨架，由各卡补齐。如果某张任务卡需要新的命令，把它加进根目录的 `package.json`（或 `core/` 的 Cargo 别名），并在报告里说明。
 

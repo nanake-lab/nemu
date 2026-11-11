@@ -1,0 +1,6140 @@
+{
+  "cohorts": {
+    "J-v1": {
+      "n": 144,
+      "valid": 144,
+      "statuses": {
+        "rating": 144
+      },
+      "meta_labels": {
+        "no": 72,
+        "yes": 72
+      },
+      "meta_bounds": {
+        "Y": 72,
+        "N0": 72,
+        "U": 0,
+        "N": 144,
+        "lower": 0.5,
+        "upper": 0.5
+      },
+      "t_labels": {
+        "connection": {
+          "absent": 96,
+          "positive": 24,
+          "negative": 24
+        },
+        "empathy": {
+          "absent": 144
+        },
+        "curiosity": {
+          "absent": 144
+        },
+        "achievement": {
+          "absent": 96,
+          "positive": 24,
+          "negative": 24
+        }
+      },
+      "failure_reasons": {},
+      "evidence_sources": {
+        "connection": {
+          "none": 63,
+          "mixed": 24,
+          "meta_only": 33,
+          "situated_only": 24
+        },
+        "empathy": {
+          "none": 111,
+          "meta_only": 33
+        },
+        "curiosity": {
+          "none": 111,
+          "meta_only": 33
+        },
+        "achievement": {
+          "none": 66,
+          "meta_only": 30,
+          "mixed": 24,
+          "situated_only": 24
+        }
+      },
+      "meta_correct": 144,
+      "t_exact": 144,
+      "per_concept_correct": {
+        "connection": 144,
+        "empathy": 144,
+        "curiosity": 144,
+        "achievement": 144
+      },
+      "truth_counts": {
+        "meta": {
+          "no": 72,
+          "yes": 72
+        },
+        "connection": {
+          "absent": 96,
+          "positive": 24,
+          "negative": 24
+        },
+        "empathy": {
+          "absent": 144
+        },
+        "curiosity": {
+          "absent": 144
+        },
+        "achievement": {
+          "absent": 96,
+          "positive": 24,
+          "negative": 24
+        }
+      },
+      "confusion": {
+        "meta": {
+          "no -> no": 72,
+          "yes -> yes": 72
+        },
+        "connection": {
+          "absent -> absent": 96,
+          "positive -> positive": 24,
+          "negative -> negative": 24
+        },
+        "empathy": {
+          "absent -> absent": 144
+        },
+        "curiosity": {
+          "absent -> absent": 144
+        },
+        "achievement": {
+          "absent -> absent": 96,
+          "positive -> positive": 24,
+          "negative -> negative": 24
+        }
+      },
+      "paired": {
+        "meta": {
+          "both_correct": 119,
+          "deepseek_missing": 24,
+          "openai_only_correct": 1
+        },
+        "connection": {
+          "both_correct": 120,
+          "deepseek_missing": 24
+        },
+        "empathy": {
+          "both_correct": 120,
+          "deepseek_missing": 24
+        },
+        "curiosity": {
+          "both_correct": 120,
+          "deepseek_missing": 24
+        },
+        "achievement": {
+          "both_correct": 120,
+          "deepseek_missing": 24
+        }
+      },
+      "agreement": {
+        "meta": {
+          "same_valid_labels": 119,
+          "denominator": 144,
+          "both_valid": 120
+        },
+        "connection": {
+          "same_valid_labels": 120,
+          "denominator": 144,
+          "both_valid": 120
+        },
+        "empathy": {
+          "same_valid_labels": 120,
+          "denominator": 144,
+          "both_valid": 120
+        },
+        "curiosity": {
+          "same_valid_labels": 120,
+          "denominator": 144,
+          "both_valid": 120
+        },
+        "achievement": {
+          "same_valid_labels": 120,
+          "denominator": 144,
+          "both_valid": 120
+        }
+      },
+      "discrepancies": {},
+      "strata": {
+        "length_bin": {
+          "65-96": {
+            "n": 24,
+            "valid": 24,
+            "statuses": {
+              "rating": 24
+            },
+            "meta_labels": {
+              "yes": 12,
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 12,
+              "U": 0,
+              "N": 24,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "positive": 6,
+                "absent": 12,
+                "negative": 6
+              },
+              "empathy": {
+                "absent": 24
+              },
+              "curiosity": {
+                "absent": 24
+              },
+              "achievement": {
+                "absent": 12,
+                "negative": 6,
+                "positive": 6
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 6,
+                "meta_only": 6,
+                "situated_only": 6,
+                "none": 6
+              },
+              "empathy": {
+                "meta_only": 12,
+                "none": 12
+              },
+              "curiosity": {
+                "meta_only": 12,
+                "none": 12
+              },
+              "achievement": {
+                "meta_only": 6,
+                "mixed": 6,
+                "none": 6,
+                "situated_only": 6
+              }
+            },
+            "meta_correct": 24,
+            "t_exact": 24,
+            "per_concept_correct": {
+              "connection": 24,
+              "empathy": 24,
+              "curiosity": 24,
+              "achievement": 24
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12,
+                "no": 12
+              },
+              "connection": {
+                "positive": 6,
+                "absent": 12,
+                "negative": 6
+              },
+              "empathy": {
+                "absent": 24
+              },
+              "curiosity": {
+                "absent": 24
+              },
+              "achievement": {
+                "absent": 12,
+                "negative": 6,
+                "positive": 6
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12,
+                "no -> no": 12
+              },
+              "connection": {
+                "positive -> positive": 6,
+                "absent -> absent": 12,
+                "negative -> negative": 6
+              },
+              "empathy": {
+                "absent -> absent": 24
+              },
+              "curiosity": {
+                "absent -> absent": 24
+              },
+              "achievement": {
+                "absent -> absent": 12,
+                "negative -> negative": 6,
+                "positive -> positive": 6
+              }
+            },
+            "paired": {
+              "meta": {
+                "deepseek_missing": 9,
+                "both_correct": 15
+              },
+              "connection": {
+                "deepseek_missing": 9,
+                "both_correct": 15
+              },
+              "empathy": {
+                "deepseek_missing": 9,
+                "both_correct": 15
+              },
+              "curiosity": {
+                "deepseek_missing": 9,
+                "both_correct": 15
+              },
+              "achievement": {
+                "deepseek_missing": 9,
+                "both_correct": 15
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 15,
+                "denominator": 24,
+                "both_valid": 15
+              },
+              "connection": {
+                "same_valid_labels": 15,
+                "denominator": 24,
+                "both_valid": 15
+              },
+              "empathy": {
+                "same_valid_labels": 15,
+                "denominator": 24,
+                "both_valid": 15
+              },
+              "curiosity": {
+                "same_valid_labels": 15,
+                "denominator": 24,
+                "both_valid": 15
+              },
+              "achievement": {
+                "same_valid_labels": 15,
+                "denominator": 24,
+                "both_valid": 15
+              }
+            },
+            "discrepancies": {}
+          },
+          "<=32": {
+            "n": 120,
+            "valid": 120,
+            "statuses": {
+              "rating": 120
+            },
+            "meta_labels": {
+              "no": 60,
+              "yes": 60
+            },
+            "meta_bounds": {
+              "Y": 60,
+              "N0": 60,
+              "U": 0,
+              "N": 120,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 84,
+                "negative": 18,
+                "positive": 18
+              },
+              "empathy": {
+                "absent": 120
+              },
+              "curiosity": {
+                "absent": 120
+              },
+              "achievement": {
+                "absent": 84,
+                "positive": 18,
+                "negative": 18
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 57,
+                "meta_only": 27,
+                "situated_only": 18,
+                "mixed": 18
+              },
+              "empathy": {
+                "none": 99,
+                "meta_only": 21
+              },
+              "curiosity": {
+                "none": 99,
+                "meta_only": 21
+              },
+              "achievement": {
+                "none": 60,
+                "mixed": 18,
+                "meta_only": 24,
+                "situated_only": 18
+              }
+            },
+            "meta_correct": 120,
+            "t_exact": 120,
+            "per_concept_correct": {
+              "connection": 120,
+              "empathy": 120,
+              "curiosity": 120,
+              "achievement": 120
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 60,
+                "yes": 60
+              },
+              "connection": {
+                "absent": 84,
+                "negative": 18,
+                "positive": 18
+              },
+              "empathy": {
+                "absent": 120
+              },
+              "curiosity": {
+                "absent": 120
+              },
+              "achievement": {
+                "absent": 84,
+                "positive": 18,
+                "negative": 18
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 60,
+                "yes -> yes": 60
+              },
+              "connection": {
+                "absent -> absent": 84,
+                "negative -> negative": 18,
+                "positive -> positive": 18
+              },
+              "empathy": {
+                "absent -> absent": 120
+              },
+              "curiosity": {
+                "absent -> absent": 120
+              },
+              "achievement": {
+                "absent -> absent": 84,
+                "positive -> positive": 18,
+                "negative -> negative": 18
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 104,
+                "deepseek_missing": 15,
+                "openai_only_correct": 1
+              },
+              "connection": {
+                "both_correct": 105,
+                "deepseek_missing": 15
+              },
+              "empathy": {
+                "both_correct": 105,
+                "deepseek_missing": 15
+              },
+              "curiosity": {
+                "both_correct": 105,
+                "deepseek_missing": 15
+              },
+              "achievement": {
+                "both_correct": 105,
+                "deepseek_missing": 15
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 104,
+                "denominator": 120,
+                "both_valid": 105
+              },
+              "connection": {
+                "same_valid_labels": 105,
+                "denominator": 120,
+                "both_valid": 105
+              },
+              "empathy": {
+                "same_valid_labels": 105,
+                "denominator": 120,
+                "both_valid": 105
+              },
+              "curiosity": {
+                "same_valid_labels": 105,
+                "denominator": 120,
+                "both_valid": 105
+              },
+              "achievement": {
+                "same_valid_labels": 105,
+                "denominator": 120,
+                "both_valid": 105
+              }
+            },
+            "discrepancies": {}
+          }
+        },
+        "category": {
+          "absence": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "meta_only": 9,
+                "none": 3
+              },
+              "empathy": {
+                "none": 3,
+                "meta_only": 9
+              },
+              "curiosity": {
+                "none": 3,
+                "meta_only": 9
+              },
+              "achievement": {
+                "meta_only": 6,
+                "none": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              },
+              "connection": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              },
+              "empathy": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              },
+              "curiosity": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              },
+              "achievement": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              },
+              "connection": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              },
+              "empathy": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              },
+              "curiosity": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              },
+              "achievement": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              }
+            },
+            "discrepancies": {}
+          },
+          "coordinate": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "negative": 3,
+                "absent": 6,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 6,
+                "meta_only": 6
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 6,
+                "situated_only": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "negative": 3,
+                "absent": 6,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "negative -> negative": 3,
+                "absent -> absent": 6,
+                "positive -> positive": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 6,
+                "positive -> positive": 3,
+                "negative -> negative": 3
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              },
+              "connection": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              },
+              "empathy": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              },
+              "curiosity": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              },
+              "achievement": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              },
+              "connection": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              },
+              "empathy": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              },
+              "curiosity": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              },
+              "achievement": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              }
+            },
+            "discrepancies": {}
+          },
+          "definition": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "homonym": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "inventory": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "negative": 3,
+                "absent": 6,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 6,
+                "meta_only": 6
+              },
+              "empathy": {
+                "meta_only": 12
+              },
+              "curiosity": {
+                "meta_only": 12
+              },
+              "achievement": {
+                "meta_only": 6,
+                "mixed": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "negative": 3,
+                "absent": 6,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "negative -> negative": 3,
+                "absent -> absent": 6,
+                "positive -> positive": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 6,
+                "positive -> positive": 3,
+                "negative -> negative": 3
+              }
+            },
+            "paired": {
+              "meta": {
+                "deepseek_missing": 6,
+                "both_correct": 6
+              },
+              "connection": {
+                "deepseek_missing": 6,
+                "both_correct": 6
+              },
+              "empathy": {
+                "deepseek_missing": 6,
+                "both_correct": 6
+              },
+              "curiosity": {
+                "deepseek_missing": 6,
+                "both_correct": 6
+              },
+              "achievement": {
+                "deepseek_missing": 6,
+                "both_correct": 6
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 6,
+                "denominator": 12,
+                "both_valid": 6
+              },
+              "connection": {
+                "same_valid_labels": 6,
+                "denominator": 12,
+                "both_valid": 6
+              },
+              "empathy": {
+                "same_valid_labels": 6,
+                "denominator": 12,
+                "both_valid": 6
+              },
+              "curiosity": {
+                "same_valid_labels": 6,
+                "denominator": 12,
+                "both_valid": 6
+              },
+              "achievement": {
+                "same_valid_labels": 6,
+                "denominator": 12,
+                "both_valid": 6
+              }
+            },
+            "discrepancies": {}
+          },
+          "long_inventory": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "positive": 3,
+                "absent": 6,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 6,
+                "meta_only": 6
+              },
+              "empathy": {
+                "meta_only": 12
+              },
+              "curiosity": {
+                "meta_only": 12
+              },
+              "achievement": {
+                "meta_only": 6,
+                "mixed": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "positive": 3,
+                "absent": 6,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "positive -> positive": 3,
+                "absent -> absent": 6,
+                "negative -> negative": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 6,
+                "negative -> negative": 3,
+                "positive -> positive": 3
+              }
+            },
+            "paired": {
+              "meta": {
+                "deepseek_missing": 8,
+                "both_correct": 4
+              },
+              "connection": {
+                "deepseek_missing": 8,
+                "both_correct": 4
+              },
+              "empathy": {
+                "deepseek_missing": 8,
+                "both_correct": 4
+              },
+              "curiosity": {
+                "deepseek_missing": 8,
+                "both_correct": 4
+              },
+              "achievement": {
+                "deepseek_missing": 8,
+                "both_correct": 4
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 4,
+                "denominator": 12,
+                "both_valid": 4
+              },
+              "connection": {
+                "same_valid_labels": 4,
+                "denominator": 12,
+                "both_valid": 4
+              },
+              "empathy": {
+                "same_valid_labels": 4,
+                "denominator": 12,
+                "both_valid": 4
+              },
+              "curiosity": {
+                "same_valid_labels": 4,
+                "denominator": 12,
+                "both_valid": 4
+              },
+              "achievement": {
+                "same_valid_labels": 4,
+                "denominator": 12,
+                "both_valid": 4
+              }
+            },
+            "discrepancies": {}
+          },
+          "long_nonstate": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "negative": 3,
+                "positive": 3,
+                "absent": 6
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "situated_only": 6,
+                "none": 6
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 6,
+                "situated_only": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "negative": 3,
+                "positive": 3,
+                "absent": 6
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "negative -> negative": 3,
+                "positive -> positive": 3,
+                "absent -> absent": 6
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 6,
+                "negative -> negative": 3,
+                "positive -> positive": 3
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              },
+              "connection": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              },
+              "empathy": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              },
+              "curiosity": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              },
+              "achievement": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              },
+              "connection": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              },
+              "empathy": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              },
+              "curiosity": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              },
+              "achievement": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              }
+            },
+            "discrepancies": {}
+          },
+          "mixed": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 3,
+                "absent": 6,
+                "negative": 3
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "meta_only": 6,
+                "mixed": 6
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "mixed": 6,
+                "meta_only": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 3,
+                "absent": 6,
+                "negative": 3
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "absent -> absent": 6,
+                "positive -> positive": 3,
+                "negative -> negative": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "positive -> positive": 3,
+                "absent -> absent": 6,
+                "negative -> negative": 3
+              }
+            },
+            "paired": {
+              "meta": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              },
+              "connection": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              },
+              "empathy": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              },
+              "curiosity": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              },
+              "achievement": {
+                "deepseek_missing": 3,
+                "both_correct": 9
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              },
+              "connection": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              },
+              "empathy": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              },
+              "curiosity": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              },
+              "achievement": {
+                "same_valid_labels": 9,
+                "denominator": 12,
+                "both_valid": 9
+              }
+            },
+            "discrepancies": {}
+          },
+          "named": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 3,
+                "negative": 3,
+                "absent": 6
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 6,
+                "situated_only": 6
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "mixed": 6,
+                "meta_only": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 3,
+                "negative": 3,
+                "absent": 6
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "absent -> absent": 6,
+                "positive -> positive": 3,
+                "negative -> negative": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "positive -> positive": 3,
+                "negative -> negative": 3,
+                "absent -> absent": 6
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              },
+              "connection": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              },
+              "empathy": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              },
+              "curiosity": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              },
+              "achievement": {
+                "both_correct": 11,
+                "deepseek_missing": 1
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              },
+              "connection": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              },
+              "empathy": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              },
+              "curiosity": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              },
+              "achievement": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 11
+              }
+            },
+            "discrepancies": {}
+          },
+          "ordinary_person": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "negative": 6,
+                "positive": 6
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "situated_only": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "negative": 6,
+                "positive": 6
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "negative -> negative": 6,
+                "positive -> positive": 6
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "ordinary_task": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 6,
+                "negative": 6
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "situated_only": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 6,
+                "negative": 6
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "positive -> positive": 6,
+                "negative -> negative": 6
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "quotation": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 11,
+                "openai_only_correct": 1
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 11,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          }
+        },
+        "lang": {
+          "en": {
+            "n": 48,
+            "valid": 48,
+            "statuses": {
+              "rating": 48
+            },
+            "meta_labels": {
+              "yes": 24,
+              "no": 24
+            },
+            "meta_bounds": {
+              "Y": 24,
+              "N0": 24,
+              "U": 0,
+              "N": 48,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "meta_only": 11,
+                "none": 21,
+                "mixed": 8,
+                "situated_only": 8
+              },
+              "empathy": {
+                "none": 37,
+                "meta_only": 11
+              },
+              "curiosity": {
+                "none": 37,
+                "meta_only": 11
+              },
+              "achievement": {
+                "meta_only": 10,
+                "none": 22,
+                "situated_only": 8,
+                "mixed": 8
+              }
+            },
+            "meta_correct": 48,
+            "t_exact": 48,
+            "per_concept_correct": {
+              "connection": 48,
+              "empathy": 48,
+              "curiosity": 48,
+              "achievement": 48
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 24,
+                "no": 24
+              },
+              "connection": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 24,
+                "no -> no": 24
+              },
+              "connection": {
+                "absent -> absent": 32,
+                "positive -> positive": 8,
+                "negative -> negative": 8
+              },
+              "empathy": {
+                "absent -> absent": 48
+              },
+              "curiosity": {
+                "absent -> absent": 48
+              },
+              "achievement": {
+                "absent -> absent": 32,
+                "positive -> positive": 8,
+                "negative -> negative": 8
+              }
+            },
+            "paired": {
+              "meta": {
+                "deepseek_missing": 7,
+                "both_correct": 40,
+                "openai_only_correct": 1
+              },
+              "connection": {
+                "deepseek_missing": 7,
+                "both_correct": 41
+              },
+              "empathy": {
+                "deepseek_missing": 7,
+                "both_correct": 41
+              },
+              "curiosity": {
+                "deepseek_missing": 7,
+                "both_correct": 41
+              },
+              "achievement": {
+                "deepseek_missing": 7,
+                "both_correct": 41
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 40,
+                "denominator": 48,
+                "both_valid": 41
+              },
+              "connection": {
+                "same_valid_labels": 41,
+                "denominator": 48,
+                "both_valid": 41
+              },
+              "empathy": {
+                "same_valid_labels": 41,
+                "denominator": 48,
+                "both_valid": 41
+              },
+              "curiosity": {
+                "same_valid_labels": 41,
+                "denominator": 48,
+                "both_valid": 41
+              },
+              "achievement": {
+                "same_valid_labels": 41,
+                "denominator": 48,
+                "both_valid": 41
+              }
+            },
+            "discrepancies": {}
+          },
+          "ja": {
+            "n": 48,
+            "valid": 48,
+            "statuses": {
+              "rating": 48
+            },
+            "meta_labels": {
+              "yes": 24,
+              "no": 24
+            },
+            "meta_bounds": {
+              "Y": 24,
+              "N0": 24,
+              "U": 0,
+              "N": 48,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "positive": 8,
+                "absent": 32,
+                "negative": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 8,
+                "meta_only": 11,
+                "situated_only": 8,
+                "none": 21
+              },
+              "empathy": {
+                "meta_only": 11,
+                "none": 37
+              },
+              "curiosity": {
+                "meta_only": 11,
+                "none": 37
+              },
+              "achievement": {
+                "meta_only": 10,
+                "mixed": 8,
+                "none": 22,
+                "situated_only": 8
+              }
+            },
+            "meta_correct": 48,
+            "t_exact": 48,
+            "per_concept_correct": {
+              "connection": 48,
+              "empathy": 48,
+              "curiosity": 48,
+              "achievement": 48
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 24,
+                "no": 24
+              },
+              "connection": {
+                "positive": 8,
+                "absent": 32,
+                "negative": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 24,
+                "no -> no": 24
+              },
+              "connection": {
+                "positive -> positive": 8,
+                "absent -> absent": 32,
+                "negative -> negative": 8
+              },
+              "empathy": {
+                "absent -> absent": 48
+              },
+              "curiosity": {
+                "absent -> absent": 48
+              },
+              "achievement": {
+                "absent -> absent": 32,
+                "positive -> positive": 8,
+                "negative -> negative": 8
+              }
+            },
+            "paired": {
+              "meta": {
+                "deepseek_missing": 9,
+                "both_correct": 39
+              },
+              "connection": {
+                "deepseek_missing": 9,
+                "both_correct": 39
+              },
+              "empathy": {
+                "deepseek_missing": 9,
+                "both_correct": 39
+              },
+              "curiosity": {
+                "deepseek_missing": 9,
+                "both_correct": 39
+              },
+              "achievement": {
+                "deepseek_missing": 9,
+                "both_correct": 39
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 39,
+                "denominator": 48,
+                "both_valid": 39
+              },
+              "connection": {
+                "same_valid_labels": 39,
+                "denominator": 48,
+                "both_valid": 39
+              },
+              "empathy": {
+                "same_valid_labels": 39,
+                "denominator": 48,
+                "both_valid": 39
+              },
+              "curiosity": {
+                "same_valid_labels": 39,
+                "denominator": 48,
+                "both_valid": 39
+              },
+              "achievement": {
+                "same_valid_labels": 39,
+                "denominator": 48,
+                "both_valid": 39
+              }
+            },
+            "discrepancies": {}
+          },
+          "zh": {
+            "n": 48,
+            "valid": 48,
+            "statuses": {
+              "rating": 48
+            },
+            "meta_labels": {
+              "no": 24,
+              "yes": 24
+            },
+            "meta_bounds": {
+              "Y": 24,
+              "N0": 24,
+              "U": 0,
+              "N": 48,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 32,
+                "negative": 8,
+                "positive": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 21,
+                "situated_only": 8,
+                "mixed": 8,
+                "meta_only": 11
+              },
+              "empathy": {
+                "none": 37,
+                "meta_only": 11
+              },
+              "curiosity": {
+                "none": 37,
+                "meta_only": 11
+              },
+              "achievement": {
+                "none": 22,
+                "meta_only": 10,
+                "situated_only": 8,
+                "mixed": 8
+              }
+            },
+            "meta_correct": 48,
+            "t_exact": 48,
+            "per_concept_correct": {
+              "connection": 48,
+              "empathy": 48,
+              "curiosity": 48,
+              "achievement": 48
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 24,
+                "yes": 24
+              },
+              "connection": {
+                "absent": 32,
+                "negative": 8,
+                "positive": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 24,
+                "yes -> yes": 24
+              },
+              "connection": {
+                "absent -> absent": 32,
+                "negative -> negative": 8,
+                "positive -> positive": 8
+              },
+              "empathy": {
+                "absent -> absent": 48
+              },
+              "curiosity": {
+                "absent -> absent": 48
+              },
+              "achievement": {
+                "absent -> absent": 32,
+                "positive -> positive": 8,
+                "negative -> negative": 8
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 40,
+                "deepseek_missing": 8
+              },
+              "connection": {
+                "both_correct": 40,
+                "deepseek_missing": 8
+              },
+              "empathy": {
+                "both_correct": 40,
+                "deepseek_missing": 8
+              },
+              "curiosity": {
+                "both_correct": 40,
+                "deepseek_missing": 8
+              },
+              "achievement": {
+                "both_correct": 40,
+                "deepseek_missing": 8
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 40,
+                "denominator": 48,
+                "both_valid": 40
+              },
+              "connection": {
+                "same_valid_labels": 40,
+                "denominator": 48,
+                "both_valid": 40
+              },
+              "empathy": {
+                "same_valid_labels": 40,
+                "denominator": 48,
+                "both_valid": 40
+              },
+              "curiosity": {
+                "same_valid_labels": 40,
+                "denominator": 48,
+                "both_valid": 40
+              },
+              "achievement": {
+                "same_valid_labels": 40,
+                "denominator": 48,
+                "both_valid": 40
+              }
+            },
+            "discrepancies": {}
+          }
+        }
+      }
+    },
+    "J-v2": {
+      "n": 144,
+      "valid": 144,
+      "statuses": {
+        "rating": 144
+      },
+      "meta_labels": {
+        "no": 72,
+        "yes": 72
+      },
+      "meta_bounds": {
+        "Y": 72,
+        "N0": 72,
+        "U": 0,
+        "N": 144,
+        "lower": 0.5,
+        "upper": 0.5
+      },
+      "t_labels": {
+        "connection": {
+          "absent": 96,
+          "negative": 24,
+          "positive": 24
+        },
+        "empathy": {
+          "absent": 144
+        },
+        "curiosity": {
+          "absent": 144
+        },
+        "achievement": {
+          "absent": 96,
+          "positive": 24,
+          "negative": 24
+        }
+      },
+      "failure_reasons": {},
+      "evidence_sources": {
+        "connection": {
+          "none": 63,
+          "mixed": 24,
+          "meta_only": 33,
+          "situated_only": 24
+        },
+        "empathy": {
+          "none": 111,
+          "meta_only": 33
+        },
+        "curiosity": {
+          "none": 112,
+          "meta_only": 32
+        },
+        "achievement": {
+          "none": 66,
+          "meta_only": 30,
+          "mixed": 24,
+          "situated_only": 24
+        }
+      },
+      "meta_correct": 144,
+      "t_exact": 144,
+      "per_concept_correct": {
+        "connection": 144,
+        "empathy": 144,
+        "curiosity": 144,
+        "achievement": 144
+      },
+      "truth_counts": {
+        "meta": {
+          "no": 72,
+          "yes": 72
+        },
+        "connection": {
+          "absent": 96,
+          "negative": 24,
+          "positive": 24
+        },
+        "empathy": {
+          "absent": 144
+        },
+        "curiosity": {
+          "absent": 144
+        },
+        "achievement": {
+          "absent": 96,
+          "positive": 24,
+          "negative": 24
+        }
+      },
+      "confusion": {
+        "meta": {
+          "no -> no": 72,
+          "yes -> yes": 72
+        },
+        "connection": {
+          "absent -> absent": 96,
+          "negative -> negative": 24,
+          "positive -> positive": 24
+        },
+        "empathy": {
+          "absent -> absent": 144
+        },
+        "curiosity": {
+          "absent -> absent": 144
+        },
+        "achievement": {
+          "absent -> absent": 96,
+          "positive -> positive": 24,
+          "negative -> negative": 24
+        }
+      },
+      "paired": {
+        "meta": {
+          "both_correct": 142,
+          "deepseek_missing": 2
+        },
+        "connection": {
+          "both_correct": 142,
+          "deepseek_missing": 2
+        },
+        "empathy": {
+          "both_correct": 142,
+          "deepseek_missing": 2
+        },
+        "curiosity": {
+          "both_correct": 142,
+          "deepseek_missing": 2
+        },
+        "achievement": {
+          "both_correct": 142,
+          "deepseek_missing": 2
+        }
+      },
+      "agreement": {
+        "meta": {
+          "same_valid_labels": 142,
+          "denominator": 144,
+          "both_valid": 142
+        },
+        "connection": {
+          "same_valid_labels": 142,
+          "denominator": 144,
+          "both_valid": 142
+        },
+        "empathy": {
+          "same_valid_labels": 142,
+          "denominator": 144,
+          "both_valid": 142
+        },
+        "curiosity": {
+          "same_valid_labels": 142,
+          "denominator": 144,
+          "both_valid": 142
+        },
+        "achievement": {
+          "same_valid_labels": 142,
+          "denominator": 144,
+          "both_valid": 142
+        }
+      },
+      "discrepancies": {},
+      "strata": {
+        "length_bin": {
+          "65-96": {
+            "n": 24,
+            "valid": 24,
+            "statuses": {
+              "rating": 24
+            },
+            "meta_labels": {
+              "yes": 12,
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 12,
+              "U": 0,
+              "N": 24,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "negative": 6,
+                "absent": 12,
+                "positive": 6
+              },
+              "empathy": {
+                "absent": 24
+              },
+              "curiosity": {
+                "absent": 24
+              },
+              "achievement": {
+                "absent": 12,
+                "negative": 6,
+                "positive": 6
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 6,
+                "meta_only": 6,
+                "none": 6,
+                "situated_only": 6
+              },
+              "empathy": {
+                "meta_only": 12,
+                "none": 12
+              },
+              "curiosity": {
+                "meta_only": 12,
+                "none": 12
+              },
+              "achievement": {
+                "meta_only": 6,
+                "mixed": 6,
+                "situated_only": 6,
+                "none": 6
+              }
+            },
+            "meta_correct": 24,
+            "t_exact": 24,
+            "per_concept_correct": {
+              "connection": 24,
+              "empathy": 24,
+              "curiosity": 24,
+              "achievement": 24
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12,
+                "no": 12
+              },
+              "connection": {
+                "negative": 6,
+                "absent": 12,
+                "positive": 6
+              },
+              "empathy": {
+                "absent": 24
+              },
+              "curiosity": {
+                "absent": 24
+              },
+              "achievement": {
+                "absent": 12,
+                "negative": 6,
+                "positive": 6
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12,
+                "no -> no": 12
+              },
+              "connection": {
+                "negative -> negative": 6,
+                "absent -> absent": 12,
+                "positive -> positive": 6
+              },
+              "empathy": {
+                "absent -> absent": 24
+              },
+              "curiosity": {
+                "absent -> absent": 24
+              },
+              "achievement": {
+                "absent -> absent": 12,
+                "negative -> negative": 6,
+                "positive -> positive": 6
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 24
+              },
+              "connection": {
+                "both_correct": 24
+              },
+              "empathy": {
+                "both_correct": 24
+              },
+              "curiosity": {
+                "both_correct": 24
+              },
+              "achievement": {
+                "both_correct": 24
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 24,
+                "denominator": 24,
+                "both_valid": 24
+              },
+              "connection": {
+                "same_valid_labels": 24,
+                "denominator": 24,
+                "both_valid": 24
+              },
+              "empathy": {
+                "same_valid_labels": 24,
+                "denominator": 24,
+                "both_valid": 24
+              },
+              "curiosity": {
+                "same_valid_labels": 24,
+                "denominator": 24,
+                "both_valid": 24
+              },
+              "achievement": {
+                "same_valid_labels": 24,
+                "denominator": 24,
+                "both_valid": 24
+              }
+            },
+            "discrepancies": {}
+          },
+          "<=32": {
+            "n": 120,
+            "valid": 120,
+            "statuses": {
+              "rating": 120
+            },
+            "meta_labels": {
+              "no": 60,
+              "yes": 60
+            },
+            "meta_bounds": {
+              "Y": 60,
+              "N0": 60,
+              "U": 0,
+              "N": 120,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 84,
+                "negative": 18,
+                "positive": 18
+              },
+              "empathy": {
+                "absent": 120
+              },
+              "curiosity": {
+                "absent": 120
+              },
+              "achievement": {
+                "absent": 84,
+                "positive": 18,
+                "negative": 18
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 57,
+                "meta_only": 27,
+                "mixed": 18,
+                "situated_only": 18
+              },
+              "empathy": {
+                "none": 99,
+                "meta_only": 21
+              },
+              "curiosity": {
+                "none": 100,
+                "meta_only": 20
+              },
+              "achievement": {
+                "none": 60,
+                "mixed": 18,
+                "meta_only": 24,
+                "situated_only": 18
+              }
+            },
+            "meta_correct": 120,
+            "t_exact": 120,
+            "per_concept_correct": {
+              "connection": 120,
+              "empathy": 120,
+              "curiosity": 120,
+              "achievement": 120
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 60,
+                "yes": 60
+              },
+              "connection": {
+                "absent": 84,
+                "negative": 18,
+                "positive": 18
+              },
+              "empathy": {
+                "absent": 120
+              },
+              "curiosity": {
+                "absent": 120
+              },
+              "achievement": {
+                "absent": 84,
+                "positive": 18,
+                "negative": 18
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 60,
+                "yes -> yes": 60
+              },
+              "connection": {
+                "absent -> absent": 84,
+                "negative -> negative": 18,
+                "positive -> positive": 18
+              },
+              "empathy": {
+                "absent -> absent": 120
+              },
+              "curiosity": {
+                "absent -> absent": 120
+              },
+              "achievement": {
+                "absent -> absent": 84,
+                "positive -> positive": 18,
+                "negative -> negative": 18
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 118,
+                "deepseek_missing": 2
+              },
+              "connection": {
+                "both_correct": 118,
+                "deepseek_missing": 2
+              },
+              "empathy": {
+                "both_correct": 118,
+                "deepseek_missing": 2
+              },
+              "curiosity": {
+                "both_correct": 118,
+                "deepseek_missing": 2
+              },
+              "achievement": {
+                "both_correct": 118,
+                "deepseek_missing": 2
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 118,
+                "denominator": 120,
+                "both_valid": 118
+              },
+              "connection": {
+                "same_valid_labels": 118,
+                "denominator": 120,
+                "both_valid": 118
+              },
+              "empathy": {
+                "same_valid_labels": 118,
+                "denominator": 120,
+                "both_valid": 118
+              },
+              "curiosity": {
+                "same_valid_labels": 118,
+                "denominator": 120,
+                "both_valid": 118
+              },
+              "achievement": {
+                "same_valid_labels": 118,
+                "denominator": 120,
+                "both_valid": 118
+              }
+            },
+            "discrepancies": {}
+          }
+        },
+        "category": {
+          "absence": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 3,
+                "meta_only": 9
+              },
+              "empathy": {
+                "meta_only": 9,
+                "none": 3
+              },
+              "curiosity": {
+                "none": 4,
+                "meta_only": 8
+              },
+              "achievement": {
+                "none": 6,
+                "meta_only": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "coordinate": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "positive": 3,
+                "absent": 6,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 6,
+                "meta_only": 6
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 6,
+                "situated_only": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "positive": 3,
+                "absent": 6,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "positive -> positive": 3,
+                "absent -> absent": 6,
+                "negative -> negative": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 6,
+                "negative -> negative": 3,
+                "positive -> positive": 3
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "definition": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "homonym": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "inventory": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 3,
+                "negative": 3,
+                "absent": 6
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "meta_only": 6,
+                "mixed": 6
+              },
+              "empathy": {
+                "meta_only": 12
+              },
+              "curiosity": {
+                "meta_only": 12
+              },
+              "achievement": {
+                "mixed": 6,
+                "meta_only": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 3,
+                "negative": 3,
+                "absent": 6
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "absent -> absent": 6,
+                "negative -> negative": 3,
+                "positive -> positive": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "positive -> positive": 3,
+                "negative -> negative": 3,
+                "absent -> absent": 6
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              },
+              "connection": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              },
+              "empathy": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              },
+              "curiosity": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              },
+              "achievement": {
+                "both_correct": 10,
+                "deepseek_missing": 2
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              },
+              "connection": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              },
+              "empathy": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              },
+              "curiosity": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              },
+              "achievement": {
+                "same_valid_labels": 10,
+                "denominator": 12,
+                "both_valid": 10
+              }
+            },
+            "discrepancies": {}
+          },
+          "long_inventory": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "negative": 3,
+                "absent": 6,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 6,
+                "meta_only": 6
+              },
+              "empathy": {
+                "meta_only": 12
+              },
+              "curiosity": {
+                "meta_only": 12
+              },
+              "achievement": {
+                "meta_only": 6,
+                "mixed": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "negative": 3,
+                "absent": 6,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "negative -> negative": 3,
+                "absent -> absent": 6,
+                "positive -> positive": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 6,
+                "negative -> negative": 3,
+                "positive -> positive": 3
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "long_nonstate": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 3,
+                "absent": 6,
+                "negative": 3
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 6,
+                "situated_only": 6
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "situated_only": 6,
+                "none": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "absent": 6,
+                "negative": 3,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 3,
+                "absent": 6,
+                "negative": 3
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "absent -> absent": 6,
+                "negative -> negative": 3,
+                "positive -> positive": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "positive -> positive": 3,
+                "absent -> absent": 6,
+                "negative -> negative": 3
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "mixed": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "negative": 3,
+                "positive": 3,
+                "absent": 6
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 6,
+                "meta_only": 6
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "meta_only": 6,
+                "mixed": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "negative": 3,
+                "positive": 3,
+                "absent": 6
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "negative -> negative": 3,
+                "positive -> positive": 3,
+                "absent -> absent": 6
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 6,
+                "positive -> positive": 3,
+                "negative -> negative": 3
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "named": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "yes": 12
+            },
+            "meta_bounds": {
+              "Y": 12,
+              "N0": 0,
+              "U": 0,
+              "N": 12,
+              "lower": 1.0,
+              "upper": 1.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "negative": 3,
+                "positive": 3,
+                "absent": 6
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 6,
+                "situated_only": 6
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "mixed": 6,
+                "meta_only": 6
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 12
+              },
+              "connection": {
+                "absent": 6,
+                "positive": 3,
+                "negative": 3
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "negative": 3,
+                "positive": 3,
+                "absent": 6
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 12
+              },
+              "connection": {
+                "absent -> absent": 6,
+                "positive -> positive": 3,
+                "negative -> negative": 3
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "negative -> negative": 3,
+                "positive -> positive": 3,
+                "absent -> absent": 6
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "ordinary_person": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "positive": 6,
+                "negative": 6
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "situated_only": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "positive": 6,
+                "negative": 6
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "positive -> positive": 6,
+                "negative -> negative": 6
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "ordinary_task": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 6,
+                "negative": 6
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "situated_only": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "positive": 6,
+                "negative": 6
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "positive -> positive": 6,
+                "negative -> negative": 6
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          },
+          "quotation": {
+            "n": 12,
+            "valid": 12,
+            "statuses": {
+              "rating": 12
+            },
+            "meta_labels": {
+              "no": 12
+            },
+            "meta_bounds": {
+              "Y": 0,
+              "N0": 12,
+              "U": 0,
+              "N": 12,
+              "lower": 0.0,
+              "upper": 0.0
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 12
+              },
+              "empathy": {
+                "none": 12
+              },
+              "curiosity": {
+                "none": 12
+              },
+              "achievement": {
+                "none": 12
+              }
+            },
+            "meta_correct": 12,
+            "t_exact": 12,
+            "per_concept_correct": {
+              "connection": 12,
+              "empathy": 12,
+              "curiosity": 12,
+              "achievement": 12
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 12
+              },
+              "connection": {
+                "absent": 12
+              },
+              "empathy": {
+                "absent": 12
+              },
+              "curiosity": {
+                "absent": 12
+              },
+              "achievement": {
+                "absent": 12
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 12
+              },
+              "connection": {
+                "absent -> absent": 12
+              },
+              "empathy": {
+                "absent -> absent": 12
+              },
+              "curiosity": {
+                "absent -> absent": 12
+              },
+              "achievement": {
+                "absent -> absent": 12
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 12
+              },
+              "connection": {
+                "both_correct": 12
+              },
+              "empathy": {
+                "both_correct": 12
+              },
+              "curiosity": {
+                "both_correct": 12
+              },
+              "achievement": {
+                "both_correct": 12
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "connection": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "empathy": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "curiosity": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              },
+              "achievement": {
+                "same_valid_labels": 12,
+                "denominator": 12,
+                "both_valid": 12
+              }
+            },
+            "discrepancies": {}
+          }
+        },
+        "lang": {
+          "en": {
+            "n": 48,
+            "valid": 48,
+            "statuses": {
+              "rating": 48
+            },
+            "meta_labels": {
+              "no": 24,
+              "yes": 24
+            },
+            "meta_bounds": {
+              "Y": 24,
+              "N0": 24,
+              "U": 0,
+              "N": 48,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 32,
+                "negative": 8,
+                "positive": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "positive": 8,
+                "absent": 32,
+                "negative": 8
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 21,
+                "meta_only": 11,
+                "situated_only": 8,
+                "mixed": 8
+              },
+              "empathy": {
+                "none": 37,
+                "meta_only": 11
+              },
+              "curiosity": {
+                "none": 37,
+                "meta_only": 11
+              },
+              "achievement": {
+                "situated_only": 8,
+                "none": 22,
+                "mixed": 8,
+                "meta_only": 10
+              }
+            },
+            "meta_correct": 48,
+            "t_exact": 48,
+            "per_concept_correct": {
+              "connection": 48,
+              "empathy": 48,
+              "curiosity": 48,
+              "achievement": 48
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 24,
+                "yes": 24
+              },
+              "connection": {
+                "absent": 32,
+                "negative": 8,
+                "positive": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "positive": 8,
+                "absent": 32,
+                "negative": 8
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 24,
+                "yes -> yes": 24
+              },
+              "connection": {
+                "absent -> absent": 32,
+                "negative -> negative": 8,
+                "positive -> positive": 8
+              },
+              "empathy": {
+                "absent -> absent": 48
+              },
+              "curiosity": {
+                "absent -> absent": 48
+              },
+              "achievement": {
+                "positive -> positive": 8,
+                "absent -> absent": 32,
+                "negative -> negative": 8
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              },
+              "connection": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              },
+              "empathy": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              },
+              "curiosity": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              },
+              "achievement": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              },
+              "connection": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              },
+              "empathy": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              },
+              "curiosity": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              },
+              "achievement": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              }
+            },
+            "discrepancies": {}
+          },
+          "ja": {
+            "n": 48,
+            "valid": 48,
+            "statuses": {
+              "rating": 48
+            },
+            "meta_labels": {
+              "no": 24,
+              "yes": 24
+            },
+            "meta_bounds": {
+              "Y": 24,
+              "N0": 24,
+              "U": 0,
+              "N": 48,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 32,
+                "negative": 8,
+                "positive": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 21,
+                "mixed": 8,
+                "meta_only": 11,
+                "situated_only": 8
+              },
+              "empathy": {
+                "none": 37,
+                "meta_only": 11
+              },
+              "curiosity": {
+                "none": 38,
+                "meta_only": 10
+              },
+              "achievement": {
+                "none": 22,
+                "meta_only": 10,
+                "mixed": 8,
+                "situated_only": 8
+              }
+            },
+            "meta_correct": 48,
+            "t_exact": 48,
+            "per_concept_correct": {
+              "connection": 48,
+              "empathy": 48,
+              "curiosity": 48,
+              "achievement": 48
+            },
+            "truth_counts": {
+              "meta": {
+                "no": 24,
+                "yes": 24
+              },
+              "connection": {
+                "absent": 32,
+                "negative": 8,
+                "positive": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "confusion": {
+              "meta": {
+                "no -> no": 24,
+                "yes -> yes": 24
+              },
+              "connection": {
+                "absent -> absent": 32,
+                "negative -> negative": 8,
+                "positive -> positive": 8
+              },
+              "empathy": {
+                "absent -> absent": 48
+              },
+              "curiosity": {
+                "absent -> absent": 48
+              },
+              "achievement": {
+                "absent -> absent": 32,
+                "positive -> positive": 8,
+                "negative -> negative": 8
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 48
+              },
+              "connection": {
+                "both_correct": 48
+              },
+              "empathy": {
+                "both_correct": 48
+              },
+              "curiosity": {
+                "both_correct": 48
+              },
+              "achievement": {
+                "both_correct": 48
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 48,
+                "denominator": 48,
+                "both_valid": 48
+              },
+              "connection": {
+                "same_valid_labels": 48,
+                "denominator": 48,
+                "both_valid": 48
+              },
+              "empathy": {
+                "same_valid_labels": 48,
+                "denominator": 48,
+                "both_valid": 48
+              },
+              "curiosity": {
+                "same_valid_labels": 48,
+                "denominator": 48,
+                "both_valid": 48
+              },
+              "achievement": {
+                "same_valid_labels": 48,
+                "denominator": 48,
+                "both_valid": 48
+              }
+            },
+            "discrepancies": {}
+          },
+          "zh": {
+            "n": 48,
+            "valid": 48,
+            "statuses": {
+              "rating": 48
+            },
+            "meta_labels": {
+              "yes": 24,
+              "no": 24
+            },
+            "meta_bounds": {
+              "Y": 24,
+              "N0": 24,
+              "U": 0,
+              "N": 48,
+              "lower": 0.5,
+              "upper": 0.5
+            },
+            "t_labels": {
+              "connection": {
+                "negative": 8,
+                "absent": 32,
+                "positive": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "mixed": 8,
+                "meta_only": 11,
+                "situated_only": 8,
+                "none": 21
+              },
+              "empathy": {
+                "meta_only": 11,
+                "none": 37
+              },
+              "curiosity": {
+                "meta_only": 11,
+                "none": 37
+              },
+              "achievement": {
+                "meta_only": 10,
+                "mixed": 8,
+                "none": 22,
+                "situated_only": 8
+              }
+            },
+            "meta_correct": 48,
+            "t_exact": 48,
+            "per_concept_correct": {
+              "connection": 48,
+              "empathy": 48,
+              "curiosity": 48,
+              "achievement": 48
+            },
+            "truth_counts": {
+              "meta": {
+                "yes": 24,
+                "no": 24
+              },
+              "connection": {
+                "negative": 8,
+                "absent": 32,
+                "positive": 8
+              },
+              "empathy": {
+                "absent": 48
+              },
+              "curiosity": {
+                "absent": 48
+              },
+              "achievement": {
+                "absent": 32,
+                "positive": 8,
+                "negative": 8
+              }
+            },
+            "confusion": {
+              "meta": {
+                "yes -> yes": 24,
+                "no -> no": 24
+              },
+              "connection": {
+                "negative -> negative": 8,
+                "absent -> absent": 32,
+                "positive -> positive": 8
+              },
+              "empathy": {
+                "absent -> absent": 48
+              },
+              "curiosity": {
+                "absent -> absent": 48
+              },
+              "achievement": {
+                "absent -> absent": 32,
+                "positive -> positive": 8,
+                "negative -> negative": 8
+              }
+            },
+            "paired": {
+              "meta": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              },
+              "connection": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              },
+              "empathy": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              },
+              "curiosity": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              },
+              "achievement": {
+                "both_correct": 47,
+                "deepseek_missing": 1
+              }
+            },
+            "agreement": {
+              "meta": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              },
+              "connection": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              },
+              "empathy": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              },
+              "curiosity": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              },
+              "achievement": {
+                "same_valid_labels": 47,
+                "denominator": 48,
+                "both_valid": 47
+              }
+            },
+            "discrepancies": {}
+          }
+        }
+      }
+    },
+    "C2": {
+      "n": 189,
+      "valid": 189,
+      "statuses": {
+        "rating": 189
+      },
+      "meta_labels": {
+        "yes": 178,
+        "no": 11
+      },
+      "meta_bounds": {
+        "Y": 178,
+        "N0": 11,
+        "U": 0,
+        "N": 189,
+        "lower": 0.9417989417989417,
+        "upper": 0.9417989417989417
+      },
+      "t_labels": {
+        "connection": {
+          "absent": 166,
+          "negative": 20,
+          "positive": 3
+        },
+        "empathy": {
+          "absent": 189
+        },
+        "curiosity": {
+          "absent": 189
+        },
+        "achievement": {
+          "absent": 167,
+          "neutral": 1,
+          "negative": 5,
+          "positive": 15,
+          "both": 1
+        }
+      },
+      "failure_reasons": {},
+      "evidence_sources": {
+        "connection": {
+          "none": 15,
+          "meta_only": 151,
+          "situated_only": 8,
+          "mixed": 15
+        },
+        "empathy": {
+          "meta_only": 164,
+          "none": 25
+        },
+        "curiosity": {
+          "meta_only": 173,
+          "none": 16
+        },
+        "achievement": {
+          "none": 20,
+          "meta_only": 147,
+          "situated_only": 4,
+          "mixed": 18
+        }
+      },
+      "strata": {
+        "length_bin": {
+          "unknown": {
+            "n": 189,
+            "valid": 189,
+            "statuses": {
+              "rating": 189
+            },
+            "meta_labels": {
+              "yes": 178,
+              "no": 11
+            },
+            "meta_bounds": {
+              "Y": 178,
+              "N0": 11,
+              "U": 0,
+              "N": 189,
+              "lower": 0.9417989417989417,
+              "upper": 0.9417989417989417
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 166,
+                "negative": 20,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 189
+              },
+              "curiosity": {
+                "absent": 189
+              },
+              "achievement": {
+                "absent": 167,
+                "neutral": 1,
+                "negative": 5,
+                "positive": 15,
+                "both": 1
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 15,
+                "meta_only": 151,
+                "situated_only": 8,
+                "mixed": 15
+              },
+              "empathy": {
+                "meta_only": 164,
+                "none": 25
+              },
+              "curiosity": {
+                "meta_only": 173,
+                "none": 16
+              },
+              "achievement": {
+                "none": 20,
+                "meta_only": 147,
+                "situated_only": 4,
+                "mixed": 18
+              }
+            }
+          }
+        },
+        "category": {
+          "C2": {
+            "n": 189,
+            "valid": 189,
+            "statuses": {
+              "rating": 189
+            },
+            "meta_labels": {
+              "yes": 178,
+              "no": 11
+            },
+            "meta_bounds": {
+              "Y": 178,
+              "N0": 11,
+              "U": 0,
+              "N": 189,
+              "lower": 0.9417989417989417,
+              "upper": 0.9417989417989417
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 166,
+                "negative": 20,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 189
+              },
+              "curiosity": {
+                "absent": 189
+              },
+              "achievement": {
+                "absent": 167,
+                "neutral": 1,
+                "negative": 5,
+                "positive": 15,
+                "both": 1
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 15,
+                "meta_only": 151,
+                "situated_only": 8,
+                "mixed": 15
+              },
+              "empathy": {
+                "meta_only": 164,
+                "none": 25
+              },
+              "curiosity": {
+                "meta_only": 173,
+                "none": 16
+              },
+              "achievement": {
+                "none": 20,
+                "meta_only": 147,
+                "situated_only": 4,
+                "mixed": 18
+              }
+            }
+          }
+        },
+        "lang": {
+          "unknown": {
+            "n": 189,
+            "valid": 189,
+            "statuses": {
+              "rating": 189
+            },
+            "meta_labels": {
+              "yes": 178,
+              "no": 11
+            },
+            "meta_bounds": {
+              "Y": 178,
+              "N0": 11,
+              "U": 0,
+              "N": 189,
+              "lower": 0.9417989417989417,
+              "upper": 0.9417989417989417
+            },
+            "t_labels": {
+              "connection": {
+                "absent": 166,
+                "negative": 20,
+                "positive": 3
+              },
+              "empathy": {
+                "absent": 189
+              },
+              "curiosity": {
+                "absent": 189
+              },
+              "achievement": {
+                "absent": 167,
+                "neutral": 1,
+                "negative": 5,
+                "positive": 15,
+                "both": 1
+              }
+            },
+            "failure_reasons": {},
+            "evidence_sources": {
+              "connection": {
+                "none": 15,
+                "meta_only": 151,
+                "situated_only": 8,
+                "mixed": 15
+              },
+              "empathy": {
+                "meta_only": 164,
+                "none": 25
+              },
+              "curiosity": {
+                "meta_only": 173,
+                "none": 16
+              },
+              "achievement": {
+                "none": 20,
+                "meta_only": 147,
+                "situated_only": 4,
+                "mixed": 18
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "gates": {
+    "J-v1": [
+      {
+        "partition": "development",
+        "lang": "zh",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "pass": true
+      },
+      {
+        "partition": "development",
+        "lang": "en",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "pass": true
+      },
+      {
+        "partition": "development",
+        "lang": "ja",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "pass": true
+      },
+      {
+        "partition": "check",
+        "lang": "zh",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "inventory_absence_correct": 4,
+        "long_positive_correct": 2,
+        "long_negative_correct": 2,
+        "pass": true
+      },
+      {
+        "partition": "check",
+        "lang": "en",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "inventory_absence_correct": 4,
+        "long_positive_correct": 2,
+        "long_negative_correct": 2,
+        "pass": true
+      },
+      {
+        "partition": "check",
+        "lang": "ja",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "inventory_absence_correct": 4,
+        "long_positive_correct": 2,
+        "long_negative_correct": 2,
+        "pass": true
+      }
+    ],
+    "J-v2": [
+      {
+        "partition": "development",
+        "lang": "zh",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "pass": true
+      },
+      {
+        "partition": "development",
+        "lang": "en",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "pass": true
+      },
+      {
+        "partition": "development",
+        "lang": "ja",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "pass": true
+      },
+      {
+        "partition": "check",
+        "lang": "zh",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "inventory_absence_correct": 4,
+        "long_positive_correct": 2,
+        "long_negative_correct": 2,
+        "pass": true
+      },
+      {
+        "partition": "check",
+        "lang": "en",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "inventory_absence_correct": 4,
+        "long_positive_correct": 2,
+        "long_negative_correct": 2,
+        "pass": true
+      },
+      {
+        "partition": "check",
+        "lang": "ja",
+        "n": 24,
+        "sensitivity_count": 12,
+        "specificity_count": 12,
+        "t_exact_count": 24,
+        "valid_count": 24,
+        "inventory_absence_correct": 4,
+        "long_positive_correct": 2,
+        "long_negative_correct": 2,
+        "pass": true
+      }
+    ]
+  },
+  "run": {
+    "scope": 477,
+    "attempts": 482,
+    "upper_nano_usd": 7808882500,
+    "peak_nano_usd": 8164807500,
+    "stop_reason": null,
+    "active_seconds": 3260.719000000041,
+    "max_in_flight": 4,
+    "in_flight": 0,
+    "collection_complete": true,
+    "formal_analysis": "not_run",
+    "fingerprint": null
+  },
+  "user_result_approval": "pending",
+  "C2_human_accuracy": "not_available",
+  "C2-fixed-20": {
+    "n": 20,
+    "valid": 20,
+    "statuses": {
+      "rating": 20
+    },
+    "meta_labels": {
+      "yes": 14,
+      "no": 6
+    },
+    "meta_bounds": {
+      "Y": 14,
+      "N0": 6,
+      "U": 0,
+      "N": 20,
+      "lower": 0.7,
+      "upper": 0.7
+    },
+    "t_labels": {
+      "connection": {
+        "absent": 18,
+        "negative": 2
+      },
+      "empathy": {
+        "absent": 20
+      },
+      "curiosity": {
+        "absent": 20
+      },
+      "achievement": {
+        "absent": 18,
+        "neutral": 1,
+        "negative": 1
+      }
+    },
+    "failure_reasons": {},
+    "evidence_sources": {
+      "connection": {
+        "none": 6,
+        "meta_only": 12,
+        "situated_only": 2
+      },
+      "empathy": {
+        "meta_only": 14,
+        "none": 6
+      },
+      "curiosity": {
+        "meta_only": 14,
+        "none": 6
+      },
+      "achievement": {
+        "none": 6,
+        "meta_only": 12,
+        "situated_only": 2
+      }
+    },
+    "shared_agreement": {
+      "coherence.contradiction": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "coherence.off_topic": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "coherence.repetition_break": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "coherence.truncated": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "coherence.unclear_reference": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "concepts.achievement": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 14
+      },
+      "concepts.connection": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 12
+      },
+      "concepts.curiosity": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 11
+      },
+      "concepts.empathy": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 13
+      },
+      "facts": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 13
+      },
+      "flags.action_promise": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "flags.customer_service": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "flags.extreme_claim": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 15
+      },
+      "flags.invented_relationship_experience": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 15
+      },
+      "flags.method_inferable": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 14
+      },
+      "flags.politeness": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 16
+      },
+      "flags.self_blame_apology": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "flags.stable_trait": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "flags.unsolicited_identity": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 17
+      },
+      "valence": {
+        "denominator": 20,
+        "both_valid": 17,
+        "same": 11
+      }
+    }
+  },
+  "C2-old-invalid-172": {
+    "n": 172,
+    "valid": 172,
+    "statuses": {
+      "rating": 172
+    },
+    "meta_labels": {
+      "no": 6,
+      "yes": 166
+    },
+    "meta_bounds": {
+      "Y": 166,
+      "N0": 6,
+      "U": 0,
+      "N": 172,
+      "lower": 0.9651162790697675,
+      "upper": 0.9651162790697675
+    },
+    "t_labels": {
+      "connection": {
+        "absent": 150,
+        "negative": 19,
+        "positive": 3
+      },
+      "empathy": {
+        "absent": 172
+      },
+      "curiosity": {
+        "absent": 172
+      },
+      "achievement": {
+        "absent": 151,
+        "negative": 5,
+        "positive": 15,
+        "both": 1
+      }
+    },
+    "failure_reasons": {},
+    "evidence_sources": {
+      "connection": {
+        "none": 9,
+        "meta_only": 141,
+        "mixed": 15,
+        "situated_only": 7
+      },
+      "empathy": {
+        "none": 20,
+        "meta_only": 152
+      },
+      "curiosity": {
+        "none": 11,
+        "meta_only": 161
+      },
+      "achievement": {
+        "none": 14,
+        "meta_only": 137,
+        "mixed": 18,
+        "situated_only": 3
+      }
+    },
+    "shared_agreement": {
+      "coherence.contradiction": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "coherence.off_topic": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "coherence.repetition_break": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "coherence.truncated": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "coherence.unclear_reference": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "concepts.achievement": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "concepts.connection": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "concepts.curiosity": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "concepts.empathy": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "facts": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "flags.action_promise": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "flags.customer_service": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "flags.extreme_claim": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "flags.invented_relationship_experience": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "flags.method_inferable": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "flags.politeness": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "flags.self_blame_apology": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "flags.stable_trait": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "flags.unsolicited_identity": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      },
+      "valence": {
+        "denominator": 172,
+        "both_valid": 0,
+        "same": 0
+      }
+    }
+  },
+  "status": "numeric_gate_pass_needs_user"
+}

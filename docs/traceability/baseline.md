@@ -32,12 +32,25 @@ The aliases identify original files, not replacement specifications. Readable co
 
 This does not silently settle disagreements between a frozen clause and a newer closure. W00-C01 in [diff-register.md](diff-register.md) remains pending user confirmation; [ADR 0006](../adr/0006-single-root-spec-conflict.md) is proposed, not approved.
 
+> **状态更新（2026-11-11）：** W00-C01 已由 [ADR 0009](../adr/0009-echo-core-v2-first-principles.md) 消解（v2.0 没有单根、多根资格），ADR 0006 已被 ADR 0009 取代。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 C2。
+
 ### Missing upstream material
 
 S §1 and O's upstream references rely on `Review_and_Remediation`: F §§20–27 and D Appendix B. The supplied F ends at §19; supplied D has Appendix A, not B. E12 remains **待用户提供** for those missing sections. Do not reconstruct their θ design. W09/W10 and growth are v1.x; Nemu v1.0 uses genesis b/Λ/B₀, empty R and audited identity G/C. Missing additions do not alone block v1.0 IDL/transaction work. Future growth must re-baseline newly supplied originals and resolve W00-C01 before activation.
 
 **追加状态说明（2026-10-14 决定）：用户确认不可得（2026-10-14 决定）**。此状态取代上述“待用户提供”的当前含义；原文保留作历史说明。范围为 Review_and_Remediation 增补 F 第 20–27 节、D 附录 B。不重建缺失内容；C01 保持未决、仅阻塞 W09/W10，ADR 0006 保持 PROPOSED，v1.0 保持 NO-GROWTH。
 
+> **状态更新（2026-11-11）：** E12 缺失的 Review_and_Remediation 增补在 [ADR 0009](../adr/0009-echo-core-v2-first-principles.md) 之后已不再需要、不再阻塞任何工作（ADR 0009 的 E12 一项）；本追加中「C01 保持未决」「ADR 0006 保持 PROPOSED」同样已过时，见上一条说明。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 C3。
+
 Review scope: all five documents' headings and §1; S §§1,2,26,31; targeted original clauses for E1–E14, conflict verification, acceptance and work-package mapping. This is not a claim that all future implementation details have already been audited.
 
 Reproduce: `pwsh -File reports/P0-06/verify-baseline.ps1` from the repository root. Evidence is written to a new timestamped directory, never over prior evidence.
+
+## PRIVACY-CLEANUP-01 metadata-only baseline — 2026-11-11
+
+用户批准一次性移除下列两份 DOCX 的个人元数据；正文和所有非目标 ZIP 成员不变。上表旧哈希作为历史保留，下表为当前有效哈希。原件与证据提交见 [证据索引](../../reports/PRIVACY-CLEANUP-01/EVIDENCE-INDEX.md)，逐成员对照见 [SHA-256 表](../../reports/PRIVACY-CLEANUP-01/DOCX-MEMBER-SHA256.csv)。
+
+| Original file | Previous SHA-256 (historical) | Current SHA-256 |
+| --- | --- | --- |
+| Ada Echo Core Math define.docx | D735D030C5EE708D824D26C3F3993DA0FFBABD3D1139C92F89D3F617FF18E638 | DD252C5C4003FD8A0F8A480B791C14E01816EEBBF10C6662C2355BA999E947F8 |
+| Echo Core Implementation Plan.docx | 7F7174078BA4E26F43FA0BE66501660A19BE6CC0D2B18568A39C074FF6113174 | CEBD8D9DF31D8E9F7F92A2C87693570BB62777BC1FD8ACBC515C92B288392256 |

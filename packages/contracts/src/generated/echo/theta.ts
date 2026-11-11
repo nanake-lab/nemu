@@ -1,6 +1,7 @@
 // P5-36: explicit semantic boundary after the structural codec.
 import { normalize, digest, type Limits } from './runtime.js';
 export const THETA_NUMERICS_ID = 'P5-25-v2-93-98-libm-0.2.16';
+export const LAW_STATE_NUMERICS_ID = 'ADR0035-D07-gradual-underflow-v1';
 const exact = 1n << 53n;
 const names = new Set([
   'ThetaEstimatorParameters',
@@ -8,6 +9,8 @@ const names = new Set([
   'ThetaLastEvent',
   'ThetaEstimatorState',
   'ThetaSnapshotV2',
+  'ThetaSnapshotV3',
+  'ThetaEstimatorParametersV2',
 ]);
 type Obj = Record<string, unknown>;
 function require(ok: boolean, why: string): void {
@@ -33,8 +36,8 @@ function scale(v: unknown): number[] {
   const o = obj(v);
   return ['connection', 'empathy', 'curiosity', 'achievement'].map((k) => num(o[k]));
 }
-function parameters(p: Obj): void {
-  require(p.numerics_id === THETA_NUMERICS_ID, 'theta numerics version');
+function parameters(p: Obj, numericsId: string): void {
+  require(p.numerics_id === numericsId, 'theta numerics version');
   for (const k of [
     'baseline_weight',
     'variance_weight',
@@ -47,7 +50,10 @@ function parameters(p: Obj): void {
     'detector_shift_sigma',
     'detector_threshold',
   ])
-    require(num(p[k]) > 0 && num(p[k]) < Number(exact), 'theta positive exact parameter');
+    require(num(p[k]) > 0 &&
+      (num(p[k]) < Number(exact) ||
+        (k === 'baseline_weight' &&
+          numericsId === LAW_STATE_NUMERICS_ID)), 'theta positive parameter');
   for (const k of ['change_prior', 'change_min']) {
     const h = num(p[k]);
     require(h > 0 && h < 1 && 1 - h !== 1, 'theta representable retention');
@@ -146,21 +152,32 @@ function state(s: Obj): void {
 export function checkThetaMessage(name: string, value: unknown, limits: Limits): void {
   if (!names.has(name)) return;
   const v = normalize(name, value, limits);
-  if (name === 'ThetaEstimatorParameters') parameters(v);
+  const numericsId =
+    name === 'ThetaSnapshotV3' || name === 'ThetaEstimatorParametersV2'
+      ? LAW_STATE_NUMERICS_ID
+      : THETA_NUMERICS_ID;
+  if (name === 'ThetaEstimatorParameters' || name === 'ThetaEstimatorParametersV2')
+    parameters(v, numericsId);
   else if (name === 'ThetaRunningTime') running(v);
   else if (name === 'ThetaEstimatorState') state(v);
-  else if (name === 'ThetaSnapshotV2') {
+  else if (name === 'ThetaSnapshotV2' || name === 'ThetaSnapshotV3') {
     const p = obj(v.parameters),
       s = obj(v.estimator),
       law = obj(v.law_version);
-    parameters(p);
+    parameters(p, numericsId);
     state(s);
     require(law.object_type === 'echo.law-version' &&
       law.resource_version === p.law_id, 'theta law binding');
     require(v.parameters_digest instanceof Uint8Array &&
       Buffer.from(v.parameters_digest).toString('hex') ===
-        digest('ThetaEstimatorParameters', p, limits), 'theta parameter digest');
+        digest(
+          name === 'ThetaSnapshotV3' ? 'ThetaEstimatorParametersV2' : 'ThetaEstimatorParameters',
+          p,
+          limits,
+        ), 'theta parameter digest');
     require(num(s.h) >= num(p.change_min), 'theta h floor');
+    if (name === 'ThetaSnapshotV3' && int(s.event_count) === 0n)
+      require(v.prior_mass === p.baseline_weight, 'theta initial P');
     if (int(s.event_count) === 0n)
       require(num(s.h) === Math.max(num(p.change_prior), num(p.change_min)), 'theta initial h');
     for (const [field, lo, hi] of [

@@ -17,8 +17,14 @@ try {
     $baseline = Get-Content docs/traceability/baseline.md -Raw -Encoding utf8
     $originals = @(Get-ChildItem docs/echo-core/original -Filter *.docx | Sort-Object Name)
     if ($originals.Count -ne 5) { throw 'Expected exactly five baseline originals' }
+    # 2026-11-11: exact metadata-only successor hashes; old hashes remain in baseline.md.
+    $metadataSuccessors = @{
+        'Ada Echo Core Math define.docx' = 'DD252C5C4003FD8A0F8A480B791C14E01816EEBBF10C6662C2355BA999E947F8'
+        'Echo Core Implementation Plan.docx' = 'CEBD8D9DF31D8E9F7F92A2C87693570BB62777BC1FD8ACBC515C92B288392256'
+    }
     $sources = foreach ($file in $originals) {
         $hash = (Get-FileHash $file.FullName -Algorithm SHA256).Hash
+        if ($metadataSuccessors.ContainsKey($file.Name) -and $hash -ne $metadataSuccessors[$file.Name]) { throw 'Metadata successor hash mismatch' }
         if (-not $baseline.Contains($hash) -or -not $baseline.Contains($file.Name)) { throw 'Baseline source hash/name mismatch' }
         $zip = [IO.Compression.ZipFile]::OpenRead($file.FullName)
         try {

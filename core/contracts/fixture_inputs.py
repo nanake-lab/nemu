@@ -12,6 +12,12 @@ LIMITS = dict(max_bytes=1048576, max_items=4096, max_depth=32)
 
 
 def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
+    from fixture_cognition import NAMES as COG_NAMES, sample_cognition
+    if name in COG_NAMES:
+        return sample_cognition(name, seed)
+    from fixture_law_state import NAMES as LAW_NAMES, sample_law_state
+    if name in LAW_NAMES:
+        return sample_law_state(name, seed)
     from fixture_theta import NAMES, sample_theta
 
     if name in NAMES:
@@ -121,8 +127,10 @@ def unit(c: float, e: float, q: float, a: float) -> dict[str, Any]:
 
 
 def targeted_legal() -> list[dict[str, Any]]:
+    from fixture_cognition import legal_cognition
     """P5-21 vectors for values that seeded samples do not reach (new enum codes) and
     semantically realistic v2 records. Additional vectors only; never replace frozen ones."""
+    from fixture_law_state import legal_law_state
     from fixture_retention import legal_retention
     from fixture_touch import legal_touch
 
@@ -182,6 +190,8 @@ def targeted_legal() -> list[dict[str, Any]]:
         + targeted_legal_p5_22()
         + legal_retention()
         + legal_touch()
+        + legal_law_state()
+        + legal_cognition()
     )
 
 
@@ -434,6 +444,7 @@ def targeted_legal_p5_22() -> list[dict[str, Any]]:
 
 
 def targeted_illegal() -> list[dict[str, Any]]:
+    from fixture_cognition import illegal_cognition
     import copy
     import struct
 
@@ -528,6 +539,7 @@ def targeted_illegal() -> list[dict[str, Any]]:
     from fixture_retention import illegal_retention
 
     from fixture_theta import illegal_theta
+    from fixture_law_state import illegal_law_state
 
     from fixture_touch import illegal_touch
 
@@ -536,5 +548,7 @@ def targeted_illegal() -> list[dict[str, Any]]:
         + out
         + illegal_retention()
         + illegal_theta()
+        + illegal_law_state()
         + illegal_touch()
+        + illegal_cognition()
     )

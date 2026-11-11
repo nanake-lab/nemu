@@ -14,6 +14,7 @@
 | 篇 | 讲什么 | 状态 |
 | --- | --- | --- |
 | [01 Echo Core 怎么影响模型](01-echo-core-and-the-model.md) | 她的状态怎样进到模型里；为什么是第 15 层；判断员用哪个模型；后训练带来的「厂商人格」；还有哪些办法；LoRA 是什么 | 在读 |
+| [02 她的状态从哪里来](02-history-and-recompute.md) | 历史 H 是权威，R、θ 按规律从 H 算出，x 由 H 重放；为什么要能完整重算；逐条追加与从出生重算为什么要逐位一致（I23）；历史变长以后怎么办；测试为什么对每个前缀都重算 | 未读 |
 
 ## 下一篇写什么（候选，由你定）
 
@@ -25,4 +26,5 @@
 ## 别处的阅读顺序
 
 - 想直接读规格原文时，从 [`docs/echo-core/README.md`](../echo-core/README.md) 第 5 节的顺序开始。
+  > **状态更新（2026-11-11）：** echo-core README 第 5 节已于 2026-11-11 改为分级读法，以 [echo-core-work 技能](../../.agents/skills/echo-core-work/SKILL.md) 第 1 节为准（echo-core README 文末「追加（2026-11-11）：阅读范围」）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 E9。
 - 每个决定为什么这样定、走过哪些弯路、当时的心情，记在 [开发手记](../journal/README.md)。

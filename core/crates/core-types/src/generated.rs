@@ -382,6 +382,116 @@ impl RelationKind {
     /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
     pub const fn is_superseded(self) -> bool { false }
 }
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum CognitiveCompletion {
+    COG_COMPLETED = 1,
+    COG_TRUNCATED = 2,
+    COG_CANCELLED = 3,
+    COG_FAILED = 4,
+}
+impl TryFrom<u32> for CognitiveCompletion { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::COG_COMPLETED),
+2 => Ok(Self::COG_TRUNCATED),
+3 => Ok(Self::COG_CANCELLED),
+4 => Ok(Self::COG_FAILED),
+_ => Err("unknown enum".into()), }}}
+impl From<CognitiveCompletion> for u32 {fn from(v:CognitiveCompletion)->Self{v as u32}}
+impl CognitiveCompletion {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum CognitiveMode {
+    COG_RUNNING = 1,
+    COG_PAUSED = 2,
+    COG_FAULT = 3,
+}
+impl TryFrom<u32> for CognitiveMode { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::COG_RUNNING),
+2 => Ok(Self::COG_PAUSED),
+3 => Ok(Self::COG_FAULT),
+_ => Err("unknown enum".into()), }}}
+impl From<CognitiveMode> for u32 {fn from(v:CognitiveMode)->Self{v as u32}}
+impl CognitiveMode {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum CognitiveActivityStatus {
+    COG_ACTIVITY_RUNNING = 1,
+    COG_ACTIVITY_WAITING = 2,
+    COG_ACTIVITY_COMPLETED = 3,
+    COG_ACTIVITY_SUSPENDED = 4,
+}
+impl TryFrom<u32> for CognitiveActivityStatus { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::COG_ACTIVITY_RUNNING),
+2 => Ok(Self::COG_ACTIVITY_WAITING),
+3 => Ok(Self::COG_ACTIVITY_COMPLETED),
+4 => Ok(Self::COG_ACTIVITY_SUSPENDED),
+_ => Err("unknown enum".into()), }}}
+impl From<CognitiveActivityStatus> for u32 {fn from(v:CognitiveActivityStatus)->Self{v as u32}}
+impl CognitiveActivityStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum CognitiveReturnStatus {
+    COG_RETURN_WAITING = 1,
+    COG_RETURN_OK = 2,
+    COG_RETURN_NO_MATCH = 3,
+    COG_RETURN_DENIED = 4,
+    COG_RETURN_INDEX_LAGGING = 5,
+    COG_RETURN_MISSING = 6,
+    COG_RETURN_BUDGET = 7,
+    COG_RETURN_FAILED = 8,
+    COG_RETURN_UNKNOWN = 9,
+}
+impl TryFrom<u32> for CognitiveReturnStatus { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::COG_RETURN_WAITING),
+2 => Ok(Self::COG_RETURN_OK),
+3 => Ok(Self::COG_RETURN_NO_MATCH),
+4 => Ok(Self::COG_RETURN_DENIED),
+5 => Ok(Self::COG_RETURN_INDEX_LAGGING),
+6 => Ok(Self::COG_RETURN_MISSING),
+7 => Ok(Self::COG_RETURN_BUDGET),
+8 => Ok(Self::COG_RETURN_FAILED),
+9 => Ok(Self::COG_RETURN_UNKNOWN),
+_ => Err("unknown enum".into()), }}}
+impl From<CognitiveReturnStatus> for u32 {fn from(v:CognitiveReturnStatus)->Self{v as u32}}
+impl CognitiveReturnStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum CognitiveMaintenanceKind {
+    COG_MAINTENANCE_PAUSE = 1,
+    COG_MAINTENANCE_RESUME = 2,
+    COG_MAINTENANCE_REVIEW = 3,
+    COG_MAINTENANCE_ALARM = 4,
+    COG_MAINTENANCE_BACKUP_RESTORE = 5,
+}
+impl TryFrom<u32> for CognitiveMaintenanceKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::COG_MAINTENANCE_PAUSE),
+2 => Ok(Self::COG_MAINTENANCE_RESUME),
+3 => Ok(Self::COG_MAINTENANCE_REVIEW),
+4 => Ok(Self::COG_MAINTENANCE_ALARM),
+5 => Ok(Self::COG_MAINTENANCE_BACKUP_RESTORE),
+_ => Err("unknown enum".into()), }}}
+impl From<CognitiveMaintenanceKind> for u32 {fn from(v:CognitiveMaintenanceKind)->Self{v as u32}}
+impl CognitiveMaintenanceKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
 /// Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -487,6 +597,42 @@ impl TryFrom<u32> for GrowthCommandKind { type Error = String; fn try_from(v:u32
 _ => Err("unknown enum".into()), }}}
 impl From<GrowthCommandKind> for u32 {fn from(v:GrowthCommandKind)->Self{v as u32}}
 impl GrowthCommandKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum FastBasisKind {
+    FAST_BASIS_RECORD = 1,
+    FAST_BASIS_INTERNAL_BRANCH = 2,
+}
+impl TryFrom<u32> for FastBasisKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::FAST_BASIS_RECORD),
+2 => Ok(Self::FAST_BASIS_INTERNAL_BRANCH),
+_ => Err("unknown enum".into()), }}}
+impl From<FastBasisKind> for u32 {fn from(v:FastBasisKind)->Self{v as u32}}
+impl FastBasisKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum FastEffectRole {
+    FAST_EFFECT_NEW_BASIS = 1,
+    FAST_EFFECT_TARGET_UPDATE = 2,
+    FAST_EFFECT_REVISIT = 3,
+    FAST_EFFECT_INTERNAL_BRANCH = 4,
+}
+impl TryFrom<u32> for FastEffectRole { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::FAST_EFFECT_NEW_BASIS),
+2 => Ok(Self::FAST_EFFECT_TARGET_UPDATE),
+3 => Ok(Self::FAST_EFFECT_REVISIT),
+4 => Ok(Self::FAST_EFFECT_INTERNAL_BRANCH),
+_ => Err("unknown enum".into()), }}}
+impl From<FastEffectRole> for u32 {fn from(v:FastEffectRole)->Self{v as u32}}
+impl FastEffectRole {
     /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
     pub const fn is_superseded(self) -> bool { false }
 }
@@ -1416,6 +1562,205 @@ pub r#world_id: Option<String>,
 pub r#world_seed: Option<DecimalU64>,
 }
 impl super::WireMessage for LineageHeaderV2 {const NAME: &'static str = "LineageHeaderV2";}
+/// ADR 0026 §§4-6; ADR 0030 field table; frozen tag `echo.cognition-binding`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CognitionBinding {
+pub r#schema_version: u32,
+pub r#activity_id: String,
+pub r#step_id: String,
+pub r#request_id: String,
+pub r#round_index: DecimalU64,
+pub r#branch_id: String,
+pub r#base_commit: String,
+pub r#q_revision: String,
+pub r#input_frontier: Vec<String>,
+pub r#snapshot_id: String,
+pub r#environment: VersionedEnvironmentV2,
+pub r#protocol: ObjectRef,
+pub r#permission_snapshot: ObjectRef,
+pub r#source_validity_version: String,
+pub r#read_set: Vec<ObjectRef>,
+}
+impl super::WireMessage for CognitionBinding {const NAME: &'static str = "CognitionBinding";}
+/// ADR 0026 §5.1; V2-88/102; ADR 0030; frozen tag `echo.cognitive-material`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CognitiveMaterial {
+pub r#schema_version: u32,
+pub r#content: ObjectRef,
+pub r#metadata: SourceMetadata,
+pub r#past_reaction: bool,
+}
+impl super::WireMessage for CognitiveMaterial {const NAME: &'static str = "CognitiveMaterial";}
+/// ADR 0026 §§3,5.2,6.9; ADR 0030; frozen tag `echo.cognitive-returned-result`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CognitiveReturnedResult {
+pub r#schema_version: u32,
+pub r#request_id: String,
+pub r#status: CognitiveReturnStatus,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#result: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#action_id: Option<String>,
+}
+impl super::WireMessage for CognitiveReturnedResult {const NAME: &'static str = "CognitiveReturnedResult";}
+/// ADR 0026 §§4.1-4.2,5.1-5.2; ADR 0030; frozen tag `echo.cognitive-input`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CognitiveInput {
+pub r#schema_version: u32,
+pub r#binding: CognitionBinding,
+pub r#materials: Vec<CognitiveMaterial>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#focus: Option<ObjectRef>,
+pub r#new_inputs: Vec<ObjectRef>,
+pub r#results: Vec<CognitiveReturnedResult>,
+pub r#retrievals: Vec<FactProjection>,
+pub r#budget: ObjectRef,
+}
+impl super::WireMessage for CognitiveInput {const NAME: &'static str = "CognitiveInput";}
+/// ADR 0026 §§4.4-4.5,5,6.7,7; ADR 0030; frozen tag `echo.cognitive-result-receipt`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CognitiveResultAndReceipt {
+pub r#schema_version: u32,
+pub r#binding: CognitionBinding,
+pub r#input: ObjectRef,
+pub r#products: Vec<CognitiveMaterial>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#next_focus: Option<ObjectRef>,
+pub r#queries: Vec<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#action_plan: Option<ActionPlan>,
+pub r#completion: CognitiveCompletion,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason: Option<String>,
+pub r#model_hash: HexBytes,
+pub r#tokenizer_hash: HexBytes,
+pub r#modulation: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#carrier_receipt: Option<ObjectRef>,
+pub r#usage: ObjectRef,
+}
+impl super::WireMessage for CognitiveResultAndReceipt {const NAME: &'static str = "CognitiveResultAndReceipt";}
+/// ADR 0026 §§5,6.7; ADR 0030; frozen tag `echo.internal-activity-record`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct InternalActivityRecord {
+pub r#schema_version: u32,
+pub r#record_id: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#previous: Option<ObjectRef>,
+pub r#result: CognitiveResultAndReceipt,
+pub r#started_at_ns: DecimalU64,
+pub r#finished_at_ns: DecimalU64,
+}
+impl super::WireMessage for InternalActivityRecord {const NAME: &'static str = "InternalActivityRecord";}
+/// ADR 0026 §§3,5; ADR 0030; frozen tag `echo.activity-state`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ActivityState {
+pub r#schema_version: u32,
+pub r#activity_id: String,
+pub r#revision: String,
+pub r#materials: Vec<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#focus: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#latest_step: Option<ObjectRef>,
+pub r#waiting: Vec<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#successor: Option<ObjectRef>,
+pub r#status: CognitiveActivityStatus,
+}
+impl super::WireMessage for ActivityState {const NAME: &'static str = "ActivityState";}
+/// ADR 0026 §6.9; retained outbox origin §6.3; ADR 0030; frozen tag `echo.cognitive-inflight-action`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CognitiveInflightAction {
+pub r#schema_version: u32,
+pub r#action_id: String,
+pub r#origin_record: ObjectRef,
+pub r#origin_step_id: String,
+pub r#round_index: DecimalU64,
+pub r#registered_at_ns: DecimalU64,
+pub r#plan: ActionPlan,
+pub r#status: ActionStatus,
+pub r#request: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#actual_result: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#credential: Option<ObjectRef>,
+}
+impl super::WireMessage for CognitiveInflightAction {const NAME: &'static str = "CognitiveInflightAction";}
+/// ADR 0026 §§3,5-6; ADR 0030; frozen tag `echo.cognition-state`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CognitionState {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#mode: CognitiveMode,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason: Option<String>,
+pub r#activities: Vec<ActivityState>,
+pub r#inflight: Vec<CognitiveInflightAction>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#active_request: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#runnable_successor: Option<ObjectRef>,
+pub r#transition: ObjectRef,
+}
+impl super::WireMessage for CognitionState {const NAME: &'static str = "CognitionState";}
+/// ADR 0026 §§5,6.1-6.2,6.10; ADR 0030; frozen tag `echo.internal-activity-commit`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct InternalActivityCommit {
+pub r#schema_version: u32,
+pub r#binding: CognitionBinding,
+pub r#record: InternalActivityRecord,
+pub r#interpretations: Vec<ObjectRef>,
+}
+impl super::WireMessage for InternalActivityCommit {const NAME: &'static str = "InternalActivityCommit";}
+/// ADR 0026 §§5,6; ADR 0030; frozen tag `echo.transaction-v3`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CoreTransactionV3 {
+pub r#schema_version: u32,
+pub r#staged_h: ObjectRef,
+pub r#staged_x: ObjectRef,
+pub r#staged_r: ObjectRef,
+pub r#staged_theta: ObjectRef,
+pub r#staged_l: ObjectRef,
+pub r#staged_q: ObjectRef,
+pub r#staged_u: ObjectRef,
+pub r#processed_position: DecimalU64,
+pub r#anchor_time_ns: DecimalU64,
+pub r#staged_concepts: Vec<ObjectRef>,
+pub r#accepted_results: Vec<ObjectRef>,
+pub r#audit_refs: Vec<ObjectRef>,
+pub r#staged_ledger: Vec<LedgerEntry>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#event_binding: Option<ProposalBindingV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#internal_commit: Option<InternalActivityCommit>,
+}
+impl super::WireMessage for CoreTransactionV3 {const NAME: &'static str = "CoreTransactionV3";}
+/// V2-87/102; ADR 0030; frozen tag `echo.system-maintenance-record`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SystemMaintenanceRecord {
+pub r#schema_version: u32,
+pub r#record_id: String,
+pub r#kind: CognitiveMaintenanceKind,
+pub r#reason: String,
+pub r#details: ObjectRef,
+pub r#ledger_refs: Vec<ObjectRef>,
+pub r#related_commit: String,
+pub r#recorded_at_ns: DecimalU64,
+}
+impl super::WireMessage for SystemMaintenanceRecord {const NAME: &'static str = "SystemMaintenanceRecord";}
 /// O 3.1; S 5; frozen tag `echo.effect-contract`. Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -2101,6 +2446,141 @@ pub r#law_version: ObjectRef,
 pub r#tendencies: Vec<TendencyV3>,
 }
 impl super::WireMessage for RSnapshotV3 {const NAME: &'static str = "RSnapshotV3";}
+/// ADR 0035 §4.1, §4.2, §9 P5-68(2,3); frozen tag `echo.fast-basis-identity`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastBasisIdentity {
+pub r#schema_version: u32,
+pub r#kind: FastBasisKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#record_id: Option<String>,
+}
+impl super::WireMessage for FastBasisIdentity {const NAME: &'static str = "FastBasisIdentity";}
+/// ADR 0035 §4.1, §4.3: finite signed h/target coordinate; frozen tag `echo.law-learned-coordinate`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LawLearnedCoordinate {
+pub r#schema_version: u32,
+pub r#tendency_id: String,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#value: f64,
+}
+impl super::WireMessage for LawLearnedCoordinate {const NAME: &'static str = "LawLearnedCoordinate";}
+/// ADR 0035 §4.1, §4.3, §4.6 B6': same coordinate identity as x; frozen tag `echo.law-state-vector`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LawStateVector {
+pub r#schema_version: u32,
+pub r#nature: NatureReal,
+pub r#learned: Vec<LawLearnedCoordinate>,
+}
+impl super::WireMessage for LawStateVector {const NAME: &'static str = "LawStateVector";}
+/// ADR 0035 §4.1, §4.6 B6': no current-target amplitude comparison; frozen tag `echo.fast-basis-slot`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastBasisSlot {
+pub r#schema_version: u32,
+pub r#basis: FastBasisIdentity,
+pub r#current: LawStateVector,
+pub r#target: LawStateVector,
+}
+impl super::WireMessage for FastBasisSlot {const NAME: &'static str = "FastBasisSlot";}
+/// ADR 0035 §4.1, §4.4, §4.8, §9 P5-68(2); frozen tag `echo.fast-state-v3`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastStateSnapshotV3 {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#representation_version: String,
+pub r#anchor_time_ns: DecimalU64,
+pub r#nature: NatureVector,
+pub r#learned: Vec<LearnedComponent>,
+pub r#slots: Vec<FastBasisSlot>,
+pub r#law_version: ObjectRef,
+}
+impl super::WireMessage for FastStateSnapshotV3 {const NAME: &'static str = "FastStateSnapshotV3";}
+/// ADR 0035 §4.1-4.3, §4.7, §9 P5-68(3); frozen tag `echo.fast-effect-record`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastEffectRecord {
+pub r#schema_version: u32,
+pub r#basis: FastBasisIdentity,
+pub r#role: FastEffectRole,
+pub r#target: LawStateVector,
+pub r#theta_before: ObjectRef,
+pub r#effects_before: ObjectRef,
+pub r#interpretation_refs: Vec<ObjectRef>,
+pub r#governance_refs: Vec<ObjectRef>,
+pub r#law_version: ObjectRef,
+}
+impl super::WireMessage for FastEffectRecord {const NAME: &'static str = "FastEffectRecord";}
+/// ADR 0035 §4.8, §9 P5-68(4); H system record and L reference; frozen tag `echo.fast-state-migration`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FastStateMigrationRecord {
+pub r#schema_version: u32,
+pub r#previous_snapshot: ObjectRef,
+pub r#migrated_snapshot: ObjectRef,
+pub r#prior_decomposition_unknown: bool,
+}
+impl super::WireMessage for FastStateMigrationRecord {const NAME: &'static str = "FastStateMigrationRecord";}
+/// ADR 0035 §3.2, §3.6, §9 P5-68(1,4); ADR 0029 complete estimator; frozen tag `echo.theta-snapshot-v3`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaSnapshotV3 {
+pub r#schema_version: u32,
+pub r#revision: String,
+pub r#law_version: ObjectRef,
+pub r#values: ThetaValues,
+pub r#estimator: ThetaEstimatorState,
+pub r#parameters: ThetaEstimatorParametersV2,
+pub r#parameters_digest: HexBytes,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#prior_mass: f64,
+}
+impl super::WireMessage for ThetaSnapshotV3 {const NAME: &'static str = "ThetaSnapshotV3";}
+/// ADR 0035 §3.2/3.3, §9 P5-68(1); ADR 0029 parameters; frozen tag `echo.theta-estimator-parameters-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ThetaEstimatorParametersV2 {
+pub r#schema_version: u32,
+pub r#law_id: String,
+pub r#numerics_id: String,
+pub r#baseline_prior: NatureVector,
+pub r#gain_prior: NatureScale,
+pub r#sigma_prior: NatureScale,
+pub r#tau_prior_s: NatureScale,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#variance_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#duration_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#change_prior: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#change_prior_weight: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#change_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#gain_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#gain_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#recovery_min: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#recovery_max: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#detector_shift_sigma: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#detector_threshold: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#jump_notice: f64,
+pub r#drift_run: DecimalU64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#drift_margin: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#baseline_weight: f64,
+}
+impl super::WireMessage for ThetaEstimatorParametersV2 {const NAME: &'static str = "ThetaEstimatorParametersV2";}
 /// v2.0 §8 θ = (b, g, λ); frozen tag `echo.theta-values`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -3625,6 +4105,18 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "PersonRelation" => super::verify_typed::<PersonRelation>(value, limits),
 "VersionedEnvironmentV2" => super::verify_typed::<VersionedEnvironmentV2>(value, limits),
 "LineageHeaderV2" => super::verify_typed::<LineageHeaderV2>(value, limits),
+"CognitionBinding" => super::verify_typed::<CognitionBinding>(value, limits),
+"CognitiveMaterial" => super::verify_typed::<CognitiveMaterial>(value, limits),
+"CognitiveReturnedResult" => super::verify_typed::<CognitiveReturnedResult>(value, limits),
+"CognitiveInput" => super::verify_typed::<CognitiveInput>(value, limits),
+"CognitiveResultAndReceipt" => super::verify_typed::<CognitiveResultAndReceipt>(value, limits),
+"InternalActivityRecord" => super::verify_typed::<InternalActivityRecord>(value, limits),
+"ActivityState" => super::verify_typed::<ActivityState>(value, limits),
+"CognitiveInflightAction" => super::verify_typed::<CognitiveInflightAction>(value, limits),
+"CognitionState" => super::verify_typed::<CognitionState>(value, limits),
+"InternalActivityCommit" => super::verify_typed::<InternalActivityCommit>(value, limits),
+"CoreTransactionV3" => super::verify_typed::<CoreTransactionV3>(value, limits),
+"SystemMaintenanceRecord" => super::verify_typed::<SystemMaintenanceRecord>(value, limits),
 "EffectContract" => super::verify_typed::<EffectContract>(value, limits),
 "QualificationCertificate" => super::verify_typed::<QualificationCertificate>(value, limits),
 "ConsolidationSlice" => super::verify_typed::<ConsolidationSlice>(value, limits),
@@ -3664,6 +4156,15 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "EvidenceGroupV3" => super::verify_typed::<EvidenceGroupV3>(value, limits),
 "TendencyV3" => super::verify_typed::<TendencyV3>(value, limits),
 "RSnapshotV3" => super::verify_typed::<RSnapshotV3>(value, limits),
+"FastBasisIdentity" => super::verify_typed::<FastBasisIdentity>(value, limits),
+"LawLearnedCoordinate" => super::verify_typed::<LawLearnedCoordinate>(value, limits),
+"LawStateVector" => super::verify_typed::<LawStateVector>(value, limits),
+"FastBasisSlot" => super::verify_typed::<FastBasisSlot>(value, limits),
+"FastStateSnapshotV3" => super::verify_typed::<FastStateSnapshotV3>(value, limits),
+"FastEffectRecord" => super::verify_typed::<FastEffectRecord>(value, limits),
+"FastStateMigrationRecord" => super::verify_typed::<FastStateMigrationRecord>(value, limits),
+"ThetaSnapshotV3" => super::verify_typed::<ThetaSnapshotV3>(value, limits),
+"ThetaEstimatorParametersV2" => super::verify_typed::<ThetaEstimatorParametersV2>(value, limits),
 "ThetaValues" => super::verify_typed::<ThetaValues>(value, limits),
 "TendencyChange" => super::verify_typed::<TendencyChange>(value, limits),
 "ThetaChange" => super::verify_typed::<ThetaChange>(value, limits),

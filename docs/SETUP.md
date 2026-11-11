@@ -41,6 +41,7 @@ dotnet build executors/office-connector/OfficeConnector.csproj --configuration R
 ## Windows 自托管 runner（P0-05 第二部分）
 
 1. 确认仓库保持私有，只给 nemu 注册 runner，不注册组织级 runner。
+   > **状态更新（2026-11-11）：** 仓库已于 2026-10-26 公开，「确认仓库保持私有」不再适用。公开仓库的自托管 runner 规则见 PR #99（`.github/workflows/windows.yml`）：只有仓库所有者在本仓库分支 push、同仓非草稿 PR 或手动触发时才进入自托管作业。依据：[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 E10。
 2. GitHub 仓库 Settings → Actions → Runners → New self-hosted runner，选择 Windows x64。
 3. 在专用目录中下载页面给出的 runner 包，核对 SHA-256，再解压。不要使用正式 Nemu 数据目录。
 4. 运行页面提供的 config.cmd，URL 为本仓库，标签加 `nemu`；注册 token 只在本地使用，不保存进脚本、日志或仓库。

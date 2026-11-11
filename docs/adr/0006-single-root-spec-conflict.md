@@ -3,6 +3,8 @@
 Status: **PROPOSED — requires user approval; not an adopted architecture change**.
 Date: 2026-10-14. Task: P0-06 / W00-C01.
 
+> **状态更新（2026-11-11）：** 已被 [ADR 0009](0009-echo-core-v2-first-principles.md) 取代（ADR 0009 头部「取代：ADR 0006」；本文末「Status update — 2026-10-19」）：v2.0 没有单根、多根资格，W00-C01 随之消解。本文请求的决定未被采纳，全文作为历史保留。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 B1。
+
 ## Context
 
 Original files are identified by filename and hash in `docs/traceability/baseline.md`. Frozen Architecture (F) §§7,7.1,16.2,16.9 admits a tightly constrained single-root consolidation branch. Operators v1.0 (O) §§9,18 I20,19,20 C01 and System Plan (S) §17 prohibit a new nonzero θ update without more than one independent root. README §1 ranks frozen ontology above later explicit closures; the agent cannot determine whether this particular earlier clause was superseded by user intent. Both wordings occur in the DOCX originals.

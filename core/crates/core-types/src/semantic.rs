@@ -14,7 +14,11 @@ use crate::generated::{
 };
 use std::cmp::Ordering;
 
+mod cognition;
+mod law_state;
+pub use cognition::check_cognition_message;
 mod theta;
+pub use law_state::check_law_state_message;
 pub use theta::{
     THETA_NUMERICS_ID, check_theta_message, check_theta_snapshot_v2, theta_parameters_digest,
 };

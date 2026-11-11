@@ -106,18 +106,22 @@ pub(super) fn derive(old: &DynamicsState, event: &ReactionEvent, h: f64) -> Resu
         range_only: [false; 12],
     };
     for i in 0..4 {
-        let baseline = moment(
-            PreviousMoment {
-                prior_weight: law.baseline_weight,
-                prior: p(law.baseline_prior[i]),
-                sum: old.reaction_sum[i],
-                mass: old.weight,
-                current: b[i],
-            },
-            p(a[i]),
-            1.0,
-            rho,
-        );
+        let baseline = if let Some(mass) = old.prior_mass {
+            common_discount(mass, old, i, a[i], rho)
+        } else {
+            moment(
+                PreviousMoment {
+                    prior_weight: law.baseline_weight,
+                    prior: p(law.baseline_prior[i]),
+                    sum: old.reaction_sum[i],
+                    mass: old.weight,
+                    current: b[i],
+                },
+                p(a[i]),
+                1.0,
+                rho,
+            )
+        };
         result.set_single_event(i, baseline.map(|value| value.delta));
 
         result.range[4 + i] = checked((p(law.gain_max) - p(law.gain_min)).hi)?;
@@ -196,4 +200,23 @@ pub(super) fn derive(old: &DynamicsState, event: &ReactionEvent, h: f64) -> Resu
         result.set_single_event(8 + i, recovery_bound);
     }
     Ok(result)
+}
+
+/// ADR 0035 §3.4: no permanent-prior term. Every interval operation widens
+/// by an adjacent float, including zero/subnormal products and quotients (§3.2).
+fn common_discount(mass: f64, old: &DynamicsState, i: usize, a: f64, rho: f64) -> Result<Moment> {
+    let (mass, sum, weight, rho) = (p(mass), p(old.reaction_sum[i]), p(old.weight), p(rho));
+    let prior = p(old.law.baseline_prior[i]);
+    let current = p(core_types::semantic::nature(&old.values.baseline)[i]);
+    let defect = (mass * prior + sum) - current * (mass + weight);
+    let identity = (rho * defect + (p(a) - current)) / (rho * (mass + weight) + p(1.0));
+    // This graph follows the actual separately-rounded P', S', U' path.
+    let image =
+        ((rho * mass) * prior + (rho * sum + p(a))) / ((rho * mass) + (rho * weight + p(1.0)));
+    let error = (image - (current + identity)).abs();
+    let delta = (p(identity.abs()) + p(error)).hi.next_up();
+    if !image.valid() || !delta.is_finite() {
+        return Err(Fault::PrecisionExhausted);
+    }
+    Ok(Moment { image, delta })
 }

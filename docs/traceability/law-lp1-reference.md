@@ -2,6 +2,8 @@
 
 设计状态：提议；依据 [ADR 0019](../adr/0019-law-lp1-reference.md)。执行范围是新 Python 参考形式和合成实验，**不是 P5-23 Rust 验收报告**。所有结果见 [REPORT](../../reports/law-lp1-reference/REPORT.md)，原判据不改。
 
+> **状态更新（2026-11-11）：** [ADR 0019](../adr/0019-law-lp1-reference.md) 已采纳（PR #61，用户合并）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 C4。
+
 ## 性质与证据
 
 | 条款 / 编号 | 设计或实现位置 | 检查与边界 |
