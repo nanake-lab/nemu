@@ -16,6 +16,39 @@ from full_run import selected_version
 from prepare import binding, write
 
 
+def resolved_status(
+    row: dict[str, Any],
+    raw: dict[str, Any],
+    paired: dict[str, Any],
+    complete: bool,
+) -> dict[str, Any]:
+    result = dict(raw)
+    # Frozen interface exclusions remain distinct from a later run interruption.
+    if row["planned_status"] == "not_run":
+        result.update(status="not_run", reason=row["reason"])
+        return result
+    if row["layer"] == "DUT" and result.get("oracle_comparison"):
+        result["oracle_comparison"] = paired.get("status", "not_run")
+        if paired.get("status") == "failed":
+            result["status"] = "failed"
+            result["paired_differences"] = paired.get("differences", [])
+        elif paired.get("status") != "passed" and result["status"] != "failed":
+            result.update(
+                status="not_run",
+                reason="DUT prefixes retained; paired independent comparison incomplete",
+            )
+    if not complete and result["status"] == "passed":
+        result.update(status="not_run", reason="incomplete prefix coverage")
+    return result
+
+
+def sensitivity_status(registered: int, completed: int, detected: int) -> str:
+    # A detected witness does not discharge unexecuted frozen coverage.
+    if completed != registered:
+        return "not_run"
+    return "passed" if detected else "failed"
+
+
 def read_lines(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
 
@@ -44,21 +77,8 @@ def main() -> None:
             if raw_path.exists()
             else []
         )
-        complete = bool(prefixes) and prefixes[-1]["prefix"] == row["N"]
-        if row["layer"] == "DUT" and result.get("oracle_comparison"):
-            paired = results.get(i + 1, {})
-            result["oracle_comparison"] = paired.get("status", "not_run")
-            if paired.get("status") == "failed":
-                result["status"] = "failed"
-                result["paired_differences"] = paired.get("differences", [])
-            elif paired.get("status") != "passed":
-                result["status"] = "not_run"
-                result["reason"] = (
-                    "DUT prefixes retained; paired independent comparison incomplete"
-                )
-        if not complete and result["status"] == "passed":
-            result["status"] = "not_run"
-            result["reason"] = "incomplete prefix coverage"
+        complete = [v["prefix"] for v in prefixes] == list(range(row["N"] + 1))
+        result = resolved_status(row, result, results.get(i + 1, {}), complete)
         category = row["layer"] + "/" + row["family"]
         total = totals.setdefault(
             category,
@@ -83,6 +103,8 @@ def main() -> None:
             timing["replay_ns"] += prefix.get("replay_ns", 0)
             timing["timed_prefixes"] += int("incremental_ns" in prefix)
         group_key = "/".join((row["id"], row["layer"], row["version"]))
+        if isinstance(row["world"], dict) and "rho" in row["world"]:
+            group_key += "/rho=" + str(row["world"]["rho"])
         group = groups.setdefault(
             group_key,
             dict(
@@ -113,6 +135,7 @@ def main() -> None:
             row["family"] == "C"
             and row["layer"] == "independent_research"
             and row["id"] in ("07-04", "07-09")
+            and (row["id"] != "07-04" or row["branch"] == 0)
             and prefixes
         ):
             start = 65 if row["id"] == "07-04" else 1025
@@ -136,7 +159,7 @@ def main() -> None:
                     else None,
                     right_censored=not complete or entered > row["N"],
                     observed_through=n,
-                    scope="new permanent value -1/2; finite-perturbation paired branch separately retained",
+                    scope="permanent branch only; finite-perturbation paired traces retained separately",
                 )
             )
         resolved.append(
@@ -150,16 +173,17 @@ def main() -> None:
     sensitivity = {
         k: dict(
             v,
-            status="passed"
-            if v["detected"]
-            else "failed"
-            if v["completed"] == v["registered"]
-            else "not_run",
+            status=sensitivity_status(v["registered"], v["completed"], v["detected"]),
         )
         for k, v in measurements.items()
     }
     summary = dict(
         source_end=json.loads((args.run / "END.json").read_text(encoding="utf-8")),
+        operator_stop=json.loads(
+            (args.run / "OPERATOR-STOP.json").read_text(encoding="utf-8-sig")
+        )
+        if (args.run / "OPERATOR-STOP.json").exists()
+        else None,
         result_hash=binding(args.run / "results.jsonl"),
         planned_totals=json.loads(
             (args.prepared / "totals.json").read_text(encoding="utf-8")
@@ -171,6 +195,8 @@ def main() -> None:
         status_counts=dict(Counter(v["result"]["status"] for v in resolved)),
         limits=[
             "DUT success requires paired independent comparison",
+            "Row statuses are comparison results, not whole-item mechanism acceptance",
+            "Frozen not_run reasons restored from the pre-execution plan; raw results unchanged",
             "No subject-level statistical inference",
             "Sensitivity detected in a registered witness; untouched worlds need not all differ",
             "All complete positive trajectories and required sensitivity are necessary before signing an item passed",

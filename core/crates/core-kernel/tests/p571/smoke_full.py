@@ -22,9 +22,36 @@ from matrix_support import (
 from full_run import law_ref, request_for
 from materialize import expand
 from prepare import resources
+from summarize_full import resolved_status, sensitivity_status
+
+
+def summary_boundaries() -> None:
+    # Report-only fixtures guard interruption and frozen-exclusion denominators.
+    frozen = dict(planned_status="not_run", reason="无固定 ρ 公开入口", layer="DUT")
+    assert (
+        resolved_status(frozen, dict(status="not_run", reason="STOP"), {}, False)[
+            "reason"
+        ]
+        == frozen["reason"]
+    )
+    ready = dict(planned_status="ready", layer="DUT")
+    pending = dict(status="passed", oracle_comparison="pending")
+    assert resolved_status(ready, pending, {}, True)["status"] == "not_run"
+    assert (
+        resolved_status(ready, pending, dict(status="passed"), True)["status"]
+        == "passed"
+    )
+    assert (
+        resolved_status(ready, dict(pending, status="failed"), {}, False)["status"]
+        == "failed"
+    )
+    assert sensitivity_status(18, 1, 1) == "not_run"
+    assert sensitivity_status(18, 18, 9) == "passed"
+    assert sensitivity_status(18, 18, 0) == "failed"
 
 
 def main() -> None:
+    summary_boundaries()
     c, f, g = resources()
     alarm = dict(c, version="P5-71-v2-C-alarm", jump_notice_bits="0000000000000001")
     del alarm["jump_notice"]
