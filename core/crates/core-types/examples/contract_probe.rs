@@ -18,6 +18,20 @@ fn probe(schema: &Schema, request: &Value) -> Result<Value, String> {
     if request["op"] == "ingress" {
         return ingress_probe::check(request, limits);
     }
+    if request["op"] == "j_genesis" {
+        let name = request["name"].as_str().ok_or("genesis type")?;
+        let value = schema.normalize(name, &request["value"], limits, 0)?;
+        match name {
+            "GenesisManifestV2" => core_types::semantic::check_genesis(
+                &serde_json::from_value(value).map_err(|e| e.to_string())?,
+            )?,
+            "GenesisManifestV3" => core_types::semantic::check_genesis_v3(
+                &serde_json::from_value(value).map_err(|e| e.to_string())?,
+            )?,
+            _ => return Err("genesis type".into()),
+        }
+        return Ok(json!({"ok":true}));
+    }
     if request["op"] == "j_envelope" {
         core_types::semantic::check_j_envelope(
             &request["value"]["envelope"],

@@ -1,3 +1,4 @@
+import { checkGenesis } from '../../packages/contracts/src/generated/echo/genesis.js';
 // Test-only JSON-lines adapter, run with Node's TypeScript stripping.
 import { ingressProbe } from './ingress_probe.js';
 import { checkThetaMessage } from '../../packages/contracts/src/generated/echo/theta.js';
@@ -32,6 +33,11 @@ for await (const line of createInterface({ input: process.stdin })) {
     };
     if (q.op === 'ingress') {
       ingressProbe(q, q.limits);
+      console.log(JSON.stringify({ ok: true }));
+      continue;
+    }
+    if (q.op === 'j_genesis') {
+      checkGenesis(q.name, fromJson(q.name, q.value), q.limits);
       console.log(JSON.stringify({ ok: true }));
       continue;
     }

@@ -8,9 +8,9 @@
 use crate::contract::{Result, require};
 use crate::generated::{
     EvidenceAllocationV3, EvidenceGroupV2, EvidenceGroupV3, EvidenceSign, GenesisManifestV2,
-    LawParameters, NatureScale, NatureVector, PersonRelation, RelationKind, SituationMatchRecord,
-    Tendency, TendencyCandidateRecord, TendencyChange, TendencyV2, TendencyV3, ThetaSnapshot,
-    ThetaValues,
+    GenesisManifestV3, LawParameters, NatureScale, NatureVector, PersonRelation, RelationKind,
+    SituationMatchRecord, Tendency, TendencyCandidateRecord, TendencyChange, TendencyV2,
+    TendencyV3, ThetaSnapshot, ThetaValues,
 };
 use std::cmp::Ordering;
 
@@ -362,9 +362,32 @@ pub fn check_law_parameters(p: &LawParameters) -> Result<()> {
 
 /// Genesis values consistent with its own law version (v2.0 §3, §8, §13).
 pub fn check_genesis(g: &GenesisManifestV2) -> Result<()> {
-    let p = &g.law_version.parameters;
+    check_genesis_fields(
+        &g.law_version.parameters,
+        &g.initial_gain,
+        g.sigma0,
+        g.tau0_s,
+    )
+}
+
+/// V3 retains the same genesis rules; no retired proactivity reference is fabricated.
+pub fn check_genesis_v3(g: &GenesisManifestV3) -> Result<()> {
+    check_genesis_fields(
+        &g.law_version.parameters,
+        &g.initial_gain,
+        g.sigma0,
+        g.tau0_s,
+    )
+}
+
+fn check_genesis_fields(
+    p: &LawParameters,
+    initial_gain: &NatureScale,
+    sigma0: f64,
+    tau0_s: f64,
+) -> Result<()> {
     check_law_parameters(p)?;
-    let gain = scale(&g.initial_gain);
+    let gain = scale(initial_gain);
     require(
         gain.iter().all(|x| (p.g_min..=p.g_max).contains(x)),
         "initial gain outside [g_min, g_max]",
@@ -374,8 +397,8 @@ pub fn check_genesis(g: &GenesisManifestV2) -> Result<()> {
         gain[3] < gain[0] && gain[3] < gain[1] && gain[3] < gain[2],
         "achievement must have the weakest initial gain",
     )?;
-    require(g.sigma0 > 0.0, "sigma0 must be positive")?;
-    require(g.tau0_s > 0.0, "tau0 must be positive")
+    require(sigma0 > 0.0, "sigma0 must be positive")?;
+    require(tau0_s > 0.0, "tau0 must be positive")
 }
 
 #[cfg(test)]

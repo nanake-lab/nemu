@@ -241,6 +241,7 @@ pub fn check_j_resources(
         values.push(schema.normalize(name, value, limits, 0)?);
     }
     let (s, v, b, r, g) = (&values[0], &values[1], &values[2], &values[3], &values[4]);
+    super::check_genesis_v3(&serde_json::from_value(g.clone()).map_err(|e| e.to_string())?)?;
     let bound = |reference: &Value, name: &str, value: &Value| -> Result<()> {
         require(
             reference["object_type"] == schema.message(name)?.tag,

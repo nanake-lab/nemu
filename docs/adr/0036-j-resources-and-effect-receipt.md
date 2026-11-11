@@ -80,3 +80,17 @@ CONTRACTS §7 的线性参数仅表达当前 P5-12 接口；不是对 ADR0032 §
 
 选用显式资源和回执；继续用不透明 bytes 会使三语核验无法落地，修改旧类型会破坏冻结字节，均不采用。
 新增字段/标签需用户批准与独立交叉审查；编解码通过不等于正式资格、生产链路或真实行为通过。
+
+### B1 修正：保留创世语义的强制入口（2026-11-12）
+
+V3 退出主动资源引用不退出既有创世规则。Rust `check_genesis`（V2）与
+`check_genesis_v3` 共用纯字段检查，继续调用既有 `check_law_parameters`；
+Python `echo.genesis.check_genesis` 与 TypeScript `checkGenesis` 对 V2/V3 使用同一组规则，
+对应既有 Rust 规则（v2.0 §§3、8、13，及规律参数所引用条款），不增加阈值或部署值。
+三语言的 `check_j_resources` / `checkJResources` 无条件调用此检查，formal=false 也不能绕过。
+独立解码 V3 的消费者必须调用纯创世语义入口，再履行原有来源、签署与已提交状态义务。
+
+原 codec 与 `check_j_message` 的检查不能代替完整创世语义。已发布的 codec 黄金包含
+结构合法而创世语义不合法的样本，继续保留其原字节和编解码结果；不改黄金来掩盖 B1。
+新回归用例单独证明：合法对照通过，五个结构合法反例在重新绑定摘要后仍因既有语义拒绝。
+不拼造已退出的 proactivity_readout，不通过把 V3 转成 V2 来执行检查。

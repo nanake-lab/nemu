@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 from typing import Any
 
+from .genesis import check_genesis
 from .runtime import SCHEMA, Limits, digest, encode_canonical, fail, normalize
 
 NAMES = {
@@ -181,6 +182,7 @@ def check_j_resources(
     for name, value in pairs:
         check_j_message(name, value, limits)
     s, v, b, r, g = [normalize(n, x, limits) for n, x in pairs]
+    check_genesis("GenesisManifestV3", g, limits)
 
     def bound(ref: dict[str, Any], name: str, value: dict[str, Any]) -> None:
         fail(ref["object_type"] == SCHEMA["messages"][name]["tag"], "resource type")

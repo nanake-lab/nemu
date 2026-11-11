@@ -182,3 +182,13 @@ P5-12 roundtrip tests use only synthetic memory. Three-language restoration and
 cross-version refusal are migration prerequisites, not SYS17 or real carrier
 acceptance. See `docs/adr/0036-j-resources-and-effect-receipt.md` for field sources,
 old-signature handling, consumer obligations and rollback routes.
+
+### P5-42 inherited genesis semantics (B1)
+
+A decoded genesis additionally requires `semantic::check_genesis` (V2) or
+`semantic::check_genesis_v3` (V3) in Rust; `echo.genesis.check_genesis(name, value,
+limits)` in Python; `checkGenesis(name, value, limits)` in TypeScript.
+The V2/V3 paths share the existing law and genesis rules. Every resolved J-resource
+check calls the V3 check, including non-formal calls. Codec / `check_j_message`
+success alone is not full genesis validity. Published codec fixtures stay intact;
+`verify_j.py` separately tests one semantic control and five re-bound refusals.

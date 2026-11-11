@@ -1,5 +1,6 @@
 // ADR 0036: field consistency is not committed-state or calibration authority.
 import { normalize, digest, encodeCanonicalData, type Limits } from './runtime.js';
+import { checkGenesis } from './genesis.js';
 import { schema } from './schema.js';
 type Obj = Record<string, unknown>;
 const obj = (v: unknown): Obj => v as Obj;
@@ -167,6 +168,7 @@ export function checkJResources(
     b = normalize('BodyReadoutParameters', body, l),
     r = normalize('JEffectReceipt', receipt, l),
     g = normalize('GenesisManifestV3', genesis, l);
+  checkGenesis('GenesisManifestV3', g, l);
   const bound = (reference: unknown, name: string, value: Obj): void => {
     const ref = obj(reference);
     require(ref['object_type'] === schema.messages[name]!.tag, 'resource type');

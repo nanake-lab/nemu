@@ -46,16 +46,57 @@ def rebind(b: dict[str, Any]) -> None:
             use.update(direction=ds[0]["vector"], validation=vr)
 
 
+
+def resource_bundle(seed: int) -> dict[str, Any]:
+    """Semantic test inputs; leave published codec-only fixtures and bytes intact."""
+    b = bundle(seed)
+    g = b["genesis"]
+    g["law_version"]["parameters"].update(
+        n0=1.0, w_teach=1.0, w_max=2.0, v_u=0.5, r_min=0.0, r_max=2.0,
+        g_min=0.1, g_max=2.0, recovery_min_per_s=0.1, recovery_max_per_s=1.0,
+    )
+    g["initial_gain"].update(connection=1.0, empathy=1.0, curiosity=1.0, achievement=0.5)
+    g.update(sigma0=1.0, tau0_s=1.0)
+    rebind(b)
+    return b
+
+
+def genesis_cases() -> tuple[list[dict[str, Any]], list[str]]:
+    # A non-fixture declaration is only a structural test, never real qualification.
+    control = resource_bundle(0)
+    control["validation"]["fixture"] = False
+    rebind(control)
+    cases = [dict(op="j_resources", value=control, formal=True, limits=LIMITS)]
+    errors = [""]
+    for path, replacement, error in (
+        (("tau0_s",), 0.0, "tau0 must be positive"),
+        (("sigma0",), 0.0, "sigma0 must be positive"),
+        (("initial_gain", "achievement"), 2.0, "achievement must have the weakest initial gain"),
+        (("law_version", "parameters", "n0"), 0.0, "n0 must be positive"),
+        (("law_version", "parameters", "g_min"), 3.0, "g_min must not exceed g_max"),
+    ):
+        b = copy.deepcopy(control)
+        target = b["genesis"]
+        for key in path[:-1]:
+            target = target[key]
+        target[path[-1]] = replacement
+        rebind(b)
+        assert b["receipt"]["genesis"] == reference("GenesisManifestV3", b["genesis"])
+        cases.append(dict(op="j_resources", value=b, formal=True, limits=LIMITS))
+        errors.append(error)
+    return cases, errors
+
+
 def verify(
     commands: dict[str, list[str]],
     probe: Callable[[list[str], list[dict[str, Any]]], list[dict[str, Any]]],
     legal: list[dict[str, Any]],
 ) -> None:
     good = [
-        dict(op="j_resources", value=bundle(i), formal=False, limits=LIMITS)
+        dict(op="j_resources", value=resource_bundle(i), formal=False, limits=LIMITS)
         for i in range(3)
     ]
-    receipt = bundle(0)["receipt"]
+    receipt = resource_bundle(0)["receipt"]
     envelope = {
         k: receipt[k]
         for k in (
@@ -134,7 +175,7 @@ def verify(
     def reject(
         label: str, edit: Callable[[dict[str, Any]], None], bind: bool = False
     ) -> None:
-        b = copy.deepcopy(bundle(0))
+        b = copy.deepcopy(resource_bundle(0))
         edit(b)
         if bind:
             rebind(b)
@@ -181,7 +222,7 @@ def verify(
     )
     reject("missing-vector", lambda b: b["vectors"].pop())
     reject("body-version", lambda b: b["receipt"]["body"].update(version="wrong"))
-    fixture = dict(op="j_resources", value=bundle(0), formal=True, limits=LIMITS)
+    fixture = dict(op="j_resources", value=resource_bundle(0), formal=True, limits=LIMITS)
     bad.append(fixture)
     labels.append("fixture-not-formal")
     restores, restored, cross = [], [], []
@@ -200,7 +241,25 @@ def verify(
                 cross.append(
                     dict(op=op, name=other, hex=row["expected"][op], limits=LIMITS)
                 )
+    genesis, genesis_errors = genesis_cases()
+    direct = [dict(op="j_genesis", name="GenesisManifestV3", value=x["value"]["genesis"], limits=LIMITS) for x in genesis]
+    codec = [dict(x, op="encode") for x in direct]
+    mask_bad = []
+    for key, value in (("prefill_mask", 3), ("decode_mask", 2)):
+        q = copy.deepcopy(genesis[0])
+        q["value"]["direction_set"]["hook"][key] = value
+        rebind(q["value"])
+        mask_bad.append(q)
     for language, command in commands.items():
+        # All six remain codec-valid. Rejection must be inherited semantics, not bytes/hash.
+        assert all(x["ok"] for x in probe(command, codec)), (language, "genesis codec")
+        for requests in (direct, genesis):
+            results = probe(command, requests)
+            assert results[0] == {"ok": True}, (language, "genesis control")
+            for result, error in zip(results[1:], genesis_errors[1:], strict=True):
+                assert not result["ok"] and error in result["error"], (language, result, error)
+        assert all(not x["ok"] for x in probe(command, mask_bad)), (language, "formal masks")
+
         assert probe(command, [numeric_good])[0]["ok"], (language, "outward bound")
         assert not probe(command, [numeric_bad])[0]["ok"], (
             language,
@@ -231,6 +290,7 @@ def verify(
             language,
             "cross-version",
         )
+    print("P5-42 B1: genesis control + 5 rebound semantic refusals, direct/resource routes, codec preservation and formal mask controls PASS per language")
     print(
         f"P5-42: 3 resolved bundles, {len(bad)} resource refusals, 12 restores/12 reinterpretation refusals per language PASS; real carrier/SYS17 not_run"
     )
