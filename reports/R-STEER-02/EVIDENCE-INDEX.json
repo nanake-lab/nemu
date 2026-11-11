@@ -112,5 +112,90 @@
       "git_original_sha256": "62ccf8d1dc1a9f7b0abcb211313b283fdd974f3e70e163c0f2bbb094938ec627",
       "git_original_commit": "def135ee97f1ef846f500a9813c084af83bd33a4"
     }
+  },
+  "extension_v2_results": {
+    "status": "incomplete_HTTP520_frozen_stop",
+    "private_repository": "nanake-lab/nemu-evidence",
+    "private_commit": "163004543eceae497ed55e921f0acaeb0fb167d8",
+    "path": "R-STEER-02/extension-run-02",
+    "manifest": "R-STEER-02/extension-run-02/MANIFEST.json",
+    "manifest_sha256": "c14de573ac00594871eb782b04772b9c062287c4fb637185bb0aaf13abeb5ef4",
+    "files": 4163,
+    "remote_verified_utc": "2026-11-11T17:26:34.512910+00:00",
+    "all_committed_bytes_equal": true,
+    "openai_audit": {
+      "provider": "openai",
+      "slots": 954,
+      "attempts": 569,
+      "statuses": {
+        "valid": 567,
+        "invalid": 1,
+        "technical_failure": 1,
+        "not_run": 385
+      },
+      "invalid_reasons": {
+        "json_schema_or_quote": 1
+      },
+      "stop": "http_or_nonretryable_transport_error",
+      "upper_usd": 8.672365,
+      "peak_reserved_usd": 8.94025,
+      "maximum_inflight": 4,
+      "retry_wait_seconds": [],
+      "usage": {
+        "prompt_tokens": 1210104,
+        "completion_tokens": 1108207,
+        "total_tokens": 2318311
+      },
+      "seconds": 4078.640999999945,
+      "returned_fingerprints": [],
+      "request_ids_observed": 568,
+      "audit": "passed"
+    },
+    "deepseek_audit": {
+      "provider": "deepseek",
+      "slots": 120,
+      "attempts": 121,
+      "statuses": {
+        "valid": 112,
+        "invalid": 8
+      },
+      "invalid_reasons": {
+        "json_schema_or_quote": 6,
+        "length_empty_refusal_or_nonstop": 2
+      },
+      "stop": null,
+      "upper_usd": 1.070551464,
+      "peak_reserved_usd": 1.112980728,
+      "maximum_inflight": 4,
+      "retry_wait_seconds": [
+        30.006119
+      ],
+      "usage": {
+        "prompt_tokens": 237181,
+        "completion_tokens": 850966,
+        "total_tokens": 1088147,
+        "prompt_cache_hit_tokens": 199808,
+        "prompt_cache_miss_tokens": 37373
+      },
+      "seconds": 1273.530999999959,
+      "returned_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ],
+      "request_ids_observed": 0,
+      "audit": "passed"
+    },
+    "final_source_audit": {
+      "all_954_outputs_original": true,
+      "all_original_metadata_equal": true,
+      "shuffle_and_sample_reproduced": true,
+      "old_invalid_free_included": 99,
+      "C3_system_sha256": "a37fd7d835c07c48956cc4efa82fa38f4b1c649bff46f8cc7e6eb5695795fe92",
+      "frozen_manifest_still_equal": true,
+      "v1_summary_semantically_equal": true,
+      "v1_prereg_prefix_unchanged": true
+    },
+    "public_report": "reports/R-STEER-02/V2-REPORT.md",
+    "public_summary": "reports/R-STEER-02/V2-SUMMARY.json",
+    "public_tables": "reports/R-STEER-02/V2-RESULT-TABLES.md"
   }
 }
