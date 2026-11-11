@@ -2,6 +2,8 @@
 
 状态：实施提案，等待用户与独立审查；迁移范围已由用户在 2026-10-27 明确批准。任务 P5-35，基线 main `32a5888`。
 
+> **状态更新（2026-11-11）：** 已采纳——PR #110（P5-35）合并（AGENTS §6：needs-user PR 由用户合并，合并即批准）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 A9。
+
 ## 背景
 
 P5-01/P5-22 定义了业务消息，但没有连接认证、上传与 dispatch 配对。EventEnvelope 的 raw_log_position 和 ingest_time_ns 属于服务端，不能作为终端可提交字段。P5-34 已允许 V3 状态写入，并明确拒写旧 V2 head；物理 SQLite 格式仍是 1。
