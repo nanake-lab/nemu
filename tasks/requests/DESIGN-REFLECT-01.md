@@ -1,7 +1,7 @@
 # DESIGN-REFLECT-01：反思触发的重新评价
 
 - 来源：用户 2026-11-12（Australia/Perth）在本任务中的直接指派。
-- 状态：设计中；只交 ADR 提议，需用户决定与独立审查。
+- 状态：设计草案已交 [PR #169](https://github.com/nanake-lab/nemu/pull/169)；只交 ADR 提议，需用户决定与独立审查。
 - 分支：`task/DESIGN-REFLECT-01-reappraisal`。
 - 目录：新增本请求、`docs/adr/0037-reflection-triggered-reappraisal.md`、`reports/DESIGN-REFLECT-01/`；仅追加 `docs/traceability/diff-register.md` 的候选差异。
 - 编号预占：ADR 0037；V2-152 至 V2-155。开工已核对 origin/main `02372ff6` 与开放 PR #45、#111、#116、#144、#154、#160、#164；#164 使用 ADR 0036 / V2-151，其余无更高占用。
