@@ -26,4 +26,5 @@
 ## 别处的阅读顺序
 
 - 想直接读规格原文时，从 [`docs/echo-core/README.md`](../echo-core/README.md) 第 5 节的顺序开始。
+  > **状态更新（2026-11-11）：** echo-core README 第 5 节已于 2026-11-11 改为分级读法，以 [echo-core-work 技能](../../.agents/skills/echo-core-work/SKILL.md) 第 1 节为准（echo-core README 文末「追加（2026-11-11）：阅读范围」）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 E9。
 - 每个决定为什么这样定、走过哪些弯路、当时的心情，记在 [开发手记](../journal/README.md)。

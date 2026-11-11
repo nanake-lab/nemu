@@ -108,6 +108,8 @@ pnpm experiment:core        # 实验谱系：在合成世界里跑 v2.0 第 14 �
 pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 ```
 
+> **状态更新（2026-11-11）：** 上面代码块 `echoctl` 一行注释「birth 只由用户在 N3 执行」：里程碑已于 2026-10-26 重排，N3（诞生）现为 E4（PR #93，[tasks/README.md](tasks/README.md) 第 5 节），读作「只由用户在 E4 执行」。依据：[清点报告](reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 F1。
+
 这些命令在 P0-01 里建立骨架，由各卡补齐。如果某张任务卡需要新的命令，把它加进根目录的 `package.json`（或 `core/` 的 Cargo 别名），并在报告里说明。
 
 ## 5. 代码规范
