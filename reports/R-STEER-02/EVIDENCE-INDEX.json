@@ -3,7 +3,7 @@
   "commit": "a44cbc04749f49e9c0de417c520a0c2189113511",
   "branch": "evidence/R-STEER-02-prereg",
   "date_perth": "2026-11-11",
-  "status": "execution_authorized_blocked_missing_process_deepseek_key",
+  "status": "execution_prepared_private_pushed_verified",
   "generation": "not_run",
   "scoring": "not_run",
   "api_calls": {
@@ -40,5 +40,15 @@
     ],
     "new_paid_calls": 0,
     "new_paid_cost_usd": 0
+  },
+  "execution_package": {
+    "commit": "c6f22054d350d21fb0adbfaa59096b97ce251b43",
+    "manifest": {
+      "path": "R-STEER-02/execution-01/MANIFEST.json",
+      "sha256": "5c4fcddba2c802b81bc379fead4e0f59dd7bffd70c849a25e367f09bb8a90e64",
+      "bytes": 627423
+    },
+    "file_count": 3087,
+    "verification": "Remote branch HEAD equals local commit; every manifest file SHA equals committed blob and local bytes; no paid calls yet"
   }
 }
