@@ -232,14 +232,15 @@ jobs:
         if: steps.scope.outputs.storage == 'true'
         working-directory: core
         run: |
+          . ./../tools/scaffold/windows-evidence-text.ps1
           $evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
           New-Item -ItemType Directory -Path $evidence -Force | Out-Null
           "NEMU_W02_EVIDENCE=$evidence" >> $env:GITHUB_ENV
-          rustup show 2>&1 | Tee-Object (Join-Path $evidence 'toolchain.log')
+          rustup show 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'toolchain.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          cargo clippy -p core-store --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')
+          cargo clippy -p core-store --all-targets --locked -- -D warnings 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'clippy.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          cargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
+          cargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'tests.log')
           exit $LASTEXITCODE
       # Retry only the upload: W02 logs stay in the same run-specific directory.
       # The final gate below is mandatory; exhausted retries must still fail CI.
@@ -303,6 +304,7 @@ jobs:
         if: steps.scope.outputs.gateway == 'true'
         working-directory: core
         run: |
+          . ./../tools/scaffold/windows-evidence-text.ps1
           $env:CARGO_HOME = 'D:\Dev\cache\cargo'
           $env:CARGO_TARGET_DIR = 'D:\Dev\cache\cargo-target\ci-gateway'
           $env:TEMP = 'D:\Dev\cache\tmp\gateway-ci'
@@ -311,9 +313,9 @@ jobs:
           New-Item -ItemType Directory -Path $evidence -Force | Out-Null
           "NEMU_W18_EVIDENCE=$evidence" >> $env:GITHUB_ENV
           $env:NEMU_W18_EVIDENCE_DIR = $evidence
-          cargo clippy -p gateway --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')
+          cargo clippy -p gateway --all-targets --locked -- -D warnings 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'clippy.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          cargo test -p gateway --locked -- --test-threads=1 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
+          cargo test -p gateway --locked -- --test-threads=1 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'tests.log')
           exit $LASTEXITCODE
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always() && env.NEMU_W18_EVIDENCE != ''
