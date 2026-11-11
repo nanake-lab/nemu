@@ -50,7 +50,7 @@ class Bridge:
         assert self.p.wait()==0
 
 
-def peak_bytes():
+def peak_bytes(pid=None):
     # Windows process-owned working-set high water, no background process list.
     class Counters(ctypes.Structure):
         _fields_=[('cb',ctypes.c_ulong),('PageFaultCount',ctypes.c_ulong)]+[(k,ctypes.c_size_t) for k in
@@ -60,7 +60,15 @@ def peak_bytes():
     kernel=ctypes.windll.kernel32; kernel.GetCurrentProcess.restype=ctypes.c_void_p
     get=ctypes.windll.psapi.GetProcessMemoryInfo
     get.argtypes=[ctypes.c_void_p,ctypes.c_void_p,ctypes.c_ulong]
-    if not get(kernel.GetCurrentProcess(),ctypes.byref(counters),counters.cb): raise ctypes.WinError()
+    kernel.OpenProcess.argtypes=[ctypes.c_ulong,ctypes.c_int,ctypes.c_ulong]
+    kernel.OpenProcess.restype=ctypes.c_void_p
+    kernel.CloseHandle.argtypes=[ctypes.c_void_p]
+    handle=kernel.GetCurrentProcess() if pid is None else kernel.OpenProcess(0x410,False,pid)
+    if not handle: raise ctypes.WinError()
+    try:
+        if not get(handle,ctypes.byref(counters),counters.cb): raise ctypes.WinError()
+    finally:
+        if pid is not None: kernel.CloseHandle(handle)
     return counters.PeakWorkingSetSize
 
 
@@ -143,6 +151,7 @@ def main():
                 else: response=dut_f
                 summaries.append(run(case,resources[family],bridge,response['rows'],args.output/(case['id']+'-independent.json')))
             write(args.output/'primitive-cache.json',{f'{name}:{bits_}':bits(v) for (name,bits_),v in bridge.cache.items()})
+            bridge_peak=peak_bytes(bridge.p.pid)
         finally: bridge.close()
     elapsed=time.perf_counter_ns()-start
     totals=json.loads((args.prepared/'plan-summary.json').read_text(encoding='utf-8'))
@@ -166,6 +175,7 @@ def main():
     projected=sum(estimates.values())
     write(args.output/'SUMMARY.json',dict(purpose='cost_only',manifest=binding(args.prepared/'RUN-MANIFEST.json'),
         rows=summaries,wall_seconds=elapsed/1e9,python_peak_working_set_bytes=peak_bytes(),
+        bridge_peak_working_set_bytes=bridge_peak,
         primitive_cache_misses=bridge.primitive_misses,rates_ns_per_replayed_operation=rates,
         estimated_seconds_by_layer=estimates,projected_seconds_known_components=projected,
         gate='stop_over_4h' if projected>14400 else 'within_4h_known_components_only',
