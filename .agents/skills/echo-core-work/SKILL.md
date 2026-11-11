@@ -9,14 +9,25 @@ description: 做 Echo Core 相关任务（P5、P6 的卡，任何改动 core/、
 
 任何会改动 `core/`、`workers/`、`executors/`，或会改变终端与核心之间消息的任务。
 
-## 1. 先读什么
+## 1. 先读什么（分级阅读，2026-11-11 用户决定）
 
-1. `docs/echo-core/echo-core-v2.0-first-principles.md`：v2.0 核心规格全文。它在优先级的最前面；旧规格只有它第 15 节列为「保留」的部分继续有效。
-2. `docs/adr/0008` 至 `0011`：数学澄清、采用 v2.0、v1.0 的范围与谱系、网络生活。
-3. `docs/echo-core/README.md`：优先级、Nemu 集成扩展登记（E1–E14）及其 2026-10-19 追加。
-4. `docs/adr/0005-rehearsal-and-birth.md` 及其追加：分阶段启用、谱系、诞生。
-5. 任务卡「必读」列出的章节，读原文，不要只读摘要。
-6. `docs/traceability/`：差异登记（V2-01 以后是 v2.0 的取代关系与读法）、已经实现的条款和对应测试，避免重复或冲突。
+AGENTS.md 开头指向本节，所以每张卡开工都按本节读，不只是 Echo Core 的卡。只读当前任务需要的内容；读到的每一处都读原文，不要只读摘要。
+
+**所有卡：**
+
+1. `AGENTS.md`。
+2. 任务卡本身。
+3. 卡上「必读」「来源」列出的原文章节。
+4. 规格中被这张卡或它引用的 ADR 直接引用的章节。
+5. 差异登记 `docs/traceability/diff-register.md`：按卡里出现的编号（`V2-NN`、`COG-NN` 等）检索，不整份读。同一编号的后续追加行可能改了它的状态，检索时看全部命中行，例如 `Select-String -Path docs/traceability/diff-register.md -Pattern 'V2-05\b'`。
+
+**另外，按卡的类型：**
+
+- **设计卡、改规格或契约的 ADR、预注册研究：** 通读 v2.0 规格全文 `docs/echo-core/echo-core-v2.0-first-principles.md`。
+- **Echo Core 相关的普通实现卡**（改动 `core/`、`workers/`、`executors/` 的卡）：读 v2.0 规格的目录（`Select-String -Path docs/echo-core/echo-core-v2.0-first-principles.md -Pattern '^#'`），按需读与本卡相关的章节。
+- 其他卡：不另加。
+
+**按需查找（不是必读）：** v2.0 规格在优先级最前面，旧规格只有它第 15 节列为「保留」的部分继续有效；`docs/echo-core/README.md`：优先级与 Nemu 集成扩展登记（E1–E14）；`docs/adr/0005`、`0008` 至 `0011`：分阶段启用与诞生、数学澄清、采用 v2.0、v1.0 的范围与谱系、网络生活；`docs/ARCHITECTURE.md`、`docs/CONTRACTS.md`：按目录找与本卡相关的章节；`docs/traceability/<任务号>.md`：已经实现的条款和对应测试，避免重复或冲突。
 
 规格有歧义时，不要选一个「看起来合理」的解释直接实现。在 `docs/traceability/diff-register.md` 追加一条，然后实现最保守的解释，并在报告的「待用户确认（阻塞）」里列出。最保守的解释是：拒绝、隔离，或不把它算作证据。
 

@@ -1,6 +1,6 @@
 # AGENTS.md — Nemu 3D 桌面伙伴
 
-本文件是 Codex、Antigravity 与 Claude 三个执行者共用的项目规则。开始任何任务之前，先完整读完本文件、`docs/ARCHITECTURE.md`、`docs/CONTRACTS.md` 和 `docs/echo-core/README.md`。做 Echo Core 相关的卡（P5、P6）前，还要按 `docs/echo-core/README.md` 第 5 节读规格原文。
+本文件是 Codex、Antigravity 与 Claude 三个执行者共用的项目规则。开始任何任务之前，先完整读完本文件，再按 `.agents/skills/echo-core-work/SKILL.md` 第 1 节的分级读法，读与本卡相关的章节（2026-11-11 用户决定）。做 Echo Core 相关的卡（P5、P6）前，按上述 SKILL.md 第 1 节读规格。
 
 ## 1. 项目一句话
 
