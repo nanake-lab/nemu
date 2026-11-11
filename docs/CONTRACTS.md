@@ -360,6 +360,8 @@ interface PerformanceSentence {
 
 `ttsStyle` 只是一个键。各 TTS 供应商自己决定怎样体现它：本地 Qwen3-TTS Base 模型按 `voice.json` 选用这种语言、这种语气的参考音频；支持文字指令的云端 TTS 按 `voice.json` 的指令表生成指令。
 
+> **状态更新（2026-11-11）：** 有效性说明：「本地 Qwen3-TTS Base 模型」已由 [ADR 0027](adr/0027-voice-model-breeze-target-gsv-interim.md) 取代——目标声音模型 Breeze TTS 2，过渡 GPT-SoVITS V5。依据：[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.2 节、第 3 节 E1。
+
 ### 3.4 给模型的说明
 
 表演标记的说明是协议 p 的一部分（`content/nemu/core/protocol/`），由 P6-01 的协议构建器生成。可用的 `act` 列表从动作清单的「可表演」槽位生成，不手写。
@@ -410,6 +412,8 @@ interface AppBusEvent<T extends string, P> {
 | `metrics.latency` | `{ utteranceKey; marks: LatencyMarks }` |
 | `stage.ready`、`stage.hit`、`stage.drag`、`stage.frameStats`、`stage.error` | 同第 2 节，由主进程从控制通道转发 |
 
+> **状态更新（2026-11-11）：** 有效性说明：表中 `desktop.observation` 的标题读取不再先经 T1 授权，已由 [ADR 0025](adr/0025-desktop-perception-and-history.md) §§3、6 与 V2-75 取代：窗口标题默认可读、用户可按类别收窄，敏感应用排除名单默认开启（名单内不读标题）；后继契约与迁移由 P6-19 接续，见 [DOC-PRESETS-01 索引](traceability/DOC-PRESETS-01.md)对应行。依据：[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.2 节、第 3 节 E1。
+
 ```ts
 type DndState = 'none' | 'fullscreen' | 'presentation' | 'busy' | 'meeting' | 'quietHours';
 type ToolTier = 'T0' | 'T1' | 'T2' | 'T3';
@@ -450,6 +454,8 @@ interface LatencyMarks {
 | `execution_result` | `speech_delivery` | `action_id`、`output_id`、`delivered_chunks`、`played_chars`、`status`（DELIVERED、PARTIAL、CANCELLED、UNKNOWN_DELIVERY） | system_record |
 | `execution_result` | `body_action` | `action_id`、`status`、`detail?` | system_record |
 | `maintenance` | `terminal` | `kind`（started、stopping、mode_switched、clock_epoch）、`detail` | system_record |
+
+> **状态更新（2026-11-11）：** 有效性说明：表中 `desktop` 观察的「`title?`（需要 T1 授权）」已由 [ADR 0025](adr/0025-desktop-perception-and-history.md) §§3、6 与 V2-75 取代：窗口标题默认可读、用户可按类别收窄，敏感应用排除名单默认开启（名单内不读标题）；后继契约与迁移由 P6-19 接续，见 [DOC-PRESETS-01 索引](traceability/DOC-PRESETS-01.md)对应行。依据：[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.2 节、第 3 节 E1。
 
 高频几何信息（窗口矩形、平台、光标插入点、拖拽过程中的坐标）只在终端内部使用，不作为事件发给核心。
 
@@ -541,6 +547,8 @@ interface ExemplarBank {
   "provider": "codex-app-server", "budgets": { "autonomousPerDay": 30 } }
 ```
 
+> **状态更新（2026-11-11）：** 有效性说明：`budgets.autonomousPerDay: 30` 已由 [ADR 0033](adr/0033-helper-fuses-cursor-evidence.md) §2 取代——每日 30 次不再作为行为上限，改为防失控保险丝，总量上限数值待 E2 实测后另行批准；旧值不能当作新保险丝的已校准值。依据：[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.2 节、第 3 节 E1。
+
 模型名以 Codex 当前提供的为准，由 P0-08 核对后写入。
 
 ### 5.4 语音供应商接口
@@ -578,6 +586,8 @@ interface AsrSession {
 | T2 | 可撤销的写入（在光标处插入、写单元格、新建文件、助手在临时工作目录里的修改） | 默认每次确认，用户可以设为「信任」 |
 | T3 | 不可撤销或对外的操作（删除、发送、执行命令、改系统设置、联网提交） | 每次都弹审批卡，不能设为信任 |
 
+> **状态更新（2026-11-11）：** 有效性说明：T1 一行里的「窗口标题」已由 [ADR 0025](adr/0025-desktop-perception-and-history.md) §§3、6 与 V2-75 取代：窗口标题默认可读、用户可按类别收窄，敏感应用排除名单默认开启（名单内不读标题）；后继契约与迁移由 P6-19 接续，见 [DOC-PRESETS-01 索引](traceability/DOC-PRESETS-01.md)对应行。依据：[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.2 节、第 3 节 E1。
+
 - 社交消息适用 ADR 0011：`social.message` 默认 T2，可设为信任；承诺 u* 的事 `social.commit` 一律 T3，不能设为信任。判定不了是否承诺时按 T3。其余对外发送仍按 T3，不借此降低其他连接器权限。网络生活只在诞生后启用，发出前检查与执行属于 P6-14/P6-15。
 - 连接器暴露的操作默认按 T2 处理；T3 不能降级。
 - I26：`action_payload` 是将要执行的原样载荷字节，`payload_digest = SHA256(action_payload)`（32 字节）；面板按执行器声明的载荷格式无损展示内容，不能仅显示模型摘要。`title`、`detail` 由闸门按载荷确定性生成。决定回传摘要，闸门核对请求、决定与实际执行载荷一致，否则拒绝；超时、错误 approval_id、T3 的 allowAlways 也拒绝。身份、一次性与凭证绑定由 P5-05 实现。载荷验证不返回可用于另一个数组的裸 boolean：`validateApproval` 在 await 前复制请求、决定与实际字节，散列后拒绝输入变化，返回一次性的校验快照。执行器经 `consume(nowNs, execute)` 接收同一快照中的不可变载荷十六进制字符串及绑定；闸门供给消费时刻以重查有效期。过期、执行抛错或一次消费后均不可复用；调用者之后修改原数组不改变已验证载荷。这不是身份认证或执行凭证，P5-05 仍须完成它们。
@@ -599,6 +609,7 @@ interface BodyReadoutV2 {
 ```
 
 - 三项是四个天性通道（联结、共情、好奇、成事）的固定线性组合后截断。参数来自 genesis，运行中不学习；计算属于 P5-12，本卡不按外观选择系数。
+  > **状态更新（2026-11-11）：** 有效性说明：「参数来自 genesis，运行中不学习」已由 [ADR 0032](adr/0032-presets-as-starting-points.md) §8 取代——预设反应保留，反应强弱与是否发生受她调控，经历可以改变，固定映射不是终态。依据：[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.2 节、第 3 节 E1。
 - m = 0（F 尚未接通或结构故障）时，输出 (0.5, 0, 0.5)；同一输入与版本得到相同输出。
 - 没有表情基线；细致表情和手势来自第 3 节表演提示。
 - 核心每次提交后推送一次；空闲时按时间投影每 10 秒最多一次。终端只应用，不保存、不累积；读出只影响动画，不影响说话内容、行动选择或权限。
@@ -622,6 +633,8 @@ interface ProactivityBoundaries {
 
 默认最小间隔 180 秒、每小时说话 2 次、安静当天预算系数 0.5、自主助手每日 30 次（沿用本文件 5.3 的 helpers 预算）。当前仓库还没有 config/helpers.json；该文件由其所属卡创建时必须与此值一致。冷却表先为空，不从旧触发规则推断每类行动的新冷却；共用最小间隔与预算照常生效。允许的身体种类沿用 BodyActionKind 的 motion、goTo、sit、sleep、wake、peek、gaze。
 
+> **状态更新（2026-11-11）：** 有效性说明：180 秒、每小时 2 次、安静当天系数 0.5 是待迁移的旧值，主动不设机会强度函数（V2-117），这些值不是新保险丝的已批准数值；「自主助手每日 30 次」已由 [ADR 0033](adr/0033-helper-fuses-cursor-evidence.md) §2 改为防失控保险丝。现行读法见 [DOC-PRESETS-01 索引](traceability/DOC-PRESETS-01.md)「R01–R03」。依据：[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.2 节、第 3 节 E1。
+
 - 勿扰不为 none 或处于安静时段时，所有主动说话候选拒绝；权限、模式、预算、最小间隔门控仍由运行时执行，不交给模型。
 - 最小间隔内的候选拒绝，不推迟到间隔末尾。
 - 原 helper_done 归助手任务后续（P6-06），说出口时仍受门控；codex_needs_you 产生一次立即主动时机，仍受全部门控（P5-20）；其余七条触发规则删除，由她的主动产生行为。拖拽导致离开睡眠属于物理状态转换（P3-04）。
@@ -636,6 +649,8 @@ interface ProactivityBoundaries {
 - **第 8 节 机会规则：** 改为主动边界表，只写允许的行动种类、冷却、门控与预算，不写「什么情况做什么」（v2.0 第 9.4 节，V2-06）。
 - **4.1、4.3：** 运行状态的显示增加情绪与成长；新增通知 `notice`、查询种类 `growth`、成长的暂停与恢复；审批请求带行动载荷的摘要（I26）。
 - **5.3、第 6 节：** 新增网络生活的社交行动种类，让你承担的事一律按 T3 审批（ADR 0011）。
+
+> **状态更新（2026-11-11）：** 有效性说明：P5-22 已由 PR #57 合并（契约 v2.2），本节与下一节一样作为历史授权依据保留。依据：[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.2 节。
 
 ## 追加（2026-10-22）：P5-22 兼容与迁移说明
 

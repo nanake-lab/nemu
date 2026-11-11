@@ -14,7 +14,9 @@ use crate::generated::{
 };
 use std::cmp::Ordering;
 
+mod cognition;
 mod law_state;
+pub use cognition::check_cognition_message;
 mod theta;
 pub use law_state::check_law_state_message;
 pub use theta::{
