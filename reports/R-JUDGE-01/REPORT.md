@@ -1,17 +1,63 @@
-# R-JUDGE-01 — OpenAI 第二盲评员校准方案
+重档：冻结方案获用户批准后执行的收费模型校准；本报告不授权后继实验。
 
-本轮只冻结方案：用一个OpenAI模型对已有合成材料独立评分，检查复述状态漏判和invalid是否重现。尚未评分，尚未校准通过；本轮仅查询 /v1/models。
+# R-JUDGE-01 — OpenAI 第二盲评员校准结果
 
-选择 gpt-6.1-terra、high、16384 completion tokens，最多4在途、每次180秒、累计主动90分钟，费用硬线US$25。477条历史用量换算情景约US$15.62，但全部用满输出的保守预留约US$50.72，不能保证25美元跑完；逐次预留，到线停止，未跑项保留原分母。
+## 结果
 
-- [冻结方案](PREREG-01.md)：模型、材料、盲法、终点、重发和停止规则。
-- [证据索引](EVIDENCE-INDEX.json)：私有来源、477份离线请求模板、模型列表查询证据、预算核算。
-- [核价摘要](SOURCES.md)：2026-11-11官方来源。
+执行和分析完成：gpt-6.1-terra / high 按冻结队列完成477项，全部有效。J v1、J v2各144条的meta及四概念T向量与原人工真值均100%一致，12个分区×语言门全部通过。状态为`numeric_gate_pass_needs_user`；用户审查原件与固定样本前，不宣布正式校准完成。
 
-编号核对：开工前fetch；origin/main、本地/远端分支、GitHub issue/PR搜索未见R-JUDGE-01已认领。搜索返回的PR #116是R-LIFE-01，不构成该号认领。本卡PR #161，分支task/R-JUDGE-01-openai-calibration，从74f7bcaf41ec45bb31063fc079eeeae49927ac82创建独立工作树。
+这批材料的错误并非评分口径必然导致，但不能单凭本次差异归因于模型：J v1输出上限不同、C2旧口径不同，且J真值中的共情/好奇只有absent。没有继续R-STEER-01后继实验，没有更换模型择优、改prompt重评或改变阈值。
 
-范围仅reports/R-JUDGE-01/与私有R-JUDGE-01/。R-STEER-01来源固定私有提交933c8509bbe7954ddb35f2fa1cae03c7d0475d9c，公开说明参考其分支7977e4148b1233e6103b389ba21e1cd12ee42c4f；未改其文件，也未改核心、契约、规律、正式资源或cards.json。
+## 主要结果
 
-验证：477份离线模板及JSON解析、prompt字符串对照、来源/模板SHA绑定、git diff --check与本次Markdown相对链接检查。全工作区测试、Windows/GPU及评分API均not_run；新增运行时依赖零。离线准备曾因Windows默认GBK读取UTF-8失败，改为按原始UTF-8字节解析后完成；未触碰源字节。
+| 队列 | 本次有效 | meta真值正确 | 四概念T向量全对 | 旧DeepSeek有效 |
+| --- | --- | --- | --- | --- |
+| J v1 | 144/144 | 144/144 | 144/144 | 120/144 |
+| J v2 | 144/144 | 144/144 | 144/144 | 142/144 |
+| C2去重并集 | 189/189 | 无完整C3人工真值，不计算 | 不计算 | 17/189 |
 
-待用户确认（阻塞执行）：审查方案，尤其C2旧口径与J v1输出上限的可比性限制、预算可能提前停止、模型固定ID的公开snapshot粒度。保持draft/needs-user，写「请审查方案」后停止，不合并、不领取下一卡。
+J各版本正类72/72、负类72/72；每分区每语正负各12/12、T向量24/24。J v1修正1项旧有效meta假阳性，24项旧length本次有效；J v2的2项旧schema/quote失败本次有效。C2固定20和旧invalid172本次分别20/20、172/172有效，重叠3项。详细配对互斥分类、共享字段、校准门与限制见[RESULTS-01](RESULTS-01.md)及[汇总JSON](RESULTS-SUMMARY.json)。invalid按原分母处理，本次为0。
+
+## 运行、预算与身份
+
+固定gpt-6.1-terra、high、16384 completion tokens、最多4在途、每次180秒；[原方案](PREREG-01.md)和[执行授权](EXECUTION-01.md)未改。正式调用前代码/分析器分别绑定公开5983031af3059644456dddf3f02209892087ef13、私有c6f333041261b02e193366e62372e53d29c05600，并已推送核对远端。只有冻结后的这一轮评分。
+
+482次POST对应477项；4项发生共5次合规网络重发，等待30.146813–30.173948秒。完整响应无重发，最终无invalid/technical_failure/not_run。主动时间3260.719秒（54.35分钟），最大并发4，无停止规则触发。所有完整响应model/tier均gpt-6.1-terra/default；返回fingerprint为空，无法用指纹进一步验证服务实现版本。同名官方Snapshot的身份粒度仍见[SOURCES](SOURCES.md)。
+
+最终费用保守上界US$7.8088825，运行中预留峰值US$8.1648075，均低于23.75软线及25硬上限；不是账户实付账单。完整响应累计input 1,010,498、completion 875,509 tokens（含推理）；未知请求和成功重发的整额预留未冲销。2026-11-11 14:07:29 UTC再次核对[官方价格页](https://developers.openai.com/api/docs/pricing)：Standard输入1/输出5美元每百万；账本输入仍保守按2.50，输出5。价格与/v1/models原始证据私有保存。运行发生在用户提示的2026-11-21额度到期之前。
+
+## 交付与证据
+
+- [RESULTS-INDEX](RESULTS-INDEX.json)：本次原始响应、失败、账本、分析、审计及代码的私有提交和逐文件SHA。
+- [EXECUTION-INDEX](EXECUTION-INDEX.json)：运行前代码、分析器、500项冻结清单与离线检查。
+- [EVIDENCE-INDEX](EVIDENCE-INDEX.json)：原方案、477请求模板和来源绑定，保持历史版本。
+- 私有analysis-01包含全部477逐项结果、两版J固定20、C2固定20/旧invalid172、全部新invalid（空）和83个字面/跨度审查候选；没有把这些原文放进主仓。
+
+编号在开工前已核对未占用；本卡PR #161，task/R-JUDGE-01-openai-calibration。材料仍固定私有933c8509bbe7954ddb35f2fa1cae03c7d0475d9c；本任务未改R-STEER-01任何来源文件。公开范围仅reports/R-JUDGE-01，私有范围仅R-JUDGE-01。运行后远端私有main出现其他任务的追加文件，普通push被拒绝；确认R-JUDGE-01无远端改动后merge同步，不强推、不修改其文件、不把新J v3纳入本次分析。之后GitHub邮箱隐私检查拒绝push；仅在仓库本地配置已认证账户的noreply身份，保留未发布提交备份并重建尚未发布的结果提交，逐字节证据树不变。最终私有提交c4b3723886a2908a8a552a45fb165223233d41a6已核对远端一致。
+
+## 验收
+
+| 检查 | 结果 | 证据 |
+| --- | --- | --- |
+| 最小运行器离线测试 | 11通过；不调用评分API | EXECUTION-INDEX，tests-02.log |
+| Python strict mypy / Ruff | 8文件通过；首次类型/格式失败日志保留 | mypy-01/02、ruff-01/02 |
+| 冻结和来源SHA | 500冻结文件、1160来源文件未变 | audit-01.json |
+| 逐请求字节、账本、usage、并发、重发时距 | 通过 | audit-01.json及ledger.jsonl |
+| 冻结分析器 | 收集后一次运行成功，12门通过 | analysis-01/summary.json、analysis-01.log |
+| 隐私 | 新证据未发现进程key回显；仅环境读取；公开只有汇总/索引 | 本次机械扫描；入口代码 |
+| 文档/JSON/索引/远端 | 发布时检查相对链接、JSON、SHA、git diff --check及两仓远端 | RESULTS-INDEX、提交记录 |
+| 全工作区/Windows/GPU测试 | not_run，本次未改产品代码 | 不构成产品端到端验收 |
+
+新增运行时依赖零，Python标准库实现。事后机械审计/报告提取脚本单独存放，不替换冻结分析器。summary.run.formal_analysis保留收集时not_run快照；离线分析完成状态见顶层status与analysis-01.log。
+
+## 待用户确认
+
+- [ ] （阻塞正式校准认定）审查原始响应、两版固定样本及83项字面/跨度候选；认可上述覆盖范围与可比性限制。C2没有新人工真值，不将事后判断补成既定真值。
+
+## 后续建议（不在本任务范围内）
+
+共情/好奇正负类覆盖及新的独立最终检验需另行冻结方案；本卡不追加材料、不消费剩余额度。
+
+## 下一步
+
+结果推送后在PR写「请审查」，停下；保持draft/needs-user，不合并、不继续评分或领取下一卡。
