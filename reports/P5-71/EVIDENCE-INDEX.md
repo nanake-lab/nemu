@@ -1,5 +1,20 @@
 # P5-71 证据索引
 
+## 正式执行 full-run-01（中断，部分结果）
+
+私有证据提交 [`f7f473a2c40cbdc04c69e2a24fbb790e80e64cad`](https://github.com/nanake-lab/nemu-evidence/tree/f7f473a2c40cbdc04c69e2a24fbb790e80e64cad/P5-71/20261111-full-v2-run01)，分支 `evidence/P5-71-probe`。原始执行代码 `8205b16fb3e5cbcda49165684b6620db89b036d9`；运行后只读汇总修正 `0bf0c92210d0d7ef69561bcee04e32be6045c000`。
+
+[逐文件索引 EVIDENCE-INDEX-full.csv](EVIDENCE-INDEX-full.csv) 共 620 行：601 个原始归档条目加 19 个归档/补充文件。每行记录私有路径、归档内路径、SHA-256、字节数、证据提交、代码绑定、ID 和状态。原始轨迹的状态来自只读覆盖校正，不修改原 results.jsonl；变异 failed 不表示所选规律失败，详见 REPORT。历史工具日志保留原过程，不把后来的代码提交强加给更早日志。
+
+原始条目 1,022,697,525 字节，无损压缩为 210,638,104 字节；按编号拼接四片 `evidence.tar.gz.part000`…`part003`，完整 SHA-256 为 `7dce1d6e13e9b131ba48e5f8d1461708025eb8954095d878f46311f2cdd67702`。各片 SHA/长度见 ARCHIVE.json；FILES.json 与 VERIFICATION.jsonl 记录 601/601 条流式解包哈希验证。最大原始文件超过 100 MB，因此保留原字节并分片归档，不截断轨迹。
+
+执行源码/二进制已先于运行后汇总改动保全；29 份源码、Cargo.lock 与二进制匹配运行清单，toolchain 文件匹配执行提交。另存源代码缺陷摘录、STOP/END、原始结果、全部已刷盘前缀、99 个未缩减首差异、输入/资源/原语、工具失败与最终验证日志。supplement 包含执行顺序审计、额外基线路径成本核对及汇总边界检查；正式矩阵没有重跑。
+
+当前结果是工具故障后的部分执行，不是整卡通过。既定接口/接线缺口与中断剩余项分别保留 not_run；真实体验未运行。
+
+## 原成本探针（历史，不替代正式矩阵）
+
+
 私有仓库 `nanake-lab/nemu-evidence`，提交 [`707bee9dfc656626b617f1df6822b4cf20712c49`](https://github.com/nanake-lab/nemu-evidence/tree/707bee9dfc656626b617f1df6822b4cf20712c49/P5-71/20261111-probe-v2)，分支 `evidence/P5-71-probe`。
 
 正式成本探针代码 `bdd52e9fdb0d9dee7a908bcd6b4555d54a21eac4`；预注册 `e58542622da8a33a17d12f26dd42a5b4e699a5cc`。旧清单各自记录对应代码。DUT/独立研究的六条探针是成本证据，全量 E07/E09/交互为 not_run。
