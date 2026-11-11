@@ -15,6 +15,8 @@ use crate::generated::{
 use std::cmp::Ordering;
 
 mod cognition;
+mod j_resources;
+pub use j_resources::{JResolvedResources, check_j_envelope, check_j_message, check_j_resources};
 mod law_state;
 pub use cognition::check_cognition_message;
 mod theta;

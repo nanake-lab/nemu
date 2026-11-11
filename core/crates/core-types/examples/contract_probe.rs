@@ -18,6 +18,30 @@ fn probe(schema: &Schema, request: &Value) -> Result<Value, String> {
     if request["op"] == "ingress" {
         return ingress_probe::check(request, limits);
     }
+    if request["op"] == "j_envelope" {
+        core_types::semantic::check_j_envelope(
+            &request["value"]["envelope"],
+            &request["value"]["receipt"],
+            limits,
+        )?;
+        return Ok(json!({"ok":true}));
+    }
+    if request["op"] == "j_resources" {
+        let v = &request["value"];
+        core_types::semantic::check_j_resources(
+            core_types::semantic::JResolvedResources {
+                direction_set: &v["direction_set"],
+                validation: &v["validation"],
+                body: &v["body"],
+                receipt: &v["receipt"],
+                genesis: &v["genesis"],
+                vectors: v["vectors"].as_array().ok_or("vectors")?,
+            },
+            request["formal"].as_bool().ok_or("formal")?,
+            limits,
+        )?;
+        return Ok(json!({"ok":true}));
+    }
     let name = request["name"].as_str().ok_or("name")?;
     let value = match request["op"].as_str().ok_or("op")? {
         "encode" => schema.normalize(name, &request["value"], limits, 0)?,
@@ -39,6 +63,7 @@ fn probe(schema: &Schema, request: &Value) -> Result<Value, String> {
     core_types::semantic::check_theta_message(name, &value, limits)?;
     core_types::semantic::check_law_state_message(name, &value, limits)?;
     core_types::semantic::check_cognition_message(name, &value, limits)?;
+    core_types::semantic::check_j_message(name, &value, limits)?;
     Ok(
         json!({"ok":true,"value":value,"canonical":hex(&schema.encode_canonical(name,&value,limits)?),
         "protobuf":hex(&schema.encode_protobuf(name,&value,limits)?),"digest":schema.digest(name,&value,limits)?}),
