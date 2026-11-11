@@ -1,0 +1,161 @@
+{
+  "status": "C3_measurement_insufficient_stop",
+  "gates": [
+    {
+      "partition": "development",
+      "lang": "zh",
+      "n": 24,
+      "sensitivity_count": 12,
+      "positive_n": 12,
+      "specificity_count": 12,
+      "negative_n": 12,
+      "t_exact_count": 24,
+      "valid_count": 24,
+      "pass": true
+    },
+    {
+      "partition": "development",
+      "lang": "en",
+      "n": 24,
+      "sensitivity_count": 12,
+      "positive_n": 12,
+      "specificity_count": 12,
+      "negative_n": 12,
+      "t_exact_count": 24,
+      "valid_count": 24,
+      "pass": true
+    },
+    {
+      "partition": "development",
+      "lang": "ja",
+      "n": 24,
+      "sensitivity_count": 12,
+      "positive_n": 12,
+      "specificity_count": 12,
+      "negative_n": 12,
+      "t_exact_count": 24,
+      "valid_count": 24,
+      "pass": true
+    },
+    {
+      "partition": "check",
+      "lang": "zh",
+      "n": 24,
+      "sensitivity_count": 12,
+      "positive_n": 12,
+      "specificity_count": 12,
+      "negative_n": 12,
+      "t_exact_count": 24,
+      "valid_count": 24,
+      "inventory_absence_correct": 4,
+      "long_positive_correct": 2,
+      "long_negative_correct": 2,
+      "pass": true
+    },
+    {
+      "partition": "check",
+      "lang": "en",
+      "n": 24,
+      "sensitivity_count": 11,
+      "positive_n": 12,
+      "specificity_count": 12,
+      "negative_n": 12,
+      "t_exact_count": 23,
+      "valid_count": 23,
+      "inventory_absence_correct": 3,
+      "long_positive_correct": 2,
+      "long_negative_correct": 2,
+      "pass": false
+    },
+    {
+      "partition": "check",
+      "lang": "ja",
+      "n": 24,
+      "sensitivity_count": 12,
+      "positive_n": 12,
+      "specificity_count": 12,
+      "negative_n": 12,
+      "t_exact_count": 24,
+      "valid_count": 24,
+      "inventory_absence_correct": 4,
+      "long_positive_correct": 2,
+      "long_negative_correct": 2,
+      "pass": true
+    }
+  ],
+  "user_approval": "pending",
+  "cost_upper_nano_usd": 2689045548,
+  "complete_invalid_rescored": false,
+  "stage2_plus": "not_run",
+  "result": "C3_measurement_insufficient_stop",
+  "logical_items": 144,
+  "valid": 143,
+  "invalid": 1,
+  "missing_or_invalid": 1,
+  "complete_response_finish_reasons": {
+    "stop": 144
+  },
+  "selected_response_models": {
+    "deepseek-flash": 144
+  },
+  "max_completion_tokens": 15579,
+  "invalid_details": [
+    {
+      "id": "jv3-04-3-en",
+      "partition": "check",
+      "lang": "en",
+      "category": "absence",
+      "truth_meta": true,
+      "finish_reason": "stop",
+      "completion_tokens": 6190,
+      "status": "invalid",
+      "error_class": "ValueError",
+      "error": "Evidence is absent from allowed text",
+      "selected_attempt": 1,
+      "retry_allowed": false
+    }
+  ],
+  "attempts": 145,
+  "network_unknown_attempts": 1,
+  "successful_retry_attempts": 1,
+  "settled_original_attempts": 143,
+  "new_upper_nano_usd": 930193812,
+  "prior_upper_nano_usd": 1758851736,
+  "cumulative_upper_nano_usd": 2689045548,
+  "max_reserved_inflight": 4,
+  "max_ledger_upper_nano_usd": 2756143212,
+  "active_seconds": 1149.125,
+  "cumulative_active_seconds": 3367.140000000014,
+  "fixed20_valid": 20,
+  "valid_meta_mismatch": 0,
+  "valid_T_mismatch": 0,
+  "invalid_denominator_retained": true,
+  "audit_required": 45,
+  "nonhit_strata": [
+    {
+      "low": 0,
+      "high": 32,
+      "eligible": 28,
+      "sampled": 10
+    },
+    {
+      "low": 33,
+      "high": 64,
+      "eligible": 0,
+      "sampled": 0
+    },
+    {
+      "low": 65,
+      "high": 96,
+      "eligible": 0,
+      "sampled": 0
+    }
+  ],
+  "meta_T_span_overlap_items": 0,
+  "literal_hit_meta_no_valid": 44,
+  "truth_positive_no_literal_or_state_hit": 0,
+  "user_result_approval": "pending",
+  "last_calibration": true,
+  "on_failure": "stop_C3_with_this_judge_user_redesign_no_further_J_versions",
+  "calibration_distribution_limit": "Repeated category templates and padding; authored calibration does not establish accuracy on real generated outputs."
+}
