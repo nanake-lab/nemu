@@ -12,6 +12,9 @@ LIMITS = dict(max_bytes=1048576, max_items=4096, max_depth=32)
 
 
 def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
+    from fixture_j import NAMES as J_NAMES, sample_j
+    if name in J_NAMES:
+        return sample_j(name, seed)
     from fixture_cognition import NAMES as COG_NAMES, sample_cognition
     if name in COG_NAMES:
         return sample_cognition(name, seed)
@@ -444,6 +447,7 @@ def targeted_legal_p5_22() -> list[dict[str, Any]]:
 
 
 def targeted_illegal() -> list[dict[str, Any]]:
+    from fixture_j import illegal_j
     from fixture_cognition import illegal_cognition
     import copy
     import struct
@@ -551,4 +555,5 @@ def targeted_illegal() -> list[dict[str, Any]]:
         + illegal_law_state()
         + illegal_touch()
         + illegal_cognition()
+        + illegal_j()
     )

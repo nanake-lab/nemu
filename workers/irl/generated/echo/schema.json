@@ -3466,6 +3466,792 @@
         "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
       }
     },
+    "JHookBinding": {
+      "tag": "echo.j-hook-binding",
+      "source": "O 13.1-13.2; ADR 0036",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "model",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tokenizer",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "layer_index",
+          "type": "uint32",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "residual_stage",
+          "type": "JResidualStage",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "layer_kind",
+          "type": "JLayerKind",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "width",
+          "type": "uint32",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "dtype",
+          "type": "JActivationDtype",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "prefill_mask",
+          "type": "JPrefillMask",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "decode_mask",
+          "type": "JDecodeMask",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {}
+    },
+    "JDirectionVector": {
+      "tag": "echo.j-direction-vector",
+      "source": "v2.0 9.1; ADR 0036",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "values",
+          "type": "double",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {}
+    },
+    "JDirection": {
+      "tag": "echo.j-direction",
+      "source": "v2.0 9.1-9.2; ADR 0036",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "JDirectionKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "concept",
+          "type": "ConceptRef",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "vector",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "beta",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {}
+    },
+    "JDirectionSet": {
+      "tag": "echo.j-direction-set",
+      "source": "v2.0 9.1-9.2,16; ADR 0036",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "hook",
+          "type": "JHookBinding",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "directions",
+          "type": "JDirection",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {}
+    },
+    "JValidatedDirection": {
+      "tag": "echo.j-validated-direction",
+      "source": "v2.0 9.6,16; ADR 0036",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "vector",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "max_beta",
+          "type": "double",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "measured_norm",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "norm_tolerance",
+          "type": "double",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "zh_evidence",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "en_evidence",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "ja_evidence",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {}
+    },
+    "JDirectionValidation": {
+      "tag": "echo.j-direction-validation",
+      "source": "v2.0 9.1,9.6,16; ADR 0036",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "direction_set",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "fixture",
+          "type": "bool",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "directions",
+          "type": "JValidatedDirection",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "combination_max_beta",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "combination_evidence",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {}
+    },
+    "BodyReadoutParameters": {
+      "tag": "echo.body-readout-parameters",
+      "source": "CONTRACTS 7; v2.0 9.3; ADR 0036",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "facing",
+          "type": "NatureReal",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tension",
+          "type": "NatureReal",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "energy",
+          "type": "NatureReal",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {}
+    },
+    "JDirectionUse": {
+      "tag": "echo.j-direction-use",
+      "source": "P5-12 NumericReceipt; ADR 0036",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "JDirectionKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tendency_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "status",
+          "type": "JDirectionStatus",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "direction",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "validation",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "beta",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "coefficient",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {}
+    },
+    "JEffectReceipt": {
+      "tag": "echo.j-effect-receipt",
+      "source": "O 13.2; ADR 0008 3; ADR 0036",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "snapshot_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "anchor_time_ns",
+          "type": "uint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "projected_at_ns",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "x_digest",
+          "type": "bytes",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "r_digest",
+          "type": "bytes",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "theta_digest",
+          "type": "bytes",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "model",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tokenizer",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "direction_set",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "validation",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "body_parameters",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "genesis",
+          "type": "ObjectRef",
+          "number": 14,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "mode",
+          "type": "JCompilationMode",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "directions",
+          "type": "JDirectionUse",
+          "number": 16,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "total_bound",
+          "type": "double",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "body",
+          "type": "BodyReadoutV2",
+          "number": 18,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {}
+    },
+    "GenesisManifestV3": {
+      "tag": "echo.genesis-v3",
+      "source": "V2-117; ADR 0036 migration",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "law_version",
+          "type": "LawVersion",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "nature_structure",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "initial_gain",
+          "type": "NatureScale",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "initial_baseline",
+          "type": "NatureVector",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "sigma0",
+          "type": "double",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "tau0_s",
+          "type": "double",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "attachment_prior",
+          "type": "double",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 0.0
+        },
+        {
+          "name": "caretaker_id",
+          "type": "string",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "carrier",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "direction_set",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "direction_validation",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "body_readout",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "fuses",
+          "type": "FuseConfig",
+          "number": 15,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "boundaries",
+          "type": "ObjectRef",
+          "number": 16,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "protocol",
+          "type": "ObjectRef",
+          "number": 17,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "j_resources.proto",
+      "rules": {},
+      "retains": "GenesisManifestV2",
+      "reserved": [
+        14
+      ]
+    },
     "EvidenceAllocation": {
       "tag": "echo.evidence-allocation",
       "source": "v2.0 §5.2 S_{c,k}, weight factors, shares; LP2, I25",
@@ -13299,6 +14085,55 @@
       "COUNTEREVIDENCE": 2,
       "RESOLVES_TRIAL": 3,
       "EVIDENCE_UNKNOWN": 4
+    },
+    "JResidualStage": {
+      "J_RESIDUAL_UNSPECIFIED": 0,
+      "J_BLOCK_RESIDUAL_OUTPUT": 1,
+      "J_MIXER_RESIDUAL_BEFORE_FFN_NORM": 2
+    },
+    "JLayerKind": {
+      "J_LAYER_UNSPECIFIED": 0,
+      "J_ATTENTION_LAYER": 1,
+      "J_RECURRENT_LAYER": 2,
+      "J_HYBRID_LAYER": 3
+    },
+    "JActivationDtype": {
+      "J_DTYPE_UNSPECIFIED": 0,
+      "J_FLOAT32": 1,
+      "J_FLOAT16": 2,
+      "J_BFLOAT16": 3,
+      "J_FLOAT64": 4
+    },
+    "JPrefillMask": {
+      "J_PREFILL_UNSPECIFIED": 0,
+      "J_PREFILL_LAST": 1,
+      "J_PREFILL_ALL": 2,
+      "J_PREFILL_NONE": 3
+    },
+    "JDecodeMask": {
+      "J_DECODE_UNSPECIFIED": 0,
+      "J_DECODE_ALL": 1,
+      "J_DECODE_NONE": 2
+    },
+    "JDirectionKind": {
+      "J_DIRECTION_UNSPECIFIED": 0,
+      "J_CONNECTION": 1,
+      "J_EMPATHY": 2,
+      "J_CURIOSITY": 3,
+      "J_ACHIEVEMENT": 4,
+      "J_LEARNED": 5
+    },
+    "JDirectionStatus": {
+      "J_STATUS_UNSPECIFIED": 0,
+      "J_INCLUDED": 1,
+      "J_UNVALIDATED": 2,
+      "J_MISSING": 3,
+      "J_VALIDATION_MISMATCH": 4
+    },
+    "JCompilationMode": {
+      "J_MODE_UNSPECIFIED": 0,
+      "J_CONNECTED": 1,
+      "J_REHEARSAL_WITHOUT_FAST": 2
     },
     "EvidenceSign": {
       "SIGN_UNSPECIFIED": 0,

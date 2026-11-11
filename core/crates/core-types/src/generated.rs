@@ -569,6 +569,152 @@ impl EvidenceRelation {
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
+pub enum JResidualStage {
+    J_BLOCK_RESIDUAL_OUTPUT = 1,
+    J_MIXER_RESIDUAL_BEFORE_FFN_NORM = 2,
+}
+impl TryFrom<u32> for JResidualStage { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::J_BLOCK_RESIDUAL_OUTPUT),
+2 => Ok(Self::J_MIXER_RESIDUAL_BEFORE_FFN_NORM),
+_ => Err("unknown enum".into()), }}}
+impl From<JResidualStage> for u32 {fn from(v:JResidualStage)->Self{v as u32}}
+impl JResidualStage {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum JLayerKind {
+    J_ATTENTION_LAYER = 1,
+    J_RECURRENT_LAYER = 2,
+    J_HYBRID_LAYER = 3,
+}
+impl TryFrom<u32> for JLayerKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::J_ATTENTION_LAYER),
+2 => Ok(Self::J_RECURRENT_LAYER),
+3 => Ok(Self::J_HYBRID_LAYER),
+_ => Err("unknown enum".into()), }}}
+impl From<JLayerKind> for u32 {fn from(v:JLayerKind)->Self{v as u32}}
+impl JLayerKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum JActivationDtype {
+    J_FLOAT32 = 1,
+    J_FLOAT16 = 2,
+    J_BFLOAT16 = 3,
+    J_FLOAT64 = 4,
+}
+impl TryFrom<u32> for JActivationDtype { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::J_FLOAT32),
+2 => Ok(Self::J_FLOAT16),
+3 => Ok(Self::J_BFLOAT16),
+4 => Ok(Self::J_FLOAT64),
+_ => Err("unknown enum".into()), }}}
+impl From<JActivationDtype> for u32 {fn from(v:JActivationDtype)->Self{v as u32}}
+impl JActivationDtype {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum JPrefillMask {
+    J_PREFILL_LAST = 1,
+    J_PREFILL_ALL = 2,
+    J_PREFILL_NONE = 3,
+}
+impl TryFrom<u32> for JPrefillMask { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::J_PREFILL_LAST),
+2 => Ok(Self::J_PREFILL_ALL),
+3 => Ok(Self::J_PREFILL_NONE),
+_ => Err("unknown enum".into()), }}}
+impl From<JPrefillMask> for u32 {fn from(v:JPrefillMask)->Self{v as u32}}
+impl JPrefillMask {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum JDecodeMask {
+    J_DECODE_ALL = 1,
+    J_DECODE_NONE = 2,
+}
+impl TryFrom<u32> for JDecodeMask { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::J_DECODE_ALL),
+2 => Ok(Self::J_DECODE_NONE),
+_ => Err("unknown enum".into()), }}}
+impl From<JDecodeMask> for u32 {fn from(v:JDecodeMask)->Self{v as u32}}
+impl JDecodeMask {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum JDirectionKind {
+    J_CONNECTION = 1,
+    J_EMPATHY = 2,
+    J_CURIOSITY = 3,
+    J_ACHIEVEMENT = 4,
+    J_LEARNED = 5,
+}
+impl TryFrom<u32> for JDirectionKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::J_CONNECTION),
+2 => Ok(Self::J_EMPATHY),
+3 => Ok(Self::J_CURIOSITY),
+4 => Ok(Self::J_ACHIEVEMENT),
+5 => Ok(Self::J_LEARNED),
+_ => Err("unknown enum".into()), }}}
+impl From<JDirectionKind> for u32 {fn from(v:JDirectionKind)->Self{v as u32}}
+impl JDirectionKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum JDirectionStatus {
+    J_INCLUDED = 1,
+    J_UNVALIDATED = 2,
+    J_MISSING = 3,
+    J_VALIDATION_MISMATCH = 4,
+}
+impl TryFrom<u32> for JDirectionStatus { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::J_INCLUDED),
+2 => Ok(Self::J_UNVALIDATED),
+3 => Ok(Self::J_MISSING),
+4 => Ok(Self::J_VALIDATION_MISMATCH),
+_ => Err("unknown enum".into()), }}}
+impl From<JDirectionStatus> for u32 {fn from(v:JDirectionStatus)->Self{v as u32}}
+impl JDirectionStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum JCompilationMode {
+    J_CONNECTED = 1,
+    J_REHEARSAL_WITHOUT_FAST = 2,
+}
+impl TryFrom<u32> for JCompilationMode { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::J_CONNECTED),
+2 => Ok(Self::J_REHEARSAL_WITHOUT_FAST),
+_ => Err("unknown enum".into()), }}}
+impl From<JCompilationMode> for u32 {fn from(v:JCompilationMode)->Self{v as u32}}
+impl JCompilationMode {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
 pub enum EvidenceSign {
     SIGN_NEGATIVE = 1,
     SIGN_POSITIVE = 2,
@@ -2078,6 +2224,171 @@ pub r#source_trace_revision: String,
 pub r#source_coupling_revision: String,
 }
 impl super::WireMessage for ThetaModuleSourceBinding {const NAME: &'static str = "ThetaModuleSourceBinding"; const SUPERSEDED: bool = true;}
+/// O 13.1-13.2; ADR 0036; frozen tag `echo.j-hook-binding`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct JHookBinding {
+pub r#schema_version: u32,
+pub r#carrier: ObjectRef,
+pub r#model: ObjectRef,
+pub r#tokenizer: ObjectRef,
+pub r#layer_index: u32,
+pub r#residual_stage: JResidualStage,
+pub r#layer_kind: JLayerKind,
+pub r#width: u32,
+pub r#dtype: JActivationDtype,
+pub r#prefill_mask: JPrefillMask,
+pub r#decode_mask: JDecodeMask,
+}
+impl super::WireMessage for JHookBinding {const NAME: &'static str = "JHookBinding";}
+/// v2.0 9.1; ADR 0036; frozen tag `echo.j-direction-vector`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct JDirectionVector {
+pub r#schema_version: u32,
+pub r#version: String,
+#[serde(serialize_with = "super::scalar::finite_vec")]
+pub r#values: Vec<f64>,
+}
+impl super::WireMessage for JDirectionVector {const NAME: &'static str = "JDirectionVector";}
+/// v2.0 9.1-9.2; ADR 0036; frozen tag `echo.j-direction`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct JDirection {
+pub r#schema_version: u32,
+pub r#kind: JDirectionKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#tendency_id: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#concept: Option<ConceptRef>,
+pub r#vector: ObjectRef,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#beta: f64,
+}
+impl super::WireMessage for JDirection {const NAME: &'static str = "JDirection";}
+/// v2.0 9.1-9.2,16; ADR 0036; frozen tag `echo.j-direction-set`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct JDirectionSet {
+pub r#schema_version: u32,
+pub r#version: String,
+pub r#hook: JHookBinding,
+pub r#directions: Vec<JDirection>,
+}
+impl super::WireMessage for JDirectionSet {const NAME: &'static str = "JDirectionSet";}
+/// v2.0 9.6,16; ADR 0036; frozen tag `echo.j-validated-direction`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct JValidatedDirection {
+pub r#schema_version: u32,
+pub r#vector: ObjectRef,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#max_beta: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#measured_norm: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#norm_tolerance: f64,
+pub r#zh_evidence: ObjectRef,
+pub r#en_evidence: ObjectRef,
+pub r#ja_evidence: ObjectRef,
+}
+impl super::WireMessage for JValidatedDirection {const NAME: &'static str = "JValidatedDirection";}
+/// v2.0 9.1,9.6,16; ADR 0036; frozen tag `echo.j-direction-validation`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct JDirectionValidation {
+pub r#schema_version: u32,
+pub r#version: String,
+pub r#direction_set: ObjectRef,
+pub r#fixture: bool,
+pub r#directions: Vec<JValidatedDirection>,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#combination_max_beta: f64,
+pub r#combination_evidence: ObjectRef,
+}
+impl super::WireMessage for JDirectionValidation {const NAME: &'static str = "JDirectionValidation";}
+/// CONTRACTS 7; v2.0 9.3; ADR 0036; frozen tag `echo.body-readout-parameters`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct BodyReadoutParameters {
+pub r#schema_version: u32,
+pub r#version: String,
+pub r#facing: NatureReal,
+pub r#tension: NatureReal,
+pub r#energy: NatureReal,
+}
+impl super::WireMessage for BodyReadoutParameters {const NAME: &'static str = "BodyReadoutParameters";}
+/// P5-12 NumericReceipt; ADR 0036; frozen tag `echo.j-direction-use`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct JDirectionUse {
+pub r#schema_version: u32,
+pub r#kind: JDirectionKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#tendency_id: Option<String>,
+pub r#status: JDirectionStatus,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#direction: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#validation: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#beta: Option<f64>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#coefficient: Option<f64>,
+}
+impl super::WireMessage for JDirectionUse {const NAME: &'static str = "JDirectionUse";}
+/// O 13.2; ADR 0008 3; ADR 0036; frozen tag `echo.j-effect-receipt`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct JEffectReceipt {
+pub r#schema_version: u32,
+pub r#snapshot_id: String,
+pub r#anchor_time_ns: DecimalU64,
+pub r#projected_at_ns: DecimalU64,
+pub r#x_digest: HexBytes,
+pub r#r_digest: HexBytes,
+pub r#theta_digest: HexBytes,
+pub r#carrier: ObjectRef,
+pub r#model: ObjectRef,
+pub r#tokenizer: ObjectRef,
+pub r#direction_set: ObjectRef,
+pub r#validation: ObjectRef,
+pub r#body_parameters: ObjectRef,
+pub r#genesis: ObjectRef,
+pub r#mode: JCompilationMode,
+pub r#directions: Vec<JDirectionUse>,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#total_bound: f64,
+pub r#body: BodyReadoutV2,
+}
+impl super::WireMessage for JEffectReceipt {const NAME: &'static str = "JEffectReceipt";}
+/// V2-117; ADR 0036 migration; frozen tag `echo.genesis-v3`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct GenesisManifestV3 {
+pub r#schema_version: u32,
+pub r#law_version: LawVersion,
+pub r#nature_structure: String,
+pub r#initial_gain: NatureScale,
+pub r#initial_baseline: NatureVector,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#sigma0: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#tau0_s: f64,
+#[serde(serialize_with = "super::scalar::finite")]
+pub r#attachment_prior: f64,
+pub r#caretaker_id: String,
+pub r#carrier: ObjectRef,
+pub r#direction_set: ObjectRef,
+pub r#direction_validation: ObjectRef,
+pub r#body_readout: ObjectRef,
+pub r#fuses: FuseConfig,
+pub r#boundaries: ObjectRef,
+pub r#protocol: ObjectRef,
+}
+impl super::WireMessage for GenesisManifestV3 {const NAME: &'static str = "GenesisManifestV3";}
 /// v2.0 §5.2 S_{c,k}, weight factors, shares; LP2, I25; frozen tag `echo.evidence-allocation`. Superseded (successor EvidenceAllocationV2): P5-32; ADR 0016: adds the ordinal, μ and p_c that G needs to replay a tendency
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -4138,6 +4449,16 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "EffectiveCausalProjection" => super::verify_typed::<EffectiveCausalProjection>(value, limits),
 "ConsolidationBinding" => super::verify_typed::<ConsolidationBinding>(value, limits),
 "ThetaModuleSourceBinding" => super::verify_typed::<ThetaModuleSourceBinding>(value, limits),
+"JHookBinding" => super::verify_typed::<JHookBinding>(value, limits),
+"JDirectionVector" => super::verify_typed::<JDirectionVector>(value, limits),
+"JDirection" => super::verify_typed::<JDirection>(value, limits),
+"JDirectionSet" => super::verify_typed::<JDirectionSet>(value, limits),
+"JValidatedDirection" => super::verify_typed::<JValidatedDirection>(value, limits),
+"JDirectionValidation" => super::verify_typed::<JDirectionValidation>(value, limits),
+"BodyReadoutParameters" => super::verify_typed::<BodyReadoutParameters>(value, limits),
+"JDirectionUse" => super::verify_typed::<JDirectionUse>(value, limits),
+"JEffectReceipt" => super::verify_typed::<JEffectReceipt>(value, limits),
+"GenesisManifestV3" => super::verify_typed::<GenesisManifestV3>(value, limits),
 "EvidenceAllocation" => super::verify_typed::<EvidenceAllocation>(value, limits),
 "EvidenceGroup" => super::verify_typed::<EvidenceGroup>(value, limits),
 "Tendency" => super::verify_typed::<Tendency>(value, limits),

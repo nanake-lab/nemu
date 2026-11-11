@@ -1,0 +1,142 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "law.proto";
+import "terminal.proto";
+
+enum JResidualStage { J_RESIDUAL_UNSPECIFIED = 0; J_BLOCK_RESIDUAL_OUTPUT = 1; J_MIXER_RESIDUAL_BEFORE_FFN_NORM = 2; }
+enum JLayerKind { J_LAYER_UNSPECIFIED = 0; J_ATTENTION_LAYER = 1; J_RECURRENT_LAYER = 2; J_HYBRID_LAYER = 3; }
+enum JActivationDtype { J_DTYPE_UNSPECIFIED = 0; J_FLOAT32 = 1; J_FLOAT16 = 2; J_BFLOAT16 = 3; J_FLOAT64 = 4; }
+enum JPrefillMask { J_PREFILL_UNSPECIFIED = 0; J_PREFILL_LAST = 1; J_PREFILL_ALL = 2; J_PREFILL_NONE = 3; }
+enum JDecodeMask { J_DECODE_UNSPECIFIED = 0; J_DECODE_ALL = 1; J_DECODE_NONE = 2; }
+enum JDirectionKind { J_DIRECTION_UNSPECIFIED = 0; J_CONNECTION = 1; J_EMPATHY = 2; J_CURIOSITY = 3; J_ACHIEVEMENT = 4; J_LEARNED = 5; }
+enum JDirectionStatus { J_STATUS_UNSPECIFIED = 0; J_INCLUDED = 1; J_UNVALIDATED = 2; J_MISSING = 3; J_VALIDATION_MISMATCH = 4; }
+enum JCompilationMode { J_MODE_UNSPECIFIED = 0; J_CONNECTED = 1; J_REHEARSAL_WITHOUT_FAST = 2; }
+
+// @message echo.j-hook-binding | O 13.1-13.2; ADR 0036
+message JHookBinding {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef carrier = 2; // required
+  optional ObjectRef model = 3; // required
+  optional ObjectRef tokenizer = 4; // required
+  optional uint32 layer_index = 5; // required
+  optional JResidualStage residual_stage = 6; // required
+  optional JLayerKind layer_kind = 7; // required
+  optional uint32 width = 8; // required,min=1
+  optional JActivationDtype dtype = 9; // required
+  optional JPrefillMask prefill_mask = 10; // required
+  optional JDecodeMask decode_mask = 11; // required
+}
+
+// @message echo.j-direction-vector | v2.0 9.1; ADR 0036
+message JDirectionVector {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  repeated double values = 3; // required
+}
+
+// @message echo.j-direction | v2.0 9.1-9.2; ADR 0036
+message JDirection {
+  optional uint32 schema_version = 1; // required
+  optional JDirectionKind kind = 2; // required
+  optional string tendency_id = 3; // optional,nonempty
+  optional ConceptRef concept = 4; // optional
+  optional ObjectRef vector = 5; // required
+  optional double beta = 6; // required,min=0
+}
+
+// @message echo.j-direction-set | v2.0 9.1-9.2,16; ADR 0036
+message JDirectionSet {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional JHookBinding hook = 3; // required
+  repeated JDirection directions = 4; // required
+}
+
+// @message echo.j-validated-direction | v2.0 9.6,16; ADR 0036
+message JValidatedDirection {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef vector = 2; // required
+  optional double max_beta = 3; // required,min=0
+  optional double measured_norm = 4; // required,min=0
+  optional double norm_tolerance = 5; // required,min=0
+  optional ObjectRef zh_evidence = 6; // required
+  optional ObjectRef en_evidence = 7; // required
+  optional ObjectRef ja_evidence = 8; // required
+}
+
+// @message echo.j-direction-validation | v2.0 9.1,9.6,16; ADR 0036
+message JDirectionValidation {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional ObjectRef direction_set = 3; // required
+  optional bool fixture = 4; // required
+  repeated JValidatedDirection directions = 5; // required
+  optional double combination_max_beta = 6; // required,min=0
+  optional ObjectRef combination_evidence = 7; // required
+}
+
+// @message echo.body-readout-parameters | CONTRACTS 7; v2.0 9.3; ADR 0036
+message BodyReadoutParameters {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional NatureReal facing = 3; // required
+  optional NatureReal tension = 4; // required
+  optional NatureReal energy = 5; // required
+}
+
+// @message echo.j-direction-use | P5-12 NumericReceipt; ADR 0036
+message JDirectionUse {
+  optional uint32 schema_version = 1; // required
+  optional JDirectionKind kind = 2; // required
+  optional string tendency_id = 3; // optional,nonempty
+  optional JDirectionStatus status = 4; // required
+  optional ObjectRef direction = 5; // optional
+  optional ObjectRef validation = 6; // optional
+  optional double beta = 7; // optional,min=0
+  optional double coefficient = 8; // optional
+}
+
+// @message echo.j-effect-receipt | O 13.2; ADR 0008 3; ADR 0036
+message JEffectReceipt {
+  optional uint32 schema_version = 1; // required
+  optional string snapshot_id = 2; // required,nonempty
+  optional uint64 anchor_time_ns = 3; // required
+  optional uint64 projected_at_ns = 4; // required
+  optional bytes x_digest = 5; // required,size=32
+  optional bytes r_digest = 6; // required,size=32
+  optional bytes theta_digest = 7; // required,size=32
+  optional ObjectRef carrier = 8; // required
+  optional ObjectRef model = 9; // required
+  optional ObjectRef tokenizer = 10; // required
+  optional ObjectRef direction_set = 11; // required
+  optional ObjectRef validation = 12; // required
+  optional ObjectRef body_parameters = 13; // required
+  optional ObjectRef genesis = 14; // required
+  optional JCompilationMode mode = 15; // required
+  repeated JDirectionUse directions = 16; // required
+  optional double total_bound = 17; // required,min=0
+  optional BodyReadoutV2 body = 18; // required
+}
+
+// @message echo.genesis-v3 | V2-117; ADR 0036 migration
+message GenesisManifestV3 {
+  // @retains GenesisManifestV2
+  reserved 14;
+  optional uint32 schema_version = 1; // required
+  optional LawVersion law_version = 2; // required
+  optional string nature_structure = 3; // required,nonempty
+  optional NatureScale initial_gain = 4; // required
+  optional NatureVector initial_baseline = 5; // required
+  optional double sigma0 = 6; // required,min=0
+  optional double tau0_s = 7; // required,min=0
+  optional double attachment_prior = 8; // required,min=0
+  optional string caretaker_id = 9; // required,nonempty
+  optional ObjectRef carrier = 10; // required
+  optional ObjectRef direction_set = 11; // required
+  optional ObjectRef direction_validation = 12; // required
+  optional ObjectRef body_readout = 13; // required
+  optional FuseConfig fuses = 15; // required
+  optional ObjectRef boundaries = 16; // required
+  optional ObjectRef protocol = 17; // required
+}
