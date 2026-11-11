@@ -211,5 +211,58 @@
     "hard_limit_usd": 25,
     "new_deepseek_calls": 0,
     "checks": "4 offline tests, strict mypy and Ruff passed; request bytes and original sources verified"
+  },
+  "extension_v2_recovery_results": {
+    "status": "complete",
+    "private_repository": "nanake-lab/nemu-evidence",
+    "private_commit": "ada91c53aad60b45645232ad25a8fff77c3fa434",
+    "path": "R-STEER-02/extension-recovery-run-03",
+    "manifest_sha256": "fc78665e6ac4d7ef38c4493fe52487c816d24e706b21b5c29b58e2ed85a80cbd",
+    "files": 3404,
+    "remote_verified_utc": "2026-11-11T18:29:10.901936+00:00",
+    "all_committed_bytes_equal": true,
+    "openai_audit": {
+      "provider": "openai",
+      "slots": 386,
+      "attempts": 955,
+      "segment_attempts": 386,
+      "prior_upper_usd": 8.672365,
+      "statuses": {
+        "valid": 385,
+        "invalid": 1
+      },
+      "invalid_reasons": {
+        "json_schema_or_quote": 1
+      },
+      "stop": null,
+      "upper_usd": 14.3584125,
+      "peak_reserved_usd": 14.7282825,
+      "maximum_inflight": 4,
+      "retry_wait_seconds": [],
+      "usage_this_segment": {
+        "prompt_tokens": 822183,
+        "completion_tokens": 706650,
+        "total_tokens": 1528833
+      },
+      "seconds": 6595.4839999999385,
+      "segment_seconds": 2516.8429999999935,
+      "returned_fingerprints": [],
+      "request_ids_observed": 386,
+      "audit": "passed"
+    },
+    "merge_source_audit": {
+      "protected_outcomes_unchanged": 568,
+      "merged_slots": 954,
+      "eligible_slots": 386,
+      "valid_rating_bytes_verified": 952,
+      "deepseek_original_results_unchanged": true,
+      "all_three_manifests_verified": true,
+      "analyzer": "unchanged extension-02/code/extension_analysis.py; IO directories only"
+    },
+    "new_deepseek_calls": 0,
+    "deepseek_cumulative_upper_usd": 1.070551464,
+    "public_report": "reports/R-STEER-02/V2-REPORT.md",
+    "public_summary": "reports/R-STEER-02/V2-SUMMARY.json",
+    "public_tables": "reports/R-STEER-02/V2-RESULT-TABLES.md"
   }
 }
