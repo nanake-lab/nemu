@@ -3,13 +3,13 @@
   "commit": "a44cbc04749f49e9c0de417c520a0c2189113511",
   "branch": "evidence/R-STEER-02-prereg",
   "date_perth": "2026-11-11",
-  "status": "execution_prepared_private_pushed_verified",
-  "generation": "not_run",
-  "scoring": "not_run",
+  "status": "complete_pending_user_review",
+  "generation": "complete",
+  "scoring": "complete",
   "api_calls": {
     "openai_models_get": 1,
-    "openai_generation": 0,
-    "deepseek": 0
+    "openai_generation_attempts": 2083,
+    "deepseek_scoring_attempts": 541
   },
   "files": [
     {
@@ -50,5 +50,50 @@
     },
     "file_count": 3087,
     "verification": "Remote branch HEAD equals local commit; every manifest file SHA equals committed blob and local bytes; no paid calls yet"
-  }
+  },
+  "completed_populations": {
+    "generation": 2073,
+    "scoring": 540,
+    "valid_ratings": 518,
+    "invalid_ratings": 22,
+    "missing_or_not_run": 0,
+    "fixed_review_sample": 20
+  },
+  "generation_checkpoint": {
+    "commit": "7aa1380661d12c4b2bea56e5a0530ec879491de8",
+    "manifest_path": "R-STEER-02/run-01/GENERATION-MANIFEST.json",
+    "sha256": "2a079aa0bdcb41ae0a115704e2262a5af0f66ca548eda5ae24b5e34404929341",
+    "files": 12486
+  },
+  "results": {
+    "commit": "5ce1dcfc897ee669e6ceb7a7873786551c2b9a89",
+    "manifest": {
+      "path": "R-STEER-02/run-01/MANIFEST.json",
+      "sha256": "7c8c9a240a3680029fcfe9fca2d6d3228ee13d6148ae7787fdbf88baff41f253",
+      "bytes": 3277246
+    },
+    "file_count": 16274,
+    "analysis_path": "R-STEER-02/run-01/analysis/analysis.json",
+    "review_packet_path": "R-STEER-02/run-01/analysis/review-packet.json",
+    "review_index_path": "R-STEER-02/run-01/analysis/review-index.json",
+    "review_notes_path": "R-STEER-02/run-01/analysis/review-notes.md",
+    "verification": {
+      "verified_utc": "2026-11-11T15:43:41.530001+00:00",
+      "commit": "5ce1dcfc897ee669e6ceb7a7873786551c2b9a89",
+      "files": 16274,
+      "remote_matches": true,
+      "all_local_and_committed_bytes_match": true,
+      "generation_checkpoint_unchanged": true
+    }
+  },
+  "ledger_upper_nano_usd": {
+    "openai": 1661040000,
+    "deepseek": 1675899570
+  },
+  "hard_limits_usd": {
+    "openai": 35,
+    "deepseek": 10
+  },
+  "invoice_status": "conservative usage and reservation bounds, not account invoices",
+  "optional_extensions": "all_disabled"
 }
