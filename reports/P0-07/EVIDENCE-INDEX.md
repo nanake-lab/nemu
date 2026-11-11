@@ -9,3 +9,7 @@
 | `direction-v1/microsoft--Phi-4-mini-instruct.meta.log` | `e989ec8d7bc96943155603ab0eb08773b4efe1cada439922f5aaf837b9dfeacc` | 脱敏：一行进程名改为「4 类共 23 个」 |
 
 原件位置：`nanake-lab/nemu-evidence` 仓库的 `P0-07/` 下，路径与上表相同。主仓库 git 历史中的旧版本未改写。
+
+## PRIVACY-CLEANUP-01（2026-11-11）
+
+本次迁移原件的位置、SHA-256 与私有证据提交见 [逐项索引](../PRIVACY-CLEANUP-01/EVIDENCE-INDEX.md)。既有索引与原始证据保留。
