@@ -191,6 +191,10 @@ fn f_probe(q: &Value) -> Value {
         let target = f::compute_target(&e, &evaluation, Some(a), 1.0, &law).unwrap();
         let mut input_ref = reference(&q["input_ref"], "p571.synthetic-history");
         input_ref.resource_version = "P5-71-v2-H".into();
+        // Algebra probe: the frozen F resource carries theta's actual values.
+        // The typed reference is a synthetic fixture binding, not a restored
+        // ThetaSnapshotV3 or a claim that the H resolver/09-19 was exercised.
+        let theta_ref = reference(&q["resource_ref"], "echo.theta-snapshot-v3");
         let effect = f::Effect::new(
             FastEffectRecord {
                 schema_version: 1,
@@ -211,7 +215,7 @@ fn f_probe(q: &Value) -> Value {
                     },
                     learned: vec![],
                 },
-                theta_before: input_ref.clone(),
+                theta_before: theta_ref,
                 effects_before: input_ref.clone(),
                 interpretation_refs: vec![input_ref.clone()],
                 governance_refs: vec![input_ref],
