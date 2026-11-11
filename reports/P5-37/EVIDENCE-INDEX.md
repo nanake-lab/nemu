@@ -2,7 +2,7 @@
 
 私有仓库：`nanake-lab/nemu-evidence`。下表全部文件固定在提交 [`066db4a437d0c448558e1b1d748fa35c3ec2dde0`](https://github.com/nanake-lab/nemu-evidence/commit/066db4a437d0c448558e1b1d748fa35c3ec2dde0)；每行链接均包含该提交号。
 
-实现 `ceea6722`，缓存测试修复 `a0e0d7b`；Ubuntu CI #42877893094 测试合并提交 `eaa33c53`，父提交为 main `8839dcae` 与 `a0e0d7b`。对应日志、命令结果和源码哈希在表内。Windows runner 离线，未签发通过。
+实现 `ceea6722`，缓存测试修复 `a0e0d7b`；Ubuntu CI #42877893094 测试合并提交 `eaa33c53`，父提交为 main `8839dcae` 与 `a0e0d7b`。对应日志、命令结果和源码哈希在表内。此处为首次归档时状态：Windows runner 离线，未签发通过；2026-11-11 补验见下方追加索引。
 
 SHA-256 按原始字节计算，并逐文件核对本地原件、私有工作区副本和 Git blob 一致。目录内 `-text` 属性防止换行转换。失败证据保留；黄金向量及发布基线仍在主仓库。
 
@@ -60,3 +60,33 @@ SHA-256 按原始字节计算，并逐文件核对本地原件、私有工作区
 | [P5-37/validation/staged-check.log](https://github.com/nanake-lab/nemu-evidence/blob/066db4a437d0c448558e1b1d748fa35c3ec2dde0/P5-37/validation/staged-check.log) | 73 | `ce30b6d7e9d69b1fb424c8d30898c400f688f927c4803dadac721a3bf732c84f` |
 | [P5-37/validation/tested-source.json](https://github.com/nanake-lab/nemu-evidence/blob/066db4a437d0c448558e1b1d748fa35c3ec2dde0/P5-37/validation/tested-source.json) | 6810 | `72b4a1d59c420aba8843ec14bfb4892b2ac5bb285d1690ce5157eba12528b1eb` |
 | [P5-37/validation/toolchain-and-fix.json](https://github.com/nanake-lab/nemu-evidence/blob/066db4a437d0c448558e1b1d748fa35c3ec2dde0/P5-37/validation/toolchain-and-fix.json) | 530 | `2fa4b6f27a95ee4dac9a5d154dca3cea9ec67c76b041f382f5999719cf7b5065` |
+
+## 2026-11-11 Windows 补验
+
+[run 42963248080](https://github.com/nanake-lab/nemu/actions/runs/42963248080)：attempt 1 测试成功但 W18 上传 ECONNRESET，工作流失败；attempt 2 全部检查、三个 artifact 上传和最终门禁成功。两次均 checkout `86acb718288bf48ddd50f65dddb5ff294fed60c7`。
+
+新增 21 文件固定在私有提交 `14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0`。逐文件核对归档副本与 Git blob 字节一致。桌面 ZIP 为明确标记的脱敏副本（全机进程列表替换为总数），原 ZIP 仅本地留存，其哈希和成员变换记录见 redaction-summary；原 artifact 的隐藏文件缺项也保留记录。gateway-runner-local-not-uploaded.zip 是首轮 runner 本地证据，不冒充上传成功。其余日志与 artifact 按原字节保留。
+
+| 私有证据路径（固定提交） | 字节数 | SHA-256 |
+| --- | ---: | --- |
+| [P5-37/windows-42963248080/attempt-1/archive-desktop.py](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/archive-desktop.py) | 2604 | `ce348f776abd3f64397cc92e5f4038f98cf391f9543eb7e34a62418c6ca110e9` |
+| [P5-37/windows-42963248080/attempt-1/artifacts.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/artifacts.json) | 1449 | `9f546d5c16a9cd820de7b527905e01615cb15717f2cd106f354e81bdb9a15e41` |
+| [P5-37/windows-42963248080/attempt-1/dispatch.log](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/dispatch.log) | 61 | `538118d9a47888e9af8bc8107d877a064bb8cd9e09bb50a71e75d943e27b8302` |
+| [P5-37/windows-42963248080/attempt-1/gateway-local-provenance.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/gateway-local-provenance.json) | 2306 | `fd94a1a54e5d2d5cbd55f56645494a9b3757dd25d73e2cb27b3d0b2bceb93a4a` |
+| [P5-37/windows-42963248080/attempt-1/gateway-runner-local-not-uploaded.zip](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/gateway-runner-local-not-uploaded.zip) | 4644 | `e66f2d0f7a251453e8468e70ce7b77500fed8333a61824212bd3cf47f158b72f` |
+| [P5-37/windows-42963248080/attempt-1/preflight.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/preflight.json) | 796 | `627d26c480abf588dea93a6fa03aa11c88bf8effaa7952e14733fecab3076021` |
+| [P5-37/windows-42963248080/attempt-1/redaction-summary.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/redaction-summary.json) | 9902 | `217e0a2753c7c865b8445f0860cd98983a8ffdfa30187c6376d328cbf5e23af7` |
+| [P5-37/windows-42963248080/attempt-1/windows-P0-01-evidence-42963248080-1-privacy-redacted.zip](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/windows-P0-01-evidence-42963248080-1-privacy-redacted.zip) | 36049 | `5e1b44dd7fb32de0c97e3589e07dc4e0766edb7def2b98c6910dc5e0737effc2` |
+| [P5-37/windows-42963248080/attempt-1/windows-P5-02-42963248080-1.zip](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/windows-P5-02-42963248080-1.zip) | 5464 | `76f3cc8630deee6b7afaa1dcc6fc4b696c0772ad0fb9a6fa81e0fa21b338b260` |
+| [P5-37/windows-42963248080/attempt-1/workflow-full.log](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/workflow-full.log) | 240110 | `3f632e55b795d66d61f9017e637f5fcc39fc476425b6442aac192d3345f901d8` |
+| [P5-37/windows-42963248080/attempt-1/workflow-result.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-1/workflow-result.json) | 6796 | `112f93408157c6c199d1b8cdbdc0723d0561cdcfd9747b0d00c0611c0329bd16` |
+| [P5-37/windows-42963248080/attempt-2/archive-desktop.py](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-2/archive-desktop.py) | 2654 | `2a964e8a18bf82c187c80b8a1001a74894869bb1ef72390edcc4019d43a23f3d` |
+| [P5-37/windows-42963248080/attempt-2/artifacts.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-2/artifacts.json) | 3571 | `28d410b6ad0e59a3ef1cafb7044ff5c73d86eaf9b2337e229b22693c4971c22a` |
+| [P5-37/windows-42963248080/attempt-2/jobs.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-2/jobs.json) | 7866 | `9e89dd6d3377d248bafeaaa549b341a8d883e747a2a313f796e2afd48a365987` |
+| [P5-37/windows-42963248080/attempt-2/redaction-summary.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-2/redaction-summary.json) | 9902 | `76752dc55423a55daec998507e2dc1f6ad2d1358555f14d2d7b3fe5ba55b1961` |
+| [P5-37/windows-42963248080/attempt-2/run.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-2/run.json) | 12234 | `4fc55e905bdf4ceab5f1c26cb69f575da2cd8301320ce8dcc0140720f4a16a67` |
+| [P5-37/windows-42963248080/attempt-2/windows-P0-01-evidence-42963248080-2-privacy-redacted.zip](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-2/windows-P0-01-evidence-42963248080-2-privacy-redacted.zip) | 36268 | `38416677b252bb774298908d4ebbba52d35c01c23f28d0f85110bfaf68e788b3` |
+| [P5-37/windows-42963248080/attempt-2/windows-P5-02-42963248080-2.zip](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-2/windows-P5-02-42963248080-2.zip) | 5474 | `fbd6a1ecd701d204f5cd6bbb7e596567b97d560f8c18db57f1e285db6fe7bde5` |
+| [P5-37/windows-42963248080/attempt-2/windows-P5-03-42963248080-2.zip](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-2/windows-P5-03-42963248080-2.zip) | 4679 | `8f6de9d890fff0402178d2996593e4d0da89670898f7e7ce5b41954b4db2004b` |
+| [P5-37/windows-42963248080/attempt-2/workflow-full.log](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/attempt-2/workflow-full.log) | 240275 | `4390dddd6dbf1132a408c1d0a99679928958277231918436abb47dc9170a6678` |
+| [P5-37/windows-42963248080/manifest.json](https://github.com/nanake-lab/nemu-evidence/blob/14c01b54190ca69c7aaea1f9cb4fd1b1f4af70b0/P5-37/windows-42963248080/manifest.json) | 3927 | `7f88edde37a3d7afc28f2a3f68a9fafe0524a9922cd1ddfc580f43b4fa2e7577` |

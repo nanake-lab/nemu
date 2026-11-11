@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-实现与缓存测试入口修复已提交 `a0e0d7ba92547c64caa6b9d013180aae58f1e38e`，PR [#155](https://github.com/nanake-lab/nemu/pull/155) 保持草稿、needs-user。契约层实现与本机验证完成；Ubuntu CI 已通过，Windows runner 离线导致门禁未完成（见 BLOCKED.md）。等待独立交叉审查及用户批准 ADR 0030/契约变更；不自行合并、不领取下一卡。
+实现与缓存测试入口修复已提交 `a0e0d7ba92547c64caa6b9d013180aae58f1e38e`，PR [#155](https://github.com/nanake-lab/nemu/pull/155) 保持草稿、needs-user。契约层实现与本机验证完成；Ubuntu CI 已通过，Windows 手动工作流 attempt 2 已全绿（首轮上传故障及完整记录见下文）；等待原审查方确认 Windows 一项（见 BLOCKED.md）。等待独立交叉审查及用户批准 ADR 0030/契约变更；不自行合并、不领取下一卡。
 
 ## 交付物
 
@@ -25,7 +25,8 @@
 | `cargo fmt --all -- --check`；`cargo clippy --workspace --all-targets --locked -- -D warnings` | passed，缓存入口修复后复跑通过 | rust-fmt-02.log、clippy-02.log |
 | `cargo test --workspace --locked`；修复后 `cargo test --workspace --locked --exclude core-kernel --exclude core-store` | 首轮在 core-types 缓存测试失败；修复后其余工作区全通过。未改动的 core-kernel 首轮 273 passed / 1 既有 ignored（V2-93 旧舍入诊断），core-store 51 passed；两包复用该有效结果 | cargo-test-01.log、cargo-test-02.log、rust-results-02.json |
 | `pnpm lint` / `pnpm typecheck` / `pnpm test` | passed；54 文件、620 测试 | pnpm-lint.log、pnpm-typecheck.log、pnpm-test.log |
-| Ubuntu CI / Windows CI | 修复后 CI passed；Windows not_run（runner 离线，draft 自动汇总门禁失败） | [CI #42877893094](https://github.com/nanake-lab/nemu/actions/runs/42877893094)、ci-02-full.log；[BLOCKED](BLOCKED.md) |
+| Ubuntu CI | 修复后 CI passed；报告 head 的 CI #42881172237 也已成功 | [CI #42881172237](https://github.com/nanake-lab/nemu/actions/runs/42881172237) |
+| Windows 完整工作流 | attempt 1 上传故障 failure；attempt 2 success，桌面四项、W02 51 单元 + 3 文档、W18 42 测试及两包 clippy 通过，三个 artifact 上传和最终门禁成功 | [Windows #42963248080 / attempt 2](https://github.com/nanake-lab/nemu/actions/runs/42963248080/attempts/2)、[证据索引](EVIDENCE-INDEX.md) |
 | COG-A01–11/13、SYS17、持续认知真实时间/体验 | not_run，只有契约层合成验证；COG-A12 旧规则已被取代，不签发通过 | [规格对照及范围](../../docs/traceability/P5-37.md) |
 
 原始数据与失败日志归档私有 `nanake-lab/nemu-evidence/P5-37/`，公开仅留 [EVIDENCE-INDEX](EVIDENCE-INDEX.md)。全部输入为合成数据，没有读取正式或排练存储。生成产物、黄金向量及契约基线属于代码和验收，保留在主仓库。
@@ -46,12 +47,24 @@
 
 ## 基线与待确认
 
-开工及最近 fetch 的 main 均为 `8839dcae73c98437f61222f49d08cafd9ba8f4e6`；契约 suite 与首次工作区检查的源码绑定 `ceea6722`；`a0e0d7b` 仅追加 cfg(test) 缓存探针的语义调用，已复跑受影响的工作区测试、fmt、clippy。清单与变更说明见私有 tested-source.json、toolchain-and-fix.json。本机 Rust/Cargo 1.99.0 与锁定工具链一致，Python 3.12.10、Node 24.21.0、pnpm 12.11.2；依赖按锁文件安装。开放 PR 完整文件列表核对未发现契约线占用。Ubuntu CI 实际 checkout 为 `eaa33c53f822faa5bcd4aeaacc7344c33825803a`，已核对两个父提交分别为上述 main 与 `a0e0d7b`；通过 Rust 工作区/存储、前端构建测试、Python 四项目与三语言契约门禁。收尾提交只更新报告、阻塞说明与证据索引，不改变被验证源码。
+开工 main 为 `8839dcae73c98437f61222f49d08cafd9ba8f4e6`；契约 suite 与首次工作区检查的源码绑定 `ceea6722`；`a0e0d7b` 仅追加 cfg(test) 缓存探针的语义调用，已复跑受影响的工作区测试、fmt、clippy。清单与变更说明见私有 tested-source.json、toolchain-and-fix.json。本机 Rust/Cargo 1.99.0 与锁定工具链一致，Python 3.12.10、Node 24.21.0、pnpm 12.11.2；依赖按锁文件安装。开放 PR 完整文件列表核对未发现契约线占用。Ubuntu CI 实际 checkout 为 `eaa33c53f822faa5bcd4aeaacc7344c33825803a`，已核对两个父提交分别为上述 main 与 `a0e0d7b`；通过 Rust 工作区/存储、前端构建测试、Python 四项目与三语言契约门禁。收尾提交只更新报告、阻塞说明与证据索引，不改变被验证源码。
 
 - [ ] （阻塞）用户批准 ADR 0030、V2-110 至 V2-114，尤其 V2-113 的分阶段停用安排。
 - [ ] （阻塞）独立交叉审查通过；本执行会话不自审签发。
-- [ ] （阻塞）Windows runner 恢复在线并完成当前代码的工作流；见 [BLOCKED](BLOCKED.md)。
+- [x] Windows runner 恢复在线并完成 `86acb718` 的完整工作流，attempt 2 success。
+- [ ] （阻塞）请原审查方确认已补齐 Windows 一项；见 [BLOCKED](BLOCKED.md)。
 
 ## 后续建议
 
 P5-38/39 完成真实持续认知、H/Q 原子提交与恢复；P5-72/75 处理新规律消费、时间事实与运行时接线。COG 的行为、资源、持续时长与真实体验由相应卡实测，本卡不以编码测试替代。
+
+
+## 2026-11-11 Windows 补验记录
+
+按用户指定命令 `gh workflow run windows.yml --ref task/P5-37-cognition-idl` 手动触发 [run 42963248080](https://github.com/nanake-lab/nemu/actions/runs/42963248080)，默认完整范围（desktop/storage/gateway）。被测分支 head、checkout 日志及桌面 run/manifest 的 SHA 均绑定 `86acb718288bf48ddd50f65dddb5ff294fed60c7`。本轮仅修改报告、BLOCKED 与证据索引，不改变源码、契约、测试、依赖或工作流。
+
+首次 attempt 1：桌面 transport/isolation/e2e/visual、证据来源校验、W02 clippy 与 51 单元 / 3 文档测试、W18 clippy 与 42 测试均成功；W18 artifact 创建请求返回 `ECONNRESET`，self-hosted 作业及最终汇总门禁因此失败。保留完整失败日志、两个成功上传的 artifact 以及 runner 上未上传的 W18 日志；本地留存不替代成功上传或工作流通过。定位上传故障后仅重跑失败作业一次，attempt 2 全绿，2026-11-11 05:30:31–05:48:31 UTC；self-hosted 作业与最终汇总作业均 success，三个 artifact 均已上传。W02 51 单元测试耗时 743.73 秒、3 文档测试耗时 0.19 秒；W18 42 测试耗时 111.29 秒。完整 jobs/steps 结论及日志见私有证据索引。
+
+本轮 fetch 的 main 为 `74f7bcaf41ec45bb31063fc079eeeae49927ac82`，分支实际 main 基线仍为 `8839dcae73c98437f61222f49d08cafd9ba8f4e6`。两者间只有 #156 的四份开工阅读规则文档；已按新版规则阅读，无产品、构建、依赖、测试、阈值或 CI 影响，按 main 影响判断规则不为本轮补验合并。Ubuntu CI #42881172237 也已完成成功，实际合并 checkout `538ac9ce5e5d63e1dffb0050632f590aa70176e5` 的父提交为 `8839dcae` 与 `86acb718`。
+
+证据隐私与完整性：既有桌面采集器把全机进程清单写入 artifact；本轮不改采集代码。原 ZIP 本地保留，私有归档仅收入把 9 处进程清单替换为总数的脱敏副本，另存原 ZIP 摘要、逐文件前后摘要及转换脚本；原 manifest 更名为 source-manifest，不能用它校验脱敏后的字节。原 artifact 缺少 manifest 列出的隐藏文件 `test-results/electron/.last-run.json`，明确记为缺项；存在的 manifest 文件摘要均核验。测试日志、结果、提交绑定不改写。后续需单独修正采集范围和隐藏文件归档，本卡不扩展代码范围。
