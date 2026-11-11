@@ -62,3 +62,9 @@ python core/crates/core-kernel/tests/p571/probe.py D:/Dev/cache/P5-71/prepared-v
 `probe-01` 在首条 C 轨迹的空前缀导出时报 `Invalid("theta law binding")`；资源引用的版本字符串未与 C 的 law_id 对齐。未完成任何轨迹，没有完整探针成本或机制结果。算术手算检查已通过，失败原日志保留。只修正适配器绑定并加入桥接子进程的峰值工作集测量；没有改变已物化输入、资源、枚举数量和判据。
 
 重跑登记：代码 `6b94540c2dd926992446cbd178f01de205655dfe`；实际二进制 SHA-256 `4fe7b2c5e8074a46537fdcaa75ba202faebcbf4995306ecf677105c4b7436a66`；新清单 `prepared-v2-r2/RUN-MANIFEST.json` SHA-256 `8ec43893307fe3c302cd7eb152a3187c5536fada5ff65cc3001f001d6e71c1e6`。其中所有输入/资源文件哈希与 r1 相同，代码哈希已更新。入口仅将 prepared 目录改为 `prepared-v2-r2`、输出改为 `probe-02`；不覆盖 probe-01。
+
+## 工具验证后的最终探针登记
+
+r2 未执行；单步工具检查修正了日志句柄及 F 的 θ 引用类型，Python 补齐类型与格式检查。F 引用为代数夹具绑定，所指 F 资源含真实 θ 值；不是可恢复 ThetaSnapshotV3，不声称覆盖 H 解析或 09-19 引用验收。没有修改资源或冻结输入。
+
+本次正式成本探针代码 `bdd52e9fdb0d9dee7a908bcd6b4555d54a21eac4`；二进制 SHA-256 `668c1a6c3f1300788d07674db1c73a7be3a1b8cc91019cfee41b560f5b0b8cf1`；实际算术文件 SHA-256 `ab549e7c533bec311fb7cdea38803f0caac811c502953782761ff38eaecce40d`；清单 `prepared-v2-r3/RUN-MANIFEST.json` SHA-256 `fa3f215fc4c9170e57428c10290dfb97f5c6854f6eb6465ba2466623230c8503`。输入/资源/成本清单字节仍与 r1 相同。使用 r3 输入、输出 `probe-02`，不覆盖失败探针。运行前已完成 Rust 编译、新工具三项检查、clippy、fmt、Python mypy strict 与 ruff；原有 kernel 单元测试 273 passed、1 ignored，原全包命令因新工具故障退出，工具修复后单独重验。
