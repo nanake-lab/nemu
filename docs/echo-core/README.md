@@ -110,3 +110,7 @@ Nemu 自己的里程碑记作 N0–N4（ADR 0005），与本规格施工总方�
 [ADR 0032](../adr/0032-presets-as-starting-points.md) 已随 PR #118 合入 main。本文原有优先级与历史追加保留；v2.0 和后续已定修订优先，旧 NO-GROWTH、资格、身体读出、主动调度、权限与自动暂停文字不能脱离后续决定使用。
 
 当前术语为「乎」，复数四个「乎」，对应表见 ADR 0032 §10；历史规格、引用、公式和标识符保留。R01–R03、R05、R08–R12 的已定依据、旧条文有效范围与逐项验收映射集中在 [DOC-PRESETS-01 索引](../traceability/DOC-PRESETS-01.md)。文档整理不签发机制/行为验收；未决设计、重叠文件见[报告](../../reports/DOC-PRESETS-01/REPORT.md)与 [BLOCKED](../../reports/DOC-PRESETS-01/BLOCKED.md)。
+
+## 追加（2026-11-11）：阅读范围
+
+本节只追加，上文保留作历史说明。第 5 节及 2026-10-19 追加中「第 5 节」一条规定的阅读范围，改为按 [`.agents/skills/echo-core-work/SKILL.md`](../../.agents/skills/echo-core-work/SKILL.md) 第 1 节的分级读法（2026-11-11 用户决定）：设计卡、改规格或契约的 ADR、预注册研究通读 v2.0 全文；Echo Core 相关的普通实现卡读 v2.0 目录与相关章节；所有卡读卡上「必读」「来源」所列的原文章节。
