@@ -32,11 +32,15 @@ The aliases identify original files, not replacement specifications. Readable co
 
 This does not silently settle disagreements between a frozen clause and a newer closure. W00-C01 in [diff-register.md](diff-register.md) remains pending user confirmation; [ADR 0006](../adr/0006-single-root-spec-conflict.md) is proposed, not approved.
 
+> **状态更新（2026-11-11）：** W00-C01 已由 [ADR 0009](../adr/0009-echo-core-v2-first-principles.md) 消解（v2.0 没有单根、多根资格），ADR 0006 已被 ADR 0009 取代。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 C2。
+
 ### Missing upstream material
 
 S §1 and O's upstream references rely on `Review_and_Remediation`: F §§20–27 and D Appendix B. The supplied F ends at §19; supplied D has Appendix A, not B. E12 remains **待用户提供** for those missing sections. Do not reconstruct their θ design. W09/W10 and growth are v1.x; Nemu v1.0 uses genesis b/Λ/B₀, empty R and audited identity G/C. Missing additions do not alone block v1.0 IDL/transaction work. Future growth must re-baseline newly supplied originals and resolve W00-C01 before activation.
 
 **追加状态说明（2026-10-14 决定）：用户确认不可得（2026-10-14 决定）**。此状态取代上述“待用户提供”的当前含义；原文保留作历史说明。范围为 Review_and_Remediation 增补 F 第 20–27 节、D 附录 B。不重建缺失内容；C01 保持未决、仅阻塞 W09/W10，ADR 0006 保持 PROPOSED，v1.0 保持 NO-GROWTH。
+
+> **状态更新（2026-11-11）：** E12 缺失的 Review_and_Remediation 增补在 [ADR 0009](../adr/0009-echo-core-v2-first-principles.md) 之后已不再需要、不再阻塞任何工作（ADR 0009 的 E12 一项）；本追加中「C01 保持未决」「ADR 0006 保持 PROPOSED」同样已过时，见上一条说明。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 C3。
 
 Review scope: all five documents' headings and §1; S §§1,2,26,31; targeted original clauses for E1–E14, conflict verification, acceptance and work-package mapping. This is not a claim that all future implementation details have already been audited.
 
