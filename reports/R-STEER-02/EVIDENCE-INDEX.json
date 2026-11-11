@@ -3,7 +3,7 @@
   "commit": "a44cbc04749f49e9c0de417c520a0c2189113511",
   "branch": "evidence/R-STEER-02-prereg",
   "date_perth": "2026-11-11",
-  "status": "preregistered_pending_user_review",
+  "status": "execution_authorized_blocked_missing_process_deepseek_key",
   "generation": "not_run",
   "scoring": "not_run",
   "api_calls": {
@@ -28,5 +28,17 @@
       "bytes": 430
     }
   ],
-  "verification": "Private branch pushed; local file bytes match committed blobs. JSON parsed. Initial CRLF normalization mismatch corrected with task-local binary attributes; no evidence content changed. No C3 material content opened."
+  "verification": "Private branch pushed; local file bytes match committed blobs. JSON parsed. Initial CRLF normalization mismatch corrected with task-local binary attributes; no evidence content changed. No C3 material content opened.",
+  "execution_preflight": {
+    "commit": "f9cb4966c5d9966b35606d15de01458580f9c180",
+    "files": [
+      {
+        "path": "R-STEER-02/blocked-01/preflight.json",
+        "sha256": "5a5597575c1d248780e0c4bf01af2bfdd04f1c480d08fb0008405cf19e713c81",
+        "bytes": 500
+      }
+    ],
+    "new_paid_calls": 0,
+    "new_paid_cost_usd": 0
+  }
 }
