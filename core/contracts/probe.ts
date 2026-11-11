@@ -2,6 +2,7 @@
 import { ingressProbe } from './ingress_probe.js';
 import { checkThetaMessage } from '../../packages/contracts/src/generated/echo/theta.js';
 import { checkLawStateMessage } from '../../packages/contracts/src/generated/echo/law_state.js';
+import { checkCognitionMessage } from '../../packages/contracts/src/generated/echo/cognition.js';
 import { createInterface } from 'node:readline';
 import { fromJson, toJson } from '../../packages/contracts/src/generated/echo/bridge.js';
 import {
@@ -36,6 +37,7 @@ for await (const line of createInterface({ input: process.stdin })) {
           : decodeProtobufData(q.name, Buffer.from(q.hex, 'hex'), q.limits);
     checkThetaMessage(q.name, v, q.limits);
     checkLawStateMessage(q.name, v, q.limits);
+    checkCognitionMessage(q.name, v, q.limits);
     console.log(
       JSON.stringify({
         ok: true,
