@@ -295,7 +295,11 @@ fn f_probe(q: &Value) -> Value {
 pub fn dispatch(q: &Value) -> Value {
     match q["op"].as_str().unwrap() {
         "libm" => {
-            let x = number(q, "x");
+            let x = if let Some(hex) = q["x_bits"].as_str() {
+                f64::from_bits(u64::from_str_radix(hex, 16).unwrap())
+            } else {
+                number(q, "x")
+            };
             let y = match q["function"].as_str().unwrap() {
                 "sqrt" => libm::sqrt(x),
                 "log" => libm::log(x),
@@ -303,7 +307,7 @@ pub fn dispatch(q: &Value) -> Value {
                 "expm1" => libm::expm1(x),
                 _ => panic!("unknown primitive"),
             };
-            json!({"value":y})
+            json!({"value":y,"value_bits":format!("{:016x}",y.to_bits())})
         }
         "C" => c_probe(q),
         "F" => f_probe(q),

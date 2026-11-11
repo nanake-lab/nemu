@@ -40,7 +40,8 @@ class Bridge:
         key=(name,bits(value))
         if key not in self.cache:
             self.primitive_misses+=1
-            self.cache[key]=Q(self.call(dict(op='libm',function=name,x=float(value)))['value'])
+            reply=self.call(dict(op='libm',function=name,x_bits=bits(value)))
+            self.cache[key]=Q(struct.unpack('>d',bytes.fromhex(reply['value_bits']))[0])
         return self.cache[key]
 
     def close(self):
