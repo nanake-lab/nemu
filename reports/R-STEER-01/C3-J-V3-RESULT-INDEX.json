@@ -1,0 +1,45 @@
+{
+  "version": "C3-J-V3-RESULTS-01",
+  "private_repository": "nanake-lab/nemu-evidence",
+  "private_commit": "e771ddb184c24b85bb1483029a702cc604681242",
+  "private_root": "R-STEER-01/c3-j-v3-01",
+  "execution_public_commit": "0c331128cbfa911a1e0657bdbcaf41c9e7c0eed4",
+  "execution_private_commit": "1bc4712506a37c046e1d8f39b028b7c31571240f",
+  "approved_material_commit": "cf397f7e6f9e54cb692a24daf1c3f51dcad3a049",
+  "status": "C3_measurement_insufficient_stop",
+  "result_approval": "pending_user",
+  "last_calibration": true,
+  "on_failure": "stop_C3_with_this_judge_user_redesign_no_further_J_versions",
+  "stage2_plus": "not_run",
+  "result_manifest": "result-files.json",
+  "git_blob_check": {
+    "private_commit": "e771ddb184c24b85bb1483029a702cc604681242",
+    "verified_git_blobs": 1933,
+    "total_bytes": 14650528,
+    "clean": true,
+    "manifest_sha256": "0aacd1aec190a4d4b4ce403bbf98edc47f9f7a6af8bbebb699b2602aac4c04a5"
+  },
+  "entry_points": {
+    "all144": "j-review-01/ALL-144.md",
+    "fixed20": "j-review-01/FIXED-20.md",
+    "invalid": "j-review-01/INVALID-ALL.md",
+    "leakage": "j-review-01/LEAKAGE-AUDIT.md",
+    "nonhit_length": "j-review-01/NONHIT-LENGTH-AUDIT.md",
+    "primary_notes": "j-review-01/PRIMARY-REVIEW.md",
+    "raw": "j-run-01",
+    "analysis": "j-analysis-01",
+    "mechanical": "j-review-01/mechanical/run.stdout.bin"
+  },
+  "budget": {
+    "new_upper_nano_usd": 930193812,
+    "prior_upper_nano_usd": 1758851736,
+    "cumulative_upper_nano_usd": 2689045548,
+    "max_ledger_upper_nano_usd": 2756143212,
+    "attempts": 145,
+    "network_unknown_attempts": 1,
+    "successful_retry_attempts": 1,
+    "active_seconds": 1149.125,
+    "cumulative_active_seconds": 3367.140000000014
+  },
+  "mechanical_scope": "Primary-prescribed script run by routine_reporter; not independent semantic review"
+}

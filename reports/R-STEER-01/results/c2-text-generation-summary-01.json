@@ -1,0 +1,180 @@
+{
+  "status": "completed_generation_only",
+  "exit": {
+    "status": "completed",
+    "completed": 2073,
+    "expected": 2073,
+    "exit_code": 0,
+    "wall_seconds": 1239.905999999959,
+    "api_calls": 0
+  },
+  "audit_checks": 15,
+  "audit_all_passed": true,
+  "summary": {
+    "run": {
+      "run_wall_seconds": 1239.905999999959,
+      "guards": [
+        {
+          "lang": "zh",
+          "start": "test-guard-zh-start",
+          "end": "test-guard-zh-end",
+          "first_size": 993280,
+          "last_size": 993280,
+          "first_sha256": "d1ad0b708d354a402106ba2b5e1534683e53e71238c0bd012c4a6ad2489c8db6",
+          "last_sha256": "d1ad0b708d354a402106ba2b5e1534683e53e71238c0bd012c4a6ad2489c8db6",
+          "logits_equal": true,
+          "prompt_equal": true,
+          "prompt_ids_equal": true
+        },
+        {
+          "lang": "en",
+          "start": "test-guard-en-start",
+          "end": "test-guard-en-end",
+          "first_size": 993280,
+          "last_size": 993280,
+          "first_sha256": "b3789f5e7ef914e1bd5e94fa64a3484143927635e247482dc6494b68700b97ca",
+          "last_sha256": "b3789f5e7ef914e1bd5e94fa64a3484143927635e247482dc6494b68700b97ca",
+          "logits_equal": true,
+          "prompt_equal": true,
+          "prompt_ids_equal": true
+        },
+        {
+          "lang": "ja",
+          "start": "test-guard-ja-start",
+          "end": "test-guard-ja-end",
+          "first_size": 993280,
+          "last_size": 993280,
+          "first_sha256": "b94530851072794fe1650faa6f2b8b9b1974ebf6010068e9f43757517f0bbb14",
+          "last_sha256": "b94530851072794fe1650faa6f2b8b9b1974ebf6010068e9f43757517f0bbb14",
+          "logits_equal": true,
+          "prompt_equal": true,
+          "prompt_ids_equal": true
+        }
+      ],
+      "request_count": 2073,
+      "utf8_counts": {
+        "valid": 2073
+      },
+      "invalid_utf8_ids": [],
+      "completion_by_kind_language": [
+        {
+          "kind": "ability",
+          "lang": "en",
+          "total": 530,
+          "eog": 527,
+          "truncated_at_limit": 3,
+          "incomplete_or_unknown": 0,
+          "strict_utf8_valid": 530,
+          "strict_utf8_invalid": 0,
+          "output_missing": 0
+        },
+        {
+          "kind": "ability",
+          "lang": "ja",
+          "total": 530,
+          "eog": 524,
+          "truncated_at_limit": 6,
+          "incomplete_or_unknown": 0,
+          "strict_utf8_valid": 530,
+          "strict_utf8_invalid": 0,
+          "output_missing": 0
+        },
+        {
+          "kind": "ability",
+          "lang": "zh",
+          "total": 530,
+          "eog": 530,
+          "truncated_at_limit": 0,
+          "incomplete_or_unknown": 0,
+          "strict_utf8_valid": 530,
+          "strict_utf8_invalid": 0,
+          "output_missing": 0
+        },
+        {
+          "kind": "free",
+          "lang": "en",
+          "total": 159,
+          "eog": 159,
+          "truncated_at_limit": 0,
+          "incomplete_or_unknown": 0,
+          "strict_utf8_valid": 159,
+          "strict_utf8_invalid": 0,
+          "output_missing": 0
+        },
+        {
+          "kind": "free",
+          "lang": "ja",
+          "total": 159,
+          "eog": 157,
+          "truncated_at_limit": 2,
+          "incomplete_or_unknown": 0,
+          "strict_utf8_valid": 159,
+          "strict_utf8_invalid": 0,
+          "output_missing": 0
+        },
+        {
+          "kind": "free",
+          "lang": "zh",
+          "total": 159,
+          "eog": 159,
+          "truncated_at_limit": 0,
+          "incomplete_or_unknown": 0,
+          "strict_utf8_valid": 159,
+          "strict_utf8_invalid": 0,
+          "output_missing": 0
+        },
+        {
+          "kind": "guard",
+          "lang": "en",
+          "total": 2,
+          "eog": 0,
+          "truncated_at_limit": 2,
+          "incomplete_or_unknown": 0,
+          "strict_utf8_valid": 2,
+          "strict_utf8_invalid": 0,
+          "output_missing": 0
+        },
+        {
+          "kind": "guard",
+          "lang": "ja",
+          "total": 2,
+          "eog": 0,
+          "truncated_at_limit": 2,
+          "incomplete_or_unknown": 0,
+          "strict_utf8_valid": 2,
+          "strict_utf8_invalid": 0,
+          "output_missing": 0
+        },
+        {
+          "kind": "guard",
+          "lang": "zh",
+          "total": 2,
+          "eog": 0,
+          "truncated_at_limit": 2,
+          "incomplete_or_unknown": 0,
+          "strict_utf8_valid": 2,
+          "strict_utf8_invalid": 0,
+          "output_missing": 0
+        }
+      ],
+      "ability_group_count": 159,
+      "ability_totals": {
+        "denominator": 1590,
+        "accepted_correct": 1285,
+        "exact_match": 1285,
+        "truncated": 9,
+        "invalid_utf8": 0,
+        "unscored": 0
+      },
+      "artifacts": [
+        "output-hashes.csv",
+        "ability-scores.csv",
+        "ability-groups.csv",
+        "completion-groups.csv"
+      ]
+    }
+  },
+  "scoring": "not_run",
+  "resource_validity": "C2_text_window_confounded_stop",
+  "eligible_for_text_effect_analysis": false
+}

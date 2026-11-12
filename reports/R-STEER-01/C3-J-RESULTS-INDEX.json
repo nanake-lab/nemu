@@ -1,0 +1,41 @@
+{
+  "phase": "C3 J calibration and stage-1 resource block",
+  "repository": "nanake-lab/nemu-evidence",
+  "commit": "8984226558159ed0e8fb5fb4f61e990f1059b434",
+  "base_path": "R-STEER-01/c3-stage01-01",
+  "frozen_input_commit": "00555813953b786e5967b0d95e5a4d7532d2def8",
+  "results_manifest": {
+    "path": "results-files.json",
+    "sha256": "4f52df6be7c14ca6228c9237bdae24861bc068037ca6981e44c8a6e408bdb280",
+    "files": 1757,
+    "bytes": 11810321,
+    "raw_git_blob_matches_including_manifest": 1758
+  },
+  "entry_points": {
+    "review": "j-review-01/README.md",
+    "fixed_20": "j-review-01/FIXED-20.md",
+    "all_144": "j-review-01/ALL-144.md",
+    "all_invalid": "j-review-01/INVALID-24.md",
+    "literal_missing_span_audit": "j-review-01/LEAKAGE-AUDIT.md",
+    "nonhit_length_audit": "j-review-01/NONHIT-LENGTH-AUDIT.md",
+    "gates": "j-analysis-01/summary.json",
+    "per_item": "j-analysis-01/all-144.json",
+    "ledger_check": "postrun-evidence/ledger-audit.json",
+    "independent_bytes_check": "postrun-evidence/INDEPENDENT-CHECKS.md",
+    "gpu_precheck": "postrun-evidence/resource-precheck-01.json",
+    "material_root_failure": "ROOT-AUDIT-02.md"
+  },
+  "calibration_status": "C3_measurement_insufficient_stop",
+  "material_status": "material_root_conflict_stop",
+  "logical_items": 144,
+  "valid": 120,
+  "invalid": 24,
+  "attempts": 145,
+  "technical_failures": 0,
+  "upper_nano_usd": 859179024,
+  "gpu_windows_used": 0,
+  "stage1": "not_run_resource_blocked",
+  "stage2_plus": "not_run",
+  "complete_invalid_rescored": false,
+  "C2_scores_changed": false
+}

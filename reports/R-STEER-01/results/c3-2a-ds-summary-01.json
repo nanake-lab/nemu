@@ -1,0 +1,57 @@
+{
+  "stage": "ds",
+  "result": {
+    "status": "completed",
+    "stage": "ds",
+    "planned": 3924,
+    "finished": 3924,
+    "attempts": 3938,
+    "upper_nano_usd": 24792142770,
+    "active_seconds": 27886.29700000002,
+    "stop_reason": null,
+    "in_flight": 0,
+    "repeat_or_resume_authorized": false
+  },
+  "N": 3924,
+  "statuses": {
+    "rating": 3876,
+    "invalid": 48
+  },
+  "ledger_upper_nano_usd": 24792142770,
+  "ledger_peak_nano_usd": 24858880962,
+  "reservation_count": 3938,
+  "settled_count": 3924,
+  "unsettled_full_reservations": 14,
+  "primary_ds_complete": true,
+  "fallback_eligible_n": 48,
+  "raw_files": 47192,
+  "raw_bytes": 281616508,
+  "binding": {
+    "stage": "ds",
+    "public_head": "cdd18857ad83e0d82b2d7b2c506c5f510a9d935f",
+    "private_head": "97d8f31f9ad13840a24447f56bdbc2e084d326eb",
+    "inputs_plan_sha256": "c8d1ee5b0f6013cb2358d4074326e6c1fefccb6e0c5f3894f75ee30e8a6bc643",
+    "started_utc": "2026-11-12T13:42:53.888299+00:00"
+  },
+  "price_check": {
+    "checked_utc": "2026-11-12T13:39:13.766691+00:00",
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "model": "deepseek-flash",
+    "model_version": "DeepSeek-V4.1-Flash-1017",
+    "rates": {
+      "hit": 6,
+      "miss": 300,
+      "output": 1200
+    },
+    "rate_unit": "integer nano-USD/token; peak-rate reserve",
+    "official_usd_per_million_tokens": {
+      "cache_hit_peak": 0.006,
+      "cache_miss_peak": 0.3,
+      "output_peak": 1.2
+    },
+    "verified_with": "official page opened using web tool immediately before this record",
+    "matches_frozen_rates": true
+  },
+  "Terra_fallback": "not_run",
+  "independent_dual_scoring": "not_run"
+}

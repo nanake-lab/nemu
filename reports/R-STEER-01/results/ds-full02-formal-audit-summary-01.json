@@ -1,0 +1,56 @@
+{
+  "01-integrity": {
+    "execution": {
+      "argv": [
+        "D:\\Dev\\cache\\P0-10\\convert-venv\\Scripts\\python.exe",
+        "-I",
+        "-B",
+        "D:\\Dev\\cache\\R-STEER-01\\ds-full02-formal-audit-01\\audit_integrity.py"
+      ],
+      "windows_command_line": "D:\\Dev\\cache\\P0-10\\convert-venv\\Scripts\\python.exe -I -B D:\\Dev\\cache\\R-STEER-01\\ds-full02-formal-audit-01\\audit_integrity.py",
+      "cwd": "D:\\Dev\\nemu-wt\\R-STEER-01",
+      "started_utc": "2026-11-10T06:08:58.134513+00:00",
+      "ended_utc": "2026-11-10T06:09:05.638684+00:00",
+      "exit_code": 0,
+      "launch_error_class": null,
+      "environment_policy": "fixed synthetic values; inherited environment not read or copied",
+      "stdout": "01-integrity.stdout",
+      "stderr": "01-integrity.stderr"
+    },
+    "checks": {
+      "sample_review_approved_and_original_sample_ids_match_plan": true,
+      "inventory_sha_matches_approved_value": true,
+      "four_review_residuals_preserved_verbatim_in_analysis": true,
+      "52_frozen_source_hashes_match_repo_and_snapshot": true,
+      "all_504_inventory_artifacts_match_and_outcomes_agree": true,
+      "formal_analysis_and_approval_exactly_match_existing_evidence": true,
+      "formal_analysis_records_no_pilot_scores": true
+    }
+  },
+  "02-numeric": {
+    "execution": {
+      "argv": [
+        "D:\\Dev\\cache\\P0-10\\convert-venv\\Scripts\\python.exe",
+        "-I",
+        "-B",
+        "D:\\Dev\\cache\\R-STEER-01\\ds-full02-formal-audit-01\\audit_numeric.py"
+      ],
+      "windows_command_line": "D:\\Dev\\cache\\P0-10\\convert-venv\\Scripts\\python.exe -I -B D:\\Dev\\cache\\R-STEER-01\\ds-full02-formal-audit-01\\audit_numeric.py",
+      "cwd": "D:\\Dev\\nemu-wt\\R-STEER-01",
+      "started_utc": "2026-11-10T06:09:05.639685+00:00",
+      "ended_utc": "2026-11-10T06:09:06.235287+00:00",
+      "exit_code": 0,
+      "launch_error_class": null,
+      "environment_policy": "fixed synthetic values; inherited environment not read or copied",
+      "stdout": "02-numeric.stdout",
+      "stderr": "02-numeric.stderr"
+    },
+    "checks": {
+      "504_unique_key_ids_match_inventory": true,
+      "501_ratings_3_invalid_no_technical": true,
+      "432_base_72_repeat_and_unique_base_jobs": true,
+      "invalid_never_filled_and_any_invalid_component_nulls_delta": true,
+      "all_frozen_numeric_counts_equal_existing_analysis": true
+    }
+  }
+}

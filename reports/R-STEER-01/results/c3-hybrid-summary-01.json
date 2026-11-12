@@ -1,0 +1,1106 @@
+{
+  "status": "posthoc_mixed_gates_pass_needs_user",
+  "posthoc_not_new_independent_calibration": true,
+  "historical_conclusions_unchanged": true,
+  "cohorts": {
+    "J-v1": {
+      "sources": {
+        "DeepSeek": 120,
+        "Terra": 24
+      },
+      "main": {
+        "all_pass": true,
+        "groups": [
+          {
+            "partition": "development",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 11,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              0.9583333333333334,
+              0.9583333333333334
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "sensitivity_Terra_as_missing": {
+        "all_pass": false,
+        "groups": [
+          {
+            "partition": "development",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 8,
+            "specificity_count": 12,
+            "t_exact_count": 20,
+            "valid_count": 20,
+            "missing": 4,
+            "specials": {},
+            "meta_correct_bounds": [
+              0.8333333333333334,
+              1.0
+            ],
+            "T_exact_bounds": [
+              0.8333333333333334,
+              1.0
+            ],
+            "pass": false
+          },
+          {
+            "partition": "development",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 9,
+            "specificity_count": 12,
+            "t_exact_count": 21,
+            "valid_count": 21,
+            "missing": 3,
+            "specials": {},
+            "meta_correct_bounds": [
+              0.875,
+              1.0
+            ],
+            "T_exact_bounds": [
+              0.875,
+              1.0
+            ],
+            "pass": false
+          },
+          {
+            "partition": "development",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 8,
+            "specificity_count": 12,
+            "t_exact_count": 20,
+            "valid_count": 20,
+            "missing": 4,
+            "specials": {},
+            "meta_correct_bounds": [
+              0.8333333333333334,
+              1.0
+            ],
+            "T_exact_bounds": [
+              0.8333333333333334,
+              1.0
+            ],
+            "pass": false
+          },
+          {
+            "partition": "check",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 8,
+            "specificity_count": 12,
+            "t_exact_count": 20,
+            "valid_count": 20,
+            "missing": 4,
+            "specials": {
+              "inventory_absence": {
+                "correct": 3,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 1,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              0.8333333333333334,
+              1.0
+            ],
+            "T_exact_bounds": [
+              0.8333333333333334,
+              1.0
+            ],
+            "pass": false
+          },
+          {
+            "partition": "check",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 8,
+            "specificity_count": 11,
+            "t_exact_count": 20,
+            "valid_count": 20,
+            "missing": 4,
+            "specials": {
+              "inventory_absence": {
+                "correct": 2,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 1,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              0.7916666666666666,
+              0.9583333333333334
+            ],
+            "T_exact_bounds": [
+              0.8333333333333334,
+              1.0
+            ],
+            "pass": false
+          },
+          {
+            "partition": "check",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 8,
+            "specificity_count": 11,
+            "t_exact_count": 19,
+            "valid_count": 19,
+            "missing": 5,
+            "specials": {
+              "inventory_absence": {
+                "correct": 3,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 0,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 1,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              0.7916666666666666,
+              1.0
+            ],
+            "T_exact_bounds": [
+              0.7916666666666666,
+              1.0
+            ],
+            "pass": false
+          }
+        ]
+      },
+      "independent_validation": false,
+      "main_vs_sensitivity_gate_disagreement": true
+    },
+    "J-v2": {
+      "sources": {
+        "DeepSeek": 142,
+        "Terra": 2
+      },
+      "main": {
+        "all_pass": true,
+        "groups": [
+          {
+            "partition": "development",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "sensitivity_Terra_as_missing": {
+        "all_pass": false,
+        "groups": [
+          {
+            "partition": "development",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 11,
+            "specificity_count": 12,
+            "t_exact_count": 23,
+            "valid_count": 23,
+            "missing": 1,
+            "specials": {},
+            "meta_correct_bounds": [
+              0.9583333333333334,
+              1.0
+            ],
+            "T_exact_bounds": [
+              0.9583333333333334,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 11,
+            "specificity_count": 12,
+            "t_exact_count": 23,
+            "valid_count": 23,
+            "missing": 1,
+            "specials": {
+              "inventory_absence": {
+                "correct": 3,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              0.9583333333333334,
+              1.0
+            ],
+            "T_exact_bounds": [
+              0.9583333333333334,
+              1.0
+            ],
+            "pass": false
+          },
+          {
+            "partition": "check",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "independent_validation": false,
+      "main_vs_sensitivity_gate_disagreement": true
+    },
+    "J-v3": {
+      "sources": {
+        "DeepSeek": 143,
+        "Terra": 1
+      },
+      "main": {
+        "all_pass": true,
+        "groups": [
+          {
+            "partition": "development",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "sensitivity_Terra_as_missing": {
+        "all_pass": false,
+        "groups": [
+          {
+            "partition": "development",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "development",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {},
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "zh",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          },
+          {
+            "partition": "check",
+            "lang": "en",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 11,
+            "specificity_count": 12,
+            "t_exact_count": 23,
+            "valid_count": 23,
+            "missing": 1,
+            "specials": {
+              "inventory_absence": {
+                "correct": 3,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              0.9583333333333334,
+              1.0
+            ],
+            "T_exact_bounds": [
+              0.9583333333333334,
+              1.0
+            ],
+            "pass": false
+          },
+          {
+            "partition": "check",
+            "lang": "ja",
+            "n": 24,
+            "positive_n": 12,
+            "negative_n": 12,
+            "sensitivity_count": 12,
+            "specificity_count": 12,
+            "t_exact_count": 24,
+            "valid_count": 24,
+            "missing": 0,
+            "specials": {
+              "inventory_absence": {
+                "correct": 4,
+                "n": 4
+              },
+              "long_positive": {
+                "correct": 2,
+                "n": 2
+              },
+              "long_negative": {
+                "correct": 2,
+                "n": 2
+              }
+            },
+            "meta_correct_bounds": [
+              1.0,
+              1.0
+            ],
+            "T_exact_bounds": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "independent_validation": false,
+      "main_vs_sensitivity_gate_disagreement": true
+    }
+  },
+  "stage2_plus": "not_run",
+  "user_review": "pending",
+  "coverage": "connection/achievement signs; empathy/curiosity absent only; other flags lack complete truth",
+  "single_new_run": {
+    "status": "Terra",
+    "terminal": {
+      "status": "rating",
+      "reason": "valid",
+      "attempts": 1,
+      "selected_attempt": 1
+    },
+    "attempts": 1,
+    "upper_nano_usd": 15382500,
+    "peak_nano_usd": 106025000,
+    "active_seconds": 32.561999999918044,
+    "stop_reason": null,
+    "in_flight": 0,
+    "fingerprint": null
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "decision": "C1_insufficient_stop",
+  "automatic_gates_pass": false,
+  "semantic_gate": "not_run",
+  "languages": [
+    {
+      "lang": "zh",
+      "concept_cells": [
+        {
+          "concept": "achievement",
+          "root_anchor_spans": [
+            0.9307105510896234,
+            0.7845526037523433
+          ],
+          "mean_span": 0.8576315774209833,
+          "pass": true
+        },
+        {
+          "concept": "connection",
+          "root_anchor_spans": [
+            0.9052801474808476,
+            1.0427296664021437
+          ],
+          "mean_span": 0.9740049069414957,
+          "pass": true
+        },
+        {
+          "concept": "curiosity",
+          "root_anchor_spans": [
+            0.5710076040813824,
+            0.33579775961963476
+          ],
+          "mean_span": 0.4534026818505086,
+          "pass": true
+        },
+        {
+          "concept": "empathy",
+          "root_anchor_spans": [
+            1.2800020473485783,
+            1.2014320797692162
+          ],
+          "mean_span": 1.2407170635588973,
+          "pass": true
+        }
+      ],
+      "headroom_pass": 50,
+      "headroom_total": 64,
+      "position_pass": 66,
+      "position_total": 96,
+      "representation": {
+        "paraphrase": {
+          "pass_count": 23,
+          "total": 48,
+          "required_fraction": 0.75
+        },
+        "long": {
+          "pass_count": 25,
+          "total": 48,
+          "required_fraction": 0.75
+        },
+        "courtesy": {
+          "pass_count": 35,
+          "total": 48,
+          "required_fraction": 0.75
+        }
+      },
+      "factual_both_sum_mean_correct": 16,
+      "factual_total": 16,
+      "free_technical_valid": 48,
+      "free_total": 48,
+      "guards_byte_equal": true,
+      "guard_sha256": [
+        "dea2416bb09e39633b8e6d4ea29b77fb5838f4bfef859ed20f2317f9f58eb744",
+        "dea2416bb09e39633b8e6d4ea29b77fb5838f4bfef859ed20f2317f9f58eb744"
+      ]
+    },
+    {
+      "lang": "en",
+      "concept_cells": [
+        {
+          "concept": "achievement",
+          "root_anchor_spans": [
+            0.7197086159885924,
+            0.5488511879484512
+          ],
+          "mean_span": 0.6342799019685218,
+          "pass": true
+        },
+        {
+          "concept": "connection",
+          "root_anchor_spans": [
+            0.4209799166047822,
+            0.46633133421470696
+          ],
+          "mean_span": 0.44365562540974457,
+          "pass": true
+        },
+        {
+          "concept": "curiosity",
+          "root_anchor_spans": [
+            0.01574631578519385,
+            -0.4303294647017159
+          ],
+          "mean_span": -0.20729157445826102,
+          "pass": false
+        },
+        {
+          "concept": "empathy",
+          "root_anchor_spans": [
+            0.26946262656053654,
+            0.5462944236325455
+          ],
+          "mean_span": 0.40787852509654104,
+          "pass": true
+        }
+      ],
+      "headroom_pass": 33,
+      "headroom_total": 64,
+      "position_pass": 50,
+      "position_total": 96,
+      "representation": {
+        "paraphrase": {
+          "pass_count": 26,
+          "total": 48,
+          "required_fraction": 0.75
+        },
+        "long": {
+          "pass_count": 21,
+          "total": 48,
+          "required_fraction": 0.75
+        },
+        "courtesy": {
+          "pass_count": 20,
+          "total": 48,
+          "required_fraction": 0.75
+        }
+      },
+      "factual_both_sum_mean_correct": 16,
+      "factual_total": 16,
+      "free_technical_valid": 48,
+      "free_total": 48,
+      "guards_byte_equal": true,
+      "guard_sha256": [
+        "4fd86a76fd0c4d046fd4c0c26cdb7954e881f38c803263c9d8e3fff889f09988",
+        "4fd86a76fd0c4d046fd4c0c26cdb7954e881f38c803263c9d8e3fff889f09988"
+      ]
+    },
+    {
+      "lang": "ja",
+      "concept_cells": [
+        {
+          "concept": "achievement",
+          "root_anchor_spans": [
+            1.2808399604370577,
+            0.6648187209340379
+          ],
+          "mean_span": 0.9728293406855478,
+          "pass": true
+        },
+        {
+          "concept": "connection",
+          "root_anchor_spans": [
+            0.7356229932286605,
+            0.7624468629209014
+          ],
+          "mean_span": 0.749034928074781,
+          "pass": true
+        },
+        {
+          "concept": "curiosity",
+          "root_anchor_spans": [
+            0.20158350508735462,
+            0.5634868205357348
+          ],
+          "mean_span": 0.38253516281154476,
+          "pass": true
+        },
+        {
+          "concept": "empathy",
+          "root_anchor_spans": [
+            1.2609595493381782,
+            0.6260445992372977
+          ],
+          "mean_span": 0.943502074287738,
+          "pass": true
+        }
+      ],
+      "headroom_pass": 44,
+      "headroom_total": 64,
+      "position_pass": 60,
+      "position_total": 96,
+      "representation": {
+        "paraphrase": {
+          "pass_count": 28,
+          "total": 48,
+          "required_fraction": 0.75
+        },
+        "long": {
+          "pass_count": 25,
+          "total": 48,
+          "required_fraction": 0.75
+        },
+        "courtesy": {
+          "pass_count": 31,
+          "total": 48,
+          "required_fraction": 0.75
+        }
+      },
+      "factual_both_sum_mean_correct": 16,
+      "factual_total": 16,
+      "free_technical_valid": 47,
+      "free_total": 48,
+      "guards_byte_equal": true,
+      "guard_sha256": [
+        "64f96cb0dd75ee2202320fc18bacfb895ffac593d5c05dcee436f89cee8270d0",
+        "64f96cb0dd75ee2202320fc18bacfb895ffac593d5c05dcee436f89cee8270d0"
+      ]
+    }
+  ],
+  "boundary": "Continuous gain is not a concept probability; anchor response is not steering evidence.",
+  "public_projection": {
+    "original_evidence_path": "R-STEER-01/results/c1-summary-02.json",
+    "omitted_detail_keys": [
+      "contrasts",
+      "scored_items"
+    ],
+    "research_values_unchanged": true
+  }
+}

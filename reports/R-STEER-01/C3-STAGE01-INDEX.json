@@ -1,0 +1,34 @@
+{
+  "phase": "C3 stage 0-1 preparation",
+  "status_at_freeze": "no_model_or_api_output",
+  "repository": "nanake-lab/nemu-evidence",
+  "commit": "00555813953b786e5967b0d95e5a4d7532d2def8",
+  "base_path": "R-STEER-01/c3-stage01-01",
+  "manifest": {
+    "path": "frozen-files.json",
+    "sha256": "b2e828538295caea593585e5e8e001cf1f92ec7537bdb7746899372ae615816c",
+    "files": 896,
+    "raw_byte_blobs_verified_in_git": 897
+  },
+  "entry_points": [
+    {"path": "ROOT-REVIEW.md", "purpose": "root conflict table and retained structural similarities"},
+    {"path": "PREPARATION.md", "purpose": "preparation failures, fixes, scope and execution bindings"},
+    {"path": "inputs-01/root-registry.json", "sha256": "3574ae58c81adea4f3fb555091e036be67e1da1da3f48f1f3008ca7a40c682ac", "roots": 262},
+    {"path": "inputs-01/plan.json", "sha256": "94b81313ee568bf5f93665fee5fff1b30ed0cdef44dc88b8d558a8945112311a", "calibration_requests": 144},
+    {"path": "inputs-01/calibration-truth.json", "sha256": "529bcc8f649fd40aaf5c7fb4c232ad765117351546ddd20ebc57f5ca39078086", "judge_can_see": false},
+    {"path": "forward-template-01/jobs.json", "sha256": "9c78aad810474778463f8387e32b76d6d51e0a1e94bdfb53e42259fc9e432b4f", "requests": 390, "generated_tokens": 0},
+    {"path": "protocol/DS-C3-RUBRIC-01.txt", "purpose": "exact new rubric"},
+    {"path": "build-proof/build.json", "executable_sha256": "dc66c101bf13772e4949889ff85a7d1895f1ea82c2f5cba5e2736b4ad10c5f19"},
+    {"path": "checks/offline-tests-01.txt", "passed": 4},
+    {"path": "checks/mypy-04.txt", "files": 15}
+  ],
+  "authorized_budget": {"hard_usd": 5, "soft_usd": 4.75, "active_api_seconds": 5400, "max_gpu_windows": 2, "minutes_per_window": 40},
+  "stage2_plus": "not_run",
+  "C2_scores": "unchanged",
+  "post_freeze_root_audit": {
+    "commit": "e9b0e27e7377e731f221dbf5f3bf9809a7a57358",
+    "path": "R-STEER-01/c3-stage01-01/ROOT-AUDIT-02.md",
+    "status": "material_root_conflict_stop",
+    "frozen_inputs_modified": false
+  }
+}
