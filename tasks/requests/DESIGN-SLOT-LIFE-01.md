@@ -1,6 +1,6 @@
 # DESIGN-SLOT-LIFE-01：F 依据槽的生命周期
 
-- 类型：纯设计；难度：高；状态：进行中，交付后保持 draft / needs-user。
+- 类型：纯设计；难度：高；状态：设计已交付，保持 draft / needs-user，待交叉审查与 U1–U4 决定。
 - 用户授权：2026-11-12 本次派卡。交付 ADR 草案与候选差异登记，不改代码；写「请审查」后停止。
 - 基线：origin/main `05e993ea`；独立工作区与分支 `task/DESIGN-SLOT-LIFE-01-slot-lifecycle`。
 - 目录：本请求、`docs/adr/0041-f-basis-slot-lifecycle.md`、`reports/DESIGN-SLOT-LIFE-01/`；共享差异登记只追加。
