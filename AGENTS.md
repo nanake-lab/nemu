@@ -40,12 +40,21 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 - **只追加的记录：** `docs/traceability/diff-register.md`。`reports/` 的规则见第 6 节。
 - **后继消息带来的穷举表追加（2026-10-25）：** 契约新增后继消息后，别处按消息类型穷举的表或样例表（例如面板 `schema-validator.ts` 的样例）缺一行导致检查失败时，可以直接追加这一行，不需要请求文件；只追加、不改旧行，并在报告里列明文件和行。
 
+**分工（2026-11-12 用户决定，按现行做法）：**
+
+- **Claude：** 和用户一起规划，写派卡提示，审查；不认领实现卡。文档类工作（卡片与文档维护 card-edit、学习文档等）可以由 Claude 会话直接完成。
+- **Codex：** 实现。下表中原来建议 Claude 的目录，实现也交给 Codex。
+- **设计卡与研究卡**（`DESIGN-`、`R-`）：在 Codex 里用 GPT-6 Astra、推理强度 high 执行。
+- **推理强度（2026-11-12 用户决定）：** 实现卡、审查后的修复轮、按已冻结方案执行的重跑与补跑，用 GPT-6 Astra 中；设计、研究、规律相关内容和难的交叉审查用 Astra high（必要时 max）；简单机械的小活用 Sol 6.1 max。文档类工作只在用户说明 Claude 额度有富余时交给 Claude 会话，否则交给 Codex。
+- **Antigravity：** 不变，按下表。
+- **旧写法的读法：** 未完成的卡，卡面上写「建议执行者：Claude」的，以及 `tasks/README.md` 第 2 节执行者表与取卡顺序里 Claude 的实现卡，一律按本段读作 Codex；以 `tasks/cards.json` 为准。已完成的卡保留当时的建议执行者。
+
 下表是各目录通常由谁做，以及特别规则。执行者一栏是建议；括号里的特别规则对所有执行者都有效。
 
 | 路径 | 建议执行者与特别规则 |
 | --- | --- |
 | `core/**`（Echo Core：Rust 工作区、IDL、黄金向量） | Codex（`core/contracts/` 只在标注「契约变更」且有 ADR 的任务里修改） |
-| `core/crates/core-policy/**`、`core/crates/core-kernel/**`、`core/crates/experiment-world/**` | Claude |
+| `core/crates/core-policy/**`、`core/crates/core-kernel/**`、`core/crates/experiment-world/**` | Codex |
 | `workers/**`（irl、drive、model-adapter） | Codex |
 | `executors/**`（codex-bridge、office-connector） | Codex |
 | `services/**`（voice-sidecar） | Codex |
@@ -58,12 +67,12 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 | `packages/body/**`（物理状态机、反射、读出应用） | Antigravity |
 | `packages/desktop-sense/**` | Codex |
 | `packages/voice/**`（含 `packages/voice/web/**` 麦克风采集模块） | Codex |
-| `tools/**` | Codex（`tools/status/` 看板状态脚本：Claude） |
+| `tools/**` | Codex |
 | `config/**` | Codex（`opportunities.json`、`helpers.json` 的修改需要 ADR） |
 | `profiles/**`（Echo Core 结构夹具与部署配置） | Codex |
 | `spikes/**` | 由任务卡指定 |
 | `content/**` | 用户。代理可以提交管线生成的产物：`nemu.vrm`、`nemu.profile.json`、`lipsync/*.json`、`motions/*.vrma` 及其清单条目。其余内容在用户确认之前只能放进 `content/_candidates/`：设定集、源文件、`build.yaml` 里的审美参数、定稿的音色、协议 p、genesis 清单、语气样例库 |
-| `docs/**`、`tasks/**` | 只能追加报告、请求和 ADR；`docs/echo-core/original/` 永远不改。改已有文字或 `tasks/cards.json` 需要用户批准（PR 加 `needs-user`） |
+| `docs/**`、`tasks/**` | 文档类工作可由 Claude 会话完成；报告随各卡由该卡执行者写。只能追加报告、请求和 ADR；`docs/echo-core/original/` 永远不改。改已有文字或 `tasks/cards.json` 需要用户批准（PR 加 `needs-user`） |
 
 2026-11-11 用户决定一次性例外：仅移除上述两份 docx 的个人元数据，正文不变；原件在私有证据仓。
 此处两份指 `Ada Echo Core Math define.docx`、`Echo Core Implementation Plan.docx`；仅允许报告登记的旧哈希到新哈希转换。
@@ -88,6 +97,7 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
     - 改变存储格式的修改必须带迁移、回退和迁移测试（SYS17），迁移失败时保留旧系统。
 15. **不替用户操作。** 不操作浏览器或其他应用去请求审查、联系其他执行者或替用户做事。需要审查时在 PR 里写「请审查」，然后停下。
 16. **不改用户级、系统级设置（2026-10-25）。** 包括注册表、开机启动项、系统或用户环境变量、全局的 git/npm/pnpm/uv 配置、防火墙、电源与通知设置。测试和工具需要时，只用进程内或仓库内的配置；确实要改的，写进 `BLOCKED.md` 由用户决定并由用户本人执行。发现以前的代码会改这类设置（例如测试路径写开机启动项），只读检查、写进报告，不自行删除。
+17. **新增之前先做减法（2026-11-12 用户决定）。** 设计方法是最简、做减法、第一性原理、以数学为基础（v2.0 §0）。提出任何新增的规则、结构、参数、机制或任务卡之前，先在报告或提议里回答三问：能不能不加？一个人会怎样？加了以后，有什么从此改不掉？三问答不过的不提；答过的，把答案写进提议。
 
 ## 4. 常用命令
 
@@ -313,13 +323,13 @@ Antigravity 会自动发现这些技能；Codex 请在开始相关任务时手�
 - 转为可审查以后还要连续修改时，先转回草稿，改完再转回，避免每推一次就在用户电脑上跑一轮。
 - 新增一类 Windows 检查时，同时把它涉及的目录加进 `windows.yml` 开头的路径列表和「Decide scope」步骤。
 
-## 10. Claude（2026-10-19 用户追加，同日按新的第 2、6 节整理）
+## 10. Claude（2026-10-19 用户追加，同日按新的第 2、6 节整理；2026-11-12 按现行分工修订）
 
-用户已决定增加第三个执行者 Claude（Claude Code 云端会话）。Claude 遵守本文件全部规则，另有以下几点：
+Claude（Claude Code 云端会话）遵守本文件全部规则，另有以下几点：
 
-- **Claude 的卡：** `tasks/cards.json` 中建议执行者为 Claude 的卡，即 `core/crates/core-policy/`、`core-kernel/`、`experiment-world/` 里不依赖 Windows 和显卡的 Echo Core 部分。其他卡由用户在派活时点名。
+- **职责（2026-11-12 用户决定）：** 和用户一起规划，写派卡提示，审查（第 2 节「分工」）。不认领实现卡；实现交给 Codex。`tasks/cards.json` 里未完成的卡不再建议 Claude，已完成的卡保留当时的建议执行者。文档类工作（card-edit、学习文档等）可以由 Claude 会话直接完成，照常开草稿 PR。
 - **审查：** 用户转来时审查（第 6 节）。
-- **环境：** Linux 云端临时会话，没有 Windows、显卡和用户的机器，也不保存本地状态。验收需要这些的卡，Claude 不认领。所有进度以推送到 GitHub 的分支、PR 和报告为准。
+- **环境：** Linux 云端临时会话，没有 Windows、显卡和用户的机器，也不保存本地状态。所有进度以推送到 GitHub 的分支、PR 和报告为准。
 - **工具链：** Claude 的环境可能无法安装 `core/rust-toolchain.toml` 锁定的版本。此时 Claude 可以用环境内可用的 stable 版本做本地开发和测试，但以 CI 中按锁定版本运行的结果为准；报告里写明本地实际使用的版本。
 - **Windows CI：** Claude 的 PR 同样会触发 Windows 作业。需要 Windows runner 时，Claude 提前通知用户，不自行判断不需要。
 
