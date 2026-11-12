@@ -114,3 +114,13 @@ Nemu 自己的里程碑记作 N0–N4（ADR 0005），与本规格施工总方�
 ## 追加（2026-11-11）：阅读范围
 
 本节只追加，上文保留作历史说明。第 5 节及 2026-10-19 追加中「第 5 节」一条规定的阅读范围，改为按 [`.agents/skills/echo-core-work/SKILL.md`](../../.agents/skills/echo-core-work/SKILL.md) 第 1 节的分级读法（2026-11-11 用户决定）：设计卡、改规格或契约的 ADR、预注册研究通读 v2.0 全文；Echo Core 相关的普通实现卡读 v2.0 目录与相关章节；所有卡读卡上「必读」「来源」所列的原文章节。
+
+## 追加（2026-11-12）：两份旧规格内容的取代
+
+本节只追加，上文保留作历史说明。
+
+> **状态更新（2026-11-12）：** 旧规格的原文与转换版不挪、不在文内标注，作为历史保留（ADR 0009）；读的时候注意：
+> - **R 转换版** [`v0.6.4-rg-plasticity-spec.md`](v0.6.4-rg-plasticity-spec.md) 全文已被 [v2.0](echo-core-v2.0-first-principles.md) 取代（第 4、5、7、8、12 节；第 15 节、ADR 0009），没有仍有效的独有内容，只作历史引用。
+> - **S** [`echo-core-system-plan-v1.0.md`](echo-core-system-plan-v1.0.md) **§27「分工 排期与第一批任务」** 已由任务卡体系与 [tasks/README.md](../../tasks/README.md) 第 5 节的里程碑 E1–E5 取代。
+>
+> 依据：PR #162「待用户判断」第 7 项，用户 2026-11-12 同意建议；[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.4 节、第 2.2 节。
