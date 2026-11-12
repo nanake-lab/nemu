@@ -124,12 +124,13 @@ Echo Core 里有不少不完美的选择，我们把它们集中写在 [docs/OPE
 
 Nemu 由 [nanake-lab](https://github.com/nanake-lab) 发起并拥有。架构、Echo Core 规格、美术取舍、诞生与所有定稿决定都属于项目所有者。
 
-下列 AI 编码代理按 [`AGENTS.md`](AGENTS.md) 的规则参与施工。它们只修改任务卡允许的目录，所有变动都经 PR 提交，按卡的难度与强制交叉审查范围审查后合并（[`AGENTS.md`](AGENTS.md) 第 6 节）；需要用户确认的事项交给项目所有者决定。
+下列 AI 协作方按 [`AGENTS.md`](AGENTS.md) 的规则参与项目。施工时只修改任务卡允许的目录，所有变动都经 PR 提交，按卡的难度与强制交叉审查范围审查后合并（[`AGENTS.md`](AGENTS.md) 第 6 节）；需要用户确认的事项交给项目所有者决定。
 
 | 协作方 | 提供方 | 通常做的卡与职责 |
 | :--- | :--- | :--- |
-| [Codex](https://openai.com/codex/) | OpenAI | Echo Core（`core-policy`、`core-kernel` 除外）、worker、执行器、旁路服务、桌面应用、契约与工具链；交叉审查高难度卡及强制审查范围（契约与 IDL、存储格式、行动闸门与权限、网络生活、改规格或契约的 ADR） |
-| [Claude](https://claude.com/product/claude-code) (Claude Code) | Anthropic | Echo Core 核心数学链：`core-policy`、`core-kernel`、`experiment-world`，以及核心状态的 IDL（P5-09、P5-21、P5-27、P5-10、P5-12、P5-23 至 P5-26、P5-30）与新规律实现（如 P5-69、P5-70）；审查其余中、高难度卡，每日抽查 |
+| [Codex](https://openai.com/codex/) | OpenAI | 实现与研究执行，包括 Echo Core、worker、执行器、旁路服务、桌面应用、契约与工具链；模型与推理强度按 [`AGENTS.md`](AGENTS.md) 第 2 节执行 |
+| [Claude](https://claude.com/product/claude-code) (Claude Code) | Anthropic | 和用户一起规划，写派卡提示，审查；不认领实现卡。文档类工作按 [`AGENTS.md`](AGENTS.md) 第 2 节分配 |
+| [ChatGPT](https://chatgpt.com/) 中的 GPT-6 Pro | OpenAI | 外部独立审计与研究；相关记录见 [PR #180](https://github.com/nanake-lab/nemu/pull/180)、[PR #181](https://github.com/nanake-lab/nemu/pull/181)、[PR #184](https://github.com/nanake-lab/nemu/pull/184) |
 | [Antigravity](https://antigravity.google/) | Google | 舞台、评审台、角色运行时与身体（`apps/stage`、`apps/panel`、`packages/avatar-runtime`、`packages/body`） |
 
-每张卡的建议执行者以 `tasks/cards.json` 和任务卡头部为准，规则见 [`AGENTS.md`](AGENTS.md) 第 2、6、10 节。
+现行分工自 2026-11-12 起按 [`AGENTS.md`](AGENTS.md) 第 2 节执行；`tasks/cards.json` 和任务卡头部中的建议执行者按该节现行分工解读，审查规则见第 6、10 节。
