@@ -45,6 +45,7 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 - **Claude：** 和用户一起规划，写派卡提示，审查；不认领实现卡。文档类工作（卡片与文档维护 card-edit、学习文档等）可以由 Claude 会话直接完成。
 - **Codex：** 实现。下表中原来建议 Claude 的目录，实现也交给 Codex。
 - **设计卡与研究卡**（`DESIGN-`、`R-`）：在 Codex 里用 GPT-6 Astra、推理强度 high 执行。
+- **推理强度（2026-11-12 用户决定）：** 实现卡、审查后的修复轮、按已冻结方案执行的重跑与补跑，用 GPT-6 Astra 中；设计、研究、规律相关内容和难的交叉审查用 Astra high（必要时 max）；简单机械的小活用 Sol 6.1 max。文档类工作只在用户说明 Claude 额度有富余时交给 Claude 会话，否则交给 Codex。
 - **Antigravity：** 不变，按下表。
 - **旧写法的读法：** 未完成的卡，卡面上写「建议执行者：Claude」的，以及 `tasks/README.md` 第 2 节执行者表与取卡顺序里 Claude 的实现卡，一律按本段读作 Codex；以 `tasks/cards.json` 为准。已完成的卡保留当时的建议执行者。
 
