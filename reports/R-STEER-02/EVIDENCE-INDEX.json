@@ -1,0 +1,268 @@
+{
+  "repository": "nanake-lab/nemu-evidence",
+  "commit": "a44cbc04749f49e9c0de417c520a0c2189113511",
+  "branch": "evidence/R-STEER-02-prereg",
+  "date_perth": "2026-11-11",
+  "status": "complete_pending_user_review",
+  "generation": "complete",
+  "scoring": "complete",
+  "api_calls": {
+    "openai_models_get": 1,
+    "openai_generation_attempts": 2083,
+    "deepseek_scoring_attempts": 541
+  },
+  "files": [
+    {
+      "path": "R-STEER-02/prereg-01/models-20261111.json",
+      "sha256": "c340e561dadc8c96083c4890c48518073da71926ef9b2342bd4fa90435246177",
+      "bytes": 16053
+    },
+    {
+      "path": "R-STEER-02/prereg-01/source-binding.json",
+      "sha256": "b6de4a80c9ea13c49aa14cf80c01e4d870c5504605bd857b2b1d172814cb818d",
+      "bytes": 4014
+    },
+    {
+      "path": "R-STEER-02/prereg-01/static-cost.json",
+      "sha256": "01c620427bac4a52b9fbc73fb4d2a9a310ca4b4179b53b05b4ca1b1ed68ab4d7",
+      "bytes": 430
+    }
+  ],
+  "verification": "Private branch pushed; local file bytes match committed blobs. JSON parsed. Initial CRLF normalization mismatch corrected with task-local binary attributes; no evidence content changed. No C3 material content opened.",
+  "execution_preflight": {
+    "commit": "f9cb4966c5d9966b35606d15de01458580f9c180",
+    "files": [
+      {
+        "path": "R-STEER-02/blocked-01/preflight.json",
+        "sha256": "5a5597575c1d248780e0c4bf01af2bfdd04f1c480d08fb0008405cf19e713c81",
+        "bytes": 500
+      }
+    ],
+    "new_paid_calls": 0,
+    "new_paid_cost_usd": 0
+  },
+  "execution_package": {
+    "commit": "c6f22054d350d21fb0adbfaa59096b97ce251b43",
+    "manifest": {
+      "path": "R-STEER-02/execution-01/MANIFEST.json",
+      "sha256": "5c4fcddba2c802b81bc379fead4e0f59dd7bffd70c849a25e367f09bb8a90e64",
+      "bytes": 627423
+    },
+    "file_count": 3087,
+    "verification": "Remote branch HEAD equals local commit; every manifest file SHA equals committed blob and local bytes; no paid calls yet"
+  },
+  "completed_populations": {
+    "generation": 2073,
+    "scoring": 540,
+    "valid_ratings": 518,
+    "invalid_ratings": 22,
+    "missing_or_not_run": 0,
+    "fixed_review_sample": 20
+  },
+  "generation_checkpoint": {
+    "commit": "7aa1380661d12c4b2bea56e5a0530ec879491de8",
+    "manifest_path": "R-STEER-02/run-01/GENERATION-MANIFEST.json",
+    "sha256": "2a079aa0bdcb41ae0a115704e2262a5af0f66ca548eda5ae24b5e34404929341",
+    "files": 12486
+  },
+  "results": {
+    "commit": "5ce1dcfc897ee669e6ceb7a7873786551c2b9a89",
+    "manifest": {
+      "path": "R-STEER-02/run-01/MANIFEST.json",
+      "sha256": "7c8c9a240a3680029fcfe9fca2d6d3228ee13d6148ae7787fdbf88baff41f253",
+      "bytes": 3277246
+    },
+    "file_count": 16274,
+    "analysis_path": "R-STEER-02/run-01/analysis/analysis.json",
+    "review_packet_path": "R-STEER-02/run-01/analysis/review-packet.json",
+    "review_index_path": "R-STEER-02/run-01/analysis/review-index.json",
+    "review_notes_path": "R-STEER-02/run-01/analysis/review-notes.md",
+    "verification": {
+      "verified_utc": "2026-11-11T15:43:41.530001+00:00",
+      "commit": "5ce1dcfc897ee669e6ceb7a7873786551c2b9a89",
+      "files": 16274,
+      "remote_matches": true,
+      "all_local_and_committed_bytes_match": true,
+      "generation_checkpoint_unchanged": true
+    }
+  },
+  "ledger_upper_nano_usd": {
+    "openai": 1661040000,
+    "deepseek": 1675899570
+  },
+  "hard_limits_usd": {
+    "openai": 35,
+    "deepseek": 10
+  },
+  "invoice_status": "conservative usage and reservation bounds, not account invoices",
+  "optional_extensions": "all_disabled",
+  "extension_v2": {
+    "phase": "execution_frozen_before_paid_calls",
+    "private_repository": "nanake-lab/nemu-evidence",
+    "private_commit": "eab5de94bc6129afde0ca05580e1fdd9e6bc8268",
+    "path": "R-STEER-02/extension-02",
+    "manifest_sha256": "f2863313e16738c02b8809b9f2e61a03cd41c108ac97dc0795bfe04e795ccba0",
+    "files": 1100,
+    "openai_items": 954,
+    "deepseek_items": 120,
+    "original_v1_prefix": {
+      "working_prefix_bytes": 21684,
+      "working_prefix_sha256": "62ccf8d1dc1a9f7b0abcb211313b283fdd974f3e70e163c0f2bbb094938ec627",
+      "git_original_bytes": 21684,
+      "git_original_sha256": "62ccf8d1dc1a9f7b0abcb211313b283fdd974f3e70e163c0f2bbb094938ec627",
+      "git_original_commit": "def135ee97f1ef846f500a9813c084af83bd33a4"
+    }
+  },
+  "extension_v2_results": {
+    "status": "incomplete_HTTP520_frozen_stop",
+    "private_repository": "nanake-lab/nemu-evidence",
+    "private_commit": "163004543eceae497ed55e921f0acaeb0fb167d8",
+    "path": "R-STEER-02/extension-run-02",
+    "manifest": "R-STEER-02/extension-run-02/MANIFEST.json",
+    "manifest_sha256": "c14de573ac00594871eb782b04772b9c062287c4fb637185bb0aaf13abeb5ef4",
+    "files": 4163,
+    "remote_verified_utc": "2026-11-11T17:26:34.512910+00:00",
+    "all_committed_bytes_equal": true,
+    "openai_audit": {
+      "provider": "openai",
+      "slots": 954,
+      "attempts": 569,
+      "statuses": {
+        "valid": 567,
+        "invalid": 1,
+        "technical_failure": 1,
+        "not_run": 385
+      },
+      "invalid_reasons": {
+        "json_schema_or_quote": 1
+      },
+      "stop": "http_or_nonretryable_transport_error",
+      "upper_usd": 8.672365,
+      "peak_reserved_usd": 8.94025,
+      "maximum_inflight": 4,
+      "retry_wait_seconds": [],
+      "usage": {
+        "prompt_tokens": 1210104,
+        "completion_tokens": 1108207,
+        "total_tokens": 2318311
+      },
+      "seconds": 4078.640999999945,
+      "returned_fingerprints": [],
+      "request_ids_observed": 568,
+      "audit": "passed"
+    },
+    "deepseek_audit": {
+      "provider": "deepseek",
+      "slots": 120,
+      "attempts": 121,
+      "statuses": {
+        "valid": 112,
+        "invalid": 8
+      },
+      "invalid_reasons": {
+        "json_schema_or_quote": 6,
+        "length_empty_refusal_or_nonstop": 2
+      },
+      "stop": null,
+      "upper_usd": 1.070551464,
+      "peak_reserved_usd": 1.112980728,
+      "maximum_inflight": 4,
+      "retry_wait_seconds": [
+        30.006119
+      ],
+      "usage": {
+        "prompt_tokens": 237181,
+        "completion_tokens": 850966,
+        "total_tokens": 1088147,
+        "prompt_cache_hit_tokens": 199808,
+        "prompt_cache_miss_tokens": 37373
+      },
+      "seconds": 1273.530999999959,
+      "returned_fingerprints": [
+        "bc19ba97cbe016479903222bb1578db6"
+      ],
+      "request_ids_observed": 0,
+      "audit": "passed"
+    },
+    "final_source_audit": {
+      "all_954_outputs_original": true,
+      "all_original_metadata_equal": true,
+      "shuffle_and_sample_reproduced": true,
+      "old_invalid_free_included": 99,
+      "C3_system_sha256": "a37fd7d835c07c48956cc4efa82fa38f4b1c649bff46f8cc7e6eb5695795fe92",
+      "frozen_manifest_still_equal": true,
+      "v1_summary_semantically_equal": true,
+      "v1_prereg_prefix_unchanged": true
+    },
+    "public_report": "reports/R-STEER-02/V2-REPORT.md",
+    "public_summary": "reports/R-STEER-02/V2-SUMMARY.json",
+    "public_tables": "reports/R-STEER-02/V2-RESULT-TABLES.md"
+  },
+  "extension_v2_recovery": {
+    "private_repository": "nanake-lab/nemu-evidence",
+    "frozen_commit": "43917cc48aad46d40f8bcf8e4b094b1560f4fcc9",
+    "package": "R-STEER-02/extension-recovery-03",
+    "manifest_sha256": "1f7b137ab74cc17dbe7a98201a1aa976fa955712f8898a31a7db117cac7328f8",
+    "authorized_slots": 386,
+    "protected_slots": 568,
+    "prior_upper_usd": 8.672365,
+    "prior_attempts": 569,
+    "prior_active_seconds": 4078.640999999945,
+    "hard_limit_usd": 25,
+    "new_deepseek_calls": 0,
+    "checks": "4 offline tests, strict mypy and Ruff passed; request bytes and original sources verified"
+  },
+  "extension_v2_recovery_results": {
+    "status": "complete",
+    "private_repository": "nanake-lab/nemu-evidence",
+    "private_commit": "ada91c53aad60b45645232ad25a8fff77c3fa434",
+    "path": "R-STEER-02/extension-recovery-run-03",
+    "manifest_sha256": "fc78665e6ac4d7ef38c4493fe52487c816d24e706b21b5c29b58e2ed85a80cbd",
+    "files": 3404,
+    "remote_verified_utc": "2026-11-11T18:29:10.901936+00:00",
+    "all_committed_bytes_equal": true,
+    "openai_audit": {
+      "provider": "openai",
+      "slots": 386,
+      "attempts": 955,
+      "segment_attempts": 386,
+      "prior_upper_usd": 8.672365,
+      "statuses": {
+        "valid": 385,
+        "invalid": 1
+      },
+      "invalid_reasons": {
+        "json_schema_or_quote": 1
+      },
+      "stop": null,
+      "upper_usd": 14.3584125,
+      "peak_reserved_usd": 14.7282825,
+      "maximum_inflight": 4,
+      "retry_wait_seconds": [],
+      "usage_this_segment": {
+        "prompt_tokens": 822183,
+        "completion_tokens": 706650,
+        "total_tokens": 1528833
+      },
+      "seconds": 6595.4839999999385,
+      "segment_seconds": 2516.8429999999935,
+      "returned_fingerprints": [],
+      "request_ids_observed": 386,
+      "audit": "passed"
+    },
+    "merge_source_audit": {
+      "protected_outcomes_unchanged": 568,
+      "merged_slots": 954,
+      "eligible_slots": 386,
+      "valid_rating_bytes_verified": 952,
+      "deepseek_original_results_unchanged": true,
+      "all_three_manifests_verified": true,
+      "analyzer": "unchanged extension-02/code/extension_analysis.py; IO directories only"
+    },
+    "new_deepseek_calls": 0,
+    "deepseek_cumulative_upper_usd": 1.070551464,
+    "public_report": "reports/R-STEER-02/V2-REPORT.md",
+    "public_summary": "reports/R-STEER-02/V2-SUMMARY.json",
+    "public_tables": "reports/R-STEER-02/V2-RESULT-TABLES.md"
+  }
+}
