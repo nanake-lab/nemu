@@ -2,8 +2,59 @@
 
 # DESIGN-IRL-Z-01 — IRL 事实字段定义草案
 
-本卡把事实字段的歧义整理成可重复执行的标注规则。技术定义给出推荐，涉及什么算她的经历的选择另列给用户。当前正在核对冻结材料，草案尚未完成。
+75处旧分歧已按新定义逐类给出候选值；拿不准的地方明确填未知，不再靠标注者猜。12条定义都有中英日正反例，并分别说明会怎样影响倾向、性情和感受。技术定义给出推荐；涉及一份经历怎么算、成事属于谁、部分吻合能否给分的三项，单列给用户决定。设计草案已完成，尚未证明两名独立标注者实际能一致执行。
 
 ## 范围与状态
 
-基线 main：`9d54a110baab70d92481cbc7de5f2b0391bcebba`。输入：PR #167 `6a25e6a132ccb4e39794443aa4d6f10a81917c92`；PR #174 `2503cfdf577ad354a60a11d2004faaa6576a49da`。只新增设计，不改原始材料或标签。完成后保持 draft / needs-user，交用户审查。
+基线 main：`9d54a110baab70d92481cbc7de5f2b0391bcebba`。输入：PR #167 `6a25e6a132ccb4e39794443aa4d6f10a81917c92`；PR #174 `2503cfdf577ad354a60a11d2004faaa6576a49da`。只新增设计及候选登记，不改代码、规律、原始材料或标签。[PR #176](https://github.com/nanake-lab/nemu/pull/176)保持draft / needs-user，写「请审查」后停止；不取下一卡。
+
+## 交付与推荐
+
+| 文件 | 内容 |
+| --- | --- |
+| [标注指南](ANNOTATION-GUIDE-DRAFT.md) | 12条操作性定义、三语正反例、字段级未知、逐条G/C/F影响及未来双人复标用法 |
+| [模式候选值](PATTERN-VALUES.md) | 9模式、6例外，拆成21行唯一值映射，恰好覆盖原75个位置；供未来重标 |
+| [ADR 0040](../../docs/adr/0040-irl-fact-annotation-boundaries.md) | 路线比较、三项用户选择、位置/依据/新读法、采用边界 |
+| [候选差异登记](../../docs/traceability/diff-register.md) | 追加V2-161–164，不改已有条目；其中162–164对应U1–U3 |
+| [任务请求](../../tasks/requests/DESIGN-IRL-Z-01.md) | 本次授权、目录、交付与停止点 |
+
+推荐保留unknown/null作为有意义的答案，且按主张阻断无依据的学习，而非整条事件清空。M01的speaker推荐unknown；M07须拆成direct/system/unknown，不能整组照搬作者或代理；M03仍为2，E03仍为yes/true/0。μ按每条冻结请求的概念顺序核对，未将创作顺序误当下标。
+
+本卡先比较了逐格投票、闭世界缺省、整条拒绝、完整事实图和字段级三值方案，推荐最后一种；具体取舍见ADR§2。所有新定义都是候选，不将新推荐倒称旧原文已有答案。
+
+## 待用户确认（阻塞）
+
+- [ ] **U1 / V2-162：** 推荐同一事件的多个命题保留事实并共享原事件身份，不因拆句增加经历；明确独立事件分别保留，单焦点不唯一就留未知。
+- [ ] **U2 / V2-163：** 推荐outcome只指她明确承担/参与/接受的目标；这是成事范围的选择。
+- [ ] **U3 / V2-164：** 推荐没有预定量尺的部分吻合统一null，不凭手感给正数；以后另批放宽标准。
+- [ ] 审查ADR 0040、指南技术定义及V2-161–164的候选文字。后续研究采用/产品映射须另行版本化与验证，本次不执行。
+
+## 检查
+
+按AGENTS轻档做文档检查，不运行全工作区测试、CI或GPU。
+
+| 检查 | 结果 |
+| --- | --- |
+| `git diff --check`及暂存后的同项检查 | 通过；范围仅6个Markdown文件 |
+| Python解析Markdown相对链接，逐个检查目标文件 | 18个链接、0个缺失；包括差异登记本次追加部分 |
+| 展开模式表scope，与固定pattern-map的members逐键比较 | 21行展开75处，11根/30视图；遗漏、重复、额外位置、模式归属错误均为0 |
+| Z01–Z12结构核对与主代理逐条内容核对 | 每条均有三语正反例、G/C/F影响；三项身份/证据选择单列 |
+| `git fetch origin`后main核对 | B=M=`9d54a110baab70d92481cbc7de5f2b0391bcebba`，无新增变化；不需要同步或重跑产品检查 |
+| 双人独立标注、G/C/F端到端、新解释资源验收 | **not_run**；不能以文档核对代替 |
+
+机械覆盖核对首轮因Python输出编码导致字符串匹配失败，改用ASCII转义JSON输出后通过；不是语义判定失败，也没有为通过而改模式范围。本卡无JSON/YAML/TOML变更，无需相应文件解析检查。
+
+## 来源与阅读范围
+
+完整读取最新main的AGENTS.md及echo-core-work技能§1；按设计卡要求通读v2.0全文。只另读与z/μ、事实资格和时间有关的ADR0032§§3/6/7、ADR0035§§3.1/5及直接相关条款，检索差异登记V2-71/72/77/87/102/114/115/142/144及COG-06的后续读法；未通读无关架构、渲染或资产文档。
+
+- [模式裁决单（#167固定提交）](https://github.com/nanake-lab/nemu/blob/6a25e6a132ccb4e39794443aa4d6f10a81917c92/reports/R-JUDGE-IRL-01/PATTERN-ADJUDICATION-01.md)：分歧范围及原文支持边界。
+- [ADR0039（#174固定提交）](https://github.com/nanake-lab/nemu/blob/2503cfdf577ad354a60a11d2004faaa6576a49da/docs/adr/0039-echo-core-principles.md)：P1/P10等原则；该PR尚为草案，不把它当已合并规范。
+- 私有冻结输入：[protocol.py](https://github.com/nanake-lab/nemu-evidence/blob/8e71a34ae204c638ea172aa74e3f25e5c178ccbd/R-JUDGE-IRL-01/A-03/code/protocol.py)、[materials.py](https://github.com/nanake-lab/nemu-evidence/blob/8e71a34ae204c638ea172aa74e3f25e5c178ccbd/R-JUDGE-IRL-01/A-03/code/materials.py)、[实际请求目录](https://github.com/nanake-lab/nemu-evidence/tree/8e71a34ae204c638ea172aa74e3f25e5c178ccbd/R-JUDGE-IRL-01/A-03/requests)。材料只作只读输入，作者facts不作证据。
+- [模式成员映射](https://github.com/nanake-lab/nemu-evidence/blob/2d7cd5b3ab8596a25e5822f9f3996d15865a69cd/R-JUDGE-IRL-01/pattern-review-01/pattern-map.json)：75个成员的范围。未生成或发布逐请求新标签包。
+
+## 限制
+
+新例子是说明性材料，不是独立测量；没有模型推理/API评估调用、GPU运行、双人盲标或新一致率。旧D用于设计，不能称独立验证；四乎32/33方向一致包含1项技术invalid的原分母，不是新指南通过，也不是事实字段准确率。36/33分母、D08排除、D03-en invalid及冻结失败证据保持；原标签与已发布解释/规律/契约未改。
+
+候选可能影响旧一致项，未来采用须对受影响字段整体重标，不能只改75格便宣称形成新基线。source不是外源类别，主观性不是可信度，单个时间锚点不是实际起点，研究单焦点/单值枚举不是生产事实图。当前等待定义审查及U1–U3决定；这些限制不由文档检查替代。
