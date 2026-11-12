@@ -73,6 +73,12 @@ Nemu 是由 [nanake-lab](https://github.com/nanake-lab) 发起并拥有的 3D �
 
 ---
 
+## 已知缺陷与开放问题
+
+Echo Core 里有不少不完美的选择，我们把它们集中写在 [docs/OPEN-PROBLEMS.md](docs/OPEN-PROBLEMS.md)：每一条写明问题、现在的选择和理由、代价，以及可能的解决方向。其中有根本的设计问题，比如为什么她最根本在意的是四个「乎」、为什么倾向要过一道 π > ½ 的门才算性格；也有实测暴露的限制，比如 4B 载体还很难把状态自然地说出来，日语最弱。如果你有更好的办法，欢迎在 [Issue](https://github.com/nanake-lab/nemu/issues) 里提出。
+
+---
+
 ## 隐私与数据
 
 - **她的数据只在本地**：排练谱系存储与诞生后的正式谱系存储都只在本地设备上，不提交至公共仓库；核心状态本身不出本机（[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) 第 6.9 节）。
