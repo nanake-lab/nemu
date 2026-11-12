@@ -78,23 +78,31 @@
 
 ## Z05. 状态命题的 actor（M05）
 
-**推荐。** 先区分“谁做了什么”与“某事处于什么状态”。未送达、已失败、待评、已完成等**结果状态本身**的 actor=none；责任人、委托人、显示系统不是该状态的施事。若焦点改为“N执行试验”或“系统显示状态”，才分别填写N/system。这是焦点角色标注，不声称现实中没有成因。
+**推荐。** 按焦点及其上下文判定，不按完成体、被动语态或单个动词判定：
+
+- 焦点明确在问状态是否成立、当前结果或持续情况（如是否已送达、结果是否达到要求、是否仍待评），没有把执行过程选为焦点，按状态读，actor=none。责任人、委托人、提供状态的系统不因此成为该状态的施事。
+- 焦点明确指向执行动作、过程或状态转变的发生（如启动检查、执行显示操作、从未显示切换到显示），按动作读，明示执行者则填该角色，否则unknown。上下文里另有动作，不把状态焦点替换掉。
+- 若焦点及上下文仍兼容动作和结果状态两种读法，**actor=unknown**，facts保留两种读法及未决原因；不能任选none或system。“已经显示/was displayed/表示されている”等形式本身不解歧。其他依赖此区别的字段若答案不同也填unknown（如动作发生时间与状态快照不同）；不受影响的已知事实照常保留。
+
+这是焦点角色标注，不声称状态没有现实成因；Z04的“纯状态”及Z06均按此判据确定。
 
 | 示例 | 中文 | English | 日本語 | 答案与拒绝的填法 |
 | --- | --- | --- | --- | --- |
 | 正 | 焦点：检查结果仍待定。N负责这项检查。 | Focus: the inspection result is still pending. N is responsible for the inspection. | 焦点：検査結果は未確定である。Nが検査を担当する。 | actor=none；不能用责任人N填施事 |
 | 反 | 焦点：N启动检查。 | Focus: N starts the inspection. | 焦点：Nが検査を開始する。 | actor=N；不能把行动当状态 |
+| 歧义 | 焦点：通知已经显示在屏幕上。无其他上下文。 | Focus: the notice is displayed on the screen. No further context is given. | 焦点：通知が画面に表示されている。ほかに文脈はない。 | actor=unknown；动作/结果状态未决，不凭语态选none或system |
+| 状态消歧 | 焦点只问通知当前是否处于显示状态；答案是已经显示，不问显示操作。 | The focus asks only whether the notice is currently in the displayed state; it is, regardless of the display operation. | 焦点は通知が現在表示状態にあるかだけであり、答えは表示中である。表示操作は焦点ではない。 | actor=none；“已显示”在此由焦点范围消歧 |
 
-**G：** 不从责任人推出自致因果，EV4仍需可比变化。**C：** 不因移除actor=N而把自致工具结果升级为外源。**F：** 成败/等待事实仍留在outcome和facts，不因actor=none失去结果意义。
+**G：** 不从责任人或未决读法推出行动归因，EV4仍需可比变化。**C：** 不因移除actor=N而把自致工具结果升级为外源，歧义不提供外源资格。**F：** 成败/等待事实仍留在outcome和facts，不因actor=none失去结果意义；未决的动作时间不能补成作用时刻。
 
 ## Z06. 被动显示、system 与观察者（M06、E02）
 
-**推荐。** “被显示/被发送”是有执行者槽的动作命题；未明示谁做的，actor=unknown。显示器、屏幕、被动语态、计算机环境都不证明由 system 发起。只有输入明示系统执行此动作，才填system。target指被指向的角色，不是看见它的人；“N看到显示”不推出“向N显示”。本研究target不装入字符流等非角色对象；未描述任何接收者角色时none，明确有接收者却不知是谁时unknown。
+**推荐。** “被显示/被发送”先按Z05判断动作、状态或未决。**已确定为动作**且未明示执行者时actor=unknown；确定为状态时none；两种读法未决时unknown。显示器、屏幕、被动语态、计算机环境都不证明由system发起，只有输入明示系统执行焦点动作才填system。target指被指向的角色，不是看见它的人；“N看到显示”不推出“向N显示”。本研究target不装入字符流等非角色对象；未描述任何接收者角色时none，明确有接收者却不知是谁时unknown。
 
 | 示例 | 中文 | English | 日本語 | 答案与拒绝的填法 |
 | --- | --- | --- | --- | --- |
 | 正 | 焦点：系统向N显示通知。 | Focus: the system displays a notice to N. | 焦点：システムがNに通知を表示する。 | actor=system,target=N |
-| 反 | 焦点：通知被显示。N路过看见了，发出者未明。 | Focus: a notice was displayed. N happened to see it; its issuer is unspecified. | 焦点：通知が表示された。通りかかったNが見たが、発信者は不明。 | actor=unknown,target=none；不能填system/N |
+| 反 | 焦点：一次显示操作将屏幕从空白切换为通知；执行者未明。N路过看见了，未指定接收者。 | Focus: a display operation changes the screen from blank to a notice; its executor is unspecified. N happens to see it; no recipient is designated. | 焦点：表示操作によって空白の画面が通知表示に切り替わる。実行者は不明。通りかかったNが見たが、受信者の指定はない。 | actor=unknown,target=none；动作已明确，但不能填system/N；未决被动句另见Z05歧义例 |
 
 **G：** 不制造系统归因或“对N回应”的证据。**C：** 偶然观察不被误升为冲着她来的事件。**F：** 看到的东西仍可触动她；缺发出者不会自动抹掉学习/噪声等已知事实。
 
@@ -104,22 +112,24 @@
 
 | 输入实际提供的依据 | source |
 | --- | --- |
-| 明示别人向N当面表达/回应，焦点是这次互动；或N直接观察到焦点事件/可核验的学习表现 | direct |
+| 明示别人向N当面表达/回应，焦点是这次互动；或明示N直接观察到焦点事件；学习焦点须同时明示N实际验证并观察到进展，而非仅标注者知道验证结果 | direct |
 | 焦点内容归属于别人的转述，即使通过文字读到；当面听B讲远方发生P，P仍是report | report |
 | 明确命名的系统/验证器提供焦点状态或结果，读取其显示只是取得路径 | system |
 | 文档内容本身提供焦点信息，没有更具体的转述者或系统产生者 | document |
 | 仅N自己的愿望、想法、回忆叙述或自我断言，没有独立发生依据 | self |
 | 来源没有明示、互相冲突或有多条同等依据而无法唯一归类 | unknown |
 
-依次先判焦点是信息的内容还是实际观察/学习事件；内容层若有命名的产生者按report/system，匿名文档按document。source记录N取得焦点信息的来源；材料附给标注者的合成真值核验不替换N的取得路径（例如N读B的转述、另有合成事实确认，仍是report）。来源链不能靠全局“读到就direct”或“含手册就document”扁平化。例如手册的定理是document；N通过新例验证自己已学会这一事实，输入明确观察到学习进展时是direct；只说“我学会了”则self。N实际取得的多个并列独立凭据须保留，无法唯一归类时unknown；不能任挑最高优先级，unknown不取消其中各自明确的事实。
+依次先判焦点是信息的内容还是实际观察/学习事件；内容层若有命名的产生者按report/system，匿名文档按document。source记录N取得焦点信息的来源；材料附给标注者的合成真值核验不替换N的取得路径（例如N读B的转述、另有合成事实确认，仍是report）。来源链不能靠全局“读到就direct”或“含手册就document”扁平化。例如手册的定理是document；N通过新例验证自己已学会，且材料明示**N观察到这次学习进展**，才可据此取direct。仅给出正确表现或给标注者的进展确认、没有N的取得依据，source=unknown；N仅经验证器反馈知道则system；只有N自述“我学会了”则self。标注时分别摘“进展成立”和“N如何得知”的跨度，前者不能补后者。N实际取得的多个并列独立凭据须保留，无法唯一归类时unknown；不能任挑最高优先级，unknown不取消其中各自明确的事实。
 
 | 示例 | 中文 | English | 日本語 | 答案与拒绝的填法 |
 | --- | --- | --- | --- | --- |
 | 正 | 焦点：N通过了检查。N读到验证器给出的通过记录。 | Focus: N passed a check. N reads the validator’s pass record. | 焦点：Nが検査に合格した。Nは検証器の合格記録を読む。 | source=system；不能因N亲眼读到取direct |
-| 反 | 焦点：N学会了一条规则。N读手册后，在新题上展示理解，材料明确记录了该学习进展。 | Focus: N learned a rule. After reading a manual, N demonstrates understanding on a new problem; the material explicitly records this learning progress. | 焦点：Nが規則を学んだ。手引きを読んだ後、新しい問題で理解を示し、その学習進展が資料に明記されている。 | source=direct；不能因手册存在取document |
+| 学习直接取得 | 焦点：N学会了一条规则。N读手册后亲自用新题验证理解，直接观察到自己的学习进展。 | Focus: N learned a rule. After reading a manual, N personally verifies understanding on a new problem and directly observes this learning progress. | 焦点：Nが規則を学んだ。手引きを読んだ後、N自身が新しい問題で理解を検証し、その学習進展を直接観察する。 | source=direct；依据是N验证并观察进展，不能因手册存在取document |
+| 学习路径缺失 | 焦点：N学会了一条规则。N在新题上展示理解，给标注者的材料确认了进展；未说明N如何得知。 | Focus: N learned a rule. N demonstrates understanding on a new problem, and the annotator’s material confirms progress; how N learns of it is unstated. | 焦点：Nが規則を学んだ。Nは新しい問題で理解を示し、注釈者用の資料が進展を確認しているが、Nの知り方は示されていない。 | source=unknown；不能从表现正确或合成真值补direct |
+| 学习反馈取得 | 焦点：N学会了一条规则。N无法自行检查新题答案，只从验证器反馈得知理解正确。 | Focus: N learned a rule. N cannot check the new answer independently and learns that the understanding is correct only from validator feedback. | 焦点：Nが規則を学んだ。Nは新しい問題の答えを自分では確認できず、検証器の通知だけで理解が正しいと知る。 | source=system；学习是真的也不改变取得路径 |
 | 缺来源 | 焦点：结果尚未产生。N检查后仍在等待，未说明依据来自哪里。 | Focus: no result exists yet. N checks and is still waiting; the source of this information is not stated. | 焦点：結果はまだない。Nは確認してなお待っているが、情報源は示されていない。 | source=unknown；不能补system |
 
-**G：** EV8 的“文中知识”与“实际读时经历”分开；改source不自动把知识变个人证据，self不自证。**C：** direct学习/桌面观察不自动进C，system验证结果也不冒充外源。**F：** 读书反应与书中命题分开解释；真实读取可有反应，书中的故事不因此真实发生在她身上。
+**G：** EV8 的“文中知识”与“实际读时经历”分开；标注者的真值不创造N取得证据的经历，改source不自动把知识变个人证据，self不自证。**C：** direct学习/桌面观察不自动进C，system验证结果也不冒充外源。**F：** 读书反应与书中命题分开解释；真实读取可有反应，source未知不抹掉已确认进展，书中的故事不因此真实发生在她身上。
 
 ## Z08. welfare 的 unknown 与 unchanged（M08）
 
@@ -163,16 +173,20 @@ occurred问所选焦点情况是否实际成立，truth问该命题内容是否�
 
 ## Z11. 持续状态的 event_time（E06）
 
-**推荐。** 点事件取明示发生时刻。焦点是持续状态时，本研究单格取**材料最早明确断言该状态成立的时刻**，它是已知状态快照的锚点，不是实际开始时刻。facts必须同时保留“首次已知成立/开始未知/后来仍成立/终止”及对应时间。observation_time另取材料明示N在本次观察中取得焦点信息的时刻，不声称这是N一生中第一次知道；多个观察时刻且未指定本次是哪一次时unknown。不能从event_time、处理时间或同一页面的旁注时间推断。
+**推荐。** 点事件取明示发生时刻。焦点是持续状态时，先确认所指的**同一持续片段**，再取材料在该片段内最早明确断言状态成立的时刻。它是已知状态快照的锚点，不是实际开始时刻。相同对象、相同状态值不证明同一片段；材料明确从前次持续到本次（包括有唯一前指、表达继续的“仍/still/引き続き”等同义叙述）才合并快照；有明确终止或重启则分开。只列两个相同快照、未交代连续关系，不能用“没有写中断”补连续。
 
-没有任何带时间的状态断言则event_time=unknown；只有区间且不能精确落到t0/t1/t2也unknown，facts保留区间。t1、t2都待评时选t1，不能把再观察当新状态起点；如果明确t1尚未等待、t2才开始等待，则取t2。不得把此单格直接映射成生产`occurred_at`的精确起始点或据此计算持续时长；完整时间语义按 ADR 0035 §5.1。
+**片段身份或较早快照与焦点片段的连续关系未决时，单格event_time=unknown**，不任选较早或较晚时刻；facts保留全部已知快照、时间及关系未知。若材料已明确排除先前片段，当前片段只知t2成立，则取t2并记起点未知，不能取旧片段的t0。facts同时保留首次已知成立、开始未知、后来仍成立或终止。observation_time另取材料明示N在本次观察中取得焦点信息的时刻，不声称这是N一生中第一次知道；多个观察时刻且未指定本次是哪一次时unknown。不能从event_time、处理时间或同一页面的旁注时间推断。
+
+没有任何带时间的状态断言则event_time=unknown；只有区间且不能精确落到t0/t1/t2也unknown，facts保留区间。明确同一次待评从t1持续到t2时选t1，不能把再观察当新状态起点；如果明确t1尚未等待、t2才开始等待，则取t2。不得把此单格直接映射成生产`occurred_at`的精确起始点或据此计算持续时长；完整时间语义按 ADR 0035 §5.1。
 
 | 示例 | 中文 | English | 日本語 | 答案与拒绝的填法 |
 | --- | --- | --- | --- | --- |
-| 正 | t1时门已开着，t2仍开着；N到t2才第一次得知，开门起点未知。 | The door is already open at t1 and remains open at t2; N first learns this at t2. The opening time is unknown. | t1には扉がすでに開き、t2にも開いている。Nが初めて知るのはt2で、開き始めた時刻は不明。 | event_time=t1,observation_time=t2；facts写起点未知，不把t1当起点 |
+| 正 | 焦点：本次开门状态。t1时门已开着，一直保持到t2；N到t2才得知，开门起点未知。 | Focus: the current open episode. The door is already open at t1 and stays open through t2; N learns this at t2. The opening time is unknown. | 焦点：今回の開扉状態。t1にはすでに開いており、t2まで開いたまま。Nが知るのはt2で、開き始めた時刻は不明。 | event_time=t1,observation_time=t2；明确同一片段，facts写起点未知 |
 | 反 | N在t2第一次读到一份无日期旧报告，报告说门开着，却未说何时。 | At t2 N first reads an undated old report saying the door was open, without saying when. | Nはt2に初めて日付のない古い報告を読み、扉が開いていたと知るが、いつかは不明。 | event_time=unknown,observation_time=t2；不能因读到就补发生时间 |
+| 连续关系歧义 | 焦点：本次待评片段。同一申请在t1、t2都待评，中间状态未提供；N本次在t2查看。 | Focus: the current pending episode. The same application is pending at t1 and t2; nothing between them is specified. N checks at t2 this time. | 焦点：今回の審査待ちの期間。同じ申請はt1とt2で審査待ちだが、その間の状態は不明。Nの今回の確認はt2。 | event_time=unknown,observation_time=t2；facts留两快照及连续关系未知，不选t1或t2 |
+| 明确不同片段 | 焦点：本次开门状态。t0门开着，t1已关闭；N在t2又见门开着，重开时刻未知。 | Focus: the current open episode. The door is open at t0, closed at t1, and N sees it open again at t2; the reopening time is unknown. | 焦点：今回の開扉状態。t0には開き、t1には閉じていた。Nはt2に再び開いているのを見るが、再び開いた時刻は不明。 | event_time=t2,observation_time=t2；t0属于已结束片段，t2也不是重开时刻 |
 
-**G：** 后续观察不自动成为新来源组，旧事实新知仍须EV2。**C：** 不能按持续状态的每个报告时刻多记一次；不能拿锚点算出未观测时长。**F：** 保留发生/观察/理解区别，排队不改变资格；更新/重访依原身份规则，不回写历史x。
+**G：** 同一片段的后续观察不自动成为新来源组，未知关系不强行合并，也不制造独立证据组，仍须EV2。**C：** 不能按每个快照多记一次，也不能将未决连续关系当去重已完成或新增样本的依据；不能拿锚点算未观测时长。**F：** 保留发生/观察/理解区别，未决片段不能冒充已知重访身份或触发额外作用；更新/重访依原身份规则，不回写历史x。
 
 ## Z12. μ：不吻合、未知、部分吻合（E03–E05）
 
