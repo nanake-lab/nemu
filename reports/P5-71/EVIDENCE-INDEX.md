@@ -1,5 +1,22 @@
 # P5-71 证据索引
 
+## full-run-02（16小时到点结束）
+
+正式执行代码 `d650aba57bb8b414f293d7ad7df1a457a50834bc`，冻结预注册 v2 未改；旧 full-run-01 保留且不拼接。本轮执行到 UTC 2026-11-12 07:52:34，34,755 条可运行轨迹均完成，14,291 条固定 not_run。C-02 位差、07-11 未检出及见证缩减缺口见 [REPORT](REPORT.md) / [BLOCKED](BLOCKED.md)。
+
+执行前登记私库提交 [`b15bb91f9dd83db0d9588291f91a84d7749954cc`](https://github.com/nanake-lab/nemu-evidence/tree/b15bb91f9dd83db0d9588291f91a84d7749954cc/P5-71/20261111-full-v2-run02/preflight)，含实际二进制、CI成功与checkout父提交、构建/物化日志、资源窗口和完整运行清单，先于正式执行存档。
+
+完整原件私库提交 [`0f2878ded77850e5b367fc47b0ce706cff8f27ae`](https://github.com/nanake-lab/nemu-evidence/tree/0f2878ded77850e5b367fc47b0ce706cff8f27ae/P5-71/20261111-full-v2-run02/archive)。[逐文件索引](EVIDENCE-INDEX-run02.csv) 记录归档内路径、SHA-256、字节数、执行代码、ID/层次/版本/行号及不可变证据提交。CSV的archive_entry非空时，private_path指向实际ARCHIVE.json；按该清单拼接14片后，在tar中查找archive_entry。轨迹status是比较标签，见证行写retained，必须查看原件里的缩减status；不将原件保全等同于机制通过。
+
+共36,696个归档内文件、3,484,073,999字节；无损压缩为873,779,789字节。顺序拼接 `evidence.tar.gz.part000`…`part013` 得完整tar.gz，SHA-256 `2148707ced73aa934e8364e95682b729ddf2c87ba1a13046d0de1f2b05518815`。ARCHIVE.json列14片各自长度与哈希；FILES.json登记所有原件；VERIFICATION.jsonl记录解包后36,696/36,696逐件匹配，拼接整体也匹配。原始full-run-02目录自身为36,611文件、3,363,088,478字节，余项为完整物化输入/资源、源码快照、登记日志、只读汇总与机械核验，不是新增样本。
+
+归档包括32份绑定执行提交的测试源码，以及Cargo.lock、rust-toolchain和冻结预注册；运行START/END、全部前缀、结果、1,559个mutation-witness、22个first-failure、134个minimum、缩减日志均保留。minimum中123份流程completed、11份未复现谓词not_run；其余不称最小见证。压缩前后各核对一次源字节，20个归档元数据/分片Git blob再次逐字节核对。
+
+Git blob与只读收尾核验补充提交 [`dbb3c6c8e9d55d65621f82080510e26256c51097`](https://github.com/nanake-lab/nemu-evidence/tree/dbb3c6c8e9d55d65621f82080510e26256c51097/P5-71/20261111-full-v2-run02)。其中GIT-VERIFICATION.json绑定归档提交的20个原始Git blob；supplement保留文档检查、复制/Git核验脚本、远端归档SHA和上传日志。15个补充文件也与该提交的Git blob逐字节匹配。逐文件CSV共36,743行：36,696个归档条目、20个归档文件、12个执行前登记文件、15个收尾补充文件。
+
+主仓 RUN02-SUMMARY / RUN02-DELAYS 是只读汇总副本；Git 对主仓文本统一 LF 时，JSON 值不变，原始字节哈希以本索引指向的私库归档内文件为准。私库 P5-71 的 `* -text` 保留原始换行与字节。
+
+以下各节保留历史时点的状态和原件定位，不作为本轮结果，也不以本轮新状态改写旧记录。
 ## 修复与自查（未开始第二轮实验）
 
 私有证据提交 [`6d2226a5efc05ded2ad9960a91840e5176485966`](https://github.com/nanake-lab/nemu-evidence/tree/6d2226a5efc05ded2ad9960a91840e5176485966/P5-71/20261111-repair-review)，绑定修复代码 `6062a36038752e19f41d3213c5b51d013e872612`。[逐文件索引 EVIDENCE-INDEX-repair.csv](EVIDENCE-INDEX-repair.csv) 记录归档内原始路径、SHA-256、字节数、代码/证据提交、ID和状态。
