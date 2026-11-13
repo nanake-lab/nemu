@@ -17,4 +17,5 @@ jobs:
           node-version-file: .nvmrc
       - run: node --check tools/r-steer-pair/app.js
       - run: node --check tools/r-steer-pair/prepare.mjs
-      - run: node --test tools/r-steer-pair/study.test.mjs
+      - run: node --check tools/r-steer-pair/browser-check.mjs
+      - run: node --test tools/r-steer-pair/study.test.mjs tools/r-steer-pair/app.test.mjs
