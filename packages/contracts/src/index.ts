@@ -8,6 +8,7 @@ export * from './appbus.js';
 export * from './readout.js';
 export * from './stage.js';
 export * from './generated/index.js';
+export * from './tts.js';
 export * from './proactivity.js';
 export * from './approval.js';
 export * from './queries.js';
