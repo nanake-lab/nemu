@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 import { resolve, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { render } from './study.mjs';
+import { revise, VERSION_V2 } from './revise-v2.mjs';
 
 // Mechanical check on synthetic text ONLY. Uses already installed Playwright, no test runner.
 const [dependencyRoot, outputDir, browserPath, mode = 'smoke'] = process.argv.slice(2);
@@ -15,7 +16,7 @@ const pairs = Array.from({ length: 12 }, (_, i) => ({
   position: i + 1, screened: i === 1, context: '这里是合成占位场景，只检查页面，不是正式盲测材料。',
   left: '这段左侧占位文字仅用于检查排版和保存。', right: '这段右侧占位文字仅用于检查排版和保存。',
 }));
-const html = render(readFileSync(new URL('page.html', import.meta.url), 'utf8'), readFileSync(new URL('app.js', import.meta.url), 'utf8'), pairs);
+const html = revise(render(readFileSync(new URL('page.html', import.meta.url), 'utf8'), readFileSync(new URL('app.js', import.meta.url), 'utf8'), pairs));
 const fixture = join(outputDir, 'synthetic.html');
 writeFileSync(fixture, html);
 const browser = await playwright.chromium.launch({ executablePath: browserPath, headless: true, args: ['--disable-gpu', '--disable-software-rasterizer'] });
@@ -26,6 +27,7 @@ page.on('pageerror', (error) => errors.push(String(error)));
 page.on('request', (request) => { if (/^https?:/.test(request.url())) remote.push(request.url()); });
 await page.goto(pathToFileURL(resolve(fixture)).href);
 assert.equal(await page.locator('#start').isDisabled(), true);
+assert.match(await page.locator('#intro').textContent(), /第二版，共 11 对/);
 await page.screenshot({ path: join(outputDir, 'intro.png'), fullPage: true });
 await page.locator('#approved').check();
 await page.locator('#start').click();
@@ -56,6 +58,7 @@ const resultPath = join(outputDir, 'synthetic-result.json');
 await download.saveAs(resultPath);
 const result = JSON.parse(readFileSync(resultPath, 'utf8'));
 assert.equal(result.answers.length, 12);
+assert.equal(result.version, VERSION_V2);
 assert.equal(result.status, mode === 'timer' ? 'timeout' : 'complete');
 if (mode === 'timer') {
   assert(result.elapsedMs >= 840000 && result.elapsedMs < 845000);

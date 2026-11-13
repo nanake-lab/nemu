@@ -1,22 +1,36 @@
-# R-STEER-PAIR-01 离线准备工具
+# 中文两句话盲测：离线附件
 
-方案见 [预注册](../../reports/R-STEER-PAIR-01/PREREGISTRATION.md)。只构建已有输出的匿名页面；没有生成、评分、联网、GPU 或结果分析入口。
+当前规则见 [预注册 v2](../../reports/R-STEER-PAIR-01/PREREGISTRATION-V2.md)，[v1](../../reports/R-STEER-PAIR-01/PREREGISTRATION.md) 保留。实际题单已冻结，不要重跑抽样；正式判断、解盲与分析未运行。
+
+## 本地验证
 
 ```powershell
-pnpm test:r-steer-pair
-# 一次性准备；两个新目录不得已存在。不要因质量筛除重跑。
-node tools/r-steer-pair/prepare.mjs <私有源仓绝对路径> <新证据输出目录> <独立新custody目录>
+node --check tools/r-steer-pair/app.js
+node --check tools/r-steer-pair/prepare.mjs
+node --check tools/r-steer-pair/browser-check.mjs
+node --check tools/r-steer-pair/revise-v2.mjs
+node --test tools/r-steer-pair/study.test.mjs tools/r-steer-pair/app.test.mjs tools/r-steer-pair/revise-v2.test.mjs
 ```
 
-交付目录只复制 `comparison.html`。`answers.sealed.json` 归私有证据；custody 不推送，不交付，不链接给参与者。公开仅复制 `commitment.json`。后续解封须先封存用户最终结果并获得确认，当前没有解封/分析命令。
-
-正常 CI 运行匿名合成夹具测试及语法检查。浏览器检查只用夹具；实际材料只做结构与来源核验，不替用户作答。没有新增运行时依赖（Node 内置模块；浏览器检查使用仓库已有 Playwright）。
+按用户本次审查意见，删除本卡专用 workflow 与 package.json 脚本；直接本地命令覆盖附件的关键边界，不新增产品运行时依赖，不修改通用 CI。
 
 ```powershell
-# 运行前检查 Runner.Worker；一个浏览器检查独占窗口，不与其他重负载并行。
+# 先检查 Runner.Worker；独占浏览器检查窗口。仅使用合成夹具与已有依赖/浏览器。
 node tools/r-steer-pair/browser-check.mjs <已有依赖的仓库根> <新检查输出目录> <已有Chromium绝对路径>
-# 同一工具的真实14分钟计时检查（仅合成占位材料）：
-node tools/r-steer-pair/browser-check.mjs <已有依赖的仓库根> <另一新检查输出目录> <已有Chromium绝对路径> timer
+# 若计时逻辑变化，真实14分钟检查可加 timer 参数；当前 app.js 原样复用 v1。
 ```
 
-浏览器检查复用已安装依赖和浏览器；不自动安装，不联网。`--disable-gpu` 禁用硬件 GPU。计时回调与过期点击的逻辑另由 `app.test.mjs` 在 CI 核验；真实时间日志与 UI 截图单独保留，不能把假时钟测试称为实际14分钟运行。
+浏览器使用已有 Playwright，禁用硬件 GPU；不自动安装、不联网。合成测试的结果不能当作人类判断。实际页面只检查首页，批准前不打开正式题目。
+
+## 版本封存
+
+`prepare.mjs` 是 v1 的历史准备入口，保留以供复核，**本次不执行**。`revise-v2.mjs` 只读取已冻结的 v1 匿名 HTML，核对原页面哈希，改版本、首页版本提示与显示对数；保留原题单、问法和作答代码。无原库、答案或密钥访问，无随机抽样。
+
+```powershell
+# 本轮已执行并封存；仅供复核，输出目录必须不存在。
+node tools/r-steer-pair/revise-v2.mjs <已冻结v1页面绝对路径> <新输出目录>
+```
+
+v2 承诺绑定本版预注册哈希、两版页面哈希、相同题单与原答案承诺。页面和结果的版本为 v2；封存答案仍是 v1 的原表。交付仅复制 HTML 和使用说明；答案密文保存在私有证据，密钥独立留存，不推送、不交付。
+
+批准 v2 前不得开始；正式完成后先封存最终结果，再确认解盲。当前工具不提供解封、评分或分析入口。
