@@ -1,5 +1,9 @@
 # P5-71 证据索引
 
+## 审查后补充 S1（2026-11-13）
+
+静态白名单子集与新分析已单独归档，见 [S1报告](S1-REPORT.md)、[S1索引](EVIDENCE-INDEX-S1.md)及[逐文件CSV](EVIDENCE-INDEX-S1.csv)。本轮643.266秒正常结束，保留灵敏度与最小见证缺口，不改以下run02或run01原件/标签。
+
 ## full-run-02（16小时到点结束）
 
 正式执行代码 `d650aba57bb8b414f293d7ad7df1a457a50834bc`，冻结预注册 v2 未改；旧 full-run-01 保留且不拼接。本轮执行到 UTC 2026-11-12 07:52:34，34,755 条可运行轨迹均完成，14,291 条固定 not_run。C-02 位差、07-11 未检出及见证缩减缺口见 [REPORT](REPORT.md) / [BLOCKED](BLOCKED.md)。
