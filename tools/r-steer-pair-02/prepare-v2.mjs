@@ -6,7 +6,7 @@ import { DOSES, CALIBRATION, sha, shaFile, prompt, vectorId, calibrationJobs, fo
 
 const repo = fileURLToPath(new URL('../../', import.meta.url));
 const cache = 'D:/Dev/cache/R-STEER-PAIR-02';
-const root = join(cache, 'v2-preparation-02');
+const root = join(cache, 'v2-preparation-03');
 const sourceRepo = 'D:/Dev/nemu-evidence-wt/R-STEER-01-J-v3';
 const sourceCommit = 'a8c57eb35cf5e823f8ee0a650efc8c3c707055e4';
 const sourceRead = (path) => execFileSync('git', ['-C', sourceRepo, 'show', `${sourceCommit}:${path}`], { windowsHide: true, maxBuffer: 16e6 });
@@ -53,7 +53,9 @@ const exe = join(cache, 'build/pair_probe.exe');
 const oldManifest = JSON.parse(readFileSync(join(cache, 'execution-manifest.json')));
 if (sha(readFileSync(exe)) !== oldManifest.files.find((row) => row.path.replaceAll('\\', '/').endsWith('/pair_probe.exe')).sha256) throw new Error('Probe binary changed');
 const code = ['prepare-v2.mjs', 'run-v2.mjs', 'protocol-v2.mjs', 'screen.mjs', 'resources.py', 'probe.cpp', 'native_probe.hpp'];
-const files = [...walk(root), ...code.map((name) => join(repo, 'tools/r-steer-pair-02', name)), exe];
+const files = [...walk(root), ...code.map((name) => join(repo, 'tools/r-steer-pair-02', name)), exe,
+  join(cache, 'v2-calibration-01/result.json'),
+  join(cache, 'v2-calibration-01/requests/c01-connection-l15-p08/output.bin')];
 write('manifest.json', { sourceCommit, model, modelHash, engine, engineFiles: inventory.files, exe,
   files: files.map((path) => ({ path, sha256: sha(readFileSync(path)) })), sampling: 'greedy', seed: 20261113, seed_used: false, max_new_tokens: 384 });
 console.log('Prepared: 30 calibration jobs, five frozen 44-job formal plans; ±.08 byte identity and all vector/model/engine hashes passed. GPU not started.');

@@ -7,7 +7,7 @@ import { calibrationJobs, formalJobs, quality, selectDose, prompt } from './prot
 const complete = () => calibrationJobs().map((job) => ({ ...job, status: 'completed', quality: { failed: false, reasons: [] } }));
 test('minimum failure stops selection even with only first answer available', () => {
   const rows = calibrationJobs().map((job) => ({ ...job, status: 'not_run' }));
-  rows[0] = { ...rows[0], status: 'completed', quality: { failed: true, reasons: ['under_6_han'] } };
+  rows[0] = { ...rows[0], status: 'completed', quality: { failed: true, reasons: ['cap'] } };
   assert.equal(selectDose(rows).status, 'minimum_rejected');
   assert.equal(selectDose(rows).selected, null);
 });
@@ -37,13 +37,18 @@ test('fixed calibration order and formal pairs share prompt, magnitude, seed and
   }
   assert(prompt('今天好累 啥也不想干').includes('\n今天好累 啥也不想干<|im_end|>'));
 });
-test('exact #186 screen and explanatory reasons agree at frozen boundaries', () => {
+test('only the authorized short-Han check is removed from #186; remaining boundaries stay fixed', () => {
   const original = readFileSync('D:/Dev/nemu-wt/R-STEER-PAIR-01/tools/r-steer-pair/study.mjs','utf8');
   const source = original.slice(original.indexOf('export function screen('),original.indexOf('\nexport function blindPair')).trim();
-  assert(readFileSync(new URL('./screen.mjs',import.meta.url),'utf8').includes(source));
+  assert(readFileSync(new URL('./screen.mjs',import.meta.url),'utf8').includes(source.replace(' || han < 6', '')));
   const cases = ['', '在呀，怎么啦？', '一二三四五六', '一二三四五六七abc', '一二三四五六abcd', '你好你好你好', '一二三四五六\ufffd', '<think>一二三四五六', '联结一二三四五六', '一二三四五六\u0000', '一'.repeat(301)];
   for (const text of cases) for (const capped of [false,true]) assert.equal(quality(text,capped).failed,screen(text,capped));
   assert.equal(screen('一二三四五六',false),false);
+  assert.equal(screen('在',false),false);
+  assert.equal(screen('在呀，怎么啦？',false),false);
+  assert.equal(screen('',false),true);
+  assert.equal(screen('在',true),true);
+  assert.equal(screen('你好你好你好',false),true);
   assert.equal(screen('一二三四五六七abc',false),false);
   assert.equal(screen('一二三四五六abcd',false),true);
   assert.equal(quality('一二三四五六',true).reasons[0],'cap');

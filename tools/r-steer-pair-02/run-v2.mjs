@@ -8,7 +8,7 @@ import { sha, shaFile, quality, selectDose, calibrationJobs, formalJobs } from '
 const repo = fileURLToPath(new URL('../../', import.meta.url));
 const code = join(repo, 'tools/r-steer-pair-02');
 const cache = 'D:/Dev/cache/R-STEER-PAIR-02';
-const preparation = join(cache, 'v2-preparation-02');
+const preparation = join(cache, 'v2-preparation-03');
 const [phase, approval, publishedHead] = process.argv.slice(2);
 if (!['calibration', 'formal'].includes(phase) || approval !== '--user-approved')
   throw new Error('Use calibration|formal --user-approved [published public head]; actual user GPU approval required');
@@ -21,7 +21,7 @@ const git = (...args) => execFileSync('git', ['-C', repo, ...args], { windowsHid
 let commands, calibrationHash = null;
 if (phase === 'calibration') commands = calibrationJobs();
 else {
-  const bytes = readFileSync(join(cache, 'v2-calibration-01/result.json'));
+  const bytes = readFileSync(join(cache, 'v2-calibration-02/result.json'));
   const previous = JSON.parse(bytes);
   const selected = selectDose(previous.rows);
   if (previous.status !== 'completed' || selected.status !== 'selected' || selected.selected !== previous.selection.selected)
@@ -59,11 +59,25 @@ const deadline = Date.parse(process.env.PAIR02_WINDOW_DEADLINE_UTC ?? '');
 const remaining = deadline - Date.now();
 if (!Number.isFinite(deadline) || remaining <= 30000 || remaining > 900000)
   throw new Error('Set the actual approved window deadline (within 15 minutes); never reset it between stages');
-const out = join(cache, `v2-${phase}-01`);
+const out = join(cache, `v2-${phase}-02`);
 mkdirSync(out); mkdirSync(join(out, 'requests'));
 const write = (name, value) => writeFileSync(join(out, name), JSON.stringify(value, null, 2) + '\n', { flag: 'wx' });
 write('binding.json', { phase, publicHead: git('rev-parse', 'HEAD'), calibrationHash, deadlineUtc: new Date(deadline).toISOString(), preparationSha256: sha(readFileSync(join(preparation, 'manifest.json'))), resources: before });
 const rows = commands.map((job) => ({ ...job, status: 'not_run' }));
+if (phase === 'calibration') {
+  // Continue the interrupted batch without regenerating or altering its one completed answer.
+  const previousBytes = readFileSync(join(cache, 'v2-calibration-01/result.json'));
+  const previous = JSON.parse(previousBytes), first = previous.rows[0];
+  const index = JSON.parse(readFileSync(join(repo, 'reports/R-STEER-PAIR-02/CALIBRATION-V2-INDEX.json')));
+  const originalBytes = readFileSync(join(cache, 'v2-calibration-01/requests', first.id, 'output.bin'));
+  if (sha(previousBytes) !== index.result_sha256 || previous.status !== 'minimum_rejected'
+      || previous.completed !== 1 || first.id !== rows[0].id || sha(originalBytes) !== first.sha256
+      || first.quality.reasons.join(',') !== 'under_6_han' || !first.eog || first.capped
+      || new TextDecoder('utf-8', { fatal: true }).decode(originalBytes) !== first.text)
+    throw new Error('Prior stopped answer binding differs');
+  rows[0] = { ...first, quality: quality(first.text, first.capped), reused_from: 'v2-calibration-01', previous_result_sha256: sha(previousBytes) };
+  if (rows[0].quality.failed) throw new Error('Carried answer fails remaining frozen rules');
+}
 const started = performance.now();
 const errors = [], samples = [before];
 const stderr = createWriteStream(join(out, 'stderr.log'), { flags: 'wx' });
@@ -99,11 +113,12 @@ async function request(job) {
   if (!response.startsWith(`OK\t${job.id}\t`)) throw new Error('Native request failed');
 }
 const guard = (suffix) => ({ id: `guard-${suffix}`, material_id: 'p01', mode: 'guard', layer: -1, vector: 'none' });
-let status = 'technical_stop', count = 0, minimumRejected = false, guardVerified = false;
+let status = 'technical_stop', count = rows.filter((row) => row.status === 'completed').length, minimumRejected = false, guardVerified = false;
 try {
   if (await nextLine() !== 'READY') throw new Error('Native startup failed');
   await request(guard('start'));
   for (const row of rows) {
+    if (row.reused_from) continue;
     await request(row);
     const location = join(out, 'requests', row.id);
     const [steps, eog, limit, writes] = readFileSync(join(location, 'completion.tsv'), 'utf8').trim().split('\n')[1].trim().split('\t').map(Number);

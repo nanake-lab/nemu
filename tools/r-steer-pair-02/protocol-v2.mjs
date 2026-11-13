@@ -34,7 +34,7 @@ export function quality(text, capped) {
   const han = [...text.matchAll(/\p{Script=Han}/gu)].length;
   const reasons = [
     [capped, 'cap'], [!text.trim(), 'blank'], [[...text].length > 300, 'over_300_codepoints'],
-    [han < 6, 'under_6_han'], [han / Math.max(1, letters) < .7, 'han_ratio_under_70pct'],
+    [han / Math.max(1, letters) < .7, 'han_ratio_under_70pct'],
     [/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f\ufffd]/u.test(text), 'control_or_replacement'],
     [/(.{2,12})\1\1/u.test(text), 'repeated_fragment'],
     [/<\||\[\[|<\/?think>|联结|共情|好奇|成事|注入|力度|steering|layer|alpha/iu.test(text), 'protocol_or_label'],
