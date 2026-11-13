@@ -18,6 +18,7 @@ from typing import Any
 from arithmetic import Q, check_hand_vectors
 from c_oracle import bit_tree, first_difference
 from cf_research import CFResearch
+from c_research import CResearch
 from criteria import distance, distance_failure
 from f_research import FResearch, scalar_bits
 from full_run import dump, key, law_ref, run_row
@@ -290,6 +291,27 @@ def main() -> None:
         bridge = MatrixBridge(binary, log)
         try:
             write(out / "arithmetic.json", check_hand_vectors())
+            boundary = {}
+            first = next(r for r in rows if r["run_index"] == 100001)["input"]
+            for version in ("old", "A"):
+                m = CResearch(
+                    resources["C"], dict(first, version=version), bridge.primitive
+                )
+                m.step(first["events"][0])
+                boundary[version] = m.c.values["baseline"]["connection"]
+            write(
+                out / "separating-boundary.json",
+                dict(
+                    old=str(boundary["old"]),
+                    A=str(boundary["A"]),
+                    observation="43/256",
+                    passed=boundary["old"] < Q(43, 256) < boundary["A"],
+                ),
+            )
+            if not boundary["old"] < Q(43, 256) < boundary["A"]:
+                raise RuntimeError(
+                    "fixed separating premise failed; do not search a new observation"
+                )
             phase = time.monotonic()
             with (out / "execution-results.jsonl").open(
                 "x", encoding="utf-8"
