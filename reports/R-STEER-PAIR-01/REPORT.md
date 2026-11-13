@@ -34,7 +34,7 @@
 | 实际交付首页 | 双击文件对应的file页面实际打开成功，未勾批准、开始禁用、真实题目开启0、作答0、远程请求0、页面错误0；首页截图已私有归档 |
 | JSON/YAML及文档 | JSON解析通过；本地PyYAML检查退出1（环境没有yaml模块），未安装或重试；专用workflow已被GitHub解析并执行通过，不声称本地YAML检查通过。失败原件保留 |
 | 专用CI | [43396735244](https://github.com/nanake-lab/nemu/actions/runs/43396735244)通过；实际checkout `2e9c3a167bd8ef4cd0c1596b08c071d262f4a5b2`（main `f39f5e9f` + head `fdfddd93`），8测试通过 |
-| 通用CI / Windows | [通用CI 43396735238](https://github.com/nanake-lab/nemu/actions/runs/43396735238)中`pnpm lint/typecheck/test/build`、contracts、transport及Python步骤通过，其余跨语言步骤仍在运行，整套结论未定；[Windows 43396735310](https://github.com/nanake-lab/nemu/actions/runs/43396735310)聚合failure，原因为draft门禁，self-hosted skipped，未运行平台套件，不能称全绿 |
+| 通用CI / Windows | 源码`fdfddd93`的[通用CI 43396735238](https://github.com/nanake-lab/nemu/actions/runs/43396735238)中`pnpm lint/typecheck/test/build`、contracts、transport及Python步骤通过；后续报告推送后该整套运行被concurrency取消，不能称整套通过。当前报告head未取得全套CI通过；[Windows 43396735310](https://github.com/nanake-lab/nemu/actions/runs/43396735310)聚合failure，原因为draft门禁，self-hosted skipped，未运行平台套件。专用离线检查与其区分 |
 | 用户正式判断、有效性分析 | **not_run**；没有用户结果文件、没有解盲、没有评分或分析命令 |
 
 源码和准备的基线为 `f39f5e9feb4bce7ed56774645b8166e483e7ce7c`；再次fetch的main相同，无新增变化。预注册与准备源码先在 `1b60e9f7` 推送，随后一次抽样并封存；`fdfddd93`只增加验证、根脚本、CI接线与公开哈希，不改变已生成HTML、问法或抽样。没有失败验收被改门/重抽覆盖。
