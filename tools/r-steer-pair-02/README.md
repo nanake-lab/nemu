@@ -42,3 +42,7 @@ node --test tools/r-steer-pair-02/app.test.mjs
 ```
 
 用户结果返回前不解密或分析；页面证据与承诺见reports/R-STEER-PAIR-02/PAGE-V2-UNLIMITED-INDEX.json。
+
+## 用户完成后解盲
+
+用户已确认最终JSON并授权分析。analyze-v2.mjs仅在结果原字节、观察与哈希先推送封存后运行；核验页面/材料、AES-GCM认证及答案承诺，再按冻结22对统计P/M/T/Q/U。运行结果见RESULTS-V2.json及RESULTS-V2-INDEX.json，独立重计一致。输出目录存在即拒绝覆盖；密钥不写入输出或上传。不重新生成材料或改动用户判断。
