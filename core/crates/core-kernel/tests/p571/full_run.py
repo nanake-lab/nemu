@@ -35,7 +35,7 @@ from prepare import binding, write
 from probe import peak_bytes
 from sensitivity import BaselinePath, arithmetic, candidate
 from materialize import negative
-from criteria import distance, measurement_mutation
+from criteria import distance, distance_failure, measurement_mutation
 from reduce_witness import reduce_all
 
 
@@ -244,9 +244,17 @@ def run_row(
 
         model = initial()
         dut_path = out / f"{index - 1:06}.jsonl"
+        has_dut = False
+        if dut_path.exists():
+            with dut_path.open(encoding="utf-8") as prior_trace:
+                prior_plan = json.loads(next(prior_trace))["plan"]
+            has_dut = (
+                prior_plan["layer"] == "DUT"
+                and prior_plan["input_sha256"] == row["input_sha256"]
+            )
         dut_lines = (
             iter(dut_path.read_text(encoding="utf-8").splitlines()[1:])
-            if dut_path.exists()
+            if has_dut
             else iter([])
         )
         baseline_lines = (
@@ -284,11 +292,17 @@ def run_row(
                     "b-path-I23",
                 )
             dut = json.loads(next(dut_lines, "null"))
+            self_difference = difference
+            cross_difference = None
+            reference_difference = None
             if dut is not None and "prefix" in dut:
-                difference = (
-                    difference
-                    or compare(model, dut, family)
-                    or audit_difference(model, dut, prefix)
+                cross_difference = compare(model, dut, family)
+                reference_difference = audit_difference(model, dut, prefix)
+                difference = difference or cross_difference or reference_difference
+            paired = distance(case) if case["id"] == "09-18" else None
+            if paired is not None:
+                difference = difference or distance_failure(
+                    model.case["version"], paired
                 )
             if (
                 prefix
@@ -327,7 +341,10 @@ def run_row(
                 prefix=prefix,
                 state=state,
                 audit=bit_tree(model.last),
-                i23=difference is None,
+                i23=self_difference is None,
+                self_replay_difference=self_difference,
+                oracle_dut_difference=cross_difference,
+                reference_difference=reference_difference,
                 incremental_ns=incremental_ns,
                 replay_ns=replay_ns,
                 difference=difference,
@@ -338,7 +355,7 @@ def run_row(
             if bpath:
                 item["independent_baseline_subpath"] = rational_json(bpath.state())
             if case["id"] == "09-18":
-                item["paired_distance"] = distance(case)
+                item["paired_distance"] = paired
             baseline = json.loads(next(baseline_lines, "null"))
             if baseline is not None and prefix > 0:
                 mutation = first_difference(
@@ -367,9 +384,7 @@ def run_row(
                             if reference_path
                             else None,
                             original_trace=destination.name,
-                            comparison_layer="DUT_oracle"
-                            if dut_path.exists()
-                            else "independent",
+                            comparison_layer="DUT_oracle" if has_dut else "independent",
                             reduction_status="pending_after_matrix",
                             events=events[:prefix],
                         ),
@@ -388,9 +403,7 @@ def run_row(
                             earliest_prefix=prefix,
                             difference=difference,
                             original_trace=destination.name,
-                            comparison_layer="DUT_oracle"
-                            if dut_path.exists()
-                            else "independent",
+                            comparison_layer="DUT_oracle" if has_dut else "independent",
                             reduction_status="pending_after_matrix",
                             events=events[:prefix],
                         ),

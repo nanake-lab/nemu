@@ -130,6 +130,7 @@ def main() -> None:
             N=16,
         )
     )
+    rows.extend([dict(rows[-1], version=v) for v in ("oldC-oldF", "A-oldF")])
     # No frozen full trajectory is used as an acceptance sample here. C/F
     # histories are short API checks; G checks its setup plus one backfill.
     with (
@@ -144,7 +145,15 @@ def main() -> None:
                 if row["family"] == "G":
                     case["events"] = case["events"][:2]
                 elif row["family"] == "CF":
-                    case["events"] = case["events"][:2]
+                    case["events"] = case["events"][:7]
+                    # S1 software-only amplitudes, distinct from frozen C-02.
+                    for event in case["events"]:
+                        if event["c"]:
+                            event["c"]["a"] /= 2
+                        if event["f"]:
+                            event["f"]["target"] = [v / 2 for v in event["f"]["target"]]
+                            if event["f"]["a"] is not None:
+                                event["f"]["a"] = list(event["f"]["target"])
                 # Change algebra amplitudes for maintenance hand fixtures;
                 # original full matrix inputs remain untouched on disk.
                 if case["id"] == "09-11":

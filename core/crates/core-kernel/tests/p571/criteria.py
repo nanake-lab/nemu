@@ -5,6 +5,14 @@ from arithmetic import Q
 from c_oracle import first_difference
 
 
+def distance_failure(
+    version: str, measured: dict[str, Any]
+) -> tuple[str, Any, Any] | None:
+    if version == "A1" and not measured["extended_nonexpansive"]:
+        return ("extended_nonexpansive", True, False)
+    return None
+
+
 def distance(case: dict[str, Any]) -> dict[str, Any]:
     pair = case["distance_pair"]
     v = Q(pair["target"])

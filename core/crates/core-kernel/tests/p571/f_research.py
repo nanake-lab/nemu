@@ -252,7 +252,11 @@ class FResearch:
         ):
             # §6 C-02 / ADR0035 §4.3: current-theta targets were evaluated at
             # their original submission, never re-evaluated on a later visit.
-            value = list(self.history[root]["recorded_target"])
+            value = (
+                self.target(self.history[root])
+                if self.base == "old"
+                else list(self.history[root]["recorded_target"])
+            )
         else:
             value = self.target(event)
         if op in ("new", "update"):
@@ -267,8 +271,9 @@ class FResearch:
             elif op == "new" and event["kind"] == "record":
                 exponent, self.internal_count = 0, 0
             else:
-                self.internal_count += 1
+                # ADR0026 §6.3: n counts already committed internal records.
                 exponent = self.internal_count
+                self.internal_count += 1
             weight = Q(1)
             for _ in range(exponent):
                 weight = r(

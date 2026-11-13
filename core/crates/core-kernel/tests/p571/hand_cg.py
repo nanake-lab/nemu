@@ -251,7 +251,10 @@ def interactions() -> None:
         c_before = deepcopy(cf.c.state())
         cf.step(dict(time_ns=10**9, c=None, f=fevent(3, "revisit", at=10**9)))
         assert cf.c.state() == c_before and cf.f.targets == saved
-        assert cf.f.x[0] == (Q(1, 4) if cf.f.base == "B" else Q(1, 2))
+        # S1 old reference: first internal n=0, so 1/4 + 1/2 = 3/4.
+        assert cf.f.x[0] == (
+            Q(1, 4) if cf.f.base == "B" else Q(3, 4) if cf.f.base == "old" else Q(1, 2)
+        )
 
 
 def run() -> None:

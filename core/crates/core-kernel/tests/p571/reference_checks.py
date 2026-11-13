@@ -10,6 +10,9 @@ from prepare import ledger
 
 
 def run() -> None:
+    from s1_checks import run as s1_checks
+
+    s1_checks()
     f_checks()
     cg_checks()
     source, ordered = ledger() + deferred(), ordered_plan()

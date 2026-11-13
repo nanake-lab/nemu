@@ -139,7 +139,7 @@ def historical_and_roles() -> None:
         f.theta["g"] = [Q(2)] * 4
         f.step(dict(e, id="later", ordinal=2, op="revisit"))
         assert f.history["r1"]["recorded_target"][0] == Q(1, 4)
-        assert f.x[0] == (Q(3, 8) if version == "old" else Q(1, 4))
+        assert f.x[0] == (Q(3, 4) if version == "old" else Q(1, 4))
         f.step(dict(e, ordinal=3, op="update"))
         assert f.history["r1"]["recorded_target"][0] == Q(1, 2)
     f = model("A1")
@@ -167,10 +167,14 @@ def historical_and_roles() -> None:
     assert f.x[0] == Q(1, 2)  # known empty-slot migration cost, no guessed h
     old = model("old")
     for i in range(1, 4):
-        old.step(event(i, "new" if i == 1 else "revisit", value=Q(1, 2)))
-    assert old.x[0] == Q(7, 8) and old.internal_count == 2
+        old.step(event(i, "new" if i == 1 else "revisit", value=Q(1, 4)))
+    assert old.x[0] == Q(5, 8) and old.internal_count == 2
     old.step(event(4, root="result", value=Q(-1, 2), source="action_result"))
-    assert old.x[0] == Q(5, 8)  # n_issued=1, independent of internal n
+    assert old.x[0] == Q(3, 8) and old.internal_count == 2
+    old.step(event(5, root="external", value=Q(0)))
+    assert old.internal_count == 0
+    old.step(event(6, "revisit", value=Q(1, 4)))
+    assert old.x[0] == Q(5, 8) and old.internal_count == 1
     # Probe-only helper: first three are distinct roots; not the full driver.
     probe = F(dict(resources()[1], **{"lambda": Q(1)}), "A1", half)
     probe.step(dict(time_ns=0, target=Q(3, 4), root="r1"), 0)

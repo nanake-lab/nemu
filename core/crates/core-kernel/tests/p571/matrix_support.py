@@ -13,6 +13,7 @@ from cf_research import CFResearch
 from f_research import FResearch
 from g_research import GResearch
 from probe import Bridge
+from s1_refs import check as check_s1_refs
 
 Model = CResearch | FResearch | CFResearch | GResearch
 
@@ -44,7 +45,7 @@ class Budget:
         if self.stop.exists():
             raise InterruptedError("explicit STOP file")
         if time.monotonic() >= self.deadline:
-            raise InterruptedError("16 hour deadline")
+            raise InterruptedError("registered execution deadline")
 
     def remaining_ms(self) -> int:
         self.check()
@@ -138,9 +139,13 @@ def audit_difference(
     if isinstance(model, CFResearch):
         ca = audit.get("c")
         if ca is not None and model.last["c"] is not None:
-            return first_difference(
+            difference = first_difference(
                 bit_tree(model.last["c"]), bit_tree(ca), "CF-C-audit"
             )
+            if difference:
+                return difference
+        if model.case["id"] == "C-02" and (model.last.get("f") or {}).get("applied"):
+            return check_s1_refs(model.last["f"]["synthetic_h"], audit["f"])
     if isinstance(model, FResearch):
         expected_rejection = model.last.get("fault") == "internal revisit"
         if bool(audit.get("fault")) != expected_rejection:

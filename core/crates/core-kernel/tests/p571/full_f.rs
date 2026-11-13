@@ -51,6 +51,19 @@ fn content_ref<T: WireMessage>(value: &T, tag: &str) -> ObjectRef {
     }
 }
 
+// S1 evidence envelope, not an importable production theta snapshot.
+fn view_ref(body: &Value, tag: &str) -> ObjectRef {
+    content_ref(
+        &AuditExtension {
+            schema_version: 1,
+            audit_schema_tag: tag.into(),
+            audit_schema_version: 1,
+            payload: HexBytes(serde_json::to_vec(body).unwrap()),
+        },
+        tag,
+    )
+}
+
 pub(super) struct Machine {
     pub state: f::State,
     pub old: fast::FastState,
@@ -64,6 +77,7 @@ pub(super) struct Machine {
     case: Value,
     history: BTreeMap<String, (Value, f::Effect)>,
     active: BTreeMap<String, bool>,
+    synthetic_h: BTreeMap<String, Value>,
 }
 impl Machine {
     pub fn new(q: &Value) -> Self {
@@ -152,6 +166,7 @@ impl Machine {
             case: case.clone(),
             history: BTreeMap::new(),
             active: BTreeMap::new(),
+            synthetic_h: BTreeMap::new(),
         }
     }
     pub fn snapshot(&self) -> (Value, Vec<u8>) {
@@ -243,6 +258,16 @@ impl Machine {
         let evaluation = effects::evaluate_effects(&eff, &matches).unwrap();
         (eff, evaluation, a)
     }
+    fn history_objects(&self, event: &Value) -> Value {
+        let bits = |v: [f64; 4]| v.map(|x| format!("{:016x}", x.to_bits()));
+        json!({
+            "theta":{"b":bits(self.effects.theta.b),"g":bits(self.effects.theta.g),
+                "lambda_bits":bits(self.effects.theta.lambda)},
+            "effects":{"effects":[]},
+            "interpretation":{"id":event["id"],"a":bits(array(&event["target"])),"w":"3ff0000000000000"},
+            "governance":{"id":event["id"],"root":event["root"],"role":event["op"],"kind":event["kind"]}
+        })
+    }
     fn effect(&self, event: &Value) -> f::Effect {
         let (eff, evaluation, a) = self.target_inputs(event);
         let target = f::compute_target(
@@ -260,7 +285,11 @@ impl Machine {
         .unwrap();
         let internal = event["kind"] == "internal";
         let historical = event["target_mode"] == "evaluate_recorded_inputs";
-        let theta_ref = if historical {
+        let objects = self.history_objects(event);
+        let c02 = self.case["id"] == "C-02";
+        let theta_ref = if c02 {
+            view_ref(&objects["theta"], "echo.theta-snapshot-v3")
+        } else if historical {
             reference(
                 &self.case["historical_bindings"]
                     [event["theta_revision"].as_u64().unwrap() as usize]["theta"],
@@ -271,7 +300,9 @@ impl Machine {
             r.object_type = "echo.theta-snapshot-v3".into();
             r
         };
-        let effects_ref = if historical {
+        let effects_ref = if c02 {
+            view_ref(&objects["effects"], "p571.effects-view")
+        } else if historical {
             reference(
                 &self.case["historical_bindings"]
                     [event["effects_revision"].as_u64().unwrap() as usize]["effects"],
@@ -306,7 +337,9 @@ impl Machine {
                 target: vector(*target.drive().nature(), target.drive().learned()),
                 theta_before: theta_ref,
                 effects_before: effects_ref,
-                interpretation_refs: vec![if historical {
+                interpretation_refs: vec![if c02 {
+                    view_ref(&objects["interpretation"], "p571.interpretation")
+                } else if historical {
                     reference(
                         &event["recorded_bindings"]["interpretation"],
                         "p571.interpretation",
@@ -314,7 +347,9 @@ impl Machine {
                 } else {
                     self.input_ref.clone()
                 }],
-                governance_refs: vec![if historical {
+                governance_refs: vec![if c02 {
+                    view_ref(&objects["governance"], "p571.governance")
+                } else if historical {
                     reference(&event["recorded_bindings"]["governance"], "p571.governance")
                 } else {
                     self.input_ref.clone()
@@ -435,7 +470,7 @@ impl Machine {
         };
         let effect = self.effect(&resolved);
         self.project(event["time_ns"].as_u64().unwrap());
-        let result = if self.old_version {
+        let mut result = if self.old_version {
             let (eff, evaluation, a) = self.target_inputs(&resolved);
             let class = if op != "revisit" && event["source"] == "action_result" {
                 fast::EventClass::ActionResult { n_issued: 1 }
@@ -443,8 +478,9 @@ impl Machine {
                 self.internal = 0;
                 fast::EventClass::NewExogenous
             } else {
+                let n = self.internal;
                 self.internal += 1;
-                fast::EventClass::InternalRecord { n: self.internal }
+                fast::EventClass::InternalRecord { n }
             };
             let drive = fast::compute_drive(
                 &eff,
@@ -486,6 +522,17 @@ impl Machine {
             self.state = self.state.apply(&effect, limits()).unwrap();
             json!({"applied":true,"fault":null,"record":effect.record()})
         };
+        if self.case["id"] == "C-02" {
+            let h = if op == "revisit" && !self.old_version {
+                self.synthetic_h[root].clone()
+            } else {
+                json!({"source_position":resolved["ordinal"],"objects":self.history_objects(&resolved)})
+            };
+            result["synthetic_h"] = h.clone();
+            if op == "new" || op == "update" {
+                self.synthetic_h.insert(root.into(), h);
+            }
+        }
         if op == "new" || op == "update" {
             self.history.insert(root.into(), (event.clone(), effect));
             self.active.insert(root.into(), true);

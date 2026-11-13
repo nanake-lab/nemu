@@ -6,6 +6,7 @@ from typing import Any, Callable
 from arithmetic import Q
 from c_research import CResearch
 from f_research import FResearch
+from s1_refs import objects
 
 
 class CFResearch:
@@ -57,11 +58,30 @@ class CFResearch:
         if ce is not None:
             self.f.project(event["time_ns"])
         if fe is not None:
+            h: dict[str, Any] = {}
+            if self.case["id"] == "C-02":
+                source = (
+                    self.f.history.get(fe["root"]) if fe["op"] == "revisit" else None
+                )
+                h = (
+                    deepcopy(source["synthetic_h"])
+                    if source is not None and self.f.base != "old"
+                    else dict(
+                        source_position=fe["ordinal"]
+                        if source is None
+                        else source["ordinal"],
+                        objects=objects(self.f.theta, source or fe),
+                    )
+                )
             if self.mutant == "revisit-current" and fe["op"] == "revisit":
                 fe.update(op="update", target_mode="current_theta", a=fe["target"])
             if self.mutant == "new-old-state" and fe["op"] == "new":
                 fe["target_mode"] = "direct"
             self.f.step(fe)
+            if self.case["id"] == "C-02" and self.f.last.get("applied"):
+                self.f.last["synthetic_h"] = h
+                if fe["op"] in ("new", "update"):
+                    self.f.history[fe["root"]]["synthetic_h"] = deepcopy(h)
             self.last["f"] = self.f.last
             if (
                 self.mutant == "internal-C-mass"

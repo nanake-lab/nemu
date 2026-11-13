@@ -34,6 +34,18 @@ def premises(case: dict[str, Any], events: list[dict[str, Any]]) -> bool:
     )
     ordinals: set[int] = set()
     for e in events:
+        # CF stores F as a named substep; preserve its root prerequisites too.
+        f_event = e.get("f")
+        if f_event is not None:
+            f_op = f_event.get("op")
+            if f_op in ("new", "update", "revisit"):
+                if (
+                    f_op != "new"
+                    and f_event["root"] not in roots
+                    and f_event.get("kind") != "internal"
+                ):
+                    return False
+                roots.add(f_event["root"])
         op = e.get("op")
         if op in ("new", "update", "revisit"):
             if op != "new" and e["root"] not in roots and e.get("kind") != "internal":
