@@ -1,6 +1,6 @@
 # 中文两句话盲测：离线附件
 
-当前规则见 [预注册 v2](../../reports/R-STEER-PAIR-01/PREREGISTRATION-V2.md)，[v1](../../reports/R-STEER-PAIR-01/PREREGISTRATION.md) 保留。实际题单已冻结，不要重跑抽样；正式判断、解盲与分析未运行。
+当前规则见 [预注册 v2](../../reports/R-STEER-PAIR-01/PREREGISTRATION-V2.md)，[v1](../../reports/R-STEER-PAIR-01/PREREGISTRATION.md) 保留。实际题单已冻结，不要重跑抽样；用户现已批准v2并完成正式判断，本次授权的封存、解盲与分析已完成；见[结果报告](../../reports/R-STEER-PAIR-01/REPORT.md)。
 
 ## 本地验证
 
@@ -33,4 +33,13 @@ node tools/r-steer-pair/revise-v2.mjs <已冻结v1页面绝对路径> <新输出
 
 v2 承诺绑定本版预注册哈希、两版页面哈希、相同题单与原答案承诺。页面和结果的版本为 v2；封存答案仍是 v1 的原表。交付仅复制 HTML 和使用说明；答案密文保存在私有证据，密钥独立留存，不推送、不交付。
 
-批准 v2 前不得开始；正式完成后先封存最终结果，再确认解盲。当前工具不提供解封、评分或分析入口。
+批准 v2 前不得开始；正式完成后先封存最终结果，再获准解盲。历史准备工具不提供分析入口。本次用户已授权按v2解盲，新增 `analyze-v2.mjs`：验证先行封存的观察/结果及材料摘要，核验密文、解封答案承诺、题单与原输出哈希，再分类计数。密钥只在本机读取，不能推送或打印。明文答案与逐题分类仅保存私有证据，公开仅汇总。
+
+```powershell
+node --check tools/r-steer-pair/analyze-v2.mjs
+node --test tools/r-steer-pair/analyze-v2.test.mjs
+# 本轮已执行；现存分析目录会阻止覆盖，不要重新作答或重抽。
+node tools/r-steer-pair/analyze-v2.mjs <公开任务仓绝对路径> <私有证据仓绝对路径> <本机custody绝对路径>
+```
+
+计数严格按v2：固定10个显示对、至少9个注入，质量/平局未支持；家族只报告。作答后的口头感受单列限制，不回填原始选择。
