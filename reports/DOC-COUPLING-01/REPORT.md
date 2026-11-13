@@ -16,9 +16,9 @@
 
 | 检查 | 状态 |
 | --- | --- |
-| 文件范围：只新增三份 Markdown | 待 PR diff 核验 |
-| 相对链接：规格、ADR、README、请求/报告 | 对应目标已在 main 查阅；待 PR diff 再核对 |
-| Markdown 尾随空白与冲突标记 | 待检查 |
+| 文件范围：只新增三份 Markdown | 通过：PR #191 远端 diff 只含指定三份新增 Markdown |
+| 相对链接：规格、ADR、README、请求/报告 | 通过：相对路径对应的已有目标已从 main 读取或在本 PR 创建 |
+| Markdown 尾随空白与冲突标记 | 通过：远端 diff 的新增行无尾随空白、无冲突标记 |
 | `git diff --check` | not_run：GitHub 接口工作，无完整本地工作区 |
 | 产品、Windows、GPU、模型实验 | not_run：纯讨论备忘，不涉及此类改动 |
 
