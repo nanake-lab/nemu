@@ -1,0 +1,293 @@
+{
+  "package": "A-03",
+  "scope": "proxy labeling only, not judge evaluation",
+  "label_warning": "代理判断，不是人工金标准",
+  "old_A02_calls": 2,
+  "old_nano_usd": 12647500,
+  "smoke_excluded": {
+    "calls": 2,
+    "settled": 2,
+    "unknown_reservations": 0,
+    "phase_nano_usd": 10857500,
+    "cumulative_nano_usd": 23505000,
+    "usage": {
+      "prompt_tokens": 1581,
+      "completion_tokens": 1381,
+      "total_tokens": 2962,
+      "reasoning_tokens": 899,
+      "cached_tokens": 0
+    },
+    "active_seconds": 11.672000000020489,
+    "stop_reason": "",
+    "statuses": {
+      "valid": 2
+    }
+  },
+  "formal_first_segment": {
+    "calls": 9,
+    "settled": 9,
+    "unknown_reservations": 0,
+    "phase_nano_usd": 77305000,
+    "cumulative_nano_usd": 100810000,
+    "usage": {
+      "prompt_tokens": 7738,
+      "completion_tokens": 11592,
+      "total_tokens": 19330,
+      "reasoning_tokens": 9004,
+      "cached_tokens": 0
+    },
+    "active_seconds": 103.07799999997951,
+    "stop_reason": "technical_stop",
+    "statuses": {
+      "valid": 8,
+      "invalid": 1
+    }
+  },
+  "remaining_segment": {
+    "calls": 27,
+    "settled": 27,
+    "unknown_reservations": 0,
+    "phase_nano_usd": 204955000,
+    "cumulative_nano_usd": 305765000,
+    "usage": {
+      "prompt_tokens": 23810,
+      "completion_tokens": 29086,
+      "total_tokens": 52896,
+      "reasoning_tokens": 21228,
+      "cached_tokens": 0
+    },
+    "active_seconds": 200.43799999996554,
+    "stop_reason": "",
+    "statuses": {
+      "valid": 27
+    }
+  },
+  "formal": {
+    "calls": 36,
+    "settled": 36,
+    "unknown_reservations": 0,
+    "phase_nano_usd": 282260000,
+    "cumulative_nano_usd": 305765000,
+    "usage": {
+      "prompt_tokens": 31548,
+      "completion_tokens": 40678,
+      "total_tokens": 72226,
+      "reasoning_tokens": 30232
+    },
+    "active_seconds": 303.51599999994505,
+    "stop_reason": "",
+    "statuses": {
+      "valid": 35,
+      "invalid": 1
+    }
+  },
+  "user_amendment": 3,
+  "measurement_unusable": false,
+  "invalid_formal_total": 1,
+  "card_batch_delivered": true,
+  "technical_N": 36,
+  "excluded_Uspec": 3,
+  "semantic_N": 33,
+  "per_language_N": 11,
+  "valid_by_language": {
+    "zh": 12,
+    "en": 11,
+    "ja": 12
+  },
+  "care_author_proxy_diagnostic": [
+    {
+      "same": 32,
+      "different": 0,
+      "unresolved": 1,
+      "N": 33,
+      "confusion": {
+        "1->1": 3,
+        "-1->-1": 3,
+        "0->0": 26,
+        "0->missing": 1
+      }
+    },
+    {
+      "same": 32,
+      "different": 0,
+      "unresolved": 1,
+      "N": 33,
+      "confusion": {
+        "0->0": 26,
+        "0->missing": 1,
+        "1->1": 3,
+        "-1->-1": 3
+      }
+    },
+    {
+      "same": 32,
+      "different": 0,
+      "unresolved": 1,
+      "N": 33,
+      "confusion": {
+        "0->0": 29,
+        "0->missing": 1,
+        "1->1": 3
+      }
+    },
+    {
+      "same": 32,
+      "different": 0,
+      "unresolved": 1,
+      "N": 33,
+      "confusion": {
+        "0->0": 23,
+        "0->missing": 1,
+        "1->1": 6,
+        "-1->-1": 3
+      }
+    }
+  ],
+  "per_language_care_same_different_unresolved": {
+    "zh": {
+      "0": [
+        11,
+        0,
+        0
+      ],
+      "1": [
+        11,
+        0,
+        0
+      ],
+      "2": [
+        11,
+        0,
+        0
+      ],
+      "3": [
+        11,
+        0,
+        0
+      ]
+    },
+    "en": {
+      "0": [
+        10,
+        0,
+        1
+      ],
+      "1": [
+        10,
+        0,
+        1
+      ],
+      "2": [
+        10,
+        0,
+        1
+      ],
+      "3": [
+        10,
+        0,
+        1
+      ]
+    },
+    "ja": {
+      "0": [
+        11,
+        0,
+        0
+      ],
+      "1": [
+        11,
+        0,
+        0
+      ],
+      "2": [
+        11,
+        0,
+        0
+      ],
+      "3": [
+        11,
+        0,
+        0
+      ]
+    }
+  },
+  "families": {
+    "D01": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 3
+    },
+    "D02": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 3
+    },
+    "D03": {
+      "eligible_views": 3,
+      "valid": 2,
+      "views_with_disagreements": 2
+    },
+    "D04": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 3
+    },
+    "D05": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 3
+    },
+    "D06": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 3
+    },
+    "D07": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 3
+    },
+    "D09": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 3
+    },
+    "D10": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 1
+    },
+    "D11": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 3
+    },
+    "D12": {
+      "eligible_views": 3,
+      "valid": 3,
+      "views_with_disagreements": 3
+    }
+  },
+  "disagreement_roots": 11,
+  "disagreement_views": 30,
+  "disagreement_fields": 75,
+  "fields_by_name": {
+    "z.speaker": 6,
+    "z.cause_count": 26,
+    "z.welfare": 4,
+    "z.actor": 14,
+    "mu.2": 3,
+    "z.outcome": 1,
+    "z.target": 6,
+    "z.subjective": 2,
+    "z.occurred": 1,
+    "z.truth": 1,
+    "z.source": 10,
+    "z.event_time": 1
+  },
+  "cumulative_active_seconds": 329.655999999959,
+  "B_frozen": false,
+  "gpu_seconds": 0,
+  "evaluation_calls": 0,
+  "H_calls": 0
+}
