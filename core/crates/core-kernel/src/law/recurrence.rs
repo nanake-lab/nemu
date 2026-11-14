@@ -300,5 +300,9 @@ pub(super) fn fold(
 pub fn consistent_and_contrary(t: &Tendency, law: &Law) -> LawResult<(f64, f64)> {
     let _ = law;
     let total = t.evidence_absolute;
-    Ok(((total + t.evidence_a) / 2.0, (total - t.evidence_a) / 2.0))
+    // FIX-STORE-01: divide before adding to avoid intermediate overflow.
+    Ok((
+        total / 2.0 + t.evidence_a / 2.0,
+        total / 2.0 - t.evidence_a / 2.0,
+    ))
 }

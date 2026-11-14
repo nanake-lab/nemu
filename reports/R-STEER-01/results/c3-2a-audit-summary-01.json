@@ -1,0 +1,54 @@
+{
+  "stage": "audit",
+  "N": 393,
+  "result": {
+    "status": "completed",
+    "stage": "audit",
+    "planned": 393,
+    "finished": 393,
+    "attempts": 393,
+    "upper_nano_usd": 4974292500,
+    "active_seconds": 1887.5470000000205,
+    "stop_reason": null,
+    "in_flight": 0,
+    "repeat_or_resume_authorized": false
+  },
+  "statuses": {
+    "rating": 392,
+    "invalid": 1
+  },
+  "ledger_upper_nano_usd": 4974292500,
+  "ledger_peak_nano_usd": 5347507500,
+  "reservation_count": 393,
+  "settled_count": 393,
+  "unsettled_full_reservations": 0,
+  "raw_files": 3937,
+  "raw_bytes": 11171574,
+  "binding": {
+    "stage": "audit",
+    "public_head": "f3779c7822d3017589834165984afc769bd61793",
+    "private_head": "1388f8e0d7fede77fa58897a0e29539397bb4920",
+    "inputs_plan_sha256": "b06a70eb9d1c214732bffe2f8de9890165f6c4703abf8f4f724a8b97e286b972",
+    "started_utc": "2026-11-12T21:41:34.571920+00:00"
+  },
+  "price_check": {
+    "checked_utc": "2026-11-12T21:41:29.998122+00:00",
+    "source": "https://developers.openai.com/api/docs/pricing",
+    "model": "gpt-6.1-terra",
+    "rates": {
+      "input_reserve": 2500,
+      "output": 5000
+    },
+    "official_standard_usd_per_million": {
+      "input": 1,
+      "output": 5,
+      "cached_input": 0.05,
+      "write_30m": 1.25,
+      "write_12h": 2.5
+    },
+    "reserve_basis": "Frozen conservative input ceiling includes 12h cache-write price; no accounting relaxation.",
+    "verification": "Official pricing page freshly reopened before independent audit; same standard and conservative ceiling rates. Model availability separately checked by frozen executor.",
+    "git_transport": "Process-only GIT_CONFIG_COUNT=1 http.sslBackend=openssl, certificate verification unchanged; no persistent settings.",
+    "stage": "audit"
+  }
+}

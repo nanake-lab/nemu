@@ -4,7 +4,7 @@ use crate::{
     ingress::fingerprint,
     objects::Objects,
     schema::{integer, unsigned},
-    store::{head, references},
+    store::head,
 };
 use core_types::{
     WireMessage,
@@ -33,9 +33,6 @@ pub(crate) fn verify(
             .is_none(),
         "foreign key closure failure",
     )?;
-    for r in references(db, objects.config)? {
-        objects.closure(&r)?;
-    }
     let limits = objects.config.encoding;
     crate::terminal_ingress::verify_audit(db, limits)?;
     let mut input = db.prepare("SELECT position,event FROM raw_ingress ORDER BY position")?;
@@ -193,5 +190,5 @@ pub(crate) fn verify(
             "authority index count differs from commit manifests",
         )?;
     }
-    Ok(())
+    crate::derived::verify(db, objects)
 }

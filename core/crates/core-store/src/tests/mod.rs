@@ -219,3 +219,5 @@ fn advance<L: LineageKind>(
     let staged = store.stage(ticket, value).unwrap();
     store.commit(cap, staged, normal()).unwrap()
 }
+
+mod consistency;
