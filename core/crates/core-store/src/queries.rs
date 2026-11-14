@@ -41,6 +41,7 @@ impl<L: LineageKind> Reader<L> {
             .root
             .parent()
             .ok_or(crate::Error::Rejected("missing store root"))?;
+        crate::witness::admit(&self.db, root, &self.objects, false)?;
         let receipts = crate::witness::capture(root, &self.objects)?;
         let snapshot = self.db.unchecked_transaction()?;
         // This first SQL read pins the snapshot. Header, recovery, indexes,
@@ -70,13 +71,20 @@ impl<L: LineageKind> Reader<L> {
     /// result masquerading as evidence that no prior cost was recorded.
     pub fn ledger_at(&self, commit: &str, limit: usize) -> Result<Vec<LedgerEntry>> {
         let position = self.query_prefix(commit, limit)?;
-        let mut stmt = self.db.prepare("SELECT l.reference FROM ledger_index l JOIN commits c ON c.id=l.commit_id WHERE c.position<=?1 ORDER BY c.position,l.entry_id LIMIT ?2")?;
-        let refs = stmt
-            .query_map(params![position, (limit + 1) as i64], |r| {
-                r.get::<_, Vec<u8>>(0)
-            })?
-            .collect::<std::result::Result<Vec<_>, _>>()?;
-        self.decode_complete(refs, limit)
+        let mut stmt = self.db.prepare("SELECT snapshot FROM commits WHERE position<=?1 AND decision='accepted' ORDER BY position")?;
+        let mut rows = stmt.query([position])?;
+        let mut result = Vec::new();
+        while let Some(row) = rows.next()? {
+            let bytes: Vec<u8> = row.get(0)?;
+            let reference = ObjectRef::from_canonical(&bytes, self.objects.config.encoding)?;
+            let transaction: core_types::generated::CoreTransactionV2 = self.read(&reference)?;
+            require(
+                transaction.staged_ledger.len() <= limit - result.len(),
+                "incomplete query: result exceeds budget",
+            )?;
+            result.extend(transaction.staged_ledger);
+        }
+        Ok(result)
     }
     /// Latest accepted version of each evidence group at an explicit commit. A
     /// group update that removes an allocation also removes the old association.

@@ -303,3 +303,32 @@ fn law_7_recurrence_is_canonical() {
         "same trials as ADR 0019 Python reference"
     );
 }
+
+#[test]
+fn evidence_components_avoid_intermediate_overflow_and_preserve_normal_bits() {
+    let l = law(1.0, 0.0, 0.1, 10.0);
+    let mut t = tendency(&l, "components", None);
+    for a in [f64::MAX, -f64::MAX, 0.0] {
+        t.evidence_absolute = f64::MAX;
+        t.evidence_a = a;
+        let (e, c) = consistent_and_contrary(&t, &l).unwrap();
+        assert!(e.is_finite() && c.is_finite());
+        assert!(e >= 0.0 && c >= 0.0);
+    }
+    // Exact power-of-two scaling away from underflow/overflow preserves rounding.
+    for exponent in -500..500 {
+        for fraction in [-1.0, -0.75, -0.1, 0.0, 0.1, 0.75, 1.0] {
+            let v = 1.23456789 * 2.0_f64.powi(exponent);
+            let a = v * fraction;
+            t.evidence_absolute = v;
+            t.evidence_a = a;
+            let (e, c) = consistent_and_contrary(&t, &l).unwrap();
+            assert_eq!(e.to_bits(), ((v + a) / 2.0).to_bits());
+            assert_eq!(c.to_bits(), ((v - a) / 2.0).to_bits());
+        }
+    }
+    // Gradual underflow is an explicit boundary, not a claim of bit equivalence.
+    t.evidence_absolute = f64::from_bits(1);
+    t.evidence_a = f64::from_bits(1);
+    assert_eq!(consistent_and_contrary(&t, &l).unwrap(), (0.0, 0.0));
+}

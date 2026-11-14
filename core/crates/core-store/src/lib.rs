@@ -33,3 +33,5 @@ pub use store::Store;
 pub use transaction::{CommitCapability, PreparedTransaction, ReadTicket};
 #[cfg(test)]
 mod tests;
+
+mod derived;

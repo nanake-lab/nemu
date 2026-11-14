@@ -193,5 +193,5 @@ pub(crate) fn verify(
             "authority index count differs from commit manifests",
         )?;
     }
-    Ok(())
+    crate::derived::verify(db, objects)
 }
