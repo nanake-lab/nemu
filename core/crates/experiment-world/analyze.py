@@ -121,10 +121,10 @@ def main() -> None:
     by_id={r['id']:r for r in reports}
     for run in manifest:
         if run['seed']!=53001:continue
-        a=by_id[run['id']];b=by_id.get(run['id'].replace('53001','53002'))
-        if not b:continue
-        sa=a.get('M1',{}).get('status','not_run');sb=b.get('M1',{}).get('status','not_run')
-        cross.append({'seed1':a['id'],'seed2':b['id'],'M1_statuses':[sa,sb],'agreement':sa==sb,'growth_requirement':'passed' if sa==sb=='passed' else 'not_run' if 'not_run' in (sa,sb) else 'failed'})
+        seed_a=by_id[run['id']];seed_b=by_id.get(run['id'].replace('53001','53002'))
+        if not seed_b:continue
+        sa=seed_a.get('M1',{}).get('status','not_run');sb=seed_b.get('M1',{}).get('status','not_run')
+        cross.append({'seed1':seed_a['id'],'seed2':seed_b['id'],'M1_statuses':[sa,sb],'agreement':sa==sb,'growth_requirement':'passed' if sa==sb=='passed' else 'not_run' if 'not_run' in (sa,sb) else 'failed'})
     output={'label':'第一版对照 / 非正式结论','runs':reports,'pairs':pairs,'feedback':feedback,'Q2':json.loads((args.results/'Q2'/'pairs.json').read_text()) if (args.results/'Q2'/'pairs.json').exists() else {'status':'not_run','reason':'continuations unfinished'},'cross_seed':cross}
     with args.output.open('x',encoding='utf-8') as f:json.dump(output,f,ensure_ascii=False,indent=2)
 if __name__=='__main__':main()
