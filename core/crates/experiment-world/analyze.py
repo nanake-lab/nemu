@@ -6,7 +6,7 @@ import json
 import struct
 import statistics
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 def bits(x: float) -> str:
     return struct.pack('>d', x).hex()
@@ -53,6 +53,11 @@ def endpoint(rows: list[dict[str, Any]], complete: bool) -> dict[str, Any]:
             if values:magnitudes.append({'probe':p['id'],'coordinate':coordinate,'minimum':min(values),'maximum':max(values),'median':statistics.median(values)})
     return {'probe_effect_sizes':magnitudes,'M1':{'status':'passed' if first else 'failed' if complete else 'not_run','first':first,'right_censored': [{'tendency':k[0],'probe':k[1],'start_day':v[0],'observed_days':v[1]} for k,v in sorted(streak.items()) if v[1]<30]},'M2':m2,'complete':complete}
 
+def daily_rows(path: Path) -> Iterator[dict[str, Any]]:
+    with gzip.open(path, 'rt', encoding='utf-8') as stream:
+        for line in stream:
+            yield json.loads(line)
+
 def main() -> None:
     parser=argparse.ArgumentParser()
     parser.add_argument('package',type=Path);parser.add_argument('results',type=Path);parser.add_argument('output',type=Path)
@@ -76,7 +81,8 @@ def main() -> None:
                     e=event['event'];first_entry={'calendar_days':e['time']/86400000000000,'running_days':((e['day']-1)*e['hours']*3600000000000+e['time']%86400000000000)/86400000000000,'events':e['ordinal'],'independent_groups':e['ordinal'],'ids':active}
         r['T_entry']=first_entry
         r['four_nature_zero_coverage']=zero_coverage
-        reports.append(r);loaded[run['id']]=rows
+        reports.append(r);loaded[run['id']]=root/'daily.jsonl.gz'
+        del rows
     pairs=[]
     for run in manifest:
         if run['world'] not in ('W0','W6'):continue
@@ -84,12 +90,12 @@ def main() -> None:
             left=run['id'];right=left.replace(run['world'],other,1)
             if left not in loaded or right not in loaded:continue
             streak: dict[tuple[str,str,int],tuple[int,int]]={};first=None; q1=[]; trajectory=[]
-            for a,b in zip(loaded[left],loaded[right]):
+            for a,b in zip(daily_rows(loaded[left]),daily_rows(loaded[right])):
                 day=a['day']
                 if day!=b['day']:raise ValueError('checkpoint misalignment')
                 if run['world']=='W6' and day in (30,90,180,365):
                     same=identity(a['state']['theta'])==identity(b['state']['theta']) and identity(a['state']['x_nature'])==identity(b['state']['x_nature']) and identity(a['state']['x_learned'])==identity(b['state']['x_learned'])
-                    q1.append({'day':day,'strict_current_match':same,'status':'passed' if same else 'non_identifiable','probe_differences': [{'id':x['id'],'delta':[u-v for u,v in zip(x['delta'],y['delta'])]} for x,y in zip(a['probes'],b['probes'])]})
+                    q1.append({'day':day,'strict_current_match':same,'match_check':'passed' if same else 'failed','status':'matched_observation' if same else 'non_identifiable','probe_differences': [{'id':x['id'],'delta':[u-v for u,v in zip(x['delta'],y['delta'])]} for x,y in zip(a['probes'],b['probes'])]})
                 ra={r['id']:r for r in a['state']['r']};rb={r['id']:r for r in b['state']['r']}
                 trajectory.append({'day':day,'active_symmetric_difference':sorted({k for k,v in ra.items() if v['active']} ^ {k for k,v in rb.items() if v['active']}),'r_differences':{k:{f:ra[k][f]-rb[k][f] for f in ('pi','r')} for k in sorted(ra.keys()&rb.keys())},'theta_left':a['state']['theta'],'theta_right':b['state']['theta'],'probe_delta_differences':[{'id':x['id'],'nature':[u-v for u,v in zip(x['delta'],y['delta'])]} for x,y in zip(a['probes'],b['probes'])]})
                 current={}
@@ -110,7 +116,7 @@ def main() -> None:
         if not run['world'].startswith('O5-') or '-none' in run['world']:continue
         reference=run['id'].replace('-temporary-','-none-').replace('-permanent-','-none-')
         if run['id'] not in loaded or reference not in loaded:continue
-        feedback.append({'id':run['id'],'reference':reference,'formal_AC2_25':'not_run: no calibrated life reference/alarm acceptance','trajectory':[{'day':a['day'],'baseline_difference':{k:a['state']['theta']['baseline'][k]-b['state']['theta']['baseline'][k] for k in ('connection','empathy','curiosity','achievement')},'distance_to_baseline_bound':{k:1-abs(a['state']['theta']['baseline'][k]) for k in ('connection','empathy','curiosity','achievement')}} for a,b in zip(loaded[run['id']],loaded[reference])]})
+        feedback.append({'id':run['id'],'reference':reference,'formal_AC2_25':'not_run: no calibrated life reference/alarm acceptance','trajectory':[{'day':a['day'],'baseline_difference':{k:a['state']['theta']['baseline'][k]-b['state']['theta']['baseline'][k] for k in ('connection','empathy','curiosity','achievement')},'distance_to_baseline_bound':{k:1-abs(a['state']['theta']['baseline'][k]) for k in ('connection','empathy','curiosity','achievement')}} for a,b in zip(daily_rows(loaded[run['id']]),daily_rows(loaded[reference]))]})
     cross=[]
     by_id={r['id']:r for r in reports}
     for run in manifest:

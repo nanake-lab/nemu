@@ -23,6 +23,6 @@ def main()->None:
         print(f'END {run["id"]}: exit={result.returncode}',flush=True)
         if result.returncode:
             with (args.results/(run['id']+'.failure.json')).open('x') as f:json.dump({'status':'failed','exit_code':result.returncode},f)
-    q2.execute(args.package,args.results,args.binary)
+    if not (args.results/'resource-stop.json').exists():q2.execute(args.package,args.results,args.binary)
     subprocess.run(['python',str(Path(__file__).with_name('analyze.py')),str(args.package),str(args.results),str(args.results/'summary.json')],check=True)
 if __name__=='__main__':main()

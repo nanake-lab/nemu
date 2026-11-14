@@ -44,6 +44,17 @@ mod tests {
         )
         .unwrap();
         assert!(adapter::Adapter.same_bits(p.state(), replay.state()));
+        let mut renamed = adapter::genesis().unwrap();
+        for commit in &h {
+            let recompute::Command::Event(mut event) = commit.command.clone() else {
+                panic!("event");
+            };
+            event.person = adapter::rename_id(&event.person, false);
+            renamed = adapter::advance_named(&renamed, &event, true).unwrap();
+        }
+        let mut inverse = adapter::state_json(&renamed).unwrap();
+        adapter::inverse_names(&mut inverse);
+        assert_eq!(inverse, adapter::state_json(p.state()).unwrap());
         let before = adapter::state_json(p.state()).unwrap();
         let restored = continuation::restore(before.clone()).unwrap();
         assert!(adapter::same(&restored, p.state()).unwrap());

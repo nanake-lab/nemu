@@ -148,19 +148,35 @@ pub fn reaction(
     Ok((before, drive, ev, after))
 }
 pub fn advance(s: &State, e: &Event) -> Result<State> {
+    advance_named(s, e, false)
+}
+pub fn advance_named(s: &State, e: &Event, renamed: bool) -> Result<State> {
     if e.time < s.time || e.ordinal == 0 {
         return Err("event order".into());
     }
     let p = Probe {
-        id: format!("e{}", e.ordinal),
+        id: format!("{}{}", if renamed { "z" } else { "e" }, e.ordinal),
         person: e.person.clone(),
         context: e.context.clone(),
         a: e.a,
     };
     let (_, _, _, x) = reaction(s, &p, e.time)?;
-    let proposals = if e.ordinal == 1 { candidates() } else { vec![] };
+    let mut proposals = if e.ordinal == 1 { candidates() } else { vec![] };
+    let mut order = all_ids();
+    if renamed {
+        for c in &mut proposals {
+            c.record_id = rename_id(&c.record_id, false);
+            c.concept.concept_id = rename_id(&c.concept.concept_id, false);
+            c.predicate[0] = text(if c.predicate[0].en == "U" { "X" } else { "Y" });
+        }
+        order = order.iter().map(|id| rename_id(id, false)).collect();
+    }
     let group = law::GroupItem {
-        group_id: format!("cause-{:08}", e.ordinal),
+        group_id: format!(
+            "{}-{:08}",
+            if renamed { "renamed-cause" } else { "cause" },
+            e.ordinal
+        ),
         position: e.ordinal,
         source_key: e.person.clone(),
         members: vec![p.id.clone()],
@@ -182,7 +198,7 @@ pub fn advance(s: &State, e: &Event) -> Result<State> {
         law_version: &reference,
         law: law::Law::new(&parameters()).map_err(err)?,
         caretaker: law::Caretaker {
-            person_id: "U",
+            person_id: if renamed { "X" } else { "U" },
             attachment_prior: 0.,
         },
         r_capacity: 100,
@@ -200,7 +216,7 @@ pub fn advance(s: &State, e: &Event) -> Result<State> {
             candidates: &proposals,
             groups: &[group],
             aliases: &BTreeMap::new(),
-            proposal_order: &all_ids(),
+            proposal_order: &order,
         },
         &ctx,
     )
@@ -305,5 +321,49 @@ impl recompute::Kernel<Event> for Adapter {
     }
     fn same_bits(&self, a: &State, b: &State) -> bool {
         same(a, b).unwrap_or(false)
+    }
+}
+
+// Fixed bijection preserving ID ordering; no altered numerical inputs.
+pub fn rename_id(id: &str, inverse: bool) -> String {
+    let pairs = if inverse {
+        [("X", "U"), ("Y", "V")]
+    } else {
+        [("U", "X"), ("V", "Y")]
+    };
+    for (a, b) in pairs {
+        if id == a {
+            return b.into();
+        }
+        if let Some(rest) = id.strip_prefix(&format!("{a}:")) {
+            return format!("{b}:{rest}");
+        }
+    }
+    if inverse {
+        if let Some(rest) = id.strip_prefix("renamed-cause-") {
+            return format!("cause-{rest}");
+        }
+        if let Some(rest) = id.strip_prefix('z')
+            && rest.parse::<u64>().is_ok()
+        {
+            return format!("e{rest}");
+        }
+    }
+    id.into()
+}
+pub fn inverse_names(v: &mut serde_json::Value) {
+    match v {
+        serde_json::Value::String(s) => *s = rename_id(s, true),
+        serde_json::Value::Array(a) => {
+            for x in a {
+                inverse_names(x);
+            }
+        }
+        serde_json::Value::Object(o) => {
+            for x in o.values_mut() {
+                inverse_names(x);
+            }
+        }
+        _ => {}
     }
 }

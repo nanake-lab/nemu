@@ -5,6 +5,7 @@ import itertools
 import json
 import struct
 import subprocess
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -28,7 +29,7 @@ def execute(package: Path,results: Path,binary: Path)->None:
     histories={}
     for r in runs:
         f=results/r['id']/'daily.jsonl.gz'
-        if f.exists():daily[r['id']]={v['day']:v for v in map(json.loads,gzip.open(f,'rt',encoding='utf-8'))}
+        if f.exists():daily[r['id']]={v['day']:v for v in map(json.loads,gzip.open(f,'rt',encoding='utf-8')) if v['day'] in (30,90,180,365)}
         histories[r['id']]=[json.loads(l) for l in (package/(r['id']+'.jsonl')).read_text().splitlines()]
     records=[];branch_keys=set()
     for a,b in itertools.combinations(runs,2):
@@ -56,13 +57,16 @@ def execute(package: Path,results: Path,binary: Path)->None:
             records.append(record)
     for run,day,density,hours,seed in sorted(branch_keys):
         path=out/f'{run}-d{day}.json'
+        if shutil.disk_usage(out).free<2*1024**3:
+            with path.open('x') as f:json.dump({'status':'not_run','reason':'less than 2 GiB evidence reserve'},f)
+            continue
         with (out/f'{run}-d{day}.log').open('x') as log:
             result=subprocess.run([str(binary),'continue',str(results/run/f'checkpoint-{day}.json'),str(day),str(day*density),str(hours),str(seed),str(path)],stdout=log,stderr=subprocess.STDOUT,check=False)
         if result.returncode and not path.exists():path.write_text(json.dumps({'status':'failed','exit_code':result.returncode}))
     for record in records:
         if record['status']!='pending':continue
         states=[json.loads((out/f'{record[k]}-d{record["day"]}.json').read_text()) for k in ('left','right')]
-        if any(s['status']!='passed' for s in states):record.update(status='failed',reason='continuation fault');continue
+        if any(s['status']!='passed' for s in states):record.update(status='not_run' if any(s['status']=='not_run' for s in states) else 'failed',reason='continuation incomplete or fault');continue
         changes=[]
         for ba,bb in zip(states[0]['branches'],states[1]['branches']):
             first=None;trajectory=[]

@@ -207,6 +207,26 @@ fn execute(package: &Path, id: &str, out: &Path) -> Result<()> {
     if !same(&s, &rebuilt)? {
         replay_status = "failed";
     }
+    let rename_control = if matches!(run.world.as_str(), "W6" | "W7") {
+        let mut renamed = genesis()?;
+        let mut fault = None;
+        for event in &actuals {
+            let mut event = event.clone();
+            event.person = rename_id(&event.person, false);
+            match advance_named(&renamed, &event, true) {
+                Ok(next) => renamed = next,
+                Err(e) => {
+                    fault = Some(e);
+                    break;
+                }
+            }
+        }
+        let mut mapped = state_json(&renamed)?;
+        inverse_names(&mut mapped);
+        json!({"status":if fault.is_none() && mapped == state_json(&s)? { "passed" } else { "failed" },"failure":fault,"scope":"full committed prefix, inverse-mapped full state; U/V to X/Y, event/group IDs renamed"})
+    } else {
+        json!({"status":"not_applicable"})
+    };
     let witness = if let Some(f) = &failure {
         if let Some(ordinal) = f["ordinal"].as_u64() {
             let e: Event = serde_json::from_value(f["input"].clone()).map_err(err)?;
@@ -222,7 +242,7 @@ fn execute(package: &Path, id: &str, out: &Path) -> Result<()> {
     };
     write_json(
         &out.join("result.json"),
-        &json!({"id":id,"label":"第一版对照 / 非正式结论","status":status,"failure":failure,"committed_events":cursor,"expected_events":input.len(),"seconds":timer.elapsed().as_secs_f64(),"event_transition_seconds":slow,"fresh_recurrence_seconds":verify.elapsed().as_secs_f64(),"same_implementation_recompute":replay_status,"recompute_failure":replay_failure,"failure_witness":witness,"independent_second_implementation":"unavailable","p526_replay":"mechanical test coverage only; full prefix audit replay not executed","analysis":"pending"}),
+        &json!({"id":id,"label":"第一版对照 / 非正式结论","status":status,"failure":failure,"committed_events":cursor,"expected_events":input.len(),"seconds":timer.elapsed().as_secs_f64(),"event_transition_seconds":slow,"fresh_recurrence_seconds":verify.elapsed().as_secs_f64(),"same_implementation_recompute":replay_status,"recompute_failure":replay_failure,"rename_negative_control":rename_control,"failure_witness":witness,"independent_second_implementation":"unavailable","p526_replay":"mechanical test coverage only; full prefix audit replay not executed","analysis":"pending"}),
     )
 }
 fn main() {

@@ -47,6 +47,8 @@ pub fn continuation(s: &State, day: u32, ordinal: u64, hours: u32, seed: u64) ->
     for sign in [-1., 1.] {
         let mut with = s.clone();
         let mut without = s.clone();
+        let mut twin_with = s.clone();
+        let mut twin_without = s.clone();
         let new = Event {
             ordinal: ordinal + 1,
             day: day + 1,
@@ -57,6 +59,10 @@ pub fn continuation(s: &State, day: u32, ordinal: u64, hours: u32, seed: u64) ->
             a: [sign * 0.25, 0., 0., 0.],
         };
         with = advance(&with, &new)?;
+        twin_with = advance(&twin_with, &new)?;
+        if !same(&with, &twin_with)? {
+            return Err("identical-state negative control diverged at new event".into());
+        }
         let mut rows = vec![
             json!({"step":0,"with":probes::observed(&with),"without":probes::observed(&without)}),
         ];
@@ -67,11 +73,19 @@ pub fn continuation(s: &State, day: u32, ordinal: u64, hours: u32, seed: u64) ->
             e.time += u64::from(day) * DAY;
             with = advance(&with, &e)?;
             without = advance(&without, &e)?;
+            twin_with = advance(&twin_with, &e)?;
+            twin_without = advance(&twin_without, &e)?;
+            if !same(&with, &twin_with)? || !same(&without, &twin_without)? {
+                return Err(format!(
+                    "identical-state negative control diverged at {}",
+                    e.ordinal
+                ));
+            }
             rows.push(json!({"step":e.ordinal-ordinal-1,"with":probes::observed(&with),"without":probes::observed(&without)}));
         }
         branches.push(json!({"sign":sign,"new_event":new,"rows":rows}));
     }
     Ok(
-        json!({"status":"passed","branches":branches,"causal_history_path":"not_identified: report increments only; near matches remain confounded"}),
+        json!({"status":"passed","identical_full_state_negative_control":"passed","branches":branches,"causal_history_path":"not_identified: report increments only; near matches remain confounded"}),
     )
 }
