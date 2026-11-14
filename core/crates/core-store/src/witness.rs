@@ -248,7 +248,9 @@ pub(crate) fn admit(db: &Connection, root: &Path, objects: &Objects, repair: boo
             )?;
         }
         fs::create_dir(&dir)?;
-        platform::sync_dir(&dir)?;
+        for required in ["d", "commits", "reject"] {
+            platform::sync_dir(&receipts.join(required))?;
+        }
         platform::sync_dir(&receipts)?;
         platform::sync_dir(
             receipts
