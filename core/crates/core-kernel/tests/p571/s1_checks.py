@@ -21,6 +21,7 @@ def run() -> None:
     assert distance_failure("A1", dict(extended_nonexpansive=False)) is not None
     assert distance_failure("A1", dict(extended_nonexpansive=True)) is None
     assert distance_failure("old", dict(extended_nonexpansive=False)) is None
+    merge_005136()
     for version in ("A1", "A2"):
         m = model(version)
         analysis = Analysis(m)
@@ -44,6 +45,29 @@ def run() -> None:
     print(
         "S1 software: distance gate, analytic guards, three isolated wrong refs passed"
     )
+
+
+def merge_005136() -> None:
+    """S1 §4: frozen 005136's merge residual belongs to this step too."""
+    from inputs_f import f_case
+
+    case = f_case(
+        dict(id="09-11", version="A1", N=4, world=dict(sign=1, coordinate=0, variant=6))
+    )
+    m = model("A1")
+    analysis = Analysis(m)
+    results = []
+    # The fixed half-step primitive reproduces this fixture's locked pull=1/2;
+    # it is not a test of libm or a rerun of the DUT.
+    for e in case["events"][:3]:
+        before = deepcopy(m)
+        m.step(e)
+        results.append(analysis.observe(before, m, e, e["op"] != "merge"))
+    expected = Q(1, 2**56)  # exact sum of stored slots minus fl(sum)
+    assert results[1]["decomposition_residual"][0] == str(-expected)
+    assert results[2]["decomposition_residual"][0] == "0"
+    assert results[2]["local_error"] == [[str(expected)] * 2] + [["0", "0"]] * 3
+    assert results[2]["cumulative_error"][0] == ["0", str(Q(1, 2**54))]
 
 
 if __name__ == "__main__":

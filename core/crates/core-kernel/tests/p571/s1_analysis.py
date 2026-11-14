@@ -125,7 +125,10 @@ class Analysis:
                 # Merge's finite ordered sum has a separately measured rounding residual.
                 ideal = sum((before.h.get(k, [Q(0)] * size)[j] for k in members), Q(0))
                 actual = after.h[members[0]][j]
-                self.error[j] = add(self.error[j], point(ideal - actual))
+                residual = point(ideal - actual)
+                # S1 §4 requires both the local and cumulative decomposition error.
+                local[j] = add(local[j], residual)
+                self.error[j] = add(self.error[j], residual)
         elif (
             after.last.get("applied")
             and event is not None
