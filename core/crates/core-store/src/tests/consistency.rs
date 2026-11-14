@@ -109,6 +109,11 @@ fn missing_latest_group_is_rejected_instead_of_resurrecting_association() {
     let path = store.path().to_path_buf();
     drop(store);
     let db = rusqlite::Connection::open(path.join("store.sqlite")).unwrap();
+    db.execute_batch("SAVEPOINT missing_allocation; DROP TRIGGER immutable_evidence_index_DELETE; DELETE FROM evidence_index;").unwrap();
+    let objects = crate::objects::Objects::new(path.join("objects"), config());
+    assert!(crate::derived::verify(&db, &objects).is_err());
+    db.execute_batch("ROLLBACK TO missing_allocation; RELEASE missing_allocation")
+        .unwrap();
     db.execute_batch("DROP TRIGGER immutable_evidence_groups_DELETE;")
         .unwrap();
     db.execute(
