@@ -308,7 +308,7 @@ fn law_7_recurrence_is_canonical() {
 fn evidence_components_avoid_intermediate_overflow_and_preserve_normal_bits() {
     let l = law(1.0, 0.0, 0.1, 10.0);
     let mut t = tendency(&l, "components", None);
-    for a in [f64::MAX, -f64::MAX, 0.0] {
+    for a in [f64::MAX, -f64::MAX, f64::MAX / 2.0, -f64::MAX / 2.0, 0.0] {
         t.evidence_absolute = f64::MAX;
         t.evidence_a = a;
         let (e, c) = consistent_and_contrary(&t, &l).unwrap();
