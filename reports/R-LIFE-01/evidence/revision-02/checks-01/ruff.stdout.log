@@ -1,0 +1,34 @@
+E741 Ambiguous variable name: `l`
+  --> reports\R-LIFE-01\probability_analysis.py:79:54
+   |
+77 |         p0, p1 = semantic_probabilities(left), semantic_probabilities(right)
+78 |         # Half the change in unconditional semantic balance: equal losses to INVALID cancel.
+79 |         delta = [(r[0] - r[1] - l[0] + l[1]) / 2 for l, r in zip(p0, p1)]
+   |                                                      ^
+80 |         differences.append(delta)
+81 |         magnitudes.append(statistics.fmean(abs(value) for value in delta))
+   |
+
+E741 Ambiguous variable name: `l`
+  --> reports\R-LIFE-01\probability_analysis.py:83:52
+   |
+81 |         magnitudes.append(statistics.fmean(abs(value) for value in delta))
+82 |         raw_distances.append(statistics.fmean((abs(r[0] - l[0]) + abs(r[1] - l[1])) / 2
+83 |                                                for l, r in zip(p0, p1)))
+   |                                                    ^
+84 |         invalid_changes.append([sum(l) - sum(r) for l, r in zip(p0, p1)])
+85 |     return {"endpoint": "H1a", "test": paired_probability_test(differences),
+   |
+
+E741 Ambiguous variable name: `l`
+  --> reports\R-LIFE-01\probability_analysis.py:84:53
+   |
+82 |         raw_distances.append(statistics.fmean((abs(r[0] - l[0]) + abs(r[1] - l[1])) / 2
+83 |                                                for l, r in zip(p0, p1)))
+84 |         invalid_changes.append([sum(l) - sum(r) for l, r in zip(p0, p1)])
+   |                                                     ^
+85 |     return {"endpoint": "H1a", "test": paired_probability_test(differences),
+86 |             "seed_semantic_balance_differences": differences, "seed_magnitudes": magnitudes,
+   |
+
+Found 3 errors.
