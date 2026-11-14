@@ -1,5 +1,9 @@
 # P5-71 证据索引
 
+## S1合并局部读数勘误（2026-11-15）
+
+见[勘误报告](S1-MERGE-ERRATUM.md)与[独立证据索引](EVIDENCE-INDEX-S1-MERGE-ERRATUM.json)。只更正已有分析的合并局部读数，不重跑DUT/矩阵；S1原件不改，分析见证缩减仍未完成。
+
 ## 审查后补充 S1（2026-11-13）
 
 静态白名单子集与新分析已单独归档，见 [S1报告](S1-REPORT.md)、[S1索引](EVIDENCE-INDEX-S1.md)及[逐文件CSV](EVIDENCE-INDEX-S1.csv)。本轮643.266秒正常结束，保留灵敏度与最小见证缺口，不改以下run02或run01原件/标签。
