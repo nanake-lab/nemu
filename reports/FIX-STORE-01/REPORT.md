@@ -2,7 +2,7 @@
 
 # FIX-STORE-01 — 数值与派生一致性修复（交付线）
 
-实现与本机验收完成，等待交叉审查及当前提交 CI。Windows runner 离线，PR 保持草稿，合并受阻，见 [BLOCKED.md](BLOCKED.md)。账本按权威事务的追加序返回；派生表与权威记录不一致时拒绝恢复。空存储初始化中断留下的缺失 reject 目录可以补建并同步；有历史的存储缺目录时明确拒绝。只用临时合成存储验证，完成后请求审查并停止。
+实现与本机验收完成，等待交叉审查及当前提交 CI。Windows 验收以实际执行的 W02/W18 和对应证据为准，见 [BLOCKED.md](BLOCKED.md)。账本按权威事务的追加序返回；派生表与权威记录不一致时拒绝恢复。空存储初始化中断留下的缺失 reject 目录可以补建并同步；有历史的存储缺目录时明确拒绝。只用临时合成存储验证，完成后请求审查并停止。
 
 ## 变更与依据
 
@@ -32,7 +32,7 @@
 | core-store | 58 passed，含 7 项新增回归与原有全部测试；533.78 s；另 3 项文档测试通过 |
 | fact-view | 18 passed；模块总耗时 378.46 s，不是单次查询延迟 |
 | 文档与差异 | `git diff --check`、新增 Markdown 相对链接存在性检查通过 |
-| 远端 CI | 最终提交推送后执行；Windows runner 离线，当前 Windows CI 未取得通过，不以本机结果替代 |
+| 远端 CI | 原 full=false 运行跳过 W02/W18，不构成验收；本次 full=true 的逐步核对在 PR 修订交付评论记录 |
 
 首轮存储回归 5 项失败：内存投影库默认开启外键，缺少故意未复制的权威表而拒绝插入。已显式关闭这一个一次性内存连接的外键，产品存储外键保持开启；原始失败保留。一次中间版本串行工作区运行因实现继续更新而主动中止（exit 0xffffffff），不是完整通过；旧提交 Ubuntu CI 同样取消。最终固定实现的全工作区测试从头完成，结果如上。
 
@@ -43,8 +43,19 @@
 ## 待审查
 
 - V2-178 运算次序修正及上述兼容边界。
-- 当前状态为草稿；请审查实现与证据。Windows runner 启动并取得当前提交 CI 通过前不可合并；本任务不自动合并。
+- 当前状态为草稿；请审查实现与证据。必要 CI 实际执行并通过及增量复审通过前不可合并；本任务不自动合并。
 
 ## 代码组织
 
 `store.rs` 为 404 行，保留既有存储生命周期、类型入口及通用 SQL 辅助函数的组织，本次只追加准入/GC 检查，不为四行超限拆出无独立职责的模块。新增派生重建与核对集中在独立的 `derived.rs`。
+
+
+## 2026-11-14 复核修订 R1
+
+接受 [复核两项阻塞](https://github.com/nanake-lab/nemu/pull/194#issuecomment-6878839396)，先在 PR 写明看法再修改。修订实现提交 `78a7ef993e12817006a7542352c1e40cbbac49ab`；后续报告提交不改实现。
+
+writer 准入现在总是按 d、commits、reject、回执根、父目录的顺序同步，目录已存在也不跳过。同步错误直接通过 Result 向上传递，Store::open 在 admit 成功前不会返回 Store。Reader 不同步；format-1 提前返回；非空存储缺目录仍拒绝。H、schema、初始化写入顺序均未改。每次 writer 打开新增最多五次目录同步，不作用于每次查询或提交。
+
+回归 `existing_initialization_namespaces_complete_every_sync_before_admission` 通过真实子进程中断建立第三次 ReceiptKindCreated、第三次 ReceiptKindSynced、ReceiptRootSynced 三个残态。每个残态检查五处同步路径和顺序，逐处注入 StorageFull（共 15 个拒绝），然后执行真实同步、打开、追加及再次打开。注入发生在准入函数的同步依赖边界，验证错误传播；不是物理断电模拟。Reader 的同步闭包若被调用即失败。
+
+本机修订检查：consistency 8 passed / 0 failed；fmt 和 core-store all-targets Clippy -D warnings 均 exit 0。此前全工作区 476 passed 属于原实现提交，不冒充修订后的整工作区结果。修订后 Windows 手动使用 full=true；交付评论记录运行号、提交、W02/W18 的逐步结论及下载证据核对，不能以汇总颜色或旧运行代替。

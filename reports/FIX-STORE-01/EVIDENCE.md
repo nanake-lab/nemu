@@ -18,3 +18,14 @@
 | [FIX-STORE-01/workspace-tests.log](https://github.com/nanake-lab/nemu-evidence/blob/44f9fc116af0d356d729f1d9643dfbab710bf1d9/FIX-STORE-01/workspace-tests.log) | `d810efbcce77892be016cd3aef98489e1da8503976976821b9ac6830e36d96ce` |
 
 最终验收为 `workspace-final.log`、`clippy-final.log` 与 `validation.json`。`consistency-first.log` 为已修复的首轮失败，`workspace-tests.log` 为主动中止的中间版本运行；均保留，不作为最终通过证据。格式检查无 stdout，退出码在 validation.json 中记录。
+
+
+## R1 初始化同步修订
+
+源提交 `78a7ef993e12817006a7542352c1e40cbbac49ab`；私有证据提交 `58f835127812410424b78ef1878204cbe304ba43`。Windows full=true 运行和工件核对见 PR 修订交付评论。
+
+| 文件 | SHA-256 |
+| --- | --- |
+| [revision-01-consistency.log](https://github.com/nanake-lab/nemu-evidence/blob/58f835127812410424b78ef1878204cbe304ba43/FIX-STORE-01/revision-01-consistency.log) | `8f5a1e6d8d56a8bdf857615189a3e87db99bbb09c7e269e2a5c944d78ea7d68a` |
+| [revision-01-clippy.log](https://github.com/nanake-lab/nemu-evidence/blob/58f835127812410424b78ef1878204cbe304ba43/FIX-STORE-01/revision-01-clippy.log) | `4757def39da6b532a93f4367b731764af69f9b8141b540797da74acb403c0389` |
+| [revision-01-validation.json](https://github.com/nanake-lab/nemu-evidence/blob/58f835127812410424b78ef1878204cbe304ba43/FIX-STORE-01/revision-01-validation.json) | `f818f59cff18dcfef28aebb862525fa874827eb5c7fbd54775e1232fb19b510a` |
