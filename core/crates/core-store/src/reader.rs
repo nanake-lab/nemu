@@ -47,6 +47,7 @@ impl<L: LineageKind> Reader<L> {
         // Capture immutable receipts FIRST, then pin a SQL read snapshot. SQL
         // publication always precedes its receipt, so this snapshot cannot lag
         // any captured receipt. Later receipts must not be scanned against it.
+        crate::witness::admit(&db, &root, &objects, false)?;
         let receipts = crate::witness::capture(&root, &objects)?;
         after_capture();
         db.execute_batch("BEGIN")?;

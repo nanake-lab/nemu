@@ -146,6 +146,8 @@ impl<L: LineageKind> Store<L> {
             _writer: writer,
             _lineage: PhantomData,
         };
+        crate::recovery::verify(&store.db, &store.objects, &store.header, &store.branch)?;
+        crate::witness::admit(&store.db, &store.root, &store.objects, true)?;
         store.verify()?;
         crate::witness::reconcile(&store.db, &store.root, &store.objects, true, &store.fault)?;
         Ok(store)
@@ -186,21 +188,26 @@ impl<L: LineageKind> Store<L> {
         head(&self.db)
     }
     pub fn verify(&self) -> Result<()> {
+        crate::witness::admit(&self.db, &self.root, &self.objects, false)?;
         crate::recovery::verify(&self.db, &self.objects, &self.header, &self.branch)?;
         crate::witness::reconcile(&self.db, &self.root, &self.objects, false, &Fault::None)
     }
     /// Pins retained by PreparedObject protect the prepare-to-publish window.
     /// Published history and durable D objects are never garbage collected.
     pub fn collect_garbage(&mut self) -> Result<usize> {
+        self.verify()?;
         let pins = self
             .objects
             .pins
             .lock()
             .map_err(|_| Error::Rejected("retention lock poisoned"))?;
-        let retained: std::collections::BTreeSet<_> = references(&self.db, self.objects.config)?
-            .into_iter()
-            .map(|r| hex(&r.digest.0))
-            .collect();
+        let retained: std::collections::BTreeSet<_> = references(
+            &crate::derived::rebuild(&self.db, &self.objects)?,
+            self.objects.config,
+        )?
+        .into_iter()
+        .map(|r| hex(&r.digest.0))
+        .collect();
         let mut removed = 0;
         for entry in fs::read_dir(&self.objects.root)? {
             let entry = entry?;
