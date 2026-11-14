@@ -215,6 +215,16 @@ pub(crate) fn reconcile(
 /// Missing namespaces are repairable only for an empty, verified initialization.
 /// A nonempty store needs explicit recovery; never erase rollback evidence.
 pub(crate) fn admit(db: &Connection, root: &Path, objects: &Objects, repair: bool) -> Result<()> {
+    admit_with_sync(db, root, objects, repair, platform::sync_dir)
+}
+
+pub(crate) fn admit_with_sync(
+    db: &Connection,
+    root: &Path,
+    objects: &Objects,
+    repair: bool,
+    mut sync_dir: impl FnMut(&Path) -> Result<()>,
+) -> Result<()> {
     if crate::migration::format(db)? == 1 {
         return Ok(());
     }
@@ -248,11 +258,16 @@ pub(crate) fn admit(db: &Connection, root: &Path, objects: &Objects, repair: boo
             )?;
         }
         fs::create_dir(&dir)?;
+    }
+    // Existence cannot prove that initialization reached its durability barriers.
+    // Repeat them on every writer admission, including after a failed repair.
+    // Readers only check the namespace; they never create or synchronize it.
+    if repair {
         for required in ["d", "commits", "reject"] {
-            platform::sync_dir(&receipts.join(required))?;
+            sync_dir(&receipts.join(required))?;
         }
-        platform::sync_dir(&receipts)?;
-        platform::sync_dir(
+        sync_dir(&receipts)?;
+        sync_dir(
             receipts
                 .parent()
                 .ok_or(crate::Error::Rejected("missing receipt parent"))?,

@@ -241,3 +241,72 @@ fn gc_refuses_live_reference_corruption_without_removing_history() {
             .exists()
     );
 }
+
+#[test]
+fn existing_initialization_namespaces_complete_every_sync_before_admission() {
+    for (point, nth) in [
+        (FaultPoint::ReceiptKindCreated, 3),
+        (FaultPoint::ReceiptKindSynced, 3),
+        (FaultPoint::ReceiptRootSynced, 1),
+    ] {
+        let root = TemporaryRoot::new().unwrap();
+        super::crash_harness::run(&root, "init", point, nth, None);
+        let path = root.path().join("crash");
+        let receipts = crate::witness::path(&path).unwrap();
+        let expected = vec![
+            receipts.join("d"),
+            receipts.join("commits"),
+            receipts.join("reject"),
+            receipts.clone(),
+            receipts.parent().unwrap().to_path_buf(),
+        ];
+        assert!(expected.iter().all(|p| p.is_dir()));
+        let db = rusqlite::Connection::open(path.join("store.sqlite")).unwrap();
+        let objects = crate::objects::Objects::new(path.join("objects"), config());
+        // Exercise the exact admission implementation with each sync returning
+        // an I/O failure. Earlier barriers really run; no failed barrier admits.
+        for fail_at in 0..expected.len() {
+            let mut visited = Vec::new();
+            let result = crate::witness::admit_with_sync(&db, &path, &objects, true, |dir| {
+                visited.push(dir.to_path_buf());
+                if visited.len() - 1 == fail_at {
+                    return Err(std::io::Error::from(std::io::ErrorKind::StorageFull).into());
+                }
+                crate::platform::sync_dir(dir)
+            });
+            assert!(
+                matches!(result, Err(crate::Error::Io(ref e)) if e.kind() == std::io::ErrorKind::StorageFull)
+            );
+            assert_eq!(
+                visited,
+                expected[..=fail_at],
+                "{point:?}, failure {fail_at}"
+            );
+        }
+        let mut visited = Vec::new();
+        crate::witness::admit_with_sync(&db, &path, &objects, true, |dir| {
+            visited.push(dir.to_path_buf());
+            crate::platform::sync_dir(dir)
+        })
+        .unwrap();
+        assert_eq!(visited, expected, "{point:?}");
+        crate::witness::admit_with_sync(&db, &path, &objects, false, |_| {
+            panic!("reader must not synchronize directories")
+        })
+        .unwrap();
+        drop(db);
+        let mut store = Store::<Rehearsal>::open_temporary(&root, "crash", config()).unwrap();
+        assert!(store.head().unwrap().0.is_none());
+        let cap = store.take_commit_capability().unwrap();
+        advance(&mut store, &cap, 0);
+        store.verify().unwrap();
+        drop(store);
+        Store::<Rehearsal>::open_temporary(&root, "crash", config())
+            .unwrap()
+            .verify()
+            .unwrap();
+        println!(
+            "{point:?}/{nth}: all five syncs observed; five injected sync failures rejected; reopen/write verified"
+        );
+    }
+}
