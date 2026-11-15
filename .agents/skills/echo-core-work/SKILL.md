@@ -23,7 +23,7 @@ AGENTS.md 开头指向本节，所以每张卡开工都按本节读，不只是 
 
 **另外，按卡的类型：**
 
-- **设计卡、改规格或契约的 ADR、预注册研究：** 通读 v2.0 规格全文 `docs/echo-core/echo-core-v2.0-first-principles.md`。
+- **设计卡、改规格或契约的 ADR、预注册研究：** 通读 v2.0 规格全文 `docs/echo-core/echo-core-v2.0-first-principles.md`；读 `docs/adr/0039-echo-core-principles.md`，按其 §2.7 核对原则，并对每个新增结构按 AGENTS.md 黄金规则 17 回答三问：能不能不加？一个人会怎样？加了以后，有什么从此改不掉？
 - **Echo Core 相关的普通实现卡**（改动 `core/`、`workers/`、`executors/` 的卡）：读 v2.0 规格的目录（`Select-String -Path docs/echo-core/echo-core-v2.0-first-principles.md -Pattern '^#'`），按需读与本卡相关的章节。
 - 其他卡：不另加。
 
