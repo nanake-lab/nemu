@@ -1,51 +1,246 @@
 # 不确定判定抽查索引
 
-共45条调用。原文、主标签和具体理由见私有`uncertain-review.json`，按下列ID检索；不确定项没有从主表扣除。
+共240条调用，正文和理由见私有uncertain-review-complete.json。主表未剔除这些条目。
 
-| 调用ID | 主类别 |
-| --- | --- |
-| deepseek-flash-high-P1-R1-T-长历史-01 | 编造 |
-| deepseek-flash-high-P1-R1-T-长历史-16 | 记错 |
-| deepseek-flash-high-P1-R2-T-少量-20 | 编造 |
-| deepseek-flash-high-P1-R2-T-长历史-03 | 记错 |
-| deepseek-flash-high-P1-R2-T-长历史-04 | 编造 |
-| deepseek-flash-high-P1-R3-T-少量-14 | 编造 |
-| deepseek-flash-high-P1-R3-T-近空-14 | 顺着认 |
-| deepseek-flash-high-P1-R3-T-长历史-14 | 顺着认 |
-| deepseek-flash-high-P1-R3-T-长历史-16 | 未编造 |
-| deepseek-flash-high-P2-R1-T-少量-17 | 记错 |
-| deepseek-flash-high-P2-R2-T-少量-20 | 编造 |
-| deepseek-flash-high-P2-R2-T-近空-06 | 未编造 |
-| deepseek-flash-high-P2-R2-T-近空-17 | 未编造 |
-| deepseek-flash-high-P2-R2-T-长历史-03 | 未编造 |
-| deepseek-flash-high-P2-R2-T-长历史-04 | 未编造 |
-| deepseek-flash-high-P2-R2-T-长历史-09 | 顺着认 |
-| deepseek-flash-high-P2-R2-T-长历史-19 | 未编造 |
-| deepseek-flash-high-P2-R3-T-少量-01 | 编造 |
-| deepseek-flash-high-P2-R3-T-长历史-04 | 记错 |
-| deepseek-flash-high-P3-R1-T-少量-16 | 顺着认 |
-| deepseek-flash-high-P3-R1-T-少量-20 | 编造 |
-| deepseek-flash-high-P3-R1-T-近空-01 | 未编造 |
-| deepseek-flash-high-P3-R2-T-少量-14 | 未编造 |
-| deepseek-flash-high-P3-R2-T-少量-20 | 编造 |
-| deepseek-flash-high-P3-R3-T-少量-16 | 顺着认 |
-| deepseek-flash-high-P3-R3-T-近空-01 | 未编造 |
-| deepseek-flash-high-P3-R3-T-近空-06 | 未编造 |
-| deepseek-flash-high-P3-R3-T-长历史-16 | 顺着认 |
-| deepseek-flash-high-P3-R3-T-长历史-20 | 编造 |
-| gpt-6.1-terra-high-P1-R1-T-近空-14 | 未编造 |
-| gpt-6.1-terra-high-P1-R1-T-近空-19 | 顺着认 |
-| gpt-6.1-terra-high-P1-R1-T-长历史-14 | 未编造 |
-| gpt-6.1-terra-high-P1-R1-T-长历史-25 | 未编造 |
-| gpt-6.1-terra-high-P1-R2-T-近空-14 | 未编造 |
-| gpt-6.1-terra-high-P1-R2-T-长历史-25 | 顺着认 |
-| gpt-6.1-terra-high-P1-R3-T-长历史-25 | 顺着认 |
-| gpt-6.1-terra-high-P2-R1-T-长历史-25 | 未编造 |
-| gpt-6.1-terra-high-P2-R2-T-长历史-25 | 顺着认 |
-| gpt-6.1-terra-high-P2-R3-T-长历史-20 | 编造 |
-| gpt-6.1-terra-high-P2-R3-T-长历史-25 | 未编造 |
-| gpt-6.1-terra-high-P3-R1-T-长历史-14 | 未编造 |
-| gpt-6.1-terra-high-P3-R1-T-长历史-25 | 顺着认 |
-| gpt-6.1-terra-high-P3-R2-T-长历史-25 | 未编造 |
-| gpt-6.1-terra-high-P3-R3-T-长历史-20 | 编造 |
-| gpt-6.1-terra-high-P3-R3-T-长历史-25 | 未编造 |
+| 阶段 | 配置 | 调用/盲判ID | 主类别 |
+| --- | --- | --- | --- |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P1-R1-T-长历史-01 | 编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P1-R1-T-长历史-16 | 记错 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P1-R2-T-少量-20 | 编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P1-R2-T-长历史-03 | 记错 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P1-R2-T-长历史-04 | 编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P1-R3-T-少量-14 | 编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P1-R3-T-近空-14 | 顺着认 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P1-R3-T-长历史-14 | 顺着认 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P1-R3-T-长历史-16 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R1-T-少量-17 | 记错 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R2-T-少量-20 | 编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R2-T-近空-06 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R2-T-近空-17 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R2-T-长历史-03 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R2-T-长历史-04 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R2-T-长历史-09 | 顺着认 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R2-T-长历史-19 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R3-T-少量-01 | 编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P2-R3-T-长历史-04 | 记错 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R1-T-少量-16 | 顺着认 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R1-T-少量-20 | 编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R1-T-近空-01 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R2-T-少量-14 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R2-T-少量-20 | 编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R3-T-少量-16 | 顺着认 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R3-T-近空-01 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R3-T-近空-06 | 未编造 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R3-T-长历史-16 | 顺着认 |
+| API调整 | deepseek-flash-high | deepseek-flash-high-P3-R3-T-长历史-20 | 编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P1-R1-T-近空-14 | 未编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P1-R1-T-近空-19 | 顺着认 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P1-R1-T-长历史-14 | 未编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P1-R1-T-长历史-25 | 未编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P1-R2-T-近空-14 | 未编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P1-R2-T-长历史-25 | 顺着认 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P1-R3-T-长历史-25 | 顺着认 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P2-R1-T-长历史-25 | 未编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P2-R2-T-长历史-25 | 顺着认 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P2-R3-T-长历史-20 | 编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P2-R3-T-长历史-25 | 未编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P3-R1-T-长历史-14 | 未编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P3-R1-T-长历史-25 | 顺着认 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P3-R2-T-长历史-25 | 未编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P3-R3-T-长历史-20 | 编造 |
+| API调整 | gpt-6.1-terra-high | gpt-6.1-terra-high-P3-R3-T-长历史-25 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P1-T-real-02 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P1-T-少量-06 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P1-T-少量-16 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P1-T-近空-17 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P1-T-近空-20 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P1-T-长历史-13 | 顺着认 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P1-T-长历史-14 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P1-T-长历史-16 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P2-T-real-02 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P2-T-少量-13 | 顺着认 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P2-T-少量-16 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P2-T-少量-19 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P2-T-长历史-13 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P2-T-长历史-14 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P2-T-长历史-16 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P2-T-长历史-17 | 顺着认 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-real-02 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-少量-01 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-少量-08 | 顺着认 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-少量-11 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-少量-13 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-少量-16 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-少量-20 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-长历史-04 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-长历史-14 | 编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-长历史-16 | 未编造 |
+| 本地调整 | Qwen3-4B-Instruct-2507-no-thinking | Qwen3-4B-Instruct-2507-no-thinking-P3-T-长历史-18 | 未编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-少量-14 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-少量-16 | 未编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-少量-17 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-少量-19 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-近空-11 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-近空-13 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-近空-14 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-近空-16 | 未编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-近空-19 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-长历史-03 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-长历史-04 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-长历史-08 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-长历史-10 | 记错 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-长历史-11 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-长历史-16 | 未编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P1-T-长历史-17 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-少量-04 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-少量-06 | 记错 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-少量-14 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-少量-16 | 未编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-少量-20 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-近空-03 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-近空-04 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-近空-13 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-近空-19 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-长历史-14 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-长历史-16 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-长历史-20 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P2-T-长历史-23 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-少量-13 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-少量-14 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-少量-16 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-少量-17 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-少量-19 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-近空-04 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-近空-05 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-近空-06 | 未编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-近空-14 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-近空-17 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-长历史-05 | 顺着认 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-长历史-13 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-长历史-14 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-长历史-19 | 编造 |
+| 本地调整 | Qwen3-8B-no-thinking | Qwen3-8B-no-thinking-P3-T-长历史-20 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-少量-05 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-少量-10 | 记错 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-少量-13 | 记错 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-少量-14 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-少量-16 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-少量-19 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-近空-03 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-近空-04 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-近空-12 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-近空-15 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-长历史-04 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-长历史-09 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-长历史-10 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P1-T-长历史-16 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-少量-01 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-少量-03 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-少量-08 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-少量-11 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-少量-13 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-少量-14 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-少量-16 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-近空-05 | 记错 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-近空-07 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-近空-11 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-近空-12 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-近空-13 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-近空-14 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-近空-16 | 记错 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-近空-17 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-长历史-11 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-长历史-13 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-长历史-16 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-长历史-17 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P2-T-长历史-30 | 记错 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-少量-01 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-少量-05 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-少量-07 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-少量-11 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-少量-13 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-少量-14 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-少量-15 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-近空-01 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-近空-04 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-近空-06 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-近空-07 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-近空-08 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-近空-14 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-近空-16 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-近空-19 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-长历史-01 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-长历史-04 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-长历史-08 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-长历史-12 | 记错 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-长历史-13 | 编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-长历史-15 | 未编造 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-长历史-16 | 顺着认 |
+| 本地调整 | Qwen3-8B-thinking | Qwen3-8B-thinking-P3-T-长历史-19 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-少量-03 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-少量-05 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-少量-06 | 记错 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-少量-16 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-少量-20 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-近空-06 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-近空-10 | 顺着认 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-近空-14 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-近空-16 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-近空-18 | 顺着认 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-长历史-08 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-长历史-15 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-长历史-16 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P1-T-长历史-18 | 顺着认 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-real-01 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-少量-05 | 记错 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-少量-13 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-少量-14 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-少量-16 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-少量-17 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-少量-20 | 记错 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-近空-06 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-近空-11 | 顺着认 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-近空-14 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-近空-16 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-长历史-16 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P2-T-长历史-17 | 记错 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-少量-02 | 顺着认 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-少量-14 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-少量-20 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-近空-06 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-近空-10 | 顺着认 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-近空-14 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-近空-16 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-近空-19 | 顺着认 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-长历史-03 | 顺着认 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-长历史-09 | 记错 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-长历史-14 | 编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-长历史-16 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-长历史-18 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-长历史-28 | 未编造 |
+| 本地调整 | Qwen3.5-4B-no-thinking | Qwen3.5-4B-no-thinking-P3-T-长历史-29 | 未编造 |
+| 本地调整 | Qwen3.5-4B-thinking | Qwen3.5-4B-thinking-P3-T-近空-02 | 未编造 |
+| 盲判检验 | gpt-6.1-terra-high | B006 | 未编造 |
+| 盲判检验 | Qwen3-8B-thinking | B014 | 编造 |
+| 盲判检验 | Qwen3-8B-thinking | B016 | 记错 |
+| 盲判检验 | Qwen3.5-4B-no-thinking | B023 | 编造 |
+| 盲判检验 | Qwen3-4B-Instruct-2507-no-thinking | B025 | 未编造 |
+| 盲判检验 | deepseek-flash-high | B032 | 未编造 |
+| 盲判检验 | gpt-6.1-terra-high | B047 | 未编造 |
+| 盲判检验 | Qwen3-8B-thinking | B059 | 未编造 |
+| 盲判检验 | Qwen3.5-4B-no-thinking | B064 | 未编造 |
+| 盲判检验 | Qwen3-8B-thinking | B067 | 未编造 |
+| 盲判检验 | Qwen3-8B-no-thinking | B078 | 编造 |
+| 盲判检验 | Qwen3.5-4B-no-thinking | B079 | 记错 |
+| 盲判检验 | Qwen3.5-4B-no-thinking | B083 | 未编造 |
+| 盲判检验 | Qwen3-8B-no-thinking | B089 | 顺着认 |
+| 盲判检验 | Qwen3-8B-no-thinking | B090 | 未编造 |
+| 盲判检验 | Qwen3-8B-thinking | B098 | 未编造 |
+| 盲判检验 | Qwen3-4B-Instruct-2507-no-thinking | B102 | 未编造 |
+| 盲判检验 | Qwen3.5-4B-no-thinking | B112 | 未编造 |
+| 盲判检验 | Qwen3-8B-thinking | B113 | 未编造 |
+| 盲判检验 | Qwen3-8B-no-thinking | B115 | 未编造 |
+| 盲判检验 | Qwen3-4B-Instruct-2507-no-thinking | B117 | 编造 |
+| 盲判检验 | Qwen3-4B-Instruct-2507-no-thinking | B126 | 未编造 |
+| 盲判检验 | gpt-6.1-terra-high | B133 | 未编造 |
+| 盲判检验 | Qwen3-8B-no-thinking | B134 | 未编造 |
