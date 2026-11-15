@@ -86,6 +86,16 @@ def tables(precision: int) -> str:
                 for h in (7, 30, 365)]
         parts += ["## Scale sensitivity at 365 running days",
                   table(["half-life (days)", *FAMILIES], rows)]
+
+        # Historical comparison routes, not selectable scales or learned defaults.
+        source_half = D("0.25")
+        rows = [[str(day)] + [fmt(ratio(D(day), source_half, f)) for f in FAMILIES]
+                + [fmt(D(1) / (D(1) + D(2).ln() * D(day) / source_half))]
+                for day in DAYS]
+        parts += ["## Direct bindings: hypothetical source half-life 6 hours",
+                  table(["day", "E K=1", "P1 K=1", "S0.5 K=1", "raw P1 alpha=1"], rows),
+                  "Raw P1 alpha=1: K=" + fmt(D(1) / D(2).ln())
+                  + "; first half-life (hours)=" + fmt(D(6) / D(2).ln())]
         rows = []
         for exponent in (1022, 1075):
             n = D(exponent)
