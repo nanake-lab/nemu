@@ -72,3 +72,12 @@ Q2 尚未运行；静态核对另发现它安排了注册明确失约之外的�
 ## CI 快照
 
 报告封存时，Ubuntu 检查仍在运行；Windows 汇总为 failure，具体原因是草稿 PR 门控，self-hosted 作业 skipped。不是 Windows 测试通过，也不是实测桌面断言失败。PR 保持 draft；本次有实际阻塞，未为获得绿灯触发本机全量 Windows 作业。CI 不能替代本次发现的输入有效性问题。
+
+
+## 2026-11-15 追加勘误与另版执行
+
+上文为 L0-control-1 历史记录，原文保留。Q2 守约正向分支是预注册 v0.2 §6 的要求；撤销“注册外事件/适配缺陷”的判断及删除该分支的建议。control-1 的 Q2 仍为 not_run，人物映射 F01 仍成立。
+
+旧 FREEZE.json 本机 CRLF 原件为 872 字节（39af51fbea8e762c055b9774251adfaafaee481a26c84450ac9208bf60d59170），旧 Git LF blob 为 857 字节（0ce73a71af2c5dc01317da6108cab48e10e47f0320e5a865b5067a2d57e1bb8c）。旧索引绑定本机字节，追加 Git-blob 索引绑定旧提交；两者不混用。证据见 [审查回复与勘误](CONTROL-2-REVIEW-RESPONSE.md)。
+
+用户已批准 L0-control-2 修正人物规则、补完整输入校验，绑定含 #194 的 main，重新冻结推送后运行。新版见 [执行记录](CONTROL-2-EXECUTION.md) 和 [独立报告](CONTROL-2-REPORT.md)，不替换旧版失败证据。

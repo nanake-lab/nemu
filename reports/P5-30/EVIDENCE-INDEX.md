@@ -16,3 +16,12 @@
 - `experiment-world.exe`：实际执行的 Windows release 二进制；SHA-256 与冻结记录一致。
 
 总文件内容 165,915,878 字节（不含索引自身）；没有上传用户历史或正式存储。不得覆盖失败或补写成全部完成。
+
+
+## 2026-11-15 追加勘误与另版执行
+
+上文为 L0-control-1 历史记录，原文保留。Q2 守约正向分支是预注册 v0.2 §6 的要求；撤销“注册外事件/适配缺陷”的判断及删除该分支的建议。control-1 的 Q2 仍为 not_run，人物映射 F01 仍成立。
+
+旧 FREEZE.json 本机 CRLF 原件为 872 字节（39af51fbea8e762c055b9774251adfaafaee481a26c84450ac9208bf60d59170），旧 Git LF blob 为 857 字节（0ce73a71af2c5dc01317da6108cab48e10e47f0320e5a865b5067a2d57e1bb8c）。旧索引绑定本机字节，追加 Git-blob 索引绑定旧提交；两者不混用。证据见 [审查回复与勘误](CONTROL-2-REVIEW-RESPONSE.md)。
+
+用户已批准 L0-control-2 修正人物规则、补完整输入校验，绑定含 #194 的 main，重新冻结推送后运行。新版见 [执行记录](CONTROL-2-EXECUTION.md) 和 [独立报告](CONTROL-2-REPORT.md)，不替换旧版失败证据。
