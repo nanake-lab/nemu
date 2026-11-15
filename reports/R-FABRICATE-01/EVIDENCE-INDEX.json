@@ -1,9 +1,10 @@
 {
   "repository": "nanake-lab/nemu-evidence",
-  "commit": "7ab5a451be0476fb4feb67d2ae17dd97021fd35c",
+  "commit": "d4f87bec56b510d3231a21009eb607c9400fd012",
   "branch": "evidence/R-FABRICATE-01",
-  "frozenCommit": "4a592c567",
-  "verification": "远端提交等于本地HEAD；所有文件SHA-256等于Git blob；四个冒烟流的首提交换行归一已补回本机原始字节，见CHECK-CORRECTIONS.md。",
+  "v1Commit": "7ab5a451be0476fb4feb67d2ae17dd97021fd35c",
+  "v2FrozenCommit": "911fac331208d73f3f9515da925c462bd6c98c41",
+  "verification": "全部文件本地字节等于Git blob；逐文件SHA-256已核对。v1原530文件未变，正式新旧320条原始流已重建；远端提交另行核对。",
   "files": [
     {
       "path": "R-FABRICATE-01/.gitattributes",
@@ -3078,6 +3079,96 @@
       "gitBlob": "e3f926ea24bf61077f51dc73587b411b41e5f3f4"
     },
     {
+      "path": "R-FABRICATE-01/revision-02/commitment.json",
+      "sha256": "2f57db57f64e54c23627239f1d443722567dae2964fceaa5f34c3163d58e0781",
+      "bytes": 187,
+      "gitBlob": "ef0b94143279beead72ad495f241189e65ff86ea"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/plan.json",
+      "sha256": "c923299b4990e57fbb6f6aa8f5f792f05b861097fbeedc7f953efe9fac73fecf",
+      "bytes": 6025,
+      "gitBlob": "939673722bee38b52fe84c6bac0127006ba48a02"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/rerun/20-少量-闪光无/request.json",
+      "sha256": "0c420013ae47260cb494863182810c3ec098a0ff5d147981585cb34182ae114d",
+      "bytes": 2090,
+      "gitBlob": "afe95afede4679e59c4aaa770b9baa698ca42413"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/rerun/20-少量-闪光无/result.json",
+      "sha256": "526f4989e185ac67582c040f27112dbada4e112c0210928495832e7d9a6b5932",
+      "bytes": 1827,
+      "gitBlob": "b140768b1548d293d81853b900a99cda44de9f4b"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/rerun/20-少量-闪光无/stream.jsonl",
+      "sha256": "81a2b3bde6bcbd1e627e2fdbe4a6e684f1489fb812800e07d3d65954d94f7a2b",
+      "bytes": 93187,
+      "gitBlob": "bf9bfc9e1be54e44d6324f2899ea1e05292942fe"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/rerun/20-少量-闪光高/request.json",
+      "sha256": "fad2005be3ef9d1eaf5c9f0853527cb5f6e42b6e9587073827c7b3c76a6de34c",
+      "bytes": 2121,
+      "gitBlob": "5fb37127e10e79eb2563e5d9499b486b5db2b796"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/rerun/20-少量-闪光高/result.json",
+      "sha256": "799df06340d4e6216e6110ad46289c20fd155e1c81d7c64267a6e0ae396a4636",
+      "bytes": 2150,
+      "gitBlob": "e8eb86ce43d76a6351de81b0e6b5a6c787724d87"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/rerun/20-少量-闪光高/stream.jsonl",
+      "sha256": "11f85fdf45e6f65050eb995dcb517355c017cc2f3001ad61be076bca96fe77a2",
+      "bytes": 191027,
+      "gitBlob": "3397cd26acc992ada3acb6adcb498458ffca1c0f"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/rerun/20-近空-闪光无/request.json",
+      "sha256": "841eba4b2b5a48a9ca09fe91c7795675e9e89444d1463b64fab06818bcc3e9e0",
+      "bytes": 1067,
+      "gitBlob": "489cd986ff543cfc0106be6ad9c21f43b068bba7"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/rerun/20-近空-闪光无/result.json",
+      "sha256": "b4620401f73f60540cd88e477bdd812c58733a9c52e8106c27fc7cbd988c3202",
+      "bytes": 1179,
+      "gitBlob": "0ce6319fe127288337f8938292a30e7b3e22736d"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/rerun/20-近空-闪光无/stream.jsonl",
+      "sha256": "a004669f9e3fed391bc1a7ef59864ccb8f9c794c300c04e2a271759a0947aa69",
+      "bytes": 33892,
+      "gitBlob": "9e8e2ddb4077130dc24be062669750a63854570f"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/新旧并列.md",
+      "sha256": "466887683bb0b348892f80a43235ec984dbf919ccb992b06f675362e096c051d",
+      "bytes": 6634,
+      "gitBlob": "068da7602e150399d0a11bf03ee6bd24b4e1312f"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/核验.json",
+      "sha256": "3d1eeba7db77d7dac97bae3a9a57a564789ecada32fdb6cb5e75b41a0766bef7",
+      "bytes": 1613,
+      "gitBlob": "751419628dce51e548c71a6dba5b041cb926d1a2"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/补测判定.json",
+      "sha256": "218107ab0387a2b41190fdf115ae342d4bef60d4e80eb09a6606c9c4ccad207d",
+      "bytes": 7318,
+      "gitBlob": "8c4d4bbff0dfe3deb2dca8c6e7537536fa8d5933"
+    },
+    {
+      "path": "R-FABRICATE-01/revision-02/逐条判定.md",
+      "sha256": "6a1736f5288087b047292c401337400cb8fe722a97bb6a276eeed146a8f788c1",
+      "bytes": 84716,
+      "gitBlob": "361212fa9509561b3564c42b3429c4ae13e04f4e"
+    },
+    {
       "path": "R-FABRICATE-01/smoke/冒烟3/request.json",
       "sha256": "ab2a1a0f6eaad6dfe745a147e3884b9d1a6bf9cb2c4958901e85639d39324a9f",
       "bytes": 1950,
@@ -3184,6 +3275,3102 @@
       "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
       "bytes": 20,
       "gitBlob": "7f6ba294132e156ccce54256b2567c8763f1b628"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/README.md",
+      "sha256": "1d286a2d4042502a304a0aa32fd7c38b13507d91fac3529347c600717b52e899",
+      "bytes": 2005,
+      "gitBlob": "01489c6090b0b49b3b452a410dea38f74c10fa67"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis-mypy-02.txt",
+      "sha256": "8e63ae22e8213e327a5e9cbd584067681681bd8ef7f25c869877887ccdcfc4ff",
+      "bytes": 43,
+      "gitBlob": "7df7328cfcc9aac186481be267e27a28345d2911"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis-mypy.txt",
+      "sha256": "8e63ae22e8213e327a5e9cbd584067681681bd8ef7f25c869877887ccdcfc4ff",
+      "bytes": 43,
+      "gitBlob": "7df7328cfcc9aac186481be267e27a28345d2911"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis-ruff-01.txt",
+      "sha256": "bc66abda337c5ca1b755811c7cf4dd1fd824dd99d4456628129a57e638b3aa9d",
+      "bytes": 9322,
+      "gitBlob": "de5362583191e6f534d8cec5796174ddf730e2a2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis-ruff-02.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20,
+      "gitBlob": "7f6ba294132e156ccce54256b2567c8763f1b628"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis/identity-manual.json",
+      "sha256": "c32aac5e7e6f65724357d963b5f188dbbecebbdec2df4865ae075b8e1acc9302",
+      "bytes": 1695,
+      "gitBlob": "41f5bf096283a1eb264682bd8f312d168b5eb8ba"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis/v1-manual.json",
+      "sha256": "9d114797f06a2f9b68668d1ee618d772cc368fbcf5baae11f61efad906aaa719",
+      "bytes": 9740,
+      "gitBlob": "0198528b1a51d543a1e8e60feacc9451bfc95bc9"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis/v1-四类判定.json",
+      "sha256": "9744f49492325f28a4f59857b03ecefddca47e9dc45fa40e09c3b701c0f9abca",
+      "bytes": 363732,
+      "gitBlob": "582574099f5777a2e46d49ef1cef942aa250f38f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis/v2-manual.json",
+      "sha256": "0ab9fb986df562862527b14a9ed774356b55e07b3b57719af6acab9b80a8e112",
+      "bytes": 12814,
+      "gitBlob": "e62807d2cb977c4b7476cffefcb77dab3d1fd0d2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis/v2-四类判定.json",
+      "sha256": "5b57f2f7c4dc79c4179d23238af67353685cb502d0502c340ab5fb07ea6ac1eb",
+      "bytes": 343634,
+      "gitBlob": "0f9ea493dff778df827559a697ef81d9fe89b245"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis/汇总.json",
+      "sha256": "50e87fe8b9df71a2baee9f648b598830253d93728d328e42464b13cc757d59ab",
+      "bytes": 20726,
+      "gitBlob": "e2dd31bfe3a9086d32bbdc0c3d83aa83df23cbe1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis/逐条并列.md",
+      "sha256": "5e2d677e36c1cd4f7df320a7827740ff87e43abadc36052bb76cf780eb8b6f28",
+      "bytes": 205580,
+      "gitBlob": "93f03515bde89cf7a2c03112d6ca393ba7d9a941"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/analysis/逐请求核验.json",
+      "sha256": "4cf389827b300a7f527f92395e7abb46b6235e164e0adaefad99e2bb00a3e775",
+      "bytes": 150405,
+      "gitBlob": "056898aef78b689cec32c43c0bac1e6b905061f0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/audit_materials.py",
+      "sha256": "4a16542ad27eed25fe1351ed33d7d5489ac58d4f796b11a7b6401eb29c9f0201",
+      "bytes": 2421,
+      "gitBlob": "1a8c56255ab2fd748eaa23f8384b542cdae84031"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/build_analysis.py",
+      "sha256": "115ef32daa71d867ded592c04093fe8d8405dfd8513cc56b9792f18e1eb7f49e",
+      "bytes": 10645,
+      "gitBlob": "1e578c9b8f991c5444f479031aabc2ea01946c8a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/commitment.json",
+      "sha256": "a8142540461a43d0851b821dee837088e70c1ba5e041b41225b3999c8f28bbc7",
+      "bytes": 437,
+      "gitBlob": "03f2c3f202af6907df46db10a0bfd93633c1002e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/final-audit.txt",
+      "sha256": "b1e82f46a009e8cfc36fa05f391a48fad875ef90b3e19296a7c5da9f5d2d1ff0",
+      "bytes": 129,
+      "gitBlob": "acfc6ed0bc0fdd93c1b90f3fafee6d250abf4001"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/final-mypy.txt",
+      "sha256": "0c37c4158c91ef55c724ba017bf6465f26018199badb08e3ff13f98acdf056c2",
+      "bytes": 44,
+      "gitBlob": "be039eab13f26906e9936ceb482063d5cade6436"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/final-ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20,
+      "gitBlob": "7f6ba294132e156ccce54256b2567c8763f1b628"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-泰拉高/request.json",
+      "sha256": "0f8c4c0fc2b4155fd3d446de6aae35107a83e870e11e89f87007f9c228af7320",
+      "bytes": 1993,
+      "gitBlob": "618ac955a673fce9d8c8af1b637f1c45429f2d37"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-泰拉高/result.json",
+      "sha256": "a650090a9a27e2dcf98a7ac6c1380b0d010e52445e0f421632fbb9f8d894237d",
+      "bytes": 1005,
+      "gitBlob": "37a80538613465094ead3637774f4895514f9192"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-泰拉高/stream.jsonl",
+      "sha256": "f440aab7f1794dcf7e8738f4bd7dd68fb117d4b3eefa76414cd6cd71681b46e7",
+      "bytes": 10154,
+      "gitBlob": "9f77895c456cd3d92e35dd69c81aa08fc72f8794"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-索尔高/request.json",
+      "sha256": "7238d35ad4559a00c25add41cccada19665970d86eebd32c56c7772196a866e2",
+      "bytes": 1991,
+      "gitBlob": "30a145af6495ba8e428cfe775df73a8b4f903a7a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-索尔高/result.json",
+      "sha256": "1878284253bcab3d60ad3bf1ae260fe28b6590f54ff1b751e18834d93d170a91",
+      "bytes": 1003,
+      "gitBlob": "00b25483a69eeb6539c1283ee5f7a52545aa51bf"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-索尔高/stream.jsonl",
+      "sha256": "10893ccf6ce6b9561c275d2b6e0933952ab3f0d3a1b41f04a6ff052331dfc81c",
+      "bytes": 9836,
+      "gitBlob": "c8c80adda468288b3980b2813b19d5db8eca6a2d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-闪光无/request.json",
+      "sha256": "ca7fdd0e7f4caf5d90ee23447b9c327684a2f0f22eeb49caabce211b24185b9e",
+      "bytes": 1950,
+      "gitBlob": "12b0f2f4d971806dce24eb704abd2c858d79d711"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-闪光无/result.json",
+      "sha256": "c33ca8f2afe9cfb767af9741ad3a140eb4bc853bd7a0b4a9cf2e15308d68a12c",
+      "bytes": 937,
+      "gitBlob": "1537e2fb3746556c00c5db266b4c3d4164c31120"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-闪光无/stream.jsonl",
+      "sha256": "0d45423d9e7c5e5ccaa4ba754e984c9d02d0fef5824887dc3b5c6af9d148adb8",
+      "bytes": 13944,
+      "gitBlob": "0306951bed580e4edfbb5ab6a9206a41557d4099"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-闪光高/request.json",
+      "sha256": "7c0ad965a6c8aa979fb78375c7eff165b012095a1d3945897d0e0fde66bc51b3",
+      "bytes": 1981,
+      "gitBlob": "44f9d1385571dd66a1fa4c218543b81ab4c71fa8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-闪光高/result.json",
+      "sha256": "2603e8fe4fcc83bb10dd20ec90277f3cada61fab58b288ca4ae70e203814220f",
+      "bytes": 996,
+      "gitBlob": "55ef1cfed7b412e0b1cdd81538b5b3460a973e95"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-少量-闪光高/stream.jsonl",
+      "sha256": "7465267f133a6d74b7c6272a3a941fdc26f47e9cc36f6e402f06fa809335adc8",
+      "bytes": 66599,
+      "gitBlob": "d844e8372b3639dbdc38afbf7f8b3e02e5586372"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-泰拉高/request.json",
+      "sha256": "acd6729c76374a6b543393eb711f223f49693f070b6ada12c1d3fe933785cf98",
+      "bytes": 1139,
+      "gitBlob": "7b079d0d9568da924f4ae787f4ff50d77622c22b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-泰拉高/result.json",
+      "sha256": "d273e66047049828ac30909df90fefaa120b053ea8b01d34f69018fb159dd57e",
+      "bytes": 981,
+      "gitBlob": "743fba4674e0174cbd16ba1dd4983d6c4649e225"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-泰拉高/stream.jsonl",
+      "sha256": "f3af4b7f75f3143d45e149afd608c8c723ce1c10520f388dcd7ba77bce3835ac",
+      "bytes": 6298,
+      "gitBlob": "224fe934fc547bf632ac9194f899d7ddf3e81a03"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-索尔高/request.json",
+      "sha256": "abe7720f96c6c98018ee9921486b21de17d397eaae41bfe982177bd2e5b8bb6b",
+      "bytes": 1137,
+      "gitBlob": "691fd988ef9ba0a1785e72839e5aac572925fe13"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-索尔高/result.json",
+      "sha256": "1dbf7aad5b0a268ebbf79746c5727be5ebb0959518c722cfe375cfb47405aa74",
+      "bytes": 1014,
+      "gitBlob": "e6292b4c7c5add94ab602b908d6ef0e2ae1e5574"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-索尔高/stream.jsonl",
+      "sha256": "3c86d73053a46adf934a391f7d6455328da513b1284ef470a044ae04d2b9233b",
+      "bytes": 10687,
+      "gitBlob": "52e1baaf74474de750aeb27441d8b37a0b33b7f8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-闪光无/request.json",
+      "sha256": "b73ae235d9d190a43d0380a51a8a3c4aec9ba4a3ad3848b83ae42f13646f1741",
+      "bytes": 1096,
+      "gitBlob": "e709ab184d7d69504fff9dbe661de74d0d3ca550"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-闪光无/result.json",
+      "sha256": "d074cf7576c7fcfdaeb882cd67fb44e0200db54fd379ffb96d27725eb61afac2",
+      "bytes": 796,
+      "gitBlob": "226e3b9b8d39bef0d6b6d5324992d4259bb409da"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-闪光无/stream.jsonl",
+      "sha256": "67a418186b06b171a15c77fc641bb1ae6ad98884582fc81dc277e323618c9a16",
+      "bytes": 2329,
+      "gitBlob": "c9daeaa36f773f1446d66c215743ea93062b453c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-闪光高/request.json",
+      "sha256": "81b80c988de4ad08664093e23e729966a666c4f1680abfca28db41eba21a6a29",
+      "bytes": 1127,
+      "gitBlob": "5d12a08fd8617a35bbb9ac5bbe97544acb796c34"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-闪光高/result.json",
+      "sha256": "7af36763a489d1b38fcd53c989779e06bba7b9a785add5686b29f35a527470fb",
+      "bytes": 950,
+      "gitBlob": "7ffafe391932ad59f293fd86a02032d6dfccb90d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/01-近空-闪光高/stream.jsonl",
+      "sha256": "0002f9e7f8d270ea48e09997fe0437bae3c349458a4026fd5c53f30326300416",
+      "bytes": 49771,
+      "gitBlob": "252612261ff3e24fb67ecc1d71dd60634ca4913d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-泰拉高/request.json",
+      "sha256": "abaa06c8b61412177fd21684ca72c60d89428138dbd0af8e645ccba62691c0e0",
+      "bytes": 2020,
+      "gitBlob": "15a92759d9ab220a9468820be870af29685b378d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-泰拉高/result.json",
+      "sha256": "4e8ebd60fd618b7d471fbe076a0834898c220f6cad7947988363ee2322ca1849",
+      "bytes": 1058,
+      "gitBlob": "0b4b0e96dd7d646123ba37f630d24d1b88f43355"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-泰拉高/stream.jsonl",
+      "sha256": "87ce7f0666febea61b08c6c6ff477029bfd3035b22b61b48a80a5f3c8db3f7d9",
+      "bytes": 16102,
+      "gitBlob": "5c0e0d77b6ca602168816293f409b918e8dcbd58"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-索尔高/request.json",
+      "sha256": "c603a7f397d20900c4f4a6e082bf7dce820344b7fb402285f0cf7ac94ee66d16",
+      "bytes": 2018,
+      "gitBlob": "2b97cb8c9afd5d5f1a989eb435d0f80aa28531fb"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-索尔高/result.json",
+      "sha256": "8dd060175a462129ef975c931ac66daabf23c5dd879b4cb66ce0b78825bb047d",
+      "bytes": 1125,
+      "gitBlob": "5b7cca655adac44806ac96f4b7ab24217bd7a0cc"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-索尔高/stream.jsonl",
+      "sha256": "c5d158ed5f6675dab907da10543ba37ba5353fb23a4e9561c52654ccf1bcfc63",
+      "bytes": 21121,
+      "gitBlob": "d313d512be62d67c4eb28c75bc45d1aec1ea3307"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-闪光无/request.json",
+      "sha256": "f01f2d60541381dda7d5ac322f9549ad6a95f4c6b90be071aebb063fd43acbfd",
+      "bytes": 1977,
+      "gitBlob": "a8dc8bad6c8b6663ad5713623cc84f58642d0593"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-闪光无/result.json",
+      "sha256": "54161aa7b0efe8d4d7e864ddf310b52b2d795fed1c1cb1579acb47d3b7a0f6f8",
+      "bytes": 1121,
+      "gitBlob": "5bf8fe38a1107a810cc98d88242e154be0fe5099"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-闪光无/stream.jsonl",
+      "sha256": "ed1d4ea9f90104e9ee40d5bd3d9407fb674f404a1e5c5f7e5056aa0aa70a8ef6",
+      "bytes": 29738,
+      "gitBlob": "e9389bdf7f31df8569893491793ceaaee83bf0c3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-闪光高/request.json",
+      "sha256": "121c4274a1f6a09c0bb4cb273f8010b380424f2af84d0843d96580ee4b3e8a6e",
+      "bytes": 2008,
+      "gitBlob": "4c354d017fda26009d71166ac4a2bb8c907eeab2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-闪光高/result.json",
+      "sha256": "692d4617c0cf74a410ddc21d63d4e16d9abf061db2967a532955cd0680bf3338",
+      "bytes": 1118,
+      "gitBlob": "5de3246467c167a5048f35b5c99222b0a97a0961"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-少量-闪光高/stream.jsonl",
+      "sha256": "6f0726ff666f53912642f919d81d3e9d674d3da9b3d94450fccb80aaeec4f797",
+      "bytes": 85687,
+      "gitBlob": "8ab6b8514794599bc968f522bf451f95c06871c2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-泰拉高/request.json",
+      "sha256": "c4b70adf891b5537c3695d5b0a6ca8cf3024892f66b3782811e12f049d5a056d",
+      "bytes": 1166,
+      "gitBlob": "82a5fa683d1bc33d6b217026f555e3029b4c7004"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-泰拉高/result.json",
+      "sha256": "b121fcc25416c499e2352e848d9f66beb2e6a85457be30f2f404843a80a8d1d0",
+      "bytes": 1059,
+      "gitBlob": "c153f41fe4d3c80d8c48071ba2d8d41661ee90e3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-泰拉高/stream.jsonl",
+      "sha256": "6e05b99f71cadf6f3bc727237ca23708518f29ea7a3bad33e06359bc20178ea6",
+      "bytes": 15294,
+      "gitBlob": "c6f4d70059a56d12298e919bd43847b6a759fb55"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-索尔高/request.json",
+      "sha256": "b2ea2e783860da82cafd3c3bd64d9ad1c79d35cc2b29fa5d2fd417e4301f969e",
+      "bytes": 1164,
+      "gitBlob": "fb97ede5497a3b9e35b6f25e13ae67e972ad8342"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-索尔高/result.json",
+      "sha256": "01cb7c826dfb7d2754e9a03212a7949297fe59882aaab6d24a6e0725262dfb28",
+      "bytes": 1081,
+      "gitBlob": "12a885266d3371b0fafd4e8c360a54f33e179671"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-索尔高/stream.jsonl",
+      "sha256": "d13fa1a650acc4b9e778086f1406a62d73b09b17d5ef95508cd0f09bb1e85efe",
+      "bytes": 16609,
+      "gitBlob": "2f57e89994d7a15e02ed9ddee4d01178d33d5c23"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-闪光无/request.json",
+      "sha256": "39e330d541dc490c12cc672c54778ff1e3c8a5e9465a8452b1d2a93472530f77",
+      "bytes": 1123,
+      "gitBlob": "61d82fb9065195f794a70282066a1387b47ead99"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-闪光无/result.json",
+      "sha256": "aa5c4876a8211585256173f0e04c97b4d7e6251ea38a6e2e9a421549c194ddad",
+      "bytes": 940,
+      "gitBlob": "0f73b7e0d111e28043ec8319cb5b30e047cb75c3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-闪光无/stream.jsonl",
+      "sha256": "bc35471a02d2d7240e71519cc7cc11ab8b8abef5e2189bffaeccf24d22ef09ba",
+      "bytes": 14781,
+      "gitBlob": "ade3e58e2a19766232fd4ea78bff965f30369b1b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-闪光高/request.json",
+      "sha256": "5e3b9fa26f4e4205a164b400f48fb9a5f9fd7898ba9e0f10005da5aa7cf1f1a8",
+      "bytes": 1154,
+      "gitBlob": "68058aa980acaa6e9522f41fea3d56a93648bbe8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-闪光高/result.json",
+      "sha256": "2ae7fcb894f168fbf6807db82eaffaf67a6aa1343cca29bfcf69c6fc7f706dc2",
+      "bytes": 973,
+      "gitBlob": "07e04cda5ec63f7115d26b8ebe4cd274ec7184a8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/02-近空-闪光高/stream.jsonl",
+      "sha256": "35f96639f9ce1a68d45eda517ddb2f3586450178c9f15f8fdafac50a60ab1ac6",
+      "bytes": 71995,
+      "gitBlob": "bd6d17c1b90ca029ad85f905b3edd26bf159f076"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-泰拉高/request.json",
+      "sha256": "341e36d2f760d36affb6b0bcd8a1ce1aa98c5d69f01060e225c621432d9b32f9",
+      "bytes": 2017,
+      "gitBlob": "269a75495a6d62b931b2933f6f33d39c2ac14365"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-泰拉高/result.json",
+      "sha256": "d3f7001e8b61f9f4c8a90b16f22ae0ea2ea369941efdb62db0c71b8d52dda8f5",
+      "bytes": 1115,
+      "gitBlob": "edef44f987e6cbd785d75ed12421f72486459321"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-泰拉高/stream.jsonl",
+      "sha256": "c13192ca50c41f7ead678a1ee0f19372076208eae6a0d71199b87f2298ab47a4",
+      "bytes": 19967,
+      "gitBlob": "8195c9e5558b9f0a29f4441e63920a9324a1df4c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-索尔高/request.json",
+      "sha256": "1521d7753ee60f4670028535847b298c9a3dde8061b234a50afeca8994530fc5",
+      "bytes": 2015,
+      "gitBlob": "2bbc6b86db0fc42f3ad6c7fca8462e691a3b3895"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-索尔高/result.json",
+      "sha256": "e8bb12fb91a7e11da809ec7d2c071c4ab5db35d9bba50e09dcbc80c1c8b726c2",
+      "bytes": 1089,
+      "gitBlob": "6a8554e7bcc3bcf2caf344de16a78876dbdfaf13"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-索尔高/stream.jsonl",
+      "sha256": "68a6046a7789e26a07d88dd769a614eabdfc5fe9d38a3c62a7d17cd4cf4d2819",
+      "bytes": 17439,
+      "gitBlob": "cc3cd47e50230cc7b13e841ed92b37f4ca8a3520"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-闪光无/request.json",
+      "sha256": "5666c8d222dccb155b08c6d67c479f55863cfa99f323a268e2be929da2f2597e",
+      "bytes": 1974,
+      "gitBlob": "c014d21afc518d0f09aba8040d178d1659a98708"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-闪光无/result.json",
+      "sha256": "257a1160e3ad1484bcc2b675e53e828447ea79c5867d5cbe9c36d9fee3099524",
+      "bytes": 1077,
+      "gitBlob": "35c0dd51106cc74aff861c83cd255f92431c72e6"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-闪光无/stream.jsonl",
+      "sha256": "360f7a5d2d14d6a682e8549f040ceeed11c1a92bc8d5e323ff961d327e5ec3ae",
+      "bytes": 23915,
+      "gitBlob": "d3a909b63b02a8979f71b36b5c74168d1ba5b6fb"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-闪光高/request.json",
+      "sha256": "447c58c8c6eb00e335181091949f06e73df2c16dbaf4f28c2104897e875554a3",
+      "bytes": 2005,
+      "gitBlob": "6f9b00681cd726d634e5df52560364280b3941a3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-闪光高/result.json",
+      "sha256": "d67a8b909713f9fc0400f78783630ad2ee3e7637ce83173a95e62a5187f050b3",
+      "bytes": 1198,
+      "gitBlob": "08d7d6efd731cd807504a5ee53c2b1c276c81e6e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-少量-闪光高/stream.jsonl",
+      "sha256": "686d03032be2ad796e46bd6fe5d7355e0f32a85c77057c92f48a58b0cbfbacd2",
+      "bytes": 73261,
+      "gitBlob": "0f1dd632730803b7ce4ccf8bd4bb61a18ab5df77"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-泰拉高/request.json",
+      "sha256": "c78afd1c49c5b8a5db10c196f0adff7030466b84020cf6f23631e99e23c3d117",
+      "bytes": 1163,
+      "gitBlob": "1ee8a110b4aa5332ec640764c134bfdf78219928"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-泰拉高/result.json",
+      "sha256": "9ace2d37e8c8c5c1d50fcc278ebe1dc696ec28341a7fb2e44d5dad37ead3a7dd",
+      "bytes": 1066,
+      "gitBlob": "10fd6c9c4c2ef331c4e7261cde7e74192265f650"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-泰拉高/stream.jsonl",
+      "sha256": "2108d18fbe98bf3e0ec2022ae2491437400b8ea2024de063b5bd2d1cd891fa45",
+      "bytes": 15697,
+      "gitBlob": "22116b036e1e446e76c16b9423c839cbbf30a85f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-索尔高/request.json",
+      "sha256": "4db730ce2ece38caef16a545348008cdb4ef8bd692b358e35ea738343914f8ac",
+      "bytes": 1161,
+      "gitBlob": "4fbee8d9f1627b02e91b35e984a5ef8ee0f16022"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-索尔高/result.json",
+      "sha256": "be4b8be32e99c5d929fde839cc40e2606862ee9936a04436ff065466d4084412",
+      "bytes": 1130,
+      "gitBlob": "aa1be3786a7b0182d9f0081e371edf1946d3083e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-索尔高/stream.jsonl",
+      "sha256": "6dee2a964da438475745d0010b25ac2df25ca3ed55e406d7db9d03851acc620e",
+      "bytes": 23239,
+      "gitBlob": "9e52cbbcb9d0a512d5322746473854b722827fd1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-闪光无/request.json",
+      "sha256": "2f205002c1ce796c2f016743ae26fa4a4d26d89fb5796c96960d7987f9f24c89",
+      "bytes": 1120,
+      "gitBlob": "622c0495990b8a196a82d5f827aa4c3dfec4523c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-闪光无/result.json",
+      "sha256": "a3d3b16fa242072bcdc7ff06e9f74c5faa94ff420d54e9f65acc7339cf2d1de7",
+      "bytes": 970,
+      "gitBlob": "873951b1d5cea8496c20db84bc2fbf783c58d231"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-闪光无/stream.jsonl",
+      "sha256": "0ff16034cd91e84cbbd0226c471e71ee1154dda3387cb8ae28e38a94c1242067",
+      "bytes": 17259,
+      "gitBlob": "6e1aefc2013fa9c27809ae18e9bab005174f7375"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-闪光高/request.json",
+      "sha256": "3810931d627a37c473cf9fc01361a6961b6c296c3e2cae52328923da87d33bb0",
+      "bytes": 1151,
+      "gitBlob": "0184b631db8acb0055f5b9292835e9fd6c4ae5c7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-闪光高/result.json",
+      "sha256": "70e85073447649bc3bb8ad5b54070308b85aeef00a6d684837aa6f4553842a17",
+      "bytes": 969,
+      "gitBlob": "dca8036e0f6700607fd9b0595cc7497167533ce5"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/03-近空-闪光高/stream.jsonl",
+      "sha256": "9ba60395027d0fe576cc965b5d805c2fe9d9c9271c09f5e48fb4faffc9f34037",
+      "bytes": 50733,
+      "gitBlob": "0b7dbaf25c5a4a7c0759fed566053b4b1425c8af"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-泰拉高/request.json",
+      "sha256": "de768979ea0c57bee53fb3c2f31bcbaf6875cf0f8b6398c93f282e1f48ddc3bc",
+      "bytes": 2026,
+      "gitBlob": "bc1fe3cea13a69adf427502e6448df9efe9269f0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-泰拉高/result.json",
+      "sha256": "ec480b788b64b6d823c1963416b6462ac780a5166a362e87b893e851ef676626",
+      "bytes": 1084,
+      "gitBlob": "df1b415d0151806b79bfb1aa0fb727161a50194c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-泰拉高/stream.jsonl",
+      "sha256": "ea3e4e2b1486463760b4df8a678623ca108cbcf1f6d61ab383847830f4e6ab8b",
+      "bytes": 16119,
+      "gitBlob": "5f463263cc60566945c7d5e2aedf45d3dac264f2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-索尔高/request.json",
+      "sha256": "6e272f2c21f400972524affcef57806756a8343905e92687494077dc6e3e7c63",
+      "bytes": 2024,
+      "gitBlob": "94d8bfe92183b846b13f2ef4450dffd983b098d6"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-索尔高/result.json",
+      "sha256": "6466040022dba16373ce7731cb45407529b7d7c9af23cd8f23128988091dcc8b",
+      "bytes": 1163,
+      "gitBlob": "e73c0528fc7899cf78589cca6b40040f6721feda"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-索尔高/stream.jsonl",
+      "sha256": "58325347a8cc59a3d82877c6ba4250c9db9f103ee017a772ac0857020b389ba1",
+      "bytes": 23419,
+      "gitBlob": "f4aa59c674dde2d769b09068e229f7d463414364"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-闪光无/request.json",
+      "sha256": "3e0248cf175a1556608a971893e210184e6c24781d1b308269d1e154814edde8",
+      "bytes": 1983,
+      "gitBlob": "a817838bf76041961e7f40d12af05f5efc233ccd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-闪光无/result.json",
+      "sha256": "268a8567e2671e17777dc69d1683806c1eb3ce55450a0770cd8df8c36fe9cc52",
+      "bytes": 975,
+      "gitBlob": "3666f4fa45d01d85514544ca4b4269227aed7f89"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-闪光无/stream.jsonl",
+      "sha256": "e6a6b5f3034a9906e2982d4238f2c65fb643569c43d0089e61ed5d1ef77a85a5",
+      "bytes": 16880,
+      "gitBlob": "8ada7bbb594ddf836221429ad9fc4e4685befa09"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-闪光高/request.json",
+      "sha256": "1c1e357ec7886376de0846b1cf855ded7221126a7e9a9ed689ee404421213a4f",
+      "bytes": 2014,
+      "gitBlob": "0feda85701e7098b601064db0e011bc11346aea4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-闪光高/result.json",
+      "sha256": "f53d125c3e201f3eb372ce5068365e3ef2551e006fe79b92f2d6fde94455fda3",
+      "bytes": 1280,
+      "gitBlob": "278ca93e5278ebea11a521e1d91f8f2c4676eac9"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-少量-闪光高/stream.jsonl",
+      "sha256": "257bb10ea77e7fedabd9e693abbd4ee5b976ab391826a4b5fab64f5f357f8510",
+      "bytes": 118642,
+      "gitBlob": "a0d6f96a6cb1f85f7c920be4e21d15117a0bf5d2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-泰拉高/request.json",
+      "sha256": "efa2fddb73e899fcd208da29c45c97c897f0811451644e165c2a13a764a584b1",
+      "bytes": 1172,
+      "gitBlob": "07f2af4668e465d79580ca13f8a08ff58ad6f721"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-泰拉高/result.json",
+      "sha256": "1ce6f6736a6051552f56afe5383b8b19c5553343107d6d2cb165d8116ad03215",
+      "bytes": 1042,
+      "gitBlob": "4f5a5d65d3415693961dfeb99192e52014d0e659"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-泰拉高/stream.jsonl",
+      "sha256": "a93d5d70f68738aa94ad84c2fae3227aa7f22c8d6ba029b82e077c1f17a71945",
+      "bytes": 12702,
+      "gitBlob": "6e69a37afd9b3128f484c0db0464e0f9c292cdd3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-索尔高/request.json",
+      "sha256": "b7a986a13fa494b98bb483d517f96ddc8b16986b9a0351119ee6b0921b1a3d14",
+      "bytes": 1170,
+      "gitBlob": "db2f135ee7d5ff728dd291626af53c40a65e171b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-索尔高/result.json",
+      "sha256": "f6c750fa6d16694769d29fbfd57fe4ddd2a4e2997e1200959a920ac1301ab66e",
+      "bytes": 1217,
+      "gitBlob": "8b657375476aebacbd19f481a795663ac95593e2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-索尔高/stream.jsonl",
+      "sha256": "6c15bb73ae15eccaa8ecbe092f0ff40ae0efe0c2badb831569a73b2bb6be68dd",
+      "bytes": 30427,
+      "gitBlob": "8962291527410fc5ee8d6539276b099591e7514c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-闪光无/request.json",
+      "sha256": "0f741bda4c2b013b0313672daadef8d4bf2b54fb2b71f9e2ea4dfb2b9b51af82",
+      "bytes": 1129,
+      "gitBlob": "47e8de2f349557a23fd63cbda1af2f292798cb3d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-闪光无/result.json",
+      "sha256": "2add5844f64dcf215953806297f1d081d3aa90883308b614074fb8a77013a8ac",
+      "bytes": 883,
+      "gitBlob": "de64941c2b41da42dbdeb8b82ade45a57fb6b259"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-闪光无/stream.jsonl",
+      "sha256": "a72ff6aa1142e37b9c499beb75f78fd1b5f157be3fc27508e3ad4a8edff22b4d",
+      "bytes": 10209,
+      "gitBlob": "73cc4cb9097ca0ddcc2cc5f19bb48ed49bcdc754"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-闪光高/request.json",
+      "sha256": "6715a764fded76f4d4db94eab066fa53fbd3073ef711264187504789da839165",
+      "bytes": 1160,
+      "gitBlob": "702206fb9ae3421573c6fe1e055bc411a1acf15a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-闪光高/result.json",
+      "sha256": "fb4cebb1457a2354c5a4e1900a12904fec1e80aeeae341f3d017f3246fff1a9d",
+      "bytes": 1051,
+      "gitBlob": "b4789ed7daf4b7b66242507bc7a01612b0e0c178"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/04-近空-闪光高/stream.jsonl",
+      "sha256": "702e0c445b1fafe069aab4466c59e2f6913155ce247e835b2ec261de5952de8b",
+      "bytes": 63600,
+      "gitBlob": "85589cef983dc03ca7846540b7c544c2736fb75e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-泰拉高/request.json",
+      "sha256": "d668e5e7de8039a4d7f2d49c762acd8f502d790e005e4af177a1f3e214009efe",
+      "bytes": 2023,
+      "gitBlob": "4bd80a50d78ef14364062cbd7c8232c8a9272aec"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-泰拉高/result.json",
+      "sha256": "763598212b89d8707918f4d1a349afef354b2ddafb87c44fca7c1835ecb2f192",
+      "bytes": 1091,
+      "gitBlob": "e0bb485fd315685aacd1aed0e8554fea3c1de3ae"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-泰拉高/stream.jsonl",
+      "sha256": "0c7d6e82ce399ad37c0593ef6104f171e1535579ba7f57bceda6d7c41c841e6f",
+      "bytes": 18298,
+      "gitBlob": "09aeeb3e55ddc549fee9e58606637fb3d470b24d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-索尔高/request.json",
+      "sha256": "75827213ca4dab7f4798a281d070c6b65a7239f3111760dedf55177b27b42258",
+      "bytes": 2021,
+      "gitBlob": "bdd70b64febca33f7f23ff356eef1b4f463ea723"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-索尔高/result.json",
+      "sha256": "fcd7597c7c4a6621378f0acf0bb1f95c62ca2cf0a363e714b42dcaf3ad1da5fb",
+      "bytes": 1152,
+      "gitBlob": "85f2ef6839d25bb075e5bd87c742a23577cd1203"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-索尔高/stream.jsonl",
+      "sha256": "71ad84a78c2803e768ca707bc2f7c6106b4568fa5fa5a2897e621d2e1ab6acc0",
+      "bytes": 24485,
+      "gitBlob": "3bb86f3bc7f1e2d8e03281cbd1f7ecae140d708f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-闪光无/request.json",
+      "sha256": "3360baaa152b80af2157a62b2f6452e75fbd7b40e7f910f1e733fc73d96249d9",
+      "bytes": 1980,
+      "gitBlob": "05cb3b98b7df635bdcf40d758a0c413c0219bfd9"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-闪光无/result.json",
+      "sha256": "b5b02b8258f65ad474a35762fca1547a00f60ca9c9843437864224168727b693",
+      "bytes": 1101,
+      "gitBlob": "313c6cec7e149e11be4c07b6082b84f5dc83b8fe"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-闪光无/stream.jsonl",
+      "sha256": "b7413df97a9aae0f93b154bd7bae006526990526688f71e48f511736306e7f9e",
+      "bytes": 25625,
+      "gitBlob": "4727bec8c706b88d9156169a8b5f0549f804ab1a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-闪光高/request.json",
+      "sha256": "4304d3a937ad378cfa11fd95e9e3bd617c47385838371d5bb359035042d38c9e",
+      "bytes": 2011,
+      "gitBlob": "5674c9006d724f162b085d3d966963e6e53300dd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-闪光高/result.json",
+      "sha256": "b276b8575ebf6e828250c0eef753848c10703a6ce6e18bed36b983e72f41d670",
+      "bytes": 1218,
+      "gitBlob": "2eb46a8a2be7da96820bd7d6d6828d31f1cc3cdc"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-少量-闪光高/stream.jsonl",
+      "sha256": "085cc90507f5808701ccc5d42ff010c846c725c567623b60448bab0fcbf68127",
+      "bytes": 44479,
+      "gitBlob": "d3b320f6ae667072b9cc321485b73103aebb5ac6"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-泰拉高/request.json",
+      "sha256": "63b52e8e3a11e048e173eafa6dbf5fbee4154ec1cd74b00aad8d043e8955d63d",
+      "bytes": 1169,
+      "gitBlob": "1f3c5f3fe3cd880ba3e16c428422a7b5e0121d7a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-泰拉高/result.json",
+      "sha256": "7a8e1d3f264d1269b6bf6583b6173c0179a7c66164c632cda3ab6f9b554dd42c",
+      "bytes": 1046,
+      "gitBlob": "a1f285b782102f357f38cc74d9d205191358bad2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-泰拉高/stream.jsonl",
+      "sha256": "9baf4060c7c579f1a704c609110215f98ca99263ca3eea830fc6607931719917",
+      "bytes": 14007,
+      "gitBlob": "706f1438c8ca44d9492bd2144f62ee06738c8c14"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-索尔高/request.json",
+      "sha256": "7f5f1a19647d44bd1ffcc7d226adaa79d987a861acc0d581635a8647e63cb059",
+      "bytes": 1167,
+      "gitBlob": "ed6ff7cf9848ffaad8ffbb730ff5b03ccc18d366"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-索尔高/result.json",
+      "sha256": "cfa0d09e9172109be30aabc05b503c163400131f35483b0ddd11a8640822a759",
+      "bytes": 1100,
+      "gitBlob": "ef018170d4de60f5c026047452b528fc2696650b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-索尔高/stream.jsonl",
+      "sha256": "83d655af7546841ac60081ba0b7b4603ce99b390c60b44d0dac9f113ace88f42",
+      "bytes": 19441,
+      "gitBlob": "ff4569a830274e15a7da605684cadc5e1bfb468e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-闪光无/request.json",
+      "sha256": "5a10296a44f404db689cde5b961731a4e5956da21c29ab7a2329d4f299266a5b",
+      "bytes": 1126,
+      "gitBlob": "11fe052d03819fc6d8a4606c36cb5cf064189f5c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-闪光无/result.json",
+      "sha256": "ea4fb8f666a752ec63f87648d9aa51b0f4d3d8b1d18dc7957ff2db5dfbd85057",
+      "bytes": 1042,
+      "gitBlob": "bf7d63e99a3deeaddfb71cb8792e5f875e428c41"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-闪光无/stream.jsonl",
+      "sha256": "a8bee8308685d05b0ef936942deefff3984cc6dc1671508e75006ebfaf3e82d3",
+      "bytes": 21863,
+      "gitBlob": "42959b6f811e5e9ab6552afce5d5759e4eec7520"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-闪光高/request.json",
+      "sha256": "7dc1b686800cf443b8b609923d877f01cf82b9444ebf6213f7c51159cee0ba23",
+      "bytes": 1157,
+      "gitBlob": "cd85f554bb49e96796ac6dc461c5e4a7e59be4ef"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-闪光高/result.json",
+      "sha256": "5bd492ae3e55a5e729822f2df424bd2d5dd6a56178477504e16a9c90448ee706",
+      "bytes": 1253,
+      "gitBlob": "e35304db692056e6774795cbb9fa7ddf8a23a91c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/05-近空-闪光高/stream.jsonl",
+      "sha256": "de07a2115a113e8e84712cfe45b58d858e0c9eb9087e0348d9846ccef65ba667",
+      "bytes": 61750,
+      "gitBlob": "aba9872eb9cc317740ab8fc9556e1c98ac689fa5"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-泰拉高/request.json",
+      "sha256": "08b2bae176b9fb17e0e104e31236cf6a76a8f9d653d9f8811fb879824ded5e16",
+      "bytes": 2029,
+      "gitBlob": "ee75784212be30c4fba5edc0274a11ef8117b527"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-泰拉高/result.json",
+      "sha256": "2fe4019713910bb7340eefca9e8ba63ff438d452f17632efbfc46089fa2ce1aa",
+      "bytes": 1093,
+      "gitBlob": "0b976334f6b985fed3fa8527f8b6d4e24379a4a4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-泰拉高/stream.jsonl",
+      "sha256": "9177a5b053ff01d458ca160c3a1ef9e91a8fd0be801b282616fa07b20803e423",
+      "bytes": 17014,
+      "gitBlob": "f318c8bec90165a62e4e008e8f28eca372417d4b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-索尔高/request.json",
+      "sha256": "ab19a4acb393d359666636633337a38d211b8c2f61fd95dfb107424ffc5bac18",
+      "bytes": 2027,
+      "gitBlob": "2a43733bab22bbd7da03d6054595e90773a8b477"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-索尔高/result.json",
+      "sha256": "57835b7343c0a508d84677104f774ecf2596c5d2ea0c202eb09fdab80951ef90",
+      "bytes": 1127,
+      "gitBlob": "24df22305146eb36187f548d19ebbda631024d38"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-索尔高/stream.jsonl",
+      "sha256": "8dde2fa89af20c1a27a9cf8019fa78d1b274fe0db5f4b5414f92828e0f345e4a",
+      "bytes": 19609,
+      "gitBlob": "d8377a91760d3f59b7917a17b76fad4d65aa1500"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-闪光无/request.json",
+      "sha256": "91b494426d1d42b42cf6b2b39016bd1b6638b0a4f74c2fea32205c6832ac1009",
+      "bytes": 1986,
+      "gitBlob": "f8743880df074ac8f3a3ccefa2afa2392c7f4c10"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-闪光无/result.json",
+      "sha256": "de33bf89a08b82b76857acc3715758ac44c7e9c8da7dca4817e9722d6faba36d",
+      "bytes": 970,
+      "gitBlob": "e90205c6f137e9208cc5ce11dfd773430647ae18"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-闪光无/stream.jsonl",
+      "sha256": "8d34a3747f64febf4d53f257409f49f4dfdfadbac2f989fd4bc7716a9d0f7452",
+      "bytes": 17274,
+      "gitBlob": "61073d6c4ab9d264470c19b93988b18fa41bc6df"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-闪光高/request.json",
+      "sha256": "552ce166da2db9d77bc2fddb3dbba7fec2cd5571cc18af2945dba7a12b69657c",
+      "bytes": 2017,
+      "gitBlob": "b928fb5a2e3c0862a38edf07c3d5fb2937ac21cd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-闪光高/result.json",
+      "sha256": "7be2e3cc75a2759135c71c81ab85bdc31e4dcb69b6e0fc810afca3eee1efc51b",
+      "bytes": 1069,
+      "gitBlob": "991018106f0842e883e394332a04fd8569df1d04"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-少量-闪光高/stream.jsonl",
+      "sha256": "87381b80d63adae5284b5d3d96b0f1ece8a164e17e0f9b1817a72061ba09b202",
+      "bytes": 54275,
+      "gitBlob": "893ca0af6526c82d9f93fa53ac2311e788a236cd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-泰拉高/request.json",
+      "sha256": "d151eaf11a77b175e54a06b2e7e1de7fbf7dbd5451980154f5e93feb8571b1cc",
+      "bytes": 1175,
+      "gitBlob": "8aff9b1a068b2e5e19fc01d54e66f875245e7ed7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-泰拉高/result.json",
+      "sha256": "3a32a7eb72bcc72d5e6ca75d9f3652299c766f083c09fa2fb5e67d7ccd6dcffb",
+      "bytes": 1050,
+      "gitBlob": "972c59f6e406c8310db4a063269baa6501cab2e5"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-泰拉高/stream.jsonl",
+      "sha256": "e8355e0dd4a1696fcf347e92a29a857addca09f67556607d3da1220307ba2aa0",
+      "bytes": 13151,
+      "gitBlob": "d211b7ea05165dfbb36f23d4fd8a3724f9a0041f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-索尔高/request.json",
+      "sha256": "c723585318c80f4727e03a81d733a71d5f2987c90914478350ff5465ff1993c0",
+      "bytes": 1173,
+      "gitBlob": "ce6283c5323a97abbb774b97defe0da8ac23a0d6"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-索尔高/result.json",
+      "sha256": "a4bb478275801a1a69066687ffbf9ddd5aa22b30134056828d5f12194e80c92e",
+      "bytes": 1143,
+      "gitBlob": "f2b55c0a3061f846b6cd9b9334aa83d95c246e4f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-索尔高/stream.jsonl",
+      "sha256": "74c23cf97783a7f3598bed88cb816d749830ca827a09ee9857c2e4fbb25a2017",
+      "bytes": 22806,
+      "gitBlob": "f55077c4ffac48faa509f9478e0c0e7f52c83f59"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-闪光无/request.json",
+      "sha256": "24ef600cd3e58ae1a1b653adefbef5e75647fac32ee5fe01cea85cbcfb876ba6",
+      "bytes": 1132,
+      "gitBlob": "5b15f5af8c0a00364a45e91649c59ef76f99ac54"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-闪光无/result.json",
+      "sha256": "d7ab1e1b0408f45ef371e6ff6f750ebdbcbbf1cde44e04ed8a208b6da68fb40c",
+      "bytes": 913,
+      "gitBlob": "050051984a9110415d06d58287cfa0e8e0d38b20"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-闪光无/stream.jsonl",
+      "sha256": "531ac6a7778b9232fc15c85d28f3d9cbd0ed33b073cca9d45a183fdb4b2c8768",
+      "bytes": 10648,
+      "gitBlob": "fc3f0944d04f91c5dfc642e9d864c5f9c4d64fd3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-闪光高/request.json",
+      "sha256": "1b68ac94486c57de6a6dc8d801bf865beec988011981587151e759be9164215d",
+      "bytes": 1163,
+      "gitBlob": "496b72ea6f8c0bd8ddba5706427d13f59298a12b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-闪光高/result.json",
+      "sha256": "51a7dedaacaea08cbe2884990d82d664c8ab5d5294a0e9275ab41691b3bc7cab",
+      "bytes": 1197,
+      "gitBlob": "12b08b091489b76fb7bf3f3e82013ef88fb7e5ff"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/06-近空-闪光高/stream.jsonl",
+      "sha256": "ff61350e5c21b14b2f00789a71f4323c6a34d530f95cddbb6e4cf3d01b6d7f60",
+      "bytes": 98022,
+      "gitBlob": "82efb0b216dd0336b80ec962b18261d3c388f50b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-泰拉高/request.json",
+      "sha256": "ebabf6e17c81e40a0108765a405144900910af61df89f2b7397d2a7213002336",
+      "bytes": 2026,
+      "gitBlob": "ad4093b31e6d57ca936d4504dd924c461d79d5ee"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-泰拉高/result.json",
+      "sha256": "10a22daa8cbc13a20d4711a75d370beef2d5989629858afc332319a815b17fd8",
+      "bytes": 1049,
+      "gitBlob": "2fe9a148148318f70cef53f6b4fb088ba00148c4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-泰拉高/stream.jsonl",
+      "sha256": "7b27118d39fd682f1e362cf22494dc28c33a6245ae03cce9005ddee06daf51fa",
+      "bytes": 13584,
+      "gitBlob": "d373b83dfeb4a591e73f47a52389f5b960f5bbe5"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-索尔高/request.json",
+      "sha256": "e9900461dd38b070b125ed100d5668bc233f0316d20650ea69c5de41a5812baf",
+      "bytes": 2024,
+      "gitBlob": "4f4e1585d47965e3a0af2915d3081267fdd7a574"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-索尔高/result.json",
+      "sha256": "9afc9e722075902b7734f0305e0ee2ca43f7ee18653b176d9bf5686e3239e3e8",
+      "bytes": 1070,
+      "gitBlob": "a21a4a559dbad380cca618084cff1eb1562005c7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-索尔高/stream.jsonl",
+      "sha256": "5ecc567efb6357c1067185588e306bf6aa60acd70e0240de9a0f3912720eb14b",
+      "bytes": 16522,
+      "gitBlob": "a2cadd47af70362e296745dda21f3deab6568f1a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-闪光无/request.json",
+      "sha256": "ce40cfcf1c37648b80f402b8dae84c9254180f4f49cbaf1fae4ee338cd8bee0a",
+      "bytes": 1983,
+      "gitBlob": "85e086b43dfd52ed3e98d1a9de7eddf89dd4b6db"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-闪光无/result.json",
+      "sha256": "4503063df37d95532571b8c9cf1bb77d61c2b52df3347109e97cda9f389ecd85",
+      "bytes": 1031,
+      "gitBlob": "388f987c356c348e9432619e1ccb20beda21d150"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-闪光无/stream.jsonl",
+      "sha256": "d6e2e5ebf7c30bb000fd849bbb3571108f43796b958e07fa97c809142456e66a",
+      "bytes": 21008,
+      "gitBlob": "48eae63f7d0f6ff1c2bb3591a5d06fd15688f8b8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-闪光高/request.json",
+      "sha256": "828667fac0a7c8316c69249b49b943f8fa3e9b533bb75f8f33e37a66b84a1ef6",
+      "bytes": 2014,
+      "gitBlob": "5d310e204cb90d61d1de41740972a47b5f4ce67e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-闪光高/result.json",
+      "sha256": "80d323623538893b0b8f8763a12c9202cf424f0394ac8d35dd11ef34cdf2c5f6",
+      "bytes": 1028,
+      "gitBlob": "ece584bb759a42b7dce263ad5f7f51f2d7766863"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-少量-闪光高/stream.jsonl",
+      "sha256": "f1259f280446d09e14781caa950f206d704134a0774687c4e9d8e285eca13ca8",
+      "bytes": 77195,
+      "gitBlob": "c3ba10389b83f77aade9b02e534dca8f3b0b68b3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-泰拉高/request.json",
+      "sha256": "90d5ddc3dc92da8141ccfbfbee47f0fd1553b93f20f73de0173e0ef26b0002b5",
+      "bytes": 1172,
+      "gitBlob": "0168be486b8434c65d5d62f1608b91344d27e2d4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-泰拉高/result.json",
+      "sha256": "1a886f157980323d4c08ac9d2aa71c1d0cd2313b438e108b8cd0f36fc9c4c33c",
+      "bytes": 1019,
+      "gitBlob": "c6d9bcffa7fd60d6b1c51ab614c3e8bbaa90aeba"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-泰拉高/stream.jsonl",
+      "sha256": "bd5e8671e04b9bd75c727823e622cc80e64c43a8811ed20dbe13b04d3cac18f5",
+      "bytes": 10144,
+      "gitBlob": "6ddd5dbe4c7e8b562c5e5454e1a4855facd6f14f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-索尔高/request.json",
+      "sha256": "d039bb82a0f1a9fcf9c94226b24d7bc2ae4d391b8953c35361f0e458e2228f55",
+      "bytes": 1170,
+      "gitBlob": "af60947ec96bf15db10ee77f83b2c1489231a912"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-索尔高/result.json",
+      "sha256": "0860d3a383496835161920caf9dc2ace4d2cd4de07c430667467b15af2e7b5d1",
+      "bytes": 1056,
+      "gitBlob": "a1ec1ff587f48899f40adf7d491c6aa5320d64d4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-索尔高/stream.jsonl",
+      "sha256": "80a0f8e768ef0920e6eaf521036b40fc548a368100bd38901cf4dcc79a6a2cdc",
+      "bytes": 14082,
+      "gitBlob": "362c618779fe59dd1bf3f5c99a36776e34e45482"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-闪光无/request.json",
+      "sha256": "8b774ea90e5ac9643b4a81a1b90d55c34a7ecb23d05cc42048742c0614f2ff56",
+      "bytes": 1129,
+      "gitBlob": "ccb34c2bd2d259a20455358af5a6ee0db9fa0625"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-闪光无/result.json",
+      "sha256": "7aef683e6ef37f1128428cbaa44fff11e6d17ace33d0993c857c401ec9ae70c8",
+      "bytes": 937,
+      "gitBlob": "e56a8fc0b53b8f1533b0f1192fb107c14751b427"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-闪光无/stream.jsonl",
+      "sha256": "95d194fd57f8b38025ae3e29a94d202f7c414d4a0dc01ee6d706d7968af8976d",
+      "bytes": 16006,
+      "gitBlob": "8a8efd4c54482b39ed3cb404b128ee571bb8e4ee"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-闪光高/request.json",
+      "sha256": "807babe6f8d473c891a4e4f2c7ba3a800ef507456750c8801f4a84c85865b1dd",
+      "bytes": 1160,
+      "gitBlob": "6430524e361a277b01578aae39bca1dbc131153a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-闪光高/result.json",
+      "sha256": "f20288f31fe667ae09b368d4ed1112a78c620076321dcc5e96c80a507a4267c8",
+      "bytes": 1033,
+      "gitBlob": "3757d5de2a20078b965948539ac69bc871b7c98f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/07-近空-闪光高/stream.jsonl",
+      "sha256": "3aa5f18366ad3bf2788a9bce76d7c298bd7cf11f41aed0a6701d4e7a89d6fcd5",
+      "bytes": 82520,
+      "gitBlob": "79ac079bfe7c1ad48e48937f5f232957675722aa"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-泰拉高/request.json",
+      "sha256": "8394a5a4d6d232c5a4749af15242ab19d77cbc33ab6313d15b5d777631d75ff5",
+      "bytes": 2029,
+      "gitBlob": "47a2642ad5141dbbce0a0b37d2b6f959d2028b43"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-泰拉高/result.json",
+      "sha256": "f9dc1a577f906840e60e087bc27a63222caedf1adab52bb47a1ed5c2a6b2ba2e",
+      "bytes": 1111,
+      "gitBlob": "be3ccbc07249dc1022b108f70ec25cfb85960bfd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-泰拉高/stream.jsonl",
+      "sha256": "d335a97af72003c62c413cb3dbc45e0a12ad81fb5aa8e15787ad353c2eeada1b",
+      "bytes": 18739,
+      "gitBlob": "d882dda4f5b9047c6bf752715c1bec7e25087b8e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-索尔高/request.json",
+      "sha256": "9451a29309ac1ddf4ea9e97005dcdcd87e51f1fd0b1469ff45cf0d1b4cff3a3a",
+      "bytes": 2027,
+      "gitBlob": "eba4b650ecdada10b657c87b362b5e013e4d10b8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-索尔高/result.json",
+      "sha256": "1b45553ed2335eff30b43e871eb281ecbaa2f04d15bcea5658d6b35206ea454d",
+      "bytes": 1161,
+      "gitBlob": "2d0284ff0fd2799f7ba287dbb8c3750cb284596a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-索尔高/stream.jsonl",
+      "sha256": "309206c4c18854ebcb7f68cf38a444375f337ccffdcb768da4f5b6c713ff2761",
+      "bytes": 23334,
+      "gitBlob": "b579d28e0003a5a385ad30a1ebcf62ef95610bf0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-闪光无/request.json",
+      "sha256": "27718ee13cd45981104b4b03c0e0e5ced3bc6c44e52950aac365f6c6ff9db443",
+      "bytes": 1986,
+      "gitBlob": "0487b1bb101b4fc98ee9d469dcc6a71792d5d8a0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-闪光无/result.json",
+      "sha256": "66b8c409645496ba70a4f7c4b6c80480a932325bb51baf8147ae6d317ccd6d0d",
+      "bytes": 1048,
+      "gitBlob": "411dc804fc08e054de1810c1fbf3d99b05a45e4e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-闪光无/stream.jsonl",
+      "sha256": "6bbc5a6b5913b041c61b327f4b242759f5ababc168bd19a4c694c0758fb597a5",
+      "bytes": 23515,
+      "gitBlob": "83e1151a8f8577be1611731d627aa9a0e41b96a9"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-闪光高/request.json",
+      "sha256": "97bfc76eef63831ae90cbbbb370427b95194e20c79ac6d987a7f453579ce7005",
+      "bytes": 2017,
+      "gitBlob": "346b04f8eed269160d35ff07d8dedad697b7971a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-闪光高/result.json",
+      "sha256": "bfe3e7a0acff29154975f13bfbc47fee427eb66b7ef5fe83af026a8bae1e2eb3",
+      "bytes": 1083,
+      "gitBlob": "ed349114a6f9b6739502c5a5d30dcea4113ab433"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-少量-闪光高/stream.jsonl",
+      "sha256": "9e5d8e6a0168875803a2e6591bea62e25d3be8ba1d98d64c6243118e974d8145",
+      "bytes": 90509,
+      "gitBlob": "b8adb8bb06b1ff1662eee75404b99ef25637edbd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-泰拉高/request.json",
+      "sha256": "1d9f90ad1cbd41a822f5c2f42d68c0f5feb2fe2e9ca6325a2b0480199bd7a25a",
+      "bytes": 1175,
+      "gitBlob": "a12ee9d9261e3571b9fb4b862235fc4224ff24eb"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-泰拉高/result.json",
+      "sha256": "c8afdd3b91ba3372233b6f83ebe04dd706c93fb44fdbbbf838d929807d481e46",
+      "bytes": 1098,
+      "gitBlob": "211c7cbcede0d4130d048d3883b86e8a55791b3a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-泰拉高/stream.jsonl",
+      "sha256": "1b34c18fd7874bdc48743c21d9417625d8c950ed33da65135e7663e378255999",
+      "bytes": 19568,
+      "gitBlob": "7437c88768561a22e0a45d515e9be18c2fc93ffe"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-索尔高/request.json",
+      "sha256": "777cf08f13647352d5eddcae852562279d2f0294fa448708c78bb1ccc8ed5730",
+      "bytes": 1173,
+      "gitBlob": "2d22c33bef3d06154269babd9a611291fe3bb300"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-索尔高/result.json",
+      "sha256": "35c3cfcf0d7bc74a70289ce406fa85f5cdf4df0cecf201eabf2a1e15e6c3aa2b",
+      "bytes": 1132,
+      "gitBlob": "a47ce765672c1767a77214e1408faeb3f418370f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-索尔高/stream.jsonl",
+      "sha256": "2353cb369fec026216305680182b354cdb8d836f1dc9141441c84417de3d82ba",
+      "bytes": 22784,
+      "gitBlob": "033f1baf7d860cfda86808f84d823e8e65d168cb"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-闪光无/request.json",
+      "sha256": "0a7ca58708d8290734e756b1939792a8b6ebc9d669988530a6d808973885df23",
+      "bytes": 1132,
+      "gitBlob": "9a9e3a6ee40f5b3f90f1fb8424214fdd3a1629b7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-闪光无/result.json",
+      "sha256": "4aa122128276ec5783b5aff696148d4ef3997a623d4375864da3429fb3403a80",
+      "bytes": 1004,
+      "gitBlob": "f1713726e7a44000b464b15489d08be21544e47a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-闪光无/stream.jsonl",
+      "sha256": "d908ae941b5e373c6239563a288eb39c44fc5587d498c73b6cdbbf73f993f2c5",
+      "bytes": 22651,
+      "gitBlob": "0fd77c029c215ff96b2af1433426c79eb5034ba1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-闪光高/request.json",
+      "sha256": "51caca0ec23092969f2620426692d10863ff5582153a50c587f19c5090e7fa6e",
+      "bytes": 1163,
+      "gitBlob": "b8e65cc7b502d2c09692ddb99ada194c7c12dca8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-闪光高/result.json",
+      "sha256": "de31cf111bf2c1f66e11c2213bec0a0ad8a22292910afd9a6069ed3dde8e1505",
+      "bytes": 1062,
+      "gitBlob": "f62b8a8a24074fbcc10f573951b7fd7724314dde"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/08-近空-闪光高/stream.jsonl",
+      "sha256": "75377aaf90b4d971d4b67814177601e32944a92d274a0e62509613713952c8fb",
+      "bytes": 63996,
+      "gitBlob": "2400117be73d88c4c768c0bb0a9350f99bff4de1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-泰拉高/request.json",
+      "sha256": "08672b46e160abe09b942b5f8d726e31a577825e3b52eb45c4e578153abe3cd0",
+      "bytes": 2041,
+      "gitBlob": "473d6e0a98d2e863efdd189ebf4c97fe5678c27e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-泰拉高/result.json",
+      "sha256": "c8809e75d22b1a02e5b234654b56fdece13fed8e831bea69fdb83870cd61f4f5",
+      "bytes": 1145,
+      "gitBlob": "3efc85297e7fa41dbb5cf024fc15d60c569e9458"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-泰拉高/stream.jsonl",
+      "sha256": "67a489b37fcfefbcd371bdef10324131616b41c2dd987e4417fca822372b43cd",
+      "bytes": 22968,
+      "gitBlob": "952e4ab5bccf2867e9c45d6c38ac7e7ece468b0b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-索尔高/request.json",
+      "sha256": "32bcf4cbed4f13523b45d727d5ff3756a0480f36b40a4df594782e5c30f714d7",
+      "bytes": 2039,
+      "gitBlob": "3c08af7250e42b8508bfc4f196de1a30567a63e9"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-索尔高/result.json",
+      "sha256": "c6c57e9cfba97f8fed2b92e4685c3ecfb2bbe6060c9301e3d6136a8b8ba3a162",
+      "bytes": 1289,
+      "gitBlob": "bc25458d4694403353a55f69de96bb69ed515611"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-索尔高/stream.jsonl",
+      "sha256": "d5ef60854e6606d0fc7e0c20be56b334e38b28f0ba93a0558c5e9a6d24755c8c",
+      "bytes": 39025,
+      "gitBlob": "835fa629b6a2bb62ddcdb7fd8a9d07b977eb4e0d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-闪光无/request.json",
+      "sha256": "29e2cb83aa4a1b7a5769fa3dc5dccd6234554843111a9b3adca1996b79e3e3cb",
+      "bytes": 1998,
+      "gitBlob": "3846f626d845c921ab74995ff17cf5a4a786c86c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-闪光无/result.json",
+      "sha256": "aae817b853dd3b49c0659e93164b3084beabaecbe8a2ceab479a9caa1f32bab9",
+      "bytes": 1254,
+      "gitBlob": "9a49f0156b6ca491070067165003600a97a57278"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-闪光无/stream.jsonl",
+      "sha256": "1547d69b58675c12371872aefa1fab7f6c525a17c97f1aeedcbfb01b73bbf665",
+      "bytes": 42599,
+      "gitBlob": "9a3e0610ee9cc7e703dcf6bd600ed79b594370fb"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-闪光高/request.json",
+      "sha256": "dc2ad8cd3f3728c26095062d268e8fd08cc63891412865b74c88dfdaed2fc2c9",
+      "bytes": 2029,
+      "gitBlob": "0649f5adce47ca3d1e22a36e60ab2d3e7fda511b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-闪光高/result.json",
+      "sha256": "f3d480d946ed9258113d0b0549a15eb423c3df22fc836bfb5cf4c5ae08ccb58a",
+      "bytes": 1449,
+      "gitBlob": "19aa44b33151143ffadddc58076ad546cdbf85ba"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-少量-闪光高/stream.jsonl",
+      "sha256": "9004a910d3df2568198a5c21c640456eb282259ec2ae9f2fcec93dd5afe5bcff",
+      "bytes": 67060,
+      "gitBlob": "84e2fc36491140d42f5019acc0c3c91e2bb92b93"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-泰拉高/request.json",
+      "sha256": "020e4eed43deacd3cd460bfbcb11c97955318d0ae730a1a7845e5f61ab5872d8",
+      "bytes": 1187,
+      "gitBlob": "1b86b660e6867067a31a4a3b53861b939cfc9873"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-泰拉高/result.json",
+      "sha256": "5a6fe1d295bcec40750b46d3718749a2135cd1c2cca7a959529ec3ae4d67653c",
+      "bytes": 1347,
+      "gitBlob": "2a864702ea09ea89f52396218c554e3fd35e195c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-泰拉高/stream.jsonl",
+      "sha256": "b17e587f66cd84996a5fd70ac76ec962f544ec5a506b760046e63d5110f47b5c",
+      "bytes": 49436,
+      "gitBlob": "5c5c6d8db1154ff2f320b7174a97fe8d44285610"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-索尔高/request.json",
+      "sha256": "8dcf5ff82cea06952376d02328391417904946204f0932df6df7ba1f7a8fe4f9",
+      "bytes": 1185,
+      "gitBlob": "ce67b214ca1ff015266a7f514dde018520dc6832"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-索尔高/result.json",
+      "sha256": "24a01b8abedb621f840b4d940b8d7ed122baa082e0e4f84e7ac66bef4c29c4e8",
+      "bytes": 1503,
+      "gitBlob": "45abea1c1bb153204b96c92d5adb80fde1f08a75"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-索尔高/stream.jsonl",
+      "sha256": "42ebfd7fdcd77a3a79be0a98d3268900ceaad0033da813fc841777e003988c46",
+      "bytes": 65317,
+      "gitBlob": "555ef079acaf0e570e91d679451b9042b2250f1f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-闪光无/request.json",
+      "sha256": "c1777e45add1f3ebdcd64ee89fc2233d079532490c28b1d188c8bc6ff615299a",
+      "bytes": 1144,
+      "gitBlob": "1a761e50c73822c7a6dd86d35a6fddf8d9424253"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-闪光无/result.json",
+      "sha256": "4ad4b13a9a9a630b8d5a13d3ca656337210b467e42fc639d15cd5567ad5d09ba",
+      "bytes": 1294,
+      "gitBlob": "a5bcba5e9d5bb568920b4dfd261c3ffbc4533798"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-闪光无/stream.jsonl",
+      "sha256": "5b330cba09a009cf2e8656dbc7f33909ad1ce196fd94b7752814a48d5e8fb303",
+      "bytes": 48761,
+      "gitBlob": "dca9451d1449d18c5a80a70029e4a2da12556568"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-闪光高/request.json",
+      "sha256": "8ed37f9edbd4a12e6a94b2d4d228b0a9e41e2f64f7fcbab65e473f0ee079b4d3",
+      "bytes": 1175,
+      "gitBlob": "20ff749eb434d33f11328208a6a2ebf25283fa33"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-闪光高/result.json",
+      "sha256": "78127b56242a96f2537b4f922a7bfecf9ea87f3f9d70dae6add94717204157c9",
+      "bytes": 1136,
+      "gitBlob": "5433e32a9f36fad4069ac22ab39f4dc1941037e1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/09-近空-闪光高/stream.jsonl",
+      "sha256": "6fc496c7bed931238a2bf972d5b18b919879f1b0abf7273be429bdc3f932e9f5",
+      "bytes": 99682,
+      "gitBlob": "c1e4c94f1a834e1fc29379402cee24425e70c223"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-泰拉高/request.json",
+      "sha256": "cd920a6fa351d3958e5db25cce281b87cb28085d8404866ccebafa28391e5ed1",
+      "bytes": 2030,
+      "gitBlob": "e1f64cdbd7c641d854136092661c592044d100f2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-泰拉高/result.json",
+      "sha256": "96b40d376561353ea0a0ac53e02db5d2dcf02a127ace9cfc336a148a9de94b6e",
+      "bytes": 1064,
+      "gitBlob": "7fba800c2b2e834bc4d167bbe5f9055daa048c80"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-泰拉高/stream.jsonl",
+      "sha256": "cccf4282c75feb707b94220a86ed134d7bb4dae60c4738ff64a669d92e33c4f0",
+      "bytes": 15264,
+      "gitBlob": "cc627381bbeff5d4cd9946c663ac228a0b76f47b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-索尔高/request.json",
+      "sha256": "9ea001d615f6ba1b0a14c3c786303f8f5253ee704a835972de56eaa144535de9",
+      "bytes": 2028,
+      "gitBlob": "3ad9c2662a644042cf37cf71bb767a9216005184"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-索尔高/result.json",
+      "sha256": "e1451eb4eeab7dc2811f03c68c8ab2c8fed38fd12e8092deb2c09c20e8fcf08f",
+      "bytes": 1107,
+      "gitBlob": "c401cf8cb54d1136c5a9f74173ad142bdc78058b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-索尔高/stream.jsonl",
+      "sha256": "db7dfed5b4268cf6190de5d6407dcdfaff3467304cad88a7d2a7210a6374e5d7",
+      "bytes": 18652,
+      "gitBlob": "910677392950a885fbf2d6cb5cc645f8411230c4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-闪光无/request.json",
+      "sha256": "efbe0332a4a21260718b3fcf89826cb53d847f006c6f566120bc414907eb869b",
+      "bytes": 1987,
+      "gitBlob": "5a2c30033934de2298cfb18ce5c083db84f199cc"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-闪光无/result.json",
+      "sha256": "0e4d8f43a69ad9558ef04325103a9071f92c892d342b0b493ac786fafd16cecc",
+      "bytes": 1100,
+      "gitBlob": "7c94106bb54aa6f6592900629b1c57e6a7201d36"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-闪光无/stream.jsonl",
+      "sha256": "27a9871497aa7d8024405d553581c38b8027865c7b37ba5e0678ac8c90a2e3df",
+      "bytes": 26423,
+      "gitBlob": "0c09594fb31b799f7e21743aa6cfa375022d74b7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-闪光高/request.json",
+      "sha256": "631e49875640271c3713faeb75e06d1eacb1a5e1270b4144a47ed44ad21b8703",
+      "bytes": 2018,
+      "gitBlob": "f8fb64b4280245b7a7ce4ed37bd9f9c7a6102b7e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-闪光高/result.json",
+      "sha256": "4ffb3a96b523ec172d766831aca688a22ea53e18972bd413ba408d1a29145426",
+      "bytes": 1154,
+      "gitBlob": "0533ff9425a0c643b7f874a55b13d46814dfa92b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-少量-闪光高/stream.jsonl",
+      "sha256": "ba8ec2b324b3ad77ac3a713b9b0c66bc511b3aa4cf78dd908fe7689c02466888",
+      "bytes": 113498,
+      "gitBlob": "c4b11cf8f0ace0d186c9c5f8cfb89dc5fd4fd087"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-泰拉高/request.json",
+      "sha256": "4423b9c876a5fe94c2d1b699e8104f3045d5dc819517f5b2e45936134de5c442",
+      "bytes": 1176,
+      "gitBlob": "613390910b37e2d9b5c7bc31736c1e567bb1c296"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-泰拉高/result.json",
+      "sha256": "ef39d1bba7a6280f78d19250a9667888821be1cd30ff570b9106444a69a50090",
+      "bytes": 1042,
+      "gitBlob": "621e9f76cedecbcd1cb6236d7522af5e583b2282"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-泰拉高/stream.jsonl",
+      "sha256": "d5ae4bc234e68c94adba8ebc729232e8016f833cbaf0e8faaf114973a4d1a5f2",
+      "bytes": 13135,
+      "gitBlob": "b19e80af2abdbca543a95fc5df38913ff1f57e7a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-索尔高/request.json",
+      "sha256": "96b1dceaedcabe8df8d2cc65f4b547fefe35b5bdf569c42e564bfc10102f58c2",
+      "bytes": 1174,
+      "gitBlob": "efd3338caa7d52da758f1c2ff5e236c8bca9b38b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-索尔高/result.json",
+      "sha256": "baf6a05332dfac6bd5eb6b0b4d0625059a4cae8e58392c1eeb0410a1a892171e",
+      "bytes": 1104,
+      "gitBlob": "333ad57cbc9f5f086ec8324348d878be42511570"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-索尔高/stream.jsonl",
+      "sha256": "11e1fed0bec9c71965dd81a692014d359b588b4699d7af89ecc6d7dcb71289f3",
+      "bytes": 19493,
+      "gitBlob": "13518661e47e0305019cdf73a2615089913ca327"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-闪光无/request.json",
+      "sha256": "17f3052e779e700517a3b7c91c2b4a9e8453648c9c156faa21fd7a3e0591ebc3",
+      "bytes": 1133,
+      "gitBlob": "9599c127083c2c5c37a563cac49a8e0a1e0a23e9"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-闪光无/result.json",
+      "sha256": "c64ff4b504926909a9258259a1ef6f518bd66211863f32ecc9850bb444d6e153",
+      "bytes": 878,
+      "gitBlob": "27f2446d9b4a6088d027c9dc8a265f958aa0fee7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-闪光无/stream.jsonl",
+      "sha256": "f8dea58dfc18aef3cc97dbef00cac461380660daa885599cad6eaf68a9487bb5",
+      "bytes": 9381,
+      "gitBlob": "ba6b2c073931500d4f3ed4f35aa0dd0b1e35c2f2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-闪光高/request.json",
+      "sha256": "16774b2fa766118c55064ec21b45037790336bc7763ecbe1764a48b23835abb5",
+      "bytes": 1164,
+      "gitBlob": "80fbd9b30bbd8911906be45d6014de1f161ed8e2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-闪光高/result.json",
+      "sha256": "6c55291e2fe0509f307d0d5801070cf2bba4bbf25c2a1985d731dd5b5e6f019c",
+      "bytes": 1183,
+      "gitBlob": "93c5cf3a820e87d7e8785b4991189b1746a84d3d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/10-近空-闪光高/stream.jsonl",
+      "sha256": "72b9db87308c915d5a93e1d7e6389a3666bfa81e560249defc3a753835e49945",
+      "bytes": 105470,
+      "gitBlob": "c7bb57e7cff5901b04fa2591d93d2615c21436fc"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-泰拉高/request.json",
+      "sha256": "9b8bda12dae14afa316189c0300ac5c0f2d240263acc23f1d42e787b3dc3699d",
+      "bytes": 2036,
+      "gitBlob": "794e84eb522b8ab4621253a0360c322788a82d8a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-泰拉高/result.json",
+      "sha256": "6417710c812b5187718164d34e5845fc61756694416d375b5f83d2b9d62ef581",
+      "bytes": 1100,
+      "gitBlob": "15a202afa8a0c14756885d96d8fbd0d9e58cd122"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-泰拉高/stream.jsonl",
+      "sha256": "990c0706f55d3875e7039a98f20993e29cf11330ea77fadce7e30f567eaaeed8",
+      "bytes": 17836,
+      "gitBlob": "469427e34a95ca905cb32879e15175370679f5d4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-索尔高/request.json",
+      "sha256": "80f20e6f1a769c68ecbd7dc704996be7f4b7c3f74acf82fae0486caa972b47de",
+      "bytes": 2034,
+      "gitBlob": "45e72c3adb9aafe717d57e6dfef9296ac5880fd8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-索尔高/result.json",
+      "sha256": "ba6e5f3f71456a4e894ed12e8df38302895640964a6c2bc2b1e380ec51171647",
+      "bytes": 1164,
+      "gitBlob": "a78e13e5f34546efd0daa8afd17d1d96d8c46d24"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-索尔高/stream.jsonl",
+      "sha256": "a675d08d91cfb27e0dbba6bc37506c6c2bf6313b73584caf7486828951f34110",
+      "bytes": 24875,
+      "gitBlob": "c43faa426ea9fdd1ab46242b83492275c804042a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-闪光无/request.json",
+      "sha256": "52ca6105204d13dc974f0f341c34dc450222e03d15ad91206932a9bde67264fc",
+      "bytes": 1993,
+      "gitBlob": "368c36972ba7def325703e3f51c1b80e91ad5188"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-闪光无/result.json",
+      "sha256": "35d58944f870d3f58bae020ce5d191a91ea0b677e05d9359619ee516b9659d27",
+      "bytes": 1039,
+      "gitBlob": "cea760517841e69c1675c788b47845bb38143d9b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-闪光无/stream.jsonl",
+      "sha256": "55268b5e14bf991fd7f0fd2a846f33662b7f277c6f3134d389681ab407032afa",
+      "bytes": 23921,
+      "gitBlob": "8e49e279b6664f438cf77c7d714c9abc5c137b61"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-闪光高/request.json",
+      "sha256": "b72eb93bc07c0f49c228284da3815615cbebee0a6fb41da7176239a090b692e7",
+      "bytes": 2024,
+      "gitBlob": "8edc5c7b9821e8f49a9645fe41823b9bed178d2b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-闪光高/result.json",
+      "sha256": "8f10fae603107024c1e0f5441cc01c6422f465a173b9675681158fff9b8f169a",
+      "bytes": 1057,
+      "gitBlob": "60fc9ce322113545b2effff3b90b5357259c7c6d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-少量-闪光高/stream.jsonl",
+      "sha256": "2915c85224150635d44d34aa40bb03a30c84e312928ed5642a3058a6755555d1",
+      "bytes": 68675,
+      "gitBlob": "ec417929e224bd6be9e8a0fe186abc011cef8b66"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-泰拉高/request.json",
+      "sha256": "08b4a274d76a0e3a742e42f907cd93f9824b4bf995611cfbf3e57867275d2f88",
+      "bytes": 1182,
+      "gitBlob": "0f495904035ab2b6080ba6ed0fb45487fc04ccc8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-泰拉高/result.json",
+      "sha256": "ee0bde7f3b0414a51aba8c54e4e097a511ee2830ea9a8eafd865c55f9ba53d82",
+      "bytes": 1085,
+      "gitBlob": "f059e247313420d9d9e3e2f0f3232acd5ca946c0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-泰拉高/stream.jsonl",
+      "sha256": "d53167752f0cf160122c1fff4fae0b015c7b3c51ffeaad7873244ebb149eedf7",
+      "bytes": 17833,
+      "gitBlob": "390a7f531a532b4c7f77b98a7e213bcad4872efb"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-索尔高/request.json",
+      "sha256": "8c31c901f8594838b977113e89e06bfdcf00825a671e4baeb6929afe21ba1b3f",
+      "bytes": 1180,
+      "gitBlob": "14f5a13775a456ec5eb480eb0eedf629bc2cc78a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-索尔高/result.json",
+      "sha256": "29585beae11605410252d563b44bf2fd50b45d342f49df6c5465a241ae1e2465",
+      "bytes": 1166,
+      "gitBlob": "d2f1477031ab0251b57d302a454057e55cf3717f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-索尔高/stream.jsonl",
+      "sha256": "c103d65482850c90f9302b04684fec09aab49f18cff8e685242c2dcf7df64266",
+      "bytes": 25423,
+      "gitBlob": "387b0fccef87848ca689567b441a074b2323a850"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-闪光无/request.json",
+      "sha256": "ad2332fad159675b32c14f09e10a406b18827a9a9373c30eea4a42b59f5e4c15",
+      "bytes": 1139,
+      "gitBlob": "f8d906c8dcd9e442b9af6f4a025701f1b57c27fd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-闪光无/result.json",
+      "sha256": "81c1466a5c8e62edff1a8ab6ba774a341ba36b6aac75a40f18156f4382eeb32c",
+      "bytes": 1027,
+      "gitBlob": "fe55434da93b6e0ddd6501c00447d1ec8bc5d717"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-闪光无/stream.jsonl",
+      "sha256": "1862a20053c3a288ce10c7a097ae430edbb908299397963309ddc368b0249dce",
+      "bytes": 21424,
+      "gitBlob": "64a31ad5b165e1a8de8bea1e78d53e77faaca8c3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-闪光高/request.json",
+      "sha256": "00e233deede7664aa51ecb1ec7346d97ad9eb6cf3d09ea53f931e489a2770b1f",
+      "bytes": 1170,
+      "gitBlob": "bb2a8422b2c61477d44ca0692e0b4019bce69bb0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-闪光高/result.json",
+      "sha256": "db47dca37a9daa8fe6f12bb8c1a0f235203fe6f6a9efb44ad6df889e3692856d",
+      "bytes": 1081,
+      "gitBlob": "62da2882667f1e61c3ecfc3017434057a116e32b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/11-近空-闪光高/stream.jsonl",
+      "sha256": "8ce28d722052b6cfcdc24052e06570124b46a47e9ce94afd3676d60303c6a985",
+      "bytes": 66210,
+      "gitBlob": "bc8c7abdf2e5fe39cb3464741686c95c3cbf2263"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-泰拉高/request.json",
+      "sha256": "305611edd2f9dee40b30d692309315f50d6f6387db6319a01b8187d0cbc7a4d6",
+      "bytes": 2030,
+      "gitBlob": "d9295fc635204ee938976ea8abbac01c1440a4f1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-泰拉高/result.json",
+      "sha256": "b3d35e09a35bf18cd922ad3d0d446572ff5b4b9b6f33114b7e3240740da01006",
+      "bytes": 1067,
+      "gitBlob": "dbce441115e1527c01408c6091678234b643fa6b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-泰拉高/stream.jsonl",
+      "sha256": "4d3e7ef4546d1dc8c3e5f2b0c520714c4a78ef9c2efbbd3e307e0cf746bef27c",
+      "bytes": 15727,
+      "gitBlob": "ae898a2941bfacf5c5b4afa80a2fd64bc47f23a3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-索尔高/request.json",
+      "sha256": "59b9a39517502ebde99d5f2fac605c88972b7036f16d4d562492aa7587ddf1c9",
+      "bytes": 2028,
+      "gitBlob": "21fda1d5a0db4e0f72af731d94f3376401a8bb41"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-索尔高/result.json",
+      "sha256": "aa33c8221247e96d28783f896eb0a408d3542264052a8a5c437c9afa3958c786",
+      "bytes": 1164,
+      "gitBlob": "10c1c74db001ebe4be885f28defce5a64ecc45d6"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-索尔高/stream.jsonl",
+      "sha256": "e90a4d74a6c9c46cd61f1c631621422f85fc521dac07c1654ab4159f384a00d1",
+      "bytes": 23325,
+      "gitBlob": "7b3cff9c5b3a7960f32880399f05c36daa7a7ac5"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-闪光无/request.json",
+      "sha256": "d39063a6c954bea339a39f7f3b7f715cbd32e7fa02475e41b6d5233d9fc60c1b",
+      "bytes": 1987,
+      "gitBlob": "26769ac200ec291fbac62813d983c5570f202884"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-闪光无/result.json",
+      "sha256": "d330c4c619dc8d4a1290d76dd0c2c0849f6d3646a438eac9560957a3562a4187",
+      "bytes": 1049,
+      "gitBlob": "755631fcb4575533f9cec254f8efd09af6659690"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-闪光无/stream.jsonl",
+      "sha256": "0e99aa0b675c506d04ab77e3100b2b06ffffe6a97bf212e1c6ffb3f92ef70afb",
+      "bytes": 23916,
+      "gitBlob": "5e27a2f25e5f2ae32ee36bcb45be3f6e8ad1d0e4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-闪光高/request.json",
+      "sha256": "77e6140dfd3b121ecc00fcfb38c1a81cf9573ad36a0a22e799185d10636f7d8d",
+      "bytes": 2018,
+      "gitBlob": "26bf50391b1aab99fb78d601583bb806e1d30549"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-闪光高/result.json",
+      "sha256": "42825a93e50a91a55e9cdb5c484548dfa0d0a013f5fb958ced2e71ca94bea7f0",
+      "bytes": 1096,
+      "gitBlob": "45a7b97aaedca88cef685a8a287c2d352aa1ce17"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-少量-闪光高/stream.jsonl",
+      "sha256": "bbda7783187398d0f1df96513a84a5833ae1c8b0d298d7dce984e76cefc03ed4",
+      "bytes": 86516,
+      "gitBlob": "ee2accffba2c20d13132d21cc691734f4b524e54"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-泰拉高/request.json",
+      "sha256": "2ed08f9e669284ce128b1f4461fa37b9f13754c8268e79f387370f1552877fa3",
+      "bytes": 1176,
+      "gitBlob": "6c2869e77302c1fd621da9387cb859f069ea1c4c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-泰拉高/result.json",
+      "sha256": "7f9f20dcf794c5b3face77a9f2512eee8cdad96b6fbefecd1bdc29da12b6f0a6",
+      "bytes": 1040,
+      "gitBlob": "887ace1bbe5fcda26b6e8a09613c1c82e086ed6d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-泰拉高/stream.jsonl",
+      "sha256": "58c736fa05a25b805e2f430cef06fa3fee2c0949869a1264fb4c4409752ee616",
+      "bytes": 12288,
+      "gitBlob": "96b61b8fac8f2dc46ff33bb1f4b6a29898cf4d91"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-索尔高/request.json",
+      "sha256": "d320509f24e8c78d5286edba48c4614195fd346d4776fc2c7bdb686df5776eae",
+      "bytes": 1174,
+      "gitBlob": "e1bd3d30688b9ae978125393cefe21df2ce7b4f0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-索尔高/result.json",
+      "sha256": "7b98c488f61dbc414cf410e9fc6d42917164b19945d5a67823e9e5bb49dd738b",
+      "bytes": 1076,
+      "gitBlob": "2ef83c1b9365ef2f24f0f9e045f2b6923b3de0df"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-索尔高/stream.jsonl",
+      "sha256": "1ae0bf8da63cf48e87133c3a0a92ea4a6e1f76d47ea2666360529d20e48ae959",
+      "bytes": 15771,
+      "gitBlob": "44a8c247938d35e244a1818b24b2d094167d33d0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-闪光无/request.json",
+      "sha256": "5119c9f0522293745983161dffe7576c48fb72b32e5cb54f612a5ccda60f6e60",
+      "bytes": 1133,
+      "gitBlob": "bb1156f368ab88d4cc39525857977e9ddc07b2ae"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-闪光无/result.json",
+      "sha256": "629ae0618b302b1ea6e1051de488fe5ae56d01049ec2f1f5eb4c9db87a6d1cae",
+      "bytes": 921,
+      "gitBlob": "6a87ea834a003bb6d08c755b7beaa607c4f0a4ff"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-闪光无/stream.jsonl",
+      "sha256": "bfd67c7f636d73c597d3aa52c3d727f64e6d6a00177f37e44925ba9cfaa95cd9",
+      "bytes": 13531,
+      "gitBlob": "473389fd2c95cc18c9caa9b28ce6302b26b57353"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-闪光高/request.json",
+      "sha256": "65531a4616101cce3ae07dc97192dc3686bb98871c00c81694e7746130ac9ba4",
+      "bytes": 1164,
+      "gitBlob": "063e62ed1554323fb41533dd3c655e790109c147"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-闪光高/result.json",
+      "sha256": "78116d60d3fb76a2624ae09fdd76f2f408a4b328547a94d3001ab7cad6ad7ee9",
+      "bytes": 1034,
+      "gitBlob": "09a9e90e0a3ec8a66f7f1903bb3412c14332b6b8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/12-近空-闪光高/stream.jsonl",
+      "sha256": "7caee32cd3f587522dc97eb76334517d0bbe570aa8fdedc077cd48dcd86988bf",
+      "bytes": 69290,
+      "gitBlob": "0eef8806df4ac9ec1ef70b27736cb84fa009c6b4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-泰拉高/request.json",
+      "sha256": "15f0c32648db854be5927dd2379ee62b800ee2e1f15d48eee628a46073b0f926",
+      "bytes": 2027,
+      "gitBlob": "417c5626ec7cb3a10e408f31df4288f1e3c9936c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-泰拉高/result.json",
+      "sha256": "aa675ed5942f57d93946f3423c3c7179d9ac34e9537da7cbe0c615aafcfceff8",
+      "bytes": 1030,
+      "gitBlob": "423cebaab237158dbb213520210f21ae7bfa6510"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-泰拉高/stream.jsonl",
+      "sha256": "13d6848ebecbeb4503fd885d80160c77dd0274653b130f5f7830108b4e3740e3",
+      "bytes": 10997,
+      "gitBlob": "37177e8863f7b93472d07f9043c6ef4bb58089e6"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-索尔高/request.json",
+      "sha256": "6ff200206ba27eafc8e0c4bc3e301ca9ed7baa2ac179ff9fd16eea709eaf620e",
+      "bytes": 2025,
+      "gitBlob": "2b74a794ccc6bf5d89063c733a01fd4fc1d7ac20"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-索尔高/result.json",
+      "sha256": "a561751878263ee7961f39f9ad9e4368311a22d7deff00bcf1d5dbf9c6bb9e7e",
+      "bytes": 1070,
+      "gitBlob": "316fa25c0afc6ca113c8d4c205cc85b9de620c1f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-索尔高/stream.jsonl",
+      "sha256": "18243cdd0e7de064baf1d5c4e876d2ae609a5e295f317a013aaeb176242db710",
+      "bytes": 15726,
+      "gitBlob": "69ca3a97733d2dbf71eaf039ebbf444f9d3fb34b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-闪光无/request.json",
+      "sha256": "e9c54e49e1fe699ec5ff960178e344a00b6283fec38711b50e7184ca534c351f",
+      "bytes": 1984,
+      "gitBlob": "172727fbdbe65f1f1ce61f3088957409f28e239e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-闪光无/result.json",
+      "sha256": "2ea0045e9929c35a1af83b0843f1bb460ed163037f007a43cc90298a407aa791",
+      "bytes": 1266,
+      "gitBlob": "2ea7a1d507c581d3cf12b73308fdc37c8fb44d52"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-闪光无/stream.jsonl",
+      "sha256": "4a073b7f153d1c766c57b7e5cce27b3ed70c15e34f29121a46316f5e2b1910d9",
+      "bytes": 38915,
+      "gitBlob": "7ef128a0480266d939534cc38e0c36116d9f0bfb"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-闪光高/request.json",
+      "sha256": "6823d8894cc86e4b6b54d3109bc70d2dba0302a45933f64076fb1e49d69665b9",
+      "bytes": 2015,
+      "gitBlob": "58998004754c0802177029efadea56868fe35831"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-闪光高/result.json",
+      "sha256": "e057d650bbb3ce57157d888beab83402d3e077733e0b073527fd059f1bf5cfdd",
+      "bytes": 1422,
+      "gitBlob": "767c1e6c4ee38f950e8bcd38f8edc31444c44f35"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-少量-闪光高/stream.jsonl",
+      "sha256": "0f2dd3eaab2581a2e3268c7be982465d8cc63fc96a72885e2c471d8eb0af8fcd",
+      "bytes": 79013,
+      "gitBlob": "fdf5b03f6e010881299bb1fe809716ff238b6fc2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-泰拉高/request.json",
+      "sha256": "6f8a0d53f516ca3f197b73da87830cbb950ea535fffedd5bd5702935a5828d89",
+      "bytes": 1173,
+      "gitBlob": "7ea38c47613e0a7eee58cb6f964ce6ed24a6fc45"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-泰拉高/result.json",
+      "sha256": "eec17d8f3a6f7219ca4da31f12ef981bc28a673e015d6f262c294adadb60dd4b",
+      "bytes": 1056,
+      "gitBlob": "8146d0b43ff4a2f18cee5d3123375c190fc0ec77"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-泰拉高/stream.jsonl",
+      "sha256": "1c776937dca9536077ba8ffb68e70d12bca11ee00341184486024dd19a2d472a",
+      "bytes": 14003,
+      "gitBlob": "0d9b6f1316a4e50488a4d8e76a04eeeb48c63ae1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-索尔高/request.json",
+      "sha256": "f1cd877acd2309ad16784b1f328aaef9297426907c75b4cfd1bc74fc9847bd7f",
+      "bytes": 1171,
+      "gitBlob": "d08cde717bd9f97c35d1d66c17d74a1065540620"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-索尔高/result.json",
+      "sha256": "50fd75899d7cce4badd2aa9bdef65cb2ab190b64365c5d489fe53298d3ea7175",
+      "bytes": 1070,
+      "gitBlob": "8a57697a8989683f2df1cfc76d4187a2dbff9abf"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-索尔高/stream.jsonl",
+      "sha256": "e47effcd0b9fe00949ab19f6c2577bb685733c6ce9aa3a3cf25527e6aba6af2f",
+      "bytes": 16522,
+      "gitBlob": "f2df079b2d797844a6fc0f49acfa16dfcb1e1dbd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-闪光无/request.json",
+      "sha256": "ee5d06ce424377047702c3cf3ffffbdb7a24c3b188f63ed0446e15a8fbcbfcb3",
+      "bytes": 1130,
+      "gitBlob": "03a973117bcbc12a50a8930f8753617117b5c16e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-闪光无/result.json",
+      "sha256": "bfd254b8cc4a542954b2368aa8905424fe37b157ebf0cefb44894cac3215c25a",
+      "bytes": 1027,
+      "gitBlob": "e353d65aa8ba52994f9eeddd45c6fbf80e456e53"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-闪光无/stream.jsonl",
+      "sha256": "a5d1e9e07f1d9a98783a5c3b5bebf8be0400434c6d9143daf250074f1d8a8508",
+      "bytes": 21442,
+      "gitBlob": "008798777c518c8b5b8a4afe6689bd4e4372f0ca"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-闪光高/request.json",
+      "sha256": "279ed242d609b0e520e5dab7df0d766827185093d92fda4df282feec8aee0661",
+      "bytes": 1161,
+      "gitBlob": "43c26f6d056d52248ebdde675d241234f53f1ec2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-闪光高/result.json",
+      "sha256": "364d07ae23b74b14ae5209cd3c2ebda2572bf79ae6079b0af88c1aa24b38ba2d",
+      "bytes": 1009,
+      "gitBlob": "e3a10b16df66b334eb7d04b484c646b6061ee36b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/13-近空-闪光高/stream.jsonl",
+      "sha256": "1f261494c63d56d2256a2aba64ce75b97a01ecb52f778c1e6fbbb72346c2d5dd",
+      "bytes": 61773,
+      "gitBlob": "e73dafb9d95350b71e14264fd626a902149b4be8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-泰拉高/request.json",
+      "sha256": "f760be857f26f1c3b298ac191c57b25dc19ecb4ee14a411b74bee05c1b1023d4",
+      "bytes": 2042,
+      "gitBlob": "9db760bf466eb1cd2475ee602a48ad1fad5795d0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-泰拉高/result.json",
+      "sha256": "128a0588e3720e1a81d08023b8da443ec6707328b149718462bb26c839285206",
+      "bytes": 1120,
+      "gitBlob": "d61301587f314e788828884fc10d631a0b4690cc"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-泰拉高/stream.jsonl",
+      "sha256": "83abad63ffbfbf5795a6273c8379f9b52638820d75af7ccf172e3d9ae84e0531",
+      "bytes": 21240,
+      "gitBlob": "38ae0165261bcf52fe710f820ae2bcbaf7324ce4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-索尔高/request.json",
+      "sha256": "7c1043cd8dc6a7e075299a7cae113ab4cb70a041dc58e0c80b8cb35e6c93c83f",
+      "bytes": 2040,
+      "gitBlob": "6f5cccf6754b16c2ffdcab9c152e3010c42dbd19"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-索尔高/result.json",
+      "sha256": "cb6a9b531d9e66bb32d9f9c5e10c4f043d9b0bd580f27f1b1d05e3430238585d",
+      "bytes": 1155,
+      "gitBlob": "5507031d24e49cbff5abaa88b8f497b24ef8dcae"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-索尔高/stream.jsonl",
+      "sha256": "c870fe7e4ace6d6ff737a87d6e361913799a45de281585c8e73c4548173dd08f",
+      "bytes": 25299,
+      "gitBlob": "79e28ba2717d951eb4df5fb4afa79eeef3532a62"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-闪光无/request.json",
+      "sha256": "0dc1562f0d667cd3d6a2bbbfa41806133878ee5439406205a9785ff1f371fbcf",
+      "bytes": 1999,
+      "gitBlob": "0a96fe0595aaa385057f67c035622e163ead16dd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-闪光无/result.json",
+      "sha256": "2ba259737a9f8372a45fe93d1a2c76fea9920dc19cb4beab73bdb852b708f020",
+      "bytes": 933,
+      "gitBlob": "a5908b2d60178ec1e70589141c114a6470c619f6"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-闪光无/stream.jsonl",
+      "sha256": "1b09079eb93bc7fb9c0253bd0fa02fc0c29735e70690e238a93397cb88e4c35f",
+      "bytes": 15176,
+      "gitBlob": "5f78463442643d8a660446493445756eabf1310a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-闪光高/request.json",
+      "sha256": "824d7572fdcef854558599d02133ab7b1d1192d51b279220013ef9fad13cd605",
+      "bytes": 2030,
+      "gitBlob": "844891d083cb3b88d3322ad34ccb85ab8cb934e0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-闪光高/result.json",
+      "sha256": "e9d571507444b2af4a27b777ca63b77dd136e4a898b0be74e506d8480b670678",
+      "bytes": 1156,
+      "gitBlob": "5c1af0d993185e7e0caec0dae485b9cc197f6a64"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-少量-闪光高/stream.jsonl",
+      "sha256": "9525ed7afaf9c4f65a71bc806f1a85679306eb69ce577b96177a32619f4fdeaf",
+      "bytes": 67075,
+      "gitBlob": "a88516ad4ccd49b838073096fc60f1334fdb6dd8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-泰拉高/request.json",
+      "sha256": "b2f7fa124d13e651d13810a64644c8ab2bcd4b9960cba165ce20f7ee5d4db20a",
+      "bytes": 1188,
+      "gitBlob": "7285b20077cf299688c86aa9fa8fc5e5fb4b889f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-泰拉高/result.json",
+      "sha256": "0fc2ce59d1faa2110c59f923a266e37509d6f6a0ffdccdcb7cf57e863f0dd47a",
+      "bytes": 1087,
+      "gitBlob": "7ef55097b8701760d978cb1abf1160d0328eb841"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-泰拉高/stream.jsonl",
+      "sha256": "54e90581bbc4c8f4cd8970f4b9198e49939ce5d743b4f005a1c49c8ea533fc49",
+      "bytes": 17394,
+      "gitBlob": "858c8e7cb0f7e20caeaf4147d4bd177977966faa"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-索尔高/request.json",
+      "sha256": "e5895adc9bd3c93bd846c08e8f6663de68297e7a40c71fa646bcb13227686568",
+      "bytes": 1186,
+      "gitBlob": "f2635324612ad1c30b663e1462006fd37dc18905"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-索尔高/result.json",
+      "sha256": "8cb90cda233acd70d741104079472c44b1b23e65b0cf5f8c9bc87f2cb914eb59",
+      "bytes": 1162,
+      "gitBlob": "e63c0513b5795c28e2b74a574803b020063d897e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-索尔高/stream.jsonl",
+      "sha256": "98e65614107ef1dee883fbb8ae8e8da5570a63e19927e56fe3fa377461b1255f",
+      "bytes": 26508,
+      "gitBlob": "b9d2f05efa424c6e2c30ff97e8a77262a46c9dd0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-闪光无/request.json",
+      "sha256": "fb1f9f6125a3fa4386c503bdd8a28df53f3d318afe2ec3df282c79ea788e5bb6",
+      "bytes": 1145,
+      "gitBlob": "5c7734da3a7da0d187b5c77854d38c517865459c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-闪光无/result.json",
+      "sha256": "f576c90d4e924b84565cdd2aaaf769ac103d7915211945f5b89991f22d6d212f",
+      "bytes": 937,
+      "gitBlob": "f47435bc7b8b6e2d15806303dd2933f6f6220191"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-闪光无/stream.jsonl",
+      "sha256": "8b31c5645f2392834381b8a1131dfd7e5b28ce38b55e1eb3bf5fdb9c0c022dd3",
+      "bytes": 15190,
+      "gitBlob": "5da8109e0dfc6fd4c6fa0dfad8cf04efd166c9e2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-闪光高/request.json",
+      "sha256": "a99dc863a980c50d2765234305f72981023023491a9c85b95c774faae8c9bb3a",
+      "bytes": 1176,
+      "gitBlob": "dfbad8e41db51fd8a4b03cc226b8f3a8461c39d2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-闪光高/result.json",
+      "sha256": "1dbf29249ba424a98c6df93443c6b507708eac9c4cdb32bbbfc840d7bd021aa8",
+      "bytes": 1065,
+      "gitBlob": "b7a64b58126c417ca36d0e88bf9c321c69a72960"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/14-近空-闪光高/stream.jsonl",
+      "sha256": "4ee43071a39ea3f2c6d31bf671981dc2c62ae59a9f7e867826e121d5f47a21bc",
+      "bytes": 95402,
+      "gitBlob": "8f340a6602ce6dc27902aefb63ee137afc1323b2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-泰拉高/request.json",
+      "sha256": "a8780eacd70b2b2640df9f91cc2e6725bdce781beb0fd115da3322f7bfd8772d",
+      "bytes": 2042,
+      "gitBlob": "00b64a8e6974be1e41680a21be95b964125008f0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-泰拉高/result.json",
+      "sha256": "b6a1564df7db0db6c9528e72dc25b6f5dac6edc157aa30df85e6f25f31857280",
+      "bytes": 1163,
+      "gitBlob": "650f2a1c39a9ac23bc372605546a6845765f73a7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-泰拉高/stream.jsonl",
+      "sha256": "27077442b47087020deb8808918af636f08ecb486ce8644adfdbd8a1c340a3e9",
+      "bytes": 22605,
+      "gitBlob": "9dc61bb911ba89e4b13dbad083c225dedb71c2a5"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-索尔高/request.json",
+      "sha256": "a03d5ae0fd81a36ec845e1c118f8ac64708032e1ad0d853be95c5877da18688e",
+      "bytes": 2040,
+      "gitBlob": "c40b17f43d29a6e94fc2d4f9bb318188fdda37ca"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-索尔高/result.json",
+      "sha256": "9fa4edb1455c6f6397eeb6983e54d214d48981b42cd67081578cd786a59edb37",
+      "bytes": 1288,
+      "gitBlob": "59ddc6d4f62b74287aafec34dc071cf29eefe4d9"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-索尔高/stream.jsonl",
+      "sha256": "542c2f8e7dec60659b47a724fb43f9c2563d075512f50fa47bfafaffb2227ba4",
+      "bytes": 35857,
+      "gitBlob": "4bd06eb75c230d2b7e56faff706bfe38f00b6f66"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-闪光无/request.json",
+      "sha256": "e3e3d784ac09d9d79d03fb53734967c0b89407c4e40138b4ac6cf1f42a46c3a3",
+      "bytes": 1999,
+      "gitBlob": "e34ef5beb7c053e3fe8e8cc5cb6186ef130d774a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-闪光无/result.json",
+      "sha256": "d165633f70bfa5eaa21fc33937d626a87e46abb33061d320052b3bf8808a7a5c",
+      "bytes": 1197,
+      "gitBlob": "09a6da755e651e11abc597a60ca0317a8b892d45"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-闪光无/stream.jsonl",
+      "sha256": "0564b4236a4c0fd99428c11e0eea13756048a488a3a611ef3c0598605bc194b2",
+      "bytes": 34740,
+      "gitBlob": "861c2cf36d6f865b20012bfa7b659b47f60cceae"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-闪光高/request.json",
+      "sha256": "3067818d4006b328fc45be5a85a072e8c352028e6ef8cdb5d509d0b7de25d70b",
+      "bytes": 2030,
+      "gitBlob": "59e1fa244128f4ef5d7dc174cf96ec01d6f080e1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-闪光高/result.json",
+      "sha256": "b6b1ed27b95da0aab034931fc67346757bc026e515d75ff99078973698e88bb7",
+      "bytes": 1291,
+      "gitBlob": "981b69159eca735e0aaa6522e6286c8cc78223d2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-少量-闪光高/stream.jsonl",
+      "sha256": "a9ed6717090832035af9fae527464576f26431e11e51eb9afeb607c3f23dbb2c",
+      "bytes": 77687,
+      "gitBlob": "f35192e30950144173bd638f37138d34d2cdd360"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-泰拉高/request.json",
+      "sha256": "0a6d17a67ae091123fc20bd6d215675583481116439fff3a2f8708052b21968e",
+      "bytes": 1188,
+      "gitBlob": "b92a0fd2718629ab864f444bf01c1150fa04da85"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-泰拉高/result.json",
+      "sha256": "798f7e5385fcd99d486e459653f87d127c5a9c9a4bd2fb5a1b98263cd0246f9f",
+      "bytes": 1147,
+      "gitBlob": "46a236fcb5669008f52bedd176468a70025b419c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-泰拉高/stream.jsonl",
+      "sha256": "f50b92fe68a9576cc8ec7faa88337b19ef7e6c6684ccd18a1810fa6e2be85c34",
+      "bytes": 22116,
+      "gitBlob": "76b39c1c0ce51036695cc5c37049430c28d507da"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-索尔高/request.json",
+      "sha256": "2382420d2b4c353ed7c8498b6fae68a4123ebedda28efe63db574f5939c00dad",
+      "bytes": 1186,
+      "gitBlob": "5a9e16bdb53ac04b0585bd2563372823d10b2468"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-索尔高/result.json",
+      "sha256": "97b4613ec32c9fd51e0b08acead2d06e129cd5c1dca2838c2640811023dfc2a4",
+      "bytes": 1240,
+      "gitBlob": "7bc5b921989ce048b6c6f4dbf43dac925f911ff7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-索尔高/stream.jsonl",
+      "sha256": "60ab6a7345ca71494f6e58f9a4b2ff6d5fdc9ce188fb2c610c190f3b14cb4de4",
+      "bytes": 30988,
+      "gitBlob": "fe3b1d8b0ba5b3fd7eb65623f1b38584ff70a0b5"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-闪光无/request.json",
+      "sha256": "a6389d5c3a6faaf355cb80fb71c880f3b2f4d729e44ca8aaadbc3348a3962d21",
+      "bytes": 1145,
+      "gitBlob": "5bf4328671194b7f6434f9a12bad55e037fedbee"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-闪光无/result.json",
+      "sha256": "34bb7cfc34a6ac1a4b0343cb1c41671e7efb0bc667ab211f9700723cc1819dad",
+      "bytes": 1082,
+      "gitBlob": "056c717689ee3f4d1c32a44a22742b0462177b2c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-闪光无/stream.jsonl",
+      "sha256": "06fd3a7b27f692abb48196156890065b938607585e51dfcc6a98c6cea2707a06",
+      "bytes": 26002,
+      "gitBlob": "8628fa6750705ac2f35d4df95c07f411a8c03660"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-闪光高/request.json",
+      "sha256": "0d047eca00676336ce0e9a2af144c7ae432b6b0cc82b798e4a6164be5f5d4748",
+      "bytes": 1176,
+      "gitBlob": "5c1637b3fe723e3cad5d74faee7fc9b8fe93a406"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-闪光高/result.json",
+      "sha256": "0b44ca9eb4cd644e4380e4c01173f49995ba0c04f9bc9008d09fe10fb149bdcd",
+      "bytes": 1064,
+      "gitBlob": "75cc4d8276216aa2ec5f7f2951e5f22b1db58aa8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/15-近空-闪光高/stream.jsonl",
+      "sha256": "3c967add4245cecd546d03efd240f8bc32753e7fa9518c0c4686c422e8bc9cc3",
+      "bytes": 70653,
+      "gitBlob": "0c30a92b199f3b4159831bccda132a0425a7400a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-泰拉高/request.json",
+      "sha256": "92f6c5ed2320dd0337bbd334fcf5a769ce5232fc589310b74bad5fe0a9d138c0",
+      "bytes": 2045,
+      "gitBlob": "7495dded03339fab67de5a8a54ed7194a51dbe20"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-泰拉高/result.json",
+      "sha256": "170d93bb0ae6e5c15e731da40318d499b97ae8d73b2c15cc8ae0b210ce85e964",
+      "bytes": 1029,
+      "gitBlob": "624b08ebe86443dc86f53f9396c64385df76d4bc"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-泰拉高/stream.jsonl",
+      "sha256": "9acc9ae20eb42a8c789c873d0c807b847fb3c3e812512e4b7af7756b1d7c1611",
+      "bytes": 11867,
+      "gitBlob": "73bff3eb565e8867a1f3c50db200a68d649d096b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-索尔高/request.json",
+      "sha256": "cd1e9c87d66cd125866de845e76f94a4bf96c6dc386535e49aef815b949100e2",
+      "bytes": 2043,
+      "gitBlob": "4e54e665d6ac6d6c19e19b9e1da88cbc03128946"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-索尔高/result.json",
+      "sha256": "4dbdc8c1013d2defa4f4cce9ed436f4098e6781dd12c2ff8c1345f096759e692",
+      "bytes": 1088,
+      "gitBlob": "f2ed65c9535d0ed8534a4e23b4ad7a5699a866ff"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-索尔高/stream.jsonl",
+      "sha256": "70d1ea029cd3c6c2fd165bfdf45207793657c8efda8c213f9f220841beb1bb1f",
+      "bytes": 18197,
+      "gitBlob": "6ff661c37e1a543d180b4ddc62739a78e2a62579"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-闪光无/request.json",
+      "sha256": "9f46a95def8ef85221daa4f85651c8a22a74e209b8fe078271d006ea94936e20",
+      "bytes": 2002,
+      "gitBlob": "8a6980b2d2d8bef999e062de5839a4a3e61abb7c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-闪光无/result.json",
+      "sha256": "e56aaf2b935f3b619b7160429da687bdba8d7d84afa83161ad36774dfada2166",
+      "bytes": 1167,
+      "gitBlob": "00158b3e4097a21fbf2f0b78fe39e61b262f5141"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-闪光无/stream.jsonl",
+      "sha256": "3c10e90e19d452e3e6233a258fd2cce412ea24fde63248cf3be4f59b14101813",
+      "bytes": 31813,
+      "gitBlob": "926c967cbb55766380308ea00be8c4e5290182d4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-闪光高/request.json",
+      "sha256": "57a5df2c0011a271f048c0303618cec7b0369e5f9a8e7df746d559459451c6fa",
+      "bytes": 2033,
+      "gitBlob": "9cdd08bcca4fd69ba2382e9375c25a0b04226ac7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-闪光高/result.json",
+      "sha256": "868e362de9ebe05b44fe5bf55aa53498492374474dc94318a45ba90e54a39a7b",
+      "bytes": 1098,
+      "gitBlob": "d976cb85c5fea4ab0f4f2ddfe25acf5cf431566e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-少量-闪光高/stream.jsonl",
+      "sha256": "b9f4c957550569ed53c45cea6813ff8bfd08f7b69ef01334c7619ef1b66c664f",
+      "bytes": 41830,
+      "gitBlob": "27e8a735a4f33fe89257a7dbd031b320dcb8892c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-泰拉高/request.json",
+      "sha256": "4231b82a51e590ebf8ec8b739454bfcf4a1dd3d9f49f29584d95874964abf890",
+      "bytes": 1191,
+      "gitBlob": "20be8cd040cd803a2ba9e06b6d08e74c8cf5fafe"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-泰拉高/result.json",
+      "sha256": "9bbdc8f45fd7fc023cd4a181890b39ba874f799b470e4d175d94726f2b6ad10e",
+      "bytes": 1030,
+      "gitBlob": "6158dac36070ff1f96af050326c9d877bd93f561"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-泰拉高/stream.jsonl",
+      "sha256": "e0c308b4227a5a0809b44f0ca305d0e78a11e905387d2e21c6a8bd931ca17b3e",
+      "bytes": 10154,
+      "gitBlob": "8e761ad07e21fc1d2db6cfea0e60063a9a1f529f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-索尔高/request.json",
+      "sha256": "84073c1866f19b89cfdf0bf56ddd5bc69e768a0f2cd9473ae6af5e7c9abe6f22",
+      "bytes": 1189,
+      "gitBlob": "79eccf97e0ac054c72fd26d09d12e3546d2da854"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-索尔高/result.json",
+      "sha256": "a10679d297d67a2114af77cb5d8e842dbace99931e54e352d321ad1558c90286",
+      "bytes": 1049,
+      "gitBlob": "1153da17c78aa9e0ec39affc5c3287f9bb46d5a1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-索尔高/stream.jsonl",
+      "sha256": "07aff4d2049500144b9b6ecf7cf4658e056a80fa1ed8e9a5938ef03aaa62e1df",
+      "bytes": 13264,
+      "gitBlob": "2ede59882b8f7e0f12b9791595804d6612104cf8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-闪光无/request.json",
+      "sha256": "8bec1fe1651c0767ddefccbf7b2b263f2b00e429088c8eb76529e9028892426f",
+      "bytes": 1148,
+      "gitBlob": "45a6e9bac290a59140605fa9a5e8f80708c6384d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-闪光无/result.json",
+      "sha256": "e1ada2de7e7a5670251b27fa82a73e26cd54b3ef2e56b83436c0bb70d6243bdf",
+      "bytes": 867,
+      "gitBlob": "85346433573db3856aa22105db6169dd62596676"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-闪光无/stream.jsonl",
+      "sha256": "93b679980abd2cdf5841c9b95cba6b730e4a01398eca944813b6df63a98b7f01",
+      "bytes": 8145,
+      "gitBlob": "e089de46ec7c7554d037ee9d1d7a82988a28abcf"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-闪光高/request.json",
+      "sha256": "3a970d18280dee9e55df65762778cc8c3d78465b358e727866ac65333d384630",
+      "bytes": 1179,
+      "gitBlob": "21a179272003b67715874167f9793af249365c25"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-闪光高/result.json",
+      "sha256": "f8050a9cc5f7fbbb5f4635a71ddd25aecaf6cc0342cf4bbd9b7a5a9fab40c33e",
+      "bytes": 1024,
+      "gitBlob": "aab48d4e7711e5f558fac934abdba5cfb2d60b77"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/16-近空-闪光高/stream.jsonl",
+      "sha256": "30f7f4fa240e1d48645197c93ef91732bf90bd73beb29c856209b802a4cae51f",
+      "bytes": 89375,
+      "gitBlob": "621c4ba1eee9b38bc3495d2efa2c634050729fe9"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-泰拉高/request.json",
+      "sha256": "9f18a49e2dec3d1c8e714560162dc99dea1f19ab73c9e991ef59197c8fcdb1a2",
+      "bytes": 2045,
+      "gitBlob": "ac80ceb8f2ecfb8b08fe5c394048564ab46bbaed"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-泰拉高/result.json",
+      "sha256": "5b93c53d621db86cee984beba37dafdf191983a302d8f663783d5ad4277c00ba",
+      "bytes": 1196,
+      "gitBlob": "2149ae7c2e32b83c63699db6e19768874c2a3ee1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-泰拉高/stream.jsonl",
+      "sha256": "bc31928d15a5d1a564a51a7cb8c6dcea937573e8b5354aa53c0008d223e42908",
+      "bytes": 30642,
+      "gitBlob": "a72dbd4f722b18538ae77a1e9708cea041117aa0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-索尔高/request.json",
+      "sha256": "812afa45e380c91f0b5c948f565d6d13d2347069967802ffd3e41ec819c1291a",
+      "bytes": 2043,
+      "gitBlob": "3fe3b4ff2f8a3ff150760e0e590af2cda52730cf"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-索尔高/result.json",
+      "sha256": "d0384ab048f9b128ac28b24e85e8d488e5be89d5dcf3d51137a90130dddc1b4a",
+      "bytes": 1376,
+      "gitBlob": "bfe11fbc68638e8938ad507035e16bde4c4210d5"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-索尔高/stream.jsonl",
+      "sha256": "86c7e75b5fc7a866bb54857c4c3399b5255777bea7be89ddbe509920e4cc3f03",
+      "bytes": 48753,
+      "gitBlob": "8059c00e0062eb784d077a406f60244f0eea362c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-闪光无/request.json",
+      "sha256": "cb208644698d2716d9f27f553b618c947eddd15e74dd72cadf057d790b52ba66",
+      "bytes": 2002,
+      "gitBlob": "d0eeb096cc32175bdde8e34a58cf1b0881564224"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-闪光无/result.json",
+      "sha256": "5b2412acbd9da222db15bb58dba1dc9bad57432b6668c2172bd035883b824a68",
+      "bytes": 1250,
+      "gitBlob": "b87f213eaaa4dc809f5ae3c9adc64f023b44bb37"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-闪光无/stream.jsonl",
+      "sha256": "26b880e9f4d69f00dbf1f51426f59866b001056ce5aa7fd61f050745561565f3",
+      "bytes": 40044,
+      "gitBlob": "70905871d06e4e358f9fd890d149582e32956cd9"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-闪光高/request.json",
+      "sha256": "c65162b258ddff436a975dbe5e3a2869edc8ac2809f5b668db4800de9be8af9d",
+      "bytes": 2033,
+      "gitBlob": "546da3c6ecdeed2c3d4f690751f085df0c64c042"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-闪光高/result.json",
+      "sha256": "bb562acb9dfbfb3d5581579766a3d50ee2b87943f7b2b3c06f5b0cf74247a6e3",
+      "bytes": 1286,
+      "gitBlob": "dc0612271ca5b31ee7fbdfd50039b794a8a0d58a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-少量-闪光高/stream.jsonl",
+      "sha256": "bc769c75edc733c8b0b963e6ffefd19b6e03c827490a085bbb715ed81125b947",
+      "bytes": 97364,
+      "gitBlob": "37be30ed84bf80f8bf9daa583ba16bd48a0494c4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-泰拉高/request.json",
+      "sha256": "4d9f0ffa065fbb70536d9ae222b0b495dccbefa1b952f6ba285720cd50c5555e",
+      "bytes": 1191,
+      "gitBlob": "740155eb462e960e2d31890aec89ad1575d94665"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-泰拉高/result.json",
+      "sha256": "8abc3b7cdbbb23fcd4ddcbc07bac650603c6b90bea9c65358b8bfb391eda0569",
+      "bytes": 1174,
+      "gitBlob": "380b2f4801eedab6a8841520fe7b0edef096154b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-泰拉高/stream.jsonl",
+      "sha256": "c00ee8a6d0a34b7b034377b0b3733c52de6b4955750a08802f20bbcbcbceec1c",
+      "bytes": 28081,
+      "gitBlob": "6137caad5f60ced31eb852f3b61b989cd33155c4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-索尔高/request.json",
+      "sha256": "e181ba89d0752f436030e44b0f9efa283e3a360091afff125c199f5bf00b547b",
+      "bytes": 1189,
+      "gitBlob": "992e29538db4b9e8f6194010bdf3b765fbf67003"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-索尔高/result.json",
+      "sha256": "dc4761b04eaaa92a6ba6e2bf2c05bbe2998670009288fc33795715a1d2049aa0",
+      "bytes": 1472,
+      "gitBlob": "9f8391a542c1ddbe1b5bbb906a9c4d1822c2ff83"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-索尔高/stream.jsonl",
+      "sha256": "8bd8983288353e5a3e356c9956a0e2a31790321cd3cfb89e4898afa1e9de10a4",
+      "bytes": 57213,
+      "gitBlob": "93f9070a14efff357dd4a6bed6033bbbf6b8fb5e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-闪光无/request.json",
+      "sha256": "f3d864277d607ec5ebbac2bd358b516b9bc7c51cfad44b81e5b0a6b60c7648c4",
+      "bytes": 1148,
+      "gitBlob": "3b62008fda4ce29e190621fea97cc410ed04c3da"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-闪光无/result.json",
+      "sha256": "2c0f6a3f92c50f698c8d4bbdd530737751f438aab891ff46c58b58a9a0227e62",
+      "bytes": 1029,
+      "gitBlob": "91c5376d7ceb088e0742ee4fb52ff2240fdd94d3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-闪光无/stream.jsonl",
+      "sha256": "f6bd3f7bf53d19621bc9991213387fe539552f86111dd97ceb6291d3466e27cc",
+      "bytes": 24313,
+      "gitBlob": "8fc8590cf2c7b78a093392bab7c01277938be43a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-闪光高/request.json",
+      "sha256": "f2e07fe9b9cd3db9d7f32e5293c0c5f709b807241e70f705a53247158c4157ed",
+      "bytes": 1179,
+      "gitBlob": "e57a01c87cd6811f4eb914f4f58f80c297f26a6f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-闪光高/result.json",
+      "sha256": "497b8ce8baa8fdc195cdce8c44d6f03bf0b020a9c0d50f35258e14ba9f575a18",
+      "bytes": 1076,
+      "gitBlob": "b8f47e9b94617b8690c9b7da012919e572c94b97"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/17-近空-闪光高/stream.jsonl",
+      "sha256": "2979db766f8c4df2e0e7752182447d79fb2f2808824d4540994d1993e67f1ece",
+      "bytes": 99099,
+      "gitBlob": "1302eff8c1c903b9afed2bdf3331df16e18ea57e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-泰拉高/request.json",
+      "sha256": "e8b63229f359ae9be5877d09fc4dc3534feb9f7009ee0f5dd81fcd9868f7f49e",
+      "bytes": 2045,
+      "gitBlob": "d42a701045c0c83524f7532404e12c4cf1c9ec6f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-泰拉高/result.json",
+      "sha256": "3968b3b3a0ee5e7f472cd4513368ed40a87e91b07823606800039b963790e7d4",
+      "bytes": 1112,
+      "gitBlob": "f0c828ddc75ebd3e9678b39546814eab14cfe91f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-泰拉高/stream.jsonl",
+      "sha256": "652cc313db5daf7d491e38cacd63043559f1871f85bd1f968f092b460389abb1",
+      "bytes": 21243,
+      "gitBlob": "ec217159501fa05b8211d2f7fd80913b1a332233"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-索尔高/request.json",
+      "sha256": "17cb8dd9312b44f6055218b5cb7f8c84f5ecf1e46cbcf5f5cb734362a6741ae1",
+      "bytes": 2043,
+      "gitBlob": "26eed131963be8330bf60e90b25560907635123b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-索尔高/result.json",
+      "sha256": "fd35739105da164fa3c62bf799b44cb402108394cafe8bd5411bb3c94d80a818",
+      "bytes": 1152,
+      "gitBlob": "8cf73a2850a897c1ad3886a716f84360b1b072b7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-索尔高/stream.jsonl",
+      "sha256": "9a66d5098e7dd64b8362c8426f0e9ad26f399ff490f4f5a9a12cd6160cd2a8d2",
+      "bytes": 25668,
+      "gitBlob": "6aa021e60474b8bfe5349ea2d342df55b150e386"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-闪光无/request.json",
+      "sha256": "d76490091f04f67855b2d753afefdcbc7a62da79dc4cc3f9ddc661f6d9ba93a0",
+      "bytes": 2002,
+      "gitBlob": "9598a9c01d8b9d1b7858ba4467db799c69a0055e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-闪光无/result.json",
+      "sha256": "fd592e7ab3f27a26e1406c7cbf6359864cd3695e8ceb85c2e364f76c8ddba7ed",
+      "bytes": 1219,
+      "gitBlob": "ebbdb390d440749cfca2baba5a86fc55a78624c1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-闪光无/stream.jsonl",
+      "sha256": "5927d009c0d3fc1f7627d21a6e33e6b3c963b8cfa87b5dd1717a8be310a80e71",
+      "bytes": 40925,
+      "gitBlob": "ac0cb05c627e401cb33e2df5cc1a5ae18d21f508"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-闪光高/request.json",
+      "sha256": "f3d0077012b3b766736f26a122d9c86119fa26bb6b6a719668ce5a70df8fd6cd",
+      "bytes": 2033,
+      "gitBlob": "8e3ebe746d09dafbeab25ac2d63aabcfdc08a540"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-闪光高/result.json",
+      "sha256": "300b7190966ab237d75bb0d31db31d2572589fee55f220c12e88a4e8970b53be",
+      "bytes": 1310,
+      "gitBlob": "fa41022a76d4a0170e1aafc43c81b2289e40869e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-少量-闪光高/stream.jsonl",
+      "sha256": "f0657f0283a04bb0b19562b6752c0b6585db092d3243f9b80cd53cc578e4ff3a",
+      "bytes": 130626,
+      "gitBlob": "2cce926ca2b64826e70e1742b10547795aa454a4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-泰拉高/request.json",
+      "sha256": "f2d2b610360850f215d21e0e5860f9bedbd5dfca79e388422f4bb2c1193cb240",
+      "bytes": 1191,
+      "gitBlob": "b5a6136ce1091124058b913fd54fcb8fd00024c6"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-泰拉高/result.json",
+      "sha256": "108ce3a0c96a54a2f2f11af3a9aa4ae859e65318ea5784bd4212c2623e6aefbe",
+      "bytes": 1124,
+      "gitBlob": "ead8807fdcd1442230b2b9fb5c694abcc8158b90"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-泰拉高/stream.jsonl",
+      "sha256": "0140bae9428755353f3707759f92e69266fa09dabf29f2b3fedd98231e78a7ae",
+      "bytes": 23396,
+      "gitBlob": "8d441d51169a9408d8258e1a15564b17071a9e28"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-索尔高/request.json",
+      "sha256": "a2d95db99fa58cda0c31ff94e03b90a229843e21968d157591b50173c8d7bd2b",
+      "bytes": 1189,
+      "gitBlob": "76beaa9688f47c235eb197190b0db84fa90b6506"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-索尔高/result.json",
+      "sha256": "52e0dff8cb293c258709f99988f2a2541a2bb28070ec86d74236b18067378bdc",
+      "bytes": 1135,
+      "gitBlob": "f1ac34682cb56241ee54cf758d87d88e20ee513e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-索尔高/stream.jsonl",
+      "sha256": "b61205e3207ce4c3834017cc9905c4307452d1a38f4dbf02132a5600766fe8c0",
+      "bytes": 24069,
+      "gitBlob": "58911103f009a21e77829fd5129231855bc816eb"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-闪光无/request.json",
+      "sha256": "dc148b568f10fed825cec468a2fe4cac7328b9aef207a4783d0126a49c37acfe",
+      "bytes": 1148,
+      "gitBlob": "085ef76fe62402ae2f965b372f93bb0c8a0f68a8"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-闪光无/result.json",
+      "sha256": "8feafb93d0a9fce24309a385061d59b19229aea56950c88d55f511c869a23b6e",
+      "bytes": 936,
+      "gitBlob": "5a1863205b06da0ee7fd8f8eb37d12ff4c1de452"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-闪光无/stream.jsonl",
+      "sha256": "e18bf12c05fa399c214266c374fbcfe9d8ca21e72b618b571a607412cb28bf0d",
+      "bytes": 14771,
+      "gitBlob": "fac4f143d230d0ffb13547d3a830bdc3ee68a646"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-闪光高/request.json",
+      "sha256": "591acb4a162a16e264092533602459403227ea84d39900a38f948ab533edc8c2",
+      "bytes": 1179,
+      "gitBlob": "169b2bc5f1bc58590d5a789b2a4e53e966566aaf"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-闪光高/result.json",
+      "sha256": "96e9955e8539a301893dae2d4cd979e10444d6ccabc5334374a1c3e8c38f35a8",
+      "bytes": 990,
+      "gitBlob": "ba9b8dea7be39679185cf828eb71947e7884017b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/18-近空-闪光高/stream.jsonl",
+      "sha256": "dd1074797d76771a4f7cbdc53a10e6b5316cea81f9199a56861eae4c5a680e80",
+      "bytes": 92024,
+      "gitBlob": "69f404a6026e326808155920d9e8d467ae66f0b3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-泰拉高/request.json",
+      "sha256": "03af40a3a3be41dcc141e9d9c777813834e3924818080d4c56e9581f213b0f66",
+      "bytes": 2033,
+      "gitBlob": "bb1e98512f946c0481a3715c7a9968b4b9dc8aec"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-泰拉高/result.json",
+      "sha256": "2f42f6a708b7fdf478711369f4e31ebdd314b532abcadab301802be5a1c7eb54",
+      "bytes": 1102,
+      "gitBlob": "19af691d9dadadf4e7e31e517fd1189ad793922e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-泰拉高/stream.jsonl",
+      "sha256": "f8b4d9509760cf931f06ec58adf9065ac455415a56be4c398779d1d7a7f97187",
+      "bytes": 19111,
+      "gitBlob": "cdd739982548ba65f0745f8ef765f450262f1385"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-索尔高/request.json",
+      "sha256": "dddd8e78876fce7b1832310511c9e1f896fd497196bf4acd71f0172c5087343a",
+      "bytes": 2031,
+      "gitBlob": "000688f73a3cd25e4ebf94cd83ad4816095d4be3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-索尔高/result.json",
+      "sha256": "a4c3749b958d01e08b0681f9e991c77953cd2ebca6d333d9701c57a0aed8b2ee",
+      "bytes": 1137,
+      "gitBlob": "6c5884e8fc67409e1a7c382939616084d6b0254b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-索尔高/stream.jsonl",
+      "sha256": "0f9d496508da8f8641f06acb69250ff0a94cc7370b84bca18c01fe6ad7741d68",
+      "bytes": 23293,
+      "gitBlob": "9783a4fb4879bd31fae969a4c6b52302d27b8b46"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-闪光无/request.json",
+      "sha256": "bad2209ccb6a0e4c29da3de67595970e39839dd090d170bdad948b9cf33b420d",
+      "bytes": 1990,
+      "gitBlob": "34950095ae0de2f7c78433eacdc609cfd159026d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-闪光无/result.json",
+      "sha256": "d05e9f432ca880e872c44499b7c65c4b4dc4798bb21343b971e985104760e813",
+      "bytes": 1018,
+      "gitBlob": "9c78e00d1a59f30c7195d4af66229ba11a885725"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-闪光无/stream.jsonl",
+      "sha256": "5b9e380d40f4142a25bee5449effe69d04faa2ea62c96be4a97a6387f5045df8",
+      "bytes": 21420,
+      "gitBlob": "78863dc33d07278465731f6193345a79dd1a9a3b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-闪光高/request.json",
+      "sha256": "1f255933fd496aa0db76ea1195d6b38d8b32f2ffb3f8ba562baf3f8609d8e582",
+      "bytes": 2021,
+      "gitBlob": "4dd3cbc0aa60565c19f3b7c28558c4d72e89130c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-闪光高/result.json",
+      "sha256": "c389d3dd691877e9e999ff495ddd5175554d93d743a0a31f21cb3a80f7ae4079",
+      "bytes": 1356,
+      "gitBlob": "33a75eed46757d536c0a40abe47db8852025a621"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-少量-闪光高/stream.jsonl",
+      "sha256": "7779b102a1b742c523be243c9e6489d4641be68c2699adc419d4c9151c899fc5",
+      "bytes": 97508,
+      "gitBlob": "c8b24c8b2604368fae1662867465685db22d8083"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-泰拉高/request.json",
+      "sha256": "cb936aa668761231540da8c9121093d9ac0925e799e0051512b9e02daffa46b9",
+      "bytes": 1179,
+      "gitBlob": "ddb94dbaf68157d52df1c8c461a8d24fc1add41d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-泰拉高/result.json",
+      "sha256": "7522a648ee53cea85d3215d0432c55e389455beeb580139ad8f0f18b20e32924",
+      "bytes": 1034,
+      "gitBlob": "de1716933dbc02cc89345b684e7f6c85e2abaa4f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-泰拉高/stream.jsonl",
+      "sha256": "f30e6fc4e349435653fe1837d388ca88745097673582e458678b291f4d454906",
+      "bytes": 13123,
+      "gitBlob": "f7d4cff444b06c3b1d1bc1879ebfee3289e3737d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-索尔高/request.json",
+      "sha256": "887f18b8249af40038d43b7484d7fee2c65d624d2ac34742b1975dd4228696e5",
+      "bytes": 1177,
+      "gitBlob": "1b0fee26c8b744b357f1f1fd57b2fe327180fae1"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-索尔高/result.json",
+      "sha256": "9ec0e0bb9c3cfaebd6253ff5f0a64726ae0bedf77296d931eec818220b236700",
+      "bytes": 1133,
+      "gitBlob": "5c80c35fb71f4037567f4abf050c2e2ff31785cc"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-索尔高/stream.jsonl",
+      "sha256": "074a514aa1a38fc4a6e56c05fbe54dcbd02525570dc53803ce5efeaea6e65af8",
+      "bytes": 24061,
+      "gitBlob": "fb38fbc6b2a24d5acd7d3efa28b766f8e3e71901"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-闪光无/request.json",
+      "sha256": "e7f957304d89dc1391077ad35bd9b86670bea55babddfa43a53df2484c4dd2c1",
+      "bytes": 1136,
+      "gitBlob": "3b76e10e13e7ca6062e792ddfd0cd5d5a0831622"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-闪光无/result.json",
+      "sha256": "f02b39cf3a39964bec706fb94baeba205b4ca978085d0f0e9f6fdcfc5fd5318e",
+      "bytes": 960,
+      "gitBlob": "c850f77b22f5076a0f35511c239524a30d9b3e34"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-闪光无/stream.jsonl",
+      "sha256": "df7ef241c77d2b46c9241f5b5fd82d9479915e65881ed8d9b1d513f9327c870b",
+      "bytes": 15614,
+      "gitBlob": "ba7cb02a3fa9da261c32023ce17abe96cbf3c08f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-闪光高/request.json",
+      "sha256": "3aaad0233b2fa0586b340d5833066dce2d04a24104bb11105e4c0fc934fd2351",
+      "bytes": 1167,
+      "gitBlob": "1ff6ad7f883405e5613c1053203f3e381585edc0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-闪光高/result.json",
+      "sha256": "37b7dd2372aa778db709f2d1435c9cc830c57c2a0a48957aa0898a24b477c075",
+      "bytes": 1141,
+      "gitBlob": "b2e63c3b38f1bcb105690d9a338d27ea89681e74"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/19-近空-闪光高/stream.jsonl",
+      "sha256": "90a4eb58cfa7293c9c537cdd52932d0cabebec8f4220d689994fa58b63f18548",
+      "bytes": 94088,
+      "gitBlob": "d12e3a5124e138ee3e29d586102994fef323cf72"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-泰拉高/request.json",
+      "sha256": "6a2e38691eb75ff6a4da720554064777b2fe6da1cdf1eed6d74c0ae5c2434cb0",
+      "bytes": 2036,
+      "gitBlob": "5b635335cfba5b7c24f4efa6936cc006bf56a573"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-泰拉高/result.json",
+      "sha256": "861f6c7f41dd10222a19939e0e22baeb4ace643416c037a08ca187239739dd9b",
+      "bytes": 1265,
+      "gitBlob": "aed9526ac042e48fbbff2bedb47a70a4c941a2b2"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-泰拉高/stream.jsonl",
+      "sha256": "a01a21a69b254bb0b078416d168bbb6a921c51e0a2c24e7f935ce4383536ac82",
+      "bytes": 40043,
+      "gitBlob": "39c816028d7ee8d564a43d6be05cf270e2ff4123"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-索尔高/request.json",
+      "sha256": "6b1b9a0303ef4c4caf81d81078e4458360ce924d283cf07adc78673d24ad28ab",
+      "bytes": 2034,
+      "gitBlob": "b859e05c5825efd56a403b66ee51ddb04e194d82"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-索尔高/result.json",
+      "sha256": "79b1cbb010ecc94ba3e819afc7b6a6e421ba3bfa435b018c6b3461a48b4e5c9e",
+      "bytes": 1450,
+      "gitBlob": "426f0ad4b6173fe88af7959bbf6cc0b49ef67027"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-索尔高/stream.jsonl",
+      "sha256": "13d6f05258a12a064102e3dcf9497e05858bd9cffa539e1e7d97d12370dafa35",
+      "bytes": 57047,
+      "gitBlob": "c51d102230ea1e191a5e27bfe0f78a358e8c0ff0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-闪光无/request.json",
+      "sha256": "443a097fa3af0c8d3100eb611aeecab23d231ab22fbbd276855acdfa250a6beb",
+      "bytes": 1993,
+      "gitBlob": "4d0c6cac17baa8062e5e77d10983b4b8eeaa9cd0"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-闪光无/result.json",
+      "sha256": "ad536bca0719769e1ffd675f9b3befb65bdcc90a370766b1ec10c14c49ce768c",
+      "bytes": 1268,
+      "gitBlob": "4e8fc3ef38989f6e09f040e08d8621da45e2652a"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-闪光无/stream.jsonl",
+      "sha256": "b719704bf0f56f5ccd4c02ea65cf288d7195e8ecd36652a65d6f01d0d7f4edb7",
+      "bytes": 39311,
+      "gitBlob": "4da2dec9ee5d54790d27f3e0bf3b6b6a0466bcf5"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-闪光高/request.json",
+      "sha256": "9c34db4cbffa25ce94fc500058f632613c3622d10c1473de2eceea7e2cd4c31a",
+      "bytes": 2024,
+      "gitBlob": "d3f3a124649e6d2e9beff31504a3046fdda6b97e"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-闪光高/result.json",
+      "sha256": "124762c94ae7dcf7c5735fff316ef8347cd0965f88f0d339490b6662187849b5",
+      "bytes": 1640,
+      "gitBlob": "dbc6740ccdc9a0cf499ac2c056f6a2d38e161d0b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-少量-闪光高/stream.jsonl",
+      "sha256": "47c529f82568dbd5de891044220f28455634f8065aabc991ead8fcc2ada9a78b",
+      "bytes": 130281,
+      "gitBlob": "9dfd9cb8139ef3423b93a7389d2e3e2364dc1b00"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-泰拉高/request.json",
+      "sha256": "5b59cb3e38c38b337d4ffa8c0caf8659b4753dc2bc12d282457ec63d92afe325",
+      "bytes": 1182,
+      "gitBlob": "9246b2149f3447ee00e1d20194dbbcbc1f3f3209"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-泰拉高/result.json",
+      "sha256": "a8e58c1efd9033ef08d7c09568b352bd175018c4a25714086a468e08c71bc689",
+      "bytes": 1217,
+      "gitBlob": "e6139b700e1dc4f3a421e505458ccd26736b8c2c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-泰拉高/stream.jsonl",
+      "sha256": "1740a61339df14b43eaacf650eb7b443bcf96939abe5b9fd6042b0b20175218b",
+      "bytes": 32371,
+      "gitBlob": "d027d7e4f913f06f9d185e22397b5a5b13f472dd"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-索尔高/request.json",
+      "sha256": "047c6b1daef043994f449cc6279b9527b526a0dccd560d8723fd838d37cd9e99",
+      "bytes": 1180,
+      "gitBlob": "789fa58ba441830224b9ba158e72f4d798a7833c"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-索尔高/result.json",
+      "sha256": "c04f13dcf08f3c47b3e57328d42d0d311066f710bc30016dc5f940057b11a89e",
+      "bytes": 1347,
+      "gitBlob": "f99000e5a13b765fc39a30e406536532b3d6760d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-索尔高/stream.jsonl",
+      "sha256": "855c4df556647537fe8d5d6b2ab31f0c2f2f4eb4c93867c17f1e97a106778b84",
+      "bytes": 43817,
+      "gitBlob": "5e986b6142e72ba544669f19dfc01c83fe7f21c3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-闪光无/request.json",
+      "sha256": "bbc84a242be9d048cdac1726c5a1c57d3df69d030cbfd59f24a72d592dcdae79",
+      "bytes": 1139,
+      "gitBlob": "472bffe4f5c0719067df940affc1d7c22eca1028"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-闪光无/result.json",
+      "sha256": "aa8d94e88c985e6e7ef2a8533d7bae7495b11c041dab87470766877d0b55bb36",
+      "bytes": 1136,
+      "gitBlob": "0578b74e4d74919da78b7d34ed4a2faaf73fe026"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-闪光无/stream.jsonl",
+      "sha256": "1ccc900da3d42369818933785b5213c4270b8fb7d2e8f678a0ff69eb156b8af0",
+      "bytes": 26460,
+      "gitBlob": "2a031fb304e40e97f53f0df4ab29dce54cfd785b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-闪光高/request.json",
+      "sha256": "3600a81d023ef1b05cde2d103b1d6c79d5d1567415a6e9cc87fc2252994bd4ab",
+      "bytes": 1170,
+      "gitBlob": "04bb1a4b1f3abe62628d6827452e1bff92581046"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-闪光高/result.json",
+      "sha256": "2951af51ad389e5315ff69214a971e3af4fe9baa092bd2eb18a92fb21f137f0a",
+      "bytes": 1188,
+      "gitBlob": "dabeb42f8408ce17024a0b94b0d23951907b269d"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/formal/20-近空-闪光高/stream.jsonl",
+      "sha256": "093d1e7579bf39d5cb93bb107eb5f2990e8e61586c43b826676251306a24b134",
+      "bytes": 101640,
+      "gitBlob": "0e3c162d672cb9a90b71de465811fd82589e46d3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/histories.json",
+      "sha256": "125687e305cf435ee560f576adab24ab5cb7d1010ce7d51438bab2e25e705e68",
+      "bytes": 1879,
+      "gitBlob": "0085fc43456eb6141b3287326bfe669addacf46b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/history-calls/历史一/request.json",
+      "sha256": "04086242f2ab14fd55877f1296ac0cc3d999a9f544cf4e497e6cdb2c88472e85",
+      "bytes": 1074,
+      "gitBlob": "b8772009a8efb94e534e2747ce652aa64609a0ac"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/history-calls/历史一/result.json",
+      "sha256": "95742aff046f079f0ecbd8db24d2434dce09a4ce3d7503925cf0f59e5eb169de",
+      "bytes": 955,
+      "gitBlob": "cff8e265fe2741bb2955d3bc2fdf38f352a9a7f3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/history-calls/历史一/stream.jsonl",
+      "sha256": "a835d26034e6ed2c5ca9428a53e099b83c75d47f57f4bb50c1d6d732efa71f1d",
+      "bytes": 54707,
+      "gitBlob": "9dc072770e607fab049a2d08daac4744697662d4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/history-calls/历史二/request.json",
+      "sha256": "0281174901e58a6aa52cd22f98bd6d24a1c6aed291f64f2fca8fb403012619ad",
+      "bytes": 1329,
+      "gitBlob": "afa8fe4c59d567e5064536aeee6d7b9f1afa1ab4"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/history-calls/历史二/result.json",
+      "sha256": "1f79c69e92277026871ef2fcc1039a16f86c2b1fc915912f886131fa292522fe",
+      "bytes": 914,
+      "gitBlob": "949a3293f191b56f507305e19a0ccd43bb3fae27"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/history-calls/历史二/stream.jsonl",
+      "sha256": "7a9609b3370969e6dce7ef36ca68b9556ae98a2204feff27c88a859538467e0b",
+      "bytes": 13535,
+      "gitBlob": "170d6ce827a6c20770d3191275a296b1d499d520"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/material-audit.json",
+      "sha256": "8e0fcc1fffbe8f6fa599e342af0ad6e356b0e7d037944204b1e5bc63014d4842",
+      "bytes": 340,
+      "gitBlob": "299593db66368dcfa3f7c9168cf69425dab7871b"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/material-mypy.txt",
+      "sha256": "8e63ae22e8213e327a5e9cbd584067681681bd8ef7f25c869877887ccdcfc4ff",
+      "bytes": 43,
+      "gitBlob": "7df7328cfcc9aac186481be267e27a28345d2911"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/material-ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20,
+      "gitBlob": "7f6ba294132e156ccce54256b2567c8763f1b628"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/plan.json",
+      "sha256": "586a5f548e97df5bcda9ed71240228f05a1f369e7108c6a239708400049936ab",
+      "bytes": 277115,
+      "gitBlob": "caab0698a1c9d7ea0f88da4e3adb7460371219d7"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/run_v2.py",
+      "sha256": "0250e3d387e47367cd65125adce3e5688b1536aad820921a2c1f02bbb8fca229",
+      "bytes": 2968,
+      "gitBlob": "451fdf9705d3ffce89917248a700d922f205d0b3"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/static-01.txt",
+      "sha256": "28c7c242c3caf150801ed151e0999ef2d99eba84710688149762f4dd92219139",
+      "bytes": 123,
+      "gitBlob": "3868749355f5fe9f6d54ec1dfca0c1b60ff8623f"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/static-mypy.txt",
+      "sha256": "8e63ae22e8213e327a5e9cbd584067681681bd8ef7f25c869877887ccdcfc4ff",
+      "bytes": 43,
+      "gitBlob": "7df7328cfcc9aac186481be267e27a28345d2911"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/static-ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20,
+      "gitBlob": "7f6ba294132e156ccce54256b2567c8763f1b628"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/v1-evidence-index.json",
+      "sha256": "ab084f64469b5c94ee3e3ec8b2a7cb3e295aab03ced1fb6eb7430612ddb08c55",
+      "bytes": 135073,
+      "gitBlob": "e4675ef803a822a982bc40e8049bb9cf4d743c03"
+    },
+    {
+      "path": "R-FABRICATE-01/v2/规则.md",
+      "sha256": "e4eb364956ce36595925db5259faab00bcfa240babf022433befbdb51f24d0a6",
+      "bytes": 2560,
+      "gitBlob": "5b3bcb373c35cf539341649348a6e3187a9c5958"
     }
   ]
 }

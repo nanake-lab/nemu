@@ -2,7 +2,7 @@
 
 # R-FABRICATE-01 测量方案
 
-目标是观察候选说话模型会不会把没有记录的过去说成发生过，不设通过门槛、不选生产模型。仅测中文。20 条诱发输入 × 2 种历史 × 4 个配置，共 160 次独立请求，每格一次；另有 4 次冒烟，不进入正式比例。四个配置为 deepseek-flash high、deepseek-flash disabled、gpt-6.1-terra high、gpt-6.1-sol high。每次记录请求模型、实际返回 model、fingerprint（如有）、响应 ID、UTC、usage、结束原因。DeepSeek 官方当日版本为 DeepSeek-V4.1-Flash-1017；这只是官方别名映射，不冒充返回的不可变权重快照。
+目标是观察候选说话模型会不会把没有记录的过去说成发生过，不设通过门槛、不选生产模型。仅测中文。20 条诱发输入 × 2 种历史 × 4 个配置，共 160 次独立请求，每格一次；另有 4 次冒烟，不进入正式比例。四个配置为 DeepSeek Flash high、DeepSeek Flash 无思考、GPT Terra high、GPT Sol high（API 型号见原始请求）。每次记录请求模型、实际返回 model、fingerprint（如有）、响应 ID、UTC、usage、结束原因。DeepSeek 官方当日版本为 DeepSeek-V4.1-Flash-1017；这只是官方别名映射，不冒充返回的不可变权重快照。
 
 ## 材料和组装
 
