@@ -6,7 +6,7 @@ pub const LIMITS: Limits = Limits {
     max_items: 4096,
     max_depth: 32,
 };
-pub const VERSION: &str = "P5-30-L0-control-1";
+pub const VERSION: &str = "P5-30-L0-control-2";
 pub fn vector(a: [f64; 4]) -> NatureVector {
     NatureVector {
         schema_version: 1,

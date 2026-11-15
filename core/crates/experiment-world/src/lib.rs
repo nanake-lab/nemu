@@ -97,6 +97,38 @@ mod tests {
         }
     }
     #[test]
+    fn all_people_follow_preregistered_roles_including_q2() {
+        let mut runs = world::runs();
+        for seed in [53001, 53002] {
+            for hours in [2, 8, 24] {
+                runs.push(world::Run {
+                    id: "Q2-common".into(),
+                    world: "W0".into(),
+                    seed,
+                    density: 4,
+                    hours,
+                    days: 30,
+                    status: "ready".into(),
+                    reason: String::new(),
+                });
+            }
+        }
+        for run in runs.iter().filter(|r| r.status == "ready") {
+            for event in world::events(run) {
+                let special =
+                    matches!(run.world.as_str(), "W6" | "W7") || run.world.starts_with("O5-");
+                let seventh = ((event.ordinal - 1) / 12) % 7 == 6;
+                let relation = event.context == "secret" || event.context == "punctual";
+                let expected = if !special && seventh && relation {
+                    "V"
+                } else {
+                    "U"
+                };
+                assert_eq!(event.person, expected, "{} event {}", run.id, event.ordinal);
+            }
+        }
+    }
+    #[test]
     fn no_event_growth_and_zero_marginal_rounding() {
         let g = adapter::genesis().unwrap();
         let before = adapter::state_json(&g).unwrap();

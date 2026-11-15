@@ -6,6 +6,7 @@ import json
 import struct
 import subprocess
 import shutil
+from validate_inputs import stopped
 from pathlib import Path
 from typing import Any
 
@@ -57,8 +58,8 @@ def execute(package: Path,results: Path,binary: Path)->None:
             records.append(record)
     for run,day,density,hours,seed in sorted(branch_keys):
         path=out/f'{run}-d{day}.json'
-        if shutil.disk_usage(out).free<2*1024**3:
-            with path.open('x') as f:json.dump({'status':'not_run','reason':'less than 2 GiB evidence reserve'},f)
+        if stopped(results) or shutil.disk_usage(out).free<2*1024**3:
+            with path.open('x') as f:json.dump({'status':'not_run','reason':'batch stopped or less than 2 GiB evidence reserve'},f)
             continue
         with (out/f'{run}-d{day}.log').open('x') as log:
             result=subprocess.run([str(binary),'continue',str(results/run/f'checkpoint-{day}.json'),str(day),str(day*density),str(hours),str(seed),str(path)],stdout=log,stderr=subprocess.STDOUT,check=False)

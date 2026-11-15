@@ -224,7 +224,7 @@ pub fn events(run: &Run) -> Vec<Event> {
             block % 4 < 3
         };
         let mut sign = if positive { 1. } else { -1. };
-        let person = if (block + 1) % 7 == 0 && matches!(c, "contact" | "secret" | "punctual") {
+        let person = if (block + 1) % 7 == 0 && matches!(c, "secret" | "punctual") {
             "V"
         } else {
             "U"
