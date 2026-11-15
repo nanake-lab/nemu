@@ -1,0 +1,815 @@
+{
+  "technical_n": 36,
+  "semantic_n": 33,
+  "per_language_n": 11,
+  "technical": {
+    "valid": 36
+  },
+  "smoke": {
+    "n": 3,
+    "valid": 3,
+    "excluded_from_analysis": true
+  },
+  "groups": {
+    "z": {
+      "known_agree": 378,
+      "known_disagree": 4,
+      "both_unknown": 66,
+      "one_unknown": 80,
+      "technical_missing": 0
+    },
+    "a": {
+      "known_agree": 130,
+      "known_disagree": 0,
+      "both_unknown": 0,
+      "one_unknown": 2,
+      "technical_missing": 0
+    },
+    "mu": {
+      "known_agree": 57,
+      "known_disagree": 0,
+      "both_unknown": 36,
+      "one_unknown": 6,
+      "technical_missing": 0
+    }
+  },
+  "per_field": {
+    "z.actor": {
+      "known_agree": 23,
+      "known_disagree": 1,
+      "both_unknown": 5,
+      "one_unknown": 4,
+      "technical_missing": 0
+    },
+    "z.target": {
+      "known_agree": 26,
+      "known_disagree": 1,
+      "both_unknown": 2,
+      "one_unknown": 4,
+      "technical_missing": 0
+    },
+    "z.occurred": {
+      "known_agree": 25,
+      "known_disagree": 0,
+      "both_unknown": 2,
+      "one_unknown": 6,
+      "technical_missing": 0
+    },
+    "z.truth": {
+      "known_agree": 25,
+      "known_disagree": 0,
+      "both_unknown": 2,
+      "one_unknown": 6,
+      "technical_missing": 0
+    },
+    "z.subjective": {
+      "known_agree": 26,
+      "known_disagree": 1,
+      "both_unknown": 2,
+      "one_unknown": 4,
+      "technical_missing": 0
+    },
+    "z.negated": {
+      "known_agree": 26,
+      "known_disagree": 1,
+      "both_unknown": 2,
+      "one_unknown": 4,
+      "technical_missing": 0
+    },
+    "z.conditional": {
+      "known_agree": 27,
+      "known_disagree": 0,
+      "both_unknown": 2,
+      "one_unknown": 4,
+      "technical_missing": 0
+    },
+    "z.speaker": {
+      "known_agree": 27,
+      "known_disagree": 0,
+      "both_unknown": 2,
+      "one_unknown": 4,
+      "technical_missing": 0
+    },
+    "z.event_time": {
+      "known_agree": 24,
+      "known_disagree": 0,
+      "both_unknown": 3,
+      "one_unknown": 6,
+      "technical_missing": 0
+    },
+    "z.observation_time": {
+      "known_agree": 27,
+      "known_disagree": 0,
+      "both_unknown": 2,
+      "one_unknown": 4,
+      "technical_missing": 0
+    },
+    "z.source": {
+      "known_agree": 24,
+      "known_disagree": 0,
+      "both_unknown": 6,
+      "one_unknown": 3,
+      "technical_missing": 0
+    },
+    "z.cause_count": {
+      "known_agree": 3,
+      "known_disagree": 0,
+      "both_unknown": 27,
+      "one_unknown": 3,
+      "technical_missing": 0
+    },
+    "z.relation": {
+      "known_agree": 33,
+      "known_disagree": 0,
+      "both_unknown": 0,
+      "one_unknown": 0,
+      "technical_missing": 0
+    },
+    "z.welfare": {
+      "known_agree": 11,
+      "known_disagree": 0,
+      "both_unknown": 9,
+      "one_unknown": 13,
+      "technical_missing": 0
+    },
+    "z.learning": {
+      "known_agree": 31,
+      "known_disagree": 0,
+      "both_unknown": 0,
+      "one_unknown": 2,
+      "technical_missing": 0
+    },
+    "z.outcome": {
+      "known_agree": 20,
+      "known_disagree": 0,
+      "both_unknown": 0,
+      "one_unknown": 13,
+      "technical_missing": 0
+    },
+    "a.0": {
+      "known_agree": 32,
+      "known_disagree": 0,
+      "both_unknown": 0,
+      "one_unknown": 1,
+      "technical_missing": 0
+    },
+    "a.1": {
+      "known_agree": 33,
+      "known_disagree": 0,
+      "both_unknown": 0,
+      "one_unknown": 0,
+      "technical_missing": 0
+    },
+    "a.2": {
+      "known_agree": 33,
+      "known_disagree": 0,
+      "both_unknown": 0,
+      "one_unknown": 0,
+      "technical_missing": 0
+    },
+    "a.3": {
+      "known_agree": 32,
+      "known_disagree": 0,
+      "both_unknown": 0,
+      "one_unknown": 1,
+      "technical_missing": 0
+    },
+    "mu.0": {
+      "known_agree": 19,
+      "known_disagree": 0,
+      "both_unknown": 12,
+      "one_unknown": 2,
+      "technical_missing": 0
+    },
+    "mu.1": {
+      "known_agree": 23,
+      "known_disagree": 0,
+      "both_unknown": 9,
+      "one_unknown": 1,
+      "technical_missing": 0
+    },
+    "mu.2": {
+      "known_agree": 15,
+      "known_disagree": 0,
+      "both_unknown": 15,
+      "one_unknown": 3,
+      "technical_missing": 0
+    }
+  },
+  "cares": {
+    "0": {
+      "n": 33,
+      "counts": {
+        "known_agree": 32,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 1,
+        "technical_missing": 0
+      },
+      "confusion": {
+        "1": {
+          "1": 3
+        },
+        "-1": {
+          "-1": 3
+        },
+        "0": {
+          "0": 26,
+          "unknown": 1
+        }
+      },
+      "by_language": {
+        "zh": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        },
+        "en": {
+          "known_agree": 10,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 1,
+          "technical_missing": 0
+        },
+        "ja": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        }
+      }
+    },
+    "1": {
+      "n": 33,
+      "counts": {
+        "known_agree": 33,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "confusion": {
+        "0": {
+          "0": 27
+        },
+        "1": {
+          "1": 3
+        },
+        "-1": {
+          "-1": 3
+        }
+      },
+      "by_language": {
+        "zh": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        },
+        "en": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        },
+        "ja": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        }
+      }
+    },
+    "2": {
+      "n": 33,
+      "counts": {
+        "known_agree": 33,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "confusion": {
+        "0": {
+          "0": 30
+        },
+        "1": {
+          "1": 3
+        }
+      },
+      "by_language": {
+        "zh": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        },
+        "en": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        },
+        "ja": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        }
+      }
+    },
+    "3": {
+      "n": 33,
+      "counts": {
+        "known_agree": 32,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 1,
+        "technical_missing": 0
+      },
+      "confusion": {
+        "0": {
+          "0": 23,
+          "unknown": 1
+        },
+        "1": {
+          "1": 6
+        },
+        "-1": {
+          "-1": 3
+        }
+      },
+      "by_language": {
+        "zh": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        },
+        "en": {
+          "known_agree": 10,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 1,
+          "technical_missing": 0
+        },
+        "ja": {
+          "known_agree": 11,
+          "known_disagree": 0,
+          "both_unknown": 0,
+          "one_unknown": 0,
+          "technical_missing": 0
+        }
+      }
+    }
+  },
+  "by_language": {
+    "zh": {
+      "z": {
+        "known_agree": 128,
+        "known_disagree": 0,
+        "both_unknown": 24,
+        "one_unknown": 24,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 44,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 21,
+        "known_disagree": 0,
+        "both_unknown": 12,
+        "one_unknown": 0,
+        "technical_missing": 0
+      }
+    },
+    "en": {
+      "z": {
+        "known_agree": 124,
+        "known_disagree": 2,
+        "both_unknown": 25,
+        "one_unknown": 25,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 42,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 2,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 18,
+        "known_disagree": 0,
+        "both_unknown": 12,
+        "one_unknown": 3,
+        "technical_missing": 0
+      }
+    },
+    "ja": {
+      "z": {
+        "known_agree": 126,
+        "known_disagree": 2,
+        "both_unknown": 17,
+        "one_unknown": 31,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 44,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 18,
+        "known_disagree": 0,
+        "both_unknown": 12,
+        "one_unknown": 3,
+        "technical_missing": 0
+      }
+    }
+  },
+  "by_family": {
+    "catalogue_verified": {
+      "z": {
+        "known_agree": 42,
+        "known_disagree": 1,
+        "both_unknown": 0,
+        "one_unknown": 5,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 12,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 6,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 0,
+        "technical_missing": 0
+      }
+    },
+    "cipher_discovery": {
+      "z": {
+        "known_agree": 43,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 2,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 12,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 6,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 0,
+        "technical_missing": 0
+      }
+    },
+    "departing_ferry": {
+      "z": {
+        "known_agree": 5,
+        "known_disagree": 0,
+        "both_unknown": 16,
+        "one_unknown": 27,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 12,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 6,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 0,
+        "technical_missing": 0
+      }
+    },
+    "doorway_invitation": {
+      "z": {
+        "known_agree": 6,
+        "known_disagree": 0,
+        "both_unknown": 16,
+        "one_unknown": 26,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 12,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 4,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 2,
+        "technical_missing": 0
+      }
+    },
+    "exhibit_accident": {
+      "z": {
+        "known_agree": 47,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 1,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 12,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 6,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 0,
+        "technical_missing": 0
+      }
+    },
+    "missed_submission": {
+      "z": {
+        "known_agree": 40,
+        "known_disagree": 1,
+        "both_unknown": 6,
+        "one_unknown": 1,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 12,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 4,
+        "known_disagree": 0,
+        "both_unknown": 4,
+        "one_unknown": 1,
+        "technical_missing": 0
+      }
+    },
+    "pending_garden_entry": {
+      "z": {
+        "known_agree": 40,
+        "known_disagree": 0,
+        "both_unknown": 6,
+        "one_unknown": 2,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 12,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 6,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 0,
+        "technical_missing": 0
+      }
+    },
+    "random_ticker": {
+      "z": {
+        "known_agree": 36,
+        "known_disagree": 0,
+        "both_unknown": 7,
+        "one_unknown": 5,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 12,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 5,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 1,
+        "technical_missing": 0
+      }
+    },
+    "repaired_heater": {
+      "z": {
+        "known_agree": 42,
+        "known_disagree": 1,
+        "both_unknown": 3,
+        "one_unknown": 2,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 11,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 1,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 6,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 0,
+        "technical_missing": 0
+      }
+    },
+    "status_correction": {
+      "z": {
+        "known_agree": 41,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 4,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 12,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 0,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 6,
+        "known_disagree": 0,
+        "both_unknown": 3,
+        "one_unknown": 0,
+        "technical_missing": 0
+      }
+    },
+    "undelivered_postcard": {
+      "z": {
+        "known_agree": 36,
+        "known_disagree": 1,
+        "both_unknown": 6,
+        "one_unknown": 5,
+        "technical_missing": 0
+      },
+      "a": {
+        "known_agree": 11,
+        "known_disagree": 0,
+        "both_unknown": 0,
+        "one_unknown": 1,
+        "technical_missing": 0
+      },
+      "mu": {
+        "known_agree": 2,
+        "known_disagree": 0,
+        "both_unknown": 5,
+        "one_unknown": 2,
+        "technical_missing": 0
+      }
+    }
+  },
+  "language_pairs": {
+    "zh-en": {
+      "z.one_unknown": 35,
+      "z.both_unknown": 19,
+      "z.known_agree": 120,
+      "a.known_agree": 42,
+      "mu.one_unknown": 3,
+      "mu.known_agree": 18,
+      "mu.both_unknown": 12,
+      "a.one_unknown": 2,
+      "z.known_disagree": 2
+    },
+    "zh-ja": {
+      "z.known_agree": 134,
+      "z.one_unknown": 17,
+      "z.both_unknown": 23,
+      "a.known_agree": 44,
+      "mu.one_unknown": 4,
+      "mu.known_agree": 18,
+      "mu.both_unknown": 11,
+      "z.known_disagree": 2
+    },
+    "en-ja": {
+      "z.one_unknown": 22,
+      "z.both_unknown": 22,
+      "z.known_agree": 127,
+      "a.known_agree": 42,
+      "mu.both_unknown": 13,
+      "mu.known_agree": 17,
+      "z.known_disagree": 5,
+      "a.one_unknown": 2,
+      "mu.one_unknown": 3
+    }
+  },
+  "differences": {
+    "positions": 92,
+    "roots": 11,
+    "views": 26
+  },
+  "old75_new_category": {
+    "one_unknown": 6,
+    "both_unknown": 37,
+    "known_agree": 32
+  },
+  "author_changes": {
+    "z.actor": 30,
+    "z.target": 21,
+    "z.occurred": 6,
+    "z.truth": 6,
+    "z.subjective": 12,
+    "z.negated": 6,
+    "z.conditional": 6,
+    "z.speaker": 6,
+    "z.event_time": 9,
+    "z.observation_time": 6,
+    "z.source": 15,
+    "z.cause_count": 27,
+    "z.welfare": 9,
+    "mu.2": 4
+  },
+  "proxy_changes_paired_valid": {
+    "z.welfare": 17,
+    "z.actor": 10,
+    "z.target": 9,
+    "z.occurred": 5,
+    "z.truth": 5,
+    "z.subjective": 5,
+    "z.negated": 3,
+    "z.conditional": 2,
+    "z.speaker": 3,
+    "z.event_time": 4,
+    "z.observation_time": 2,
+    "z.source": 7,
+    "z.learning": 2,
+    "z.outcome": 12,
+    "mu.0": 9,
+    "mu.2": 13,
+    "mu.1": 6,
+    "z.cause_count": 8,
+    "a.3": 1
+  },
+  "cost_nano_usd": {
+    "old": 305765000,
+    "smoke": 49460000,
+    "formal": 658090000,
+    "new_stage": 707550000,
+    "cumulative": 1013315000
+  },
+  "active_seconds": {
+    "old": 329.655999999959,
+    "smoke": 84.65599999995902,
+    "formal": 553.844000000041,
+    "cumulative": 968.155999999959
+  },
+  "stop_reason": "",
+  "ledgers": [
+    {
+      "phase": "smoke-05",
+      "dispatched": 3,
+      "settled": 3,
+      "unsettled_reserved": 0,
+      "replay_pass": true
+    },
+    {
+      "phase": "proxy-run-05",
+      "dispatched": 36,
+      "settled": 36,
+      "unsettled_reserved": 0,
+      "replay_pass": true
+    }
+  ],
+  "old_files_unchanged": 503,
+  "limitation": "proxy judgment, not human gold; design D is not held-out; unknown agreement is not factual accuracy"
+}
