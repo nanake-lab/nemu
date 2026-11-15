@@ -1,0 +1,111 @@
+{
+  "version": "C3-2A-SCORING-INPUTS-01",
+  "private_repository": "nanake-lab/nemu-evidence",
+  "private_commit": "97d8f31f9ad13840a24447f56bdbc2e084d326eb",
+  "inputs_root": "R-STEER-01/c3-2a-ds-inputs-01",
+  "checks_root": "R-STEER-01/c3-2a-ds-inputs-check-01",
+  "files": [
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-01/.gitattributes",
+      "bytes": 43,
+      "sha256": "8ee58d82049f85b248fb5fd417bcee18576c7dbda387f46e5540b62759176dde"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-01/materialize.py",
+      "bytes": 6384,
+      "sha256": "1d4f85420e9a6636c96a703e6eeddafdd65d6f2d3d7ba018e047044396165286"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-01/plan.json",
+      "bytes": 556655,
+      "sha256": "c8d1ee5b0f6013cb2358d4074326e6c1fefccb6e0c5f3894f75ee30e8a6bc643"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-01/raw-output-bindings.json",
+      "bytes": 2703406,
+      "sha256": "ae55f50bde72ba25222f0446e6e915cc08b04f84e70b9602b100e5d475cefaad"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-01/summary.json",
+      "bytes": 709,
+      "sha256": "1f9d8aca44a4bfbe2b2073a41aa88a55d84816fd65939a720d551c78a1ec3c8e"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-01/frozen-files.json",
+      "bytes": 654411,
+      "sha256": "530e0c388d30643f4a997e5e082f4760c1de21b9f96591f64d21b3f505f34f98"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-check-01/files-manifest.json",
+      "bytes": 1001,
+      "sha256": "f95e015b65ce0acc7889283d38844520c7bf60bd29fd60d5ccc4eddc2620464e"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-check-01/stdout.log",
+      "bytes": 404,
+      "sha256": "021bd9b60ee67cc8e8d075299690ee7d88912061229cebabd5a236732216f0b5"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-check-01/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-check-01/run.json",
+      "bytes": 362,
+      "sha256": "cea9e3d8a2744d5cd8bdeffe69652d8723ac47324453ad26a3016a10bb919c44"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-check-01/check_inputs.py",
+      "bytes": 3540,
+      "sha256": "53530240a17319b02e5de09c1213a9c6edf5467629f38e7ed9ee6655a2d66f00"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-check-01/all-generation-check.json",
+      "bytes": 633,
+      "sha256": "061b8f87f1d64f2d198de549df5abc9ca4402159cab1941114c95b1943635241"
+    },
+    {
+      "path": "R-STEER-01/c3-2a-ds-inputs-check-01/metadata.json",
+      "bytes": 395,
+      "sha256": "316ee6b56f7085791d3c976b109557e8f7aea78cf969169126f73278eecaa1ff"
+    }
+  ],
+  "all_request_hashes": "R-STEER-01/c3-2a-ds-inputs-01/frozen-files.json",
+  "proof": {
+    "private_commit": "97d8f31f9ad13840a24447f56bdbc2e084d326eb",
+    "git_blobs_verified": 3942,
+    "input_manifest_sha256": "530e0c388d30643f4a997e5e082f4760c1de21b9f96591f64d21b3f505f34f98",
+    "check_manifest_sha256": "f95e015b65ce0acc7889283d38844520c7bf60bd29fd60d5ccc4eddc2620464e"
+  },
+  "summary": {
+    "N": 3924,
+    "generation_windows_completed": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "source_file_count": 56,
+    "truncated_inputs_retained": 794,
+    "request_bytes_min": 8549,
+    "request_bytes_max": 9175,
+    "max_four_request_reserve_nano_usd": 90839700,
+    "first_four_reserve_nano_usd": 90320100,
+    "soft_nano_usd": 39900000000,
+    "hard_nano_usd": 42000000000,
+    "API_calls": 0,
+    "status": "materialized_not_run",
+    "model": "deepseek-flash",
+    "reasoning_effort": "high",
+    "max_tokens": 16384,
+    "prompt_sha256": "a37fd7d835c07c48956cc4efa82fa38f4b1c649bff46f8cc7e6eb5695795fe92",
+    "metadata_visible_to_judge": [
+      "待评输出",
+      "评分事实参照"
+    ],
+    "original_denominator_preserved": true
+  },
+  "API_calls": 0,
+  "status": "frozen_before_scoring"
+}

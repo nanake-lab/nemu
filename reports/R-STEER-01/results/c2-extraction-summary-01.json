@@ -1,0 +1,41 @@
+{
+  "status": "extraction_and_technical_guards_completed_effects_not_run",
+  "main_execution_head": "79ef1f3a79c26034e405dff6c41235fec57c45b5",
+  "private_execution_head": "d686afca9a3af91701157aa2d89f76e882f10b54",
+  "authorization": "User explicitly approved the first 10-minute quiet window in this chat.",
+  "exit": {
+    "status": "completed",
+    "completed": 54,
+    "expected": 54,
+    "exit_code": 0,
+    "wall_seconds": 21.468999999924563,
+    "api_calls": 0
+  },
+  "wall_time_scope": "probe process including loading, process checks and IO; not pure GPU time",
+  "layers": {
+    "10": {
+      "residual_median_l2": 6.484373539186022,
+      "connection_difference_l2": 0.44672530004960115,
+      "achievement_difference_l2": 0.670361708614902,
+      "connection_achievement_cosine": 0.7255154763765875
+    },
+    "16": {
+      "residual_median_l2": 9.63255797002075,
+      "connection_difference_l2": 1.130314309769538,
+      "achievement_difference_l2": 1.8047883054644538,
+      "connection_achievement_cosine": 0.7001219699472269
+    },
+    "22": {
+      "residual_median_l2": 26.288825849846873,
+      "connection_difference_l2": 3.569749142655908,
+      "achievement_difference_l2": 7.27261007357259,
+      "connection_achievement_cosine": 0.7159944394471793
+    }
+  },
+  "directions_sha256": "4b4d47bd1a63c99e1b86e77fe263742f7ba5fd6a870d3a986433fc72fbc1d5fa",
+  "api_calls": 0,
+  "new_api_cost_usd": 0,
+  "development_status": "prepared_not_run",
+  "development_requests": 1410,
+  "direction_status": "private temporary research vectors; no formal resource; E2 m=0"
+}

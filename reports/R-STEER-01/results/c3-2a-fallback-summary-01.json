@@ -1,0 +1,52 @@
+{
+  "stage": "fallback",
+  "N": 48,
+  "result": {
+    "status": "completed",
+    "stage": "fallback",
+    "planned": 48,
+    "finished": 48,
+    "attempts": 48,
+    "upper_nano_usd": 661612500,
+    "active_seconds": 270.01599999994505,
+    "stop_reason": null,
+    "in_flight": 0,
+    "repeat_or_resume_authorized": false
+  },
+  "statuses": {
+    "rating": 48
+  },
+  "ledger_upper_nano_usd": 661612500,
+  "ledger_peak_nano_usd": 1029872500,
+  "reservation_count": 48,
+  "settled_count": 48,
+  "unsettled_full_reservations": 0,
+  "raw_files": 487,
+  "raw_bytes": 1400238,
+  "binding": {
+    "stage": "fallback",
+    "public_head": "42c8df37edfdcaf89241d51709a0afb86c2c1c70",
+    "private_head": "72ec7ac93136cd45584050f1fbb5c7786e91a1ab",
+    "inputs_plan_sha256": "2bbff7667e48eaa5eda73b56badb8b97fc7a6b77260217f73d58ac2cd9bf97ac",
+    "started_utc": "2026-11-12T21:34:24.132664+00:00"
+  },
+  "price_check": {
+    "checked_utc": "2026-11-12T21:34:18.565109+00:00",
+    "source": "https://developers.openai.com/api/docs/pricing",
+    "model": "gpt-6.1-terra",
+    "rates": {
+      "input_reserve": 2500,
+      "output": 5000
+    },
+    "official_standard_usd_per_million": {
+      "input": 1,
+      "output": 5,
+      "cached_input": 0.05,
+      "write_30m": 1.25,
+      "write_12h": 2.5
+    },
+    "reserve_basis": "Frozen conservative input ceiling includes 12h cache-write price; no accounting relaxation.",
+    "verification": "Official pricing page opened before this stage; model availability separately checked by frozen executor.",
+    "git_transport": "Process-only GIT_CONFIG_COUNT=1 http.sslBackend=openssl, certificate verification unchanged; no persistent settings."
+  }
+}
