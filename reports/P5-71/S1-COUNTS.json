@@ -1,0 +1,43 @@
+{
+  "source_matrix_sha256": "d34c3c9017cbc9f922cfb51d47748b8ef2ba669023300aef109a32b1b8daceea",
+  "allowlist_sha256": "d3768c41387ea5ce16d14c0eec4e7c29c74e86c812acd7fd6073a2adc2453e7c",
+  "rows": 26384,
+  "by_family_layer": {
+    "F:DUT": {
+      "rows": 4584,
+      "execution_sum_N": 4376,
+      "prefix_recompute": 152672,
+      "analysis_prefixes": 12752
+    },
+    "F:independent_research": {
+      "rows": 12792,
+      "execution_sum_N": 6424,
+      "prefix_recompute": 284768,
+      "analysis_prefixes": 33368
+    },
+    "CF:DUT": {
+      "rows": 208,
+      "execution_sum_N": 2048,
+      "prefix_recompute": 46080,
+      "analysis_prefixes": 4640
+    },
+    "CF:independent_research": {
+      "rows": 392,
+      "execution_sum_N": 2688,
+      "prefix_recompute": 51520,
+      "analysis_prefixes": 9280
+    }
+  },
+  "new_07_11_S1": {
+    "rows": 16,
+    "sum_N": 44,
+    "prefix_recompute": 84,
+    "shadow_old_C": {
+      "sum_N": 11,
+      "prefix_recompute": 21
+    }
+  },
+  "rules": "PREREGISTRATION-S1.md section 2; selection reads inputs only",
+  "new_inputs_sha256": "7a2e18175cdd6ec76e3ee71a0c23f9029c79db1edf62ff08f24721978b8d3ba6",
+  "retained_original_not_run": 8392
+}

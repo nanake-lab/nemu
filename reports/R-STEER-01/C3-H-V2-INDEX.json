@@ -1,0 +1,362 @@
+{
+  "version": "C3-H-v2-01",
+  "private_repository": "nanake-lab/nemu-evidence",
+  "private_commit": "85d676b07c3804a14022ed62f3b8fed587619139",
+  "private_root": "R-STEER-01/c3-h-v2-01",
+  "status": "author_distinct_pending_user_H_review",
+  "step2_plus": "not_run",
+  "checks": {
+    "status": "pass_mechanical_only",
+    "active": 262,
+    "H": 48,
+    "H_replaced": 22,
+    "H_retained": 26,
+    "D_E_V_unchanged": true,
+    "non_H_active_registrations_exact": 214,
+    "unchanged_raw_D_H_lines": [
+      "d01",
+      "d02",
+      "d03",
+      "d04",
+      "d05",
+      "d06",
+      "d07",
+      "d08",
+      "d09",
+      "d10",
+      "d11",
+      "d12",
+      "h02",
+      "h06",
+      "h10",
+      "h12",
+      "h14",
+      "h15",
+      "h16",
+      "h21",
+      "h22",
+      "h25",
+      "h26",
+      "h27",
+      "h28",
+      "h30",
+      "h33",
+      "h34",
+      "h35",
+      "h36",
+      "h37",
+      "h38",
+      "h39",
+      "h41",
+      "h42",
+      "h43",
+      "h46",
+      "h47"
+    ],
+    "exact_copies": [
+      {
+        "source": "reference-v1/ev-scenes.tsv",
+        "copy": "materials/ev-scenes.tsv",
+        "sha256": "26aacb87d91b199dca3e498ac743b9f96ecd6ff388149537d5d379da192c0069"
+      },
+      {
+        "source": "materials/ability.tsv",
+        "copy": "materials/ability.tsv",
+        "sha256": "a08995ea481608fd44155198226e60c472db56d3f4e117fc4bb27a7819640b0a"
+      },
+      {
+        "source": "materials/j-scenes.tsv",
+        "copy": "materials/j-scenes.tsv",
+        "sha256": "48f890dcad86bf2da10a928dd30d5c85cb60ed9b8fb467b1e4e2f042ecee6747"
+      }
+    ],
+    "H_families": {
+      "mutual_dependency": 4,
+      "credit_allocation": 4,
+      "disagreement_process": 4,
+      "care_reciprocity": 4,
+      "asymmetric_information": 4,
+      "role_transition": 4,
+      "conflicting_obligations": 4,
+      "irreversible_separation": 4,
+      "third_party_exclusion": 4,
+      "anonymous_help": 4,
+      "error_responsibility": 4,
+      "delayed_verification": 4
+    },
+    "H_families_absent_D": [
+      "anonymous_help",
+      "conflicting_obligations",
+      "delayed_verification",
+      "error_responsibility",
+      "irreversible_separation",
+      "third_party_exclusion"
+    ],
+    "active_pairs": 34191,
+    "H_pairs": 11400,
+    "H_old_source_pairs": 15696,
+    "historical_identity_references_not_duplicates": 26,
+    "normalized_exact_collisions_H_active": [],
+    "H_same_or_near_unresolved_in_author_opinion": 0,
+    "semantic_gate": "awaiting_user_review",
+    "semantic_decisions_not_derived_from_counts_or_strings": true,
+    "old_conflict_edges_replaced": 24
+  },
+  "expression_checks": {
+    "expression_items": 180,
+    "H_items": 144,
+    "new_H_items": 66,
+    "unchanged_D_and_retained_H_items": 114,
+    "tokenizer_path": "D:\\Dev\\cache\\P0-12\\models\\Qwen--Qwen3.5-4B\\851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a\\tokenizer.json",
+    "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+    "maximum_prompt_tokens": 100,
+    "per_language_max": {
+      "zh": 80,
+      "en": 88,
+      "ja": 100
+    },
+    "tokenization_only": true,
+    "model_calls": 0,
+    "API_calls": 0,
+    "GPU_windows": 0,
+    "no_context_acceptance_claim": "Step2+ execution settings remain unselected/not_run."
+  },
+  "review_entry": "review/H48-REVIEW.md",
+  "full_pairs": "review/all-partition-pairs.tsv",
+  "old_exclusion": "review/H-old-exclusion.tsv",
+  "sources": [
+    {
+      "repository": "nanake-lab/nemu-evidence",
+      "commit": "d15cdae93dce9845fa882df2f94efb265faff7b2",
+      "path": "R-STEER-01/c3-materials-v2-01/review/active-root-registry.json",
+      "bytes": 193763,
+      "sha256": "c2371193d9e786e1af0aa224997250f63b514bc3ca2a9d6ec4e3ddc2b95087d4"
+    },
+    {
+      "repository": "nanake-lab/nemu-evidence",
+      "commit": "d15cdae93dce9845fa882df2f94efb265faff7b2",
+      "path": "R-STEER-01/c3-materials-v2-01/review/all-partition-pairs.tsv",
+      "bytes": 2879558,
+      "sha256": "36c70e325ba4242cb75d4c4a87484e6c47015a067dbf5500bc05e4b1228d24ce"
+    },
+    {
+      "repository": "nanake-lab/nemu-evidence",
+      "commit": "d15cdae93dce9845fa882df2f94efb265faff7b2",
+      "path": "R-STEER-01/c3-materials-v2-01/review/dh-semantic-review.tsv",
+      "bytes": 12800,
+      "sha256": "bd84a3b53060e291cc0dd304f413aad29dbf541bfbaa4701c8544f64727d2439"
+    },
+    {
+      "repository": "nanake-lab/nemu-evidence",
+      "commit": "d15cdae93dce9845fa882df2f94efb265faff7b2",
+      "path": "R-STEER-01/c3-materials-v2-01/old-exclusion/seen-root-index.tsv",
+      "bytes": 43256,
+      "sha256": "700081953ceb472777f973e68b34be5eda711b06b93a9b79a5a77b12ce51df82"
+    },
+    {
+      "repository": "nanake-lab/nemu-evidence",
+      "commit": "d15cdae93dce9845fa882df2f94efb265faff7b2",
+      "path": "R-STEER-01/c3-materials-v2-01/old-exclusion/seen-root-details.json.gz",
+      "bytes": 658450,
+      "sha256": "6c9360ed05cd35f25ee36c3576bfa3843bb1593b5bd52d0c5138246c9fa559f7"
+    },
+    {
+      "repository": "nanake-lab/nemu-evidence",
+      "commit": "d15cdae93dce9845fa882df2f94efb265faff7b2",
+      "path": "R-STEER-01/c3-materials-v2-01/old-exclusion/old-materials-inventory.json.gz",
+      "bytes": 2390539,
+      "sha256": "eac20b9d052c54344d3335d6a2a7ca35d094db9841dd293b8c51f3d3072d72b5"
+    },
+    {
+      "repository": "nanake-lab/nemu-evidence",
+      "commit": "d15cdae93dce9845fa882df2f94efb265faff7b2",
+      "path": "R-STEER-01/c3-materials-v2-01/old-exclusion/old-materials-supplement-final.json.gz",
+      "bytes": 1034026,
+      "sha256": "13514004ad9bf2ce388d4fdd2814b565f10b6dbca31bd9da074db1541e2bae05"
+    },
+    {
+      "repository": "nanake-lab/nemu-evidence",
+      "commit": "d15cdae93dce9845fa882df2f94efb265faff7b2",
+      "path": "R-STEER-01/c3-materials-v2-01/old-exclusion/source-coverage-final.md",
+      "bytes": 4216,
+      "sha256": "df5a952679d3aebb2e3433c35a2b912cf6e531c8c51cf73773fa7b263dfdeb63"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 9,
+      "sha256": "8b9c3028d6467ff3be7c793141927841d70f47f52d0590677438f488ca154992"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 21,
+      "sha256": "01d8d0360f02a0c00e236a4eb2a1d8bdf83377acf442eaafad7a136bf14d6bb0"
+    },
+    {
+      "path": "checks/expression-checks.json",
+      "bytes": 629,
+      "sha256": "37933ccb5ebb285a7f873c6e4477c2535b124adcb6c5da136f621c71b7b3bfe1"
+    },
+    {
+      "path": "checks/initial-builder-failure.json",
+      "bytes": 401,
+      "sha256": "aacf82a48b798b32a39c267954f7b537d4d00b09560e866deb4cab86cddc757f"
+    },
+    {
+      "path": "checks/mechanical-review.md",
+      "bytes": 907,
+      "sha256": "795f832691c0ba90c51312385b166a09059d10363ed49435bdcd42212bdce660"
+    },
+    {
+      "path": "checks/mypy-final.txt",
+      "bytes": 44,
+      "sha256": "0c37c4158c91ef55c724ba017bf6465f26018199badb08e3ff13f98acdf056c2"
+    },
+    {
+      "path": "checks/mypy-initial.txt",
+      "bytes": 864,
+      "sha256": "5f4c305f2897ff8f2f422d71299fb49a0308e28d7f4c8502c7d47e46e231d65f"
+    },
+    {
+      "path": "checks/mypy-second.txt",
+      "bytes": 362,
+      "sha256": "777dfe2f02be1e86193dd0fadea0a73a65464bce17a7bb01f678a053591f7cd7"
+    },
+    {
+      "path": "checks/ruff-final.txt",
+      "bytes": 20,
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "path": "checks/ruff-initial.txt",
+      "bytes": 2627,
+      "sha256": "7a9031747e7013fdf442da09424ad2e74b4c315f1423bd0ccc827d4b9bfd1c53"
+    },
+    {
+      "path": "checks/structural-checks.json",
+      "bytes": 2244,
+      "sha256": "d134ef3150e7ec238f14668601cf1c3fc30f240d7584e663b21a891f6413b4e3"
+    },
+    {
+      "path": "code/build_review.py",
+      "bytes": 11288,
+      "sha256": "03ca7a7e8a16b6e625417f1ecdeca12a84a0880664aa69e79c45bd5fe237ee99"
+    },
+    {
+      "path": "code/prepare_expression.py",
+      "bytes": 3355,
+      "sha256": "dc86e260fafcdcb82789d2ab8f43266d2301795f363ebcd23cfef69d7b96e263"
+    },
+    {
+      "path": "inputs-01/expression-materials.json",
+      "bytes": 130810,
+      "sha256": "e35444beb8d80961616f48b1f1e35c2fcf6d63af9d9d153341c229316f6d07e7"
+    },
+    {
+      "path": "materials/ability.tsv",
+      "bytes": 44542,
+      "sha256": "a08995ea481608fd44155198226e60c472db56d3f4e117fc4bb27a7819640b0a"
+    },
+    {
+      "path": "materials/dh-scenes.tsv",
+      "bytes": 32712,
+      "sha256": "357d0dca443bc4ce5f710fa0735b00e3695562d6d8d59d92a2306f33c523a61b"
+    },
+    {
+      "path": "materials/ev-scenes.tsv",
+      "bytes": 16081,
+      "sha256": "26aacb87d91b199dca3e498ac743b9f96ecd6ff388149537d5d379da192c0069"
+    },
+    {
+      "path": "materials/j-scenes.tsv",
+      "bytes": 26995,
+      "sha256": "48f890dcad86bf2da10a928dd30d5c85cb60ed9b8fb467b1e4e2f042ecee6747"
+    },
+    {
+      "path": "materials/replacements.tsv",
+      "bytes": 16418,
+      "sha256": "e9aafe2c6a6af76a00591b71beee682d2197e8352004a0839ae8936fc7a9a20c"
+    },
+    {
+      "path": "provenance/authoring-adjustments.json",
+      "bytes": 448,
+      "sha256": "33696d21adccf37d8a4c7ec82327e43d2fb3cb04a402e251078c6327476595bf"
+    },
+    {
+      "path": "provenance/lexical-recall-incomplete-draft.json",
+      "bytes": 56061,
+      "sha256": "b926463f3fa10aea875de588fd3615a20926472c2de7e8b36f51105f32fe87da"
+    },
+    {
+      "path": "provenance/rejected-draft-h24.json",
+      "bytes": 1014,
+      "sha256": "8ad2764e131946347e40c11736565b4bac761bd87d7635c70a64d2d342362991"
+    },
+    {
+      "path": "provenance/replacement-rule.json",
+      "bytes": 5651,
+      "sha256": "096893b26476d25802d89b9c474c3bfaeb2d2a7900c011f106128852e2eb8ee8"
+    },
+    {
+      "path": "provenance/replacements-draft-01.tsv",
+      "bytes": 16419,
+      "sha256": "ddd99c449e090fbbb880fbf4761afacb6d3c4522ef1bcb07d71c87bda6c8e8aa"
+    },
+    {
+      "path": "provenance/source-bindings.json",
+      "bytes": 2446,
+      "sha256": "a3fabfbbda4520efa07b105756c6d9f88ad920041c32f88c6250807e3ef4b2f1"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3843,
+      "sha256": "92114d802dd74258f43ac1df10f70c4f061d6b1ee8c817e99d4a84032492ba31"
+    },
+    {
+      "path": "review/active-root-registry.json",
+      "bytes": 229111,
+      "sha256": "d511c91ac9823fe8d4415967a758b2df00a7209f39941dac04837fe768df395e"
+    },
+    {
+      "path": "review/all-partition-pairs.tsv",
+      "bytes": 4337457,
+      "sha256": "08aeee442c24e84151bb12994bf228a4c864c73909471d5c5b847fa9b2ab93ee"
+    },
+    {
+      "path": "review/author-decisions.json",
+      "bytes": 12125,
+      "sha256": "4dfb5f4f2baa1bf1267846956fc90ec69195efb572d78b0716a6c26459d929c9"
+    },
+    {
+      "path": "review/H-old-exclusion.tsv",
+      "bytes": 2645377,
+      "sha256": "0338906a7358cad5d5a7c6b36ade47146884683d63cfb9f5fac3369a6dcbf547"
+    },
+    {
+      "path": "review/H48-REVIEW.md",
+      "bytes": 44772,
+      "sha256": "987d8d58f9489b72cd18707e988ad8defa7bb5bdfa0bb0a50669331e1535c557"
+    },
+    {
+      "path": "review/lexical-recall.json",
+      "bytes": 62486,
+      "sha256": "729b826a720fd73cb34340fd0b0af7fe7fd74825848e782f083931982a897ba9"
+    },
+    {
+      "path": "review/old-conflict-resolution.json",
+      "bytes": 5065,
+      "sha256": "c952a9f4ac9ba78ac5e71951736032f1f4c92a84990f42b37163de4bd0c3820c"
+    },
+    {
+      "path": "review/partition-matrix.tsv",
+      "bytes": 656,
+      "sha256": "add10fc1343471a07720362474b32ffa17b3d4b7b27593e56abfc9898d261a5c"
+    },
+    {
+      "path": "review/semantic-review.tsv",
+      "bytes": 13258,
+      "sha256": "3d57e55d2a915747f2d2a6e156fc105c48388b9f3eae14e8c354357a673f7636"
+    }
+  ]
+}

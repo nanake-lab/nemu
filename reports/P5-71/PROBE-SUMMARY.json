@@ -1,0 +1,115 @@
+{
+  "bridge_peak_working_set_bytes": 9998336,
+  "estimated_seconds_by_layer": {
+    "DUT/C": 369.44628221969697,
+    "DUT/CF": 3861.0198234694826,
+    "DUT/F": 5304.3795494580645,
+    "independent_research/C": 26016.252458253457,
+    "independent_research/CF": 346.41241243,
+    "independent_research/F": 89.73848801892474
+  },
+  "gate": "stop_over_4h",
+  "manifest": {
+    "length": 6817,
+    "sha256": "fa3f215fc4c9170e57428c10290dfb97f5c6854f6eb6465ba2466623230c8503"
+  },
+  "note": "Projection is an estimate, not elapsed full-run time. Unestimated costs are additional, not zero.",
+  "primitive_cache_misses": 150,
+  "projected_seconds_known_components": 35987.24901384963,
+  "purpose": "cost_only",
+  "python_peak_working_set_bytes": 39718912,
+  "rates_ns_per_replayed_operation": {
+    "dut/C": 61433.90151515151,
+    "dut/F": 16017573.225806452,
+    "independent/C": 556882.7178030303,
+    "independent/F": 90994.94623655915
+  },
+  "rows": [
+    {
+      "N": 32,
+      "bytes": 275313,
+      "dut_incremental_ns": 2845600,
+      "dut_replay_ns": 36789500,
+      "dut_snapshot_ns": 1959089300,
+      "family": "C",
+      "first_difference": null,
+      "id": "07-01-p2-b-0.25-old",
+      "independent_incremental_ns": 25811400,
+      "independent_replay_ns": 296991900,
+      "version": "old"
+    },
+    {
+      "N": 32,
+      "bytes": 277753,
+      "dut_incremental_ns": 2505200,
+      "dut_replay_ns": 31648700,
+      "dut_snapshot_ns": 3184272900,
+      "family": "C",
+      "first_difference": null,
+      "id": "07-01-p2-b-0.25-A",
+      "independent_incremental_ns": 22521000,
+      "independent_replay_ns": 296850300,
+      "version": "A"
+    },
+    {
+      "N": 32,
+      "bytes": 275320,
+      "dut_incremental_ns": 2473100,
+      "dut_replay_ns": 30445900,
+      "dut_snapshot_ns": 1661503400,
+      "family": "C",
+      "first_difference": null,
+      "id": "07-01-p2-b0.25-old",
+      "independent_incremental_ns": 21720900,
+      "independent_replay_ns": 289780600,
+      "version": "old"
+    },
+    {
+      "N": 32,
+      "bytes": 277761,
+      "dut_incremental_ns": 2410200,
+      "dut_replay_ns": 30864300,
+      "dut_snapshot_ns": 2925917100,
+      "family": "C",
+      "first_difference": null,
+      "id": "07-01-p2-b0.25-A",
+      "independent_incremental_ns": 22110400,
+      "independent_replay_ns": 292513500,
+      "version": "A"
+    },
+    {
+      "N": 30,
+      "bytes": 16064,
+      "dut_incremental_ns": 1015294700,
+      "dut_replay_ns": 14896343100,
+      "dut_snapshot_ns": 0,
+      "family": "F",
+      "first_difference": null,
+      "id": "09-06-plus-j0-123-old",
+      "independent_incremental_ns": 2989600,
+      "independent_replay_ns": 37493300,
+      "version": "old"
+    },
+    {
+      "N": 30,
+      "bytes": 72299,
+      "dut_incremental_ns": 1015294700,
+      "dut_replay_ns": 14896343100,
+      "dut_snapshot_ns": 0,
+      "family": "F",
+      "first_difference": null,
+      "id": "09-06-plus-j0-123-A1",
+      "independent_incremental_ns": 3327000,
+      "independent_replay_ns": 47132000,
+      "version": "A1"
+    }
+  ],
+  "unestimated_components": [
+    "G",
+    "candidate sensitivity",
+    "arithmetic-only",
+    "long-history rational numerator growth",
+    "full evidence serialization"
+  ],
+  "wall_seconds": 27.5584154
+}

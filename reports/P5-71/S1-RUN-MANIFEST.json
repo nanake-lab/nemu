@@ -1,0 +1,119 @@
+{
+  "batch": "supplement-S1-01",
+  "created_utc": "2026-11-13T04:20:13.708445+00:00",
+  "code_commit": "86bde0073bcb861ec4f866cfd7e27f301739b876",
+  "prereg_commits": [
+    "5f736a91",
+    "310b5b62"
+  ],
+  "binary_profile": {
+    "opt_level": "3",
+    "debuginfo": 0,
+    "debug_assertions": false,
+    "overflow_checks": false,
+    "test": true
+  },
+  "optimized_build": true,
+  "counts": {
+    "F:DUT": {
+      "rows": 12792,
+      "sum_N": 4376,
+      "prefix_recompute": 152672,
+      "analysis_prefixes": 12752
+    },
+    "F:independent_research": {
+      "rows": 12792,
+      "sum_N": 6424,
+      "prefix_recompute": 284768,
+      "analysis_prefixes": 33368
+    },
+    "CF:DUT": {
+      "rows": 392,
+      "sum_N": 2048,
+      "prefix_recompute": 46080,
+      "analysis_prefixes": 4640
+    },
+    "CF:independent_research": {
+      "rows": 392,
+      "sum_N": 2688,
+      "prefix_recompute": 51520,
+      "analysis_prefixes": 9280
+    },
+    "C:DUT": {
+      "rows": 4,
+      "sum_N": 11,
+      "prefix_recompute": 21,
+      "analysis_prefixes": 0
+    },
+    "C:independent_research": {
+      "rows": 12,
+      "sum_N": 33,
+      "prefix_recompute": 63,
+      "analysis_prefixes": 0
+    }
+  },
+  "additional_old_C_shadow": {
+    "sum_N": 11,
+    "prefix_recompute": 21
+  },
+  "fixed_separating_prerequisite": {
+    "independent_transitions": 2,
+    "prefix_recompute": 0
+  },
+  "limit_seconds": 14400,
+  "toolchain": {
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "python": "Python 3.12.10"
+  },
+  "reused_arithmetic": {
+    "sha256": "ab549e7c533bec311fb7cdea38803f0caac811c502953782761ff38eaecce40d",
+    "length": 2352
+  },
+  "original_evidence_commit": "0f2878ded77850e5b367fc47b0ce706cff8f27ae",
+  "original_files_verified": 36611,
+  "manifest_sha256": "d5ff1dd15e6e98f788caed78af76d275c4dd29df370973eace1016e5c5e0d012",
+  "private_manifest": "P5-71/20261113-S1-01/prepared/RUN-MANIFEST.json",
+  "binary": {
+    "sha256": "e6517952e1f9042f59ad476ee582ef9689ff6605b224d3e522855a1930af4fbb",
+    "length": 3177984
+  },
+  "registered_resources_and_inputs": {
+    "matrix.jsonl": {
+      "sha256": "d34c3c9017cbc9f922cfb51d47748b8ef2ba669023300aef109a32b1b8daceea",
+      "length": 91981410
+    },
+    "C.json": {
+      "sha256": "ce1d4fc7e59b99f3157e1a2d41248663928d0e1efefd36b15f42470e745762f5",
+      "length": 494
+    },
+    "C-alarm.json": {
+      "sha256": "bd7e089cc5a07b3125ec7b856ef1780ee46bfbc4fbd9c259cd2931e2707aaefe",
+      "length": 520
+    },
+    "F.json": {
+      "sha256": "8afe66b4e89cecc3a73bfa33594f2be0dccf185212a387d51312a0899615b9fb",
+      "length": 224
+    },
+    "F-interaction.json": {
+      "sha256": "104a181b6e49e980607b30f17e4dc74464276716251670c0ec588956bda7826b",
+      "length": 236
+    },
+    "G.json": {
+      "sha256": "a5e22008024a3ad07dc33887e4803aaf767c33d7e5568ace37daebf52f7cf488",
+      "length": 847
+    },
+    "PREREGISTRATION-S1.md": {
+      "sha256": "044b2c20848cca3cdb8cd05d031895a187639642252dba9f1508f50fc3f8e273",
+      "length": 8031
+    },
+    "S1-ALLOWLIST.csv": {
+      "sha256": "d3768c41387ea5ce16d14c0eec4e7c29c74e86c812acd7fd6073a2adc2453e7c",
+      "length": 4288644
+    },
+    "S1-NEW-INPUTS.json": {
+      "sha256": "7a2e18175cdd6ec76e3ee71a0c23f9029c79db1edf62ff08f24721978b8d3ba6",
+      "length": 24737
+    }
+  }
+}

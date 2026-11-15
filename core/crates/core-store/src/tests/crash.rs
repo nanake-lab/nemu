@@ -267,7 +267,7 @@ fn x03_targeted_r_segments_manifest_and_reused_objects() {
 fn initialization_and_gc_crash_boundaries_have_separate_expectations() {
     for point in INIT {
         let occurrences: &[usize] = if matches!(point, ReceiptKindCreated | ReceiptKindSynced) {
-            &[1, 2]
+            &[1, 2, 3]
         } else {
             &[1]
         };
@@ -275,9 +275,9 @@ fn initialization_and_gc_crash_boundaries_have_separate_expectations() {
             let root = TemporaryRoot::new().unwrap();
             run(&root, "init", *point, *nth, None);
             let opened = Store::<Rehearsal>::open_temporary(&root, "crash", config());
-            // Before both receipt namespaces exist initialization must fail closed.
+            // Missing D/commit witnesses fail closed; an empty reject tail can be repaired.
             let complete = matches!(point, ReceiptRootSynced | ReceiptParentSynced)
-                || (matches!(point, ReceiptKindCreated | ReceiptKindSynced) && *nth == 2);
+                || (matches!(point, ReceiptKindCreated | ReceiptKindSynced) && *nth >= 2);
             assert_eq!(opened.is_ok(), complete, "init/{point:?}/{nth}");
             if let Ok(store) = opened {
                 store.verify().unwrap();

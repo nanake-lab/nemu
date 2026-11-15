@@ -211,3 +211,67 @@ pub(crate) fn reconcile(
     }
     Ok(())
 }
+
+/// Missing namespaces are repairable only for an empty, verified initialization.
+/// A nonempty store needs explicit recovery; never erase rollback evidence.
+pub(crate) fn admit(db: &Connection, root: &Path, objects: &Objects, repair: bool) -> Result<()> {
+    admit_with_sync(db, root, objects, repair, platform::sync_dir)
+}
+
+pub(crate) fn admit_with_sync(
+    db: &Connection,
+    root: &Path,
+    objects: &Objects,
+    repair: bool,
+    mut sync_dir: impl FnMut(&Path) -> Result<()>,
+) -> Result<()> {
+    if crate::migration::format(db)? == 1 {
+        return Ok(());
+    }
+    let receipts = path(root)?;
+    for kind in ["d", "commits", "reject"] {
+        let dir = receipts.join(kind);
+        platform::no_links(&dir)?;
+        if dir.is_dir() {
+            continue;
+        }
+        require(
+            repair && kind == "reject" && !dir.exists(),
+            "required receipt directory missing; explicit receipt recovery required",
+        )?;
+        let captured = capture(root, objects)?;
+        require(
+            captured.values().all(|v| v.is_empty()),
+            "receipt namespace incomplete; preserve files and recover from verified backup",
+        )?;
+        for table in [
+            "raw_ingress",
+            "commits",
+            "ingress_rejections",
+            "object_refs",
+        ] {
+            require(
+                db.query_row(&format!("SELECT count(*) FROM {table}"), [], |r| {
+                    r.get::<_, i64>(0)
+                })? == 0,
+                "nonempty store lacks receipt directory; preserve files and perform explicit recovery",
+            )?;
+        }
+        fs::create_dir(&dir)?;
+    }
+    // Existence cannot prove that initialization reached its durability barriers.
+    // Repeat them on every writer admission, including after a failed repair.
+    // Readers only check the namespace; they never create or synchronize it.
+    if repair {
+        for required in ["d", "commits", "reject"] {
+            sync_dir(&receipts.join(required))?;
+        }
+        sync_dir(&receipts)?;
+        sync_dir(
+            receipts
+                .parent()
+                .ok_or(crate::Error::Rejected("missing receipt parent"))?,
+        )?;
+    }
+    Ok(())
+}
