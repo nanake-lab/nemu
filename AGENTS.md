@@ -1,6 +1,6 @@
 # AGENTS.md — Nemu 3D 桌面伙伴
 
-本文件是 Codex、Antigravity 与 Claude 三个执行者共用的项目规则。开始任何任务之前，先完整读完本文件，再按 `.agents/skills/echo-core-work/SKILL.md` 第 1 节的分级读法，读与本卡相关的章节（2026-11-11 用户决定）。做 Echo Core 相关的卡（P5、P6）前，按上述 SKILL.md 第 1 节读规格。
+本文件是 Codex、Antigravity 与 Claude 三个执行者共用的项目规则。开始任何任务之前，先完整读完本文件，再按 `.agents/skills/echo-core-work/SKILL.md` 第 1 节的分级读法，读与本卡相关的章节（2026-11-11 用户决定）。做 Echo Core 相关的卡（P5、P6）前，按上述 SKILL.md 第 1 节读规格。`docs/agents/` 下的文件按本文件各处的指引，在需要时读。
 
 ## 1. 项目一句话
 
@@ -56,28 +56,13 @@ Nemu 是一个常驻 Windows 桌面的原创二次元 3D 伙伴。
 | 路径 | 建议执行者与特别规则 |
 | --- | --- |
 | `core/**`（Echo Core：Rust 工作区、IDL、黄金向量） | Codex（`core/contracts/` 只在标注「契约变更」且有 ADR 的任务里修改） |
-| `core/crates/core-policy/**`、`core/crates/core-kernel/**`、`core/crates/experiment-world/**` | Codex |
-| `workers/**`（irl、drive、model-adapter） | Codex |
-| `executors/**`（codex-bridge、office-connector） | Codex |
-| `services/**`（voice-sidecar） | Codex |
-| `apps/desktop/**` | Codex |
-| `apps/stage/**` | Antigravity |
-| `apps/panel/**` | Antigravity |
+| `core/crates/core-policy/**`、`core/crates/core-kernel/**`、`core/crates/experiment-world/**`、`workers/**`（irl、drive、model-adapter）、`executors/**`（codex-bridge、office-connector）、`services/**`（voice-sidecar）、`apps/desktop/**`、`packages/terminal/**`（终端客户端）、`packages/desktop-sense/**`、`packages/voice/**`（含 `packages/voice/web/**` 麦克风采集模块）、`tools/**`、`profiles/**`（Echo Core 结构夹具与部署配置） | Codex |
+| `apps/stage/**`、`apps/panel/**`、`packages/avatar-runtime/**`、`packages/body/**`（物理状态机、反射、读出应用） | Antigravity |
 | `packages/contracts/**` | Codex（只在标注「契约变更」且有 ADR 的任务里修改） |
-| `packages/terminal/**`（终端客户端） | Codex |
-| `packages/avatar-runtime/**` | Antigravity |
-| `packages/body/**`（物理状态机、反射、读出应用） | Antigravity |
-| `packages/desktop-sense/**` | Codex |
-| `packages/voice/**`（含 `packages/voice/web/**` 麦克风采集模块） | Codex |
-| `tools/**` | Codex |
 | `config/**` | Codex（`opportunities.json`、`helpers.json` 的修改需要 ADR） |
-| `profiles/**`（Echo Core 结构夹具与部署配置） | Codex |
 | `spikes/**` | 由任务卡指定 |
 | `content/**` | 用户。代理可以提交管线生成的产物：`nemu.vrm`、`nemu.profile.json`、`lipsync/*.json`、`motions/*.vrma` 及其清单条目。其余内容在用户确认之前只能放进 `content/_candidates/`：设定集、源文件、`build.yaml` 里的审美参数、定稿的音色、协议 p、genesis 清单、语气样例库 |
 | `docs/**`、`tasks/**` | 文档类工作可由 Claude 会话完成；报告随各卡由该卡执行者写。只能追加报告、请求和 ADR；`docs/echo-core/original/` 永远不改。改已有文字或 `tasks/cards.json` 需要用户批准（PR 加 `needs-user`） |
-
-2026-11-11 用户决定一次性例外：仅移除上述两份 docx 的个人元数据，正文不变；原件在私有证据仓。
-此处两份指 `Ada Echo Core Math define.docx`、`Echo Core Implementation Plan.docx`；仅允许报告登记的旧哈希到新哈希转换。
 
 ## 3. 黄金规则
 
@@ -116,14 +101,12 @@ pnpm bench                  # 性能与延迟基准（只能在用户的 GPU 主
 pnpm asset:build            # 运行 Blender 资产管线
 pnpm asset:lint <file.vrm>  # 资产契约校验
 cargo test --workspace      # Echo Core 测试（在 core/ 下）
-cargo run -p echoctl -- <inspect|replay|verify|checkpoint|restore|birth|growth|experiment>   # Echo Core 管理命令（birth 只由用户在 N3 执行；growth 只由用户执行）
+cargo run -p echoctl -- <inspect|replay|verify|checkpoint|restore|birth|growth|experiment>   # Echo Core 管理命令（birth 只由用户在 E4 执行；growth 只由用户执行）
 uv run pytest               # worker 与旁路服务测试（在 workers/、services/ 下）
 pnpm accept:core            # Echo Core v2.0 验收套件（P5-18）
 pnpm experiment:core        # 实验谱系：在合成世界里跑 v2.0 第 14 节的实验（P5-30）
 pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 ```
-
-> **状态更新（2026-11-11）：** 上面代码块 `echoctl` 一行注释「birth 只由用户在 N3 执行」：里程碑已于 2026-10-26 重排，N3（诞生）现为 E4（PR #93，[tasks/README.md](tasks/README.md) 第 5 节），读作「只由用户在 E4 执行」。依据：[清点报告](reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 F1。
 
 这些命令在 P0-01 里建立骨架，由各卡补齐。如果某张任务卡需要新的命令，把它加进根目录的 `package.json`（或 `core/` 的 Cargo 别名），并在报告里说明。
 
@@ -181,11 +164,7 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 
 **设计卡与研究卡**（任务号以 `DESIGN-`、`R-` 开头）：报告内容本身就是交付物，按内容需要写。开头必须有白话总览；其中实际运行的部分按重档执行。
 
-**设计卡与研究卡怎么写、怎么做（2026-11-02 用户决定）：** 先前的调研只比较了提示词里列出的路线，用户真正需要的路线在框外，是用户自己想到的。为此：
-- **派卡的提示词只写目标、约束和已知事实，不写候选答案。**「用户决定」只能写用户亲口定过的事；派卡方自己的想法一律标为「候选」，与其他路线同等评估。
-- **执行者先发散、再收敛：**先列出能想到的、彼此不同的路线，包括常规之外的，逐条写明值得考虑或排除的理由；再从中选出最有希望的几条深入比较。被排除的路线及理由保留在报告里。
-- **提示词里的候选覆盖不了目标时，执行者要指出来，并提出自己认为更好的路线**，不能只在给定的框里作答。
-- 推荐与理由写明「由用户决定」；不预造数值，任何数值标明来源或「待实测」。
+**设计卡与研究卡怎么写、怎么做：** 做 `DESIGN-`、`R-` 卡，或为这类卡写派卡提示之前，读 [docs/agents/design-research-cards.md](docs/agents/design-research-cards.md)。
 
 **报告写什么（各档通用）：**
 - 必须写：所用档位及理由（一句话，放在第一行）；当前状态与结论；改了什么（到文件或模块）；做了哪些检查，命令与结果；失败、阻塞与未完成项；需要用户做什么。
@@ -194,35 +173,7 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 
 **白话三行：** 每个 PR 说明与「请审查」评论的开头，先用三行白话写：做了什么；对她或对项目意味着什么；需要用户做什么（没有就写「无」）。术语与细节放在后面。
 
-报告模板：
-
-```markdown
-# <任务号> <标题> — 报告
-
-## 当前状态
-一段话：完成 / 部分完成（见 BLOCKED.md）；在等什么；接下来取的卡。
-
-## 交付物
-- 文件或目录：作用
-
-## 验收
-| 命令或检查（含 Echo Core 验收编号） | 结果 | 证据 |
-| --- | --- | --- |
-
-## 规格对照（Echo Core 相关的卡必填）
-| 规格条款 | 实现位置 | 测试 |
-| --- | --- | --- |
-
-## 新增依赖
-| 名称 | 版本 | 许可证 | 用途 |
-
-## 待用户确认
-- [ ] （阻塞）...
-- [ ] （不阻塞）...
-
-## 后续建议（不在本任务范围内）
-- ...
-```
+报告模板见 [docs/agents/report-template.md](docs/agents/report-template.md)，写报告时读。
 
 ### 审查与合并
 
@@ -247,13 +198,7 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 - 当前提交的必要检查已通过，任务卡列出的验收命令全部通过，所需审查已完成；只改文档时按第 9 节的检查范围执行，不要求本来不适用的 CI/Windows 检查；
 - 报告里没有「阻塞」类的待确认项。
 
-**main 增量影响核对：**
-
-1. `git fetch origin` 后固定本次核对的 main 提交 M。对各项必要检查，从最近一次有效验证的运行记录或原始证据确定当时的 PR head、实际被测提交、实际使用的 main 基线 B 和结果；不同检查使用不同基线时分别核对。PR 合成合并提交的 B 是该次实际 checkout 的合并提交的 main 父提交，须核实另一个父提交对应被验证的 PR head；直接测试分支或本地提交时，依据当时的 checkout 与合入历史确认 B。不能拿当前 PR base、当前合成合并提交、分支落后数量或最后一次提交代替当时的基线。
-2. 检查 B 到 M 的全部新增提交及文件 diff（如 `git log B..M`、`git diff B M`），结合 PR 的构建、运行、测试和依赖关系判断影响。先确认 B 是 M 的祖先；基线证据缺失、历史关系异常或无法确认相关性时，在报告或 PR 说明中列明不确定点，不得按「无影响」放行。仅作无影响核对不产生新的实际验证基线，下一次仍从 B 检查。
-3. 若只有不影响产品构建、运行和测试的文档、报告或代理配置变化，不要求同步 main，也不因此重跑 CI/Windows。不能只凭目录或扩展名认定无影响：契约、验收要求、生成输入等即使写在文档里也要检查其含义；代理配置若影响测试命令或环境，同样不能直接豁免。
-4. 若涉及相关源码、依赖、契约、生成器、工具链、测试或工作流变化，则 merge main，并运行受影响的检查，验证 PR 与 main 的新组合；原有验收标准与必要审查不变。存在合并冲突时必须先同步并解决冲突，再按解决后的实际改动运行受影响的检查；不能以文档变化为由忽略冲突。
-5. 在现有报告或 PR 说明中简记 B、M、验证证据、变化范围、影响判断及需要运行的检查。合并前若 main 又有变化，继续核对；PR head 改变时核验新 head 的必要检查与审查，不把旧 head 的绿灯当成新 head 的结果。仅因 main 前进且核对为无影响，不使当前 head 的有效检查失效。
+**main 增量影响核对：** 合并前必须做。步骤见 [docs/agents/merge-main-check.md](docs/agents/merge-main-check.md)，合并前读并照做。
 
 **合并前核对四样（2026-10-25）：** 不论执行者自己合并还是用户合并，合并前对**当前 head** 逐项核对：CI 结论（看这个提交的检查，不拿旧提交或本机的通过代替）；报告的「当前状态」；没有勾选的验收项与待确认项；`reports/<任务号>/BLOCKED.md` 是否还有未解除的项。判断 PR 状态时先读最新提交和最后一条评论，不只看更新时间。
 
@@ -265,7 +210,7 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 - 影响她、却找不到出处的数值、阈值或规则，是**阻塞问题**；
 - 不必要的复杂（重复校验、没有需求的抽象、多余的层次、无所守护的测试）写成非阻塞建议，执行者逐条回应：采纳，或说明为什么需要。
 
-**真实体验也是验收（2026-11-04 用户决定）：** 依据是一次抽查：已合并卡的测试与报告都属实，但有一条好测的安全检查会在正常使用中出故障，有测试的名字承诺了它没有验证的东西，还有 5,214 行代码不在构建与 CI 里。
+**真实体验也是验收（2026-11-04 用户决定）：**
 
 - 凡涉及等待、时间或响应速度的卡：在假时钟或推进时间的测试之外，至少要有一项按真实时间运行的端到端测量，并写明测到的时长。没有测的写 not_run，不能用假时钟测试代替。
 - 接线卡的验收写明用户和她实际体验到的结果，例如从发消息到她开始回复要多久、长时间离线后重启、连续发几条消息、某个 worker 出错时会怎样。「测试通过」不等于体验合格。
@@ -323,19 +268,12 @@ Antigravity 会自动发现这些技能；Codex 请在开始相关任务时手�
 - GPU 测量需要用户安排的安静窗口：主代理提前告诉用户要测什么、大约多久，用户停掉 runner 后再开始。测量前确认 `Runner.Listener` 和 `Runner.Worker` 都没有在运行，在运行或无法确认就停止并报告。窗口内不运行其他测试或 GPU 工作；测完通知用户重新启动 runner。
 - PR 需要 Windows 检查而 runner 不在线时，由主代理通知用户，并列出相关的 PR 和提交。
 
-**CI 的范围（2026-10-20 按用户要求追加）：**
-
-- 只改文档、任务卡、报告或 `content` 子模块指针的 PR 和提交，不跑 CI（`ci.yml` 的 `paths-ignore`）。
-- `docs/echo-core/original/` 或 `tasks/cards.json` 有改动时，由 Docs guard（`docs-guard.yml`）检查：前者一律不允许改，后者检查能否解析、依赖和里程碑是否存在。
-- Windows 检查在 `windows.yml` 里，在你的电脑上运行，按改动只跑相关的部分：桌面（传输、隔离、端到端、视觉回归）和存储（W02），对应的目录写在该文件开头。纯 Linux 就能验证的改动（如 core-kernel 的数学部分、文档、研究报告）不触发它。草稿 PR 不跑 Windows 检查，转为可审查时自动运行；草稿阶段需要时，用 `gh workflow run windows.yml --ref <分支>` 手动触发，手动触发默认全量。
-- 转为可审查以后还要连续修改时，先转回草稿，改完再转回，避免每推一次就在用户电脑上跑一轮。
-- 新增一类 Windows 检查时，同时把它涉及的目录加进 `windows.yml` 开头的路径列表和「Decide scope」步骤。
+**CI 的范围：** 哪些改动跑哪些检查、Windows 检查怎么触发，见 [docs/agents/ci-scope.md](docs/agents/ci-scope.md)。改 CI、开 PR 或判断检查是否适用时读。
 
 ## 10. Claude（2026-10-19 用户追加，同日按新的第 2、6 节整理；2026-11-12 按现行分工修订）
 
 Claude（Claude Code 云端会话）遵守本文件全部规则，另有以下几点：
 
-- **职责（2026-11-12 用户决定）：** 和用户一起规划，写派卡提示，审查（第 2 节「分工」）。不认领实现卡；实现交给 Codex。`tasks/cards.json` 里未完成的卡不再建议 Claude，已完成的卡保留当时的建议执行者。文档类工作（card-edit、学习文档等）可以由 Claude 会话直接完成，照常开草稿 PR。
 - **审查：** 用户转来时审查（第 6 节）。
 - **环境：** Linux 云端临时会话，没有 Windows、显卡和用户的机器，也不保存本地状态。所有进度以推送到 GitHub 的分支、PR 和报告为准。
 - **工具链：** Claude 的环境可能无法安装 `core/rust-toolchain.toml` 锁定的版本。此时 Claude 可以用环境内可用的 stable 版本做本地开发和测试，但以 CI 中按锁定版本运行的结果为准；报告里写明本地实际使用的版本。
@@ -343,11 +281,7 @@ Claude（Claude Code 云端会话）遵守本文件全部规则，另有以下�
 
 ## 11. 云端执行（2026-10-25，按 P5-25 云端试点整理）
 
-云端会话（Codex 云端、Claude 云端）没有用户的电脑，状态只以推送到 GitHub 的内容为准。试点中遇到过：
-
-- 无法完整克隆仓库，只能经 GitHub 接口逐个文件提交；
-- 大文件上传失败，2.4 MB 的证据对象丢失，导致实现当时没有生成提交；
-- 会话中途失效。
+云端会话（Codex 云端、Claude 云端）没有用户的电脑，状态只以推送到 GitHub 的内容为准。
 
 所以：
 
