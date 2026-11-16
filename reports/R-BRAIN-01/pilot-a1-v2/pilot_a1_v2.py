@@ -360,10 +360,14 @@ def measure(stage: str, test: dict, h0: dict) -> dict:
 
 
 def stage_eval(stage: str) -> None:
-    if stage == "baseline" and (CACHE / "adapter").exists():
-        raise RuntimeError("Cannot run zero-training baseline after adapter exists")
+    if stage == "baseline" and ((CACHE / "adapter").exists() or
+                                (CACHE / "probe-v1.done.json").exists()):
+        raise RuntimeError("Baseline must precede probe-v1 and V2 training")
+    if stage == "probe-v1" and (not (CACHE / "baseline.done.json").exists() or
+                                 (CACHE / "adapter").exists()):
+        raise RuntimeError("Probe-v1 needs V2 baseline and no V2 adapter")
     if stage == "post" and not (CACHE / "train.done.json").exists():
-        raise RuntimeError("No completed training recorded")
+        raise RuntimeError("V2 post requires finished V2 training")
     done_path = CACHE / f"{stage}.done.json"
     if done_path.exists():
         raise FileExistsError(done_path)
@@ -382,13 +386,25 @@ def stage_eval(stage: str) -> None:
             if row["id"] in manifest["samples"]:
                 print(f"=== FROZEN RANDOM PROMPT {row['id']} ===\n{chat_prefix(row, tok)}\n=== END PROMPT ===")
     model = load_model(model_dir)
-    if stage == "post":
+    first_adapter_hashes = None
+    if stage in ("probe-v1", "post"):
         from peft import PeftModel
-        adapter = CACHE / "adapter"
+        adapter = V1_ADAPTER if stage == "probe-v1" else CACHE / "adapter"
+        if not (adapter / "adapter_config.json").is_file() or not (adapter / "adapter_model.safetensors").is_file():
+            raise RuntimeError(f"Missing adapter: {adapter}")
+        if stage == "probe-v1":
+            first_adapter_hashes = {p.name: sha(p) for p in adapter.iterdir() if p.is_file()}
+            print(f"V1 adapter BEFORE SHA-256: {first_adapter_hashes}")
         model = PeftModel.from_pretrained(model, str(adapter), is_trainable=False)
     test = evaluate(model, test_rows, tok, ids, stage, "test")
     h0 = evaluate(model, h0_rows, tok, ids, stage, "h0")
     result = measure(stage, test, h0)
+    if first_adapter_hashes is not None:
+        after = {p.name: sha(p) for p in V1_ADAPTER.iterdir() if p.is_file()}
+        if after != first_adapter_hashes:
+            raise RuntimeError("V1 adapter changed during read-only probe")
+        print(f"V1 adapter AFTER SHA-256: {after}")
+        result["v1_adapter_sha256"] = first_adapter_hashes
     verify_base(model_dir, inventory, f"{stage} AFTER")
     save_new(done_path, json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     print(f"{stage.upper()}: PASS; summary_sha256={sha(done_path)}")
@@ -396,8 +412,8 @@ def stage_eval(stage: str) -> None:
 
 def stage_train() -> None:
     manifest = load_manifest()
-    if not (CACHE / "baseline.done.json").is_file():
-        raise RuntimeError("Baseline must be completed and reviewed before training")
+    if not (CACHE / "probe-v1.done.json").is_file():
+        raise RuntimeError("V2 baseline and V1 adapter probe must complete before training")
     if any((CACHE / name).exists() for name in ("adapter", "train.done.json", "post.done.json")):
         raise RuntimeError("Training already started/completed; do not overwrite")
     check_runner()
@@ -445,11 +461,14 @@ def stage_train() -> None:
             if not logs or "loss" not in logs:
                 return
             loss, grad = float(logs["loss"]), float(logs.get("grad_norm", float("nan")))
-            if not (math.isfinite(loss) and math.isfinite(grad)):
-                raise RuntimeError(f"NaN/Inf loss or grad norm at optimizer step {state.global_step}")
+            reward_accuracy = float(logs.get("rewards/accuracies", float("nan")))
+            reward_margin = float(logs.get("rewards/margins", float("nan")))
+            if not all(math.isfinite(x) for x in (loss, grad, reward_accuracy, reward_margin)):
+                raise RuntimeError(f"Missing/NaN/Inf DPO metric at optimizer step {state.global_step}")
             secs, alloc, reserved = self.stats[state.global_step]
             self.steps.append(state.global_step)
             print(f"step={state.global_step:02d} loss={loss:.7g} grad_norm={grad:.7g} "
+                  f"rewards/accuracies={reward_accuracy:.7g} rewards/margins={reward_margin:.7g} "
                   f"sec={secs:.3f} allocated_MiB={alloc:.1f} reserved_MiB={reserved:.1f}", flush=True)
 
     args = DPOConfig(
@@ -524,22 +543,50 @@ def stage_train() -> None:
     print("TRAIN: PASS; no reference model, base hash unchanged")
 
 
-def main() -> None:
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--stage", required=True, choices=("prepare", "baseline", "train", "post"))
-    opts = p.parse_args()
-    try:
-        if opts.stage == "prepare":
-            generate()
-        elif opts.stage in ("baseline", "post"):
-            stage_eval(opts.stage)
-        else:
-            stage_train()
-    except Exception as exc:
-        print(f"{opts.stage.upper()}: FAIL ({type(exc).__name__}: {exc})", flush=True)
-        traceback.print_exc()
-        raise SystemExit(1) from exc
+def run_stage(stage: str) -> None:
+    if stage == "prepare":
+        generate()
+    elif stage in ("baseline", "probe-v1", "post"):
+        stage_eval(stage)
+    else:
+        stage_train()
 
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--stage", required=True,
+                        choices=("prepare", "baseline", "probe-v1", "train", "post"))
+    parser.add_argument("--_child", action="store_true", help=argparse.SUPPRESS)
+    opts = parser.parse_args()
+    if opts._child:
+        try:
+            run_stage(opts.stage)
+        except Exception as exc:
+            print(f"{opts.stage.upper()}: FAIL ({type(exc).__name__}: {exc})", flush=True)
+            traceback.print_exc()
+            raise SystemExit(1) from exc
+        return
+
+    # Stream the child's complete stdout+stderr to console and one immutable log.
+    log_path = CACHE / "logs" / f"{opts.stage}.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    if log_path.exists():
+        raise SystemExit(f"Log exists, refusing to overwrite: {log_path}")
+    command = [sys.executable, "-u", "-X", "utf8", str(Path(__file__).resolve()),
+               "--stage", opts.stage, "--_child"]
+    with log_path.open("xb") as log, subprocess.Popen(
+        command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0
+    ) as child:
+        assert child.stdout is not None
+        while chunk := child.stdout.read(65536):
+            log.write(chunk)
+            log.flush()
+            sys.stdout.buffer.write(chunk)
+            sys.stdout.buffer.flush()
+        result = child.wait()
+    print(f"Raw terminal log: {log_path} sha256={sha(log_path)}")
+    if result:
+        raise SystemExit(result)
 
 if __name__ == "__main__":
     main()
