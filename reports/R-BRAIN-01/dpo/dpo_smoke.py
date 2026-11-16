@@ -10,6 +10,7 @@ import hashlib
 import json
 import math
 import os
+import re
 from pathlib import Path
 import time
 import traceback
@@ -118,12 +119,15 @@ class StepProbe(TrainerCallback):
         if logs is None or "loss" not in logs:
             return
         loss = float(logs["loss"])
+        if logs.get("grad_norm") is None:
+            raise RuntimeError(f"TRL did not report grad_norm at step {state.global_step}")
+        grad_norm = float(logs["grad_norm"])
         duration, allocated, reserved = self.samples[state.global_step]
         print(f"step={state.global_step:02d} sec={duration:.3f} "
               f"peak_alloc_MiB={allocated:.1f} peak_reserved_MiB={reserved:.1f} "
-              f"loss={loss:.7g}", flush=True)
-        if not math.isfinite(loss):
-            raise RuntimeError(f"Non-finite loss at step {state.global_step}")
+              f"loss={loss:.7g} grad_norm={grad_norm:.7g}", flush=True)
+        if not math.isfinite(loss) or not math.isfinite(grad_norm):
+            raise RuntimeError(f"Non-finite loss/grad_norm at step {state.global_step}")
         self.logged.add(state.global_step)
 
 
@@ -184,14 +188,55 @@ def run(length: int, model_dir: Path) -> None:
         if not trainable or any("lora_" not in name for name in trainable):
             raise RuntimeError(f"Trainable non-LoRA parameters: {trainable[:5]}")
         print("LoRA trainable tensors:", len(trainable))
+        # PEFT modules reveal actual placement; do not assume linear-attention coverage.
+        target_modules = [(name, module) for name, module in trainer.model.named_modules()
+                          if hasattr(module, "lora_A") and hasattr(module, "lora_B")]
+        if not target_modules:
+            raise RuntimeError("No LoRA modules attached")
+        coverage = {}
+        for name, module in target_modules:
+            layer_match = re.search(r"(?:^|\.)layers\.(\d+)\.", name)
+            layer = layer_match.group(1) if layer_match else "unknown"
+            kind = ("full-attention" if ".self_attn." in name else
+                    "linear-attention" if ".linear_attn." in name else "other")
+            coverage.setdefault(kind, set()).add(layer)
+            print(f"LoRA module: layer={layer} kind={kind} path={name} "
+                  f"base_type={type(getattr(module, 'base_layer', module)).__name__}")
+        print("LoRA coverage: count=", len(target_modules),
+              "layers_by_type=", {key: sorted(ids) for key, ids in coverage.items()})
+
+        b_params = {name: p for name, p in trainer.model.named_parameters() if "lora_B" in name}
+        if not b_params:
+            raise RuntimeError("No LoRA B parameters")
+        b_initial_max = max(p.detach().float().norm().item() for p in b_params.values())
+        print(f"LoRA B initial max norm: {b_initial_max:.8g}")
+        if b_initial_max != 0:
+            raise RuntimeError("LoRA B did not start at zero; cannot use nonzero as update evidence")
+
+        # TRL 1.18.0 DataCollatorForPreference returns these three tensor keys.
         batch = next(iter(trainer.get_train_dataloader()))
+        print("TRL batch keys:", sorted(batch))
+        required = {"input_ids", "attention_mask", "completion_mask"}
+        if not required.issubset(batch):
+            raise RuntimeError(f"Unexpected TRL batch fields; missing {sorted(required - set(batch))}")
         real_tokens = batch["attention_mask"].sum(dim=1).tolist()
-        print(f"Batch input shape={tuple(batch['input_ids'].shape)} valid_tokens={real_tokens}")
-        if batch["input_ids"].shape[-1] != length or min(real_tokens) < length - 64:
-            raise RuntimeError("Length test ineffective; stopping rather than reporting misleading numbers")
+        completion_tokens = ((batch["completion_mask"] > 0) &
+                             (batch["attention_mask"] > 0)).sum(dim=1).tolist()
+        print(f"Batch input shape={tuple(batch['input_ids'].shape)} "
+              f"valid_tokens={real_tokens} completion_tokens={completion_tokens}")
+        if (batch["input_ids"].shape[-1] != length or min(real_tokens) < length - 64
+                or min(completion_tokens) <= 0):
+            raise RuntimeError("Length or completion-mask check failed; cannot use measurement")
         trainer.train()
         if probe.logged != set(range(1, 11)):
             raise RuntimeError(f"Expected 10 logged finite steps, got: {sorted(probe.logged)}")
+        b_norms = [p.detach().float().norm().item() for p in b_params.values()]
+        if not all(math.isfinite(x) for x in b_norms):
+            raise RuntimeError("Non-finite LoRA B weights")
+        print(f"LoRA B final norms: count={len(b_norms)} "
+              f"min={min(b_norms):.8g} max={max(b_norms):.8g}")
+        if max(b_norms) <= 0:
+            raise RuntimeError("LoRA B remained zero: optimizer did not update the adapter")
         print(f"Training steps: PASS 10; maximum CUDA reserved MiB: "
               f"{max(x[2] for x in probe.samples.values()):.1f}")
         trainer.model.save_pretrained(adapter_dir, safe_serialization=True)
