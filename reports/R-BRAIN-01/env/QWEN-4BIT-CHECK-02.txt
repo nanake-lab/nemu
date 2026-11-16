@@ -1,0 +1,23 @@
+R-BRAIN local 4-bit test 2026-11-16T18:30:54
+Python: 3.12.10
+Executable: D:\Dev\r-brain-train\.venv\Scripts\python.exe
+Model: D:\Dev\cache\P0-12\models\Qwen--Qwen3.5-4B\851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a
+Network: offline (process-local flags and local_files_only=True)
+torch: 2.10.0+cu128 CUDA: 12.8
+transformers: 5.23.0
+bitsandbytes: 0.50.2
+CUDA available: True
+GPU: NVIDIA GeForce RTX 3080
+Checkpoint model_type: qwen3_5
+Checkpoint architectures: ['Qwen3_5ForConditionalGeneration']
+Has vision_config: True
+Loading text-only AutoModelForCausalLM, NF4, double quantization, bf16 compute...
+Loaded class: Qwen3_5ForCausalLM
+Model config type: qwen3_5_text
+4-bit: True
+Parameters on GPU: cuda:0
+Generated text: '我是 Qwen3.5，阿里巴巴最新推出的通义千问大语言模型。\n'
+Peak CUDA allocated MiB: 3052.8
+Peak CUDA reserved MiB: 3122.0
+RESULT: PASS
+pip freeze: D:\Dev\nemu-r-brain\reports\R-BRAIN-01\env\pip-freeze.txt exit code: 0
