@@ -395,6 +395,14 @@ def stage_eval(stage: str) -> None:
         if stage == "probe-v1":
             first_adapter_hashes = {p.name: sha(p) for p in adapter.iterdir() if p.is_file()}
             print(f"V1 adapter BEFORE SHA-256: {first_adapter_hashes}")
+            v1_post = V1_CACHE / "post.done.json"
+            if v1_post.is_file():
+                ref = json.loads(v1_post.read_text(encoding="utf-8"))
+                print("V1 POST reference metrics:", json.dumps(ref["metric"], sort_keys=True))
+                print("V1 POST result hashes:", json.dumps(ref["files"], sort_keys=True))
+                print("V1 POST summary SHA-256:", sha(v1_post))
+            else:
+                print("V1 POST reference summary: not found")
         model = PeftModel.from_pretrained(model, str(adapter), is_trainable=False)
     test = evaluate(model, test_rows, tok, ids, stage, "test")
     h0 = evaluate(model, h0_rows, tok, ids, stage, "h0")
