@@ -102,7 +102,7 @@ Echo Core 里有不少不完美的选择，我们把它们集中写在 [docs/OPE
 
 | 路径 | 内容 | 主要读者 |
 | :--- | :--- | :--- |
-| [`AGENTS.md`](AGENTS.md) | 三个执行者共用的规则：认领与目录规则、16 条黄金规则、命令、报告模板、审查与合并 | 代理 |
+| [`AGENTS.md`](AGENTS.md) | 执行者共用的规则：认领与目录规则、17 条黄金规则、命令、报告、审查与合并 | 代理 |
 | [tasks/README.md](tasks/README.md) | 从这里开始（进度看板、等你处理的事、派活与取卡规则、依赖与里程碑说明） | 项目所有者与代理 |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 架构说明、进程模型与 30 项 v1.0 完成标准 | 代理 |
 | [docs/CONTRACTS.md](docs/CONTRACTS.md) | 资产契约、舞台协议、表演协议、终端协议、生成接口、权限分级、身体读出、机会规则（v2.1） | 代理 |
