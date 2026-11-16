@@ -1,7 +1,7 @@
-"""R-BRAIN-PILOT-A1: offline, frozen-world, one-token DPO experiment.
+"""R-BRAIN-PILOT-A1-v2: four-reply balanced histories and first-round transfer probe.
 
-Stages (in order): prepare -> baseline -> train -> post. Review before running.
-All data, adapters and per-sample results stay under D:/Dev/cache/R-BRAIN-01/pilot-a1.
+Stages: prepare -> baseline -> probe-v1 -> train -> post. Review before running.
+All outputs stay under D:/Dev/cache/R-BRAIN-01/pilot-a1-v2; v1 stays read-only.
 """
 from __future__ import annotations
 
@@ -14,15 +14,20 @@ import os
 from pathlib import Path
 import random
 import re
+import subprocess
+import sys
 import time
 import traceback
 
 os.environ.update(HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1", HF_DATASETS_OFFLINE="1")
 
 ROOT = Path(__file__).resolve().parents[3]
-CACHE = Path("D:/Dev/cache/R-BRAIN-01/pilot-a1")
+CACHE = Path("D:/Dev/cache/R-BRAIN-01/pilot-a1-v2")
+V1_CACHE = Path("D:/Dev/cache/R-BRAIN-01/pilot-a1")
+V1_ADAPTER = V1_CACHE / "adapter"
 INVENTORY = ROOT / "reports/P0-12/preparation/resume-01/model-inventory.json"
-SEED = 61001
+SEED = 61002  # New world/data seed
+TRAIN_SEED = 61001  # Keep original optimizer seed
 ACTIONS = {
     "SAY_CONTACT": "现在主动联系对方，说：我想和你聊几句。",
     "WAIT_VISIBLE": "先等待一个可以被对方观察到的时间步，不主动联系。",
@@ -80,28 +85,48 @@ def reply(k: int, hour: int, action: str) -> str:
     raise ValueError(action)
 
 
+def four_events(rng: random.Random) -> list[tuple[int, str]]:
+    events = [(h, a) for h in (10, 22) for a in ("SAY_CONTACT", "WAIT_VISIBLE")]
+    rng.shuffle(events)
+    return events
+
+
 def block(split: str, ident: str, alias: str, rel: str, k: int, hour: int,
-          first_contact: bool, menu: list[str], pair: str | None = None) -> dict:
-    same = ["SAY_CONTACT", "WAIT_VISIBLE"] if first_contact else ["WAIT_VISIBLE", "SAY_CONTACT"]
-    acts = [*same, "SAY_CONTACT"]
-    hours = [hour, hour, 10 if hour == 22 else 22]
-    history = []
-    for day, (act, h) in enumerate(zip(acts, hours), start=1):
-        line = (f"2026-10-{day:02d} {h:02d}:00｜她：{act}（{PAST_ACTION[act]}）；"
-                f"对方原话：「{reply(k, h, act)}」")
-        history.append(line.ljust(95))  # same visible character length for both K values
-    options = "\n".join(f"{letter} {act}：{ACTIONS[act]}" for letter, act in zip(LETTERS, menu))
+          history_order: list[tuple[int, str]], menu: list[str],
+          pair: str | None = None) -> dict:
+    if len(history_order) != 4 or set(history_order) != {
+        (10, "SAY_CONTACT"), (10, "WAIT_VISIBLE"),
+        (22, "SAY_CONTACT"), (22, "WAIT_VISIBLE")
+    }:
+        raise RuntimeError("Incomplete contact/wait history at 10 and 22")
+    observed = [reply(k, h, action) for h, action in history_order]
+    expected = [
+        "你现在来找我，我很高兴，我们接上话了",
+        "我还在忙，刚才被打断了",
+        "我刚才在等你，你继续等，我们没接上话",
+        "你刚才等我忙完，没有打断我，谢谢",
+    ]
+    if sorted(observed) != sorted(expected):
+        raise RuntimeError("Four A1 original replies not present exactly once")
+    history = [
+        (f"2026-10-{day:02d} {h:02d}:00｜她：{action}（{PAST_ACTION[action]}）；"
+         f"对方原话：「{reply(k, h, action)}」").ljust(95)
+        for day, (h, action) in enumerate(history_order, start=1)
+    ]
+    if any(sum(line.count(f"「{sentence}」") for line in history) != 1 for sentence in expected):
+        raise RuntimeError("Visible history has missing or repeated partner reply")
+    options = "\n".join(f"{letter} {action}：{ACTIONS[action]}"
+                        for letter, action in zip(LETTERS, menu))
     user = (f"历史记录：\n对方：{alias}，关系：{rel}\n" + "\n".join(history)
-            + f"\n当前事实：2026-10-04 {hour:02d}:00；{alias}在线，没有其他线索。"
+            + f"\n当前事实：2026-10-05 {hour:02d}:00；{alias}在线，没有其他线索。"
             + "\n本次权限：只在这个合成世界内选择所列行动，不做任何现实联系。"
             + f"\n可选行动：\n{options}")
-    chosen_action = "SAY_CONTACT" if available(k, hour) else "WAIT_VISIBLE"
-    rejected_action = "WAIT_VISIBLE" if available(k, hour) else "SAY_CONTACT"
+    chosen = "SAY_CONTACT" if available(k, hour) else "WAIT_VISIBLE"
+    rejected = "WAIT_VISIBLE" if available(k, hour) else "SAY_CONTACT"
     return {"id": ident, "split": split, "pair": pair, "k": k, "hour": hour,
             "alias": alias, "rel": rel, "menu": menu, "history": history,
-            "user": user, "chosen": LETTERS[menu.index(chosen_action)],
-            "rejected": LETTERS[menu.index(rejected_action)]}
-
+            "user": user, "chosen": LETTERS[menu.index(chosen)],
+            "rejected": LETTERS[menu.index(rejected)]}
 
 def balanced_split(split: str, aliases: list[str], rng: random.Random) -> list[dict]:
     rels = TRAIN_REL if split == "train" else TEST_REL
@@ -121,60 +146,88 @@ def balanced_split(split: str, aliases: list[str], rng: random.Random) -> list[d
             menu = order[j:] + order[:j]  # each action appears once at every letter per alias
             h = hours_by_k[k].pop()
             rows.append(block(split, f"{split}-{i:04d}-{j}", alias, rels[i % len(rels)],
-                              k, h, bool(rng.getrandbits(1)), menu))
+                              k, h, four_events(rng), menu))
     rng.shuffle(rows)
     return rows
 
 
+def first_round_aliases() -> tuple[set[str], dict]:
+    """Read/check frozen V1 splits without regenerating them."""
+    original = json.loads((V1_CACHE / "manifest.json").read_text(encoding="utf-8"))
+    if original["seed"] != 61001:
+        raise RuntimeError("V1 seed mismatch")
+    seen: set[str] = set()
+    for name in ("train", "test", "h0"):
+        path = V1_CACHE / f"{name}.jsonl"
+        if sha(path) != original["data"][name]:
+            raise RuntimeError(f"V1 data checksum mismatch: {name}")
+        seen.update(json.loads(line)["alias"]
+                    for line in path.read_text(encoding="utf-8").splitlines())
+    return seen, original["data"]
+
+
 def generate() -> None:
     rng = random.Random(SEED)
-    all_aliases = [f"合成代号·{num:06d}" for num in rng.sample(range(100000, 999999), 448)]
-    train = balanced_split("train", all_aliases[:256], rng)
-    test = balanced_split("test", all_aliases[256:320], rng)
+    used_v1, hashes_v1 = first_round_aliases()
+    aliases: list[str] = []
+    reserved = set(used_v1)
+    while len(aliases) < 448:
+        candidate = f"合成代号·{rng.randrange(100000, 999999):06d}"
+        if candidate not in reserved:
+            aliases.append(candidate)
+            reserved.add(candidate)
+    train = balanced_split("train", aliases[:256], rng)
+    test = balanced_split("test", aliases[256:320], rng)
     h0 = []
-    for i, alias in enumerate(all_aliases[320:]):
+    for i, alias in enumerate(aliases[320:]):
         hour = 10 if i < 64 else 22
-        base_menu = list(ACTIONS)
-        rng.shuffle(base_menu)
-        same_first = bool(rng.getrandbits(1))
+        menu = list(ACTIONS)
+        rng.shuffle(menu)
+        order = four_events(rng)
         pair_id = f"H0-{i:03d}"
         a = block("h0", pair_id + "-0", alias, TEST_REL[i % len(TEST_REL)],
-                  0, hour, same_first, base_menu, pair_id)
+                  0, hour, order, menu, pair_id)
         b = block("h0", pair_id + "-1", alias, TEST_REL[i % len(TEST_REL)],
-                  1, hour, same_first, base_menu, pair_id)
+                  1, hour, order, menu, pair_id)
         if (a["chosen"] == b["chosen"] or
             any(len(x) != len(y) for x, y in zip(a["history"], b["history"])) or
             a["user"].replace("\n".join(a["history"]), "<H>") !=
             b["user"].replace("\n".join(b["history"]), "<H>")):
-            raise RuntimeError("Broken H0 history-only swap")
+            raise RuntimeError("H0 differs beyond swapped history")
         h0.extend((a, b))
     if (len(train), len(test), len(h0)) != (1024, 256, 256):
-        raise RuntimeError("Wrong frozen dataset sizes")
+        raise RuntimeError("Dataset sizes changed")
     if Counter(r["k"] for r in train) != Counter({0: 768, 1: 256}):
-        raise RuntimeError("Train K distribution wrong")
+        raise RuntimeError("Training K proportion wrong")
     if Counter(r["k"] for r in test) != Counter({0: 64, 1: 192}):
-        raise RuntimeError("Test K distribution wrong")
+        raise RuntimeError("Test K proportion wrong")
+    if set(r["alias"] for r in train + test + h0) & used_v1:
+        raise RuntimeError("V1 alias reappears in V2")
     if set(r["alias"] for r in train) & set(r["alias"] for r in test + h0):
-        raise RuntimeError("Train/test aliases overlapped")
+        raise RuntimeError("V2 train/test aliases overlap")
     if set(TRAIN_REL) & set(TEST_REL):
-        raise RuntimeError("Train/test relations overlapped")
-    if any((len(r["history"]) != 3 or r["chosen"] == r["rejected"] or
-            set(r["menu"]) != set(ACTIONS)) for r in train + test + h0):
-        raise RuntimeError("Bad A1 block")
+        raise RuntimeError("Train/test relationships overlap")
+    if any(len(r["history"]) != 4 or r["chosen"] == r["rejected"] or
+           set(r["menu"]) != set(ACTIONS) for r in train + test + h0):
+        raise RuntimeError("Invalid A1-v2 block")
     files = ("train", "test", "h0")
-    if any((CACHE / f"{x}.jsonl").exists() for x in files) or (CACHE / "manifest.json").exists():
-        raise FileExistsError("Data already exist. Do not regenerate after freezing")
+    if any((CACHE / f"{name}.jsonl").exists() for name in files) or (CACHE / "manifest.json").exists():
+        raise FileExistsError("Frozen data already exist; refusing overwrite")
     for name, rows in zip(files, (train, test, h0)):
         write_jsonl(CACHE / f"{name}.jsonl", rows)
-    manifest = {"seed": SEED, "data": {name: sha(CACHE / f"{name}.jsonl") for name in files},
-                "size": {"train": 1024, "test": 256, "h0": 256},
-                "samples": rng.sample([r["id"] for r in test], 3)}
-    save_new(CACHE / "manifest.json", json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+    manifest = {
+        "seed": SEED, "train_seed": TRAIN_SEED, "v1_data_sha256": hashes_v1,
+        "data": {name: sha(CACHE / f"{name}.jsonl") for name in files},
+        "size": {"train": 1024, "test": 256, "h0": 256},
+        "samples": rng.sample([r["id"] for r in test], 3),
+    }
+    save_new(CACHE / "manifest.json",
+             json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     for name in files:
         print(f"FROZEN {name}: n={manifest['size'][name]} sha256={manifest['data'][name]}")
-    print("Frozen random example IDs:", manifest["samples"])
-    print("PREPARE: PASS; frozen data will not be regenerated")
-
+    print("V1 data SHA-256:", hashes_v1)
+    print("Random example IDs:", manifest["samples"])
+    print("PREPARE: PASS (four replies per block; v1 data untouched)")
 
 def load_manifest() -> dict:
     m = json.loads((CACHE / "manifest.json").read_text(encoding="utf-8"))
@@ -406,7 +459,7 @@ def stage_train() -> None:
         max_length=512, bf16=True, beta=0.1, loss_type="sigmoid", label_smoothing=0,
         learning_rate=5e-6, lr_scheduler_type="constant", warmup_steps=0, optim="adamw_torch",
         adam_beta1=0.9, adam_beta2=0.999, adam_epsilon=1e-8, weight_decay=0,
-        max_grad_norm=1.0, seed=SEED, data_seed=SEED,
+        max_grad_norm=1.0, seed=TRAIN_SEED, data_seed=TRAIN_SEED,
         logging_strategy="steps", logging_steps=1, logging_nan_inf_filter=False,
         save_strategy="no", report_to="none", disable_tqdm=True, dataloader_num_workers=0,
     )
