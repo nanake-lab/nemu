@@ -128,9 +128,9 @@ Nemu 由 [nanake-lab](https://github.com/nanake-lab) 发起并拥有。架构、
 
 | 协作方 | 提供方 | 通常做的卡与职责 |
 | :--- | :--- | :--- |
-| [Codex](https://openai.com/codex/) | OpenAI | 实现与研究执行，包括 Echo Core、worker、执行器、旁路服务、桌面应用、契约与工具链；模型与推理强度按 [`AGENTS.md`](AGENTS.md) 第 2 节执行 |
-| [Claude](https://claude.com/product/claude-code) (Claude Code) | Anthropic | 和用户一起规划，写派卡提示，审查；不认领实现卡。文档类工作按 [`AGENTS.md`](AGENTS.md) 第 2 节分配 |
+| [Codex](https://openai.com/codex/) | OpenAI | 实现与研究执行，包括 Echo Core、worker、执行器、旁路服务、桌面应用、契约与工具链；模型与推理强度由用户派活时决定 |
+| [Claude](https://claude.com/product/claude-code) (Claude Code) | Anthropic | 和用户一起规划，写派卡提示，审查；不认领实现卡。文档类工作由用户决定交给谁 |
 | [ChatGPT](https://chatgpt.com/) 中的 GPT-6 Pro | OpenAI | 外部独立审计与研究；相关记录见 [PR #180](https://github.com/nanake-lab/nemu/pull/180)、[PR #181](https://github.com/nanake-lab/nemu/pull/181)、[PR #184](https://github.com/nanake-lab/nemu/pull/184) |
-| [Antigravity](https://antigravity.google/) | Google | 舞台、评审台、角色运行时与身体（`apps/stage`、`apps/panel`、`packages/avatar-runtime`、`packages/body`） |
+| [Antigravity](https://antigravity.google/) | Google | 暂停使用。原负责舞台、评审台、角色运行时与身体（`apps/stage`、`apps/panel`、`packages/avatar-runtime`、`packages/body`） |
 
-现行分工自 2026-11-12 起按 [`AGENTS.md`](AGENTS.md) 第 2 节执行；`tasks/cards.json` 和任务卡头部中的建议执行者按该节现行分工解读，审查规则见第 6、10 节。
+现行分工自 2026-11-12 起按 [`AGENTS.md`](AGENTS.md) 第 2 节执行；`tasks/cards.json` 和任务卡头部中的建议执行者按该节现行分工解读，审查与合并规则见第 6 节。
