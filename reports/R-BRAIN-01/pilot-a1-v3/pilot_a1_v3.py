@@ -373,7 +373,7 @@ def think_arm(output: Path, data: dict) -> dict:
 
 def deepseek_call(key: str, row: dict, effort: str) -> dict:
     # No SDK / extra packages, and never echo or persist the Bearer token.
-    assert effort in ("none", "max")
+    assert effort in ("none", "high")
     payload = {
         "model": MODEL_ID,
         "messages": [{"role": "system", "content": SYSTEM},
@@ -443,7 +443,7 @@ def api_arm(output: Path, data: dict) -> dict:
         pairs.setdefault(row["pair"], []).append(row)
     h0 = [r for pair in sorted(pairs)[:64] for r in sorted(pairs[pair], key=lambda x:x["id"])]
     summary = {}
-    for effort in ("none", "max"):
+    for effort in ("none", "high"):
         print(f"DeepSeek API model={MODEL_ID} thinking={effort} prompts={len(test)}+{len(h0)}")
         smoke = []
         for row in (test[0], h0[0]):
