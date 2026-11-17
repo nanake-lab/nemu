@@ -493,3 +493,177 @@ def api_arm(output: Path, data: dict) -> dict:
         print(f"API {effort} metrics: {json.dumps(m, sort_keys=True)}")
         print(f"API {effort} estimated USD: {json.dumps(cost, sort_keys=True)}")
     return summary
+
+
+def training_set(data: dict, tok, letters) -> list[dict]:
+    rows = []
+    for row in data["train"]:
+        ids = tokenize_row(row, tok, letters)
+        if len(ids["chosen_ids"]) != 1 or len(ids["rejected_ids"]) != 1:
+            raise RuntimeError(f"Non-single-token training target: {row['id']}")
+        rows.append(ids)
+    if len(rows) != 1024:
+        raise RuntimeError("Expected 1024 frozen A1-v2 training cases")
+    print("FROZEN training examples=1024; chosen/rejected completion=1 token, no EOS")
+    return rows
+
+
+def lora_config():
+    from peft import LoraConfig
+    return LoraConfig(r=8, lora_alpha=16, lora_dropout=0.0,
+                      bias="none", target_modules="all-linear",
+                      exclude_modules=["lm_head"], task_type="CAUSAL_LM")
+
+
+def ensure_lora_only(model) -> tuple[list, list]:
+    params = [(n, p) for n, p in model.named_parameters() if p.requires_grad]
+    if not params or any("lora_" not in n or "lm_head" in n or
+                         "embed_tokens" in n for n, _ in params):
+        raise RuntimeError("Non-LoRA/embedding/lm_head weights are trainable")
+    b_params = [p for n, p in model.named_parameters() if "lora_B" in n]
+    if not b_params or max(p.detach().float().norm().item() for p in b_params) != 0:
+        raise RuntimeError("LoRA B did not initialize at zero")
+    modules = [n for n, m in model.named_modules() if hasattr(m, "lora_A") and hasattr(m, "lora_B")]
+    kinds = {"full-attention": [], "linear-attention": [], "mlp": [], "other": []}
+    for name in modules:
+        kind = ("full-attention" if ".self_attn." in name else
+                "linear-attention" if ".linear_attn." in name else
+                "mlp" if ".mlp." in name else "other")
+        kinds[kind].append(name)
+    print(f"LoRA modules={len(modules)} trainable_tensors={len(params)} "
+          f"trainable_parameters={sum(p.numel() for _, p in params)}")
+    for name, names in kinds.items():
+        print(f"LoRA {name} count={len(names)}")
+    if len(modules) != 248:
+        raise RuntimeError(f"Frozen all-linear coverage changed: {len(modules)} != 248")
+    return [p for _,p in params], b_params
+
+
+class RestartCheckpointing(Exception):
+    """The sole allowed training-configuration fallback, within first two updates."""
+
+
+def save_epoch_and_eval(model, tok, letters, data: dict, output: Path,
+                        epoch: int, arm: str) -> dict:
+    import torch
+    target = output / f"ep{epoch}"
+    if target.exists():
+        raise FileExistsError(f"Refuse overwrite: {target}")
+    target.mkdir(parents=True)
+    model.save_pretrained(target, safe_serialization=True)
+    print(f"{arm} saved adapter: {target}", flush=True)
+    before = model.training
+    summary = evaluate_local(model, tok, letters, data, target, f"{arm}-ep{epoch}")
+    if before:
+        model.train()
+    adapter_files = {p.name: sha(p) for p in target.iterdir() if p.is_file()
+                     and p.name != "metrics.json"}
+    summary["adapter_files"] = adapter_files
+    dump_new(target / "metrics.json", summary)
+    print(f"{arm} epoch={epoch} adapter_sha256={adapter_files} metrics={summary['metric']}", flush=True)
+    return summary
+
+
+def train_sft_once(output: Path, data: dict, checkpointing: bool) -> dict:
+    import torch
+    import torch.nn.functional as F
+    from peft import get_peft_model, prepare_model_for_kbit_training
+
+    # Re-create a fresh LoRA policy for every attempt and do not resume after fallback.
+    torch.manual_seed(TRAIN_SEED)
+    random.seed(TRAIN_SEED)
+    model, tok, letters, model_dir, inv = read_model_and_tokenizer()
+    examples = training_set(data, tok, letters)
+    model = prepare_model_for_kbit_training(
+        model, use_gradient_checkpointing=checkpointing,
+        gradient_checkpointing_kwargs={"use_reentrant": False} if checkpointing else None,
+    )
+    model = get_peft_model(model, lora_config())
+    trainable, bparams = ensure_lora_only(model)
+    optimizer = torch.optim.AdamW(trainable, lr=1e-4, betas=(0.9, 0.999),
+                                  eps=1e-8, weight_decay=0.0)
+    peak_mib, stats, epoch_reports = 0.0, [], {}
+    letter_ids = torch.tensor([letters[c] for c in LETTERS], device="cuda:0")
+    print(f"SFT lr=1e-4 epochs=3 batch=1 accum=16 max_length=512 "
+          f"seed={TRAIN_SEED} checkpointing={checkpointing}", flush=True)
+    try:
+        step = 0
+        for epoch in (1, 2, 3):
+            shuffled = list(range(len(examples)))
+            random.Random(TRAIN_SEED + epoch - 1).shuffle(shuffled)
+            model.train()
+            optimizer.zero_grad(set_to_none=True)
+            acc_loss, acc_hits, acc_count = 0.0, 0, 0
+            start = time.perf_counter()
+            torch.cuda.reset_peak_memory_stats()
+            for pos, index in enumerate(shuffled, 1):
+                item = examples[index]
+                x = torch.tensor([item["prompt_ids"]], dtype=torch.long, device="cuda:0")
+                target = torch.tensor([item["chosen_ids"][0]], dtype=torch.long, device="cuda:0")
+                # Exactly one gold token. Do not include EOS or prompt positions in loss.
+                out = model(input_ids=x, use_cache=False)
+                logits = out.logits[:, -1, :].float()
+                loss = F.cross_entropy(logits, target)
+                if not bool(torch.isfinite(loss).item()):
+                    raise RuntimeError(f"Non-finite SFT loss on epoch={epoch} item={pos}")
+                acc_loss += float(loss.detach().item())
+                acc_hits += int(torch.argmax(logits[:, letter_ids], dim=-1).item()
+                                == LETTERS.index(next(k for k,v in letters.items()
+                                                     if v == item["chosen_ids"][0])))
+                acc_count += 1
+                (loss / 16).backward()
+                if pos % 16:
+                    continue
+                grad = torch.nn.utils.clip_grad_norm_(trainable, max_norm=1.0)
+                if not bool(torch.isfinite(grad).item()):
+                    raise RuntimeError(f"Non-finite SFT grad_norm on optimizer step {step+1}")
+                optimizer.step()
+                optimizer.zero_grad(set_to_none=True)
+                torch.cuda.synchronize()
+                step += 1
+                alloc = torch.cuda.max_memory_allocated() / 2**20
+                reserved = torch.cuda.max_memory_reserved() / 2**20
+                peak_mib = max(peak_mib, reserved)
+                if step == 2 and not checkpointing and peak_mib > STOP_MEM_MIB:
+                    print(f"SFT first two optimizer steps peak={peak_mib:.1f}MiB > 9GiB; "
+                          "restarting this arm with gradient checkpointing", flush=True)
+                    raise RestartCheckpointing()
+                sec = time.perf_counter() - start
+                rec = {"step": step, "epoch": epoch, "loss": acc_loss / acc_count,
+                       "grad_norm": float(grad), "train_accuracy": acc_hits/acc_count,
+                       "elapsed_seconds": sec, "peak_allocated_MiB": alloc,
+                       "peak_reserved_MiB": reserved}
+                stats.append(rec)
+                print(f"SFT step={step:03d} epoch={epoch} loss={rec['loss']:.7g} "
+                      f"grad_norm={rec['grad_norm']:.7g} train_accuracy={rec['train_accuracy']:.5f} "
+                      f"sec={sec:.3f} alloc_MiB={alloc:.1f} reserved_MiB={reserved:.1f}", flush=True)
+                start = time.perf_counter()
+                acc_loss, acc_hits, acc_count = 0.0, 0, 0
+                torch.cuda.reset_peak_memory_stats()
+            if step != epoch * STEPS_PER_EPOCH:
+                raise RuntimeError(f"SFT update count wrong at epoch {epoch}: {step}")
+            norms = [p.detach().float().norm().item() for p in bparams]
+            if not all(math.isfinite(v) for v in norms) or max(norms) <= 0:
+                raise RuntimeError("SFT LoRA B did not update")
+            epoch_reports[f"ep{epoch}"] = save_epoch_and_eval(
+                model, tok, letters, data, output, epoch, "sft")
+        verify_base(model_dir, inv, "SFT AFTER")
+        write_jsonl(output / "optimizer-steps.jsonl", stats)
+        return {"status": "PASS", "checkpointing": checkpointing,
+                "steps": step, "peak_reserved_MiB": peak_mib,
+                "epoch_reports": epoch_reports,
+                "step_sha256": sha(output / "optimizer-steps.jsonl")}
+    finally:
+        del model
+        gc.collect()
+        torch.cuda.empty_cache()
+
+
+def sft_arm(output: Path, data: dict) -> dict:
+    check_runner()
+    try:
+        return train_sft_once(output, data, checkpointing=False)
+    except RestartCheckpointing:
+        # Restart before the first epoch finishes; no adapter has been written.
+        print("SFT fallback: restarting from original NF4 base + fresh LoRA, no resumption")
+        return train_sft_once(output, data, checkpointing=True)
