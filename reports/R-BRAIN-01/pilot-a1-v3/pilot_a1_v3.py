@@ -8,7 +8,6 @@ No training, API calls, sampling, or changes to frozen v2 data.
 from __future__ import annotations
 
 import argparse
-from collections import Counter
 import hashlib
 import json
 import math
@@ -253,7 +252,7 @@ def make_report(baseline: dict, core: dict, examples: list[dict], tok,
         ("H0 翻转率", "h0_flip"),
         ("H0 两边同一行动比例", "h0_same_action"),
     )
-    lines = ["# A1-v3 core：相关经历筛选测试", "",
+    lines = ["**档位：重档（GPU 行为测量）**", "", "# A1-v3 core：相关经历筛选测试", "",
              "| 指标 | 第二轮基线：原始四条历史 | core：同一时刻两条历史 |",
              "|---|---:|---:|"]
     for label, key in labels:
@@ -266,7 +265,7 @@ def make_report(baseline: dict, core: dict, examples: list[dict], tok,
     lines.extend(["", "## 固定种子抽取的三条完整提示词", ""])
     for row in examples:
         lines.extend([f"### {row['id']}", ""])
-        lines.extend("    " + line for line in chat_prefix(row, tok).splitlines())
+        lines.extend("    " + line for line in chat_prefix(row, tok).split("\n"))
         lines.append("")
     save_new(OUT / "REPORT.md", "\n".join(lines) + "\n")
 
