@@ -475,7 +475,7 @@ def api_arm(output: Path, data: dict) -> dict:
                 result["valid"] = call["valid"]
                 result["choice4"] = choice
                 result["choice2"] = choice if choice in (row["chosen"], row["rejected"]) else None
-                result["action2"] = row["menu"][LETTERS.index(choice)] if result["choice2"] else None
+                result["action2"] = row["menu"][LETTERS.index(choice)] if choice else None
                 result["ok4"] = choice == row["chosen"]
                 result["ok2"] = choice == row["chosen"]
                 answers.append(result)
@@ -769,7 +769,7 @@ def train_dpo_once(output: Path, data: dict, checkpointing: bool) -> dict:
         probe.model = trainer.model
         if trainer.ref_model is not None:
             raise RuntimeError("DPO unexpectedly loaded a second reference base")
-        if not peft.utils.other.is_peft_model(trainer.model) if hasattr(peft.utils, "other") else False:
+        if not isinstance(trainer.model, peft.PeftModel):
             raise RuntimeError("Policy is not PEFT model")
         trainable, bs = ensure_lora_only(trainer.model)
         batch = next(iter(trainer.get_train_dataloader()))
@@ -834,3 +834,101 @@ def dpo_arm(output: Path, data: dict) -> dict:
         # Only restart before 1st epoch, with unchanged seed/LoRA/optimizer hyperparams.
         print("DPO fallback: restarting whole arm with gradient checkpointing; no adapter written.")
         return train_dpo_once(output, data, checkpointing=True)
+
+
+def run_arm(arm: str, output: Path) -> dict:
+    manifest, data, references = shared_inputs()
+    print(f"R-BRAIN A1-v3 arm={arm} seed_train={TRAIN_SEED} "
+          f"v2_data_sha256={json.dumps(manifest['data'], sort_keys=True)}", flush=True)
+    print(f"V2 BASELINE: {json.dumps(references['baseline']['metrics'], sort_keys=True)}", flush=True)
+    print(f"V2 POST: {json.dumps(references['post']['metrics'], sort_keys=True)}", flush=True)
+    dump_new(output / "frozen-sources.json", {
+        "v2_data": manifest["data"], "v2_results": references,
+        "script_sha256": sha(Path(__file__).resolve()),
+        "python": sys.version.split()[0],
+    })
+    started = time.perf_counter()
+    if arm == "think":
+        result = think_arm(output, data)
+    elif arm == "api":
+        result = api_arm(output, data)
+    elif arm == "sft":
+        result = sft_arm(output, data)
+    elif arm == "dpo":
+        result = dpo_arm(output, data)
+    else:
+        raise ValueError(arm)
+    result["wall_seconds"] = round(time.perf_counter() - started, 2)
+    result["arm"] = arm
+    dump_new(output / "result.json", result)
+    print(f"ARM {arm}: COMPLETED ({result['wall_seconds']} s)", flush=True)
+    return result
+
+
+def execute_one(arm: str) -> int:
+    out = V3_ROOT / arm
+    try:
+        run_arm(arm, out)
+    except Exception as exc:
+        print(f"ARM {arm}: FAILED {type(exc).__name__}: {exc}", flush=True)
+        traceback.print_exc()
+        return 1
+    return 0
+
+
+def orchestrate(arms: list[str]) -> None:
+    """Each arm gets a fresh process, separate artifacts and a single immutable log."""
+    if not V3_ROOT.exists():
+        V3_ROOT.mkdir(parents=True)
+    statuses = {}
+    for arm in arms:
+        try:
+            out = ready_to_use(arm)
+        except Exception as exc:
+            print(f"SKIPPED {arm}: {type(exc).__name__}: {exc}", flush=True)
+            statuses[arm] = {"state": "SKIPPED_EXISTING"}
+            continue
+        logs = out / "logs"
+        logs.mkdir()
+        log_path = logs / f"{arm}.log"
+        cmd = [sys.executable, "-u", str(Path(__file__).resolve()),
+               "--arm", arm, "--_child"]
+        print(f"START {arm}: log={log_path}", flush=True)
+        with log_path.open("xb") as raw, subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=0
+        ) as proc:
+            assert proc.stdout is not None
+            while chunk := proc.stdout.read(65536):
+                raw.write(chunk)
+                raw.flush()
+                sys.stdout.buffer.write(chunk)
+                sys.stdout.buffer.flush()
+            rc = proc.wait()
+        state = "PASS" if rc == 0 else "FAIL"
+        statuses[arm] = {"state": state, "exit_code": rc, "log_sha256": sha(log_path)}
+        dump_new(out / "status.json", statuses[arm])
+        hashes = {str(p.relative_to(out)).replace("\\", "/"): sha(p)
+                  for p in sorted(out.rglob("*")) if p.is_file() and p.name != "manifest.json"}
+        dump_new(out / "manifest.json", hashes)
+        print(f"{arm}: {state}; log_sha256={sha(log_path)}, "
+              f"manifest={out / 'manifest.json'}", flush=True)
+        # Technical failures skip to the next arm without changing parameters.
+    out_summary = V3_ROOT / "run-summary.json"
+    dump_new(out_summary, statuses)
+    print(f"ALL ARMS FINAL STATUS: {json.dumps(statuses, ensure_ascii=False)}", flush=True)
+    print(f"Summary: {out_summary} sha256={sha(out_summary)}", flush=True)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--arm", choices=("all",) + ARM_NAMES, default="all")
+    parser.add_argument("--_child", action="store_true", help=argparse.SUPPRESS)
+    opt = parser.parse_args()
+    if opt._child:
+        raise SystemExit(execute_one(opt.arm))
+    arms = list(ARM_NAMES) if opt.arm == "all" else [opt.arm]
+    orchestrate(arms)
+
+
+if __name__ == "__main__":
+    main()
