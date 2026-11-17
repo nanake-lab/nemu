@@ -667,3 +667,170 @@ def sft_arm(output: Path, data: dict) -> dict:
         # Restart before the first epoch finishes; no adapter has been written.
         print("SFT fallback: restarting from original NF4 base + fresh LoRA, no resumption")
         return train_sft_once(output, data, checkpointing=True)
+
+
+def train_dpo_once(output: Path, data: dict, checkpointing: bool) -> dict:
+    import torch
+    import peft
+    import transformers
+    import trl
+    from datasets import Dataset
+    from transformers import TrainerCallback
+    from trl import DPOConfig, DPOTrainer
+
+    torch.manual_seed(TRAIN_SEED)
+    random.seed(TRAIN_SEED)
+    model, tok, letters, model_dir, inventory = read_model_and_tokenizer()
+    samples = training_set(data, tok, letters)
+    dataset = Dataset.from_list(samples)
+
+    class FrozenOneTokenTrainer(DPOTrainer):
+        def _prepare_dataset(self, dataset, *args, **kwargs):
+            required = {"prompt_ids", "chosen_ids", "rejected_ids"}
+            if not required.issubset(dataset.column_names):
+                raise RuntimeError("Frozen one-token DPO fields missing")
+            return dataset
+
+    class DPOProbe(TrainerCallback):
+        def __init__(self):
+            self.model = None
+            self.start = 0.0
+            self.steps: list[dict] = []
+            self.epoch_reports: dict[str, dict] = {}
+            self.memory = 0.0
+            self.last_step = {}
+
+        def on_step_begin(self, args, state, control, **kwargs):
+            torch.cuda.synchronize()
+            torch.cuda.reset_peak_memory_stats()
+            self.start = time.perf_counter()
+
+        def on_step_end(self, args, state, control, **kwargs):
+            torch.cuda.synchronize()
+            self.last_step[state.global_step] = (
+                time.perf_counter() - self.start,
+                torch.cuda.max_memory_allocated() / 2**20,
+                torch.cuda.max_memory_reserved() / 2**20,
+            )
+
+        def on_log(self, args, state, control, logs=None, **kwargs):
+            if not logs or "loss" not in logs:
+                return
+            keys = ("loss", "grad_norm", "rewards/accuracies", "rewards/margins")
+            vals = [float(logs.get(k, float("nan"))) for k in keys]
+            if not all(math.isfinite(v) for v in vals):
+                raise RuntimeError(f"Non-finite or missing DPO metrics at update {state.global_step}")
+            sec, alloc, reserved = self.last_step[state.global_step]
+            self.memory = max(self.memory, reserved)
+            if state.global_step == 2 and not checkpointing and self.memory > STOP_MEM_MIB:
+                print(f"DPO first two updates peak={self.memory:.1f}MiB > 9GiB; "
+                      "restart arm with gradient checkpointing", flush=True)
+                raise RestartCheckpointing()
+            rec = dict(step=state.global_step, epoch=int(math.ceil(state.global_step/64)),
+                       loss=vals[0], grad_norm=vals[1], rewards_accuracy=vals[2],
+                       rewards_margin=vals[3], elapsed_seconds=sec,
+                       peak_allocated_MiB=alloc, peak_reserved_MiB=reserved)
+            self.steps.append(rec)
+            print(f"DPO step={rec['step']:03d} loss={vals[0]:.7g} grad_norm={vals[1]:.7g} "
+                  f"rewards/accuracies={vals[2]:.7g} rewards/margins={vals[3]:.7g} "
+                  f"sec={sec:.3f} allocated_MiB={alloc:.1f} reserved_MiB={reserved:.1f}", flush=True)
+
+        def on_epoch_end(self, args, state, control, **kwargs):
+            epoch = int(round(state.epoch))
+            if epoch not in (1, 2, 3) or state.global_step != epoch * STEPS_PER_EPOCH:
+                raise RuntimeError(f"DPO epoch boundary wrong: epoch={state.epoch} step={state.global_step}")
+            self.epoch_reports[f"ep{epoch}"] = save_epoch_and_eval(
+                self.model, tok, letters, data, output, epoch, "dpo")
+            return control
+
+    def make_trainer(base_model, precompute: bool):
+        config = DPOConfig(
+            output_dir=str(output / "scratch"),
+            num_train_epochs=N_EPOCHS, max_steps=-1,
+            per_device_train_batch_size=1, gradient_accumulation_steps=16,
+            gradient_checkpointing=checkpointing,
+            gradient_checkpointing_kwargs={"use_reentrant": False} if checkpointing else {},
+            max_length=512, bf16=True,
+            beta=0.1, loss_type="sigmoid", label_smoothing=0.0,
+            learning_rate=5e-5, lr_scheduler_type="constant", warmup_steps=0,
+            optim="adamw_torch", adam_beta1=0.9, adam_beta2=0.999,
+            adam_epsilon=1e-8, weight_decay=0.0, max_grad_norm=1.0,
+            seed=TRAIN_SEED, data_seed=TRAIN_SEED,
+            logging_strategy="steps", logging_steps=1, logging_nan_inf_filter=False,
+            save_strategy="no", report_to="none", disable_tqdm=True,
+            dataloader_num_workers=0, precompute_ref_log_probs=precompute,
+            precompute_ref_batch_size=1, sync_ref_model=False,
+        )
+        probe = DPOProbe()
+        trainer = FrozenOneTokenTrainer(
+            model=base_model, ref_model=None, args=config,
+            processing_class=tok, train_dataset=dataset,
+            peft_config=lora_config(), callbacks=[probe])
+        probe.model = trainer.model
+        if trainer.ref_model is not None:
+            raise RuntimeError("DPO unexpectedly loaded a second reference base")
+        if not peft.utils.other.is_peft_model(trainer.model) if hasattr(peft.utils, "other") else False:
+            raise RuntimeError("Policy is not PEFT model")
+        trainable, bs = ensure_lora_only(trainer.model)
+        batch = next(iter(trainer.get_train_dataloader()))
+        if not {"input_ids", "attention_mask", "completion_mask"}.issubset(batch):
+            raise RuntimeError(f"DPO collator keys incompatible: {sorted(batch)}")
+        counts = batch["completion_mask"].sum(dim=1).tolist()
+        if counts != [1, 1]:
+            raise RuntimeError(f"DPO completion loss mask not exactly one token: {counts}")
+        print(f"DPO precompute_ref_log_probs={precompute}, "
+              f"ref_model={trainer.ref_model}, one-token mask={counts}")
+        return trainer, probe, bs
+
+    precompute = True
+    trainer = None
+    try:
+        try:
+            trainer, probe, bparams = make_trainer(model, precompute=True)
+        except (ValueError, NotImplementedError) as exc:
+            if "precomput" not in str(exc).lower() and "ref_model" not in str(exc).lower():
+                raise
+            print(f"TRL 1.18 precompute unsupported: {type(exc).__name__}: {exc}. "
+                  "Using the original disabled-adapter reference path (no custom implementation).")
+            if trainer is not None:
+                del trainer
+            del model
+            gc.collect()
+            torch.cuda.empty_cache()
+            torch.manual_seed(TRAIN_SEED)
+            model = load_model(model_dir)
+            trainer, probe, bparams = make_trainer(model, precompute=False)
+            precompute = False
+
+        print(f"DPO lr=5e-5 epochs=3 batch=1 accum=16 seed={TRAIN_SEED} "
+              f"checkpointing={checkpointing} ref_precompute={precompute}", flush=True)
+        trainer.train()
+        if [r["step"] for r in probe.steps] != list(range(1, 193)):
+            raise RuntimeError(f"Expected 192 DPO updates, saw {len(probe.steps)}")
+        if sorted(probe.epoch_reports) != ["ep1", "ep2", "ep3"]:
+            raise RuntimeError("Missing DPO epoch evaluation")
+        norms = [p.detach().float().norm().item() for p in bparams]
+        if not all(math.isfinite(v) for v in norms) or max(norms) <= 0:
+            raise RuntimeError("DPO LoRA B not updated")
+        verify_base(model_dir, inventory, "DPO AFTER")
+        write_jsonl(output / "optimizer-steps.jsonl", probe.steps)
+        return {"status": "PASS", "steps": 192, "checkpointing": checkpointing,
+                "precompute_ref_log_probs": precompute,
+                "peak_reserved_MiB": probe.memory, "epoch_reports": probe.epoch_reports,
+                "step_sha256": sha(output / "optimizer-steps.jsonl")}
+    finally:
+        if trainer is not None:
+            del trainer
+        del model
+        gc.collect()
+        torch.cuda.empty_cache()
+
+
+def dpo_arm(output: Path, data: dict) -> dict:
+    check_runner()
+    try:
+        return train_dpo_once(output, data, checkpointing=False)
+    except RestartCheckpointing:
+        # Only restart before 1st epoch, with unchanged seed/LoRA/optimizer hyperparams.
+        print("DPO fallback: restarting whole arm with gradient checkpointing; no adapter written.")
+        return train_dpo_once(output, data, checkpointing=True)
