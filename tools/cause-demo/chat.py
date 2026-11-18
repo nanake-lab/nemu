@@ -95,7 +95,7 @@ def build_deepseek_body(messages: list[dict[str, str]], no_think: bool) -> dict[
 
 
 def call_deepseek_stream(
-    body: dict[str, Any], api_key: str
+    body: dict[str, Any], api_key: str, *, raw_stream: list[str] | None = None
 ) -> dict[str, Any]:
     req = urllib.request.Request(
         DEEPSEEK_ENDPOINT,
@@ -125,6 +125,8 @@ def call_deepseek_stream(
             result["http_status"] = resp.status
             for raw in resp:
                 elapsed = time.perf_counter() - start
+                if raw_stream is not None:
+                    raw_stream.append(raw.decode("utf-8", errors="replace"))
                 line = raw.decode("utf-8").strip()
                 if not line.startswith("data:"):
                     continue
@@ -175,6 +177,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="ADR 0042 cause-projection + DeepSeek chat demo")
     parser.add_argument("--scenario", required=True, help="Path to scenario JSON file")
     parser.add_argument("--no-think", action="store_true", help="Disable DeepSeek thinking")
+    parser.add_argument("--gap-facts", action="store_true", help="Include facts about missing thoughts")
     args = parser.parse_args()
 
     api_key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
@@ -228,6 +231,9 @@ def main() -> int:
             "frontier_complete": True,
             "decomposition_unknown": False,
         }
+
+        if args.gap_facts:
+            payload["gap_facts"] = True
 
         assembled = run_assembler(payload, core_dir, env)
         outcome = assembled.get("outcome")
