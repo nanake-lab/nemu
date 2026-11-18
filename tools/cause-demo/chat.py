@@ -178,7 +178,10 @@ def main() -> int:
     parser.add_argument("--scenario", required=True, help="Path to scenario JSON file")
     parser.add_argument("--no-think", action="store_true", help="Disable DeepSeek thinking")
     parser.add_argument("--gap-facts", action="store_true", help="Include facts about missing thoughts")
+    parser.add_argument("--fact-mode", choices=("none", "per_event", "general"), help="Choose fact mode (default: none)")
     args = parser.parse_args()
+    if args.gap_facts and args.fact_mode not in (None, "per_event"):
+        parser.error("--gap-facts is equivalent to --fact-mode per_event")
 
     api_key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
     if not api_key:
@@ -234,6 +237,8 @@ def main() -> int:
 
         if args.gap_facts:
             payload["gap_facts"] = True
+        if args.fact_mode is not None:
+            payload["fact_mode"] = args.fact_mode
 
         assembled = run_assembler(payload, core_dir, env)
         outcome = assembled.get("outcome")
