@@ -1,7 +1,7 @@
 #![forbid(unsafe_code)]
 //! CLI bridge example for DEMO-CAUSE-01 (`task_layer::cause_projection::assemble`).
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::io::{self, Read, Write};
 
 use serde::{Deserialize, Serialize};
@@ -114,6 +114,8 @@ struct DemoInput {
     slots: Vec<SlotIn>,
     #[serde(default)]
     decomposition_unknown: bool,
+    #[serde(default)]
+    gap_facts: bool,
     budget: BudgetIn,
 }
 
@@ -170,9 +172,48 @@ impl DemoOutput {
 /// 演示用，不是发布的投影资源 (Demo only; not a published projection resource).
 struct DemoCodec {
     speakers: BTreeMap<RecordId, String>,
+    times: BTreeMap<RecordId, String>,
+    slot_sources: Vec<Vec<RecordId>>,
+    gap_facts: bool,
 }
 
 impl DemoCodec {
+    fn append_gap_facts(&self, content: &mut String, plan: &RequestPlan, records: &RecordTable) {
+        let delivered: BTreeSet<_> = plan
+            .dialogue
+            .iter()
+            .map(|item| &item.id)
+            .chain(plan.experience.iter().map(|item| &item.id))
+            .chain(std::iter::once(&plan.latest))
+            .collect();
+        let mut anchors = BTreeSet::new();
+        for sources in &self.slot_sources {
+            if !sources.iter().all(|id| {
+                delivered.contains(id)
+                    && self
+                        .speakers
+                        .get(id)
+                        .is_some_and(|speaker| !speaker.starts_with("Nemu"))
+            }) {
+                continue;
+            }
+            if let Some(anchor) = sources
+                .iter()
+                .filter_map(|id| records.get(id))
+                .min_by_key(|record| (record.h_pos, &record.id))
+                && let Some(time) = self.times.get(&anchor.id)
+            {
+                anchors.insert((anchor.h_pos, time));
+            }
+        }
+        let mut written = BTreeSet::new();
+        for (_, time) in anchors {
+            if written.insert(time) {
+                content.push_str(&format!("\n关于 [{time}] 那件事，你当时的想法没有记录。"));
+            }
+        }
+    }
+
     fn encode_messages(&self, plan: &RequestPlan, records: &RecordTable) -> Vec<ChatMessage> {
         let mut msgs = vec![ChatMessage {
             role: "system".to_string(),
@@ -200,6 +241,9 @@ impl DemoCodec {
             });
         }
         let mut e_content = format!("{IDENTITY_LINE_1}\n{IDENTITY_LINE_2}");
+        if self.gap_facts {
+            self.append_gap_facts(&mut e_content, plan, records);
+        }
         for item in &plan.experience {
             if let Some(rec) = records.get(&item.id) {
                 e_content.push('\n');
@@ -270,6 +314,7 @@ fn pack_out(entry: PackEntry) -> PackOut {
 
 fn build_input(demo_in: DemoInput) -> Result<(AssemblyInput, DemoCodec), String> {
     let mut speakers = BTreeMap::new();
+    let mut times = BTreeMap::new();
     let mut records = Vec::with_capacity(demo_in.records.len());
     for r in demo_in.records {
         let rid = RecordId(r.id.into_bytes());
@@ -279,6 +324,7 @@ fn build_input(demo_in: DemoInput) -> Result<(AssemblyInput, DemoCodec), String>
         } else {
             format!("[{}] {}：{}", r.time, r.speaker, r.text).into_bytes()
         };
+        times.insert(rid.clone(), r.time);
         let eligibility = match r.eligibility {
             EligibilityIn::Eligible => Eligibility::Eligible,
             EligibilityIn::Undetermined => Eligibility::Undetermined,
@@ -308,6 +354,7 @@ fn build_input(demo_in: DemoInput) -> Result<(AssemblyInput, DemoCodec), String>
             kind,
         });
     }
+    let mut slot_sources = Vec::new();
     let slots = demo_in
         .slots
         .into_iter()
@@ -317,14 +364,15 @@ fn build_input(demo_in: DemoInput) -> Result<(AssemblyInput, DemoCodec), String>
                 HValueIn::Scalar(v) => vec![v],
                 HValueIn::Vec(v) => v,
             };
+            let sources = to_rids(s.sources);
+            if demo_in.gap_facts {
+                slot_sources.push(sources.clone());
+            }
             Slot {
                 basis: basis.clone(),
                 h,
                 first_f_pos: HPos(s.first_f_pos),
-                members: vec![Member {
-                    basis,
-                    sources: to_rids(s.sources),
-                }],
+                members: vec![Member { basis, sources }],
                 merge_undecided: s.merge_undecided,
             }
         })
@@ -356,7 +404,15 @@ fn build_input(demo_in: DemoInput) -> Result<(AssemblyInput, DemoCodec), String>
             output_reserve: demo_in.budget.output_reserve,
         },
     };
-    Ok((input, DemoCodec { speakers }))
+    Ok((
+        input,
+        DemoCodec {
+            speakers,
+            times,
+            slot_sources,
+            gap_facts: demo_in.gap_facts,
+        },
+    ))
 }
 
 fn run(stdin_str: &str) -> DemoOutput {
