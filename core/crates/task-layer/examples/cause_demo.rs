@@ -14,6 +14,7 @@ use task_layer::cause_projection::{
 const DEFAULT_PROTOCOL: &str = "请用中文回复最新输入。输出为对话正文。已有对话保留原说话人；本轮来由是历史记录，记录中的话保留原有来源身份。";
 const IDENTITY_LINE_1: &str = "本轮说话者是 Nemu，对话对象是用户竹。";
 const IDENTITY_LINE_2: &str = "你知道的过去，只有下面记录里的内容。";
+const GENERAL_FACT: &str = "你过去的想法和感受，只有说话人以 Nemu 开头的记录里写着。";
 
 fn default_true() -> bool {
     true
@@ -94,6 +95,20 @@ struct BudgetIn {
     output_reserve: u64,
 }
 
+#[derive(Clone, Copy, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+enum FactMode {
+    None,
+    PerEvent,
+    General,
+}
+
+fn present<'de, Value: Deserialize<'de>, Decoder: serde::Deserializer<'de>>(
+    decoder: Decoder,
+) -> Result<Option<Value>, Decoder::Error> {
+    Value::deserialize(decoder).map(Some)
+}
+
 #[derive(Deserialize)]
 struct DemoInput {
     #[serde(default = "default_protocol")]
@@ -114,8 +129,10 @@ struct DemoInput {
     slots: Vec<SlotIn>,
     #[serde(default)]
     decomposition_unknown: bool,
-    #[serde(default)]
-    gap_facts: bool,
+    #[serde(default, deserialize_with = "present")]
+    gap_facts: Option<bool>,
+    #[serde(default, deserialize_with = "present")]
+    fact_mode: Option<FactMode>,
     budget: BudgetIn,
 }
 
@@ -174,7 +191,7 @@ struct DemoCodec {
     speakers: BTreeMap<RecordId, String>,
     times: BTreeMap<RecordId, String>,
     slot_sources: Vec<Vec<RecordId>>,
-    gap_facts: bool,
+    fact_mode: FactMode,
 }
 
 impl DemoCodec {
@@ -241,8 +258,13 @@ impl DemoCodec {
             });
         }
         let mut e_content = format!("{IDENTITY_LINE_1}\n{IDENTITY_LINE_2}");
-        if self.gap_facts {
-            self.append_gap_facts(&mut e_content, plan, records);
+        match self.fact_mode {
+            FactMode::None => {}
+            FactMode::PerEvent => self.append_gap_facts(&mut e_content, plan, records),
+            FactMode::General => {
+                e_content.push('\n');
+                e_content.push_str(GENERAL_FACT);
+            }
         }
         for item in &plan.experience {
             if let Some(rec) = records.get(&item.id) {
@@ -313,6 +335,19 @@ fn pack_out(entry: PackEntry) -> PackOut {
 }
 
 fn build_input(demo_in: DemoInput) -> Result<(AssemblyInput, DemoCodec), String> {
+    let legacy_mode = demo_in.gap_facts.map(|enabled| {
+        if enabled {
+            FactMode::PerEvent
+        } else {
+            FactMode::None
+        }
+    });
+    if let (Some(mode), Some(legacy)) = (demo_in.fact_mode, legacy_mode)
+        && mode != legacy
+    {
+        return Err("fact_mode conflicts with gap_facts".to_string());
+    }
+    let fact_mode = demo_in.fact_mode.or(legacy_mode).unwrap_or(FactMode::None);
     let mut speakers = BTreeMap::new();
     let mut times = BTreeMap::new();
     let mut records = Vec::with_capacity(demo_in.records.len());
@@ -365,7 +400,7 @@ fn build_input(demo_in: DemoInput) -> Result<(AssemblyInput, DemoCodec), String>
                 HValueIn::Vec(v) => v,
             };
             let sources = to_rids(s.sources);
-            if demo_in.gap_facts {
+            if fact_mode == FactMode::PerEvent {
                 slot_sources.push(sources.clone());
             }
             Slot {
@@ -410,7 +445,7 @@ fn build_input(demo_in: DemoInput) -> Result<(AssemblyInput, DemoCodec), String>
             speakers,
             times,
             slot_sources,
-            gap_facts: demo_in.gap_facts,
+            fact_mode,
         },
     ))
 }

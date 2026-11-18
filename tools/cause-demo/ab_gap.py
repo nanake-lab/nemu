@@ -61,7 +61,7 @@ def run_trial(
     phase: str,
     round_no: int,
     question: str,
-    gap_facts: bool,
+    condition: bool | str,
     body: dict[str, Any],
 ) -> bool:
     raw_stream: list[str] = []
@@ -69,11 +69,12 @@ def run_trial(
         response = call_deepseek_stream(body, api_key, raw_stream=raw_stream)
     valid = bool(response["done"] and not response["error"] and response["text"].strip())
     cost, cost_period = estimate_cost(response["usage"], response["started_utc"])
+    field = "gap_facts" if isinstance(condition, bool) else "fact_mode"
     append_session_log(log_path, {
         "phase": phase,
         "round": round_no,
         "question": question,
-        "gap_facts": gap_facts,
+        field: condition,
         "request": body,
         "response": response,
         "raw_stream": raw_stream,
@@ -81,7 +82,7 @@ def run_trial(
         "cost_usd": cost,
         "cost_period": cost_period,
     })
-    print(f"{phase} {round_no:02d} {question} gap_facts={gap_facts}: {'ok' if valid else 'failed'}", flush=True)
+    print(f"{phase} {round_no:02d} {question} {field}={condition}: {'ok' if valid else 'failed'}", flush=True)
     return valid
 
 
