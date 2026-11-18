@@ -180,12 +180,17 @@ def main() -> int:
     parser.add_argument("--no-think", action="store_true", help="Disable DeepSeek thinking")
     parser.add_argument("--gap-facts", action="store_true", help="Include facts about missing thoughts")
     parser.add_argument("--fact-mode", choices=("none", "per_event", "general"), help="Choose fact mode (default: none)")
-    parser.add_argument("--plan", action="store_true", help="Plan, check citations, then speak")
+    plans = parser.add_mutually_exclusive_group()
+    plans.add_argument("--plan", action="store_true", help="Plan, check citations, then speak")
+    plans.add_argument("--plan2", action="store_true", help="Plan, check, and join without rewriting")
+    parser.add_argument("--self-quote", choices=("loose", "strict"), default="loose")
     args = parser.parse_args()
     if args.gap_facts and args.fact_mode not in (None, "per_event"):
         parser.error("--gap-facts is equivalent to --fact-mode per_event")
-    if args.plan and (args.no_think or args.fact_mode not in (None, "per_event")):
-        parser.error("--plan uses per_event and fixed thinking settings")
+    if (args.plan or args.plan2) and (args.no_think or args.fact_mode not in (None, "per_event")):
+        parser.error("--plan and --plan2 use per_event and fixed thinking settings")
+    if not args.plan2 and args.self_quote != "loose":
+        parser.error("--self-quote strict requires --plan2")
 
     api_key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
     if not api_key:
@@ -202,6 +207,8 @@ def main() -> int:
     last_shown: dict[str, Any] | None = None
 
     mode_label = "列要点 high → 核对 → 说出口关闭思考" if args.plan else ("关闭" if args.no_think else "high")
+    if args.plan2:
+        mode_label = f"列要点 high → 核对并拼接（{args.self_quote}）"
     print(f"已载入场景：{args.scenario}（思考：{mode_label}）。输入 /show 查看上轮包，/quit 退出。")
     while True:
         try:
@@ -244,7 +251,7 @@ def main() -> int:
             payload["gap_facts"] = True
         if args.fact_mode is not None:
             payload["fact_mode"] = args.fact_mode
-        if args.plan:
+        if args.plan or args.plan2:
             payload.update(fact_mode="per_event", show_ids=True)
 
         assembled = run_assembler(payload, core_dir, env)
@@ -256,6 +263,23 @@ def main() -> int:
 
         messages: list[dict[str, str]] = assembled["messages"]
         last_shown = {"messages": messages, "binding": assembled["binding"], "measured": assembled["measured"]}
+        if args.plan2:
+            from plan_speak import run_plan2
+
+            run = run_plan2(assembled, payload["records"], api_key, self_quote=args.self_quote)
+            last_shown.update(plan_json=run["plan"]["response"]["text"], verification=run["verification"])
+            if not run["valid"]:
+                last_shown["error"] = run["error"]
+                print(f"[plan2_error] {run['error']}", file=sys.stderr)
+                append_session_log(log_path, {"turn": next_idx // 2 + 1, "plan2_run": run})
+                continue
+            print(f"Nemu> {run['answer']}", flush=True)
+            dialogue_records.extend([o_record, {
+                "id": f"d{next_idx + 1}", "h_pos": FIRST_DIALOGUE_H_POS + next_idx + 1,
+                "time": "", "speaker": "Nemu", "text": run["answer"],
+            }])
+            append_session_log(log_path, {"turn": next_idx // 2 + 1, "plan2_run": run})
+            continue
         plan_run = None
         if args.plan:
             from plan_speak import run_pipeline
