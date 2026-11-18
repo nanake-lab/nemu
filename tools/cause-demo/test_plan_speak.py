@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Any
 
-from plan_speak import FALLBACK, verify_points
+from plan_speak import FALLBACK, PLAN2_FALLBACK, join_points, verify_points
 
 SPEAKERS = {"e4": "网友阿杰", "n1": "Nemu（独处时的念头）"}
 
@@ -54,6 +54,43 @@ class VerifyPointsTests(unittest.TestCase):
         result = verify_points(json.dumps({"points": points}), SPEAKERS)
         self.assertEqual(result["kept"], points)
         self.assertTrue(all(check["kept"] for check in result["checks"]))
+
+
+class Plan2Tests(unittest.TestCase):
+    def verify(self, kind: str, text: str, mode: str = "loose") -> dict[str, Any]:
+        point = {"type": kind, "text": text, "cites": ["n1"] if kind == "past_self" else []}
+        return verify_points(
+            json.dumps({"points": [point]}), SPEAKERS,
+            self_quote=mode, record_texts={"n1": "是不是忘了。"},
+        )
+
+    def test_reject_past_now(self) -> None:
+        result = self.verify("now", "那天我愣了一下。")
+        self.assertEqual(result["checks"][0]["reason"], "now_refers_past")
+
+    def test_keep_now_with_present_marker(self) -> None:
+        self.assertEqual(len(self.verify("now", "现在回想那天，还有点闷。")["kept"]), 1)
+
+    def test_strict_accepts_verbatim(self) -> None:
+        self.assertEqual(len(self.verify("past_self", "我想：是不是忘了。", "strict")["kept"]), 1)
+
+    def test_strict_rejects_paraphrase(self) -> None:
+        self.assertEqual(
+            self.verify("past_self", "我想你是不是忘了？", "strict")["checks"][0]["reason"],
+            "not_verbatim",
+        )
+
+    def test_loose_accepts_same_paraphrase(self) -> None:
+        self.assertEqual(len(self.verify("past_self", "我想你是不是忘了？")["kept"]), 1)
+
+    def test_join_points(self) -> None:
+        points = [{"text": text} for text in ("你好", "是吗？", "我记得…", "再见")]
+        self.assertEqual(join_points(points), "你好。是吗？我记得…再见")
+
+    def test_empty_after_filtering(self) -> None:
+        result = self.verify("now", "当时我没说话。")
+        self.assertEqual(result["kept"], [])
+        self.assertEqual(join_points(result["kept"]), PLAN2_FALLBACK)
 
 
 if __name__ == "__main__":
