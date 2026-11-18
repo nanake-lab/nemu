@@ -27,10 +27,16 @@ Q1_DIALOGUE = (
 
 
 def build_payload(scenario: dict[str, Any], question: str, mode: str) -> dict[str, Any]:
-    prior = Q1_DIALOGUE if question == "Q1" else ()
+    return build_question_payload(scenario, QUESTIONS[question], mode, with_dialogue=question == "Q1")
+
+
+def build_question_payload(
+    scenario: dict[str, Any], latest: str, mode: str, *, with_dialogue: bool
+) -> dict[str, Any]:
+    prior = Q1_DIALOGUE if with_dialogue else ()
     records = [
         {"id": f"d{index}", "h_pos": FIRST_DIALOGUE_H_POS + index, "speaker": speaker, "text": text}
-        for index, (speaker, text) in enumerate((*prior, ("竹", QUESTIONS[question])))
+        for index, (speaker, text) in enumerate((*prior, ("竹", latest)))
     ]
     return {
         **scenario,

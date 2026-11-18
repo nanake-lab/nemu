@@ -133,6 +133,8 @@ struct DemoInput {
     gap_facts: Option<bool>,
     #[serde(default, deserialize_with = "present")]
     fact_mode: Option<FactMode>,
+    #[serde(default)]
+    show_ids: bool,
     budget: BudgetIn,
 }
 
@@ -172,6 +174,8 @@ struct DemoOutput {
     binding: Option<BindingOut>,
     #[serde(skip_serializing_if = "Option::is_none")]
     measured: Option<u64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    delivered_ids: Option<Vec<String>>,
 }
 
 impl DemoOutput {
@@ -182,6 +186,7 @@ impl DemoOutput {
             messages: None,
             binding: None,
             measured: None,
+            delivered_ids: None,
         }
     }
 }
@@ -192,6 +197,7 @@ struct DemoCodec {
     times: BTreeMap<RecordId, String>,
     slot_sources: Vec<Vec<RecordId>>,
     fact_mode: FactMode,
+    show_ids: bool,
 }
 
 impl DemoCodec {
@@ -254,7 +260,11 @@ impl DemoCodec {
             });
             msgs.push(ChatMessage {
                 role: role.to_string(),
-                content,
+                content: if self.show_ids {
+                    format!("({}) {content}", id_str(&item.id))
+                } else {
+                    content
+                },
             });
         }
         let mut e_content = format!("{IDENTITY_LINE_1}\n{IDENTITY_LINE_2}");
@@ -269,6 +279,9 @@ impl DemoCodec {
         for item in &plan.experience {
             if let Some(rec) = records.get(&item.id) {
                 e_content.push('\n');
+                if self.show_ids {
+                    e_content.push_str(&format!("({}) ", id_str(&item.id)));
+                }
                 e_content.push_str(&String::from_utf8_lossy(&rec.body));
             }
         }
@@ -446,6 +459,7 @@ fn build_input(demo_in: DemoInput) -> Result<(AssemblyInput, DemoCodec), String>
             times,
             slot_sources,
             fact_mode,
+            show_ids: demo_in.show_ids,
         },
     ))
 }
@@ -461,6 +475,7 @@ fn run(stdin_str: &str) -> DemoOutput {
     };
     match assemble(&input, &codec) {
         Ok(Outcome::Sent {
+            plan,
             bytes,
             binding,
             note,
@@ -482,6 +497,14 @@ fn run(stdin_str: &str) -> DemoOutput {
                     packs: binding.packs.into_iter().map(pack_out).collect(),
                 }),
                 measured: Some(binding.measured),
+                delivered_ids: codec.show_ids.then(|| {
+                    plan.dialogue
+                        .iter()
+                        .map(|item| id_str(&item.id))
+                        .chain(plan.experience.iter().map(|item| id_str(&item.id)))
+                        .chain(std::iter::once(id_str(&plan.latest)))
+                        .collect()
+                }),
             }
         }
         Ok(Outcome::ProjectionUnavailable(u)) => {

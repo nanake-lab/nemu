@@ -95,7 +95,7 @@ def build_deepseek_body(messages: list[dict[str, str]], no_think: bool) -> dict[
 
 
 def call_deepseek_stream(
-    body: dict[str, Any], api_key: str, *, raw_stream: list[str] | None = None
+    body: dict[str, Any], api_key: str, *, raw_stream: list[str] | None = None, echo: bool = True
 ) -> dict[str, Any]:
     req = urllib.request.Request(
         DEEPSEEK_ENDPOINT,
@@ -148,10 +148,11 @@ def call_deepseek_stream(
                     if delta:
                         if result["first_text_s"] is None:
                             result["first_text_s"] = elapsed
-                        if not printed_prefix:
+                        if echo and not printed_prefix:
                             print("Nemu> ", end="", flush=True)
                             printed_prefix = True
-                        print(delta, end="", flush=True)
+                        if echo:
+                            print(delta, end="", flush=True)
                         result["text"] += delta
                     if choice.get("finish_reason"):
                         result["finish_reason"] = choice["finish_reason"]
@@ -179,9 +180,12 @@ def main() -> int:
     parser.add_argument("--no-think", action="store_true", help="Disable DeepSeek thinking")
     parser.add_argument("--gap-facts", action="store_true", help="Include facts about missing thoughts")
     parser.add_argument("--fact-mode", choices=("none", "per_event", "general"), help="Choose fact mode (default: none)")
+    parser.add_argument("--plan", action="store_true", help="Plan, check citations, then speak")
     args = parser.parse_args()
     if args.gap_facts and args.fact_mode not in (None, "per_event"):
         parser.error("--gap-facts is equivalent to --fact-mode per_event")
+    if args.plan and (args.no_think or args.fact_mode not in (None, "per_event")):
+        parser.error("--plan uses per_event and fixed thinking settings")
 
     api_key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
     if not api_key:
@@ -197,7 +201,8 @@ def main() -> int:
     dialogue_records: list[dict[str, Any]] = []
     last_shown: dict[str, Any] | None = None
 
-    print(f"已载入场景：{args.scenario}（思考：{'关闭' if args.no_think else 'high'}）。输入 /show 查看上轮包，/quit 退出。")
+    mode_label = "列要点 high → 核对 → 说出口关闭思考" if args.plan else ("关闭" if args.no_think else "high")
+    print(f"已载入场景：{args.scenario}（思考：{mode_label}）。输入 /show 查看上轮包，/quit 退出。")
     while True:
         try:
             user_text = input("竹> ").strip()
@@ -239,6 +244,8 @@ def main() -> int:
             payload["gap_facts"] = True
         if args.fact_mode is not None:
             payload["fact_mode"] = args.fact_mode
+        if args.plan:
+            payload.update(fact_mode="per_event", show_ids=True)
 
         assembled = run_assembler(payload, core_dir, env)
         outcome = assembled.get("outcome")
@@ -249,8 +256,23 @@ def main() -> int:
 
         messages: list[dict[str, str]] = assembled["messages"]
         last_shown = {"messages": messages, "binding": assembled["binding"], "measured": assembled["measured"]}
-        req_body = build_deepseek_body(messages, args.no_think)
-        api_res = call_deepseek_stream(req_body, api_key)
+        plan_run = None
+        if args.plan:
+            from plan_speak import run_pipeline
+
+            plan_run = run_pipeline(assembled, payload["records"], api_key, echo=True)
+            last_shown["plan_json"] = plan_run["plan"]["response"]["text"]
+            last_shown["verification"] = plan_run["verification"]
+            if not plan_run["valid"]:
+                last_shown["error"] = plan_run["error"]
+                print(f"[plan_error] {plan_run['error']}", file=sys.stderr)
+                append_session_log(log_path, {"turn": next_idx // 2 + 1, "plan_run": plan_run})
+                continue
+            req_body = plan_run["speak"]["request"]
+            api_res = plan_run["speak"]["response"]
+        else:
+            req_body = build_deepseek_body(messages, args.no_think)
+            api_res = call_deepseek_stream(req_body, api_key)
 
         if api_res["error"] or not api_res["done"] or not str(api_res["text"]).strip():
             print(f"[api_error] error={api_res['error']} finish={api_res['finish_reason']}", file=sys.stderr)
@@ -265,11 +287,17 @@ def main() -> int:
                 "text": reply_text,
             })
 
-        first_s = api_res["first_text_s"]
+        prior_s = plan_run["plan"]["response"]["elapsed_s"] if plan_run else 0.0
+        elapsed = prior_s + api_res["elapsed_s"]
+        first_s = prior_s + api_res["first_text_s"] if api_res["first_text_s"] is not None else None
         first_str = f"{first_s:.2f}s" if isinstance(first_s, float) else "N/A"
         cost, period = estimate_cost(api_res["usage"], str(api_res["started_utc"]))
+        if plan_run:
+            plan_cost = plan_run["plan"]["cost_usd"]
+            cost = cost + plan_cost if cost is not None and plan_cost is not None else None
+            period = "两步合计"
         cost_str = f"${cost:.6f}" if cost is not None else "未知"
-        print(f"[统计] 首字 {first_str} | 总计 {api_res['elapsed_s']:.2f}s | 估算花费 {cost_str}（{period}）")
+        print(f"[统计] 首字 {first_str} | 总计 {elapsed:.2f}s | 估算花费 {cost_str}（{period}）")
 
         append_session_log(log_path, {
             "turn": next_idx // 2 + 1,
@@ -280,6 +308,7 @@ def main() -> int:
             "response": api_res,
             "cost_usd": cost,
             "cost_period": period,
+            **({"plan_run": plan_run} if plan_run else {}),
         })
     return 0
 
