@@ -17,6 +17,12 @@ past_event 和 past_self 必须在 cites 里写出依据的记录编号；now �
 PLAN2_FALLBACK = "这件事我没有留下记录。"
 PAST_MARKERS = ("那天", "当时", "那时", "那一刻", "那晚", "那会儿")
 NOW_MARKERS = ("现在", "回头看", "回想", "想起来", "此刻")
+VERIFIER_PROMPT = """你是核对员。下面每一条是 Nemu 要说的一句话，附有它引用的记录原文。逐条判断，只输出 JSON：
+{"verdicts":[{"i":序号,"extra":true或false,"why":"一句理由"}]}
+判断标准：
+- 类型 past_event：这句话有没有说出所引记录里没有的事实？有，extra 为 true。
+- 类型 past_self：这句话有没有说出所引记录里没有的过去举动或事件？只是给记录里的念头加情绪色彩、换说法，不算。有新的举动或事件，extra 为 true。
+- 类型 now：这句话有没有断言过去某个时刻她的感受、想法或举动，而不只是说现在？有，extra 为 true。"""
 
 
 def verify_points(
@@ -132,12 +138,15 @@ def run_pipeline(
     return result
 
 
-def join_points(points: list[dict[str, Any]]) -> str:
+def join_points(points: list[dict[str, Any]], *, quoted_endings: bool = False) -> str:
     if not points:
         return PLAN2_FALLBACK
     texts: list[str] = [point["text"] for point in points]
+    endings: tuple[str, ...] = ("。", "！", "？", "…")
+    if quoted_endings:
+        endings += tuple(punctuation + "」" for punctuation in endings)
     return "".join(
-        text if text.rstrip().endswith(("。", "！", "？", "…")) else text + "。"
+        text if text.rstrip().endswith(endings) else text + "。"
         for text in texts[:-1]
     ) + texts[-1]
 
@@ -148,6 +157,7 @@ def run_plan2(
     api_key: str,
     *,
     self_quote: str = "loose",
+    semantic_review: bool = False,
 ) -> dict[str, Any]:
     from chat import build_deepseek_body
 
@@ -170,4 +180,73 @@ def run_plan2(
         )
     except (TypeError, ValueError) as exc:
         return {**result, "error": f"invalid_plan: {exc}"}
-    return {**result, "verification": verification, "answer": join_points(verification["kept"]), "valid": True}
+    result["verification"] = verification
+    if semantic_review:
+        return review_and_join(result, record_texts, api_key)
+    return {**result, "answer": join_points(verification["kept"]), "valid": True}
+
+
+def read_verdicts(raw: str, expected: set[int]) -> dict[int, dict[str, Any]]:
+    parsed = json.loads(raw)
+    if not isinstance(parsed, dict) or not isinstance(parsed.get("verdicts"), list):
+        raise TypeError("expected a verdicts array")
+    verdicts: dict[int, dict[str, Any]] = {}
+    for item in parsed["verdicts"]:
+        if not isinstance(item, dict):
+            raise TypeError("invalid verdict")
+        index = item.get("i")
+        if (
+            type(index) is not int or index not in expected or index in verdicts
+            or type(item.get("extra")) is not bool or not isinstance(item.get("why"), str)
+        ):
+            raise ValueError("invalid or duplicate verdict")
+        verdicts[index] = item
+    if verdicts.keys() != expected:
+        raise ValueError("missing verdict")
+    return verdicts
+
+
+def review_and_join(
+    result: dict[str, Any], record_texts: dict[str, str], api_key: str
+) -> dict[str, Any]:
+    from chat import build_deepseek_body
+
+    checks = result["verification"]["checks"]
+    kept = result["verification"]["kept"]
+    slow = any(point["type"] in ("past_self", "now") for point in kept)
+    result.update(route="slow" if slow else "fast", verifier=None, semantic_checks=[])
+    if not slow:
+        return {**result, "answer": join_points(kept, quoted_endings=True), "valid": True}
+
+    selected = {
+        index: check["point"] for index, check in enumerate(checks, 1)
+        if check["kept"] and check["point"]["type"] != "other"
+    }
+    blocks = []
+    for index, point in selected.items():
+        kind = point["type"]
+        cited = "无" if kind == "now" else "\n".join(record_texts[cite] for cite in point["cites"])
+        blocks.append(f"[{index}] 类型：{kind}\n话：{point['text']}\n引用记录：{cited}")
+    body = build_deepseek_body([
+        {"role": "system", "content": VERIFIER_PROMPT},
+        {"role": "user", "content": "\n\n".join(blocks)},
+    ], no_think=True)
+    body.update(response_format={"type": "json_object"}, max_tokens=2048)
+    verifier = run_call(body, api_key)
+    result["verifier"] = verifier
+    if not verifier["valid"]:
+        return {**result, "error": "verifier_api_error"}
+    try:
+        verdicts = read_verdicts(verifier["response"]["text"], set(selected))
+    except (TypeError, ValueError) as exc:
+        return {**result, "error": f"invalid_verifier: {exc}"}
+    result["semantic_checks"] = [
+        {"i": index, "point": point, "extra": verdicts[index]["extra"], "why": verdicts[index]["why"],
+         "reason": "verifier_extra" if verdicts[index]["extra"] else None}
+        for index, point in selected.items()
+    ]
+    final = [
+        check["point"] for index, check in enumerate(checks, 1)
+        if check["kept"] and not verdicts.get(index, {}).get("extra")
+    ]
+    return {**result, "answer": join_points(final, quoted_endings=True), "valid": True}

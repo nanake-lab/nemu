@@ -19,8 +19,10 @@ from chat import (
 )
 from plan_speak import run_call, run_pipeline, run_plan2
 
-TASK_QUESTIONS = {**QUESTIONS, "Q3": "我教过你一个上班偷懒的词，叫什么来着？"}
-CELLS = tuple((question, method) for question in TASK_QUESTIONS for method in ("A", "B"))
+TASK_QUESTIONS = {
+    **QUESTIONS, "Q3": "我教过你一个上班偷懒的词，叫什么来着？", "Q4": "今天加班好累啊",
+}
+CELLS = tuple((question, method) for question in ("Q1", "Q2", "Q3") for method in ("A", "B"))
 LOG_DIR = Path(r"D:\Dev\cache\cause-demo\ab-plan")
 
 
@@ -52,7 +54,8 @@ def run_trial(
         result = run_pipeline(assembled, records, api_key)
     else:
         result = run_plan2(
-            assembled, records, api_key, self_quote="strict" if method == "D" else "loose"
+            assembled, records, api_key, self_quote="strict" if method == "D" else "loose",
+            semantic_review=method == "E",
         )
     append_session_log(log_path, {
         "phase": phase, "round": round_no, "question": question, "method": method, **result,
@@ -65,34 +68,45 @@ def main(
     cells: tuple[tuple[str, str], ...] = CELLS,
     smoke_cell: tuple[str, str] = ("Q2", "B"),
     log_dir: Path = LOG_DIR,
+    *,
+    smoke_routes: dict[tuple[str, str], str] | None = None,
 ) -> int:
     parser = argparse.ArgumentParser()
     phase = parser.add_mutually_exclusive_group(required=True)
     phase.add_argument("--smoke", action="store_true", help="Run only the smoke cell for manual inspection")
     phase.add_argument("--formal", type=Path, metavar="SMOKE_JSONL", help="Append to the inspected smoke log")
     args = parser.parse_args()
+    expected_routes = smoke_routes or {}
+    smoke_cells = tuple(expected_routes) or (smoke_cell,)
     api_key = os.environ.get("DEEPSEEK_API_KEY")
     if not api_key:
         print("DEEPSEEK_API_KEY is not set", file=sys.stderr)
         return 1
     if args.smoke:
-        prepared = prepare(*smoke_cell)
+        prepared_smokes = [prepare(*cell) for cell in smoke_cells]
         stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S.%fZ")
         log_dir.mkdir(parents=True, exist_ok=True)
         log_path = log_dir / f"{stamp}.jsonl"
         log_path.touch(exist_ok=False)
         print(log_path, flush=True)
-        return 0 if run_trial(log_path, api_key, "smoke", 1, *smoke_cell, prepared) else 1
+        successes = [
+            run_trial(log_path, api_key, "smoke", 1, *cell, prepared)
+            for cell, prepared in zip(smoke_cells, prepared_smokes, strict=True)
+        ]
+        return 0 if all(successes) else 1
 
     log_path = args.formal.resolve()
     if log_path.parent != log_dir.resolve():
         parser.error("smoke log must be in the experiment log directory")
     existing = log_path.read_text(encoding="utf-8").splitlines()
-    if len(existing) != 1:
-        parser.error("expected exactly one smoke row and no formal attempts")
-    row = json.loads(existing[0])
-    if (row["phase"], row["question"], row["method"], row["valid"]) != ("smoke", *smoke_cell, True):
-        parser.error("expected a valid smoke row")
+    if len(existing) != len(smoke_cells):
+        parser.error("expected only the required smoke rows and no formal attempts")
+    for line, cell in zip(existing, smoke_cells, strict=True):
+        row = json.loads(line)
+        if (row["phase"], row["question"], row["method"], row["valid"]) != ("smoke", *cell, True):
+            parser.error("expected a valid smoke row")
+        if cell in expected_routes and row.get("route") != expected_routes[cell]:
+            parser.error(f"{cell}: expected {expected_routes[cell]} route")
     prepared_cells = {(question, method): prepare(question, method) for question, method in cells}
     for round_no in range(1, ROUNDS + 1):
         for question, method in cells:

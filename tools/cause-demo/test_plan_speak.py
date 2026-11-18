@@ -1,8 +1,15 @@
 import json
 import unittest
 from typing import Any
+from unittest.mock import patch
 
-from plan_speak import FALLBACK, PLAN2_FALLBACK, join_points, verify_points
+from plan_speak import (
+    FALLBACK,
+    PLAN2_FALLBACK,
+    join_points,
+    review_and_join,
+    verify_points,
+)
 
 SPEAKERS = {"e4": "网友阿杰", "n1": "Nemu（独处时的念头）"}
 
@@ -91,6 +98,52 @@ class Plan2Tests(unittest.TestCase):
         result = self.verify("now", "当时我没说话。")
         self.assertEqual(result["kept"], [])
         self.assertEqual(join_points(result["kept"]), PLAN2_FALLBACK)
+
+
+class SemanticReviewTests(unittest.TestCase):
+    def review(self, kind: str, verdicts: list[dict[str, Any]]) -> tuple[dict[str, Any], int]:
+        raw = json.dumps({"points": [{"type": kind, "text": "原要点", "cites": []}]})
+        result = {"verification": verify_points(raw, {}, self_quote="loose"), "valid": False, "answer": None}
+        response = {"valid": True, "response": {"text": json.dumps({"verdicts": verdicts})}}
+        with patch("plan_speak.run_call", return_value=response) as call:
+            output = review_and_join(result, {}, "unused")
+            return output, call.call_count
+
+    def test_fast_route(self) -> None:
+        result, calls = self.review("other", [])
+        self.assertEqual((result["route"], result["answer"], calls), ("fast", "原要点", 0))
+
+    def test_slow_route(self) -> None:
+        result, calls = self.review("now", [{"i": 1, "extra": False, "why": "理由"}])
+        self.assertEqual((result["route"], calls), ("slow", 1))
+
+    def test_remove_extra(self) -> None:
+        result, _ = self.review("now", [{"i": 1, "extra": True, "why": "原样理由"}])
+        self.assertEqual(result["answer"], PLAN2_FALLBACK)
+        self.assertEqual(result["semantic_checks"][0]["reason"], "verifier_extra")
+        self.assertEqual(result["semantic_checks"][0]["why"], "原样理由")
+
+    def test_keep_supported(self) -> None:
+        result, _ = self.review("now", [{"i": 1, "extra": False, "why": "理由"}])
+        self.assertTrue(result["valid"])
+        self.assertEqual(result["answer"], "原要点")
+
+    def test_missing_verdict_fails_closed(self) -> None:
+        result, calls = self.review("now", [])
+        self.assertEqual(calls, 1)
+        self.assertFalse(result["valid"])
+        self.assertIsNone(result["answer"])
+        self.assertIn("missing verdict", result["error"])
+
+    def test_quoted_punctuation(self) -> None:
+        self.assertEqual(
+            join_points([{"text": "「好。」"}, {"text": "再见"}], quoted_endings=True), "「好。」再见"
+        )
+
+    def test_quoted_without_punctuation(self) -> None:
+        self.assertEqual(
+            join_points([{"text": "「好」"}, {"text": "再见"}], quoted_endings=True), "「好」。再见"
+        )
 
 
 if __name__ == "__main__":
