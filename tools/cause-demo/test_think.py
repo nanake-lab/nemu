@@ -5,7 +5,10 @@ from pathlib import Path
 from typing import Any
 import unittest
 
-from think import PROTOCOL, THOUGHT_SPEAKER, append_thought, projection_payload, render_prompt
+from think import (
+    PROTOCOL, SENSES_FACT, THOUGHT_SPEAKER, append_thought, completion_request,
+    projection_payload, render_prompt,
+)
 
 
 def thoughts_scene() -> dict[str, Any]:
@@ -79,3 +82,36 @@ class ThinkTests(unittest.TestCase):
             "<|im_start|>assistant\n<think>\n\n</think>\n\n",
         )
         self.assertEqual(messages[0]["content"], "聊天 P")
+
+    def test_senses_on_inserts_exactly_one_line_after_protocol(self) -> None:
+        messages = [
+            {"role": "system", "content": "聊天 P"},
+            {"role": "system", "content": "身份及往事"},
+            {"role": "user", "content": "独处触发"},
+        ]
+        fact = "她在电脑里，能感知到的只有下面这些记录和现在的时间。"
+        self.assertEqual(SENSES_FACT, fact)
+        off = render_prompt(messages, senses="off")
+        on = render_prompt(messages, senses="on")
+        self.assertNotIn(fact, off)
+        self.assertEqual(on.count(fact), 1)
+        self.assertEqual(on, off.replace(PROTOCOL, f"{PROTOCOL}\n{fact}", 1))
+
+    def test_greedy_request_matches_demo_think_01(self) -> None:
+        self.assertEqual(completion_request("greedy"), {
+            "stream": True, "n_predict": 256, "return_tokens": True,
+            "temperature": 0, "seed": 731, "repeat_penalty": 1.0,
+            "presence_penalty": 0.0, "frequency_penalty": 0.0,
+            "cache_prompt": False, "id_slot": 0,
+        })
+
+    def test_official_request_uses_non_thinking_parameters_without_fixed_seed(self) -> None:
+        request = completion_request("official")
+        self.assertNotIn("seed", request)
+        self.assertEqual(
+            {name: request[name] for name in (
+                "temperature", "top_p", "top_k", "min_p", "presence_penalty", "repeat_penalty"
+            )},
+            {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "min_p": 0.0,
+             "presence_penalty": 1.5, "repeat_penalty": 1.0},
+        )
