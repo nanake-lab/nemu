@@ -1,5 +1,11 @@
 # P5-42 证据索引
 
+## 本轮同步证据
+
+本机 Rust、生成检查、三语言契约测试、两次默认并发复现、隔离 SYS01 复跑和纯 main 对照均归档在[私有证据仓库提交 `0c8953402070665c979f01ba352061a94be38e11`](https://github.com/nanake-lab/nemu-evidence/tree/0c8953402070665c979f01ba352061a94be38e11/P5-42/main-sync-20261119-local)。
+
+[逐文件 SHA-256 索引](SYNC-EVIDENCE.csv)涵盖 18 份原始文件。私有 `sha256-manifest.json` 的 SHA-256 为 `7921ae2f1a8d3e39db9150d6b5dc4c1c489cb5deca1ce4ad39e9e0c93b09220d`。原始文件与 Git blob 已逐字节核对。
+
 原始证据：[私有 nanake-lab/nemu-evidence 提交 `16154210155c9fbaaf2b7d49202867a3056eb5c5`](https://github.com/nanake-lab/nemu-evidence/tree/16154210155c9fbaaf2b7d49202867a3056eb5c5/P5-42)。逐文件仓库路径、SHA-256、提交号、字节数见 [EVIDENCE-INDEX.csv](EVIDENCE-INDEX.csv)。推送后已核对远端提交，且逐文件比较 Git blob 与本机原件一致；目录关闭文本换行转换。
 
 - `2026-11-11-local/`：全部本机原始日志（含失败/中断）、未发布的早期向量后缀、运行辅助脚本、最终源码 raw SHA-256 / Git blob 清单。
