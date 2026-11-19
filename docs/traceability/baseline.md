@@ -45,3 +45,12 @@ S §1 and O's upstream references rely on `Review_and_Remediation`: F §§20–2
 Review scope: all five documents' headings and §1; S §§1,2,26,31; targeted original clauses for E1–E14, conflict verification, acceptance and work-package mapping. This is not a claim that all future implementation details have already been audited.
 
 Reproduce: `pwsh -File reports/P0-06/verify-baseline.ps1` from the repository root. Evidence is written to a new timestamped directory, never over prior evidence.
+
+## PRIVACY-CLEANUP-01 metadata-only baseline — 2026-11-11
+
+用户批准一次性移除下列两份 DOCX 的个人元数据；正文和所有非目标 ZIP 成员不变。上表旧哈希作为历史保留，下表为当前有效哈希。原件与证据提交见 [证据索引](../../reports/PRIVACY-CLEANUP-01/EVIDENCE-INDEX.md)，逐成员对照见 [SHA-256 表](../../reports/PRIVACY-CLEANUP-01/DOCX-MEMBER-SHA256.csv)。
+
+| Original file | Previous SHA-256 (historical) | Current SHA-256 |
+| --- | --- | --- |
+| Ada Echo Core Math define.docx | D735D030C5EE708D824D26C3F3993DA0FFBABD3D1139C92F89D3F617FF18E638 | DD252C5C4003FD8A0F8A480B791C14E01816EEBBF10C6662C2355BA999E947F8 |
+| Echo Core Implementation Plan.docx | 7F7174078BA4E26F43FA0BE66501660A19BE6CC0D2B18568A39C074FF6113174 | CEBD8D9DF31D8E9F7F92A2C87693570BB62777BC1FD8ACBC515C92B288392256 |

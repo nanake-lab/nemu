@@ -23,6 +23,8 @@ Nemu 从 Live2D 2D 原型转向 3D。目标是原创、高完成度、可长期�
 | 授权 | 默认私有；代码仓与 Nemu 内容包分开管理，许可清单完整，任何时候都可以单独公开代码或整体公开 |
 | 离线 | 断网时自动切到本地模型（Ollama + 0.6B TTS），保证 Nemu 不依赖任何云服务也能存在 |
 
+> **状态更新（2026-11-12）：** 上表「语音」一行中的 Qwen3-TTS（VoiceDesign 设计音色、Base 克隆）已被 [ADR 0027](0027-voice-model-breeze-target-gsv-interim.md) 取代：目标 Breeze TTS 2，过渡 GPT-SoVITS V5；与 [ARCHITECTURE](../ARCHITECTURE.md) 「合成」一条的处理一致。依据：PR #162「待用户判断」第 5 项，用户 2026-11-12 同意建议；[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.3 节 ADR 0001 一行。
+
 ## 备选方案与否决理由
 
 - **Unity 6 + UniVRM：** 渲染与动画工具最强，但依赖编辑器图形界面，AI 代理难以端到端自动化；官方 MCP 在 2026 年仍处于公测并变动；开源贡献门槛高；不能复用现有 Electron 原型。

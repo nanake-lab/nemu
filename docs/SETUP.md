@@ -67,6 +67,8 @@ dotnet build executors/office-connector/OfficeConnector.csproj --configuration R
 超过 80% 时输出 GitHub workflow warning。它是预测，不声称获取了真实账单用量。
 Windows 自托管时间不计入上述托管分钟估算。
 
+> **状态更新（2026-11-12）：** 本节按私有仓库的托管分钟估算。仓库已于 2026-10-26 公开，公开仓库使用 GitHub 标准托管 runner 不计分钟，按分钟的估算不再适用；Windows 作业跑在自托管 runner 上，本来就不计分钟。依据：PR #162「待用户判断」第 4 项，用户 2026-11-12 同意建议；[清点报告](../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 1.2 节 SETUP.md 一行。
+
 官方参考：[electron-vite](https://electron-vite.org/guide/dev)、
 [Electron 安全说明](https://www.electronjs.org/docs/latest/tutorial/security)、
 [GitHub runner 安装](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners)。
