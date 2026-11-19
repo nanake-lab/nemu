@@ -6,6 +6,7 @@ name: Windows
 #   the pnpm workspace packages the e2e build and supervisor start (apps, packages, tools
 #   packages, executors/codex-bridge, workers/*/src, services/*/src), the Windows scaffold,
 #   the Node toolchain files and this workflow. spikes/* are left to the Ubuntu build.
+#   The Python demo tools under tools/cause-demo/ are outside the desktop group.
 # - storage: W02 NTFS checks of core-store and what it depends on (core-types, the contracts
 #   that generate core-types, the Cargo workspace files) and this workflow.
 # - gateway: W18 native auth/upload/dispatch/SYS01, its storage/contract dependencies.
@@ -39,6 +40,7 @@ on:
       - 'tsconfig*.json'
       - '.github/workflows/windows.yml'
       - '!tools/status/**'
+      - '!tools/cause-demo/**'
       - '!tools/asset-pipeline/**'
       - '!tools/texture-fix/**'
       - '!tools/scaffold/ci-budget.mjs'
@@ -69,6 +71,7 @@ on:
       - 'tsconfig*.json'
       - '.github/workflows/windows.yml'
       - '!tools/status/**'
+      - '!tools/cause-demo/**'
       - '!tools/asset-pipeline/**'
       - '!tools/texture-fix/**'
       - '!tools/scaffold/ci-budget.mjs'
@@ -149,7 +152,7 @@ jobs:
           $desktopPatterns = @(
             '^apps/', '^packages/', '^executors/codex-bridge/',
             '^workers/[^/]+/src/', '^services/[^/]+/src/',
-            '^tools/(?!status/|asset-pipeline/|texture-fix/|scaffold/ci-budget\.mjs$)',
+            '^tools/(?!status/|cause-demo/|asset-pipeline/|texture-fix/|scaffold/ci-budget\.mjs$)',
             '^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|\.nvmrc|\.npmrc|\.gitattributes)$',
             '^tsconfig[^/]*\.json$', '^executors/office-connector/global\.json$',
             '^\.github/workflows/windows\.yml$'

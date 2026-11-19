@@ -6,15 +6,19 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 import sys
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from chat import cargo_env, repo_root, run_assembler
 
+if TYPE_CHECKING:
+    from http_probe import Server
+
 PROTOCOL = "这是 Nemu 独处时的内心。输出为她此刻的一个念头，用第一人称，一到三句。"
+SENSES_FACT = "她在电脑里，能感知到的只有下面这些记录和现在的时间。"
 THOUGHT_SPEAKER = "Nemu（独处时的念头）"
 TIME_FORMAT = "%Y-%m-%d %H:%M"
 CACHE = Path("D:/Dev/cache")
-RUN_DIR = CACHE / "cause-demo" / "think"
+RUN_DIR = CACHE / "cause-demo" / "think-02"
 ENGINE = CACHE / "P0-10" / "llama.cpp" / "b11669"
 MODEL = CACHE / "P0-12" / "gguf" / "carrier-Q4_K_M.gguf"
 
@@ -70,17 +74,47 @@ def append_thought(
     return {**scenario, "records": [*scenario["records"], thought], "slots": slots}
 
 
-def render_prompt(messages: list[dict[str, str]]) -> str:
+def render_prompt(messages: list[dict[str, str]], *, senses: str = "off") -> str:
     if [message["role"] for message in messages] != ["system", "system", "user"]:
         raise ValueError("独处组包必须依次包含 P、E、o。")
     # cause_demo emits two system messages. Qwen's official template permits
     # one, so join the unchanged E to the replacement P inside that block.
-    system = f"{PROTOCOL}\n\n{messages[1]['content']}".strip()
+    protocol = f"{PROTOCOL}\n{SENSES_FACT}" if senses == "on" else PROTOCOL
+    system = f"{protocol}\n\n{messages[1]['content']}".strip()
     observation = messages[2]["content"].strip()
     return (
         f"<|im_start|>system\n{system}<|im_end|>\n"
         f"<|im_start|>user\n{observation}<|im_end|>\n"
         "<|im_start|>assistant\n<think>\n\n</think>\n\n"
+    )
+
+
+def completion_request(sampling: str) -> dict[str, Any]:
+    request = dict(
+        stream=True, n_predict=256, return_tokens=True, repeat_penalty=1.0,
+        frequency_penalty=0.0, cache_prompt=False, id_slot=0,
+    )
+    if sampling == "greedy":
+        # DEMO-THINK-01 retained the P0-12 greedy parameters.
+        return dict(request, temperature=0, seed=731, presence_penalty=0.0)
+    # Qwen3.5-4B README, "Instruct (or non-thinking) mode for general tasks".
+    # With seed omitted, llama.cpp chooses a fresh seed per request.
+    return dict(request, temperature=0.7, top_p=0.8, top_k=20, min_p=0.0, presence_penalty=1.5)
+
+
+def generate_sample(
+    server: Server, request: dict[str, Any], tokens: list[int], folder: Path
+) -> dict[str, Any]:
+    result = server.completion({**request, "prompt": tokens}, folder)
+    first_text_ms = next(
+        (event["elapsedMs"] for event in map(
+            json.loads, (folder / "events.jsonl").read_text(encoding="utf-8").splitlines()
+        ) if event["data"].get("content")),
+        None,
+    )
+    return dict(
+        text=str(result["content"]), first_text_ms=first_text_ms,
+        elapsed_ms=result["completedClientMs"], stop_type=result["final"].get("stop_type"),
     )
 
 
@@ -90,6 +124,8 @@ def main() -> int:
     parser.add_argument("--at", required=True, help="YYYY-MM-DD HH:MM")
     parser.add_argument("--n", type=int, default=1)
     parser.add_argument("--append", type=Path, metavar="OUTPUT_SCENARIO")
+    parser.add_argument("--sampling", choices=("greedy", "official"), default="official")
+    parser.add_argument("--senses", choices=("on", "off"), default="off")
     args = parser.parse_args()
     if args.n < 1 or (args.append is not None and args.n != 1):
         parser.error("--n 必须为正整数，--append 只支持 --n 1")
@@ -106,16 +142,11 @@ def main() -> int:
         assembled = run_assembler(payload, root / "core", cargo_env())
         if assembled["outcome"] != "sent":
             raise RuntimeError(f"组包失败：{assembled['outcome']} {assembled['reason']}")
-        prompt = render_prompt(assembled["messages"])
+        prompt = render_prompt(assembled["messages"], senses=args.senses)
         binding = assembled["binding"]
         if args.append is not None and not binding["accepted"]:
             raise ValueError("组包没有接纳任何槽，无法追加念头。")
-        # P0-12 visual_http_benchmark.py used greedy decoding and disabled reuse.
-        request = dict(
-            stream=True, n_predict=256, return_tokens=True, temperature=0, seed=731,
-            repeat_penalty=1.0, presence_penalty=0.0, frequency_penalty=0.0,
-            cache_prompt=False, id_slot=0,
-        )
+        request = completion_request(args.sampling)
         quiet()
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
         RUN_DIR.mkdir(parents=True, exist_ok=True)
@@ -128,7 +159,7 @@ def main() -> int:
 
             log_row(dict(
                 scenario=str(args.scenario), at=args.at, n=args.n,
-                prompt=prompt, binding=binding, request=request,
+                prompt=prompt, binding=binding, request=request, senses=args.senses, sampling=args.sampling,
             ))
             try:
                 with Server(ENGINE, MODEL, RUN_DIR / stamp / "server") as server:
@@ -138,19 +169,9 @@ def main() -> int:
                     )["tokens"]
                     for index in range(1, args.n + 1):
                         folder = RUN_DIR / stamp / f"request-{index:02}"
-                        result = server.completion({**request, "prompt": tokens}, folder)
-                        content = str(result["content"])
-                        first_text_ms = next(
-                            (event["elapsedMs"] for event in map(
-                                json.loads,
-                                (folder / "events.jsonl").read_text(encoding="utf-8").splitlines(),
-                            ) if event["data"].get("content")),
-                            None,
-                        )
-                        log_row(dict(
-                            index=index, text=content, first_text_ms=first_text_ms,
-                            elapsed_ms=result["completedClientMs"], stop_type=result["final"].get("stop_type"),
-                        ))
+                        sample = generate_sample(server, request, tokens, folder)
+                        content = str(sample["text"])
+                        log_row(dict(index=index, **sample))
                         print(content, flush=True)
                     if args.append is not None:
                         if not content.strip():
