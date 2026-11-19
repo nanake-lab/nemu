@@ -1,6 +1,3 @@
-# CI-SCOPE-DEMO-01 的远端 Windows 验收
+# CI-SCOPE-DEMO-01 的 Windows runner 离线记录
 
-GitHub Actions runner API 返回 Windows runner 为 offline。本地已通过两份 YAML 的解析、分流验证和演示单测。当前提交仍须通过真实的 Windows 全量工作流。
-
-- 恢复 Windows runner 在线，让此次检查执行。
-- 保持草稿并延后 Windows 验收，任务维持未完成。
+已解除。GitHub Actions 曾显示 Windows runner 离线。启动现有监听进程后，runner 恢复在线，[草稿阶段的全量工作流](https://github.com/nanake-lab/nemu/actions/runs/44452750228) 开始运行。当前提交的验收结果见 [PR #230 的检查页](https://github.com/nanake-lab/nemu/pull/230/checks)。

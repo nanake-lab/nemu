@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-本地验收通过。GitHub 的 Ubuntu 与 Windows 全量检查见 [PR #230 的检查页](https://github.com/nanake-lab/nemu/pull/230/checks)。Windows runner 离线，远端全量验收待完成，见 [BLOCKED.md](BLOCKED.md)。
+本地验收通过。GitHub 的 Ubuntu 与 Windows 全量验收结果以 [PR #230 当前提交的检查页](https://github.com/nanake-lab/nemu/pull/230/checks) 为准。
 
 ## 交付物
 
@@ -27,4 +27,4 @@ PyYAML 6.0.3 完整解析两个工作流，actionlint 1.7.12 校验通过。acti
 
 ## 待用户确认
 
-恢复 Windows runner 在线。全量检查通过后，PR 可交审查。
+请审查演示工具单测的触发范围和 Windows 路径排除。Windows runner 曾离线，已恢复。草稿阶段自动 Windows 检查的门禁按既有策略报告失败，另行发起了全量检查。
