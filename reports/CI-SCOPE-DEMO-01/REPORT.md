@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-本地验收通过。GitHub 的 Ubuntu 与 Windows 全量验收结果以 [PR #230 当前提交的检查页](https://github.com/nanake-lab/nemu/pull/230/checks) 为准。
+本地验收通过。GitHub 的 Ubuntu 与 Windows 全量验收结果以 [PR #230 当前提交的检查页](https://github.com/nanake-lab/nemu/pull/230/checks) 为准。首次手动 Windows 全量在 W02 阶段失联，GitHub 判为失败。失败记录及重跑入口见 [BLOCKED.md](BLOCKED.md)。
 
 ## 交付物
 
