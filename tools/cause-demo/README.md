@@ -10,5 +10,6 @@
 - **两步回答**：聊天加 `--plan2`；`--self-quote strict` 要求过去的念头包含引用原句，默认 `loose`。对照用 `ab_plan2.py`，同样先冒烟再正式运行。
 - **会话日志**：自动写到 `D:\Dev\cache\cause-demo\sessions\<UTC时间>.jsonl`（不含密钥，不进仓库）。
 - **独处想一次**：`python tools/cause-demo/think.py --scenario tools/cause-demo/scenarios/thoughts.json --at "2026-11-05 15:25"`。可用 `--n` 重复独立请求。
+- **采样与感知**：默认 `--sampling official --senses off`。用 `--sampling greedy` 复现 DEMO-THINK-01 的采样参数，用 `--senses on` 加入她的感知范围。
 - **追加念头**：上面的命令加 `--append D:/Dev/cache/cause-demo/thoughts-appended.json`（仅单次生成，输出路径须是新文件）。演示将念头挂入投影中第一个被接纳的槽，真实系统由 Echo Core 决定。
 - **问她**：设置上面的 DeepSeek 密钥，运行 `python tools/cause-demo/chat.py --plan2 --scenario D:/Dev/cache/cause-demo/thoughts-appended.json`，问「阿杰骂你那天，你什么感觉？」并用 `/show` 查看 E。
