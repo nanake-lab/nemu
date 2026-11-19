@@ -1,13 +1,18 @@
 from __future__ import annotations
 
 import json
+from contextlib import redirect_stderr
+from io import StringIO
 from pathlib import Path
+import sys
 from typing import Any
 import unittest
+from unittest.mock import patch
 
+from chat import build_deepseek_body
 from think import (
     PROTOCOL, SENSES_FACT, THOUGHT_SPEAKER, append_thought, completion_request,
-    projection_payload, render_prompt,
+    main, projection_payload, render_prompt, thought_messages,
 )
 
 
@@ -19,6 +24,37 @@ def thoughts_scene() -> dict[str, Any]:
 
 
 class ThinkTests(unittest.TestCase):
+    def test_deepseek_messages_match_local_system_and_observation(self) -> None:
+        assembled = [
+            {"role": "system", "content": "原聊天 P"},
+            {"role": "system", "content": "身份\n[昨日] 记录。"},
+            {"role": "user", "content": "现在，你一个人。"},
+        ]
+        messages = thought_messages(assembled)
+        local_system, local_user, _ = render_prompt(assembled).split("<|im_end|>\n")
+        self.assertEqual(messages, [
+            {"role": "system", "content": local_system.removeprefix("<|im_start|>system\n")},
+            {"role": "user", "content": local_user.removeprefix("<|im_start|>user\n")},
+        ])
+        for no_think, mode in ((True, "disabled"), (False, "enabled")):
+            body = build_deepseek_body(messages, no_think=no_think)
+            self.assertEqual(body["model"], "deepseek-flash")
+            self.assertEqual(body["max_tokens"], 8192)
+            self.assertEqual(body["thinking"], {"type": mode})
+            self.assertEqual(body.get("reasoning_effort"), None if no_think else "high")
+            self.assertTrue({"temperature", "top_p", "seed"}.isdisjoint(body))
+
+    def test_deepseek_rejects_senses_on_before_assembly_or_api(self) -> None:
+        args = [
+            "think.py", "--scenario", "unused.json", "--at", "2026-11-01 22:00",
+            "--thinker", "deepseek", "--senses", "on",
+        ]
+        error = StringIO()
+        with patch.object(sys, "argv", args), redirect_stderr(error), self.assertRaises(SystemExit) as raised:
+            main()
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("--thinker deepseek 只支持 --senses off", error.getvalue())
+
     def test_projection_filters_future_records_slots_and_relation_endpoints(self) -> None:
         scenario = thoughts_scene()
         at = "2026-11-01 22:00"

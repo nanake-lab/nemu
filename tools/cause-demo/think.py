@@ -4,11 +4,12 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 import sys
 from typing import TYPE_CHECKING, Any
 
-from chat import cargo_env, repo_root, run_assembler
+from chat import build_deepseek_body, call_deepseek_stream, cargo_env, repo_root, run_assembler
 
 if TYPE_CHECKING:
     from http_probe import Server
@@ -19,6 +20,7 @@ THOUGHT_SPEAKER = "Nemu（独处时的念头）"
 TIME_FORMAT = "%Y-%m-%d %H:%M"
 CACHE = Path("D:/Dev/cache")
 RUN_DIR = CACHE / "cause-demo" / "think-02"
+DEEPSEEK_RUN_DIR = CACHE / "cause-demo" / "think-03"
 ENGINE = CACHE / "P0-10" / "llama.cpp" / "b11669"
 MODEL = CACHE / "P0-12" / "gguf" / "carrier-Q4_K_M.gguf"
 
@@ -74,7 +76,9 @@ def append_thought(
     return {**scenario, "records": [*scenario["records"], thought], "slots": slots}
 
 
-def render_prompt(messages: list[dict[str, str]], *, senses: str = "off") -> str:
+def thought_messages(
+    messages: list[dict[str, str]], *, senses: str = "off"
+) -> list[dict[str, str]]:
     if [message["role"] for message in messages] != ["system", "system", "user"]:
         raise ValueError("独处组包必须依次包含 P、E、o。")
     # cause_demo emits two system messages. Qwen's official template permits
@@ -82,11 +86,25 @@ def render_prompt(messages: list[dict[str, str]], *, senses: str = "off") -> str
     protocol = f"{PROTOCOL}\n{SENSES_FACT}" if senses == "on" else PROTOCOL
     system = f"{protocol}\n\n{messages[1]['content']}".strip()
     observation = messages[2]["content"].strip()
+    return [{"role": "system", "content": system}, {"role": "user", "content": observation}]
+
+
+def render_prompt(messages: list[dict[str, str]], *, senses: str = "off") -> str:
+    system, observation = thought_messages(messages, senses=senses)
     return (
-        f"<|im_start|>system\n{system}<|im_end|>\n"
-        f"<|im_start|>user\n{observation}<|im_end|>\n"
+        f"<|im_start|>system\n{system['content']}<|im_end|>\n"
+        f"<|im_start|>user\n{observation['content']}<|im_end|>\n"
         "<|im_start|>assistant\n<think>\n\n</think>\n\n"
     )
+
+
+def deepseek_sample(request: dict[str, Any], api_key: str) -> dict[str, Any]:
+    response = call_deepseek_stream(request, api_key, echo=False)
+    valid = (
+        response["error"] is None and response["done"] and response["finish_reason"] == "stop"
+        and bool(response["text"].strip())
+    )
+    return {**response, "valid": valid}
 
 
 def completion_request(sampling: str) -> dict[str, Any]:
@@ -126,15 +144,17 @@ def main() -> int:
     parser.add_argument("--append", type=Path, metavar="OUTPUT_SCENARIO")
     parser.add_argument("--sampling", choices=("greedy", "official"), default="official")
     parser.add_argument("--senses", choices=("on", "off"), default="off")
+    parser.add_argument("--thinker", choices=("local", "deepseek"), default="local")
+    parser.add_argument("--ds-think", choices=("off", "high"), default="off")
     args = parser.parse_args()
     if args.n < 1 or (args.append is not None and args.n != 1):
         parser.error("--n 必须为正整数，--append 只支持 --n 1")
     if args.append is not None and args.append.exists():
         parser.error("--append 需要一个新文件路径")
+    if args.thinker == "deepseek" and args.senses != "off":
+        parser.error("--thinker deepseek 只支持 --senses off")
 
     root = repo_root()
-    sys.path.insert(0, str(root / "spikes" / "carrier-engine"))
-    from http_probe import Server, quiet
 
     try:
         scenario = json.loads(args.scenario.read_text(encoding="utf-8"))
@@ -142,15 +162,30 @@ def main() -> int:
         assembled = run_assembler(payload, root / "core", cargo_env())
         if assembled["outcome"] != "sent":
             raise RuntimeError(f"组包失败：{assembled['outcome']} {assembled['reason']}")
-        prompt = render_prompt(assembled["messages"], senses=args.senses)
         binding = assembled["binding"]
         if args.append is not None and not binding["accepted"]:
             raise ValueError("组包没有接纳任何槽，无法追加念头。")
-        request = completion_request(args.sampling)
-        quiet()
+        if args.thinker == "deepseek":
+            api_key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
+            if not api_key:
+                raise ValueError("环境变量 DEEPSEEK_API_KEY 未设置或为空。")
+            request = build_deepseek_body(
+                thought_messages(assembled["messages"]), no_think=args.ds_think == "off"
+            )
+            run_dir = DEEPSEEK_RUN_DIR
+            settings = dict(thinker="deepseek", ds_think=args.ds_think)
+        else:
+            sys.path.insert(0, str(root / "spikes" / "carrier-engine"))
+            from http_probe import Server, quiet
+
+            quiet()
+            prompt = render_prompt(assembled["messages"], senses=args.senses)
+            request = completion_request(args.sampling)
+            run_dir = RUN_DIR
+            settings = dict(prompt=prompt, senses=args.senses, sampling=args.sampling)
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
-        RUN_DIR.mkdir(parents=True, exist_ok=True)
-        log_path = RUN_DIR / f"{stamp}.jsonl"
+        run_dir.mkdir(parents=True, exist_ok=True)
+        log_path = run_dir / f"{stamp}.jsonl"
         print(f"记录：{log_path}", file=sys.stderr, flush=True)
         with log_path.open("x", encoding="utf-8") as log:
             def log_row(row: dict[str, Any]) -> None:
@@ -159,27 +194,36 @@ def main() -> int:
 
             log_row(dict(
                 scenario=str(args.scenario), at=args.at, n=args.n,
-                prompt=prompt, binding=binding, request=request, senses=args.senses, sampling=args.sampling,
+                binding=binding, request=request, **settings,
             ))
             try:
-                with Server(ENGINE, MODEL, RUN_DIR / stamp / "server") as server:
-                    # Explicitly parse ChatML markers, as in P0-12's text route.
-                    tokens = server.post(
-                        "/tokenize", dict(content=prompt, add_special=False, parse_special=True)
-                    )["tokens"]
+                if args.thinker == "deepseek":
                     for index in range(1, args.n + 1):
-                        folder = RUN_DIR / stamp / f"request-{index:02}"
-                        sample = generate_sample(server, request, tokens, folder)
-                        content = str(sample["text"])
+                        sample = deepseek_sample(request, api_key)
                         log_row(dict(index=index, **sample))
+                        if not sample["valid"]:
+                            raise RuntimeError("DeepSeek 未返回正常结束的非空念头，详见请求日志。")
+                        content = str(sample["text"])
                         print(content, flush=True)
-                    if args.append is not None:
-                        if not content.strip():
-                            raise ValueError("模型返回空文本，无法追加念头。")
-                        output = append_thought(scenario, binding, args.at, content)
-                        with args.append.open("x", encoding="utf-8") as stream:
-                            json.dump(output, stream, ensure_ascii=False, indent=2)
-                            stream.write("\n")
+                else:
+                    with Server(ENGINE, MODEL, RUN_DIR / stamp / "server") as server:
+                        # Explicitly parse ChatML markers, as in P0-12's text route.
+                        tokens = server.post(
+                            "/tokenize", dict(content=prompt, add_special=False, parse_special=True)
+                        )["tokens"]
+                        for index in range(1, args.n + 1):
+                            folder = RUN_DIR / stamp / f"request-{index:02}"
+                            sample = generate_sample(server, request, tokens, folder)
+                            content = str(sample["text"])
+                            log_row(dict(index=index, **sample))
+                            print(content, flush=True)
+                if args.append is not None:
+                    if not content.strip():
+                        raise ValueError("模型返回空文本，无法追加念头。")
+                    output = append_thought(scenario, binding, args.at, content)
+                    with args.append.open("x", encoding="utf-8") as stream:
+                        json.dump(output, stream, ensure_ascii=False, indent=2)
+                        stream.write("\n")
             except Exception as exc:
                 log_row(dict(error=f"{type(exc).__name__}: {exc}"))
                 raise
