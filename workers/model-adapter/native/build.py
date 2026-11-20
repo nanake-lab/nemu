@@ -39,7 +39,7 @@ def main() -> None:
                     "/fp:precise", "/LD", f"/I{source / 'include'}", f"/I{source / 'ggml/include'}",
                     f"/I{extra / 'common'}", f"/I{extra / 'tools/mtmd'}",
                     str(Path(__file__).with_name("carrier.cpp").resolve()), *libraries,
-                    "/link", f"/OUT:{dll_name}.dll"], cwd=out, check=True)
+                    "/link", "/Brepro", f"/OUT:{dll_name}.dll"], cwd=out, check=True)
 
 
 if __name__ == "__main__":

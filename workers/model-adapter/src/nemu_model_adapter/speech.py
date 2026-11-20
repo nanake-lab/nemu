@@ -31,6 +31,6 @@ def speech_result(mode: SpeechMode, chunks: list[OutputChunk], observed: Observa
             or not observed.positions or not observed.forward_batches):
         raise Unmodulated("unobserved speech")
     result = PlanAndCarrierReceipt(1, chunks, None, mode, True, observed.model_hash,
-                                   observed.tokenizer_hash, record_probe(observed), None, drafts, usage)
+                                   observed.tokenizer_hash, observed.record(record_probe, limits), None, drafts, usage)
     normalize("PlanAndCarrierReceipt", to_value(result), limits)
     return result

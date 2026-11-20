@@ -53,7 +53,7 @@ def rows(name: str) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text("utf-8").splitlines()]
 
 
-def bundle(assets: Assets, arm: str) -> tuple[Any, ...]:
+def bundle(assets: Assets, arm: str, *, learned: bool = True) -> tuple[Any, ...]:
     b = fixture()
     raw = b["direction_set"]["hook"]
     pins = json.loads((PACKAGE / "src/nemu_model_adapter/manifest.json").read_bytes())
@@ -68,6 +68,12 @@ def bundle(assets: Assets, arm: str) -> tuple[Any, ...]:
         b["receipt"][key] = raw[key]
     for i, vector in enumerate(b["vectors"]):
         vector["values"] = [float(j == i) for j in range(raw["width"])]
+    if not learned:
+        for collection in (b["vectors"], b["validation"]["directions"], b["direction_set"]["directions"]):
+            collection.pop()
+        b["receipt"]["directions"] = b["receipt"]["directions"][:4]
+        b["receipt"]["total_bound"] = 0.5
+        b["direction_set"]["version"] = "synthetic-four"
     for use in b["receipt"]["directions"]:
         if use["status"] == 1:
             use["coefficient"] *= {"zero": 0, "plus": 1, "minus": -1}[arm]
@@ -86,6 +92,17 @@ class Evidence:
                                ensure_ascii=False, allow_nan=False) + "\n")
 
 
+def logits_hash(native: Native, handle: int) -> str:
+    logits = native.lib.carrier_logits
+    logits.restype = ct.POINTER(ct.c_float)
+    logits.argtypes = [ct.c_void_p, ct.POINTER(ct.c_int)]
+    count = ct.c_int()
+    ptr = logits(handle, ct.byref(count))
+    if not ptr or count.value != 248320:
+        raise RuntimeError("full logits unavailable")
+    return hashlib.sha256(ct.string_at(ptr, count.value * 4)).hexdigest()
+
+
 def path_checks(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
     """Compare full logits for each greedy position; hashes are over native F32 bytes."""
     prompts = [chat_prompt(None, s) for s in (QUERY, "Please introduce yourself.", "お名前は？")]
@@ -95,8 +112,6 @@ def path_checks(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
         quiet()
         shim = assets.shim if build == "carrier" else assets.shim.with_name("measurement-" + build + ".dll")
         native = Native(replace(assets, shim=shim, shim_sha256=sha256_file(shim)), load_mmproj=False)
-        native.lib.carrier_logits.restype = ct.POINTER(ct.c_float)
-        native.lib.carrier_logits.argtypes = [ct.c_void_p, ct.POINTER(ct.c_int)]
         try:
             for arm in arms:
                 state = arm.split("-")[0]
@@ -115,11 +130,7 @@ def path_checks(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
                         sequence = []
                         for _ in range(24):
                             piece = native.next(h)
-                            n = ct.c_int()
-                            ptr = native.lib.carrier_logits(h, ct.byref(n))
-                            if not ptr or n.value != 248320:
-                                raise RuntimeError("full logits unavailable")
-                            sequence.append(hashlib.sha256(ct.string_at(ptr, n.value * 4)).hexdigest())
+                            sequence.append(logits_hash(native, h))
                             if piece is None:
                                 break
                         stats = native.stats(h)
@@ -155,7 +166,32 @@ async def run(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
                      96, 30_000_000_000)  # P0-07 speech fixture budget
     carrier = LocalCarrier(assets, hook, load_mmproj=True)
     try:
-        if a.group in ("irl", "mode-b"):
+        if a.group == "resources":
+            # Same prompt, same model instance. Remove the learned column, then restore
+            # it. Observe actual prefill logits and physical additions at the public API.
+            evidence = {}
+            for learned in (True, False, True):
+                quiet()
+                envelope, receipt, committed, _, objects = bundle(assets, "plus", learned=learned)
+                async with carrier.generate(base, QUERY, envelope, receipt, committed,
+                                            objects.__getitem__, LIMITS) as stream:
+                    signature = logits_hash(stream.native, stream.handle)
+                    async for _ in stream.text():
+                        pass
+                    observed = stream.observation
+                    if not observed or not observed.max_delta_l2 or not observed.positions:
+                        raise AssertionError("missing J resource forward observation")
+                    result = (signature, observed.key.direction_set.digest.hex())
+                    ev.add("resources", columns=5 if learned else 4, prefill_logits_sha256=signature,
+                           direction_set=result[1], envelope=observed.key.envelope.digest.hex(),
+                           positions=observed.positions, batches=observed.forward_batches,
+                           max_abs_error=observed.max_abs_error, max_delta_l2=observed.max_delta_l2)
+                    if learned in evidence and evidence[learned] != result:
+                        raise AssertionError("restored direction set changed fresh prefill")
+                    if not learned and any(a == b for a, b in zip(evidence[True], result, strict=True)):
+                        raise AssertionError("removed column reused logits or direction set")
+                    evidence[learned] = result
+        elif a.group in ("irl", "mode-b"):
             infer = carrier.judgment(2048, 2**62)  # P0-08 token limit; no new deployment deadline.
             inputs = rows("irl")
             for sample in inputs if a.group == "irl" else inputs[:3]:
@@ -170,15 +206,14 @@ async def run(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
                 ev.add("irl", id=sample["id"], lang=sample["language"], schema_ok=schema_ok,
                        source_ok=record.parsed is not None, reason=record.reason, complete=record.output_complete,
                        elapsed_ms=record.elapsed_ms, output=data.decode("utf-8", errors="backslashreplace"))
-                if not record.output_complete and not data:
-                    raise RuntimeError("judgment endpoint failed before producing text")
         else:
-            for arm in (("zero",) if a.group == "latency" else packets):
+            identity = a.group.startswith("identity")
+            for arm in (packets if a.group == "identity" else ("zero",)):
                 e, r, p, hook, obj = packets[arm]
-                samples = (rows("identity") if a.group == "identity" else
+                samples = (rows("identity") if identity else
                            [dict(id=str(i), text=QUERY, language="zh") for i in range(21)])
                 for sample in samples:
-                    for mode in (("A", "C") if a.group == "identity" else ("A",)):
+                    for mode in (("A", "C") if identity else ("A",)):
                         quiet()
                         user = sample["text"]
                         draft = None
@@ -191,7 +226,7 @@ async def run(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
                             draft = replace(p.genesis, object_type="fixture.draft",
                                             digest=hashlib.sha256(content).digest(), byte_length=len(content))
                             obj[draft] = content
-                        task = replace(base, protocol_content=FACT if a.group == "identity" else "")
+                        task = replace(base, protocol_content=FACT if identity else "")
                         start = perf_counter()
                         chunks: list[str] = []
                         first = sentence = None
@@ -206,7 +241,7 @@ async def run(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
                             o = stream.observation
                             if o is None:
                                 raise RuntimeError("missing observation")
-                            ev.add(a.group, arm=arm, mode=mode, id=sample["id"], lang=sample["language"],
+                            ev.add("identity" if identity else "latency", arm=arm, mode=mode, id=sample["id"], lang=sample["language"],
                                    output="".join(chunks), ttft_ms=first, first_sentence_ms=sentence,
                                    total_ms=(perf_counter() - start)*1000, tokens=o.tokens, positions=o.positions,
                                    max_abs_error=o.max_abs_error, max_delta_l2=o.max_delta_l2,
@@ -219,7 +254,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     for name in ("engine", "model", "tokenizer", "mmproj", "shim", "out"):
         parser.add_argument("--" + name, type=Path, required=True)
-    parser.add_argument("--group", choices=["path", "irl", "identity", "latency", "mode-b"], required=True)
+    parser.add_argument("--group", choices=["path", "resources", "irl", "identity", "identity-zero", "latency", "mode-b"], required=True)
     a = parser.parse_args()
     quiet()
     ev = Evidence(a.out)

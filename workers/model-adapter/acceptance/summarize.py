@@ -15,11 +15,12 @@ def records(file: Path) -> list[dict]:
     return [json.loads(line) for line in file.read_text("utf-8-sig").splitlines()] if file.exists() else []
 
 
-def latency(data: list[float]) -> dict:
+def latency(data: list[float], *, nearest_rank: bool = False) -> dict:
     if not data:
         return {}
     values = sorted(data)
-    return dict(p50_ms=median(values), p90_ms=values[math.ceil(0.9 * len(values)) - 1])
+    midpoint = values[math.ceil(0.5 * len(values)) - 1] if nearest_rank else median(values)
+    return dict(p50_ms=midpoint, p90_ms=values[math.ceil(0.9 * len(values)) - 1])
 
 
 def summarize(root: Path) -> dict:
@@ -32,7 +33,14 @@ def summarize(root: Path) -> dict:
     summary["irl"] = dict(observed=len(irl), denominator=len(expected), full=full,
         schema_passed=passes, source_passed=sum(r["source_ok"] for r in irl),
         schema_rate=passes/len(expected) if full else None, semantic_accuracy=None,
-        **latency([r["elapsed_ms"] for r in irl]))
+        **latency([r["elapsed_ms"] for r in irl], nearest_rank=True))
+    languages = {}
+    for language in ("zh", "en", "ja"):
+        subset = [r for r in irl if r["lang"] == language]
+        languages[language] = dict(observed=len(subset), denominator=100,
+            schema_passed=sum(r["schema_ok"] for r in subset),
+            **latency([r["elapsed_ms"] for r in subset], nearest_rank=True))
+    summary["irl"]["per_language"] = languages
     identity = records(root / "identity/identity.jsonl")
     groups = Counter((r["mode"], r["arm"], r["lang"]) for r in identity)
     summary["identity"] = dict(observed=len(identity), planned=900,

@@ -48,12 +48,12 @@ struct Request {
         ggml_backend_tensor_get(t, values.data(), 0, values.size() * sizeof(float));
         for (auto x : values) require(std::isfinite(x), "nonfinite activation");
         if (before_name == t->name) {
-            require(before.empty(), "duplicate pre-injection tensor");
+            require(before.empty(), "AT13: duplicate pre-injection tensor");
             before.swap(values);
             return;
         }
         if (nonzero) {
-            require(before.size() == values.size(), "missing pre-injection tensor");
+            require(before.size() == values.size(), "AT13: missing pre-injection tensor");
             bool changed = false;
             for (size_t offset = 0; offset < values.size(); offset += width) {
                 double square = 0;

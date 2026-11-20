@@ -37,7 +37,7 @@ def local_result(
         raise Unmodulated("cognitive execution binding")
     # The material owner resolves content bytes. The receipt writer receives the actual
     # observation rather than an arbitrary carrier_receipt supplied in the request.
-    receipt = record_probe(actual_input, observed)
+    receipt = observed.record(lambda obs: record_probe(actual_input, obs), limits)
     result = CognitiveResultAndReceipt(
         1, binding, actual_input, [product], None, [], None, observed.completion,
         "token budget" if observed.completion == CognitiveCompletion.COG_TRUNCATED else None,

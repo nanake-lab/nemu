@@ -10,7 +10,7 @@ import codecs
 import json
 from time import monotonic_ns
 
-from echo.runtime import Limits, normalize
+from echo.runtime import SCHEMA, Limits, normalize
 from echo.cognition import check_cognition_message
 from echo.typed_api import to_value
 from echo.types import (
@@ -58,6 +58,17 @@ class Observation:
     max_delta_l2: float
     output_sha256: bytes
 
+    def record(self, writer: Callable[[Observation], ObjectRef], limits: Limits) -> ObjectRef:
+        ref = writer(self)
+        normalize("ObjectRef", to_value(ref), limits)
+        # The trusted post-execution writer owns the object format. A pre-execution
+        # J resource cannot also be evidence of this forward pass.
+        if (not ref.byte_length or ref.object_type in {
+                SCHEMA["messages"][name]["tag"] for name in
+                ("JEffectReceipt", "ModulationEnvelopeV2", "JDirectionSet", "GenesisManifestV3")}):
+            raise Unmodulated("missing post-execution carrier evidence")
+        return ref
+
 
 class LocalCarrier:
     def __init__(self, assets: Assets, hook: JHookBinding, *, load_mmproj: bool = True) -> None:
@@ -70,7 +81,12 @@ class LocalCarrier:
                 or hook.prefill_mask != JPrefillMask.J_PREFILL_ALL
                 or hook.decode_mask != JDecodeMask.J_DECODE_ALL):
             raise Unmodulated("unsupported native hook")
-        self._native = Native(assets, load_mmproj=load_mmproj)
+        try:
+            if (hook.carrier.digest, hook.carrier.byte_length) != (assets.shim_sha256, assets.shim.stat().st_size):
+                raise Unmodulated("installed carrier mismatch")
+            self._native = Native(assets, load_mmproj=load_mmproj)
+        except OSError as exc:
+            raise Unmodulated("carrier asset unavailable") from exc
         if self._native.lib.carrier_measurement_control():
             self._native.close()
             raise Unmodulated("measurement-only carrier")
@@ -110,6 +126,8 @@ class LocalCarrier:
                                      wire, max_tokens, duration_ns) as stream:
                 async for chunk in stream.text():
                     yield chunk
+                if stream.completion != CognitiveCompletion.COG_COMPLETED:
+                    raise Unmodulated("judgment output truncated")
         return infer
 
     @asynccontextmanager
@@ -128,7 +146,7 @@ class LocalCarrier:
             if len(raw_draft) != draft.byte_length:
                 raise Unmodulated("draft length")
             material = material + "\n\n" + raw_draft.decode("utf-8")
-        prefix = chat_prompt(task.protocol_content, material)
+        prefix = chat_prompt(task.protocol_content or None, material)
         m = receive(envelope, receipt, committed, self.hook, read, prefix.cache_prefix(), self.numeric_config, limits)
         if m.snapshot_id != task.snapshot_id:
             raise Unmodulated("task/envelope snapshot")
@@ -137,8 +155,10 @@ class LocalCarrier:
             cv = to_value(cognition)
             check_cognition_message("CognitiveInput", cv, limits)
             b = cognition.binding
-            if b.snapshot_id != m.snapshot_id or b.protocol.resource_version != task.protocol_version:
-                raise Unmodulated("cognitive input snapshot/protocol")
+            if (b.snapshot_id != m.snapshot_id or b.protocol.resource_version != task.protocol_version
+                    or b.environment.model != self.hook.model or b.environment.tokenizer != self.hook.tokenizer
+                    or b.environment.carrier != self.hook.carrier or b.environment.direction_set != m.key.direction_set):
+                raise Unmodulated("cognitive input binding")
             input_ref = canonical_ref("CognitiveInput", cv, limits)
         async with self._request(prefix, m.delta, None, task.max_tokens, deadline - monotonic_ns()) as stream:
             stream.key = m.key
@@ -187,6 +207,7 @@ class Stream:
         self.draft: ObjectRef | None = None
         self.snapshot_id = ""
         self.observation: Observation | None = None
+        self.completion: CognitiveCompletion | None = None
 
     async def text(self) -> AsyncIterator[str]:
         if self.closed or self.started:
@@ -218,6 +239,7 @@ class Stream:
             decoder.decode(b"", final=True)
         if self.closed:
             raise Unmodulated("stream closed")
+        self.completion = completion
         if self.key is not None:
             s = self.native.stats(self.handle)
             self.observation = Observation(self.key, self.cognitive_input, self.draft, self.snapshot_id, self.native.model_hash,

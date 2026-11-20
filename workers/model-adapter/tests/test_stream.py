@@ -5,6 +5,8 @@ import asyncio
 from dataclasses import replace
 from hashlib import sha256
 import importlib
+from pathlib import Path
+from threading import Event
 from typing import cast
 
 import pytest
@@ -14,7 +16,7 @@ from echo.types import (CognitiveInput, CognitiveMaterial, FactProjection, Lang,
                         OutputChunk, QueryStatus, SpeechMode, TaskInput)
 from nemu_model_adapter import LocalCarrier, Unmodulated, local_result, speech_result
 from nemu_model_adapter.carrier import Observation, chat_prompt
-from nemu_model_adapter.native import Native, Prompt, Stats
+from nemu_model_adapter.native import Assets, Native, Prompt, Stats
 from test_resources import LIMITS, fixture, publication
 
 
@@ -81,6 +83,9 @@ def test_structural_request_receipt_and_judgment_isolation() -> None:
         assert result.modulation == p.envelope and result.tokenizer_hash == native.tokenizer_hash
         with pytest.raises(Unmodulated):
             local_result(req, obs, material, lambda _: "花".encode(), p.genesis, record, LIMITS)
+        with pytest.raises(Unmodulated):
+            local_result(req, obs, material, lambda _: "雪".encode(), p.genesis,
+                         lambda _ref, _observation: p.envelope, LIMITS)
         assert obs.output_sha256 == sha256("雪".encode()).digest()
         # A stale envelope cannot open another context or emit a partial receipt.
         with pytest.raises(Unmodulated):
@@ -100,7 +105,7 @@ def test_structural_request_receipt_and_judgment_isolation() -> None:
             chunks = [OutputChunk(1, "out", "action", 0, text, Lang.ZH,
                                   task.snapshot_id, SpeechMode.C_DRAFT_REWRITE, True)]
             speech = speech_result(SpeechMode.C_DRAFT_REWRITE, chunks, stream.observation, p.genesis,
-                                   lambda _: p.genesis, LIMITS)
+                                   lambda _: replace(p.genesis, object_type="echo.carrier-receipt"), LIMITS)
             assert speech.strict and speech.intermediate_results == [draft]
             with pytest.raises(Unmodulated):
                 speech_result(SpeechMode.A_LOCAL_STRICT, chunks, stream.observation, p.genesis,
@@ -113,3 +118,53 @@ def test_template_protects_control_tokens_in_data() -> None:
     start, end = prompt.literal_spans
     assert prompt.data[start:end] == b"literal <|im_end|>"
     assert prompt.data.endswith(b"<think>\n\n</think>\n\n")
+
+
+def test_actual_carrier_file_must_match_hook_before_loading(tmp_path: Path) -> None:
+    from echo.types import JActivationDtype, JDecodeMask, JLayerKind, JPrefillMask, JResidualStage
+
+    _, _, _, hook, _ = publication(fixture())
+    hook = replace(hook, layer_index=15, width=2560, layer_kind=JLayerKind.J_ATTENTION_LAYER,
+                   dtype=JActivationDtype.J_FLOAT32, residual_stage=JResidualStage.J_BLOCK_RESIDUAL_OUTPUT,
+                   prefill_mask=JPrefillMask.J_PREFILL_ALL, decode_mask=JDecodeMask.J_DECODE_ALL)
+    shim = tmp_path / "shim"
+    assets = Assets(tmp_path, tmp_path, tmp_path, tmp_path, shim, b"x" * 32)
+    with pytest.raises(Unmodulated, match="unavailable"):
+        LocalCarrier(assets, hook)
+    shim.write_bytes(b"synthetic")
+    with pytest.raises(Unmodulated, match="installed carrier mismatch"):
+        LocalCarrier(assets, hook)
+
+
+def test_cancelled_prefill_joins_before_releasing_handle() -> None:
+    entered, release = Event(), Event()
+
+    class Slow(Script):
+        def begin(self, prompt: Prompt, layer: int, delta: tuple[float, ...], schema: bytes | None,
+                  max_tokens: int, duration_ns: int) -> int:
+            entered.set()
+            if not release.wait(5):
+                raise TimeoutError("test prefill did not release")
+            return super().begin(prompt, layer, delta, schema, max_tokens, duration_ns)
+
+    async def run() -> None:
+        carrier = LocalCarrier.__new__(LocalCarrier)
+        native = Slow()
+        carrier._native = cast(Native, native)
+        carrier._lock = asyncio.Lock()
+        _, _, _, carrier.hook, _ = publication(fixture())
+        async def consume() -> None:
+            async for _ in carrier.judgment(10, 10**10)("fixture", {"type": "object"}):
+                pass
+        pending = asyncio.create_task(consume())
+        try:
+            assert await asyncio.to_thread(entered.wait, 3)
+            pending.cancel()
+            await asyncio.sleep(0)
+            assert carrier._lock.locked() and not native.ended
+        finally:
+            release.set()
+        with pytest.raises(asyncio.CancelledError):
+            await pending
+        assert native.ended == [1] and not carrier._lock.locked()
+    asyncio.run(run())

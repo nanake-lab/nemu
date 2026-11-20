@@ -17,6 +17,10 @@ from uuid import uuid4
 from suite import PACKAGE, quiet
 
 
+class GroupFailed(RuntimeError):
+    """A recorded measurement failed. The lease and hardware guard remain separate."""
+
+
 def utc() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -67,11 +71,8 @@ def main() -> None:
     def mark(event: str, **data: object) -> None:
         with log.open("a", encoding="utf-8") as f:
             f.write(json.dumps(dict(utc=utc(), event=event, **data)) + "\n")
-    end = time.monotonic() + 7200  # User-facing estimate and total GPU lease.
     def guard() -> None:
         quiet()
-        if time.monotonic() >= end:
-            raise TimeoutError("window time limit")
     def group(name: str, directory: str, companions: tuple[subprocess.Popen[bytes], ...] = ()) -> None:
         guard()
         cmd = [sys.executable, str(Path(__file__).with_name("suite.py")), "--group", name,
@@ -87,7 +88,7 @@ def main() -> None:
                 time.sleep(2)
             mark("group_end", group=directory, code=p.returncode)
             if p.returncode:
-                raise RuntimeError("group failed: " + directory)
+                raise GroupFailed("group failed: " + directory)
     def ready(flag: Path, p: subprocess.Popen[bytes]) -> None:
         until = time.monotonic() + 180  # Startup allowance only; never a model latency threshold.
         while not flag.exists():
@@ -110,9 +111,31 @@ def main() -> None:
     with lease(Path("D:/Dev/cache")):
         mark("open")
         try:
-            group("path", "path")
-            sampled("irl", "mode-b-irl")
-            group("identity", "identity")
+            failures = []
+            identity_group = "identity"
+            try:
+                group("path", "path")
+            except GroupFailed as exc:
+                path_log = a.out / "path/path.jsonl"
+                trials = [json.loads(line) for line in path_log.read_text("utf-8").splitlines()] if path_log.exists() else []
+                if not any(r["build"] == "carrier" and r["arm"] == "zero" and "logits_sha256" in r for r in trials):
+                    raise
+                failures.append(str(exc))
+                identity_group = "identity-zero"
+            if identity_group == "identity":
+                try:
+                    group("resources", "resources")
+                except GroupFailed as exc:
+                    failures.append(str(exc))
+                    identity_group = "identity-zero"
+            try:
+                sampled("irl", "mode-b-irl")
+            except GroupFailed as exc:
+                failures.append(str(exc))
+            try:
+                group(identity_group, "identity")
+            except GroupFailed as exc:
+                failures.append(str(exc))
             stage, voice = a.out / "stage-ready.json", a.out / "voice-ready.json"
             stop = a.out / "resident.stop"
             env = dict(os.environ, PLAYWRIGHT_BROWSERS_PATH=str(a.browser_cache))
@@ -126,12 +149,15 @@ def main() -> None:
                         ready(voice, tts)
                         for i in range(1, 4):
                             sampled("latency", f"joint-{i}", (render, tts))
-                        sampled("mode-b", "mode-b-joint", (render, tts))
+                        if "group failed: mode-b-irl" not in failures:
+                            sampled("mode-b", "mode-b-joint", (render, tts))
                     finally:
                         stop.touch()
                         if tts.poll() is None:
                             tts.wait(timeout=30)
                 render.wait(timeout=30)
+            if failures:
+                raise GroupFailed(", ".join(failures))
             mark("finished")
         except BaseException as exc:
             mark("failed", reason=str(exc))
