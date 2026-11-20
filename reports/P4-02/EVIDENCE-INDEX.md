@@ -887,3 +887,20 @@
 | [P4-02/migration-20261110/migrate-evidence.py](https://github.com/nanake-lab/nemu-evidence/blob/15ec0ea508de7f426924d5353d4b32caecb423f4/P4-02/migration-20261110/migrate-evidence.py) | 1781 | `2a325e7a6c98c1a064f37f2ac30f1119fc3d113ae6e524031ff698dbf72b1a95` |
 | [P4-02/migration-20261110/prepare-public-evidence.py](https://github.com/nanake-lab/nemu-evidence/blob/15ec0ea508de7f426924d5353d4b32caecb423f4/P4-02/migration-20261110/prepare-public-evidence.py) | 16281 | `3e95fbb78e5c6b9c5759988b51b0cfa5c009a53558244517dccc86add371831e` |
 | [P4-02/migration-20261110/verification.json](https://github.com/nanake-lab/nemu-evidence/blob/15ec0ea508de7f426924d5353d4b32caecb423f4/P4-02/migration-20261110/verification.json) | 728 | `d1b2d343674602676576e17ea62ba5616c4f872d215865ffcb29aa044c5b2f0c` |
+
+## 2026-11-21 正式 provider 与归因
+
+私有证据仓库提交 `085e72122b3e9d7d54a52b8779e8e073026ed9e6`，以下文件位于 `P4-02/continue-20261120/`。两个归档共 87 个成员，逐文件大小和 SHA-256 收在 members.json。写入后逐个解压核对，并核实了下列 8 个文件的远端 Git blob。
+
+| 文件 | 字节 | SHA-256 |
+| --- | ---: | --- |
+| [local-checks.zip](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/local-checks.zip) | 4120 | `16f64ec34fdbc296d4562bf8f9ebe1995b6daf6a7cf248c9d48f138ef92b1f5a` |
+| [measurement.zip](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/measurement.zip) | 4967969 | `42566dbbb0a3ae3f1c1f24079a40627de10956c40c70eb66ffdcc4d612e45d36` |
+| [members.json](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/members.json) | 12865 | `37dba3cd8e0b10d2d4d225179f773e463da3a1b67b44b8855696a67f5931cac9` |
+| [mixed-first.wav](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/mixed-first.wav) | 97964 | `311d530e9c26e81cae1b84f804c08cfb8748007a80e8983d74e85dae23c9581c` |
+| [mixed-repeat.wav](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/mixed-repeat.wav) | 97964 | `65e1bef20633be7aa67a68b372e797cbd557dca8c4b4cab4a3f16aa1c7a8f092` |
+| [summary.json](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/summary.json) | 8184 | `fea8f40faf60a55ad3a8aca3c76e6ac373c3512dfdc479a65900c2b93fdefdbf` |
+| [zh-first.wav](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/zh-first.wav) | 140204 | `e4a2e94ba67ca728264cc02c70e45b54f0f31e560b249d2434dcd769c2dbb886` |
+| [zh-repeat.wav](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/zh-repeat.wav) | 140204 | `6ca1814c234ece8e3a4718e6063c4b310d4be4e2371384b8afa4d6eac85d1741` |
+
+measurement.zip 中的 final-wire.jsonl、final-wddm.jsonl 和 final-regions.jsonl 分别记录正式服务请求、WDDM 采样和进程区域提交量。cuda-diag.jsonl 记录英文导入、语义 token、梅尔谱和 PCM。各 *-follow.jsonl 记录同精度设备对照、声学重放及逐层对照。wire.jsonl 和 stop 保留固定提交前的短试跑。local-checks.zip 保存 Windows 本机静态检查、测试命令及结果。
