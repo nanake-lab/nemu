@@ -236,6 +236,30 @@ class ReviewTrigger(IntEnum):
 class ReviewVerdict(IntEnum):
     LAW_CORRECT = 1
     LAW_INCORRECT = 2
+class DesktopTier(IntEnum):
+    IRREVERSIBLE_NEVER = 1
+    IRREVERSIBLE_ASK = 2
+    IRREVERSIBLE_DIRECT = 3
+class ScopeKind(IntEnum):
+    CONNECTOR_OPERATION = 1
+    LOCAL_DESKTOP = 2
+    OWN_SOCIAL = 3
+    SOCIAL_NOTIFY_USER = 4
+    OWN_WALLET_PAY = 5
+    USER_WALLET_TOP_UP = 6
+class ManagementEntry(IntEnum):
+    LOCAL_PANEL = 1
+    LOCAL_ECHOCTL = 2
+class PermissionDenial(IntEnum):
+    IDENTITY_UNVERIFIED = 1
+    WRONG_BINDING = 2
+    SCOPE_DENIED = 3
+    BUDGET_DENIED = 4
+    GRANT_EXPIRED = 5
+    ALREADY_CONSUMED = 6
+    VERSION_REVOKED = 7
+    CONSENT_MISSING = 8
+    UNRESOLVED_DISPATCH = 9
 class RemoteAttemptStatus(IntEnum):
     REMOTE_ATTEMPT_COMPLETED = 1
     REMOTE_ATTEMPT_TRUNCATED = 2
@@ -1398,6 +1422,137 @@ class LedgerEntry:
     review_trigger: ReviewTrigger | None
     review_verdict: ReviewVerdict | None
     review_record: ObjectRef | None
+@dataclass(frozen=True)
+class LocalUserBinding:
+    schema_version: int
+    principal_id: str
+    session_id: str
+    installation_id: str
+    authentication_record_id: str
+@dataclass(frozen=True)
+class DesktopPermissionPolicy:
+    schema_version: int
+    version: str
+    irreversible: DesktopTier
+    reversibility_rule: ObjectRef
+@dataclass(frozen=True)
+class ActionConsent:
+    schema_version: int
+    user: LocalUserBinding
+    confirmed_at_ns: int
+    approval_id: str
+    action_id: str
+    payload_digest: bytes
+@dataclass(frozen=True)
+class ConnectorScope:
+    schema_version: int
+    kind: ScopeKind
+    connector_id: str
+    operation_id: str
+    resource_id: str
+    desktop: DesktopPermissionPolicy | None
+    reversible: bool | None
+    wallet_minor_units: int | None
+    currency: str | None
+    depositor: LocalUserBinding | None
+@dataclass(frozen=True)
+class ExecutionBudget:
+    schema_version: int
+    budget_id: str
+    version: str
+    unit: str
+    limit: int
+    charge: int
+@dataclass(frozen=True)
+class TrustMemory:
+    schema_version: int
+    version: str
+    user: LocalUserBinding
+    scope: ConnectorScope
+    tier: ToolTier
+    revocation_version: int
+@dataclass(frozen=True, repr=False)
+class ExecutionCredential:
+    schema_version: int
+    issuance_id: str
+    executor_session_id: str
+    action_id: str
+    payload_digest: bytes
+    protocol: ObjectRef
+    permission_version: str
+    revocation_version: int
+    scope: ConnectorScope
+    budget: ExecutionBudget
+    issued_at_ns: int
+    expires_at_ns: int
+    tier: ToolTier
+    consent: ActionConsent | None
+    trust: TrustMemory | None
+@dataclass(frozen=True, repr=False)
+class ActionRequestV2:
+    schema_version: int
+    action_id: str
+    expires_at_ns: int
+    grant: ExecutionCredential
+    action_payload: bytes
+@dataclass(frozen=True)
+class GrowthCommandV2:
+    schema_version: int
+    command_id: str
+    kind: GrowthCommandKind
+    verdict: ReviewVerdict | None
+    review_record: ObjectRef | None
+    law_version: ObjectRef
+    history_prefix: str
+    alarm_id: str | None
+    replacement_law: ObjectRef | None
+    alarm_record: ObjectRef | None
+@dataclass(frozen=True)
+class GrowthManagementRequest:
+    schema_version: int
+    entry: ManagementEntry
+    user: LocalUserBinding
+    command: GrowthCommandV2
+    confirmation_id: str | None
+@dataclass(frozen=True)
+class TerminalRequestV2:
+    schema_version: int
+    request_id: str
+    session_id: str
+    protocol_version: int
+    kind: IngressKind
+    event: TerminalEvent | None
+    upload: ObjectUploadChunk | None
+    query: QueryV2 | None
+    approval: ApprovalDecisionV2 | None
+    cancel: OutputCancel | None
+    management: GrowthManagementRequest | None
+@dataclass(frozen=True)
+class PermissionResult:
+    schema_version: int
+    request_id: str
+    audit_record_id: str
+    management_commit: SystemMaintenanceRecord | None
+    denied: PermissionDenial | None
+    dispatch_record_id: str | None
+@dataclass(frozen=True, repr=False)
+class PermissionContext:
+    schema_version: int
+    local_execution: ExecutionCredential | None
+    remote_text: RemoteCognitiveReceipt | None
+@dataclass(frozen=True)
+class TerminalResponseV2:
+    schema_version: int
+    request_id: str
+    session_id: str
+    protocol_version: int
+    reply_to: IngressKind
+    kind: IngressResponseKind
+    receipt: ReceiptV2 | None
+    upload: ObjectUploadReceipt | None
+    query: QueryResultV2 | None
+    reason: IngressReason | None
+    management: PermissionResult | None
 @dataclass(frozen=True)
 class NatureAppraisalRecord:
     schema_version: int

@@ -669,3 +669,12 @@ interface ProactivityBoundaries {
 - `FastBasisIdentity` 的记录分支必须有非空 record_id；内部支路是无自定义 ID 的唯一变体。`FastEffectRecord` 保存依据、角色、目标、前态 θ 与 R⁺ 作用视图引用、解释与治理引用、规律引用。记录身份须来自正式治理；这些编码检查不能证明引用存在、治理正确或作用资格。消费键交 P5-72。
 - 结构解码之后，消费前必须调用 Rust `semantic::check_theta_message` / `check_law_state_message`，Python `echo.theta.check_theta_message` / `echo.law_state.check_law_state_message`，TS `echo/theta.checkThetaMessage` / `echo/law_state.checkLawStateMessage`，并传递同一调用方 Limits。调用方还须解析可信资源、H 前缀与引用；本卡不接管 P5-75 的存储和事务边界。
 - 旧 θ 不补猜 P，换规律须按 §3.6 从 H 重算。旧快状态迁移保留 x 与锚点、槽为空，并在 H/L 引用 `FastStateMigrationRecord`（前后快照引用与必须为真的 prior_decomposition_unknown）。新快照在 CanonicalV1 和 Protobuf 下都不能作为旧消息读取；回退恢复旧应用与备份。测试只提供 SYS17 的契约前提，不冒充迁移执行、失败原子性或重启体验验收。
+
+## P5-40 补充 §4.3 与 §6 — 本机权限合同
+
+本节为待用户批准的后继契约。字段、类型标签与必填分支以 [IDL](../core/contracts/permission.proto) 为准。[ADR 0047](adr/0047-permission-contracts.md) 记录授权依据，[规格对照和消费检查](traceability/P5-40.md) 列出接线方的职责。
+
+- **请求与响应。** P5-35 配对和能力分派继续适用。面板、echoctl 的成长操作经 TerminalRequestV2.management 发给同一本机认证服务。请求中的身份由服务与当前 u* 绑定对照；受信入口、安装、连接、命令、一次性二次确认任何一项不符即拒绝。TerminalResponseV2 对管理成功携带同次审计与 H 系统记录，对管理拒绝携带原因。旧 GrowthControl 不取得新接口的执行资格。
+- **行动。** 执行器接收 ActionRequestV2，凭证与已签发的同一次授权、持有会话、action_id、执行载荷原样 SHA-256、协议、权限/撤销版本、作用域、预算与有效期逐项比对。确认、凭证和作用域均不得由模型签发。预算单位和记账期由所指预算资源确定；执行前按实时可用量原子预留并消费一次。同意及信任记录经核心核验，T3 无记忆授权。拒绝记录带审计定位；副作用未知走核对流程。
+- **桌面与云端。** 本机可挽回行动可放行；不可挽回行动按用户所选档位，默认先问，按次同意绑定具体行动。版本化的可挽回性规则由后继发布。云端内部文字沿用 ADR 0046 的回执，本地暂停原因同时保留；远端主体没有执行、投递、查询、下一步选择或提交入口。
+- **社交与钱包。** §5.3、§6 旧 social.commit 一律 T3 的分类由 V2-89 取代。她以自己身份发消息、作约定和花自己小钱包的钱默认信任，涉及 u* 的事事后通知。充值仅限经本机认证的 u*，余额上限由受信钱包资源设定，不透支、不自动充值、不使用 u* 的卡和账号。新旧行动都必须经过实际执行边界的核验。
