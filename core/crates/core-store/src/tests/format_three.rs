@@ -111,6 +111,8 @@ fn bytes_are_type_scoped_and_verified_before_use() {
     let before = files();
     for body in [
         br#"{"Authorization":"fixture"}"#.as_slice(),
+        br#"{"messages":[],"X-Goog-Api-Key":"fixture"}"#,
+        br#"{"X-Auth-Token":"fixture"}"#,
         br#"{"x":{"API_Key":"fixture"},"x":0}"#,
         br#"{"messages":[],"headers":{"Accept":"text/plain"}}"#,
         b"Authorization: fixture\r\n\r\n{}",
@@ -118,6 +120,10 @@ fn bytes_are_type_scoped_and_verified_before_use() {
         assert!(s.prepare_request_body(body).is_err());
     }
     assert!(s.prepare_raw(b"\xff\nAuthorization: fixture").is_err());
+    assert!(
+        s.prepare_raw(br#"{"response":0,"X-Auth-Token":"fixture"#)
+            .is_err()
+    );
     assert_eq!(files(), before);
     let bad = s.prepare_raw(b"valid").unwrap();
     std::fs::write(s.objects.path(bad.reference()).unwrap(), b"false").unwrap();

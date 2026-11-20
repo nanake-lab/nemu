@@ -29,20 +29,22 @@ pub(crate) fn verify(r: &ObjectRef, bytes: &[u8], limit: u64) -> Result<()> {
 
 fn credential_field(key: &str) -> bool {
     let key = key.to_ascii_lowercase().replace(['-', '_'], "");
-    matches!(
-        key.as_str(),
-        "authorization"
-            | "proxyauthorization"
-            | "apikey"
-            | "xapikey"
-            | "accesstoken"
-            | "refreshtoken"
-            | "credentials"
-            | "password"
-            | "clientsecret"
-            | "cookie"
-            | "setcookie"
-    )
+    [
+        "authorization",
+        "apikey",
+        "accesstoken",
+        "refreshtoken",
+        "authtoken",
+        "securitytoken",
+        "clientsecret",
+        "secretaccesskey",
+        "subscriptionkey",
+        "password",
+        "credentials",
+        "cookie",
+    ]
+    .iter()
+    .any(|suffix| key.ends_with(suffix))
 }
 fn credential_text(text: &str) -> bool {
     let lower = text.to_ascii_lowercase();
@@ -53,10 +55,17 @@ fn credential_text(text: &str) -> bool {
                 .is_some_and(|suffix| suffix.len() >= 8)
         })
         || lower.contains("bearer ")
-        || text.lines().any(|line| {
-            line.split_once(':')
-                .is_some_and(|(key, _)| credential_field(key.trim()))
-        })
+        || text
+            .split_inclusive(':')
+            .filter_map(|part| part.strip_suffix(':'))
+            .any(|part| {
+                let before = part.trim_end().trim_end_matches('"');
+                let key = before
+                    .rsplit(|c: char| !c.is_ascii_alphanumeric() && !matches!(c, '-' | '_'))
+                    .next()
+                    .unwrap_or("");
+                credential_field(key)
+            })
 }
 /// Scan the actual JSON string tokens, including shadowed duplicate members.
 fn protected_json(bytes: &[u8]) -> bool {
