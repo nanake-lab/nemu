@@ -2,7 +2,7 @@
 
 # P5-40 身份、执行凭证与成长管理认证
 
-已提交本机授权与成长管理契约。本机契约验收通过；[草稿 PR #235](https://github.com/nanake-lab/nemu/pull/235) 保留「契约变更」与 `needs-user`。最终提交的 Ubuntu、Windows 实跑结果随 PR 的交付评论按 SHA 登记。等待审查及用户批准 ADR 0047 / V2-188。
+已提交本机授权与成长管理契约。本机契约验收通过；[草稿 PR #235](https://github.com/nanake-lab/nemu/pull/235) 保留「契约变更」与 `needs-user`。最终提交的 Ubuntu、Windows 实跑结果随 PR 的交付评论按 SHA 登记。实现提交的 Ubuntu 通过；Windows W18 在网关等待回执时超时，开工基线也在相同行超时。见 [BLOCKED.md](BLOCKED.md)。当前 head 的 W18 通过才能解除 CI 阻塞，另待独立审查与用户批准 ADR 0047 / V2-188。
 
 ## 交付
 
@@ -20,9 +20,9 @@
 | `cargo test -p core-types` | 通过，含冻结向量的冷/热/无缓存路径、受信主体对照、过期边界及帧预算。首次测试编译发现新测试闭包持有借用，已用独立的变更会话夹具修正并复验。 |
 | `pnpm test:contracts` | 8 个测试文件，354 项通过。 |
 | fmt、core-types clippy、契约 Ruff、严格 mypy、根 lint 与 typecheck | 通过。首次 mypy 提示新夹具中三处字典类型推断过窄；补上类型后严格检查通过。 |
-| 当前 head CI | Ubuntu 由 PR 触发，草稿 Windows 按同提交手动触发。以 [PR 检查](https://github.com/nanake-lab/nemu/pull/235/checks) 和[分支 Windows 作业](https://github.com/nanake-lab/nemu/actions/workflows/windows.yml?query=branch%3Atask%2FP5-40-permission-contracts) 的实际运行及最终评论为准。 |
+| 当前 head CI | 实现提交 bd750680 的 Ubuntu 通过。Windows 首次上传证据遇到 ECONNRESET；重跑后桌面与 W02 通过，W18 为 41 通过、1 项回执读取超时。草稿自动门卫按设计报红。以 [PR 检查](https://github.com/nanake-lab/nemu/pull/235/checks) 和[分支 Windows 作业](https://github.com/nanake-lab/nemu/actions/workflows/windows.yml?query=branch%3Atask%2FP5-40-permission-contracts) 的实际运行及最终评论为准。 |
 
-本机原始日志（含初次失败）、冻结字节及逐消息覆盖核验的私有路径、SHA-256 和证据提交见[证据索引](EVIDENCE-INDEX.csv)。较大的文件来自追加式黄金向量与三端生成代码。
+实现提交两端 CI 的原始日志、重跑、门卫及工件已存入[私有 CI 证据索引](https://github.com/nanake-lab/nemu-evidence/blob/0c89abccfaf6c098350ad972182bb6910010366e/P5-40/ci/index.json)。本机原始日志（含初次失败）、冻结字节及逐消息覆盖核验的私有路径、SHA-256 和证据提交见[证据索引](EVIDENCE-INDEX.csv)。较大的文件来自追加式黄金向量与三端生成代码。
 
 主线增量核对从开工基线 `c5636361` 到 `469262e4`，新增 #201 的规律实施规划报告与请求，未改变 P5-40 的发布输入和验收条件。
 
