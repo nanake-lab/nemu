@@ -7672,6 +7672,1559 @@
       "file": "records.proto",
       "rules": {}
     },
+    "SourceField": {
+      "tag": "echo.source-field",
+      "source": "ADR 0048 G01",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "field_number",
+          "type": "uint32",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "element",
+          "type": "uint64",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "SourceLocation": {
+      "tag": "echo.source-location",
+      "source": "ADR 0048 G01",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source",
+          "type": "RecordVersion",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "path",
+          "type": "SourceField",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "text",
+          "type": "Utf8Range",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "SourceTransform": {
+      "tag": "echo.source-transform",
+      "source": "ADR 0048 G01",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "inputs",
+          "type": "RecordVersion",
+          "number": 2,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "output",
+          "type": "RecordVersion",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "rule",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "SourceMetadataV2": {
+      "tag": "echo.source-metadata-v2",
+      "source": "ADR 0048 G01",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "derivation",
+          "type": "Derivation",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "epistemic_type",
+          "type": "EpistemicType",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "resolution_state",
+          "type": "ResolutionState",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "representation_version",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "locations",
+          "type": "SourceLocation",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "roots",
+          "type": "RecordVersion",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "transformations",
+          "type": "SourceTransform",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "validity",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "speaker",
+          "type": "SpeakerAttribution",
+          "number": 13,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "conversation",
+          "type": "string",
+          "number": 14,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {},
+      "retains": "SourceMetadata",
+      "reserved": [
+        2,
+        3
+      ]
+    },
+    "ConceptRole": {
+      "tag": "echo.concept-role",
+      "source": "ADR 0048 G02–G03",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "node_kind",
+          "type": "SemanticNodeKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "domain",
+          "type": "ConceptRef",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "mandatory",
+          "type": "bool",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "ConceptRevision": {
+      "tag": "echo.concept-revision",
+      "source": "ADR 0048 G02",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "concept_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "lifecycle",
+          "type": "ConceptLifecycle",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "previous",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "governance",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "grounding",
+          "type": "SourceLocation",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "label",
+          "type": "TrilingualText",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "definition",
+          "type": "TrilingualText",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "positive_examples",
+          "type": "TrilingualText",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "negative_examples",
+          "type": "TrilingualText",
+          "number": 10,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "roles",
+          "type": "ConceptRole",
+          "number": 11,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "role"
+        },
+        {
+          "name": "allows_reported_text",
+          "type": "bool",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "constraints",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "ConceptLink": {
+      "tag": "echo.concept-link",
+      "source": "ADR 0048 G02",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "origin",
+          "type": "ConceptRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "target",
+          "type": "ConceptRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "basis",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "ConceptRegistry": {
+      "tag": "echo.concept-registry",
+      "source": "ADR 0048 G02",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "previous",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "entries",
+          "type": "ConceptRevision",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "concept_id"
+        },
+        {
+          "name": "links",
+          "type": "ConceptLink",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "relation_kinds",
+          "type": "string",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "interaction_kinds",
+          "type": "string",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "edge_kinds",
+          "type": "string",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "aliases",
+          "type": "ConceptLink",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "origin"
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "RefV2": {
+      "tag": "echo.semantic-ref-v2",
+      "source": "ADR 0048 G03",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "referent",
+          "type": "ConceptRef",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "source",
+          "type": "SourceMetadataV2",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {},
+      "retains": "Ref",
+      "reserved": [
+        3
+      ]
+    },
+    "ClaimV2": {
+      "tag": "echo.semantic-claim-v2",
+      "source": "ADR 0048 G03",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "predicate",
+          "type": "ConceptRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "roles",
+          "type": "RoleBinding",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "role"
+        },
+        {
+          "name": "polarity",
+          "type": "bool",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source",
+          "type": "SourceMetadataV2",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "reported_text",
+          "type": "SourceLocation",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "mode",
+          "type": "ClaimModality",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "time_kind",
+          "type": "ClaimTimeKind",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "time_fact",
+          "type": "ObjectRef",
+          "number": 14,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {},
+      "retains": "Claim",
+      "reserved": [
+        3,
+        6,
+        8,
+        9
+      ]
+    },
+    "ActV2": {
+      "tag": "echo.semantic-act-v2",
+      "source": "ADR 0048 G03",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "interaction_kind",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "source",
+          "type": "SourceMetadataV2",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {},
+      "retains": "Act",
+      "reserved": [
+        3
+      ]
+    },
+    "SemanticGraphV2": {
+      "tag": "echo.semantic-graph-v2",
+      "source": "ADR 0048 G03",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "edges",
+          "type": "Edge",
+          "number": 6,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "references",
+          "type": "RefV2",
+          "number": 7,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "id"
+        },
+        {
+          "name": "statements",
+          "type": "ClaimV2",
+          "number": 8,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "id"
+        },
+        {
+          "name": "actions",
+          "type": "ActV2",
+          "number": 9,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "id"
+        },
+        {
+          "name": "registry",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {},
+      "retains": "SemanticGraph",
+      "reserved": [
+        3,
+        4,
+        5
+      ]
+    },
+    "TextAdapterEntry": {
+      "tag": "echo.text-adapter-entry",
+      "source": "ADR 0048 G03",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "payload_tag",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "payload_schema",
+          "type": "uint32",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "path",
+          "type": "SourceField",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "predicate",
+          "type": "ConceptRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "TextAdapterTable": {
+      "tag": "echo.text-adapter-table",
+      "source": "ADR 0048 G03",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "registry",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "entries",
+          "type": "TextAdapterEntry",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "payload_tag"
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "StageCoverage": {
+      "tag": "echo.stage-coverage",
+      "source": "ADR 0048 G04",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "accepted",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "mu",
+          "type": "double",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "min": 0.0,
+          "max": 1.0
+        },
+        {
+          "name": "unknown_reason",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "StageAdoption": {
+      "tag": "echo.stage-adoption",
+      "source": "ADR 0048 G04",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event",
+          "type": "RecordVersion",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "interpretation",
+          "type": "RecordVersion",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "stage",
+          "type": "InterpretationStage",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "outcome",
+          "type": "StageOutcome",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "binding",
+          "type": "ProposalBindingV2",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "producer_resource",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "candidate",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "actual_output",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "context",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "definitions",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        },
+        {
+          "name": "isolation",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "governance",
+          "type": "ObjectRef",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "coverage",
+          "type": "StageCoverage",
+          "number": 14,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "target"
+        },
+        {
+          "name": "appraisal",
+          "type": "NatureVector",
+          "number": 15,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "number": 16,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "registry_after",
+          "type": "ObjectRef",
+          "number": 17,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "revision",
+          "type": "RecordRelation",
+          "number": 18,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "relations",
+          "type": "RelationQueryReceipt",
+          "number": 19,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "transaction_id",
+          "type": "string",
+          "number": 20,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "replaced_targets",
+          "type": "string",
+          "number": 21,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "registry_before",
+          "type": "ObjectRef",
+          "number": 22,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "staged_revisions",
+          "type": "ObjectRef",
+          "number": 23,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "digest"
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "AttributeRule": {
+      "tag": "echo.attribute-rule",
+      "source": "ADR 0048 G05",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source",
+          "type": "AttributeSource",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_kind",
+          "type": "EventKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "payload_type",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "exogenous",
+          "type": "bool",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "self_narrative",
+          "type": "bool",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "growth_access",
+          "type": "EvidenceAccess",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "AttributeRuleTable": {
+      "tag": "echo.attribute-rule-table",
+      "source": "ADR 0048 G05",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "rules",
+          "type": "AttributeRule",
+          "number": 2,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "ScopedVerification": {
+      "tag": "echo.scoped-verification",
+      "source": "ADR 0048 G05",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "SourceLocation",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "value",
+          "type": "VerificationValue",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "evidence",
+          "type": "RecordVersion",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "experiencer",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "VerificationRequirement": {
+      "tag": "echo.verification-requirement",
+      "source": "ADR 0048 G05",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "SourceLocation",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "expected",
+          "type": "VerificationValue",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "TargetPremise": {
+      "tag": "echo.target-premise",
+      "source": "ADR 0048 G05",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "target",
+          "type": "ConceptRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "occurrence_scopes",
+          "type": "VerificationRequirement",
+          "number": 3,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "scope"
+        },
+        {
+          "name": "truth_scopes",
+          "type": "VerificationRequirement",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "scope"
+        },
+        {
+          "name": "subjective_scopes",
+          "type": "VerificationRequirement",
+          "number": 5,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "scope"
+        },
+        {
+          "name": "comparison",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "definition",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {}
+    },
+    "EventAttributesRecordV2": {
+      "tag": "echo.event-attributes-v2",
+      "source": "ADR 0048 G05",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "rule_table_version",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "exogenous",
+          "type": "bool",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "self_narrative",
+          "type": "bool",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source_key",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "event",
+          "type": "RecordVersion",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "rule_table",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "applied",
+          "type": "AttributeRule",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "source",
+          "type": "SourceMetadataV2",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "governance",
+          "type": "ObjectRef",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "occurred",
+          "type": "ScopedVerification",
+          "number": 13,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "scope"
+        },
+        {
+          "name": "truth",
+          "type": "ScopedVerification",
+          "number": 14,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "scope"
+        },
+        {
+          "name": "subjective",
+          "type": "ScopedVerification",
+          "number": 15,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "scope"
+        },
+        {
+          "name": "c_unit",
+          "type": "RecordVersion",
+          "number": 17,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "targets",
+          "type": "TargetPremise",
+          "number": 18,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "target"
+        },
+        {
+          "name": "inputs",
+          "type": "RecordVersion",
+          "number": 19,
+          "repeated": true,
+          "required": true,
+          "nonempty": false,
+          "set": "self"
+        },
+        {
+          "name": "person_mapping",
+          "type": "ObjectRef",
+          "number": 20,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "directed_to_n",
+          "type": "RecordVersion",
+          "number": 21,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "cause",
+          "type": "RecordVersion",
+          "number": 22,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "episode_phase_fact",
+          "type": "ObjectRef",
+          "number": 23,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "duration_fact",
+          "type": "ObjectRef",
+          "number": 24,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "semantic_evidence.proto",
+      "rules": {},
+      "retains": "EventAttributesRecord",
+      "reserved": [
+        6
+      ]
+    },
     "Utf8Range": {
       "tag": "echo.utf8-range",
       "source": "ADR 0045 §§3–5; ADR 0046",
@@ -15240,6 +16793,62 @@
       "VERDICT_UNSPECIFIED": 0,
       "LAW_CORRECT": 1,
       "LAW_INCORRECT": 2
+    },
+    "ConceptLifecycle": {
+      "CONCEPT_LIFE_UNSPECIFIED": 0,
+      "CONCEPT_LIFE_PROVISIONAL": 1,
+      "CONCEPT_LIFE_STABLE": 2,
+      "CONCEPT_LIFE_DEPRECATED": 3
+    },
+    "SemanticNodeKind": {
+      "SEM_NODE_UNSPECIFIED": 0,
+      "SEM_NODE_REF": 1,
+      "SEM_NODE_CLAIM": 2,
+      "SEM_NODE_ACT": 3
+    },
+    "ClaimTimeKind": {
+      "CLAIM_TIME_UNSPECIFIED": 0,
+      "CLAIM_TIME_NOT_APPLICABLE": 1,
+      "CLAIM_TIME_UNKNOWN": 2,
+      "CLAIM_TIME_FACT": 3
+    },
+    "ClaimModality": {
+      "CLAIM_MODE_UNSPECIFIED": 0,
+      "CLAIM_MODE_REPORTED": 1
+    },
+    "InterpretationStage": {
+      "INTERPRET_STAGE_UNSPECIFIED": 0,
+      "INTERPRET_STAGE_IRL": 1,
+      "INTERPRET_STAGE_A": 2,
+      "INTERPRET_STAGE_M": 3
+    },
+    "StageOutcome": {
+      "STAGE_OUTCOME_UNSPECIFIED": 0,
+      "STAGE_OUTCOME_VALID": 1,
+      "STAGE_OUTCOME_PARTIAL": 2,
+      "STAGE_OUTCOME_FAILED": 3
+    },
+    "VerificationValue": {
+      "VERIFY_VALUE_UNSPECIFIED": 0,
+      "VERIFY_VALUE_TRUE": 1,
+      "VERIFY_VALUE_FALSE": 2,
+      "VERIFY_VALUE_UNKNOWN": 3
+    },
+    "AttributeSource": {
+      "ATTR_SOURCE_UNSPECIFIED": 0,
+      "ATTR_SOURCE_HUMAN_RESPONSE": 1,
+      "ATTR_SOURCE_DIRECTED_TOUCH": 2,
+      "ATTR_SOURCE_ABSENCE": 3,
+      "ATTR_SOURCE_DESKTOP": 4,
+      "ATTR_SOURCE_SELF_RESULT": 5,
+      "ATTR_SOURCE_INTERNAL": 6,
+      "ATTR_SOURCE_MAINTENANCE": 7
+    },
+    "EvidenceAccess": {
+      "EVIDENCE_ACCESS_UNSPECIFIED": 0,
+      "EVIDENCE_ACCESS_NONE": 1,
+      "EVIDENCE_ACCESS_TARGET_DEPENDENT": 2,
+      "EVIDENCE_ACCESS_COMPARISON_REQUIRED": 3
     },
     "RemoteAttemptStatus": {
       "REMOTE_ATTEMPT_UNSPECIFIED": 0,
