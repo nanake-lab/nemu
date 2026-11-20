@@ -2,7 +2,7 @@
 
 ## RTX 3080 实测
 
-P4-02 已释放本机显卡。P5-13 的三个原生构建、语料、阶段渲染所需资源及 CPU 核验已就绪。2026-11-21 00:33（Perth），runner 离线，PR #245 的 [Windows 作业](https://github.com/nanake-lab/nemu/actions/runs/44771934510) 正在排队。已通知用户先启动 runner，待队列清空再由用户确认停机开窗。J01、真机 J05、AT13、身份、IRL 联测与显存/延迟保留 not_run。
+P4-02 已释放本机显卡。P5-13 的三个原生构建、语料、舞台渲染资源及 CPU 核验已就绪。PR #245 的 [Windows 作业](https://github.com/nanake-lab/nemu/actions/runs/44771934510) 已通过。2026-11-21 用户决定另行安排显卡窗口，目前可保持 runner 在线。用户确认开窗时需要重新核对 Windows 队列及两个 runner 进程。J01、真机 J05、AT13、身份、IRL 联测与显存/延迟保留 not_run。
 
 ## 执行后探针对象
 
