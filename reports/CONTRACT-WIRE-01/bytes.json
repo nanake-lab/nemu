@@ -35,5 +35,44 @@
       "new_prefix_sha256": "bb39414c6321ba97e6fd76cde37a5797d1ea8960614a19381c1227b7e58088a7",
       "new_entries_sha256": "bb39414c6321ba97e6fd76cde37a5797d1ea8960614a19381c1227b7e58088a7"
     }
-  ]
+  ],
+  "wire_digest_framing": "Per vector: u64 little-endian byte length followed by exact encoded bytes, in fixture order.",
+  "legal_wire_bytes": {
+    "canonical": {
+      "old": {
+        "vectors": 646,
+        "bytes": 342120,
+        "framed_sha256": "36a657f0d1febccda4d9bd71db304583b928070f1d8eb035cc9fa54ab5e9bb49"
+      },
+      "old_prefix_now": {
+        "vectors": 646,
+        "bytes": 342120,
+        "framed_sha256": "36a657f0d1febccda4d9bd71db304583b928070f1d8eb035cc9fa54ab5e9bb49"
+      },
+      "added": {
+        "vectors": 80,
+        "bytes": 110500,
+        "framed_sha256": "9183a67cd81659ffc4e5dabf11315105b48d57d1f2c9f09a0d33f85fca4014ba"
+      },
+      "changed_old_vectors": 0
+    },
+    "protobuf": {
+      "old": {
+        "vectors": 646,
+        "bytes": 209092,
+        "framed_sha256": "b9c86c39a396bbf0ab8b965b8d937ae45bcd02364017690a6200fda6f339a772"
+      },
+      "old_prefix_now": {
+        "vectors": 646,
+        "bytes": 209092,
+        "framed_sha256": "b9c86c39a396bbf0ab8b965b8d937ae45bcd02364017690a6200fda6f339a772"
+      },
+      "added": {
+        "vectors": 80,
+        "bytes": 67543,
+        "framed_sha256": "c92308dd91d09a5f5746ed189829ad402e3e2a09a3f1f17e5d12ed6ecc27a813"
+      },
+      "changed_old_vectors": 0
+    }
+  }
 }
