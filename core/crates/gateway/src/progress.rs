@@ -8,6 +8,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         if let Some(event) = self.store.next_raw()?
             && let Some(settled) = self.store.settle_duplicate()?
         {
+            self.receipt_reader = None; // Gamma published a filtered or conflicting position.
             let reason = match settled.stage {
                 ReceiptStage::FILTERED => None,
                 ReceiptStage::REJECTED => Some(self.audit(
@@ -38,7 +39,11 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             // Observe the sole writer's published head immediately after EACH
             // core step, even when its notification is delayed. This avoids a
             // history-sized query/cache and does not accept mere object visibility.
-            let published = self.store.reader()?.current()?.ok_or(Error::Contract)?;
+            let published = self
+                .store
+                .receipt_reader(&mut self.receipt_reader)?
+                .current()?
+                .ok_or(Error::Contract)?;
             if after.1 != before.1.checked_add(1).ok_or(Error::Contract)?
                 || published.processed_position.0 != after.1
                 || published.binding.raw_log_position.0 != before.1
@@ -59,10 +64,8 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             if !outcome.committed {
                 return Err(Error::Rejected("uncommitted core outcome"));
             }
-            // Read checks the exact ObjectRef and visibility in THIS lineage.
-            let reader = self.store.reader()?;
-            let transaction: CoreTransactionV2 = reader.read(&outcome.snapshot)?;
-            let event: EventEnvelope = reader.read(&transaction.staged_h)?;
+            let reader = self.store.receipt_reader(&mut self.receipt_reader)?;
+            let (transaction, event) = reader.read_published_transaction(&outcome.snapshot)?;
             let Some(p) = self.pending.get(&event.raw_log_position.0) else {
                 continue; // no surviving connection is awaiting this notification
             };

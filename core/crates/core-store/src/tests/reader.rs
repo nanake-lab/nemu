@@ -1,6 +1,114 @@
 use super::*;
 
 #[test]
+fn receipts_verify_once_per_head_and_again_after_reopening_the_store() {
+    use crate::reader::counts::FULL_CHECKS;
+    let root = TemporaryRoot::new().unwrap();
+    let mut store = rehearsal(&root, "receipt-prefix");
+    let cap = store.take_commit_capability().unwrap();
+    let first = advance(&mut store, &cap, 0);
+    let mut slot = None;
+    let before = FULL_CHECKS.get();
+    let reader = store.receipt_reader(&mut slot).unwrap();
+    assert_eq!(
+        reader
+            .read_published_transaction(&first.snapshot)
+            .unwrap()
+            .1
+            .id,
+        first.event_id
+    );
+    assert_eq!(FULL_CHECKS.get() - before, 1);
+
+    let second = advance(&mut store, &cap, 1);
+    assert!(
+        slot.as_ref()
+            .unwrap()
+            .read_published_transaction(&second.snapshot)
+            .is_err()
+    );
+    for outcome in [&second, &first] {
+        let reader = store.receipt_reader(&mut slot).unwrap();
+        assert_eq!(
+            reader
+                .read_published_transaction(&outcome.snapshot)
+                .unwrap()
+                .1
+                .id,
+            outcome.event_id
+        );
+    }
+    assert_eq!(FULL_CHECKS.get() - before, 2);
+    event(&mut store, 2);
+    store.receipt_reader(&mut slot).unwrap();
+    assert_eq!(FULL_CHECKS.get() - before, 2);
+
+    drop(store);
+    let reopened = Store::<Rehearsal>::open_temporary(&root, "receipt-prefix", config()).unwrap();
+    reopened.receipt_reader(&mut slot).unwrap();
+    assert_eq!(FULL_CHECKS.get() - before, 3);
+}
+
+#[test]
+fn cached_receipt_checks_transaction_objects_and_live_publication() {
+    let root = TemporaryRoot::new().unwrap();
+    let mut store = rehearsal(&root, "receipt-damage");
+    let cap = store.take_commit_capability().unwrap();
+    let result = advance(&mut store, &cap, 0);
+    let mut slot = None;
+    let reader = store.receipt_reader(&mut slot).unwrap();
+    let (_, event) = reader.read_published_transaction(&result.snapshot).unwrap();
+    let path = store.objects.path(&event.payload_ref).unwrap();
+    let bytes = std::fs::read(&path).unwrap();
+    let mut damaged = bytes.clone();
+    *damaged.last_mut().unwrap() ^= 1;
+    std::fs::write(&path, damaged).unwrap();
+    assert!(reader.read_published_transaction(&result.snapshot).is_err());
+    std::fs::write(&path, bytes).unwrap();
+    assert!(reader.read_published_transaction(&result.snapshot).is_ok());
+
+    // Remove the synthetic commit while leaving its head, indexes and objects intact.
+    let db = rusqlite::Connection::open(store.path().join("store.sqlite")).unwrap();
+    db.execute_batch(
+        "PRAGMA foreign_keys=OFF; DROP TRIGGER immutable_commits_DELETE; DELETE FROM commits;",
+    )
+    .unwrap();
+    assert!(reader.read::<CoreTransactionV2>(&result.snapshot).is_ok());
+    assert!(reader.read_published_transaction(&result.snapshot).is_err());
+    assert!(store.receipt_reader(&mut slot).is_err());
+    assert!(slot.is_none());
+}
+
+#[test]
+fn visible_transaction_dependency_is_not_a_published_commit() {
+    let root = TemporaryRoot::new().unwrap();
+    let mut store = rehearsal(&root, "receipt-membership");
+    let cap = store.take_commit_capability().unwrap();
+    advance(&mut store, &cap, 0);
+    let mut other = store.current().unwrap().unwrap();
+    other.audit_refs.push(other.staged_q.clone());
+    let nested = store.prepare(&other, "1").unwrap();
+    let next = event(&mut store, 1);
+    let (ticket, mut tx, _pins) = proposal(&store, &next);
+    tx.audit_refs.push(nested.reference().clone());
+    let staged = store.stage(ticket, tx).unwrap();
+    store.commit(&cap, staged, normal()).unwrap();
+    let mut slot = None;
+    let reader = store.receipt_reader(&mut slot).unwrap();
+    assert_eq!(
+        reader
+            .read::<CoreTransactionV2>(nested.reference())
+            .unwrap(),
+        other
+    );
+    assert!(
+        reader
+            .read_published_transaction(nested.reference())
+            .is_err()
+    );
+}
+
+#[test]
 fn complete_transaction_prefix_is_verified_and_bounded() {
     let root = TemporaryRoot::new().unwrap();
     let mut store = rehearsal(&root, "prefix");

@@ -42,6 +42,7 @@ pub struct Gateway<L: LineageKind, H: CoreHandler<L>> {
     pub(crate) installations: Vec<Installation>,
     pub(crate) connections: BTreeMap<u64, Connection<L>>,
     pub(crate) pending: BTreeMap<u64, Pending>,
+    pub(crate) receipt_reader: Option<core_store::Reader<L>>,
     pub(crate) audit_blocked: bool,
     audit_bytes: usize,
 }
@@ -111,6 +112,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             config,
             connections: BTreeMap::new(),
             pending: BTreeMap::new(),
+            receipt_reader: None,
             audit_blocked,
             audit_bytes: bytes,
         })
