@@ -46,7 +46,8 @@ def run_worker(pipe: ModelPipe, root: Path) -> None:
         os.environ.update(HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1", MPLBACKEND="Agg")
         dll_dir = os.getenv("NEMU_GSV_FFMPEG_BIN")
         # TorchCodec resolves its FFmpeg shared libraries through the Windows loader.
-        dll = os.add_dll_directory(dll_dir) if dll_dir and os.name == "nt" else None
+        if sys.platform == "win32" and dll_dir:
+            dll = os.add_dll_directory(dll_dir)
         os.chdir(root)
         sys.path[:0] = [str(root), str(root / "GPT_SoVITS")]
         ort = importlib.import_module("onnxruntime")
@@ -56,11 +57,11 @@ def run_worker(pipe: ModelPipe, root: Path) -> None:
         torch.set_num_threads(4)  # Same thread pool as the qualified V5 configuration.
         providers = ort.get_available_providers
         try:
-            ort.get_available_providers = lambda: ["CPUExecutionProvider"]
+            setattr(ort, "get_available_providers", lambda: ["CPUExecutionProvider"])
             upstream = importlib.import_module("TTS_infer_pack.TTS")
             frontend = importlib.import_module("text.chinese2")
         finally:
-            ort.get_available_providers = providers
+            setattr(ort, "get_available_providers", providers)
         if frontend.g2pw._g2pw.session_g2pw.get_providers() != ["CPUExecutionProvider"]:
             raise RuntimeError("G2PW_PROVIDER_MISMATCH")
         # Load the English dictionaries at warmup, before a user waits for speech.
