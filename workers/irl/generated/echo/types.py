@@ -168,6 +168,39 @@ class EvidenceRelation(IntEnum):
     COUNTEREVIDENCE = 2
     RESOLVES_TRIAL = 3
     EVIDENCE_UNKNOWN = 4
+class JResidualStage(IntEnum):
+    J_BLOCK_RESIDUAL_OUTPUT = 1
+    J_MIXER_RESIDUAL_BEFORE_FFN_NORM = 2
+class JLayerKind(IntEnum):
+    J_ATTENTION_LAYER = 1
+    J_RECURRENT_LAYER = 2
+    J_HYBRID_LAYER = 3
+class JActivationDtype(IntEnum):
+    J_FLOAT32 = 1
+    J_FLOAT16 = 2
+    J_BFLOAT16 = 3
+    J_FLOAT64 = 4
+class JPrefillMask(IntEnum):
+    J_PREFILL_LAST = 1
+    J_PREFILL_ALL = 2
+    J_PREFILL_NONE = 3
+class JDecodeMask(IntEnum):
+    J_DECODE_ALL = 1
+    J_DECODE_NONE = 2
+class JDirectionKind(IntEnum):
+    J_CONNECTION = 1
+    J_EMPATHY = 2
+    J_CURIOSITY = 3
+    J_ACHIEVEMENT = 4
+    J_LEARNED = 5
+class JDirectionStatus(IntEnum):
+    J_INCLUDED = 1
+    J_UNVALIDATED = 2
+    J_MISSING = 3
+    J_VALIDATION_MISMATCH = 4
+class JCompilationMode(IntEnum):
+    J_CONNECTED = 1
+    J_REHEARSAL_WITHOUT_FAST = 2
 class EvidenceSign(IntEnum):
     SIGN_NEGATIVE = 1
     SIGN_POSITIVE = 2
@@ -862,6 +895,112 @@ class ThetaModuleSourceBinding:
     source_slice_id: str
     source_trace_revision: str
     source_coupling_revision: str
+@dataclass(frozen=True)
+class JHookBinding:
+    schema_version: int
+    carrier: ObjectRef
+    model: ObjectRef
+    tokenizer: ObjectRef
+    layer_index: int
+    residual_stage: JResidualStage
+    layer_kind: JLayerKind
+    width: int
+    dtype: JActivationDtype
+    prefill_mask: JPrefillMask
+    decode_mask: JDecodeMask
+@dataclass(frozen=True)
+class JDirectionVector:
+    schema_version: int
+    version: str
+    values: list[float]
+@dataclass(frozen=True)
+class JDirection:
+    schema_version: int
+    kind: JDirectionKind
+    tendency_id: str | None
+    concept: ConceptRef | None
+    vector: ObjectRef
+    beta: float
+@dataclass(frozen=True)
+class JDirectionSet:
+    schema_version: int
+    version: str
+    hook: JHookBinding
+    directions: list[JDirection]
+@dataclass(frozen=True)
+class JValidatedDirection:
+    schema_version: int
+    vector: ObjectRef
+    max_beta: float
+    measured_norm: float
+    norm_tolerance: float
+    zh_evidence: ObjectRef
+    en_evidence: ObjectRef
+    ja_evidence: ObjectRef
+@dataclass(frozen=True)
+class JDirectionValidation:
+    schema_version: int
+    version: str
+    direction_set: ObjectRef
+    fixture: bool
+    directions: list[JValidatedDirection]
+    combination_max_beta: float
+    combination_evidence: ObjectRef
+@dataclass(frozen=True)
+class BodyReadoutParameters:
+    schema_version: int
+    version: str
+    facing: NatureReal
+    tension: NatureReal
+    energy: NatureReal
+@dataclass(frozen=True)
+class JDirectionUse:
+    schema_version: int
+    kind: JDirectionKind
+    tendency_id: str | None
+    status: JDirectionStatus
+    direction: ObjectRef | None
+    validation: ObjectRef | None
+    beta: float | None
+    coefficient: float | None
+@dataclass(frozen=True)
+class JEffectReceipt:
+    schema_version: int
+    snapshot_id: str
+    anchor_time_ns: int
+    projected_at_ns: int
+    x_digest: bytes
+    r_digest: bytes
+    theta_digest: bytes
+    carrier: ObjectRef
+    model: ObjectRef
+    tokenizer: ObjectRef
+    direction_set: ObjectRef
+    validation: ObjectRef
+    body_parameters: ObjectRef
+    genesis: ObjectRef
+    mode: JCompilationMode
+    directions: list[JDirectionUse]
+    total_bound: float
+    body: BodyReadoutV2
+@dataclass(frozen=True)
+class GenesisManifestV3:
+    schema_version: int
+    law_version: LawVersion
+    nature_structure: str
+    initial_gain: NatureScale
+    initial_baseline: NatureVector
+    sigma0: float
+    tau0_s: float
+    attachment_prior: float
+    caretaker_id: str
+    carrier: ObjectRef
+    direction_set: ObjectRef
+    direction_validation: ObjectRef
+    body_readout: ObjectRef
+    fuses: FuseConfig
+    boundaries: ObjectRef
+    protocol: ObjectRef
 @dataclass(frozen=True)
 class EvidenceAllocation:
     # Superseded (successor EvidenceAllocationV2): P5-32; ADR 0016: adds the ordinal, μ and p_c that G needs to replay a tendency
