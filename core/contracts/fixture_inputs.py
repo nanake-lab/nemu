@@ -12,6 +12,12 @@ LIMITS = dict(max_bytes=1048576, max_items=4096, max_depth=32)
 
 
 def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
+    from fixture_speak_think import NAMES as WIRE_NAMES, sample_wire
+    if name in WIRE_NAMES:
+        return sample_wire(name, seed)
+    from fixture_j import NAMES as J_NAMES, sample_j
+    if name in J_NAMES:
+        return sample_j(name, seed)
     from fixture_cognition import NAMES as COG_NAMES, sample_cognition
     if name in COG_NAMES:
         return sample_cognition(name, seed)
@@ -128,6 +134,7 @@ def unit(c: float, e: float, q: float, a: float) -> dict[str, Any]:
 
 def targeted_legal() -> list[dict[str, Any]]:
     from fixture_cognition import legal_cognition
+    from fixture_speak_think import legal_wire
     """P5-21 vectors for values that seeded samples do not reach (new enum codes) and
     semantically realistic v2 records. Additional vectors only; never replace frozen ones."""
     from fixture_law_state import legal_law_state
@@ -192,6 +199,7 @@ def targeted_legal() -> list[dict[str, Any]]:
         + legal_touch()
         + legal_law_state()
         + legal_cognition()
+        + legal_wire()
     )
 
 
@@ -444,7 +452,9 @@ def targeted_legal_p5_22() -> list[dict[str, Any]]:
 
 
 def targeted_illegal() -> list[dict[str, Any]]:
+    from fixture_j import illegal_j
     from fixture_cognition import illegal_cognition
+    from fixture_speak_think import illegal_wire
     import copy
     import struct
 
@@ -551,4 +561,6 @@ def targeted_illegal() -> list[dict[str, Any]]:
         + illegal_law_state()
         + illegal_touch()
         + illegal_cognition()
+        + illegal_wire()
+        + illegal_j()
     )

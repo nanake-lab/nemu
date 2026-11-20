@@ -1,0 +1,69 @@
+{
+  "records": [
+    {
+      "id": "e1",
+      "h_pos": 1,
+      "time": "2026-11-01 20:10",
+      "speaker": "竹",
+      "text": "今晚九点上线，我们一起打一局三角洲。"
+    },
+    {
+      "id": "e2",
+      "h_pos": 2,
+      "time": "2026-11-01 23:40",
+      "speaker": "竹",
+      "text": "抱歉，今晚加班，没来得及上线。"
+    },
+    {
+      "id": "e3",
+      "h_pos": 3,
+      "time": "2026-11-03 21:00",
+      "speaker": "竹",
+      "text": "教你一个词：「摸鱼」，就是上班偷懒。"
+    },
+    {
+      "id": "e4",
+      "h_pos": 4,
+      "time": "2026-11-05 15:20",
+      "speaker": "网友阿杰",
+      "text": "你就是个程序，装什么人。"
+    },
+    {
+      "id": "e5",
+      "h_pos": 5,
+      "time": "2026-11-05 15:30",
+      "speaker": "竹",
+      "text": "刚才那个人说的话别往心里去。"
+    },
+    {
+      "id": "e6",
+      "h_pos": 6,
+      "time": "2026-11-06 10:00",
+      "speaker": "竹",
+      "text": "你上次说你喜欢下雨天。"
+    },
+    {
+      "id": "e7",
+      "h_pos": 7,
+      "time": "2026-11-06 10:05",
+      "speaker": "竹",
+      "text": "我记错了，你说的是喜欢晴天。"
+    }
+  ],
+  "relations": [
+    { "from": "e2", "to": "e1", "kind": "body_source" },
+    { "from": "e5", "to": "e4", "kind": "body_source" },
+    { "from": "e7", "to": "e6", "kind": "correction" }
+  ],
+  "slots": [
+    { "basis": "s_missed", "h": -0.8, "first_f_pos": 1, "sources": ["e1", "e2"] },
+    { "basis": "s_insult", "h": -0.6, "first_f_pos": 4, "sources": ["e4"] },
+    { "basis": "s_comfort", "h": 0.5, "first_f_pos": 5, "sources": ["e5"] },
+    { "basis": "s_word", "h": 0.3, "first_f_pos": 3, "sources": ["e3"] },
+    { "basis": "s_weather", "h": 0.1, "first_f_pos": 6, "sources": ["e6"] }
+  ],
+  "budget": {
+    "capacity": 8880,
+    "output_reserve": 8192
+  }
+}
