@@ -8,7 +8,6 @@ use crate::{
 use core_types::{
     WireMessage,
     generated::{CoreTransactionV2, ObjectRef},
-    scalar::hex,
 };
 use rusqlite::{Connection, OpenFlags, OptionalExtension};
 use std::{marker::PhantomData, path::Path};
@@ -64,19 +63,92 @@ impl<L: LineageKind> Reader<L> {
             _lineage: PhantomData,
         })
     }
+    pub fn activity_attempts(
+        &self,
+        request: &str,
+        limit: usize,
+    ) -> Result<Vec<(ObjectRef, ObjectRef)>> {
+        require(
+            limit < self.objects.config.encoding.max_items,
+            "attempt query budget exceeded",
+        )?;
+        if crate::migration::format(&self.db)? < 3 {
+            return Ok(Vec::new());
+        }
+        let mut stmt = self.db.prepare("SELECT activity, record FROM cognitive_attempts WHERE request_id=?1 ORDER BY position LIMIT ?2")?;
+        let mut rows = stmt.query(rusqlite::params![
+            request,
+            crate::schema::integer(limit as u64 + 1)?
+        ])?;
+        let mut result = Vec::new();
+        while let Some(row) = rows.next()? {
+            require(result.len() < limit, "incomplete attempt audit")?;
+            let decode =
+                |bytes: Vec<u8>| ObjectRef::from_canonical(&bytes, self.objects.config.encoding);
+            result.push((decode(row.get(0)?)?, decode(row.get(1)?)?));
+        }
+        Ok(result)
+    }
+    pub fn snapshot_at(&self, commit: &str) -> Result<Option<ObjectRef>> {
+        let bytes: Option<Vec<u8>> =
+            self.db
+                .query_row("SELECT snapshot FROM commits WHERE id=?1", [commit], |r| {
+                    r.get(0)
+                })?;
+        bytes
+            .map(|b| {
+                ObjectRef::from_canonical(&b, self.objects.config.encoding).map_err(Into::into)
+            })
+            .transpose()
+    }
+    pub fn current_snapshot(&self) -> Result<Option<ObjectRef>> {
+        let bytes: Option<Vec<u8>> = self.db.query_row(
+            "SELECT snapshot FROM branch_head WHERE singleton=1",
+            [],
+            |r| r.get(0),
+        )?;
+        bytes
+            .map(|b| {
+                ObjectRef::from_canonical(&b, self.objects.config.encoding).map_err(Into::into)
+            })
+            .transpose()
+    }
     pub fn current(&self) -> Result<Option<CoreTransactionV2>> {
         current(&self.db, &self.objects)
     }
+    /// The event fields after decoding the exact snapshot tag. Activity and unknown
+    /// tags cannot acknowledge terminal ingress.
+    pub fn event_snapshot(&self, r: &ObjectRef) -> Result<CoreTransactionV2> {
+        match r.object_type.as_str() {
+            "echo.transaction-v2" => self.read(r),
+            "echo.transaction-v4" => crate::manifest::event_view(self.read(r)?),
+            _ => Err(crate::Error::Rejected("unsupported event snapshot")),
+        }
+    }
     pub fn read<T: WireMessage>(&self, r: &ObjectRef) -> Result<T> {
-        let stored: Option<Vec<u8>> = self.db.query_row("SELECT reference FROM object_refs JOIN visible_objects USING(digest) WHERE digest=?1", [hex(&r.digest.0)], |r| r.get(0)).optional()?;
+        require(
+            r.object_type != crate::RAW_BYTES,
+            "raw resource is not a CanonicalV1 message",
+        )?;
+        Ok(T::from_canonical(
+            &self.visible_bytes(r)?,
+            self.objects.config.encoding,
+        )?)
+    }
+    pub fn read_raw(&self, r: &ObjectRef) -> Result<Vec<u8>> {
+        require(
+            r.object_type == crate::RAW_BYTES,
+            "expected raw byte resource",
+        )?;
+        self.visible_bytes(r)
+    }
+    fn visible_bytes(&self, r: &ObjectRef) -> Result<Vec<u8>> {
+        let stored: Option<Vec<u8>> = self.db.query_row("SELECT reference FROM object_refs JOIN visible_objects USING(digest) WHERE digest=?1", [crate::raw::storage_key(r)], |r| r.get(0)).optional()?;
         require(
             stored.as_deref() == Some(r.canonical_bytes(self.objects.config.encoding)?.as_slice()),
             "object is not visible in this lineage",
         )?;
-        Ok(T::from_canonical(
-            &self.objects.read(r)?,
-            self.objects.config.encoding,
-        )?)
+        self.objects.read(r)
     }
     pub fn facts(&self, limit: usize) -> Result<Vec<core_types::generated::EventEnvelope>> {
         require(

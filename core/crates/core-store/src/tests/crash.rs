@@ -231,7 +231,7 @@ fn x03_targeted_r_segments_manifest_and_reused_objects() {
         for (operation, object_tag, nth) in [
             ("r", tag::<TendencyV3>(), 2),
             ("r", tag::<RSnapshotV3>(), 1),
-            ("manifest-second", tag::<CoreTransactionV2>(), 2),
+            ("manifest-second", tag::<CoreTransactionV4>(), 2),
         ] {
             let root = TemporaryRoot::new().unwrap();
             let old = seed(&root);

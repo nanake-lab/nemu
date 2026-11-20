@@ -61,7 +61,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             }
             // Read checks the exact ObjectRef and visibility in THIS lineage.
             let reader = self.store.reader()?;
-            let transaction: CoreTransactionV2 = reader.read(&outcome.snapshot)?;
+            let transaction = reader.event_snapshot(&outcome.snapshot)?;
             let event: EventEnvelope = reader.read(&transaction.staged_h)?;
             let Some(p) = self.pending.get(&event.raw_log_position.0) else {
                 continue; // no surviving connection is awaiting this notification

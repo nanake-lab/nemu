@@ -4,14 +4,14 @@ use crate::{
     ingress::{fingerprint, next_raw, prior_fingerprint, record_decision},
     publication,
     schema::integer,
-    store::{head, publish_refs},
+    store::head,
 };
 use core_types::{
     WireMessage,
     contract::Schema,
     generated::{
-        CoreCommitResultV2, CoreTransactionV2, DegradedStatus, EventEnvelope, FastStateSnapshotV2,
-        ObjectRef, ProposalBindingV2, RSnapshotV3,
+        CoreCommitResultV2, CoreTransactionV2, CoreTransactionV4, DegradedStatus, EventEnvelope,
+        FastStateSnapshotV2, ObjectRef, ProposalBindingV2, RSnapshotV3,
     },
     scalar::hex,
 };
@@ -27,7 +27,7 @@ use std::sync::{Arc, Mutex};
 /// let forged = CommitCapability::<Rehearsal> {};
 /// ```
 pub struct CommitCapability<L: LineageKind> {
-    owner: Arc<Mutex<BTreeMap<String, usize>>>,
+    pub(crate) owner: Arc<Mutex<BTreeMap<String, usize>>>,
     marker: std::marker::PhantomData<L>,
 }
 pub struct ReadTicket<L: LineageKind> {
@@ -50,7 +50,7 @@ impl<L: LineageKind> ReadTicket<L> {
 /// }
 /// ```
 pub struct PreparedTransaction<L: LineageKind> {
-    value: CoreTransactionV2,
+    value: CoreTransactionV4,
     snapshot: PreparedObject<L>,
     ticket: ReadTicket<L>,
     ledger: Vec<PreparedObject<L>>,
@@ -105,18 +105,39 @@ impl<L: LineageKind> Store<L> {
             self.objects.config.encoding,
         )?)
     }
+    /// Existing event callers supply their original V2-shaped proposal. The
+    /// new snapshot is produced and checked directly as a V4 event.
     pub fn stage(
         &self,
         ticket: ReadTicket<L>,
         value: CoreTransactionV2,
     ) -> Result<PreparedTransaction<L>> {
+        self.stage_event_v4(ticket, crate::manifest::from_event(value))
+    }
+    pub fn stage_event_v4(
+        &self,
+        ticket: ReadTicket<L>,
+        value: CoreTransactionV4,
+    ) -> Result<PreparedTransaction<L>> {
+        require(
+            crate::migration::format(&self.db)? == 3,
+            "explicit format 3 migration required for publication",
+        )?;
+        require(
+            value.activity_commit.is_none(),
+            "expected event origin only",
+        )?;
+        let binding = value
+            .event_binding
+            .as_ref()
+            .ok_or(Error::Rejected("missing event binding"))?;
         let limits = self.objects.config.encoding;
         require(
             Arc::ptr_eq(&ticket.pinned.pins, &self.objects.pins),
             "foreign staging capability",
         )?;
         require(
-            value.binding.canonical_bytes(limits)? == ticket.binding.canonical_bytes(limits)?,
+            binding.canonical_bytes(limits)? == ticket.binding.canonical_bytes(limits)?,
             "proposal binding changed after dispatch",
         )?;
         self.check_binding(&ticket.binding)?;
@@ -127,8 +148,7 @@ impl<L: LineageKind> Store<L> {
             .checked_add(1)
             .ok_or(Error::Rejected("processed overflow"))?;
         require(
-            value.processed_position.0 == next
-                && value.anchor_time_ns == value.binding.process_time_ns,
+            value.processed_position.0 == next && value.anchor_time_ns == binding.process_time_ns,
             "position or time anchor mismatch",
         )?;
         integer(next)?;
@@ -203,19 +223,14 @@ impl<L: LineageKind> Store<L> {
             prior_fingerprint(&tx, event)?.is_none(),
             "stable key must be settled before state transition",
         )?;
-        publish_refs(&tx, &refs, cfg)?;
-        for r in &refs {
-            tx.execute(
-                "INSERT OR IGNORE INTO visible_objects VALUES(?1)",
-                [hex(&r.digest.0)],
-            )?;
-        }
+        let sequence = crate::store::next_commit_position(&tx)?;
+        publication::visible(&tx, &self.objects, &refs)?;
         tx.execute(
             "INSERT INTO commits VALUES(?1,?2,?3,?4,?5,'accepted')",
             params![
                 id,
                 parent,
-                integer(processed)?,
+                sequence,
                 integer(staged.value.anchor_time_ns.0)?,
                 snapshot_bytes
             ],
@@ -266,7 +281,7 @@ impl<L: LineageKind> Store<L> {
         crate::witness::record(
             &self.root,
             "commits",
-            processed,
+            sequence as u64,
             &staged.snapshot.reference,
             &self.objects,
             &self.fault,
@@ -318,7 +333,7 @@ impl<L: LineageKind> Store<L> {
             &serde_json::to_value(&binding.environment)?,
             &mut required,
         )?;
-        if let Some(old) = self.current()? {
+        if let Some(old) = self.current_manifest()? {
             let x =
                 FastStateSnapshotV2::from_canonical(&self.objects.read(&old.staged_x)?, limits)?;
             let r = RSnapshotV3::from_canonical(&self.objects.read(&old.staged_r)?, limits)?;

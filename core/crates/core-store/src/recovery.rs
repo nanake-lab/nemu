@@ -8,7 +8,7 @@ use crate::{
 };
 use core_types::{
     WireMessage,
-    generated::{CoreTransactionV2, EventEnvelope, LedgerEntry, LineageHeaderV2, ObjectRef},
+    generated::{EventEnvelope, LedgerEntry, LineageHeaderV2, ObjectRef},
     scalar::hex,
 };
 use rusqlite::{Connection, params};
@@ -61,6 +61,11 @@ pub(crate) fn verify(
     let mut anchor = 0u64;
     let mut snapshot: Option<Vec<u8>> = None;
     let mut accepted = 0i64;
+    let mut activities = 0i64;
+    let mut sequence = 0u64;
+    let mut step_ids = std::collections::BTreeSet::new();
+    let mut request_ids = std::collections::BTreeSet::new();
+    let mut record_ids = std::collections::BTreeSet::new();
     let mut ledger_count = 0i64;
     let mut seen = BTreeMap::new();
     let initial = hex(&objects.reference(header, "1")?.digest.0);
@@ -70,9 +75,51 @@ pub(crate) fn verify(
         let next_snapshot: Option<Vec<u8>> = row.get(4)?;
         let decision: String = row.get(5)?;
         require(
-            row.get::<_, Option<String>>(1)? == parent && unsigned(row.get(2)?)? == position,
+            row.get::<_, Option<String>>(1)? == parent && unsigned(row.get(2)?)? == sequence,
             "commit chain is broken",
         )?;
+        sequence += 1;
+        if decision == "activity" {
+            require(
+                crate::migration::format(db)? == 3,
+                "internal activity before migration",
+            )?;
+            let decode_ref = |b: &Option<Vec<u8>>| -> Result<ObjectRef> {
+                Ok(ObjectRef::from_canonical(
+                    b.as_deref()
+                        .ok_or(crate::Error::Rejected("missing activity snapshot"))?,
+                    limits,
+                )?)
+            };
+            let reference = decode_ref(&next_snapshot)?;
+            let previous = crate::manifest::decode(objects, &decode_ref(&snapshot)?)?;
+            let value = crate::manifest::decode(objects, &reference)?;
+            let c = value
+                .activity_commit
+                .as_ref()
+                .ok_or(crate::Error::Rejected("expected activity origin"))?;
+            require(
+                record_ids.insert(c.activity.record_id.clone())
+                    && request_ids.insert(c.binding.request_id.clone())
+                    && step_ids.insert((c.binding.activity_id.clone(), c.binding.step_id.clone())),
+                "duplicate internal publication",
+            )?;
+            require(
+                hex(&reference.digest.0) == id
+                    && c.binding.branch_id == branch
+                    && Some(&c.binding.base_commit) == parent.as_ref()
+                    && value.processed_position.0 == position
+                    && value.anchor_time_ns.0 == next_anchor
+                    && next_anchor >= anchor,
+                "internal publication frontier mismatch",
+            )?;
+            crate::activity::verify_transition(objects, &previous, &value)?;
+            parent = Some(id);
+            anchor = next_anchor;
+            snapshot = next_snapshot;
+            activities += 1;
+            continue;
+        }
         let event_bytes: Vec<u8> = db.query_row(
             "SELECT event FROM raw_ingress WHERE position=?1",
             [integer(position)?],
@@ -89,7 +136,7 @@ pub(crate) fn verify(
                 .as_ref()
                 .ok_or(crate::Error::Rejected("accepted commit lacks snapshot"))?;
             let reference = ObjectRef::from_canonical(bytes, limits)?;
-            let value = CoreTransactionV2::from_canonical(&objects.read(&reference)?, limits)?;
+            let value = crate::manifest::event_view(crate::manifest::decode(objects, &reference)?)?;
             crate::theta::read(objects, &value.staged_theta)?;
             require(
                 hex(&reference.digest.0) == id
@@ -179,7 +226,7 @@ pub(crate) fn verify(
     )?;
     for (table, expected) in [
         ("facts", accepted),
-        ("snapshots", accepted),
+        ("snapshots", accepted + activities),
         ("ledger_index", ledger_count),
         ("ingress_decisions", integer(position)?),
     ] {

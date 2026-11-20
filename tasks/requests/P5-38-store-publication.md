@@ -1,9 +1,16 @@
-# P5-38 权威存储与运行时事件生产点的最小改动请求
+# P5-38 存储发布与读端兼容范围
 
-P5-38 卡面目录只覆盖运行时与任务层的 cognition 子目录。申请在本 PR 内修改下列路径，等待范围确认。
+卡面的两个 cognition 子目录覆盖不了权威事务写入。原有存储每次提交都消费一条 D，恢复和索引也假设每次提交有一个 EventEnvelope。独处时需要在同一个 D 游标上发布多次，继续使用唯一写者、原子可见性和持久回执。
 
-- core-store 的事务、存储格式、恢复、查询和相关测试。当前 stage 只接收 CoreTransactionV2，必须消费下一条 raw ingress；commits.position 唯一，恢复又逐条要求外部事件。独处期间的多次发布必须能在同一 ingress 游标上发生，继续使用唯一 writer、同一 SQLite 事务、对象可见性和崩溃恢复。旧标签按旧格式读取。需要以临时数据库验迁移、回退、混合历史、拒收审计以及提交前后故障。
-- core-runtime/src/store.rs 的事件生产点。事件使用原 ProposalBindingV2 直接生产 CoreTransactionV4.event_binding，沿用原有绑定、顺序与快照检查。
-- 读端按实际用途区分事件、内部提交与仅审计的尝试。已有事件消费者的查询仍须能得到正确的事件前缀；不可将内部记录伪装为 EventEnvelope。
+## 用户在草稿 PR #238 施工期间确认的范围
 
-另有一处需 P5-39 协调：现有三语言认知状态语义检查只允许旧记录作为 latest_step 与 origin_record。请求允许在本卡提前接通这两个读端对新记录标签的支持，并保留旧标签的正反例；或者由 P5-39 先行提供兼容读端。按派卡约定不改 core/contracts/。
+| 位置 | 依据 | 接口与限制 |
+| --- | --- | --- |
+| core-store、core-runtime/src/store.rs | ADR 0046 §4，首次范围确认 | 写方从事件 V2 直接切换到 V4，新活动经 V4.activity_commit 发布。旧标签按旧格式读取。迁移、回退、混合历史、审计与故障均用临时库。 |
+| core-types 与 core/contracts/templates 下的 latest_step、origin_record | ADR 0046 §4，首次范围确认 | 两处引用接受旧活动记录或新活动记录。重新生成 Python、TypeScript 产物，保留旧向量正反例和字节。PR 使用「契约变更」标签。 |
+| gateway/src/progress.rs | 第二次范围确认 | 只改终端「已提交」回执的快照读点。V2 事件和 V4 事件可继续核验已观察到的提交；内部活动与未知标签不能产生回执。 |
+| core-store 原始字节资源 | ADR 0046 §2.1，第二次范围确认 | 独立类型，普通 SHA-256 与原始长度，沿用对象预算。应用层请求体排除 HTTP 头与凭证。作为文字使用时严格校验 UTF-8 与区间两端。 |
+| fact-view 的快照身份比较和同类读端 | 第三次范围确认 | 混合历史按实际标签核验；memory.rs、source.rs 从存储的事件查询取数据。材料由运行时发起查询，向任务层传结果、W19 原标记与来源。 |
+| core-runtime/Cargo.toml、core-store/Cargo.toml、core/Cargo.lock | 最终依赖确认 | 只加入 core-runtime → task-layer 和 core-store → 已锁定的 sha2 0.11.1。task-layer 运行时只依赖 core-types。 |
+
+运行时通过注入的查询函数调用 W19。工作区中尚无同时拥有运行时和 W19 的产品调用方。临时库组合验证、交付限制和剩余验收见 [报告](../../reports/P5-38/REPORT.md)。

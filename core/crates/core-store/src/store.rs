@@ -84,6 +84,7 @@ impl<L: LineageKind> Store<L> {
             "INSERT INTO metadata VALUES(1,2,?1,?2,?3,?4)",
             params![root.to_string_lossy(), temporary, encoded, branch],
         )?;
+        crate::migration::change_schema(&tx, 2, 3)?;
         tx.commit()?;
         fault.hit(crate::FaultPoint::InitSqlCommitted)?;
         platform::sync_dir(&root)?;
@@ -125,7 +126,7 @@ impl<L: LineageKind> Store<L> {
         let objects = Objects::new(root.join("objects"), config);
         require_writable_head(&readonly, &objects)?;
         require(
-            crate::migration::format(&readonly)? == 2,
+            matches!(crate::migration::format(&readonly)?, 2 | 3),
             "physical format 1 requires explicit migration to format 2",
         )?;
         drop(readonly);
@@ -184,6 +185,9 @@ impl<L: LineageKind> Store<L> {
     pub fn current(&self) -> Result<Option<CoreTransactionV2>> {
         current(&self.db, &self.objects)
     }
+    pub fn current_manifest(&self) -> Result<Option<core_types::generated::CoreTransactionV4>> {
+        current_manifest(&self.db, &self.objects)
+    }
     pub fn head(&self) -> Result<(Option<String>, u64, u64)> {
         head(&self.db)
     }
@@ -206,7 +210,7 @@ impl<L: LineageKind> Store<L> {
             self.objects.config,
         )?
         .into_iter()
-        .map(|r| hex(&r.digest.0))
+        .map(|r| crate::raw::storage_key(&r))
         .collect();
         let mut removed = 0;
         for entry in fs::read_dir(&self.objects.root)? {
@@ -315,7 +319,7 @@ pub(crate) fn check_header<L: LineageKind>(
     temporary: bool,
 ) -> Result<(LineageHeaderV2, String)> {
     require(
-        matches!(crate::migration::format(db)?, 1 | 2),
+        matches!(crate::migration::format(db)?, 1..=3),
         "unknown storage format; explicit migration required",
     )?;
     let (format, location, is_temp, bytes, branch): (i32, String, bool, Vec<u8>, String) = db
@@ -339,6 +343,13 @@ pub(crate) fn check_header<L: LineageKind>(
     )?;
     Ok((header, branch))
 }
+pub(crate) fn next_commit_position(db: &Connection) -> Result<i64> {
+    Ok(db.query_row(
+        "SELECT coalesce(max(position), -1) + 1 FROM commits",
+        [],
+        |r| r.get(0),
+    )?)
+}
 pub(crate) fn head(db: &Connection) -> Result<(Option<String>, u64, u64)> {
     let (id, position, anchor): (Option<String>, i64, i64) = db.query_row(
         "SELECT commit_id,processed,anchor FROM branch_head WHERE singleton=1",
@@ -348,6 +359,14 @@ pub(crate) fn head(db: &Connection) -> Result<(Option<String>, u64, u64)> {
     Ok((id, schema::unsigned(position)?, schema::unsigned(anchor)?))
 }
 pub(crate) fn current(db: &Connection, objects: &Objects) -> Result<Option<CoreTransactionV2>> {
+    current_manifest(db, objects)?
+        .map(crate::manifest::event_view)
+        .transpose()
+}
+pub(crate) fn current_manifest(
+    db: &Connection,
+    objects: &Objects,
+) -> Result<Option<core_types::generated::CoreTransactionV4>> {
     let bytes: Option<Vec<u8>> = db.query_row(
         "SELECT snapshot FROM branch_head WHERE singleton=1",
         [],
@@ -356,8 +375,7 @@ pub(crate) fn current(db: &Connection, objects: &Objects) -> Result<Option<CoreT
     bytes
         .map(|b| -> Result<_> {
             let r = ObjectRef::from_canonical(&b, objects.config.encoding)?;
-            let value =
-                CoreTransactionV2::from_canonical(&objects.read(&r)?, objects.config.encoding)?;
+            let value = crate::manifest::decode(objects, &r)?;
             crate::theta::read(objects, &value.staged_theta)?;
             Ok(value)
         })
@@ -372,7 +390,7 @@ pub(crate) fn references(db: &Connection, config: StoreConfig) -> Result<Vec<Obj
 pub(crate) fn publish_refs(db: &Connection, refs: &[ObjectRef], config: StoreConfig) -> Result<()> {
     for r in refs {
         let bytes = r.canonical_bytes(config.encoding)?;
-        let key = hex(&r.digest.0);
+        let key = crate::raw::storage_key(r);
         let old: Option<Vec<u8>> = db
             .query_row(
                 "SELECT reference FROM object_refs WHERE digest=?1",
@@ -390,7 +408,7 @@ pub(crate) fn publish_refs(db: &Connection, refs: &[ObjectRef], config: StoreCon
 }
 
 pub(crate) fn require_writable_head(db: &Connection, objects: &Objects) -> Result<()> {
-    if let Some(head) = current(db, objects)? {
+    if let Some(head) = current_manifest(db, objects)? {
         require(
             head.staged_r.object_type
                 != core_types::contract::Schema::builtin()?

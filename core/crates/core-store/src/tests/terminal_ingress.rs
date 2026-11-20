@@ -124,9 +124,8 @@ fn terminal_positions_follow_durable_tail_after_restart_and_same_key_retry() {
 #[test]
 fn audit_is_bounded_append_only_and_preserves_every_authority_row() {
     let root = TemporaryRoot::new().unwrap();
-    let mut store = rehearsal(&root, "audit");
-    let cap = store.take_commit_capability().unwrap();
-    advance(&mut store, &cap, 0);
+    let mut store = format_two(&root, "audit");
+    seed_format_two(&mut store);
     let before = rows(&store.db);
     for n in 0..3 {
         assert_eq!(
@@ -352,9 +351,8 @@ fn process_crashes_recover_allocation_audit_and_both_migration_directions() {
             FaultPoint::MigrationSqlCommitted,
         ] {
             let root = TemporaryRoot::new().unwrap();
-            let mut store = rehearsal(&root, "crash");
-            let cap = store.take_commit_capability().unwrap();
-            advance(&mut store, &cap, 0);
+            let mut store = format_two(&root, "crash");
+            seed_format_two(&mut store);
             let before = rows(&store.db);
             drop(store);
             if target == 2 {

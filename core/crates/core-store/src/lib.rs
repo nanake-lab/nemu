@@ -2,17 +2,23 @@
 //! W02. Only `Store` owns the writer; readers expose committed objects only.
 //! All persisted messages and hashes use the generated core-types contract.
 //! The only unsafe boundary is documented Win32 volume/publication calls in platform.
+mod activity;
+mod activity_audit;
+pub use activity::{ActivityOutcome, ActivityTicket};
 mod config;
 mod error;
 mod fault;
 mod ingress;
 mod lineage;
+mod manifest;
 mod migration;
 mod objects;
 #[allow(unsafe_code)]
 mod platform;
 mod publication;
 mod queries;
+mod raw;
+pub use raw::RAW_BYTES;
 mod reader;
 mod recovery;
 mod schema;
