@@ -47,10 +47,15 @@ def run_chains(
     output.mkdir(parents=True, exist_ok=True)
     states = {(number, mode): scenario for number in range(1, chains + 1) for mode in modes}
     logs = {key: output / f"{stamp}-{key[1]}-{key[0]}.jsonl" for key in states}
+    if resume and set(output.glob(f"{stamp}-*.jsonl")) != set(logs.values()):
+        raise ValueError("续跑时的链号和模式须与原批次相同")
     prior: dict[Path, deque[dict[str, Any]]] = {}
     for path in logs.values():
         if resume:
             prior[path] = deque(map(json.loads, path.read_text(encoding="utf-8").splitlines()))
+            recorded_rounds = max((row["round"] for row in prior[path]), default=0)
+            if recorded_rounds > rounds or (path.with_suffix(".final.json").exists() and rounds != recorded_rounds):
+                raise ValueError(f"--rounds 与已保存的进度不符：{path}")
         else:
             path.touch(exist_ok=False)
             prior[path] = deque()
@@ -76,8 +81,6 @@ def run_chains(
                 states[number, mode] = append_thought(current, binding, at, content)
             if index + 1 == rounds:
                 final = path.with_suffix(".final.json")
-                if prior[path]:
-                    raise ValueError(f"--rounds 小于旧记录的轮数：{path}")
                 if resume and final.exists():
                     if json.loads(final.read_text(encoding="utf-8")) != states[number, mode]:
                         raise ValueError(f"最终场景与重放不符：{final}")

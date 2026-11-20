@@ -53,6 +53,13 @@ class ChainTests(unittest.TestCase):
                 else:
                     self.assertEqual([r["text"] for r in final["records"][len(thoughts_scene()["records"]):]],
                                      [r["text"] for r in responses[i::4]])
+            stamp = path.name.split("-")[0]
+            run_chains(thoughts_scene(), start, 10, 3, ("append", "fresh"), 2, "", Path(folder), stamp)
+            with self.assertRaisesRegex(ValueError, "模式"):
+                run_chains(thoughts_scene(), start, 10, 3, ("fresh",), 1, "", Path(folder), stamp)
+            with self.assertRaisesRegex(ValueError, "rounds"):
+                run_chains(thoughts_scene(), start, 10, 4, ("append", "fresh"), 2, "", Path(folder), stamp)
+            self.assertEqual(sample.call_count, 12)
 
     def test_missing_usage_preserves_failed_response_and_stops_chain(self) -> None:
         with TemporaryDirectory() as folder, patch("think_chain.run_assembler", side_effect=assemble), \
