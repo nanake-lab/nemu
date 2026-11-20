@@ -24,6 +24,11 @@ def external_records(records: list[dict[str, Any]], binding: dict[str, Any]) -> 
     return [r for r in records if r["id"] in delivered and r["speaker"] != THOUGHT_SPEAKER]
 
 
+def complete_response(response: dict[str, Any]) -> bool:
+    return bool(not response.get("error") and response.get("done")
+                and response.get("finish_reason") == "stop" and response.get("usage"))
+
+
 def check(
     thought_text: str, external_records: list[dict[str, Any]], *,
     send: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
@@ -38,9 +43,8 @@ def check(
     request["response_format"] = {"type": "json_object"}
     response = (send(request) if send else
                 call_deepseek_stream(request, os.environ["DEEPSEEK_API_KEY"], echo=False))
-    complete = (not response.get("error") and response.get("done") and
-                response.get("finish_reason") == "stop" and bool(response.get("usage")))
-    result: dict[str, Any] = dict(request=request, response=response, valid=bool(complete),
+    complete = complete_response(response)
+    result: dict[str, Any] = dict(request=request, response=response, valid=complete,
                                   blocked=None, claims=[])
     if not complete:
         return result

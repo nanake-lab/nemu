@@ -1,11 +1,19 @@
 from __future__ import annotations
 
+from datetime import datetime
 import json
+from pathlib import Path
+import sys
+from tempfile import TemporaryDirectory
 from typing import Any
 import unittest
+from unittest.mock import patch
 
 from check_thought import check, external_records
-from think import projection_payload
+from think import main, projection_payload
+from think_chain import run_chains
+from think_plan import THOUGHT_SPEAKER
+from test_think_plan import assembly
 from test_think import thoughts_scene
 
 
@@ -49,3 +57,50 @@ class CheckTests(unittest.TestCase):
         guess = dict(span="也许他来了", kind="event", supported_by=[], verdict="guess")
         self.assertFalse(check(text, records, send=lambda _: reply(json.dumps(dict(claims=[guess]))))["blocked"])
         self.assertFalse(check(text, records, send=lambda _: {**reply(""), "done": False})["valid"])
+
+    def test_single_cli_logs_whole_rejection_and_creates_no_append_file(self) -> None:
+        with TemporaryDirectory() as temp:
+            path = Path(temp)
+            output = path / "out.json"
+            args = ["think.py", "--check", "--scenario", str(Path(__file__).parent/"scenarios"/"thoughts.json"),
+                    "--at", "2026-11-05 15:25", "--append", str(output)]
+            text = "竹教我摸鱼。我见到了海。"
+            claims = [dict(span="竹教我摸鱼", kind="event", supported_by=["e3"], verdict="supported"),
+                      dict(span="我见到了海", kind="perception", supported_by=[], verdict="unsupported")]
+            with patch.object(sys, "argv", args), patch.dict("os.environ", DEEPSEEK_API_KEY="test"), \
+                    patch("think.CHECK_RUN_DIR", path), patch("think.run_assembler", side_effect=assembly), \
+                    patch("think.deepseek_sample", return_value=dict(valid=True, text=text)), \
+                    patch("check_thought.call_deepseek_stream", return_value=reply(json.dumps(dict(claims=claims)))):
+                self.assertEqual(main(), 0)
+            self.assertFalse(output.exists())
+            log, = path.glob("*.jsonl")
+            row = json.loads(log.read_text(encoding="utf8").splitlines()[-1])
+            self.assertEqual(row["text"], text)
+            self.assertTrue(row["check"]["blocked"])
+
+    def test_chain_sends_only_accepted_text_forward_and_replays_checks_offline(self) -> None:
+        texts = ["我看到海了。", "我有些难过。", "也许他忘了。"]
+        verdicts = ["unsupported", "supported", "guess"]
+        calls = []
+        for t, v in zip(texts, verdicts, strict=True):
+            raw = json.dumps({"claims": [dict(span=t, kind="perception" if v == "unsupported" else "none",
+                                               supported_by=[], verdict=v)]})
+            calls.extend([{**reply(t), "valid": True}, {**reply(raw), "valid": True}])
+        with TemporaryDirectory() as temp, patch("think_chain.run_assembler", side_effect=assembly), \
+                patch("think_chain.deepseek_sample", side_effect=calls) as api:
+            args = (thoughts_scene(), datetime(2026, 11, 5, 15, 25), 10, 3, ("append",), 1, "", Path(temp))
+            run_chains(*args, check_thought=True)
+            requests = [call.args[0]["messages"] for call in api.call_args_list]
+            self.assertNotIn(texts[0], requests[2][0]["content"])
+            self.assertIn(texts[1], requests[4][0]["content"])
+            for ix in (1, 3, 5):
+                data = json.loads(requests[ix][1]["content"])
+                self.assertEqual(data["thought_text"], texts[ix//2])
+                self.assertTrue(all(r["speaker"] != THOUGHT_SPEAKER for r in data["external_records"]))
+            log, = Path(temp).glob("*.jsonl")
+            final = json.loads(log.with_suffix(".final.json").read_text(encoding="utf8"))
+            self.assertEqual([r["text"] for r in final["records"][len(thoughts_scene()["records"]):]], texts[1:])
+            saved = log.read_bytes()
+            run_chains(*args, resume=log.name.split("-")[0], check_thought=True)
+            self.assertEqual(log.read_bytes(), saved)
+            self.assertEqual(api.call_count, 6)
