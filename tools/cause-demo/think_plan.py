@@ -55,7 +55,11 @@ class ThoughtPlan:
                 for cite in point["cites"] if isinstance(cite, str)
             }
             visiting.remove(rid)
-            error = "cyclic_cite" if "cyclic_cite" in errors else None if None in errors else "no_external_root"
+            error = None
+            if "cyclic_cite" in errors:
+                error = "cyclic_cite"
+            elif None not in errors:
+                error = "no_external_root"
             cache[rid] = error
             return error
 

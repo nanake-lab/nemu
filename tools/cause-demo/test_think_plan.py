@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import deque
 from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime
 from io import StringIO
@@ -14,7 +15,7 @@ from unittest.mock import patch
 from test_think import thoughts_scene
 from test_think_chain import assemble
 from think import main, projection_payload, thought_messages, thought_request
-from think_chain import run_chains
+from think_chain import recorded_sample, run_chains
 from think_plan import THOUGHT_SPEAKER, ThoughtPlan
 
 
@@ -89,7 +90,7 @@ class PlanTests(unittest.TestCase):
         with TemporaryDirectory() as folder:
             output = Path(folder) / "out.json"
             args = ["think.py", "--scenario", str(Path(__file__).parent / "scenarios" / "thoughts.json"),
-                    "--at", "2026-11-05 15:25", "--append", str(output), "--thinker", "deepseek", "--plan2"]
+                    "--at", "2026-11-05 15:25", "--append", str(output), "--plan2"]
             with patch.object(sys, "argv", args), patch("think.PLAN_RUN_DIR", Path(folder)), \
                     patch.dict("os.environ", DEEPSEEK_API_KEY="test"), \
                     patch("think.run_assembler", side_effect=assembly), \
@@ -102,3 +103,22 @@ class PlanTests(unittest.TestCase):
             row = json.loads(log.read_text(encoding="utf-8").splitlines()[-1])
             self.assertTrue(row["empty"])
             self.assertEqual(row["text"], "")
+
+    def test_resume_detects_changed_provenance_for_identical_outbound_text(self) -> None:
+        payload = projection_payload(thoughts_scene(), "2026-11-05 15:25")
+        assembled = assembly(payload)
+        request, plan = thought_request(assembled, payload, True, True)
+        assert plan is not None
+        entry = dict(kind="request", round=1, request=request)
+        with TemporaryDirectory() as folder, patch("think_chain.deepseek_sample",
+                return_value=sample(point("recall", "那时我在想。", "n1"))) as api:
+            log = Path(folder) / "chain.jsonl"
+            self.assertTrue(recorded_sample(log, deque(), entry, "", plan)["empty"])
+            saved = log.read_bytes()
+            old_rows = list(map(json.loads, saved.splitlines()))
+            self.assertTrue(recorded_sample(log, deque(old_rows), entry, "", plan)["empty"])
+            plan.history["n1"]["points"] = [point("recall", "约定", "e1")]
+            with self.assertRaisesRegex(ValueError, "外根"):
+                recorded_sample(log, deque(old_rows), entry, "", plan)
+            self.assertEqual(log.read_bytes(), saved)
+            api.assert_called_once()

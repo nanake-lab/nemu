@@ -163,10 +163,12 @@ def main() -> int:
     parser.add_argument("--append", type=Path, metavar="OUTPUT_SCENARIO")
     parser.add_argument("--sampling", choices=("greedy", "official"), default="official")
     parser.add_argument("--senses", choices=("on", "off"), default="off")
-    parser.add_argument("--thinker", choices=("local", "deepseek"), default="local")
+    parser.add_argument("--thinker", choices=("local", "deepseek"))
     parser.add_argument("--ds-think", choices=("off", "high"), default="off")
     parser.add_argument("--plan2", action="store_true", help="核对编号后按顺序拼接念头")
     args = parser.parse_args()
+    if args.thinker is None:
+        args.thinker = "deepseek" if args.plan2 else "local"
     if args.plan2 and args.thinker != "deepseek":
         parser.error("--plan2 需要 --thinker deepseek")
     if args.n < 1 or (args.append is not None and args.n != 1):

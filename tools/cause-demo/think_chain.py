@@ -30,6 +30,11 @@ def recorded_sample(
             response = prior.popleft()
             if response.get("kind") != "response" or response.get("round") != entry["round"]:
                 raise ValueError(f"旧响应轮次不符：{path}")
+            if plan and response["valid"]:
+                # Historical points are local provenance. Their cites are absent from the HTTP body.
+                replay = plan.verify({**response, "text": response["raw_text"]})
+                if replay != response:
+                    raise ValueError(f"旧要点与本轮外根核验不符：{path}")
         else:
             append_session_log(path, entry)
             sample = deepseek_sample(entry["request"], api_key)
@@ -114,7 +119,9 @@ def main() -> int:
     args = parser.parse_args()
     if args.chains is not None and args.mode is None:
         parser.error("--chains 需要 --mode")
-    chains = args.chains if args.chains is not None else (args.paired_chains if args.paired_chains is not None else 1)
+    chains = args.chains if args.mode else args.paired_chains
+    if chains is None:
+        chains = 1
     if min(args.rounds, args.step_min, chains) < 1:
         parser.error("--rounds、--step-min 和链数必须为正整数")
     api_key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
