@@ -1,6 +1,7 @@
 """Check the exact outbound requests and archived scenarios without an API key."""
 from __future__ import annotations
 
+from collections import deque
 from datetime import datetime
 import json
 from pathlib import Path
@@ -10,7 +11,7 @@ import unittest
 from unittest.mock import patch
 
 from test_think import thoughts_scene
-from think_chain import run_chains
+from think_chain import recorded_sample, run_chains
 
 
 def assemble(payload: dict[str, Any], *_: object) -> dict[str, Any]:
@@ -58,6 +59,28 @@ class ChainTests(unittest.TestCase):
                 patch("think_chain.deepseek_sample", return_value=dict(valid=True, usage=None, text="x")) as sample:
             with self.assertRaisesRegex(RuntimeError, "响应无效"):
                 run_chains(thoughts_scene(), datetime(2026, 11, 5), 10, 2, ("append",), 1, "", Path(folder))
-            sample.assert_called_once()
+            self.assertEqual(sample.call_count, 3)
+            for call in sample.call_args_list:
+                self.assertEqual(call, sample.call_args_list[0])
             log, = Path(folder).iterdir()
             self.assertFalse(json.loads(log.read_text(encoding="utf-8").splitlines()[-1])["valid"])
+
+    def test_resume_reuses_success_and_retries_identical_failed_request(self) -> None:
+        entry = dict(kind="request", round=5, request={"messages": [{"content": "原来的第5轮"}]})
+        failure = dict(kind="response", round=5, valid=False, text="", usage=None)
+        success = dict(kind="response", round=5, valid=True, text="念头", usage={"total_tokens": 9})
+        with TemporaryDirectory() as folder, patch("think_chain.deepseek_sample", return_value=success) as sample:
+            path = Path(folder) / "original.jsonl"
+            prefix = b"".join((json.dumps(row) + "\n").encode() for row in (entry, failure))
+            path.write_bytes(prefix)
+            self.assertEqual(recorded_sample(path, deque([entry, failure]), entry, "key"), "念头")
+            sample.assert_called_once_with(entry["request"], "key")
+            self.assertTrue(path.read_bytes().startswith(prefix))
+            saved = path.read_bytes()
+            rows = list(map(json.loads, saved.splitlines()))
+            self.assertEqual(rows, [entry, failure, entry, success])
+            self.assertEqual(recorded_sample(path, deque(rows), entry, "key"), "念头")
+            with self.assertRaisesRegex(ValueError, "不符"):
+                recorded_sample(path, deque(rows), {**entry, "round": 6}, "key")
+            sample.assert_called_once()
+            self.assertEqual(path.read_bytes(), saved)

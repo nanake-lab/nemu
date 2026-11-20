@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import deque
 from datetime import datetime, timedelta, timezone
 import json
 import os
@@ -13,18 +14,46 @@ from chat import append_session_log, build_deepseek_body, cargo_env, repo_root, 
 from think import CACHE, TIME_FORMAT, append_thought, deepseek_sample, projection_payload, thought_messages
 
 RUN_DIR = CACHE / "cause-demo" / "think-04"
+STAMP = "%Y%m%dT%H%M%S.%fZ"
+
+
+def recorded_sample(
+    path: Path, prior: deque[dict[str, Any]], entry: dict[str, Any], api_key: str,
+) -> str:
+    # Replay the saved prefix. A retry must use the identical request at this position.
+    for _ in range(3):  # DEMO-THINK-04 recovery decision: stop after three consecutive failures.
+        if prior:
+            if prior.popleft() != entry or not prior:
+                raise ValueError(f"旧记录与本轮请求不符，或缺少响应：{path}")
+            response = prior.popleft()
+            if response.get("kind") != "response" or response.get("round") != entry["round"]:
+                raise ValueError(f"旧响应轮次不符：{path}")
+        else:
+            append_session_log(path, entry)
+            sample = deepseek_sample(entry["request"], api_key)
+            response = {**sample, "kind": "response", "round": entry["round"],
+                        "valid": bool(sample["valid"] and sample["usage"])}
+            append_session_log(path, response)
+        if response["valid"]:
+            return str(response["text"])
+    raise RuntimeError(f"第 {entry['round']} 轮连续三次响应无效，详见 {path}")
 
 
 def run_chains(
     scenario: dict[str, Any], start: datetime, step_min: int, rounds: int,
-    modes: tuple[str, ...], chains: int, api_key: str, output: Path,
+    modes: tuple[str, ...], chains: int, api_key: str, output: Path, resume: str | None = None,
 ) -> None:
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
+    stamp = datetime.strptime(resume, STAMP).strftime(STAMP) if resume else datetime.now(timezone.utc).strftime(STAMP)
     output.mkdir(parents=True, exist_ok=True)
     states = {(number, mode): scenario for number in range(1, chains + 1) for mode in modes}
     logs = {key: output / f"{stamp}-{key[1]}-{key[0]}.jsonl" for key in states}
+    prior: dict[Path, deque[dict[str, Any]]] = {}
     for path in logs.values():
-        path.touch(exist_ok=False)
+        if resume:
+            prior[path] = deque(map(json.loads, path.read_text(encoding="utf-8").splitlines()))
+        else:
+            path.touch(exist_ok=False)
+            prior[path] = deque()
     core = repo_root() / "core"
     env = cargo_env()
     for index in range(rounds):
@@ -40,17 +69,20 @@ def run_chains(
             if mode == "append" and not binding["accepted"]:
                 raise ValueError(f"链 {number} 第 {index + 1} 轮没有接纳任何槽。")
             request = build_deepseek_body(thought_messages(assembled["messages"]), no_think=True)
-            append_session_log(path, dict(kind="request", round=index + 1, at=at,
-                                          mode=mode, chain=number, binding=binding, request=request))
-            sample = deepseek_sample(request, api_key)
-            valid = bool(sample["valid"] and sample["usage"])
-            append_session_log(path, {**sample, "kind": "response", "round": index + 1, "valid": valid})
-            if not valid:
-                raise RuntimeError(f"第 {index + 1} 轮响应无效，详见 {path}")
+            entry = dict(kind="request", round=index + 1, at=at,
+                         mode=mode, chain=number, binding=binding, request=request)
+            content = recorded_sample(path, prior[path], entry, api_key)
             if mode == "append":
-                states[number, mode] = append_thought(current, binding, at, sample["text"])
+                states[number, mode] = append_thought(current, binding, at, content)
             if index + 1 == rounds:
-                with path.with_suffix(".final.json").open("x", encoding="utf-8", newline="\n") as stream:
+                final = path.with_suffix(".final.json")
+                if prior[path]:
+                    raise ValueError(f"--rounds 小于旧记录的轮数：{path}")
+                if resume and final.exists():
+                    if json.loads(final.read_text(encoding="utf-8")) != states[number, mode]:
+                        raise ValueError(f"最终场景与重放不符：{final}")
+                    continue
+                with final.open("x", encoding="utf-8", newline="\n") as stream:
                     json.dump(states[number, mode], stream, ensure_ascii=False, indent=2)
                     stream.write("\n")
         print(f"{index + 1}/{rounds} 轮 · {len(states)} 条链", flush=True)
@@ -62,6 +94,7 @@ def main() -> int:
     parser.add_argument("--start", required=True, help="YYYY-MM-DD HH:MM (first round)")
     parser.add_argument("--step-min", type=int, default=10)
     parser.add_argument("--rounds", required=True, type=int)
+    parser.add_argument("--resume", metavar="UTC_STAMP", help="replay the recorded prefix and continue")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--mode", choices=("append", "fresh"))
     group.add_argument("--paired-chains", type=int, metavar="N", help="alternate N append/fresh pairs")
@@ -78,7 +111,7 @@ def main() -> int:
     try:
         run_chains(json.loads(args.scenario.read_text(encoding="utf-8")),
                    datetime.strptime(args.start, TIME_FORMAT), args.step_min, args.rounds,
-                   modes, chains, api_key, RUN_DIR)
+                   modes, chains, api_key, RUN_DIR, args.resume)
     except (KeyError, OSError, RuntimeError, ValueError, TypeError, OverflowError) as exc:
         print(f"错误：{exc}", file=sys.stderr)
         return 1
