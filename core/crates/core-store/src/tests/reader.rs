@@ -2,7 +2,7 @@ use super::*;
 
 #[test]
 fn receipts_verify_once_per_head_and_again_after_reopening_the_store() {
-    use crate::reader::counts::FULL_CHECKS;
+    use crate::reader::FULL_CHECKS;
     let root = TemporaryRoot::new().unwrap();
     let mut store = rehearsal(&root, "receipt-prefix");
     let cap = store.take_commit_capability().unwrap();

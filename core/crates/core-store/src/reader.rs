@@ -14,8 +14,8 @@ use rusqlite::{Connection, OpenFlags, OptionalExtension, params};
 use std::{marker::PhantomData, path::Path, sync::Arc};
 
 #[cfg(test)]
-pub(crate) mod counts {
-    std::thread_local! { pub static FULL_CHECKS: std::cell::Cell<usize> = const { std::cell::Cell::new(0) }; }
+std::thread_local! {
+    pub(crate) static FULL_CHECKS: std::cell::Cell<usize> = const { std::cell::Cell::new(0) };
 }
 
 pub struct Reader<L: LineageKind> {
@@ -97,7 +97,7 @@ impl<L: LineageKind> Reader<L> {
         crate::witness::check(&db, &objects, &receipts)?;
         let verified_head = head(&db)?;
         #[cfg(test)]
-        counts::FULL_CHECKS.update(|n| n + 1);
+        FULL_CHECKS.update(|n| n + 1);
         db.execute_batch("ROLLBACK")?;
         // The open check is a coherent snapshot; subsequent queries remain live.
         // The sole writer only appends immutable, fully verified publications.
