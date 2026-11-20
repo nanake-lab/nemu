@@ -35,6 +35,7 @@ describe('Local TTS provider', () => {
   it('validates requests, forwards style/language, and decodes PCM', async () => {
     const socket = new Socket();
     const provider = new LocalTtsProvider(undefined, () => socket as unknown as WebSocket);
+    expect(provider.id).toBe('gpt-sovits-v5-local');
     const iterable = provider.synthesize(request, new AbortController().signal);
     const iterator = iterable[Symbol.asyncIterator]();
     const first = iterator.next();

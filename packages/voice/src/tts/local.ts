@@ -2,7 +2,7 @@ import { ttsRequestSchema, type TtsProvider, type TtsRequest } from '@nemu/contr
 
 /** One request per socket. Binary frames are little-endian mono float32 at 24 kHz. */
 export class LocalTtsProvider implements TtsProvider {
-  readonly id = 'qwen3-tts-local';
+  readonly id = 'gpt-sovits-v5-local';
 
   constructor(
     private readonly baseUrl = 'http://127.0.0.1:17863',

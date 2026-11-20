@@ -2,7 +2,8 @@
 from __future__ import annotations
 
 import asyncio
-from contextlib import suppress
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager, suppress
 import json
 import os
 import time
@@ -15,7 +16,7 @@ from jsonschema import Draft202012Validator, ValidationError
 import structlog
 
 from .backend import Engine, Lane, Request
-from .qwen import QwenEngine
+from .gsv import GsvEngine
 from .trace_writer import append_jsonl
 from .voices import VoiceBank
 
@@ -25,8 +26,17 @@ LOG = structlog.get_logger()
 
 
 def create_app(engine: Engine | None = None, bank: VoiceBank | None = None) -> FastAPI:
-    app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
-    lane = Lane(engine or QwenEngine())
+    lane = Lane(GsvEngine() if engine is None else engine)
+
+    @asynccontextmanager
+    async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+        try:
+            yield
+        finally:
+            if isinstance(lane.engine, GsvEngine):
+                await asyncio.to_thread(lane.engine.close)
+
+    app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
     voices = bank or VoiceBank(Path(os.getenv("NEMU_TTS_VOICE", "voice.json")))
 
     @app.get("/health")
@@ -35,7 +45,7 @@ def create_app(engine: Engine | None = None, bank: VoiceBank | None = None) -> F
         reasons = list(cast(list[str], state.get("reasons", [])))
         if not lane.warmed:
             reasons.append("NOT_WARMED")
-        if lane.failure:
+        if lane.failure and lane.failure not in reasons:
             reasons.append(lane.failure)
         if not voices.path.is_file():
             reasons.append("VOICE_BANK_MISSING")

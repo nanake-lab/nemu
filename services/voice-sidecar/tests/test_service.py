@@ -74,9 +74,12 @@ def test_degraded_startup_and_failed_warmup_survive(tmp_path: Path) -> None:
 
 def test_default_backend_missing_configuration_stays_alive(monkeypatch: pytest.MonkeyPatch,
                                                            tmp_path: Path) -> None:
-    monkeypatch.delenv("NEMU_TTS_CACHE", raising=False)
+    monkeypatch.delenv("NEMU_GSV_ROOT", raising=False)
     with TestClient(create_app(bank=VoiceBank(tmp_path / "missing.json"))) as client:
-        assert client.get("/health").json()["status"] == "degraded"
+        health = client.get("/health").json()
+        assert health["model"] == "gpt-sovits-v5turbo"
+        assert health["vram"] is None
+        assert health["status"] == "degraded"
         assert "MODEL_CACHE_NOT_CONFIGURED" in client.post("/warmup").json()["reasons"]
         assert client.get("/health").status_code == 200
 
