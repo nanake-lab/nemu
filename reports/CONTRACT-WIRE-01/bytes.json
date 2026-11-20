@@ -1,0 +1,78 @@
+{
+  "source": "fea7d2fec12a1026b0a773fc030f9849631403e9",
+  "golden": [
+    {
+      "name": "illegal",
+      "old": 901,
+      "new": 988,
+      "old_entries_sha256": "30e81c46d0eee3bf72225134ad81ae9f138ca10a274c4fea2d5c44f94a42fa6a",
+      "new_prefix_sha256": "30e81c46d0eee3bf72225134ad81ae9f138ca10a274c4fea2d5c44f94a42fa6a",
+      "new_entries_sha256": "5f638d6475da88992eebdbce61f03789e694d7e50dbeb9c885c6a2333d9f3fe7",
+      "added": 87
+    },
+    {
+      "name": "ingress",
+      "old": 63,
+      "new": 63,
+      "old_entries_sha256": "d6ba5c31b94dbaa45fbd5410777bcc08c07d6b5b5bee66184fbe6ca47330764c",
+      "new_prefix_sha256": "d6ba5c31b94dbaa45fbd5410777bcc08c07d6b5b5bee66184fbe6ca47330764c",
+      "new_entries_sha256": "d6ba5c31b94dbaa45fbd5410777bcc08c07d6b5b5bee66184fbe6ca47330764c"
+    },
+    {
+      "name": "legal",
+      "old": 646,
+      "new": 726,
+      "old_entries_sha256": "5d78d446aabf1c435f9e1b13a8b679e22874ebb4ef8cad0968131107afec657c",
+      "new_prefix_sha256": "5d78d446aabf1c435f9e1b13a8b679e22874ebb4ef8cad0968131107afec657c",
+      "new_entries_sha256": "c23521abefd9ffab4023714f5310efec4859490d80d42ad994caa97cac4c5d9b",
+      "added": 80
+    },
+    {
+      "name": "unicode",
+      "old": 18,
+      "new": 18,
+      "old_entries_sha256": "bb39414c6321ba97e6fd76cde37a5797d1ea8960614a19381c1227b7e58088a7",
+      "new_prefix_sha256": "bb39414c6321ba97e6fd76cde37a5797d1ea8960614a19381c1227b7e58088a7",
+      "new_entries_sha256": "bb39414c6321ba97e6fd76cde37a5797d1ea8960614a19381c1227b7e58088a7"
+    }
+  ],
+  "wire_digest_framing": "Per vector: u64 little-endian byte length followed by exact encoded bytes, in fixture order.",
+  "legal_wire_bytes": {
+    "canonical": {
+      "old": {
+        "vectors": 646,
+        "bytes": 342120,
+        "framed_sha256": "36a657f0d1febccda4d9bd71db304583b928070f1d8eb035cc9fa54ab5e9bb49"
+      },
+      "old_prefix_now": {
+        "vectors": 646,
+        "bytes": 342120,
+        "framed_sha256": "36a657f0d1febccda4d9bd71db304583b928070f1d8eb035cc9fa54ab5e9bb49"
+      },
+      "added": {
+        "vectors": 80,
+        "bytes": 110500,
+        "framed_sha256": "9183a67cd81659ffc4e5dabf11315105b48d57d1f2c9f09a0d33f85fca4014ba"
+      },
+      "changed_old_vectors": 0
+    },
+    "protobuf": {
+      "old": {
+        "vectors": 646,
+        "bytes": 209092,
+        "framed_sha256": "b9c86c39a396bbf0ab8b965b8d937ae45bcd02364017690a6200fda6f339a772"
+      },
+      "old_prefix_now": {
+        "vectors": 646,
+        "bytes": 209092,
+        "framed_sha256": "b9c86c39a396bbf0ab8b965b8d937ae45bcd02364017690a6200fda6f339a772"
+      },
+      "added": {
+        "vectors": 80,
+        "bytes": 67543,
+        "framed_sha256": "c92308dd91d09a5f5746ed189829ad402e3e2a09a3f1f17e5d12ed6ecc27a813"
+      },
+      "changed_old_vectors": 0
+    }
+  }
+}

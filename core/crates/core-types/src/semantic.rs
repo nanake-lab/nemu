@@ -15,6 +15,8 @@ use crate::generated::{
 use std::cmp::Ordering;
 
 mod cognition;
+mod speak_think;
+pub use speak_think::{check_speak_think_message, resolved_text_range};
 mod j_resources;
 pub use j_resources::{JResolvedResources, check_j_envelope, check_j_message, check_j_resources};
 mod law_state;
