@@ -20,10 +20,13 @@ ROOT = Path(__file__).resolve().parents[3]
 PACKAGE = ROOT / "workers/model-adapter"
 sys.path[:0] = [str(PACKAGE / "src"), str(PACKAGE / "generated"), str(PACKAGE / "tests"),
                 str(ROOT / "core/contracts"), str(ROOT / "workers/irl/src")]
-from echo.types import JActivationDtype, JDecodeMask, JLayerKind, JPrefillMask, JResidualStage, TaskInput  # noqa: E402
+from echo.typed_api import to_value  # noqa: E402
+from echo.types import (FactProjection, JActivationDtype, JDecodeMask, JLayerKind,  # noqa: E402
+                        JPrefillMask, JResidualStage, TaskInput, UserText)
 from nemu_model_adapter import Assets, LocalCarrier, Unmodulated  # noqa: E402
 from nemu_model_adapter.carrier import chat_prompt  # noqa: E402
 from nemu_model_adapter.native import Native, sha256_file  # noqa: E402
+from nemu_model_adapter.resources import canonical_ref  # noqa: E402
 from test_resources import LIMITS, fixture, publication  # noqa: E402
 from verify_j import rebind  # noqa: E402
 
@@ -51,6 +54,12 @@ def rows(name: str) -> list[dict[str, Any]]:
     if sha256_file(path).hex() != expected:
         raise ValueError("frozen input hash")
     return [json.loads(line) for line in path.read_text("utf-8").splitlines()]
+
+
+def task_for(text: str, protocol: str, facts: FactProjection) -> TaskInput:
+    user = canonical_ref("UserText", to_value(UserText(1, text)), LIMITS)
+    return TaskInput(1, user, "test-facts-v1", protocol, facts, "synthetic-0",
+                     96, 30_000_000_000)  # P0-07 speech fixture budget
 
 
 def bundle(assets: Assets, arm: str, *, learned: bool = True) -> tuple[Any, ...]:
@@ -162,8 +171,7 @@ async def run(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
     spec.loader.exec_module(views)
     worker = importlib.import_module("nemu_irl.worker")
     validator = importlib.import_module("jsonschema").Draft202012Validator(worker.wire_schema())
-    base = TaskInput(1, p.genesis, "test-facts-v1", FACT, views.view_for().c_core, "synthetic-0",
-                     96, 30_000_000_000)  # P0-07 speech fixture budget
+    facts = views.view_for().c_core
     carrier = LocalCarrier(assets, hook, load_mmproj=True)
     try:
         if a.group == "resources":
@@ -173,7 +181,7 @@ async def run(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
             for learned in (True, False, True):
                 quiet()
                 envelope, receipt, committed, _, objects = bundle(assets, "plus", learned=learned)
-                async with carrier.generate(base, QUERY, envelope, receipt, committed,
+                async with carrier.generate(task_for(QUERY, FACT, facts), QUERY, envelope, receipt, committed,
                                             objects.__getitem__, LIMITS) as stream:
                     signature = logits_hash(stream.native, stream.handle)
                     async for _ in stream.text():
@@ -226,7 +234,7 @@ async def run(a: argparse.Namespace, assets: Assets, ev: Evidence) -> None:
                             draft = replace(p.genesis, object_type="fixture.draft",
                                             digest=hashlib.sha256(content).digest(), byte_length=len(content))
                             obj[draft] = content
-                        task = replace(base, protocol_content=FACT if identity else "")
+                        task = task_for(sample["text"], FACT if identity else "", facts)
                         start = perf_counter()
                         chunks: list[str] = []
                         first = sentence = None

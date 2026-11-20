@@ -72,6 +72,10 @@ class Native:
         else:
             raise Unmodulated("the pinned carrier requires Windows")
         try:
+            # b11669's plugin loader calls LoadLibraryW. Load its dependencies from
+            # the verified directory with ctypes' DLL_LOAD_DIR search before that call.
+            self._backend_dlls = [ct.CDLL(str(engine / name)) for name in (
+                "libomp.dll", "cudart64_12.dll", "cublasLt64_12.dll", "cublas64_12.dll", "ggml-cuda.dll")]
             self.lib = ct.CDLL(str(assets.shim.resolve(strict=True)))
             self._bind()
             handle = self.lib.carrier_open(str(engine).encode(), str(assets.model.resolve()).encode(),
