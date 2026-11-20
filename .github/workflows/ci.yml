@@ -58,10 +58,11 @@ jobs:
             $files = @(git diff --name-only --no-renames $env:BEFORE HEAD)
             $full = $LASTEXITCODE -ne 0
           }
-          $scope = @{ node = $false; python = $false; rust = $false; storage = $false; contracts = $false; dotnet = $false; status = $false }
+          $scope = @{ node = $false; python = $false; rust = $false; storage = $false; contracts = $false; dotnet = $false; status = $false; causedemo = $false }
           foreach ($f in $files) {
             if ($f -match '\.md$|^(docs/|tasks/|reports/|content$)') { continue }
             if ($f -match '^\.github/workflows/') { $full = $true; continue }
+            if ($f -match '^tools/cause-demo/') { $scope.causedemo = $true; continue }
             $known = $false
             if ($f -match '^(apps/|packages/|tools/|spikes/|executors/codex-bridge/)') {
               $scope.node = $true; $known = $true
@@ -198,6 +199,9 @@ jobs:
       - name: Status board pause and reminder regressions
         if: steps.scope.outputs.status == 'true'
         run: python -m unittest discover -s tools/status -p 'test_*.py' -v
+      - name: cause-demo unit tests
+        if: steps.scope.outputs.causedemo == 'true'
+        run: python -m unittest discover -s tools/cause-demo -p 'test_*.py' -v
       - name: P5-36 bounded writer lock lifecycle evidence (Linux)
         if: steps.scope.outputs.storage == 'true'
         working-directory: core

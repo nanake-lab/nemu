@@ -102,7 +102,7 @@ Echo Core 里有不少不完美的选择，我们把它们集中写在 [docs/OPE
 
 | 路径 | 内容 | 主要读者 |
 | :--- | :--- | :--- |
-| [`AGENTS.md`](AGENTS.md) | 三个执行者共用的规则：认领与目录规则、16 条黄金规则、命令、报告模板、审查与合并 | 代理 |
+| [`AGENTS.md`](AGENTS.md) | 执行者共用的规则：认领与目录规则、17 条黄金规则、命令、报告、审查与合并 | 代理 |
 | [tasks/README.md](tasks/README.md) | 从这里开始（进度看板、等你处理的事、派活与取卡规则、依赖与里程碑说明） | 项目所有者与代理 |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 架构说明、进程模型与 30 项 v1.0 完成标准 | 代理 |
 | [docs/CONTRACTS.md](docs/CONTRACTS.md) | 资产契约、舞台协议、表演协议、终端协议、生成接口、权限分级、身体读出、机会规则（v2.1） | 代理 |
@@ -128,9 +128,9 @@ Nemu 由 [nanake-lab](https://github.com/nanake-lab) 发起并拥有。架构、
 
 | 协作方 | 提供方 | 通常做的卡与职责 |
 | :--- | :--- | :--- |
-| [Codex](https://openai.com/codex/) | OpenAI | 实现与研究执行，包括 Echo Core、worker、执行器、旁路服务、桌面应用、契约与工具链；模型与推理强度按 [`AGENTS.md`](AGENTS.md) 第 2 节执行 |
-| [Claude](https://claude.com/product/claude-code) (Claude Code) | Anthropic | 和用户一起规划，写派卡提示，审查；不认领实现卡。文档类工作按 [`AGENTS.md`](AGENTS.md) 第 2 节分配 |
+| [Codex](https://openai.com/codex/) | OpenAI | 实现与研究执行，包括 Echo Core、worker、执行器、旁路服务、桌面应用、契约与工具链；模型与推理强度由用户派活时决定 |
+| [Claude](https://claude.com/product/claude-code) (Claude Code) | Anthropic | 和用户一起规划，写派卡提示，审查；不认领实现卡。文档类工作由用户决定交给谁 |
 | [ChatGPT](https://chatgpt.com/) 中的 GPT-6 Pro | OpenAI | 外部独立审计与研究；相关记录见 [PR #180](https://github.com/nanake-lab/nemu/pull/180)、[PR #181](https://github.com/nanake-lab/nemu/pull/181)、[PR #184](https://github.com/nanake-lab/nemu/pull/184) |
-| [Antigravity](https://antigravity.google/) | Google | 舞台、评审台、角色运行时与身体（`apps/stage`、`apps/panel`、`packages/avatar-runtime`、`packages/body`） |
+| [Antigravity](https://antigravity.google/) | Google | 暂停使用。原负责舞台、评审台、角色运行时与身体（`apps/stage`、`apps/panel`、`packages/avatar-runtime`、`packages/body`） |
 
-现行分工自 2026-11-12 起按 [`AGENTS.md`](AGENTS.md) 第 2 节执行；`tasks/cards.json` 和任务卡头部中的建议执行者按该节现行分工解读，审查规则见第 6、10 节。
+现行分工自 2026-11-12 起按 [`AGENTS.md`](AGENTS.md) 第 2 节执行；`tasks/cards.json` 和任务卡头部中的建议执行者按该节现行分工解读，审查与合并规则见第 6 节。

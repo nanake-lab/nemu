@@ -154,3 +154,41 @@ never reinterpreted; `verify_cognition.py` checks same-version restoration and
 cross-version rejection in all three languages. This is a SYS17 prerequisite,
 not a migration or atomic-publish test. Published pre-change IDL/golden prefixes
 are frozen as `baselines/p5-68` at main `8839dcae`.
+
+## P5-42 J resources (ADR 0036)
+
+`j_resources.proto` adds explicit direction/hook/validation/body resources and the
+canonical `JEffectReceipt`. `GenesisManifestV3` reserves old field 14 instead of
+requiring a proactivity function; V2 stays readable and its bytes do not change.
+The complete pre-change contract is frozen in `baselines/p5-37`.
+
+After structural decoding call `semantic::check_j_message` (Rust),
+`echo.j_resources.check_j_message` (Python), or `echo/j_resources.checkJMessage`
+(TypeScript). `check_j_resources` / `checkJResources` accepts resolved immutable
+set, validation, body, receipt, genesis and vectors in set order, with an explicit
+formal/fixture boundary. `check_j_envelope` / `checkJEnvelope` checks the existing
+ModulationEnvelopeV2 against the canonical receipt digest and all shared fields.
+All three probes exercise these interfaces in normal contract CI.
+
+These interfaces do not verify commit authority, real calibration evidence, the
+R+ frontier/exclusion reasons, or migration approval. Callers must check those
+against the trusted committed snapshot, genesis and approved migration chain,
+and recompute numeric J before publication. A true `formal` argument only rejects
+fixture/rehearsal resources; it never establishes their provenance. The initial
+genesis carrier may differ from the current carrier after a verified migration;
+body parameters still bind to genesis. No production publisher is added.
+
+P5-12 roundtrip tests use only synthetic memory. Three-language restoration and
+cross-version refusal are migration prerequisites, not SYS17 or real carrier
+acceptance. See `docs/adr/0036-j-resources-and-effect-receipt.md` for field sources,
+old-signature handling, consumer obligations and rollback routes.
+
+### P5-42 inherited genesis semantics (B1)
+
+A decoded genesis additionally requires `semantic::check_genesis` (V2) or
+`semantic::check_genesis_v3` (V3) in Rust; `echo.genesis.check_genesis(name, value,
+limits)` in Python; `checkGenesis(name, value, limits)` in TypeScript.
+The V2/V3 paths share the existing law and genesis rules. Every resolved J-resource
+check calls the V3 check, including non-formal calls. Codec / `check_j_message`
+success alone is not full genesis validity. Published codec fixtures stay intact;
+`verify_j.py` separately tests one semantic control and five re-bound refusals.
