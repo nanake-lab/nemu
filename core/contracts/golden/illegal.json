@@ -44461,5 +44461,3938 @@
         "max_depth": 32
       }
     }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "JHookBinding",
+      "op": "encode",
+      "value": {
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "layer_index": 0,
+        "residual_stage": 1,
+        "layer_kind": 1,
+        "width": 5,
+        "dtype": 1,
+        "prefill_mask": 1,
+        "decode_mask": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "JHookBinding",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "layer_index": 0,
+        "residual_stage": 1,
+        "layer_kind": 1,
+        "width": 5,
+        "dtype": 1,
+        "prefill_mask": 1,
+        "decode_mask": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "JHookBinding",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "layer_index": 0,
+        "residual_stage": 1,
+        "layer_kind": 1,
+        "width": 5,
+        "dtype": 1,
+        "prefill_mask": 1,
+        "decode_mask": 1,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "JDirectionVector",
+      "op": "encode",
+      "value": {
+        "version": "fixture-0-0",
+        "values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "JDirectionVector",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "version": "fixture-0-0",
+        "values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "JDirectionVector",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "fixture-0-0",
+        "values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "JDirection",
+      "op": "encode",
+      "value": {
+        "kind": 1,
+        "vector": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "beta": 0.125
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "JDirection",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "kind": 1,
+        "vector": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "beta": 0.125
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "JDirection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1,
+        "vector": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "beta": 0.125,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "JDirectionSet",
+      "op": "encode",
+      "value": {
+        "version": "fixture-set-0",
+        "hook": {
+          "schema_version": 1,
+          "carrier": {
+            "schema_version": 1,
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "fixture.carrier",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "model": {
+            "schema_version": 1,
+            "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+            "object_type": "fixture.model",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "tokenizer": {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "fixture.tokenizer",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "layer_index": 0,
+          "residual_stage": 1,
+          "layer_kind": 1,
+          "width": 5,
+          "dtype": 1,
+          "prefill_mask": 1,
+          "decode_mask": 1
+        },
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "beta": 0.125,
+            "tendency_id": "learned",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "concept",
+              "registry_version": "fixture-registry-1"
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "JDirectionSet",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "version": "fixture-set-0",
+        "hook": {
+          "schema_version": 1,
+          "carrier": {
+            "schema_version": 1,
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "fixture.carrier",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "model": {
+            "schema_version": 1,
+            "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+            "object_type": "fixture.model",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "tokenizer": {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "fixture.tokenizer",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "layer_index": 0,
+          "residual_stage": 1,
+          "layer_kind": 1,
+          "width": 5,
+          "dtype": 1,
+          "prefill_mask": 1,
+          "decode_mask": 1
+        },
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "beta": 0.125,
+            "tendency_id": "learned",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "concept",
+              "registry_version": "fixture-registry-1"
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "JDirectionSet",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "fixture-set-0",
+        "hook": {
+          "schema_version": 1,
+          "carrier": {
+            "schema_version": 1,
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "fixture.carrier",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "model": {
+            "schema_version": 1,
+            "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+            "object_type": "fixture.model",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "tokenizer": {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "fixture.tokenizer",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "layer_index": 0,
+          "residual_stage": 1,
+          "layer_kind": 1,
+          "width": 5,
+          "dtype": 1,
+          "prefill_mask": 1,
+          "decode_mask": 1
+        },
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "beta": 0.125,
+            "tendency_id": "learned",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "concept",
+              "registry_version": "fixture-registry-1"
+            }
+          }
+        ],
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "JValidatedDirection",
+      "op": "encode",
+      "value": {
+        "vector": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "max_beta": 0.25,
+        "measured_norm": 1.0,
+        "norm_tolerance": 0.0,
+        "zh_evidence": {
+          "schema_version": 1,
+          "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+          "object_type": "fixture.zh",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "en_evidence": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "fixture.en",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "ja_evidence": {
+          "schema_version": 1,
+          "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+          "object_type": "fixture.ja",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "JValidatedDirection",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "vector": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "max_beta": 0.25,
+        "measured_norm": 1.0,
+        "norm_tolerance": 0.0,
+        "zh_evidence": {
+          "schema_version": 1,
+          "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+          "object_type": "fixture.zh",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "en_evidence": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "fixture.en",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "ja_evidence": {
+          "schema_version": 1,
+          "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+          "object_type": "fixture.ja",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "JValidatedDirection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "vector": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "max_beta": 0.25,
+        "measured_norm": 1.0,
+        "norm_tolerance": 0.0,
+        "zh_evidence": {
+          "schema_version": 1,
+          "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+          "object_type": "fixture.zh",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "en_evidence": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "fixture.en",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "ja_evidence": {
+          "schema_version": 1,
+          "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+          "object_type": "fixture.ja",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "JDirectionValidation",
+      "op": "encode",
+      "value": {
+        "version": "fixture-validation-0",
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "fixture": true,
+        "directions": [
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          }
+        ],
+        "combination_max_beta": 1.0,
+        "combination_evidence": {
+          "schema_version": 1,
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707",
+          "object_type": "fixture.combination",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "JDirectionValidation",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "version": "fixture-validation-0",
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "fixture": true,
+        "directions": [
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          }
+        ],
+        "combination_max_beta": 1.0,
+        "combination_evidence": {
+          "schema_version": 1,
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707",
+          "object_type": "fixture.combination",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "JDirectionValidation",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "fixture-validation-0",
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "fixture": true,
+        "directions": [
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          },
+          {
+            "schema_version": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "max_beta": 0.25,
+            "measured_norm": 1.0,
+            "norm_tolerance": 0.0,
+            "zh_evidence": {
+              "schema_version": 1,
+              "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+              "object_type": "fixture.zh",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "en_evidence": {
+              "schema_version": 1,
+              "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+              "object_type": "fixture.en",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            },
+            "ja_evidence": {
+              "schema_version": 1,
+              "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+              "object_type": "fixture.ja",
+              "resource_version": "synthetic-adr0035",
+              "byte_length": "100"
+            }
+          }
+        ],
+        "combination_max_beta": 1.0,
+        "combination_evidence": {
+          "schema_version": 1,
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707",
+          "object_type": "fixture.combination",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "BodyReadoutParameters",
+      "op": "encode",
+      "value": {
+        "version": "fixture-body-0",
+        "facing": {
+          "schema_version": 1,
+          "connection": 0.25,
+          "empathy": -0.5,
+          "curiosity": 0.0,
+          "achievement": 0.125
+        },
+        "tension": {
+          "schema_version": 1,
+          "connection": 0.25,
+          "empathy": -0.5,
+          "curiosity": 0.0,
+          "achievement": 0.125
+        },
+        "energy": {
+          "schema_version": 1,
+          "connection": 0.25,
+          "empathy": -0.5,
+          "curiosity": 0.0,
+          "achievement": 0.125
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "BodyReadoutParameters",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "version": "fixture-body-0",
+        "facing": {
+          "schema_version": 1,
+          "connection": 0.25,
+          "empathy": -0.5,
+          "curiosity": 0.0,
+          "achievement": 0.125
+        },
+        "tension": {
+          "schema_version": 1,
+          "connection": 0.25,
+          "empathy": -0.5,
+          "curiosity": 0.0,
+          "achievement": 0.125
+        },
+        "energy": {
+          "schema_version": 1,
+          "connection": 0.25,
+          "empathy": -0.5,
+          "curiosity": 0.0,
+          "achievement": 0.125
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "BodyReadoutParameters",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "fixture-body-0",
+        "facing": {
+          "schema_version": 1,
+          "connection": 0.25,
+          "empathy": -0.5,
+          "curiosity": 0.0,
+          "achievement": 0.125
+        },
+        "tension": {
+          "schema_version": 1,
+          "connection": 0.25,
+          "empathy": -0.5,
+          "curiosity": 0.0,
+          "achievement": 0.125
+        },
+        "energy": {
+          "schema_version": 1,
+          "connection": 0.25,
+          "empathy": -0.5,
+          "curiosity": 0.0,
+          "achievement": 0.125
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "JDirectionUse",
+      "op": "encode",
+      "value": {
+        "kind": 1,
+        "status": 1,
+        "direction": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "beta": 0.125,
+        "coefficient": 0.0625
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "JDirectionUse",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "kind": 1,
+        "status": 1,
+        "direction": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "beta": 0.125,
+        "coefficient": 0.0625
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "JDirectionUse",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1,
+        "status": 1,
+        "direction": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "beta": 0.125,
+        "coefficient": 0.0625,
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "JEffectReceipt",
+      "op": "encode",
+      "value": {
+        "snapshot_id": "synthetic-0",
+        "anchor_time_ns": "0",
+        "projected_at_ns": "9007199254740992",
+        "x_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "r_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "theta_digest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_parameters": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "genesis": {
+          "schema_version": 1,
+          "object_type": "echo.genesis-v3",
+          "resource_version": "1",
+          "digest": "e106b9da9c0fddd2058a28cfc03eed6c14ee13297dc186c2b3fe9efec6ac0d84",
+          "byte_length": "1267"
+        },
+        "mode": 1,
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625,
+            "tendency_id": "learned"
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "unverified",
+            "status": 2
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "missing-data",
+            "status": 3
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "wrong-validation",
+            "status": 4
+          }
+        ],
+        "total_bound": 0.625,
+        "body": {
+          "schema_version": 1,
+          "version": "fixture-body-0",
+          "facing": 0.625,
+          "tension": 0.125,
+          "energy": 0.625
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "JEffectReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "snapshot_id": "synthetic-0",
+        "anchor_time_ns": "0",
+        "projected_at_ns": "9007199254740992",
+        "x_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "r_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "theta_digest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_parameters": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "genesis": {
+          "schema_version": 1,
+          "object_type": "echo.genesis-v3",
+          "resource_version": "1",
+          "digest": "e106b9da9c0fddd2058a28cfc03eed6c14ee13297dc186c2b3fe9efec6ac0d84",
+          "byte_length": "1267"
+        },
+        "mode": 1,
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625,
+            "tendency_id": "learned"
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "unverified",
+            "status": 2
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "missing-data",
+            "status": 3
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "wrong-validation",
+            "status": 4
+          }
+        ],
+        "total_bound": 0.625,
+        "body": {
+          "schema_version": 1,
+          "version": "fixture-body-0",
+          "facing": 0.625,
+          "tension": 0.125,
+          "energy": 0.625
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "JEffectReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "synthetic-0",
+        "anchor_time_ns": "0",
+        "projected_at_ns": "9007199254740992",
+        "x_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "r_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "theta_digest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_parameters": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "genesis": {
+          "schema_version": 1,
+          "object_type": "echo.genesis-v3",
+          "resource_version": "1",
+          "digest": "e106b9da9c0fddd2058a28cfc03eed6c14ee13297dc186c2b3fe9efec6ac0d84",
+          "byte_length": "1267"
+        },
+        "mode": 1,
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625,
+            "tendency_id": "learned"
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "unverified",
+            "status": 2
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "missing-data",
+            "status": 3
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "wrong-validation",
+            "status": 4
+          }
+        ],
+        "total_bound": 0.625,
+        "body": {
+          "schema_version": 1,
+          "version": "fixture-body-0",
+          "facing": 0.625,
+          "tension": 0.125,
+          "energy": 0.625
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "GenesisManifestV3",
+      "op": "encode",
+      "value": {
+        "law_version": {
+          "schema_version": 1,
+          "version": 1,
+          "reference_form": "A0",
+          "parameters": {
+            "schema_version": 1,
+            "n0": 0.0,
+            "kappa1": 0.0,
+            "w_max": 0.0,
+            "w_teach": 0.0,
+            "v_u": 0.0,
+            "r_min": 0.0,
+            "r_max": 0.0,
+            "h0": 0.0,
+            "n_h": 0.0,
+            "h0_theta": 0.0,
+            "h_hat_theta_min": 0.0,
+            "n_b": 0.0,
+            "n_sigma": 0.0,
+            "g_min": 0.0,
+            "g_max": 0.0,
+            "recovery_min_per_s": 0.0,
+            "recovery_max_per_s": 0.0,
+            "w_min": 0.0,
+            "t_x_s": 0.0,
+            "epsilon_x": 0.0,
+            "k_max": 0.0
+          }
+        },
+        "nature_structure": "A0",
+        "initial_gain": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "initial_baseline": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "sigma0": 0.0,
+        "tau0_s": 0.0,
+        "attachment_prior": 0.0,
+        "caretaker_id": "A0",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "direction_validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_readout": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "fuses": {
+          "schema_version": 1,
+          "r_capacity": 1,
+          "delta_theta_max": 0.0,
+          "jump_threshold": 0.0,
+          "jump_probes": {
+            "schema_version": 1,
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "byte_length": "0"
+          },
+          "slow_drift_run": 1,
+          "slow_drift_margin": 0.0,
+          "contact_limit": 0,
+          "message_limit": 0,
+          "network_window_ns": "0"
+        },
+        "boundaries": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "protocol": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "GenesisManifestV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "law_version": {
+          "schema_version": 1,
+          "version": 1,
+          "reference_form": "A0",
+          "parameters": {
+            "schema_version": 1,
+            "n0": 0.0,
+            "kappa1": 0.0,
+            "w_max": 0.0,
+            "w_teach": 0.0,
+            "v_u": 0.0,
+            "r_min": 0.0,
+            "r_max": 0.0,
+            "h0": 0.0,
+            "n_h": 0.0,
+            "h0_theta": 0.0,
+            "h_hat_theta_min": 0.0,
+            "n_b": 0.0,
+            "n_sigma": 0.0,
+            "g_min": 0.0,
+            "g_max": 0.0,
+            "recovery_min_per_s": 0.0,
+            "recovery_max_per_s": 0.0,
+            "w_min": 0.0,
+            "t_x_s": 0.0,
+            "epsilon_x": 0.0,
+            "k_max": 0.0
+          }
+        },
+        "nature_structure": "A0",
+        "initial_gain": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "initial_baseline": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "sigma0": 0.0,
+        "tau0_s": 0.0,
+        "attachment_prior": 0.0,
+        "caretaker_id": "A0",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "direction_validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_readout": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "fuses": {
+          "schema_version": 1,
+          "r_capacity": 1,
+          "delta_theta_max": 0.0,
+          "jump_threshold": 0.0,
+          "jump_probes": {
+            "schema_version": 1,
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "byte_length": "0"
+          },
+          "slow_drift_run": 1,
+          "slow_drift_margin": 0.0,
+          "contact_limit": 0,
+          "message_limit": 0,
+          "network_window_ns": "0"
+        },
+        "boundaries": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "protocol": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "GenesisManifestV3",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "law_version": {
+          "schema_version": 1,
+          "version": 1,
+          "reference_form": "A0",
+          "parameters": {
+            "schema_version": 1,
+            "n0": 0.0,
+            "kappa1": 0.0,
+            "w_max": 0.0,
+            "w_teach": 0.0,
+            "v_u": 0.0,
+            "r_min": 0.0,
+            "r_max": 0.0,
+            "h0": 0.0,
+            "n_h": 0.0,
+            "h0_theta": 0.0,
+            "h_hat_theta_min": 0.0,
+            "n_b": 0.0,
+            "n_sigma": 0.0,
+            "g_min": 0.0,
+            "g_max": 0.0,
+            "recovery_min_per_s": 0.0,
+            "recovery_max_per_s": 0.0,
+            "w_min": 0.0,
+            "t_x_s": 0.0,
+            "epsilon_x": 0.0,
+            "k_max": 0.0
+          }
+        },
+        "nature_structure": "A0",
+        "initial_gain": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "initial_baseline": {
+          "schema_version": 1,
+          "connection": 0.0,
+          "empathy": 0.0,
+          "curiosity": 0.0,
+          "achievement": 0.0
+        },
+        "sigma0": 0.0,
+        "tau0_s": 0.0,
+        "attachment_prior": 0.0,
+        "caretaker_id": "A0",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "direction_validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_readout": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "fuses": {
+          "schema_version": 1,
+          "r_capacity": 1,
+          "delta_theta_max": 0.0,
+          "jump_threshold": 0.0,
+          "jump_probes": {
+            "schema_version": 1,
+            "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+            "object_type": "A0",
+            "resource_version": "A0",
+            "byte_length": "0"
+          },
+          "slow_drift_run": 1,
+          "slow_drift_margin": 0.0,
+          "contact_limit": 0,
+          "message_limit": 0,
+          "network_window_ns": "0"
+        },
+        "boundaries": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "protocol": {
+          "schema_version": 1,
+          "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "object_type": "A0",
+          "resource_version": "A0",
+          "byte_length": "0"
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "nature-has-tendency",
+    "request": {
+      "name": "JDirection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1,
+        "vector": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "beta": 0.125,
+        "tendency_id": "x"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "wrong-vector-type",
+    "request": {
+      "name": "JDirection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "kind": 1,
+        "vector": {
+          "schema_version": 1,
+          "object_type": "private-protocol",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "beta": 0.125
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-nature",
+    "request": {
+      "name": "JDirectionSet",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "fixture-set-0",
+        "hook": {
+          "schema_version": 1,
+          "carrier": {
+            "schema_version": 1,
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "fixture.carrier",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "model": {
+            "schema_version": 1,
+            "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+            "object_type": "fixture.model",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "tokenizer": {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "fixture.tokenizer",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "layer_index": 0,
+          "residual_stage": 1,
+          "layer_kind": 1,
+          "width": 5,
+          "dtype": 1,
+          "prefill_mask": 1,
+          "decode_mask": 1
+        },
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "beta": 0.125,
+            "tendency_id": "learned",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "concept",
+              "registry_version": "fixture-registry-1"
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "duplicate-learned",
+    "request": {
+      "name": "JDirectionSet",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "fixture-set-0",
+        "hook": {
+          "schema_version": 1,
+          "carrier": {
+            "schema_version": 1,
+            "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+            "object_type": "fixture.carrier",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "model": {
+            "schema_version": 1,
+            "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+            "object_type": "fixture.model",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "tokenizer": {
+            "schema_version": 1,
+            "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+            "object_type": "fixture.tokenizer",
+            "resource_version": "synthetic-adr0035",
+            "byte_length": "100"
+          },
+          "layer_index": 0,
+          "residual_stage": 1,
+          "layer_kind": 1,
+          "width": 5,
+          "dtype": 1,
+          "prefill_mask": 1,
+          "decode_mask": 1
+        },
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "beta": 0.125
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "beta": 0.125,
+            "tendency_id": "learned",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "concept",
+              "registry_version": "fixture-registry-1"
+            }
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "vector": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "beta": 0.125,
+            "tendency_id": "learned",
+            "concept": {
+              "schema_version": 1,
+              "concept_id": "concept",
+              "registry_version": "fixture-registry-1"
+            }
+          }
+        ]
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "non-unit",
+    "request": {
+      "name": "JValidatedDirection",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "vector": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-vector",
+          "resource_version": "fixture-0-0",
+          "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+          "byte_length": "94"
+        },
+        "max_beta": 0.25,
+        "measured_norm": 0.5,
+        "norm_tolerance": 0.0,
+        "zh_evidence": {
+          "schema_version": 1,
+          "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+          "object_type": "fixture.zh",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "en_evidence": {
+          "schema_version": 1,
+          "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+          "object_type": "fixture.en",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "ja_evidence": {
+          "schema_version": 1,
+          "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+          "object_type": "fixture.ja",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "total-understates-budget",
+    "request": {
+      "name": "JEffectReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "synthetic-0",
+        "anchor_time_ns": "0",
+        "projected_at_ns": "9007199254740992",
+        "x_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "r_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "theta_digest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_parameters": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "genesis": {
+          "schema_version": 1,
+          "object_type": "echo.genesis-v3",
+          "resource_version": "1",
+          "digest": "e106b9da9c0fddd2058a28cfc03eed6c14ee13297dc186c2b3fe9efec6ac0d84",
+          "byte_length": "1267"
+        },
+        "mode": 1,
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625,
+            "tendency_id": "learned"
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "unverified",
+            "status": 2
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "missing-data",
+            "status": 3
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "wrong-validation",
+            "status": 4
+          }
+        ],
+        "total_bound": 0.5,
+        "body": {
+          "schema_version": 1,
+          "version": "fixture-body-0",
+          "facing": 0.625,
+          "tension": 0.125,
+          "energy": 0.625
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "coefficient-exceeds-beta",
+    "request": {
+      "name": "JEffectReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "synthetic-0",
+        "anchor_time_ns": "0",
+        "projected_at_ns": "9007199254740992",
+        "x_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "r_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "theta_digest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_parameters": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "genesis": {
+          "schema_version": 1,
+          "object_type": "echo.genesis-v3",
+          "resource_version": "1",
+          "digest": "e106b9da9c0fddd2058a28cfc03eed6c14ee13297dc186c2b3fe9efec6ac0d84",
+          "byte_length": "1267"
+        },
+        "mode": 1,
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.25
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625,
+            "tendency_id": "learned"
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "unverified",
+            "status": 2
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "missing-data",
+            "status": 3
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "wrong-validation",
+            "status": 4
+          }
+        ],
+        "total_bound": 0.625,
+        "body": {
+          "schema_version": 1,
+          "version": "fixture-body-0",
+          "facing": 0.625,
+          "tension": 0.125,
+          "energy": 0.625
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "rehearsal-not-zero",
+    "request": {
+      "name": "JEffectReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "synthetic-0",
+        "anchor_time_ns": "0",
+        "projected_at_ns": "9007199254740992",
+        "x_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "r_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "theta_digest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_parameters": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "genesis": {
+          "schema_version": 1,
+          "object_type": "echo.genesis-v3",
+          "resource_version": "1",
+          "digest": "e106b9da9c0fddd2058a28cfc03eed6c14ee13297dc186c2b3fe9efec6ac0d84",
+          "byte_length": "1267"
+        },
+        "mode": 2,
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625,
+            "tendency_id": "learned"
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "unverified",
+            "status": 2
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "missing-data",
+            "status": 3
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "wrong-validation",
+            "status": 4
+          }
+        ],
+        "total_bound": 0.625,
+        "body": {
+          "schema_version": 1,
+          "version": "fixture-body-0",
+          "facing": 0.625,
+          "tension": 0.125,
+          "energy": 0.625
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "excluded-carries-coefficient",
+    "request": {
+      "name": "JEffectReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "synthetic-0",
+        "anchor_time_ns": "0",
+        "projected_at_ns": "9007199254740992",
+        "x_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "r_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "theta_digest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_parameters": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "genesis": {
+          "schema_version": 1,
+          "object_type": "echo.genesis-v3",
+          "resource_version": "1",
+          "digest": "e106b9da9c0fddd2058a28cfc03eed6c14ee13297dc186c2b3fe9efec6ac0d84",
+          "byte_length": "1267"
+        },
+        "mode": 1,
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625,
+            "tendency_id": "learned"
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "unverified",
+            "status": 2
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "missing-data",
+            "status": 3
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "wrong-validation",
+            "status": 4,
+            "coefficient": 0
+          }
+        ],
+        "total_bound": 0.625,
+        "body": {
+          "schema_version": 1,
+          "version": "fixture-body-0",
+          "facing": 0.625,
+          "tension": 0.125,
+          "energy": 0.625
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "time-before-anchor",
+    "request": {
+      "name": "JEffectReceipt",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "snapshot_id": "synthetic-0",
+        "anchor_time_ns": "2",
+        "projected_at_ns": "1",
+        "x_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+        "r_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "theta_digest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "carrier": {
+          "schema_version": 1,
+          "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+          "object_type": "fixture.carrier",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "model": {
+          "schema_version": 1,
+          "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+          "object_type": "fixture.model",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "tokenizer": {
+          "schema_version": 1,
+          "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+          "object_type": "fixture.tokenizer",
+          "resource_version": "synthetic-adr0035",
+          "byte_length": "100"
+        },
+        "direction_set": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-set",
+          "resource_version": "fixture-set-0",
+          "digest": "49e599bd7867f04d99eafbe47e7dde83450b6321b81b97be9ce77cb791852b51",
+          "byte_length": "1352"
+        },
+        "validation": {
+          "schema_version": 1,
+          "object_type": "echo.j-direction-validation",
+          "resource_version": "fixture-validation-0",
+          "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+          "byte_length": "2876"
+        },
+        "body_parameters": {
+          "schema_version": 1,
+          "object_type": "echo.body-readout-parameters",
+          "resource_version": "fixture-body-0",
+          "digest": "96d2a2fe4c7ff200d2496ccabd5c54322256e2fb8ef644d182525e0a628c7829",
+          "byte_length": "250"
+        },
+        "genesis": {
+          "schema_version": 1,
+          "object_type": "echo.genesis-v3",
+          "resource_version": "1",
+          "digest": "e106b9da9c0fddd2058a28cfc03eed6c14ee13297dc186c2b3fe9efec6ac0d84",
+          "byte_length": "1267"
+        },
+        "mode": 1,
+        "directions": [
+          {
+            "schema_version": 1,
+            "kind": 1,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-0",
+              "digest": "e48661e0770da9df844d59721f65f8c784e967a4a515312c0bbf8bee3299f8f7",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 2,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-1",
+              "digest": "9de863a774bbc65af69d67f7ebc46a244fe420e80d5a06e9ac716f6dccba8b7c",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 3,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-2",
+              "digest": "29fb6c48ff462f96293ff8c9f255e095b9d8f3e2e5075110716f34ef445c0f33",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 4,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-3",
+              "digest": "8c7531e0ce7a162808fb35cf6d087adb5ec6b653a66d54b5a899d7c6a350f344",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": -0.0625
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "status": 1,
+            "direction": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-vector",
+              "resource_version": "fixture-0-4",
+              "digest": "d9ea5e30113d129df7588c4a043999e7edd32ab8044542016268529d69d5141a",
+              "byte_length": "94"
+            },
+            "validation": {
+              "schema_version": 1,
+              "object_type": "echo.j-direction-validation",
+              "resource_version": "fixture-validation-0",
+              "digest": "29f50fcc7e37734e9925290b63ae6349bdcdc52fc40f8a9a15154b7bac1e1262",
+              "byte_length": "2876"
+            },
+            "beta": 0.125,
+            "coefficient": 0.0625,
+            "tendency_id": "learned"
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "unverified",
+            "status": 2
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "missing-data",
+            "status": 3
+          },
+          {
+            "schema_version": 1,
+            "kind": 5,
+            "tendency_id": "wrong-validation",
+            "status": 4
+          }
+        ],
+        "total_bound": 0.625,
+        "body": {
+          "schema_version": 1,
+          "version": "fixture-body-0",
+          "facing": 0.625,
+          "tension": 0.125,
+          "energy": 0.625
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "empty-direction",
+    "request": {
+      "name": "JDirectionVector",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "fixture-0-0",
+        "values": []
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
   }
 ]
