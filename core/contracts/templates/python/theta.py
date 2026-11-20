@@ -6,6 +6,7 @@ from typing import Any
 from .runtime import Limits, digest, fail, normalize
 
 NUMERICS_ID = "P5-25-v2-93-98-libm-0.2.16"
+LAW_STATE_NUMERICS_ID = "ADR0035-D07-gradual-underflow-v1"
 EXACT = 1 << 53
 NAMES = {
     "ThetaEstimatorParameters",
@@ -13,6 +14,8 @@ NAMES = {
     "ThetaLastEvent",
     "ThetaEstimatorState",
     "ThetaSnapshotV2",
+    "ThetaSnapshotV3",
+    "ThetaEstimatorParametersV2",
 }
 
 
@@ -20,8 +23,8 @@ def scale(v: dict[str, Any]) -> list[float]:
     return [float(v[k]) for k in ("connection", "empathy", "curiosity", "achievement")]
 
 
-def parameters(p: dict[str, Any]) -> None:
-    fail(p["numerics_id"] == NUMERICS_ID, "theta numerics version")
+def parameters(p: dict[str, Any], numerics_id: str) -> None:
+    fail(p["numerics_id"] == numerics_id, "theta numerics version")
     for k in (
         "baseline_weight",
         "variance_weight",
@@ -34,7 +37,14 @@ def parameters(p: dict[str, Any]) -> None:
         "detector_shift_sigma",
         "detector_threshold",
     ):
-        fail(0 < p[k] < EXACT, "theta positive exact parameter")
+        fail(
+            p[k] > 0
+            and (
+                p[k] < EXACT
+                or (k == "baseline_weight" and numerics_id == LAW_STATE_NUMERICS_ID)
+            ),
+            "theta positive parameter",
+        )
     for k in ("change_prior", "change_min"):
         fail(0 < p[k] < 1 and 1.0 - p[k] != 1.0, "theta representable retention")
     for k in ("gain_prior", "sigma_prior", "tau_prior_s"):
@@ -143,15 +153,20 @@ def check_theta_message(name: str, value: dict[str, Any], limits: Limits) -> Non
     if name not in NAMES:
         return
     v = normalize(name, value, limits)
-    if name == "ThetaEstimatorParameters":
-        parameters(v)
+    numerics_id = (
+        LAW_STATE_NUMERICS_ID
+        if name in ("ThetaSnapshotV3", "ThetaEstimatorParametersV2")
+        else NUMERICS_ID
+    )
+    if name in ("ThetaEstimatorParameters", "ThetaEstimatorParametersV2"):
+        parameters(v, numerics_id)
     elif name == "ThetaRunningTime":
         running(v)
     elif name == "ThetaEstimatorState":
         state(v)
-    elif name == "ThetaSnapshotV2":
+    elif name in ("ThetaSnapshotV2", "ThetaSnapshotV3"):
         p, s = v["parameters"], v["estimator"]
-        parameters(p)
+        parameters(p, numerics_id)
         state(s)
         fail(
             v["law_version"]["object_type"] == "echo.law-version"
@@ -160,10 +175,18 @@ def check_theta_message(name: str, value: dict[str, Any], limits: Limits) -> Non
         )
         fail(
             v["parameters_digest"].hex()
-            == digest("ThetaEstimatorParameters", p, limits),
+            == digest(
+                "ThetaEstimatorParametersV2"
+                if name == "ThetaSnapshotV3"
+                else "ThetaEstimatorParameters",
+                p,
+                limits,
+            ),
             "theta parameter digest",
         )
         fail(s["h"] >= p["change_min"], "theta h floor")
+        if name == "ThetaSnapshotV3" and s["event_count"] == 0:
+            fail(v["prior_mass"] == p["baseline_weight"], "theta initial P")
         if s["event_count"] == 0:
             fail(s["h"] == max(p["change_prior"], p["change_min"]), "theta initial h")
         for field, lo, hi in (

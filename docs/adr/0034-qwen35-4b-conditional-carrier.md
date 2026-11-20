@@ -4,6 +4,8 @@
 - 日期：2026-11-01
 - 关联：[ADR 0012](0012-continuity-carrier-mobile.md)、[ADR 0031](0031-carrier-engine-and-injection.md)、[ADR 0032](0032-presets-as-starting-points.md)；[P0-12](../../tasks/P0-foundation.md#p0-12-视觉载体条件切换实测)。
 
+> **状态更新（2026-11-11）：** 已采纳并已生效——PR #127 合并（AGENTS §6：needs-user PR 由用户合并，合并即批准）；用户判定 Qwen3.5-4B 通过 P0-12（[P0-12 报告](../../reports/P0-12/REPORT.md)第 2 行，PR #128），条件切换生效，现行载体为 Qwen/Qwen3.5-4B。头部「须待 P0-12 实测通过才生效」的条件已满足。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 A16。
+
 ## 背景
 
 她需要看图，包括照片、表情与屏幕。ADR 0031 的 Qwen3-4B-Instruct-2507 是纯文本载体。用户作出本次决定时，P5-13 与 P5-31 尚未开工，E2 默认 m = 0，现在更换几乎没有迁移成本。

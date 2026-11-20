@@ -8,3 +8,4 @@
 - 交付检查：逐条对照本次用户决定、受影响位置及验收；Markdown 相对链接；`git diff --check`；既有差异登记只追加、改动范围核对。
 - 后续：见 [ADR 0033](../../docs/adr/0033-helper-fuses-cursor-evidence.md)；契约卡正式编号与依赖另行排卡，不修改 cards.json，不占用其他执行中卡的实现目录。
 - 提交状态：先草稿认领，完成文档检查后按本次用户指示转可审查，保留 `needs-user` 并写「请审查」；交叉审查与用户合并仍待完成。
+  > **状态更新（2026-11-11）：** PR #124 已合并（AGENTS §6：needs-user PR 由用户合并，合并即批准），ADR 0033 已采纳。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 D2。

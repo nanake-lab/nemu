@@ -6,6 +6,7 @@ name: Windows
 #   the pnpm workspace packages the e2e build and supervisor start (apps, packages, tools
 #   packages, executors/codex-bridge, workers/*/src, services/*/src), the Windows scaffold,
 #   the Node toolchain files and this workflow. spikes/* are left to the Ubuntu build.
+#   The Python demo tools under tools/cause-demo/ are outside the desktop group.
 # - storage: W02 NTFS checks of core-store and what it depends on (core-types, the contracts
 #   that generate core-types, the Cargo workspace files) and this workflow.
 # - gateway: W18 native auth/upload/dispatch/SYS01, its storage/contract dependencies.
@@ -39,6 +40,7 @@ on:
       - 'tsconfig*.json'
       - '.github/workflows/windows.yml'
       - '!tools/status/**'
+      - '!tools/cause-demo/**'
       - '!tools/asset-pipeline/**'
       - '!tools/texture-fix/**'
       - '!tools/scaffold/ci-budget.mjs'
@@ -69,6 +71,7 @@ on:
       - 'tsconfig*.json'
       - '.github/workflows/windows.yml'
       - '!tools/status/**'
+      - '!tools/cause-demo/**'
       - '!tools/asset-pipeline/**'
       - '!tools/texture-fix/**'
       - '!tools/scaffold/ci-budget.mjs'
@@ -149,7 +152,7 @@ jobs:
           $desktopPatterns = @(
             '^apps/', '^packages/', '^executors/codex-bridge/',
             '^workers/[^/]+/src/', '^services/[^/]+/src/',
-            '^tools/(?!status/|asset-pipeline/|texture-fix/|scaffold/ci-budget\.mjs$)',
+            '^tools/(?!status/|cause-demo/|asset-pipeline/|texture-fix/|scaffold/ci-budget\.mjs$)',
             '^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|\.nvmrc|\.npmrc|\.gitattributes)$',
             '^tsconfig[^/]*\.json$', '^executors/office-connector/global\.json$',
             '^\.github/workflows/windows\.yml$'
@@ -232,14 +235,15 @@ jobs:
         if: steps.scope.outputs.storage == 'true'
         working-directory: core
         run: |
+          . ./../tools/scaffold/windows-evidence-text.ps1
           $evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
           New-Item -ItemType Directory -Path $evidence -Force | Out-Null
           "NEMU_W02_EVIDENCE=$evidence" >> $env:GITHUB_ENV
-          rustup show 2>&1 | Tee-Object (Join-Path $evidence 'toolchain.log')
+          rustup show 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'toolchain.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          cargo clippy -p core-store --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')
+          cargo clippy -p core-store --all-targets --locked -- -D warnings 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'clippy.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          cargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
+          cargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'tests.log')
           exit $LASTEXITCODE
       # Retry only the upload: W02 logs stay in the same run-specific directory.
       # The final gate below is mandatory; exhausted retries must still fail CI.
@@ -303,6 +307,7 @@ jobs:
         if: steps.scope.outputs.gateway == 'true'
         working-directory: core
         run: |
+          . ./../tools/scaffold/windows-evidence-text.ps1
           $env:CARGO_HOME = 'D:\Dev\cache\cargo'
           $env:CARGO_TARGET_DIR = 'D:\Dev\cache\cargo-target\ci-gateway'
           $env:TEMP = 'D:\Dev\cache\tmp\gateway-ci'
@@ -311,9 +316,9 @@ jobs:
           New-Item -ItemType Directory -Path $evidence -Force | Out-Null
           "NEMU_W18_EVIDENCE=$evidence" >> $env:GITHUB_ENV
           $env:NEMU_W18_EVIDENCE_DIR = $evidence
-          cargo clippy -p gateway --all-targets --locked -- -D warnings 2>&1 | Tee-Object (Join-Path $evidence 'clippy.log')
+          cargo clippy -p gateway --all-targets --locked -- -D warnings 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'clippy.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          cargo test -p gateway --locked -- --test-threads=1 2>&1 | Tee-Object (Join-Path $evidence 'tests.log')
+          cargo test -p gateway --locked -- --test-threads=1 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'tests.log')
           exit $LASTEXITCODE
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always() && env.NEMU_W18_EVIDENCE != ''

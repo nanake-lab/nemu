@@ -1,0 +1,644 @@
+﻿2026-11-09T05:43:05.6852560Z Current runner version: '2.338.2'
+2026-11-09T05:43:05.6882006Z ##[group]Runner Image Provisioner
+2026-11-09T05:43:05.6882858Z Hosted Compute Agent
+2026-11-09T05:43:05.6883528Z Version: 20261028.624
+2026-11-09T05:43:05.6884245Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-09T05:43:05.6885387Z Build Date: 2026-10-28T21:51:42Z
+2026-11-09T05:43:05.6886177Z Worker ID: {f71569e1-885b-4621-adb8-3adb379e7e47}
+2026-11-09T05:43:05.6886911Z Region: eastus
+2026-11-09T05:43:05.6887469Z Cloud: Azure
+2026-11-09T05:43:05.6888159Z ##[endgroup]
+2026-11-09T05:43:05.6889691Z ##[group]Operating System
+2026-11-09T05:43:05.6890415Z Ubuntu
+2026-11-09T05:43:05.6890953Z 24.04.5
+2026-11-09T05:43:05.6891514Z LTS
+2026-11-09T05:43:05.6892108Z ##[endgroup]
+2026-11-09T05:43:05.6892665Z ##[group]Runner Image
+2026-11-09T05:43:05.6893307Z Image: ubuntu-24.04
+2026-11-09T05:43:05.6893876Z Version: 20261101.360.1
+2026-11-09T05:43:05.6895749Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-09T05:43:05.6897408Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-09T05:43:05.6898453Z ##[endgroup]
+2026-11-09T05:43:05.6899599Z ##[group]GITHUB_TOKEN Permissions
+2026-11-09T05:43:05.6901952Z Contents: read
+2026-11-09T05:43:05.6902621Z Metadata: read
+2026-11-09T05:43:05.6903295Z ##[endgroup]
+2026-11-09T05:43:05.6905794Z Secret source: Actions
+2026-11-09T05:43:05.6906806Z Cache mode: write
+2026-11-09T05:43:05.6907578Z Prepare workflow directory
+2026-11-09T05:43:05.7310553Z Prepare all required actions
+2026-11-09T05:43:05.7360866Z Getting action download info
+2026-11-09T05:43:05.9996868Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-09T05:43:06.0847034Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-09T05:43:06.1821187Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-09T05:43:06.2940302Z Download action repository 'astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff' (SHA:d0d8abe699bfb85fec6de9f7adb5ae17292296ff)
+2026-11-09T05:43:06.4942847Z Download action repository 'actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+2026-11-09T05:43:06.7502453Z Complete job name: Ubuntu static checks and unit tests
+2026-11-09T05:43:06.8605499Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-11-09T05:43:06.8606623Z with:
+2026-11-09T05:43:06.8607048Z   lfs: true
+2026-11-09T05:43:06.8607488Z   persist-credentials: false
+2026-11-09T05:43:06.8608010Z   fetch-depth: 0
+2026-11-09T05:43:06.8608478Z   repository: nanake-lab/nemu
+2026-11-09T05:43:06.8612278Z   token: ***
+2026-11-09T05:43:06.8612719Z   ssh-strict: true
+2026-11-09T05:43:06.8613166Z   ssh-user: git
+2026-11-09T05:43:06.8613619Z   clean: true
+2026-11-09T05:43:06.8614068Z   sparse-checkout-cone-mode: true
+2026-11-09T05:43:06.8614806Z   fetch-tags: false
+2026-11-09T05:43:06.8615269Z   show-progress: true
+2026-11-09T05:43:06.8615731Z   submodules: false
+2026-11-09T05:43:06.8616189Z   set-safe-directory: true
+2026-11-09T05:43:06.8616705Z   allow-unsafe-pr-checkout: false
+2026-11-09T05:43:06.8617473Z env:
+2026-11-09T05:43:06.8617906Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-11-09T05:43:06.8618425Z   UV_LINK_MODE: copy
+2026-11-09T05:43:06.8618911Z ##[endgroup]
+2026-11-09T05:43:07.1642071Z Syncing repository: nanake-lab/nemu
+2026-11-09T05:43:07.1645145Z ##[group]Getting Git version info
+2026-11-09T05:43:07.1646374Z Working directory is '/home/runner/work/nemu/nemu'
+2026-11-09T05:43:07.1648134Z [command]/usr/bin/git version
+2026-11-09T05:43:07.1727836Z git version 2.56.0
+2026-11-09T05:43:07.1774641Z [command]/usr/bin/git lfs version
+2026-11-09T05:43:07.2400197Z git-lfs/3.8.1 (GitHub; linux amd64; go 1.27.3)
+2026-11-09T05:43:07.2428928Z ##[endgroup]
+2026-11-09T05:43:07.2444348Z Temporarily overriding HOME='/home/runner/work/_temp/bf8fbfc9-5eab-49b0-a988-89fc0e7174ed' before making global git config changes
+2026-11-09T05:43:07.2447902Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-09T05:43:07.2450796Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nemu/nemu
+2026-11-09T05:43:07.2514116Z Deleting the contents of '/home/runner/work/nemu/nemu'
+2026-11-09T05:43:07.2519451Z ##[group]Initializing the repository
+2026-11-09T05:43:07.2524044Z [command]/usr/bin/git init /home/runner/work/nemu/nemu
+2026-11-09T05:43:07.2647418Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-09T05:43:07.2649056Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-09T05:43:07.2650248Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-09T05:43:07.2651180Z hint: call:
+2026-11-09T05:43:07.2651743Z hint:
+2026-11-09T05:43:07.2652401Z hint: 	git config --global init.defaultBranch <name>
+2026-11-09T05:43:07.2653203Z hint:
+2026-11-09T05:43:07.2654064Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-09T05:43:07.2655624Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-09T05:43:07.2656748Z hint:
+2026-11-09T05:43:07.2657299Z hint: 	git branch -m <name>
+2026-11-09T05:43:07.2657927Z hint:
+2026-11-09T05:43:07.2658852Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-09T05:43:07.2661130Z Initialized empty Git repository in /home/runner/work/nemu/nemu/.git/
+2026-11-09T05:43:07.2672874Z [command]/usr/bin/git remote add origin https://github.com/nanake-lab/nemu
+2026-11-09T05:43:07.2729422Z ##[endgroup]
+2026-11-09T05:43:07.2730761Z ##[group]Disabling automatic garbage collection
+2026-11-09T05:43:07.2733449Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-09T05:43:07.2774059Z ##[endgroup]
+2026-11-09T05:43:07.2775388Z ##[group]Setting up auth
+2026-11-09T05:43:07.2782726Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-09T05:43:07.2829576Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-09T05:43:07.3119587Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-09T05:43:07.3166732Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-09T05:43:07.3412751Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-09T05:43:07.3457449Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-09T05:43:07.3711425Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-09T05:43:07.3763026Z ##[endgroup]
+2026-11-09T05:43:07.3776159Z [command]/usr/bin/git lfs install --local
+2026-11-09T05:43:07.4209920Z Updated Git hooks.
+2026-11-09T05:43:07.4211334Z Git LFS initialized.
+2026-11-09T05:43:07.4227141Z ##[group]Fetching the repository
+2026-11-09T05:43:07.4243367Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +589912de344ea2b087366c0cdb159f9131def2cb:refs/remotes/pull/146/merge
+2026-11-09T05:43:17.8290023Z From https://github.com/nanake-lab/nemu
+2026-11-09T05:43:17.8291880Z  * [new branch]        audit/design-presets                     -> origin/audit/design-presets
+2026-11-09T05:43:17.8294352Z  * [new branch]        backup/P5-23-local-bcdce6f               -> origin/backup/P5-23-local-bcdce6f
+2026-11-09T05:43:17.8297073Z  * [new branch]        cards/P5-39-continuity-scenario          -> origin/cards/P5-39-continuity-scenario
+2026-11-09T05:43:17.8299350Z  * [new branch]        cards/P5-54-recompute-simplify           -> origin/cards/P5-54-recompute-simplify
+2026-11-09T05:43:17.8300697Z  * [new branch]        ci/windows-timeout                       -> origin/ci/windows-timeout
+2026-11-09T05:43:17.8301739Z  * [new branch]        claude/adr-0008-spec-clarifications      -> origin/claude/adr-0008-spec-clarifications
+2026-11-09T05:43:17.8302812Z  * [new branch]        claude/adr-0012-continuity               -> origin/claude/adr-0012-continuity
+2026-11-09T05:43:17.8303750Z  * [new branch]        claude/adr-0014-correction               -> origin/claude/adr-0014-correction
+2026-11-09T05:43:17.8305214Z  * [new branch]        claude/adr-0014-v2-amendments            -> origin/claude/adr-0014-v2-amendments
+2026-11-09T05:43:17.8306864Z  * [new branch]        claude/adr-0015-asset-meta               -> origin/claude/adr-0015-asset-meta
+2026-11-09T05:43:17.8308071Z  * [new branch]        claude/adr-0017-voice-latency            -> origin/claude/adr-0017-voice-latency
+2026-11-09T05:43:17.8309657Z  * [new branch]        claude/agents-claude-lane                -> origin/claude/agents-claude-lane
+2026-11-09T05:43:17.8311230Z  * [new branch]        claude/agents-simplify                   -> origin/claude/agents-simplify
+2026-11-09T05:43:17.8312385Z  * [new branch]        claude/agents-sync-main                  -> origin/claude/agents-sync-main
+2026-11-09T05:43:17.8313471Z  * [new branch]        claude/board-card-edit                   -> origin/claude/board-card-edit
+2026-11-09T05:43:17.8314335Z  * [new branch]        claude/board-partial-waits               -> origin/claude/board-partial-waits
+2026-11-09T05:43:17.8315911Z  * [new branch]        claude/change-detection-scenarios        -> origin/claude/change-detection-scenarios
+2026-11-09T05:43:17.8317127Z  * [new branch]        claude/ci-scope                          -> origin/claude/ci-scope
+2026-11-09T05:43:17.8317781Z  * [new branch]        claude/ci-timeout                        -> origin/claude/ci-timeout
+2026-11-09T05:43:17.8318434Z  * [new branch]        claude/drop-stray-log                    -> origin/claude/drop-stray-log
+2026-11-09T05:43:17.8319366Z  * [new branch]        claude/exciting-knuth-hco1f0             -> origin/claude/exciting-knuth-hco1f0
+2026-11-09T05:43:17.8320125Z  * [new branch]        claude/focused-wozniak-ee0f0q            -> origin/claude/focused-wozniak-ee0f0q
+2026-11-09T05:43:17.8321066Z  * [new branch]        claude/n0-decision                       -> origin/claude/n0-decision
+2026-11-09T05:43:17.8321742Z  * [new branch]        claude/needs-user-merge                  -> origin/claude/needs-user-merge
+2026-11-09T05:43:17.8322391Z  * [new branch]        claude/p0-09-agenda                      -> origin/claude/p0-09-agenda
+2026-11-09T05:43:17.8323034Z  * [new branch]        claude/p2-05-fold-split                  -> origin/claude/p2-05-fold-split
+2026-11-09T05:43:17.8323720Z  * [new branch]        claude/p5-07-after-p0-09                 -> origin/claude/p5-07-after-p0-09
+2026-11-09T05:43:17.8324674Z  * [new branch]        claude/p5-20-proactivity-questions       -> origin/claude/p5-20-proactivity-questions
+2026-11-09T05:43:17.8325537Z  * [new branch]        claude/p5-34-and-p5-23-rework            -> origin/claude/p5-34-and-p5-23-rework
+2026-11-09T05:43:17.8326296Z  * [new branch]        claude/p6-13-prebirth-review             -> origin/claude/p6-13-prebirth-review
+2026-11-09T05:43:17.8326951Z  * [new branch]        claude/review-scope                      -> origin/claude/review-scope
+2026-11-09T05:43:17.8327573Z  * [new branch]        claude/runner-idle-rule                  -> origin/claude/runner-idle-rule
+2026-11-09T05:43:17.8328198Z  * [new branch]        claude/user-first-reorg                  -> origin/claude/user-first-reorg
+2026-11-09T05:43:17.8328806Z  * [new branch]        claude/v2-task-cards                     -> origin/claude/v2-task-cards
+2026-11-09T05:43:17.8329587Z  * [new branch]        claude/windows-ci-scope                  -> origin/claude/windows-ci-scope
+2026-11-09T05:43:17.8330429Z  * [new branch]        codex/docs-experience-acceptance         -> origin/codex/docs-experience-acceptance
+2026-11-09T05:43:17.8331206Z  * [new branch]        codex/docs-test-e12-unicode              -> origin/codex/docs-test-e12-unicode
+2026-11-09T05:43:17.8331911Z  * [new branch]        codex/echo-core-v2-revision              -> origin/codex/echo-core-v2-revision
+2026-11-09T05:43:17.8332568Z  * [new branch]        codex/law-lp1-reference                  -> origin/codex/law-lp1-reference
+2026-11-09T05:43:17.8333178Z  * [new branch]        codex/longing-study                      -> origin/codex/longing-study
+2026-11-09T05:43:17.8333826Z  * [new branch]        codex/main-validation-policy             -> origin/codex/main-validation-policy
+2026-11-09T05:43:17.8334764Z  * [new branch]        codex/p5-05-scope-split                  -> origin/codex/p5-05-scope-split
+2026-11-09T05:43:17.8335448Z  * [new branch]        codex/p5-12-scope-split                  -> origin/codex/p5-12-scope-split
+2026-11-09T05:43:17.8336095Z  * [new branch]        codex/pr-pause-closeout                  -> origin/codex/pr-pause-closeout
+2026-11-09T05:43:17.8336764Z  * [new branch]        codex/routine-agent-rules                -> origin/codex/routine-agent-rules
+2026-11-09T05:43:17.8337506Z  * [new branch]        docs/adr-0025-desktop-perception         -> origin/docs/adr-0025-desktop-perception
+2026-11-09T05:43:17.8338255Z  * [new branch]        docs/adr-0027-voice                      -> origin/docs/adr-0027-voice
+2026-11-09T05:43:17.8338917Z  * [new branch]        docs/agents-research-cards               -> origin/docs/agents-research-cards
+2026-11-09T05:43:17.8339592Z  * [new branch]        docs/agents-risk-tiers                   -> origin/docs/agents-risk-tiers
+2026-11-09T05:43:17.8340250Z  * [new branch]        docs/agents-rules-1025                   -> origin/docs/agents-rules-1025
+2026-11-09T05:43:17.8340899Z  * [new branch]        docs/agents-simplicity                   -> origin/docs/agents-simplicity
+2026-11-09T05:43:17.8341512Z  * [new branch]        docs/batch-2-3                           -> origin/docs/batch-2-3
+2026-11-09T05:43:17.8342103Z  * [new branch]        docs/batch4-theta                        -> origin/docs/batch4-theta
+2026-11-09T05:43:17.8342736Z  * [new branch]        docs/batch5-lifecycle                    -> origin/docs/batch5-lifecycle
+2026-11-09T05:43:17.8343537Z  * [new branch]        docs/batch6-contracts                    -> origin/docs/batch6-contracts
+2026-11-09T05:43:17.8344169Z  * [new branch]        docs/card-P5-35                          -> origin/docs/card-P5-35
+2026-11-09T05:43:17.8345041Z  * [new branch]        docs/cards-sync-01                       -> origin/docs/cards-sync-01
+2026-11-09T05:43:17.8345677Z  * [new branch]        docs/milestones-e1-e5                    -> origin/docs/milestones-e1-e5
+2026-11-09T05:43:17.8346354Z  * [new branch]        docs/proactivity-fuse-only               -> origin/docs/proactivity-fuse-only
+2026-11-09T05:43:17.8346971Z  * [new branch]        main                                     -> origin/main
+2026-11-09T05:43:17.8347543Z  * [new branch]        task/ADR-0032-presets                    -> origin/task/ADR-0032-presets
+2026-11-09T05:43:17.8348227Z  * [new branch]        task/ADR-carrier-conditional             -> origin/task/ADR-carrier-conditional
+2026-11-09T05:43:17.8348940Z  * [new branch]        task/DESIGN-ASSIST-EV-01                 -> origin/task/DESIGN-ASSIST-EV-01
+2026-11-09T05:43:17.8349581Z  * [new branch]        task/DESIGN-EV-01                        -> origin/task/DESIGN-EV-01
+2026-11-09T05:43:17.8350199Z  * [new branch]        task/DESIGN-LAW-01                       -> origin/task/DESIGN-LAW-01
+2026-11-09T05:43:17.8350872Z  * [new branch]        task/DESIGN-VRAM-01                      -> origin/task/DESIGN-VRAM-01
+2026-11-09T05:43:17.8351479Z  * [new branch]        task/DOC-LEARN-01                        -> origin/task/DOC-LEARN-01
+2026-11-09T05:43:17.8352242Z  * [new branch]        task/DOC-PRESETS-01                      -> origin/task/DOC-PRESETS-01
+2026-11-09T05:43:17.8353089Z  * [new branch]        task/P0-01-monorepo                      -> origin/task/P0-01-monorepo
+2026-11-09T05:43:17.8354284Z  * [new branch]        task/P0-01-windows-diagnostics           -> origin/task/P0-01-windows-diagnostics
+2026-11-09T05:43:17.8355265Z  * [new branch]        task/P0-02-contracts                     -> origin/task/P0-02-contracts
+2026-11-09T05:43:17.8355891Z  * [new branch]        task/P0-04-doctor                        -> origin/task/P0-04-doctor
+2026-11-09T05:43:17.8356523Z  * [new branch]        task/P0-04-vrm-addon-fix                 -> origin/task/P0-04-vrm-addon-fix
+2026-11-09T05:43:17.8357200Z  * [new branch]        task/P0-05-content-submodule             -> origin/task/P0-05-content-submodule
+2026-11-09T05:43:17.8357876Z  * [new branch]        task/P0-06-echo-baseline                 -> origin/task/P0-06-echo-baseline
+2026-11-09T05:43:17.8358542Z  * [new branch]        task/P0-07-carrier-probe                 -> origin/task/P0-07-carrier-probe
+2026-11-09T05:43:17.8359207Z  * [new branch]        task/P0-08-codex-irl-spike               -> origin/task/P0-08-codex-irl-spike
+2026-11-09T05:43:17.8359822Z  * [new branch]        task/P0-08-part2                         -> origin/task/P0-08-part2
+2026-11-09T05:43:17.8360450Z  * [new branch]        task/P0-10-carrier-engine                -> origin/task/P0-10-carrier-engine
+2026-11-09T05:43:17.8361153Z  * [new branch]        task/P0-10-carrier-engine-adr            -> origin/task/P0-10-carrier-engine-adr
+2026-11-09T05:43:17.8361838Z  * [new branch]        task/P0-12-visual-carrier                -> origin/task/P0-12-visual-carrier
+2026-11-09T05:43:17.8362452Z  * [new branch]        task/P2-01-bible                         -> origin/task/P2-01-bible
+2026-11-09T05:43:17.8363131Z  * [new branch]        task/P2-01-bible-refine                  -> origin/task/P2-01-bible-refine
+2026-11-09T05:43:17.8364190Z  * [new branch]        task/P2-02-vroid                         -> origin/task/P2-02-vroid
+2026-11-09T05:43:17.8365311Z  * [new branch]        task/P2-03-asset-pipeline                -> origin/task/P2-03-asset-pipeline
+2026-11-09T05:43:17.8365977Z  * [new branch]        task/P2-04-asset-lint                    -> origin/task/P2-04-asset-lint
+2026-11-09T05:43:17.8366615Z  * [new branch]        task/P2-05-tail-springs                  -> origin/task/P2-05-tail-springs
+2026-11-09T05:43:17.8367498Z  * [new branch]        task/P2-06-expressions-materials         -> origin/task/P2-06-expressions-materials
+2026-11-09T05:43:17.8368195Z  * [new branch]        task/P3-06-readout-v2                    -> origin/task/P3-06-readout-v2
+2026-11-09T05:43:17.8368788Z  * [new branch]        task/P4-01-asr                           -> origin/task/P4-01-asr
+2026-11-09T05:43:17.8369382Z  * [new branch]        task/P4-02-tts-sidecar                   -> origin/task/P4-02-tts-sidecar
+2026-11-09T05:43:17.8369997Z  * [new branch]        task/P5-01-idl                           -> origin/task/P5-01-idl
+2026-11-09T05:43:17.8370564Z  * [new branch]        task/P5-02-store                         -> origin/task/P5-02-store
+2026-11-09T05:43:17.8371151Z  * [new branch]        task/P5-03-gateway                       -> origin/task/P5-03-gateway
+2026-11-09T05:43:17.8371743Z  * [new branch]        task/P5-04-fact-view                     -> origin/task/P5-04-fact-view
+2026-11-09T05:43:17.8372365Z  * [new branch]        task/P5-05-permissions                   -> origin/task/P5-05-permissions
+2026-11-09T05:43:17.8373011Z  * [new branch]        task/P5-06-semantic-core                 -> origin/task/P5-06-semantic-core
+2026-11-09T05:43:17.8373842Z  * [new branch]        task/P5-07-irl-worker                    -> origin/task/P5-07-irl-worker
+2026-11-09T05:43:17.8374732Z  * [new branch]        task/P5-08-orchestration                 -> origin/task/P5-08-orchestration
+2026-11-09T05:43:17.8376125Z  * [new branch]        task/P5-09-effects                       -> origin/task/P5-09-effects
+2026-11-09T05:43:17.8376982Z  * [new branch]        task/P5-09-review-fixes                  -> origin/task/P5-09-review-fixes
+2026-11-09T05:43:17.8377616Z  * [new branch]        task/P5-10-fast-state                    -> origin/task/P5-10-fast-state
+2026-11-09T05:43:17.8378436Z  * [new branch]        task/P5-12-j-compiler                    -> origin/task/P5-12-j-compiler
+2026-11-09T05:43:17.8379219Z  * [new branch]        task/P5-21-idl-v2                        -> origin/task/P5-21-idl-v2
+2026-11-09T05:43:17.8379877Z  * [new branch]        task/P5-22-report-closeout               -> origin/task/P5-22-report-closeout
+2026-11-09T05:43:17.8380766Z  * [new branch]        task/P5-22-terminal-contracts-v2         -> origin/task/P5-22-terminal-contracts-v2
+2026-11-09T05:43:17.8381589Z  * [new branch]        task/P5-23-law-engine                    -> origin/task/P5-23-law-engine
+2026-11-09T05:43:17.8382218Z  * [new branch]        task/P5-24-evidence                      -> origin/task/P5-24-evidence
+2026-11-09T05:43:17.8382996Z  * [new branch]        task/P5-25-dynamics                      -> origin/task/P5-25-dynamics
+2026-11-09T05:43:17.8383611Z  * [new branch]        task/P5-26-recompute                     -> origin/task/P5-26-recompute
+2026-11-09T05:43:17.8384386Z  * [new branch]        task/P5-27-effects-v2                    -> origin/task/P5-27-effects-v2
+2026-11-09T05:43:17.8385434Z  * [new branch]        task/P5-31-card-gaps                     -> origin/task/P5-31-card-gaps
+2026-11-09T05:43:17.8386084Z  * [new branch]        task/P5-32-law-replay-idl                -> origin/task/P5-32-law-replay-idl
+2026-11-09T05:43:17.8386956Z  * [new branch]        task/P5-33-change-detection              -> origin/task/P5-33-change-detection
+2026-11-09T05:43:17.8387649Z  * [new branch]        task/P5-34-law-retention-idl             -> origin/task/P5-34-law-retention-idl
+2026-11-09T05:43:17.8388333Z  * [new branch]        task/P5-35-terminal-ingress              -> origin/task/P5-35-terminal-ingress
+2026-11-09T05:43:17.8389219Z  * [new branch]        task/P5-36-theta-estimator-idl           -> origin/task/P5-36-theta-estimator-idl
+2026-11-09T05:43:17.8390089Z  * [new branch]        task/P5-48-followup                      -> origin/task/P5-48-followup
+2026-11-09T05:43:17.8390749Z  * [new branch]        task/P5-65-test-registration             -> origin/task/P5-65-test-registration
+2026-11-09T05:43:17.8391573Z  * [new branch]        task/P5-66-law-adr                       -> origin/task/P5-66-law-adr
+2026-11-09T05:43:17.8392198Z  * [new branch]        task/P5-67-d05-design                    -> origin/task/P5-67-d05-design
+2026-11-09T05:43:17.8392914Z  * [new branch]        task/P5-68-law-state-idl                 -> origin/task/P5-68-law-state-idl
+2026-11-09T05:43:17.8393749Z  * [new branch]        task/P5-72-card-sync                     -> origin/task/P5-72-card-sync
+2026-11-09T05:43:17.8394887Z  * [new branch]        task/P6-08-desktop-sense                 -> origin/task/P6-08-desktop-sense
+2026-11-09T05:43:17.8396064Z  * [new branch]        task/P6-11-codex-session                 -> origin/task/P6-11-codex-session
+2026-11-09T05:43:17.8397251Z  * [new branch]        task/P6-17-touch-dwell                   -> origin/task/P6-17-touch-dwell
+2026-11-09T05:43:17.8398590Z  * [new branch]        task/R-CHOICE-01-state-selection         -> origin/task/R-CHOICE-01-state-selection
+2026-11-09T05:43:17.8399958Z  * [new branch]        task/R-CHOICE-02-measurement             -> origin/task/R-CHOICE-02-measurement
+2026-11-09T05:43:17.8401251Z  * [new branch]        task/R-KAPPA-01-novel-results            -> origin/task/R-KAPPA-01-novel-results
+2026-11-09T05:43:17.8402384Z  * [new branch]        task/R-LIFE-01-prereg                    -> origin/task/R-LIFE-01-prereg
+2026-11-09T05:43:17.8403469Z  * [new branch]        task/R-STEER-01                          -> origin/task/R-STEER-01
+2026-11-09T05:43:17.8404777Z  * [new branch]        task/R-WECHAT-01                         -> origin/task/R-WECHAT-01
+2026-11-09T05:43:17.8406220Z  * [new branch]        task/ci-minutes                          -> origin/task/ci-minutes
+2026-11-09T05:43:17.8407346Z  * [new branch]        task/ci-public-hardening                 -> origin/task/ci-public-hardening
+2026-11-09T05:43:17.8408652Z  * [new branch]        task/design-continuous-cognition         -> origin/task/design-continuous-cognition
+2026-11-09T05:43:17.8409998Z  * [new branch]        task/routine-reporter-terra              -> origin/task/routine-reporter-terra
+2026-11-09T05:43:17.8410810Z  * [new branch]        tools/board-partial                      -> origin/tools/board-partial
+2026-11-09T05:43:17.8411598Z  * [new ref]           589912de344ea2b087366c0cdb159f9131def2cb -> pull/146/merge
+2026-11-09T05:43:17.8413627Z ##[endgroup]
+2026-11-09T05:43:17.8414330Z ##[group]Determining the checkout info
+2026-11-09T05:43:17.8415500Z ##[endgroup]
+2026-11-09T05:43:17.8416025Z ##[group]Fetching LFS objects
+2026-11-09T05:43:17.8416636Z [command]/usr/bin/git lfs fetch origin refs/remotes/pull/146/merge
+2026-11-09T05:43:17.8599275Z Fetching reference refs/remotes/pull/146/merge
+2026-11-09T05:43:21.5529673Z ##[endgroup]
+2026-11-09T05:43:21.5535693Z [command]/usr/bin/git sparse-checkout disable
+2026-11-09T05:43:21.5606498Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-09T05:43:21.5649894Z ##[group]Checking out the ref
+2026-11-09T05:43:21.5655432Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/146/merge
+2026-11-09T05:43:22.5936314Z Updating files:  45% (7156/15646)
+2026-11-09T05:43:22.6294898Z Updating files:  46% (7198/15646)
+2026-11-09T05:43:22.6673655Z Updating files:  47% (7354/15646)
+2026-11-09T05:43:22.8009644Z Updating files:  48% (7511/15646)
+2026-11-09T05:43:22.8192333Z Updating files:  49% (7667/15646)
+2026-11-09T05:43:22.8253194Z Updating files:  50% (7823/15646)
+2026-11-09T05:43:22.8315931Z Updating files:  51% (7980/15646)
+2026-11-09T05:43:22.8381023Z Updating files:  52% (8136/15646)
+2026-11-09T05:43:22.8453065Z Updating files:  53% (8293/15646)
+2026-11-09T05:43:22.8518884Z Updating files:  54% (8449/15646)
+2026-11-09T05:43:22.8580535Z Updating files:  55% (8606/15646)
+2026-11-09T05:43:22.9132795Z Updating files:  56% (8762/15646)
+2026-11-09T05:43:22.9616522Z Updating files:  57% (8919/15646)
+2026-11-09T05:43:23.0097980Z Updating files:  58% (9075/15646)
+2026-11-09T05:43:23.0552611Z Updating files:  59% (9232/15646)
+2026-11-09T05:43:23.0941203Z Updating files:  60% (9388/15646)
+2026-11-09T05:43:23.1326375Z Updating files:  61% (9545/15646)
+2026-11-09T05:43:23.1416186Z Updating files:  62% (9701/15646)
+2026-11-09T05:43:23.1912477Z Updating files:  63% (9857/15646)
+2026-11-09T05:43:23.3133158Z Updating files:  64% (10014/15646)
+2026-11-09T05:43:23.3919014Z Updating files:  65% (10170/15646)
+2026-11-09T05:43:23.4012590Z Updating files:  66% (10327/15646)
+2026-11-09T05:43:23.4149719Z Updating files:  67% (10483/15646)
+2026-11-09T05:43:23.4242317Z Updating files:  68% (10640/15646)
+2026-11-09T05:43:23.4304990Z Updating files:  69% (10796/15646)
+2026-11-09T05:43:23.4380153Z Updating files:  70% (10953/15646)
+2026-11-09T05:43:23.4455607Z Updating files:  71% (11109/15646)
+2026-11-09T05:43:23.4523928Z Updating files:  72% (11266/15646)
+2026-11-09T05:43:23.4578165Z Updating files:  73% (11422/15646)
+2026-11-09T05:43:23.4873532Z Updating files:  74% (11579/15646)
+2026-11-09T05:43:23.4942679Z Updating files:  75% (11735/15646)
+2026-11-09T05:43:23.5012363Z Updating files:  76% (11891/15646)
+2026-11-09T05:43:23.5292463Z Updating files:  77% (12048/15646)
+2026-11-09T05:43:23.5365088Z Updating files:  78% (12204/15646)
+2026-11-09T05:43:23.5914875Z Updating files:  79% (12361/15646)
+2026-11-09T05:43:23.5980432Z Updating files:  79% (12433/15646)
+2026-11-09T05:43:23.6044475Z Updating files:  80% (12517/15646)
+2026-11-09T05:43:23.6123978Z Updating files:  81% (12674/15646)
+2026-11-09T05:43:23.6239384Z Updating files:  82% (12830/15646)
+2026-11-09T05:43:23.6316661Z Updating files:  83% (12987/15646)
+2026-11-09T05:43:23.6673792Z Updating files:  84% (13143/15646)
+2026-11-09T05:43:23.6826726Z Updating files:  85% (13300/15646)
+2026-11-09T05:43:23.6881719Z Updating files:  86% (13456/15646)
+2026-11-09T05:43:23.6994010Z Updating files:  87% (13613/15646)
+2026-11-09T05:43:23.7070007Z Updating files:  88% (13769/15646)
+2026-11-09T05:43:23.7198030Z Updating files:  89% (13925/15646)
+2026-11-09T05:43:23.7412004Z Updating files:  90% (14082/15646)
+2026-11-09T05:43:23.8111334Z Updating files:  91% (14238/15646)
+2026-11-09T05:43:23.8271628Z Updating files:  92% (14395/15646)
+2026-11-09T05:43:23.8330278Z Updating files:  93% (14551/15646)
+2026-11-09T05:43:23.8394226Z Updating files:  94% (14708/15646)
+2026-11-09T05:43:23.8454418Z Updating files:  95% (14864/15646)
+2026-11-09T05:43:23.8513959Z Updating files:  96% (15021/15646)
+2026-11-09T05:43:23.8573509Z Updating files:  97% (15177/15646)
+2026-11-09T05:43:23.8848371Z Updating files:  98% (15334/15646)
+2026-11-09T05:43:23.8968223Z Updating files:  99% (15490/15646)
+2026-11-09T05:43:23.8968921Z Updating files: 100% (15646/15646)
+2026-11-09T05:43:23.8969413Z Updating files: 100% (15646/15646), done.
+2026-11-09T05:43:23.9137195Z Note: switching to 'refs/remotes/pull/146/merge'.
+2026-11-09T05:43:23.9137709Z 
+2026-11-09T05:43:23.9138107Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-09T05:43:23.9139116Z changes and commit them, and you can discard any commits you make in this
+2026-11-09T05:43:23.9140145Z state without impacting any branches by switching back to a branch.
+2026-11-09T05:43:23.9140729Z 
+2026-11-09T05:43:23.9141131Z If you want to create a new branch to retain commits you create, you may
+2026-11-09T05:43:23.9142064Z do so (now or later) by using -c with the switch command. Example:
+2026-11-09T05:43:23.9142599Z 
+2026-11-09T05:43:23.9142823Z   git switch -c <new-branch-name>
+2026-11-09T05:43:23.9143175Z 
+2026-11-09T05:43:23.9143394Z Or undo this operation with:
+2026-11-09T05:43:23.9143733Z 
+2026-11-09T05:43:23.9143932Z   git switch -
+2026-11-09T05:43:23.9144209Z 
+2026-11-09T05:43:23.9144903Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-09T05:43:23.9145492Z 
+2026-11-09T05:43:23.9146080Z HEAD is now at 589912de Merge a85be8a0a6d55cd25ce9aa42b9ce81336b348d74 into a7e8ae8790d297ac697956f6f1256d2e2b9403d5
+2026-11-09T05:43:24.0103798Z ##[endgroup]
+2026-11-09T05:43:24.0166644Z [command]/usr/bin/git log -1 --format=%H
+2026-11-09T05:43:24.0202720Z 589912de344ea2b087366c0cdb159f9131def2cb
+2026-11-09T05:43:24.0215509Z ##[group]Removing auth
+2026-11-09T05:43:24.0219463Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-09T05:43:24.0263929Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-09T05:43:24.0549665Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-09T05:43:24.0592985Z http.https://github.com/.extraheader
+2026-11-09T05:43:24.0602976Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-09T05:43:24.0653713Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-09T05:43:24.0932799Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-09T05:43:24.0978897Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-09T05:43:24.1252397Z ##[endgroup]
+2026-11-09T05:43:24.1504285Z ##[group]Run # A manual run or an unavailable comparison runs everything (fail closed).
+2026-11-09T05:43:24.1505349Z [36;1m# A manual run or an unavailable comparison runs everything (fail closed).[0m
+2026-11-09T05:43:24.1505868Z [36;1m$full = $true[0m
+2026-11-09T05:43:24.1506352Z [36;1m$files = @()[0m
+2026-11-09T05:43:24.1506673Z [36;1mif ($env:EVENT -eq 'pull_request') {[0m
+2026-11-09T05:43:24.1507217Z [36;1m  $files = @(git diff --name-only --no-renames "$($env:PR_BASE)...$($env:PR_HEAD)")[0m
+2026-11-09T05:43:24.1507753Z [36;1m  $full = $LASTEXITCODE -ne 0[0m
+2026-11-09T05:43:24.1508270Z [36;1m} elseif ($env:EVENT -eq 'push' -and $env:BEFORE -and $env:BEFORE -notmatch '^0+$') {[0m
+2026-11-09T05:43:24.1508905Z [36;1m  $files = @(git diff --name-only --no-renames $env:BEFORE HEAD)[0m
+2026-11-09T05:43:24.1509366Z [36;1m  $full = $LASTEXITCODE -ne 0[0m
+2026-11-09T05:43:24.1509679Z [36;1m}[0m
+2026-11-09T05:43:24.1510273Z [36;1m$scope = @{ node = $false; python = $false; rust = $false; storage = $false; contracts = $false; dotnet = $false; status = $false }[0m
+2026-11-09T05:43:24.1510911Z [36;1mforeach ($f in $files) {[0m
+2026-11-09T05:43:24.1511309Z [36;1m  if ($f -match '\.md$|^(docs/|tasks/|reports/|content$)') { continue }[0m
+2026-11-09T05:43:24.1511830Z [36;1m  if ($f -match '^\.github/workflows/') { $full = $true; continue }[0m
+2026-11-09T05:43:24.1512236Z [36;1m  $known = $false[0m
+2026-11-09T05:43:24.1512638Z [36;1m  if ($f -match '^(apps/|packages/|tools/|spikes/|executors/codex-bridge/)') {[0m
+2026-11-09T05:43:24.1513130Z [36;1m    $scope.node = $true; $known = $true[0m
+2026-11-09T05:43:24.1513448Z [36;1m  }[0m
+2026-11-09T05:43:24.1513822Z [36;1m  if ($f -match '^(workers/|services/)') { $scope.python = $true; $known = $true }[0m
+2026-11-09T05:43:24.1514378Z [36;1m  if ($f -match '^core/') { $scope.rust = $true; $known = $true }[0m
+2026-11-09T05:43:24.1515130Z [36;1m  # core-store currently depends on core-types and frozen contract fixtures.[0m
+2026-11-09T05:43:24.1515803Z [36;1m  # Include workspace/lock/toolchain/config changes; update this with new path deps.[0m
+2026-11-09T05:43:24.1516480Z [36;1m  if ($f -match '^core/(crates/(core-store|core-types)/|contracts/|\.cargo/|[^/]+$)') {[0m
+2026-11-09T05:43:24.1516987Z [36;1m    $scope.storage = $true[0m
+2026-11-09T05:43:24.1517264Z [36;1m  }[0m
+2026-11-09T05:43:24.1517772Z [36;1m  if ($f -match '^(core/(contracts/|crates/core-types/|\.cargo/|[^/]+$)|packages/contracts/|workers/irl/generated/)') {[0m
+2026-11-09T05:43:24.1518395Z [36;1m    $scope.contracts = $true[0m
+2026-11-09T05:43:24.1518683Z [36;1m  }[0m
+2026-11-09T05:43:24.1545648Z [36;1m  if ($f -match '^executors/office-connector/') { $scope.dotnet = $true; $known = $true }[0m
+2026-11-09T05:43:24.1546507Z [36;1m  if ($f -match '^tools/status/') { $scope.status = $true }[0m
+2026-11-09T05:43:24.1547407Z [36;1m  # New directories and shared root build/toolchain files cannot silently miss checks.[0m
+2026-11-09T05:43:24.1548302Z [36;1m  if (-not $known) { $full = $true }[0m
+2026-11-09T05:43:24.1548830Z [36;1m}[0m
+2026-11-09T05:43:24.1549379Z [36;1mif ($full) { foreach ($key in @($scope.Keys)) { $scope[$key] = $true } }[0m
+2026-11-09T05:43:24.1550406Z [36;1m# Contract/generated-type edits also exercise every Python consumer.[0m
+2026-11-09T05:43:24.1551552Z [36;1m# Three-language conformance needs both the Node and Python toolchains.[0m
+2026-11-09T05:43:24.1552649Z [36;1mif ($scope.contracts) { $scope.node = $true; $scope.python = $true }[0m
+2026-11-09T05:43:24.1553539Z [36;1mforeach ($key in ($scope.Keys | Sort-Object)) {[0m
+2026-11-09T05:43:24.1554325Z [36;1m  $value = $scope[$key].ToString().ToLowerInvariant()[0m
+2026-11-09T05:43:24.1555435Z [36;1m  "$key=$value" >> $env:GITHUB_OUTPUT[0m
+2026-11-09T05:43:24.1556230Z [36;1m  $message = if ($scope[$key]) { 'run' } else { '无相关改动' }[0m
+2026-11-09T05:43:24.1557218Z [36;1m  "$key`: $message" | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append[0m
+2026-11-09T05:43:24.1558319Z [36;1m}[0m
+2026-11-09T05:43:24.1558787Z [36;1m"full=$full; changed files=$($files.Count)"[0m
+2026-11-09T05:43:24.1559630Z [36;1m# A failed diff selected the full suite; do not propagate its native exit code.[0m
+2026-11-09T05:43:24.1560389Z [36;1m$global:LASTEXITCODE = 0[0m
+2026-11-09T05:43:24.1588538Z shell: /usr/bin/pwsh -command ". '{0}'"
+2026-11-09T05:43:24.1588835Z env:
+2026-11-09T05:43:24.1589045Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-11-09T05:43:24.1589309Z   UV_LINK_MODE: copy
+2026-11-09T05:43:24.1589522Z   EVENT: pull_request
+2026-11-09T05:43:24.1589782Z   BEFORE: d2dc42e645a4904ea924d83477fea77bd9269ebc
+2026-11-09T05:43:24.1590129Z   PR_BASE: a7e8ae8790d297ac697956f6f1256d2e2b9403d5
+2026-11-09T05:43:24.1590474Z   PR_HEAD: a85be8a0a6d55cd25ce9aa42b9ce81336b348d74
+2026-11-09T05:43:24.1590770Z ##[endgroup]
+2026-11-09T05:43:27.9222719Z contracts: run
+2026-11-09T05:43:27.9237140Z dotnet: 无相关改动
+2026-11-09T05:43:27.9296240Z node: run
+2026-11-09T05:43:27.9305357Z python: run
+2026-11-09T05:43:27.9314606Z rust: run
+2026-11-09T05:43:27.9326251Z status: 无相关改动
+2026-11-09T05:43:27.9334873Z storage: run
+2026-11-09T05:43:27.9360270Z full=False; changed files=48
+2026-11-09T05:43:28.1703189Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-11-09T05:43:28.1703665Z with:
+2026-11-09T05:43:28.1703898Z   node-version-file: .nvmrc
+2026-11-09T05:43:28.1704169Z   always-auth: false
+2026-11-09T05:43:28.1704404Z   check-latest: false
+2026-11-09T05:43:28.1707519Z   token: ***
+2026-11-09T05:43:28.1707744Z env:
+2026-11-09T05:43:28.1707964Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-11-09T05:43:28.1708244Z   UV_LINK_MODE: copy
+2026-11-09T05:43:28.1708486Z ##[endgroup]
+2026-11-09T05:43:28.3337393Z Resolved .nvmrc as 24
+2026-11-09T05:43:28.3397451Z Found in cache @ /opt/hostedtoolcache/node/24.22.2/x64
+2026-11-09T05:43:28.3401580Z (node:2587) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T05:43:28.3402850Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T05:43:28.3404881Z ##[group]Environment details
+2026-11-09T05:43:28.7889362Z node: v24.22.2
+2026-11-09T05:43:28.7890009Z npm: 11.19.1
+2026-11-09T05:43:28.7890410Z yarn: 1.22.22
+2026-11-09T05:43:28.7891356Z ##[endgroup]
+2026-11-09T05:43:28.8059292Z ##[group]Run npm install --global pnpm@12.11.2
+2026-11-09T05:43:28.8059771Z [36;1mnpm install --global pnpm@12.11.2[0m
+2026-11-09T05:43:28.8089298Z shell: /usr/bin/bash -e {0}
+2026-11-09T05:43:28.8089625Z env:
+2026-11-09T05:43:28.8089886Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-11-09T05:43:28.8090227Z   UV_LINK_MODE: copy
+2026-11-09T05:43:28.8090508Z ##[endgroup]
+2026-11-09T05:43:30.6736635Z 
+2026-11-09T05:43:30.6744087Z added 2 packages in 2s
+2026-11-09T05:43:30.6758248Z npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-11-09T05:43:30.6759466Z npm warn install-scripts   pnpm@12.11.2 (preinstall: node install.js; postinstall: node install.js)
+2026-11-09T05:43:30.6760511Z npm warn install-scripts
+2026-11-09T05:43:30.6762887Z npm warn install-scripts Run `npm install -g --allow-scripts=pnpm` to allow these scripts once, or `npm config set allow-scripts=pnpm --location=user` to allow them for all global installs.
+2026-11-09T05:43:30.7279655Z ##[group]Run pnpm install --frozen-lockfile
+2026-11-09T05:43:30.7280099Z [36;1mpnpm install --frozen-lockfile[0m
+2026-11-09T05:43:30.7301478Z shell: /usr/bin/bash -e {0}
+2026-11-09T05:43:30.7301762Z env:
+2026-11-09T05:43:30.7301990Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-11-09T05:43:30.7302285Z   UV_LINK_MODE: copy
+2026-11-09T05:43:30.7302519Z ##[endgroup]
+2026-11-09T05:43:30.7536699Z Scope: all 14 workspace projects
+2026-11-09T05:43:30.7733917Z ? Verifying lockfile against supply-chain policies (363 entries)...
+2026-11-09T05:43:30.9239187Z Packages are hard linked from the content-addressable store to the virtual store.
+2026-11-09T05:43:30.9240697Z   Content-addressable store is at: /home/runner/.local/share/pnpm/store/v11
+2026-11-09T05:43:30.9241817Z   Virtual store is at:             node_modules/.pnpm
+2026-11-09T05:43:31.1537472Z Downloading three@0.174.0: 0.00 B/7.29 MB
+2026-11-09T05:43:31.2337893Z Downloading sherpa-onnx-linux-x64@1.13.8: 0.00 B/11.08 MB
+2026-11-09T05:43:32.1676739Z ✓ Lockfile passes supply-chain policies (363 entries in 1.4s)
+2026-11-09T05:43:32.1678160Z Lockfile is up to date, resolution step is skipped
+2026-11-09T05:43:32.1714948Z Packages: +239
+2026-11-09T05:43:32.1716256Z ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-11-09T05:43:32.1936670Z Progress: resolved 239, reused 0, downloaded 239, added 239, done
+2026-11-09T05:43:32.1975352Z .../esbuild@0.27.7/node_modules/esbuild postinstall$ node install.js
+2026-11-09T05:43:32.1976261Z .../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+2026-11-09T05:43:32.1977081Z .../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+2026-11-09T05:43:32.1978233Z .../.pnpm/koffi@3.3.3/node_modules/koffi install$ node ./cnoke.cjs -P . -D src/koffi --prebuild --release
+2026-11-09T05:43:32.2861623Z .../esbuild@0.27.7/node_modules/esbuild postinstall: Done
+2026-11-09T05:43:32.3026308Z .../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+2026-11-09T05:43:32.3256723Z .../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+2026-11-09T05:43:32.3522533Z .../.pnpm/koffi@3.3.3/node_modules/koffi install: Done
+2026-11-09T05:43:32.3968121Z 
+2026-11-09T05:43:32.3968898Z dependencies:
+2026-11-09T05:43:32.3969594Z + zod 4.6.7
+2026-11-09T05:43:32.3969930Z 
+2026-11-09T05:43:32.3970282Z devDependencies:
+2026-11-09T05:43:32.3970748Z + @eslint/js 10.0.1
+2026-11-09T05:43:32.3971199Z + @playwright/test 1.64.0
+2026-11-09T05:43:32.3971692Z + @types/node 24.19.2
+2026-11-09T05:43:32.3972157Z + @types/pixelmatch 7.1.0
+2026-11-09T05:43:32.3972682Z + @types/pngjs 6.0.5
+2026-11-09T05:43:32.3973118Z + @types/react 19.3.0
+2026-11-09T05:43:32.3973502Z + @types/react-dom 19.3.0
+2026-11-09T05:43:32.3973911Z + @vitest/coverage-v8 5.0.4
+2026-11-09T05:43:32.3974648Z + ajv 8.20.0
+2026-11-09T05:43:32.3975058Z + electron 44.7.0
+2026-11-09T05:43:32.3975436Z + electron-vite 5.0.0
+2026-11-09T05:43:32.3975807Z + eslint 10.12.0
+2026-11-09T05:43:32.3976179Z + pixelmatch 8.0.0
+2026-11-09T05:43:32.3976613Z + pngjs 7.0.0
+2026-11-09T05:43:32.3976997Z + prettier 3.9.10
+2026-11-09T05:43:32.3977338Z + tsx 4.21.0
+2026-11-09T05:43:32.3977688Z + typescript 6.0.3
+2026-11-09T05:43:32.3978031Z + typescript-eslint 8.71.2
+2026-11-09T05:43:32.3978301Z + vite 7.3.7
+2026-11-09T05:43:32.3978520Z + vitest 5.0.4
+2026-11-09T05:43:32.3978655Z 
+2026-11-09T05:43:32.4018175Z Done in 1.7s using pnpm v12.11.2
+2026-11-09T05:43:32.4360863Z ##[group]Run pnpm lint && pnpm typecheck && pnpm test && pnpm build
+2026-11-09T05:43:32.4361797Z [36;1mpnpm lint && pnpm typecheck && pnpm test && pnpm build[0m
+2026-11-09T05:43:32.4393835Z shell: /usr/bin/bash -e {0}
+2026-11-09T05:43:32.4394280Z env:
+2026-11-09T05:43:32.4394940Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-11-09T05:43:32.4395427Z   UV_LINK_MODE: copy
+2026-11-09T05:43:32.4395816Z ##[endgroup]
+2026-11-09T05:43:32.4608540Z $ eslint .
+2026-11-09T05:43:38.5213908Z $ tsc --noEmit
+2026-11-09T05:43:45.2481496Z $ vitest run
+2026-11-09T05:43:45.5385791Z 
+2026-11-09T05:43:45.5388320Z [1m[30m[46m RUN [49m[39m[22m [36mv5.0.4 [39m[90m/home/runner/work/nemu/nemu[39m
+2026-11-09T05:43:45.5389379Z 
+2026-11-09T05:43:46.5176800Z  [32m✓[39m packages/contracts/src/schemas.test.ts [2m([22m[2m125 tests[22m[2m)[22m[32m 182[2mms[22m[39m
+2026-11-09T05:43:47.1420886Z  [32m✓[39m executors/codex-bridge/src/base/replay.test.ts [2m([22m[2m39 tests[22m[2m)[22m[32m 241[2mms[22m[39m
+2026-11-09T05:43:47.2296855Z  [32m✓[39m packages/avatar-runtime/src/animation/animation.test.ts [2m([22m[2m23 tests[22m[2m)[22m[33m 889[2mms[22m[39m
+2026-11-09T05:43:47.2299049Z    [32m✓[39m P3-01 Animation Runtime (Five Layers) [2m(23)[22m
+2026-11-09T05:43:47.2314679Z      [32m✓[39m Animation Compositor [2m(6)[22m
+2026-11-09T05:43:47.2342926Z        [33m[2m✓[22m[39m v2 stays bounded through 10,800 frames without a base clip, and duplicate apply does not drift[33m 755[2mms[22m[39m
+2026-11-09T05:43:47.5912986Z  [32m✓[39m packages/contracts/src/performance.test.ts [2m([22m[2m197 tests[22m[2m)[22m[32m 132[2mms[22m[39m
+2026-11-09T05:43:47.6647469Z  [32m✓[39m packages/contracts/src/review-regressions.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 68[2mms[22m[39m
+2026-11-09T05:43:47.8914814Z  [32m✓[39m packages/body/src/fsm/fsm.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 52[2mms[22m[39m
+2026-11-09T05:43:48.2580954Z  [32m✓[39m packages/avatar-runtime/src/index.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+2026-11-09T05:43:48.8317907Z [90mstderr[2m | apps/desktop/src/supervisor/supervisor.test.ts[2m > [22m[2mSupervisedProcess Exponential Backoff and Restart[2m > [22m[2mdetects hung process missing heartbeats and restarts it without leaving orphan processes
+2026-11-09T05:43:48.8320904Z [22m[39m[Supervisor] Process hung-process failed health check (stdout-heartbeat). Killing process tree for restart.
+2026-11-09T05:43:48.8364912Z 
+2026-11-09T05:43:48.9295169Z [90mstderr[2m | apps/desktop/src/supervisor/supervisor.test.ts[2m > [22m[2mSupervisedProcess Exponential Backoff and Restart[2m > [22m[2mdetects hung process missing heartbeats and restarts it without leaving orphan processes
+2026-11-09T05:43:48.9306744Z [22m[39m[Supervisor] Process hung-process failed health check (stdout-heartbeat). Killing process tree for restart.
+2026-11-09T05:43:48.9307949Z 
+2026-11-09T05:43:48.9396402Z  [32m✓[39m packages/body/src/readout/readout.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 322[2mms[22m[39m
+2026-11-09T05:43:49.1616876Z  [32m✓[39m apps/desktop/src/supervisor/supervisor.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 670[2mms[22m[39m
+2026-11-09T05:43:49.2896925Z  [32m✓[39m packages/desktop-sense/src/engine.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+2026-11-09T05:43:49.4471167Z  [32m✓[39m packages/avatar-runtime/src/lipsync/lipsync.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 3444[2mms[22m[39m
+2026-11-09T05:43:49.4489609Z    [32m✓[39m Cross-correlation deviation test (完成标准第 10 项) [2m(3)[22m
+2026-11-09T05:43:49.4496274Z      [33m[2m✓[22m[39m cross-correlation delay for 20 sentences in zh: mean <= 50ms, max <= 80ms[33m 675[2mms[22m[39m
+2026-11-09T05:43:49.4498327Z      [33m[2m✓[22m[39m cross-correlation delay for 20 sentences in en: mean <= 50ms, max <= 80ms[33m 1790[2mms[22m[39m
+2026-11-09T05:43:49.4500742Z      [33m[2m✓[22m[39m cross-correlation delay for 20 sentences in ja: mean <= 50ms, max <= 80ms[33m 896[2mms[22m[39m
+2026-11-09T05:43:49.4864137Z  [32m✓[39m packages/body/src/idle/idle.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+2026-11-09T05:43:49.5397534Z  [32m✓[39m packages/contracts/src/terminal-v2.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 61[2mms[22m[39m
+2026-11-09T05:43:50.0021374Z  [32m✓[39m apps/panel/src/debug/DebugPanel.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+2026-11-09T05:43:50.0095688Z  [32m✓[39m packages/voice/src/asr/runtime.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 59[2mms[22m[39m
+2026-11-09T05:43:50.2382877Z  [32m✓[39m packages/body/src/actions/actions.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+2026-11-09T05:43:50.3300385Z  [32m✓[39m packages/voice/src/asr/annotation.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 644[2mms[22m[39m
+2026-11-09T05:43:50.4681228Z  [32m✓[39m apps/stage/src/review/review.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+2026-11-09T05:43:50.7070722Z  [32m✓[39m packages/contracts/src/resource-dictionary.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 55[2mms[22m[39m
+2026-11-09T05:43:50.7192049Z  [32m✓[39m apps/desktop/src/bus/bus.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 49[2mms[22m[39m
+2026-11-09T05:43:50.7376604Z  [32m✓[39m packages/voice/src/asr/quiet.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+2026-11-09T05:43:50.9180277Z  [32m✓[39m apps/desktop/src/main/display.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+2026-11-09T05:43:50.9277357Z  [32m✓[39m packages/body/src/reflex/reflex.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+2026-11-09T05:43:51.1151658Z  [32m✓[39m packages/voice/src/asr/asr.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+2026-11-09T05:43:51.2625270Z  [32m✓[39m packages/voice/src/asr/hybrid-reference.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+2026-11-09T05:43:51.2711191Z  [32m✓[39m packages/voice/src/asr/alignment.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+2026-11-09T05:43:51.2911184Z  [32m✓[39m packages/desktop-sense/src/geometry.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+2026-11-09T05:43:51.4762285Z  [32m✓[39m apps/panel/src/debug/bus-client.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+2026-11-09T05:43:51.6318095Z  [32m✓[39m packages/contracts/src/body-animation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+2026-11-09T05:43:51.8260161Z  [32m✓[39m apps/panel/src/debug/schema-validator.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+2026-11-09T05:43:52.0222584Z  [32m✓[39m apps/desktop/src/sense/index.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+2026-11-09T05:43:52.0783019Z  [32m✓[39m packages/voice/src/asr/models.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+2026-11-09T05:43:52.2384231Z  [32m✓[39m packages/voice/src/asr/barge-window-gate.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+2026-11-09T05:43:52.2986774Z  [32m✓[39m packages/desktop-sense/src/semantics.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+2026-11-09T05:43:52.3951111Z  [32m✓[39m packages/body/src/actions/cue-scheduler.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+2026-11-09T05:43:52.4487349Z  [32m✓[39m packages/voice/src/asr/cache.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[32m 6[2mms[22m[39m
+2026-11-09T05:43:52.5940804Z  [32m✓[39m packages/desktop-sense/src/focus-probe.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+2026-11-09T05:43:52.6977368Z  [32m✓[39m tools/scaffold/structure.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 128[2mms[22m[39m
+2026-11-09T05:43:52.8419469Z  [32m✓[39m apps/panel/src/debug/latency.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-11-09T05:43:52.8609479Z  [32m✓[39m packages/avatar-runtime/src/animation/readout-mapping.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+2026-11-09T05:43:52.9999437Z  [32m✓[39m packages/voice/src/asr/latency-acceptance.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+2026-11-09T05:43:53.1461074Z  [32m✓[39m executors/codex-bridge/src/base/home.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+2026-11-09T05:43:53.3671462Z  [32m✓[39m apps/panel/src/legacy/Composer.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 15[2mms[22m[39m
+2026-11-09T05:43:53.4752695Z  [32m✓[39m packages/contracts/src/browser-contracts.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 370[2mms[22m[39m
+2026-11-09T05:43:53.4776434Z    [33m[2m✓[22m[39m browser validator accepts every frozen legal vector accepted by authority codecs[33m 368[2mms[22m[39m
+2026-11-09T05:43:53.5343360Z  [32m✓[39m packages/voice/src/asr/measurement-stats.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+2026-11-09T05:43:53.6830947Z  [32m✓[39m packages/voice/src/asr/timing-quality.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-11-09T05:43:53.8017947Z  [32m✓[39m packages/desktop-sense/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+2026-11-09T05:43:53.8288946Z  [32m✓[39m executors/codex-bridge/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+2026-11-09T05:43:53.9833390Z  [32m✓[39m packages/terminal/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+2026-11-09T05:43:54.0566888Z  [32m✓[39m packages/contracts/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+2026-11-09T05:43:54.1341657Z  [32m✓[39m packages/voice/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+2026-11-09T05:43:54.2811507Z  [32m✓[39m packages/log/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+2026-11-09T05:43:54.3640376Z  [32m✓[39m packages/body/src/index.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+2026-11-09T05:44:02.7243491Z HTTPError: Response code 504 (Gateway Time-out) for https://github.com/electron/electron/releases/download/v44.7.0/electron-v44.7.0-linux-x64.zip
+2026-11-09T05:44:02.7247058Z     at FetchDownloader.download (file:///home/runner/work/nemu/nemu/node_modules/.pnpm/@electron+get@5.1.0/node_modules/@electron/get/dist/FetchDownloader.js:48:23)
+2026-11-09T05:44:02.7249418Z     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-11-09T05:44:02.7250873Z     at async file:///home/runner/work/nemu/nemu/node_modules/.pnpm/@electron+get@5.1.0/node_modules/@electron/get/dist/index.js:158:9
+2026-11-09T05:44:02.7252606Z     at async useAndRemoveDirectory (file:///home/runner/work/nemu/nemu/node_modules/.pnpm/@electron+get@5.1.0/node_modules/@electron/get/dist/utils.js:10:18)
+2026-11-09T05:44:02.7254875Z     at async downloadArtifact (file:///home/runner/work/nemu/nemu/node_modules/.pnpm/@electron+get@5.1.0/node_modules/@electron/get/dist/index.js:154:12)
+2026-11-09T05:44:02.7315587Z [90mstdout[2m | apps/desktop/src/settings/settings.test.ts
+2026-11-09T05:44:02.7316992Z [22m[39mDownloading Electron binary...
+2026-11-09T05:44:02.7317787Z 
+2026-11-09T05:44:02.7409691Z  [31m❯[39m apps/desktop/src/settings/settings.test.ts [2m([22m[2m0 test[22m[2m)[22m
+2026-11-09T05:44:02.7498248Z 
+2026-11-09T05:44:02.7499324Z [31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+2026-11-09T05:44:02.7499713Z 
+2026-11-09T05:44:02.7502198Z [41m[1m FAIL [22m[49m apps/desktop/src/settings/settings.test.ts[2m [ apps/desktop/src/settings/settings.test.ts ][22m
+2026-11-09T05:44:02.7509530Z [31m[1mError[22m: Electron failed to install correctly. Please delete `node_modules/electron` and run "npx install-electron --no" manually.[39m
+2026-11-09T05:44:02.7512422Z [90m [2m❯[22m getElectronPath node_modules/.pnpm/electron@44.7.0/node_modules/electron/index.js:[2m43:13[22m[39m
+2026-11-09T05:44:02.7514881Z [90m [2m❯[22m Object.<anonymous> node_modules/.pnpm/electron@44.7.0/node_modules/electron/index.js:[2m52:18[22m[39m
+2026-11-09T05:44:02.7515826Z 
+2026-11-09T05:44:02.7516468Z [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+2026-11-09T05:44:02.7516921Z 
+2026-11-09T05:44:02.7516989Z 
+2026-11-09T05:44:02.7531745Z [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m53 passed[39m[22m[90m (54)[39m
+2026-11-09T05:44:02.7533598Z [2m      Tests [22m [1m[32m615 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (616)[39m
+2026-11-09T05:44:02.7535206Z [2m   Start at [22m 05:43:45
+2026-11-09T05:44:02.7539144Z [2m   Duration [22m 17.20s[2m (tests 50%, import 32%, transform 16%, worker 2%)[22m
+2026-11-09T05:44:02.7553600Z 
+2026-11-09T05:44:02.7554904Z [2m    Isolate [22m [33m54 workers spawned[39m[2m · ~129ms startup each (spawn + environment, per file)[22m
+2026-11-09T05:44:02.7556823Z [2m            [22m [2mat least ~2.20s faster with [22m[33misolate: false[39m[2m — reuses workers across files instead of one per file[22m
+2026-11-09T05:44:02.7557673Z 
+2026-11-09T05:44:02.7877673Z [ELIFECYCLE] Test failed. See above for more details.
+2026-11-09T05:44:02.7915552Z ##[error]Process completed with exit code 1.
+2026-11-09T05:44:02.8017581Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-11-09T05:44:02.8018027Z with:
+2026-11-09T05:44:02.8018242Z   name: contracts-coverage
+2026-11-09T05:44:02.8018510Z   path: reports/P0-02/coverage/
+2026-11-09T05:44:02.8018951Z   if-no-files-found: warn
+2026-11-09T05:44:02.8019192Z   compression-level: 6
+2026-11-09T05:44:02.8019416Z   overwrite: false
+2026-11-09T05:44:02.8019638Z   include-hidden-files: false
+2026-11-09T05:44:02.8019887Z env:
+2026-11-09T05:44:02.8020088Z   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+2026-11-09T05:44:02.8020344Z   UV_LINK_MODE: copy
+2026-11-09T05:44:02.8020554Z ##[endgroup]
+2026-11-09T05:44:02.9879672Z (node:3372) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T05:44:02.9881253Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T05:44:02.9949217Z With the provided path, there will be 1 file uploaded
+2026-11-09T05:44:02.9952422Z Artifact name is valid!
+2026-11-09T05:44:02.9953376Z Root directory input is valid!
+2026-11-09T05:44:03.1981123Z Beginning upload of artifact content to blob storage
+2026-11-09T05:44:03.2242894Z (node:3372) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-09T05:44:03.2611797Z Uploaded bytes 539
+2026-11-09T05:44:03.2779360Z Finished uploading artifact content to blob storage!
+2026-11-09T05:44:03.2781180Z SHA256 digest of uploaded artifact zip is a9716b273f14624d5d8b46e73a7e93d4c9c2dd7b1847a355fc5c40b2703832db
+2026-11-09T05:44:03.2782605Z Finalizing artifact upload
+2026-11-09T05:44:03.6718479Z Artifact contracts-coverage.zip successfully finalized. Artifact ID 13651728969
+2026-11-09T05:44:03.6720305Z Artifact contracts-coverage has been successfully uploaded! Final size is 539 bytes. Artifact ID is 13651728969
+2026-11-09T05:44:03.6728328Z Artifact download URL: https://github.com/nanake-lab/nemu/actions/runs/42568888129/artifacts/13651728969
+2026-11-09T05:44:03.7047963Z Post job cleanup.
+2026-11-09T05:44:03.7997557Z [command]/usr/bin/git version
+2026-11-09T05:44:03.8055313Z git version 2.56.0
+2026-11-09T05:44:03.8100602Z Temporarily overriding HOME='/home/runner/work/_temp/57e021f3-67b4-4e22-8824-eee391375dbc' before making global git config changes
+2026-11-09T05:44:03.8102155Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-09T05:44:03.8107398Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nemu/nemu
+2026-11-09T05:44:03.8158411Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-09T05:44:03.8206201Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-09T05:44:03.8529929Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-09T05:44:03.8587057Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-09T05:44:03.8925535Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-09T05:44:03.8983673Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-09T05:44:03.9502669Z Cleaning up orphan processes
+2026-11-09T05:44:03.9936074Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

@@ -2,6 +2,8 @@
 
 状态：PROPOSED。2026-10-24 用户授权 P3-06 扩大目录并实现候选；最终契约变更待交叉审查和用户合并批准。PR 保持 `needs-user`。
 
+> **状态更新（2026-11-11）：** 已采纳——PR #76（P3-06）合并（AGENTS §6：needs-user PR 由用户合并，合并即批准）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 A8。
+
 ## 背景
 
 P5-22 已发布 `BodyReadoutV2` 与 IDL `ReadoutV2` 后继消息，舞台仍只有旧 `stage.readout`。P3-06 要求三项读出驱动身体、去除面部基线、固定版本映射参数进入 profile，并供评审台预览。卡片原目录不足以完成接线，用户已明确授权本 ADR、`packages/contracts/`、舞台两个入口及评审台 HTML；P2-06 等用户选定期间允许在重叠目录工作，尽量新增独立文件，后合并者解决冲突。

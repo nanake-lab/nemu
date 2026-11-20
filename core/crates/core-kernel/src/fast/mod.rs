@@ -29,3 +29,6 @@ pub use space::{
     validate,
 };
 pub use types::*;
+
+/// ADR 0035 D09-A1, explicitly selected; legacy F above remains replayable.
+pub mod contribution;

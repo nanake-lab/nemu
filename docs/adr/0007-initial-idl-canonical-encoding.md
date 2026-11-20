@@ -131,6 +131,7 @@ missing Review_and_Remediation content. Such additions need their own review.
 ## Preserved decisions
 
 - C01 remains unresolved; ADR 0006 remains PROPOSED; W09/W10 remain blocked.
+  > **状态更新（2026-11-11）：** 本条已过时：C01（W00-C01）已由 [ADR 0009](0009-echo-core-v2-first-principles.md) 消解，ADR 0006 已被 ADR 0009 取代；W09/W10 按 v2.0 重新路由（[ADR 0010](0010-v1-scope-birth-and-lineages.md)）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 B3。
 - v1.0 remains NO-GROWTH. Defining/encoding an R/G object grants no runtime
   eligibility, authority, or growth capability.
 - Frozen Architecture (F) §§7,7.1,8 supports qualification-branch and single-root

@@ -7,6 +7,10 @@
 - 依据：[DESIGN-LAW-01 报告](../../reports/DESIGN-LAW-01/REPORT.md) §§2–4、8、9（用户的选择）；[证明](../../reports/DESIGN-LAW-01/PROOFS.md) P00、P07-A、P07-F、P09-A1、P09-C、P11 与「数值与证据义务」；[实验](../../reports/DESIGN-LAW-01/EXPERIMENTS.md) E07、E09、E11、E-C；[来源与接续](../../reports/DESIGN-LAW-01/SOURCES-AND-HANDOFF.md) §§2–5；PR #131 两轮交叉审查（[阻塞 1](https://github.com/nanake-lab/nemu/pull/131#issuecomment-6573386725)、[复审通过](https://github.com/nanake-lab/nemu/pull/131#issuecomment-6594940474)）；[v2.0](../echo-core/echo-core-v2.0-first-principles.md) §§2、6、8、12、16、17；[ADR 0008](0008-echo-core-math-clarifications.md)、[ADR 0026](0026-continuous-cognition.md)、[ADR 0029](0029-theta-estimator-storage.md)、[ADR 0032](0032-presets-as-starting-points.md) §§4、5、7、[ADR 0033](0033-helper-fuses-cursor-evidence.md)；[差异登记](../traceability/diff-register.md) V2-71/72/77/87、V2-94–97、V2-100、V2-115、V2-118–143。
 - 范围：三项已选规律的定义、状态归属、规范 binary64 运算路径、遗留证明义务、参数与资源清单、被取代条目和后继卡验收条款。不改代码、IDL、配置或任何数值；不给参数数值。D05 不在本 ADR（P5-67）。
 
+> **状态更新（2026-11-11）：** 已采纳——PR #138（P5-66）合并（AGENTS §6：needs-user PR 由用户合并，合并即批准）。后继卡 P5-69、P5-70 已按本文实现；新规律版本何时发布、文中各项取代何时生效，本说明不作判定。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 A17。
+
+> **状态更新（2026-11-12）：** 新规律版本的发布时点由发布它的那张后继卡在本 ADR 与 [ADR 0019](0019-law-lp1-reference.md) 头部各追加一行写明。依据：PR #162「待用户判断」第 10 项，用户 2026-11-12 同意建议。
+
 ## 0. 白话总览
 
 | 规律 | 她在生活里会怎样变化 | 代价 |
@@ -252,6 +256,8 @@ s = fl(x + d)
 - 不加任何定时强制平复（ADR 0032 D09）。ADR 0008 §1 的事件局部非扩张、ADR 0026 的内部记录分支、EV3/5/6、COG-A07 的来源与回溯规则保留。
 
 ## 5. D11-A：按发生与观察判资格，理解时一次作用
+
+> **标题勘误（2026-11-12）：** 本节标题应读作「D11-A：资格不读任何时间事实，理解时一次作用」。原标题保留作历史；以 §5.2、§5.3、§5.5 正文为准，发生与观察的关系用于理解意义，不用于判定资格。依据：[AUDIT-GLOBAL-01](../../reports/AUDIT-GLOBAL-01/REPORT.md) G05；用户 2026-11-12 的 DOC-FIX-AUDIT-01 指示。本次只勘误标题，不改正文规则。
 
 **白话。** 她做完一件事，结果回来时机器正忙，等忙完才处理到，她仍然会为这个结果高兴或难过——排队不会让她「错过」。决定这件事对她意味着什么的，是它什么时候发生、她什么时候知道：今天才知道朋友上周难过、现在已经好了，她对「今天得知旧事」的反应可以不同于朋友正在受苦，但不会假装上周就已经知道。代价：机器慢，她的反应就晚；一批回执积压后一起到，她可能一下子有比较集中的反应。执行许可照旧：凭证过期就不能再去做那件事；已经做完的事，回执晚到照样记下来、照样能触动她。
 

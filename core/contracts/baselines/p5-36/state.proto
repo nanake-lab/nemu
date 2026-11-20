@@ -1,0 +1,326 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "ledger.proto";
+
+// @message echo.event | F 4; S 9
+message EventEnvelope {
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  optional EventKind kind = 3; // required
+  optional sint64 event_time_ns = 4; // required
+  optional sint64 ingest_time_ns = 5; // required
+  optional uint64 raw_log_position = 6; // required
+  repeated string parents = 7; // required,set=self
+  optional ObjectRef payload_ref = 8; // required
+  optional ObjectRef provenance = 9; // required
+  optional string device = 10; // required
+  optional string session = 11; // required
+  optional string stable_source_key = 12; // required,nonempty
+  optional bytes payload_digest = 13; // required,size=32
+  optional string action_id = 14; // optional
+  optional string trial_id = 15; // optional
+  repeated string correction_of = 16; // required,set=self
+  optional Derivation derivation = 17; // required
+}
+
+// @message echo.fact-item | F 3; S 11
+message FactItem {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef content = 2; // required
+  optional string source_id = 3; // required,nonempty
+  optional QueryStatus availability = 4; // required
+  repeated string correction_chain = 5; // required
+}
+
+// @message echo.fact-projection | F 3; S 11
+message FactProjection {
+  optional uint32 schema_version = 1; // required
+  optional string history_prefix = 2; // required,nonempty
+  optional string query_version = 3; // required,nonempty
+  optional QueryStatus status = 4; // required
+  repeated FactItem items = 5; // required
+  optional string index_version = 6; // required,nonempty
+  optional bool truncated = 7; // required
+}
+
+// @message echo.source-metadata | F 3.2; S 10
+message SourceMetadata {
+  optional uint32 schema_version = 1; // required
+  repeated string source_refs = 2; // required,set=self
+  optional ObjectRef source_span = 3; // required
+  optional Derivation derivation = 4; // required
+  optional EpistemicType epistemic_type = 5; // required
+  optional ResolutionState resolution_state = 6; // required
+  optional string representation_version = 7; // required,nonempty
+}
+
+// @message echo.semantic-ref | F 3.2
+message Ref {
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  optional SourceMetadata metadata = 3; // required
+  optional ConceptRef referent = 4; // optional
+}
+
+// @message echo.role-binding | F 3.2,3.4
+message RoleBinding {
+  optional uint32 schema_version = 1; // required
+  optional string role = 2; // required,nonempty
+  optional string node_ref = 3; // required,nonempty
+}
+
+// @message echo.semantic-claim | F 3.2,3.4
+message Claim {
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  optional SourceMetadata metadata = 3; // required
+  optional ConceptRef predicate = 4; // required
+  repeated RoleBinding roles = 5; // required,set=role
+  optional ObjectRef value = 6; // required
+  optional bool polarity = 7; // required
+  optional ObjectRef modality = 8; // required
+  optional ObjectRef time = 9; // required
+}
+
+// @message echo.semantic-act | F 3.2
+message Act {
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  optional SourceMetadata metadata = 3; // required
+  optional string interaction_kind = 4; // required,nonempty
+}
+
+// @message echo.semantic-edge | F 3.2
+message Edge {
+  optional uint32 schema_version = 1; // required
+  optional string relation = 2; // required,nonempty
+  optional string from_node = 3; // required,nonempty
+  optional string to_node = 4; // required,nonempty
+}
+
+// @message echo.semantic-graph | F 3.2; D I 4.3
+message SemanticGraph {
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  repeated Ref refs = 3; // required,set=id
+  repeated Claim claims = 4; // required,set=id
+  repeated Act acts = 5; // required,set=id
+  repeated Edge edges = 6; // required
+}
+
+// @message echo.proposal-binding | D I 3; O 16.1
+message ProposalBinding {
+  // @superseded ProposalBindingV2 | P5-21; binds VersionedEnvironmentV2 (v2.0 §1 Ω)
+  optional uint32 schema_version = 1; // required
+  optional string branch_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional uint64 raw_log_position = 4; // required
+  optional string base_commit = 5; // required,nonempty
+  optional uint64 process_time_ns = 6; // required
+  optional uint64 anchor_time_ns = 7; // required
+  optional bytes projected_state_digest = 8; // required,size=32
+  optional bytes accepted_z_digest = 9; // required,size=32
+  optional bytes c_core_digest = 10; // required,size=32
+  optional string x_revision = 11; // required,nonempty
+  optional string r_revision = 12; // required,nonempty
+  optional string theta_revision = 13; // required,nonempty
+  optional ObjectRef validation_snapshot = 14; // required
+  optional string source_validity_version = 15; // required,nonempty
+  optional VersionedEnvironment environment = 16; // required
+  optional bytes relevant_effect_set_digest = 17; // required,size=32
+  optional bytes proposal_payload_digest = 18; // required,size=32
+  repeated ObjectRef read_set = 19; // required,set=digest
+}
+
+// @message echo.semantic-candidate | D I 4.2,7.1
+message SemanticCandidate {
+  // @superseded SemanticCandidateV2 | P5-21; carries ProposalBindingV2
+  optional uint32 schema_version = 1; // required
+  optional ProposalBinding binding = 2; // required
+  optional ObjectRef candidate_graph = 3; // required
+  optional string producer = 4; // required,nonempty
+  optional string producer_version = 5; // required,nonempty
+  optional ObjectRef actual_output = 6; // required
+}
+
+// @message echo.concept-proposal | F 3.4; D I 4.4
+message ConceptProposal {
+  // @superseded ConceptProposalV2 | P5-21; carries ProposalBindingV2
+  optional uint32 schema_version = 1; // required
+  optional ProposalBinding binding = 2; // required
+  optional string mention = 3; // required
+  optional ObjectRef signature = 4; // required
+  optional ObjectRef grounding = 5; // required
+  optional ObjectRef relations = 6; // required
+  repeated string source_refs = 7; // required,set=self
+}
+
+// @message echo.fast-state | D I 5.1; O 5.1
+message FastStateSnapshot {
+  // @superseded FastStateSnapshotV2 | P5-21; v2.0 §6: nature channels plus learned components by tendency ID
+  // @rules {"lengths":{"coordinates":"dimension"}}
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional string representation_version = 3; // required,nonempty
+  optional uint32 dimension = 4; // required,min=1
+  repeated double coordinates = 5 [packed = false]; // required,min=-1,max=1
+  optional uint64 anchor_time_ns = 6; // required
+}
+
+// @message echo.fast-drive | D I 5.3; O 5.2
+message FastDriveProposal {
+  // @superseded NatureAppraisalRecord | P5-21; v2.0 §2.4, §3, §6: drive is assembled by F from the recorded a(e)
+  optional uint32 schema_version = 1; // required
+  optional ProposalBinding binding = 2; // required
+  optional string semantic_graph_id = 3; // required,nonempty
+  optional string state_space_version = 4; // required,nonempty
+  repeated double drive = 5 [packed = false]; // required,min=-1,max=1
+  repeated string source_node_refs = 6; // required,set=self
+  optional string producer = 7; // required,nonempty
+  optional string producer_version = 8; // required,nonempty
+  optional bytes proposal_hash = 9; // required,size=32
+}
+
+// @message echo.transaction | D I 3,7; O 16.2; S 8
+message CoreTransaction {
+  // @superseded CoreTransactionV2 | P5-21; adds staged L entries for R and θ changes (v2.0 §2.4)
+  optional uint32 schema_version = 1; // required
+  optional ProposalBinding binding = 2; // required
+  optional ObjectRef staged_h = 3; // required
+  optional ObjectRef staged_x = 4; // required
+  optional ObjectRef staged_r = 5; // required
+  optional ObjectRef staged_theta = 6; // required
+  optional ObjectRef staged_l = 7; // required
+  optional ObjectRef staged_q = 8; // required
+  optional ObjectRef staged_u = 9; // required
+  optional uint64 processed_position = 10; // required
+  optional uint64 anchor_time_ns = 11; // required
+  repeated ObjectRef staged_concepts = 12; // required
+  repeated ObjectRef accepted_results = 13; // required
+  repeated ObjectRef audit_refs = 14; // required
+}
+
+// @message echo.commit-result | D I 6.2; O 16.2
+message CoreCommitResult {
+  // @superseded CoreCommitResultV2 | P5-21; reports published L entries (v2.0 §2.4)
+  optional uint32 schema_version = 1; // required
+  optional string branch_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional string commit_id = 4; // required,nonempty
+  optional bool committed = 5; // required
+  optional ObjectRef snapshot = 6; // required
+  optional DegradedStatus status = 7; // required
+}
+
+
+// ---- Echo Core v2.0 (P5-21). Successors keep every predecessor field number either
+// unchanged or reserved, and add new fields above the predecessor maximum. ----
+
+// @message echo.proposal-binding-v2 | D I 3; O 16.1; v2.0 §1 Ω, §2.4
+message ProposalBindingV2 {
+  // @supersedes ProposalBinding
+  // Field 16 (VersionedEnvironment) is replaced by field 20.
+  reserved 16;
+  optional uint32 schema_version = 1; // required
+  optional string branch_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional uint64 raw_log_position = 4; // required
+  optional string base_commit = 5; // required,nonempty
+  optional uint64 process_time_ns = 6; // required
+  optional uint64 anchor_time_ns = 7; // required
+  optional bytes projected_state_digest = 8; // required,size=32
+  optional bytes accepted_z_digest = 9; // required,size=32
+  optional bytes c_core_digest = 10; // required,size=32
+  optional string x_revision = 11; // required,nonempty
+  optional string r_revision = 12; // required,nonempty
+  optional string theta_revision = 13; // required,nonempty
+  optional ObjectRef validation_snapshot = 14; // required
+  optional string source_validity_version = 15; // required,nonempty
+  optional bytes relevant_effect_set_digest = 17; // required,size=32
+  optional bytes proposal_payload_digest = 18; // required,size=32
+  repeated ObjectRef read_set = 19; // required,set=digest
+  optional VersionedEnvironmentV2 environment = 20; // required
+}
+
+// @message echo.semantic-candidate-v2 | D I 4.2,7.1; v2.0 §2.4
+message SemanticCandidateV2 {
+  // @supersedes SemanticCandidate
+  reserved 2;
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef candidate_graph = 3; // required
+  optional string producer = 4; // required,nonempty
+  optional string producer_version = 5; // required,nonempty
+  optional ObjectRef actual_output = 6; // required
+  optional ProposalBindingV2 binding = 7; // required
+}
+
+// @message echo.concept-proposal-v2 | F 3.4; D I 4.4; v2.0 §7
+message ConceptProposalV2 {
+  // @supersedes ConceptProposal
+  reserved 2;
+  optional uint32 schema_version = 1; // required
+  optional string mention = 3; // required
+  optional ObjectRef signature = 4; // required
+  optional ObjectRef grounding = 5; // required
+  optional ObjectRef relations = 6; // required
+  repeated string source_refs = 7; // required,set=self
+  optional ProposalBindingV2 binding = 8; // required
+}
+
+// @message echo.learned-component | v2.0 §6 x_k for k ∈ R⁺
+message LearnedComponent {
+  optional uint32 schema_version = 1; // required
+  optional string tendency_id = 2; // required,nonempty
+  optional double value = 3; // required,min=-1,max=1
+}
+
+// @message echo.fast-state-v2 | v2.0 §6 X = [−1,1]^{4+|R⁺|}; D I 5.1
+message FastStateSnapshotV2 {
+  // @supersedes FastStateSnapshot
+  // Fields 4 and 5 (dimension, coordinates) are replaced by the fixed nature channels and the
+  // learned components, kept in CanonicalV1 set order of tendency_id (ADR 0007 §6).
+  reserved 4, 5;
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional string representation_version = 3; // required,nonempty
+  optional uint64 anchor_time_ns = 6; // required
+  optional NatureVector nature = 7; // required
+  repeated LearnedComponent learned = 8; // required,set=tendency_id
+}
+
+// @message echo.transaction-v2 | D I 3,7; O 16.2; S 8; v2.0 §2.4, §2.5
+message CoreTransactionV2 {
+  // @supersedes CoreTransaction
+  // staged_r and staged_theta reference RSnapshot and ThetaSnapshot; staged_ledger lists the L
+  // entries staged by G and C in append order (v2.0 §2.5).
+  reserved 2;
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef staged_h = 3; // required
+  optional ObjectRef staged_x = 4; // required
+  optional ObjectRef staged_r = 5; // required
+  optional ObjectRef staged_theta = 6; // required
+  optional ObjectRef staged_l = 7; // required
+  optional ObjectRef staged_q = 8; // required
+  optional ObjectRef staged_u = 9; // required
+  optional uint64 processed_position = 10; // required
+  optional uint64 anchor_time_ns = 11; // required
+  repeated ObjectRef staged_concepts = 12; // required
+  repeated ObjectRef accepted_results = 13; // required
+  repeated ObjectRef audit_refs = 14; // required
+  optional ProposalBindingV2 binding = 15; // required
+  repeated LedgerEntry staged_ledger = 16; // required
+}
+
+// @message echo.commit-result-v2 | D I 6.2; O 16.2; v2.0 §2.4, §2.5
+message CoreCommitResultV2 {
+  // @supersedes CoreCommitResult
+  optional uint32 schema_version = 1; // required
+  optional string branch_id = 2; // required,nonempty
+  optional string event_id = 3; // required,nonempty
+  optional string commit_id = 4; // required,nonempty
+  optional bool committed = 5; // required
+  optional ObjectRef snapshot = 6; // required
+  optional DegradedStatus status = 7; // required
+  repeated string ledger_entries = 8; // required
+}

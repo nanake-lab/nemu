@@ -5,6 +5,8 @@
 - 取代：`docs/ARCHITECTURE.md` 中 `voice-sidecar` 与「合成」两处的 Qwen3-TTS；P4-02 卡中「Qwen3-TTS Base」的模型选择（卡在声音工作恢复时修订）。
 - 关联：ADR 0017（端点与抢话目标）；P4-02（PR #45，已暂停）、P4-03；Echo Core 未定义清单第 7 批 V-1 至 V-3。
 
+> **状态更新（2026-11-11）：** 已采纳——PR #86 合并（AGENTS §6：needs-user PR 由用户合并，合并即批准）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 A11。
+
 ## 背景
 
 - **目标（用户 2026-10-25）：** 她的内在状态影响语气、语速、停顿和笑声，而不只是把文字读出来。情感表达优先；不要求覆盖中英日三种语言。

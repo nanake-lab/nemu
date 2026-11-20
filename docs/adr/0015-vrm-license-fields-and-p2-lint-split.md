@@ -4,6 +4,8 @@
 - 日期：2026-10-21
 - 关联：CONTRACTS.md 第 1.5 节；任务卡 P2-03（PR #43 审查意见第 2、4 条）、P2-05、P2-06；VRM 1.0 规范 `VRMC_vrm` 的 meta
 
+> **状态更新（2026-11-11）：** 已采纳——PR #47 合并（AGENTS §6：needs-user PR 由用户合并，合并即批准）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 A3。
+
 ## 背景
 
 - **许可字段的冲突：** CONTRACTS 第 1.5 节写「`licenseUrl` 指向内容包的许可文件」。VRM 1.0 规范规定 `licenseUrl` 必填，而且必须是指向 VRM 公共许可的唯一地址，VRM 1.0 只接受 `https://vrm.dev/licenses/1.0/`；其他许可写在 `otherLicenseUrl`。管线锁定的 VRM 扩展 4.10.2 按规范固定导出这个地址。

@@ -6,6 +6,8 @@
 - 核对基线：`3f8f98e5ac3cba2f2b4718ca242a5a0c226d0fbf`
 - 依据：ADR 0007、ADR 0019 §8、V2-94 至 V2-98、V2-100、V2-103，以及 `reports/P5-25/METHODS.md`
 
+> **状态更新（2026-11-11）：** 已采纳——PR #108（P5-36）合并（AGENTS §6：needs-user PR 由用户合并，合并即批准）；用户已批准存储消费者适配（[P5-36 规格对照](../traceability/P5-36.md)「2026-10-28 B3 扩围实施对照」）。头部「B3 阻塞完整验收，待交叉审查及用户最终合并」已不是现状。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 A12。
+
 ## 背景
 
 `ThetaSnapshot.estimator_state` 是未定格式的 `ObjectRef`。P5-25 已合入纯函数实现，但其 `DynamicsState` 和 `RunningTime` 仍为内存结构。只保存 θ、σ̂、τ̂、总权重和 ĥθ，不能恢复下一次递推所需的全部信息。状态也不能藏在手写 JSON、Debug 文本或额外进程缓存中。

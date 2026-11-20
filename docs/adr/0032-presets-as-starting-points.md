@@ -5,6 +5,8 @@
 - 范围：只记录本日决定、取代关系和后续工作；本 PR 不改代码、公式、数值、已发布契约或原始实验数据。
 - 依据：[PR #104 审计全文（固定提交）](https://github.com/nanake-lab/nemu/blob/8f0d1335283693297602868491a34b0ffeb85088/reports/design-audit-20261026/REPORT.md)、[R-KAPPA-01 开发日志](../../reports/R-KAPPA-01/DEVLOG.md)、[v2.0](../echo-core/echo-core-v2.0-first-principles.md)。D/R 编号沿用审计，仅作定位；审计建议不自动成为本 ADR 的决定。
 
+> **状态更新（2026-11-11）：** 已采纳——PR #118 合并（AGENTS §6：needs-user PR 由用户合并，合并即批准）。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 A14。
+
 ## 1. 背景与总原则
 
 预设可以为了她可爱、为了用户的需要而设，但每一条都必须受她调控——存在经历改变它的路径；她改不了的预设视为缺陷。

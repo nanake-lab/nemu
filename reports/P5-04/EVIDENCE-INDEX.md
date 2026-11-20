@@ -11,3 +11,7 @@
 | `main-sync-20261024/windows-evidence-original.zip` | `c3aa271e56e25511e9e53ef7be44497f6f922935d33614578127aafaa061ecb8` | 已移出主仓库（原始归档） |
 
 原件位置：`nanake-lab/nemu-evidence` 仓库的 `P5-04/` 下，路径与上表相同。主仓库 git 历史中的旧版本未改写。
+
+## PRIVACY-CLEANUP-01（2026-11-11）
+
+本次迁移原件的位置、SHA-256 与私有证据提交见 [逐项索引](../PRIVACY-CLEANUP-01/EVIDENCE-INDEX.md)。既有索引与原始证据保留。

@@ -1,8 +1,8 @@
 use super::{Fault, Result, numeric as n};
 use core_types::generated::{NatureScale, NatureVector, ThetaChange, ThetaValues};
 
-/// Temporary, versioned law-resource view, not an IDL or storage message.
-/// The requested estimator-state contract is tracked in tasks/requests/P5-25-dynamics.md.
+/// Resolved, versioned law-resource view, not a separate IDL/storage message.
+/// ADR 0029 / ADR 0035: snapshots bind the complete generated parameter message.
 #[derive(Clone, Debug, PartialEq)]
 pub struct DynamicsLaw {
     pub version: String,
@@ -55,10 +55,18 @@ pub enum ReactionSource {
     TriggeredProgramResult,
     SelfNarrative,
     DeceptionInducedReply,
+    /// ADR 0035 §3.1 / D21: observations only about the user do not enter C.
+    DesktopObservation,
+    /// ADR 0035 §3.1: caller's recorded governance says this contact/absence
+    /// was already counted. Identity resolution remains outside this pure C.
+    RepeatedExperience,
 }
 impl ReactionSource {
-    pub(super) fn learns(self) -> bool {
+    pub(super) fn learns(self, common_discount: bool) -> bool {
         matches!(self, Self::ExternalWorld | Self::OtherPersonReply)
+            // ADR 0035 §3.1 / ADR 0032 D20: a real external consequence is not
+            // excluded merely because deception preceded it. Retain old replay.
+            || (common_discount && self == Self::DeceptionInducedReply)
     }
 }
 
@@ -109,6 +117,8 @@ pub(super) struct Run {
 pub struct DynamicsState {
     pub(super) law: DynamicsLaw,
     pub(super) values: ThetaValues,
+    /// ADR 0035 §3.2: None is the legacy law; Some(P), including +0, is D07-A.
+    pub(super) prior_mass: Option<f64>,
     pub(super) weight: f64,
     pub(super) reaction_sum: [f64; 4],
     pub(super) square_sum: [f64; 4],
@@ -131,6 +141,15 @@ pub struct DynamicsState {
 impl DynamicsState {
     pub fn genesis(law: DynamicsLaw) -> Result<Self> {
         law.validate()?;
+        Self::initialize(law, None)
+    }
+    /// Explicit new-law genesis (ADR 0035 §§2, 3.2, 3.6). Never upgrades a snapshot.
+    pub fn genesis_common_discount(law: DynamicsLaw) -> Result<Self> {
+        law.validate_common_discount()?;
+        let prior_mass = law.baseline_weight;
+        Self::initialize(law, Some(prior_mass))
+    }
+    fn initialize(law: DynamicsLaw, prior_mass: Option<f64>) -> Result<Self> {
         let mut recovery = [0.0; 4];
         let mut variance = [0.0; 4];
         let mut log_mean = [0.0; 4];
@@ -150,6 +169,7 @@ impl DynamicsState {
         let values = theta(law.baseline_prior, law.gain_prior, recovery);
         Ok(Self {
             values,
+            prior_mass,
             sigma: law.sigma_prior,
             variance,
             tau,
@@ -189,6 +209,9 @@ impl DynamicsState {
     pub fn tau_s(&self) -> [f64; 4] {
         self.tau
     }
+    pub fn prior_mass(&self) -> Option<f64> {
+        self.prior_mass
+    }
     pub fn weight_sum(&self) -> f64 {
         self.weight
     }
@@ -199,6 +222,19 @@ impl DynamicsState {
 
 impl DynamicsLaw {
     pub fn validate(&self) -> Result<()> {
+        self.validate_parameters(false)
+    }
+    pub(super) fn validate_common_discount(&self) -> Result<()> {
+        self.validate_parameters(true)
+    }
+    fn validate_parameters(&self, common_discount: bool) -> Result<()> {
+        // ADR 0035 §7 / P5-68: P0 is any finite strictly positive binary64.
+        if !self.baseline_weight.is_finite()
+            || self.baseline_weight <= 0.0
+            || (!common_discount && self.baseline_weight >= (1_u64 << 53) as f64)
+        {
+            return Err(Fault::InvalidLaw);
+        }
         if self.version.is_empty() {
             return Err(Fault::InvalidLaw);
         }
@@ -215,7 +251,6 @@ impl DynamicsLaw {
             }
         }
         for v in [
-            self.baseline_weight,
             self.variance_weight,
             self.duration_weight,
             self.change_prior_weight,

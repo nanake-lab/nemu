@@ -1,0 +1,272 @@
+{
+  "status": "D_proxy_technical_stop",
+  "prereg": "v2 D only",
+  "frozen_public_head": "ea8d586c123d1ee657bc6c50e31082e80aa99859",
+  "frozen_private_head": "578674cc756f8f31e3555d8754175985d77296ac",
+  "proxy": {
+    "planned": 36,
+    "attempts": 2,
+    "complete_http_responses": 2,
+    "accepted_labels": 0,
+    "technical_missing": 2,
+    "not_run": 34,
+    "retries": 0,
+    "reason": "organization_mismatch",
+    "diagnostic": [
+      {
+        "slot": "D01-zh",
+        "model_matches": true,
+        "tier_matches": true,
+        "finish": "stop",
+        "organization_header_format": "user-prefixed",
+        "expected_billing_identifier_format": "org-prefixed",
+        "accepted_reference_label": false
+      },
+      {
+        "slot": "D01-en",
+        "model_matches": true,
+        "tier_matches": true,
+        "finish": "stop",
+        "organization_header_format": "user-prefixed",
+        "expected_billing_identifier_format": "org-prefixed",
+        "accepted_reference_label": false
+      }
+    ]
+  },
+  "evaluation": {
+    "Qwen3.5-4B": {
+      "Z": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      },
+      "A-ref": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      },
+      "A-pipeline": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      },
+      "M-ref": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      }
+    },
+    "gpt-6.1-terra": {
+      "Z": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      },
+      "A-ref": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      },
+      "A-pipeline": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      },
+      "M-ref": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      }
+    },
+    "deepseek-flash": {
+      "Z": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      },
+      "A-ref": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      },
+      "A-pipeline": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      },
+      "M-ref": {
+        "planned": 36,
+        "not_run": 36,
+        "semantic_N": 33,
+        "C": 0,
+        "W": 0,
+        "U": 33,
+        "direction_metrics": "not_estimable_no_reference_or_evaluation",
+        "per_language_N": {
+          "zh": 11,
+          "en": 11,
+          "ja": 11
+        }
+      }
+    }
+  },
+  "semantic_exclusions": {
+    "roots": [
+      "D08"
+    ],
+    "views": 3,
+    "reason": "U_spec"
+  },
+  "proxy_language_flow": {
+    "zh": {
+      "planned": 12,
+      "received": 1,
+      "accepted": 0,
+      "missing_or_not_run": 12
+    },
+    "en": {
+      "planned": 12,
+      "received": 1,
+      "accepted": 0,
+      "missing_or_not_run": 12
+    },
+    "ja": {
+      "planned": 12,
+      "received": 0,
+      "accepted": 0,
+      "missing_or_not_run": 12
+    }
+  },
+  "reference_sources": {
+    "proxy_agreed": 0,
+    "user_adjudicated": 0,
+    "unresolved_views": 36
+  },
+  "adjudication": {
+    "root_cards": 0,
+    "reason": "no accepted proxy labels; technical failures are not user semantic adjudication"
+  },
+  "usage": {
+    "prompt_tokens": 1555,
+    "completion_tokens": 1752,
+    "reasoning_tokens": 1267,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0
+  },
+  "conservative_usd": 0.0126475,
+  "standard_usage_estimate_usd": 0.010315,
+  "standard_usage_estimate_is_invoice": false,
+  "unknown_cost_reservations": 0,
+  "peak_reserved_usd": 0.20992,
+  "active_seconds": 14.46799999999348,
+  "hard_caps_usd": {
+    "openai": 20,
+    "deepseek": 4
+  },
+  "gpu_minutes": 0,
+  "gpu_window_requested": false,
+  "gpu_reason": "technical stop before B; no usable evaluation inputs yet",
+  "H_calls": 0,
+  "in_flight": 0,
+  "proxy_warning": "代理判断，不是人工金标准；本次没有形成可接受的代理标签",
+  "boundary": "No 4B ability, a(e), language, hard-case or mu accuracy conclusion is available."
+}

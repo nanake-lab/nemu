@@ -4,6 +4,7 @@
 - 分支：`task/DESIGN-LAW-01`；阅读与开工基线：`origin/main` 的 `8fed313b7ca9c31423d0ad442789ddef7e6b063b`。
 - 写入范围：仅 `reports/DESIGN-LAW-01/` 和本新建请求文件。不改代码、契约、规格正文、已发布规律、配置或 cards.json；不实现任何选项。
 - 认领状态：设计交付及选型已记录，交叉审查阻塞 1 已响应、待原方复审；用户于 2026-11-03 已选 D09 截断归属 A1。[PR #131](https://github.com/nanake-lab/nemu/pull/131) 保持 `needs-user` 草稿，未实施或运行新机制。
+  > **状态更新（2026-11-11）：** PR #131 已合并；用户的选择已由 ADR 0035（PR #138）写成精确定义。依据：[清点报告](../../reports/DOC-ARCHIVE-INVENTORY/REPORT.md) 第 3 节 D3。
 
 ## 用户已定目标
 
