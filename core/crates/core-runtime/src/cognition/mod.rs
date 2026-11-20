@@ -13,7 +13,8 @@ pub struct RoundEffects {
     pub next_input: CognitiveInput,
     /// Local action gate supplies identity and the actual request, if proposed.
     pub action: Option<(String, ObjectRef)>,
-    /// r and M from the bound versioned deployment fuse resource (ADR 0026 §6).
+    /// The caller supplies r and M. Persistent deployment must resolve them
+    /// from the versioned fuse resource (ADR 0026 §6).
     pub actions_per_round: usize,
     pub inflight_capacity: usize,
 }

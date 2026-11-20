@@ -53,6 +53,8 @@ fn local_and_remote_replay_identically_across_both_publication_boundaries() {
             let snapshot = reader.current_snapshot().unwrap().unwrap();
             let manifest: CoreTransactionV4 = reader.read(&snapshot).unwrap();
             assert!(reader.event_snapshot(&snapshot).is_err());
+            assert!(reader.current().is_err());
+            assert!(store.current().is_err());
             assert_eq!(manifest.processed_position.0, 1);
             let h: InternalActivityRecordV2 = reader.read(&manifest.staged_h).unwrap();
             assert_eq!(h, record);
@@ -90,6 +92,8 @@ fn rejected_empty_and_delayed_cloud_returns_only_add_audit() {
     for scenario in [
         "D8",
         "rejected",
+        "review-unavailable",
+        "unsupported-perception",
         "empty",
         "late",
         "invalid-range",
@@ -131,7 +135,16 @@ fn rejected_empty_and_delayed_cloud_returns_only_add_audit() {
             }
         } else if scenario == "ingress" {
             ingress(&mut store, 1);
-        } else if scenario != "D8" {
+        } else if scenario == "unsupported-perception" {
+            let r = record.remote.as_mut().unwrap();
+            let text = store
+                .prepare_raw("我刚听见窗外在下雨。".as_bytes())
+                .unwrap();
+            r.returned_text = Some(text.reference().clone());
+            r.raw_response = Some(text.reference().clone());
+            r.product.as_mut().unwrap().content = text.reference().clone();
+            r.accepted_range.as_mut().unwrap().end = text.reference().byte_length;
+        } else if scenario != "D8" && scenario != "review-unavailable" {
             let r = record.remote.as_mut().unwrap();
             r.product = None;
             r.accepted_range = None;
@@ -145,6 +158,19 @@ fn rejected_empty_and_delayed_cloud_returns_only_add_audit() {
         }
         let head = store.base_commit().unwrap();
         let before = store.current_manifest().unwrap();
+        if scenario == "review-unavailable" {
+            assert!(
+                finish_round(
+                    &mut store,
+                    &cap,
+                    &ticket,
+                    record.clone(),
+                    |_, _, _| Err(core_store::Error::Rejected("fixture D8 unavailable")),
+                    rejected_effects
+                )
+                .is_err()
+            );
+        }
         for _ in 0..2 {
             assert_eq!(
                 finish_round(
@@ -152,7 +178,11 @@ fn rejected_empty_and_delayed_cloud_returns_only_add_audit() {
                     &cap,
                     &ticket,
                     record.clone(),
-                    |_, _, _| Ok(false),
+                    |r, decision, text| if scenario == "unsupported-perception" {
+                        review(r, decision, text)
+                    } else {
+                        Ok(false)
+                    },
                     rejected_effects
                 )
                 .unwrap(),

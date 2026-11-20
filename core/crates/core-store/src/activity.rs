@@ -50,21 +50,22 @@ pub(crate) fn check_record(objects: &Objects, record: &InternalActivityRecordV2)
         &serde_json::to_value(record)?,
         objects.config.encoding,
     )?;
-    if let Some(remote) = &record.remote {
-        if let Some(response) = &remote.raw_response {
-            require(
-                response.object_type == crate::RAW_BYTES,
-                "response requires an exact byte resource",
-            )?;
-        }
-        if let Some(request) = &remote.sent_request {
-            require(
-                request.object_type == crate::RAW_BYTES
-                    && Some(&request.digest) == remote.request_sha256.as_ref(),
-                "actual request identity mismatch",
-            )?;
-            crate::raw::request_body(&objects.read(request)?)?;
-        }
+    let Some(remote) = &record.remote else {
+        return Ok(());
+    };
+    if let Some(response) = &remote.raw_response {
+        require(
+            response.object_type == crate::RAW_BYTES,
+            "response requires an exact byte resource",
+        )?;
+    }
+    if let Some(request) = &remote.sent_request {
+        require(
+            request.object_type == crate::RAW_BYTES
+                && Some(&request.digest) == remote.request_sha256.as_ref(),
+            "actual request identity mismatch",
+        )?;
+        crate::raw::request_body(&objects.read(request)?)?;
     }
     Ok(())
 }
@@ -282,10 +283,18 @@ impl<L: LineageKind> Store<L> {
                     let text = self.objects.read(&product.content)?;
                     let text = std::str::from_utf8(&text)
                         .map_err(|_| Error::Rejected("invalid product UTF-8"))?;
-                    if review_d8(r, &self.objects.read(review)?, text)? {
-                        None
-                    } else {
-                        Some("rejected")
+                    match review_d8(r, &self.objects.read(review)?, text) {
+                        Ok(true) => None,
+                        Ok(false) => Some("rejected"),
+                        Err(error) => {
+                            crate::activity_audit::record(
+                                self,
+                                &h,
+                                &b.request_id,
+                                "review-unavailable",
+                            )?;
+                            return Err(error);
+                        }
                     }
                 }
             }

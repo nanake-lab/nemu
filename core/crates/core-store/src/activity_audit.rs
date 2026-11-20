@@ -120,6 +120,7 @@ pub(crate) fn rebuild(db: &Connection, projected: &Connection, objects: &Objects
                     "no-text",
                     "incomplete",
                     "invalid-content",
+                    "review-unavailable",
                 ]
                 .iter()
                 .any(|why| decision(&record, why, limits).is_ok_and(|d| d == stored)),

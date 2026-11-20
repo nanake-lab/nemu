@@ -31,6 +31,13 @@ fn sys17_v2_v4_event_history_and_rollback_preserve_bytes() {
         assert!(committed.is_err());
         // SQL publication is authoritative even when no success reached the caller.
         assert!(migrate(target).is_err());
+        let db = rusqlite::Connection::open_with_flags(
+            root.store_path("mixed").unwrap().join("store.sqlite"),
+            rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY,
+        )
+        .unwrap();
+        assert_eq!(crate::migration::format(&db).unwrap(), target);
+        drop(db);
         let r = Reader::<Rehearsal>::open_temporary(&root, "mixed", config()).unwrap();
         assert_eq!(r.current_snapshot().unwrap().unwrap(), original);
         assert_eq!(r.event_snapshot(&original).unwrap(), old);
