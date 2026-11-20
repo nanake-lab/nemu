@@ -11,7 +11,7 @@ import pytest
 from echo.bridge import from_json
 from echo.runtime import Limits, encode_canonical
 from echo.typed_api import from_value
-from echo.types import JHookBinding, Lineage, ObjectRef
+from echo.types import JActivationDtype, JHookBinding, Lineage, ObjectRef
 from nemu_model_adapter.resources import Publication, Unmodulated, canonical_ref, receive
 
 LIMITS = Limits(1048576, 4096, 32)
@@ -101,7 +101,7 @@ def test_unmodulated_without_fallback(fault: str) -> None:
     if fault == "model":
         h = replace(h, model=h.tokenizer)
     if fault == "dtype":
-        h = replace(h, width=h.width + 1)
+        h = replace(h, dtype=JActivationDtype.J_BFLOAT16)
     if fault in ("zero-policy", "formal"):
         p = replace(p, lineage=Lineage.REHEARSAL if fault == "zero-policy" else Lineage.LIFE)
     with pytest.raises(Unmodulated):

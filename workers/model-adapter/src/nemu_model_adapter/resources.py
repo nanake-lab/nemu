@@ -96,8 +96,6 @@ def receive(
         used = [d for d in receipt["directions"] if d["status"] == JDirectionStatus.J_INCLUDED]
         if publication.lineage != Lineage.EXPERIMENT and any(d["coefficient"] for d in used):
             raise Unmodulated("nonzero modulation outside experiment")
-        if validation["fixture"] and publication.lineage == Lineage.LIFE:
-            raise Unmodulated("fixture in life lineage")
         columns = {(d["kind"], d.get("tendency_id")): v["values"]
                    for d, v in zip(directions["directions"], vectors, strict=True)}
         delta = [0.0] * hook.width

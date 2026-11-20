@@ -22,6 +22,8 @@ on:
       - 'tools/**'
       - 'executors/codex-bridge/**'
       - 'workers/*/src/**'
+      - 'workers/model-adapter/native/**'
+      - 'workers/model-adapter/pyproject.toml'
       - 'services/*/src/**'
       - 'core/crates/core-store/**'
       - 'core/crates/gateway/**'
@@ -53,6 +55,8 @@ on:
       - 'tools/**'
       - 'executors/codex-bridge/**'
       - 'workers/*/src/**'
+      - 'workers/model-adapter/native/**'
+      - 'workers/model-adapter/pyproject.toml'
       - 'services/*/src/**'
       - 'core/crates/core-store/**'
       - 'core/crates/gateway/**'
@@ -180,6 +184,30 @@ jobs:
           "desktop=$($desktop.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
           "storage=$($storage.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
           "gateway=$($gateway.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          $carrier = $full -or (Test-Group @('^workers/model-adapter/(native|src)/', '^workers/model-adapter/pyproject\.toml$'))
+          "carrier=$($carrier.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+      - name: Check out fixed carrier headers
+        if: steps.scope.outputs.carrier == 'true'
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: ggml-org/llama.cpp
+          ref: 620d2225cc436ab0b001e3200e590e3b286ef9ab
+          path: .carrier-sdk
+          sparse-checkout: |
+            include
+            ggml/include
+            common
+            tools/mtmd
+          persist-credentials: false
+      - name: Build carrier against b11669 (CPU only)
+        if: steps.scope.outputs.carrier == 'true'
+        run: |
+          $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
+          $vs = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          & (Join-Path $vs 'Common7/Tools/Launch-VsDevShell.ps1') -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
+          $out = Join-Path 'D:/Dev/cache/ci-carrier' "$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          python workers/model-adapter/native/build.py --source .carrier-sdk --engine D:/Dev/cache/P0-10/llama.cpp/b11669 --output $out
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         if: steps.scope.outputs.desktop == 'true'
         with:
