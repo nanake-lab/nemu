@@ -865,6 +865,150 @@ impl ReviewVerdict {
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
+pub enum RemoteAttemptStatus {
+    REMOTE_ATTEMPT_COMPLETED = 1,
+    REMOTE_ATTEMPT_TRUNCATED = 2,
+    REMOTE_ATTEMPT_CANCELLED = 3,
+    REMOTE_ATTEMPT_SERVICE_FAULT = 4,
+    REMOTE_ATTEMPT_CONTENT_REFUSED = 5,
+    REMOTE_ATTEMPT_NOT_SENT = 6,
+}
+impl TryFrom<u32> for RemoteAttemptStatus { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::REMOTE_ATTEMPT_COMPLETED),
+2 => Ok(Self::REMOTE_ATTEMPT_TRUNCATED),
+3 => Ok(Self::REMOTE_ATTEMPT_CANCELLED),
+4 => Ok(Self::REMOTE_ATTEMPT_SERVICE_FAULT),
+5 => Ok(Self::REMOTE_ATTEMPT_CONTENT_REFUSED),
+6 => Ok(Self::REMOTE_ATTEMPT_NOT_SENT),
+_ => Err("unknown enum".into()), }}}
+impl From<RemoteAttemptStatus> for u32 {fn from(v:RemoteAttemptStatus)->Self{v as u32}}
+impl RemoteAttemptStatus {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum TextAdoption {
+    TEXT_ADOPTION_FULL = 1,
+    TEXT_ADOPTION_RANGE = 2,
+    TEXT_ADOPTION_REJECTED = 3,
+    TEXT_ADOPTION_STALE = 4,
+    TEXT_ADOPTION_NO_TEXT = 5,
+}
+impl TryFrom<u32> for TextAdoption { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::TEXT_ADOPTION_FULL),
+2 => Ok(Self::TEXT_ADOPTION_RANGE),
+3 => Ok(Self::TEXT_ADOPTION_REJECTED),
+4 => Ok(Self::TEXT_ADOPTION_STALE),
+5 => Ok(Self::TEXT_ADOPTION_NO_TEXT),
+_ => Err("unknown enum".into()), }}}
+impl From<TextAdoption> for u32 {fn from(v:TextAdoption)->Self{v as u32}}
+impl TextAdoption {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum RemoteTextMode {
+    REMOTE_TEXT_INTERNAL_TEXT_ONLY_THINKING_OFF = 1,
+}
+impl TryFrom<u32> for RemoteTextMode { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::REMOTE_TEXT_INTERNAL_TEXT_ONLY_THINKING_OFF),
+_ => Err("unknown enum".into()), }}}
+impl From<RemoteTextMode> for u32 {fn from(v:RemoteTextMode)->Self{v as u32}}
+impl RemoteTextMode {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum RelationFact {
+    REL_FACT_REPLY = 1,
+    REL_FACT_QUOTATION = 2,
+    REL_FACT_PARAPHRASE = 3,
+    REL_FACT_SOURCE_LOCATOR = 4,
+    REL_FACT_CORRECTION = 5,
+    REL_FACT_RETRACTION = 6,
+    REL_FACT_CONTRADICTION_ANNOTATION = 7,
+    REL_FACT_TEACHING_ANNOTATION = 8,
+    REL_FACT_ACCEPTED_FALSIFICATION = 9,
+    REL_FACT_SAME_EVENT_HINT = 10,
+    REL_FACT_CONTACT = 11,
+    REL_FACT_EVIDENCE_MEMBER = 12,
+    REL_FACT_GOVERNED_MERGE = 13,
+    REL_FACT_REINTERPRETATION = 14,
+    REL_FACT_SEMANTIC_LINK = 15,
+    REL_FACT_PROPOSAL_SOURCE = 16,
+    REL_FACT_EFFECT_PROVENANCE = 17,
+    REL_FACT_MIGRATION = 18,
+    REL_FACT_TRANSACTION_MEMBER = 19,
+    REL_FACT_LEDGER_REFERENCE = 20,
+    REL_FACT_ACTIVITY_PREVIOUS = 21,
+    REL_FACT_MATERIAL_READ = 22,
+    REL_FACT_PRODUCT_SOURCE = 23,
+    REL_FACT_ACTION_DEPENDENCY = 24,
+    REL_FACT_OUTPUT_DELIVERY = 25,
+    REL_FACT_PERMISSION_SNAPSHOT = 26,
+    REL_FACT_USE_REVOKED = 27,
+    REL_FACT_UNRESOLVED = 28,
+}
+impl TryFrom<u32> for RelationFact { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::REL_FACT_REPLY),
+2 => Ok(Self::REL_FACT_QUOTATION),
+3 => Ok(Self::REL_FACT_PARAPHRASE),
+4 => Ok(Self::REL_FACT_SOURCE_LOCATOR),
+5 => Ok(Self::REL_FACT_CORRECTION),
+6 => Ok(Self::REL_FACT_RETRACTION),
+7 => Ok(Self::REL_FACT_CONTRADICTION_ANNOTATION),
+8 => Ok(Self::REL_FACT_TEACHING_ANNOTATION),
+9 => Ok(Self::REL_FACT_ACCEPTED_FALSIFICATION),
+10 => Ok(Self::REL_FACT_SAME_EVENT_HINT),
+11 => Ok(Self::REL_FACT_CONTACT),
+12 => Ok(Self::REL_FACT_EVIDENCE_MEMBER),
+13 => Ok(Self::REL_FACT_GOVERNED_MERGE),
+14 => Ok(Self::REL_FACT_REINTERPRETATION),
+15 => Ok(Self::REL_FACT_SEMANTIC_LINK),
+16 => Ok(Self::REL_FACT_PROPOSAL_SOURCE),
+17 => Ok(Self::REL_FACT_EFFECT_PROVENANCE),
+18 => Ok(Self::REL_FACT_MIGRATION),
+19 => Ok(Self::REL_FACT_TRANSACTION_MEMBER),
+20 => Ok(Self::REL_FACT_LEDGER_REFERENCE),
+21 => Ok(Self::REL_FACT_ACTIVITY_PREVIOUS),
+22 => Ok(Self::REL_FACT_MATERIAL_READ),
+23 => Ok(Self::REL_FACT_PRODUCT_SOURCE),
+24 => Ok(Self::REL_FACT_ACTION_DEPENDENCY),
+25 => Ok(Self::REL_FACT_OUTPUT_DELIVERY),
+26 => Ok(Self::REL_FACT_PERMISSION_SNAPSHOT),
+27 => Ok(Self::REL_FACT_USE_REVOKED),
+28 => Ok(Self::REL_FACT_UNRESOLVED),
+_ => Err("unknown enum".into()), }}}
+impl From<RelationFact> for u32 {fn from(v:RelationFact)->Self{v as u32}}
+impl RelationFact {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum PresentationChannel {
+    PRESENTATION_DISPLAY = 1,
+    PRESENTATION_AUDIO = 2,
+}
+impl TryFrom<u32> for PresentationChannel { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::PRESENTATION_DISPLAY),
+2 => Ok(Self::PRESENTATION_AUDIO),
+_ => Err("unknown enum".into()), }}}
+impl From<PresentationChannel> for u32 {fn from(v:PresentationChannel)->Self{v as u32}}
+impl PresentationChannel {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
 pub enum Lang {
     ZH = 1,
     EN = 2,
@@ -3113,6 +3257,194 @@ pub r#verifiable: bool,
 pub r#source_key: String,
 }
 impl super::WireMessage for EventAttributesRecord {const NAME: &'static str = "EventAttributesRecord";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.utf8-range`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Utf8Range {
+pub r#schema_version: u32,
+pub r#start: DecimalU64,
+pub r#end: DecimalU64,
+}
+impl super::WireMessage for Utf8Range {const NAME: &'static str = "Utf8Range";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.record-version`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RecordVersion {
+pub r#schema_version: u32,
+pub r#branch_id: String,
+pub r#record_id: String,
+pub r#content: ObjectRef,
+}
+impl super::WireMessage for RecordVersion {const NAME: &'static str = "RecordVersion";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.quote-layer`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct QuoteLayer {
+pub r#schema_version: u32,
+pub r#source: RecordVersion,
+pub r#visible: Utf8Range,
+pub r#principal_id: String,
+pub r#identity_evidence: ObjectRef,
+}
+impl super::WireMessage for QuoteLayer {const NAME: &'static str = "QuoteLayer";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.speaker-attribution`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SpeakerAttribution {
+pub r#schema_version: u32,
+pub r#layers: Vec<QuoteLayer>,
+pub r#governance: ObjectRef,
+}
+impl super::WireMessage for SpeakerAttribution {const NAME: &'static str = "SpeakerAttribution";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.record-relation`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RecordRelation {
+pub r#schema_version: u32,
+pub r#kind: RelationFact,
+pub r#origin: RecordVersion,
+pub r#target: RecordVersion,
+pub r#purpose: String,
+pub r#effective_commit: String,
+pub r#governance: ObjectRef,
+}
+impl super::WireMessage for RecordRelation {const NAME: &'static str = "RecordRelation";}
+/// ADR 0045 §3; ADR 0046; frozen tag `echo.relation-set`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RelationSet {
+pub r#schema_version: u32,
+pub r#endpoint: RecordVersion,
+pub r#purpose: String,
+pub r#frontier: String,
+pub r#relations: Vec<RecordRelation>,
+}
+impl super::WireMessage for RelationSet {const NAME: &'static str = "RelationSet";}
+/// ADR 0045 §3; ADR 0046; frozen tag `echo.relation-query-receipt`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RelationQueryReceipt {
+pub r#schema_version: u32,
+pub r#result: RelationSet,
+pub r#manifest: ObjectRef,
+pub r#expected_count: DecimalU64,
+}
+impl super::WireMessage for RelationQueryReceipt {const NAME: &'static str = "RelationQueryReceipt";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.remote-cognitive-receipt`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RemoteCognitiveReceipt {
+pub r#schema_version: u32,
+pub r#binding: CognitionBinding,
+pub r#provider: String,
+pub r#requested_model: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#returned_model: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#provider_revision: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#model_sha256: Option<HexBytes>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#tokenizer_sha256: Option<HexBytes>,
+pub r#mode: RemoteTextMode,
+pub r#parameters: ObjectRef,
+pub r#format: ObjectRef,
+pub r#mapping: ObjectRef,
+pub r#meter: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#capacity: Option<DecimalU64>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#output_reserve: Option<DecimalU64>,
+pub r#input_manifest: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#sent_request: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#request_sha256: Option<HexBytes>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#raw_response: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#returned_text: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#finish_reason: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#usage: Option<ObjectRef>,
+pub r#status: RemoteAttemptStatus,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason: Option<String>,
+pub r#adoption: TextAdoption,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#accepted_range: Option<Utf8Range>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#product: Option<CognitiveMaterial>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#review: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#local_pause_reason: Option<String>,
+}
+impl super::WireMessage for RemoteCognitiveReceipt {const NAME: &'static str = "RemoteCognitiveReceipt";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.internal-activity-record-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct InternalActivityRecordV2 {
+pub r#schema_version: u32,
+pub r#record_id: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#previous: Option<ObjectRef>,
+pub r#started_at_ns: DecimalU64,
+pub r#finished_at_ns: DecimalU64,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#local: Option<CognitiveResultAndReceipt>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#remote: Option<RemoteCognitiveReceipt>,
+}
+impl super::WireMessage for InternalActivityRecordV2 {const NAME: &'static str = "InternalActivityRecordV2";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.internal-activity-commit-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct InternalActivityCommitV2 {
+pub r#schema_version: u32,
+pub r#binding: CognitionBinding,
+pub r#interpretations: Vec<ObjectRef>,
+pub r#activity: InternalActivityRecordV2,
+}
+impl super::WireMessage for InternalActivityCommitV2 {const NAME: &'static str = "InternalActivityCommitV2";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.transaction-v4`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CoreTransactionV4 {
+pub r#schema_version: u32,
+pub r#staged_h: ObjectRef,
+pub r#staged_x: ObjectRef,
+pub r#staged_r: ObjectRef,
+pub r#staged_theta: ObjectRef,
+pub r#staged_l: ObjectRef,
+pub r#staged_q: ObjectRef,
+pub r#staged_u: ObjectRef,
+pub r#processed_position: DecimalU64,
+pub r#anchor_time_ns: DecimalU64,
+pub r#staged_concepts: Vec<ObjectRef>,
+pub r#accepted_results: Vec<ObjectRef>,
+pub r#audit_refs: Vec<ObjectRef>,
+pub r#staged_ledger: Vec<LedgerEntry>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#event_binding: Option<ProposalBindingV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#activity_commit: Option<InternalActivityCommitV2>,
+}
+impl super::WireMessage for CoreTransactionV4 {const NAME: &'static str = "CoreTransactionV4";}
+/// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.speech-delivery-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SpeechDeliveryV2 {
+pub r#schema_version: u32,
+pub r#action_id: String,
+pub r#output_id: String,
+pub r#status: DeliveryStatus,
+pub r#channel: PresentationChannel,
+pub r#presentation: RecordVersion,
+pub r#delivered: Vec<Utf8Range>,
+}
+impl super::WireMessage for SpeechDeliveryV2 {const NAME: &'static str = "SpeechDeliveryV2";}
 /// F 4; S 9; frozen tag `echo.event`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -4502,6 +4834,18 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "SameMatterAnnotation" => super::verify_typed::<SameMatterAnnotation>(value, limits),
 "ReinterpretationLink" => super::verify_typed::<ReinterpretationLink>(value, limits),
 "EventAttributesRecord" => super::verify_typed::<EventAttributesRecord>(value, limits),
+"Utf8Range" => super::verify_typed::<Utf8Range>(value, limits),
+"RecordVersion" => super::verify_typed::<RecordVersion>(value, limits),
+"QuoteLayer" => super::verify_typed::<QuoteLayer>(value, limits),
+"SpeakerAttribution" => super::verify_typed::<SpeakerAttribution>(value, limits),
+"RecordRelation" => super::verify_typed::<RecordRelation>(value, limits),
+"RelationSet" => super::verify_typed::<RelationSet>(value, limits),
+"RelationQueryReceipt" => super::verify_typed::<RelationQueryReceipt>(value, limits),
+"RemoteCognitiveReceipt" => super::verify_typed::<RemoteCognitiveReceipt>(value, limits),
+"InternalActivityRecordV2" => super::verify_typed::<InternalActivityRecordV2>(value, limits),
+"InternalActivityCommitV2" => super::verify_typed::<InternalActivityCommitV2>(value, limits),
+"CoreTransactionV4" => super::verify_typed::<CoreTransactionV4>(value, limits),
+"SpeechDeliveryV2" => super::verify_typed::<SpeechDeliveryV2>(value, limits),
 "EventEnvelope" => super::verify_typed::<EventEnvelope>(value, limits),
 "FactItem" => super::verify_typed::<FactItem>(value, limits),
 "FactProjection" => super::verify_typed::<FactProjection>(value, limits),

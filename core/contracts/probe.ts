@@ -9,6 +9,7 @@ import {
   checkJResources,
   checkJEnvelope,
 } from '../../packages/contracts/src/generated/echo/j_resources.js';
+import { checkSpeakThinkMessage } from '../../packages/contracts/src/generated/echo/speak_think.js';
 import { createInterface } from 'node:readline';
 import { fromJson, toJson } from '../../packages/contracts/src/generated/echo/bridge.js';
 import {
@@ -76,6 +77,7 @@ for await (const line of createInterface({ input: process.stdin })) {
     checkThetaMessage(q.name, v, q.limits);
     checkLawStateMessage(q.name, v, q.limits);
     checkCognitionMessage(q.name, v, q.limits);
+    checkSpeakThinkMessage(q.name, v, q.limits);
     checkJMessage(q.name, v, q.limits);
     console.log(
       JSON.stringify({

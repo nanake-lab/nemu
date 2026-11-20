@@ -236,6 +236,53 @@ class ReviewTrigger(IntEnum):
 class ReviewVerdict(IntEnum):
     LAW_CORRECT = 1
     LAW_INCORRECT = 2
+class RemoteAttemptStatus(IntEnum):
+    REMOTE_ATTEMPT_COMPLETED = 1
+    REMOTE_ATTEMPT_TRUNCATED = 2
+    REMOTE_ATTEMPT_CANCELLED = 3
+    REMOTE_ATTEMPT_SERVICE_FAULT = 4
+    REMOTE_ATTEMPT_CONTENT_REFUSED = 5
+    REMOTE_ATTEMPT_NOT_SENT = 6
+class TextAdoption(IntEnum):
+    TEXT_ADOPTION_FULL = 1
+    TEXT_ADOPTION_RANGE = 2
+    TEXT_ADOPTION_REJECTED = 3
+    TEXT_ADOPTION_STALE = 4
+    TEXT_ADOPTION_NO_TEXT = 5
+class RemoteTextMode(IntEnum):
+    REMOTE_TEXT_INTERNAL_TEXT_ONLY_THINKING_OFF = 1
+class RelationFact(IntEnum):
+    REL_FACT_REPLY = 1
+    REL_FACT_QUOTATION = 2
+    REL_FACT_PARAPHRASE = 3
+    REL_FACT_SOURCE_LOCATOR = 4
+    REL_FACT_CORRECTION = 5
+    REL_FACT_RETRACTION = 6
+    REL_FACT_CONTRADICTION_ANNOTATION = 7
+    REL_FACT_TEACHING_ANNOTATION = 8
+    REL_FACT_ACCEPTED_FALSIFICATION = 9
+    REL_FACT_SAME_EVENT_HINT = 10
+    REL_FACT_CONTACT = 11
+    REL_FACT_EVIDENCE_MEMBER = 12
+    REL_FACT_GOVERNED_MERGE = 13
+    REL_FACT_REINTERPRETATION = 14
+    REL_FACT_SEMANTIC_LINK = 15
+    REL_FACT_PROPOSAL_SOURCE = 16
+    REL_FACT_EFFECT_PROVENANCE = 17
+    REL_FACT_MIGRATION = 18
+    REL_FACT_TRANSACTION_MEMBER = 19
+    REL_FACT_LEDGER_REFERENCE = 20
+    REL_FACT_ACTIVITY_PREVIOUS = 21
+    REL_FACT_MATERIAL_READ = 22
+    REL_FACT_PRODUCT_SOURCE = 23
+    REL_FACT_ACTION_DEPENDENCY = 24
+    REL_FACT_OUTPUT_DELIVERY = 25
+    REL_FACT_PERMISSION_SNAPSHOT = 26
+    REL_FACT_USE_REVOKED = 27
+    REL_FACT_UNRESOLVED = 28
+class PresentationChannel(IntEnum):
+    PRESENTATION_DISPLAY = 1
+    PRESENTATION_AUDIO = 2
 class Lang(IntEnum):
     ZH = 1
     EN = 2
@@ -1444,6 +1491,124 @@ class EventAttributesRecord:
     self_narrative: bool
     verifiable: bool
     source_key: str
+@dataclass(frozen=True)
+class Utf8Range:
+    schema_version: int
+    start: int
+    end: int
+@dataclass(frozen=True)
+class RecordVersion:
+    schema_version: int
+    branch_id: str
+    record_id: str
+    content: ObjectRef
+@dataclass(frozen=True)
+class QuoteLayer:
+    schema_version: int
+    source: RecordVersion
+    visible: Utf8Range
+    principal_id: str
+    identity_evidence: ObjectRef
+@dataclass(frozen=True)
+class SpeakerAttribution:
+    schema_version: int
+    layers: list[QuoteLayer]
+    governance: ObjectRef
+@dataclass(frozen=True)
+class RecordRelation:
+    schema_version: int
+    kind: RelationFact
+    origin: RecordVersion
+    target: RecordVersion
+    purpose: str
+    effective_commit: str
+    governance: ObjectRef
+@dataclass(frozen=True)
+class RelationSet:
+    schema_version: int
+    endpoint: RecordVersion
+    purpose: str
+    frontier: str
+    relations: list[RecordRelation]
+@dataclass(frozen=True)
+class RelationQueryReceipt:
+    schema_version: int
+    result: RelationSet
+    manifest: ObjectRef
+    expected_count: int
+@dataclass(frozen=True)
+class RemoteCognitiveReceipt:
+    schema_version: int
+    binding: CognitionBinding
+    provider: str
+    requested_model: str
+    returned_model: str | None
+    provider_revision: str | None
+    model_sha256: bytes | None
+    tokenizer_sha256: bytes | None
+    mode: RemoteTextMode
+    parameters: ObjectRef
+    format: ObjectRef
+    mapping: ObjectRef
+    meter: ObjectRef
+    capacity: int | None
+    output_reserve: int | None
+    input_manifest: ObjectRef
+    sent_request: ObjectRef | None
+    request_sha256: bytes | None
+    raw_response: ObjectRef | None
+    returned_text: ObjectRef | None
+    finish_reason: str | None
+    usage: ObjectRef | None
+    status: RemoteAttemptStatus
+    reason: str | None
+    adoption: TextAdoption
+    accepted_range: Utf8Range | None
+    product: CognitiveMaterial | None
+    review: ObjectRef | None
+    local_pause_reason: str | None
+@dataclass(frozen=True)
+class InternalActivityRecordV2:
+    schema_version: int
+    record_id: str
+    previous: ObjectRef | None
+    started_at_ns: int
+    finished_at_ns: int
+    local: CognitiveResultAndReceipt | None
+    remote: RemoteCognitiveReceipt | None
+@dataclass(frozen=True)
+class InternalActivityCommitV2:
+    schema_version: int
+    binding: CognitionBinding
+    interpretations: list[ObjectRef]
+    activity: InternalActivityRecordV2
+@dataclass(frozen=True)
+class CoreTransactionV4:
+    schema_version: int
+    staged_h: ObjectRef
+    staged_x: ObjectRef
+    staged_r: ObjectRef
+    staged_theta: ObjectRef
+    staged_l: ObjectRef
+    staged_q: ObjectRef
+    staged_u: ObjectRef
+    processed_position: int
+    anchor_time_ns: int
+    staged_concepts: list[ObjectRef]
+    accepted_results: list[ObjectRef]
+    audit_refs: list[ObjectRef]
+    staged_ledger: list[LedgerEntry]
+    event_binding: ProposalBindingV2 | None
+    activity_commit: InternalActivityCommitV2 | None
+@dataclass(frozen=True)
+class SpeechDeliveryV2:
+    schema_version: int
+    action_id: str
+    output_id: str
+    status: DeliveryStatus
+    channel: PresentationChannel
+    presentation: RecordVersion
+    delivered: list[Utf8Range]
 @dataclass(frozen=True)
 class EventEnvelope:
     schema_version: int
