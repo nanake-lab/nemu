@@ -1,0 +1,168 @@
+name: CI-SPEED-01 hosted Windows trial
+# Task-branch experiment. Production Windows jobs do not depend on this trial.
+on:
+  push:
+    branches: [task/CI-SPEED-01]
+    paths: ['.github/workflows/ci-speed-windows-trial.yml']
+permissions:
+  contents: read
+jobs:
+  storage:
+    name: "W02 hosted trial (${{ matrix.sample }})"
+    if: github.repository == 'nanake-lab/nemu' && github.actor == github.repository_owner && github.triggering_actor == github.repository_owner
+    runs-on: windows-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        sample: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          lfs: true
+          persist-credentials: false
+      - name: Record runner and scratch volume
+        run: |
+          "image=$env:ImageOS/$env:ImageVersion processors=$env:NUMBER_OF_PROCESSORS"
+          Get-Volume -DriveLetter ([IO.Path]::GetPathRoot($env:RUNNER_TEMP).Substring(0, 1)) |
+            Select-Object FileSystem, SizeRemaining
+      - name: W02 NTFS storage checks
+        working-directory: core
+        run: |
+          . ./../tools/scaffold/windows-evidence-text.ps1
+          $evidence = Join-Path $env:RUNNER_TEMP "w02-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          New-Item -ItemType Directory -Path $evidence -Force | Out-Null
+          "NEMU_W02_EVIDENCE=$evidence" >> $env:GITHUB_ENV
+          rustup show 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'toolchain.log')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo clippy -p core-store --all-targets --locked -- -D warnings 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'clippy.log')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo test -p core-store --locked -- --test-threads=1 --nocapture 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'tests.log')
+          exit $LASTEXITCODE
+      # Retry only the upload: W02 logs stay in the same run-specific directory.
+      # The final gate below is mandatory; exhausted retries must still fail CI.
+      - name: Upload W02 evidence (attempt 1)
+        id: w02_upload_1
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' }}
+        continue-on-error: true
+        timeout-minutes: 6
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}-s${{ matrix.sample }}
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
+          if-no-files-found: error
+      - name: Wait before W02 upload retry 2
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' }}
+        run: Start-Sleep -Seconds 20
+      - name: Upload W02 evidence (attempt 2)
+        id: w02_upload_2
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' }}
+        continue-on-error: true
+        timeout-minutes: 6
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}-s${{ matrix.sample }}-retry-2
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
+          if-no-files-found: error
+      - name: Wait before W02 upload retry 3
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' && steps.w02_upload_2.outcome != 'success' }}
+        run: Start-Sleep -Seconds 40
+      - name: Upload W02 evidence (attempt 3)
+        id: w02_upload_3
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() && env.NEMU_W02_EVIDENCE != '' && steps.w02_upload_1.outcome != 'success' && steps.w02_upload_2.outcome != 'success' }}
+        continue-on-error: true
+        timeout-minutes: 6
+        with:
+          name: windows-P5-02-${{ github.run_id }}-${{ github.run_attempt }}-s${{ matrix.sample }}-retry-3
+          path: ${{ env.NEMU_W02_EVIDENCE }}/
+          if-no-files-found: error
+      - name: Require W02 evidence upload
+        if: always() && env.NEMU_W02_EVIDENCE != ''
+        env:
+          UPLOAD_1_OUTCOME: ${{ steps.w02_upload_1.outcome }}
+          UPLOAD_1_ID: ${{ steps.w02_upload_1.outputs.artifact-id }}
+          UPLOAD_2_OUTCOME: ${{ steps.w02_upload_2.outcome }}
+          UPLOAD_2_ID: ${{ steps.w02_upload_2.outputs.artifact-id }}
+          UPLOAD_3_OUTCOME: ${{ steps.w02_upload_3.outcome }}
+          UPLOAD_3_ID: ${{ steps.w02_upload_3.outputs.artifact-id }}
+        run: |
+          $outcomes = @($env:UPLOAD_1_OUTCOME, $env:UPLOAD_2_OUTCOME, $env:UPLOAD_3_OUTCOME)
+          $artifactIds = @($env:UPLOAD_1_ID, $env:UPLOAD_2_ID, $env:UPLOAD_3_ID)
+          for ($attempt = 0; $attempt -lt $outcomes.Count; $attempt++) {
+            if ($outcomes[$attempt] -eq 'success' -and $artifactIds[$attempt] -match '^[1-9][0-9]*$') {
+              "W02 evidence uploaded: attempt $($attempt + 1), artifact $($artifactIds[$attempt])" >> $env:GITHUB_STEP_SUMMARY
+              exit 0
+            }
+          }
+          throw 'W02 evidence upload did not succeed after three attempts; retained local logs do not replace an uploaded artifact.'
+
+  gateway:
+    name: "W18 hosted trial (${{ matrix.sample }})"
+    if: github.repository == 'nanake-lab/nemu' && github.actor == github.repository_owner && github.triggering_actor == github.repository_owner
+    runs-on: windows-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        sample: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          lfs: true
+          persist-credentials: false
+      - name: Record runner and scratch volume
+        run: |
+          "image=$env:ImageOS/$env:ImageVersion processors=$env:NUMBER_OF_PROCESSORS"
+          Get-Volume -DriveLetter ([IO.Path]::GetPathRoot($env:RUNNER_TEMP).Substring(0, 1)) |
+            Select-Object FileSystem, SizeRemaining
+      - name: W18 gateway Windows components (temporary stores only)
+        working-directory: core
+        run: |
+          . ./../tools/scaffold/windows-evidence-text.ps1
+          $evidence = Join-Path $env:RUNNER_TEMP "w18-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          New-Item -ItemType Directory -Path $evidence -Force | Out-Null
+          "NEMU_W18_EVIDENCE=$evidence" >> $env:GITHUB_ENV
+          $env:NEMU_W18_EVIDENCE_DIR = $evidence
+          cargo clippy -p gateway --all-targets --locked -- -D warnings 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'clippy.log')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo test -p gateway --locked -- --test-threads=1 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'tests.log')
+          exit $LASTEXITCODE
+      - name: Measure SYS01 r2 wait in an instrumented repeat (same deadline)
+        working-directory: core
+        run: |
+          . ./../tools/scaffold/windows-evidence-text.ps1
+          $test = 'crates/gateway/src/tests/service/acceptance.rs'
+          $source = Get-Content -Raw -LiteralPath $test
+          $anchor = '        assert_eq!(peer.reply(&r2).await.stage, ReceiptStage::CORE_COMMITTED);'
+          if ([regex]::Matches($source, [regex]::Escape($anchor)).Count -ne 1) {
+            throw 'The SYS01 r2 anchor changed. Review the probe before measuring again.'
+          }
+          $source.Replace($anchor, @"
+                  let r2_started = std::time::Instant::now();
+          $anchor
+                  println!("CI_SPEED_SYS01_R2_WAIT_MS={:.3}", r2_started.elapsed().as_secs_f64() * 1000.0);
+          "@) | Set-Content -LiteralPath $test -NoNewline -Encoding utf8
+          try {
+            cargo test -p gateway --locked -- --test-threads=1 --nocapture 2>&1 |
+              Protect-WindowsEvidenceText | Tee-Object (Join-Path $env:NEMU_W18_EVIDENCE 'sys01-probe.log')
+            if ($LASTEXITCODE -ne 0) { throw "Instrumented W18 repeat exited $LASTEXITCODE" }
+            $match = Select-String -LiteralPath (Join-Path $env:NEMU_W18_EVIDENCE 'sys01-probe.log') -Pattern '^CI_SPEED_SYS01_R2_WAIT_MS=(\d+\.\d+)$'
+            if (@($match).Count -ne 1) { throw 'Missing or ambiguous SYS01 measurement' }
+            $wait = [double]::Parse($match.Matches[0].Groups[1].Value, [cultureinfo]::InvariantCulture)
+            ('r2 wait: {0:F3} ms. Margin against the existing 10 s deadline: {1:F3} ms.' -f $wait, (10000 - $wait)) >> $env:GITHUB_STEP_SUMMARY
+          } finally {
+            git restore -- $test
+          }
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always() && env.NEMU_W18_EVIDENCE != ''
+        with:
+          name: windows-P5-03-${{ github.run_id }}-${{ github.run_attempt }}-s${{ matrix.sample }}
+          path: ${{ env.NEMU_W18_EVIDENCE }}/
+          if-no-files-found: error
