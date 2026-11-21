@@ -1,4 +1,9 @@
-"""Read partial-delivery evidence from main, never from the checked-out branch."""
+"""Read partial-delivery evidence from main, never from the checked-out branch.
+
+Ordinary code cards do not require REPORT.md (AGENTS.md section 6); when
+REPORT.md is absent, partial delivery depends only on BLOCKED.md here and on
+build_status.py's n/m split-PR rules, without raising.
+"""
 
 from __future__ import annotations
 
@@ -39,10 +44,12 @@ def unresolved(text: str) -> str:
     return "\n".join(lines)
 
 
-def delivery_waiting(cid: str, report: str, blocked: str) -> list[str] | None:
+def delivery_waiting(
+    cid: str, report: str | None, blocked: str | None
+) -> list[str] | None:
     """None means complete; a list supplies the existing board's waiting column."""
-    current = current_section(report)
-    pending = unresolved(blocked)
+    current = current_section(report or "")
+    pending = unresolved(blocked or "")
     partial = re.search(r"部分(?:交付|完成|实现)", current)
     if not partial and not pending:
         return None
