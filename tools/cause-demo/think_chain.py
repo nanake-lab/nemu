@@ -11,7 +11,7 @@ import sys
 from typing import Any
 
 from chat import append_session_log, cargo_env, repo_root, run_assembler
-from check_thought import check, complete_response, external_records
+from check_thought import check, complete_response, external_records, own_thoughts
 from think import (CACHE, CHECK_RUN_DIR, PLAN_RUN_DIR, TIME_FORMAT, append_thought,
                    deepseek_sample, projection_payload, thought_request)
 from think_plan import ThoughtPlan
@@ -104,11 +104,17 @@ def run_chains(
                     check_entry = dict(kind="check_request", round=index + 1, request=body)
                     return recorded_sample(path, prior[path], check_entry, api_key)
 
-                result = check(sample["text"], external_records(payload["records"][:-1], binding),
-                               checker=checker, checker_think=checker_think, send=send_check)
+                result = check(
+                    sample["text"], external_records(payload["records"][:-1], binding),
+                    checker=checker, checker_think=checker_think,
+                    now=at if checker == "v3" else None,
+                    own_thoughts=(own_thoughts(payload["records"][:-1], binding)
+                                  if checker == "v3" else None),
+                    send=send_check,
+                )
                 blocked = result["blocked"]
                 decision = dict(kind="decision", round=index + 1, blocked=blocked, claims=result["claims"])
-                if checker == "v2":
+                if checker in ("v2", "v3"):
                     decision["out_of_bounds"] = result["out_of_bounds"]
                     decision["voided_claims"] = result["voided_claims"]
                 if prior[path]:
@@ -144,7 +150,7 @@ def main() -> int:
     parser.add_argument("--thinker", choices=("deepseek",), default="deepseek")
     parser.add_argument("--ds-think", choices=("off",), default="off")
     parser.add_argument("--check", action="store_true", help="独立核对整条念头，通过后才写回")
-    parser.add_argument("--checker", choices=("v1", "v2"), default="v1", help="独立核对口径")
+    parser.add_argument("--checker", choices=("v1", "v2", "v3"), default="v1", help="独立核对口径")
     parser.add_argument("--checker-think", choices=("off", "high"), default="off", help="独立核对思考档位")
     parser.add_argument("--plan2", action="store_true")
     parser.add_argument("--chains", type=int, help="同一 --mode 下的独立链数")
