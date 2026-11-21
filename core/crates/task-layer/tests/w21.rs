@@ -61,6 +61,9 @@ fn binding(task: &TaskInput) -> Binding {
 
 struct Codec;
 impl SpeechCodec for Codec {
+    fn output_reserve(&self, tokens: u64) -> Result<u64, String> {
+        Ok(tokens)
+    }
     fn encode(
         &self,
         p: &cp::RequestPlan,
@@ -86,7 +89,7 @@ fn material(task: &TaskInput) -> CloudMaterial<'static> {
     };
     CloudMaterial {
         prefix: "h1".into(),
-        snapshot_id: "s".into(),
+        bound: binding(task),
         latest,
         settings: SpeechSettings::default(),
         samples: None,
@@ -261,6 +264,10 @@ fn sys14_failed_explanation_retains_reason_and_late_success_never_generates_or_r
             plan.submit(&b, &[], &mut outbox).unwrap()
         }
     }
+    assert_eq!(
+        turn.state().fault_receipt().unwrap().reasons,
+        vec![reason.clone()]
+    );
     assert_eq!(turn.state(), &ReplyState::Failed(reason));
     assert_eq!((calls.get(), outbox.chunks), (0, 0));
 }

@@ -38,7 +38,7 @@ pub struct SampleRequest<'a> {
 }
 pub struct CloudMaterial<'a> {
     pub prefix: String,
-    pub snapshot_id: String,
+    pub bound: super::reply::Binding,
     pub latest: RecordVersion,
     pub input: AssemblyInput,
     pub settings: SpeechSettings,
@@ -47,15 +47,22 @@ pub struct CloudMaterial<'a> {
     pub gaps: Vec<String>,
 }
 
+struct VisibleRecord {
+    version: Vec<u8>,
+    body: Vec<u8>,
+    range: std::ops::Range<usize>,
+}
+
 pub struct CloudRequest {
     pub(super) bytes: Vec<u8>,
     pub binding: cp::Binding,
     pub note: cp::SentNote,
     settings: SpeechSettings,
-    pub samples: Option<Samples>,
+    samples: Option<Samples>,
+    bound: super::reply::Binding,
     task: TaskInput,
     latest: RecordVersion,
-    visible: BTreeMap<String, (Vec<u8>, Vec<u8>, std::ops::Range<usize>)>,
+    visible: BTreeMap<String, VisibleRecord>,
 }
 
 /// Only a trusted governance adapter resolves these layers. The raw model
@@ -66,8 +73,11 @@ pub trait Governance {
     fn supported(&self, point: &Point, evidence: &[&VisibleQuote<'_>]) -> bool;
 }
 impl CloudRequest {
-    pub(super) fn matches(&self, input: &TaskInput, branch: &str) -> bool {
-        self.task == *input && self.latest.branch_id == branch
+    pub fn samples(&self) -> Option<&Samples> {
+        self.samples.as_ref()
+    }
+    pub(super) fn matches(&self, input: &TaskInput, current: &super::reply::Binding) -> bool {
+        self.task == *input && &self.bound == current
     }
     pub(super) fn latest(&self) -> &RecordVersion {
         &self.latest
@@ -78,7 +88,15 @@ impl CloudRequest {
         governance: &dyn Governance,
     ) -> Result<String, String> {
         let mut quotes = BTreeMap::new();
-        for (id, (version, body, range)) in &self.visible {
+        for (
+            id,
+            VisibleRecord {
+                version,
+                body,
+                range,
+            },
+        ) in &self.visible
+        {
             let Some((record, layers)) = governance.layers(id) else {
                 continue;
             };
@@ -112,6 +130,8 @@ impl CloudRequest {
 /// The P6-04 renderer serializes the complete vendor request, including these
 /// format instructions. Its meter must bound the actual model and wrapping (D5).
 pub trait SpeechCodec {
+    /// Convert the requested generation limit into this codec's proven meter units.
+    fn output_reserve(&self, max_tokens: u64) -> Result<u64, String>;
     fn encode(
         &self,
         plan: &cp::RequestPlan,
@@ -158,7 +178,9 @@ pub fn prepare(
 ) -> Result<CloudRequest, String> {
     task.canonical_bytes(limits)?;
     let facts = &task.c_task;
-    if task.snapshot_id != material.snapshot_id
+    if task.snapshot_id != material.bound.snapshot
+        || material.bound.branch != material.latest.branch_id
+        || material.bound.protocol_version != task.protocol_version
         || material.prefix != facts.history_prefix
         || task.current_input != material.latest.content
         || !matches!(facts.status, QueryStatus::OK | QueryStatus::NO_MATCH)
@@ -167,6 +189,7 @@ pub fn prepare(
         return Err("cloud input binding or required fact query unavailable".into());
     }
     let input = &mut material.input;
+    input.budget.output_reserve = codec.output_reserve(task.max_tokens.0)?;
     input.latest = RecordId(material.latest.record_id.as_bytes().to_vec());
     input.protocol = task.protocol_content.as_bytes().to_vec();
     let samples = material
@@ -245,12 +268,16 @@ pub fn prepare(
         let name = String::from_utf8(id.0.clone()).map_err(|_| "invalid source ID")?;
         visible
             .entry(name)
-            .and_modify(|v: &mut (Vec<u8>, Vec<u8>, std::ops::Range<usize>)| {
+            .and_modify(|v: &mut VisibleRecord| {
                 if delivered == Delivered::Full {
-                    v.2 = range.clone()
+                    v.range = range.clone()
                 }
             })
-            .or_insert_with(|| (r.content_version.clone(), r.body.clone(), range));
+            .or_insert_with(|| VisibleRecord {
+                version: r.content_version.clone(),
+                body: r.body.clone(),
+                range,
+            });
         Ok(())
     };
     for d in &plan.dialogue {
@@ -266,6 +293,7 @@ pub fn prepare(
         note,
         settings: material.settings,
         samples,
+        bound: material.bound,
         visible,
         task: task.clone(),
         latest: material.latest,

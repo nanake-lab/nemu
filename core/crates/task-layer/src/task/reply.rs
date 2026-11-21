@@ -33,6 +33,11 @@ pub enum Modulation<'a> {
     Compiled(&'a ModulationEnvelopeV2),
 }
 pub trait ModulationProvider {
+    /// Immutable value used by the sample selector (D10). A provider without a
+    /// retrievable value can only service requests which do not bind samples.
+    fn resource(&self, _snapshot: &str, _generation_ns: u64) -> Option<&ObjectRef> {
+        None
+    }
     fn at_generation(&self, snapshot: &str, generation_ns: u64) -> Result<Modulation<'_>, String>;
 }
 pub struct DisabledModulation;
@@ -42,6 +47,19 @@ impl ModulationProvider for DisabledModulation {
             schema_version: 1,
             code: FailureCode::MODULATION_DISABLED,
             detail_ref: None,
+        }))
+    }
+}
+
+/// Selected by the trusted runtime only for a separately permitted zero-mode
+/// response. A failure never implicitly selects another generator or mode.
+pub struct CarrierUnavailable(pub Option<ObjectRef>);
+impl ModulationProvider for CarrierUnavailable {
+    fn at_generation(&self, _: &str, _: u64) -> Result<Modulation<'_>, String> {
+        Ok(Modulation::Zero(FailureReason {
+            schema_version: 1,
+            code: FailureCode::CARRIER_UNAVAILABLE,
+            detail_ref: self.0.clone(),
         }))
     }
 }
@@ -89,6 +107,26 @@ pub enum ReplyState {
     Failed(FailureReason),
     Generated,
     Closed,
+}
+
+impl ReplyState {
+    /// Persist this generated status with the owning Q transaction. A failed
+    /// pre-generation turn has no carrier response or delivery receipt.
+    pub fn fault_receipt(&self) -> Option<DegradedStatus> {
+        let Self::Failed(reason) = self else {
+            return None;
+        };
+        let state = if reason.code == FailureCode::IRL_FAILED {
+            RunStatus::IRL_DEGRADED
+        } else {
+            RunStatus::CORE_UNMODULATED
+        };
+        Some(DegradedStatus {
+            schema_version: 1,
+            states: vec![state],
+            reasons: vec![reason.clone()],
+        })
+    }
 }
 
 pub struct ReplyTurn {
@@ -141,6 +179,20 @@ pub trait Outbox {
 }
 
 impl PendingPlan {
+    pub fn modulation_status(&self) -> Option<DegradedStatus> {
+        self.zero_reason.as_ref().map(|reason| DegradedStatus {
+            schema_version: 1,
+            states: if reason.code == FailureCode::MODULATION_DISABLED {
+                vec![
+                    RunStatus::CORE_UNMODULATED,
+                    RunStatus::MODULATION_NOT_ENABLED,
+                ]
+            } else {
+                vec![RunStatus::CORE_UNMODULATED]
+            },
+            reasons: vec![reason.clone()],
+        })
+    }
     pub fn receipt(&self) -> &PlanAndCarrierReceipt {
         &self.receipt
     }
@@ -253,7 +305,12 @@ fn generate(
     let model_input = match mode {
         SpeechMode::B_REMOTE_PROJECTED => {
             let (request, _) = cloud.ok_or("assembled cloud request required")?;
-            if !request.matches(input, &g.binding.branch) {
+            if !request.matches(input, g.binding)
+                || request.samples().is_some_and(|s| {
+                    g.modulation.resource(&input.snapshot_id, g.projected_at_ns)
+                        != Some(&s.modulation)
+                })
+            {
                 return Err("stale cloud request".into());
             }
             ModelInput::Projected(&request.bytes)
@@ -263,10 +320,13 @@ fn generate(
             modulation: &modulation,
         },
     };
-    let adapter = generators
-        .0
-        .get_mut(&u32::from(mode))
-        .ok_or("generator unavailable")?;
+    let adapter = generators.0.get_mut(&u32::from(mode)).ok_or_else(|| {
+        GenerationError::Fault(FailureReason {
+            schema_version: 1,
+            code: FailureCode::CARRIER_UNAVAILABLE,
+            detail_ref: None,
+        })
+    })?;
     let budget = super::protocol::GenerationBudget {
         tokens: input.max_tokens.0,
         duration_ns: input.max_duration_ns.0,
@@ -277,7 +337,10 @@ fn generate(
         .map_err(GenerationError::Fault)?;
     let r = generated.receipt;
     r.canonical_bytes(g.limits)?;
-    if generated.used_output_tokens > budget.tokens || r.speech_mode != mode {
+    if generated.used_output_tokens > budget.tokens
+        || r.speech_mode != mode
+        || (matches!(modulation, Modulation::Zero(_)) && r.strict)
+    {
         return Err("invalid generation budget or mode".into());
     }
     if mode == SpeechMode::B_REMOTE_PROJECTED {
