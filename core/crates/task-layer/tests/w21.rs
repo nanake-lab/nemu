@@ -153,6 +153,9 @@ impl Generator for Script {
             }
         }
         let projected = self.mode == SpeechMode::B_REMOTE_PROJECTED;
+        let text = if self.chunks { "Hello." } else { "" };
+        let tokens = text.split_whitespace().count() as u64;
+        let usage = format!("script-call={} output-tokens={tokens}", self.calls.get());
         Ok(Generated {
             receipt: PlanAndCarrierReceipt {
                 schema_version: 1,
@@ -162,7 +165,12 @@ impl Generator for Script {
                         output_id: "out".into(),
                         action_id: "speak".into(),
                         chunk_index: DecimalU64(0),
-                        text: "Hello.".into(),
+                        text: if projected {
+                            "unchecked adapter text"
+                        } else {
+                            text
+                        }
+                        .into(),
                         lang: Lang::EN,
                         snapshot_id: "s".into(),
                         speech_mode: self.mode,
@@ -179,9 +187,9 @@ impl Generator for Script {
                 carrier_receipt: (!projected).then(|| object("script applied")),
                 projection_version: projected.then(|| "fixture".into()),
                 intermediate_results: vec![],
-                usage: object("one output token"),
+                usage: object(&usage),
             },
-            used_output_tokens: 1,
+            used_output_tokens: tokens,
             outline: projected
                 .then(|| r#"{"points":[{"type":"other","text":"Hello.","cites":[]}]}"#.into()),
         })
@@ -321,21 +329,30 @@ fn sys14_permitted_zero_preserves_adapter_usage_and_reason() {
     let b = binding(&t);
     let mode = SpeechMode::A_LOCAL_STRICT;
     let (mut adapters, _) = setup(mode, true, None);
+    let fault = CarrierUnavailable(Some(object("local carrier failure")));
     let mut turn = ReplyTurn::new(material(&t).latest, mode);
     let plan = turn
         .advance(
             &material(&t).latest,
             Interpretation::Committed,
             &mut adapters,
-            || Ok(generation(&t, &b, None)),
+            || {
+                Ok(Generation {
+                    modulation: &fault,
+                    ..generation(&t, &b, None)
+                })
+            },
         )
         .unwrap()
         .unwrap();
     assert_eq!(
         plan.zero_reason().unwrap().code,
-        FailureCode::MODULATION_DISABLED
+        FailureCode::CARRIER_UNAVAILABLE
     );
-    assert_eq!(plan.receipt().usage, object("one output token"));
+    assert_eq!(
+        plan.receipt().usage,
+        object("script-call=1 output-tokens=1")
+    );
     assert!(!plan.receipt().strict);
 }
 #[test]
@@ -376,10 +393,17 @@ fn declined_action_out_of_scope_and_new_observation_do_not_register() {
             current.frontier.push("new observation".into())
         }
         let mut outbox = TestOutbox::default();
+        let scope = object("body");
         let allowed = if permitted {
-            vec![object("body")]
+            vec![AllowedAction {
+                payload_type: "fixture",
+                scope: &scope,
+            }]
         } else {
-            vec![]
+            vec![AllowedAction {
+                payload_type: "other-kind",
+                scope: &scope,
+            }]
         };
         assert_eq!(
             plan.submit(&current, &allowed, &mut outbox).is_ok(),
@@ -388,3 +412,5 @@ fn declined_action_out_of_scope_and_new_observation_do_not_register() {
         assert_eq!(outbox.calls, want);
     }
 }
+#[path = "w21/remote.rs"]
+mod remote;

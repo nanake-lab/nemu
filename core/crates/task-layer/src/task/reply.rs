@@ -178,6 +178,13 @@ pub trait Outbox {
     ) -> Result<(), String>;
 }
 
+/// The trusted boundary table pairs a payload kind with its allowed scope.
+/// A model cannot grant itself a new kind by copying an allowed scope.
+pub struct AllowedAction<'a> {
+    pub payload_type: &'a str,
+    pub scope: &'a ObjectRef,
+}
+
 impl PendingPlan {
     pub fn modulation_status(&self) -> Option<DegradedStatus> {
         self.zero_reason.as_ref().map(|reason| DegradedStatus {
@@ -204,14 +211,17 @@ impl PendingPlan {
     pub fn submit(
         self,
         current: &Binding,
-        allowed_scopes: &[ObjectRef],
+        allowed: &[AllowedAction<'_>],
         outbox: &mut impl Outbox,
     ) -> Result<(), String> {
         if &self.bound != current {
             return Err("stale plan".into());
         }
         if let Some(action) = &self.receipt.action_plan
-            && !allowed_scopes.contains(&action.expected_scope)
+            && !allowed.iter().any(|entry| {
+                entry.scope == &action.expected_scope
+                    && entry.payload_type == action.output_or_tool_parameters.object_type
+            })
         {
             return Err("action outside allowed scope".into());
         }
@@ -320,7 +330,7 @@ fn generate(
             modulation: &modulation,
         },
     };
-    let adapter = generators.0.get_mut(&u32::from(mode)).ok_or_else(|| {
+    let adapter = generators.0.get_mut(&u32::from(mode)).ok_or({
         GenerationError::Fault(FailureReason {
             schema_version: 1,
             code: FailureCode::CARRIER_UNAVAILABLE,
@@ -335,8 +345,7 @@ fn generate(
     let generated = adapter
         .generate(model_input, budget)
         .map_err(GenerationError::Fault)?;
-    let r = generated.receipt;
-    r.canonical_bytes(g.limits)?;
+    let mut r = generated.receipt;
     if generated.used_output_tokens > budget.tokens
         || r.speech_mode != mode
         || (matches!(modulation, Modulation::Zero(_)) && r.strict)
@@ -359,19 +368,24 @@ fn generate(
                 .ok_or("missing speech outline")?,
             governance,
         )?;
-        if r.output_chunks
-            .iter()
-            .map(|c| c.text.as_str())
-            .collect::<String>()
-            != approved
-        {
-            return Err("speech differs from checked outline".into());
+        // The adapter supplies output identity. Only the code-joined outline
+        // becomes speech. No raw reply or second model pass is publishable.
+        if approved.is_empty() {
+            r.output_chunks.clear();
+        } else {
+            r.output_chunks.truncate(1);
+            let chunk = r
+                .output_chunks
+                .first_mut()
+                .ok_or("missing speech action identity")?;
+            chunk.text = approved;
         }
     } else if r.carrier_receipt.is_none()
         || (mode == SpeechMode::C_DRAFT_REWRITE && r.intermediate_results.is_empty())
     {
         return Err("missing actual carrier or draft receipt".into());
     }
+    r.canonical_bytes(g.limits)?;
     if r.output_chunks.iter().enumerate().any(|(i, c)| {
         c.snapshot_id != input.snapshot_id
             || c.speech_mode != mode
