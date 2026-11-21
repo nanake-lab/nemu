@@ -326,11 +326,12 @@ impl<L: LineageKind> Reader<L> {
             }
             prefix
         } else {
+            // Count full verification even when it rejects a corrupt publication.
+            #[cfg(test)]
+            FULL_CHECKS.update(|n| n + 1);
             let mut proof = PublicationProof::empty(&db)?;
             proof.extend(&db, &objects, &header, &branch)?;
             crate::witness::check(&db, &objects, &receipts.unwrap())?;
-            #[cfg(test)]
-            FULL_CHECKS.update(|n| n + 1);
             proof
         };
         let verified_head = proof.head.clone();
