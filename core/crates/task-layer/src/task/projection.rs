@@ -178,12 +178,30 @@ impl<C: SpeechCodec> RequestCodec for MeasuredSpeech<'_, C> {
     }
 }
 
+#[derive(Debug)]
+pub enum ProjectionError {
+    Binding(String),
+    InvalidInput(cp::InvalidInput),
+    Unavailable(cp::Unavailable),
+    BaseRequestFailed(cp::BaseFailure),
+}
+impl From<String> for ProjectionError {
+    fn from(s: String) -> Self {
+        Self::Binding(s)
+    }
+}
+impl From<&str> for ProjectionError {
+    fn from(s: &str) -> Self {
+        Self::Binding(s.into())
+    }
+}
+
 pub fn prepare(
     task: &TaskInput,
     mut material: CloudMaterial<'_>,
     codec: &impl SpeechCodec,
     limits: Limits,
-) -> Result<CloudRequest, String> {
+) -> Result<CloudRequest, ProjectionError> {
     task.canonical_bytes(limits)?;
     let facts = &task.c_task;
     if task.snapshot_id != material.bound.snapshot
@@ -253,15 +271,18 @@ pub fn prepare(
             gaps: &material.gaps,
         },
     )
-    .map_err(|e| format!("{e:?}"))?;
-    let Outcome::Sent {
-        plan,
-        bytes,
-        binding,
-        note,
-    } = outcome
-    else {
-        return Err(format!("{outcome:?}"));
+    .map_err(ProjectionError::InvalidInput)?;
+    let (plan, bytes, binding, note) = match outcome {
+        Outcome::Sent {
+            plan,
+            bytes,
+            binding,
+            note,
+        } => (plan, bytes, binding, note),
+        Outcome::ProjectionUnavailable(reason) => return Err(ProjectionError::Unavailable(reason)),
+        Outcome::BaseRequestFailed(reason) => {
+            return Err(ProjectionError::BaseRequestFailed(reason));
+        }
     };
     let mut visible = BTreeMap::new();
     let mut add = |id: &RecordId, delivered: Delivered| -> Result<(), String> {

@@ -278,6 +278,19 @@ fn sys14_failed_explanation_retains_reason_and_late_success_never_generates_or_r
     );
     assert_eq!(turn.state(), &ReplyState::Failed(reason));
     assert_eq!((calls.get(), outbox.chunks), (0, 0));
+    let reason = turn.state().fault_receipt().unwrap().reasons.remove(0);
+    let mut restored = ReplyTurn::resume(material(&t).latest, mode, ReplyState::Failed(reason));
+    assert!(
+        restored
+            .advance(
+                &material(&t).latest,
+                Interpretation::Committed,
+                &mut adapters,
+                || panic!("reopened failed turn")
+            )
+            .unwrap()
+            .is_none()
+    );
 }
 #[test]
 fn sys14_valid_no_effect_generates_after_real_wait_longer_than_generation_budget() {

@@ -238,11 +238,12 @@ impl PendingPlan {
 
 impl ReplyTurn {
     pub fn new(input: RecordVersion, mode: SpeechMode) -> Self {
-        Self {
-            input,
-            mode,
-            state: ReplyState::Waiting,
-        }
+        Self::resume(input, mode, ReplyState::Waiting)
+    }
+    /// The outer owner restores the state recorded for this exact input. A
+    /// completed or failed attempt cannot be rearmed by late interpretation.
+    pub fn resume(input: RecordVersion, mode: SpeechMode, state: ReplyState) -> Self {
+        Self { input, mode, state }
     }
     pub fn state(&self) -> &ReplyState {
         &self.state
