@@ -253,11 +253,7 @@ impl Fixture {
             }),
             trust: None,
         };
-        let settings = lifecycle::Settings {
-            credential_lifetime_ns: Some(100),
-            max_dispatching: Some(1),
-            ..Default::default()
-        };
+        let settings = lifecycle::Settings::default();
         let mut issuer = outbox::Issuer::default();
         let request = issuer.issue(grant, bytes, &settings, limits()).unwrap();
         let environment: VersionedEnvironmentV2 = with_refs(&leaf);

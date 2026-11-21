@@ -6,7 +6,7 @@ use core_types::{
     scalar::DecimalI64,
 };
 
-/// ADR 0043 §4.1 and CONTRACTS §6. Other deployment values have no implicit default.
+/// Configurable desktop policy, approval window and dispatch limits.
 pub struct Settings {
     pub irreversible: DesktopTier,
     pub approval_timeout_ns: i64,
@@ -19,8 +19,10 @@ impl Default for Settings {
         Self {
             irreversible: DesktopTier::IRREVERSIBLE_ASK,
             approval_timeout_ns: 60_000_000_000, // CONTRACTS §6: 60 seconds.
-            credential_lifetime_ns: None,
-            max_dispatching: None,
+            // Leave time for a long utterance: each chunk rechecks the credential.
+            credential_lifetime_ns: Some(600_000_000_000), // 10 minutes.
+            // Allow speech and body actions to overlap while bounding outstanding sends.
+            max_dispatching: Some(4),
         }
     }
 }

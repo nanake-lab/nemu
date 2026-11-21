@@ -104,7 +104,10 @@ fn expired_withdrawn_wrong_session_or_changed_scope_cannot_be_consumed() {
     auth.scope = &different;
     deny(&mut tx, &auth, Some(40));
     auth.scope = &f.request.grant.scope;
-    let unset = lifecycle::Settings::default();
+    let unset = lifecycle::Settings {
+        credential_lifetime_ns: None,
+        ..Default::default()
+    };
     auth.settings = &unset;
     deny(&mut tx, &auth, Some(40));
     let disabled = lifecycle::Settings {
@@ -153,6 +156,8 @@ fn desktop_three_tiers_and_approval_deadline_are_configurable() {
     let mut settings = lifecycle::Settings::default();
     assert_eq!(settings.irreversible, DesktopTier::IRREVERSIBLE_ASK);
     assert_eq!(settings.approval_timeout_ns, 60_000_000_000);
+    assert_eq!(settings.credential_lifetime_ns, Some(600_000_000_000));
+    assert_eq!(settings.max_dispatching, Some(4));
     settings.approval_timeout_ns = 7;
     let display = lifecycle::ask(
         &action,
@@ -165,6 +170,8 @@ fn desktop_three_tiers_and_approval_deadline_are_configurable() {
     )
     .unwrap();
     assert_eq!(display.expires_at_ns.0, 17);
+    // A user may tighten the lifetime below the fixture grant's 69 ns.
+    settings.credential_lifetime_ns = Some(68);
     let mut issuer = outbox::Issuer::default();
     assert!(
         issuer
