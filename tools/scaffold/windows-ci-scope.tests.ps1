@@ -36,7 +36,7 @@ $desktop = 'desktop=true,gateway=false,selected=true,storage=false'
 $native = 'desktop=false,gateway=true,selected=true,storage=true'
 $all = 'desktop=true,gateway=true,selected=true,storage=true'
 try {
-    Assert-Scope 'pure metadata' @('apps/stage/manifest.json', 'packages/body/说明.md', 'packages/body/LICENSE-MIT') $none
+    Assert-Scope 'pure metadata' @('apps/stage/manifest.json', 'packages/body/说明.md', 'packages/body/LICENSE-MIT', 'NOTICE') $none
     Assert-Scope 'pure Markdown' @('apps/stage/README.md', 'packages/body/docs/guide.md') $none
     Assert-Scope 'manifest and desktop source' @('apps/stage/manifest.json', 'apps/stage/src/index.ts') $desktop
     Assert-Scope 'licence and primary storage' @('packages/body/LICENCE.txt', 'core/crates/core-store/src/store.rs') $all

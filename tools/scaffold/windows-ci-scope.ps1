@@ -24,7 +24,7 @@ switch ($env:EVENT) {
 }
 # An escaped path may hide a relevant name. Fall back to all checks.
 $full = $full -or (($files -match '^"').Count -gt 0)
-$metadata = '(?:\.md$|(?:^|/)(?:manifest\.json|(?:licen[cs]e(?:-(?:mit|apache|bsd))?|copying(?:\.lesser)?)(?:\.(?:md|txt|rst))?)$)'
+$metadata = '(?:\.md$|(?:^|/)(?:manifest\.json|(?:licen[cs]e(?:-(?:mit|apache|bsd))?|copying(?:\.lesser)?|notice)(?:\.(?:md|txt|rst))?)$)'
 $metadataOnly = $files.Count -gt 0 -and ($files -notmatch $metadata).Count -eq 0
 
 # For mixed changes, keep the existing path routing.
