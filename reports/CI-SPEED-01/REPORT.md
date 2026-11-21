@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-实现与对照验收完成，PR 等待审查。Ubuntu 按范围并行，并为两组 Rust 作业启用编译缓存。Windows 默认按完整改动选择组，纯登记和文档改动不占用桌面 runner。混合改动的自托管 desktop 已通过。托管 W18 触发了切换失败条件，W02 和 W18 继续由自托管执行。正式全组 Windows 按第 6 节安排在审查通过后。
+实现与对照验收完成，PR 等待审查。Ubuntu 按范围并行，并为两组 Rust 作业启用编译缓存。Windows 默认按完整改动选择组，纯登记和文档改动不占用桌面 runner。混合改动的自托管 desktop 已通过。按组应用托管切换门槛。W02 十轮全过，已迁至 `windows-latest` 并加 Rust 缓存。W18 与 desktop 继续由自托管执行。正式全组 Windows 按第 6 节安排在审查通过后。
 
 ## 改动前基线
 
@@ -28,9 +28,9 @@
 ## 调度变更
 
 - Ubuntu 沿用原有的改动分类和检查命令。Rust 工作区、core-store、Node／Python／.NET 工具分别运行，最后由 `Ubuntu static checks and unit tests` 汇总。Rust 工作区与 core-store 的检查相互独立。两者分别恢复编译缓存，缓存键包含目标系统、架构、工具链、Cargo.lock 和 Cargo 配置。禁用增量编译产物缓存以减小归档。
-- Windows 在 GitHub 托管机比较完整 PR、push 或手动触发分支的改动，选中至少一组后才分配自托管 runner。手动触发默认按范围，`full=true` 显式选中全部。缺少比较基准或无法解析文件名时选中全部。
+- Windows 在 GitHub 托管机比较完整 PR、push 或手动触发分支的改动，选中 W18 或 desktop 才分配自托管 runner。选中 W02 时单独分配 `windows-latest`。手动触发默认按范围，`full=true` 显式选中全部。缺少比较基准或无法解析文件名时选中全部。
 - Windows 纯登记改动免跑 desktop。整次改动须只包含 `manifest.json`、Markdown 或常见许可证文件。混入其他文件后沿用原路径规则。变更重命名按删除和新增分别计入。
-- W02、W18 和 desktop 保留自托管。最近一次基线的 W02 编译约占 1451 秒步骤的 2%。W18 已使用本机持久目标目录，因此自托管增设 GitHub Rust 缓存暂不采用。
+- 托管 W02 与自托管 W18、desktop 并行，`Windows desktop and isolation` 同时核对选中的两个作业。W02 使用与 Ubuntu 同规则的 Rust 缓存键，系统与架构隔离。W18 继续使用本机持久目标目录。W02 测试命令、60 分钟作业上限及证据上传规则沿用原配置。
 - 保留 `Ubuntu static checks and unit tests` 和 `Windows desktop and isolation` 两个汇总名称。交付期间查询传统分支保护与分支 rules API，未发现 main 配置了 required status checks。无需改仓库设置。
 - 第 6 节规定在需要 Windows 验收的 PR 审查通过后完整跑一次。草稿阶段按改动范围触发。GPU 使用现有窗口规则。
 
@@ -51,7 +51,7 @@
 
 W02 **10/10**。每轮 65 个库测试、3 个文档测试和 clippy 均通过。表中是库测试时间，范围 889.06–1419.17 秒，中位数 1310.67 秒。
 
-W18 **0/10**。每轮 44 项通过、3 项失败，失败均是命名管道或 DPAPI 文件的 DACL 文本比较。实际文本使用 Windows SDDL 别名 `LA`，断言预期以 `-500` 结尾的完整 SID。微软定义了 `LA` 为本机 Administrator 的 SID 别名。根据切换条件保留自托管。参见 [BLOCKED.md](BLOCKED.md) 和 [微软的 SID 字符串说明](https://learn.microsoft.com/en-us/windows/win32/secauthz/sid-strings)。
+W18 **0/10**。每轮 44 项通过、3 项失败，失败均是命名管道或 DPAPI 文件的 DACL 文本比较。实际文本使用 Windows SDDL 别名 `LA`，断言预期以 `-500` 结尾的完整 SID。微软定义了 `LA` 为本机 Administrator 的 SID 别名。按组应用切换门槛，W18 留在自托管。参见 [BLOCKED.md](BLOCKED.md) 和 [微软的 SID 字符串说明](https://learn.microsoft.com/en-us/windows/win32/secauthz/sid-strings)。
 
 SYS01 的 `r2` 来自另外 10 台托管机上的同一个测试用例。每台先在临时 checkout 插入单调时钟观测，仅计时原来的 `peer.reply(&r2)` 提交回执读取及检查。原有 10 秒期限和断言照常执行。十个用例均通过，耗时 4.072–6.498 秒，余量 3.502–5.928 秒。试验包装的结果解析误要求标记在行首，libtest 把用例名写在标记前，导致十个作业报失败。表中时长取各自留存的完整输出。正式全包 W18 与补测 SYS01 的行号分别编号，不代表同一台 VM。[SYS01 补测](https://github.com/nanake-lab/nemu/actions/runs/44915879880)
 
@@ -81,17 +81,37 @@ SYS01 的 `r2` 来自另外 10 台托管机上的同一个测试用例。每台�
 
 额外的 `manifest.json` 与 Markdown 组合完成 Windows 范围判定与汇总，物理 runner 跳过。随后加一个普通文件，Windows scope 选中 desktop。同步 main 后，以 #254 的真实文件差异验证 `LICENSE`、`NOTICE` 和多个 manifests 同时变化时仍免跑 desktop。[纯登记运行](https://github.com/nanake-lab/nemu/actions/runs/44916723257) · [仓库许可登记](https://github.com/nanake-lab/nemu/pull/254)
 
+### 自托管 `Set up job` 耗时
+
+#256 前两轮的 GitHub Jobs API 分别记录 13 秒和 100 秒。Runner 版本均为 `2.338.2`，预下载的四个 Action 及其 SHA 相同。第二轮在 checkout 启动之前出现四次 TLS 建连失败。一次发生于解析 Action 下载信息，另三次发生于访问 `codeload.github.com` 下载 `setup-node` 和 `upload-artifact`。四次日志中的退避合计 **75.269 秒**，失败请求本身再花约 12 秒。这解释了两次步骤耗时约 87 秒的差异。重试发生在 runner 准备 Action 期间。两轮的 checkout 均为 19 秒。[13 秒作业](https://github.com/nanake-lab/nemu/actions/runs/44916470910/job/136883045892) · [100 秒作业](https://github.com/nanake-lab/nemu/actions/runs/44918934098/job/136890765804)
+
+### W02 独立迁移复测
+
+沿用 [#256](https://github.com/nanake-lab/nemu/pull/256) 的同一个存储文件差异和同一份产品源码。临时 base 从上轮候选 `3d6e2a2a` 派生，只复制交付分支的 Windows 工作流和两个范围脚本。复测 head 的文件树与上轮 head `8ac9df99` 完全一致，自托管占用按自托管 job 的 `started_at → completed_at` 计入启动、执行和清理，排队单列。[按组迁移决定](https://github.com/nanake-lab/nemu/pull/255#issuecomment-7065511147)
+
+首次重开 #256 时，Actions 事件虽然列出新 base，checkout 实际仍由旧 base 合并生成。该轮保留作排查记录，并退出对照。同步推送后的合并提交已核对两个父节点，较上一次对照的合并树只变更上述三个 CI 文件。[初次重开运行](https://github.com/nanake-lab/nemu/actions/runs/44925937241)
+
+| #256 版本 | 推送至两项汇总结束 | Ubuntu 工作流 | Windows 工作流 | 自托管排队 | 自托管占用 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 原版 | 25 分 58 秒 | 18 分 19 秒 | 25 分 49 秒 | 53 秒 | 24 分 50 秒 |
+| 范围拆分，W02 仍自托管 | 27 分 29 秒 | 17 分 34 秒 | 27 分 14 秒 | 39 秒 | 25 分 29 秒 |
+| W02 独立托管 | 25 分 57 秒 | 17 分 20 秒 | 25 分 47 秒 | 22 分 33 秒 | 2 分 28 秒 |
+
+相对迁移前，自托管占用减少 **23 分 01 秒**，约 90.3%。本次端到端耗时缩短 1 分 32 秒。两个作业可并行调度。本轮 W18 排队期间，托管 W02 已完成，因此最终耗时由 W18 排队和执行决定。自托管 `Set up job` 为 9 秒。
+
+托管 W02 作业用时 19 分 24 秒，clippy、65 个库测试、3 个文档测试和证据上传均通过。本轮为冷缓存，保存 87.76 MB 的 Windows Rust 缓存。自托管作业只执行 W18，汇总核对两个选中的作业后通过。[同源 Windows 复测](https://github.com/nanake-lab/nemu/actions/runs/44927169369) · [同源 Ubuntu 复测](https://github.com/nanake-lab/nemu/actions/runs/44927169366)
+
 ## 验收
 
 | 项目 | 结果 |
 | --- | --- |
 | 工作流语法与表达式 | `actionlint` 1.7.12 通过 |
 | Windows 范围 | `pwsh -NoProfile -File tools/scaffold/windows-ci-scope.tests.ps1` 12/12，通过纯登记、混合、全分支 diff、缺失基准等情况 |
-| 检查门槛 | 对 Ubuntu/Windows 汇总脚本执行 20 项结果及来源组合，均符合预期。原有执行命令逐项保留 |
+| 检查门槛 | Windows 双作业汇总通过 19 项选择、来源和作业结论组合。迁移前后 W02、W18 和 desktop 检查命令、期限及证据步骤逐项对照 |
 | 纯登记 | Windows 托管范围和原汇总通过，物理 runner 未分配。追加普通文件后运行并通过 desktop。[纯登记运行](https://github.com/nanake-lab/nemu/actions/runs/44916723257) |
 | Ubuntu | 冷跑与缓存复跑均通过，存储单路径对照的 Rust 工作区、core-store 和汇总均通过。[CI 结果](https://github.com/nanake-lab/nemu/actions/runs/44916280895) |
 | Windows 自托管 desktop | 传输、隔离、e2e、视觉回归均通过，随运行上传来源校验证据。[desktop 运行](https://github.com/nanake-lab/nemu/actions/runs/44916947919) |
-| 同步 main 后的验收 | 以 `996a4e47` 同步。新增 `NOTICE` 识别，12 项范围回归和 #254 的实际差异验证通过。Ubuntu 汇总查看 [PR 当前检查](https://github.com/nanake-lab/nemu/pull/255/checks) |
+| 同步 main 后的验收 | 以 `996a4e47` 同步。新增 `NOTICE` 识别，12 项范围回归和 #254 的实际差异验证通过。本轮并入 `e79dce88` 的项目规则更新。Ubuntu 汇总查看 [PR 当前检查](https://github.com/nanake-lab/nemu/pull/255/checks) |
 
 ## CI 依赖
 
@@ -99,7 +119,7 @@ SYS01 的 `r2` 来自另外 10 台托管机上的同一个测试用例。每台�
 
 ## 并行中的 PR
 
-对 #242 的已知 head `a77e3e64` 做只读试合并，`windows.yml` 的 scope 代码有冲突。两个 PR 合入 main 前需核对合并顺序。第二个合并的 PR 需保留 P5-13 候选的 carrier 路径、独立选择和 native 步骤，并在整合后的 Windows 工作流重跑受影响组。[P5-13](https://github.com/nanake-lab/nemu/pull/242)
+对 #242 的已知 head `a77e3e64` 做只读试合并，`windows.yml` 的 scope 代码有冲突。按审查约定，本 PR 先合并。#242 再 merge main。合并时保留其 carrier 路径、选择和 native 步骤，在整合后的 Windows 工作流重跑受影响组。[P5-13](https://github.com/nanake-lab/nemu/pull/242)
 
 ## 证据
 
