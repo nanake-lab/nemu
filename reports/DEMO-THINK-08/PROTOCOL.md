@@ -99,3 +99,4 @@
 - `v3` 提示词明示 `external_records` 是到 `now` 为止完整的外部记录，并为 P2–P6 各配独立自编例（均不取自任何金标准样本）。
 - 主终点、参考线与测试集只跑一次的规则均不变。
 - 统一历史金标准已按上述裁定冻结于 [gold-historical.json](gold-historical.json)（539 条：162 正例 / 377 负例；SHA-256：`183538fc2bb6d4ca0a0a93f8e4463d24ebf7db053bf3d717b2e63029a235a0ad`），逐条调整记录见 [RELABEL-DIFF.md](RELABEL-DIFF.md)。
+- 新盲测集（180 条，种子 `20261121`）盲标结果已冻结于 [new-blind-labels.json](new-blind-labels.json)（97 正例 / 83 负例；SHA-256：`e51b8c700325baee03da7a14127681781cf30067c412fdaa64e45c70cb477208`；去标签输入 `new_blind_inputs.json` SHA-256：`38bf71d17b1702710322623138c212adb7bf6682b72ae44dc8d9015b17e20848`），推送冻结后才运行任何核对器。
