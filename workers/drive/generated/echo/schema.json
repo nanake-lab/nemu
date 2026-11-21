@@ -7002,6 +7002,1128 @@
         }
       }
     },
+    "LocalUserBinding": {
+      "tag": "echo.local-user-binding",
+      "source": "ADR 0047: authenticated local service output, never caller testimony",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "principal_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "installation_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "authentication_record_id",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {}
+    },
+    "DesktopPermissionPolicy": {
+      "tag": "echo.desktop-permission-policy",
+      "source": "ADR 0043 §4.1; ADR 0045 D9",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "irreversible",
+          "type": "DesktopTier",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "reversibility_rule",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {}
+    },
+    "ActionConsent": {
+      "tag": "echo.action-consent",
+      "source": "ADR 0043 §4.1; CONTRACTS §6; consumed confirmation from u*",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "user",
+          "type": "LocalUserBinding",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "confirmed_at_ns",
+          "type": "sint64",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "approval_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "payload_digest",
+          "type": "bytes",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {}
+    },
+    "ConnectorScope": {
+      "tag": "echo.connector-scope",
+      "source": "P5-05/40; V2-89; catalog operation and concrete target",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "ScopeKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "connector_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "operation_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "resource_id",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "desktop",
+          "type": "DesktopPermissionPolicy",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "reversible",
+          "type": "bool",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "wallet_minor_units",
+          "type": "uint64",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "currency",
+          "type": "string",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "depositor",
+          "type": "LocalUserBinding",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {
+        "common": [
+          "connector_id",
+          "operation_id",
+          "resource_id"
+        ],
+        "cases": {
+          "1": {},
+          "2": {
+            "required": [
+              "desktop",
+              "reversible"
+            ]
+          },
+          "3": {},
+          "4": {},
+          "5": {
+            "required": [
+              "wallet_minor_units",
+              "currency"
+            ]
+          },
+          "6": {
+            "required": [
+              "wallet_minor_units",
+              "currency",
+              "depositor"
+            ]
+          }
+        }
+      }
+    },
+    "ExecutionBudget": {
+      "tag": "echo.execution-budget",
+      "source": "P5-40: reservation in the named versioned resource's unit and accounting period",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "budget_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "limit",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "charge",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {}
+    },
+    "TrustMemory": {
+      "tag": "echo.trust-memory",
+      "source": "P5-05/40: T2 user trust, committed by the core only",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "user",
+          "type": "LocalUserBinding",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "ConnectorScope",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tier",
+          "type": "ToolTier",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "revocation_version",
+          "type": "uint64",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {}
+    },
+    "ExecutionCredential": {
+      "tag": "echo.execution-credential",
+      "source": "P5-40: issuer-registered, single-use and connection-holder-bound",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "issuance_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "executor_session_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "payload_digest",
+          "type": "bytes",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        },
+        {
+          "name": "protocol",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "permission_version",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "revocation_version",
+          "type": "uint64",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "scope",
+          "type": "ConnectorScope",
+          "number": 9,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "budget",
+          "type": "ExecutionBudget",
+          "number": 10,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "issued_at_ns",
+          "type": "sint64",
+          "number": 11,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "expires_at_ns",
+          "type": "sint64",
+          "number": 12,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "tier",
+          "type": "ToolTier",
+          "number": 13,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "consent",
+          "type": "ActionConsent",
+          "number": 14,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "trust",
+          "type": "TrustMemory",
+          "number": 15,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {},
+      "transient": true
+    },
+    "ActionRequestV2": {
+      "tag": "echo.action-request-v2",
+      "source": "ADR 0047, I26: exact authorized executor bytes",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "expires_at_ns",
+          "type": "sint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "grant",
+          "type": "ExecutionCredential",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "action_payload",
+          "type": "bytes",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {},
+      "retains": "ActionRequest",
+      "transient": true,
+      "reserved": [
+        3,
+        4
+      ]
+    },
+    "GrowthCommandV2": {
+      "tag": "echo.growth-command-v2",
+      "source": "v2.0 §5.4, V2-97/101",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "command_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "kind",
+          "type": "GrowthCommandKind",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "verdict",
+          "type": "ReviewVerdict",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "review_record",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "law_version",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "history_prefix",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "alarm_id",
+          "type": "string",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "replacement_law",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "alarm_record",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {
+        "common": [
+          "command_id",
+          "law_version",
+          "history_prefix"
+        ],
+        "cases": {
+          "1": {},
+          "2": {},
+          "3": {
+            "required": [
+              "verdict",
+              "review_record",
+              "alarm_id",
+              "alarm_record"
+            ],
+            "optional": [
+              "replacement_law"
+            ]
+          }
+        }
+      },
+      "retains": "GrowthCommand"
+    },
+    "GrowthManagementRequest": {
+      "tag": "echo.growth-management-request",
+      "source": "P5-40: single local management service; authenticated P5-35 session",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "entry",
+          "type": "ManagementEntry",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "user",
+          "type": "LocalUserBinding",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "command",
+          "type": "GrowthCommandV2",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "confirmation_id",
+          "type": "string",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {
+        "discriminator": "entry",
+        "common": [
+          "command",
+          "user"
+        ],
+        "cases": {
+          "1": {
+            "required": [
+              "confirmation_id"
+            ]
+          },
+          "2": {}
+        }
+      }
+    },
+    "TerminalRequestV2": {
+      "tag": "echo.terminal-request-v2",
+      "source": "ADR 0024 and ADR 0047: same paired dispatch, typed management branch",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "protocol_version",
+          "type": "uint32",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0,
+          "max": 1.0
+        },
+        {
+          "name": "kind",
+          "type": "IngressKind",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "event",
+          "type": "TerminalEvent",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "upload",
+          "type": "ObjectUploadChunk",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "query",
+          "type": "QueryV2",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "approval",
+          "type": "ApprovalDecisionV2",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "cancel",
+          "type": "OutputCancel",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "management",
+          "type": "GrowthManagementRequest",
+          "number": 12,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {
+        "common": [
+          "request_id",
+          "session_id",
+          "protocol_version"
+        ],
+        "cases": {
+          "1": {
+            "required": [
+              "event"
+            ]
+          },
+          "2": {
+            "required": [
+              "upload"
+            ]
+          },
+          "3": {
+            "required": [
+              "query"
+            ]
+          },
+          "4": {
+            "required": [
+              "approval"
+            ]
+          },
+          "5": {
+            "required": [
+              "cancel"
+            ]
+          },
+          "6": {
+            "required": [
+              "management"
+            ]
+          }
+        }
+      },
+      "retains": "TerminalRequest",
+      "reserved": [
+        11
+      ]
+    },
+    "PermissionResult": {
+      "tag": "echo.permission-result",
+      "source": "P5-40; V2-87, V2-101: correlate outcome and audit in H/Q or H/L",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "audit_record_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "management_commit",
+          "type": "SystemMaintenanceRecord",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "outcome"
+        },
+        {
+          "name": "denied",
+          "type": "PermissionDenial",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "outcome"
+        },
+        {
+          "name": "dispatch_record_id",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": true,
+          "oneof": "outcome"
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {
+        "oneofs": {
+          "outcome": {
+            "fields": [
+              "management_commit",
+              "denied",
+              "dispatch_record_id"
+            ],
+            "required": true
+          }
+        }
+      }
+    },
+    "PermissionContext": {
+      "tag": "echo.permission-context",
+      "source": "ADR 0045 D1; ADR 0046: a remote text receipt carries no local execution grant",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "local_execution",
+          "type": "ExecutionCredential",
+          "number": 2,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "authority"
+        },
+        {
+          "name": "remote_text",
+          "type": "RemoteCognitiveReceipt",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "authority"
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {
+        "oneofs": {
+          "authority": {
+            "fields": [
+              "local_execution",
+              "remote_text"
+            ],
+            "required": true
+          }
+        }
+      },
+      "transient": true
+    },
+    "TerminalResponseV2": {
+      "tag": "echo.terminal-response-v2",
+      "source": "ADR 0024 and ADR 0047: authenticated management result",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "protocol_version",
+          "type": "uint32",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0,
+          "max": 1.0
+        },
+        {
+          "name": "reply_to",
+          "type": "IngressKind",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "IngressResponseKind",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "receipt",
+          "type": "ReceiptV2",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "upload",
+          "type": "ObjectUploadReceipt",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "query",
+          "type": "QueryResultV2",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "IngressReason",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "management",
+          "type": "PermissionResult",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "permission.proto",
+      "rules": {
+        "common": [
+          "request_id",
+          "session_id",
+          "protocol_version",
+          "reply_to"
+        ],
+        "cases": {
+          "1": {
+            "required": [
+              "receipt"
+            ]
+          },
+          "2": {
+            "required": [
+              "upload"
+            ]
+          },
+          "3": {
+            "required": [
+              "query"
+            ]
+          },
+          "4": {
+            "optional": [
+              "management"
+            ]
+          },
+          "5": {
+            "required": [
+              "reason"
+            ],
+            "optional": [
+              "management"
+            ]
+          }
+        }
+      },
+      "retains": "TerminalResponse"
+    },
     "NatureAppraisalRecord": {
       "tag": "echo.nature-appraisal",
       "source": "v2.0 §1 a(e), §3, EV6, EV10",
@@ -15240,6 +16362,38 @@
       "VERDICT_UNSPECIFIED": 0,
       "LAW_CORRECT": 1,
       "LAW_INCORRECT": 2
+    },
+    "DesktopTier": {
+      "DESKTOP_TIER_UNSPECIFIED": 0,
+      "IRREVERSIBLE_NEVER": 1,
+      "IRREVERSIBLE_ASK": 2,
+      "IRREVERSIBLE_DIRECT": 3
+    },
+    "ScopeKind": {
+      "SCOPE_UNSPECIFIED": 0,
+      "CONNECTOR_OPERATION": 1,
+      "LOCAL_DESKTOP": 2,
+      "OWN_SOCIAL": 3,
+      "SOCIAL_NOTIFY_USER": 4,
+      "OWN_WALLET_PAY": 5,
+      "USER_WALLET_TOP_UP": 6
+    },
+    "ManagementEntry": {
+      "MANAGEMENT_UNSPECIFIED": 0,
+      "LOCAL_PANEL": 1,
+      "LOCAL_ECHOCTL": 2
+    },
+    "PermissionDenial": {
+      "PERMISSION_UNSPECIFIED": 0,
+      "IDENTITY_UNVERIFIED": 1,
+      "WRONG_BINDING": 2,
+      "SCOPE_DENIED": 3,
+      "BUDGET_DENIED": 4,
+      "GRANT_EXPIRED": 5,
+      "ALREADY_CONSUMED": 6,
+      "VERSION_REVOKED": 7,
+      "CONSENT_MISSING": 8,
+      "UNRESOLVED_DISPATCH": 9
     },
     "RemoteAttemptStatus": {
       "REMOTE_ATTEMPT_UNSPECIFIED": 0,

@@ -256,7 +256,7 @@ def main() -> None:
             # Same valid first chunk, only the declared tag changes. Contract
             # registration alone must not enable any new terminal upload route.
             for definition in SCHEMA["messages"].values():
-                if definition["file"] == "speak_think.proto":
+                if definition["file"] in ("speak_think.proto", "permission.proto"):
                     chunk = copy.deepcopy(vector["request"])
                     chunk["chunk"]["object"]["object_type"] = definition["tag"]
                     bad(chunk)
