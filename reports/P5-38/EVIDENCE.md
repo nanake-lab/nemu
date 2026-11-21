@@ -1,6 +1,18 @@
 # P5-38 证据索引
 
-原始文件均保存在私有证据仓库 nanake-lab/nemu-evidence 的提交 4eadc5df815e42b38effb3e5917d9f54fefbc6b3。表内 SHA-256 按原始文件字节核算，并逐个与该提交的 Git blob 比对。development 收录开发阶段失败输出，workspace-superseded 在旧库测试失败后中止。checks/workspace-fa5155ab 是该源码的完整工作区运行。
+## P1 复验
+
+被测代码为 `49d45a90fd440a9d94ff9f93e352ce09006f0069`。原始日志与私有证据仓提交 `25164b3e20686e7ecab487343bf33a1f883aad18` 的 Git blob 已逐文件核对。
+
+| 文件 | 字节 | SHA-256 |
+| --- | ---: | --- |
+| [P5-38/checks/store-runtime-49d45a90.log](https://github.com/nanake-lab/nemu-evidence/blob/25164b3e20686e7ecab487343bf33a1f883aad18/P5-38/checks/store-runtime-49d45a90.log) | 13262 | 171fd0431f287f6edfd48a51c9bc224d21f9bb79047ca5c0aef361a07af40096 |
+| [P5-38/V2-88/w19-49d45a90.log](https://github.com/nanake-lab/nemu-evidence/blob/25164b3e20686e7ecab487343bf33a1f883aad18/P5-38/V2-88/w19-49d45a90.log) | 1624 | e06f0c18fc90c82a28adc0dce54b8ef8bcace391ee78276f52961e0b9291ad21 |
+| [P5-38/checks/clippy-49d45a90.log](https://github.com/nanake-lab/nemu-evidence/blob/25164b3e20686e7ecab487343bf33a1f883aad18/P5-38/checks/clippy-49d45a90.log) | 2380 | 5acb79d597c841d18020f9bf632edb32bce8e8d9139175edce6165894bda25c5 |
+
+## 首轮验收
+
+以下文件保存在私有证据仓库 nanake-lab/nemu-evidence 的提交 4eadc5df815e42b38effb3e5917d9f54fefbc6b3。表内 SHA-256 按原始文件字节核算，并逐个与该提交的 Git blob 比对。development 收录开发阶段失败输出，workspace-superseded 在旧库测试失败后中止。checks/workspace-fa5155ab 是该源码的完整工作区运行。
 
 | 文件 | 字节 | SHA-256 |
 | --- | ---: | --- |
