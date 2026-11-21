@@ -44,7 +44,18 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         // Admission checks expiry too, so a busy input queue cannot defer it
         // indefinitely by keeping the periodic cleanup branch unselected.
         c.uploads.expire(self.config.upload_lifetime);
-        let decision = self.admit(id, &mut c, &request)?;
+        let decision = match self.admit(id, &mut c, &request) {
+            // A read-only query that consults the new prefix can finish once
+            // the worker returns. Independent queries continue immediately.
+            Err(Error::Store(core_store::Error::VerificationPending))
+                if request.kind == IngressKind::INGRESS_QUERY =>
+            {
+                self.connections.insert(id, c);
+                self.defer(id, Box::new(request));
+                return Ok(());
+            }
+            other => other?,
+        };
         let mut close = false;
         let reply = match decision {
             Ok(reply) => reply,

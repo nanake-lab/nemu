@@ -80,13 +80,13 @@ class ChainTests(unittest.TestCase):
             path = Path(folder) / "original.jsonl"
             prefix = b"".join((json.dumps(row) + "\n").encode() for row in (entry, failure))
             path.write_bytes(prefix)
-            self.assertEqual(recorded_sample(path, deque([entry, failure]), entry, "key"), "念头")
+            self.assertEqual(recorded_sample(path, deque([entry, failure]), entry, "key")["text"], "念头")
             sample.assert_called_once_with(entry["request"], "key")
             self.assertTrue(path.read_bytes().startswith(prefix))
             saved = path.read_bytes()
             rows = list(map(json.loads, saved.splitlines()))
             self.assertEqual(rows, [entry, failure, entry, success])
-            self.assertEqual(recorded_sample(path, deque(rows), entry, "key"), "念头")
+            self.assertEqual(recorded_sample(path, deque(rows), entry, "key")["text"], "念头")
             with self.assertRaisesRegex(ValueError, "不符"):
                 recorded_sample(path, deque(rows), {**entry, "round": 6}, "key")
             sample.assert_called_once()
