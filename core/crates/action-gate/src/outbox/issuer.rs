@@ -15,8 +15,10 @@ impl Issuer {
         &mut self,
         grant: ExecutionCredential,
         payload: Vec<u8>,
+        settings: &Settings,
         limits: Limits,
     ) -> Result<ActionRequestV2> {
+        check_settings(&grant, settings)?;
         let request = ActionRequestV2 {
             schema_version: 1,
             action_id: grant.action_id.clone(),

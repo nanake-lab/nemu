@@ -253,8 +253,13 @@ impl Fixture {
             }),
             trust: None,
         };
+        let settings = lifecycle::Settings {
+            credential_lifetime_ns: Some(100),
+            max_dispatching: Some(1),
+            ..Default::default()
+        };
         let mut issuer = outbox::Issuer::default();
-        let request = issuer.issue(grant, bytes, limits()).unwrap();
+        let request = issuer.issue(grant, bytes, &settings, limits()).unwrap();
         let environment: VersionedEnvironmentV2 = with_refs(&leaf);
         let binding = CognitionBinding {
             schema_version: 1,
@@ -403,11 +408,6 @@ impl Fixture {
         store
             .commit(&cap, staged, crate::status::Status::default().value())
             .unwrap();
-        let settings = lifecycle::Settings {
-            credential_lifetime_ns: Some(100),
-            max_dispatching: Some(1),
-            ..Default::default()
-        };
         Self {
             root,
             store,

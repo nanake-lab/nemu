@@ -71,6 +71,7 @@ fn x04_sys12_body_sent_receipt_lost_reopen_no_resend_then_late_success() {
         .issue(
             request.grant.clone(),
             request.action_payload.0.clone(),
+            &settings,
             limits(),
         )
         .unwrap();
@@ -153,6 +154,20 @@ fn x04_sys12_body_sent_receipt_lost_reopen_no_resend_then_late_success() {
 
 #[test]
 fn sys12_speech_partial_delivery_preserves_the_terminal_extent() {
+    speech_delivery(
+        DeliveryStatus::PARTIAL,
+        1,
+        2,
+        ActionStatus::CANCELLED_ACTION,
+    );
+}
+
+#[test]
+fn sys12_complete_speech_is_settled_from_its_actual_receipt() {
+    speech_delivery(DeliveryStatus::DELIVERED, 2, 4, ActionStatus::SUCCEEDED);
+}
+
+fn speech_delivery(delivered: DeliveryStatus, blocks: u64, played: u64, status: ActionStatus) {
     let mut f = Fixture::new(true, false);
     f.registered();
     f.authorized();
@@ -182,16 +197,16 @@ fn sys12_speech_partial_delivery_preserves_the_terminal_extent() {
         schema_version: 1,
         action_id: "a".into(),
         output_id: "o".into(),
-        delivered_chunks: DecimalU64(1),
-        played_chars: DecimalU64(2),
-        status: DeliveryStatus::PARTIAL,
+        delivered_chunks: DecimalU64(blocks),
+        played_chars: DecimalU64(played),
+        status: delivered,
     };
     let r = f.store.prepare(&receipt, "1").unwrap();
     let frame = f.frame(EventKind::EXECUTION_RESULT, r.reference(), "partial");
     f.transaction(frame).settle().unwrap();
     let f = f.reopen();
     let actual = f.status();
-    assert_eq!(actual.status, ActionStatus::CANCELLED_ACTION);
+    assert_eq!(actual.status, status);
     assert_eq!(
         f.store
             .reader()

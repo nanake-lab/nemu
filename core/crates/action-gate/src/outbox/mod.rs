@@ -41,22 +41,28 @@ impl Authority<'_> {
                 && g.tier == self.tier,
             "grant revoked or scope changed",
         )?;
-        if let Some(policy) = &self.scope.desktop {
-            require(
-                policy.irreversible == self.settings.irreversible,
-                "desktop settings changed",
-            )?;
-        }
-        let ttl = self
-            .settings
-            .credential_lifetime_ns
-            .ok_or("credential lifetime unset")?;
-        require(
-            ttl > 0
-                && i128::from(g.expires_at_ns.0) - i128::from(g.issued_at_ns.0) <= i128::from(ttl),
-            "credential exceeds configured lifetime",
-        )
+        check_settings(g, self.settings)
     }
+}
+
+fn check_settings(g: &ExecutionCredential, settings: &Settings) -> Result<()> {
+    if let Some(policy) = &g.scope.desktop {
+        require(
+            policy.irreversible == settings.irreversible,
+            "desktop settings changed",
+        )?;
+    }
+    require(
+        settings.max_dispatching.is_some_and(|n| n > 0),
+        "dispatch concurrency unset or disabled",
+    )?;
+    let ttl = settings
+        .credential_lifetime_ns
+        .ok_or("credential lifetime unset")?;
+    require(
+        ttl > 0 && i128::from(g.expires_at_ns.0) - i128::from(g.issued_at_ns.0) <= i128::from(ttl),
+        "credential exceeds configured lifetime",
+    )
 }
 
 pub trait Outbox {

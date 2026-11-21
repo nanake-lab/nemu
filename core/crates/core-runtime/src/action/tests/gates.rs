@@ -165,6 +165,19 @@ fn desktop_three_tiers_and_approval_deadline_are_configurable() {
     )
     .unwrap();
     assert_eq!(display.expires_at_ns.0, 17);
+    let mut issuer = outbox::Issuer::default();
+    assert!(
+        issuer
+            .issue(
+                f.request.grant.clone(),
+                f.request.action_payload.0.clone(),
+                &settings,
+                limits()
+            )
+            .is_err()
+    );
+    settings.credential_lifetime_ns = Some(100);
+    settings.max_dispatching = Some(1);
     for reversible in [true, false] {
         for tier in [
             DesktopTier::IRREVERSIBLE_NEVER,
@@ -176,8 +189,14 @@ fn desktop_three_tiers_and_approval_deadline_are_configurable() {
             grant.scope.reversible = Some(reversible);
             grant.scope.desktop.as_mut().unwrap().irreversible = tier;
             let mut issuer = outbox::Issuer::default();
+            settings.irreversible = tier;
             let allowed = issuer
-                .issue(grant, f.request.action_payload.0.clone(), limits())
+                .issue(
+                    grant,
+                    f.request.action_payload.0.clone(),
+                    &settings,
+                    limits(),
+                )
                 .is_ok();
             assert_eq!(
                 allowed,
@@ -185,4 +204,34 @@ fn desktop_three_tiers_and_approval_deadline_are_configurable() {
             );
         }
     }
+}
+
+#[test]
+fn changed_scheduler_frontier_cannot_consume_the_authorized_action() {
+    let mut f = Fixture::new(false, false);
+    f.registered();
+    f.authorized();
+    let mut frame = f.frame(EventKind::MAINTENANCE, &f.leaf.clone(), "changed-frontier");
+    frame
+        .next_input
+        .as_mut()
+        .unwrap()
+        .binding
+        .input_frontier
+        .push("new-input".into());
+    let mut tx =
+        ActionTransaction::open(&mut f.store, &f.cap, frame, limits(), 32, &mut f.index).unwrap();
+    let auth = authority(&f.request, &f.settings, &f.issuer);
+    assert!(
+        outbox::dispatch(
+            &mut tx,
+            &f.request,
+            &auth,
+            limits(),
+            || Some(40),
+            |_| panic!("sent despite changed frontier")
+        )
+        .is_err()
+    );
+    assert_eq!(f.status().status, ActionStatus::AUTHORIZED);
 }
