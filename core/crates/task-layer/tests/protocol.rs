@@ -82,9 +82,9 @@ fn settings_read_explicit_budgets_and_override_approved_defaults() {
     assert_eq!(changed.speech.missing, MissingHint::None);
     assert_eq!(changed.k, 1);
     for (json, tokens, ns, k) in [
-        ("{}", 128, 6_000_000_000, 2),
+        ("{}", 1_280, 6_000_000_000, 2),
         (r#"{"generation":{"tokens":42}}"#, 42, 6_000_000_000, 2),
-        (r#"{"generation":{"duration_ns":17},"k":3}"#, 128, 17, 3),
+        (r#"{"generation":{"duration_ns":17},"k":3}"#, 1_280, 17, 3),
     ] {
         fs::write(&file, json).unwrap();
         let s = TaskSettings::load(&file).unwrap();

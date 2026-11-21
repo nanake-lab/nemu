@@ -170,11 +170,10 @@ pub struct GenerationBudget {
 
 impl Default for GenerationBudget {
     fn default() -> Self {
-        // ADR 0027 favors short first sentences. At P0-12's 116.62 tokens/s,
-        // 128 tokens take about 1.1 s of decode. Leave room for prefill,
-        // a structured outline and a slower adapter before ending generation.
+        // DEMO-CAUSE-05 C/D: P95 was 1,154 completion tokens for the D6
+        // outline, including reasoning. The wall-clock limit is independent.
         Self {
-            tokens: 128,
+            tokens: 1_280,
             duration_ns: 6_000_000_000,
         }
     }
