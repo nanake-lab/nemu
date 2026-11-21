@@ -1,5 +1,16 @@
 # P6-01 验收证据
 
+## 1/2 复验
+
+实现提交 `4abad0f8ac13b4b08db956ab7c374618e8cfb858`。Windows 本机 `cargo test -p task-layer --locked --offline -- --nocapture` 通过 67 项，`cargo clippy -p task-layer --locked --offline --all-targets -- -D warnings` 通过。复验包括设置缺失时的完整回复、逐字段覆盖、配置错误、ADR 0047 权限绑定的正反例及既有 SYS14 回归。私有证据提交为 [a0fa6bffc71864fca9c4e4457ace89e22539e54c](https://github.com/nanake-lab/nemu-evidence/tree/a0fa6bffc71864fca9c4e4457ace89e22539e54c/P6-01)。
+
+| 原始文件 | SHA-256（Git 文件字节） |
+| --- | --- |
+| P6-01/windows-tests-4abad0f8.log | `aecab169868a645db4fdc237621f12dd80684d900a5d160904e597cf2e1c51ae` |
+| P6-01/windows-clippy-4abad0f8.log | `3f67917d0b8db3376f0b8a5a32c9584aed1403ca8f08afe2e5cecc8d950170e7` |
+
+## 首轮验收
+
 代码提交 `7f9e9a3eb1820be05132de810913d50ca95bf662`。Windows 在临时测试存储运行 `cargo test -p task-layer --locked --offline -- --nocapture`，65 项通过，0 项失败，0 项忽略。包括 50 项现有单测、15 项集成测试。[Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/44888568455) 通过工作区 fmt、Clippy、除 core-store 外的工作区测试及独立的 core-store 测试。整次运行结果为 success。
 
 | 检查 | 实测结果 |
