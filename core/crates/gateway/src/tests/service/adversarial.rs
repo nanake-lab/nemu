@@ -169,12 +169,12 @@ async fn auth_failure_connection_replay_and_audit_full_fail_closed() {
 }
 
 #[tokio::test]
-async fn upload_reservations_binding_expiry_and_disconnect_cleanup() {
+async fn upload_reservations_binding_and_disconnect_cleanup() {
     let root = TemporaryRoot::new().unwrap();
     let mut cfg = deployment();
     cfg.budget.max_uploads = 1;
     cfg.budget.max_upload_bytes = 8192;
-    cfg.upload_lifetime = Duration::from_millis(100);
+    cfg.upload_lifetime = Duration::from_secs(10);
     let (mut gateway, listener, name, token) = setup(&root, "upload", cfg);
     let (stop, stopped) = tokio::sync::oneshot::channel();
     let run = gateway.serve_listener(listener, async {
@@ -215,12 +215,6 @@ async fn upload_reservations_binding_expiry_and_disconnect_cleanup() {
             peer.exchange(&changed).await.reason,
             Some(IngressReason::OBJECT_MISMATCH)
         );
-        // Expiry releases the FULL declared reservation, not just bytes received.
-        tokio::time::sleep(Duration::from_millis(150)).await;
-        assert_eq!(
-            peer.exchange(&second).await.upload.unwrap().status,
-            UploadStatus::UPLOAD_CONTINUE
-        );
         let old_session = peer.session.session_id.clone();
         drop(peer);
         let mut peer = Peer::connect(&name, &token).await;
@@ -260,6 +254,58 @@ async fn upload_reservations_binding_expiry_and_disconnect_cleanup() {
         assert_eq!(
             peer.exchange(&forbidden).await.reason,
             Some(IngressReason::OBJECT_MISMATCH)
+        );
+        let _ = stop.send(());
+    };
+    let (r, ()) = tokio::join!(run, client);
+    r.unwrap();
+    let (s, _) = gateway.into_parts();
+    assert!(s.next_raw().unwrap().is_none());
+    assert!(s.reader().unwrap().facts(10).unwrap().is_empty());
+    s.verify().unwrap();
+}
+
+#[tokio::test]
+async fn expired_upload_releases_the_declared_reservation() {
+    let root = TemporaryRoot::new().unwrap();
+    let mut cfg = deployment();
+    cfg.budget.max_uploads = 1;
+    cfg.budget.max_upload_bytes = 8192;
+    cfg.upload_lifetime = Duration::from_millis(100);
+    let (mut gateway, listener, name, token) = setup(&root, "upload-expiry", cfg);
+    let (stop, stopped) = tokio::sync::oneshot::channel();
+    let run = gateway.serve_listener(listener, async {
+        let _ = stopped.await;
+    });
+    let client = async {
+        let mut peer = Peer::connect(&name, &token).await;
+        let value = UserText {
+            schema_version: 1,
+            text: "synthetic chunked text".repeat(3),
+        };
+        let bytes = value.canonical_bytes(limits()).unwrap();
+        let reference = reference(&value);
+        let mut r = peer.request("first", IngressKind::INGRESS_UPLOAD);
+        r.upload = Some(ObjectUploadChunk {
+            schema_version: 1,
+            upload_id: "partial".into(),
+            object: reference.clone(),
+            offset: DecimalU64(0),
+            data: HexBytes(bytes[..10].to_vec()),
+            final_chunk: false,
+        });
+        assert_eq!(
+            peer.exchange(&r).await.upload.unwrap().status,
+            UploadStatus::UPLOAD_CONTINUE
+        );
+        let mut second = r.clone();
+        second.request_id = "full".into();
+        second.upload.as_mut().unwrap().upload_id = "another".into();
+        // Expiry releases the FULL declared reservation, not just bytes received.
+        tokio::time::sleep(Duration::from_millis(150)).await;
+        assert_eq!(
+            peer.exchange(&second).await.upload.unwrap().status,
+            UploadStatus::UPLOAD_CONTINUE
         );
         let _ = stop.send(());
     };
