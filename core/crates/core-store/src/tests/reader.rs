@@ -1,7 +1,7 @@
 use super::*;
 
 #[test]
-fn receipts_verify_once_per_head_and_again_after_reopening_the_store() {
+fn receipts_extend_the_verified_prefix_and_recheck_after_reopen() {
     use crate::reader::FULL_CHECKS;
     let root = TemporaryRoot::new().unwrap();
     let mut store = rehearsal(&root, "receipt-prefix");
@@ -38,15 +38,15 @@ fn receipts_verify_once_per_head_and_again_after_reopening_the_store() {
             outcome.event_id
         );
     }
-    assert_eq!(FULL_CHECKS.get() - before, 2);
+    assert_eq!(FULL_CHECKS.get() - before, 1);
     event(&mut store, 2);
     store.receipt_reader(&mut slot).unwrap();
-    assert_eq!(FULL_CHECKS.get() - before, 2);
+    assert_eq!(FULL_CHECKS.get() - before, 1);
 
     drop(store);
     let reopened = Store::<Rehearsal>::open_temporary(&root, "receipt-prefix", config()).unwrap();
     reopened.receipt_reader(&mut slot).unwrap();
-    assert_eq!(FULL_CHECKS.get() - before, 3);
+    assert_eq!(FULL_CHECKS.get() - before, 2);
 }
 
 #[test]
@@ -238,42 +238,54 @@ fn background_publication_proof_requires_the_same_writer_epoch_on_delivery() {
 }
 
 #[test]
-fn new_publication_rejects_damage_to_either_the_old_or_new_transaction_file() {
-    use std::sync::{
-        Arc,
-        atomic::{AtomicBool, Ordering},
-    };
-
-    for old_file in [true, false] {
+fn incremental_verification_hashes_new_references_and_full_checks_cold_history() {
+    for cold in [true, false] {
         let root = TemporaryRoot::new().unwrap();
         let mut store = rehearsal(&root, "damaged-publication");
         let cap = store.take_commit_capability().unwrap();
         let first = advance(&mut store, &cap, 0);
-        let mut cached = None;
-        store.receipt_reader(&mut cached).unwrap();
-        let second = advance(&mut store, &cap, 1);
-        let snapshot = if old_file {
+        let mut slot = None;
+        store.receipt_reader(&mut slot).unwrap();
+        advance(&mut store, &cap, 1);
+        let current = store.current().unwrap().unwrap();
+        // Damage a referenced object, separately from the transaction manifest.
+        let reference = if cold {
             first.snapshot
         } else {
-            second.snapshot
+            current.staged_x
         };
-        let path = store.objects.path(&snapshot).unwrap();
+        let path = store.objects.path(&reference).unwrap();
         let mut bytes = std::fs::read(&path).unwrap();
         *bytes.last_mut().unwrap() ^= 1;
         std::fs::write(path, bytes).unwrap();
-
-        let full = Arc::new(AtomicBool::new(false));
-        let observed = Arc::clone(&full);
-        let check = store
-            .receipt_check(cached, move || observed.store(true, Ordering::SeqCst))
-            .unwrap();
-        assert!(check().is_err());
-        assert!(store.verify().is_err());
-        if old_file {
-            assert!(
-                full.load(Ordering::SeqCst),
-                "a changed prefix needs full verification"
-            );
+        if cold {
+            let reader = store.receipt_reader(&mut slot).unwrap();
+            assert!(reader.read::<CoreTransactionV2>(&reference).is_err());
+            assert!(reader.read_published_transaction(&reference).is_err());
+        } else {
+            assert!(store.receipt_reader(&mut slot).is_err());
         }
+        assert!(store.full_publication_check().unwrap()().is_err());
+        assert!(store.verify().is_err());
     }
+}
+
+#[test]
+fn external_sql_write_forces_full_check_for_all_store_readers() {
+    use crate::reader::FULL_CHECKS;
+    let root = TemporaryRoot::new().unwrap();
+    let mut store = rehearsal(&root, "external-epoch");
+    let cap = store.take_commit_capability().unwrap();
+    advance(&mut store, &cap, 0);
+    store.verified_reader().unwrap();
+    let before = FULL_CHECKS.get();
+    advance(&mut store, &cap, 1);
+    store.reader().unwrap();
+    assert_eq!(FULL_CHECKS.get(), before);
+    let other = rusqlite::Connection::open(store.path().join("store.sqlite")).unwrap();
+    other
+        .execute_batch("CREATE TABLE synthetic_epoch_probe(value INTEGER)")
+        .unwrap();
+    store.verified_reader().unwrap();
+    assert_eq!(FULL_CHECKS.get(), before + 1);
 }

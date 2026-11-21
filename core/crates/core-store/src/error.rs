@@ -7,6 +7,8 @@ pub enum Error {
     WriterLock(std::fs::TryLockError),
     Sql(rusqlite::Error),
     Contract(String),
+    /// A cached-only service read needs the pending publication worker.
+    VerificationPending,
     Rejected(&'static str),
     /// Known no-D-write capacity rejection; I/O and SQL remain outcome-unknown.
     Backpressure(core_types::generated::IngressReason),
@@ -30,6 +32,7 @@ impl fmt::Display for Error {
             Self::WriterLock(e) => write!(f, "authority writer lock: {e}"),
             Self::Sql(e) => write!(f, "storage SQL: {e}"),
             Self::Contract(e) => write!(f, "contract: {e}"),
+            Self::VerificationPending => f.write_str("publication verification pending"),
             Self::Rejected(e) => write!(f, "storage rejected: {e}"),
         }
     }

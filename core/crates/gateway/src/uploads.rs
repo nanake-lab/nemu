@@ -54,7 +54,7 @@ impl<L: LineageKind> Uploads<L> {
         {
             return T::from_canonical(&u.bytes, limits).map_err(|_| Error::Contract);
         }
-        Ok(store.reader()?.read(reference)?)
+        Ok(store.verified_reader()?.read(reference)?)
     }
     pub fn payload(
         &self,

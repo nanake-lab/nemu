@@ -5,18 +5,48 @@ use core_types::{WireMessage, generated::*};
 pub(crate) struct CheckedProgress<L: LineageKind> {
     reader: Reader<L>,
     publication: Option<(u64, String)>,
+    settlement: Option<(EventEnvelope, ReceiptV2)>,
     events: Vec<(String, EventEnvelope)>,
 }
 
 pub(crate) type ProgressTask<L> = tokio::task::JoinHandle<Result<CheckedProgress<L>>>;
 
 impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
+    pub(crate) fn check_publication(
+        &mut self,
+        full: bool,
+        settlement: Option<(EventEnvelope, ReceiptV2)>,
+    ) -> Result<ProgressTask<L>> {
+        let job: Box<dyn FnOnce() -> core_store::Result<Reader<L>> + Send> = if full {
+            Box::new(self.store.full_publication_check()?)
+        } else {
+            Box::new(
+                self.store
+                    .receipt_check(self.receipt_reader.take(), || {})?,
+            )
+        };
+        #[cfg(test)]
+        let gate = self.full_gate.take();
+        Ok(tokio::task::spawn_blocking(move || {
+            #[cfg(test)]
+            if let Some((entered, resume)) = gate {
+                let _ = entered.send(());
+                let _ = resume.recv();
+            }
+            Ok(CheckedProgress {
+                reader: job()?,
+                publication: None,
+                settlement,
+                events: vec![],
+            })
+        }))
+    }
+
     pub(crate) fn progress(&mut self) -> Result<Option<ProgressTask<L>>> {
         // Gamma operates on durable D before the core can learn or sample time.
         if let Some(event) = self.store.next_raw()?
             && let Some(settled) = self.store.settle_duplicate()?
         {
-            self.receipt_reader = None; // Gamma published a filtered or conflicting position.
             let reason = match settled.stage {
                 ReceiptStage::FILTERED => None,
                 ReceiptStage::REJECTED => Some(self.audit(
@@ -34,11 +64,11 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
                 raw_log_position: None,
                 ingest_time_ns: None,
             };
-            self.deliver(event.raw_log_position.0, &event, receipt)?;
+
             // Do not hand the next queued duplicate to the core merely
             // because one duplicate was settled in this tick. Gamma must
             // precede EVERY new core transition, including a retry backlog.
-            return Ok(None);
+            return Ok(Some(self.check_publication(false, Some((event, receipt)))?));
         }
         let before = self.store.head()?;
         let outcomes = self.handler.process_next(&mut self.store)?;
@@ -98,18 +128,18 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             Ok(CheckedProgress {
                 reader,
                 publication,
+                settlement: None,
                 events,
             })
         })))
     }
 
-    pub(crate) fn finish_progress(&mut self, checked: CheckedProgress<L>) -> Result<()> {
-        if !self.store.publication_matches(&checked.reader)? {
-            return Err(Error::Rejected(
-                "publication changed during receipt verification",
-            ));
-        }
+    pub(crate) fn finish_progress(&mut self, mut checked: CheckedProgress<L>) -> Result<()> {
+        self.store.accept_publication(&mut checked.reader)?;
         self.receipt_reader = Some(checked.reader);
+        if let Some((event, receipt)) = checked.settlement {
+            return self.deliver(event.raw_log_position.0, &event, receipt);
+        }
         if let Some((position, commit)) = checked.publication
             && let Some(p) = self.pending.get_mut(&position)
         {

@@ -18,6 +18,8 @@ use std::{
 pub struct Store<L: LineageKind> {
     pub(crate) db: Connection,
     pub(crate) objects: Objects,
+    pub(crate) proof: std::cell::RefCell<Option<crate::reader::PublicationProof>>,
+    pub(crate) cached_reads_only: bool,
     pub(crate) root: PathBuf,
     pub(crate) branch: String,
     pub(crate) header: LineageHeaderV2,
@@ -97,6 +99,8 @@ impl<L: LineageKind> Store<L> {
             header,
             fault,
             capability_issued: false,
+            proof: Default::default(),
+            cached_reads_only: false,
             _writer: writer,
             _lineage: PhantomData,
         })
@@ -143,6 +147,8 @@ impl<L: LineageKind> Store<L> {
             header,
             fault,
             capability_issued: false,
+            proof: Default::default(),
+            cached_reads_only: false,
             _writer: writer,
             _lineage: PhantomData,
         };
@@ -176,10 +182,7 @@ impl<L: LineageKind> Store<L> {
         self.objects.prepare_r(value, &self.fault)
     }
     pub fn reader(&self) -> Result<Reader<L>> {
-        let temporary: bool = self
-            .db
-            .query_row("SELECT temporary FROM metadata", [], |r| r.get(0))?;
-        Reader::open(&self.root, self.objects.config, temporary)
+        self.verified_reader()
     }
     pub fn current(&self) -> Result<Option<CoreTransactionV2>> {
         current(&self.db, &self.objects)

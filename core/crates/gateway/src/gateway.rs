@@ -9,6 +9,27 @@ use core_store::{LineageKind, Store};
 use core_types::{WireMessage, generated::*, terminal_ingress::check_session};
 use std::{collections::BTreeMap, time::Duration};
 
+#[cfg(test)]
+pub(crate) type VerificationGate = (
+    tokio::sync::oneshot::Sender<()>,
+    std::sync::mpsc::Receiver<()>,
+);
+
+/// Deployment setting in seconds. Read once at startup, outside the event loop.
+fn verification_interval(setting: Option<std::ffi::OsString>) -> Result<Duration> {
+    let Some(setting) = setting else {
+        return Ok(Duration::from_secs(24 * 60 * 60));
+    };
+    let seconds = setting
+        .to_str()
+        .and_then(|v| v.parse::<u64>().ok())
+        .filter(|&v| v > 0)
+        .ok_or(Error::Rejected(
+            "NEMU_STORE_VERIFY_INTERVAL_SECONDS must be a positive integer",
+        ))?;
+    Ok(Duration::from_secs(seconds))
+}
+
 pub struct Installation {
     pub(crate) id: String,
     pub(crate) token: TerminalToken,
@@ -44,12 +65,13 @@ pub struct Gateway<L: LineageKind, H: CoreHandler<L>> {
     pub(crate) pending: BTreeMap<u64, Pending>,
     pub(crate) receipt_reader: Option<core_store::Reader<L>>,
     #[cfg(test)]
-    pub(crate) check_gate: Option<(
-        tokio::sync::oneshot::Sender<()>,
-        std::sync::mpsc::Receiver<()>,
-    )>,
+    pub(crate) check_gate: Option<VerificationGate>,
+    #[cfg(test)]
+    pub(crate) full_gate: Option<VerificationGate>,
     pub(crate) audit_blocked: bool,
+    deferred: std::collections::VecDeque<(u64, Box<TerminalRequest>)>,
     audit_bytes: usize,
+    verification_interval: Duration,
 }
 impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
     pub fn new(
@@ -120,10 +142,26 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             receipt_reader: None,
             #[cfg(test)]
             check_gate: None,
+            #[cfg(test)]
+            full_gate: None,
             audit_blocked,
+            deferred: Default::default(),
             audit_bytes: bytes,
+            verification_interval: verification_interval(std::env::var_os(
+                "NEMU_STORE_VERIFY_INTERVAL_SECONDS",
+            ))?,
         })
     }
+    /// Monotonic running time between idle full-history checks. Each service
+    /// start checks immediately, including when the schedule is reconfigured.
+    pub fn set_verification_interval(&mut self, interval: Duration) -> Result<()> {
+        if interval.is_zero() {
+            return Err(Error::Rejected("zero verification interval"));
+        }
+        self.verification_interval = interval;
+        Ok(())
+    }
+
     /// Return the sole writer to its owner; no shared writer or second journal.
     pub fn into_parts(self) -> (Store<L>, H) {
         (self.store, self.handler)
@@ -134,9 +172,17 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
     pub fn handler_mut(&mut self) -> &mut H {
         &mut self.handler
     }
+    pub(crate) fn defer(&mut self, connection: u64, request: Box<TerminalRequest>) {
+        if self.deferred.len() >= self.config.max_pending_requests {
+            self.close(connection);
+        } else {
+            self.deferred.push_back((connection, request));
+        }
+    }
     pub(crate) fn close(&mut self, connection: u64) {
         self.connections.remove(&connection); // drops all unfinished buffers/pins
         self.pending.retain(|_, p| p.connection != connection);
+        self.deferred.retain(|(id, _)| *id != connection);
     }
     pub(crate) fn audit(
         &mut self,
@@ -227,7 +273,9 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         let mut timer = tokio::time::interval(self.config.poll_interval);
         timer.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
         let mut sequence = 0u64;
-        let mut checking: Option<crate::progress::ProgressTask<L>> = None;
+        let mut checking = Some(self.check_publication(true, None)?);
+        self.store.set_cached_reads_only(true);
+        let mut last_full = std::time::Instant::now();
         tokio::pin!(shutdown);
         let result = async { loop {
             let step: Result<()> = tokio::select! {
@@ -246,15 +294,39 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
                     Err(Error::Timeout) => Ok(()),
                     Err(e) => Err(e),
                 },
-                input = rx.recv() => match input { Some(v) => self.input(v), None => Err(Error::Disconnected) },
+                input = rx.recv() => match input.ok_or(Error::Disconnected)? {
+                    Input::Request { connection, request }
+                        if self.deferred.iter().any(|(id, _)| *id == connection) ||
+                           (!matches!(request.kind, IngressKind::INGRESS_QUERY | IngressKind::INGRESS_UPLOAD) && !self.store.has_verified_publication()?) => {
+                        // Preserve frame order on a waiting pipe. A saturated peer
+                        // cannot prevent other connections from authenticating or querying.
+                        self.defer(connection, request);
+                        if checking.is_none() { checking = Some(self.check_publication(false, None)?); }
+                        Ok(())
+                    }
+                    input => self.input(input),
+                },
                 completed = async { checking.as_mut().unwrap().await }, if checking.is_some() => {
                     checking = None;
-                    self.finish_progress(completed.map_err(|_| Error::Rejected("publication check worker failed"))??)
+                    self.finish_progress(completed.map_err(|_| Error::Rejected("publication check worker failed"))??)?;
+                    let waiting = std::mem::take(&mut self.deferred);
+                    for (connection, request) in waiting {
+                        if self.connections.contains_key(&connection) {
+                            self.dispatch(connection, *request)?;
+                        }
+                    }
+                    Ok(())
                 },
                 _ = timer.tick() => {
                     self.expire_connections();
                     if checking.is_none() {
-                        checking = self.progress()?;
+                        checking = if !self.store.has_verified_publication()? {
+                            Some(self.check_publication(false, None)?)
+                        } else if last_full.elapsed() >= self.verification_interval
+                            && self.pending.is_empty() && self.store.next_raw()?.is_none() {
+                            last_full = std::time::Instant::now();
+                            Some(self.check_publication(true, None)?)
+                        } else { self.progress()? };
                     }
                     Ok(())
                 },
@@ -267,13 +339,39 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         } }.await;
         // A running blocking job cannot be aborted. Join it before returning
         // the Store to its owner, including on shutdown and error.
-        if let Some(check) = checking {
-            let _ = check.await;
-        }
+        let joined = if let Some(check) = checking {
+            check
+                .await
+                .map_err(|_| Error::Rejected("publication check worker failed"))
+                .and_then(|r| r.map(|_| ()))
+        } else {
+            Ok(())
+        };
+        self.store.set_cached_reads_only(false);
         tasks.abort_all();
         while tasks.join_next().await.is_some() {}
         self.connections.clear();
         self.pending.clear();
-        result
+        self.deferred.clear();
+        result.and(joined)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn verification_schedule_uses_a_positive_user_interval_or_daily_default() {
+        assert_eq!(
+            verification_interval(None).unwrap(),
+            Duration::from_secs(86_400)
+        );
+        assert_eq!(
+            verification_interval(Some("3600".into())).unwrap(),
+            Duration::from_secs(3600)
+        );
+        assert!(verification_interval(Some("0".into())).is_err());
+        assert!(verification_interval(Some("invalid".into())).is_err());
     }
 }
