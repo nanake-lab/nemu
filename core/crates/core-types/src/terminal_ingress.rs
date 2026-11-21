@@ -188,7 +188,7 @@ pub fn upload_type(tag: &str) -> Result<String> {
                 && m.superseded.is_none()
                 && !matches!(
                     m.file.as_str(),
-                    "terminal_ingress.proto" | "speak_think.proto" | "semantic_evidence.proto"
+                    "terminal_ingress.proto" | "speak_think.proto" | "permission.proto" | "semantic_evidence.proto"
                 )
         })
         .map(|(name, _)| name)

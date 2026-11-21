@@ -4,6 +4,7 @@
 mod canonical;
 pub mod contract;
 pub mod numeric;
+pub mod permission;
 mod protobuf;
 pub mod scalar;
 pub mod semantic;
@@ -168,6 +169,7 @@ mod codec_cache_tests {
         semantic::check_law_state_message(name, &value, limits)?;
         semantic::check_cognition_message(name, &value, limits)?;
         semantic::check_j_message(name, &value, limits)?;
+        semantic::check_permission_message(name, &value, limits)?;
         semantic::check_speak_think_message(name, &value, limits)?;
         semantic::check_semantic_evidence_message(name, &value, limits)?;
         Ok(

@@ -17,6 +17,8 @@ use std::cmp::Ordering;
 mod cognition;
 mod evidence;
 pub use evidence::*;
+mod permission;
+pub use permission::check_permission_message;
 mod speak_think;
 pub use speak_think::{check_speak_think_message, resolved_text_range};
 mod j_resources;

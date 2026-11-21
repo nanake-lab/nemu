@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 import json
 from typing import Any
 
@@ -19,6 +20,30 @@ PAST_MARKERS = ("那天", "当时", "那时", "那一刻", "那晚", "那会儿"
 NOW_MARKERS = ("现在", "回头看", "回想", "想起来", "此刻")
 
 
+def checked_points(
+    raw: str, types: tuple[str, ...], check: Callable[[dict[str, Any]], str | None],
+) -> dict[str, Any]:
+    parsed = json.loads(raw)
+    if not isinstance(parsed, dict) or not isinstance(parsed.get("points"), list):
+        raise TypeError("expected an object with a points array")
+    checks = []
+    kept: list[dict[str, Any]] = []
+    for point in parsed["points"]:
+        reason: str | None
+        if not isinstance(point, dict):
+            reason = "invalid_point"
+        elif point.get("type") not in types:
+            reason = "unknown_type"
+        elif not isinstance(point.get("text"), str) or not point["text"].strip():
+            reason = "invalid_text"
+        else:
+            reason = check(point)
+        checks.append({"point": point, "kept": reason is None, "reason": reason})
+        if reason is None:
+            kept.append(point)
+    return {"checks": checks, "kept": kept}
+
+
 def verify_points(
     raw: str,
     speakers: dict[str, str],
@@ -26,20 +51,9 @@ def verify_points(
     self_quote: str | None = None,
     record_texts: dict[str, str] | None = None,
 ) -> dict[str, Any]:
-    parsed = json.loads(raw)
-    if not isinstance(parsed, dict) or not isinstance(parsed.get("points"), list):
-        raise TypeError("expected an object with a points array")
-    checks = []
-    kept = []
-    for point in parsed["points"]:
+    def check(point: dict[str, Any]) -> str | None:
         reason = None
-        if not isinstance(point, dict):
-            reason = "invalid_point"
-        elif point.get("type") not in ("past_event", "past_self", "now", "other"):
-            reason = "unknown_type"
-        elif not isinstance(point.get("text"), str) or not point["text"].strip():
-            reason = "invalid_text"
-        elif point["type"] in ("past_event", "past_self"):
+        if point["type"] in ("past_event", "past_self"):
             cites = point.get("cites")
             if not isinstance(cites, list) or any(not isinstance(cite, str) for cite in cites):
                 reason = "invalid_cites"
@@ -67,12 +81,12 @@ def verify_points(
             and not any(marker in point["text"] for marker in NOW_MARKERS)
         ):
             reason = "now_refers_past"
-        checks.append({"point": point, "kept": reason is None, "reason": reason})
-        if reason is None:
-            kept.append(point)
-    if not kept and self_quote is None:
-        kept.append({"type": "other", "text": FALLBACK, "cites": []})
-    return {"checks": checks, "kept": kept}
+        return reason
+
+    result = checked_points(raw, ("past_event", "past_self", "now", "other"), check)
+    if not result["kept"] and self_quote is None:
+        result["kept"].append({"type": "other", "text": FALLBACK, "cites": []})
+    return result
 
 
 def run_call(body: dict[str, Any], api_key: str, *, echo: bool = False) -> dict[str, Any]:

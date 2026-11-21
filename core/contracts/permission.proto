@@ -1,0 +1,191 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "terminal.proto";
+import "terminal_ingress.proto";
+import "law.proto";
+import "ledger.proto";
+import "cognition.proto";
+import "speak_think.proto";
+
+enum DesktopTier { DESKTOP_TIER_UNSPECIFIED = 0; IRREVERSIBLE_NEVER = 1; IRREVERSIBLE_ASK = 2; IRREVERSIBLE_DIRECT = 3; }
+enum ScopeKind { SCOPE_UNSPECIFIED = 0; CONNECTOR_OPERATION = 1; LOCAL_DESKTOP = 2; OWN_SOCIAL = 3; SOCIAL_NOTIFY_USER = 4; OWN_WALLET_PAY = 5; USER_WALLET_TOP_UP = 6; }
+enum ManagementEntry { MANAGEMENT_UNSPECIFIED = 0; LOCAL_PANEL = 1; LOCAL_ECHOCTL = 2; }
+enum PermissionDenial { PERMISSION_UNSPECIFIED = 0; IDENTITY_UNVERIFIED = 1; WRONG_BINDING = 2; SCOPE_DENIED = 3; BUDGET_DENIED = 4; GRANT_EXPIRED = 5; ALREADY_CONSUMED = 6; VERSION_REVOKED = 7; CONSENT_MISSING = 8; UNRESOLVED_DISPATCH = 9; }
+
+// @message echo.local-user-binding | ADR 0047: authenticated local service output, never caller testimony
+message LocalUserBinding {
+  optional uint32 schema_version = 1; // required
+  optional string principal_id = 2; // required,nonempty
+  optional string session_id = 3; // required,nonempty
+  optional string installation_id = 4; // required,nonempty
+  optional string authentication_record_id = 5; // required,nonempty
+}
+
+// @message echo.desktop-permission-policy | ADR 0043 §4.1; ADR 0045 D9
+message DesktopPermissionPolicy {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional DesktopTier irreversible = 3; // required
+  optional ObjectRef reversibility_rule = 4; // required
+}
+
+// @message echo.action-consent | ADR 0043 §4.1; CONTRACTS §6; consumed confirmation from u*
+message ActionConsent {
+  optional uint32 schema_version = 1; // required
+  optional LocalUserBinding user = 2; // required
+  optional sint64 confirmed_at_ns = 3; // required
+  optional string approval_id = 4; // required,nonempty
+  optional string action_id = 5; // required,nonempty
+  optional bytes payload_digest = 6; // required,size=32
+}
+
+// @message echo.connector-scope | P5-05/40; V2-89; catalog operation and concrete target
+message ConnectorScope {
+  // @rules {"common":["connector_id","operation_id","resource_id"],"cases":{"1":{},"2":{"required":["desktop","reversible"]},"3":{},"4":{},"5":{"required":["wallet_minor_units","currency"]},"6":{"required":["wallet_minor_units","currency","depositor"]}}}
+  optional uint32 schema_version = 1; // required
+  optional ScopeKind kind = 2; // required
+  optional string connector_id = 3; // required,nonempty
+  optional string operation_id = 4; // required,nonempty
+  optional string resource_id = 5; // required,nonempty
+  optional DesktopPermissionPolicy desktop = 6; // optional
+  optional bool reversible = 7; // optional
+  optional uint64 wallet_minor_units = 8; // optional
+  optional string currency = 9; // optional,nonempty
+  optional LocalUserBinding depositor = 10; // optional
+}
+
+// @message echo.execution-budget | P5-40: reservation in the named versioned resource's unit and accounting period
+message ExecutionBudget {
+  optional uint32 schema_version = 1; // required
+  optional string budget_id = 2; // required,nonempty
+  optional string version = 3; // required,nonempty
+  optional string unit = 4; // required,nonempty
+  optional uint64 limit = 5; // required
+  optional uint64 charge = 6; // required
+}
+
+// @message echo.trust-memory | P5-05/40: T2 user trust, committed by the core only
+message TrustMemory {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional LocalUserBinding user = 3; // required
+  optional ConnectorScope scope = 4; // required
+  optional ToolTier tier = 5; // required
+  optional uint64 revocation_version = 6; // required
+}
+
+// @message echo.execution-credential | P5-40: issuer-registered, single-use and connection-holder-bound
+message ExecutionCredential {
+  // @transient
+  optional uint32 schema_version = 1; // required
+  optional string issuance_id = 2; // required,nonempty
+  optional string executor_session_id = 3; // required,nonempty
+  optional string action_id = 4; // required,nonempty
+  optional bytes payload_digest = 5; // required,size=32
+  optional ObjectRef protocol = 6; // required
+  optional string permission_version = 7; // required,nonempty
+  optional uint64 revocation_version = 8; // required
+  optional ConnectorScope scope = 9; // required
+  optional ExecutionBudget budget = 10; // required
+  optional sint64 issued_at_ns = 11; // required
+  optional sint64 expires_at_ns = 12; // required
+  optional ToolTier tier = 13; // required
+  optional ActionConsent consent = 14; // optional
+  optional TrustMemory trust = 15; // optional
+}
+
+// @message echo.action-request-v2 | ADR 0047, I26: exact authorized executor bytes
+message ActionRequestV2 {
+  // @retains ActionRequest
+  // @transient
+  reserved 3, 4;
+  optional uint32 schema_version = 1; // required
+  optional string action_id = 2; // required,nonempty
+  optional sint64 expires_at_ns = 5; // required
+  optional ExecutionCredential grant = 6; // required
+  optional bytes action_payload = 7; // required
+}
+
+// @message echo.growth-command-v2 | v2.0 §5.4, V2-97/101
+message GrowthCommandV2 {
+  // @retains GrowthCommand
+  // @rules {"common":["command_id","law_version","history_prefix"],"cases":{"1":{},"2":{},"3":{"required":["verdict","review_record","alarm_id","alarm_record"],"optional":["replacement_law"]}}}
+  optional uint32 schema_version = 1; // required
+  optional string command_id = 2; // required,nonempty
+  optional GrowthCommandKind kind = 3; // required
+  optional ReviewVerdict verdict = 4; // optional
+  optional ObjectRef review_record = 5; // optional
+  optional ObjectRef law_version = 6; // required
+  optional string history_prefix = 7; // required,nonempty
+  optional string alarm_id = 8; // optional,nonempty
+  optional ObjectRef replacement_law = 9; // optional
+  optional ObjectRef alarm_record = 10; // optional
+}
+
+// @message echo.growth-management-request | P5-40: single local management service; authenticated P5-35 session
+message GrowthManagementRequest {
+  // @rules {"discriminator":"entry","common":["command","user"],"cases":{"1":{"required":["confirmation_id"]},"2":{}}}
+  optional uint32 schema_version = 1; // required
+  optional ManagementEntry entry = 2; // required
+  optional LocalUserBinding user = 3; // required
+  optional GrowthCommandV2 command = 4; // required
+  optional string confirmation_id = 5; // optional,nonempty
+}
+
+// @message echo.terminal-request-v2 | ADR 0024 and ADR 0047: same paired dispatch, typed management branch
+message TerminalRequestV2 {
+  // @retains TerminalRequest
+  reserved 11;
+  // @rules {"common":["request_id","session_id","protocol_version"],"cases":{"1":{"required":["event"]},"2":{"required":["upload"]},"3":{"required":["query"]},"4":{"required":["approval"]},"5":{"required":["cancel"]},"6":{"required":["management"]}}}
+  optional uint32 schema_version = 1; // required
+  optional string request_id = 2; // required,nonempty
+  optional string session_id = 3; // required,nonempty
+  optional uint32 protocol_version = 4; // required,min=1,max=1
+  optional IngressKind kind = 5; // required
+  optional TerminalEvent event = 6; // optional
+  optional ObjectUploadChunk upload = 7; // optional
+  optional QueryV2 query = 8; // optional
+  optional ApprovalDecisionV2 approval = 9; // optional
+  optional OutputCancel cancel = 10; // optional
+  optional GrowthManagementRequest management = 12; // optional
+}
+
+// @message echo.permission-result | P5-40; V2-87, V2-101: correlate outcome and audit in H/Q or H/L
+message PermissionResult {
+  optional uint32 schema_version = 1; // required
+  optional string request_id = 2; // required,nonempty
+  optional string audit_record_id = 3; // required,nonempty
+  oneof outcome { // required
+    SystemMaintenanceRecord management_commit = 4; // optional
+    PermissionDenial denied = 5; // optional
+    string dispatch_record_id = 6; // optional,nonempty
+  }
+}
+
+// @message echo.permission-context | ADR 0045 D1; ADR 0046: a remote text receipt carries no local execution grant
+message PermissionContext {
+  // @transient
+  optional uint32 schema_version = 1; // required
+  oneof authority { // required
+    ExecutionCredential local_execution = 2; // optional
+    RemoteCognitiveReceipt remote_text = 3; // optional
+  }
+}
+
+// @message echo.terminal-response-v2 | ADR 0024 and ADR 0047: authenticated management result
+message TerminalResponseV2 {
+  // @retains TerminalResponse
+  // @rules {"common":["request_id","session_id","protocol_version","reply_to"],"cases":{"1":{"required":["receipt"]},"2":{"required":["upload"]},"3":{"required":["query"]},"4":{"optional":["management"]},"5":{"required":["reason"],"optional":["management"]}}}
+  optional uint32 schema_version = 1; // required
+  optional string request_id = 2; // required,nonempty
+  optional string session_id = 3; // required,nonempty
+  optional uint32 protocol_version = 4; // required,min=1,max=1
+  optional IngressKind reply_to = 5; // required
+  optional IngressResponseKind kind = 6; // required
+  optional ReceiptV2 receipt = 7; // optional
+  optional ObjectUploadReceipt upload = 8; // optional
+  optional QueryResultV2 query = 9; // optional
+  optional IngressReason reason = 10; // optional
+  optional PermissionResult management = 11; // optional
+}

@@ -16,3 +16,4 @@ change to a frozen golden vector. Baselines are append-only: never edit one.
 
 | `p5-37/` | Published contract at main `6b9c9b0b136e6c3cd4483adf9e35a3298cf55093`, frozen before P5-42 |
 | `p5-42/` | Published P5-42 IDL and all four golden prefixes at `fea7d2fec12a1026b0a773fc030f9849631403e9`, frozen before CONTRACT-WIRE-01 |
+| `contract-wire-01/` | Published IDL and four golden prefixes at `c56363617d13191deb55a66c3193bee0d5ceaeda`, frozen before P5-40 |
