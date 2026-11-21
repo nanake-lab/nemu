@@ -39,3 +39,15 @@
 
 - 报告开头三行白话。第一行写：仓库从此采用 Apache-2.0，别人可以使用、修改，也可以商用，但必须保留版权和许可声明；`content` 不在此列。
 - 开 draft PR，标题 `docs(DOC-LICENSE-01): 采用 Apache-2.0`，加 `needs-user` 标签，写「请审查」后停下。
+
+## 追加指令（2026-11-21 用户确认）
+
+用户确认在本 PR（`#254`）中一并将下列英文简介加在 `README.md` 开头（紧接 `# Nemu` 之后）：
+
+```markdown
+*less less more — a little someone on your desktop, shaped only by what she has lived.*
+
+Nemu is a desktop companion. Her personality is not written in a prompt: her moods, her relationships and what she remembers all grow from what she actually lives through, and every change can be traced and replayed. Her mind runs on [Echo Core](docs/echo-core/), a model-independent cognitive core that keeps state, memory and permissions outside the language model; models only help her speak and think. She acts on your computer only within the permissions you choose.
+
+*(Chinese documentation follows. 以下为中文说明。)*
+```
