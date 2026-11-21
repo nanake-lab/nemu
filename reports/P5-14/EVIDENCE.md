@@ -1,6 +1,6 @@
 # P5-14 原始证据索引
 
-行动专项的代码提交为 `6d2d3ecd32b8d5584b3b68ac22c2d7e330cf8d68`。工具链为 Windows x86_64 MSVC、Rust/Cargo 1.99.0。专项目录在 `core/` 下运行以下命令，16 项通过，一项依用户决定忽略。输出的一个 filtered out 是 core-runtime 其他模块的用例。
+初次交付行动专项的代码提交为 `6d2d3ecd32b8d5584b3b68ac22c2d7e330cf8d68`。工具链为 Windows x86_64 MSVC、Rust/Cargo 1.99.0。专项目录在 `core/` 下运行以下命令，16 项通过，一项依用户决定忽略。输出的一个 filtered out 是 core-runtime 其他模块的用例。
 
 ```powershell
 cargo fmt --all -- --check
@@ -36,3 +36,16 @@ cargo test --release --workspace --locked --no-fail-fast
 | [action-6d79.log.gz](https://github.com/nanake-lab/nemu-evidence/blob/2f20bcd060ff2ad658ab0e4fa9120d35a093227b/P5-14/action-6d79.log.gz) | `ddd181115c6728566084f0fbb8da6605e534d5d082cf530b1fbadaa4fa87507a` | P1 修复后，使用默认设置签发及派发的行动专项 |
 | [clippy-6d79.log.gz](https://github.com/nanake-lab/nemu-evidence/blob/2f20bcd060ff2ad658ab0e4fa9120d35a093227b/P5-14/clippy-6d79.log.gz) | `2dd3cbe6c8aaf68b9f187a8c318f94f87c0a71b09a5a08526a564051e270c749` | P1 修复后全工作区 Clippy |
 | [windows-82593109.log.gz](https://github.com/nanake-lab/nemu-evidence/blob/2f20bcd060ff2ad658ab0e4fa9120d35a093227b/P5-14/windows-82593109.log.gz) | `f64a480afacc290cbc9dcce53c1e09885b9a29adf7616d59cb79c5e429e04d74` | 旧提交 Windows CI 的 W18/SYS01 失败 |
+
+## #235 合并后的复验
+
+代码提交为 `d6fd22210a35a5386e1f36541120631a253d31b9`。命令与上面的四条 Windows 命令相同，status 文件记录代码提交、工具链和四个退出码。
+
+| 文件 | SHA-256 | 对应运行 |
+| --- | --- | --- |
+| [merged-d6fd-action.log.gz](https://github.com/nanake-lab/nemu-evidence/blob/ade06c86ee2800535d3fe24de18eec9d13a98071/P5-14/merged-d6fd-action.log.gz) | `5d4df55aa45072e73e262890de4cadcf0a4c5e1c68fd45451bb17f9f667a4422` | 行动专项 16 通过、1 暂缓 |
+| [merged-d6fd-clippy.log.gz](https://github.com/nanake-lab/nemu-evidence/blob/ade06c86ee2800535d3fe24de18eec9d13a98071/P5-14/merged-d6fd-clippy.log.gz) | `e96ee04e17ba5a7c63c2fa91c775535e6b3063b77ec360151fb102a2fd379e46` | 全工作区 Clippy |
+| [merged-d6fd-fmt.log.gz](https://github.com/nanake-lab/nemu-evidence/blob/ade06c86ee2800535d3fe24de18eec9d13a98071/P5-14/merged-d6fd-fmt.log.gz) | `46b50c321b39e89a491b6727a01628c34245605a30beb3e7414c5e01cff90e6e` | 格式检查，通过时无输出 |
+| [merged-d6fd-workspace.log.gz](https://github.com/nanake-lab/nemu-evidence/blob/ade06c86ee2800535d3fe24de18eec9d13a98071/P5-14/merged-d6fd-workspace.log.gz) | `2d631ba8c1e44e5e7f44bce02983f2a93de5878e4604c6b11d84bbc6c49ae854` | 全工作区 release 测试，含 Windows SYS01 |
+| [merged-d6fd-status.txt.gz](https://github.com/nanake-lab/nemu-evidence/blob/ade06c86ee2800535d3fe24de18eec9d13a98071/P5-14/merged-d6fd-status.txt.gz) | `dbbcec330994eba5a5f418a81762b2c3c4db93667f05e9dc83370cbceafa9dc5` | 实际提交、工具链与退出码 |
+| [merged-d6fd-ubuntu-attempt1.json.gz](https://github.com/nanake-lab/nemu-evidence/blob/ade06c86ee2800535d3fe24de18eec9d13a98071/P5-14/merged-d6fd-ubuntu-attempt1.json.gz) | `cf639a6c1d4b9b6c79fbf82c79afa23cd22de5e1699a5cb9ee653bb8aba4bcdd` | Ubuntu 首次运行的分步结论与时间 |
