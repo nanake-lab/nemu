@@ -27,12 +27,23 @@ impl Default for Settings {
 
 /// The caller resolves the origin from committed Q. Never accept a second,
 /// caller-supplied plan alongside the producer record (ADR 0045 D1).
-pub fn local_plan(origin: &InternalActivityRecordV2) -> Result<&CognitiveResultAndReceipt> {
-    require(
-        origin.remote.is_none(),
-        "remote cognition cannot select an action",
-    )?;
-    let local = origin.local.as_ref().ok_or("missing local result")?;
+#[derive(Clone, Copy)]
+pub enum Origin<'a> {
+    Local(&'a InternalActivityRecord),
+    Receipt(&'a InternalActivityRecordV2),
+}
+
+pub fn local_plan(origin: Origin<'_>) -> Result<&CognitiveResultAndReceipt> {
+    let local = match origin {
+        Origin::Local(record) => &record.result,
+        Origin::Receipt(record) => {
+            require(
+                record.remote.is_none(),
+                "remote cognition cannot select an action",
+            )?;
+            record.local.as_ref().ok_or("missing local result")?
+        }
+    };
     require(
         local.completion == CognitiveCompletion::COG_COMPLETED && local.carrier_receipt.is_some(),
         "local selection did not complete",
@@ -159,7 +170,7 @@ pub fn cancel(status: ActionStatus) -> Result<ActionStatus> {
 /// Create the PLANNED entry while publishing the originating local step in Q.
 /// The caller supplies the origin's W02 object reference and registration time.
 pub fn planned(
-    origin: &InternalActivityRecordV2,
+    origin: Origin<'_>,
     origin_ref: ObjectRef,
     id: String,
     request: ObjectRef,
@@ -167,7 +178,12 @@ pub fn planned(
 ) -> Result<CognitiveInflightAction> {
     let local = local_plan(origin)?;
     require(
-        !id.is_empty() && origin_ref.object_type == "echo.internal-activity-record-v2",
+        !id.is_empty()
+            && origin_ref.object_type
+                == match origin {
+                    Origin::Local(_) => "echo.internal-activity-record",
+                    Origin::Receipt(_) => "echo.internal-activity-record-v2",
+                },
         "invalid action identity or origin",
     )?;
     let plan = local.action_plan.clone().ok_or("no local plan")?;

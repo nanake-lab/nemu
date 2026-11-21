@@ -87,6 +87,7 @@ fn x04_sys12_body_sent_receipt_lost_reopen_no_resend_then_late_success() {
                 panic!("unexpected speech")
             };
             assert_eq!(body, &request);
+            recovery::deliver_then_exit(body);
             sends += 1;
             Ok(())
         },
@@ -121,6 +122,17 @@ fn x04_sys12_body_sent_receipt_lost_reopen_no_resend_then_late_success() {
         )
         .is_err()
     );
+    assert!(
+        transaction
+            .history
+            .check_reservation(&request.grant)
+            .is_err()
+    );
+    let mut second = request.grant.clone();
+    second.issuance_id = "different-issuance".into();
+    assert!(transaction.history.check_reservation(&second).is_err());
+    second.budget.version = "fresh-period".into();
+    transaction.history.check_reservation(&second).unwrap();
     transaction.settle().unwrap();
     assert_eq!(sends, 1);
     let actual = f.status();

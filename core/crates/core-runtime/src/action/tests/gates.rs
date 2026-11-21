@@ -7,7 +7,16 @@ fn cloud_receipt_cannot_be_relabelled_as_a_local_plan() {
     let q: CognitionState = reader
         .read(&f.store.current().unwrap().unwrap().staged_q)
         .unwrap();
-    let mut origin: InternalActivityRecordV2 = reader.read(&q.inflight[0].origin_record).unwrap();
+    let old: InternalActivityRecord = reader.read(&q.inflight[0].origin_record).unwrap();
+    let mut origin = InternalActivityRecordV2 {
+        schema_version: 1,
+        record_id: old.record_id,
+        previous: old.previous,
+        started_at_ns: old.started_at_ns,
+        finished_at_ns: old.finished_at_ns,
+        local: Some(old.result),
+        remote: None,
+    };
     let binding = origin.local.as_ref().unwrap().binding.clone();
     origin.remote = Some(RemoteCognitiveReceipt {
         schema_version: 1,
@@ -40,9 +49,20 @@ fn cloud_receipt_cannot_be_relabelled_as_a_local_plan() {
         review: None,
         local_pause_reason: Some("local unavailable".into()),
     });
-    assert!(lifecycle::local_plan(&origin).is_err());
+    assert!(lifecycle::local_plan(lifecycle::Origin::Receipt(&origin)).is_err());
     origin.local = None;
-    assert!(stage_local_plan(&f.store, q, &origin, "other".into(), f.payload.clone(), 1).is_err());
+    assert!(
+        stage_local_plan(
+            &f.store,
+            q,
+            lifecycle::Origin::Receipt(&origin),
+            "other".into(),
+            f.payload.clone(),
+            1,
+            limits()
+        )
+        .is_err()
+    );
 }
 
 #[test]

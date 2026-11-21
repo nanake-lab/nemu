@@ -128,3 +128,80 @@ fn sent_body_can_fail_and_pending_action_can_cancel() {
     f.transaction(frame).settle().unwrap();
     assert_eq!(f.status().status, ActionStatus::FAILED);
 }
+
+pub(super) fn deliver_then_exit(body: &ActionRequestV2) {
+    use std::{
+        io::Write,
+        process::{Command, Stdio},
+    };
+    let mut child = Command::new(std::env::current_exe().unwrap())
+        .args([
+            "--exact",
+            "action::tests::recovery::synthetic_body_executor",
+            "--nocapture",
+        ])
+        .env("NEMU_W13_SYNTHETIC_CHILD", "yes")
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .spawn()
+        .unwrap();
+    child
+        .stdin
+        .take()
+        .unwrap()
+        .write_all(&body.action_payload.0)
+        .unwrap();
+    let output = child.wait_with_output().unwrap();
+    assert_eq!(output.status.code(), Some(86));
+    assert!(
+        String::from_utf8(output.stdout)
+            .unwrap()
+            .contains("executed motion=wave")
+    );
+}
+
+#[test]
+fn synthetic_body_executor() {
+    use std::io::{Read, Write};
+    if std::env::var("NEMU_W13_SYNTHETIC_CHILD").as_deref() != Ok("yes") {
+        return;
+    }
+    let mut bytes = vec![];
+    std::io::stdin()
+        .take(limits().max_bytes as u64)
+        .read_to_end(&mut bytes)
+        .unwrap();
+    let body = BodyAction::from_canonical(&bytes, limits()).unwrap();
+    assert_eq!(body.kind, BodyActionKind::MOTION);
+    println!("executed motion={}", body.motion_id.unwrap());
+    std::io::stdout().flush().unwrap();
+    // No terminal receipt, unwinding or normal shutdown after the simulated effect.
+    std::process::exit(86);
+}
+
+#[test]
+fn elapsed_approval_window_cancels_the_durable_request() {
+    use std::time::{Duration, Instant};
+    // A short user-selected fixture window, independent of the 60 s default.
+    let window = Duration::from_millis(25);
+    let mut f = Fixture::with_approval_deadline(false, true, window.as_nanos() as i64);
+    f.registered();
+    let user = f.request.grant.consent.as_ref().unwrap().user.clone();
+    let shown = Instant::now();
+    std::thread::sleep(window);
+    let decision_at = i64::try_from(shown.elapsed().as_nanos()).unwrap();
+    let frame = f.frame(
+        EventKind::MAINTENANCE,
+        &f.leaf.clone(),
+        "wall-clock-timeout",
+    );
+    f.transaction(frame).decision(&user, decision_at).unwrap();
+    assert!(decision_at >= window.as_nanos() as i64);
+    assert_eq!(f.status().status, ActionStatus::CANCELLED_ACTION);
+    println!(
+        "approval_window_ns={} elapsed_at_timeout_ns={} durable_cancellation_seen_ms={}",
+        window.as_nanos(),
+        decision_at,
+        shown.elapsed().as_millis()
+    );
+}

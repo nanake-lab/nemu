@@ -93,6 +93,9 @@ pub(super) struct Fixture {
 }
 impl Fixture {
     pub fn new(speech: bool, ask: bool) -> Self {
+        Self::with_approval_deadline(speech, ask, 80)
+    }
+    pub fn with_approval_deadline(speech: bool, ask: bool, approval_deadline: i64) -> Self {
         let root = TemporaryRoot::new().unwrap();
         let header = LineageHeaderV2 {
             schema_version: 1,
@@ -216,7 +219,7 @@ impl Fixture {
             "a".into(),
             ToolTier::T0,
             &bytes,
-            80,
+            approval_deadline,
             limits(),
         )
         .unwrap();
@@ -300,14 +303,13 @@ impl Fixture {
             carrier_receipt: Some(leaf.clone()),
             usage: leaf.clone(),
         };
-        let record = InternalActivityRecordV2 {
+        let record = InternalActivityRecord {
             schema_version: 1,
             record_id: "step".into(),
             previous: None,
             started_at_ns: DecimalU64(0),
             finished_at_ns: DecimalU64(1),
-            local: Some(local),
-            remote: None,
+            result: local,
         };
         let source = store.prepare(&record, "1").unwrap();
         let transition = store
@@ -327,13 +329,13 @@ impl Fixture {
             .unwrap();
         let q = CognitionState {
             schema_version: 1,
-            revision: "initial".into(),
+            revision: "q-0".into(),
             mode: CognitiveMode::COG_RUNNING,
             reason: None,
             activities: vec![ActivityState {
                 schema_version: 1,
                 activity_id: "activity".into(),
-                revision: "initial".into(),
+                revision: "q-0".into(),
                 materials: vec![],
                 focus: None,
                 latest_step: Some(source.reference().clone()),
@@ -346,7 +348,16 @@ impl Fixture {
             runnable_successor: Some(input.reference().clone()),
             transition: transition.reference().clone(),
         };
-        let q = stage_local_plan(&store, q, &record, "a".into(), request_ref.clone(), 1).unwrap();
+        let q = stage_local_plan(
+            &store,
+            q,
+            lifecycle::Origin::Local(&record),
+            "a".into(),
+            request_ref.clone(),
+            1,
+            limits(),
+        )
+        .unwrap();
         let mut theta: ThetaSnapshotV2 = fixture();
         let law = store
             .prepare(&with_refs::<LawVersion>(&leaf), &theta.parameters.law_id)
