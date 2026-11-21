@@ -5,8 +5,8 @@ use core_types::{
 };
 
 pub enum Content {
-    Body(BodyAction),
-    Speech(PlanAndCarrierReceipt),
+    Body,
+    Speech(Vec<OutputChunk>),
 }
 
 pub enum Message<'a> {
@@ -17,8 +17,8 @@ pub enum Message<'a> {
 impl Content {
     pub fn decode(request: &ActionRequestV2, limits: Limits) -> Result<Self> {
         let bytes = &request.action_payload.0;
-        if let Ok(body) = BodyAction::from_canonical(bytes, limits) {
-            return Ok(Self::Body(body));
+        if BodyAction::from_canonical(bytes, limits).is_ok() {
+            return Ok(Self::Body);
         }
         let speech = PlanAndCarrierReceipt::from_canonical(bytes, limits)?;
         let first = speech.output_chunks.first().ok_or("no speech chunks")?;
@@ -33,7 +33,7 @@ impl Content {
                 "speech block binding changed",
             )?;
         }
-        Ok(Self::Speech(speech))
+        Ok(Self::Speech(speech.output_chunks))
     }
 }
 

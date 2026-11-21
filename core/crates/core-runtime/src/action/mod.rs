@@ -7,13 +7,20 @@ use action_gate::{
 use core_store::{CommitCapability, Error, LineageKind, PreparedObject, ReadTicket, Result, Store};
 use core_types::{WireMessage, contract::Limits, generated::*};
 
+mod continuation;
 mod history;
+mod index;
+mod planning;
+pub use index::{IndexIssue, OutboxIndex};
+pub use planning::stage_local_plan;
 
 /// Prepared by the trusted event path for the next durable H record.
 pub struct EventCommit<L: LineageKind> {
     pub ticket: ReadTicket<L>,
     pub transaction: CoreTransactionV2,
     pub status: DegradedStatus,
+    /// Freshly computed by the scheduling owner when Q has running cognition.
+    pub next_input: Option<CognitiveInput>,
 }
 
 pub struct ActionTransaction<'a, L: LineageKind> {
@@ -21,6 +28,7 @@ pub struct ActionTransaction<'a, L: LineageKind> {
     capability: &'a CommitCapability<L>,
     frame: Option<EventCommit<L>>,
     event: EventEnvelope,
+    reader: core_store::Reader<L>,
     q: CognitionState,
     index: usize,
     history: history::History,
@@ -36,6 +44,20 @@ pub fn authorization_key(grant: &ExecutionCredential, limits: Limits) -> Result<
         "w13/authorization/{}",
         core_types::scalar::hex(&digest.0)
     ))
+}
+
+/// Called by startup before offering dispatch. These IDs only admit UNKNOWN
+/// maintenance or correlated late results, never another send.
+pub fn unresolved_after_restart<L: LineageKind>(store: &Store<L>) -> Result<Vec<String>> {
+    let Some(current) = store.current()? else {
+        return Ok(vec![]);
+    };
+    let q: CognitionState = store.reader()?.read(&current.staged_q)?;
+    Ok(q.inflight
+        .into_iter()
+        .filter(|a| a.status == ActionStatus::DISPATCHING)
+        .map(|a| a.action_id)
+        .collect())
 }
 
 fn ensure(ok: bool, message: &'static str) -> Result<()> {
@@ -56,6 +78,7 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
         frame: EventCommit<L>,
         limits: Limits,
         history_limit: usize,
+        index_hint: &mut impl OutboxIndex,
     ) -> Result<Self> {
         let event = store
             .next_raw()?
@@ -75,15 +98,8 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
         )?;
         let reader = store.reader()?;
         let q: CognitionState = reader.read(&current.staged_q)?;
-        let mut matching = q
-            .inflight
-            .iter()
-            .enumerate()
-            .filter(|(_, a)| a.action_id == id);
-        let (index, action) = matching
-            .next()
-            .ok_or(Error::Rejected("action is not pending in Q"))?;
-        ensure(matching.next().is_none(), "ambiguous action id")?;
+        let index = index::locate(&q, &binding.base_commit, id, index_hint)?;
+        let action = &q.inflight[index];
         let origin: InternalActivityRecordV2 = reader.read(&action.origin_record)?;
         let local = lifecycle::local_plan(&origin)?;
         ensure(
@@ -96,6 +112,7 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
         let history = history::History::read(&reader, &binding.base_commit, history_limit, action)?;
         Ok(Self {
             store,
+            reader,
             capability,
             frame: Some(frame),
             event,
@@ -131,7 +148,7 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
             .frame
             .take()
             .ok_or(Error::Rejected("transaction consumed"))?;
-        self.q.revision = self.event.id.clone();
+        let _next_pin = continuation::publish_next(self.store, &mut self.q, &frame, &self.event)?;
         let action = &mut self.q.inflight[self.index];
         action.status = status;
         if result.is_some() {
@@ -173,7 +190,7 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
     /// bytes and ID were registered with the action. The reply is read from H's
     /// actual input, and the service supplies the authenticated local identity.
     pub fn decision(mut self, user: &LocalUserBinding, now_ns: i64) -> Result<()> {
-        let request: ApprovalRequestV2 = self.store.reader()?.read(&self.action().request)?;
+        let request: ApprovalRequestV2 = self.reader.read(&self.action().request)?;
         let actual = self.payload_bytes()?;
         let reply = match self.event.kind {
             EventKind::OBSERVATION => Some(self.input::<ApprovalDecisionV2>()?),
@@ -211,7 +228,7 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
 
     fn payload_bytes(&self) -> Result<Vec<u8>> {
         let r = &self.action().plan.output_or_tool_parameters;
-        let reader = self.store.reader()?;
+        let reader = &self.reader;
         match r.object_type.as_str() {
             "echo.body-action" => Ok(reader.read::<BodyAction>(r)?.canonical_bytes(self.limits)?),
             "echo.plan-carrier-receipt" => Ok(reader
@@ -236,18 +253,25 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
                 && request.action_payload.0 == self.payload_bytes()?,
             "wrong action, payload or deadline",
         )?;
-        let reader = self.store.reader()?;
+        let reader = &self.reader;
         let scope: ConnectorScope = reader.read(&action.plan.expected_scope)?;
         ensure(
             &scope == authority.scope && authority.consent == self.history.consent.as_ref(),
             "scope or authenticated consent changed",
         )?;
+        if self.history.consent.is_some() {
+            let approved: ApprovalRequestV2 = reader.read(&action.request)?;
+            ensure(
+                approved.tier == authority.tier,
+                "authorized tier differs from the displayed request",
+            )?;
+        }
         let origin: InternalActivityRecordV2 = reader.read(&action.origin_record)?;
         let b = &lifecycle::local_plan(&origin)?.binding;
         let frame = self.frame()?;
         ensure(
             b.protocol == *authority.protocol
-                && b.permission_snapshot.resource_version == authority.permission_version
+                && &b.permission_snapshot == authority.permission
                 && b.environment == frame.transaction.binding.environment
                 && b.source_validity_version == frame.transaction.binding.source_validity_version
                 && action
@@ -257,10 +281,10 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
                     .all(|r| frame.ticket.binding().read_set.contains(r)),
             "action resources or versions changed",
         )?;
-        self.history.continuation(&frame.transaction, action)?;
+        self.history.continuation(&frame.transaction)?;
         if let delivery::Content::Speech(s) = delivery::Content::decode(request, self.limits)? {
             ensure(
-                s.output_chunks[0].snapshot_id == action.plan.snapshot_id,
+                s[0].snapshot_id == action.plan.snapshot_id,
                 "speech uses another snapshot",
             )?;
         }
@@ -279,7 +303,7 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
         )?;
         self.check_authority(request, authority, now_ns)?;
         ensure(
-            self.event.stable_source_key == authorization_key(authority.issued, self.limits)?,
+            self.event.stable_source_key == authorization_key(&request.grant, self.limits)?,
             "event is not bound to this issuance",
         )?;
         self.publish(ActionStatus::AUTHORIZED, None, vec![])
@@ -317,13 +341,10 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
                 delivery::body_result(&action.action_id, &self.input::<BodyActionResult>()?)?
             }
             "echo.plan-carrier-receipt" => {
-                let speech = self
-                    .store
-                    .reader()?
-                    .read(&action.plan.output_or_tool_parameters)?;
+                let speech = self.reader.read(&action.plan.output_or_tool_parameters)?;
                 let receipt: SpeechDelivery = self.input()?;
                 if let Some(previous) = &action.actual_result {
-                    let earlier: SpeechDelivery = self.store.reader()?.read(previous)?;
+                    let earlier: SpeechDelivery = self.reader.read(previous)?;
                     ensure(
                         receipt.delivered_chunks.0 >= earlier.delivered_chunks.0
                             && receipt.played_chars.0 >= earlier.played_chars.0,
@@ -369,15 +390,15 @@ impl<L: LineageKind> outbox::Outbox for ActionTransaction<'_, L> {
         ensure(active < maximum, "concurrency limit reached")?;
         ensure(
             self.history.authorization_key.as_ref()
-                == Some(&authorization_key(authority.issued, self.limits)?),
+                == Some(&authorization_key(&request.grant, self.limits)?),
             "wrong authorized issuance",
         )?;
-        self.history.check_reservation(authority.issued)?;
+        self.history.check_reservation(&request.grant)?;
         let consumption = PermissionResult {
             schema_version: 1,
             request_id: request.action_id.clone(),
             audit_record_id: self.event.id.clone(),
-            dispatch_record_id: Some(authority.issued.issuance_id.clone()),
+            dispatch_record_id: Some(request.grant.issuance_id.clone()),
             denied: None,
             management_commit: None,
         };

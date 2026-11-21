@@ -2,20 +2,21 @@
 //! transaction. No executor callback is reachable until that transaction returns.
 use crate::lifecycle::Settings;
 use core_types::{
-    WireMessage,
     contract::{Limits, Result, require},
     generated::*,
     permission::check_dispatch_binding,
 };
 pub mod delivery;
+mod issuer;
+pub use issuer::Issuer;
 
 /// These values come independently from the authenticated connection, live
 /// catalog and versioned permission resources, never from the submitted grant.
 pub struct Authority<'a> {
-    pub issued: &'a ExecutionCredential,
+    pub issuer: &'a Issuer,
     pub session: &'a str,
     pub protocol: &'a ObjectRef,
-    pub permission_version: &'a str,
+    pub permission: &'a ObjectRef,
     pub revocation_version: u64,
     pub scope: &'a ConnectorScope,
     pub budget: &'a ExecutionBudget,
@@ -27,11 +28,11 @@ pub struct Authority<'a> {
 
 impl Authority<'_> {
     pub fn check(&self, request: &ActionRequestV2, now_ns: i64, limits: Limits) -> Result<()> {
-        check_dispatch_binding(request, self.issued, self.session, now_ns, limits)?;
-        let g = self.issued;
+        let g = self.issuer.registered(&request.grant.issuance_id)?;
+        check_dispatch_binding(request, g, self.session, now_ns, limits)?;
         require(
             &g.protocol == self.protocol
-                && g.permission_version == self.permission_version
+                && g.permission_version == self.permission.resource_version
                 && g.revocation_version.0 == self.revocation_version
                 && &g.scope == self.scope
                 && &g.budget == self.budget
@@ -81,36 +82,28 @@ pub fn dispatch<O: Outbox>(
     request: &ActionRequestV2,
     authority: &Authority<'_>,
     limits: Limits,
-    mut now: impl FnMut() -> i64,
+    mut now: impl FnMut() -> Option<i64>,
     mut send: impl FnMut(delivery::Message<'_>) -> std::result::Result<(), O::Error>,
 ) -> std::result::Result<(), O::Error> {
-    let at = now();
+    let mut at = now().ok_or_else(|| "issuance clock domain unavailable".to_string())?;
     authority.check(request, at, limits)?;
     let payload = delivery::Content::decode(request, limits)?;
     outbox.consume(request, authority, at)?;
     let mut emit = |message| {
         outbox.check_frontier()?;
-        authority.check(request, now(), limits)?;
+        let current = now().ok_or_else(|| "issuance clock domain unavailable".to_string())?;
+        require(current >= at, "dispatch clock moved backwards")?;
+        at = current;
+        authority.check(request, current, limits)?;
         send(message)
     };
     match &payload {
-        delivery::Content::Body(_) => emit(delivery::Message::Body(request)),
+        delivery::Content::Body => emit(delivery::Message::Body(request)),
         delivery::Content::Speech(speech) => {
-            for chunk in &speech.output_chunks {
+            for chunk in speech {
                 emit(delivery::Message::Chunk(chunk))?;
             }
             Ok(())
         }
     }
-}
-
-pub fn validate_payload<T: WireMessage>(
-    value: &T,
-    request: &ActionRequestV2,
-    limits: Limits,
-) -> Result<()> {
-    require(
-        value.canonical_bytes(limits)? == request.action_payload.0,
-        "payload differs from the approved object",
-    )
 }

@@ -66,6 +66,19 @@ fn with_refs<T: WireMessage>(r: &ObjectRef) -> T {
     )
     .unwrap()
 }
+#[derive(Default)]
+pub(super) struct TestIndex {
+    pub hint: Option<CognitiveInflightAction>,
+    pub diagnostics: Vec<IndexIssue>,
+}
+impl OutboxIndex for TestIndex {
+    fn lookup(&self, _: &str, _: &str) -> Option<CognitiveInflightAction> {
+        self.hint.clone()
+    }
+    fn diagnose(&mut self, _: &str, _: &str, issue: IndexIssue) {
+        self.diagnostics.push(issue);
+    }
+}
 pub(super) struct Fixture {
     pub root: TemporaryRoot,
     pub store: Store<Rehearsal>,
@@ -73,6 +86,8 @@ pub(super) struct Fixture {
     pub leaf: ObjectRef,
     pub payload: ObjectRef,
     pub request_ref: ObjectRef,
+    pub index: TestIndex,
+    pub issuer: outbox::Issuer,
     pub request: ActionRequestV2,
     pub settings: lifecycle::Settings,
 }
@@ -88,7 +103,8 @@ impl Fixture {
             world_seed: None,
         };
         let mut store =
-            Store::<Rehearsal>::create_temporary(&root, "action", header, "branch", config()).unwrap();
+            Store::<Rehearsal>::create_temporary(&root, "action", header, "branch", config())
+                .unwrap();
         let cap = store.take_commit_capability().unwrap();
         let leaf_pin = store
             .prepare(
@@ -234,13 +250,8 @@ impl Fixture {
             }),
             trust: None,
         };
-        let request = ActionRequestV2 {
-            schema_version: 1,
-            action_id: "a".into(),
-            expires_at_ns: grant.expires_at_ns,
-            grant,
-            action_payload: HexBytes(bytes),
-        };
+        let mut issuer = outbox::Issuer::default();
+        let request = issuer.issue(grant, bytes, limits()).unwrap();
         let environment: VersionedEnvironmentV2 = with_refs(&leaf);
         let binding = CognitionBinding {
             schema_version: 1,
@@ -259,10 +270,24 @@ impl Fixture {
             source_validity_version: "valid".into(),
             read_set: vec![leaf.clone()],
         };
+        let current_input = CognitiveInput {
+            schema_version: 1,
+            binding: binding.clone(),
+            materials: vec![],
+            focus: Some(leaf.clone()),
+            new_inputs: vec![],
+            results: vec![],
+            retrievals: vec![],
+            budget: leaf.clone(),
+        };
+        let input = store.prepare(&current_input, "1").unwrap();
+        let modulation = store
+            .prepare(&with_refs::<ModulationEnvelopeV2>(&leaf), "1")
+            .unwrap();
         let local = CognitiveResultAndReceipt {
             schema_version: 1,
             binding,
-            input: leaf.clone(),
+            input: input.reference().clone(),
             products: vec![],
             next_focus: None,
             queries: vec![],
@@ -271,7 +296,7 @@ impl Fixture {
             reason: None,
             model_hash: leaf.digest.clone(),
             tokenizer_hash: leaf.digest.clone(),
-            modulation: leaf.clone(),
+            modulation: modulation.reference().clone(),
             carrier_receipt: Some(leaf.clone()),
             usage: leaf.clone(),
         };
@@ -285,26 +310,43 @@ impl Fixture {
             remote: None,
         };
         let source = store.prepare(&record, "1").unwrap();
-        let pending = lifecycle::planned(
-            &record,
-            source.reference().clone(),
-            "a".into(),
-            request_ref.clone(),
-            1,
-        )
-        .unwrap();
+        let transition = store
+            .prepare(
+                &SystemMaintenanceRecord {
+                    schema_version: 1,
+                    record_id: "start".into(),
+                    kind: CognitiveMaintenanceKind::COG_MAINTENANCE_RESUME,
+                    reason: "fixture".into(),
+                    details: leaf.clone(),
+                    ledger_refs: vec![],
+                    related_commit: store.base_commit().unwrap(),
+                    recorded_at_ns: DecimalU64(0),
+                },
+                "1",
+            )
+            .unwrap();
         let q = CognitionState {
             schema_version: 1,
             revision: "initial".into(),
             mode: CognitiveMode::COG_RUNNING,
             reason: None,
-            activities: vec![],
-            inflight: vec![pending],
-            active_request: Some(leaf.clone()),
-            runnable_successor: None,
-            transition: leaf.clone(),
+            activities: vec![ActivityState {
+                schema_version: 1,
+                activity_id: "activity".into(),
+                revision: "initial".into(),
+                materials: vec![],
+                focus: None,
+                latest_step: Some(source.reference().clone()),
+                waiting: vec![],
+                successor: Some(input.reference().clone()),
+                status: CognitiveActivityStatus::COG_ACTIVITY_RUNNING,
+            }],
+            inflight: vec![],
+            active_request: None,
+            runnable_successor: Some(input.reference().clone()),
+            transition: transition.reference().clone(),
         };
-        let q = store.prepare(&q, "1").unwrap();
+        let q = stage_local_plan(&store, q, &record, "a".into(), request_ref.clone(), 1).unwrap();
         let mut theta: ThetaSnapshotV2 = fixture();
         let law = store
             .prepare(&with_refs::<LawVersion>(&leaf), &theta.parameters.law_id)
@@ -363,6 +405,8 @@ impl Fixture {
             payload,
             request_ref,
             request,
+            index: TestIndex::default(),
+            issuer,
             settings,
         }
     }
@@ -375,6 +419,8 @@ impl Fixture {
             payload,
             request_ref,
             request,
+            index,
+            issuer,
             settings,
         } = self;
         drop((cap, store));
@@ -388,6 +434,8 @@ impl Fixture {
             payload,
             request_ref,
             request,
+            index,
+            issuer,
             settings,
         }
     }
@@ -434,7 +482,13 @@ impl Fixture {
         tx.processed_position = DecimalU64(e.raw_log_position.0 + 1);
         tx.audit_refs.clear();
         tx.binding = b.clone();
+        let q: CognitionState = reader.read(&tx.staged_q).unwrap();
+        let mut next: CognitiveInput = reader.read(q.runnable_successor.as_ref().unwrap()).unwrap();
+        next.binding.q_revision = format!("q-{}", e.id);
+        next.binding.request_id = format!("next-{}", e.id);
+        next.binding.base_commit = b.base_commit.clone();
         EventCommit {
+            next_input: Some(next),
             ticket: self.store.bind(b).unwrap(),
             transaction: tx,
             status: crate::status::Status::default().value(),
@@ -444,7 +498,15 @@ impl Fixture {
         &mut self,
         frame: EventCommit<Rehearsal>,
     ) -> ActionTransaction<'_, Rehearsal> {
-        ActionTransaction::open(&mut self.store, &self.cap, frame, limits(), 32).unwrap()
+        ActionTransaction::open(
+            &mut self.store,
+            &self.cap,
+            frame,
+            limits(),
+            32,
+            &mut self.index,
+        )
+        .unwrap()
     }
     pub fn registered(&mut self) {
         let frame = self.frame(
@@ -457,11 +519,18 @@ impl Fixture {
     pub fn authorized(&mut self) {
         let key = authorization_key(&self.request.grant, limits()).unwrap();
         let frame = self.frame(EventKind::MAINTENANCE, &self.leaf.clone(), &key);
-        let auth = authority(&self.request, &self.settings);
-        ActionTransaction::open(&mut self.store, &self.cap, frame, limits(), 32)
-            .unwrap()
-            .authorize(&self.request, &auth, 30)
-            .unwrap();
+        let auth = authority(&self.request, &self.settings, &self.issuer);
+        ActionTransaction::open(
+            &mut self.store,
+            &self.cap,
+            frame,
+            limits(),
+            32,
+            &mut self.index,
+        )
+        .unwrap()
+        .authorize(&self.request, &auth, 30)
+        .unwrap();
     }
     pub fn status(&self) -> ActionLifecycle {
         let tx = self.store.current().unwrap().unwrap();
@@ -484,13 +553,14 @@ fn event(store: &mut Store<Rehearsal>, r: &ObjectRef, kind: EventKind, key: &str
 pub(super) fn authority<'a>(
     request: &'a ActionRequestV2,
     settings: &'a lifecycle::Settings,
+    issuer: &'a outbox::Issuer,
 ) -> Authority<'a> {
     let g = &request.grant;
     Authority {
-        issued: g,
+        issuer,
         session: "executor",
         protocol: &g.protocol,
-        permission_version: "1",
+        permission: &g.protocol,
         revocation_version: 0,
         scope: &g.scope,
         budget: &g.budget,

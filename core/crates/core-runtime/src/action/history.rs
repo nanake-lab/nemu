@@ -9,6 +9,7 @@ pub(super) struct History {
     reservations: Vec<(String, ExecutionBudget)>,
     origin: Option<CoreTransactionV2>,
     unchanged: bool,
+    frontier: Option<u64>,
 }
 
 fn same_state(left: &CoreTransactionV2, right: &CoreTransactionV2) -> bool {
@@ -35,8 +36,9 @@ impl History {
             reservations: vec![],
             origin: None,
             unchanged: true,
+            frontier: None,
         };
-        let mut previous_position = None;
+
         for tx in reader.transactions_at(head, limit)? {
             let mut lifecycle = None;
             let mut consent = None;
@@ -81,7 +83,7 @@ impl History {
                     .is_some_and(|a| a.action_id == action.action_id && a.plan == action.plan);
                 history.unchanged &= own
                     && same_state(origin, &tx)
-                    && previous_position == Some(tx.binding.raw_log_position.0);
+                    && history.frontier == Some(tx.binding.raw_log_position.0);
                 if own {
                     let event: EventEnvelope = reader.read(&tx.staged_h)?;
                     if event.kind == EventKind::ACTION_REQUEST {
@@ -114,19 +116,21 @@ impl History {
                     history.origin = Some(tx.clone());
                 }
             }
-            previous_position = Some(tx.processed_position.0);
+            history.frontier = Some(tx.processed_position.0);
         }
         ensure(history.origin.is_some(), "missing committed plan")?;
         Ok(history)
     }
 
-    pub fn continuation(&self, tx: &CoreTransactionV2, _: &CognitiveInflightAction) -> Result<()> {
+    pub fn continuation(&self, tx: &CoreTransactionV2) -> Result<()> {
         let origin = self
             .origin
             .as_ref()
             .ok_or(Error::Rejected("unresolved origin"))?;
         ensure(
-            self.unchanged && same_state(origin, tx),
+            self.unchanged
+                && self.frontier == Some(tx.binding.raw_log_position.0)
+                && same_state(origin, tx),
             "snapshot is not an action-only continuation",
         )
     }

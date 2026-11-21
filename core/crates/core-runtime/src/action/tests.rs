@@ -4,6 +4,8 @@ use core_store::{Fault, FaultPoint};
 use core_types::scalar::DecimalU64;
 
 mod fixtures;
+mod gates;
+mod recovery;
 use fixtures::*;
 
 #[test]
@@ -64,14 +66,22 @@ fn x04_sys12_body_sent_receipt_lost_reopen_no_resend_then_late_success() {
         max_dispatching: Some(1),
         ..Default::default()
     };
-    let auth = authority(&request, &settings);
+    let mut issuer = outbox::Issuer::default();
+    issuer
+        .issue(
+            request.grant.clone(),
+            request.action_payload.0.clone(),
+            limits(),
+        )
+        .unwrap();
+    let auth = authority(&request, &settings, &issuer);
     let mut sends = 0;
     outbox::dispatch(
         &mut f.transaction(frame),
         &request,
         &auth,
         limits(),
-        || 40,
+        || Some(40),
         |msg| {
             let Message::Body(body) = msg else {
                 panic!("unexpected speech")
@@ -103,7 +113,7 @@ fn x04_sys12_body_sent_receipt_lost_reopen_no_resend_then_late_success() {
             &request,
             &auth,
             limits(),
-            || 41,
+            || Some(41),
             |_| {
                 sends += 1;
                 Ok(())
@@ -136,16 +146,16 @@ fn sys12_speech_partial_delivery_preserves_the_terminal_extent() {
     f.authorized();
     let request = f.request.clone();
     let frame = f.frame(EventKind::MAINTENANCE, &f.leaf.clone(), "consume");
-    let auth = authority(&request, &f.settings);
+    let auth = authority(&request, &f.settings, &f.issuer);
     let mut transaction =
-        ActionTransaction::open(&mut f.store, &f.cap, frame, limits(), 32).unwrap();
+        ActionTransaction::open(&mut f.store, &f.cap, frame, limits(), 32, &mut f.index).unwrap();
     let mut sent = vec![];
     outbox::dispatch(
         &mut transaction,
         &request,
         &auth,
         limits(),
-        || 41,
+        || Some(41),
         |message| {
             let Message::Chunk(c) = message else {
                 panic!("unexpected body")
@@ -197,22 +207,23 @@ fn i26_denies_changed_payload_and_commits_consent_before_authorization() {
     f.transaction(frame).decision(&consent.user, 25).unwrap();
     f.authorized();
     let frame = f.frame(EventKind::MAINTENANCE, &f.leaf.clone(), "consume");
-    let auth = authority(&request, &f.settings);
+    let auth = authority(&request, &f.settings, &f.issuer);
     let mut altered = request.clone();
     altered.action_payload.0.push(1);
-    let mut tx = ActionTransaction::open(&mut f.store, &f.cap, frame, limits(), 32).unwrap();
+    let mut tx =
+        ActionTransaction::open(&mut f.store, &f.cap, frame, limits(), 32, &mut f.index).unwrap();
     assert!(
         outbox::dispatch(
             &mut tx,
             &altered,
             &auth,
             limits(),
-            || 40,
+            || Some(40),
             |_| panic!("changed bytes sent")
         )
         .is_err()
     );
-    outbox::dispatch(&mut tx, &request, &auth, limits(), || 40, |_| Ok(())).unwrap();
+    outbox::dispatch(&mut tx, &request, &auth, limits(), || Some(40), |_| Ok(())).unwrap();
     assert_eq!(f.status().status, ActionStatus::DISPATCHING);
 }
 
