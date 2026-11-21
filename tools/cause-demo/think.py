@@ -11,6 +11,7 @@ from typing import TYPE_CHECKING, Any
 
 from chat import build_deepseek_body, call_deepseek_stream, cargo_env, repo_root, run_assembler
 
+from check_thought import check, external_records
 from think_plan import THOUGHT_SPEAKER as THOUGHT_SPEAKER, ThoughtPlan
 
 if TYPE_CHECKING:
@@ -21,6 +22,7 @@ SENSES_FACT = "她在电脑里，能感知到的只有下面这些记录和现�
 TIME_FORMAT = "%Y-%m-%d %H:%M"
 CACHE = Path("D:/Dev/cache")
 RUN_DIR = CACHE / "cause-demo" / "think-02"
+CHECK_RUN_DIR = CACHE / "cause-demo" / "think-06"
 PLAN_RUN_DIR = CACHE / "cause-demo" / "think-05"
 DEEPSEEK_RUN_DIR = CACHE / "cause-demo" / "think-03"
 ENGINE = CACHE / "P0-10" / "llama.cpp" / "b11669"
@@ -166,9 +168,10 @@ def main() -> int:
     parser.add_argument("--thinker", choices=("local", "deepseek"))
     parser.add_argument("--ds-think", choices=("off", "high"), default="off")
     parser.add_argument("--plan2", action="store_true", help="核对编号后按顺序拼接念头")
+    parser.add_argument("--check", action="store_true", help="独立核对整条念头，通过后才写回")
     args = parser.parse_args()
     if args.thinker is None:
-        args.thinker = "deepseek" if args.plan2 else "local"
+        args.thinker = "deepseek" if args.plan2 or args.check else "local"
     if args.plan2 and args.thinker != "deepseek":
         parser.error("--plan2 需要 --thinker deepseek")
     if args.n < 1 or (args.append is not None and args.n != 1):
@@ -190,10 +193,11 @@ def main() -> int:
         if args.append is not None and not binding["accepted"]:
             raise ValueError("组包没有接纳任何槽，无法追加念头。")
         points = None
-        if args.thinker == "deepseek":
+        if args.thinker == "deepseek" or args.check:
             api_key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
             if not api_key:
                 raise ValueError("环境变量 DEEPSEEK_API_KEY 未设置或为空。")
+        if args.thinker == "deepseek":
             request, plan = thought_request(assembled, payload, args.ds_think == "off", args.plan2)
             run_dir = PLAN_RUN_DIR if plan else DEEPSEEK_RUN_DIR
             settings = dict(thinker="deepseek", ds_think=args.ds_think)
@@ -206,6 +210,11 @@ def main() -> int:
             request = completion_request(args.sampling)
             run_dir = RUN_DIR
             settings = dict(prompt=prompt, senses=args.senses, sampling=args.sampling)
+        if args.check:
+            run_dir = CHECK_RUN_DIR
+            settings["check"] = True
+        check_records = external_records(payload["records"][:-1], binding) if args.check else []
+        blocked = False
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
         run_dir.mkdir(parents=True, exist_ok=True)
         log_path = run_dir / f"{stamp}.jsonl"
@@ -214,6 +223,19 @@ def main() -> int:
             def log_row(row: dict[str, Any]) -> None:
                 log.write(json.dumps(row, ensure_ascii=False) + "\n")
                 log.flush()
+
+            def record_sample(index: int, sample: dict[str, Any]) -> bool:
+                judgment = None
+                if args.check and sample["text"] and sample.get("valid", True):
+                    judgment = check(sample["text"], check_records)
+                    sample = {**sample, "check": judgment}
+                log_row(dict(index=index, **sample))
+                if judgment and not judgment["valid"]:
+                    raise RuntimeError("独立核对调用失败，详见请求日志。")
+                if judgment and judgment["blocked"]:
+                    print("拦下", file=sys.stderr, flush=True)
+                    return True
+                return False
 
             log_row(dict(
                 scenario=str(args.scenario), at=args.at, n=args.n,
@@ -228,7 +250,7 @@ def main() -> int:
                             if plan:
                                 sample["valid"] = bool(sample["valid"] and sample["usage"])
                                 sample = plan.verify(sample)
-                            log_row(dict(index=index, **sample))
+                            blocked = record_sample(index, sample)
                             if sample["valid"]:
                                 break
                         if not sample["valid"]:
@@ -247,9 +269,9 @@ def main() -> int:
                             folder = RUN_DIR / stamp / f"request-{index:02}"
                             sample = generate_sample(server, request, tokens, folder)
                             content = str(sample["text"])
-                            log_row(dict(index=index, **sample))
+                            blocked = record_sample(index, sample)
                             print(content, flush=True)
-                if args.append is not None and points != []:
+                if args.append is not None and points != [] and not blocked:
                     if not content.strip():
                         raise ValueError("模型返回空文本，无法追加念头。")
                     output = append_thought(scenario, binding, args.at, content, points)

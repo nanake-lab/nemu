@@ -15,13 +15,17 @@ GUESS_MARKERS = ("也许", "会不会", "可能", "或许", "是不是", "说不
                  "没准", "难道", "莫非", "如果", "假如", "要是", "不知", "恐怕", "说不好", "搞不好")
 
 
+def delivered_ids(binding: dict[str, Any]) -> set[str]:
+    accepted = {rid for pack in binding["packs"] if pack["fate"] == "accepted"
+                for rid in pack["records"]}
+    return accepted | set(binding["base_records"])
+
+
 class ThoughtPlan:
     def __init__(self, records: list[dict[str, Any]], binding: dict[str, Any]) -> None:
         # records is the time-filtered history, excluding the transient clock observation.
         self.history = {r["id"]: r for r in records}
-        accepted = {rid for pack in binding["packs"] if pack["fate"] == "accepted"
-                    for rid in pack["records"]}
-        self.delivered = (accepted | set(binding["base_records"])) & self.history.keys()
+        self.delivered = delivered_ids(binding) & self.history.keys()
 
     def instruction(self) -> dict[str, str]:
         records = [r for r in self.history.values() if r["id"] in self.delivered]
