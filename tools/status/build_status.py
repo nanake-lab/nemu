@@ -18,8 +18,11 @@ Rules, first match wins:
     open ready PR                        -> review
     merged PR with label unverified      -> unverified (merged, review unfinished;
                                             dependants stay blocked)
+    merged PRs with malformed n/m title  -> needs_you ("标题异常", never done)
+      (and no n = m or unnumbered title)
+    merged PRs with only n < m titles    -> partial (waiting on "剩余 PR")
     merged PR with partial report/blockers -> partial
-    merged PR                            -> done
+    merged PR (n = m or unnumbered)      -> done
     branch task/<id>-* without any PR    -> in_progress (claimed)
     PR labelled card-edit                -> ignored for every card: it only edits
                                             card text, so neither the PR nor its
@@ -57,7 +60,8 @@ from status_types import (
 )
 
 REPO = "nanake-lab/nemu"
-CARD = re.compile(r"\((P\d-\d{2})\)")
+CARD = re.compile(r"\(\s*(P\d-\d{2})(?:\s+(\S[^)]*?))?\s*\)")
+PART = re.compile(r"^(\d+)/(\d+)$")
 BRANCH = re.compile(r"^task/(P\d-\d{2})\b")
 VERDICT = "审查结论："
 # AGENTS.md section 6: whatever the difficulty, changes here need a cross review.
@@ -151,8 +155,40 @@ def cards_of_pr(pr: RawPr) -> set[str]:
     m = BRANCH.match(pr["head"]["ref"])
     if m:
         found.add(m.group(1))
-    found.update(CARD.findall(pr["title"]))
+    found.update(match.group(1) for match in CARD.finditer(pr["title"]))
     return found
+
+
+def _parse_fraction(raw: str) -> str:
+    match = PART.fullmatch(raw.strip())
+    if not match:
+        return "invalid"
+    n, total = int(match.group(1)), int(match.group(2))
+    if total < 1 or n < 1 or n > total:
+        return "invalid"
+    return "final" if n == total else "part"
+
+
+def pr_split_kind(title: str, cid: str) -> str:
+    """Classify a PR title's '<id> n/m' marker: legacy, part, final or invalid."""
+    kinds: list[str] = []
+    for match in CARD.finditer(title):
+        if match.group(1) != cid:
+            continue
+        suffix = match.group(2)
+        kinds.append("legacy" if suffix is None else _parse_fraction(suffix))
+    if not kinds:
+        bare = re.search(rf"\b{re.escape(cid)}\s+([+-]?\d+/[+-]?\d+)", title)
+        if bare:
+            return _parse_fraction(bare.group(1))
+        return "legacy"
+    if "invalid" in kinds:
+        return "invalid"
+    if "final" in kinds:
+        return "final"
+    if "legacy" in kinds:
+        return "legacy"
+    return "part"
 
 
 def windows_waiting(repo: str, sha: str) -> bool:
@@ -238,7 +274,9 @@ def review_item(number: int, who: str, why: str) -> Reminder:
     return {"kind": "cross_review", "text": f"PR #{number}（{why}）请转给 {who} 审查，通过前不要合并"}
 
 
-def label_of(card: Card) -> str:
+def label_of(card: Card, *, title_anomaly: bool = False) -> str:
+    if card["status"] == "needs_you" and title_anomaly:
+        return "标题异常"
     if card["status"] != "review":
         return LABELS[card["status"]]
     live = [p for p in card["prs"] if p["state"] == "open" and not p["draft"]]
@@ -301,6 +339,21 @@ def compute(repo: str, catalog: Catalog) -> Board:
     except RuntimeError as exc:
         raise GitHubError(str(exc)) from exc
 
+    split_invalid: dict[str, list[CardPr]] = {}
+    split_pending: set[str] = set()
+    for cid, c in cards.items():
+        merged = [p for p in c["prs"] if p["state"] == "merged"]
+        if not merged:
+            continue
+        kinds = [(p, pr_split_kind(p["title"], cid)) for p in merged]
+        if any(k in ("legacy", "final") for _, k in kinds):
+            continue
+        bad = [p for p, k in kinds if k == "invalid"]
+        if bad:
+            split_invalid[cid] = bad
+        if any(k == "part" for _, k in kinds):
+            split_pending.add(cid)
+
     def direct(c: Card) -> str | None:
         if c.get("status_override"):
             return c["status_override"]["status"]
@@ -318,7 +371,11 @@ def compute(repo: str, catalog: Catalog) -> Board:
         ):
             return "unverified"
         if any(p["state"] == "merged" for p in c["prs"]):
-            return "partial" if c["id"] in deliveries else "done"
+            if c["id"] in split_invalid:
+                return "needs_you"
+            if c["id"] in split_pending or c["id"] in deliveries:
+                return "partial"
+            return "done"
         if c["id"] in claimed:
             return "in_progress"
         return None
@@ -337,8 +394,14 @@ def compute(repo: str, catalog: Catalog) -> Board:
     def satisfied(cid: str, dep: str) -> bool:
         if status.get(dep) == "done":
             return True
-        return status.get(dep) == "partial" and any(
-            w == cid or cid in ancestors(w) for w in deliveries.get(dep, []) if w in cards
+        return (
+            status.get(dep) == "partial"
+            and dep not in split_pending
+            and any(
+                w == cid or cid in ancestors(w)
+                for w in deliveries.get(dep, [])
+                if w in cards
+            )
         )
 
     status: dict[str, str] = {}
@@ -360,9 +423,22 @@ def compute(repo: str, catalog: Catalog) -> Board:
         card["waiting_on"] = [d for d in card["deps"] if not satisfied(cid, d)]
         # A status_override (e.g. a card closed by the user) is final: its old
         # report remainders are no longer something the card waits on.
-        remainder = [] if card.get("status_override") else deliveries.get(cid, [])
+        if card.get("status_override"):
+            remainder: list[str] = []
+        else:
+            remainder = list(deliveries.get(cid, []))
+            if cid in split_invalid:
+                remainder.append("标题异常")
+            if cid in split_pending:
+                remainder.append("剩余 PR")
         card["waiting_on"] = list(dict.fromkeys(card["waiting_on"] + remainder))
-        card["status_label"] = label_of(card)
+        has_open = any(p["state"] == "open" for p in card["prs"])
+        card["status_label"] = label_of(
+            card,
+            title_anomaly=bool(
+                not card.get("status_override") and not has_open and cid in split_invalid
+            ),
+        )
 
     attention: list[Attention] = []
     for c in sorted(cards.values(), key=lambda c: c["id"]):
@@ -384,6 +460,14 @@ def compute(repo: str, catalog: Catalog) -> Board:
             if due and p.get("verdict") is None:
                 why = f"{c['id']}，高难度" if c["difficulty"] == "高" else f"{c['id']}，改动了契约、权限或规格"
                 attention.append({**item, **review_item(p["number"], reviewer(c, p["branch"]), why)})
+            if pr_split_kind(p["title"], c["id"]) == "invalid":
+                attention.append(
+                    {
+                        **item,
+                        "kind": "title_anomaly",
+                        "text": f"{c['id']} 的 PR #{p['number']} 标题编号异常（{p['title']}），合并后不会计为完成",
+                    }
+                )
         for p in c["prs"]:
             if p["state"] == "merged" and "unverified" in p["labels"]:
                 attention.append(
@@ -395,7 +479,18 @@ def compute(repo: str, catalog: Catalog) -> Board:
                         "text": f"{c['id']} 已合并但交叉审查没做完（PR #{p['number']}），需要补完核验",
                     }
                 )
-        if c["status"] == "needs_you" and c["suggested"] == "你":
+        if not c.get("status_override"):
+            for p in split_invalid.get(c["id"], []):
+                attention.append(
+                    {
+                        "card": c["id"],
+                        "pr": p["number"],
+                        "url": p["url"],
+                        "kind": "title_anomaly",
+                        "text": f"{c['id']} 的 PR #{p['number']} 标题编号异常（{p['title']}），未计为完成",
+                    }
+                )
+        if c["status"] == "needs_you" and c["suggested"] == "你" and not c["prs"]:
             attention.append(
                 {
                     "card": c["id"],
