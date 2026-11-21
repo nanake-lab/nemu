@@ -84,7 +84,10 @@ pub fn ask(
     limits: Limits,
 ) -> Result<ApprovalRequestV2> {
     require(
-        action.status == ActionStatus::REQUESTED && settings.approval_timeout_ns > 0,
+        matches!(
+            action.status,
+            ActionStatus::PLANNED | ActionStatus::REQUESTED
+        ) && settings.approval_timeout_ns > 0,
         "invalid approval window",
     )?;
     let expires = now_ns

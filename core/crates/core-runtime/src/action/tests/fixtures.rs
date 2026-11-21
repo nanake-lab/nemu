@@ -525,7 +525,15 @@ impl Fixture {
             &self.request_ref.clone(),
             "register",
         );
-        self.transaction(frame).register(20).unwrap();
+        let shown = self.transaction(frame).register(20).unwrap();
+        if self.request.grant.consent.is_some() {
+            let shown = shown.expect("ask after the request commits");
+            assert_eq!(shown.action_id, self.request.action_id);
+            assert_eq!(shown.action_payload, self.request.action_payload);
+            assert_eq!(shown.payload_digest, self.request.grant.payload_digest);
+        } else {
+            assert!(shown.is_none());
+        }
     }
     pub fn authorized(&mut self) {
         let key = authorization_key(&self.request.grant, limits()).unwrap();

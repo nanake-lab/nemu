@@ -49,6 +49,11 @@ fn stale_and_missing_index_hints_use_q_and_leave_diagnostics() {
     f.authorized();
     assert_eq!(f.status().status, ActionStatus::AUTHORIZED);
     assert_eq!(f.index.diagnostics.last(), Some(&IndexIssue::Disagrees));
+    assert_eq!(pending_dispatch(&f.store, &mut f.index).unwrap(), ["a"]);
+    f.index.hint = None;
+    assert_eq!(pending_dispatch(&f.store, &mut f.index).unwrap(), ["a"]);
+    assert_eq!(f.index.diagnostics.last(), Some(&IndexIssue::Missing));
+    f.index.hint = Some(q.inflight[0].clone());
     let mut empty = q;
     empty.inflight.clear();
     assert!(index::locate(&empty, "head", "a", &mut f.index).is_err());

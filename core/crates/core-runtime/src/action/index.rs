@@ -37,3 +37,25 @@ pub(super) fn locate(
         .map(|(i, _)| i)
         .ok_or(Error::Rejected("action is not pending in Q"))
 }
+
+/// Enumerate dispatch candidates from one committed Q. The scheduler subsequently
+/// opens each action on a fresh writer ticket before consuming its credential.
+pub fn pending_dispatch<L: LineageKind>(
+    store: &Store<L>,
+    index: &mut impl OutboxIndex,
+) -> Result<Vec<String>> {
+    let reader = store.reader()?;
+    let Some(current) = reader.current()? else {
+        return Ok(Vec::new());
+    };
+    let q: CognitionState = reader.read(&current.staged_q)?;
+    let head = store.base_commit()?;
+    q.inflight
+        .iter()
+        .filter(|a| a.status == ActionStatus::AUTHORIZED)
+        .map(|a| {
+            let i = locate(&q, &head, &a.action_id, index)?;
+            Ok(q.inflight[i].action_id.clone())
+        })
+        .collect()
+}

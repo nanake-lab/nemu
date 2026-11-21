@@ -12,7 +12,7 @@ mod dispatch;
 mod history;
 mod index;
 mod planning;
-pub use index::{IndexIssue, OutboxIndex};
+pub use index::{IndexIssue, OutboxIndex, pending_dispatch};
 pub use planning::stage_local_plan;
 
 /// Prepared by the trusted event path for the next durable H record.
@@ -184,10 +184,58 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
         Ok(())
     }
 
-    pub fn register(mut self, now_ns: i64) -> Result<()> {
+    /// Return the exact displayable request only after its W02 registration commits.
+    pub fn register(mut self, now_ns: i64) -> Result<Option<ApprovalRequestV2>> {
         let status = lifecycle::request(self.action(), &self.event, now_ns)?;
         ensure(!self.history.registered, "duplicate action registration")?;
-        self.publish(status, None, vec![])
+        let action = self.action();
+        let scope: ConnectorScope = self.reader.read(&action.plan.expected_scope)?;
+        let irreversible = if scope.kind == ScopeKind::LOCAL_DESKTOP {
+            let reversible = scope
+                .reversible
+                .ok_or(Error::Rejected("missing reversibility"))?;
+            let policy = scope
+                .desktop
+                .as_ref()
+                .ok_or(Error::Rejected("missing desktop policy"))?;
+            (!reversible).then_some(policy.irreversible)
+        } else {
+            None
+        };
+        if irreversible == Some(DesktopTier::IRREVERSIBLE_NEVER) {
+            self.deny(PermissionDenial::SCOPE_DENIED)?;
+            return Ok(None);
+        }
+        let display = if action.request.object_type == "echo.approval-request-v2" {
+            let offer: ApprovalRequestV2 = self.reader.read(&action.request)?;
+            let expected = action_gate::permissions::approval::build_request(
+                offer.approval_id.clone(),
+                action.action_id.clone(),
+                offer.tier,
+                &self.payload_bytes()?,
+                offer.expires_at_ns.0,
+                self.limits,
+            )
+            .map_err(|_| Error::Rejected("invalid approval presentation"))?;
+            ensure(
+                offer == expected && offer.expires_at_ns.0 <= action.plan.deadline_ns.0,
+                "approval does not describe this plan",
+            )?;
+            if now_ns >= offer.expires_at_ns.0 {
+                self.deny(PermissionDenial::GRANT_EXPIRED)?;
+                return Ok(None);
+            }
+            Some(offer)
+        } else {
+            ensure(
+                irreversible != Some(DesktopTier::IRREVERSIBLE_ASK)
+                    && action.request == action.plan.output_or_tool_parameters,
+                "missing bound action request",
+            )?;
+            None
+        };
+        self.publish(status, None, vec![])?;
+        Ok(display)
     }
 
     /// ApprovalRequestV2 is the immutable request displayed to the user. Its
@@ -215,19 +263,21 @@ impl<'a, L: LineageKind> ActionTransaction<'a, L> {
                 let pin = self.store.prepare(&c, "1")?;
                 self.publish(ActionStatus::REQUESTED, None, vec![pin])
             }
-            lifecycle::Decision::Cancelled(reason) => {
-                let denial = PermissionResult {
-                    schema_version: 1,
-                    request_id: self.action().action_id.clone(),
-                    audit_record_id: self.event.id.clone(),
-                    denied: Some(reason),
-                    management_commit: None,
-                    dispatch_record_id: None,
-                };
-                let pin = self.store.prepare(&denial, "1")?;
-                self.publish(ActionStatus::CANCELLED_ACTION, None, vec![pin])
-            }
+            lifecycle::Decision::Cancelled(reason) => self.deny(reason),
         }
+    }
+
+    fn deny(&mut self, reason: PermissionDenial) -> Result<()> {
+        let denial = PermissionResult {
+            schema_version: 1,
+            request_id: self.action().action_id.clone(),
+            audit_record_id: self.event.id.clone(),
+            denied: Some(reason),
+            management_commit: None,
+            dispatch_record_id: None,
+        };
+        let pin = self.store.prepare(&denial, "1")?;
+        self.publish(ActionStatus::CANCELLED_ACTION, None, vec![pin])
     }
 
     fn payload_bytes(&self) -> Result<Vec<u8>> {
