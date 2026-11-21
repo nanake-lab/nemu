@@ -63,7 +63,19 @@ impl<L: LineageKind> Reader<L> {
             })?
             .collect::<std::result::Result<Vec<_>, _>>()?
         };
-        let result = self.decode_complete(refs, limit)?;
+        require(
+            refs.len() <= limit,
+            "incomplete query: result exceeds budget",
+        )?;
+        let result = refs
+            .into_iter()
+            .map(|b| {
+                self.event_snapshot(&ObjectRef::from_canonical(
+                    &b,
+                    self.objects.config.encoding,
+                )?)
+            })
+            .collect::<Result<_>>()?;
         snapshot.rollback()?;
         Ok(result)
     }
@@ -77,7 +89,7 @@ impl<L: LineageKind> Reader<L> {
         while let Some(row) = rows.next()? {
             let bytes: Vec<u8> = row.get(0)?;
             let reference = ObjectRef::from_canonical(&bytes, self.objects.config.encoding)?;
-            let transaction: core_types::generated::CoreTransactionV2 = self.read(&reference)?;
+            let transaction = crate::manifest::decode(&self.objects, &reference)?;
             require(
                 transaction.staged_ledger.len() <= limit - result.len(),
                 "incomplete query: result exceeds budget",
@@ -129,19 +141,5 @@ impl<L: LineageKind> Reader<L> {
             .query_row("SELECT position FROM commits WHERE id=?1", [commit], |r| {
                 r.get(0)
             })?)
-    }
-    fn decode_complete<T: WireMessage>(&self, refs: Vec<Vec<u8>>, limit: usize) -> Result<Vec<T>> {
-        require(
-            refs.len() <= limit,
-            "incomplete query: result exceeds budget",
-        )?;
-        refs.into_iter()
-            .map(|bytes| {
-                self.read(&ObjectRef::from_canonical(
-                    &bytes,
-                    self.objects.config.encoding,
-                )?)
-            })
-            .collect()
     }
 }

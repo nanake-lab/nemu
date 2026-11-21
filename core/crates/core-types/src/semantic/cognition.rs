@@ -15,6 +15,16 @@ fn tag(v: &Value, key: &str, expected: &str) -> Result<()> {
         "cognition reference type",
     )
 }
+fn activity_ref(v: &Value, key: &str) -> Result<()> {
+    require(
+        !has(v, key)
+            || matches!(
+                v[key]["object_type"].as_str(),
+                Some("echo.internal-activity-record" | "echo.internal-activity-record-v2")
+            ),
+        "cognition activity reference type",
+    )
+}
 fn number(v: &Value, key: &str) -> u64 {
     v[key]
         .as_str()
@@ -99,10 +109,10 @@ pub fn check_cognition_message(name: &str, value: &Value, limits: Limits) -> Res
             check_cognition_message("CognitiveResultAndReceipt", &v["result"], limits)?;
         }
         "ActivityState" => {
-            tag(&v, "latest_step", "echo.internal-activity-record")?;
+            activity_ref(&v, "latest_step")?;
             tag(&v, "successor", "echo.cognitive-input")?;
         }
-        "CognitiveInflightAction" => tag(&v, "origin_record", "echo.internal-activity-record")?,
+        "CognitiveInflightAction" => activity_ref(&v, "origin_record")?,
         "CognitionState" => {
             tag(&v, "active_request", "echo.cognitive-input")?;
             tag(&v, "runnable_successor", "echo.cognitive-input")?;

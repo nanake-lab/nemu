@@ -28,8 +28,8 @@ function equalBytes(a: unknown, b: unknown): boolean {
 export function checkCognitionMessage(name: string, value: Obj, limits: Limits): void {
   if (!names.has(name)) return;
   const v = normalize(name, value, limits);
-  const tag = (key: string, expected: string): void => {
-    if (key in v) require(obj(v[key])['object_type'] === expected, `${name}.${key} type`);
+  const tag = (key: string, ...expected: string[]): void => {
+    if (key in v) require(expected.some(t => obj(v[key])['object_type'] === t), `${name}.${key} type`);
   };
   const child = (key: string, type: string): void => {
     if (key in v) checkCognitionMessage(type, obj(v[key]), limits);
@@ -67,10 +67,10 @@ export function checkCognitionMessage(name: string, value: Obj, limits: Limits):
       (v['started_at_ns'] as bigint), 'request execution interval');
     child('result', 'CognitiveResultAndReceipt');
   } else if (name === 'ActivityState') {
-    tag('latest_step', 'echo.internal-activity-record');
+    tag('latest_step', 'echo.internal-activity-record', 'echo.internal-activity-record-v2');
     tag('successor', 'echo.cognitive-input');
   } else if (name === 'CognitiveInflightAction') {
-    tag('origin_record', 'echo.internal-activity-record');
+    tag('origin_record', 'echo.internal-activity-record', 'echo.internal-activity-record-v2');
   } else if (name === 'CognitionState') {
     tag('active_request', 'echo.cognitive-input');
     tag('runnable_successor', 'echo.cognitive-input');

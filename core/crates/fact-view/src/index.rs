@@ -4,7 +4,7 @@ use crate::{
     source::{self, Record},
 };
 use core_store::{LineageKind, Reader};
-use core_types::generated::CoreTransactionV2;
+use core_types::generated::ObjectRef;
 use rusqlite::{Connection, params};
 
 /// Lineage is preserved in the Reader borrow; consumers receive projections only.
@@ -21,7 +21,7 @@ pub struct FactView<'a, L: LineageKind> {
     pub(crate) db: Connection,
     pub(crate) records: Vec<Record>,
     pub(crate) prefix: String,
-    pub(crate) last: CoreTransactionV2,
+    pub(crate) last: ObjectRef,
     pub(crate) model: Option<String>,
 }
 impl<'a, L: LineageKind> FactView<'a, L> {
@@ -102,10 +102,9 @@ impl<'a, L: LineageKind> FactView<'a, L> {
         }
         tx.commit()?;
         db.pragma_update(None, "query_only", true)?;
-        let last = transactions
-            .last()
-            .ok_or(crate::Error::Invalid("empty prefix".into()))?
-            .clone();
+        let last = reader
+            .snapshot_at(prefix)?
+            .ok_or(crate::Error::Invalid("empty prefix".into()))?;
         Ok(Self {
             reader,
             db,

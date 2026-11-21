@@ -73,7 +73,7 @@ fn cached_receipt_checks_transaction_objects_and_live_publication() {
         "PRAGMA foreign_keys=OFF; DROP TRIGGER immutable_commits_DELETE; DELETE FROM commits;",
     )
     .unwrap();
-    assert!(reader.read::<CoreTransactionV2>(&result.snapshot).is_ok());
+    assert!(reader.read::<CoreTransactionV4>(&result.snapshot).is_ok());
     assert!(reader.read_published_transaction(&result.snapshot).is_err());
     assert!(store.receipt_reader(&mut slot).is_err());
     assert!(slot.is_none());
@@ -260,7 +260,7 @@ fn incremental_verification_hashes_new_references_and_full_checks_cold_history()
         std::fs::write(path, bytes).unwrap();
         if cold {
             let reader = store.receipt_reader(&mut slot).unwrap();
-            assert!(reader.read::<CoreTransactionV2>(&reference).is_err());
+            assert!(reader.read::<CoreTransactionV4>(&reference).is_err());
             assert!(reader.read_published_transaction(&reference).is_err());
         } else {
             assert!(store.receipt_reader(&mut slot).is_err());

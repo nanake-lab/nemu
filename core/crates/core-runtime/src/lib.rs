@@ -8,6 +8,7 @@
 
 pub mod binding;
 pub mod clock;
+pub mod cognition;
 pub mod pipeline;
 pub mod stages;
 pub mod status;
