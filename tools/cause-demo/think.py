@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Any
 
 from chat import build_deepseek_body, call_deepseek_stream, cargo_env, repo_root, run_assembler
 
-from check_thought import check, external_records
+from check_thought import check, external_records, own_thoughts
 from think_plan import THOUGHT_SPEAKER as THOUGHT_SPEAKER, ThoughtPlan
 
 if TYPE_CHECKING:
@@ -169,6 +169,8 @@ def main() -> int:
     parser.add_argument("--ds-think", choices=("off", "high"), default="off")
     parser.add_argument("--plan2", action="store_true", help="核对编号后按顺序拼接念头")
     parser.add_argument("--check", action="store_true", help="独立核对整条念头，通过后才写回")
+    parser.add_argument("--checker", choices=("v1", "v2", "v3"), default="v1", help="独立核对口径")
+    parser.add_argument("--checker-think", choices=("off", "high"), default="off", help="独立核对思考档位")
     args = parser.parse_args()
     if args.thinker is None:
         args.thinker = "deepseek" if args.plan2 or args.check else "local"
@@ -213,7 +215,13 @@ def main() -> int:
         if args.check:
             run_dir = CHECK_RUN_DIR
             settings["check"] = True
+            if args.checker != "v1":
+                settings["checker"] = args.checker
+            if args.checker_think != "off":
+                settings["checker_think"] = args.checker_think
         check_records = external_records(payload["records"][:-1], binding) if args.check else []
+        check_own = (own_thoughts(payload["records"][:-1], binding)
+                     if args.check and args.checker == "v3" else None)
         blocked = False
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
         run_dir.mkdir(parents=True, exist_ok=True)
@@ -227,7 +235,10 @@ def main() -> int:
             def record_sample(index: int, sample: dict[str, Any]) -> bool:
                 judgment = None
                 if args.check and sample["text"] and sample.get("valid", True):
-                    judgment = check(sample["text"], check_records)
+                    judgment = check(sample["text"], check_records,
+                                     checker=args.checker, checker_think=args.checker_think,
+                                     now=args.at if args.checker == "v3" else None,
+                                     own_thoughts=check_own)
                     sample = {**sample, "check": judgment}
                 log_row(dict(index=index, **sample))
                 if judgment and not judgment["valid"]:
