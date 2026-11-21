@@ -269,7 +269,7 @@ def evidence_illegal() -> list[Row]:
             )
             value["producer_resource"] = value["isolation"]
             extra.append(dict(label="wrong-producer", request=q | {"value": value}))
-    return extra + [
+    invalid_values = extra + [
         dict(
             label=label,
             request=dict(
@@ -281,6 +281,32 @@ def evidence_illegal() -> list[Row]:
         )
         for name, label, fields in cases
     ]
+    # All these mutations still have a valid wire shape. Freeze their bytes so
+    # each decoder must reject the same semantic fault after deserialization.
+    from echo.bridge import from_json
+    from echo.runtime import Limits, encode_canonical, encode_protobuf
+
+    invalid_bytes = []
+    for row in invalid_values:
+        q = row["request"]
+        name = q["name"]
+        native = from_json(name, q["value"])
+        for op, encoder in (
+            ("canonical", encode_canonical),
+            ("protobuf", encode_protobuf),
+        ):
+            invalid_bytes.append(
+                dict(
+                    label=f"{row['label']}-{op}",
+                    request=dict(
+                        name=name,
+                        op=op,
+                        limits=LIMITS,
+                        hex=encoder(name, native, Limits(**LIMITS)).hex(),
+                    ),
+                )
+            )
+    return invalid_values + invalid_bytes
 
 
 def evidence_legal() -> list[Row]:
