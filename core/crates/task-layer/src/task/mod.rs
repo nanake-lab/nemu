@@ -1,3 +1,4 @@
+pub mod permission;
 pub mod projection;
 pub mod protocol;
 pub mod reply;

@@ -162,25 +162,48 @@ impl Protocol {
 }
 
 #[derive(Clone, Copy, Debug, Deserialize, serde::Serialize)]
-#[serde(deny_unknown_fields)]
+#[serde(default, deny_unknown_fields)]
 pub struct GenerationBudget {
     pub tokens: u64,
     pub duration_ns: u64,
 }
 
-/// Explicit deployment resource. The approved D3/D7 defaults are the only
-/// implicit choices; the owner supplies all numeric settings.
+impl Default for GenerationBudget {
+    fn default() -> Self {
+        // ADR 0027 favors short first sentences. At P0-12's 116.62 tokens/s,
+        // 128 tokens take about 1.1 s of decode. Leave room for prefill,
+        // a structured outline and a slower adapter before ending generation.
+        Self {
+            tokens: 128,
+            duration_ns: 6_000_000_000,
+        }
+    }
+}
+
+/// Deployment settings. Missing fields inherit the same defaults as a missing file.
 #[derive(Clone, Copy, Debug, Deserialize, serde::Serialize)]
-#[serde(deny_unknown_fields)]
+#[serde(default, deny_unknown_fields)]
 pub struct TaskSettings {
     pub generation: GenerationBudget,
-    #[serde(default)]
     pub speech: super::speech::SpeechSettings,
     pub k: usize,
 }
+impl Default for TaskSettings {
+    fn default() -> Self {
+        Self {
+            generation: GenerationBudget::default(),
+            speech: super::speech::SpeechSettings::default(),
+            // Two nearby same-language examples allow variation while keeping P short.
+            k: 2,
+        }
+    }
+}
 impl TaskSettings {
     pub fn load(path: &Path) -> Result<Self, String> {
-        serde_json::from_slice(&fs::read(path).map_err(|e| e.to_string())?)
-            .map_err(|e| e.to_string())
+        match fs::read(path) {
+            Ok(bytes) => serde_json::from_slice(&bytes).map_err(|e| e.to_string()),
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(Self::default()),
+            Err(e) => Err(e.to_string()),
+        }
     }
 }

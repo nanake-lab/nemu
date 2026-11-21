@@ -1,5 +1,6 @@
 //! One live reply attempt in the outer transaction owner. Restores/replays never
 //! dispatch from this API. The owner persists Q and arbitrates the final CAS.
+use super::permission::{AllowedAction, PermissionBinding, ScopedAction};
 use super::projection::{CloudRequest, Governance};
 use core_types::{WireMessage, contract::Limits, generated::*};
 use std::{
@@ -16,16 +17,23 @@ pub struct Binding {
     pub processed_through: u64,
     pub snapshot: String,
     pub frontier: Vec<String>,
-    pub protocol_version: String,
-    pub permission: ObjectRef,
+    pub permission: PermissionBinding,
     pub q_revision: String,
 }
 
 impl Binding {
     /// Apply to the owner's staged Q before commit. Only plans still bound to
     /// this complete runtime binding remain eligible for registration.
-    pub fn bind_protocol(&mut self, protocol: &super::protocol::Protocol) {
-        self.protocol_version = protocol.version().to_owned();
+    pub fn bind_protocol(
+        &mut self,
+        protocol: &super::protocol::Protocol,
+        resource: ObjectRef,
+    ) -> Result<(), String> {
+        if resource.resource_version != protocol.version() {
+            return Err("protocol resource version differs from loaded protocol".into());
+        }
+        self.permission.protocol = resource;
+        Ok(())
     }
 }
 
@@ -180,15 +188,8 @@ pub trait Outbox {
         &mut self,
         binding: &Binding,
         chunks: &[OutputChunk],
-        action: Option<&ActionPlan>,
+        action: Option<ScopedAction<'_, '_>>,
     ) -> Result<(), String>;
-}
-
-/// The trusted boundary table pairs a payload kind with its allowed scope.
-/// A model cannot grant itself a new kind by copying an allowed scope.
-pub struct AllowedAction<'a> {
-    pub payload_type: &'a str,
-    pub scope: &'a ObjectRef,
 }
 
 impl PendingPlan {
@@ -223,22 +224,21 @@ impl PendingPlan {
         if &self.bound != current {
             return Err("stale plan".into());
         }
-        if let Some(action) = &self.receipt.action_plan
-            && !allowed.iter().any(|entry| {
-                entry.scope == &action.expected_scope
-                    && entry.payload_type == action.output_or_tool_parameters.object_type
+        let scoped = self
+            .receipt
+            .action_plan
+            .as_ref()
+            .map(|plan| {
+                allowed
+                    .iter()
+                    .find_map(|entry| entry.resolve(plan))
+                    .ok_or("action outside allowed scope")
             })
-        {
-            return Err("action outside allowed scope".into());
-        }
+            .transpose()?;
         if self.receipt.output_chunks.is_empty() && self.receipt.action_plan.is_none() {
             return Ok(());
         }
-        outbox.register(
-            &self.bound,
-            &self.receipt.output_chunks,
-            self.receipt.action_plan.as_ref(),
-        )
+        outbox.register(&self.bound, &self.receipt.output_chunks, scoped)
     }
 }
 
@@ -308,7 +308,7 @@ fn generate(
     let input = g.input;
     input.canonical_bytes(g.limits)?;
     if input.snapshot_id != g.binding.snapshot
-        || input.protocol_version != g.binding.protocol_version
+        || input.protocol_version != g.binding.permission.protocol.resource_version
     {
         return Err("task and Q binding differ".into());
     }

@@ -73,7 +73,7 @@ fn d10_samples_and_d3_hints_are_metered_in_the_same_four_section_request() {
     small.input.budget.capacity = c.binding.measured + t.max_tokens.0 - 1;
     assert!(prepare(&t, small, &Codec, LIMITS).is_err());
     let mut stale = material(&t);
-    stale.bound.protocol_version = "old".into();
+    stale.bound.permission.protocol.resource_version = "old".into();
     assert!(prepare(&t, stale, &Codec, LIMITS).is_err());
 }
 #[test]

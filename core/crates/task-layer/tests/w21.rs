@@ -11,7 +11,7 @@ use std::{
 };
 use task_layer::{
     cause_projection as cp,
-    task::{projection::*, protocol::*, reply::*, speech::*},
+    task::{permission::*, projection::*, protocol::*, reply::*, speech::*},
 };
 
 const LIMITS: Limits = Limits {
@@ -55,8 +55,14 @@ fn binding(task: &TaskInput) -> Binding {
         processed_through: 1,
         snapshot: task.snapshot_id.clone(),
         frontier: vec!["o".into()],
-        protocol_version: task.protocol_version.clone(),
-        permission: object("grants"),
+        permission: PermissionBinding {
+            protocol: ObjectRef {
+                resource_version: task.protocol_version.clone(),
+                ..object("protocol")
+            },
+            policy: object("grants"),
+            revocation_version: DecimalU64(1),
+        },
         q_revision: "q1".into(),
     }
 }
@@ -207,7 +213,7 @@ impl Outbox for TestOutbox {
         &mut self,
         _: &Binding,
         chunks: &[OutputChunk],
-        _: Option<&ActionPlan>,
+        _: Option<ScopedAction<'_, '_>>,
     ) -> Result<(), String> {
         self.calls += 1;
         self.chunks += chunks.len();
@@ -375,6 +381,8 @@ fn declined_action_out_of_scope_and_new_observation_do_not_register() {
     let t = input();
     let b = binding(&t);
     let mode = SpeechMode::A_LOCAL_STRICT;
+    let scope = permission_tests::request().grant.scope;
+    let permitted_action = AllowedAction::new("fixture", &scope, "catalog-v1", LIMITS).unwrap();
     let action = ActionPlan {
         schema_version: 1,
         plan_id: "plan".into(),
@@ -382,7 +390,7 @@ fn declined_action_out_of_scope_and_new_observation_do_not_register() {
         task_version: "1".into(),
         protocol_version: "fixture-p".into(),
         output_or_tool_parameters: object("move"),
-        expected_scope: object("body"),
+        expected_scope: permitted_action.reference().clone(),
         dependencies: vec![],
         deadline_ns: core_types::scalar::DecimalI64(200),
     };
@@ -408,18 +416,8 @@ fn declined_action_out_of_scope_and_new_observation_do_not_register() {
             current.frontier.push("new observation".into())
         }
         let mut outbox = TestOutbox::default();
-        let scope = object("body");
-        let allowed = if permitted {
-            vec![AllowedAction {
-                payload_type: "fixture",
-                scope: &scope,
-            }]
-        } else {
-            vec![AllowedAction {
-                payload_type: "other-kind",
-                scope: &scope,
-            }]
-        };
+        let payload_type = if permitted { "fixture" } else { "other-kind" };
+        let allowed = [AllowedAction::new(payload_type, &scope, "catalog-v1", LIMITS).unwrap()];
         assert_eq!(
             plan.submit(&current, &allowed, &mut outbox).is_ok(),
             fresh && (!proposed || permitted)
@@ -427,5 +425,56 @@ fn declined_action_out_of_scope_and_new_observation_do_not_register() {
         assert_eq!(outbox.calls, want);
     }
 }
+#[path = "w21/permission.rs"]
+mod permission_tests;
 #[path = "w21/remote.rs"]
 mod remote;
+
+#[test]
+fn missing_settings_complete_a_reply_with_the_default_budget() {
+    let tmp = tempfile::tempdir().unwrap();
+    let path = tmp.path().join("settings.json");
+    let settings = TaskSettings::load(&path).unwrap();
+    let folder = tmp.path().join("_candidates/core/protocol");
+    std::fs::create_dir_all(&folder).unwrap();
+    std::fs::write(
+        folder.join("manifest.json"),
+        r#"{"version":"v0","status":"candidate","files":["en.json"]}"#,
+    )
+    .unwrap();
+    std::fs::write(
+        folder.join("en.json"),
+        r#"{"facts":"AI","boundaries":"honesty","format":"{acts}","language":"en"}"#,
+    )
+    .unwrap();
+    let p = Protocol::load(tmp.path(), Source::Candidate, Lang::EN, &[]).unwrap();
+    let fixture = input();
+    let t = p.task_input(
+        fixture.current_input,
+        fixture.c_task,
+        fixture.snapshot_id,
+        settings.generation,
+    );
+    assert_eq!(
+        (t.max_tokens.0, t.max_duration_ns.0, settings.k),
+        (128, 6_000_000_000, 2)
+    );
+    let b = binding(&t);
+    let mode = SpeechMode::B_REMOTE_PROJECTED;
+    let (mut generators, calls) = setup(mode, true, None);
+    let mut turn = ReplyTurn::new(material(&t).latest, mode);
+    let cloud = prepare(&t, material(&t), &Codec, LIMITS).unwrap();
+    let plan = turn
+        .advance(
+            &material(&t).latest,
+            Interpretation::Committed { input_position: 1 },
+            &mut generators,
+            || Ok(generation(&t, &b, Some(&cloud))),
+        )
+        .unwrap()
+        .unwrap();
+    let mut outbox = TestOutbox::default();
+    plan.submit(&b, &[], &mut outbox).unwrap();
+    assert_eq!((calls.get(), outbox.chunks), (1, 1));
+    assert!(!path.exists());
+}

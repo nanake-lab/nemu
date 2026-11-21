@@ -206,7 +206,7 @@ pub fn prepare(
     let facts = &task.c_task;
     if task.snapshot_id != material.bound.snapshot
         || material.bound.branch != material.latest.branch_id
-        || material.bound.protocol_version != task.protocol_version
+        || material.bound.permission.protocol.resource_version != task.protocol_version
         || material.prefix != facts.history_prefix
         || material.bound.history_prefix != material.prefix
         || task.current_input != material.latest.content
