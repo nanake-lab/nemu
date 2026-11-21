@@ -73,6 +73,14 @@ pub trait Governance {
     fn supported(&self, point: &Point, evidence: &[&VisibleQuote<'_>]) -> bool;
 }
 impl CloudRequest {
+    /// Retain these exact application bytes locally for D5/replay, including
+    /// the point-format instructions, selected hints, and sample presentation.
+    pub fn sent_candidate(&self) -> &[u8] {
+        &self.bytes
+    }
+    pub fn settings(&self) -> SpeechSettings {
+        self.settings
+    }
     pub fn samples(&self) -> Option<&Samples> {
         self.samples.as_ref()
     }

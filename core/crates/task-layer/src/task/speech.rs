@@ -4,20 +4,23 @@ use core_types::generated::{QuoteLayer, RecordVersion};
 use serde::Deserialize;
 use std::{collections::BTreeMap, ops::Range};
 
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deserialize, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum MissingHint {
     None,
     #[default]
     PerEvent,
     General,
 }
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deserialize, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum SelfQuote {
     #[default]
     Loose,
     Strict,
 }
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deserialize, serde::Serialize)]
+#[serde(default, deny_unknown_fields)]
 pub struct SpeechSettings {
     pub missing: MissingHint,
     pub self_quote: SelfQuote,

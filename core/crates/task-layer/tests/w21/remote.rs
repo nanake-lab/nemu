@@ -31,6 +31,18 @@ fn d10_samples_and_d3_hints_are_metered_in_the_same_four_section_request() {
         c
     };
     let c = prepare(&t, setup(), &Codec, LIMITS).unwrap();
+    let sent: serde_json::Value = serde_json::from_slice(c.sent_candidate()).unwrap();
+    assert!(
+        sent["P"]
+            .as_str()
+            .unwrap()
+            .ends_with("【说话样例】\nSample only.")
+    );
+    assert_eq!(sent["E"], serde_json::json!([]));
+    assert_eq!(
+        sent["hints"],
+        serde_json::json!(["本轮材料未提供与 o 对应的记录。"])
+    );
     let samples = c.samples().unwrap();
     assert_eq!(samples.modulation, m);
     assert_eq!(samples.language, Lang::EN);

@@ -161,8 +161,26 @@ impl Protocol {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Deserialize, serde::Serialize)]
+#[serde(deny_unknown_fields)]
 pub struct GenerationBudget {
     pub tokens: u64,
     pub duration_ns: u64,
+}
+
+/// Explicit deployment resource. The approved D3/D7 defaults are the only
+/// implicit choices; the owner supplies all numeric settings.
+#[derive(Clone, Copy, Debug, Deserialize, serde::Serialize)]
+#[serde(deny_unknown_fields)]
+pub struct TaskSettings {
+    pub generation: GenerationBudget,
+    #[serde(default)]
+    pub speech: super::speech::SpeechSettings,
+    pub k: usize,
+}
+impl TaskSettings {
+    pub fn load(path: &Path) -> Result<Self, String> {
+        serde_json::from_slice(&fs::read(path).map_err(|e| e.to_string())?)
+            .map_err(|e| e.to_string())
+    }
 }

@@ -9,6 +9,10 @@ mod query {
     };
 }
 #[allow(dead_code)]
+#[expect(
+    unexpected_cfgs,
+    reason = "shared W19 fixture also contains a helper gated by its owning crate's optional CPU embedding feature"
+)]
 #[path = "../../fact-view/src/tests/fixture.rs"]
 mod fixture;
 

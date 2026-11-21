@@ -149,6 +149,13 @@ pub fn query(
 ) -> Result<QueryResultV2, String> {
     request.canonical_bytes(limits)?;
     let result = match request.kind {
+        QueryKindV2::QUERY_MEMORY if !access.allowed => QueryResultV2 {
+            schema_version: 1,
+            query_id: request.query_id.clone(),
+            status: QueryStatus::DENIED,
+            items: vec![],
+            growth_entries: vec![],
+        },
         QueryKindV2::QUERY_MEMORY => memory(request)?,
         QueryKindV2::QUERY_ACTIONS => select(request, journal.actions, access, budget, limits)?,
         QueryKindV2::QUERY_RUN_HISTORY => {
