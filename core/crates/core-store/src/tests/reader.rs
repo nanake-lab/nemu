@@ -207,3 +207,73 @@ fn live_readers_open_during_ingress_without_false_rollback() {
     });
     store.verify().unwrap();
 }
+
+#[test]
+fn background_publication_proof_requires_the_same_writer_epoch_on_delivery() {
+    let root = TemporaryRoot::new().unwrap();
+    let mut store = rehearsal(&root, "delivery-epoch");
+    let cap = store.take_commit_capability().unwrap();
+    advance(&mut store, &cap, 0);
+    let opened = store.receipt_check(None, || {}).unwrap();
+    let reader = std::thread::spawn(opened).join().unwrap().unwrap();
+    assert!(store.publication_matches(&reader).unwrap());
+
+    // Another committed SQL write, even off the publication path, invalidates
+    // this delivery. Leave the authoritative tables intact for the reopen check.
+    let other = rusqlite::Connection::open(store.path().join("store.sqlite")).unwrap();
+    other
+        .execute_batch("CREATE TABLE synthetic_epoch_probe(value INTEGER)")
+        .unwrap();
+    drop(other);
+    assert!(!store.publication_matches(&reader).unwrap());
+    let refreshed = store.receipt_check(Some(reader), || {}).unwrap()().unwrap();
+    assert!(store.publication_matches(&refreshed).unwrap());
+    advance(&mut store, &cap, 1);
+    assert!(!store.publication_matches(&refreshed).unwrap());
+
+    let old = store.receipt_check(None, || {}).unwrap()().unwrap();
+    drop(store);
+    let reopened = Store::<Rehearsal>::open_temporary(&root, "delivery-epoch", config()).unwrap();
+    assert!(!reopened.publication_matches(&old).unwrap());
+}
+
+#[test]
+fn new_publication_rejects_damage_to_either_the_old_or_new_transaction_file() {
+    use std::sync::{
+        Arc,
+        atomic::{AtomicBool, Ordering},
+    };
+
+    for old_file in [true, false] {
+        let root = TemporaryRoot::new().unwrap();
+        let mut store = rehearsal(&root, "damaged-publication");
+        let cap = store.take_commit_capability().unwrap();
+        let first = advance(&mut store, &cap, 0);
+        let mut cached = None;
+        store.receipt_reader(&mut cached).unwrap();
+        let second = advance(&mut store, &cap, 1);
+        let snapshot = if old_file {
+            first.snapshot
+        } else {
+            second.snapshot
+        };
+        let path = store.objects.path(&snapshot).unwrap();
+        let mut bytes = std::fs::read(&path).unwrap();
+        *bytes.last_mut().unwrap() ^= 1;
+        std::fs::write(path, bytes).unwrap();
+
+        let full = Arc::new(AtomicBool::new(false));
+        let observed = Arc::clone(&full);
+        let check = store
+            .receipt_check(cached, move || observed.store(true, Ordering::SeqCst))
+            .unwrap();
+        assert!(check().is_err());
+        assert!(store.verify().is_err());
+        if old_file {
+            assert!(
+                full.load(Ordering::SeqCst),
+                "a changed prefix needs full verification"
+            );
+        }
+    }
+}

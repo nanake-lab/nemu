@@ -27,34 +27,65 @@ pub struct Reader<L: LineageKind> {
 }
 
 impl<L: LineageKind> Store<L> {
-    /// Reuse one full open check for receipts at this writer's current publication.
-    pub fn receipt_reader<'a>(&self, slot: &'a mut Option<Reader<L>>) -> Result<&'a Reader<L>> {
+    fn writer_version(&self) -> Result<i64> {
+        Ok(self
+            .db
+            .pragma_query_value(None, "data_version", |r| r.get(0))?)
+    }
+
+    /// Check the observation again on the sole writer after a background check.
+    pub fn publication_matches(&self, reader: &Reader<L>) -> Result<bool> {
+        Ok(Arc::ptr_eq(&self.objects.pins, &reader.objects.pins)
+            && reader.writer_data_version == Some(self.writer_version()?)
+            && reader.verified_head == self.head()?)
+    }
+
+    /// Capture a publication on the writer. The returned job owns only reader
+    /// resources and can perform its SQL, file and witness checks off-thread.
+    /// On a full check, the observer runs after the read transaction is pinned
+    /// and before recovery traverses it. Finally call publication_matches on
+    /// the original Store before consuming the results.
+    pub fn receipt_check<F: FnOnce() + Send + 'static>(
+        &self,
+        cached: Option<Reader<L>>,
+        snapshot_pinned: F,
+    ) -> Result<impl FnOnce() -> Result<Reader<L>> + Send + 'static + use<L, F>> {
+        let version = self.writer_version()?;
         let published = self.head()?;
-        // This connection's data_version changes only for another SQL writer.
-        // The Store's own appends to unprocessed D do not invalidate its prefix.
-        let data_version = || {
-            self.db
-                .pragma_query_value(None, "data_version", |r| r.get::<_, i64>(0))
-        };
-        let version = data_version()?;
-        if !slot.as_ref().is_some_and(|r| {
-            r.verified_head == published
-                && r.writer_data_version == Some(version)
-                && Arc::ptr_eq(&self.objects.pins, &r.objects.pins)
-        }) {
-            *slot = None;
-            let mut reader = self.reader()?;
+        let root = self.root.clone();
+        let config = self.objects.config;
+        let pins = Arc::clone(&self.objects.pins);
+        let temporary: bool = self
+            .db
+            .query_row("SELECT temporary FROM metadata", [], |r| r.get(0))?;
+        Ok(move || {
+            if let Some(reader) = cached
+                && reader.verified_head == published
+                && reader.writer_data_version == Some(version)
+                && Arc::ptr_eq(&pins, &reader.objects.pins)
+            {
+                return Ok(reader);
+            }
+            let mut reader =
+                Reader::open_checked(&root, config, temporary, || {}, snapshot_pinned)?;
             require(
-                reader.verified_head == published && data_version()? == version,
+                reader.verified_head == published,
                 "publication changed during receipt verification",
             )?;
-            // The same per-opening identity also binds the Store's commit capability.
-            reader.objects.pins = Arc::clone(&self.objects.pins);
+            reader.objects.pins = pins;
             reader.writer_data_version = Some(version);
-            *slot = Some(reader);
-        }
-        slot.as_ref()
-            .ok_or(crate::Error::Rejected("receipt reader unavailable"))
+            Ok(reader)
+        })
+    }
+
+    pub fn receipt_reader<'a>(&self, slot: &'a mut Option<Reader<L>>) -> Result<&'a Reader<L>> {
+        let check = self.receipt_check(slot.take(), || {})?;
+        let reader = check()?;
+        require(
+            self.publication_matches(&reader)?,
+            "publication changed during receipt verification",
+        )?;
+        Ok(slot.insert(reader))
     }
 }
 impl<L: LineageKind> Reader<L> {
@@ -65,7 +96,7 @@ impl<L: LineageKind> Reader<L> {
         Self::open_checked(root, config, temporary, || {}, || {})
     }
     // Internal seam for deterministic read/append interleavings; no locks or
-    // transactions are passed to callbacks. Public opens always use no-op hooks.
+    // transactions are passed to callbacks. Standalone opens use no-op hooks.
     pub(crate) fn open_checked(
         root: &Path,
         config: StoreConfig,

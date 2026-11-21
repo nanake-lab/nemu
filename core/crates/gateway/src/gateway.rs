@@ -43,6 +43,11 @@ pub struct Gateway<L: LineageKind, H: CoreHandler<L>> {
     pub(crate) connections: BTreeMap<u64, Connection<L>>,
     pub(crate) pending: BTreeMap<u64, Pending>,
     pub(crate) receipt_reader: Option<core_store::Reader<L>>,
+    #[cfg(test)]
+    pub(crate) check_gate: Option<(
+        tokio::sync::oneshot::Sender<()>,
+        std::sync::mpsc::Receiver<()>,
+    )>,
     pub(crate) audit_blocked: bool,
     audit_bytes: usize,
 }
@@ -113,6 +118,8 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             connections: BTreeMap::new(),
             pending: BTreeMap::new(),
             receipt_reader: None,
+            #[cfg(test)]
+            check_gate: None,
             audit_blocked,
             audit_bytes: bytes,
         })
@@ -186,7 +193,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         }
         Ok(())
     }
-    pub(crate) fn tick(&mut self) -> Result<()> {
+    fn expire_connections(&mut self) {
         let expired: Vec<_> = self
             .connections
             .iter()
@@ -201,7 +208,6 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         for c in self.connections.values_mut() {
             c.uploads.expire(self.config.upload_lifetime);
         }
-        self.progress()
     }
     /// Bind only on the current user's SID pipe. Multiple I/O tasks submit to
     /// this actor; all Store and handler access stays serial in this future.
@@ -221,6 +227,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         let mut timer = tokio::time::interval(self.config.poll_interval);
         timer.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
         let mut sequence = 0u64;
+        let mut checking: Option<crate::progress::ProgressTask<L>> = None;
         tokio::pin!(shutdown);
         let result = async { loop {
             let step: Result<()> = tokio::select! {
@@ -240,7 +247,17 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
                     Err(e) => Err(e),
                 },
                 input = rx.recv() => match input { Some(v) => self.input(v), None => Err(Error::Disconnected) },
-                _ = timer.tick() => self.tick(),
+                completed = async { checking.as_mut().unwrap().await }, if checking.is_some() => {
+                    checking = None;
+                    self.finish_progress(completed.map_err(|_| Error::Rejected("publication check worker failed"))??)
+                },
+                _ = timer.tick() => {
+                    self.expire_connections();
+                    if checking.is_none() {
+                        checking = self.progress()?;
+                    }
+                    Ok(())
+                },
                 _ = tasks.join_next(), if !tasks.is_empty() => Ok(()),
             };
             if let Err(e) = step { break Err(e); }
@@ -248,6 +265,11 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             // drain bounded replies between steps even when a timer is overdue.
             tokio::task::yield_now().await;
         } }.await;
+        // A running blocking job cannot be aborted. Join it before returning
+        // the Store to its owner, including on shutdown and error.
+        if let Some(check) = checking {
+            let _ = check.await;
+        }
         tasks.abort_all();
         while tasks.join_next().await.is_some() {}
         self.connections.clear();

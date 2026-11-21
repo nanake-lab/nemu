@@ -223,3 +223,57 @@ async fn control_dispatch_never_acknowledges_denial_and_does_not_enter_d() {
     assert_eq!(s.head().unwrap(), (None, 0, 0));
     assert_eq!(s.ingress_rejections().unwrap().len(), 3);
 }
+
+#[tokio::test]
+async fn another_pipe_can_authenticate_and_query_while_publication_check_is_outstanding() {
+    let root = TemporaryRoot::new().unwrap();
+    let (mut gateway, listener, name, token) = setup(&root, "busy-check", deployment());
+    let enabled = Arc::clone(&gateway.handler.enabled);
+    let (entered, checking) = tokio::sync::oneshot::channel();
+    let (resume, gate) = std::sync::mpsc::channel();
+    gateway.check_gate = Some((entered, gate));
+    let (stop, stopped) = tokio::sync::oneshot::channel();
+    let client = async move {
+        let mut first = Peer::connect(&name, &token).await;
+        let payload = text();
+        let (e, source) = event(&payload, 0);
+        let TerminalPayload::Text(value) = &payload else {
+            unreachable!()
+        };
+        first.upload("text", value).await;
+        first.upload("source", &source).await;
+        let request = first.send_event("pending", input(e)).await;
+        assert_eq!(
+            first.reply(&request).await.stage,
+            ReceiptStage::RECEIVED_DURABLE
+        );
+        enabled.store(true, Ordering::SeqCst);
+        tokio::time::timeout(deployment().frames.deadline, checking)
+            .await
+            .unwrap()
+            .unwrap();
+
+        let receipt = first.reply(&request);
+        tokio::pin!(receipt);
+        tokio::select! {
+            biased;
+            _ = &mut receipt => panic!("commit receipt escaped the publication check"),
+            () = async {
+                let mut second = Peer::connect(&name, &token).await;
+                let mut q = second.request("during-check", IngressKind::INGRESS_QUERY);
+                q.query = Some(fixture());
+                assert_eq!(second.exchange(&q).await.kind, IngressResponseKind::QUERY_REPLY);
+            } => {}
+        }
+        resume.send(()).unwrap();
+        assert_eq!(receipt.await.stage, ReceiptStage::CORE_COMMITTED);
+        let _ = stop.send(());
+    };
+    let (r, ()) = tokio::join!(
+        gateway.serve_listener(listener, async {
+            let _ = stopped.await;
+        }),
+        client
+    );
+    r.unwrap();
+}
