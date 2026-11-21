@@ -1,5 +1,13 @@
 # Nemu
 
+*less less more — a little someone on your desktop, shaped only by what she has lived.*
+
+Nemu is a desktop companion. Her personality is not written in a prompt: her moods, her relationships and what she remembers all grow from what she actually lives through, and every change can be traced and replayed. Her mind runs on [Echo Core](docs/echo-core/), a model-independent cognitive core that keeps state, memory and permissions outside the language model; models only help her speak and think. She acts on your computer only within the permissions you choose.
+
+*(Chinese documentation follows. 以下为中文说明。)*
+
+---
+
 Nemu 是由 [nanake-lab](https://github.com/nanake-lab) 发起并拥有的 3D 桌面伙伴与持续状态演化项目：核心是自主设计的 [Echo Core](docs/echo-core/)，桌面应用是她的身体、感官和声音，[Codex](https://openai.com/codex/) 是她可以求助的旁路助手，不是她本人。
 
 ---
@@ -134,3 +142,11 @@ Nemu 由 [nanake-lab](https://github.com/nanake-lab) 发起并拥有。架构、
 | [Antigravity](https://antigravity.google/) | Google | 暂停使用。原负责舞台、评审台、角色运行时与身体（`apps/stage`、`apps/panel`、`packages/avatar-runtime`、`packages/body`） |
 
 现行分工自 2026-11-12 起按 [`AGENTS.md`](AGENTS.md) 第 2 节执行；`tasks/cards.json` 和任务卡头部中的建议执行者按该节现行分工解读，审查与合并规则见第 6 节。
+
+---
+
+## License
+
+本仓库中的代码与文档采用 [Apache License 2.0](LICENSE) 许可协议（版权与归属说明见 [NOTICE](NOTICE)）。`content` 子模块（`nemu-content`，包含她的角色设定、外观、声音等专属内容）属于独立仓库，不在本仓库的 Apache-2.0 许可范围之内。仓库中引用或附带的第三方模型、动作等资产各自沿用其对应 `manifest.json` 中登记的许可证。
+
+The code and documentation in this repository are licensed under the [Apache License 2.0](LICENSE) (see [NOTICE](NOTICE) for copyright and attribution notices). The `content` submodule (`nemu-content`, containing her character lore, appearance, voice, and related assets) is a separate repository and is not covered by this license. Third-party models, motions, and other assets remain subject to their respective licenses as recorded in their `manifest.json` files.
