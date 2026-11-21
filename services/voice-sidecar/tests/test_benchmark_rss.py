@@ -1,0 +1,44 @@
+from pathlib import Path
+import sys
+import os
+import subprocess
+import ctypes
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import benchmark  # noqa: E402
+
+
+def test_rss_requires_windows_without_spawning_a_process(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(sys, "platform", "linux")
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: pytest.fail("spawned subprocess"))
+    with pytest.raises(RuntimeError, match="requires Windows"):
+        benchmark.rss()
+
+
+@pytest.mark.skipif(sys.platform != "win32", reason="native Windows RSS reader requires Windows")
+def test_repeated_rss_samples_do_not_accumulate_ctypes_pointer_types() -> None:
+    # ctypes keeps POINTER(Structure) types for the process lifetime. Defining the
+    # Structure inside every sample leaks even after Python garbage collection.
+    assert benchmark.rss() > 0
+    pointer_types = getattr(ctypes, "_pointer_type_cache")
+    before = set(pointer_types)
+    for _ in range(1000):
+        assert benchmark.rss() > 0
+    assert set(pointer_types) == before
+
+
+def test_step_traces_are_disabled_for_pressure_and_restored(monkeypatch: pytest.MonkeyPatch) -> None:
+    target = "D:/evidence/traces"
+    monkeypatch.setenv("NEMU_TTS_TRACE_DIR", target)
+    with benchmark.trace_phase("stress"):
+        assert "NEMU_TTS_TRACE_DIR" not in os.environ
+    assert os.environ["NEMU_TTS_TRACE_DIR"] == target
+
+
+def test_latency_keeps_step_traces_enabled(monkeypatch: pytest.MonkeyPatch) -> None:
+    target = "D:/evidence/traces"
+    monkeypatch.setenv("NEMU_TTS_TRACE_DIR", target)
+    with benchmark.trace_phase("latency"):
+        assert os.environ["NEMU_TTS_TRACE_DIR"] == target

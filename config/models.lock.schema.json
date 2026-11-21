@@ -321,6 +321,207 @@
           }
         }
       }
+    },
+    "tts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "models"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "models": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "0.6B",
+            "1.7B",
+            "VoiceDesign"
+          ],
+          "properties": {
+            "0.6B": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "revision",
+                "source",
+                "license",
+                "redistributable",
+                "files"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^Qwen/Qwen3-TTS-12Hz-"
+                },
+                "revision": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                },
+                "source": {
+                  "type": "string",
+                  "pattern": "^https://huggingface[.]co/Qwen/"
+                },
+                "license": {
+                  "const": "Apache-2.0"
+                },
+                "redistributable": {
+                  "type": "boolean"
+                },
+                "files": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "path",
+                      "size",
+                      "sha256"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "size": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "1.7B": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "revision",
+                "source",
+                "license",
+                "redistributable",
+                "files"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^Qwen/Qwen3-TTS-12Hz-"
+                },
+                "revision": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                },
+                "source": {
+                  "type": "string",
+                  "pattern": "^https://huggingface[.]co/Qwen/"
+                },
+                "license": {
+                  "const": "Apache-2.0"
+                },
+                "redistributable": {
+                  "type": "boolean"
+                },
+                "files": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "path",
+                      "size",
+                      "sha256"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "size": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "VoiceDesign": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "revision",
+                "source",
+                "license",
+                "redistributable",
+                "files"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^Qwen/Qwen3-TTS-12Hz-"
+                },
+                "revision": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                },
+                "source": {
+                  "type": "string",
+                  "pattern": "^https://huggingface[.]co/Qwen/"
+                },
+                "license": {
+                  "const": "Apache-2.0"
+                },
+                "redistributable": {
+                  "type": "boolean"
+                },
+                "files": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "path",
+                      "size",
+                      "sha256"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "size": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
