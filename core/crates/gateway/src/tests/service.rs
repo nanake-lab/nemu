@@ -119,11 +119,14 @@ impl CoreHandler<Rehearsal> for Core {
     }
     fn query(
         &mut self,
-        _s: &mut Store<Rehearsal>,
+        store: &mut Store<Rehearsal>,
         _c: &TerminalSession,
         q: &QueryV2,
     ) -> Result<Decision<QueryResultV2>> {
         self.calls.push(IngressKind::INGRESS_QUERY);
+        if q.query_id == "read-history" {
+            store.verified_reader()?.facts(1)?;
+        }
         Ok(Ok(QueryResultV2 {
             schema_version: 1,
             query_id: q.query_id.clone(),
