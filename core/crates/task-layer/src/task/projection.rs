@@ -208,6 +208,7 @@ pub fn prepare(
         || material.bound.branch != material.latest.branch_id
         || material.bound.protocol_version != task.protocol_version
         || material.prefix != facts.history_prefix
+        || material.bound.history_prefix != material.prefix
         || task.current_input != material.latest.content
         || !matches!(facts.status, QueryStatus::OK | QueryStatus::NO_MATCH)
         || facts.truncated

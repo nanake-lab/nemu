@@ -51,6 +51,8 @@ fn input() -> TaskInput {
 fn binding(task: &TaskInput) -> Binding {
     Binding {
         branch: "b".into(),
+        history_prefix: "h1".into(),
+        processed_through: 1,
         snapshot: task.snapshot_id.clone(),
         frontier: vec!["o".into()],
         protocol_version: task.protocol_version.clone(),
@@ -261,7 +263,7 @@ fn sys14_failed_explanation_retains_reason_and_late_success_never_generates_or_r
     for progress in [
         Interpretation::Pending,
         Interpretation::Failed(reason.clone()),
-        Interpretation::Committed,
+        Interpretation::Committed { input_position: 1 },
     ] {
         let result = turn
             .advance(&material(&t).latest, progress, &mut adapters, || {
@@ -284,7 +286,7 @@ fn sys14_failed_explanation_retains_reason_and_late_success_never_generates_or_r
         restored
             .advance(
                 &material(&t).latest,
-                Interpretation::Committed,
+                Interpretation::Committed { input_position: 1 },
                 &mut adapters,
                 || panic!("reopened failed turn")
             )
@@ -319,7 +321,7 @@ fn sys14_valid_no_effect_generates_after_real_wait_longer_than_generation_budget
     let plan = turn
         .advance(
             &material(&t).latest,
-            Interpretation::Committed,
+            Interpretation::Committed { input_position: 1 },
             &mut adapters,
             || Ok(generation(&t, &b, Some(&cloud))),
         )
@@ -347,7 +349,7 @@ fn sys14_permitted_zero_preserves_adapter_usage_and_reason() {
     let plan = turn
         .advance(
             &material(&t).latest,
-            Interpretation::Committed,
+            Interpretation::Committed { input_position: 1 },
             &mut adapters,
             || {
                 Ok(Generation {
@@ -395,7 +397,7 @@ fn declined_action_out_of_scope_and_new_observation_do_not_register() {
         let plan = turn
             .advance(
                 &material(&t).latest,
-                Interpretation::Committed,
+                Interpretation::Committed { input_position: 1 },
                 &mut adapters,
                 || Ok(generation(&t, &b, None)),
             )

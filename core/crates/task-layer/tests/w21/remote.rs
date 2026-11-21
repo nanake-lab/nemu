@@ -1,4 +1,27 @@
 use super::*;
+
+#[test]
+fn interpreted_input_requires_a_snapshot_including_its_committed_position() {
+    let task = input();
+    let bound = binding(&task);
+    let mode = SpeechMode::B_REMOTE_PROJECTED;
+    let request = prepare(&task, material(&task), &Codec, LIMITS).unwrap();
+    let (mut adapters, calls) = setup(mode, true, None);
+    let event = material(&task).latest;
+    let mut turn = ReplyTurn::new(event.clone(), mode);
+    assert!(
+        turn.advance(
+            &event,
+            Interpretation::Committed {
+                input_position: bound.processed_through + 1
+            },
+            &mut adapters,
+            || Ok(generation(&task, &bound, Some(&request)))
+        )
+        .is_err()
+    );
+    assert_eq!(calls.get(), 0);
+}
 struct Selected;
 impl SampleSelector for Selected {
     fn select(&self, m: &ObjectRef, language: Lang, k: usize) -> Result<Samples, String> {

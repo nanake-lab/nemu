@@ -12,6 +12,8 @@ use std::{
 #[derive(Clone, Debug, PartialEq)]
 pub struct Binding {
     pub branch: String,
+    pub history_prefix: String,
+    pub processed_through: u64,
     pub snapshot: String,
     pub frontier: Vec<String>,
     pub protocol_version: String,
@@ -99,7 +101,11 @@ impl Generators {
 pub enum Interpretation {
     Pending,
     Failed(FailureReason),
-    Committed,
+    /// H position of the effective interpretation, including a valid no-effect
+    /// outcome, after its ordered commit. A failed placeholder is not a commit here.
+    Committed {
+        input_position: u64,
+    },
 }
 #[derive(Debug, PartialEq)]
 pub enum ReplyState {
@@ -266,10 +272,12 @@ impl ReplyTurn {
                 self.state = ReplyState::Failed(reason);
                 Ok(None)
             }
-            Interpretation::Committed => {
+            Interpretation::Committed { input_position } => {
                 self.state = ReplyState::Closed;
                 let generation = prepare()?;
-                if generation.input.current_input != self.input.content
+                if generation.binding.processed_through < input_position
+                    || generation.input.c_task.history_prefix != generation.binding.history_prefix
+                    || generation.input.current_input != self.input.content
                     || generation.binding.branch != self.input.branch_id
                     || generation
                         .cloud
