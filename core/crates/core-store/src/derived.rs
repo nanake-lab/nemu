@@ -25,6 +25,12 @@ pub(crate) const TABLES: &[&str] = &[
 ];
 
 pub(crate) fn rebuild(db: &Connection, objects: &Objects) -> Result<Connection> {
+    let projected = empty(db)?;
+    extend(&projected, db, objects, 0, 0, 0)?;
+    Ok(projected)
+}
+
+pub(crate) fn empty(db: &Connection) -> Result<Connection> {
     let projected = Connection::open_in_memory()?;
     // Foreign keys are intentionally off in this disposable projection: authority
     // tables are verified by recovery, never copied from possibly damaged indexes.
@@ -33,17 +39,29 @@ pub(crate) fn rebuild(db: &Connection, objects: &Objects) -> Result<Connection> 
     if crate::migration::format(db)? == 3 {
         projected.execute_batch(crate::migration::ATTEMPTS_SQL)?;
     }
+    Ok(projected)
+}
+
+pub(crate) fn extend(
+    projected: &Connection,
+    db: &Connection,
+    objects: &Objects,
+    inputs: u64,
+    commits: u64,
+    attempts: u64,
+) -> Result<()> {
     let limits = objects.config.encoding;
-    let mut input = db.prepare("SELECT event FROM raw_ingress ORDER BY position")?;
-    let mut rows = input.query([])?;
+    let mut input =
+        db.prepare("SELECT event FROM raw_ingress WHERE position>=?1 ORDER BY position")?;
+    let mut rows = input.query([crate::schema::integer(inputs)?])?;
     while let Some(row) = rows.next()? {
         let event = EventEnvelope::from_canonical(&row.get::<_, Vec<u8>>(0)?, limits)?;
         let root = objects.reference(&event, "1")?;
-        crate::store::publish_refs(&projected, &objects.closure(&root)?, objects.config)?;
+        crate::store::publish_refs(projected, &objects.closure(&root)?, objects.config)?;
     }
     let mut stmt =
-        db.prepare("SELECT id,snapshot FROM commits WHERE decision IN ('accepted','activity') ORDER BY position")?;
-    let mut rows = stmt.query([])?;
+        db.prepare("SELECT id,snapshot FROM commits WHERE decision IN ('accepted','activity') AND position>=?1 ORDER BY position")?;
+    let mut rows = stmt.query([crate::schema::integer(commits)?])?;
     while let Some(row) = rows.next()? {
         let id: String = row.get(0)?;
         let root = ObjectRef::from_canonical(&row.get::<_, Vec<u8>>(1)?, limits)?;
@@ -52,8 +70,8 @@ pub(crate) fn rebuild(db: &Connection, objects: &Objects) -> Result<Connection> 
         for entry in &value.staged_ledger {
             refs.extend(objects.closure(&objects.reference(entry, "1")?)?);
         }
-        crate::publication::visible(&projected, objects, &refs)?;
-        crate::publication::index(&projected, objects, &id, &value, &refs)?;
+        crate::publication::visible(projected, objects, &refs)?;
+        crate::publication::index(projected, objects, &id, &value, &refs)?;
         let encoded = root.canonical_bytes(limits)?;
         projected.execute("INSERT INTO snapshots VALUES(?1,?2)", params![id, encoded])?;
         if value.activity_commit.is_some() {
@@ -89,15 +107,18 @@ pub(crate) fn rebuild(db: &Connection, objects: &Objects) -> Result<Connection> 
         }
     }
     if crate::migration::format(db)? == 3 {
-        crate::activity_audit::rebuild(db, &projected, objects)?;
+        crate::activity_audit::rebuild(db, projected, objects, attempts)?;
     }
-    let mut processed = 0i64;
+    let mut processed: i64 = projected.query_row(
+        "SELECT processed FROM branch_head WHERE singleton=1",
+        [],
+        |r| r.get(0),
+    )?;
     let mut stmt =
-        db.prepare("SELECT id,position,anchor,snapshot,decision FROM commits ORDER BY position")?;
-    let mut rows = stmt.query([])?;
+        db.prepare("SELECT id,position,anchor,snapshot,decision FROM commits WHERE position>=?1 ORDER BY position")?;
+    let mut rows = stmt.query([crate::schema::integer(commits)?])?;
     while let Some(row) = rows.next()? {
         let id: String = row.get(0)?;
-
         let anchor: i64 = row.get(2)?;
         let snapshot: Option<Vec<u8>> = row.get(3)?;
         let decision: String = row.get(4)?;
@@ -109,7 +130,7 @@ pub(crate) fn rebuild(db: &Connection, objects: &Objects) -> Result<Connection> 
             )?;
             let event = EventEnvelope::from_canonical(&bytes, limits)?;
             crate::ingress::record_decision(
-                &projected,
+                projected,
                 &event,
                 &id,
                 &decision,
@@ -119,25 +140,65 @@ pub(crate) fn rebuild(db: &Connection, objects: &Objects) -> Result<Connection> 
         }
         projected.execute("UPDATE branch_head SET commit_id=?1,processed=?2,anchor=?3,snapshot=?4 WHERE singleton=1", params![id, processed, anchor, snapshot])?;
     }
-    Ok(projected)
+    Ok(())
 }
 
 pub(crate) fn rows(db: &Connection, table: &str) -> Result<Vec<Vec<Value>>> {
-    // table is selected exclusively from the fixed TABLES list.
+    rows_since(db, table, None)
+}
+
+fn rows_since(db: &Connection, table: &str, frontier: Option<i64>) -> Result<Vec<Vec<Value>>> {
     require(
         TABLES.contains(&table) || table == "activity_keys",
         "unknown derived table",
     )?;
-    let stmt = db.prepare(&format!("SELECT * FROM {table}"))?;
-    let columns = stmt.column_count();
+    let columns = db
+        .prepare(&format!("SELECT * FROM {table}"))?
+        .column_count();
     let order = (1..=columns)
         .map(|n| n.to_string())
         .collect::<Vec<_>>()
         .join(",");
-    let mut stmt = db.prepare(&format!("SELECT * FROM {table} ORDER BY {order}"))?;
+    let filter = if frontier.is_some() {
+        "WHERE rowid > ?1"
+    } else {
+        ""
+    };
+    let mut stmt = db.prepare(&format!("SELECT * FROM {table} {filter} ORDER BY {order}"))?;
     Ok(stmt
-        .query_map([], |r| (0..columns).map(|i| r.get(i)).collect())?
+        .query_map(rusqlite::params_from_iter(frontier), |r| {
+            (0..columns).map(|i| r.get(i)).collect()
+        })?
         .collect::<std::result::Result<_, _>>()?)
+}
+
+/// Each database allocates its own rowids. The Store only appends to these
+/// projections, except for the singleton head which we always compare in full.
+#[derive(Default)]
+pub(crate) struct Frontiers(std::collections::BTreeMap<&'static str, (Option<i64>, Option<i64>)>);
+
+impl Frontiers {
+    pub fn compare(&mut self, db: &Connection, projected: &Connection) -> Result<()> {
+        let activity = (crate::migration::format(db)? == 3).then_some("activity_keys");
+        for table in TABLES.iter().copied().chain(activity) {
+            let (actual, expected) = self.0.get(table).copied().unwrap_or_default();
+            require(
+                rows_since(db, table, actual)? == rows_since(projected, table, expected)?,
+                "derived index differs from authoritative history; explicit index recovery required",
+            )?;
+            if table != "branch_head" {
+                let sql = format!("SELECT MAX(rowid) FROM {table}");
+                self.0.insert(
+                    table,
+                    (
+                        db.query_row(&sql, [], |r| r.get(0))?,
+                        projected.query_row(&sql, [], |r| r.get(0))?,
+                    ),
+                );
+            }
+        }
+        Ok(())
+    }
 }
 
 pub(crate) fn verify(db: &Connection, objects: &Objects) -> Result<()> {

@@ -97,13 +97,18 @@ pub(crate) fn record<L: LineageKind>(
     store.fault.hit(FaultPoint::AfterPublish)
 }
 
-pub(crate) fn rebuild(db: &Connection, projected: &Connection, objects: &Objects) -> Result<()> {
+pub(crate) fn rebuild(
+    db: &Connection,
+    projected: &Connection,
+    objects: &Objects,
+    start: u64,
+) -> Result<()> {
     let limits = objects.config.encoding;
     let mut stmt = db.prepare(
-        "SELECT position,record,activity,request_id FROM cognitive_attempts ORDER BY position",
+        "SELECT position,record,activity,request_id FROM cognitive_attempts WHERE position>=?1 ORDER BY position",
     )?;
-    let mut rows = stmt.query([])?;
-    let mut pos = 0i64;
+    let mut rows = stmt.query([crate::schema::integer(start)?])?;
+    let mut pos = crate::schema::integer(start)?;
     while let Some(row) = rows.next()? {
         let note = ObjectRef::from_canonical(&row.get::<_, Vec<u8>>(1)?, limits)?;
         let record = ObjectRef::from_canonical(&row.get::<_, Vec<u8>>(2)?, limits)?;

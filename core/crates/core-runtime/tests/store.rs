@@ -73,7 +73,8 @@ pub(crate) fn seed_with_history(
         &ProposalBindingV2,
     ) -> Vec<ObjectRef>,
 ) -> PreparedObject<Rehearsal> {
-    let e = ingress(store, 0);
+    let (_, cursor, anchor) = store.head().unwrap();
+    let e = ingress(store, cursor);
     let leaf = store
         .prepare(
             &UserText {
@@ -88,9 +89,27 @@ pub(crate) fn seed_with_history(
     b.base_commit = store.base_commit().unwrap();
     b.event_id = e.id.clone();
     b.raw_log_position = e.raw_log_position;
-    b.anchor_time_ns = DecimalU64(0);
+    b.anchor_time_ns = DecimalU64(anchor);
     b.process_time_ns = DecimalU64(10);
     b.read_set = vec![leaf.reference().clone()];
+    if let Some(old) = store.current_manifest().unwrap() {
+        let state = runtime::read_state(store).unwrap();
+        b.x_revision = state.x.revision;
+        b.r_revision = state.r.revision;
+        b.theta_revision = state.theta.revision;
+        b.read_set.extend([
+            old.staged_h,
+            old.staged_x,
+            old.staged_r,
+            old.staged_theta,
+            old.staged_l,
+            old.staged_q,
+            old.staged_u,
+        ]);
+        b.read_set
+            .sort_by_key(|r| core_types::scalar::hex(&r.digest.0));
+        b.read_set.dedup();
+    }
     // ADR 0029: retain the complete real-C fixture, including nonempty state.
     let mut theta: ThetaSnapshotV2 = fixture();
     let law = store
@@ -123,7 +142,7 @@ pub(crate) fn seed_with_history(
         accepted_results: interpretations(store, leaf.reference(), &e, &b),
         audit_refs: vec![],
         staged_ledger: vec![],
-        processed_position: DecimalU64(1),
+        processed_position: DecimalU64(cursor + 1),
         anchor_time_ns: DecimalU64(10),
     };
     let tx = store.stage(store.bind(b).unwrap(), tx).unwrap();

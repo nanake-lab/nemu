@@ -33,7 +33,7 @@ pub fn finish_round<L: LineageKind>(
             let effects = effects()?;
             let binding = ticket.input().binding.clone();
             let local = accepted.local.as_ref();
-            let mut q: CognitionState = store.reader()?.read(&old.staged_q)?;
+            let mut q: CognitionState = store.verified_reader()?.read(&old.staged_q)?;
             let next = store.prepare(&effects.next_input, "1")?;
             let x = store.prepare(&effects.x, &old.staged_x.resource_version)?;
             let mut pins: Vec<PreparedObject<L>> = vec![];
@@ -137,7 +137,7 @@ pub fn query_task_materials<L: LineageKind>(
         store.base_commit()? == b.base_commit && store.next_raw()?.is_none(),
         "stale material query",
     )?;
-    let (projection, memories) = query(&store.reader()?, b)?;
+    let (projection, memories) = query(&store.verified_reader()?, b)?;
     let mut page = RecalledPage {
         projection,
         memories,

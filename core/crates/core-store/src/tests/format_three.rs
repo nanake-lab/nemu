@@ -41,6 +41,7 @@ fn sys17_v2_v4_event_history_and_rollback_preserve_bytes() {
         let r = Reader::<Rehearsal>::open_temporary(&root, "mixed", config()).unwrap();
         assert_eq!(r.current_snapshot().unwrap().unwrap(), original);
         assert_eq!(r.event_snapshot(&original).unwrap(), old);
+        assert_eq!(r.read_published_transaction(&original).unwrap().0, old);
         assert!(r.read::<CoreTransactionV4>(&original).is_err());
     }
     let mut s = Store::<Rehearsal>::open_temporary(&root, "mixed", config()).unwrap();

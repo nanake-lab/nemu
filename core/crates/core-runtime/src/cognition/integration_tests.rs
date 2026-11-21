@@ -283,6 +283,22 @@ fn external_event_after_internal_round_keeps_the_two_cursors_and_sources_separat
             .is_err()
     );
     assert_eq!(reader.event_snapshot(&out.snapshot).unwrap(), events[1]);
+    let verified = store.verified_reader().unwrap();
+    assert_eq!(
+        verified
+            .read_published_transaction(&out.snapshot)
+            .unwrap()
+            .1,
+        e
+    );
+    assert!(
+        verified
+            .read_published_transaction(&verified.snapshot_at(&inner).unwrap().unwrap())
+            .is_err()
+    );
+    let mut unknown = out.snapshot.clone();
+    unknown.object_type = "unknown".into();
+    assert!(verified.read_published_transaction(&unknown).is_err());
     store.verify().unwrap();
 }
 
@@ -389,4 +405,40 @@ fn attempt_before_and_after_sql_recovers_without_advancing_q() {
         );
         store.verify().unwrap();
     }
+}
+
+#[test]
+fn warm_round_cost_with_short_and_long_event_history() {
+    let mut medians = Vec::new();
+    for history in [1, 24] {
+        let root = TemporaryRoot::new().unwrap();
+        let mut store = open(&root);
+        let cap = store.take_commit_capability().unwrap();
+        for _ in 1..history {
+            seed(&mut store, &cap);
+        }
+        seed_with_q(&mut store, &cap, initial_q);
+        // Exclude cold admission and setup. Use the same number of consecutive
+        // real thought publications in each store, including tail verification.
+        store.verified_reader().unwrap();
+        let mut samples = Vec::new();
+        for _ in 0..3 {
+            let start = Instant::now();
+            let ticket = store.begin_activity().unwrap();
+            let record = activity(&store, &ticket, true);
+            let update = effects(&store, &ticket, &record);
+            finish_round(&mut store, &cap, &ticket, record, review, || Ok(update)).unwrap();
+            store.verified_reader().unwrap();
+            samples.push(start.elapsed().as_micros());
+        }
+        println!("event_history={history} warm_round_us={samples:?}");
+        samples.sort_unstable();
+        medians.push(samples[1]);
+    }
+    // A full historical replay per round makes the longer fixture scale with
+    // the prefix. Allow timing variation while detecting that regression.
+    assert!(
+        medians[1] < 3 * medians[0],
+        "warm round medians (us): {medians:?}"
+    );
 }

@@ -223,3 +223,45 @@ async fn unauthenticated_zero_byte_handshake_remains_time_bounded() {
         "preauthentication_zero_bytes: deadline_ms=2000 timed_out=true invalid_auth_frame_audit=1 D_empty=true"
     );
 }
+
+#[tokio::test]
+async fn idle_full_verification_stops_the_service_on_object_damage() {
+    let root = TemporaryRoot::new().unwrap();
+    let (mut gateway, listener, name, token) = setup(&root, "idle-full-check", deployment());
+    gateway
+        .set_verification_interval(Duration::from_millis(100))
+        .unwrap();
+    gateway.handler.enabled.store(true, Ordering::SeqCst);
+    let objects = gateway.store.path().join("objects");
+    let client = async move {
+        let mut peer = Peer::connect(&name, &token).await;
+        let payload = text();
+        let (e, source) = event(&payload, 0);
+        let TerminalPayload::Text(value) = &payload else {
+            unreachable!()
+        };
+        let reference = peer.upload("text", value).await;
+        peer.upload("source", &source).await;
+        let request = peer.send_event("published", input(e)).await;
+        assert_eq!(
+            peer.reply(&request).await.stage,
+            ReceiptStage::RECEIVED_DURABLE
+        );
+        assert_eq!(
+            peer.reply(&request).await.stage,
+            ReceiptStage::CORE_COMMITTED
+        );
+        let path = objects.join(format!(
+            "{}.obj",
+            core_types::scalar::hex(&reference.digest.0)
+        ));
+        let mut bytes = std::fs::read(&path).unwrap();
+        *bytes.last_mut().unwrap() ^= 1;
+        std::fs::write(path, bytes).unwrap();
+    };
+    let (result, ()) = tokio::join!(
+        gateway.serve_listener(listener, tokio::time::sleep(Duration::from_secs(30))),
+        client
+    );
+    assert!(matches!(result, Err(Error::Store(_))), "{result:?}");
+}

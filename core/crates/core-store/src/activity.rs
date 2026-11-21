@@ -175,7 +175,7 @@ impl<L: LineageKind> Store<L> {
                 && (b.base_commit != self.base_commit()? || self.next_raw()?.is_some()),
             "current return belongs to normal publication",
         )?;
-        let reader = self.reader()?;
+        let reader = self.verified_reader()?;
         let r = reader
             .snapshot_at(&b.base_commit)?
             .ok_or(Error::Rejected("unknown dispatch base"))?;

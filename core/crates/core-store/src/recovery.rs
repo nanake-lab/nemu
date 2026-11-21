@@ -22,6 +22,39 @@ pub(crate) fn verify(
     header: &LineageHeaderV2,
     branch: &str,
 ) -> Result<()> {
+    let mut prefix = Prefix::default();
+    verify_tail(db, objects, header, branch, &mut prefix)?;
+    crate::derived::verify(db, objects)
+}
+
+#[derive(Default)]
+pub(crate) struct Prefix {
+    pub inputs: u64,
+    position: u64,
+    pub commits: u64,
+    pub attempts: u64,
+    activities: i64,
+    record_ids: std::collections::BTreeSet<String>,
+    request_ids: std::collections::BTreeSet<String>,
+    step_ids: std::collections::BTreeSet<(String, String)>,
+    pub audit: u64,
+    parent: Option<String>,
+    anchor: u64,
+    snapshot: Option<Vec<u8>>,
+    accepted: i64,
+    ledger_count: i64,
+    seen: BTreeMap<(String, String), Vec<u8>>,
+}
+
+/// The caller discards the entire prefix if any check, including projection
+/// or witness reconciliation, fails. Never publish a partially advanced proof.
+pub(crate) fn verify_tail(
+    db: &Connection,
+    objects: &Objects,
+    header: &LineageHeaderV2,
+    branch: &str,
+    prefix: &mut Prefix,
+) -> Result<()> {
     require(
         db.query_row("PRAGMA integrity_check", [], |r| r.get::<_, String>(0))? == "ok",
         "database integrity failure",
@@ -34,10 +67,11 @@ pub(crate) fn verify(
         "foreign key closure failure",
     )?;
     let limits = objects.config.encoding;
-    crate::terminal_ingress::verify_audit(db, limits)?;
-    let mut input = db.prepare("SELECT position,event FROM raw_ingress ORDER BY position")?;
-    let mut rows = input.query([])?;
-    let mut count = 0u64;
+    prefix.audit = crate::terminal_ingress::verify_audit_from(db, limits, prefix.audit)?;
+    let mut input =
+        db.prepare("SELECT position,event FROM raw_ingress WHERE position>=?1 ORDER BY position")?;
+    let mut rows = input.query([integer(prefix.inputs)?])?;
+    let mut count = prefix.inputs;
     while let Some(row) = rows.next()? {
         let event = EventEnvelope::from_canonical(&row.get::<_, Vec<u8>>(1)?, limits)?;
         require(
@@ -53,21 +87,18 @@ pub(crate) fn verify(
             .ok_or(crate::Error::Rejected("durable input overflow"))?;
     }
     let mut stmt = db.prepare(
-        "SELECT id,parent,position,anchor,snapshot,decision FROM commits ORDER BY position",
+        "SELECT id,parent,position,anchor,snapshot,decision FROM commits WHERE position>=?1 ORDER BY position",
     )?;
-    let mut rows = stmt.query([])?;
-    let mut parent: Option<String> = None;
-    let mut position = 0u64;
-    let mut anchor = 0u64;
-    let mut snapshot: Option<Vec<u8>> = None;
-    let mut accepted = 0i64;
-    let mut activities = 0i64;
-    let mut sequence = 0u64;
-    let mut step_ids = std::collections::BTreeSet::new();
-    let mut request_ids = std::collections::BTreeSet::new();
-    let mut record_ids = std::collections::BTreeSet::new();
-    let mut ledger_count = 0i64;
-    let mut seen = BTreeMap::new();
+    let mut rows = stmt.query([integer(prefix.commits)?])?;
+    let mut parent = prefix.parent.take();
+    let mut position = prefix.position;
+    let mut sequence = prefix.commits;
+    let mut activities = prefix.activities;
+    let mut anchor = prefix.anchor;
+    let mut snapshot = prefix.snapshot.take();
+    let mut accepted = prefix.accepted;
+    let mut ledger_count = prefix.ledger_count;
+    let seen = &mut prefix.seen;
     let initial = hex(&objects.reference(header, "1")?.digest.0);
     while let Some(row) = rows.next()? {
         let id: String = row.get(0)?;
@@ -99,9 +130,11 @@ pub(crate) fn verify(
                 .as_ref()
                 .ok_or(crate::Error::Rejected("expected activity origin"))?;
             require(
-                record_ids.insert(c.activity.record_id.clone())
-                    && request_ids.insert(c.binding.request_id.clone())
-                    && step_ids.insert((c.binding.activity_id.clone(), c.binding.step_id.clone())),
+                prefix.record_ids.insert(c.activity.record_id.clone())
+                    && prefix.request_ids.insert(c.binding.request_id.clone())
+                    && prefix
+                        .step_ids
+                        .insert((c.binding.activity_id.clone(), c.binding.step_id.clone())),
                 "duplicate internal publication",
             )?;
             require(
@@ -183,6 +216,9 @@ pub(crate) fn verify(
             }
             accepted += 1;
         } else {
+            // The durable event can already belong to the verified input
+            // prefix. Settlement still publishes its digest at this position.
+            objects.closure(&event_ref)?;
             let old = seen.get(&key).ok_or(crate::Error::Rejected(
                 "settlement has no earlier accepted source",
             ))?;
@@ -221,7 +257,11 @@ pub(crate) fn verify(
         |r| r.get(0),
     )?;
     require(
-        head == (parent, position, anchor) && head_snapshot == snapshot && position <= count,
+        head.0 == parent
+            && head.1 == position
+            && head.2 == anchor
+            && head_snapshot == snapshot
+            && position <= count,
         "branch head mixes committed snapshots",
     )?;
     for (table, expected) in [
@@ -237,5 +277,93 @@ pub(crate) fn verify(
             "authority index count differs from commit manifests",
         )?;
     }
-    crate::derived::verify(db, objects)
+    prefix.inputs = count;
+    prefix.position = position;
+    prefix.activities = activities;
+    prefix.commits = sequence;
+    prefix.anchor = anchor;
+    prefix.parent = parent;
+    prefix.snapshot = snapshot;
+    prefix.accepted = accepted;
+    prefix.ledger_count = ledger_count;
+    Ok(())
+}
+
+/// The writer has finished the publications in these ranges before dispatching
+/// the check. A later append cannot replace their immutable position receipts.
+pub(crate) fn check_new_witnesses(
+    db: &Connection,
+    root: &std::path::Path,
+    objects: &Objects,
+    inputs: std::ops::Range<u64>,
+    commits: std::ops::Range<u64>,
+    attempts: std::ops::Range<u64>,
+    audit: std::ops::Range<u64>,
+) -> Result<()> {
+    let receipts = crate::witness::path(root)?;
+    let limits = objects.config.encoding;
+    for (kind, range) in [
+        ("d", inputs),
+        ("commits", commits),
+        ("reject", audit),
+        ("attempts", attempts),
+    ] {
+        let dir = receipts.join(kind);
+        for position in range {
+            let path = dir.join(format!("{position:016x}.ref"));
+            crate::platform::no_links(&path)?;
+            let metadata = match std::fs::metadata(&path) {
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => continue, // SQL can precede ACK
+                other => other?,
+            };
+            require(
+                metadata.len() <= limits.max_bytes as u64,
+                "oversized receipt",
+            )?;
+            let reference = ObjectRef::from_canonical(&std::fs::read(path)?, limits)?;
+            let pos = integer(position)?;
+            let expected = match kind {
+                "d" => {
+                    let bytes: Vec<u8> = db.query_row(
+                        "SELECT event FROM raw_ingress WHERE position=?1",
+                        [pos],
+                        |r| r.get(0),
+                    )?;
+                    objects.reference(&EventEnvelope::from_canonical(&bytes, limits)?, "1")?
+                }
+                "attempts" => {
+                    let bytes: Vec<u8> = db.query_row(
+                        "SELECT record FROM cognitive_attempts WHERE position=?1",
+                        [pos],
+                        |r| r.get(0),
+                    )?;
+                    ObjectRef::from_canonical(&bytes, limits)?
+                }
+                "reject" => {
+                    let bytes: Vec<u8> = db.query_row(
+                        "SELECT record FROM ingress_rejections WHERE position=?1",
+                        [pos],
+                        |r| r.get(0),
+                    )?;
+                    objects.reference(
+                        &core_types::generated::IngressRejection::from_canonical(&bytes, limits)?,
+                        "1",
+                    )?
+                }
+                _ => {
+                    let (decision, bytes): (String, Vec<u8>) = db.query_row("SELECT c.decision,CASE WHEN c.decision IN ('accepted','activity') THEN c.snapshot ELSE d.event END FROM commits c LEFT JOIN ingress_decisions i ON i.commit_id=c.id LEFT JOIN raw_ingress d ON d.position=i.position WHERE c.position=?1", [pos], |r| Ok((r.get(0)?, r.get(1)?)))?;
+                    if matches!(decision.as_str(), "accepted" | "activity") {
+                        ObjectRef::from_canonical(&bytes, limits)?
+                    } else {
+                        objects.reference(&EventEnvelope::from_canonical(&bytes, limits)?, "1")?
+                    }
+                }
+            };
+            require(
+                reference == expected,
+                "durability receipt differs from publication",
+            )?;
+        }
+    }
+    Ok(())
 }
