@@ -1,5 +1,22 @@
 # P5-38 证据索引
 
+## #240 合并后复验
+
+源码为 `8d439f66b19ba8ad83671854d8dc371ca11e2d3a`。Windows 默认并行工作区、单独运行的 gateway、W19 组合测试、单轮耗时、fmt、Clippy 的退出码见 checks.tsv。表中长度与摘要按仓库 blob 计算；TSV 在入库时规范为 LF。review-check.log 保留开发中 SQLite 整数转换的编译错误，review-scale.log 保留长历史夹具未绑定前态修订号的首次失败，review-scale2.log 为扩大计时范围之前的开发运行。最终单轮数据见 round.log。
+
+| 文件 | 字节 | SHA-256 |
+| --- | ---: | --- |
+| [checks.tsv](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/checks.tsv) | 51 | c6259e594145c548ddf515a752485aaf8dbdc7c463b8ee7e7b5996cf807adacc |
+| [clippy.log](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/clippy.log) | 934 | 2d5ab930d260b0008bc2029b1cab2d6cfcdab576b507d6beae19ff67597166c5 |
+| [fmt.log](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/fmt.log) | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| [gateway.log](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/gateway.log) | 5500 | 232953bcc7e1af43f4457bdd7f3dfc60416828a8293897c47e78240555fe76b9 |
+| [review-check.log](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/review-check.log) | 3465 | faeb533e580c8ba93fa51f115fe5250c034ee362643f4c0b9c576a6954ffc8a8 |
+| [review-scale.log](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/review-scale.log) | 2343 | 147cc966dd4f4b80cfa8cfdbfd086d71b6f7f245ec2f517c53f6fd3b853ce498 |
+| [review-scale2.log](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/review-scale2.log) | 660 | 036e9e778811cc6c4695111cabe242ece7ca36fb8116b585c5a60f67438d92c5 |
+| [round.log](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/round.log) | 739 | 5cb7bdf830cd9d1f4f77bcd5874ad92538689bf147e92373e4c41f7190e0a902 |
+| [w19.log](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/w19.log) | 257 | b398df2e5653339df895eaac92dfa4a830dd62eab971d23cc99be81d9283f2e7 |
+| [workspace.log](https://github.com/nanake-lab/nemu-evidence/blob/46f82d761444a46cb14b88a48e535700e801c08d/P5-38/checks/8d439f66/workspace.log) | 62225 | 5f9efe25254dac02233ff1a69e92874a04b3859068efcec770e2a797c5435065 |
+
 ## P1 复验
 
 被测代码为 `49d45a90fd440a9d94ff9f93e352ce09006f0069`。原始日志与私有证据仓提交 `25164b3e20686e7ecab487343bf33a1f883aad18` 的 Git blob 已逐文件核对。

@@ -1,10 +1,10 @@
-# P5-38 尚未通过的验收
+# P5-38 验收拆分与历史阻塞
 
-## 本卡仍待通过的 Windows W18 验收
+## Windows W18 历史阻塞
 
 在 fa5155ab 的本机完整工作区测试中，gateway 的 SYS01 重连回执超时。19845545 的 gateway 默认并行两次分别通过 40/42、41/42，串行一次通过 42/42。相同机器、锁定工具链和未修改的基线 469262e4 上，默认并行两次分别通过 41/42、40/42。回执超时和上传保留期断言均在基线复现。
 
-等待 [FIX-SYS01-01（#240）](https://github.com/nanake-lab/nemu/pull/240) 合并。随后将 main 合入本分支，处理 `progress.rs`、`reader.rs` 的重叠改动，补 V4 回执测试并重跑 W18 和 Windows 工作区默认并行验收。[交叉审查意见](https://github.com/nanake-lab/nemu/pull/238#issuecomment-7043212645)
+本次已将 [FIX-SYS01-01（#240）](https://github.com/nanake-lab/nemu/pull/240) 随 main 合入本分支。合并提交 `8d439f66` 已通过 W18 默认并行 47 项，新增覆盖 V4 事件、内部提交和未知标签。完整结果见[报告](REPORT.md)。[交叉审查意见](https://github.com/nanake-lab/nemu/pull/238#issuecomment-7043212645)
 
 ## 已转交后继卡的验收
 

@@ -64,3 +64,17 @@ core-store/src/tests/consistency.rs 中直接调用 V2::from_canonical 的测试
 | derived、recovery、witness 以及活动审计 | [attempt_before_and_after_sql_recovers_without_advancing_q](../../core/crates/core-runtime/src/cognition/integration_tests.rs#L332) | 审计事务在提交前后分别故障；重启、重试后只有一条审计，Q 与头不动。 |
 | W02 事件前缀预算 | [complete_transaction_prefix_is_verified_and_bounded](../../core/crates/core-store/src/tests/reader.rs#L4) | 原有预算与输入完整性断言保留。 |
 | W02 派生索引 | [all_derived_tables_match_authoritative_rebuild](../../core/crates/core-store/src/tests/consistency.rs#L129) | 原有投影重建断言保留。 |
+
+## 合入 #240 后的读端（8d439f66）
+
+| 位置 | 依据 | 新读法 |
+| --- | --- | --- |
+| [activity.rs:178](../../core/crates/core-store/src/activity.rs#L178) | #238 复审，迟返审计 | 从已核验的发布历史读取回执；审计单独追加时亦须核验新记录。 |
+| [cognition/mod.rs:36](../../core/crates/core-runtime/src/cognition/mod.rs#L36) | #238 复审，发布念头 | 从已核验的根读取本轮原 Q，再按现有绑定提交。 |
+| [cognition/mod.rs:140](../../core/crates/core-runtime/src/cognition/mod.rs#L140) | #238 复审，W19 | 查询方取得已核验的 reader，沿用原有历史前缀和来源检查。 |
+| [runtime/store.rs:33](../../core/crates/core-runtime/src/store.rs#L33) | #240 与 ADR 0046 §4 | 从已核验的当前快照读状态，支持旧事件、新事件和内部提交。 |
+| [gateway/progress.rs:117](../../core/crates/gateway/src/progress.rs#L117)、[reader.rs:417](../../core/crates/core-store/src/reader.rs#L417) | #240 的后台发布核验，ADR 0046 §4 | 按原标签核验 V2 或 V4 事件。按事实所在输入位置及提交身份核对回执，内部提交和未知标签均被拒。 |
+| [reader.rs:31](../../core/crates/core-store/src/reader.rs#L31)、[recovery.rs:51](../../core/crates/core-store/src/recovery.rs#L51)、[recovery.rs:294](../../core/crates/core-store/src/recovery.rs#L294) | #240 的增量核验，ADR 0045 的独立审计 | 续查保存的物理提交位置、外部输入位置和审计位置，验证新增提交和持久回执。外部 SQL 写入使旧缓存失效。 |
+| [derived.rs:45](../../core/crates/core-store/src/derived.rs#L45)、[activity_audit.rs:100](../../core/crates/core-store/src/activity_audit.rs#L100) | 同一增量核验 | 从已核验位置延伸混合历史的索引和审计投影；内部提交独立于外部输入计数。 |
+
+回归覆盖[旧 V2 回执](../../core/crates/core-store/src/tests/format_three.rs#L44)、[内部提交前后的事件回执及两种拒收](../../core/crates/core-runtime/src/cognition/integration_tests.rs#L286)和[两种历史长度下的单轮耗时](../../core/crates/core-runtime/src/cognition/integration_tests.rs#L411)。
