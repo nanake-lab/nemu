@@ -15,9 +15,13 @@
 | SYS12 | 排练存储覆盖请求撤销、失败、丢回执、迟到结算、说话投递与打断后的部分回执。[结果](SYS12/result.md) |
 | I26 | 批准后改变一个字节，发送前拒绝，原样载荷能通过。[结果](I26/result.md) |
 | Windows 本地 Rust | 锁定 Rust/Cargo 1.99.0。格式、全工作区 Clippy 通过。行动专项 16 通过，1 项按决定暂缓。全工作区 release 测试通过（退出码 0），含 Windows 原生命名管道 SYS01 和存储故障恢复。具体命令、工具链与结果见[证据索引](EVIDENCE.md)。 |
-| GitHub Windows | 草稿工作流跳过 self-hosted 作业，汇总门返回失败。最后查询时 runner 离线；手动工作流及最终提交检查见 PR。 |
+| GitHub Windows | 原提交 82593109 的手动 W18 检查在 SYS01 上失败。[运行记录](https://github.com/nanake-lab/nemu/actions/runs/44877810764)。#235 合并后在组合提交上重跑。 |
 | 物理索引逐行一致 | **not_run**。组合提交在 #238 与 #249 后合并的一方验证。[测试及命令](../../docs/traceability/P5-14.md) |
 | P5-41 系统边界 | 完整 SYS09、跨认证服务撤权/预算/重放、真实执行器 I26 和数据库/协议双层隔离为 **not_run**。 |
+
+## P1 复验
+
+`6d79f63c` 在 Windows 通过格式、全工作区 Clippy 和行动专项（16 通过、1 项按约定暂缓）。完整投递与中断投递用例都用 `Settings::default()` 从签发、登记、授权走到逐块发送和回执结算。Ubuntu 的 Rust 检查通过，整次工作流到达 35 分钟限制后取消。[运行记录](https://github.com/nanake-lab/nemu/actions/runs/44886299044)
 
 ## 派卡后的决定
 
