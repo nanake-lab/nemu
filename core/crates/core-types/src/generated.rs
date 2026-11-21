@@ -865,6 +865,94 @@ impl ReviewVerdict {
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
+pub enum DesktopTier {
+    IRREVERSIBLE_NEVER = 1,
+    IRREVERSIBLE_ASK = 2,
+    IRREVERSIBLE_DIRECT = 3,
+}
+impl TryFrom<u32> for DesktopTier { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::IRREVERSIBLE_NEVER),
+2 => Ok(Self::IRREVERSIBLE_ASK),
+3 => Ok(Self::IRREVERSIBLE_DIRECT),
+_ => Err("unknown enum".into()), }}}
+impl From<DesktopTier> for u32 {fn from(v:DesktopTier)->Self{v as u32}}
+impl DesktopTier {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum ScopeKind {
+    CONNECTOR_OPERATION = 1,
+    LOCAL_DESKTOP = 2,
+    OWN_SOCIAL = 3,
+    SOCIAL_NOTIFY_USER = 4,
+    OWN_WALLET_PAY = 5,
+    USER_WALLET_TOP_UP = 6,
+}
+impl TryFrom<u32> for ScopeKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::CONNECTOR_OPERATION),
+2 => Ok(Self::LOCAL_DESKTOP),
+3 => Ok(Self::OWN_SOCIAL),
+4 => Ok(Self::SOCIAL_NOTIFY_USER),
+5 => Ok(Self::OWN_WALLET_PAY),
+6 => Ok(Self::USER_WALLET_TOP_UP),
+_ => Err("unknown enum".into()), }}}
+impl From<ScopeKind> for u32 {fn from(v:ScopeKind)->Self{v as u32}}
+impl ScopeKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum ManagementEntry {
+    LOCAL_PANEL = 1,
+    LOCAL_ECHOCTL = 2,
+}
+impl TryFrom<u32> for ManagementEntry { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::LOCAL_PANEL),
+2 => Ok(Self::LOCAL_ECHOCTL),
+_ => Err("unknown enum".into()), }}}
+impl From<ManagementEntry> for u32 {fn from(v:ManagementEntry)->Self{v as u32}}
+impl ManagementEntry {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum PermissionDenial {
+    IDENTITY_UNVERIFIED = 1,
+    WRONG_BINDING = 2,
+    SCOPE_DENIED = 3,
+    BUDGET_DENIED = 4,
+    GRANT_EXPIRED = 5,
+    ALREADY_CONSUMED = 6,
+    VERSION_REVOKED = 7,
+    CONSENT_MISSING = 8,
+    UNRESOLVED_DISPATCH = 9,
+}
+impl TryFrom<u32> for PermissionDenial { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::IDENTITY_UNVERIFIED),
+2 => Ok(Self::WRONG_BINDING),
+3 => Ok(Self::SCOPE_DENIED),
+4 => Ok(Self::BUDGET_DENIED),
+5 => Ok(Self::GRANT_EXPIRED),
+6 => Ok(Self::ALREADY_CONSUMED),
+7 => Ok(Self::VERSION_REVOKED),
+8 => Ok(Self::CONSENT_MISSING),
+9 => Ok(Self::UNRESOLVED_DISPATCH),
+_ => Err("unknown enum".into()), }}}
+impl From<PermissionDenial> for u32 {fn from(v:PermissionDenial)->Self{v as u32}}
+impl PermissionDenial {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
 pub enum RemoteAttemptStatus {
     REMOTE_ATTEMPT_COMPLETED = 1,
     REMOTE_ATTEMPT_TRUNCATED = 2,
@@ -3122,6 +3210,225 @@ pub r#review_verdict: Option<ReviewVerdict>,
 pub r#review_record: Option<ObjectRef>,
 }
 impl super::WireMessage for LedgerEntry {const NAME: &'static str = "LedgerEntry";}
+/// ADR 0047: authenticated local service output, never caller testimony; frozen tag `echo.local-user-binding`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LocalUserBinding {
+pub r#schema_version: u32,
+pub r#principal_id: String,
+pub r#session_id: String,
+pub r#installation_id: String,
+pub r#authentication_record_id: String,
+}
+impl super::WireMessage for LocalUserBinding {const NAME: &'static str = "LocalUserBinding";}
+/// ADR 0043 §4.1; ADR 0045 D9; frozen tag `echo.desktop-permission-policy`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct DesktopPermissionPolicy {
+pub r#schema_version: u32,
+pub r#version: String,
+pub r#irreversible: DesktopTier,
+pub r#reversibility_rule: ObjectRef,
+}
+impl super::WireMessage for DesktopPermissionPolicy {const NAME: &'static str = "DesktopPermissionPolicy";}
+/// ADR 0043 §4.1; CONTRACTS §6; consumed confirmation from u*; frozen tag `echo.action-consent`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ActionConsent {
+pub r#schema_version: u32,
+pub r#user: LocalUserBinding,
+pub r#confirmed_at_ns: DecimalI64,
+pub r#approval_id: String,
+pub r#action_id: String,
+pub r#payload_digest: HexBytes,
+}
+impl super::WireMessage for ActionConsent {const NAME: &'static str = "ActionConsent";}
+/// P5-05/40; V2-89; catalog operation and concrete target; frozen tag `echo.connector-scope`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ConnectorScope {
+pub r#schema_version: u32,
+pub r#kind: ScopeKind,
+pub r#connector_id: String,
+pub r#operation_id: String,
+pub r#resource_id: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#desktop: Option<DesktopPermissionPolicy>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reversible: Option<bool>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#wallet_minor_units: Option<DecimalU64>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#currency: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#depositor: Option<LocalUserBinding>,
+}
+impl super::WireMessage for ConnectorScope {const NAME: &'static str = "ConnectorScope";}
+/// P5-40: reservation in the named versioned resource's unit and accounting period; frozen tag `echo.execution-budget`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ExecutionBudget {
+pub r#schema_version: u32,
+pub r#budget_id: String,
+pub r#version: String,
+pub r#unit: String,
+pub r#limit: DecimalU64,
+pub r#charge: DecimalU64,
+}
+impl super::WireMessage for ExecutionBudget {const NAME: &'static str = "ExecutionBudget";}
+/// P5-05/40: T2 user trust, committed by the core only; frozen tag `echo.trust-memory`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TrustMemory {
+pub r#schema_version: u32,
+pub r#version: String,
+pub r#user: LocalUserBinding,
+pub r#scope: ConnectorScope,
+pub r#tier: ToolTier,
+pub r#revocation_version: DecimalU64,
+}
+impl super::WireMessage for TrustMemory {const NAME: &'static str = "TrustMemory";}
+/// P5-40: issuer-registered, single-use and connection-holder-bound; frozen tag `echo.execution-credential`.
+#[derive(Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ExecutionCredential {
+pub r#schema_version: u32,
+pub r#issuance_id: String,
+pub r#executor_session_id: String,
+pub r#action_id: String,
+pub r#payload_digest: HexBytes,
+pub r#protocol: ObjectRef,
+pub r#permission_version: String,
+pub r#revocation_version: DecimalU64,
+pub r#scope: ConnectorScope,
+pub r#budget: ExecutionBudget,
+pub r#issued_at_ns: DecimalI64,
+pub r#expires_at_ns: DecimalI64,
+pub r#tier: ToolTier,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#consent: Option<ActionConsent>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#trust: Option<TrustMemory>,
+}
+impl std::fmt::Debug for ExecutionCredential {fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {f.write_str("ExecutionCredential([REDACTED])")}}
+impl super::WireMessage for ExecutionCredential {const NAME: &'static str = "ExecutionCredential"; const PERSISTABLE: bool = false;}
+/// ADR 0047, I26: exact authorized executor bytes; frozen tag `echo.action-request-v2`.
+#[derive(Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ActionRequestV2 {
+pub r#schema_version: u32,
+pub r#action_id: String,
+pub r#expires_at_ns: DecimalI64,
+pub r#grant: ExecutionCredential,
+pub r#action_payload: HexBytes,
+}
+impl std::fmt::Debug for ActionRequestV2 {fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {f.write_str("ActionRequestV2([REDACTED])")}}
+impl super::WireMessage for ActionRequestV2 {const NAME: &'static str = "ActionRequestV2"; const PERSISTABLE: bool = false;}
+/// v2.0 §5.4, V2-97/101; frozen tag `echo.growth-command-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct GrowthCommandV2 {
+pub r#schema_version: u32,
+pub r#command_id: String,
+pub r#kind: GrowthCommandKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#verdict: Option<ReviewVerdict>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#review_record: Option<ObjectRef>,
+pub r#law_version: ObjectRef,
+pub r#history_prefix: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#alarm_id: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#replacement_law: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#alarm_record: Option<ObjectRef>,
+}
+impl super::WireMessage for GrowthCommandV2 {const NAME: &'static str = "GrowthCommandV2";}
+/// P5-40: single local management service; authenticated P5-35 session; frozen tag `echo.growth-management-request`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct GrowthManagementRequest {
+pub r#schema_version: u32,
+pub r#entry: ManagementEntry,
+pub r#user: LocalUserBinding,
+pub r#command: GrowthCommandV2,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#confirmation_id: Option<String>,
+}
+impl super::WireMessage for GrowthManagementRequest {const NAME: &'static str = "GrowthManagementRequest";}
+/// ADR 0024 and ADR 0047: same paired dispatch, typed management branch; frozen tag `echo.terminal-request-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TerminalRequestV2 {
+pub r#schema_version: u32,
+pub r#request_id: String,
+pub r#session_id: String,
+pub r#protocol_version: u32,
+pub r#kind: IngressKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#event: Option<TerminalEvent>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#upload: Option<ObjectUploadChunk>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#query: Option<QueryV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#approval: Option<ApprovalDecisionV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#cancel: Option<OutputCancel>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#management: Option<GrowthManagementRequest>,
+}
+impl super::WireMessage for TerminalRequestV2 {const NAME: &'static str = "TerminalRequestV2";}
+/// P5-40; V2-87, V2-101: correlate outcome and audit in H/Q or H/L; frozen tag `echo.permission-result`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct PermissionResult {
+pub r#schema_version: u32,
+pub r#request_id: String,
+pub r#audit_record_id: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#management_commit: Option<SystemMaintenanceRecord>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#denied: Option<PermissionDenial>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#dispatch_record_id: Option<String>,
+}
+impl super::WireMessage for PermissionResult {const NAME: &'static str = "PermissionResult";}
+/// ADR 0045 D1; ADR 0046: a remote text receipt carries no local execution grant; frozen tag `echo.permission-context`.
+#[derive(Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct PermissionContext {
+pub r#schema_version: u32,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#local_execution: Option<ExecutionCredential>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#remote_text: Option<RemoteCognitiveReceipt>,
+}
+impl std::fmt::Debug for PermissionContext {fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {f.write_str("PermissionContext([REDACTED])")}}
+impl super::WireMessage for PermissionContext {const NAME: &'static str = "PermissionContext"; const PERSISTABLE: bool = false;}
+/// ADR 0024 and ADR 0047: authenticated management result; frozen tag `echo.terminal-response-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TerminalResponseV2 {
+pub r#schema_version: u32,
+pub r#request_id: String,
+pub r#session_id: String,
+pub r#protocol_version: u32,
+pub r#reply_to: IngressKind,
+pub r#kind: IngressResponseKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#receipt: Option<ReceiptV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#upload: Option<ObjectUploadReceipt>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#query: Option<QueryResultV2>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason: Option<IngressReason>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#management: Option<PermissionResult>,
+}
+impl super::WireMessage for TerminalResponseV2 {const NAME: &'static str = "TerminalResponseV2";}
 /// v2.0 §1 a(e), §3, EV6, EV10; frozen tag `echo.nature-appraisal`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -4824,6 +5131,20 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "RecomputeRecord" => super::verify_typed::<RecomputeRecord>(value, limits),
 "MigrationRecord" => super::verify_typed::<MigrationRecord>(value, limits),
 "LedgerEntry" => super::verify_typed::<LedgerEntry>(value, limits),
+"LocalUserBinding" => super::verify_typed::<LocalUserBinding>(value, limits),
+"DesktopPermissionPolicy" => super::verify_typed::<DesktopPermissionPolicy>(value, limits),
+"ActionConsent" => super::verify_typed::<ActionConsent>(value, limits),
+"ConnectorScope" => super::verify_typed::<ConnectorScope>(value, limits),
+"ExecutionBudget" => super::verify_typed::<ExecutionBudget>(value, limits),
+"TrustMemory" => super::verify_typed::<TrustMemory>(value, limits),
+"ExecutionCredential" => super::verify_typed::<ExecutionCredential>(value, limits),
+"ActionRequestV2" => super::verify_typed::<ActionRequestV2>(value, limits),
+"GrowthCommandV2" => super::verify_typed::<GrowthCommandV2>(value, limits),
+"GrowthManagementRequest" => super::verify_typed::<GrowthManagementRequest>(value, limits),
+"TerminalRequestV2" => super::verify_typed::<TerminalRequestV2>(value, limits),
+"PermissionResult" => super::verify_typed::<PermissionResult>(value, limits),
+"PermissionContext" => super::verify_typed::<PermissionContext>(value, limits),
+"TerminalResponseV2" => super::verify_typed::<TerminalResponseV2>(value, limits),
 "NatureAppraisalRecord" => super::verify_typed::<NatureAppraisalRecord>(value, limits),
 "TendencyMatch" => super::verify_typed::<TendencyMatch>(value, limits),
 "SituationMatchRecord" => super::verify_typed::<SituationMatchRecord>(value, limits),

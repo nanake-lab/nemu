@@ -4,6 +4,7 @@
 mod canonical;
 pub mod contract;
 pub mod numeric;
+pub mod permission;
 mod protobuf;
 pub mod scalar;
 pub mod semantic;
@@ -168,6 +169,7 @@ mod codec_cache_tests {
         semantic::check_law_state_message(name, &value, limits)?;
         semantic::check_cognition_message(name, &value, limits)?;
         semantic::check_j_message(name, &value, limits)?;
+        semantic::check_permission_message(name, &value, limits)?;
         semantic::check_speak_think_message(name, &value, limits)?;
         Ok(
             json!({"ok":true,"value":value,"canonical":hex(&schema.encode_canonical(name,&value,limits)?),"protobuf":hex(&schema.encode_protobuf(name,&value,limits)?),"digest":schema.digest(name,&value,limits)?}),
