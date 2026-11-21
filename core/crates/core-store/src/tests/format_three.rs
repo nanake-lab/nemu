@@ -107,6 +107,34 @@ fn bytes_are_type_scoped_and_verified_before_use() {
             .unwrap(),
         b"NSI1\xff"
     );
+    let bad = s.prepare_raw(b"valid").unwrap();
+    std::fs::write(s.objects.path(bad.reference()).unwrap(), b"false").unwrap();
+    assert!(s.objects.read(bad.reference()).is_err());
+    std::fs::write(s.objects.path(bad.reference()).unwrap(), b"longer").unwrap();
+    assert!(s.objects.read(bad.reference()).is_err());
+    s.objects.config.max_object_bytes = 2;
+    assert!(s.prepare_raw(b"123").is_err());
+}
+
+#[test]
+fn request_body_checks_keys_and_preserves_text_and_response_bytes() {
+    let root = TemporaryRoot::new().unwrap();
+    let s = rehearsal(&root, "request");
+    let text = r#"password: cookie: Bearer xyz sk-abcdefgh12 and "headers": {}"#;
+    let request =
+        serde_json::to_vec(&serde_json::json!({"messages": [{"content": text}]})).unwrap();
+    let sent = s.prepare_request_body(&request).unwrap();
+    assert_eq!(s.objects.read(sent.reference()).unwrap(), request);
+    for response in [
+        text.as_bytes(),
+        br#"{"headers":{},"Authorization":"fixture"}"#,
+        b"\xff\nAuthorization: fixture",
+        br#"{"response":0,"X-Auth-Token":"fixture"#,
+    ] {
+        let raw = s.prepare_raw(response).unwrap();
+        assert_eq!(s.objects.read(raw.reference()).unwrap(), response);
+    }
+
     let files = || std::fs::read_dir(s.path().join("objects")).unwrap().count();
     let before = files();
     for body in [
@@ -115,21 +143,12 @@ fn bytes_are_type_scoped_and_verified_before_use() {
         br#"{"X-Auth-Token":"fixture"}"#,
         br#"{"x":{"API_Key":"fixture"},"x":0}"#,
         br#"{"messages":[],"headers":{"Accept":"text/plain"}}"#,
+        br#"{"messages":[{"nested":{"Headers":null}}]}"#,
+        br#"{"messages":[{"\u0041uthorization":null}]}"#,
+        br#"["headers"]"#,
         b"Authorization: fixture\r\n\r\n{}",
     ] {
         assert!(s.prepare_request_body(body).is_err());
     }
-    assert!(s.prepare_raw(b"\xff\nAuthorization: fixture").is_err());
-    assert!(
-        s.prepare_raw(br#"{"response":0,"X-Auth-Token":"fixture"#)
-            .is_err()
-    );
     assert_eq!(files(), before);
-    let bad = s.prepare_raw(b"valid").unwrap();
-    std::fs::write(s.objects.path(bad.reference()).unwrap(), b"false").unwrap();
-    assert!(s.objects.read(bad.reference()).is_err());
-    std::fs::write(s.objects.path(bad.reference()).unwrap(), b"longer").unwrap();
-    assert!(s.objects.read(bad.reference()).is_err());
-    s.objects.config.max_object_bytes = 2;
-    assert!(s.prepare_raw(b"123").is_err());
 }

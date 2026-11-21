@@ -46,29 +46,9 @@ fn credential_field(key: &str) -> bool {
     .iter()
     .any(|suffix| key.ends_with(suffix))
 }
-fn credential_text(text: &str) -> bool {
-    let lower = text.to_ascii_lowercase();
-    lower
-        .split(|c: char| !c.is_ascii_alphanumeric() && !matches!(c, '-' | '_'))
-        .any(|word| {
-            word.strip_prefix("sk-")
-                .is_some_and(|suffix| suffix.len() >= 8)
-        })
-        || lower.contains("bearer ")
-        || text
-            .split_inclusive(':')
-            .filter_map(|part| part.strip_suffix(':'))
-            .any(|part| {
-                let before = part.trim_end().trim_end_matches('"');
-                let key = before
-                    .rsplit(|c: char| !c.is_ascii_alphanumeric() && !matches!(c, '-' | '_'))
-                    .next()
-                    .unwrap_or("");
-                credential_field(key)
-            })
-}
-/// Scan the actual JSON string tokens, including shadowed duplicate members.
-fn protected_json(bytes: &[u8]) -> bool {
+
+/// Check member names in the validated JSON bytes so duplicate members are all checked.
+fn has_protected_key(bytes: &[u8]) -> bool {
     let mut offset = 0;
     while let Some(at) = bytes[offset..].iter().position(|b| *b == b'"') {
         offset += at;
@@ -79,9 +59,7 @@ fn protected_json(bytes: &[u8]) -> bool {
         };
         offset += strings.byte_offset();
         let key = bytes[offset..].iter().find(|b| !b.is_ascii_whitespace()) == Some(&b':');
-        if (key && (credential_field(&s) || s.eq_ignore_ascii_case("headers")))
-            || credential_text(&s)
-        {
+        if key && (credential_field(&s) || s.eq_ignore_ascii_case("headers")) {
             return true;
         }
     }
@@ -91,7 +69,7 @@ pub(crate) fn request_body(bytes: &[u8]) -> Result<()> {
     let value: serde_json::Value = serde_json::from_slice(bytes)
         .map_err(|_| crate::Error::Rejected("expected JSON application request body"))?;
     require(
-        value.is_object() && !protected_json(bytes),
+        value.is_object() && !has_protected_key(bytes),
         "transport headers or credentials in application body",
     )
 }
@@ -112,15 +90,6 @@ impl<L: LineageKind> Store<L> {
         require(
             bytes.len() as u64 <= self.objects.config.max_object_bytes,
             "raw resource exceeds budget",
-        )?;
-        // Inspect the ASCII credential syntax even in binary resources. The original
-        // bytes are hashed and stored without converting or repairing UTF-8.
-        let inspection = String::from_utf8_lossy(bytes);
-        require(
-            !credential_text(&inspection)
-                && !(serde_json::from_slice::<serde_json::Value>(bytes).is_ok()
-                    && protected_json(bytes)),
-            "credential-like content in resource",
         )?;
         let reference = ObjectRef {
             schema_version: 1,
