@@ -31,17 +31,17 @@ function Assert-Scope {
     Write-Output "PASS $Name"
 }
 
-$none = 'desktop=false,gateway=false,selected=false,storage=false'
-$desktop = 'desktop=true,gateway=false,selected=true,storage=false'
-$native = 'desktop=false,gateway=true,selected=true,storage=true'
-$all = 'desktop=true,gateway=true,selected=true,storage=true'
+$none = 'desktop=false,gateway=false,self_hosted=false,storage=false'
+$desktop = 'desktop=true,gateway=false,self_hosted=true,storage=false'
+$native = 'desktop=false,gateway=true,self_hosted=true,storage=true'
+$all = 'desktop=true,gateway=true,self_hosted=true,storage=true'
 try {
     Assert-Scope 'pure metadata' @('apps/stage/manifest.json', 'packages/body/说明.md', 'packages/body/LICENSE-MIT', 'NOTICE') $none
     Assert-Scope 'pure Markdown' @('apps/stage/README.md', 'packages/body/docs/guide.md') $none
     Assert-Scope 'manifest and desktop source' @('apps/stage/manifest.json', 'apps/stage/src/index.ts') $desktop
     Assert-Scope 'licence and primary storage' @('packages/body/LICENCE.txt', 'core/crates/core-store/src/store.rs') $all
-    Assert-Scope 'storage only' @('core/crates/core-store/src/store.rs') $native
-    Assert-Scope 'gateway only' @('core/crates/gateway/src/gateway.rs') 'desktop=false,gateway=true,selected=true,storage=false'
+    Assert-Scope 'core-store change selects hosted W02 and self-hosted W18' @('core/crates/core-store/src/store.rs') $native
+    Assert-Scope 'gateway only' @('core/crates/gateway/src/gateway.rs') 'desktop=false,gateway=true,self_hosted=true,storage=false'
     Assert-Scope 'workflow dispatch uses full branch diff' @('apps/stage/manifest.json', 'apps/stage/src/index.ts') $desktop -Event workflow_dispatch -Comparison 'refs/remotes/origin/main...HEAD'
     Assert-Scope 'explicit full overrides paths' @() $all -Event workflow_dispatch -Full true -Comparison 'unexpected comparison'
     Assert-Scope 'push compares before to HEAD' @('apps/stage/manifest.json') $none -Event push -Comparison 'before HEAD'

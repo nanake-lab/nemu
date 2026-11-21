@@ -47,7 +47,7 @@ $scope = @{
     storage = $full -or ($files -match $storagePaths).Count -gt 0
     gateway = $full -or ($files -match $gatewayPaths).Count -gt 0
 }
-$scope.selected = $scope.desktop -or $scope.storage -or $scope.gateway
+$scope.self_hosted = $scope.desktop -or $scope.gateway
 foreach ($key in ($scope.Keys | Sort-Object)) {
     "$key=$($scope[$key].ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
 }
