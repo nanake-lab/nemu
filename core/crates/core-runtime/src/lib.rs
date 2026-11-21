@@ -52,3 +52,4 @@ pub(crate) fn same<T: WireMessage>(a: &T, b: &T, limits: Limits) -> Result<bool>
     Ok(a.canonical_bytes(limits).map_err(Error::Contract)?
         == b.canonical_bytes(limits).map_err(Error::Contract)?)
 }
+pub mod action;
