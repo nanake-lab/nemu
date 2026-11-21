@@ -34,8 +34,10 @@ def main() -> None:
     except ImportError:
         degraded_server("PYTHON_DEPENDENCIES_MISSING")
         return
+    # Disable per-message deflate on loopback PCM to avoid per-connection zlib heap retention.
     uvicorn.run(create_app(), host="127.0.0.1", port=int(os.getenv("NEMU_TTS_PORT", "17863")),
-                access_log=False, log_level="warning", ws_max_size=65536)
+                access_log=False, log_level="warning", ws_max_size=65536,
+                ws_per_message_deflate=False)
 
 
 if __name__ == "__main__":

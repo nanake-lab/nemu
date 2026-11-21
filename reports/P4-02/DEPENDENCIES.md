@@ -1,6 +1,6 @@
 # P4-02 实验环境依赖与许可登记
 
-本次无新增依赖。以下是已固定实验环境的元数据登记，不等于正式产品分发审核；代码与预训练权重/随包数据分开。完整许可证原文、固定下载来源及哈希见 [证据索引](EVIDENCE-INDEX.md)，P7 条件见 [待决表](gsv-v5-resume-09/P7-PENDING.md)。
+本轮（2026-11-21 第二轮）按用户批准在独立推理环境 `gsv-v5-venv` 中新增固定版本 `rich==13.9.4`（MIT）及其传递依赖 `markdown-it-py==4.3.0`（MIT）、`mdurl==0.1.2`（MIT）、`pygments==2.21.0`（BSD-2-Clause），仅用于 CUDA Graph 对照测量，正式默认配置保持不变。以下是已固定实验环境的元数据登记，不等于正式产品分发审核；代码与预训练权重/随包数据分开。完整许可证原文、固定下载来源及哈希见 [证据索引](EVIDENCE-INDEX.md)，P7 条件见 [待决表](gsv-v5-resume-09/P7-PENDING.md)。
 
 Distance 有意排除：g2p_en 2.1.0 元数据声明它，但 g2p.py / expand.py 未导入；因 AGENTS 3.8 的 GPL 禁令排除。g2p_en 采用不带依赖安装，显式补 nltk/inflect/numpy；后续禁网中文与中英混合真实 CPU 推理通过。不声称 g2p_en 的元数据依赖全部满足。
 
@@ -66,8 +66,10 @@ FFmpeg n8.1.3-29-gad3b795b72-20261101 使用 BtbN win64-lgpl-shared-8.1 固定 a
 | lightning-utilities | 0.15.3 | Apache-2.0 |
 | llvmlite | 0.50.0 | BSD-2-Clause AND Apache-2.0 WITH LLVM-exception |
 | loguru | 0.7.3 | License :: OSI Approved :: MIT License |
+| markdown-it-py | 4.3.0 | License :: OSI Approved :: MIT License |
 | MarkupSafe | 3.0.4 | BSD-3-Clause |
 | matplotlib | 3.10.8 | License :: OSI Approved :: Python Software Foundation License |
+| mdurl | 0.1.2 | License :: OSI Approved :: MIT License |
 | more-itertools | 11.2.1 | MIT |
 | mpmath | 1.3.0 | License :: OSI Approved :: BSD License |
 | msgpack | 1.2.4 | Apache-2.0 |
@@ -91,6 +93,7 @@ FFmpeg n8.1.3-29-gad3b795b72-20261101 使用 BtbN win64-lgpl-shared-8.1 固定 a
 | pycparser | 3.12 | BSD-3-Clause |
 | pydantic | 2.14.2 | MIT |
 | pydantic_core | 2.50.2 | MIT |
+| pygments | 2.21.0 | BSD-2-Clause |
 | pyparsing | 3.2.5 | MIT |
 | pypinyin | 0.55.0 | License :: OSI Approved :: MIT License |
 | pyreadline3 | 3.5.6 | License :: OSI Approved :: BSD License |
@@ -101,6 +104,7 @@ FFmpeg n8.1.3-29-gad3b795b72-20261101 使用 BtbN win64-lgpl-shared-8.1 固定 a
 | regex | 2026.9.29 | Apache-2.0 AND CNRI-Python |
 | requests | 2.34.2 | License :: OSI Approved :: Apache Software License |
 | resampy | 0.4.3 | License :: OSI Approved :: ISC License (ISCL) |
+| rich | 13.9.4 | MIT |
 | robust-downloader | 0.0.2 | License :: OSI Approved :: Apache Software License |
 | rotary-embedding-torch | 0.9.1 | License :: OSI Approved :: MIT License |
 | rpds-py | 2026.9.1 | MIT |

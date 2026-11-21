@@ -1,41 +1,83 @@
-重档。本卡包含 RTX 3080 10 GB 上的真实语音合成、取消和 30 分钟压力测量。
+重档。本卡包含 RTX 3080 10 GB 上的真实语音合成首包、取消、30 分钟连续压力复核与 CUDA Graph 独立对照测量。
 
-# P4-02 交付报告（2026-11-21）
+本轮在无 GPU 与 RTX 3080 独占窗口内完成了内存稳定性修复复核、确定性标点分句流式、预热内核初始化，以及 V5 `torch_static_cuda_graph` 独立对照。\
+她现在长时间说话的内存与显存已通过 30 分钟连续压力复核（尾 10 分钟进程树私有提交斜率 −2.01 MiB/h，专用显存首尾持平），原 40 句首包 P50 从 1,053 / 759 ms 降到 885 / 537 ms，多句长句首包缩短 3.1–4.8 倍。\
+原 40 条无句内标点短句的首包 P50 仍未达到 250 ms，且配对多分句样音待用户试听确认；PR #45 保持草稿与 `needs-user`。
 
-**部分完成。** GPT-SoVITS V5 已接到默认本地语音服务。中文及英文各 20 句的 WebSocket 首包中位数分别为 **1,053 ms、759 ms**，均超过原卡的 250 ms。取消达标。压力测试跑满，内存稳定性仍待验证。PR #45 保持草稿。待决定的工作见 [BLOCKED](BLOCKED.md)。
+# P4-02 交付报告（2026-11-21 第二轮）
 
-## 从桌面使用的服务入口实测
+**部分完成（内存稳定项已通过，首包 250 ms 仍未达标）。** 内存与显存稳定性已通过无 GPU 10,000 次平台期验证和 RTX 3080 上 30 分钟连续合成复核；取消与子进程故障恢复继续通过。原 40 句短句在默认基准配置下中英文首包 P50 分别为 **885 ms、537 ms**，未达到 250 ms 阈值；单独测试的 V5 `torch_static_cuda_graph` 未缩短总首包且增占显存，本轮保持默认关闭。未完成项见 [BLOCKED](BLOCKED.md)。
 
-沿用桌面守护使用的 `services/voice-sidecar/src/main.py`、HTTP 预热/健康检查和 WebSocket 合成接口。`GsvEngine` 默认在独立子进程中加载已核验的本地 V5 权重，用 CUDA FP16 推理，G2PW 固定到 CPU。英文词典改在预热时加载，上游文本输出在子进程内屏蔽。TypeScript 本地 provider 使用同一套契约。准备推理环境及参考音色见[服务说明](../../services/voice-sidecar/README.md)。
+## 第一步：内存稳定性（无 GPU 定位 + 30 分钟 GPU 复核）
 
-| 检查 | 实测 |
-| --- | --- |
-| 首包，中文 20 句 | P50 1,053 ms，P90 1,249 ms，最大 4,238 ms |
-| 首包，英文 20 句 | P50 759 ms，P90 1,421 ms，最大 1,795 ms |
-| 取消，首包前及收到首块后各 3 次 | 首包前 3 次均未收到音频。另 3 次各有 1 个在途块，最晚 18.89 ms 到达，连接均以 1000 关闭 |
-| 压力，40 条固定中文或中英混合短句循环 | 连续 1,800.018 s，完成 1,856 次，40/40 句在压力阶段各自字节一致。首包 P50 658 ms，P90 914 ms，最大 2,234 ms，聚合 RTF 0.545 |
-| 健康与恢复 | 首次预热 47.81 s。主动终止模型子进程后，HTTP 仍在线，返回 `WORKER_EXITED`、`ready=false`、`vram=null`。再次预热并收到完整语音耗时 28.22 s |
-| 离线降级 | 实际默认进程在资源不全时可重复预热并返回缺失原因。校验覆盖损坏文件、DNS 拒绝及缺基础依赖的标准库健康入口 |
+### 根因与修复（无 GPU）
 
-首包计时从客户端开始建立 WebSocket 到收到第一块可播放的 24 kHz float32 PCM。每句单独建连，中文与英文各用登记的合成测试参考音色。未计声卡起播，没有载体或舞台同驻。V5 整句生成后分块发送。原 Qwen 0.6B 初轮三语首包约 0.85 s，测试条件有别；云端适配器通过接口测试，尚无真实端点的同口径延迟数据。[历史对照](QWEN3-TTS-HISTORY.md)
+在无 GPU 的真实 HTTP/WS + 子进程 Pipe 路径上执行了 3,000 次 `tracemalloc` 分配跟踪与 4,000 / 10,000 次连续建连、合成、断开对照（[汇总数据](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/round2-summary.json)）：
 
-## 三项归因
+- **根因（引用循环滞留 + 回环 PCM 默认开启 zlib 压缩，非请求对象真泄漏）：** `uvicorn` + `websockets.legacy.server` 的 `WebSocketProtocol` 在连接关闭后通过 Python 引用循环滞留到第 2 代 GC 回收（约每 1,100–2,200 次请求一次）。原 [main.py](../../services/voice-sidecar/src/main.py) 使用默认的 `ws_per_message_deflate=True`，每个未回收连接都挂着 `zlib.compressobj` 与 `zlib.decompressobj`（约 300 KiB 堆与句柄），形成约 **12.3 MiB 锯齿**（4,000 次对照：`43.55 → 55.86 MiB`，句柄 `269 → 301`，显式 `gc.collect()` 后回落至 `44.42 MiB`、`traced_current = 2.65 MiB`，请求对象无残留）。上一轮 30 分钟压测（1,856 次）的最后 10 分钟恰好落在锯齿上升沿，造成 HTTP 进程 `+17.67 MiB/h`。
+- **修复：** 在 [main.py](../../services/voice-sidecar/src/main.py) 显式设置 `ws_per_message_deflate=False`（本机 `127.0.0.1` 回环原始 float32 PCM 不应做 zlib 压缩）。
+- **无 GPU 平台期证据：**
 
-- **首次英文延迟。** 固定旧版输入的首次混合句在请求中导入 `text.english`，实测 4.233 s，其中 `g2p_en` 导入 2.856 s、`wordsegment.load()` 0.471 s，均计入前者。该句首次、复读的带探针整句时间为 6.402 s 和 1.076 s。11 月 6 日原请求仅有阶段时戳；当时 5.484 s 首声中的 3.973 s 落在前处理/组批，本次复现把主要的一次性开销定位到了英文词典和转换器。正式入口已将这段开销移入预热。
-- **Private Bytes 中的 CUDA 贡献。** 对正式模型进程做了三次 Windows 分配区域快照，当时私有提交总量为 9.714–9.733 GiB。26 个可辨认的 CUDA/PyTorch CUDA DLL 映像的提交费用每次都是 **560.883 MiB**，均无查询失败。另用同一套 CUDA 构建、相同权重、FP32 和英文前端，各在全新进程加载一次。加载完成后 CUDA 路径为 **9.738 GiB**，CPU 路径为 **8.664 GiB**，净差 **1.074 GiB**。前一项是映像可直接归属的提交费用，后一项是切换设备的整进程净效应，两者有重叠。匿名分配没有调用栈，不能把其余提交逐字节分给驱动或模型，也不能倒推旧峰值 9.679 GiB 的精确组成。[Windows 区域提交量定义](https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/ns-memoryapi-win32_memory_region_information)
-- **首次 PCM 差异。** 冷中文及首次混合的首轮、复读四个哈希均复现了 11 月 6 日的原值。同句的语义 token 相同。逐层记录在上游声学编码器 `wns1` 的 TorchScript 门函数 `fused_add_tanh_sigmoid_multiply` 发现首个差异，该函数的输入逐字节相同，输出不同。单独关闭 cuDNN 后仍有差异。仅在诊断进程把这个函数换成源码中的相加、tanh、sigmoid 和相乘，两个 case 的首轮和复读 PCM 都逐字节相同。固定声学特征及 CUDA RNG 时，梅尔谱也可逐字节重放。两句时长保持 2.92 / 2.04 s，原始浮点 PCM 首轮与复读的差值信噪比为 17.45 / 29.68 dB。正式服务继续使用固定上游实现。人工听感未签发，配对 WAV 见[中文首轮](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/zh-first.wav)、[中文复读](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/zh-repeat.wav)、[混合首轮](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/mixed-first.wav)、[混合复读](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/mixed-repeat.wav)。
+| 无 GPU 测量臂 | 请求数 | HTTP Private Bytes（首 → 末 / 峰值 / GC 后） | 后半段斜率（MiB / 1k 次） | 句柄（首 → 末） | 子进程 Private（首 → 末） |
+| --- | ---: | --- | ---: | --- | --- |
+| 修复前对照（`deflate=True`） | 4,000 | 43.55 → 52.77 / 55.86 / 44.42 MiB | −0.94（12.3 MiB 锯齿） | 269 → 301 | 16.14 → 16.14 MiB |
+| 修复后对照（`deflate=False`） | 4,000 | 38.76 → 42.48 / 43.16 / 42.14 MiB | −0.25 | 243 → 243 | 16.15 → 16.15 MiB |
+| 修复后 `tracemalloc` | 3,000 | 46.24 → 53.78（含 tracemalloc 表）；GC 后 `traced = 2.50 MiB` | — | 243 → 243 | 16.20 → 16.09 MiB |
+| 修复后长程平台期（`deflate=False`） | 10,000 | 41.20 → 41.43 / 43.26 / 40.80 MiB（区间 40.86–43.26 MiB） | **+0.048** | **243 → 243** | **16.24 → 16.24 MiB** |
 
-## 压力与显存
+### 30 分钟真实 GPU 复核（通过）
 
-618 个压力阶段 WDDM 样本全部取到模型进程。专用显存在 2,180.5–2,222.5 MiB 范围内，首尾均为 2,202.5 MiB，共享显存始终为 72 MiB。覆盖预热、合成与恢复的采样中，专用显存最高为 2,514.5 MiB。
+在 RTX 3080 上沿用上轮 40 条固定短句循环，连续运行 **1,800.7 s**，完成 **1,799 次**真实 WebSocket 合成，40/40 个 case 各自逐字节一致（聚合 RTF 0.562，压测首包 P50 796 ms，P95 1,106 ms）：
 
-每次完成请求均记录服务进程树内存。Private Bytes 首尾增加 **46.70 MiB**，全窗线性斜率 **+24.85 MiB/h**，尾段 10 分钟 **+21.28 MiB/h**。尾段 HTTP 进程和模型子进程的斜率分别为 +17.67 和 +3.61 MiB/h。RSS 尾段发生工作集收缩，不能用它抵消私有提交量的增长。因此本次未签发“内存不持续增长”。逐进程、全窗及尾窗统计在[机器可读汇总](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/summary.json)。
+| 指标 | 全窗 30 分钟（n=1,799） | 尾段 10 分钟（n=609，599.4 s） | 上一轮尾段 10 分钟 |
+| --- | --- | --- | --- |
+| 进程树 Private Bytes | 9,640.37 → 9,665.89 MiB（+25.52 MiB，+11.42 MiB/h） | 9,663.31 → 9,665.89 MiB（+2.59 MiB，**−2.01 MiB/h**） | +21.28 MiB/h |
+| HTTP 进程 Private Bytes | 38.55 → 42.32 MiB（+3.77 MiB，+6.72 MiB/h） | 41.74 → 42.32 MiB（+0.58 MiB，**+4.01 MiB/h**） | +17.67 MiB/h |
+| 模型子进程 Private Bytes | 9,601.82 → 9,623.57 MiB（+21.75 MiB，+4.70 MiB/h） | 9,621.57 → 9,623.57 MiB（+2.00 MiB，**−6.02 MiB/h**） | +3.61 MiB/h |
+| 进程树 RSS | 4,830.39 → 4,869.69 MiB（+39.30 MiB，+11.94 MiB/h） | 4,869.31 → 4,869.69 MiB（+0.38 MiB，**−0.69 MiB/h**） | 工作集收缩 |
+| HTTP 进程句柄数 | 244 → 242（全程 242–244） | 恒定 | 未单记 |
+| WDDM 专用显存（7,237 样本） | 2,204.52 → 2,204.52 MiB（区间 2,180.52–2,226.52 MiB，全窗峰值 2,508.52 MiB） | +1.74 MiB/h，首尾差 0.00 MiB | 首尾相同 |
+| WDDM 共享显存 | 恒定 72.00 MiB | 恒定 72.00 MiB | 恒定 72 MiB |
 
-## 验证与证据
+尾段 10 分钟内进程树私有提交与 RSS 斜率均为负（−2.01 / −0.69 MiB/h，远低于 12 MiB/h 复测门限，且未出现上轮工作集收缩干扰），专用显存首尾一致，内存与显存稳定性验收通过。
 
-- GPU 窗口为 Perth **2026-11-20 23:38:43 至 11-21 00:30:01**。独占标记由本卡取得并释放，开窗前已确认 Windows 队列与 runner、其他推理负载状态。一次接线试跑在 391 条压力请求后主动结束，以固定实现提交重新执行完整 30 分钟；两次原始记录都已归档。
-- 原分支以 merge 提交 `955d82e0` 同步 main `da40fd06`。正式压力基于 `5a8dae20`。后续 `dbf3dc63` 修正 Linux 类型检查对 Windows DLL API 与动态 ORT 方法赋值的识别，Windows 分支仍做相同调用。恢复测试在新启动的子进程中覆盖了该改动。收尾时核对 main 至 `1a23a738`，增量是思考 demo、报告及研究设计，未改动语音契约、依赖、构建或测量输入。
-- Windows 本机运行旁路 `ruff check .`、`mypy --strict src tests` 全部通过。旁路 pytest 53 项通过，1 项显式 GPU smoke 在离线测试中跳过；上述 GPU 结果来自单独的真实服务测量。旧汇总器 5 项边界测试通过。
-- `pnpm tts:schema`、本地/云端 provider 与桌面守护定向测试（8 项）、`pnpm lint`、`pnpm typecheck`、`pnpm test`（631 项）通过。[产品代码提交的 Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/44768889041) 通过。草稿 PR 的 Windows 自托管作业跳过，Windows 汇总门禁未通过。
-- 无新增第三方包或模型下载。本机复用此前核准的环境及 VoiceDesign 测试音色。P7 分发前需复核词频数据、派生词典、fastText 与动态链接组件。[依赖和许可](DEPENDENCIES.md)；[P7 待决表](gsv-v5-resume-09/P7-PENDING.md)。
-- 本轮原件及 SHA-256 见[证据索引](EVIDENCE-INDEX.md#2026-11-21-正式-provider-与归因)。11 月 6 日的独立模型结果及历史失败仍见[旧汇总](gsv-v5-offline-20261107/RESULTS.md)和[上次报告](https://github.com/nanake-lab/nemu/blob/2c31dfbedeb44858c94e5d005a216b9be29fdb79/reports/P4-02/REPORT.md)。
+## 第二步：首包延迟（基准组 vs CUDA Graph 对照组）
+
+新增确定性标点分句模块 [clauses.py](../../services/voice-sidecar/src/nemu_voice_sidecar/clauses.py)（按中英标点切分、保护小数点、合并短于 5 非空字符的片段以与上游预切分一一对应），在 [gsv_worker.py](../../services/voice-sidecar/src/nemu_voice_sidecar/gsv_worker.py) 中对多分句启用 `return_fragment=True`（`batch_size=1`、`fragment_interval=0.15`）逐分句流式送出，并在 `/warmup` 中用临时合成正弦波预热 CUDA 内核。默认配置显式保持 `"use_cuda_graph": False`。
+
+### 原 40 句短句（中英各 20 句，真实 WebSocket 建连到首块 PCM）
+
+两组分开实测，均保留原 40 句语料与 250 ms 阈值：
+
+| 测量组 | 中文 P50 | 中文 P95 | 中文最大 | 英文 P50 | 英文 P95 | 英文最大 | 250 ms 验收 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| 上一轮（2026-11-21 首轮） | 1,053 ms | 1,438 ms | 4,238 ms | 759 ms | 1,723 ms | 1,795 ms | 未通过 |
+| **本轮基准组（关 CUDA Graph，含内核预热 + 分句流式）** | **885 ms** | **1,110 ms** | **1,579 ms** | **537 ms** | **1,034 ms** | **1,409 ms** | **未通过** |
+| **本轮 CUDA Graph 对照组（`rich==13.9.4`，开 `torch_static_cuda_graph`）** | **1,139 ms** | **1,449 ms** | **1,868 ms** | **548 ms** | **1,413 ms** | **1,470 ms** | **未通过** |
+
+- **基准组结论：** 内核预热与关闭回环压缩使中文 P50 降 168 ms、最大首包从 4,238 ms 降到 1,579 ms，英文 P50 降 222 ms、P95 降 689 ms。但由于原 40 句全是 5–9 字或 3–6 词的单分句、不含句内标点，标点分句对其均为 1 段，单分句端到端推理仍需 537–885 ms，未达 250 ms。
+- **CUDA Graph 对照组结论（不建议进默认路径）：** 按用户批准在 `gsv-v5-venv` 安装固定版本 `rich==13.9.4`（MIT）后，日志与健康状态证实 `torch_static_cuda_graph` 正常激活（`accelGraphEnabled=True`，`accelGraphFailed=False`）。虽然 AR 阶段 P50 确降至 272 ms（中）/ 312 ms（英），但中文 V5 CFM+Vocoder 阶段 P50 反升至 **891 ms**（基准约 220 ms），导致中文总首包 P50 退化至 1,139 ms（+254 ms），英文 P50 基本持平（548 vs 537 ms），两者 P95 均变差，WDDM 专用显存峰值增加 122 MiB（2,630.5 vs 2,508.5 MiB），且 40 句 PCM 与基准组 0/40 逐字节一致。因此本轮保持默认 `"use_cuda_graph": False`。
+
+### 多分句长句切分前后对比与试听样音
+
+对 4 条含句内标点的中英文长句，比较同一句整句合成（`cut0`、不切分）与按固定标点切分流式送出的首包延迟及音频（配对 WAV 存私有证据仓，供用户试听）：
+
+| 样例 | 分句数 | 切分前首包 | 切分后首包 | 首包提速 | 切分前 / 后时长 | 配对试听（私有证据仓） |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| `zh_multi_01` | 4 | 3,684 ms | **767 ms** | **4.80×** | 8.28 s / 7.12 s | [切分前](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_01_unsplit.wav) · [切分后](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_01_split.wav) · [CG 切分](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_01_cudagraph_split.wav) |
+| `zh_multi_02` | 4 | 2,571 ms | **534 ms** | **4.81×** | 7.00 s / 6.28 s | [切分前](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_02_unsplit.wav) · [切分后](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_02_split.wav) · [CG 切分](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_02_cudagraph_split.wav) |
+| `en_multi_01` | 4 | 3,148 ms | **1,016 ms** | **3.10×** | 8.52 s / 8.32 s | [切分前](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_01_unsplit.wav) · [切分后](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_01_split.wav) · [CG 切分](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_01_cudagraph_split.wav) |
+| `en_multi_02` | 4 | 2,735 ms | **644 ms** | **4.25×** | 7.36 s / 7.32 s | [切分前](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_02_unsplit.wav) · [切分后](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_02_split.wav) · [CG 切分](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_02_cudagraph_split.wav) |
+
+## 取消、恢复与历史归因
+
+- **取消回归（6/6 通过）：** 首包前 3 次均 0 块返回；收到首块后 3 次分别有 1–2 个在途块，最晚 **0.35 ms** 到达（阈值 ≤ 50 ms），连接均以关闭码 `1000` 结束。
+- **故障恢复（通过）：** 首次 `/warmup` 耗时 58.44 s（含合成正弦波内核预热）；主动终止模型子进程后 `/health` 返回 `WORKER_EXITED`、`ready=false`，再次 `/warmup` 并恢复完整合成通过。
+- **既有归因保留：** 首次英文延迟（4.233 s，已移入预热）、CUDA DLL 映像 560.883 MiB 与同精度 CUDA/CPU 加载净差 1.074 GiB、上游 `wns1` TorchScript 门函数首轮数值差异（本轮按排序决定不改上游数值路径）详见上一轮归档与 [证据索引](EVIDENCE-INDEX.md#2026-11-21-正式-provider-与归因)。
+
+## GPU 窗口、依赖与验证
+
+- **GPU 安静窗口：** **2026-11-21 14:34:50 +08:00 至 2026-11-21 15:11:14 +08:00**（UTC `06:34:50Z–07:11:14Z`）。开窗前确认 #240 Windows 作业（`44873820256`）及排队作业均已结束，停止 runner 并确认 `Runner.Listener` 与 `Runner.Worker` 均退出（0 个运行），写入 `D:\Dev\cache\gpu-window.txt`；开窗前背景总进程 640、内存占用 25,821.1 / 32,694.2 MiB、显存 1,275 / 10,240 MiB，无其他重负载。测完已删除 `gpu-window.txt` 并恢复 `Runner.Listener` 运行（关窗背景总进程 646、内存 24,217.9 MiB、显存 2,016 MiB）。
+- **新增环境依赖（经用户批准，仅用于独立推理环境 CUDA Graph 对照）：** `rich==13.9.4`（MIT）及其传递依赖 `markdown-it-py==4.3.0`（MIT）、`mdurl==0.1.2`（MIT）、`pygments==2.21.0`（BSD-2-Clause），已登记在 [DEPENDENCIES.md](DEPENDENCIES.md)；应用代码目录无新增依赖。
+- **同步 main 与本机静态检查：** 分支已 merge 最新 `origin/main`（`2954da2b`），仅修改卡面目录 `services/voice-sidecar/`（`src/main.py`、`src/nemu_voice_sidecar/clauses.py`、`src/nemu_voice_sidecar/gsv_worker.py`、`tests/test_clauses.py`）与 `reports/P4-02/`。Windows 本机 `uv run ruff check .`、`uv run mypy --strict src tests`（29 文件）、`uv run pytest -q`（58 通过，1 GPU smoke 跳过）、`pnpm tts:schema`、`pnpm lint`、`pnpm typecheck`、`pnpm test` 全部通过。
+- **私有证据索引：** 本轮全部原件、12 份 WAV、SHA-256 与 41 个归档成员清单固定于私有仓库提交 `853b69fcc99662ab14234c9c32628e1d0605a179`，见 [证据索引](EVIDENCE-INDEX.md#2026-11-21-第二轮内存稳定性分句首包与-cuda-graph-对照)。

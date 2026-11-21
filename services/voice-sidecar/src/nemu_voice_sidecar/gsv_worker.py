@@ -4,9 +4,15 @@ from __future__ import annotations
 import hashlib
 import importlib
 import json
+import math
 import os
+import struct
 import sys
+import tempfile
+import wave
 from pathlib import Path
+
+from .clauses import split_clauses
 
 if sys.platform == "win32":
     from multiprocessing.connection import PipeConnection as ModelPipe
@@ -86,16 +92,40 @@ def run_worker(pipe: ModelPipe, root: Path) -> None:
         # The fixed model has no user-editable runtime configuration to persist.
         config.configs_path = os.devnull
         model = upstream.TTS(config)
+        # Warm CUDA/TorchScript kernels on a synthetic tone so the first request pays no JIT cost.
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tone = Path(tmpdir) / "warmup.wav"
+            samples = [int(4000 * math.sin(2 * math.pi * 220 * i / 16000)) for i in range(56000)]
+            with wave.open(str(tone), "wb") as wf:
+                wf.setnchannels(1)
+                wf.setsampwidth(2)
+                wf.setframerate(16000)
+                wf.writeframes(struct.pack(f"<{len(samples)}h", *samples))
+            for _ in model.run({
+                "text": "你好。", "text_lang": "zh",
+                "ref_audio_path": str(tone), "prompt_text": "今天的天气很好。",
+                "prompt_lang": "all_zh", "speed_factor": 1.0, "parallel_infer": False,
+                "streaming_mode": False, "return_fragment": False,
+                "text_split_method": "cut0", "use_cuda_graph": False, "seed": 42,
+            }):
+                pass
+            model.prompt_cache["ref_audio_path"] = None
+            model.prompt_cache["prompt_text"] = None
         pipe.send(("ready", vram()))
         while True:
             request, reference = pipe.recv()
+            clauses = split_clauses(request.text)
+            text_input = "\n".join(clauses) if clauses else request.text
+            multi = len(clauses) > 1
             emitted = False
             for rate, audio in model.run({
-                "text": request.text, "text_lang": request.lang,
+                "text": text_input, "text_lang": request.lang,
                 "ref_audio_path": str(reference.path), "prompt_text": reference.text,
                 "prompt_lang": "all_zh" if request.lang == "zh" else "en",
                 "speed_factor": 1.0, "parallel_infer": False, "streaming_mode": False,
-                "return_fragment": False, "text_split_method": "cut0", "seed": 42,
+                "return_fragment": multi, "batch_size": 1,
+                "fragment_interval": 0.15 if multi else 0.3,
+                "text_split_method": "cut0", "use_cuda_graph": False, "seed": 42,
             }):
                 if rate != 48000 or audio.ndim != 1 or audio.dtype != np.int16 or not np.any(audio):
                     raise RuntimeError("INVALID_MODEL_PCM")

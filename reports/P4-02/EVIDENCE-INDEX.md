@@ -904,3 +904,25 @@
 | [zh-repeat.wav](https://github.com/nanake-lab/nemu-evidence/blob/085e72122b3e9d7d54a52b8779e8e073026ed9e6/P4-02/continue-20261120/zh-repeat.wav) | 140204 | `6ca1814c234ece8e3a4718e6063c4b310d4be4e2371384b8afa4d6eac85d1741` |
 
 measurement.zip 中的 final-wire.jsonl、final-wddm.jsonl 和 final-regions.jsonl 分别记录正式服务请求、WDDM 采样和进程区域提交量。cuda-diag.jsonl 记录英文导入、语义 token、梅尔谱和 PCM。各 *-follow.jsonl 记录同精度设备对照、声学重放及逐层对照。wire.jsonl 和 stop 保留固定提交前的短试跑。local-checks.zip 保存 Windows 本机静态检查、测试命令及结果。
+
+## 2026-11-21 第二轮内存稳定性、分句首包与 CUDA Graph 对照
+
+私有证据仓库提交 `853b69fcc99662ab14234c9c32628e1d0605a179`，以下文件位于 `P4-02/round2-20261121/`。`round2-raw.zip` 内含 41 个成员（无 GPU 3,000–10,000 次分配跟踪与平台期采样、基准组 40 句/多分句/取消/30 分钟压测/WDDM、CUDA Graph 对照组逐请求与日志、窗口开闭记录），逐成员字节数与 SHA-256 记于 `members.json` 并已解压回读核对。
+
+| 文件 | 字节 | SHA-256 |
+| --- | ---: | --- |
+| [en_multi_01_cudagraph_split.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_01_cudagraph_split.wav) | 387884 | `27c317ca5cce66c58a58c73579c0ef1b933269a54ed4e5a3458baef3e4d6f6fe` |
+| [en_multi_01_split.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_01_split.wav) | 399404 | `be8f91a6e72f198ac885aaa6928c536cc201d73166b940d159f077493c80606c` |
+| [en_multi_01_unsplit.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_01_unsplit.wav) | 409004 | `d1ec305941d8906bc427bd5d8fed891b4a60061a70cc82692da3cb5c39a0eb32` |
+| [en_multi_02_cudagraph_split.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_02_cudagraph_split.wav) | 351404 | `5edbbb2e828b2ae34bf2ce8e43270a1168e9b13ef48711e80d747ba5943e6719` |
+| [en_multi_02_split.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_02_split.wav) | 351404 | `3433f1a69d2151c2f8d8bee55e87e56a5933e16dd339d46b7d92d5ffc23281c1` |
+| [en_multi_02_unsplit.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/en_multi_02_unsplit.wav) | 353324 | `294e3ad98eab821091a7bbe75a2183cbea770ec64e67d65759636c73907dc655` |
+| [members.json](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/members.json) | 7001 | `e8aa75066174bd4efb08a133f82c9fe210e8eab5580688fc80292b6d83556f6f` |
+| [round2-raw.zip](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/round2-raw.zip) | 777771 | `e6fafbf711b54310e182617edaa626866f259528425820a0dcc050216666220b` |
+| [round2-summary.json](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/round2-summary.json) | 14043 | `6dc3511dd04dd9f684f067a847154b043c8d0eaf37e11e23bcb5cc5a0de89860` |
+| [zh_multi_01_cudagraph_split.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_01_cudagraph_split.wav) | 389804 | `97dbfb71992cce2c879b69f69bd6e4d5e43321e746ee3d4268d2c9c5de352cea` |
+| [zh_multi_01_split.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_01_split.wav) | 341804 | `4858c5c79048007870b2513d267dcae2868dfc70528d0ea53b557055281e8409` |
+| [zh_multi_01_unsplit.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_01_unsplit.wav) | 397484 | `b54d7da6e0949b0e59587a459b93384aa5b3fd4c3a63ef18dd3d724455bb3a11` |
+| [zh_multi_02_cudagraph_split.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_02_cudagraph_split.wav) | 301484 | `18172ea6e2363f632453d44656ab82a11cba899aa75d0aa8d07382ada860378c` |
+| [zh_multi_02_split.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_02_split.wav) | 301484 | `9744d4e412345e66e84df57452c52a8db7dd9211e4968609ae81dc72b9dde603` |
+| [zh_multi_02_unsplit.wav](https://github.com/nanake-lab/nemu-evidence/blob/853b69fcc99662ab14234c9c32628e1d0605a179/P4-02/round2-20261121/zh_multi_02_unsplit.wav) | 336044 | `236a6c726ea376ce68811ab154e73002e4c31883de0e911cf3116a364c2375d4` |
