@@ -11,15 +11,19 @@ from typing import TYPE_CHECKING, Any
 
 from chat import build_deepseek_body, call_deepseek_stream, cargo_env, repo_root, run_assembler
 
+from check_thought import check, external_records
+from think_plan import THOUGHT_SPEAKER as THOUGHT_SPEAKER, ThoughtPlan
+
 if TYPE_CHECKING:
     from http_probe import Server
 
 PROTOCOL = "这是 Nemu 独处时的内心。输出为她此刻的一个念头，用第一人称，一到三句。"
 SENSES_FACT = "她在电脑里，能感知到的只有下面这些记录和现在的时间。"
-THOUGHT_SPEAKER = "Nemu（独处时的念头）"
 TIME_FORMAT = "%Y-%m-%d %H:%M"
 CACHE = Path("D:/Dev/cache")
 RUN_DIR = CACHE / "cause-demo" / "think-02"
+CHECK_RUN_DIR = CACHE / "cause-demo" / "think-06"
+PLAN_RUN_DIR = CACHE / "cause-demo" / "think-05"
 DEEPSEEK_RUN_DIR = CACHE / "cause-demo" / "think-03"
 ENGINE = CACHE / "P0-10" / "llama.cpp" / "b11669"
 MODEL = CACHE / "P0-12" / "gguf" / "carrier-Q4_K_M.gguf"
@@ -62,12 +66,15 @@ def projection_payload(scenario: dict[str, Any], at: str) -> dict[str, Any]:
 
 
 def append_thought(
-    scenario: dict[str, Any], binding: dict[str, Any], at: str, content: str
+    scenario: dict[str, Any], binding: dict[str, Any], at: str, content: str,
+    points: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     first = next((pack for pack in binding["packs"] if pack["fate"] == "accepted"), None)
     if first is None:
         raise ValueError("组包没有接纳任何槽，无法追加念头。")
     thought = new_record(scenario["records"], at, THOUGHT_SPEAKER, content, "thought")
+    if points is not None:
+        thought["points"] = points
     slots = [
         {**slot, "sources": [*slot["sources"], thought["id"]]}
         if slot["basis"] == first["basis"] else slot
@@ -87,6 +94,20 @@ def thought_messages(
     system = f"{protocol}\n\n{messages[1]['content']}".strip()
     observation = messages[2]["content"].strip()
     return [{"role": "system", "content": system}, {"role": "user", "content": observation}]
+
+
+def thought_request(
+    assembled: dict[str, Any], payload: dict[str, Any], no_think: bool, plan2: bool,
+) -> tuple[dict[str, Any], ThoughtPlan | None]:
+    messages = thought_messages(assembled["messages"])
+    plan = None
+    if plan2:
+        plan = ThoughtPlan(payload["records"][:-1], assembled["binding"])
+        messages.append(plan.instruction())
+    request = build_deepseek_body(messages, no_think=no_think)
+    if plan is not None:
+        request["response_format"] = {"type": "json_object"}
+    return request, plan
 
 
 def render_prompt(messages: list[dict[str, str]], *, senses: str = "off") -> str:
@@ -144,9 +165,15 @@ def main() -> int:
     parser.add_argument("--append", type=Path, metavar="OUTPUT_SCENARIO")
     parser.add_argument("--sampling", choices=("greedy", "official"), default="official")
     parser.add_argument("--senses", choices=("on", "off"), default="off")
-    parser.add_argument("--thinker", choices=("local", "deepseek"), default="local")
+    parser.add_argument("--thinker", choices=("local", "deepseek"))
     parser.add_argument("--ds-think", choices=("off", "high"), default="off")
+    parser.add_argument("--plan2", action="store_true", help="核对编号后按顺序拼接念头")
+    parser.add_argument("--check", action="store_true", help="独立核对整条念头，通过后才写回")
     args = parser.parse_args()
+    if args.thinker is None:
+        args.thinker = "deepseek" if args.plan2 or args.check else "local"
+    if args.plan2 and args.thinker != "deepseek":
+        parser.error("--plan2 需要 --thinker deepseek")
     if args.n < 1 or (args.append is not None and args.n != 1):
         parser.error("--n 必须为正整数，--append 只支持 --n 1")
     if args.append is not None and args.append.exists():
@@ -165,14 +192,14 @@ def main() -> int:
         binding = assembled["binding"]
         if args.append is not None and not binding["accepted"]:
             raise ValueError("组包没有接纳任何槽，无法追加念头。")
-        if args.thinker == "deepseek":
+        points = None
+        if args.thinker == "deepseek" or args.check:
             api_key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
             if not api_key:
                 raise ValueError("环境变量 DEEPSEEK_API_KEY 未设置或为空。")
-            request = build_deepseek_body(
-                thought_messages(assembled["messages"]), no_think=args.ds_think == "off"
-            )
-            run_dir = DEEPSEEK_RUN_DIR
+        if args.thinker == "deepseek":
+            request, plan = thought_request(assembled, payload, args.ds_think == "off", args.plan2)
+            run_dir = PLAN_RUN_DIR if plan else DEEPSEEK_RUN_DIR
             settings = dict(thinker="deepseek", ds_think=args.ds_think)
         else:
             sys.path.insert(0, str(root / "spikes" / "carrier-engine"))
@@ -183,6 +210,11 @@ def main() -> int:
             request = completion_request(args.sampling)
             run_dir = RUN_DIR
             settings = dict(prompt=prompt, senses=args.senses, sampling=args.sampling)
+        if args.check:
+            run_dir = CHECK_RUN_DIR
+            settings["check"] = True
+        check_records = external_records(payload["records"][:-1], binding) if args.check else []
+        blocked = False
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
         run_dir.mkdir(parents=True, exist_ok=True)
         log_path = run_dir / f"{stamp}.jsonl"
@@ -192,6 +224,19 @@ def main() -> int:
                 log.write(json.dumps(row, ensure_ascii=False) + "\n")
                 log.flush()
 
+            def record_sample(index: int, sample: dict[str, Any]) -> bool:
+                judgment = None
+                if args.check and sample["text"] and sample.get("valid", True):
+                    judgment = check(sample["text"], check_records)
+                    sample = {**sample, "check": judgment}
+                log_row(dict(index=index, **sample))
+                if judgment and not judgment["valid"]:
+                    raise RuntimeError("独立核对调用失败，详见请求日志。")
+                if judgment and judgment["blocked"]:
+                    print("拦下", file=sys.stderr, flush=True)
+                    return True
+                return False
+
             log_row(dict(
                 scenario=str(args.scenario), at=args.at, n=args.n,
                 binding=binding, request=request, **settings,
@@ -199,11 +244,20 @@ def main() -> int:
             try:
                 if args.thinker == "deepseek":
                     for index in range(1, args.n + 1):
-                        sample = deepseek_sample(request, api_key)
-                        log_row(dict(index=index, **sample))
+                        # Keep every failed attempt. Empty verified thoughts are completed rounds.
+                        for _ in range(3 if plan else 1):
+                            sample = deepseek_sample(request, api_key)
+                            if plan:
+                                sample["valid"] = bool(sample["valid"] and sample["usage"])
+                                sample = plan.verify(sample)
+                            blocked = record_sample(index, sample)
+                            if sample["valid"]:
+                                break
                         if not sample["valid"]:
                             raise RuntimeError("DeepSeek 未返回正常结束的非空念头，详见请求日志。")
                         content = str(sample["text"])
+                        if plan:
+                            points = sample["verification"]["kept"]
                         print(content, flush=True)
                 else:
                     with Server(ENGINE, MODEL, RUN_DIR / stamp / "server") as server:
@@ -215,12 +269,12 @@ def main() -> int:
                             folder = RUN_DIR / stamp / f"request-{index:02}"
                             sample = generate_sample(server, request, tokens, folder)
                             content = str(sample["text"])
-                            log_row(dict(index=index, **sample))
+                            blocked = record_sample(index, sample)
                             print(content, flush=True)
-                if args.append is not None:
+                if args.append is not None and points != [] and not blocked:
                     if not content.strip():
                         raise ValueError("模型返回空文本，无法追加念头。")
-                    output = append_thought(scenario, binding, args.at, content)
+                    output = append_thought(scenario, binding, args.at, content, points)
                     with args.append.open("x", encoding="utf-8") as stream:
                         json.dump(output, stream, ensure_ascii=False, indent=2)
                         stream.write("\n")

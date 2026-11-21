@@ -30,10 +30,10 @@ pub fn next<L: LineageKind>(store: &mut Store<L>) -> Result<Next> {
         .unwrap_or(Next::Idle))
 }
 pub fn read_state<L: LineageKind>(store: &Store<L>) -> Result<Snapshot> {
-    let current = store.current()?.ok_or(Error::Rejected(
+    let reader = store.verified_reader()?;
+    let current = reader.current()?.ok_or(Error::Rejected(
         "genesis/bootstrap publication contract required",
     ))?;
-    let reader = store.reader()?;
     Ok(Snapshot {
         x: reader.read(&current.staged_x)?,
         r: reader.read(&current.staged_r)?,
