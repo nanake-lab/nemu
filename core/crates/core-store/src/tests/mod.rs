@@ -85,6 +85,11 @@ fn rehearsal(root: &TemporaryRoot, name: &str) -> Store<Rehearsal> {
     Store::<Rehearsal>::create_temporary(root, name, header::<Rehearsal>(), "test-branch", config())
         .unwrap()
 }
+fn format_two(root: &TemporaryRoot, name: &str) -> Store<Rehearsal> {
+    drop(rehearsal(root, name));
+    Store::<Rehearsal>::migrate_temporary(root, name, config(), 2).unwrap();
+    Store::<Rehearsal>::open_temporary(root, name, config()).unwrap()
+}
 fn unpersisted_event<L: LineageKind>(
     store: &mut Store<L>,
     n: u64,
@@ -221,3 +226,11 @@ fn advance<L: LineageKind>(
 }
 
 mod consistency;
+
+mod format_three;
+
+fn seed_format_two(s: &mut Store<Rehearsal>) {
+    let e = event(s, 0);
+    let (_, old, _pins) = proposal(s, &e);
+    legacy_v2::publish(s, &e, &old, None);
+}

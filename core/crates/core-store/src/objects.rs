@@ -1,3 +1,4 @@
+use crate::raw::{RAW_BYTES, storage_key};
 use crate::{Error, Fault, FaultPoint, LineageKind, Result, StoreConfig, error::require, platform};
 use core_types::{
     WireMessage,
@@ -20,7 +21,7 @@ pub struct PreparedObject<L: LineageKind> {
     pub(crate) reference: ObjectRef,
     pub(crate) closure: Vec<ObjectRef>,
     pub(crate) pins: Pins,
-    _lineage: PhantomData<L>,
+    pub(crate) _lineage: PhantomData<L>,
 }
 impl<L: LineageKind> PreparedObject<L> {
     pub fn reference(&self) -> &ObjectRef {
@@ -31,7 +32,7 @@ impl<L: LineageKind> Drop for PreparedObject<L> {
     fn drop(&mut self) {
         if let Ok(mut pins) = self.pins.lock() {
             for r in &self.closure {
-                let key = hex(&r.digest.0);
+                let key = storage_key(r);
                 if let Some(n) = pins.get_mut(&key) {
                     *n -= 1;
                     if *n == 0 {
@@ -69,7 +70,7 @@ impl Objects {
     }
     pub fn path(&self, r: &ObjectRef) -> Result<PathBuf> {
         r.canonical_bytes(self.config.encoding)?;
-        Ok(self.root.join(format!("{}.obj", hex(&r.digest.0))))
+        Ok(self.root.join(format!("{}.obj", storage_key(r))))
     }
     pub fn prepare<L: LineageKind, T: WireMessage>(
         &self,
@@ -95,7 +96,7 @@ impl Objects {
         self.write(&r, &bytes, fault)?;
         let closure = self.closure(&r)?;
         for item in &closure {
-            *held.entry(hex(&item.digest.0)).or_default() += 1;
+            *held.entry(storage_key(item)).or_default() += 1;
         }
         Ok(PreparedObject {
             reference: r,
@@ -149,7 +150,7 @@ impl Objects {
         self.write(&r, &disk, fault)?;
         let closure = self.closure(&r)?;
         for item in &closure {
-            *held.entry(hex(&item.digest.0)).or_default() += 1;
+            *held.entry(storage_key(item)).or_default() += 1;
         }
         Ok(PreparedObject {
             reference: r,
@@ -158,7 +159,7 @@ impl Objects {
             _lineage: PhantomData,
         })
     }
-    fn write(&self, r: &ObjectRef, disk: &[u8], fault: &Fault) -> Result<()> {
+    pub(crate) fn write(&self, r: &ObjectRef, disk: &[u8], fault: &Fault) -> Result<()> {
         require(
             r.byte_length.0 <= self.config.max_object_bytes,
             "object capacity exhausted",
@@ -228,7 +229,17 @@ impl Objects {
                     .saturating_add(self.config.encoding.max_bytes as u64),
             "physical object too large",
         )?;
+        if r.object_type == RAW_BYTES {
+            require(
+                fs::metadata(&path)?.len() == r.byte_length.0,
+                "raw resource length mismatch",
+            )?;
+        }
         let disk = fs::read(path)?;
+        if r.object_type == RAW_BYTES {
+            crate::raw::verify(r, &disk, self.config.max_object_bytes)?;
+            return Ok(disk);
+        }
         let bytes = if disk.starts_with(b"NSI1") {
             let schema = Schema::builtin()?;
             require(
@@ -274,7 +285,7 @@ impl Objects {
         let mut pending = vec![root.clone()];
         let mut found = BTreeMap::new();
         while let Some(r) = pending.pop() {
-            let key = hex(&r.digest.0);
+            let key = storage_key(&r);
             if let Some(old) = found.get(&key) {
                 require(old == &r, "ambiguous object resource version")?;
                 continue;
@@ -284,6 +295,10 @@ impl Objects {
                 "reference closure capacity exhausted",
             )?;
             let bytes = self.read(&r)?;
+            if r.object_type == RAW_BYTES {
+                found.insert(key, r);
+                continue;
+            }
             let (name, _) = schema
                 .messages
                 .iter()

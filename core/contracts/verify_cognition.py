@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from collections.abc import Callable
 from typing import Any
 from fixture_inputs import LIMITS, SCHEMA
@@ -36,7 +37,24 @@ def verify(
                 bad.append(
                     dict(name=other, op=op, hex=row["expected"][op], limits=LIMITS)
                 )
+    # ADR 0046 §4. The same Q types can point to either record generation.
+    new_refs, wrong_refs = [], []
+    for name, key in (("ActivityState", "latest_step"), ("CognitiveInflightAction", "origin_record")):
+        case = deepcopy(next(row["request"] for row in legal
+                             if row["request"]["name"] == name and key in row["request"]["value"]))
+        case["value"][key]["object_type"] = "echo.internal-activity-record-v2"
+        new_refs.append(case)
+        wrong = deepcopy(case)
+        wrong["value"][key]["object_type"] = "echo.internal-activity-commit-v2"
+        wrong_refs.append(wrong)
+    reference = None
     for lang, command in commands.items():
+        results = probe(command, new_refs)
+        assert all(r["ok"] for r in results), (lang, "successor activity references")
+        if reference is None:
+            reference = results
+        assert results == reference, (lang, "successor reference bytes")
+        assert all(not r["ok"] for r in probe(command, wrong_refs)), (lang, "commit used as record")
         assert probe(command, good) == expected, (lang, "same-version restore bytes")
         assert all(not v["ok"] for v in probe(command, bad)), (
             lang,

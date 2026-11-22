@@ -157,6 +157,7 @@ dependencies = [
  "core-policy",
  "core-store",
  "core-types",
+ "task-layer",
 ]
 
 [[package]]
@@ -166,6 +167,7 @@ dependencies = [
  "core-types",
  "rusqlite",
  "serde_json",
+ "sha2",
  "tempfile",
  "tracing",
  "windows-sys 0.61.2",
@@ -359,6 +361,17 @@ name = "esaxx-rs"
 version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d817e038c30374a4bcb22f94d0a8a0e216958d4c3dcde369b1439fec4bdda6e6"
+
+[[package]]
+name = "experiment-world"
+version = "0.0.0"
+dependencies = [
+ "core-kernel",
+ "core-types",
+ "serde",
+ "serde_json",
+ "sha2",
+]
 
 [[package]]
 name = "fact-view"

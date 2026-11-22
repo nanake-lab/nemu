@@ -23,10 +23,11 @@ def card(cid: str = "P5-23", deps: list[str] | None = None) -> Card:
 
 
 def pr(number: int, *, labels: list[str], draft: bool = False,
-       branch: str = "task/P5-23-test", merged: bool = False) -> RawPr:
+       branch: str = "task/P5-23-test", merged: bool = False,
+       title: str = "Test PR") -> RawPr:
     return {
         "number": number,
-        "title": "Test PR",
+        "title": title,
         "state": "closed" if merged else "open",
         "merged_at": "2026-10-25T00:00:00Z" if merged else None,
         "draft": draft,
@@ -188,6 +189,111 @@ class PauseTests(unittest.TestCase):
         self.assertEqual(body["rows"][0]["status_label"], "暂停")
         self.assertEqual(body["other_attention"], [])
         self.assertEqual([p["number"] for p in body["paused_prs"]], [49, 82])
+
+    def test_legacy_unnumbered_title_completes_card(self) -> None:
+        # DOC-AGENTS-LEAN-01: old-style "<type>(<id>): <title>" still marks done.
+        out = self.compute(
+            [pr(49, labels=[], merged=True, title="feat(P5-23): single PR delivery")],
+            [card(), card("P5-24", ["P5-23"])],
+        )
+        row = status.board_rows(out)[0]
+        self.assertEqual((row["status"], row["status_label"], row["waiting_on"]),
+                         ("done", "已完成", ""))
+        self.assertEqual(out["cards"][1]["status"], "ready")
+        self.assertEqual(out["milestones"][0]["done"], 1)
+
+    def test_split_pr_before_final_is_partial_waiting_on_remaining_prs(self) -> None:
+        # DOC-AGENTS-LEAN-01: merging only n < m (e.g. 1/4) must not finish the card.
+        out = self.compute(
+            [pr(49, labels=[], merged=True, branch="feat/slice-1",
+                title="feat(P5-23 1/4): first slice")],
+            [card(), card("P5-24", ["P5-23"])],
+        )
+        row = status.board_rows(out)[0]
+        self.assertEqual(row["status"], "partial")
+        self.assertEqual(row["status_label"], "部分交付")
+        self.assertEqual(row["waiting_on"], "剩余 PR")
+        self.assertEqual(out["cards"][1]["status"], "blocked")
+        self.assertEqual(out["milestones"][0]["done"], 0)
+        self.assertEqual(out["attention"], [])
+
+    def test_split_pr_final_completes_card_and_preserves_unverified_and_blockers(self) -> None:
+        # DOC-AGENTS-LEAN-01: once n = m (e.g. 4/4) is merged, card finishes unless
+        # unverified or blocked by delivery evidence.
+        prs = [
+            pr(49, labels=[], merged=True, title="feat(P5-23 1/4): first slice"),
+            pr(52, labels=[], merged=True, title="feat(P5-23 4/4): final slice"),
+        ]
+        out = self.compute(prs, [card(), card("P5-24", ["P5-23"])])
+        row = status.board_rows(out)[0]
+        self.assertEqual((row["status"], row["status_label"], row["waiting_on"]),
+                         ("done", "已完成", ""))
+        self.assertEqual(out["cards"][1]["status"], "ready")
+        self.assertEqual(out["milestones"][0]["done"], 1)
+
+        out_blocked = self.compute(prs, [card(), card("P5-24", ["P5-23"])],
+                                   deliveries={"P5-23": ["P5-06"]})
+        self.assertEqual(out_blocked["cards"][0]["status"], "partial")
+        self.assertEqual(out_blocked["cards"][0]["waiting_on"], ["P5-06"])
+        self.assertEqual(out_blocked["cards"][1]["status"], "blocked")
+
+        out_unverified = self.compute([
+            pr(52, labels=["unverified"], merged=True, title="feat(P5-23 4/4): final slice")
+        ])
+        self.assertEqual(out_unverified["cards"][0]["status"], "unverified")
+
+    def test_split_pr_partial_preserves_open_work_and_unverified_precedence(self) -> None:
+        for prs, expected in (
+            ([pr(49, labels=["unverified"], merged=True,
+                 title="feat(P5-23 1/4): first slice")], "unverified"),
+            ([pr(49, labels=[], merged=True, title="feat(P5-23 1/4): first slice"),
+              pr(50, labels=[], draft=True, title="feat(P5-23 2/4): second slice")],
+             "in_progress"),
+        ):
+            with self.subTest(expected=expected):
+                out = self.compute(prs)
+                self.assertEqual(out["cards"][0]["status"], expected)
+                self.assertEqual(out["cards"][0]["waiting_on"], ["剩余 PR"])
+
+    def test_malformed_split_pr_title_is_never_done_and_marked_anomalous(self) -> None:
+        # DOC-AGENTS-LEAN-01: malformed n/m (e.g. 5/4, 0/3, 1/0, -1/3, non-numeric)
+        # must not mark done and must surface an anomaly on the board.
+        for bad_title in (
+            "feat(P5-23 5/4): overflow index",
+            "feat(P5-23 0/3): zero index",
+            "feat(P5-23 1/0): zero total",
+            "feat(P5-23 -1/3): negative index",
+            "feat(P5-23 1/a): non numeric",
+        ):
+            with self.subTest(title=bad_title):
+                user_card = card()
+                user_card["suggested"] = "你"
+                out = self.compute(
+                    [pr(49, labels=[], merged=True, branch="feat/bad-title",
+                        title=bad_title)],
+                    [user_card, card("P5-24", ["P5-23"])],
+                )
+                row = status.board_rows(out)[0]
+                self.assertNotEqual(row["status"], "done")
+                self.assertEqual(row["status"], "needs_you")
+                self.assertEqual(row["status_label"], "标题异常")
+                self.assertEqual(row["waiting_on"], "标题异常")
+                self.assertEqual(out["cards"][1]["status"], "blocked")
+                self.assertEqual(out["milestones"][0]["done"], 0)
+                self.assertEqual([a["kind"] for a in out["attention"]], ["title_anomaly"])
+                self.assertIn("异常", out["attention"][0]["text"])
+
+    def test_open_malformed_split_title_raises_attention_unless_paused(self) -> None:
+        out = self.compute([
+            pr(49, labels=[], draft=True, title="feat(P5-23 5/4): typo while open")
+        ])
+        self.assertEqual(out["cards"][0]["status"], "in_progress")
+        self.assertIn("title_anomaly", {a["kind"] for a in out["attention"]})
+
+        paused = self.compute([
+            pr(49, labels=["paused"], draft=True, title="feat(P5-23 5/4): paused typo")
+        ])
+        self.assertEqual(paused["attention"], [])
 
 
 if __name__ == "__main__":

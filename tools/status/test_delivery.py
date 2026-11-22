@@ -65,6 +65,35 @@ class DeliveryTests(unittest.TestCase):
             with self.subTest(raw=raw), self.assertRaises(RuntimeError):
                 load_deliveries("example/test", {"P5-24"}, raw)
 
+    def test_missing_report_relies_only_on_blocked_without_error(self) -> None:
+        # DOC-AGENTS-LEAN-01: ordinary code cards have no REPORT.md; absence must
+        # not error and partial delivery follows BLOCKED.md only.
+        self.assertIsNone(delivery_waiting("P5-14", None, None))
+        self.assertIsNone(delivery_waiting("P5-14", "", ""))
+        self.assertIsNone(delivery_waiting("P5-14", None, "- [x] P5-06 已解除"))
+        self.assertEqual(delivery_waiting("P5-14", None, "- [ ] 等待 P5-06"), ["P5-06"])
+        self.assertEqual(
+            delivery_waiting("P5-14", None, "- [ ] 等待外部确认"),
+            ["见 reports/P5-14/BLOCKED.md"],
+        )
+
+        def raw(args: list[str]) -> str:
+            if args[-1].endswith("git/trees/main?recursive=1"):
+                return json.dumps({"tree": [
+                    {"path": "reports/P5-14/BLOCKED.md", "sha": "b1"},
+                    {"path": "reports/P5-15/BLOCKED.md", "sha": "b2"},
+                ]})
+            if args[-1].endswith("git/blobs/b1"):
+                return "- [ ] 等待 P5-06 接入"
+            if args[-1].endswith("git/blobs/b2"):
+                return "- [x] 已解除"
+            self.fail(f"Unexpected request: {args}")
+
+        self.assertEqual(
+            load_deliveries("example/test", {"P5-14", "P5-15", "P5-16"}, raw),
+            {"P5-14": ["P5-06"]},
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

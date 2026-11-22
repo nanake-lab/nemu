@@ -247,6 +247,8 @@ fn existing_initialization_namespaces_complete_every_sync_before_admission() {
     for (point, nth) in [
         (FaultPoint::ReceiptKindCreated, 3),
         (FaultPoint::ReceiptKindSynced, 3),
+        (FaultPoint::ReceiptKindCreated, 4),
+        (FaultPoint::ReceiptKindSynced, 4),
         (FaultPoint::ReceiptRootSynced, 1),
     ] {
         let root = TemporaryRoot::new().unwrap();
@@ -257,10 +259,11 @@ fn existing_initialization_namespaces_complete_every_sync_before_admission() {
             receipts.join("d"),
             receipts.join("commits"),
             receipts.join("reject"),
+            receipts.join("attempts"),
             receipts.clone(),
             receipts.parent().unwrap().to_path_buf(),
         ];
-        assert!(expected.iter().all(|p| p.is_dir()));
+        assert!(expected[..3].iter().all(|p| p.is_dir()));
         let db = rusqlite::Connection::open(path.join("store.sqlite")).unwrap();
         let objects = crate::objects::Objects::new(path.join("objects"), config());
         // Exercise the exact admission implementation with each sync returning
@@ -306,7 +309,7 @@ fn existing_initialization_namespaces_complete_every_sync_before_admission() {
             .verify()
             .unwrap();
         println!(
-            "{point:?}/{nth}: all five syncs observed; five injected sync failures rejected; reopen/write verified"
+            "{point:?}/{nth}: all six syncs observed; six injected sync failures rejected; reopen/write verified"
         );
     }
 }
