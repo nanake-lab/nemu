@@ -28,7 +28,8 @@ function runtime(q: InitialRuntimeRoot): void {
 }
 
 function birth(b: BirthNameRecord): void {
-  check(['echo.genesis-v2', 'echo.genesis-v3'].includes(b.manifest.object_type), 'birth manifest type');
+  check(['echo.genesis-v2', 'echo.genesis-v3'].includes(b.manifest.object_type)
+    && b.manifest.resource_version === '1', 'birth manifest type or schema version');
   check(b.signature_evidence.object_type === 'nemu.storage.raw-bytes-v1'
     && b.signature_evidence.resource_version === '1' && b.signature_evidence.byte_length > 0n, 'birth signature evidence');
 }

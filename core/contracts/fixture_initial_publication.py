@@ -128,9 +128,8 @@ def initial_illegal() -> list[dict[str, Any]]:
         name: str, label: str, value: dict[str, Any], *, wire: bool = True
     ) -> None:
         rows.append(dict(label="P5-52-" + label, request=request(name, value)))
-        if (
-            wire
-        ):  # Structurally valid bytes must also reach semantic checks after decoding.
+        # Run the same semantic rejection after decoding structurally valid bytes.
+        if wire:
             for op, encode in (
                 ("canonical", encode_canonical),
                 ("protobuf", encode_protobuf),
@@ -197,6 +196,14 @@ def initial_illegal() -> list[dict[str, Any]]:
         q = _runtime(STAGES)
         del q["environment"][missing]
         reject("InitialRuntimeRoot", "missing-" + missing, q)
+    # Both retained manifests have schema_version 1 and no independent resource version (ADR 0036).
+    for seed in (1, 4):
+        parent = initial_sample(name, seed)
+        birth = parent["birth"]
+        manifest = birth["manifest"]
+        bad = birth | dict(manifest=manifest | dict(resource_version="unbound"))
+        reject("BirthNameRecord", f"version-{manifest['object_type']}", bad)
+        reject(name, f"nested-version-{manifest['object_type']}", parent | dict(birth=bad))
     b = life["birth"]
     for key, changes in [
         ("manifest", dict(object_type="echo.user-text")),

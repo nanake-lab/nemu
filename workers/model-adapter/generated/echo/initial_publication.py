@@ -32,8 +32,9 @@ def _runtime(q: dict[str, Any]) -> None:
 
 def _birth(b: dict[str, Any]) -> None:
     fail(
-        b["manifest"]["object_type"] in ("echo.genesis-v2", "echo.genesis-v3"),
-        "birth manifest type",
+        b["manifest"]["object_type"] in ("echo.genesis-v2", "echo.genesis-v3")
+        and b["manifest"]["resource_version"] == "1",
+        "birth manifest type or schema version",
     )
     signature = b["signature_evidence"]
     fail(

@@ -46,8 +46,8 @@ fn birth(b: &BirthNameRecord) -> Result<()> {
         matches!(
             b.manifest.object_type.as_str(),
             "echo.genesis-v2" | "echo.genesis-v3"
-        ),
-        "birth manifest type",
+        ) && b.manifest.resource_version == "1",
+        "birth manifest type or schema version",
     )?;
     require(
         b.signature_evidence.object_type == "nemu.storage.raw-bytes-v1"
