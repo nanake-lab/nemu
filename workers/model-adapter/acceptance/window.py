@@ -16,6 +16,10 @@ from uuid import uuid4
 
 from suite import PACKAGE, quiet
 
+WINDOW_SECONDS = 120 * 60
+CLEANUP_SECONDS = 5 * 60
+IRL_RESERVATION_SECONDS = 35 * 60
+
 
 class GroupFailed(RuntimeError):
     """A recorded measurement failed. The lease and hardware guard remain separate."""
@@ -54,6 +58,14 @@ def child(cmd: list[str], *, env: dict[str, str] | None = None,
                 p.wait(timeout=30)
 
 
+def verify_windows_queue() -> None:
+    for status in ("queued", "in_progress", "waiting", "requested", "pending"):
+        data = subprocess.check_output(["gh", "api", "repos/nanake-lab/nemu/actions/workflows/windows.yml/runs"
+                                         + "?status=" + status + "&per_page=1"], text=True, encoding="utf-8", timeout=15)
+        if json.loads(data)["total_count"]:
+            raise RuntimeError("Windows workflow " + status)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     for name in ("out", "engine", "model", "tokenizer", "mmproj", "shim", "voice-python",
@@ -61,18 +73,14 @@ def main() -> None:
         parser.add_argument("--" + name, required=True, type=Path)
     a = parser.parse_args()
     quiet()
-    for status in ("queued", "in_progress", "waiting", "requested", "pending"):
-        data = subprocess.check_output(["gh", "api", "repos/nanake-lab/nemu/actions/workflows/windows.yml/runs"
-                                         + "?status=" + status + "&per_page=1"], text=True, encoding="utf-8")
-        if json.loads(data)["total_count"]:
-            raise RuntimeError("Windows workflow " + status)
-    a.out.mkdir(parents=True, exist_ok=False)
     log = a.out / "window.jsonl"
     def mark(event: str, **data: object) -> None:
         with log.open("a", encoding="utf-8") as f:
             f.write(json.dumps(dict(utc=utc(), event=event, **data)) + "\n")
     def guard() -> None:
         quiet()
+        if time.monotonic() >= work_deadline:
+            raise TimeoutError("GPU window work budget exhausted")
     def group(name: str, directory: str, companions: tuple[subprocess.Popen[bytes], ...] = ()) -> None:
         guard()
         cmd = [sys.executable, str(Path(__file__).with_name("suite.py")), "--group", name,
@@ -109,6 +117,10 @@ def main() -> None:
                 if monitor.returncode:
                     raise RuntimeError("WDDM sampling failed")
     with lease(Path("D:/Dev/cache")):
+        work_deadline = time.monotonic() + WINDOW_SECONDS - CLEANUP_SECONDS
+        verify_windows_queue()
+        guard()
+        a.out.mkdir(parents=True, exist_ok=False)
         mark("open")
         try:
             failures = []
@@ -129,10 +141,6 @@ def main() -> None:
                     failures.append(str(exc))
                     identity_group = "identity-zero"
             try:
-                sampled("irl", "mode-b-irl")
-            except GroupFailed as exc:
-                failures.append(str(exc))
-            try:
                 group(identity_group, "identity")
             except GroupFailed as exc:
                 failures.append(str(exc))
@@ -149,8 +157,7 @@ def main() -> None:
                         ready(voice, tts)
                         for i in range(1, 4):
                             sampled("latency", f"joint-{i}", (render, tts))
-                        if "group failed: mode-b-irl" not in failures:
-                            sampled("mode-b", "mode-b-joint", (render, tts))
+                        sampled("mode-b", "mode-b-joint", (render, tts))
                     finally:
                         stop.touch()
                         if tts.poll() is None:
@@ -158,6 +165,10 @@ def main() -> None:
                 render.wait(timeout=30)
             if failures:
                 raise GroupFailed(", ".join(failures))
+            if work_deadline - time.monotonic() >= IRL_RESERVATION_SECONDS:
+                sampled("irl", "mode-b-irl")
+            else:
+                mark("deferred", group="mode-b-irl", reason="reserve full batch for next window")
             mark("finished")
         except BaseException as exc:
             mark("failed", reason=str(exc))

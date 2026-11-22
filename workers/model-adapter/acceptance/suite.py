@@ -43,7 +43,7 @@ def quiet() -> None:
     # Filter at collection. No enumeration/recording of unrelated programs.
     for name in ("Runner.Listener.exe", "Runner.Worker.exe"):
         proc = subprocess.run(["tasklist", "/FI", "IMAGENAME eq " + name, "/FO", "CSV", "/NH"],
-                              capture_output=True, check=True)
+                              capture_output=True, check=True, timeout=10)
         if name.lower().encode() in proc.stdout.lower():
             raise RuntimeError("runner active")
 
