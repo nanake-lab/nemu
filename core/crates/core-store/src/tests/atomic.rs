@@ -31,7 +31,7 @@ fn atomic_publication_and_append_only_history() {
     assert_eq!(reader.facts(10).unwrap(), vec![e]);
     assert_eq!(
         reader
-            .read::<CoreTransactionV2>(&result.snapshot)
+            .read::<CoreTransactionV4>(&result.snapshot)
             .unwrap()
             .processed_position
             .0,

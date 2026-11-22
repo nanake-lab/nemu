@@ -110,6 +110,7 @@ impl<L: LineageKind> Store<L> {
         let identical = old == fingerprint;
         let decision = if identical { "filtered" } else { "conflict" };
         let (parent, processed, anchor) = head(&tx)?;
+        let sequence = crate::store::next_commit_position(&tx)?;
         let id = hex(&self.objects.reference(&event, "1")?.digest.0);
         let snapshot: Option<Vec<u8>> = tx.query_row(
             "SELECT snapshot FROM branch_head WHERE singleton=1",
@@ -118,14 +119,7 @@ impl<L: LineageKind> Store<L> {
         )?;
         tx.execute(
             "INSERT INTO commits VALUES(?1,?2,?3,?4,?5,?6)",
-            params![
-                id,
-                parent,
-                integer(processed)?,
-                integer(anchor)?,
-                snapshot,
-                decision
-            ],
+            params![id, parent, sequence, integer(anchor)?, snapshot, decision],
         )?;
         record_decision(&tx, &event, &id, decision, &fingerprint)?;
         tx.execute(
@@ -145,7 +139,7 @@ impl<L: LineageKind> Store<L> {
         crate::witness::record(
             &self.root,
             "commits",
-            processed,
+            sequence as u64,
             &self.objects.reference(&event, "1")?,
             &self.objects,
             &self.fault,

@@ -22,9 +22,8 @@ fn acknowledged_audit_detects_old_database_restore() {
 #[test]
 fn sys17_physical_format_roundtrip_preserves_v3_and_pending_data() {
     let root = TemporaryRoot::new().unwrap();
-    let mut store = rehearsal(&root, "migrate");
-    let cap = store.take_commit_capability().unwrap();
-    advance(&mut store, &cap, 0);
+    let mut store = format_two(&root, "migrate");
+    seed_format_two(&mut store);
     event(&mut store, 1);
     let before = rows(&store.db);
     let head = store.current().unwrap();
@@ -45,7 +44,7 @@ fn sys17_physical_format_roundtrip_preserves_v3_and_pending_data() {
 fn sys17_precommit_failure_retains_complete_previous_physical_format() {
     for target in [1, 2] {
         let root = TemporaryRoot::new().unwrap();
-        let store = rehearsal(&root, "migrate");
+        let store = format_two(&root, "migrate");
         let before = rows(&store.db);
         drop(store);
         if target == 2 {

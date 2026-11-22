@@ -50,6 +50,65 @@ fn receipts_extend_the_verified_prefix_and_recheck_after_reopen() {
 }
 
 #[test]
+fn attempt_only_append_extends_verified_prefix_and_rejects_tampering() {
+    use crate::reader::FULL_CHECKS;
+
+    let root = TemporaryRoot::new().unwrap();
+    let mut store = rehearsal(&root, "attempt-prefix");
+    let cap = store.take_commit_capability().unwrap();
+    let event = advance(&mut store, &cap, 0);
+    let head = store.head().unwrap();
+    let leaf = &store.current().unwrap().unwrap().staged_u;
+    let mut record: InternalActivityRecordV2 = with_refs(leaf);
+    let local = record.local.as_mut().unwrap();
+    let input = store
+        .prepare(&with_refs::<CognitiveInput>(leaf), "1")
+        .unwrap();
+    let modulation = store
+        .prepare(&with_refs::<ModulationEnvelopeV2>(leaf), "1")
+        .unwrap();
+    local.input = input.reference().clone();
+    local.modulation = modulation.reference().clone();
+    local.model_hash = local.binding.environment.model.digest.clone();
+    local.tokenizer_hash = local.binding.environment.tokenizer.digest.clone();
+    local.binding.base_commit = event.commit_id;
+    local.binding.branch_id = store.branch.clone();
+
+    let mut append = |store: &mut Store<Rehearsal>, request: &str| {
+        record.local.as_mut().unwrap().binding.request_id = request.into();
+        let activity = store.prepare(&record, "1").unwrap();
+        crate::activity_audit::record(store, &activity, request, "stale").unwrap();
+        activity
+    };
+    let initial = store.verified_reader().unwrap();
+    let full = FULL_CHECKS.get();
+    let first = append(&mut store, "attempt-a");
+    assert_eq!(store.head().unwrap(), head);
+    assert!(!store.publication_matches(&initial).unwrap());
+    let updated = store.verified_reader().unwrap();
+    assert!(store.publication_matches(&updated).unwrap());
+    let attempts = updated.activity_attempts("attempt-a", 1).unwrap();
+    assert_eq!(attempts.len(), 1);
+    assert_eq!(&attempts[0].0, first.reference());
+    assert_eq!(FULL_CHECKS.get(), full);
+
+    let second = append(&mut store, "attempt-b");
+    assert_eq!(store.head().unwrap(), head);
+    assert!(!store.publication_matches(&updated).unwrap());
+    // Replace only the new object with well-formed bytes of the same length.
+    // No other SQL writer changes the epoch and invalidates the cached prefix.
+    let first_path = store.objects.path(first.reference()).unwrap();
+    let second_path = store.objects.path(second.reference()).unwrap();
+    std::fs::copy(first_path, second_path).unwrap();
+    assert!(matches!(
+        store.verified_reader(),
+        Err(Error::Rejected("object digest mismatch"))
+    ));
+    assert_eq!(FULL_CHECKS.get(), full + 1);
+    assert!(!store.has_verified_publication().unwrap());
+}
+
+#[test]
 fn cached_receipt_checks_transaction_objects_and_live_publication() {
     let root = TemporaryRoot::new().unwrap();
     let mut store = rehearsal(&root, "receipt-damage");
@@ -73,7 +132,7 @@ fn cached_receipt_checks_transaction_objects_and_live_publication() {
         "PRAGMA foreign_keys=OFF; DROP TRIGGER immutable_commits_DELETE; DELETE FROM commits;",
     )
     .unwrap();
-    assert!(reader.read::<CoreTransactionV2>(&result.snapshot).is_ok());
+    assert!(reader.read::<CoreTransactionV4>(&result.snapshot).is_ok());
     assert!(reader.read_published_transaction(&result.snapshot).is_err());
     assert!(store.receipt_reader(&mut slot).is_err());
     assert!(slot.is_none());
@@ -260,7 +319,7 @@ fn incremental_verification_hashes_new_references_and_full_checks_cold_history()
         std::fs::write(path, bytes).unwrap();
         if cold {
             let reader = store.receipt_reader(&mut slot).unwrap();
-            assert!(reader.read::<CoreTransactionV2>(&reference).is_err());
+            assert!(reader.read::<CoreTransactionV4>(&reference).is_err());
             assert!(reader.read_published_transaction(&reference).is_err());
         } else {
             assert!(store.receipt_reader(&mut slot).is_err());
