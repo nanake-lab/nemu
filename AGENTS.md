@@ -178,6 +178,13 @@ pnpm eval:helpers; pnpm eval:speech; pnpm eval:memory
 - 当前提交的必要检查通过，任务卡的验收命令全部通过，所需审查已完成（只改文档时按第 9 节的检查范围）；
 - 报告里没有「阻塞」类的待确认项。
 
+#### Windows 检查
+
+- 每个需要 Windows 验收的 PR 在审查通过、准备合并时完整跑一次 Windows 检查，用 `gh workflow run windows.yml --ref <分支> -f full=true`。
+- 转为可审查时自动按改动范围运行。草稿阶段需要检查时，用 `gh workflow run windows.yml --ref <分支>`，默认按分支相对默认分支的完整改动判定范围。
+- W02 在 GitHub 托管的 Windows runner 上执行，W18 和 desktop 由自托管 runner 执行。第 9 节链接的 CI 范围文档中，关于 runner 与手动触发范围的说明以本节为准。
+- 需要 GPU 的检查在自托管 runner 所在的主机执行，按第 9 节安排 GPU 安静窗口。
+
 **合并前核对当前 head：** CI 结论（看这个提交的检查，不拿旧提交或本机的通过代替）；报告的「当前状态」；没有勾选的验收项与待确认项；`BLOCKED.md` 里有没有未解除的项。判断 PR 状态时先读最新提交和最后一条评论。
 
 合并一律用 squash。提交信息里不写 `[skip ci]`，否则 main 的检查会被跳过。
