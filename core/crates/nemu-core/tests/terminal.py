@@ -275,6 +275,7 @@ def test_host(binary: str, root: Path):
         assert all(r[0] == "auth-v1-" + r[3] and r[2] == "desktop" for r in rows)
         assert {r[1] for r in rows} == {hashlib.sha256(b"nemu/windows-principal/v1\0" + sid.encode()).hexdigest()}
     with closing(sqlite3.connect((root / "Nemu/core/rehearsal/store.sqlite").as_uri() + "?mode=ro", uri=True)) as db:
+        assert db.execute("SELECT commit_id, processed FROM branch_head WHERE singleton=1").fetchone() == (None, 0)
         reasons = [codec.decode_canonical("IngressRejection", row[0], LIMITS)["reason"]
                    for row in db.execute("SELECT record FROM ingress_rejections ORDER BY position")]
     assert sorted(reasons) == sorted([Reason.AUTH_FAILED, Reason.INVALID_FRAME, Reason.CAPABILITY_DENIED, Reason.CAPABILITY_DENIED])
