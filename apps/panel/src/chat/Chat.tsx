@@ -5,13 +5,13 @@ import { Composer } from '../legacy/Composer.js';
 import type { ChatPanelChannel, ChatStatus } from './channel.js';
 import './chat.css';
 
-type Message = { id: string; speaker: 'You' | 'Nemu'; text: string };
+import { appendChunk, Transcript, type ChatMessage } from './Transcript.js';
 type Approval = AppBusPayloads['approval.request.v2'];
 type Choice = AppBusPayloads['approval.decision.v2']['decision'];
 
 export function Chat({ channel = window.nemuChat }: { channel?: ChatPanelChannel } = {}) {
   const [draft, setDraft] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const stopped = useRef(new Set<string>());
   const [active, setActive] = useState<string[]>([]);
   const [status, setStatus] = useState<ChatStatus>({
@@ -40,18 +40,8 @@ export function Chat({ channel = window.nemuChat }: { channel?: ChatPanelChannel
         if (event.type === 'output.chunk') {
           const result = appBusPayloads['output.chunk'].safeParse(event.payload);
           if (!result.success) return;
-          const { outputId, text } = result.data;
-          if (stopped.current.has(outputId)) return;
-          setMessages((rows) => {
-            if (!rows.some((row) => row.speaker === 'Nemu' && row.id === outputId)) {
-              return [...rows, { id: outputId, speaker: 'Nemu', text }];
-            }
-            return rows.map((row) =>
-              row.speaker === 'Nemu' && row.id === outputId
-                ? { ...row, text: row.text + text }
-                : row,
-            );
-          });
+          if (stopped.current.has(result.data.outputId)) return;
+          setMessages((rows) => appendChunk(rows, result.data));
         } else if (event.type === 'output.state') {
           const result = appBusPayloads['output.state'].safeParse(event.payload);
           if (!result.success) return;
@@ -110,14 +100,7 @@ export function Chat({ channel = window.nemuChat }: { channel?: ChatPanelChannel
   const outputId = active.at(-1);
   return (
     <section className="chat" aria-label="Conversation">
-      <ol className="chat-messages" aria-label="Messages" aria-live="polite">
-        {messages.map((message) => (
-          <li key={message.speaker + message.id}>
-            <strong>{message.speaker}</strong>
-            <div>{message.text}</div>
-          </li>
-        ))}
-      </ol>
+      <Transcript messages={messages} />
       {approvals.map((request) => (
         <section key={request.approvalId} aria-label="Approval request">
           <h2>{request.title}</h2>
