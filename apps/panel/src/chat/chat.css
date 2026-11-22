@@ -1,0 +1,30 @@
+.chat-messages {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chat-messages li {
+  padding: 12px 14px;
+  border: 1px solid #d9dee6;
+  border-radius: 8px;
+  background: #fff;
+  overflow-wrap: anywhere;
+}
+
+.chat-messages li div {
+  margin-top: 4px;
+  white-space: pre-wrap;
+}
+
+.chat-status {
+  color: #596373;
+  font-size: 0.875rem;
+  margin: 12px 0;
+}
+
+.chat code {
+  overflow-wrap: anywhere;
+}

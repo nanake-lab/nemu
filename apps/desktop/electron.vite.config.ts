@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts', '@nemu/voice', '@nemu/desktop-sense'] })],
+    plugins: [externalizeDepsPlugin({ exclude: ['@nemu/contracts', '@nemu/voice', '@nemu/desktop-sense', '@nemu/terminal'] })],
     build: {
       rollupOptions: {
         external: ['sherpa-onnx-node', 'koffi'],
