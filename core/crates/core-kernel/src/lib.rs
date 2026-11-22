@@ -8,8 +8,9 @@ pub mod fast;
 pub mod law;
 pub mod modulation;
 
-// P5-24/P5-26 条件性交付：只进测试构建，不暴露给生产。
+// P5-24 evidence remains test-only. P5-30 opts into pure P5-26 staging;
+// this grants no storage/publication capability or production authentication.
 #[cfg(test)]
 pub mod evidence;
-#[cfg(test)]
+#[cfg(any(test, feature = "synthetic-recompute"))]
 pub mod recompute;
