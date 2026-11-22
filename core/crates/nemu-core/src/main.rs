@@ -1,6 +1,8 @@
 #![deny(unsafe_code)]
 
 #[cfg(windows)]
+mod authority;
+#[cfg(windows)]
 mod deployment;
 #[cfg(windows)]
 mod host;

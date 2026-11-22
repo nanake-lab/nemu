@@ -1,33 +1,15 @@
-use crate::{deployment, logging, signal};
+use crate::{authority::LocalAuthority, deployment, logging, signal};
 use core_store::{Rehearsal, Store};
 use core_types::{generated::*, scalar::DecimalI64};
 use gateway::{
-    Grants, TerminalToken,
+    TerminalToken,
     gateway::{Gateway, Installation},
-    hooks::{CoreHandler, Decision},
 };
 use std::{
     path::PathBuf,
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 use tracing::level_filters::LevelFilter;
-
-struct WaitingForRoot;
-
-impl CoreHandler<Rehearsal> for WaitingForRoot {
-    fn authorize_event(
-        &mut self,
-        _: &Store<Rehearsal>,
-        _: &TerminalSession,
-        _: &TerminalEvent,
-        _: &SourceMetadata,
-    ) -> Decision<Grants> {
-        // HOST-01-user-text: pairing authenticates an installation. The source
-        // authority predicate for an assertion from a person is still missing.
-        Err(IngressReason::CAPABILITY_DENIED)
-    }
-    // The trait denies all controls and process_next returns no commit results.
-}
 
 fn options(args: impl Iterator<Item = String>) -> Result<LevelFilter, &'static str> {
     let mut lineage = None;
@@ -102,7 +84,19 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             INGRESS_CANCEL,
         ],
     );
-    let mut gateway = Gateway::new(store, WaitingForRoot, vec![install], config)?;
+    // This API reads TokenUser from our process token. No peer-supplied name
+    // or connection address participates in principal identity.
+    let endpoint = gateway::pipe::current_pipe_name()?;
+    let sid = endpoint
+        .strip_prefix(r"\\.\pipe\nemu-core-")
+        .ok_or("unexpected local endpoint")?;
+    let authority = LocalAuthority::open(
+        &base.join("Nemu/rehearsal-auth.sqlite"),
+        sid,
+        config.frames.encoding,
+    )
+    .map_err(|_| "cannot open rehearsal authentication records")?;
+    let mut gateway = Gateway::new(store, authority, vec![install], config)?;
     signal::install()?;
     tokio::runtime::Builder::new_current_thread()
         .enable_all()

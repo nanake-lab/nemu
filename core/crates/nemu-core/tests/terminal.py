@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import ctypes
+import hashlib
 from ctypes import wintypes
 import json
 import msvcrt
@@ -14,13 +15,13 @@ import sys
 import tempfile
 from threading import Timer
 import time
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 
 ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(ROOT / "workers/irl/generated"))
 from echo import ingress, runtime as codec
 from echo.bridge import from_json
-from echo.types import AuthStatus, EpistemicType, IngressKind as Kind, IngressReason as Reason, UploadStatus
+from echo.types import AuthStatus, EpistemicType, EventKind, IngressKind as Kind, IngressReason as Reason, UploadStatus, ReceiptStage
 
 LIMITS = codec.Limits(4 << 20, 4096, 64)
 STOP_SECONDS = 5
@@ -95,10 +96,14 @@ def read_exact(pipe, size: int) -> bytes:
     return bytes(data)
 
 
-def exchange(pipe, name: str, request: dict, response: str) -> dict:
+def send(pipe, name: str, request: dict) -> None:
     data = codec.encode_protobuf(name, request, LIMITS)
     frame = struct.pack("<I", len(data)) + data
     assert pipe.write(frame) == len(frame)
+
+
+def exchange(pipe, name: str, request: dict, response: str) -> dict:
+    send(pipe, name, request)
     size, = struct.unpack("<I", read_exact(pipe, 4))
     assert 0 < size <= LIMITS.max_bytes
     return codec.decode_protobuf(response, read_exact(pipe, size), LIMITS)
@@ -112,9 +117,13 @@ def authenticate(pipe, token: bytes) -> dict:
     return reply
 
 
+def request_for(session, kind, **payload):
+    return dict(schema_version=1, request_id=next(iter(payload)), protocol_version=1,
+                session_id=session["session_id"], kind=int(kind), **payload)
+
+
 def dispatch(pipe, session, kind, **payload):
-    request = dict(schema_version=1, request_id=next(iter(payload)), protocol_version=1,
-                   session_id=session["session_id"], kind=int(kind), **payload)
+    request = request_for(session, kind, **payload)
     reply = exchange(pipe, "TerminalRequest", request, "TerminalResponse")
     ingress.response(request, reply, session, LIMITS)
     return reply
@@ -125,32 +134,44 @@ def upload(pipe, session, name, value):
     ref = dict(schema_version=1, object_type=codec.SCHEMA["messages"][name]["tag"],
                resource_version="1", byte_length=len(data),
                digest=bytes.fromhex(codec.digest(name, value, LIMITS)))
-    chunk = dict(schema_version=1, upload_id=name, object=ref, offset=0, data=data, final_chunk=True)
+    chunk = dict(schema_version=1, upload_id=ref["digest"].hex(), object=ref, offset=0, data=data, final_chunk=True)
     reply = dispatch(pipe, session, Kind.INGRESS_UPLOAD, upload=chunk)
     assert reply["upload"]["status"] == UploadStatus.UPLOAD_COMPLETE
     return ref
 
 
-def check_terminal(pipe, token, fixtures):
+def observation(pipe, session, fixtures, index):
+    payload = upload(pipe, session, "UserText", dict(schema_version=1, text=f"synthetic host text {index}"))
+    source = fixtures["SourceMetadata"] | dict(source_span=payload, epistemic_type=int(EpistemicType.USER_ASSERTION))
+    provenance = upload(pipe, session, "SourceMetadata", source)
+    return fixtures["TerminalEvent"] | dict(kind=int(EventKind.OBSERVATION), id=f"host-{index}",
+        stable_source_key=f"01ARZ3NDEKTSV4RRFFQ{index:07d}", payload_ref=payload,
+        payload_digest=payload["digest"], provenance=provenance)
+
+
+def durable(pipe, session, event):
+    receipt = dispatch(pipe, session, Kind.INGRESS_EVENT, event=event)["receipt"]
+    assert receipt["stage"] == ReceiptStage.RECEIVED_DURABLE
+    assert receipt["stable_source_key"] == event["stable_source_key"]
+    assert receipt["event_id"] == event["id"]
+    return receipt
+
+
+def raw_events(root):
+    uri = (root / "Nemu/core/rehearsal/store.sqlite").as_uri() + "?mode=ro"
+    with closing(sqlite3.connect(uri, uri=True)) as db:
+        return [codec.decode_canonical("EventEnvelope", row[0], LIMITS)
+                for row in db.execute("SELECT event FROM raw_ingress ORDER BY position")]
+
+
+def session_for(pipe, token):
     auth = authenticate(pipe, token)
     assert auth["status"] == AuthStatus.AUTHENTICATED
     session = auth["session"]
     assert set(session["capabilities"]) == {
         Kind.INGRESS_EVENT, Kind.INGRESS_QUERY, Kind.INGRESS_APPROVAL, Kind.INGRESS_CANCEL, Kind.INGRESS_UPLOAD,
     }
-    growth = dispatch(pipe, session, Kind.INGRESS_GROWTH, growth=fixtures["GrowthControl"])
-    assert growth["reason"] == Reason.CAPABILITY_DENIED
-    payload = upload(pipe, session, "UserText", dict(schema_version=1, text="synthetic host text"))
-    source = fixtures["SourceMetadata"] | dict(source_span=payload, epistemic_type=int(EpistemicType.USER_ASSERTION))
-    provenance = upload(pipe, session, "SourceMetadata", source)
-    event = fixtures["TerminalEvent"] | dict(stable_source_key="01ARZ3NDEKTSV4RRFFQ69G5FAV",
-        payload_ref=payload, payload_digest=payload["digest"], provenance=provenance)
-    # The card explicitly requires denial until a source-authority predicate exists.
-    for index in range(20):
-        observation = event | dict(id=f"host-{index}", stable_source_key=f"01ARZ3NDEKTSV4RRFFQ{index:07d}")
-        reply = dispatch(pipe, session, Kind.INGRESS_EVENT, event=observation)
-        assert reply["reason"] == Reason.CAPABILITY_DENIED and "receipt" not in reply
-    print("user_text: 20 CAPABILITY_DENIED, 0 RECEIVED_DURABLE")
+    return session
 
 
 def test_host(binary: str, root: Path):
@@ -163,10 +184,11 @@ def test_host(binary: str, root: Path):
     samples = json.loads((ROOT / "core/contracts/golden/legal.json").read_text(encoding="utf-8"))
     fixtures = {v["request"]["name"]: from_json(v["request"]["name"], v["request"]["value"])
                 for v in samples if v["request"]["name"] in {"TerminalEvent", "SourceMetadata", "GrowthControl"}}
+    sessions = []
+    accepted = []
     with running(binary, root) as child:
         protected = token_path.read_bytes()
-        # The private subprocess stdout pipe carries the temporary credential
-        # directly into memory. Neither child output nor token is logged.
+        # Private subprocess pipe only. No token in argv, environment, logs or evidence.
         token = powershell(
             "Add-Type -AssemblyName System.Security\n"
             "$b=[Security.Cryptography.ProtectedData]::Unprotect("
@@ -176,29 +198,82 @@ def test_host(binary: str, root: Path):
         with connect(pipe_name, child.pid) as pipe:
             assert authenticate(pipe, bytes(32))["reason"] == Reason.AUTH_FAILED
         with connect(pipe_name, child.pid) as pipe:
-            check_terminal(pipe, token, fixtures)
-        with connect(pipe_name, child.pid) as pipe:
             pipe.write(struct.pack("<I", LIMITS.max_bytes + 1))
             try:
                 assert not pipe.read(1)
             except BrokenPipeError:
                 pass
+        with connect(pipe_name, child.pid) as pipe:
+            session = session_for(pipe, token)
+            sessions.append(session["session_id"])
+            growth = dispatch(pipe, session, Kind.INGRESS_GROWTH, growth=fixtures["GrowthControl"])
+            assert growth["reason"] == Reason.CAPABILITY_DENIED
+            first = observation(pipe, session, fixtures, 0)
+            rejected = dispatch(pipe, session, Kind.INGRESS_EVENT, event=first | {"parents": ["unverified"]})
+            assert rejected["reason"] == Reason.CAPABILITY_DENIED
+            for index in range(20):
+                event = first if index == 0 else observation(pipe, session, fixtures, index)
+                receipt = durable(pipe, session, event)
+                assert receipt["raw_log_position"] == index
+                accepted.append((event, receipt))
+            # Kill immediately after consuming the last durable receipt.
+            child.kill()
+            child.wait(timeout=5)
+
+    with running(binary, root) as child:
+        recovered = raw_events(root)
+        assert len(recovered) == len(accepted) == 20
+        for stored, (event, receipt) in zip(recovered, accepted, strict=True):
+            assert all(stored[k] == v for k, v in event.items())
+            assert stored["ingest_time_ns"] == receipt["ingest_time_ns"]
+            assert stored["raw_log_position"] == receipt["raw_log_position"]
+            assert stored["session"] == sessions[0] and stored["device"] == "desktop"
+        with connect(pipe_name, child.pid) as pipe:
+            session = session_for(pipe, token)
+            sessions.append(session["session_id"])
+            unacknowledged = observation(pipe, session, fixtures, 20)
+            send(pipe, "TerminalRequest", request_for(session, Kind.INGRESS_EVENT, event=unacknowledged))
+            # No response read. Either storage outcome is legal at this boundary.
+            child.kill()
+            child.wait(timeout=5)
+
+    with running(binary, root) as child:
+        before_retry = raw_events(root)
+        assert before_retry[:20] == recovered and len(before_retry) in (20, 21)
+        if len(before_retry) == 21:
+            assert all(before_retry[20][k] == v for k, v in unacknowledged.items())
+        with connect(pipe_name, child.pid) as pipe:
+            session = session_for(pipe, token)
+            sessions.append(session["session_id"])
+            retry = observation(pipe, session, fixtures, 20)
+            assert retry == unacknowledged
+            receipt = durable(pipe, session, retry)
+            assert receipt["raw_log_position"] == len(before_retry)
         start = time.monotonic()
         subprocess.run([sys.executable, "-I", "-B", __file__, "--stop", str(child.pid)],
                        creationflags=subprocess.CREATE_NO_WINDOW, check=True, timeout=STOP_SECONDS)
         assert child.wait(timeout=max(0, STOP_SECONDS - (time.monotonic() - start))) == 0
         print(f"console stop: {time.monotonic() - start:.3f} s")
-    db = root / "Nemu/core/rehearsal/store.sqlite"
-    with sqlite3.connect(db.as_uri() + "?mode=ro", uri=True) as conn:
-        assert conn.execute("SELECT count(*) FROM raw_ingress").fetchone() == (0,)
-        reasons = [codec.decode_canonical("IngressRejection", row[0], LIMITS)["reason"]
-                   for row in conn.execute("SELECT record FROM ingress_rejections ORDER BY position")]
-        assert reasons == [Reason.AUTH_FAILED] + [Reason.CAPABILITY_DENIED] * 21 + [Reason.INVALID_FRAME]
-    conn.close()
+
     with running(binary, root) as child:
         assert token_path.read_bytes() == protected
+        final = raw_events(root)
+        assert final[:-1] == before_retry and all(final[-1][k] == v for k, v in retry.items())
         with connect(pipe_name, child.pid) as pipe:
-            assert authenticate(pipe, token)["status"] == AuthStatus.AUTHENTICATED
+            sessions.append(session_for(pipe, token)["session_id"])
+        # Every accepted handshake already has a durable record, even without an event.
+        with closing(sqlite3.connect((root / "Nemu/rehearsal-auth.sqlite").as_uri() + "?mode=ro", uri=True)) as db:
+            rows = db.execute("SELECT record_id,principal_id,installation_id,session_id FROM local_auth_v1").fetchall()
+        assert len(rows) == len(set(sessions)) == 4
+        assert {r[3] for r in rows} == set(sessions)
+        assert all(r[0] == "auth-v1-" + r[3] and r[2] == "desktop" for r in rows)
+        assert {r[1] for r in rows} == {hashlib.sha256(b"nemu/windows-principal/v1\0" + sid.encode()).hexdigest()}
+    with closing(sqlite3.connect((root / "Nemu/core/rehearsal/store.sqlite").as_uri() + "?mode=ro", uri=True)) as db:
+        reasons = [codec.decode_canonical("IngressRejection", row[0], LIMITS)["reason"]
+                   for row in db.execute("SELECT record FROM ingress_rejections ORDER BY position")]
+    assert sorted(reasons) == sorted([Reason.AUTH_FAILED, Reason.INVALID_FRAME, Reason.CAPABILITY_DENIED, Reason.CAPABILITY_DENIED])
+    print(f"20 durable receipts recovered, unacknowledged retry position {receipt['raw_log_position']}, "
+          f"{len(final)} D records, 4 authenticated sessions, 4 audited denials")
 
 
 if __name__ == "__main__":
