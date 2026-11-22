@@ -29,9 +29,9 @@ def check_cognition_message(name: str, value: dict[str, Any], limits: Limits) ->
         return
     v = normalize(name, value, limits)
 
-    def tag(key: str, expected: str) -> None:
+    def tag(key: str, *expected: str) -> None:
         if key in v:
-            fail(v[key]["object_type"] == expected, f"{name}.{key} type")
+            fail(v[key]["object_type"] in expected, f"{name}.{key} type")
 
     def child(key: str, child_name: str) -> None:
         if key in v:
@@ -75,10 +75,10 @@ def check_cognition_message(name: str, value: dict[str, Any], limits: Limits) ->
         fail(v["finished_at_ns"] >= v["started_at_ns"], "request execution interval")
         child("result", "CognitiveResultAndReceipt")
     elif name == "ActivityState":
-        tag("latest_step", "echo.internal-activity-record")
+        tag("latest_step", "echo.internal-activity-record", "echo.internal-activity-record-v2")
         tag("successor", "echo.cognitive-input")
     elif name == "CognitiveInflightAction":
-        tag("origin_record", "echo.internal-activity-record")
+        tag("origin_record", "echo.internal-activity-record", "echo.internal-activity-record-v2")
     elif name == "CognitionState":
         tag("active_request", "echo.cognitive-input")
         tag("runnable_successor", "echo.cognitive-input")

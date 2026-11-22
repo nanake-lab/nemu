@@ -11,7 +11,7 @@ import sys
 from typing import Any
 
 from chat import append_session_log, cargo_env, repo_root, run_assembler
-from check_thought import check, complete_response, external_records
+from check_thought import check, complete_response, external_records, own_thoughts
 from think import (CACHE, CHECK_RUN_DIR, PLAN_RUN_DIR, TIME_FORMAT, append_thought,
                    deepseek_sample, projection_payload, thought_request)
 from think_plan import ThoughtPlan
@@ -56,6 +56,7 @@ def run_chains(
     scenario: dict[str, Any], start: datetime, step_min: int, rounds: int,
     modes: tuple[str, ...], chains: int, api_key: str, output: Path, resume: str | None = None,
     *, plan2: bool = False, check_thought: bool = False,
+    checker: str = "v1", checker_think: str = "off",
 ) -> None:
     stamp = datetime.strptime(resume, STAMP).strftime(STAMP) if resume else datetime.now(timezone.utc).strftime(STAMP)
     output.mkdir(parents=True, exist_ok=True)
@@ -92,6 +93,10 @@ def run_chains(
                          mode=mode, chain=number, binding=binding, request=request)
             if check_thought:
                 entry["check"] = True
+                if checker != "v1":
+                    entry["checker"] = checker
+                if checker_think != "off":
+                    entry["checker_think"] = checker_think
             sample = recorded_sample(path, prior[path], entry, api_key, plan)
             blocked = False
             if check_thought and not sample.get("empty"):
@@ -99,10 +104,19 @@ def run_chains(
                     check_entry = dict(kind="check_request", round=index + 1, request=body)
                     return recorded_sample(path, prior[path], check_entry, api_key)
 
-                result = check(sample["text"], external_records(payload["records"][:-1], binding),
-                               send=send_check)
+                result = check(
+                    sample["text"], external_records(payload["records"][:-1], binding),
+                    checker=checker, checker_think=checker_think,
+                    now=at if checker == "v3" else None,
+                    own_thoughts=(own_thoughts(payload["records"][:-1], binding)
+                                  if checker == "v3" else None),
+                    send=send_check,
+                )
                 blocked = result["blocked"]
                 decision = dict(kind="decision", round=index + 1, blocked=blocked, claims=result["claims"])
+                if checker in ("v2", "v3"):
+                    decision["out_of_bounds"] = result["out_of_bounds"]
+                    decision["voided_claims"] = result["voided_claims"]
                 if prior[path]:
                     if prior[path].popleft() != decision:
                         raise ValueError(f"旧核对结论与重放不符：{path}")
@@ -136,6 +150,8 @@ def main() -> int:
     parser.add_argument("--thinker", choices=("deepseek",), default="deepseek")
     parser.add_argument("--ds-think", choices=("off",), default="off")
     parser.add_argument("--check", action="store_true", help="独立核对整条念头，通过后才写回")
+    parser.add_argument("--checker", choices=("v1", "v2", "v3"), default="v1", help="独立核对口径")
+    parser.add_argument("--checker-think", choices=("off", "high"), default="off", help="独立核对思考档位")
     parser.add_argument("--plan2", action="store_true")
     parser.add_argument("--chains", type=int, help="同一 --mode 下的独立链数")
     args = parser.parse_args()
@@ -154,7 +170,9 @@ def main() -> int:
         output = CHECK_RUN_DIR if args.check else (PLAN_RUN_DIR if args.plan2 else RUN_DIR)
         run_chains(json.loads(args.scenario.read_text(encoding="utf-8")),
                    datetime.strptime(args.start, TIME_FORMAT), args.step_min, args.rounds,
-                   modes, chains, api_key, output, args.resume, plan2=args.plan2, check_thought=args.check)
+                   modes, chains, api_key, output, args.resume,
+                   plan2=args.plan2, check_thought=args.check,
+                   checker=args.checker, checker_think=args.checker_think)
     except (KeyError, OSError, RuntimeError, ValueError, TypeError, OverflowError) as exc:
         print(f"错误：{exc}", file=sys.stderr)
         return 1
