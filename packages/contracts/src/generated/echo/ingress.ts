@@ -21,7 +21,7 @@ import {
 import { schema } from './schema.js';
 const uploadTypes: Readonly<Record<string, string>> = Object.fromEntries(
   Object.entries(schema.messages)
-    .filter(([, m]) => !m.transient && !m.superseded && !['terminal_ingress.proto', 'speak_think.proto', 'permission.proto'].includes(m.file))
+    .filter(([, m]) => !m.transient && !m.superseded && !['terminal_ingress.proto', 'speak_think.proto', 'permission.proto', 'initial_publication.proto'].includes(m.file))
     .map(([name, m]) => [m.tag, name]),
 );
 export function checkUploadWindow(

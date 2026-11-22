@@ -256,10 +256,24 @@ def main() -> None:
             # Same valid first chunk, only the declared tag changes. Contract
             # registration alone must not enable any new terminal upload route.
             for definition in SCHEMA["messages"].values():
-                if definition["file"] in ("speak_think.proto", "permission.proto"):
+                if definition["file"] in ("speak_think.proto", "permission.proto", "initial_publication.proto"):
                     chunk = copy.deepcopy(vector["request"])
                     chunk["chunk"]["object"]["object_type"] = definition["tag"]
                     bad(chunk)
+        if vector["label"] == "canonical-object-complete":
+            # The complete-object entry gets valid bytes, full length and the correct
+            # domain digest. Only its upload authority is missing (ADR 0049).
+            control = vector["request"]
+            for name, definition in SCHEMA["messages"].items():
+                if definition["file"] != "initial_publication.proto":
+                    continue
+                encoded = next(v["expected"] for v in legal if v["request"]["name"] == name)
+                size = len(bytes.fromhex(encoded["canonical"]))
+                assert size <= int(control["budget"]["max_object_bytes"])
+                ref = control["reference"] | dict(
+                    object_type=definition["tag"], byte_length=str(size), digest=encoded["digest"]
+                )
+                bad(control | dict(reference=ref, hex=encoded["canonical"]))
     for language, command in commands.items():
         actual = probe(command, queries)
         for i, (got, want) in enumerate(zip(actual, expected, strict=True)):
