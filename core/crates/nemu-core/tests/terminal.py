@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(ROOT / "workers/irl/generated"))
 from echo import ingress, runtime as codec
 from echo.bridge import from_json
-from echo.types import AuthStatus, EpistemicType, EventKind, IngressKind as Kind, IngressReason as Reason, UploadStatus, ReceiptStage
+from echo.types import (AuthStatus, Derivation, EpistemicType, EventKind, IngressKind as Kind,
+                        IngressReason as Reason, ReceiptStage, ResolutionState, UploadStatus)
 
 LIMITS = codec.Limits(4 << 20, 4096, 64)
 STOP_SECONDS = 5
@@ -140,17 +141,22 @@ def upload(pipe, session, name, value):
     return ref
 
 
-def observation(pipe, session, fixtures, index):
+def observation(pipe, session, index):
     payload = upload(pipe, session, "UserText", dict(schema_version=1, text=f"synthetic host text {index}"))
-    source = fixtures["SourceMetadata"] | dict(source_span=payload, epistemic_type=int(EpistemicType.USER_ASSERTION))
+    source = dict(schema_version=1, source_refs=[], source_span=payload,
+                  epistemic_type=int(EpistemicType.USER_ASSERTION), derivation=int(Derivation.VERBATIM),
+                  resolution_state=int(ResolutionState.UNRESOLVED), representation_version="1")
     provenance = upload(pipe, session, "SourceMetadata", source)
-    return fixtures["TerminalEvent"] | dict(kind=int(EventKind.OBSERVATION), id=f"host-{index}",
+    return dict(schema_version=1, kind=int(EventKind.OBSERVATION), id=f"host-{index}",
+        parents=[], correction_of=[], event_time_ns=index, derivation=source["derivation"],
         stable_source_key=f"01ARZ3NDEKTSV4RRFFQ{index:07d}", payload_ref=payload,
         payload_digest=payload["digest"], provenance=provenance)
 
 
 def durable(pipe, session, event):
-    receipt = dispatch(pipe, session, Kind.INGRESS_EVENT, event=event)["receipt"]
+    reply = dispatch(pipe, session, Kind.INGRESS_EVENT, event=event)
+    assert "receipt" in reply, (event["id"], reply.get("reason"))
+    receipt = reply["receipt"]
     assert receipt["stage"] == ReceiptStage.RECEIVED_DURABLE
     assert receipt["stable_source_key"] == event["stable_source_key"]
     assert receipt["event_id"] == event["id"]
@@ -182,8 +188,8 @@ def test_host(binary: str, root: Path):
     pipe_name = rf"\\.\pipe\nemu-core-{sid}"
     token_path = root / "Nemu/terminal.token"
     samples = json.loads((ROOT / "core/contracts/golden/legal.json").read_text(encoding="utf-8"))
-    fixtures = {v["request"]["name"]: from_json(v["request"]["name"], v["request"]["value"])
-                for v in samples if v["request"]["name"] in {"TerminalEvent", "SourceMetadata", "GrowthControl"}}
+    growth_control = next(from_json("GrowthControl", v["request"]["value"])
+                          for v in samples if v["request"]["name"] == "GrowthControl")
     sessions = []
     accepted = []
     with running(binary, root) as child:
@@ -206,13 +212,13 @@ def test_host(binary: str, root: Path):
         with connect(pipe_name, child.pid) as pipe:
             session = session_for(pipe, token)
             sessions.append(session["session_id"])
-            growth = dispatch(pipe, session, Kind.INGRESS_GROWTH, growth=fixtures["GrowthControl"])
+            growth = dispatch(pipe, session, Kind.INGRESS_GROWTH, growth=growth_control)
             assert growth["reason"] == Reason.CAPABILITY_DENIED
-            first = observation(pipe, session, fixtures, 0)
+            first = observation(pipe, session, 0)
             rejected = dispatch(pipe, session, Kind.INGRESS_EVENT, event=first | {"parents": ["unverified"]})
             assert rejected["reason"] == Reason.CAPABILITY_DENIED
             for index in range(20):
-                event = first if index == 0 else observation(pipe, session, fixtures, index)
+                event = first if index == 0 else observation(pipe, session, index)
                 receipt = durable(pipe, session, event)
                 assert receipt["raw_log_position"] == index
                 accepted.append((event, receipt))
@@ -231,7 +237,7 @@ def test_host(binary: str, root: Path):
         with connect(pipe_name, child.pid) as pipe:
             session = session_for(pipe, token)
             sessions.append(session["session_id"])
-            unacknowledged = observation(pipe, session, fixtures, 20)
+            unacknowledged = observation(pipe, session, 20)
             send(pipe, "TerminalRequest", request_for(session, Kind.INGRESS_EVENT, event=unacknowledged))
             # No response read. Either storage outcome is legal at this boundary.
             child.kill()
@@ -245,7 +251,7 @@ def test_host(binary: str, root: Path):
         with connect(pipe_name, child.pid) as pipe:
             session = session_for(pipe, token)
             sessions.append(session["session_id"])
-            retry = observation(pipe, session, fixtures, 20)
+            retry = observation(pipe, session, 20)
             assert retry == unacknowledged
             receipt = durable(pipe, session, retry)
             assert receipt["raw_log_position"] == len(before_retry)
