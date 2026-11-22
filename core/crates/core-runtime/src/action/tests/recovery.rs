@@ -9,16 +9,14 @@ fn rebuilt_outbox_rows_equal_online_rows() {
     let mut f = Fixture::new(false, false);
     f.registered();
     let head = f.store.base_commit().unwrap();
-    let db = f.store.path().join("store.sqlite");
-    let check = r#"import pathlib, sqlite3, sys
-uri = pathlib.Path(sys.argv[1]).resolve().as_uri() + '?mode=ro'
-with sqlite3.connect(uri, uri=True) as db:
-    rows = db.execute('SELECT action_id FROM outbox WHERE commit_id=? ORDER BY action_id', (sys.argv[2],)).fetchall()
+    let check = r#"import sqlite3, sys
+with sqlite3.connect('file:store.sqlite?mode=ro', uri=True) as db:
+    rows = db.execute('SELECT action_id FROM outbox WHERE commit_id=? ORDER BY action_id', (sys.argv[1],)).fetchall()
     assert rows == [('a',)], rows
 "#;
     let probe = std::process::Command::new("python")
         .args(["-I", "-c", check])
-        .arg(db)
+        .current_dir(f.store.path())
         .arg(head)
         .output()
         .unwrap();
