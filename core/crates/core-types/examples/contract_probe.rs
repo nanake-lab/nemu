@@ -79,6 +79,7 @@ fn probe(schema: &Schema, request: &Value) -> Result<Value, String> {
     core_types::semantic::check_cognition_message(name, &value, limits)?;
     core_types::semantic::check_permission_message(name, &value, limits)?;
     core_types::semantic::check_speak_think_message(name, &value, limits)?;
+    core_types::semantic::check_semantic_evidence_message(name, &value, limits)?;
     core_types::semantic::check_j_message(name, &value, limits)?;
     Ok(
         json!({"ok":true,"value":value,"canonical":hex(&schema.encode_canonical(name,&value,limits)?),

@@ -11,7 +11,7 @@ UPLOAD_TYPES = {
     for name, m in r.SCHEMA["messages"].items()
     if not m.get("transient")
     and not m.get("superseded")
-    and m["file"] not in ("terminal_ingress.proto", "speak_think.proto", "permission.proto")
+    and m["file"] not in ("terminal_ingress.proto", "speak_think.proto", "permission.proto", "semantic_evidence.proto")
 }
 
 
