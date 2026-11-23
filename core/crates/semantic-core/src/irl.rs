@@ -212,7 +212,29 @@ pub trait CommittedIrlPrefix: SemanticReadView {
     fn initial_irl(
         &self,
         turn: &RecordVersion,
-    ) -> core_types::contract::Result<Option<&StageAdoption>>;
+    ) -> core_types::contract::Result<Option<&RecordVersion>>;
+}
+
+/// Authenticate the canonical bytes at the selected record version. An index
+/// hit without its adopted object is insufficient, including for the stage itself.
+fn adopted<T: WireMessage>(
+    prefix: &impl CommittedIrlPrefix,
+    at: &RecordVersion,
+    limits: Limits,
+) -> Result<T> {
+    let VisibleContent::Adopted(version, bytes) = prefix.content(at).map_err(|_| Fault::Source)?
+    else {
+        return Err(Fault::Source);
+    };
+    if version != at || version.branch_id != prefix.branch() {
+        return Err(Fault::Binding);
+    }
+    let value = T::from_canonical(bytes, limits).map_err(|_| Fault::Object)?;
+    check_object(&at.content, &value, limits)?;
+    if value.canonical_bytes(limits).map_err(|_| Fault::Object)? != bytes {
+        return Err(Fault::Object);
+    }
+    Ok(value)
 }
 
 /// Read the same-turn product from the prefix without repeating interpretation.
@@ -225,12 +247,13 @@ pub fn committed_irl(
     if prefix.transaction().is_some() || prefix.branch() != turn.branch_id {
         return Err(Fault::Binding);
     }
-    let Some(stage) = prefix.initial_irl(turn).map_err(|_| Fault::Source)? else {
+    let Some(at) = prefix.initial_irl(turn).map_err(|_| Fault::Source)? else {
         return Ok(None);
     };
+    let stage: StageAdoption = adopted(prefix, at, limits)?;
     core_types::semantic::check_semantic_evidence_message(
         StageAdoption::NAME,
-        &serde_json::to_value(stage).map_err(|_| Fault::Schema)?,
+        &serde_json::to_value(&stage).map_err(|_| Fault::Schema)?,
         limits,
     )
     .map_err(|_| Fault::Schema)?;
@@ -245,20 +268,8 @@ pub fn committed_irl(
     if stage.outcome == StageOutcome::STAGE_OUTCOME_FAILED {
         return Err(Fault::Source);
     }
-    let VisibleContent::Adopted(version, bytes) = prefix
-        .content(&stage.interpretation)
-        .map_err(|_| Fault::Source)?
-    else {
-        return Err(Fault::Source);
-    };
-    if version != &stage.interpretation {
-        return Err(Fault::Binding);
-    }
-    let graph = SemanticGraphV2::from_canonical(bytes, limits).map_err(|_| Fault::Object)?;
-    check_object(&version.content, &graph, limits)?;
-    if graph.registry != stage.registry_before
-        || graph.canonical_bytes(limits).map_err(|_| Fault::Object)? != bytes
-    {
+    let graph: SemanticGraphV2 = adopted(prefix, &stage.interpretation, limits)?;
+    if graph.registry != stage.registry_before {
         return Err(Fault::Object);
     }
     Ok(Some(graph))

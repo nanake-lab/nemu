@@ -23,6 +23,8 @@ struct World {
     binding: ProposalBindingV2,
     graph: SemanticGraphV2,
     transaction: Option<&'static str>,
+    initial: Option<RecordVersion>,
+    stage_bytes: Vec<u8>,
     committed: Option<(StageAdoption, Vec<u8>)>,
 }
 
@@ -53,6 +55,12 @@ impl SemanticReadView for World {
         if id == &self.turn {
             return Ok(VisibleContent::Event(&self.raw, &self.bytes));
         }
+        if let Some(at) = &self.initial
+            && at == id
+            && !self.stage_bytes.is_empty()
+        {
+            return Ok(VisibleContent::Adopted(at, &self.stage_bytes));
+        }
         if let Some((stage, bytes)) = &self.committed
             && id == &stage.interpretation
         {
@@ -75,8 +83,8 @@ impl IrlReadView for World {
     }
 }
 impl CommittedIrlPrefix for World {
-    fn initial_irl(&self, _: &RecordVersion) -> contract::Result<Option<&StageAdoption>> {
-        Ok(self.committed.as_ref().map(|(stage, _)| stage))
+    fn initial_irl(&self, _: &RecordVersion) -> contract::Result<Option<&RecordVersion>> {
+        Ok(self.initial.as_ref())
     }
 }
 impl World {
@@ -149,6 +157,8 @@ impl World {
             binding,
             graph,
             transaction: Some("tx"),
+            initial: None,
+            stage_bytes: vec![],
             committed: None,
         }
     }
@@ -206,7 +216,19 @@ fn u6_reads_the_same_turn_graph_only_from_a_committed_prefix() {
         panic!("expected a governed graph")
     };
     let bytes = graph.canonical_bytes(limits()).unwrap();
-    w.committed = Some((staged.adoption, bytes));
+    let stage_ref = RecordVersion {
+        schema_version: 1,
+        branch_id: w.turn.branch_id.clone(),
+        record_id: "adoption".into(),
+        content: reference(&staged.adoption),
+    };
+    w.initial = Some(stage_ref);
+    w.committed = Some((staged.adoption.clone(), bytes));
+    assert_eq!(
+        committed_irl(&w, &w.turn, "tx", limits()),
+        Err(Fault::Source)
+    ); // graph alone
+    w.stage_bytes = staged.adoption.canonical_bytes(limits()).unwrap();
     assert_eq!(committed_irl(&w, &w.turn, "tx", limits()), Ok(Some(graph)));
     assert_eq!(
         committed_irl(&w, &w.turn, "retry", limits()),
@@ -227,6 +249,8 @@ fn u6_reads_the_same_turn_graph_only_from_a_committed_prefix() {
     stage.outcome = StageOutcome::STAGE_OUTCOME_FAILED;
     stage.reason = Some("failed".into());
     stage.coverage.clear();
+    w.initial.as_mut().unwrap().content = reference(stage);
+    w.stage_bytes = stage.canonical_bytes(limits()).unwrap();
     assert!(committed_irl(&w, &w.turn, "tx", limits()).is_err());
 }
 #[test]

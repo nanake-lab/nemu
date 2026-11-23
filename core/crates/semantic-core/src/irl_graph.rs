@@ -117,15 +117,6 @@ pub(super) fn govern(
 
     let validate = |part: &SemanticGraphV2| -> Result<()> {
         check_graph_registry(part, registry, limits).map_err(|_| Fault::Concept)?;
-        check_graph_sources(
-            part,
-            view,
-            &d.binding.base_commit,
-            Some(d.transaction),
-            d.time_facts,
-            limits,
-        )
-        .map_err(|_| Fault::Source)?;
         for c in &part.statements {
             if c.reported_text.source == *d.event
                 && (c.reported_text.path != adapter.1.path
@@ -153,12 +144,13 @@ pub(super) fn govern(
             // Pin the epistemic ceiling to the authenticated origins. The model
             // cannot turn an inference or a quotation into a user's self-report.
             for root in &meta.roots {
-                if root != d.event
-                    && !d.facts.items.iter().any(|i| {
-                        i.availability == QueryStatus::OK
-                            && i.source_id == root.record_id
-                            && i.content == root.content
-                    })
+                if root.branch_id != d.event.branch_id
+                    || root != d.event
+                        && !d.facts.items.iter().any(|i| {
+                            i.availability == QueryStatus::OK
+                                && i.source_id == root.record_id
+                                && i.content == root.content
+                        })
                 {
                     return Err(Fault::Source);
                 }
@@ -170,6 +162,15 @@ pub(super) fn govern(
                 return Err(Fault::Concept);
             }
         }
+        check_graph_sources(
+            part,
+            view,
+            &d.binding.base_commit,
+            Some(d.transaction),
+            d.time_facts,
+            limits,
+        )
+        .map_err(|_| Fault::Source)?;
         Ok(())
     };
     let mut rejected = BTreeMap::new();
