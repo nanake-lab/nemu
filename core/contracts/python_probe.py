@@ -7,6 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "workers/irl/generated"))
 from echo.permission import check_permission_message  # noqa: E402
+from echo.semantic_evidence import check_semantic_evidence  # noqa: E402
 from echo.speak_think import check_speak_think_message  # noqa: E402
 from echo.genesis import check_genesis  # noqa: E402
 from echo import runtime as r  # noqa: E402
@@ -56,6 +57,7 @@ for line in sys.stdin:
         check_law_state_message(name, v, limits)
         check_cognition_message(name, v, limits)
         check_permission_message(name, v, limits)
+        check_semantic_evidence(name, v, limits)
         check_speak_think_message(name, v, limits)
         check_j_message(name, v, limits)
         assert r.normalize(name, to_value(typed), limits) == v
