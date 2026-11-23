@@ -1,0 +1,338 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "state.proto";
+import "speak_think.proto";
+
+// Proposed on the P5-43 branch; ADR 0048. All tags are core-owned.
+
+enum ConceptLifecycle {
+  CONCEPT_LIFE_UNSPECIFIED = 0;
+  CONCEPT_LIFE_PROVISIONAL = 1;
+  CONCEPT_LIFE_STABLE = 2;
+  CONCEPT_LIFE_DEPRECATED = 3;
+}
+
+enum SemanticNodeKind {
+  SEM_NODE_UNSPECIFIED = 0;
+  SEM_NODE_REF = 1;
+  SEM_NODE_CLAIM = 2;
+  SEM_NODE_ACT = 3;
+}
+
+enum ClaimTimeKind {
+  CLAIM_TIME_UNSPECIFIED = 0;
+  CLAIM_TIME_NOT_APPLICABLE = 1;
+  CLAIM_TIME_UNKNOWN = 2;
+  CLAIM_TIME_FACT = 3;
+}
+
+enum ClaimModality {
+  CLAIM_MODE_UNSPECIFIED = 0;
+  CLAIM_MODE_REPORTED = 1;
+}
+
+enum InterpretationStage {
+  INTERPRET_STAGE_UNSPECIFIED = 0;
+  INTERPRET_STAGE_IRL = 1;
+  INTERPRET_STAGE_A = 2;
+  INTERPRET_STAGE_M = 3;
+}
+
+enum StageOutcome {
+  STAGE_OUTCOME_UNSPECIFIED = 0;
+  STAGE_OUTCOME_VALID = 1;
+  STAGE_OUTCOME_PARTIAL = 2;
+  STAGE_OUTCOME_FAILED = 3;
+}
+
+enum VerificationValue {
+  VERIFY_VALUE_UNSPECIFIED = 0;
+  VERIFY_VALUE_TRUE = 1;
+  VERIFY_VALUE_FALSE = 2;
+  VERIFY_VALUE_UNKNOWN = 3;
+}
+
+enum AttributeSource {
+  ATTR_SOURCE_UNSPECIFIED = 0;
+  ATTR_SOURCE_HUMAN_RESPONSE = 1;
+  ATTR_SOURCE_DIRECTED_TOUCH = 2;
+  ATTR_SOURCE_ABSENCE = 3;
+  ATTR_SOURCE_DESKTOP = 4;
+  ATTR_SOURCE_SELF_RESULT = 5;
+  ATTR_SOURCE_INTERNAL = 6;
+  ATTR_SOURCE_MAINTENANCE = 7;
+}
+
+enum EvidenceAccess {
+  EVIDENCE_ACCESS_UNSPECIFIED = 0;
+  EVIDENCE_ACCESS_NONE = 1;
+  EVIDENCE_ACCESS_TARGET_DEPENDENT = 2;
+  EVIDENCE_ACCESS_COMPARISON_REQUIRED = 3;
+}
+
+// @message echo.source-field | ADR 0048 G01
+message SourceField {
+  optional uint32 schema_version = 1; // required
+  optional uint32 field_number = 2; // required,min=1
+  optional uint64 element = 3; // optional
+}
+
+// @message echo.source-location | ADR 0048 G01
+message SourceLocation {
+  optional uint32 schema_version = 1; // required
+  optional RecordVersion source = 2; // required
+  repeated SourceField path = 3; // required
+  optional Utf8Range text = 4; // optional
+}
+
+// @message echo.source-transform | ADR 0048 G01
+message SourceTransform {
+  optional uint32 schema_version = 1; // required
+  repeated RecordVersion inputs = 2; // required,set=self
+  optional RecordVersion output = 3; // required
+  optional ObjectRef rule = 4; // required
+}
+
+// @message echo.source-metadata-v2 | ADR 0048 G01
+message SourceMetadataV2 {
+  // @retains SourceMetadata
+  reserved 2, 3;
+  optional uint32 schema_version = 1; // required
+  optional Derivation derivation = 4; // required
+  optional EpistemicType epistemic_type = 5; // required
+  optional ResolutionState resolution_state = 6; // required
+  optional string representation_version = 7; // required,nonempty
+  repeated SourceLocation locations = 8; // required,set=self
+  repeated RecordVersion roots = 9; // required,set=self
+  repeated SourceTransform transformations = 10; // required
+  optional ObjectRef producer = 11; // required
+  optional ObjectRef validity = 12; // required
+  optional SpeakerAttribution speaker = 13; // optional
+  optional string conversation = 14; // optional,nonempty
+}
+
+// @message echo.concept-role | ADR 0048 G02–G03
+message ConceptRole {
+  optional uint32 schema_version = 1; // required
+  optional string role = 2; // required,nonempty
+  optional SemanticNodeKind node_kind = 3; // required
+  optional ConceptRef domain = 4; // optional
+  optional bool mandatory = 5; // required
+}
+
+// @message echo.concept-revision | ADR 0048 G02
+message ConceptRevision {
+  optional uint32 schema_version = 1; // required
+  optional string concept_id = 2; // required,nonempty
+  optional ConceptLifecycle lifecycle = 3; // required
+  optional ObjectRef previous = 4; // optional
+  optional ObjectRef governance = 5; // required
+  repeated SourceLocation grounding = 6; // required,set=self
+  optional TrilingualText label = 7; // optional
+  optional TrilingualText definition = 8; // optional
+  repeated TrilingualText positive_examples = 9; // required
+  repeated TrilingualText negative_examples = 10; // required
+  repeated ConceptRole roles = 11; // required,set=role
+  optional bool allows_reported_text = 12; // required
+  repeated ObjectRef constraints = 13; // required,set=digest
+}
+
+// @message echo.concept-link | ADR 0048 G02
+message ConceptLink {
+  optional uint32 schema_version = 1; // required
+  optional ConceptRef origin = 2; // required
+  optional ConceptRef target = 3; // required
+  optional string kind = 4; // required,nonempty
+  optional ObjectRef basis = 5; // required
+}
+
+// @message echo.concept-registry | ADR 0048 G02
+message ConceptRegistry {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional ObjectRef previous = 3; // optional
+  repeated ConceptRevision entries = 4; // required,set=concept_id
+  repeated ConceptLink links = 5; // required,set=self
+  repeated string relation_kinds = 6; // required,set=self
+  repeated string interaction_kinds = 7; // required,set=self
+  repeated string edge_kinds = 8; // required,set=self
+  repeated ConceptLink aliases = 9; // required,set=origin
+}
+
+// @message echo.semantic-ref-v2 | ADR 0048 G03
+message RefV2 {
+  // @retains Ref
+  reserved 3;
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  optional ConceptRef referent = 4; // optional
+  optional SourceMetadataV2 source = 5; // required
+}
+
+// @message echo.semantic-claim-v2 | ADR 0048 G03
+message ClaimV2 {
+  // @retains Claim
+  reserved 3, 6, 8, 9;
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  optional ConceptRef predicate = 4; // required
+  repeated RoleBinding roles = 5; // required,set=role
+  optional bool polarity = 7; // required
+  optional SourceMetadataV2 source = 10; // required
+  optional SourceLocation reported_text = 11; // required
+  optional ClaimModality mode = 12; // required
+  optional ClaimTimeKind time_kind = 13; // required
+  optional ObjectRef time_fact = 14; // optional
+}
+
+// @message echo.semantic-act-v2 | ADR 0048 G03
+message ActV2 {
+  // @retains Act
+  reserved 3;
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  optional string interaction_kind = 4; // required,nonempty
+  optional SourceMetadataV2 source = 5; // required
+}
+
+// @message echo.semantic-graph-v2 | ADR 0048 G03
+message SemanticGraphV2 {
+  // @retains SemanticGraph
+  reserved 3, 4, 5;
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  repeated Edge edges = 6; // required
+  repeated RefV2 references = 7; // required,set=id
+  repeated ClaimV2 statements = 8; // required,set=id
+  repeated ActV2 actions = 9; // required,set=id
+  optional ObjectRef registry = 10; // required
+}
+
+// @message echo.text-adapter-entry | ADR 0048 G03
+message TextAdapterEntry {
+  optional uint32 schema_version = 1; // required
+  optional string payload_tag = 2; // required,nonempty
+  optional uint32 payload_schema = 3; // required,min=1
+  repeated SourceField path = 4; // required
+  optional ConceptRef predicate = 5; // required
+  optional string role = 6; // required,nonempty
+}
+
+// @message echo.text-adapter-table | ADR 0048 G03
+message TextAdapterTable {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef registry = 2; // required
+  repeated TextAdapterEntry entries = 3; // required,set=payload_tag
+}
+
+// @message echo.stage-coverage | ADR 0048 G04
+message StageCoverage {
+  optional uint32 schema_version = 1; // required
+  optional string target = 2; // required,nonempty
+  optional ObjectRef accepted = 3; // optional
+  optional double mu = 4; // optional,min=0,max=1
+  optional string unknown_reason = 5; // optional,nonempty
+}
+
+// @message echo.stage-adoption | ADR 0048 G04
+message StageAdoption {
+  optional uint32 schema_version = 1; // required
+  optional RecordVersion event = 2; // required
+  optional RecordVersion interpretation = 3; // required
+  optional InterpretationStage stage = 4; // required
+  optional StageOutcome outcome = 5; // required
+  optional ProposalBindingV2 binding = 6; // required
+  optional ObjectRef producer_resource = 7; // optional
+  optional ObjectRef candidate = 8; // optional
+  optional ObjectRef actual_output = 9; // optional
+  optional ObjectRef context = 10; // required
+  repeated ObjectRef definitions = 11; // required,set=digest
+  optional ObjectRef isolation = 12; // required
+  optional ObjectRef governance = 13; // required
+  repeated StageCoverage coverage = 14; // required,set=target
+  optional NatureVector appraisal = 15; // optional
+  optional string reason = 16; // optional,nonempty
+  optional ObjectRef registry_after = 17; // optional
+  optional RecordRelation revision = 18; // optional
+  optional RelationQueryReceipt relations = 19; // optional
+  optional string transaction_id = 20; // required,nonempty
+  repeated string replaced_targets = 21; // required,set=self
+  optional ObjectRef registry_before = 22; // required
+  repeated ObjectRef staged_revisions = 23; // required,set=digest
+}
+
+// @message echo.attribute-rule | ADR 0048 G05
+message AttributeRule {
+  optional uint32 schema_version = 1; // required
+  optional AttributeSource source = 2; // required
+  optional EventKind event_kind = 3; // required
+  optional string payload_type = 4; // required,nonempty
+  optional bool exogenous = 5; // required
+  optional bool self_narrative = 6; // required
+  optional EvidenceAccess growth_access = 7; // required
+}
+
+// @message echo.attribute-rule-table | ADR 0048 G05
+message AttributeRuleTable {
+  optional uint32 schema_version = 1; // required
+  repeated AttributeRule rules = 2; // required,set=self
+}
+
+// @message echo.scoped-verification | ADR 0048 G05
+message ScopedVerification {
+  optional uint32 schema_version = 1; // required
+  optional SourceLocation scope = 2; // required
+  optional VerificationValue value = 3; // required
+  repeated RecordVersion evidence = 4; // required,set=self
+  optional string reason = 5; // optional,nonempty
+  optional string experiencer = 6; // optional,nonempty
+}
+
+// Direction of the requirement is recorded before evaluating the event.
+// Each axis of a target premise can require an established true or false value.
+// @message echo.verification-requirement | ADR 0048 G05
+message VerificationRequirement {
+  optional uint32 schema_version = 1; // required
+  optional SourceLocation scope = 2; // required
+  optional VerificationValue expected = 3; // required
+}
+
+// @message echo.target-premise | ADR 0048 G05
+message TargetPremise {
+  optional uint32 schema_version = 1; // required
+  optional ConceptRef target = 2; // required
+  repeated VerificationRequirement occurrence_scopes = 3; // required,set=scope
+  repeated VerificationRequirement truth_scopes = 4; // required,set=scope
+  repeated VerificationRequirement subjective_scopes = 5; // required,set=scope
+  optional ObjectRef comparison = 6; // optional
+  optional ObjectRef definition = 7; // required
+}
+
+// @message echo.event-attributes-v2 | ADR 0048 G05
+message EventAttributesRecordV2 {
+  // @retains EventAttributesRecord
+  reserved 6;
+  optional uint32 schema_version = 1; // required
+  optional string event_id = 2; // required,nonempty
+  optional string rule_table_version = 3; // required,nonempty
+  optional bool exogenous = 4; // required
+  optional bool self_narrative = 5; // required
+  optional string source_key = 7; // required,nonempty
+  optional RecordVersion event = 8; // required
+  optional ObjectRef rule_table = 9; // required
+  optional AttributeRule applied = 10; // required
+  optional SourceMetadataV2 source = 11; // required
+  optional ObjectRef governance = 12; // required
+  repeated ScopedVerification occurred = 13; // required,set=scope
+  repeated ScopedVerification truth = 14; // required,set=scope
+  repeated ScopedVerification subjective = 15; // required,set=scope
+  optional RecordVersion c_unit = 17; // optional
+  repeated TargetPremise targets = 18; // required,set=target
+  repeated RecordVersion inputs = 19; // required,set=self
+  optional ObjectRef person_mapping = 20; // optional
+  optional RecordVersion directed_to_n = 21; // optional
+  optional RecordVersion cause = 22; // optional
+  optional ObjectRef episode_phase_fact = 23; // optional
+  optional ObjectRef duration_fact = 24; // optional
+}

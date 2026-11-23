@@ -10,6 +10,7 @@ import {
   checkJEnvelope,
 } from '../../packages/contracts/src/generated/echo/j_resources.js';
 import { checkPermissionMessage } from '../../packages/contracts/src/generated/echo/permission.js';
+import { checkSemanticEvidence } from '../../packages/contracts/src/generated/echo/semantic_evidence.js';
 import { checkInitialMessage } from '../../packages/contracts/src/generated/echo/initial_publication.js';
 import { checkSpeakThinkMessage } from '../../packages/contracts/src/generated/echo/speak_think.js';
 import { createInterface } from 'node:readline';
@@ -81,6 +82,7 @@ for await (const line of createInterface({ input: process.stdin })) {
     checkCognitionMessage(q.name, v, q.limits);
     checkInitialMessage(q.name, v, q.limits);
     checkPermissionMessage(q.name, v, q.limits);
+    checkSemanticEvidence(q.name, v, q.limits);
     checkSpeakThinkMessage(q.name, v, q.limits);
     checkJMessage(q.name, v, q.limits);
     console.log(

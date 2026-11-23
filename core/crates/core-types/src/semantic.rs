@@ -15,6 +15,8 @@ use crate::generated::{
 use std::cmp::Ordering;
 
 mod cognition;
+mod evidence;
+pub use evidence::*;
 mod initial_publication;
 pub use initial_publication::{
     check_initial_message, check_initial_store_binding, verify_birth_material,

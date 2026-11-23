@@ -971,6 +971,172 @@ impl PermissionDenial {
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
+pub enum ConceptLifecycle {
+    CONCEPT_LIFE_PROVISIONAL = 1,
+    CONCEPT_LIFE_STABLE = 2,
+    CONCEPT_LIFE_DEPRECATED = 3,
+}
+impl TryFrom<u32> for ConceptLifecycle { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::CONCEPT_LIFE_PROVISIONAL),
+2 => Ok(Self::CONCEPT_LIFE_STABLE),
+3 => Ok(Self::CONCEPT_LIFE_DEPRECATED),
+_ => Err("unknown enum".into()), }}}
+impl From<ConceptLifecycle> for u32 {fn from(v:ConceptLifecycle)->Self{v as u32}}
+impl ConceptLifecycle {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum SemanticNodeKind {
+    SEM_NODE_REF = 1,
+    SEM_NODE_CLAIM = 2,
+    SEM_NODE_ACT = 3,
+}
+impl TryFrom<u32> for SemanticNodeKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::SEM_NODE_REF),
+2 => Ok(Self::SEM_NODE_CLAIM),
+3 => Ok(Self::SEM_NODE_ACT),
+_ => Err("unknown enum".into()), }}}
+impl From<SemanticNodeKind> for u32 {fn from(v:SemanticNodeKind)->Self{v as u32}}
+impl SemanticNodeKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum ClaimTimeKind {
+    CLAIM_TIME_NOT_APPLICABLE = 1,
+    CLAIM_TIME_UNKNOWN = 2,
+    CLAIM_TIME_FACT = 3,
+}
+impl TryFrom<u32> for ClaimTimeKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::CLAIM_TIME_NOT_APPLICABLE),
+2 => Ok(Self::CLAIM_TIME_UNKNOWN),
+3 => Ok(Self::CLAIM_TIME_FACT),
+_ => Err("unknown enum".into()), }}}
+impl From<ClaimTimeKind> for u32 {fn from(v:ClaimTimeKind)->Self{v as u32}}
+impl ClaimTimeKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum ClaimModality {
+    CLAIM_MODE_REPORTED = 1,
+}
+impl TryFrom<u32> for ClaimModality { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::CLAIM_MODE_REPORTED),
+_ => Err("unknown enum".into()), }}}
+impl From<ClaimModality> for u32 {fn from(v:ClaimModality)->Self{v as u32}}
+impl ClaimModality {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum InterpretationStage {
+    INTERPRET_STAGE_IRL = 1,
+    INTERPRET_STAGE_A = 2,
+    INTERPRET_STAGE_M = 3,
+}
+impl TryFrom<u32> for InterpretationStage { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::INTERPRET_STAGE_IRL),
+2 => Ok(Self::INTERPRET_STAGE_A),
+3 => Ok(Self::INTERPRET_STAGE_M),
+_ => Err("unknown enum".into()), }}}
+impl From<InterpretationStage> for u32 {fn from(v:InterpretationStage)->Self{v as u32}}
+impl InterpretationStage {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum StageOutcome {
+    STAGE_OUTCOME_VALID = 1,
+    STAGE_OUTCOME_PARTIAL = 2,
+    STAGE_OUTCOME_FAILED = 3,
+}
+impl TryFrom<u32> for StageOutcome { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::STAGE_OUTCOME_VALID),
+2 => Ok(Self::STAGE_OUTCOME_PARTIAL),
+3 => Ok(Self::STAGE_OUTCOME_FAILED),
+_ => Err("unknown enum".into()), }}}
+impl From<StageOutcome> for u32 {fn from(v:StageOutcome)->Self{v as u32}}
+impl StageOutcome {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum VerificationValue {
+    VERIFY_VALUE_TRUE = 1,
+    VERIFY_VALUE_FALSE = 2,
+    VERIFY_VALUE_UNKNOWN = 3,
+}
+impl TryFrom<u32> for VerificationValue { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::VERIFY_VALUE_TRUE),
+2 => Ok(Self::VERIFY_VALUE_FALSE),
+3 => Ok(Self::VERIFY_VALUE_UNKNOWN),
+_ => Err("unknown enum".into()), }}}
+impl From<VerificationValue> for u32 {fn from(v:VerificationValue)->Self{v as u32}}
+impl VerificationValue {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum AttributeSource {
+    ATTR_SOURCE_HUMAN_RESPONSE = 1,
+    ATTR_SOURCE_DIRECTED_TOUCH = 2,
+    ATTR_SOURCE_ABSENCE = 3,
+    ATTR_SOURCE_DESKTOP = 4,
+    ATTR_SOURCE_SELF_RESULT = 5,
+    ATTR_SOURCE_INTERNAL = 6,
+    ATTR_SOURCE_MAINTENANCE = 7,
+}
+impl TryFrom<u32> for AttributeSource { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::ATTR_SOURCE_HUMAN_RESPONSE),
+2 => Ok(Self::ATTR_SOURCE_DIRECTED_TOUCH),
+3 => Ok(Self::ATTR_SOURCE_ABSENCE),
+4 => Ok(Self::ATTR_SOURCE_DESKTOP),
+5 => Ok(Self::ATTR_SOURCE_SELF_RESULT),
+6 => Ok(Self::ATTR_SOURCE_INTERNAL),
+7 => Ok(Self::ATTR_SOURCE_MAINTENANCE),
+_ => Err("unknown enum".into()), }}}
+impl From<AttributeSource> for u32 {fn from(v:AttributeSource)->Self{v as u32}}
+impl AttributeSource {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum EvidenceAccess {
+    EVIDENCE_ACCESS_NONE = 1,
+    EVIDENCE_ACCESS_TARGET_DEPENDENT = 2,
+    EVIDENCE_ACCESS_COMPARISON_REQUIRED = 3,
+}
+impl TryFrom<u32> for EvidenceAccess { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::EVIDENCE_ACCESS_NONE),
+2 => Ok(Self::EVIDENCE_ACCESS_TARGET_DEPENDENT),
+3 => Ok(Self::EVIDENCE_ACCESS_COMPARISON_REQUIRED),
+_ => Err("unknown enum".into()), }}}
+impl From<EvidenceAccess> for u32 {fn from(v:EvidenceAccess)->Self{v as u32}}
+impl EvidenceAccess {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
 pub enum RemoteAttemptStatus {
     REMOTE_ATTEMPT_COMPLETED = 1,
     REMOTE_ATTEMPT_TRUNCATED = 2,
@@ -3642,6 +3808,334 @@ pub r#verifiable: bool,
 pub r#source_key: String,
 }
 impl super::WireMessage for EventAttributesRecord {const NAME: &'static str = "EventAttributesRecord";}
+/// ADR 0048 G01; frozen tag `echo.source-field`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SourceField {
+pub r#schema_version: u32,
+pub r#field_number: u32,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#element: Option<DecimalU64>,
+}
+impl super::WireMessage for SourceField {const NAME: &'static str = "SourceField";}
+/// ADR 0048 G01; frozen tag `echo.source-location`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SourceLocation {
+pub r#schema_version: u32,
+pub r#source: RecordVersion,
+pub r#path: Vec<SourceField>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#text: Option<Utf8Range>,
+}
+impl super::WireMessage for SourceLocation {const NAME: &'static str = "SourceLocation";}
+/// ADR 0048 G01; frozen tag `echo.source-transform`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SourceTransform {
+pub r#schema_version: u32,
+pub r#inputs: Vec<RecordVersion>,
+pub r#output: RecordVersion,
+pub r#rule: ObjectRef,
+}
+impl super::WireMessage for SourceTransform {const NAME: &'static str = "SourceTransform";}
+/// ADR 0048 G01; frozen tag `echo.source-metadata-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SourceMetadataV2 {
+pub r#schema_version: u32,
+pub r#derivation: Derivation,
+pub r#epistemic_type: EpistemicType,
+pub r#resolution_state: ResolutionState,
+pub r#representation_version: String,
+pub r#locations: Vec<SourceLocation>,
+pub r#roots: Vec<RecordVersion>,
+pub r#transformations: Vec<SourceTransform>,
+pub r#producer: ObjectRef,
+pub r#validity: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#speaker: Option<SpeakerAttribution>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#conversation: Option<String>,
+}
+impl super::WireMessage for SourceMetadataV2 {const NAME: &'static str = "SourceMetadataV2";}
+/// ADR 0048 G02–G03; frozen tag `echo.concept-role`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ConceptRole {
+pub r#schema_version: u32,
+pub r#role: String,
+pub r#node_kind: SemanticNodeKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#domain: Option<ConceptRef>,
+pub r#mandatory: bool,
+}
+impl super::WireMessage for ConceptRole {const NAME: &'static str = "ConceptRole";}
+/// ADR 0048 G02; frozen tag `echo.concept-revision`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ConceptRevision {
+pub r#schema_version: u32,
+pub r#concept_id: String,
+pub r#lifecycle: ConceptLifecycle,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#previous: Option<ObjectRef>,
+pub r#governance: ObjectRef,
+pub r#grounding: Vec<SourceLocation>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#label: Option<TrilingualText>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#definition: Option<TrilingualText>,
+pub r#positive_examples: Vec<TrilingualText>,
+pub r#negative_examples: Vec<TrilingualText>,
+pub r#roles: Vec<ConceptRole>,
+pub r#allows_reported_text: bool,
+pub r#constraints: Vec<ObjectRef>,
+}
+impl super::WireMessage for ConceptRevision {const NAME: &'static str = "ConceptRevision";}
+/// ADR 0048 G02; frozen tag `echo.concept-link`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ConceptLink {
+pub r#schema_version: u32,
+pub r#origin: ConceptRef,
+pub r#target: ConceptRef,
+pub r#kind: String,
+pub r#basis: ObjectRef,
+}
+impl super::WireMessage for ConceptLink {const NAME: &'static str = "ConceptLink";}
+/// ADR 0048 G02; frozen tag `echo.concept-registry`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ConceptRegistry {
+pub r#schema_version: u32,
+pub r#version: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#previous: Option<ObjectRef>,
+pub r#entries: Vec<ConceptRevision>,
+pub r#links: Vec<ConceptLink>,
+pub r#relation_kinds: Vec<String>,
+pub r#interaction_kinds: Vec<String>,
+pub r#edge_kinds: Vec<String>,
+pub r#aliases: Vec<ConceptLink>,
+}
+impl super::WireMessage for ConceptRegistry {const NAME: &'static str = "ConceptRegistry";}
+/// ADR 0048 G03; frozen tag `echo.semantic-ref-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RefV2 {
+pub r#schema_version: u32,
+pub r#id: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#referent: Option<ConceptRef>,
+pub r#source: SourceMetadataV2,
+}
+impl super::WireMessage for RefV2 {const NAME: &'static str = "RefV2";}
+/// ADR 0048 G03; frozen tag `echo.semantic-claim-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ClaimV2 {
+pub r#schema_version: u32,
+pub r#id: String,
+pub r#predicate: ConceptRef,
+pub r#roles: Vec<RoleBinding>,
+pub r#polarity: bool,
+pub r#source: SourceMetadataV2,
+pub r#reported_text: SourceLocation,
+pub r#mode: ClaimModality,
+pub r#time_kind: ClaimTimeKind,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#time_fact: Option<ObjectRef>,
+}
+impl super::WireMessage for ClaimV2 {const NAME: &'static str = "ClaimV2";}
+/// ADR 0048 G03; frozen tag `echo.semantic-act-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ActV2 {
+pub r#schema_version: u32,
+pub r#id: String,
+pub r#interaction_kind: String,
+pub r#source: SourceMetadataV2,
+}
+impl super::WireMessage for ActV2 {const NAME: &'static str = "ActV2";}
+/// ADR 0048 G03; frozen tag `echo.semantic-graph-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SemanticGraphV2 {
+pub r#schema_version: u32,
+pub r#id: String,
+pub r#edges: Vec<Edge>,
+pub r#references: Vec<RefV2>,
+pub r#statements: Vec<ClaimV2>,
+pub r#actions: Vec<ActV2>,
+pub r#registry: ObjectRef,
+}
+impl super::WireMessage for SemanticGraphV2 {const NAME: &'static str = "SemanticGraphV2";}
+/// ADR 0048 G03; frozen tag `echo.text-adapter-entry`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TextAdapterEntry {
+pub r#schema_version: u32,
+pub r#payload_tag: String,
+pub r#payload_schema: u32,
+pub r#path: Vec<SourceField>,
+pub r#predicate: ConceptRef,
+pub r#role: String,
+}
+impl super::WireMessage for TextAdapterEntry {const NAME: &'static str = "TextAdapterEntry";}
+/// ADR 0048 G03; frozen tag `echo.text-adapter-table`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TextAdapterTable {
+pub r#schema_version: u32,
+pub r#registry: ObjectRef,
+pub r#entries: Vec<TextAdapterEntry>,
+}
+impl super::WireMessage for TextAdapterTable {const NAME: &'static str = "TextAdapterTable";}
+/// ADR 0048 G04; frozen tag `echo.stage-coverage`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct StageCoverage {
+pub r#schema_version: u32,
+pub r#target: String,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#accepted: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+#[serde(serialize_with = "super::scalar::finite_option")]
+pub r#mu: Option<f64>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#unknown_reason: Option<String>,
+}
+impl super::WireMessage for StageCoverage {const NAME: &'static str = "StageCoverage";}
+/// ADR 0048 G04; frozen tag `echo.stage-adoption`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct StageAdoption {
+pub r#schema_version: u32,
+pub r#event: RecordVersion,
+pub r#interpretation: RecordVersion,
+pub r#stage: InterpretationStage,
+pub r#outcome: StageOutcome,
+pub r#binding: ProposalBindingV2,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#producer_resource: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#candidate: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#actual_output: Option<ObjectRef>,
+pub r#context: ObjectRef,
+pub r#definitions: Vec<ObjectRef>,
+pub r#isolation: ObjectRef,
+pub r#governance: ObjectRef,
+pub r#coverage: Vec<StageCoverage>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#appraisal: Option<NatureVector>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#registry_after: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#revision: Option<RecordRelation>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#relations: Option<RelationQueryReceipt>,
+pub r#transaction_id: String,
+pub r#replaced_targets: Vec<String>,
+pub r#registry_before: ObjectRef,
+pub r#staged_revisions: Vec<ObjectRef>,
+}
+impl super::WireMessage for StageAdoption {const NAME: &'static str = "StageAdoption";}
+/// ADR 0048 G05; frozen tag `echo.attribute-rule`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct AttributeRule {
+pub r#schema_version: u32,
+pub r#source: AttributeSource,
+pub r#event_kind: EventKind,
+pub r#payload_type: String,
+pub r#exogenous: bool,
+pub r#self_narrative: bool,
+pub r#growth_access: EvidenceAccess,
+}
+impl super::WireMessage for AttributeRule {const NAME: &'static str = "AttributeRule";}
+/// ADR 0048 G05; frozen tag `echo.attribute-rule-table`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct AttributeRuleTable {
+pub r#schema_version: u32,
+pub r#rules: Vec<AttributeRule>,
+}
+impl super::WireMessage for AttributeRuleTable {const NAME: &'static str = "AttributeRuleTable";}
+/// ADR 0048 G05; frozen tag `echo.scoped-verification`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ScopedVerification {
+pub r#schema_version: u32,
+pub r#scope: SourceLocation,
+pub r#value: VerificationValue,
+pub r#evidence: Vec<RecordVersion>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#experiencer: Option<String>,
+}
+impl super::WireMessage for ScopedVerification {const NAME: &'static str = "ScopedVerification";}
+/// ADR 0048 G05; frozen tag `echo.verification-requirement`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct VerificationRequirement {
+pub r#schema_version: u32,
+pub r#scope: SourceLocation,
+pub r#expected: VerificationValue,
+}
+impl super::WireMessage for VerificationRequirement {const NAME: &'static str = "VerificationRequirement";}
+/// ADR 0048 G05; frozen tag `echo.target-premise`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TargetPremise {
+pub r#schema_version: u32,
+pub r#target: ConceptRef,
+pub r#occurrence_scopes: Vec<VerificationRequirement>,
+pub r#truth_scopes: Vec<VerificationRequirement>,
+pub r#subjective_scopes: Vec<VerificationRequirement>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#comparison: Option<ObjectRef>,
+pub r#definition: ObjectRef,
+}
+impl super::WireMessage for TargetPremise {const NAME: &'static str = "TargetPremise";}
+/// ADR 0048 G05; frozen tag `echo.event-attributes-v2`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EventAttributesRecordV2 {
+pub r#schema_version: u32,
+pub r#event_id: String,
+pub r#rule_table_version: String,
+pub r#exogenous: bool,
+pub r#self_narrative: bool,
+pub r#source_key: String,
+pub r#event: RecordVersion,
+pub r#rule_table: ObjectRef,
+pub r#applied: AttributeRule,
+pub r#source: SourceMetadataV2,
+pub r#governance: ObjectRef,
+pub r#occurred: Vec<ScopedVerification>,
+pub r#truth: Vec<ScopedVerification>,
+pub r#subjective: Vec<ScopedVerification>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#c_unit: Option<RecordVersion>,
+pub r#targets: Vec<TargetPremise>,
+pub r#inputs: Vec<RecordVersion>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#person_mapping: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#directed_to_n: Option<RecordVersion>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#cause: Option<RecordVersion>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#episode_phase_fact: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#duration_fact: Option<ObjectRef>,
+}
+impl super::WireMessage for EventAttributesRecordV2 {const NAME: &'static str = "EventAttributesRecordV2";}
 /// ADR 0045 §§3–5; ADR 0046; frozen tag `echo.utf8-range`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -5237,6 +5731,28 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "SameMatterAnnotation" => super::verify_typed::<SameMatterAnnotation>(value, limits),
 "ReinterpretationLink" => super::verify_typed::<ReinterpretationLink>(value, limits),
 "EventAttributesRecord" => super::verify_typed::<EventAttributesRecord>(value, limits),
+"SourceField" => super::verify_typed::<SourceField>(value, limits),
+"SourceLocation" => super::verify_typed::<SourceLocation>(value, limits),
+"SourceTransform" => super::verify_typed::<SourceTransform>(value, limits),
+"SourceMetadataV2" => super::verify_typed::<SourceMetadataV2>(value, limits),
+"ConceptRole" => super::verify_typed::<ConceptRole>(value, limits),
+"ConceptRevision" => super::verify_typed::<ConceptRevision>(value, limits),
+"ConceptLink" => super::verify_typed::<ConceptLink>(value, limits),
+"ConceptRegistry" => super::verify_typed::<ConceptRegistry>(value, limits),
+"RefV2" => super::verify_typed::<RefV2>(value, limits),
+"ClaimV2" => super::verify_typed::<ClaimV2>(value, limits),
+"ActV2" => super::verify_typed::<ActV2>(value, limits),
+"SemanticGraphV2" => super::verify_typed::<SemanticGraphV2>(value, limits),
+"TextAdapterEntry" => super::verify_typed::<TextAdapterEntry>(value, limits),
+"TextAdapterTable" => super::verify_typed::<TextAdapterTable>(value, limits),
+"StageCoverage" => super::verify_typed::<StageCoverage>(value, limits),
+"StageAdoption" => super::verify_typed::<StageAdoption>(value, limits),
+"AttributeRule" => super::verify_typed::<AttributeRule>(value, limits),
+"AttributeRuleTable" => super::verify_typed::<AttributeRuleTable>(value, limits),
+"ScopedVerification" => super::verify_typed::<ScopedVerification>(value, limits),
+"VerificationRequirement" => super::verify_typed::<VerificationRequirement>(value, limits),
+"TargetPremise" => super::verify_typed::<TargetPremise>(value, limits),
+"EventAttributesRecordV2" => super::verify_typed::<EventAttributesRecordV2>(value, limits),
 "Utf8Range" => super::verify_typed::<Utf8Range>(value, limits),
 "RecordVersion" => super::verify_typed::<RecordVersion>(value, limits),
 "QuoteLayer" => super::verify_typed::<QuoteLayer>(value, limits),
