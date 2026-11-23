@@ -171,10 +171,10 @@ pub struct GenerationBudget {
 impl Default for GenerationBudget {
     fn default() -> Self {
         // DEMO-CAUSE-05 C/D: P95 was 1,154 completion tokens for the D6
-        // outline, including reasoning. The wall-clock limit is independent.
+        // outline, including reasoning. Elapsed time P99 was 10.481446 s (rounded up to 11 s).
         Self {
             tokens: 1_280,
-            duration_ns: 6_000_000_000,
+            duration_ns: 11_000_000_000,
         }
     }
 }

@@ -457,7 +457,7 @@ fn missing_settings_complete_a_reply_with_the_default_budget() {
     );
     assert_eq!(
         (t.max_tokens.0, t.max_duration_ns.0, settings.k),
-        (1_280, 6_000_000_000, 2)
+        (1_280, 11_000_000_000, 2)
     );
     let b = binding(&t);
     let mode = SpeechMode::B_REMOTE_PROJECTED;
