@@ -2,7 +2,7 @@ use super::*;
 use std::{collections::BTreeMap, fs, path::Path};
 
 // Compare authoritative files, not timestamps or SQLite's transient read locks.
-fn durable_bytes(path: &Path) -> BTreeMap<String, Vec<u8>> {
+pub(super) fn durable_bytes(path: &Path) -> BTreeMap<String, Vec<u8>> {
     fn visit(root: &Path, path: &Path, files: &mut BTreeMap<String, Vec<u8>>) {
         for entry in fs::read_dir(path).unwrap() {
             let path = entry.unwrap().path();

@@ -35,7 +35,7 @@ pub(crate) fn create(root: &Path, fault: &Fault) -> Result<()> {
     )?;
     fs::create_dir(&receipts)?;
     fault.hit(FaultPoint::ReceiptRootCreated)?;
-    for kind in ["d", "commits", "reject"] {
+    for kind in ["d", "commits", "reject", "attempts"] {
         fs::create_dir(receipts.join(kind))?;
         fault.hit(FaultPoint::ReceiptKindCreated)?;
         platform::sync_dir(&receipts.join(kind))?;
@@ -92,23 +92,30 @@ pub(crate) fn expected(
     kind: &str,
 ) -> Result<BTreeMap<u64, ObjectRef>> {
     let mut result = BTreeMap::new();
-    if kind == "reject" && crate::migration::format(db)? == 1 {
+    if (kind == "reject" && crate::migration::format(db)? == 1)
+        || (kind == "attempts" && crate::migration::format(db)? < 3)
+    {
         return Ok(result);
     }
-    let sql = if kind == "reject" {
+    let sql = if kind == "attempts" {
+        "SELECT position,record FROM cognitive_attempts ORDER BY position"
+    } else if kind == "reject" {
         "SELECT position,record FROM ingress_rejections ORDER BY position"
     } else if kind == "d" {
         "SELECT position,event FROM raw_ingress ORDER BY position"
     } else {
-        "SELECT c.position,CASE WHEN c.decision='accepted' THEN c.snapshot ELSE d.event END,c.decision,c.id FROM commits c JOIN raw_ingress d USING(position) ORDER BY c.position"
+        "SELECT c.position,CASE WHEN c.decision IN ('accepted','activity') THEN c.snapshot ELSE d.event END,c.decision,c.id FROM commits c LEFT JOIN ingress_decisions i ON i.commit_id=c.id LEFT JOIN raw_ingress d ON d.position=i.position ORDER BY c.position"
     };
     let mut stmt = db.prepare(sql)?;
     let mut rows = stmt.query([])?;
     while let Some(row) = rows.next()? {
         let position = unsigned(row.get(0)?)?;
         let bytes: Vec<u8> = row.get(1)?;
-        let is_snapshot = kind == "commits" && row.get::<_, String>(2)? == "accepted";
-        let reference = if kind == "reject" {
+        let is_snapshot = kind == "commits"
+            && matches!(row.get::<_, String>(2)?.as_str(), "accepted" | "activity");
+        let reference = if kind == "attempts" {
+            ObjectRef::from_canonical(&bytes, objects.config.encoding)?
+        } else if kind == "reject" {
             objects.reference(
                 &core_types::generated::IngressRejection::from_canonical(
                     &bytes,
@@ -142,11 +149,11 @@ pub(crate) type Captured = BTreeMap<&'static str, BTreeMap<u64, ObjectRef>>;
 
 pub(crate) fn capture(root: &Path, objects: &Objects) -> Result<Captured> {
     let mut captured = BTreeMap::new();
-    for kind in ["d", "commits", "reject"] {
+    for kind in ["d", "commits", "reject", "attempts"] {
         let dir = path(root)?.join(kind);
         platform::no_links(&dir)?;
         let mut found = BTreeMap::new();
-        if kind == "reject" && !dir.exists() {
+        if matches!(kind, "reject" | "attempts") && !dir.exists() {
             captured.insert(kind, found);
             continue;
         }
@@ -201,13 +208,83 @@ pub(crate) fn reconcile(
     let captured = capture(root, objects)?;
     check(db, objects, &captured)?;
     if repair_tail {
-        for kind in ["d", "commits", "reject"] {
+        for kind in ["d", "commits", "reject", "attempts"] {
             for (position, r) in expected(db, objects, kind)? {
                 if !captured[kind].contains_key(&position) {
                     record(root, kind, position, &r, objects, fault)?;
                 }
             }
         }
+    }
+    Ok(())
+}
+
+/// Missing namespaces are repairable only for an empty, verified initialization.
+/// A nonempty store needs explicit recovery; never erase rollback evidence.
+pub(crate) fn admit(db: &Connection, root: &Path, objects: &Objects, repair: bool) -> Result<()> {
+    admit_with_sync(db, root, objects, repair, platform::sync_dir)
+}
+
+pub(crate) fn admit_with_sync(
+    db: &Connection,
+    root: &Path,
+    objects: &Objects,
+    repair: bool,
+    mut sync_dir: impl FnMut(&Path) -> Result<()>,
+) -> Result<()> {
+    if crate::migration::format(db)? == 1 {
+        return Ok(());
+    }
+    let receipts = path(root)?;
+    for kind in ["d", "commits", "reject", "attempts"] {
+        let dir = receipts.join(kind);
+        platform::no_links(&dir)?;
+        if kind == "attempts" && crate::migration::format(db)? < 3 {
+            continue;
+        }
+        if dir.is_dir() {
+            continue;
+        }
+        require(
+            repair && matches!(kind, "reject" | "attempts") && !dir.exists(),
+            "required receipt directory missing; explicit receipt recovery required",
+        )?;
+        let captured = capture(root, objects)?;
+        require(
+            captured.values().all(|v| v.is_empty()),
+            "receipt namespace incomplete; preserve files and recover from verified backup",
+        )?;
+        for table in [
+            "raw_ingress",
+            "commits",
+            "ingress_rejections",
+            "object_refs",
+        ] {
+            require(
+                db.query_row(&format!("SELECT count(*) FROM {table}"), [], |r| {
+                    r.get::<_, i64>(0)
+                })? == 0,
+                "nonempty store lacks receipt directory; preserve files and perform explicit recovery",
+            )?;
+        }
+        fs::create_dir(&dir)?;
+    }
+    // Existence cannot prove that initialization reached its durability barriers.
+    // Repeat them on every writer admission, including after a failed repair.
+    // Readers only check the namespace; they never create or synchronize it.
+    if repair {
+        for required in ["d", "commits", "reject", "attempts"] {
+            if required == "attempts" && crate::migration::format(db)? < 3 {
+                continue;
+            }
+            sync_dir(&receipts.join(required))?;
+        }
+        sync_dir(&receipts)?;
+        sync_dir(
+            receipts
+                .parent()
+                .ok_or(crate::Error::Rejected("missing receipt parent"))?,
+        )?;
     }
     Ok(())
 }

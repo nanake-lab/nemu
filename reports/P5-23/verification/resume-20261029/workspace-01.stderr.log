@@ -1,0 +1,156 @@
+ Downloading crates ...
+warning: spurious network error (3 tries remaining): [35] SSL connect error (schannel: failed to receive handshake, SSL/TLS connection failed)
+  Downloaded deranged v0.5.9
+  Downloaded time v0.3.44
+  Downloaded sqlite-vec v0.1.9
+  Downloaded num-conv v0.1.0
+  Downloaded time-macros v0.2.24
+  Downloaded powerfmt v0.2.1
+  Downloaded time-core v0.1.6
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling find-msvc-tools v0.1.15
+   Compiling shlex v2.0.1
+   Compiling vcpkg v0.2.15
+   Compiling pkg-config v0.3.34
+   Compiling once_cell v1.21.4
+   Compiling getrandom v0.4.3
+   Compiling windows-link v0.2.1
+   Compiling pin-project-lite v0.2.17
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling bitflags v2.13.2
+   Compiling fastrand v2.5.0
+   Compiling smallvec v1.16.3
+   Compiling fallible-iterator v0.3.0
+   Compiling core-policy v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\core-policy)
+   Compiling windows-sys v0.61.2
+   Compiling powerfmt v0.2.1
+   Compiling time-core v0.1.6
+   Compiling tracing-core v0.1.36
+   Compiling num-conv v0.1.0
+   Compiling deranged v0.5.9
+   Compiling cc v1.9.0
+   Compiling syn v3.0.9
+   Compiling syn v2.0.119
+   Compiling tempfile v3.27.0
+   Compiling time v0.3.44
+   Compiling libsqlite3-sys v0.38.2
+   Compiling sqlite-vec v0.1.9
+   Compiling serde_derive v1.0.229
+   Compiling serde v1.0.229
+   Compiling tracing-attributes v0.1.31
+   Compiling rusqlite v0.40.2
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\core-types)
+   Compiling tracing v0.1.44
+   Compiling core-store v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\core-store)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\core-kernel)
+   Compiling task-layer v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\task-layer)
+   Compiling action-gate v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\action-gate)
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\gateway)
+   Compiling semantic-core v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\semantic-core)
+   Compiling fact-view v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\fact-view)
+   Compiling core-replay v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\core-replay)
+   Compiling core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\core-runtime)
+   Compiling echoctl v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\echoctl)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.95s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\action_gate-472aee472b5c3e46.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\core_kernel-950144fe979e9e01.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\core_policy-cecff13cbca70ecd.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\core_replay-29e09c116cfd287f.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\core_runtime-d41a4b86510a71fb.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\core_store-795912f244dd72a4.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\core_types-10f9b83983db9b8f.exe)
+     Running tests\canonical_boundaries.rs (D:\Dev\cache\P5-23\target\debug\deps\canonical_boundaries-c4cd504ad9a70878.exe)
+     Running tests\p5_32_contract.rs (D:\Dev\cache\P5-23\target\debug\deps\p5_32_contract-4501c5270e32da09.exe)
+     Running tests\p5_34_contract.rs (D:\Dev\cache\P5-23\target\debug\deps\p5_34_contract-4fc86d9f30484a04.exe)
+     Running tests\v2_contract.rs (D:\Dev\cache\P5-23\target\debug\deps\v2_contract-9ccbb01e280b5b77.exe)
+     Running unittests src\main.rs (D:\Dev\cache\P5-23\target\debug\deps\echoctl-230cdabb167c101e.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\fact_view-3f8bb758acb69734.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\gateway-78e26add726f9780.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\semantic_core-780170bd5686342a.exe)
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\task_layer-560b5a6ea8dea384.exe)
+   Doc-tests action_gate
+error[E0382]: use of moved value: `snapshot`
+   --> crates\action-gate\src\permissions\approval.rs:110:13
+    |
+108 | fn reuse(snapshot: PayloadSnapshot) {
+    |          -------- move occurs because `snapshot` has type `PayloadSnapshot`, which does not implement the `Copy` trait
+109 |     let _ = snapshot.consume(0, |_, _| Ok::<_, ()>(()));
+    |                      ---------------------------------- `snapshot` moved due to this method call
+110 |     let _ = snapshot.consume(0, |_, _| Ok::<_, ()>(()));
+    |             ^^^^^^^^ value used here after move
+    |
+note: `action_gate::permissions::approval::PayloadSnapshot::consume` takes ownership of the receiver `self`, which moves `snapshot`
+   --> crates\action-gate\src\permissions\approval.rs:139:9
+    |
+139 |         self,
+    |         ^^^^
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0382`.
+   Doc-tests core_kernel
+   Doc-tests core_policy
+   Doc-tests core_replay
+   Doc-tests core_runtime
+   Doc-tests core_store
+error[E0308]: mismatched types
+  --> crates\core-store\src\queries.rs:27:32
+   |
+27 |     let other: &Reader<Life> = reader;
+   |                -------------   ^^^^^^ expected `&Reader<Life>`, found `&Reader<Rehearsal>`
+   |                |
+   |                expected due to this
+   |
+   = note: expected reference `&Reader<Life>`
+              found reference `&Reader<Rehearsal>`
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0308`.
+error: cannot construct `CommitCapability<Rehearsal>` with struct literal syntax due to private fields
+  --> crates\core-store\src\transaction.rs:28:14
+   |
+28 | let forged = CommitCapability::<Rehearsal> {};
+   |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: aborting due to 1 previous error
+
+error[E0308]: mismatched types
+   --> crates\core-store\src\transaction.rs:50:17
+    |
+ 50 |     s.commit(c, t, status);
+    |       ------    ^ expected `PreparedTransaction<Life>`, found `PreparedTransaction<Rehearsal>`
+    |       |
+    |       arguments to this method are incorrect
+    |
+    = note: expected struct `PreparedTransaction<Life>`
+               found struct `PreparedTransaction<Rehearsal>`
+note: method defined here
+   --> crates\core-store\src\transaction.rs:165:12
+    |
+165 |     pub fn commit(
+    |            ^^^^^^
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0308`.
+   Doc-tests core_types
+   Doc-tests fact_view
+error[E0308]: mismatched types
+  --> crates\fact-view\src\index.rs:17:36
+   |
+17 |     let view: FactView<'_, Life> = FactView::rebuild(reader, "commit", 100, None).unwrap();
+   |               ------------------   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `FactView<'_, Life>`, found `FactView<'_, Rehearsal>`
+   |               |
+   |               expected due to this
+   |
+   = note: expected struct `FactView<'_, Life>`
+              found struct `FactView<'_, Rehearsal>`
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0308`.
+   Doc-tests gateway
+   Doc-tests semantic_core
+   Doc-tests task_layer

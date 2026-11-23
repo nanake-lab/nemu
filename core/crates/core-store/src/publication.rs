@@ -5,17 +5,27 @@ use crate::{
 use core_types::{
     WireMessage,
     contract::Schema,
-    generated::{ActionLifecycle, CoreTransactionV2, EvidenceGroupV3, ObjectRef, RSnapshotV3},
+    generated::{ActionLifecycle, CoreTransactionV4, EvidenceGroupV3, ObjectRef, RSnapshotV3},
     scalar::hex,
 };
 use rusqlite::{Connection, params};
+pub(crate) fn visible(db: &Connection, objects: &Objects, refs: &[ObjectRef]) -> Result<()> {
+    crate::store::publish_refs(db, refs, objects.config)?;
+    for r in refs {
+        db.execute(
+            "INSERT OR IGNORE INTO visible_objects VALUES(?1)",
+            [crate::raw::storage_key(r)],
+        )?;
+    }
+    Ok(())
+}
 
 /// All derived indexes publish in the same SQLite transaction as branch_head.
 pub(crate) fn index(
     db: &Connection,
     objects: &Objects,
     commit: &str,
-    value: &CoreTransactionV2,
+    value: &CoreTransactionV4,
     refs: &[ObjectRef],
 ) -> Result<()> {
     let limits = objects.config.encoding;
@@ -33,16 +43,26 @@ pub(crate) fn index(
             params![commit, role, r.canonical_bytes(limits)?],
         )?;
     }
-    let r = RSnapshotV3::from_canonical(&objects.read(&value.staged_r)?, limits)?;
-    for tendency in &r.tendencies {
-        let reference = objects.reference(tendency, "1")?;
+    let schema = Schema::builtin()?;
+    let tendencies: Vec<(String, ObjectRef)> = if value.staged_r.object_type
+        == schema.message(RSnapshotV3::NAME)?.tag
+    {
+        RSnapshotV3::from_canonical(&objects.read(&value.staged_r)?, limits)?
+            .tendencies
+            .iter()
+            .map(|t| Ok((t.tendency_id.clone(), objects.reference(t, "1")?)))
+            .collect::<Result<_>>()?
+    } else {
+        core_types::generated::RSnapshotV2::from_canonical(&objects.read(&value.staged_r)?, limits)?
+            .tendencies
+            .iter()
+            .map(|t| Ok((t.tendency_id.clone(), objects.reference(t, "1")?)))
+            .collect::<Result<_>>()?
+    };
+    for (id, reference) in tendencies {
         db.execute(
             "INSERT INTO snapshot_objects VALUES(?1,'tendency',?2,?3)",
-            params![
-                commit,
-                tendency.tendency_id,
-                reference.canonical_bytes(limits)?
-            ],
+            params![commit, id, reference.canonical_bytes(limits)?],
         )?;
     }
     for reference in &value.accepted_results {
@@ -70,23 +90,78 @@ pub(crate) fn index(
     let schema = Schema::builtin()?;
     // Index only groups accepted in this transaction, never unaccepted candidates.
     for reference in &value.accepted_results {
-        if reference.object_type == schema.message(EvidenceGroupV3::NAME)?.tag {
-            let group = EvidenceGroupV3::from_canonical(&objects.read(reference)?, limits)?;
-            db.execute(
-                "INSERT INTO evidence_groups VALUES(?1,?2,?3)",
-                params![commit, group.group_id, reference.canonical_bytes(limits)?],
-            )?;
-            for allocation in &group.allocations {
-                db.execute(
-                    "INSERT INTO evidence_index VALUES(?1,?2,?3,?4)",
-                    params![
-                        commit,
-                        allocation.tendency_id,
-                        group.group_id,
-                        reference.canonical_bytes(limits)?
-                    ],
+        let (group_id, tendencies) =
+            if reference.object_type == schema.message(EvidenceGroupV3::NAME)?.tag {
+                let group = EvidenceGroupV3::from_canonical(&objects.read(reference)?, limits)?;
+                (
+                    group.group_id,
+                    group
+                        .allocations
+                        .into_iter()
+                        .map(|a| a.tendency_id)
+                        .collect::<Vec<_>>(),
+                )
+            } else if reference.object_type
+                == schema
+                    .message(core_types::generated::EvidenceGroupV2::NAME)?
+                    .tag
+            {
+                let group = core_types::generated::EvidenceGroupV2::from_canonical(
+                    &objects.read(reference)?,
+                    limits,
                 )?;
-            }
+                (
+                    group.group_id,
+                    group
+                        .allocations
+                        .into_iter()
+                        .map(|a| a.tendency_id)
+                        .collect::<Vec<_>>(),
+                )
+            } else {
+                continue;
+            };
+        db.execute(
+            "INSERT INTO evidence_groups VALUES(?1,?2,?3)",
+            params![commit, group_id, reference.canonical_bytes(limits)?],
+        )?;
+        for tendency in tendencies {
+            db.execute(
+                "INSERT INTO evidence_index VALUES(?1,?2,?3,?4)",
+                params![
+                    commit,
+                    tendency,
+                    group_id,
+                    reference.canonical_bytes(limits)?
+                ],
+            )?;
+        }
+    }
+
+    if let Some(c) = &value.activity_commit {
+        db.execute(
+            "INSERT INTO activity_keys VALUES(?1,?2,?3,?4,?5)",
+            params![
+                c.activity.record_id,
+                c.binding.request_id,
+                c.binding.activity_id,
+                c.binding.step_id,
+                commit
+            ],
+        )?;
+        let q = core_types::generated::CognitionState::from_canonical(
+            &objects.read(&value.staged_q)?,
+            limits,
+        )?;
+        for action in q
+            .inflight
+            .iter()
+            .filter(|a| a.origin_record == value.staged_h)
+        {
+            db.execute(
+                "INSERT INTO outbox VALUES(?1,?2,?3)",
+                params![commit, action.action_id, action.canonical_bytes(limits)?],
+            )?;
         }
     }
     if value.staged_q.object_type == schema.message(ActionLifecycle::NAME)?.tag {
@@ -101,6 +176,9 @@ pub(crate) fn index(
         )?;
     }
     for r in refs {
+        if r.object_type == crate::RAW_BYTES {
+            continue;
+        }
         let (name, _) = schema
             .messages
             .iter()
@@ -113,7 +191,11 @@ pub(crate) fn index(
         for dependency in dependencies {
             db.execute(
                 "INSERT OR IGNORE INTO dependency_index VALUES(?1,?2,?3)",
-                params![commit, hex(&r.digest.0), hex(&dependency.digest.0)],
+                params![
+                    commit,
+                    hex(&r.digest.0),
+                    crate::raw::storage_key(&dependency)
+                ],
             )?;
         }
     }

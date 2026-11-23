@@ -1,0 +1,75 @@
+{
+  "phase": "C3 stage1 zero-injection forward diagnosis",
+  "repository": "nanake-lab/nemu-evidence",
+  "commit": "b4084bc3e3694c3a604f92c06ca41bfe255b2132",
+  "base_path": "R-STEER-01/c3-stage1-results-01",
+  "execution_public_head": "95ddf11862f99ba3e70c8d22c827a1c48c883296",
+  "execution_private_head": "8984226558159ed0e8fb5fb4f61e990f1059b434",
+  "frozen_source_index": "C3-STAGE01-INDEX.json",
+  "manifest": {
+    "path": "files.json",
+    "sha256": "f7ad3eae7a52aff6cb1567b7b0f28fb70230a77ad3ce9626fd68c8c77838947f",
+    "files": 25,
+    "bytes": 141120786,
+    "git_blob_matches_with_manifest": 26
+  },
+  "raw_manifest": {
+    "path": "raw-files.json",
+    "sha256": "523356fbed94510b273b997204eebc3ffa7004a705f57dcb1aca9e025a9681f6",
+    "files": 13662,
+    "bytes": 152444167,
+    "roundtrip_matches": 13662
+  },
+  "archives": [
+    {
+      "path": "archives/metadata.zip",
+      "bytes": 493630,
+      "sha256": "15018137792ffd8534226d0df5c823dda39df820bacd1c2bc8f6bb38d2932282"
+    },
+    {
+      "path": "archives/requests-01.zip",
+      "bytes": 30927362,
+      "sha256": "dd3778a4c37879859dd2d37937bf32ad7887ce6e05853fcd0b312516fcef4581"
+    },
+    {
+      "path": "archives/requests-02.zip",
+      "bytes": 36431441,
+      "sha256": "913a7c32c6803d211442c99d74d929a2307c20a9dfadee2ba1d4a68956dfec27"
+    },
+    {
+      "path": "archives/requests-03.zip",
+      "bytes": 30929080,
+      "sha256": "bd7acaac976c6ec57d6d5b84f45105764cf7815606ca00e87bd7d2532e43a86f"
+    },
+    {
+      "path": "archives/requests-04.zip",
+      "bytes": 27838529,
+      "sha256": "14f9317d3734825c6e2ef80e5731daa88530244b7ebe17292b9a9b361590b59a"
+    }
+  ],
+  "entry_points": {
+    "readme": "README.md",
+    "summary": "diagnosis/summary.json",
+    "all_64_curves": "diagnosis/curves.json",
+    "all_3072_V_projections": "diagnosis/per-root.json",
+    "private_vectors_and_language_cosines": "diagnosis/vectors-private-research-only.json",
+    "collection_audit": "independent-audit/01-forward-audit.stdout.json",
+    "independent_recalculation": "independent-audit/02-independent-numeric-recompute.stdout.json",
+    "audit_record_limitations": "independent-audit/README.txt",
+    "old_frozen_and_result_hashes": "verification-receipt.json"
+  },
+  "run_status": "completed",
+  "requests": 390,
+  "captured_layer_files": 12480,
+  "wall_seconds": 34.641,
+  "gpu_windows_used": 1,
+  "gpu_windows_authorized": 2,
+  "api_calls_this_run": 0,
+  "generated_tokens": 0,
+  "C3_cost_upper_nano_usd": 859179024,
+  "material_gate": "material_root_conflict_stop",
+  "J_gate": "C3_measurement_insufficient_stop",
+  "stage2_plus": "not_run",
+  "J_v2_and_material_v2": "proposal_only_not_run",
+  "C2_scores_changed": false
+}

@@ -1,0 +1,49 @@
+     Locking 24 packages to highest Rust 1.99.0 compatible versions
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling typenum v1.20.1
+   Compiling unicode-ident v1.0.27
+   Compiling hybrid-array v0.4.15
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling syn v3.0.9
+   Compiling block-buffer v0.12.1
+   Compiling crypto-common v0.2.2
+   Compiling const-oid v0.10.2
+   Compiling serde_json v1.0.154
+   Compiling serde v1.0.229
+   Compiling digest v0.11.3
+   Compiling serde_derive v1.0.229
+   Compiling libm v0.2.16
+   Compiling memchr v2.8.3
+   Compiling itoa v1.0.18
+   Compiling cpufeatures v0.3.1
+   Compiling cfg-if v1.0.5
+   Compiling sha2 v0.11.1
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\R-KAPPA-01\core\crates\core-types)
+   Compiling r-kappa-01 v0.1.0 (D:\Dev\nemu-wt\R-KAPPA-01\reports\R-KAPPA-01\probe)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\R-KAPPA-01\core\crates\core-kernel)
+error[E0277]: the trait bound `Array<u8, UInt<UInt<UInt<UInt<_, B0>, B0>, B0>, B0>>: LowerHex` is not satisfied
+  --> src\verifier.rs:21:25
+   |
+21 |         format!("{:x}", Sha256::digest(self.key().as_bytes()))
+   |                  ----   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `LowerHex` is not implemented for `Array<u8, UInt<UInt<UInt<UInt<UInt<_, B0>, B0>, B0>, B0>, B0>>`
+   |                  |
+   |                  required by this formatting parameter
+   |
+   = help: the following other types implement trait `LowerHex`:
+             &T
+             &mut T
+             Saturating<T>
+             Wrapping<T>
+             compiler_builtins::math::libm_math::support::big::i256
+             compiler_builtins::math::libm_math::support::big::u256
+             compiler_builtins::math::libm_math::support::hex_float::hex_fmt::Hex<T>
+             i128
+           and 12 others
+   = note: the full name for the type has been written to 'D:\Dev\cache\R-KAPPA-01\target\debug\deps\r_kappa_01-11017a9b15d95153.long-type-613239833459687454.txt'
+   = note: consider using `--verbose` to print the full type name to the console
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `r-kappa-01` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

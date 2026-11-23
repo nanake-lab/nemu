@@ -19,6 +19,12 @@ pub(super) fn statistics(
     let mut s = old.clone();
     s.h = h;
     s.weight = n::add(n::mul(rho, old.weight)?, 1.0)?;
+    // ADR 0035 §3.2: S, then P, then channels; only the baseline path permits
+    // gradual underflow. Legacy None preserves the original arithmetic.
+    s.prior_mass = old
+        .prior_mass
+        .map(|mass| n::finite(rho * mass))
+        .transpose()?;
     let old_b = core_types::semantic::nature(&old.values.baseline);
     let mut b = [0.0; 4];
     let mut g = [0.0; 4];
@@ -26,16 +32,18 @@ pub(super) fn statistics(
     for i in 0..4 {
         let residual = n::sub(a[i], old_b[i])?;
         s.square_sum[i] = n::add(n::mul(rho, old.square_sum[i])?, n::mul(residual, residual)?)?;
-        s.reaction_sum[i] = n::add(n::mul(rho, old.reaction_sum[i])?, a[i])?;
-        b[i] = n::div(
-            n::add(
-                n::mul(p.baseline_weight, p.baseline_prior[i])?,
-                s.reaction_sum[i],
-            )?,
-            n::add(p.baseline_weight, s.weight)?,
-        )?;
-        if !(-1.0..=1.0).contains(&b[i]) {
-            return Err(Fault::OutOfRange);
+        if old.prior_mass.is_none() {
+            s.reaction_sum[i] = n::add(n::mul(rho, old.reaction_sum[i])?, a[i])?;
+            b[i] = n::div(
+                n::add(
+                    n::mul(p.baseline_weight, p.baseline_prior[i])?,
+                    s.reaction_sum[i],
+                )?,
+                n::add(p.baseline_weight, s.weight)?,
+            )?;
+            if !(-1.0..=1.0).contains(&b[i]) {
+                return Err(Fault::OutOfRange);
+            }
         }
         let prior_variance = n::mul(p.sigma_prior[i], p.sigma_prior[i])?;
         let variance = n::div(
@@ -48,6 +56,15 @@ pub(super) fn statistics(
             .clamp(p.gain_min, p.gain_max);
         super::duration::observe(old, &mut s, i, residual, running_ns, rho)?;
         lambda[i] = n::div(1.0, s.tau[i])?.clamp(p.recovery_min, p.recovery_max);
+        if let Some(mass) = s.prior_mass {
+            s.reaction_sum[i] = n::add(n::finite(rho * old.reaction_sum[i])?, a[i])?;
+            let numerator = n::add(n::finite(mass * p.baseline_prior[i])?, s.reaction_sum[i])?;
+            let denominator = n::add(mass, s.weight)?;
+            b[i] = n::finite(numerator / denominator)?;
+            if !(-1.0..=1.0).contains(&b[i]) {
+                return Err(Fault::OutOfRange);
+            }
+        }
     }
     s.values = types::theta(b, g, lambda);
     Ok(s)

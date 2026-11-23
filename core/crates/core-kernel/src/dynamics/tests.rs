@@ -1,6 +1,11 @@
 use super::types::{components, nature};
 use super::*;
 
+mod common_discount;
+mod common_discount_bounds;
+mod common_discount_controls;
+mod common_discount_e07;
+
 fn law() -> DynamicsLaw {
     DynamicsLaw {
         version: "P5-25-v2-93-98-libm-0.2.16".into(),

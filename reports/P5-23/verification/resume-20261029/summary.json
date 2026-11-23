@@ -1,0 +1,47 @@
+{
+  "i23": {
+    "evictions": 77,
+    "capacity_notices": 51,
+    "legacy_prefixes": 125,
+    "v3_capacity_codec_prefix_comparisons": 300
+  },
+  "core_kernel": {
+    "ignored_reason": "Existing P5-25 V2-93 rounding diagnostic; unchanged",
+    "ignored": 1,
+    "passed": 169
+  },
+  "ac2_01": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "scalar_parity": {
+    "faults": 7,
+    "states": 2539894,
+    "bit_mismatches": 0,
+    "share_vectors": 261581
+  },
+  "clippy_exit_code": 0,
+  "law_6": {
+    "status": "failed",
+    "violations": 3064,
+    "sequences": 3000,
+    "exit_code": 1,
+    "authority": "ADR 0019 / V2-60; original predicate preserved"
+  },
+  "merge_commit": "551928db",
+  "event_parity": {
+    "events": 13339,
+    "bit_mismatches": 0,
+    "atomic_faults": 5
+  },
+  "date": "2026-10-29",
+  "rust": "1.99.0",
+  "baseline_main": "f24f1256259c998bc213a9dc93103fcfb9cfe89a",
+  "diff_check_exit_code": 0,
+  "fmt_exit_code": 0,
+  "source_manifest_files": 46,
+  "workspace_exit_code": 0,
+  "python": "3.12.10",
+  "scope": "Pure G; external K/H/notification/migration wiring requested separately",
+  "first_failure": "capacity-01 test stimulus pi=0.5, corrected sigma without assertion changes; raw failure retained"
+}

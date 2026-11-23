@@ -17,6 +17,10 @@ import sys
 from typing import Any
 from fixture_inputs import LIMITS, SCHEMA
 from adversarial import cases
+from verify_theta_limits import verify as verify_theta_limits
+from verify_law_state import verify as verify_law_state
+from verify_cognition import verify as verify_cognition
+from verify_j import verify as verify_j
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -86,6 +90,7 @@ def main() -> None:
             "packages/contracts/src/generated/.test-build",
             "core/contracts/probe.ts",
             "core/contracts/check_retention_browser.ts",
+            "core/contracts/check_touch_browser.ts",
         ]
     )
     legal = json.loads((HERE / "golden/legal.json").read_text(encoding="utf-8"))
@@ -247,6 +252,14 @@ def main() -> None:
     for vector in json.loads((HERE / "golden/ingress.json").read_text(encoding="utf-8")):
         queries.append(vector["request"])
         expected.append(vector["expected"])
+        if vector["label"] == "upload-complete-chunk":
+            # Same valid first chunk, only the declared tag changes. Contract
+            # registration alone must not enable any new terminal upload route.
+            for definition in SCHEMA["messages"].values():
+                if definition["file"] in ("speak_think.proto", "permission.proto", "semantic_evidence.proto"):
+                    chunk = copy.deepcopy(vector["request"])
+                    chunk["chunk"]["object"]["object_type"] = definition["tag"]
+                    bad(chunk)
     for language, command in commands.items():
         actual = probe(command, queries)
         for i, (got, want) in enumerate(zip(actual, expected, strict=True)):
@@ -255,6 +268,7 @@ def main() -> None:
                 assert got == want, (language, i, queries[i]["name"], got, want)
         print(f"{language}: {len(actual)} cases PASS")
     run(["node", str(ROOT / "packages/contracts/src/generated/.test-build/core/contracts/check_retention_browser.js")])
+    run(["node", str(ROOT / "packages/contracts/src/generated/.test-build/core/contracts/check_touch_browser.js")])
     counts = collections.Counter("legal" if e["ok"] else "illegal" for e in expected)
     print(
         json.dumps(
@@ -265,6 +279,12 @@ def main() -> None:
             )
         )
     )
+    verify_theta_limits(commands, probe)
+    verify_law_state(commands, probe, legal)
+    verify_cognition(commands, probe, legal)
+    verify_j(commands, probe, legal)
+    # P5-36: restore actual kernel states returned by both non-Rust codecs.
+    run([sys.executable, "core/contracts/verify_theta_restore.py", "--output", str(HERE / ".test-build/theta-restore")])
 
 
 if __name__ == "__main__":

@@ -12,6 +12,28 @@ LIMITS = dict(max_bytes=1048576, max_items=4096, max_depth=32)
 
 
 def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
+    from fixture_evidence import evidence_sample
+    if SCHEMA["messages"][name]["file"] == "semantic_evidence.proto":
+        return evidence_sample(name, seed)
+    from fixture_permission import permission_sample
+    if SCHEMA["messages"][name]["file"] == "permission.proto":
+        return permission_sample(name, seed)
+    from fixture_speak_think import NAMES as WIRE_NAMES, sample_wire
+    if name in WIRE_NAMES:
+        return sample_wire(name, seed)
+    from fixture_j import NAMES as J_NAMES, sample_j
+    if name in J_NAMES:
+        return sample_j(name, seed)
+    from fixture_cognition import NAMES as COG_NAMES, sample_cognition
+    if name in COG_NAMES:
+        return sample_cognition(name, seed)
+    from fixture_law_state import NAMES as LAW_NAMES, sample_law_state
+    if name in LAW_NAMES:
+        return sample_law_state(name, seed)
+    from fixture_theta import NAMES, sample_theta
+
+    if name in NAMES:
+        return sample_theta(name, seed)
     message = SCHEMA["messages"][name]
 
     def atom(f: dict[str, Any], n: int) -> Any:
@@ -117,9 +139,15 @@ def unit(c: float, e: float, q: float, a: float) -> dict[str, Any]:
 
 
 def targeted_legal() -> list[dict[str, Any]]:
+    from fixture_evidence import evidence_legal
+    from fixture_cognition import legal_cognition
+    from fixture_speak_think import legal_wire
+    from fixture_permission import permission_legal
     """P5-21 vectors for values that seeded samples do not reach (new enum codes) and
     semantically realistic v2 records. Additional vectors only; never replace frozen ones."""
+    from fixture_law_state import legal_law_state
     from fixture_retention import legal_retention
+    from fixture_touch import legal_touch
 
     e = SCHEMA["enums"]
     rs, fc = e["RunStatus"], e["FailureCode"]
@@ -176,6 +204,12 @@ def targeted_legal() -> list[dict[str, Any]]:
         + targeted_legal_p5_32(tendency)
         + targeted_legal_p5_22()
         + legal_retention()
+        + legal_touch()
+        + legal_law_state()
+        + legal_cognition()
+        + legal_wire()
+        + permission_legal()
+        + evidence_legal()
     )
 
 
@@ -428,6 +462,10 @@ def targeted_legal_p5_22() -> list[dict[str, Any]]:
 
 
 def targeted_illegal() -> list[dict[str, Any]]:
+    from fixture_j import illegal_j
+    from fixture_cognition import illegal_cognition
+    from fixture_speak_think import illegal_wire
+    from fixture_permission import permission_illegal
     import copy
     import struct
 
@@ -521,4 +559,23 @@ def targeted_illegal() -> list[dict[str, Any]]:
         )
     from fixture_retention import illegal_retention
 
-    return targeted_illegal_existing() + out + illegal_retention()
+    from fixture_theta import illegal_theta
+    from fixture_law_state import illegal_law_state
+
+    from fixture_touch import illegal_touch
+
+    from fixture_evidence import evidence_illegal
+
+    return (
+        evidence_illegal()
+        + targeted_illegal_existing()
+        + out
+        + illegal_retention()
+        + illegal_theta()
+        + illegal_law_state()
+        + illegal_touch()
+        + illegal_cognition()
+        + illegal_wire()
+        + permission_illegal()
+        + illegal_j()
+    )

@@ -1,0 +1,149 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "terminal.proto";
+
+enum IngressKind { INGRESS_UNSPECIFIED = 0; INGRESS_EVENT = 1; INGRESS_UPLOAD = 2; INGRESS_QUERY = 3; INGRESS_APPROVAL = 4; INGRESS_CANCEL = 5; INGRESS_GROWTH = 6; }
+enum IngressReason { INGRESS_REASON_UNSPECIFIED = 0; INVALID_FRAME = 1; AUTH_FAILED = 2; SESSION_EXPIRED = 3; CAPABILITY_DENIED = 4; VERSION_UNSUPPORTED = 5; OBJECT_MISMATCH = 6; PENDING_RECORDS_FULL = 7; PENDING_BYTES_FULL = 8; AUDIT_FULL = 9; UPLOAD_BUDGET_FULL = 10; SOURCE_KEY_CONFLICT = 11; }
+enum AuthStatus { AUTH_UNSPECIFIED = 0; AUTHENTICATED = 1; AUTH_REJECTED = 2; }
+enum UploadStatus { UPLOAD_UNSPECIFIED = 0; UPLOAD_CONTINUE = 1; UPLOAD_COMPLETE = 2; }
+enum IngressResponseKind { INGRESS_RESPONSE_UNSPECIFIED = 0; EVENT_RECEIPT = 1; UPLOAD_RECEIPT = 2; QUERY_REPLY = 3; CONTROL_ACK = 4; INGRESS_REJECTED = 5; }
+
+// @message echo.terminal-budget | ADR 0024 explicit deployment limits
+message TerminalBudget {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional uint32 max_frame_bytes = 3; // required,min=1
+  optional uint32 max_chunk_bytes = 4; // required,min=1
+  optional uint32 max_object_bytes = 5; // required,min=1
+  optional uint32 max_uploads = 6; // required,min=1
+  optional uint32 max_upload_bytes = 7; // required,min=1
+}
+
+// @message echo.terminal-authenticate | ADR 0024 transient credentials; never persist or log
+message TerminalAuthenticate {
+  // @transient
+  optional uint32 schema_version = 1; // required
+  optional string request_id = 2; // required,nonempty
+  optional string installation_id = 3; // required,nonempty
+  optional bytes token = 4; // required,size=32
+  repeated uint32 protocol_versions = 5 [packed = false]; // required,set=self
+}
+
+// @message echo.terminal-session | ADR 0024 server-issued, connection-bound
+message TerminalSession {
+  optional uint32 schema_version = 1; // required
+  optional string session_id = 2; // required,nonempty
+  optional string installation_id = 3; // required,nonempty
+  optional uint32 protocol_version = 4; // required,min=1,max=1
+  repeated IngressKind capabilities = 5 [packed = false]; // required,set=self
+  optional TerminalBudget budget = 6; // required
+}
+
+// @message echo.terminal-auth-result | ADR 0024 authentication pairing
+message TerminalAuthResult {
+  // @rules {"discriminator":"status","common":["request_id"],"cases":{"1":{"required":["session"]},"2":{"required":["reason"]}}}
+  optional uint32 schema_version = 1; // required
+  optional string request_id = 2; // required,nonempty
+  optional AuthStatus status = 3; // required
+  optional TerminalSession session = 4; // optional
+  optional IngressReason reason = 5; // optional
+}
+
+// @message echo.terminal-event | ADR 0024 no client receipt position/time/identity
+message TerminalEvent {
+  optional uint32 schema_version = 1; // required
+  optional string id = 2; // required,nonempty
+  optional string stable_source_key = 3; // required,nonempty
+  optional EventKind kind = 4; // required
+  optional sint64 event_time_ns = 5; // required
+  repeated string parents = 6; // required,set=self
+  optional ObjectRef payload_ref = 7; // required
+  optional ObjectRef provenance = 8; // required
+  optional bytes payload_digest = 9; // required,size=32
+  optional string action_id = 10; // optional
+  optional string trial_id = 11; // optional
+  repeated string correction_of = 12; // required,set=self
+  optional Derivation derivation = 13; // required
+}
+
+// @message echo.object-upload-chunk | ADR 0024 sequential CanonicalV1 bytes
+message ObjectUploadChunk {
+  optional uint32 schema_version = 1; // required
+  optional string upload_id = 2; // required,nonempty
+  optional ObjectRef object = 3; // required
+  optional uint64 offset = 4; // required
+  optional bytes data = 5; // required
+  optional bool final_chunk = 6; // required
+}
+
+// @message echo.object-upload-receipt | ADR 0024 completion only after verification
+message ObjectUploadReceipt {
+  optional uint32 schema_version = 1; // required
+  optional string upload_id = 2; // required,nonempty
+  optional ObjectRef object = 3; // required
+  optional uint64 next_offset = 4; // required
+  optional UploadStatus status = 5; // required
+}
+
+// @message echo.receipt-v2 | ADR 0024 typed successor; legacy Receipt stays internal
+message ReceiptV2 {
+  // @retains Receipt
+  reserved 5;
+  // @rules {"discriminator":"stage","common":["stable_source_key"],"cases":{"1":{"required":["event_id","raw_log_position","ingest_time_ns"]},"2":{"required":["event_id"]},"3":{"required":["event_id"]},"4":{"required":["event_id","reason_code"]}}}
+  optional uint32 schema_version = 1; // required
+  optional string stable_source_key = 2; // required,nonempty
+  optional ReceiptStage stage = 3; // required
+  optional string event_id = 4; // optional
+  optional IngressReason reason_code = 6; // optional
+  optional uint64 raw_log_position = 7; // optional
+  optional sint64 ingest_time_ns = 8; // optional
+}
+
+// @message echo.terminal-request | ADR 0024 closed authenticated dispatch
+message TerminalRequest {
+  // @rules {"common":["request_id","session_id","protocol_version"],"cases":{"1":{"required":["event"]},"2":{"required":["upload"]},"3":{"required":["query"]},"4":{"required":["approval"]},"5":{"required":["cancel"]},"6":{"required":["growth"]}}}
+  optional uint32 schema_version = 1; // required
+  optional string request_id = 2; // required,nonempty
+  optional string session_id = 3; // required,nonempty
+  optional uint32 protocol_version = 4; // required,min=1,max=1
+  optional IngressKind kind = 5; // required
+  optional TerminalEvent event = 6; // optional
+  optional ObjectUploadChunk upload = 7; // optional
+  optional QueryV2 query = 8; // optional
+  optional ApprovalDecisionV2 approval = 9; // optional
+  optional OutputCancel cancel = 10; // optional
+  optional GrowthControl growth = 11; // optional
+}
+
+// @message echo.terminal-response | ADR 0024 paired reply; no old Receipt arm
+message TerminalResponse {
+  // @rules {"common":["request_id","session_id","protocol_version","reply_to"],"cases":{"1":{"required":["receipt"]},"2":{"required":["upload"]},"3":{"required":["query"]},"4":{},"5":{"required":["reason"]}}}
+  optional uint32 schema_version = 1; // required
+  optional string request_id = 2; // required,nonempty
+  optional string session_id = 3; // required,nonempty
+  optional uint32 protocol_version = 4; // required,min=1,max=1
+  optional IngressKind reply_to = 5; // required
+  optional IngressResponseKind kind = 6; // required
+  optional ReceiptV2 receipt = 7; // optional
+  optional ObjectUploadReceipt upload = 8; // optional
+  optional QueryResultV2 query = 9; // optional
+  optional IngressReason reason = 10; // optional
+}
+
+// @message echo.ingress-audit-budget | ADR 0024 independent append-only bound
+message IngressAuditBudget {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional uint32 max_records = 3; // required,min=1
+  optional uint32 max_bytes = 4; // required,min=1
+}
+
+// @message echo.ingress-rejection | ADR 0024 server fields only; no raw credential or input
+message IngressRejection {
+  optional uint32 schema_version = 1; // required
+  optional uint64 position = 2; // required
+  optional sint64 recorded_at_ns = 3; // required
+  optional IngressReason reason = 4; // required
+  optional IngressKind request_kind = 5; // optional
+}

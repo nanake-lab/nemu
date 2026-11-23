@@ -1,0 +1,29 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0
+rootdir: D:\Dev\nemu-wt\P5-07\workers\irl
+configfile: pyproject.toml
+testpaths: tests
+collected 28 items
+
+tests\test_scaffold.py .                                                 [  3%]
+tests\test_worker.py ......F....................                         [100%]
+
+================================== FAILURES ===================================
+________ test_output_collection_and_depth_limits_are_enforced[limits1] ________
+
+limits = Limits(max_bytes=1048576, max_items=4096, max_depth=4)
+
+    @pytest.mark.parametrize("limits", [Limits(1_048_576, 8, 32), Limits(1_048_576, 4096, 4)])
+    def test_output_collection_and_depth_limits_are_enforced(limits: Limits) -> None:
+        view = view_for()
+        replay = Replay(json.dumps(candidate(view.payload.text)))
+        result = asyncio.run(interpret(view, replay.stream, producer="local-replay",
+                             producer_version="v1", limits=limits, max_output_bytes=4096))
+>       assert result.parsed is None and result.reason is not None
+E       AssertionError: assert ({'schemaVersion': 'p0-08-candidate-v1', 'sourceRef': 'p0-08-0000', 'nodes': [{'id': 'n1', 'sourceRefs': ['p0-08-0000'], 'sourceSpan': [0, 7], 'derivation': 'normalized', ...}]} is None)
+E        +  where {'schemaVersion': 'p0-08-candidate-v1', 'sourceRef': 'p0-08-0000', 'nodes': [{'id': 'n1', 'sourceRefs': ['p0-08-0000'], 'sourceSpan': [0, 7], 'derivation': 'normalized', ...}]} = RecordedCandidate(actual_output=AuditExtension(schema_version=1, audit_schema_tag='nemu.irl.wire-output', audit_schema...one)), producer='local-replay', producer_version='v1', reason=None, output_complete=True, elapsed_ms=16.00000000325963).parsed
+
+tests\test_worker.py:118: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_worker.py::test_output_collection_and_depth_limits_are_enforced[limits1]
+======================== 1 failed, 27 passed in 0.62s =========================

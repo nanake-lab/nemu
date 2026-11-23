@@ -108,7 +108,7 @@ fn reader_and_capabilities_cannot_cross_stores_even_same_kind() {
     assert!(
         b.reader()
             .unwrap()
-            .read::<CoreTransactionV2>(&published.snapshot)
+            .event_snapshot(&published.snapshot)
             .is_err()
     );
     assert!(b.reader().unwrap().facts(10).unwrap().is_empty());

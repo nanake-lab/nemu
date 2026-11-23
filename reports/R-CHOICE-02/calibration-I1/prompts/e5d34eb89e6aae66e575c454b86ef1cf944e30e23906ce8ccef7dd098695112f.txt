@@ -1,0 +1,8 @@
+Synthetic rule task. A correct final decision earns 10 points; each read costs 1 point. At most one read is available before the final decision.
+RULE: Put a amber tile in LEFT; put a blue tile in RIGHT.
+CURRENT FACTS: Current tile color is amber.
+OPERATION CODES:
+C: read the current tile color
+B: submit a decision using the visible information
+A: read the decorative border color
+Select the next operation code. The response slot reads exactly one token: A, B, or C. Write only that code, with no other text.

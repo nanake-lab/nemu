@@ -1,0 +1,14 @@
+{
+  "scope": "多账号/同源/对话/转述归组及 G 重复不增权重",
+  "status": "passed",
+  "production_acceptance": "not_run",
+  "source": "../verification/test-06/stdout.log",
+  "source_sha256": "14D0C5528AAF4949670AD478FBDC596F5B3641CEC5341BE559CE9FA30D0F7A1F",
+  "tests": [
+    "evidence::tests::integration::ac2_03_assembled_repeated_experience_does_not_add_g_weight",
+    "evidence::tests::properties::ac2_03_multiple_accounts_map_to_one_source_and_one_teaching_group",
+    "evidence::tests::rules::ac2_03_same_source_conversation_and_transitive_matter_form_one_group"
+  ],
+  "limitation": "条件性合成输入；不替代上游认证/属性生产或完整实验谱系。见 REPORT.md 和 BLOCKED.md。",
+  "id": "AC2-03"
+}

@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "task": "P5-08",
+  "captured_utc": "2026-10-31T16:53:25.060147+00:00",
+  "review_url": "https://github.com/nanake-lab/nemu/pull/120#issuecomment-6514177758",
+  "reviewed_head": "5bdb3092095815d61d3a573307a8bf0c9210e506",
+  "merged_main_B": "db8802f317b5b4dd5fe57699ef724fbac0d940f1",
+  "final_fetched_main_M": "db8802f317b5b4dd5fe57699ef724fbac0d940f1",
+  "merge_commit": "222d0913fb3bd862aa3d67671154f029b2cc0144",
+  "red_tests_commit": "b55374a76d59bb29c19975d5b4a68e3cf4b9ba2c",
+  "validated_source_commit": "e1c63b16d1f8d5d38f3bda48795d68c8f611afa1",
+  "validated_core_tree": "b90cf1f92b3dd99e6a564175c137c397fec559a0",
+  "validated_runtime_tree": "99b384ab27c143483c47591c0b7e3d3442a493db",
+  "source_binding": {
+    "workspace-test.log": "clean e1c63b16 source; only report files changed while running",
+    "clippy-01.log": "working tree identical to the source and tests committed as e1c63b16",
+    "fmt.log": "working tree identical to the source and tests committed as e1c63b16",
+    "runtime-green-01.log": "development working tree after both fixes; subsequent source changes only interface documentation; final tests covered by workspace-test.log",
+    "red_logs": "before production fixes; failing tests preserved in b55374a7; r2-maintenance regression added after the first r2 run"
+  },
+  "commands": {
+    "r1-red.log": "cargo test --offline --locked -p core-runtime --lib review_r1 -- --nocapture",
+    "r2-red.log": "cargo test --offline --locked -p core-runtime --test review_theta -- --nocapture",
+    "r2-maintenance-red.log": "cargo test --offline --locked -p core-runtime --test review_theta review_r2_maintenance -- --nocapture",
+    "runtime-green-01.log": "cargo test --offline --locked -p core-runtime",
+    "workspace-test.log": "cargo test --offline --locked --workspace",
+    "fmt.log": "cargo fmt --all --check",
+    "clippy-01.log": "cargo clippy --offline --locked --workspace --all-targets -- -D warnings",
+    "fetch-final.log": "git -c http.lowSpeedLimit=1 -c http.lowSpeedTime=30 fetch origin",
+    "fetch-final-02.log": "git -c http.lowSpeedLimit=1 -c http.lowSpeedTime=30 fetch origin; followed by rev-parse of main and PR branch"
+  },
+  "environment": {
+    "platform": "Windows",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "CARGO_HOME": "D:/Dev/cache/cargo",
+    "CARGO_TARGET_DIR": "D:/Dev/cache/cargo-target",
+    "TEMP": "D:/Dev/cache/P5-08/tmp",
+    "TMP": "D:/Dev/cache/P5-08/tmp",
+    "settings_scope": "process only"
+  },
+  "results": {
+    "review_R1": "passed: active view preserves magnitude; F-path contributions are 0.05 and 0.4",
+    "review_R2": "passed: zero lambda/sigma/tau refused at input and C output; invalid maintenance input refused; nonidentity C positive control passed",
+    "runtime_tests": 26,
+    "runtime_compile_fail_doc_tests": 2,
+    "runtime_ignored": 0,
+    "workspace": "passed",
+    "workspace_existing_ignored": 1,
+    "full_card_acceptance": "not_run",
+    "production_F_adapter": "not_run",
+    "law_resource_range_binding": "not_run"
+  },
+  "logs": {
+    "r1-red.log": {
+      "sha256": "564710bb5a19581158d8f27cbe3a23a80f3da8de2eace47e0de0a94b07d2dc50",
+      "bytes": 2940,
+      "exit_code": 101
+    },
+    "r2-red.log": {
+      "sha256": "ac0c9d520cbc7ab9cf5a98c8c73240d72a934b079fa91cb1a28925643b412a02",
+      "bytes": 1311,
+      "exit_code": 101
+    },
+    "r2-maintenance-red.log": {
+      "sha256": "b4d0b082ccdcd8c08f7cf138d220fe2460abbea09bb532bd9730e3d3b41d23cb",
+      "bytes": 937,
+      "exit_code": 101
+    },
+    "runtime-green-01.log": {
+      "sha256": "c53f89918eaec563190607fdf9dc248506b5838b9e98aee7026bc995a73755d0",
+      "bytes": 4040,
+      "exit_code": 0
+    },
+    "fmt.log": {
+      "sha256": "a9f58776a09b5dac438049683f24bf85764e0ff8e7455952456165c68c158627",
+      "bytes": 13,
+      "exit_code": 0
+    },
+    "clippy-01.log": {
+      "sha256": "3301451ede7e5a56f196e4b728b6a45aee2c2b7211b8f85cb13f8bb84f72fce7",
+      "bytes": 2393,
+      "exit_code": 0
+    },
+    "workspace-test.log": {
+      "sha256": "62ec517672a41b820f40d1d676d9a66a8842f633a03aeb413dd26f216be509b7",
+      "bytes": 40655,
+      "exit_code": 0
+    },
+    "fetch-final.log": {
+      "sha256": "de2f6f407ba5541c07aad21f95d1aeda3f40ddfb724627de2d2e03d0e7a92fab",
+      "bytes": 148,
+      "exit_code": 128
+    },
+    "fetch-final-02.log": {
+      "sha256": "0ce5310ca9be1e4498627c9f5dcd9d5e850cd15476ae1743bf4ff02410a70798",
+      "bytes": 97,
+      "exit_code": 0
+    }
+  }
+}

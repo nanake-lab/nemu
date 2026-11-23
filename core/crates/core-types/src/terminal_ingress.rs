@@ -176,8 +176,8 @@ pub fn check_chunk(
     Ok(())
 }
 
-/// All registered live object contracts are eligible. Ingress control frames
-/// and transient credentials cannot become objects. Upload never publishes H.
+/// Only active, upload-enabled contracts are eligible. ADR 0046 types await
+/// their producing cards. Uploading a prepared object never publishes H.
 pub fn upload_type(tag: &str) -> Result<String> {
     Schema::builtin()?
         .messages
@@ -186,7 +186,13 @@ pub fn upload_type(tag: &str) -> Result<String> {
             m.tag == tag
                 && !m.transient
                 && m.superseded.is_none()
-                && m.file != "terminal_ingress.proto"
+                && !matches!(
+                    m.file.as_str(),
+                    "terminal_ingress.proto"
+                        | "speak_think.proto"
+                        | "permission.proto"
+                        | "semantic_evidence.proto"
+                )
         })
         .map(|(name, _)| name)
         .ok_or("object type is not terminal-uploadable".into())

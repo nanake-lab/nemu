@@ -1,0 +1,605 @@
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 83 tests
+test effects::tests::compile_budget_overflow_in_stored_state_is_a_fault ... ok
+test effects::tests::effects_sum_in_canonical_order_with_receipts ... ok
+test effects::tests::evaluate_rejects_missing_inputs_foreign_fields_and_version_mismatch ... ok
+test effects::tests::f06_drive_proposal_may_not_reencode_an_r_or_theta_effect ... ok
+test effects::tests::i06_only_active_r_effects_are_authorised ... ok
+test effects::tests::i07_theta_takeover_suppresses_r_even_after_legal_disable ... ok
+test effects::tests::i07_two_owners_for_one_responsibility_and_domain_is_a_structural_fault ... ok
+test effects::tests::i08_new_evidence_revision_does_not_release_a_taken_over_responsibility ... ok
+test effects::tests::i12_failure_barrier_blocks_effects_immediately ... ok
+test effects::tests::i21_compile_is_pure_and_repeated_reads_do_not_accumulate_decay ... ok
+test effects::tests::i22_theta_outside_validity_contract_quarantines_instead_of_local_disable ... ok
+test effects::tests::integrity_and_time_faults_are_structural ... ok
+test effects::tests::j06_candidate_over_budget_or_cancelling_is_rejected_and_existing_kept ... ok
+test effects::tests::j06_candidate_with_non_whitelisted_field_is_rejected ... ok
+test effects::tests::j06_out_of_scope_and_unauthorised_effects_contribute_zero ... ok
+test effects::tests::parameter_canonical_bytes_golden_layout ... ok
+test effects::tests::r_certificate_expiry_and_dependency_faults_withhold_authorisation ... ok
+test law::audit::tests::partial_withdrawal_does_not_require_a_fictitious_full_withdrawal ... ok
+test law::num::tests::exact_mean_is_order_and_repetition_invariant ... ok
+test law::num::tests::exact_mean_of_single_value_is_the_value ... ok
+test law::num::tests::exact_mean_rejects_bad_inputs ... ok
+test law::num::tests::exact_mean_rounds_ties_to_even ... ok
+test law::num::tests::finite_normalises_negative_zero_and_rejects_nonfinite ... ok
+test law::tests::ac2_count::ac2_01_consistent_evidence_raises_pi_and_contrary_lowers_it ... AC2-01 full before/after check: 4000 groups, 0 violations at rho = 1, 0 over the committed pre-state
+ok
+test law::tests::ac2_count::ac2_01_signal_limited_form_keeps_weak_support_monotone ... AC2-01_RESULT={"id":"AC2-01","status":"passed","predicate":"pi_after > pi_before for W > 0 and S = 1","pi_before":0.88578221096697518,"pi_after":0.88584758377514616,"support":1.0,"weight":0.01}
+ok
+test law::tests::ac2_count::ac2_02_i25_each_side_sums_to_one_and_zero_support_gets_nothing ... ok
+test law::tests::ac2_count::ac2_06_complex_tendencies_need_more_and_one_salient_group_suffices ... ok
+test law::tests::ac2_count::ac2_07_one_group_moves_pi_at_most_by_corollary_4 ... AC2-07: 20000 groups, 0 violations at rho = 1, 0 over the committed pre-state
+ok
+test law::tests::ac2_count::shares_reject_duplicates_and_out_of_range_values ... ok
+test law::tests::adr0019::backfill_cf_omits_first_allocations_and_preserves_all_old_q_bits ... ok
+test law::tests::adr0019::capacity_has_a_separate_revision_audit_and_frozen_q ... ok
+test law::tests::adr0019::change_rate_is_versioned_evidence_only_and_precedes_the_group ... ok
+test law::tests::adr0019::late_insertion_fault_discards_candidates_revisions_and_earlier_additions ... ok
+test law::tests::adr0019::several_backfills_share_this_append_position_and_use_group_id_order ... ok
+test law::tests::adr0019::zero_and_tiny_opposite_backfills_do_not_touch_the_other_side ... ok
+test law::tests::adr0019::zero_signal_preserves_evidence_and_q_but_can_add_magnitude ... ok
+test law::tests::boundaries::ac2_21_capacity_removes_the_weakest_candidate_and_reshares_its_groups ... ok
+test law::tests::boundaries::alias_adr_0014_any_number_of_synonyms_leaves_pi_and_r_unchanged ... ok
+test law::tests::boundaries::candidate_enters_r_at_pi_zero_with_an_l_entry ... ok
+test law::tests::boundaries::relation_candidate_becomes_the_structural_tendency ... ok
+test law::tests::boundaries::stored_state_is_checked_before_use ... ok
+test law::tests::cases::ev5_back_collection_reshares_old_groups_and_keeps_i25 ... ok
+test law::tests::cases::first_group_records_ordinal_zero_and_the_typical_magnitude ... ok
+test law::tests::cases::late_member_updates_the_group_without_a_second_count ... ok
+test law::tests::cases::precision_exhaustion_is_an_explicit_fault_at_the_step ... ok
+test law::tests::cases::subnormal_edge_u_zero_with_m_nonzero_is_carried_and_recovers ... ok
+test law::tests::cases::teaching_counts_by_trust_and_repeats_do_not_refresh ... ok
+test law::tests::engine::ac2_02_i25_and_replay_identity_hold_after_every_step_of_random_worlds ... G worlds: 40 x 120 events, 5702 groups, 8047 allocations; I25 and replay identity hold after every step
+ok
+test law::tests::engine::ac2_03_the_same_group_arriving_again_changes_nothing ... AC2-03: 1834 groups re-delivered under other b and sigma: R unchanged
+ok
+test law::tests::engine::ac2_05_without_new_evidence_r_is_bitwise_unchanged ... ok
+test law::tests::engine::ac2_21_capacity_with_resharing_keeps_i25_in_small_worlds ... ok
+test law::tests::engine::step_order_of_inputs_does_not_matter ... ok
+test law::tests::group_props::law_10_attachment_corollary_7 ... LAW-10: contrary groups to bring pi below 1/2 after 200 supporting: ordinary Some(39), A_att=60 Some(61), A_att=600 Some(298); exact true; alternating keeps pi >= 0.824
+ok
+test law::tests::group_props::law_8_shares_sum_to_one_per_side_i25 ... LAW-8: 20000 random groups with 1-8 matching tendencies, 0 violations
+ok
+test law::tests::group_props::law_9_repeats_add_nothing_and_missing_reaction_counts ... LAW-9: 5000 groups repeated 2-9 times: 0 changes beyond 1e-12, 0 bitwise; silent (-1.0, 1.0), striking (1.0, 5.0)
+ok
+test law::tests::law_props::law_1_threshold_corollary_1 ... LAW-1: 41607 states, 0 violations
+ok
+test law::tests::law_props::law_2_one_shot_and_occam_corollary_2 ... LAW-2: 20000 single groups, 0 violations; ordinary groups for kappa 0..5: [4, 5, 6, 7, 8, 9]
+ok
+test law::tests::law_props::law_3_reversal_corollary_3 ... LAW-3: 61604 states, 0 violations
+ok
+test law::tests::law_props::law_4_single_group_bound_corollary_4 ... LAW-4: 30000 states, 0 violations, largest |dpi|/bound = 0.9899
+ok
+test law::tests::law_props::law_5_time_and_state_independence_corollary_5 ... LAW-5: 500 sequences, 0 bitwise differences in pi
+ok
+test law::tests::law_props::law_6_original_predicate_failure_is_retained ... LAW-6_RESULT={"id":"LAW-6","status":"failed","sequences":3000,"violations":3064}
+ok
+test law::tests::law_props::law_7_recurrence_is_canonical ... LAW-7: replay differs bitwise in 0; closed form differs in 488 (max relative 8.9e-16)
+ok
+test law::tests::numeric::exact_mean_matches_correctly_rounded_reference ... ok
+test law::tests::pyrandom::matches_cpython_reference_draws ... ok
+test law::tests::reference_events::adr0019_python_events_review_and_side_tapes_match_g_phase_machine ... EVENT_REFERENCE {"suite": "events", "result": {"check": "LP1-three-clauses-I23-I25", "seed": 20261121, "worlds": 250, "append_checks": 9000, "append_violations": 0, "marginal_checks": 12000, "marginal_violations": 0, "backfill_candidate_checks": 3000, "oracle_mismatches": 0, "withdrawal_checks": 5019, "withdrawal_violations": 0, "history_prefixes": 6000, "replay_mismatches": 0, "conservation_failures": 0, "faults": 0, "failures": [], "example": {"before": 0.7142857142857143, "counterfactual": 0.6122448979591837, "after": 0.612434370390726, "candidate_counterfactual": 0.0, "candidate_after": 0.4794520547945206}, "scope": "original random event tape; all first-allocation targets; independent cf oracle"}}
+EVENT_REFERENCE {"suite": "review", "result": {"check": "PR61-blocking-regressions", "regression": {"counterfactual": {"a": 0.6122448979591837, "b": 0.0}, "after": {"a": 0.6122448979591837, "b": 0.4794520547945206}, "ok": true}, "random_backfill": {"seed": 20261023, "worlds": 150, "only_backfill": 1800, "mixed": 1800, "existing_tendency_first_allocation": 1200, "candidate_marginal_violations": 0, "first_allocation_checks": 3600, "first_allocation_violations": 0, "oracle_mismatches": 0, "history_prefixes": 3600, "replay_mismatches": 0, "conservation_failures": 0, "faults": 0, "failures": [], "examples": [{"mode": "only-backfill", "candidate": "r0", "cf": 0.9043534988911086, "after": 0.876971603239711}, {"mode": "mixed", "candidate": "r1", "cf": 0.9375, "after": 0.8825928458859771}], "ok": true}, "incoming_weight_boundaries": {"cases": [{"case": "new_group_half_share_-1", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "new_group_half_share_+1", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "backfill_first_allocation", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "revised_old_allocation", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "mixed_event_atomicity", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "replay_share", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "replay_signal", "fault": "UnderflowEvidence", "expected": "UnderflowEvidence", "unchanged": true, "ok": true}], "genuine_zeros": [{"case": "zero_weight", "pi": [0.0, 0.0], "groups": [1, 1]}, {"case": "zero_support", "pi": [0.0, 0.0], "groups": [1, 1]}], "ok": true}, "ok": true}}
+EVENT_REFERENCE {"suite": "sides", "result": {"check": "PR61-R2-side-membership", "seed": 20261025, "cases": 804, "families": {"review-zero": 1, "review-tiny-opposite": 1, "review-quantization": 1, "same-side-control": 1, "random-zero": 200, "random-tiny-opposite": 200, "random-quantization": 200, "random-two-sides": 200}, "unchanged_targets": 1948, "affected_targets": 260, "unaffected_state_violations": 0, "unaffected_share_violations": 0, "counterfactual_violations": 0, "plan_violations": 0, "first_allocation_violations": 0, "conservation_failures": 0, "history_prefixes": 804, "replay_mismatches": 0, "faults": 0, "witnesses": [{"family": "review-zero", "old_supports": [["a", 1.0], ["b", 1.0]], "candidate_support": 0.0, "before_pi": {"a": 0.26717557251908397, "b": 0.1111111111111111}, "cf": {"a": 0.26717557251908397, "b": 0.1111111111111111, "z": 0.0}, "after_pi": {"a": 0.26717557251908397, "b": 0.1111111111111111, "z": 0.0}, "before_shares": {"a": 0.5, "b": 0.5}, "after_shares": {"a": 0.5, "b": 0.5}, "unaffected_state_errors": 0, "unaffected_share_errors": 0, "cf_errors": 0, "plan_error": false, "first_error": false, "conserved": true, "replay_mismatch": false}, {"family": "review-tiny-opposite", "old_supports": [["a", -1e-200], ["b", -1e-200]], "candidate_support": 1e-200, "before_pi": {"a": 0.2, "b": -1.25e-201}, "cf": {"a": 0.2, "b": -1.25e-201, "z": 0.0}, "after_pi": {"a": 0.2, "b": -1.25e-201, "z": 2.5e-201}, "before_shares": {"a": 0.5, "b": 0.5}, "after_shares": {"a": 0.5, "b": 0.5}, "unaffected_state_errors": 0, "unaffected_share_errors": 0, "cf_errors": 0, "plan_error": false, "first_error": false, "conserved": true, "replay_mismatch": false}, {"family": "review-quantization", "old_supports": [["a", 1.0], ["b", 1.0]], "candidate_support": -1.0, "before_pi": {"a": -0.9999999999999999, "b": 0.1111111111111111}, "cf": {"a": -0.9999999999999999, "b": 0.1111111111111111, "z": 0.0}, "after_pi": {"a": -0.9999999999999999, "b": 0.1111111111111111, "z": -0.2}, "before_shares": {"a": 0.5, "b": 0.5}, "after_shares": {"a": 0.5, "b": 0.5}, "unaffected_state_errors": 0, "unaffected_share_errors": 0, "cf_errors": 0, "plan_error": false, "first_error": false, "conserved": true, "replay_mismatch": false}, {"family": "same-side-control", "old_supports": [["a", 1.0], ["b", 1.0]], "candidate_support": 1.0, "before_pi": {"a": 0.26717557251908397, "b": 0.1111111111111111}, "cf": {"a": 0.25147407738025324, "b": 0.07597726481846652, "z": 0.0}, "after_pi": {"a": 0.25147407738025324, "b": 0.07597726481846652, "z": 0.06890304482496641}, "before_shares": {}, "after_shares": {}, "unaffected_state_errors": 0, "unaffected_share_errors": 0, "cf_errors": 0, "plan_error": false, "first_error": false, "conserved": true, "replay_mismatch": false}], "failures": [], "ok": true}}
+EVENT_REFERENCE {"unique_events": 13339, "fault_events": 5, "sha256": "594ebd603733afbbd2c047525c323f0a9b8d9ec94a57be3ab858e08fa8ecfcf6"}
+Full event parity: 13339 unique events, 5 atomic faults; zero R, allocation or cf mismatches
+ok
+test law::tests::reference_parity::adr0019_python_legacy_and_extra_same_input_all_scalar_bits ... REFERENCE {"suite": "legacy", "result": 1, "stdout": "{\"check_id\": \"LAW-1\", \"spec_ref\": \"\u00a75.3(1) only consistent evidence: \u03c0 > \u00bd \u27fa E > n\u2080 + \u03ba\", \"kind\": \"property\", \"ok\": true, \"detail\": \"41607 states with random n\u2080, \u03ba, \u03c1 and weights: 0 violations\"}\n{\"check_id\": \"LAW-2\", \"spec_ref\": \"\u00a75.3(2), LP6: one group with W > n\u2080 + \u03ba suffices; larger \u03ba needs more ordinary groups\", \"kind\": \"property\", \"ok\": true, \"detail\": \"20000 single groups: 0 violations; ordinary groups (W = 1, n\u2080 = 3) needed for \u03ba = 0\u20265: [4, 5, 6, 7, 8, 9]\"}\n{\"check_id\": \"LAW-3\", \"spec_ref\": \"\u00a75.3(3) \u03c0 < \u00bd \u27fa C > (E \u2212 n\u2080 \u2212 \u03ba)/3\", \"kind\": \"property\", \"ok\": true, \"detail\": \"61604 states with mixed-sign groups and learned \u03c1: 0 violations\"}\n{\"check_id\": \"LAW-4\", \"spec_ref\": \"\u00a75.3(4), LP7: one group changes \u03c0 by at most 2w/(B + w) (no recency weight)\", \"kind\": \"property\", \"ok\": true, \"detail\": \"30000 random states: 0 violations; largest |\u0394\u03c0|/bound = 0.9899\"}\n{\"check_id\": \"LAW-5\", \"spec_ref\": \"\u00a75.3(5), LP5, LP8: \u03c0 depends on neither elapsed time nor x\", \"kind\": \"property\", \"ok\": true, \"detail\": \"500 event sequences with gaps stretched up to 10\u2076\u00d7 and different x\u2080: 0 bitwise differences in \u03c0\"}\n{\"check_id\": \"LAW-6\", \"spec_ref\": \"\u00a75.3(6) constant \u03c1: E, C \u2264 w_max/(1 \u2212 \u03c1)\", \"kind\": \"property\", \"ok\": false, \"detail\": \"3000 random sequences: 3064 violations\"}\n{\"check_id\": \"LAW-7\", \"spec_ref\": \"\u00a75.2 calculation order, \u00a72.2: recomputation replays the recurrence bitwise\", \"kind\": \"property\", \"ok\": true, \"detail\": \"1000 sequences: replay differs bitwise in 0; the mathematically equal closed form \u03a3_c \u03a0\u03c1\u00b7W\u00b7S differs in the last bits in 488 (max relative 8.9e-16), so the recurrence is the canonical definition\"}\n{\"check_id\": \"LAW-8\", \"spec_ref\": \"\u00a75.2 shares, LP2, I25: each side's shares sum to 1; credit never exceeds the group\", \"kind\": \"property\", \"ok\": true, \"detail\": \"20000 random groups with 1\u20138 matching tendencies: 0 violations\"}\n{\"check_id\": \"LAW-9\", \"spec_ref\": \"\u00a75.2 support and strength, LP3, LP6: repeats add nothing; a missing reaction counts\", \"kind\": \"property\", \"ok\": true, \"detail\": \"5000 groups repeated 2\u20139 times: 0 changes in (S, strength); no reaction where 0.2 was predicted gives (S, strength) = (-1.0, 1.0); a 5\u03c3 reaction gives (1.0, 5.0)\"}\n{\"check_id\": \"LAW-10\", \"spec_ref\": \"\u00a75.3(7) attachment: hard to move, but finite; alternating contrary evidence cannot\", \"kind\": \"scenario\", \"ok\": true, \"detail\": \"after 200 supporting groups, consistent contrary groups needed to bring \u03c0 below \u00bd: ordinary 39, A_att = 60: 61, A_att = 600: 298; the flip matches C > (A + E \u2212 n\u2080 \u2212 \u03ba)/3: True; 5000 alternating groups keep \u03c0_att \u2265 0.824\"}\n{\"seed\": 20261019, \"failed\": [\"LAW-6\"]}\n"}
+REFERENCE {"suite": "whole", "result": {"check": "LP1-whole-event", "worlds": 2000, "planned_events": 80000, "accepted_events": 80000, "groups": 279592, "violations": 0, "old_violations_same_accepted_tapes": 21406, "faults": 0, "fault_rows": [], "scope": "homogeneous append events, 1-6 new groups"}, "stdout": ""}
+REFERENCE {"suite": "counterexamples", "result": {"check": "ADR0018-and-redistribution", "recurrence_rows": [{"form": "old", "before": 0.8731988472622478, "after": 0.8414511103965939, "q": 0.7692307692307692, "before_hex": "0x1.bf13eb57cae1cp-1", "after_hex": "0x1.aed2ae10ac29dp-1"}, {"form": "new", "before": 0.8857822109669752, "after": 0.8858475837751462, "q": 0.9993570678414644, "before_hex": "0x1.c5853ef6f6a57p-1", "after_hex": "0x1.c58dd0831c185p-1"}, {"form": "new_from_old_prestate", "before": 0.8731988472622478, "after": 0.8732794408141603, "q": 0.999276204680543}], "redistribution": {"before": 0.9090909090909091, "counterfactual": 0.8677685950413223, "after": 0.8679432155827006, "old_share": 1.0, "new_share": 0.65625, "new_positive_weight": 0.01, "classification": "user three-clause LP1: both comparisons required", "withdrawal_ok": true, "marginal_ok": true}, "ok": true}, "stdout": ""}
+REFERENCE {"suite": "replay_shares", "result": {"check": "I23-I25", "scalar_prefixes": 8000, "bitwise_mismatches": 0, "groups": 20000, "exact_share_failures": 0, "scope": "scalar recurrence serialization; not Rust G/IDL/store acceptance"}, "stdout": ""}
+REFERENCE {"suite": "numeric", "result": {"check": "numeric-edges", "cases": [{"case": "nan", "fault": "NonFinite", "unchanged": true}, {"case": "inf", "fault": "NonFinite", "unchanged": true}, {"case": "underflow", "fault": "UnderflowEvidence", "unchanged": true}, {"case": "tiny_change", "fault": "PrecisionExhaustedLP1", "unchanged": true}, {"case": "overflow", "fault": "PrecisionExhausted", "unchanged": true}, {"case": "counter", "fault": "CounterExhausted", "unchanged": true}, {"case": "tiny_share", "fault": "PrecisionExhaustedShare", "unchanged": true}], "zero_signal_pi_unchanged": true, "subnormal_m": "0x0.0000000000001p-1022", "subnormal_u": "0x0.0p+0", "subnormal_ok": true, "ok": true}, "stdout": ""}
+REFERENCE {"suite": "events", "result": {"check": "LP1-three-clauses-I23-I25", "seed": 20261121, "worlds": 250, "append_checks": 9000, "append_violations": 0, "marginal_checks": 12000, "marginal_violations": 0, "backfill_candidate_checks": 3000, "oracle_mismatches": 0, "withdrawal_checks": 5019, "withdrawal_violations": 0, "history_prefixes": 6000, "replay_mismatches": 0, "conservation_failures": 0, "faults": 0, "failures": [], "example": {"before": 0.7142857142857143, "counterfactual": 0.6122448979591837, "after": 0.612434370390726, "candidate_counterfactual": 0.0, "candidate_after": 0.4794520547945206}, "scope": "original random event tape; all first-allocation targets; independent cf oracle"}, "stdout": ""}
+REFERENCE {"suite": "properties", "result": {"check": "LP2-LP4-LP6-LP7-and-frozen-q", "seed": 20261122, "trials": 10000, "weight_monotonicity_violations": 0, "recency_violations": 0, "inertia_violations": 0, "complexity_violations": 0, "withdrawal_counterexample": {"n0": 3.0, "kappa": 1.0, "prior": 0.0, "h0": 0.1, "nh": 10.0, "changed_index": 0, "retained_weight_fraction": 0.1, "before": -0.5752715543316654, "wrongly_recomputed_q": -0.5753015920389444, "frozen_q": -0.5752208068511547}, "ok": true, "scope": "matched-state inequalities; not arbitrary different histories or full G"}, "stdout": ""}
+REFERENCE {"suite": "review", "result": {"check": "PR61-blocking-regressions", "regression": {"counterfactual": {"a": 0.6122448979591837, "b": 0.0}, "after": {"a": 0.6122448979591837, "b": 0.4794520547945206}, "ok": true}, "random_backfill": {"seed": 20261023, "worlds": 150, "only_backfill": 1800, "mixed": 1800, "existing_tendency_first_allocation": 1200, "candidate_marginal_violations": 0, "first_allocation_checks": 3600, "first_allocation_violations": 0, "oracle_mismatches": 0, "history_prefixes": 3600, "replay_mismatches": 0, "conservation_failures": 0, "faults": 0, "failures": [], "examples": [{"mode": "only-backfill", "candidate": "r0", "cf": 0.9043534988911086, "after": 0.876971603239711}, {"mode": "mixed", "candidate": "r1", "cf": 0.9375, "after": 0.8825928458859771}], "ok": true}, "incoming_weight_boundaries": {"cases": [{"case": "new_group_half_share_-1", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "new_group_half_share_+1", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "backfill_first_allocation", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "revised_old_allocation", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "mixed_event_atomicity", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "replay_share", "fault": "UnderflowEvidenceWeight", "expected": "UnderflowEvidenceWeight", "unchanged": true, "ok": true}, {"case": "replay_signal", "fault": "UnderflowEvidence", "expected": "UnderflowEvidence", "unchanged": true, "ok": true}], "genuine_zeros": [{"case": "zero_weight", "pi": [0.0, 0.0], "groups": [1, 1]}, {"case": "zero_support", "pi": [0.0, 0.0], "groups": [1, 1]}], "ok": true}, "ok": true}, "stdout": ""}
+REFERENCE {"suite": "sides", "result": {"check": "PR61-R2-side-membership", "seed": 20261025, "cases": 804, "families": {"review-zero": 1, "review-tiny-opposite": 1, "review-quantization": 1, "same-side-control": 1, "random-zero": 200, "random-tiny-opposite": 200, "random-quantization": 200, "random-two-sides": 200}, "unchanged_targets": 1948, "affected_targets": 260, "unaffected_state_violations": 0, "unaffected_share_violations": 0, "counterfactual_violations": 0, "plan_violations": 0, "first_allocation_violations": 0, "conservation_failures": 0, "history_prefixes": 804, "replay_mismatches": 0, "faults": 0, "witnesses": [{"family": "review-zero", "old_supports": [["a", 1.0], ["b", 1.0]], "candidate_support": 0.0, "before_pi": {"a": 0.26717557251908397, "b": 0.1111111111111111}, "cf": {"a": 0.26717557251908397, "b": 0.1111111111111111, "z": 0.0}, "after_pi": {"a": 0.26717557251908397, "b": 0.1111111111111111, "z": 0.0}, "before_shares": {"a": 0.5, "b": 0.5}, "after_shares": {"a": 0.5, "b": 0.5}, "unaffected_state_errors": 0, "unaffected_share_errors": 0, "cf_errors": 0, "plan_error": false, "first_error": false, "conserved": true, "replay_mismatch": false}, {"family": "review-tiny-opposite", "old_supports": [["a", -1e-200], ["b", -1e-200]], "candidate_support": 1e-200, "before_pi": {"a": 0.2, "b": -1.25e-201}, "cf": {"a": 0.2, "b": -1.25e-201, "z": 0.0}, "after_pi": {"a": 0.2, "b": -1.25e-201, "z": 2.5e-201}, "before_shares": {"a": 0.5, "b": 0.5}, "after_shares": {"a": 0.5, "b": 0.5}, "unaffected_state_errors": 0, "unaffected_share_errors": 0, "cf_errors": 0, "plan_error": false, "first_error": false, "conserved": true, "replay_mismatch": false}, {"family": "review-quantization", "old_supports": [["a", 1.0], ["b", 1.0]], "candidate_support": -1.0, "before_pi": {"a": -0.9999999999999999, "b": 0.1111111111111111}, "cf": {"a": -0.9999999999999999, "b": 0.1111111111111111, "z": 0.0}, "after_pi": {"a": -0.9999999999999999, "b": 0.1111111111111111, "z": -0.2}, "before_shares": {"a": 0.5, "b": 0.5}, "after_shares": {"a": 0.5, "b": 0.5}, "unaffected_state_errors": 0, "unaffected_share_errors": 0, "cf_errors": 0, "plan_error": false, "first_error": false, "conserved": true, "replay_mismatch": false}, {"family": "same-side-control", "old_supports": [["a", 1.0], ["b", 1.0]], "candidate_support": 1.0, "before_pi": {"a": 0.26717557251908397, "b": 0.1111111111111111}, "cf": {"a": 0.25147407738025324, "b": 0.07597726481846652, "z": 0.0}, "after_pi": {"a": 0.25147407738025324, "b": 0.07597726481846652, "z": 0.06890304482496641}, "before_shares": {}, "after_shares": {}, "unaffected_state_errors": 0, "unaffected_share_errors": 0, "cf_errors": 0, "plan_error": false, "first_error": false, "conserved": true, "replay_mismatch": false}], "failures": [], "ok": true}, "stdout": ""}
+REFERENCE {"vectors": {"scalar": 2539894, "share": 261581, "fault": 7}, "sha256": "5923d259457770fdf0848de413b798ed1482e42841d5f4239a6f9ae898487aa1"}
+Same-input parity: 2539894 scalar states, 261581 share vectors, 7 explicit faults; zero bit mismatches
+ok
+test law::tests::relations::ac2_13_attachment_resists_ordinary_contrary_experience_but_is_finite ... ok
+test law::tests::relations::ac2_21_capacity_choice_takes_the_weakest_candidate_never_personality ... ok
+test law::tests::relations::ac2_21_single_group_weight_never_exceeds_w_max ... ok
+test law::tests::relations::relation_readouts_closeness_weight_and_trust ... ok
+test law::tests::relations::relation_structure_ids_directions_and_r0 ... ok
+test law::tests::relations::teaching_weight_follows_trust_in_the_speaker_and_verifiability ... ok
+test law::tests::replay_h::i23_d5_back_collection_late_member_and_capacity_are_bitwise_reproducible ... ok
+test law::tests::replay_h::i23_random_h_prefixes_survive_canonical_reload_and_full_recomputation ... I23: 125 H prefixes; persisted incremental, full H and D5 test envelope bytes (legacy fields plus raw V/q) and eight scalar bit patterns equal
+ok
+test law::tests::review_regressions::ac2_03_late_repetition_of_a_mixed_group_preserves_both_sides ... ok
+test law::tests::review_regressions::ac2_03_late_repetition_preserves_allocations_after_r_or_theta_changes ... ok
+test law::tests::review_regressions::aliases_cannot_win_first_creation_by_record_id_or_match_order ... ok
+test law::tests::review_regressions::capacity_removal_lists_groups_even_for_zero_support_or_empty_sides ... ok
+test law::tests::review_regressions::competing_aliases_need_a_representative_but_a_sole_alias_can_create_it ... ok
+test law::tests::review_regressions::late_group_requires_the_full_immutable_member_set ... ok
+test law::tests::state_bits::raw_comparison_rejects_negative_zero_in_state_and_allocations ... ok
+test law::tests::types::i10_g_signature_has_no_x_m_g_or_lambda ... ok
+test law::tests::types::temporary_v_q_state_has_no_production_wire_until_p534 ... ok
+
+test result: ok. 83 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 405.73s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 5 tests
+test dnf_limit_reports_unknown_overlap ... ok
+test foreign_catalog_version_is_unknown_not_disjoint ... ok
+test intersection_cases_hold_in_both_directions ... ok
+test pair_limit_reports_unknown_overlap ... ok
+test product_limit_reports_unknown_overlap ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 6 tests
+test canonical_bytes_are_stable_and_order_independent_for_sets ... ok
+test depth_node_and_set_limits_are_enforced ... ok
+test evaluation_is_closed_interval_and_never_defaults_to_hit ... ok
+test malformed_scopes_are_rejected ... ok
+test scope_digest_golden_vector ... ok
+test whitelist_rejects_fields_outside_endpoint ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 31 tests
+test tests::atomic::all_binding_fields_are_immutable_after_dispatch ... ok
+test tests::atomic::atomic_publication_and_append_only_history ... ok
+test tests::atomic::d101_d102_stale_and_mutated_bindings_rejected ... ok
+test tests::atomic::disk_full_rolls_back_ledger_and_all_state ... ok
+test tests::atomic::duplicate_and_conflict_only_advance_processed_frontier ... ok
+test tests::atomic::f161_exact_e1_e2_e2_survives_restart_without_second_ledger_charge ... ok
+test tests::atomic::later_ingress_cannot_overtake_uncommitted_input ... ok
+test tests::atomic::recovery_rejects_valid_but_mixed_head_and_missing_ledger ... ok
+test tests::crash::initialization_and_gc_crash_boundaries_have_separate_expectations ... running 1 test
+W02_INJECT InitRootCreated object=None plan=Nth(NthFault { point: InitRootCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT InitRootCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitRootSynced object=None plan=Nth(NthFault { point: InitRootSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT InitRootSynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitObjectsCreated object=None plan=Nth(NthFault { point: InitObjectsCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT InitObjectsCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitObjectsSynced object=None plan=Nth(NthFault { point: InitObjectsSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT InitObjectsSynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitSqlCommitted object=None plan=Nth(NthFault { point: InitSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+INIT InitSqlCommitted/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT InitDbDirectorySynced object=None plan=Nth(NthFault { point: InitDbDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+INIT InitDbDirectorySynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptRootCreated object=None plan=Nth(NthFault { point: ReceiptRootCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptRootCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptKindCreated object=None plan=Nth(NthFault { point: ReceiptKindCreated, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptKindCreated/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptKindCreated object=None plan=Nth(NthFault { point: ReceiptKindCreated, occurrence: 2, object_type: None, seen: 2 })
+INIT ReceiptKindCreated/2: exit=86; verified empty store
+running 1 test
+W02_INJECT ReceiptKindSynced object=None plan=Nth(NthFault { point: ReceiptKindSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptKindSynced/1: exit=86; partial initialization refused
+running 1 test
+W02_INJECT ReceiptKindSynced object=None plan=Nth(NthFault { point: ReceiptKindSynced, occurrence: 2, object_type: None, seen: 2 })
+INIT ReceiptKindSynced/2: exit=86; verified empty store
+running 1 test
+W02_INJECT ReceiptRootSynced object=None plan=Nth(NthFault { point: ReceiptRootSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptRootSynced/1: exit=86; verified empty store
+running 1 test
+W02_INJECT ReceiptParentSynced object=None plan=Nth(NthFault { point: ReceiptParentSynced, occurrence: 1, object_type: None, seen: 1 })
+INIT ReceiptParentSynced/1: exit=86; verified empty store
+running 1 test
+W02_INJECT GcDeleted object=None plan=Nth(NthFault { point: GcDeleted, occurrence: 1, object_type: None, seen: 1 })
+X03 gc/GcDeleted/1: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT GcDeleted object=None plan=Nth(NthFault { point: GcDeleted, occurrence: 2, object_type: None, seen: 2 })
+X03 gc/GcDeleted/2: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT GcDirectorySyncBefore object=None plan=Nth(NthFault { point: GcDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 gc/GcDirectorySyncBefore/1: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT GcDirectorySynced object=None plan=Nth(NthFault { point: GcDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 gc/GcDirectorySynced/1: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+ok
+test tests::crash::x03_ingress_and_transaction_publication_boundaries ... running 1 test
+W02_INJECT GStaged object=None plan=Nth(NthFault { point: GStaged, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/GStaged: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT CStaged object=None plan=Nth(NthFault { point: CStaged, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/CStaged: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT LedgerWritten object=None plan=Nth(NthFault { point: LedgerWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/LedgerWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT BeforePublish object=None plan=Nth(NthFault { point: BeforePublish, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/BeforePublish: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/SqlCommitted: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT AfterPublish object=None plan=Nth(NthFault { point: AfterPublish, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/AfterPublish: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ObjectWritten object=Some("echo.event") plan=Nth(NthFault { point: ObjectWritten, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+X03 ingress/ObjectWritten: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.event") plan=Nth(NthFault { point: FileSynced, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+X03 ingress/FileSynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.event") plan=Nth(NthFault { point: Renamed, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+X03 ingress/Renamed: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.event") plan=Nth(NthFault { point: DirectorySynced, occurrence: 1, object_type: Some("echo.event"), seen: 1 })
+X03 ingress/DirectorySynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressBeforeSql object=None plan=Nth(NthFault { point: IngressBeforeSql, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/IngressBeforeSql: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/IngressSqlCommitted: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressAcknowledged object=None plan=Nth(NthFault { point: IngressAcknowledged, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/IngressAcknowledged: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+ok
+test tests::crash::x03_receipt_publish_and_repair_can_crash_again ... running 1 test
+W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptFileSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptFileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptRenameBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptRenamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptTargetSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptTargetSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptDirectorySyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=false/ReceiptDirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptFileSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptFileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptRenameBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptRenamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptTargetSyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptTargetSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptDirectorySyncBefore: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT IngressSqlCommitted object=None plan=Nth(NthFault { point: IngressSqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 ingress/repair=true/ReceiptDirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptWritten: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptFileSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptFileSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptRenameBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptRenamed: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptTargetSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptTargetSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptDirectorySyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=false/ReceiptDirectorySynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptWritten object=None plan=Nth(NthFault { point: ReceiptWritten, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptWritten: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptFileSyncBefore object=None plan=Nth(NthFault { point: ReceiptFileSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptFileSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptFileSynced object=None plan=Nth(NthFault { point: ReceiptFileSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptFileSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenameBefore object=None plan=Nth(NthFault { point: ReceiptRenameBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptRenameBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptRenamed object=None plan=Nth(NthFault { point: ReceiptRenamed, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptRenamed: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptTargetSyncBefore object=None plan=Nth(NthFault { point: ReceiptTargetSyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptTargetSyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptTargetSynced object=None plan=Nth(NthFault { point: ReceiptTargetSynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptTargetSynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptDirectorySyncBefore object=None plan=Nth(NthFault { point: ReceiptDirectorySyncBefore, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptDirectorySyncBefore: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT SqlCommitted object=None plan=Nth(NthFault { point: SqlCommitted, occurrence: 1, object_type: None, seen: 1 })
+running 1 test
+W02_INJECT ReceiptDirectorySynced object=None plan=Nth(NthFault { point: ReceiptDirectorySynced, occurrence: 1, object_type: None, seen: 1 })
+X03 commit/repair=true/ReceiptDirectorySynced: exit=86; state=2; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+ok
+test tests::crash::x03_targeted_r_segments_manifest_and_reused_objects ... running 1 test
+W02_INJECT ObjectWritten object=Some("echo.tendency-v2") plan=Nth(NthFault { point: ObjectWritten, occurrence: 2, object_type: Some("echo.tendency-v2"), seen: 2 })
+X03 r/echo.tendency-v2/2/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ObjectWritten object=Some("echo.r-snapshot-v2") plan=Nth(NthFault { point: ObjectWritten, occurrence: 1, object_type: Some("echo.r-snapshot-v2"), seen: 1 })
+X03 r/echo.r-snapshot-v2/1/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ObjectWritten object=Some("echo.transaction-v2") plan=Nth(NthFault { point: ObjectWritten, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/ObjectWritten: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.tendency-v2") plan=Nth(NthFault { point: FileSynced, occurrence: 2, object_type: Some("echo.tendency-v2"), seen: 2 })
+X03 r/echo.tendency-v2/2/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.r-snapshot-v2") plan=Nth(NthFault { point: FileSynced, occurrence: 1, object_type: Some("echo.r-snapshot-v2"), seen: 1 })
+X03 r/echo.r-snapshot-v2/1/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT FileSynced object=Some("echo.transaction-v2") plan=Nth(NthFault { point: FileSynced, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/FileSynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.tendency-v2") plan=Nth(NthFault { point: Renamed, occurrence: 2, object_type: Some("echo.tendency-v2"), seen: 2 })
+X03 r/echo.tendency-v2/2/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.r-snapshot-v2") plan=Nth(NthFault { point: Renamed, occurrence: 1, object_type: Some("echo.r-snapshot-v2"), seen: 1 })
+X03 r/echo.r-snapshot-v2/1/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT Renamed object=Some("echo.transaction-v2") plan=Nth(NthFault { point: Renamed, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/Renamed: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.tendency-v2") plan=Nth(NthFault { point: DirectorySynced, occurrence: 2, object_type: Some("echo.tendency-v2"), seen: 2 })
+X03 r/echo.tendency-v2/2/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.r-snapshot-v2") plan=Nth(NthFault { point: DirectorySynced, occurrence: 1, object_type: Some("echo.r-snapshot-v2"), seen: 1 })
+X03 r/echo.r-snapshot-v2/1/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT DirectorySynced object=Some("echo.transaction-v2") plan=Nth(NthFault { point: DirectorySynced, occurrence: 2, object_type: Some("echo.transaction-v2"), seen: 2 })
+X03 manifest-second/echo.transaction-v2/2/DirectorySynced: exit=86; state=1; D=2; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseFileSyncBefore object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseFileSyncBefore, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseFileSyncBefore: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseFileSynced object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseFileSynced, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseFileSynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseDirectorySyncBefore object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseDirectorySyncBefore, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseDirectorySyncBefore: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+running 1 test
+W02_INJECT ReuseDirectorySynced object=Some("echo.fast-state-v2") plan=Nth(NthFault { point: ReuseDirectorySynced, occurrence: 2, object_type: Some("echo.fast-state-v2"), seen: 2 })
+X03 reuse/FastStateSnapshotV2/2/ReuseDirectorySynced: exit=86; state=1; D=1; closure/L/H/concepts/accepted/receipts/reopen/GC verified
+ok
+test tests::crash_harness::crash_worker ... ok
+test tests::crash_harness::stray_environment_or_missing_permit_never_touches_target ... ok
+test tests::isolation::at04_old_database_in_original_location_cannot_refund_ledger ... ok
+test tests::isolation::at04_single_writer_and_copy_cannot_resume_as_same_branch ... ok
+test tests::isolation::i29_all_six_cross_lineage_opens_rejected ... ok
+test tests::isolation::malformed_headers_and_existing_directories_never_initialize ... ok
+test tests::isolation::reader_and_capabilities_cannot_cross_stores_even_same_kind ... ok
+test tests::objects::at01_canonical_identity_and_superseded_writes ... ok
+test tests::objects::at02_corrupt_or_missing_object_never_publishes ... ok
+test tests::objects::at03_pins_close_prepare_gc_publish_race ... ok
+test tests::objects::object_capacity_and_io_failures_never_acknowledge_d ... ok
+test tests::objects::p532_evidence_versions_and_ledger_prefix_are_complete ... ok
+test tests::objects::publication_primitive_never_replaces_existing_target ... ok
+test tests::objects::published_closure_damage_refuses_recovery ... ok
+test tests::objects::r_index_reassembles_canonical_and_reuses_unchanged_tendencies ... ok
+test tests::objects::segmented_r_commit_retains_both_tendencies_through_reopen_and_gc ... ok
+test tests::objects::sys22_capacity_and_busy_wait_are_bounded ... ok
+test tests::reader::live_readers_open_during_ingress_without_false_rollback ... ok
+test tests::reader::reader_receipts_precede_sql_snapshot_under_controlled_appends ... ok
+
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 985.08s
+
+
+running 7 tests
+test numeric::tests::sys21_count_accepts_boundaries_rejects_limit_and_overflow ... ok
+test numeric::tests::sys21_finite_values_preserve_binary64_bits ... ok
+test numeric::tests::sys21_intervals_are_explicitly_bounded_and_never_wrap ... ok
+test numeric::tests::sys21_normalizes_negative_zero_only ... ok
+test numeric::tests::sys21_rejects_all_nonfinite_categories ... ok
+test semantic::tests::tendency_order_is_canonical_set_order ... ok
+test semantic::tests::unit_directions_pass_and_others_fail ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 4 tests
+test frozen_tag_is_independent_of_message_name ... ok
+test nested_encoding_repeats_header_and_vector_order_is_significant ... ok
+test optional_nonfinite_is_rejected_before_json_can_erase_it ... ok
+test sys21_canonical_count_overflow_negative_zero_and_bad_presence ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+
+running 5 tests
+test allocation_ordinals_are_exactly_zero_to_n_minus_one ... ok
+test subnormal_edge_u_zero_with_m_nonzero_is_valid ... ok
+test successors_are_live_and_predecessors_superseded ... ok
+test teaching_allocation_has_no_projection_and_roundtrips ... ok
+test tendency_v2_semantics_include_the_magnitude_sums ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+
+running 8 tests
+test adr_0014_values_are_live ... ok
+test genesis_has_no_free_text_fields ... ok
+test genesis_semantics ... ok
+test law_parameter_inequalities ... ok
+test superseded_registry ... ok
+test tendency_change_needs_an_endpoint ... ok
+test tendency_order_matches_codec_set_order ... ok
+test tendency_semantics_beyond_the_codec ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 2 tests
+test crates\core-store\src\transaction.rs - transaction::CommitCapability (line 25) - compile fail ... ok
+test crates\core-store\src\transaction.rs - transaction::PreparedTransaction (line 44) - compile fail ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

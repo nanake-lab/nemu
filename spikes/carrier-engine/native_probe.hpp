@@ -64,8 +64,10 @@ struct Native {
     llama_model * model = nullptr;
     const llama_vocab * vocab = nullptr;
     int embd = 0, layers = 0, vocabulary = 0;
+    int injection_layer = 17;
 
-    Native(const fs::path & engine, const char * file) {
+    Native(const fs::path & engine, const char * file, int expected_layers = 36,
+        int expected_vocabulary = 151936, int layer = 17) : injection_layer(layer) {
         require_quiet(); // Before backend loading, not merely before inference.
         if (!SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_DEFAULT_DIRS) ||
             !AddDllDirectory(engine.c_str())) throw std::runtime_error("DLL search setup failed");
@@ -106,7 +108,8 @@ struct Native {
         vocab = llama_model_get_vocab(model);
         embd = llama_model_n_embd(model); layers = llama_model_n_layer(model);
         vocabulary = llama_vocab_n_tokens(vocab);
-        if (embd != 2560 || layers != 36 || vocabulary != 151936) throw std::runtime_error("Model shape changed");
+        if (embd != 2560 || layers != expected_layers || vocabulary != expected_vocabulary ||
+            injection_layer < 1 || injection_layer >= layers) throw std::runtime_error("Model shape changed");
     }
     ~Native() { if (model) { llama_model_free(model); llama_backend_free(); } }
     Native(const Native &) = delete;
@@ -128,9 +131,9 @@ struct Native {
         return tokens;
     }
     int control(llama_context * ctx, const std::vector<float> * direction, float amplitude) const {
-        if (!direction) return llama_set_adapter_cvec(ctx, nullptr, 0, embd, 17, 17);
+        if (!direction) return llama_set_adapter_cvec(ctx, nullptr, 0, embd, injection_layer, injection_layer);
         std::vector<float> buffer(static_cast<size_t>(layers - 1) * embd, 0.0f);
-        for (int i = 0; i < embd; ++i) buffer[static_cast<size_t>(16) * embd + i] = (*direction)[i] * amplitude;
-        return llama_set_adapter_cvec(ctx, buffer.data(), buffer.size(), embd, 17, 17);
+        for (int i = 0; i < embd; ++i) buffer[static_cast<size_t>(injection_layer - 1) * embd + i] = (*direction)[i] * amplitude;
+        return llama_set_adapter_cvec(ctx, buffer.data(), buffer.size(), embd, injection_layer, injection_layer);
     }
 };

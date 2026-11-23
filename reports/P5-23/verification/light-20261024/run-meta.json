@@ -1,0 +1,88 @@
+{
+  "evidence_directory": "D:\\Dev\\cache\\P5-23\\light-20261024-01",
+  "working_directory": "D:\\Dev\\nemu-wt\\P5-23",
+  "environment_scope": "ProcessStartInfo child processes only",
+  "environment": {
+    "PYTHONUTF8": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MYPYPATH": "D:\\Dev\\nemu-wt\\P5-23\\reports\\echo-core-v2-draft",
+    "MYPY_CACHE_DIR": "D:\\Dev\\cache\\P5-23\\mypy",
+    "RUFF_CACHE_DIR": "D:\\Dev\\cache\\P5-23\\ruff",
+    "TEMP": "D:\\Dev\\cache\\P5-23\\tmp",
+    "TMP": "D:\\Dev\\cache\\P5-23\\tmp"
+  },
+  "input_sha256_before": {
+    "D:\\Dev\\nemu-wt\\P5-23\\core\\crates\\core-kernel\\src\\law\\tests\\reference_event_vectors.py": "FF6583B9781F2ECDC1CF1237461FCAB20A9990894F5A37E035DD40B73E689DBA",
+    "D:\\Dev\\nemu-wt\\P5-23\\core\\crates\\core-kernel\\src\\law\\tests\\reference_vectors.py": "10D06CC81E8CCF234090A55A4B9C4BBA4310E19CD5709AA6F0790DD0ED4231FB"
+  },
+  "input_sha256_after": {
+    "D:\\Dev\\nemu-wt\\P5-23\\core\\crates\\core-kernel\\src\\law\\tests\\reference_event_vectors.py": "FF6583B9781F2ECDC1CF1237461FCAB20A9990894F5A37E035DD40B73E689DBA",
+    "D:\\Dev\\nemu-wt\\P5-23\\core\\crates\\core-kernel\\src\\law\\tests\\reference_vectors.py": "10D06CC81E8CCF234090A55A4B9C4BBA4310E19CD5709AA6F0790DD0ED4231FB"
+  },
+  "tool_versions": {
+    "ruff": {
+      "Executable": "D:\\Dev\\cache\\uv\\archive-v0\\zZzYXHvD_8D046l3\\Scripts\\ruff.exe",
+      "Arguments": "--version",
+      "Command": "& 'D:\\Dev\\cache\\uv\\archive-v0\\zZzYXHvD_8D046l3\\Scripts\\ruff.exe' --version",
+      "WorkingDirectory": "D:\\Dev\\nemu-wt\\P5-23",
+      "Environment": {
+        "PYTHONUTF8": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MYPYPATH": "D:\\Dev\\nemu-wt\\P5-23\\reports\\echo-core-v2-draft",
+        "MYPY_CACHE_DIR": "D:\\Dev\\cache\\P5-23\\mypy",
+        "RUFF_CACHE_DIR": "D:\\Dev\\cache\\P5-23\\ruff",
+        "TEMP": "D:\\Dev\\cache\\P5-23\\tmp",
+        "TMP": "D:\\Dev\\cache\\P5-23\\tmp"
+      },
+      "StartedAt": "2026-10-24T00:54:21.1246352+08:00",
+      "EndedAt": "2026-10-24T00:54:21.2010597+08:00",
+      "ExitCode": 0,
+      "Stdout": "ruff 0.15.6\n",
+      "Stderr": "",
+      "StartError": ""
+    },
+    "mypy": {
+      "Executable": "D:\\Dev\\cache\\uv\\archive-v0\\zZzYXHvD_8D046l3\\Scripts\\mypy.exe",
+      "Arguments": "--version",
+      "Command": "& 'D:\\Dev\\cache\\uv\\archive-v0\\zZzYXHvD_8D046l3\\Scripts\\mypy.exe' --version",
+      "WorkingDirectory": "D:\\Dev\\nemu-wt\\P5-23",
+      "Environment": {
+        "PYTHONUTF8": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MYPYPATH": "D:\\Dev\\nemu-wt\\P5-23\\reports\\echo-core-v2-draft",
+        "MYPY_CACHE_DIR": "D:\\Dev\\cache\\P5-23\\mypy",
+        "RUFF_CACHE_DIR": "D:\\Dev\\cache\\P5-23\\ruff",
+        "TEMP": "D:\\Dev\\cache\\P5-23\\tmp",
+        "TMP": "D:\\Dev\\cache\\P5-23\\tmp"
+      },
+      "StartedAt": "2026-10-24T00:54:21.2050401+08:00",
+      "EndedAt": "2026-10-24T00:54:21.6570559+08:00",
+      "ExitCode": 0,
+      "Stdout": "mypy 1.20.2 (compiled: yes)\r\n",
+      "Stderr": "",
+      "StartError": ""
+    }
+  },
+  "checks": [
+    {
+      "tool": "ruff",
+      "command": "& 'D:\\Dev\\cache\\uv\\archive-v0\\zZzYXHvD_8D046l3\\Scripts\\ruff.exe' check 'D:\\Dev\\nemu-wt\\P5-23\\core\\crates\\core-kernel\\src\\law\\tests\\reference_vectors.py' 'D:\\Dev\\nemu-wt\\P5-23\\core\\crates\\core-kernel\\src\\law\\tests\\reference_event_vectors.py'",
+      "started_at": "2026-10-24T00:54:21.6613497+08:00",
+      "ended_at": "2026-10-24T00:54:21.7326922+08:00",
+      "exit_code": 0,
+      "stdout_path": "D:\\Dev\\cache\\P5-23\\light-20261024-01\\ruff.stdout.log",
+      "stderr_path": "D:\\Dev\\cache\\P5-23\\light-20261024-01\\ruff.stderr.log",
+      "start_error": ""
+    },
+    {
+      "tool": "mypy",
+      "command": "& 'D:\\Dev\\cache\\uv\\archive-v0\\zZzYXHvD_8D046l3\\Scripts\\mypy.exe' --strict 'D:\\Dev\\nemu-wt\\P5-23\\core\\crates\\core-kernel\\src\\law\\tests\\reference_vectors.py' 'D:\\Dev\\nemu-wt\\P5-23\\core\\crates\\core-kernel\\src\\law\\tests\\reference_event_vectors.py'",
+      "started_at": "2026-10-24T00:54:21.7628294+08:00",
+      "ended_at": "2026-10-24T00:54:22.6431741+08:00",
+      "exit_code": 0,
+      "stdout_path": "D:\\Dev\\cache\\P5-23\\light-20261024-01\\mypy.stdout.log",
+      "stderr_path": "D:\\Dev\\cache\\P5-23\\light-20261024-01\\mypy.stderr.log",
+      "start_error": ""
+    }
+  ]
+}

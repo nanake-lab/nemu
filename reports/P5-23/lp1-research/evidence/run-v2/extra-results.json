@@ -1,0 +1,209 @@
+[
+  {
+    "check": "LP1-1",
+    "model": "O",
+    "trials": 20000,
+    "violations": 7445,
+    "faults": 0,
+    "positive": 9961,
+    "negative": 10039,
+    "ok": false
+  },
+  {
+    "check": "LP1-1",
+    "model": "M",
+    "trials": 20000,
+    "violations": 0,
+    "faults": 0,
+    "positive": 9961,
+    "negative": 10039,
+    "ok": true
+  },
+  {
+    "check": "LP1-1",
+    "model": "B",
+    "trials": 20000,
+    "violations": 0,
+    "faults": 0,
+    "positive": 9961,
+    "negative": 10039,
+    "ok": true
+  },
+  {
+    "check": "LP1-2",
+    "model": "O",
+    "trials": 20000,
+    "violations": 7350,
+    "faults": 0,
+    "positive": 9988,
+    "negative": 10012,
+    "ok": false
+  },
+  {
+    "check": "LP1-2",
+    "model": "M",
+    "trials": 20000,
+    "violations": 0,
+    "faults": 0,
+    "positive": 9988,
+    "negative": 10012,
+    "ok": true
+  },
+  {
+    "check": "LP1-2",
+    "model": "B",
+    "trials": 20000,
+    "violations": 0,
+    "faults": 0,
+    "positive": 9988,
+    "negative": 10012,
+    "ok": true
+  },
+  {
+    "check": "LP1-3",
+    "model": "O",
+    "trials": 20000,
+    "violations": 39,
+    "faults": 0,
+    "positive": 10100,
+    "negative": 9900,
+    "ok": false
+  },
+  {
+    "check": "LP1-3",
+    "model": "M",
+    "trials": 20000,
+    "violations": 0,
+    "faults": 0,
+    "positive": 10100,
+    "negative": 9900,
+    "ok": true
+  },
+  {
+    "check": "LP1-3",
+    "model": "B",
+    "trials": 20000,
+    "violations": 52,
+    "faults": 0,
+    "positive": 10100,
+    "negative": 9900,
+    "ok": false
+  },
+  {
+    "check": "LP7-fixed-pi",
+    "model": "O",
+    "trials": 20000,
+    "violations": 0,
+    "faults": 0,
+    "ok": true
+  },
+  {
+    "check": "LP7-fixed-pi",
+    "model": "M",
+    "trials": 20000,
+    "violations": 0,
+    "faults": 0,
+    "ok": true
+  },
+  {
+    "check": "LP7-fixed-pi",
+    "model": "B",
+    "trials": 20000,
+    "violations": 0,
+    "faults": 0,
+    "ok": true
+  },
+  {
+    "check": "I23-I25-projected",
+    "model": "O",
+    "prefixes": 20000,
+    "share_checks": 41627,
+    "violations": 0,
+    "faults": 0,
+    "capacity_faults": 0,
+    "ok": true
+  },
+  {
+    "check": "I23-I25-projected",
+    "model": "M",
+    "prefixes": 20000,
+    "share_checks": 41625,
+    "violations": 0,
+    "faults": 0,
+    "capacity_faults": 0,
+    "ok": true
+  },
+  {
+    "check": "I23-I25-projected",
+    "model": "B",
+    "prefixes": 20000,
+    "share_checks": 41662,
+    "violations": 0,
+    "faults": 0,
+    "capacity_faults": 0,
+    "ok": true
+  },
+  {
+    "check": "ADR0018",
+    "model": "O",
+    "before": 0.8731988472622478,
+    "after": 0.8414511103965939,
+    "ok": false
+  },
+  {
+    "check": "ADR0018",
+    "model": "M",
+    "before": 0.9202725038142058,
+    "after": 0.920398910874117,
+    "ok": true
+  },
+  {
+    "check": "ADR0018",
+    "model": "B",
+    "before": 0.8901438592319582,
+    "after": 0.8902366487481456,
+    "ok": true
+  },
+  {
+    "check": "weak-subnormal",
+    "model": "MeanPreserving",
+    "status": "PrecisionExhausted",
+    "atomic": true,
+    "ok": true
+  },
+  {
+    "check": "nonfinite",
+    "model": "MeanPreserving",
+    "status": "PrecisionExhausted",
+    "atomic": true,
+    "ok": true
+  },
+  {
+    "check": "overflow",
+    "model": "MeanPreserving",
+    "status": "PrecisionExhausted",
+    "atomic": true,
+    "ok": true
+  },
+  {
+    "check": "weak-subnormal",
+    "model": "Budgeted",
+    "status": "PrecisionExhausted",
+    "atomic": true,
+    "ok": true
+  },
+  {
+    "check": "nonfinite",
+    "model": "Budgeted",
+    "status": "PrecisionExhausted",
+    "atomic": true,
+    "ok": true
+  },
+  {
+    "check": "overflow",
+    "model": "Budgeted",
+    "status": "PrecisionExhausted",
+    "atomic": true,
+    "ok": true
+  }
+]

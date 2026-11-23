@@ -1,0 +1,19 @@
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.86s
+     Running unittests src\lib.rs (D:\Dev\cache\cargo-target\P5-03\debug\deps\gateway-eef0200df3cbeedf.exe)
+
+running 1 test
+
+thread 'tests::service::idle::authenticated_zero_request_idle_reconnects_do_not_consume_audit' (4664) panicked at crates\gateway\src\tests\service\idle.rs:41:13:
+zero-request authenticated idle was disconnected: Ok(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test tests::service::idle::authenticated_zero_request_idle_reconnects_do_not_consume_audit ... FAILED
+
+failures:
+
+failures:
+    tests::service::idle::authenticated_zero_request_idle_reconnects_do_not_consume_audit
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 41 filtered out; finished in 2.25s
+
+error: test failed, to rerun pass `-p gateway --lib`

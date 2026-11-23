@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "scope": "conditional recompute mechanism on explicit inputs",
+  "full_card_complete": false,
+  "production_permitted": false,
+  "tested_commit": "000e3c0990b04016d7ebc6180c10ddfab4232f78",
+  "main_baseline": "67cc296c8b960ae429aceb1f1e0110ef0dbc2f9e",
+  "reviewed_head": "7142adc442e3014b84259802e2b5710e61012916",
+  "recompute_source_unchanged": true,
+  "recompute_files": 15,
+  "rust_files": 13,
+  "source_manifests_match_all_eight_runs": true,
+  "checks": [
+    {
+      "run": "conditional-20261101-clippy",
+      "exit_code": 0,
+      "result": "verification/conditional-20261101-clippy/result.json"
+    },
+    {
+      "run": "conditional-20261101-format",
+      "exit_code": 0,
+      "result": "verification/conditional-20261101-format/result.json"
+    },
+    {
+      "run": "conditional-20261101-test",
+      "exit_code": 0,
+      "result": "verification/conditional-20261101-test/result.json"
+    },
+    {
+      "run": "conditional-20261101-workspace-clippy",
+      "exit_code": 0,
+      "result": "verification/conditional-20261101-workspace-clippy/result.json"
+    },
+    {
+      "run": "conditional-20261101-workspace-format",
+      "exit_code": 0,
+      "result": "verification/conditional-20261101-workspace-format/result.json"
+    },
+    {
+      "run": "conditional-20261101-workspace-test-detached",
+      "exit_code": 0,
+      "result": "verification/conditional-20261101-workspace-test-detached/result.json"
+    }
+  ],
+  "interrupted_attempts": [
+    "workspace-interruption.json",
+    "workspace-retry-interruption.json"
+  ],
+  "interrupted_attempts_counted_as_pass": false,
+  "harness": {
+    "passed": 68,
+    "failed": 0,
+    "ignored": 0,
+    "prefix_comparisons": 384,
+    "bit_differences": 0
+  },
+  "workspace_summaries": [
+    "ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+    "ok. 173 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 371.62s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 51 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 692.34s",
+    "ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 31.93s",
+    "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.14s",
+    "ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s",
+    "ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s",
+    "ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s",
+    "ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 482.11s",
+    "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 41 filtered out; finished in 3.76s",
+    "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 41 filtered out; finished in 4.49s",
+    "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 41 filtered out; finished in 4.45s",
+    "ok. 42 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 98.14s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+  ],
+  "python_parity_output": [
+    "Full event parity: 13339 unique events, 5 atomic faults; zero R, allocation or cf mismatches",
+    "Same-input parity: 2539894 scalar states, 261581 share vectors, 7 explicit faults; zero bit mismatches"
+  ],
+  "independent_complete_second_implementation": "not_completed",
+  "production_integration_migration_SYS17_new_laws": "not_run",
+  "archive_check": "archive-check.json"
+}

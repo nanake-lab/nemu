@@ -78,16 +78,8 @@ fn class_weight(class: EventClass, kappa: f64) -> f64 {
 }
 
 fn check_law(law: &DriveLaw) -> Result<(), FastError> {
-    let ok = law.g_max.is_finite()
-        && law.g_max > 0.0
-        && law.r_max.is_finite()
-        && law.r_max >= 0.0
-        && law.w_min.is_finite()
-        && law.w_min > 0.0
-        && law.w_min <= 1.0
-        && law.kappa.is_finite()
-        && law.kappa > 0.0
-        && law.kappa < 1.0;
+    let ok = law.kappa.is_finite() && law.kappa > 0.0 && law.kappa < 1.0;
+    check_target_law(law.g_max, law.r_max, law.w_min)?;
     if ok {
         Ok(())
     } else {
@@ -115,6 +107,46 @@ pub fn compute_drive(
     law: &DriveLaw,
 ) -> Result<Drive, FastError> {
     check_law(law)?;
+    let c = class_weight(input.class, law.kappa);
+    compute_unweighted_or_legacy(
+        effects,
+        evaluation,
+        input.appraisal,
+        input.empathy_weight,
+        law.g_max,
+        law.r_max,
+        law.w_min,
+        c,
+    )
+}
+
+pub(super) fn check_target_law(g_max: f64, r_max: f64, w_min: f64) -> Result<(), FastError> {
+    if g_max.is_finite()
+        && g_max > 0.0
+        && r_max.is_finite()
+        && r_max >= 0.0
+        && w_min.is_finite()
+        && w_min > 0.0
+        && w_min <= 1.0
+    {
+        Ok(())
+    } else {
+        Err(FastError::OutOfRange("law"))
+    }
+}
+
+// ADR 0035 §4.3/4.9: share the original D arithmetic; new F has no κ resource.
+#[allow(clippy::too_many_arguments)]
+pub(super) fn compute_unweighted_or_legacy(
+    effects: &EffectiveEffects,
+    evaluation: &Evaluation,
+    appraisal: Option<[f64; 4]>,
+    empathy_weight: f64,
+    g_max: f64,
+    r_max: f64,
+    w_min: f64,
+    c: f64,
+) -> Result<Drive, FastError> {
     let aligned = evaluation.drives.len() == effects.effects.len()
         && evaluation
             .drives
@@ -131,14 +163,14 @@ pub fn compute_drive(
     {
         return Err(FastError::Misaligned);
     }
-    let w = input.empathy_weight;
+    let w = empathy_weight;
     if !w.is_finite() {
         return Err(FastError::NonFinite("empathy_weight"));
     }
-    if !(law.w_min..=1.0).contains(&w) {
+    if !(w_min..=1.0).contains(&w) {
         return Err(FastError::OutOfRange("empathy_weight"));
     }
-    if let Some(a) = input.appraisal {
+    if let Some(a) = appraisal {
         if a.iter().any(|v| !v.is_finite()) {
             return Err(FastError::NonFinite("appraisal"));
         }
@@ -155,7 +187,7 @@ pub fn compute_drive(
         if !(-1.0..=1.0).contains(&theta.b[i]) || theta.g[i] <= 0.0 {
             return Err(FastError::OutOfRange("theta_drive"));
         }
-        if theta.g[i] > law.g_max {
+        if theta.g[i] > g_max {
             return Err(FastError::DriveOverBound { channel: i });
         }
     }
@@ -163,7 +195,7 @@ pub fn compute_drive(
         if !e.r.is_finite() || e.d.iter().any(|v| !v.is_finite()) {
             return Err(FastError::NonFinite("effect"));
         }
-        if !(0.0..=law.r_max).contains(&e.r) {
+        if !(0.0..=r_max).contains(&e.r) {
             return Err(FastError::OutOfRange("r"));
         }
     }
@@ -179,19 +211,18 @@ pub fn compute_drive(
         }
         direction_mass = direction_mass.max(mass);
     }
-    let eta = 2.0 * law.g_max + law.r_max * direction_mass;
+    let eta = 2.0 * g_max + r_max * direction_mass;
     if !eta.is_finite() {
         return Err(FastError::NonFinite("eta"));
     }
     let eta = eta.max(1.0);
 
-    let c = class_weight(input.class, law.kappa);
     if !(c.is_finite() && (0.0..=1.0).contains(&c)) {
         return Err(FastError::OutOfRange("class_weight"));
     }
     let mut nature = [0.0; 4];
     for i in 0..4 {
-        let base = match input.appraisal {
+        let base = match appraisal {
             Some(a) => (theta.g[i] * weights[i]) * (a[i] - theta.b[i]),
             None => 0.0,
         };

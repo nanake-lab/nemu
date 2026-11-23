@@ -1,0 +1,8 @@
+Synthetic rule task. A correct final decision earns 10 points; each read costs 1 point. At most one read is available before the final decision.
+RULE: Select WARM if the current temperature is below 10; otherwise select COOL.
+CURRENT FACTS: Current temperature is 6.
+OPERATION CODES:
+A: submit a decision using the visible information
+B: read the decorative border color
+C: read the current temperature
+Select the next operation code. The response slot reads exactly one token: A, B, or C. Write only that code, with no other text.

@@ -1,0 +1,14 @@
+{
+  "gateway_test_baseline": "787fd2bec82f17b247158a0a985c3ee2c214af03",
+  "latest_main": "740c2289c2a86f400580b4e6d4aa07654c08ace6",
+  "main_is_descendant": true,
+  "increment": "P5-23 core-kernel law module/tests and registrations",
+  "gateway_dependencies_changed": false,
+  "gateway_input_blob_manifest": "runs/20261029-143622-83651cd71d7347578b63c9a675d67c63/source-manifest.json",
+  "gateway_test_reused": "42 passed; identical gateway/types/store/contracts/lock/toolchain sources, no core-kernel dependency",
+  "repeated_checks": [
+    "cargo fmt --all -- --check",
+    "cargo clippy --workspace --all-targets --locked -- -D warnings"
+  ],
+  "repeat_check_result": "final-main-checks.json"
+}

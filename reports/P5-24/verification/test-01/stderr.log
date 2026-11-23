@@ -1,0 +1,37 @@
+     Locking 24 packages to highest Rust 1.99.0 compatible versions
+   Compiling proc-macro2 v1.0.107
+   Compiling unicode-ident v1.0.27
+   Compiling quote v1.0.47
+   Compiling typenum v1.20.1
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling serde_json v1.0.154
+   Compiling const-oid v0.10.2
+   Compiling serde v1.0.229
+   Compiling libm v0.2.16
+   Compiling cpufeatures v0.3.1
+   Compiling cfg-if v1.0.5
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling hybrid-array v0.4.15
+   Compiling crypto-common v0.2.2
+   Compiling block-buffer v0.12.1
+   Compiling syn v3.0.9
+   Compiling digest v0.11.3
+   Compiling sha2 v0.11.1
+   Compiling serde_derive v1.0.229
+   Compiling core-types v0.0.0 (D:\Dev\nemu-wt\P5-24\core\crates\core-types)
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-24\core\crates\core-kernel)
+   Compiling p5-24-evidence-verifier v0.0.0 (D:\Dev\cache\P5-24\harness)
+error[E0502]: cannot borrow `h` as immutable because it is also borrowed as mutable
+  --> D:\Dev\nemu-wt\P5-24\core\crates\core-kernel\src\evidence\tests\rules.rs:94:88
+   |
+93 |     h[3].same_matters.push(SameMatterAnnotation { schema_version: 1, record_id: "same".into(),
+   |     -                 ---- mutable borrow later used by call
+   |     |
+   |     mutable borrow occurs here
+94 |         event_id: "event-3".into(), same_as: vec!["event-2".into()], binding: binding(&h[3]), producer: "M".into(), producer_version...
+   |                                                                                        ^ immutable borrow occurs here
+
+For more information about this error, try `rustc --explain E0502`.
+error: could not compile `p5-24-evidence-verifier` (lib test) due to 1 previous error

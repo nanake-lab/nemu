@@ -5,6 +5,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false
+. (Join-Path $PSScriptRoot 'windows-evidence-text.ps1')
 
 if ($Mode -eq 'Init') {
     if (!$env:GITHUB_RUN_ID -or !$env:GITHUB_RUN_ATTEMPT -or !$env:RUNNER_TEMP) {
@@ -28,25 +29,14 @@ $root = $env:NEMU_EVIDENCE_DIR
 if (!$root -or !(Test-Path -LiteralPath (Join-Path $root 'run.json'))) { throw 'Missing evidence initialization' }
 
 function Save-Snapshot([string]$Name) {
-    $sample = [ordered]@{ at = [DateTime]::UtcNow.ToString('o'); interactive = [Environment]::UserInteractive
-        sessionId = (Get-Process -Id $PID).SessionId }
-    # No command lines, environment dumps, window titles, or document content.
-    $sample.processes = @(Get-Process | Select-Object Id, ProcessName, SessionId)
-    try { $sample.ports = @(Get-NetTCPConnection -State Listen -ErrorAction Stop |
-        Select-Object LocalAddress, LocalPort, OwningProcess) } catch { $sample.portsError = $_.Exception.Message }
-    $query = Join-Path $env:SystemRoot 'System32/query.exe'
-    if (Test-Path -LiteralPath $query) {
-        # Session listing includes state (Active/Disc), not application content.
-        $sample.sessions = @(& $query session 2>&1 | ForEach-Object { "$_" })
-        $sample.sessionQueryExit = $LASTEXITCODE
-    } else { $sample.sessionsError = 'query.exe unavailable' }
-    $sample.lockState = 'Unknown: interactive/session Active does not prove unlocked'
+    . (Join-Path $PSScriptRoot 'windows-snapshot.ps1')
+    $sample = Get-PublicWindowsSnapshot -RepositoryRoot (Join-Path $PSScriptRoot '../..')
     try {
         $since = [DateTime]::Parse((Get-Content -LiteralPath (Join-Path $root 'run.json') -Raw | ConvertFrom-Json).startedUtc)
         $sample.sessionEvents = @(Get-WinEvent -FilterHashtable @{
             LogName = 'Microsoft-Windows-TerminalServices-LocalSessionManager/Operational'; StartTime = $since
         } -ErrorAction Stop | Select-Object TimeCreated, Id)
-    } catch { $sample.sessionEventsError = $_.Exception.Message }
+    } catch { $sample.sessionEventsError = 'unavailable' }
     $sample | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath (Join-Path $root "$Name.json") -Encoding utf8
 }
 
@@ -63,9 +53,9 @@ if ($Mode -eq 'Run') {
         if ($Check -eq 'e2e') { $env:DEBUG = 'pw:browser' }
         $log = Join-Path $root "$Check.log"
         if ($Check -eq 'isolation') {
-            & pwsh -NoProfile -File (Join-Path $PSScriptRoot 'test-windows-isolation.ps1') 2>&1 | Tee-Object -FilePath $log
+            & pwsh -NoProfile -File (Join-Path $PSScriptRoot 'test-windows-isolation.ps1') 2>&1 | Protect-WindowsEvidenceText | Tee-Object -FilePath $log
         } else {
-            & pnpm "test:$Check" 2>&1 | Tee-Object -FilePath $log
+            & pnpm "test:$Check" 2>&1 | Protect-WindowsEvidenceText | Tee-Object -FilePath $log
         }
         $code = $LASTEXITCODE
     } finally {

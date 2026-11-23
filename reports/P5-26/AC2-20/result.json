@@ -1,0 +1,16 @@
+{
+  "task": "P5-26",
+  "check": "AC2-20",
+  "status": "incomplete",
+  "mechanism_status": "passed",
+  "evidence": "../verification/test-04/stdout.log",
+  "boundary": "版本/差异暂存、无否决入口与 V2-97 分流通过；完整独立第二实现及真实 H/L 持久记录未完成。",
+  "law_scope": "conditional legacy only; ADR0032 successor laws and superseded AC2-25/COG-A12 claims excluded",
+  "test_name_search_keys": [
+    "ac2_20_new_law_recalculates_entire_h_and_records_diff",
+    "ac2_20_21_unavailable_or_consistent_checks_alarm_and_apply",
+    "v2_97_mismatch_or_math_fault_retains_whole_state_and_repair_replays_h",
+    "local_fault_requires_record_and_never_leaks_part_of_candidate",
+    "review_cannot_target_an_unrecorded_alarm_or_other_prefix"
+  ]
+}

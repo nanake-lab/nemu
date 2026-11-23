@@ -1,0 +1,27 @@
+{
+  "initial_push_attempts": {
+    "evidence_kind": "Exact output excerpt from this task's tool transcript; timestamps were not separately recorded",
+    "command": "git push -u origin task/P5-36-theta-estimator-idl",
+    "attempt_count": 2,
+    "exit_code_each": 1,
+    "output_each": "fatal: unable to access 'https://github.com/nanake-lab/nemu.git/': schannel: failed to receive handshake, SSL/TLS connection failed"
+  },
+  "claim_publication": {
+    "method": "GitHub connector create_tree/create_commit/create_branch/create_pull_request",
+    "local_commit": "6ee2aeda30a4aed0e633dc05d48a7cc8817cbfcb",
+    "remote_commit": "bbcf0a4d4cc7848da80caa1e6b869dad0e8910f3",
+    "identical_tree": "92661d2c8cb8e4196c6cde451898904cf298472c",
+    "pull_request": "https://github.com/nanake-lab/nemu/pull/108",
+    "draft": true
+  },
+  "reconciliation": {
+    "fetch_exit_code": 0,
+    "fetch_evidence": "final-fetch.log / final-fetch.json",
+    "command": "git merge --no-edit origin/task/P5-36-theta-estimator-idl",
+    "exit_code": 0,
+    "merge_commit_short": "b0072b8f",
+    "rebase": false,
+    "force_push": false,
+    "tls_or_global_configuration_changed": false
+  }
+}

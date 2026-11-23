@@ -151,13 +151,13 @@ impl World {
             .sort_by_key(|r| core_types::scalar::hex(&r.digest.0));
         b.read_set.dedup();
         let ticket = self.store.bind(b.clone()).unwrap();
+        let mut theta: ThetaSnapshotV2 = fixture();
         let law: LawVersion = with_refs(leaf.reference());
-        let law = self.store.prepare(&law, "1").unwrap();
+        let law = self.store.prepare(&law, &theta.parameters.law_id).unwrap();
         let mut r: RSnapshotV3 = with_refs(leaf.reference());
         r.revision = format!("r-{n}");
         r.law_version = law.reference().clone();
         let r = self.store.prepare_r(&r).unwrap();
-        let mut theta: ThetaSnapshot = with_refs(leaf.reference());
         theta.revision = format!("theta-{n}");
         theta.law_version = law.reference().clone();
         let theta = self.store.prepare(&theta, "1").unwrap();

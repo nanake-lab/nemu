@@ -1,0 +1,13 @@
+{
+  "scope": "128 条 b=0 翻转历史及晚到匹配回溯",
+  "status": "passed",
+  "production_acceptance": "not_run",
+  "source": "../verification/test-06/stdout.log",
+  "source_sha256": "14D0C5528AAF4949670AD478FBDC596F5B3641CEC5341BE559CE9FA30D0F7A1F",
+  "tests": [
+    "evidence::tests::properties::ev5_late_match_and_new_candidate_backfill_old_event_without_rejudging",
+    "evidence::tests::properties::ev5_sign_inversion_preserves_group_set_and_order_for_128_histories"
+  ],
+  "limitation": "条件性合成输入；不替代上游认证/属性生产或完整实验谱系。见 REPORT.md 和 BLOCKED.md。",
+  "id": "EV5"
+}

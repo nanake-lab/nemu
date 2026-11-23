@@ -3,8 +3,12 @@ use std::{fmt, io};
 #[derive(Debug)]
 pub enum Error {
     Io(io::Error),
+    /// Preserve WouldBlock versus actual I/O errors (including OS errno).
+    WriterLock(std::fs::TryLockError),
     Sql(rusqlite::Error),
     Contract(String),
+    /// A cached-only service read needs the pending publication worker.
+    VerificationPending,
     Rejected(&'static str),
     /// Known no-D-write capacity rejection; I/O and SQL remain outcome-unknown.
     Backpressure(core_types::generated::IngressReason),
@@ -25,13 +29,22 @@ impl fmt::Display for Error {
         match self {
             Self::Backpressure(reason) => write!(f, "ingress capacity: {reason:?}"),
             Self::Io(e) => write!(f, "storage I/O: {e}"),
+            Self::WriterLock(e) => write!(f, "authority writer lock: {e}"),
             Self::Sql(e) => write!(f, "storage SQL: {e}"),
             Self::Contract(e) => write!(f, "contract: {e}"),
+            Self::VerificationPending => f.write_str("publication verification pending"),
             Self::Rejected(e) => write!(f, "storage rejected: {e}"),
         }
     }
 }
-impl std::error::Error for Error {}
+impl std::error::Error for Error {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Self::WriterLock(e) => Some(e),
+            _ => None,
+        }
+    }
+}
 impl From<io::Error> for Error {
     fn from(e: io::Error) -> Self {
         Self::Io(e)

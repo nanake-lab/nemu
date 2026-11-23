@@ -122,7 +122,7 @@ impl<L: LineageKind> FactView<'_, L> {
         }
         if query.history_prefix != self.prefix
             || (query.purpose != Purpose::Audit
-                && self.reader.current()?.as_ref() != Some(&self.last))
+                && self.reader.current_snapshot()?.as_ref() != Some(&self.last))
         {
             result.projection.status = QueryStatus::INDEX_LAGGING;
             return Ok(result);

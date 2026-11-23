@@ -69,3 +69,7 @@ PR #38 已合并，跨内核差按配置属性登记，显存采用专用/共享
 本轮三次 Instruct 含采样器 p50 均 ≤ 600 ms，显存最高观测上界均 ≤ 8 GB，三次同内核通路检查通过；范数比例信息性观察与比较页完成。数据/采样限制/流畅度风险见 instruct-adr0012-v1/REPORT.md；旧失败原样保留。本轮技术测量不再阻塞 ADR 0012 选定口径。
 
 根据用户授权，decision 第一行与 models.lock 已写选定条目，作为 PR #27 可审查交付。仍阻塞合并：Claude 交叉审查、用户批准与最终 CI；保留 needs-user，不自行合并或取下一卡。试聊仅用户手动启动，不算验收。
+
+## 2026-11-08 结案（用户决定，追加）
+
+用户于 2026-11-08（Australia/Perth）决定本卡结案，`tasks/cards.json` 记为 `status_override: done`。本卡的探针在旧载体（Qwen3-4B 系列）与旧通路（Transformers）上完成，之后引擎与载体已按 [ADR 0031](../../docs/adr/0031-carrier-engine-and-injection.md)、[ADR 0034](../../docs/adr/0034-qwen35-4b-conditional-carrier.md) 改变，由 [P0-10](../P0-10/REPORT.md)、[P0-12](../P0-12/REPORT.md) 在新引擎、新载体上实测取代。上文仍列为未完成的各项不再执行：延迟与显存按新载体以 P0-10、P0-12 为准；层位与三语方向按 P5-31（2026-11-07 追加）在新载体上实测。上文历史记录与失败原样保留。

@@ -1,0 +1,369 @@
+{
+  "source_commit": "06ec1885320ab52a3da7bba0276e847d432e2793",
+  "actual_main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385",
+  "previous_main_baseline": "f24f1256259c998bc213a9dc93103fcfb9cfe89a",
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "D:/Dev/nemu-wt/P5-36",
+      "head": "06ec1885320ab52a3da7bba0276e847d432e2793",
+      "main": "02948dc11aa1b43dc0dfe67c9da2e61676427385",
+      "started_utc": "2026-10-30T03:29:48.3616175+00:00",
+      "ended_utc": "2026-10-30T03:29:50.3864942+00:00",
+      "exit_code": 0,
+      "target": "D:\\Dev\\cache\\P5-36\\target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "actual_main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385"
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "D:/Dev/nemu-wt/P5-36",
+      "head": "06ec1885320ab52a3da7bba0276e847d432e2793",
+      "main": "02948dc11aa1b43dc0dfe67c9da2e61676427385",
+      "started_utc": "2026-10-30T03:29:50.9059912+00:00",
+      "ended_utc": "2026-10-30T03:30:02.0979804+00:00",
+      "exit_code": 0,
+      "target": "D:\\Dev\\cache\\P5-36\\target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "actual_main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385"
+    },
+    {
+      "name": "workspace",
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "core/Cargo.toml",
+        "--workspace",
+        "--locked",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "D:/Dev/nemu-wt/P5-36",
+      "head": "06ec1885320ab52a3da7bba0276e847d432e2793",
+      "main": "fb14feff3c35cf64ae661b642c3455ed506394e2",
+      "started_utc": "2026-10-30T03:30:19.2327854+00:00",
+      "ended_utc": "2026-10-30T03:58:20.7121818+00:00",
+      "exit_code": 0,
+      "target": "D:\\Dev\\cache\\P5-36\\target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "actual_main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385"
+    },
+    {
+      "name": "contracts-corrected",
+      "command": [
+        "pnpm",
+        "test:core-contracts"
+      ],
+      "cwd": "D:/Dev/nemu-wt/P5-36",
+      "head": "06ec1885320ab52a3da7bba0276e847d432e2793",
+      "main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385",
+      "observed_origin_main": "fb14feff3c35cf64ae661b642c3455ed506394e2",
+      "started_utc": "2026-10-30T04:02:53.4517440+00:00",
+      "ended_utc": "2026-10-30T04:04:06.2861384+00:00",
+      "exit_code": 0,
+      "target": "D:\\Dev\\cache\\P5-36\\target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "actual_main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385"
+    },
+    {
+      "name": "storage",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "reports/P5-36/storage/verify-storage.ps1",
+        "-Output",
+        "D:\\Dev\\nemu-wt\\P5-36\\reports\\P5-36\\main-sync-20261030\\storage-roundtrip"
+      ],
+      "cwd": "D:/Dev/nemu-wt/P5-36",
+      "head": "06ec1885320ab52a3da7bba0276e847d432e2793",
+      "main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385",
+      "observed_origin_main": "fb14feff3c35cf64ae661b642c3455ed506394e2",
+      "started_utc": "2026-10-30T04:04:51.0758602+00:00",
+      "ended_utc": "2026-10-30T04:11:23.3083250+00:00",
+      "exit_code": 0,
+      "target": "D:\\Dev\\cache\\P5-36\\target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "actual_main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385"
+    },
+    {
+      "name": "evidence-test",
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--manifest-path",
+        "D:\\Dev\\cache\\P5-36\\main-sync-20261030\\evidence-harness\\Cargo.toml",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "D:/Dev/nemu-wt/P5-36",
+      "head": "06ec1885320ab52a3da7bba0276e847d432e2793",
+      "main": "fb14feff3c35cf64ae661b642c3455ed506394e2",
+      "started_utc": "2026-10-30T03:58:44.7353672+00:00",
+      "ended_utc": "2026-10-30T03:59:12.9651313+00:00",
+      "exit_code": 0,
+      "target": "D:\\Dev\\cache\\P5-36\\target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "actual_main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385"
+    },
+    {
+      "name": "evidence-clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--offline",
+        "--locked",
+        "--manifest-path",
+        "D:\\Dev\\cache\\P5-36\\main-sync-20261030\\evidence-harness\\Cargo.toml",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "D:/Dev/nemu-wt/P5-36",
+      "head": "06ec1885320ab52a3da7bba0276e847d432e2793",
+      "main": "fb14feff3c35cf64ae661b642c3455ed506394e2",
+      "started_utc": "2026-10-30T03:59:13.4153506+00:00",
+      "ended_utc": "2026-10-30T03:59:19.3769533+00:00",
+      "exit_code": 0,
+      "target": "D:\\Dev\\cache\\P5-36\\target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "actual_main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385"
+    },
+    {
+      "name": "evidence-fmt",
+      "command": [
+        "rustfmt",
+        "--edition",
+        "2024",
+        "--check",
+        "core/crates/core-kernel/src/evidence/mod.rs"
+      ],
+      "cwd": "D:/Dev/nemu-wt/P5-36",
+      "head": "06ec1885320ab52a3da7bba0276e847d432e2793",
+      "main": "02948dc11aa1b43dc0dfe67c9da2e61676427385",
+      "started_utc": "2026-10-30T03:39:01.4771215+00:00",
+      "ended_utc": "2026-10-30T03:39:01.8271469+00:00",
+      "exit_code": 0,
+      "target": "D:\\Dev\\cache\\P5-36\\target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "actual_main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385"
+    }
+  ],
+  "workspace_targets": [
+    {
+      "target": "action_gate",
+      "passed": 15,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "core_kernel",
+      "passed": 173,
+      "failed": 0,
+      "ignored": 1
+    },
+    {
+      "target": "core_policy",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "core_replay",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "core_runtime",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "core_store",
+      "passed": 51,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "core_types",
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "canonical_boundaries",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "p5_32_contract",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "p5_34_contract",
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "v2_contract",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "echoctl",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "fact_view",
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "gateway",
+      "passed": 42,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "semantic_core",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "task_layer",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:action_gate",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:core_kernel",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:core_policy",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:core_replay",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:core_runtime",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:core_store",
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:core_types",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:fact_view",
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:gateway",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:semantic_core",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "target": "doc:task_layer",
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "cross_language": {
+    "result": "passed",
+    "actual_prefixes": 65,
+    "returned_states": 260,
+    "languages": [
+      "python",
+      "typescript"
+    ],
+    "encodings": [
+      "canonical",
+      "protobuf"
+    ],
+    "state_oracle": "exhaustive fields, f64::to_bits",
+    "continuation": "same remaining events, changes, signals, bounds"
+  },
+  "storage": {
+    "boundary": "commit -> close -> reopen -> read -> restore -> every remaining event",
+    "prefixes": 65,
+    "oracle": "exhaustive private fields, f64::to_bits",
+    "source": "existing P5-36 C trajectory",
+    "result": "passed",
+    "noMigration": true
+  },
+  "source_manifest_files": 136,
+  "source_unchanged": true,
+  "conflict_bytes_unchanged": true,
+  "summarized_utc": "2026-10-30T04:13:49.994455+00:00"
+}

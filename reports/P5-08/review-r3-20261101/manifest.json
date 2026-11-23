@@ -1,0 +1,130 @@
+{
+  "task": "P5-08",
+  "review": "R3",
+  "review_url": "https://github.com/nanake-lab/nemu/pull/120#issuecomment-6558896765",
+  "date": "2026-11-01",
+  "risk": "heavy",
+  "previous_validated_main": "db8802f317b5b4dd5fe57699ef724fbac0d940f1",
+  "validated_main_B": "67cc296c8b960ae429aceb1f1e0110ef0dbc2f9e",
+  "fetched_main_M": "67cc296c8b960ae429aceb1f1e0110ef0dbc2f9e",
+  "merge_commit": "aa73ad62d875060713f809a777406314ec6245bf",
+  "regression_commit": "45ed7cf9dcbeaa22488fe3b545f59e371596090e",
+  "source_commit": "966fef5a83dee60507f1018a56959cf301c2b54c",
+  "core_tree": "8a7a0f9e45852d5c247b9c52b256033acc96d7d1",
+  "runtime_tree": "9b2dfacf0b2f4c7ba8241be91e343107d4f9b9e8",
+  "toolchain": {
+    "rustc": "1.99.0 (b940084d7 2026-09-28)",
+    "cargo": "1.99.0 (5f94df478 2026-08-27)"
+  },
+  "process_environment": {
+    "CARGO_HOME": "D:/Dev/cache/cargo",
+    "CARGO_TARGET_DIR": "D:/Dev/cache/cargo-target",
+    "TEMP": "D:/Dev/cache/P5-08/tmp",
+    "TMP": "D:/Dev/cache/P5-08/tmp"
+  },
+  "fixture": {
+    "path": "core/crates/core-runtime/tests/fixtures/ThetaSnapshotV2.hex",
+    "source": "core/contracts/golden/legal.json at validated_main_B, request.name=ThetaSnapshotV2 and estimator.event_count=17",
+    "canonical_bytes": 1911,
+    "canonical_sha256": "dadc5ee6e584f0af30c38ac787f7651eaeba72eb415c9ec129c3ca3c2685785d",
+    "boundary": "synthetic C trajectory; runtime store test substitutes synthetic persisted law reference; no production H/law authentication or migration"
+  },
+  "logs": [
+    {
+      "file": "r3-red.log",
+      "command": "cargo test --offline --locked -p core-runtime --test store review_r3 -- --nocapture",
+      "status": "expected_failure",
+      "exit_code": 101,
+      "bytes": 1273,
+      "sha256": "5a628f2189cb2a56b665ad00f0739a24210dea70d59d60bb1e05d4a82e04c4d5"
+    },
+    {
+      "file": "runtime-green-01.log",
+      "command": "cargo test --offline --locked -p core-runtime",
+      "status": "passed",
+      "exit_code": 0,
+      "bytes": 4225,
+      "sha256": "e4fdfbca421a1adf7a42e13a7a6d9c7eb007d4103011d529e0a269563cbac250"
+    },
+    {
+      "file": "fmt.log",
+      "command": "cargo fmt --all --check",
+      "status": "passed",
+      "exit_code": 0,
+      "bytes": 13,
+      "sha256": "a9f58776a09b5dac438049683f24bf85764e0ff8e7455952456165c68c158627"
+    },
+    {
+      "file": "clippy.log",
+      "command": "cargo clippy --offline --locked --workspace --all-targets -- -D warnings",
+      "status": "passed",
+      "exit_code": 0,
+      "bytes": 947,
+      "sha256": "69a1fdb1e4fdb9f6062d9a4c74f50360b3fceb2c8e111e91598e5cdab68e56b2"
+    },
+    {
+      "file": "workspace-test.log",
+      "command": "cargo test --offline --locked --workspace",
+      "status": "interrupted",
+      "exit_code": null,
+      "bytes": 33814,
+      "sha256": "5c53283f395c072a4db8c0d898511a408c152c0b09f0146039f6ca3f4672a182"
+    },
+    {
+      "file": "workspace-remaining.log",
+      "command": "cargo test --offline --locked -p fact-view -p gateway -p semantic-core -p task-layer --lib --tests",
+      "status": "passed",
+      "exit_code": 0,
+      "bytes": 6916,
+      "sha256": "0ffa24f935e80b1b86df875d8e6325cf88c1b1771ca7f88adfec07ab954e9d39"
+    },
+    {
+      "file": "workspace-doc.log",
+      "command": "cargo test --offline --locked --workspace --doc",
+      "status": "passed",
+      "exit_code": 0,
+      "bytes": 2414,
+      "sha256": "561ae03de2c2d2186784be9406b6c24cf070927eb0d0562629314775a33e4296"
+    },
+    {
+      "file": "fetch-final.log",
+      "command": "git -c http.lowSpeedLimit=1 -c http.lowSpeedTime=30 fetch origin",
+      "status": "passed",
+      "exit_code": 0,
+      "bytes": 13,
+      "sha256": "a9f58776a09b5dac438049683f24bf85764e0ff8e7455952456165c68c158627"
+    }
+  ],
+  "workspace_validation": {
+    "status": "passed_in_segments",
+    "interruption": "Original exec session 91662 was unavailable on continuation (Unknown process id); no owned cargo/test process remained; original log has no final exit_code and stops in fact-view. Cause unknown. Original bytes preserved.",
+    "completed_unit_integration_packages": [
+      "action-gate",
+      "core-kernel",
+      "core-policy",
+      "core-replay",
+      "core-runtime",
+      "core-store",
+      "core-types",
+      "echoctl"
+    ],
+    "remaining_unit_integration_packages": [],
+    "doc_tests": "workspace-doc.log: 7 compile-fail tests passed, exit 0",
+    "ignored": "core-kernel dynamics::tests::reference::theta_1_original_500_streams_zero_violations, existing V2-93 diagnostic; unchanged",
+    "legacy_head_evidence": "workspace-test.log includes core_store::tests::theta::legacy_theta_readable_writer_refused_without_touching_history ... ok and 51 passed suite result",
+    "coverage_note": "The initial workspace command is interrupted, not exit 0. All 12 member packages have passing unit/integration suite results across the initial log and workspace-remaining.log; all workspace doc tests passed separately. Product source/tests stayed at source_commit throughout.",
+    "supplemented_unit_integration_packages": [
+      "fact-view",
+      "gateway",
+      "semantic-core",
+      "task-layer"
+    ]
+  },
+  "scope": "Product edits limited to core/crates/core-runtime; own reports and requests only; upstream changes arrived by merge. Partial card stays draft.",
+  "checks": {
+    "markdown_relative_links": "passed",
+    "diff_check": "passed",
+    "all_archived_log_hashes": "passed",
+    "core_tree_unchanged": "passed"
+  }
+}

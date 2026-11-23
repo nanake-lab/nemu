@@ -119,6 +119,36 @@ class TrialOutcome(IntEnum):
 class RelationKind(IntEnum):
     CLOSENESS = 1
     TRUST = 2
+class CognitiveCompletion(IntEnum):
+    COG_COMPLETED = 1
+    COG_TRUNCATED = 2
+    COG_CANCELLED = 3
+    COG_FAILED = 4
+class CognitiveMode(IntEnum):
+    COG_RUNNING = 1
+    COG_PAUSED = 2
+    COG_FAULT = 3
+class CognitiveActivityStatus(IntEnum):
+    COG_ACTIVITY_RUNNING = 1
+    COG_ACTIVITY_WAITING = 2
+    COG_ACTIVITY_COMPLETED = 3
+    COG_ACTIVITY_SUSPENDED = 4
+class CognitiveReturnStatus(IntEnum):
+    COG_RETURN_WAITING = 1
+    COG_RETURN_OK = 2
+    COG_RETURN_NO_MATCH = 3
+    COG_RETURN_DENIED = 4
+    COG_RETURN_INDEX_LAGGING = 5
+    COG_RETURN_MISSING = 6
+    COG_RETURN_BUDGET = 7
+    COG_RETURN_FAILED = 8
+    COG_RETURN_UNKNOWN = 9
+class CognitiveMaintenanceKind(IntEnum):
+    COG_MAINTENANCE_PAUSE = 1
+    COG_MAINTENANCE_RESUME = 2
+    COG_MAINTENANCE_REVIEW = 3
+    COG_MAINTENANCE_ALARM = 4
+    COG_MAINTENANCE_BACKUP_RESTORE = 5
 # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data
 class DistinctionForm(IntEnum):
     EXEMPLAR = 1
@@ -138,6 +168,39 @@ class EvidenceRelation(IntEnum):
     COUNTEREVIDENCE = 2
     RESOLVES_TRIAL = 3
     EVIDENCE_UNKNOWN = 4
+class JResidualStage(IntEnum):
+    J_BLOCK_RESIDUAL_OUTPUT = 1
+    J_MIXER_RESIDUAL_BEFORE_FFN_NORM = 2
+class JLayerKind(IntEnum):
+    J_ATTENTION_LAYER = 1
+    J_RECURRENT_LAYER = 2
+    J_HYBRID_LAYER = 3
+class JActivationDtype(IntEnum):
+    J_FLOAT32 = 1
+    J_FLOAT16 = 2
+    J_BFLOAT16 = 3
+    J_FLOAT64 = 4
+class JPrefillMask(IntEnum):
+    J_PREFILL_LAST = 1
+    J_PREFILL_ALL = 2
+    J_PREFILL_NONE = 3
+class JDecodeMask(IntEnum):
+    J_DECODE_ALL = 1
+    J_DECODE_NONE = 2
+class JDirectionKind(IntEnum):
+    J_CONNECTION = 1
+    J_EMPATHY = 2
+    J_CURIOSITY = 3
+    J_ACHIEVEMENT = 4
+    J_LEARNED = 5
+class JDirectionStatus(IntEnum):
+    J_INCLUDED = 1
+    J_UNVALIDATED = 2
+    J_MISSING = 3
+    J_VALIDATION_MISMATCH = 4
+class JCompilationMode(IntEnum):
+    J_CONNECTED = 1
+    J_REHEARSAL_WITHOUT_FAST = 2
 class EvidenceSign(IntEnum):
     SIGN_NEGATIVE = 1
     SIGN_POSITIVE = 2
@@ -145,6 +208,14 @@ class GrowthCommandKind(IntEnum):
     GROWTH_PAUSE = 1
     GROWTH_RESUME = 2
     GROWTH_REVIEW_CONCLUSION = 3
+class FastBasisKind(IntEnum):
+    FAST_BASIS_RECORD = 1
+    FAST_BASIS_INTERNAL_BRANCH = 2
+class FastEffectRole(IntEnum):
+    FAST_EFFECT_NEW_BASIS = 1
+    FAST_EFFECT_TARGET_UPDATE = 2
+    FAST_EFFECT_REVISIT = 3
+    FAST_EFFECT_INTERNAL_BRANCH = 4
 class LedgerKind(IntEnum):
     LEDGER_TENDENCY_CHANGED = 1
     LEDGER_THETA_CHANGED = 2
@@ -165,6 +236,115 @@ class ReviewTrigger(IntEnum):
 class ReviewVerdict(IntEnum):
     LAW_CORRECT = 1
     LAW_INCORRECT = 2
+class DesktopTier(IntEnum):
+    IRREVERSIBLE_NEVER = 1
+    IRREVERSIBLE_ASK = 2
+    IRREVERSIBLE_DIRECT = 3
+class ScopeKind(IntEnum):
+    CONNECTOR_OPERATION = 1
+    LOCAL_DESKTOP = 2
+    OWN_SOCIAL = 3
+    SOCIAL_NOTIFY_USER = 4
+    OWN_WALLET_PAY = 5
+    USER_WALLET_TOP_UP = 6
+class ManagementEntry(IntEnum):
+    LOCAL_PANEL = 1
+    LOCAL_ECHOCTL = 2
+class PermissionDenial(IntEnum):
+    IDENTITY_UNVERIFIED = 1
+    WRONG_BINDING = 2
+    SCOPE_DENIED = 3
+    BUDGET_DENIED = 4
+    GRANT_EXPIRED = 5
+    ALREADY_CONSUMED = 6
+    VERSION_REVOKED = 7
+    CONSENT_MISSING = 8
+    UNRESOLVED_DISPATCH = 9
+class ConceptLifecycle(IntEnum):
+    CONCEPT_LIFE_PROVISIONAL = 1
+    CONCEPT_LIFE_STABLE = 2
+    CONCEPT_LIFE_DEPRECATED = 3
+class SemanticNodeKind(IntEnum):
+    SEM_NODE_REF = 1
+    SEM_NODE_CLAIM = 2
+    SEM_NODE_ACT = 3
+class ClaimTimeKind(IntEnum):
+    CLAIM_TIME_NOT_APPLICABLE = 1
+    CLAIM_TIME_UNKNOWN = 2
+    CLAIM_TIME_FACT = 3
+class ClaimModality(IntEnum):
+    CLAIM_MODE_REPORTED = 1
+class InterpretationStage(IntEnum):
+    INTERPRET_STAGE_IRL = 1
+    INTERPRET_STAGE_A = 2
+    INTERPRET_STAGE_M = 3
+class StageOutcome(IntEnum):
+    STAGE_OUTCOME_VALID = 1
+    STAGE_OUTCOME_PARTIAL = 2
+    STAGE_OUTCOME_FAILED = 3
+class VerificationValue(IntEnum):
+    VERIFY_VALUE_TRUE = 1
+    VERIFY_VALUE_FALSE = 2
+    VERIFY_VALUE_UNKNOWN = 3
+class AttributeSource(IntEnum):
+    ATTR_SOURCE_HUMAN_RESPONSE = 1
+    ATTR_SOURCE_DIRECTED_TOUCH = 2
+    ATTR_SOURCE_ABSENCE = 3
+    ATTR_SOURCE_DESKTOP = 4
+    ATTR_SOURCE_SELF_RESULT = 5
+    ATTR_SOURCE_INTERNAL = 6
+    ATTR_SOURCE_MAINTENANCE = 7
+class EvidenceAccess(IntEnum):
+    EVIDENCE_ACCESS_NONE = 1
+    EVIDENCE_ACCESS_TARGET_DEPENDENT = 2
+    EVIDENCE_ACCESS_COMPARISON_REQUIRED = 3
+class RemoteAttemptStatus(IntEnum):
+    REMOTE_ATTEMPT_COMPLETED = 1
+    REMOTE_ATTEMPT_TRUNCATED = 2
+    REMOTE_ATTEMPT_CANCELLED = 3
+    REMOTE_ATTEMPT_SERVICE_FAULT = 4
+    REMOTE_ATTEMPT_CONTENT_REFUSED = 5
+    REMOTE_ATTEMPT_NOT_SENT = 6
+class TextAdoption(IntEnum):
+    TEXT_ADOPTION_FULL = 1
+    TEXT_ADOPTION_RANGE = 2
+    TEXT_ADOPTION_REJECTED = 3
+    TEXT_ADOPTION_STALE = 4
+    TEXT_ADOPTION_NO_TEXT = 5
+class RemoteTextMode(IntEnum):
+    REMOTE_TEXT_INTERNAL_TEXT_ONLY_THINKING_OFF = 1
+class RelationFact(IntEnum):
+    REL_FACT_REPLY = 1
+    REL_FACT_QUOTATION = 2
+    REL_FACT_PARAPHRASE = 3
+    REL_FACT_SOURCE_LOCATOR = 4
+    REL_FACT_CORRECTION = 5
+    REL_FACT_RETRACTION = 6
+    REL_FACT_CONTRADICTION_ANNOTATION = 7
+    REL_FACT_TEACHING_ANNOTATION = 8
+    REL_FACT_ACCEPTED_FALSIFICATION = 9
+    REL_FACT_SAME_EVENT_HINT = 10
+    REL_FACT_CONTACT = 11
+    REL_FACT_EVIDENCE_MEMBER = 12
+    REL_FACT_GOVERNED_MERGE = 13
+    REL_FACT_REINTERPRETATION = 14
+    REL_FACT_SEMANTIC_LINK = 15
+    REL_FACT_PROPOSAL_SOURCE = 16
+    REL_FACT_EFFECT_PROVENANCE = 17
+    REL_FACT_MIGRATION = 18
+    REL_FACT_TRANSACTION_MEMBER = 19
+    REL_FACT_LEDGER_REFERENCE = 20
+    REL_FACT_ACTIVITY_PREVIOUS = 21
+    REL_FACT_MATERIAL_READ = 22
+    REL_FACT_PRODUCT_SOURCE = 23
+    REL_FACT_ACTION_DEPENDENCY = 24
+    REL_FACT_OUTPUT_DELIVERY = 25
+    REL_FACT_PERMISSION_SNAPSHOT = 26
+    REL_FACT_USE_REVOKED = 27
+    REL_FACT_UNRESOLVED = 28
+class PresentationChannel(IntEnum):
+    PRESENTATION_DISPLAY = 1
+    PRESENTATION_AUDIO = 2
 class Lang(IntEnum):
     ZH = 1
     EN = 2
@@ -267,6 +447,16 @@ class ApprovalChoice(IntEnum):
     ALLOW_ONCE = 1
     ALLOW_ALWAYS = 2
     DENY = 3
+class TouchKindV2(IntEnum):
+    TOUCH_V2_CLICK = 1
+    TOUCH_V2_DOUBLE_CLICK = 2
+    TOUCH_V2_PAT = 3
+    TOUCH_V2_DRAG_START = 4
+    TOUCH_V2_DRAG_END = 5
+    TOUCH_V2_FLING = 6
+    DWELL_START = 7
+    DWELL_CONTINUE = 8
+    DWELL_END = 9
 class TerminalLineage(IntEnum):
     TERMINAL_REHEARSAL = 1
     TERMINAL_LIFE = 2
@@ -436,6 +626,139 @@ class LineageHeaderV2:
     genesis_manifest_digest: bytes | None
     world_id: str | None
     world_seed: int | None
+@dataclass(frozen=True)
+class CognitionBinding:
+    schema_version: int
+    activity_id: str
+    step_id: str
+    request_id: str
+    round_index: int
+    branch_id: str
+    base_commit: str
+    q_revision: str
+    input_frontier: list[str]
+    snapshot_id: str
+    environment: VersionedEnvironmentV2
+    protocol: ObjectRef
+    permission_snapshot: ObjectRef
+    source_validity_version: str
+    read_set: list[ObjectRef]
+@dataclass(frozen=True)
+class CognitiveMaterial:
+    schema_version: int
+    content: ObjectRef
+    metadata: SourceMetadata
+    past_reaction: bool
+@dataclass(frozen=True)
+class CognitiveReturnedResult:
+    schema_version: int
+    request_id: str
+    status: CognitiveReturnStatus
+    result: ObjectRef | None
+    action_id: str | None
+@dataclass(frozen=True)
+class CognitiveInput:
+    schema_version: int
+    binding: CognitionBinding
+    materials: list[CognitiveMaterial]
+    focus: ObjectRef | None
+    new_inputs: list[ObjectRef]
+    results: list[CognitiveReturnedResult]
+    retrievals: list[FactProjection]
+    budget: ObjectRef
+@dataclass(frozen=True)
+class CognitiveResultAndReceipt:
+    schema_version: int
+    binding: CognitionBinding
+    input: ObjectRef
+    products: list[CognitiveMaterial]
+    next_focus: ObjectRef | None
+    queries: list[ObjectRef]
+    action_plan: ActionPlan | None
+    completion: CognitiveCompletion
+    reason: str | None
+    model_hash: bytes
+    tokenizer_hash: bytes
+    modulation: ObjectRef
+    carrier_receipt: ObjectRef | None
+    usage: ObjectRef
+@dataclass(frozen=True)
+class InternalActivityRecord:
+    schema_version: int
+    record_id: str
+    previous: ObjectRef | None
+    result: CognitiveResultAndReceipt
+    started_at_ns: int
+    finished_at_ns: int
+@dataclass(frozen=True)
+class ActivityState:
+    schema_version: int
+    activity_id: str
+    revision: str
+    materials: list[ObjectRef]
+    focus: ObjectRef | None
+    latest_step: ObjectRef | None
+    waiting: list[str]
+    successor: ObjectRef | None
+    status: CognitiveActivityStatus
+@dataclass(frozen=True)
+class CognitiveInflightAction:
+    schema_version: int
+    action_id: str
+    origin_record: ObjectRef
+    origin_step_id: str
+    round_index: int
+    registered_at_ns: int
+    plan: ActionPlan
+    status: ActionStatus
+    request: ObjectRef
+    actual_result: ObjectRef | None
+    credential: ObjectRef | None
+@dataclass(frozen=True)
+class CognitionState:
+    schema_version: int
+    revision: str
+    mode: CognitiveMode
+    reason: str | None
+    activities: list[ActivityState]
+    inflight: list[CognitiveInflightAction]
+    active_request: ObjectRef | None
+    runnable_successor: ObjectRef | None
+    transition: ObjectRef
+@dataclass(frozen=True)
+class InternalActivityCommit:
+    schema_version: int
+    binding: CognitionBinding
+    record: InternalActivityRecord
+    interpretations: list[ObjectRef]
+@dataclass(frozen=True)
+class CoreTransactionV3:
+    schema_version: int
+    staged_h: ObjectRef
+    staged_x: ObjectRef
+    staged_r: ObjectRef
+    staged_theta: ObjectRef
+    staged_l: ObjectRef
+    staged_q: ObjectRef
+    staged_u: ObjectRef
+    processed_position: int
+    anchor_time_ns: int
+    staged_concepts: list[ObjectRef]
+    accepted_results: list[ObjectRef]
+    audit_refs: list[ObjectRef]
+    staged_ledger: list[LedgerEntry]
+    event_binding: ProposalBindingV2 | None
+    internal_commit: InternalActivityCommit | None
+@dataclass(frozen=True)
+class SystemMaintenanceRecord:
+    schema_version: int
+    record_id: str
+    kind: CognitiveMaintenanceKind
+    reason: str
+    details: ObjectRef
+    ledger_refs: list[ObjectRef]
+    related_commit: str
+    recorded_at_ns: int
 @dataclass(frozen=True)
 class EffectContract:
     # Superseded (no successor): P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests
@@ -682,6 +1005,112 @@ class ThetaModuleSourceBinding:
     source_trace_revision: str
     source_coupling_revision: str
 @dataclass(frozen=True)
+class JHookBinding:
+    schema_version: int
+    carrier: ObjectRef
+    model: ObjectRef
+    tokenizer: ObjectRef
+    layer_index: int
+    residual_stage: JResidualStage
+    layer_kind: JLayerKind
+    width: int
+    dtype: JActivationDtype
+    prefill_mask: JPrefillMask
+    decode_mask: JDecodeMask
+@dataclass(frozen=True)
+class JDirectionVector:
+    schema_version: int
+    version: str
+    values: list[float]
+@dataclass(frozen=True)
+class JDirection:
+    schema_version: int
+    kind: JDirectionKind
+    tendency_id: str | None
+    concept: ConceptRef | None
+    vector: ObjectRef
+    beta: float
+@dataclass(frozen=True)
+class JDirectionSet:
+    schema_version: int
+    version: str
+    hook: JHookBinding
+    directions: list[JDirection]
+@dataclass(frozen=True)
+class JValidatedDirection:
+    schema_version: int
+    vector: ObjectRef
+    max_beta: float
+    measured_norm: float
+    norm_tolerance: float
+    zh_evidence: ObjectRef
+    en_evidence: ObjectRef
+    ja_evidence: ObjectRef
+@dataclass(frozen=True)
+class JDirectionValidation:
+    schema_version: int
+    version: str
+    direction_set: ObjectRef
+    fixture: bool
+    directions: list[JValidatedDirection]
+    combination_max_beta: float
+    combination_evidence: ObjectRef
+@dataclass(frozen=True)
+class BodyReadoutParameters:
+    schema_version: int
+    version: str
+    facing: NatureReal
+    tension: NatureReal
+    energy: NatureReal
+@dataclass(frozen=True)
+class JDirectionUse:
+    schema_version: int
+    kind: JDirectionKind
+    tendency_id: str | None
+    status: JDirectionStatus
+    direction: ObjectRef | None
+    validation: ObjectRef | None
+    beta: float | None
+    coefficient: float | None
+@dataclass(frozen=True)
+class JEffectReceipt:
+    schema_version: int
+    snapshot_id: str
+    anchor_time_ns: int
+    projected_at_ns: int
+    x_digest: bytes
+    r_digest: bytes
+    theta_digest: bytes
+    carrier: ObjectRef
+    model: ObjectRef
+    tokenizer: ObjectRef
+    direction_set: ObjectRef
+    validation: ObjectRef
+    body_parameters: ObjectRef
+    genesis: ObjectRef
+    mode: JCompilationMode
+    directions: list[JDirectionUse]
+    total_bound: float
+    body: BodyReadoutV2
+@dataclass(frozen=True)
+class GenesisManifestV3:
+    schema_version: int
+    law_version: LawVersion
+    nature_structure: str
+    initial_gain: NatureScale
+    initial_baseline: NatureVector
+    sigma0: float
+    tau0_s: float
+    attachment_prior: float
+    caretaker_id: str
+    carrier: ObjectRef
+    direction_set: ObjectRef
+    direction_validation: ObjectRef
+    body_readout: ObjectRef
+    fuses: FuseConfig
+    boundaries: ObjectRef
+    protocol: ObjectRef
+@dataclass(frozen=True)
 class EvidenceAllocation:
     # Superseded (successor EvidenceAllocationV2): P5-32; ADR 0016: adds the ordinal, μ and p_c that G needs to replay a tendency
     schema_version: int
@@ -726,6 +1155,7 @@ class RSnapshot:
     tendencies: list[Tendency]
 @dataclass(frozen=True)
 class ThetaSnapshot:
+    # Superseded (successor ThetaSnapshotV2): P5-36; ADR 0029: inline complete recursive estimator state
     schema_version: int
     revision: str
     law_version: ObjectRef
@@ -899,6 +1329,88 @@ class RSnapshotV3:
     law_version: ObjectRef
     tendencies: list[TendencyV3]
 @dataclass(frozen=True)
+class FastBasisIdentity:
+    schema_version: int
+    kind: FastBasisKind
+    record_id: str | None
+@dataclass(frozen=True)
+class LawLearnedCoordinate:
+    schema_version: int
+    tendency_id: str
+    value: float
+@dataclass(frozen=True)
+class LawStateVector:
+    schema_version: int
+    nature: NatureReal
+    learned: list[LawLearnedCoordinate]
+@dataclass(frozen=True)
+class FastBasisSlot:
+    schema_version: int
+    basis: FastBasisIdentity
+    current: LawStateVector
+    target: LawStateVector
+@dataclass(frozen=True)
+class FastStateSnapshotV3:
+    schema_version: int
+    revision: str
+    representation_version: str
+    anchor_time_ns: int
+    nature: NatureVector
+    learned: list[LearnedComponent]
+    slots: list[FastBasisSlot]
+    law_version: ObjectRef
+@dataclass(frozen=True)
+class FastEffectRecord:
+    schema_version: int
+    basis: FastBasisIdentity
+    role: FastEffectRole
+    target: LawStateVector
+    theta_before: ObjectRef
+    effects_before: ObjectRef
+    interpretation_refs: list[ObjectRef]
+    governance_refs: list[ObjectRef]
+    law_version: ObjectRef
+@dataclass(frozen=True)
+class FastStateMigrationRecord:
+    schema_version: int
+    previous_snapshot: ObjectRef
+    migrated_snapshot: ObjectRef
+    prior_decomposition_unknown: bool
+@dataclass(frozen=True)
+class ThetaSnapshotV3:
+    schema_version: int
+    revision: str
+    law_version: ObjectRef
+    values: ThetaValues
+    estimator: ThetaEstimatorState
+    parameters: ThetaEstimatorParametersV2
+    parameters_digest: bytes
+    prior_mass: float
+@dataclass(frozen=True)
+class ThetaEstimatorParametersV2:
+    schema_version: int
+    law_id: str
+    numerics_id: str
+    baseline_prior: NatureVector
+    gain_prior: NatureScale
+    sigma_prior: NatureScale
+    tau_prior_s: NatureScale
+    variance_weight: float
+    duration_weight: float
+    change_prior: float
+    change_prior_weight: float
+    change_min: float
+    gain_min: float
+    gain_max: float
+    recovery_min: float
+    recovery_max: float
+    detector_shift_sigma: float
+    detector_threshold: float
+    jump_notice: float
+    drift_run: int
+    drift_margin: float
+    baseline_weight: float
+@dataclass(frozen=True)
 class ThetaValues:
     schema_version: int
     baseline: NatureVector
@@ -948,6 +1460,137 @@ class LedgerEntry:
     review_trigger: ReviewTrigger | None
     review_verdict: ReviewVerdict | None
     review_record: ObjectRef | None
+@dataclass(frozen=True)
+class LocalUserBinding:
+    schema_version: int
+    principal_id: str
+    session_id: str
+    installation_id: str
+    authentication_record_id: str
+@dataclass(frozen=True)
+class DesktopPermissionPolicy:
+    schema_version: int
+    version: str
+    irreversible: DesktopTier
+    reversibility_rule: ObjectRef
+@dataclass(frozen=True)
+class ActionConsent:
+    schema_version: int
+    user: LocalUserBinding
+    confirmed_at_ns: int
+    approval_id: str
+    action_id: str
+    payload_digest: bytes
+@dataclass(frozen=True)
+class ConnectorScope:
+    schema_version: int
+    kind: ScopeKind
+    connector_id: str
+    operation_id: str
+    resource_id: str
+    desktop: DesktopPermissionPolicy | None
+    reversible: bool | None
+    wallet_minor_units: int | None
+    currency: str | None
+    depositor: LocalUserBinding | None
+@dataclass(frozen=True)
+class ExecutionBudget:
+    schema_version: int
+    budget_id: str
+    version: str
+    unit: str
+    limit: int
+    charge: int
+@dataclass(frozen=True)
+class TrustMemory:
+    schema_version: int
+    version: str
+    user: LocalUserBinding
+    scope: ConnectorScope
+    tier: ToolTier
+    revocation_version: int
+@dataclass(frozen=True, repr=False)
+class ExecutionCredential:
+    schema_version: int
+    issuance_id: str
+    executor_session_id: str
+    action_id: str
+    payload_digest: bytes
+    protocol: ObjectRef
+    permission_version: str
+    revocation_version: int
+    scope: ConnectorScope
+    budget: ExecutionBudget
+    issued_at_ns: int
+    expires_at_ns: int
+    tier: ToolTier
+    consent: ActionConsent | None
+    trust: TrustMemory | None
+@dataclass(frozen=True, repr=False)
+class ActionRequestV2:
+    schema_version: int
+    action_id: str
+    expires_at_ns: int
+    grant: ExecutionCredential
+    action_payload: bytes
+@dataclass(frozen=True)
+class GrowthCommandV2:
+    schema_version: int
+    command_id: str
+    kind: GrowthCommandKind
+    verdict: ReviewVerdict | None
+    review_record: ObjectRef | None
+    law_version: ObjectRef
+    history_prefix: str
+    alarm_id: str | None
+    replacement_law: ObjectRef | None
+    alarm_record: ObjectRef | None
+@dataclass(frozen=True)
+class GrowthManagementRequest:
+    schema_version: int
+    entry: ManagementEntry
+    user: LocalUserBinding
+    command: GrowthCommandV2
+    confirmation_id: str | None
+@dataclass(frozen=True)
+class TerminalRequestV2:
+    schema_version: int
+    request_id: str
+    session_id: str
+    protocol_version: int
+    kind: IngressKind
+    event: TerminalEvent | None
+    upload: ObjectUploadChunk | None
+    query: QueryV2 | None
+    approval: ApprovalDecisionV2 | None
+    cancel: OutputCancel | None
+    management: GrowthManagementRequest | None
+@dataclass(frozen=True)
+class PermissionResult:
+    schema_version: int
+    request_id: str
+    audit_record_id: str
+    management_commit: SystemMaintenanceRecord | None
+    denied: PermissionDenial | None
+    dispatch_record_id: str | None
+@dataclass(frozen=True, repr=False)
+class PermissionContext:
+    schema_version: int
+    local_execution: ExecutionCredential | None
+    remote_text: RemoteCognitiveReceipt | None
+@dataclass(frozen=True)
+class TerminalResponseV2:
+    schema_version: int
+    request_id: str
+    session_id: str
+    protocol_version: int
+    reply_to: IngressKind
+    kind: IngressResponseKind
+    receipt: ReceiptV2 | None
+    upload: ObjectUploadReceipt | None
+    query: QueryResultV2 | None
+    reason: IngressReason | None
+    management: PermissionResult | None
 @dataclass(frozen=True)
 class NatureAppraisalRecord:
     schema_version: int
@@ -1041,6 +1684,332 @@ class EventAttributesRecord:
     self_narrative: bool
     verifiable: bool
     source_key: str
+@dataclass(frozen=True)
+class SourceField:
+    schema_version: int
+    field_number: int
+    element: int | None
+@dataclass(frozen=True)
+class SourceLocation:
+    schema_version: int
+    source: RecordVersion
+    path: list[SourceField]
+    text: Utf8Range | None
+@dataclass(frozen=True)
+class SourceTransform:
+    schema_version: int
+    inputs: list[RecordVersion]
+    output: RecordVersion
+    rule: ObjectRef
+@dataclass(frozen=True)
+class SourceMetadataV2:
+    schema_version: int
+    derivation: Derivation
+    epistemic_type: EpistemicType
+    resolution_state: ResolutionState
+    representation_version: str
+    locations: list[SourceLocation]
+    roots: list[RecordVersion]
+    transformations: list[SourceTransform]
+    producer: ObjectRef
+    validity: ObjectRef
+    speaker: SpeakerAttribution | None
+    conversation: str | None
+@dataclass(frozen=True)
+class ConceptRole:
+    schema_version: int
+    role: str
+    node_kind: SemanticNodeKind
+    domain: ConceptRef | None
+    mandatory: bool
+@dataclass(frozen=True)
+class ConceptRevision:
+    schema_version: int
+    concept_id: str
+    lifecycle: ConceptLifecycle
+    previous: ObjectRef | None
+    governance: ObjectRef
+    grounding: list[SourceLocation]
+    label: TrilingualText | None
+    definition: TrilingualText | None
+    positive_examples: list[TrilingualText]
+    negative_examples: list[TrilingualText]
+    roles: list[ConceptRole]
+    allows_reported_text: bool
+    constraints: list[ObjectRef]
+@dataclass(frozen=True)
+class ConceptLink:
+    schema_version: int
+    origin: ConceptRef
+    target: ConceptRef
+    kind: str
+    basis: ObjectRef
+@dataclass(frozen=True)
+class ConceptRegistry:
+    schema_version: int
+    version: str
+    previous: ObjectRef | None
+    entries: list[ConceptRevision]
+    links: list[ConceptLink]
+    relation_kinds: list[str]
+    interaction_kinds: list[str]
+    edge_kinds: list[str]
+    aliases: list[ConceptLink]
+@dataclass(frozen=True)
+class RefV2:
+    schema_version: int
+    id: str
+    referent: ConceptRef | None
+    source: SourceMetadataV2
+@dataclass(frozen=True)
+class ClaimV2:
+    schema_version: int
+    id: str
+    predicate: ConceptRef
+    roles: list[RoleBinding]
+    polarity: bool
+    source: SourceMetadataV2
+    reported_text: SourceLocation
+    mode: ClaimModality
+    time_kind: ClaimTimeKind
+    time_fact: ObjectRef | None
+@dataclass(frozen=True)
+class ActV2:
+    schema_version: int
+    id: str
+    interaction_kind: str
+    source: SourceMetadataV2
+@dataclass(frozen=True)
+class SemanticGraphV2:
+    schema_version: int
+    id: str
+    edges: list[Edge]
+    references: list[RefV2]
+    statements: list[ClaimV2]
+    actions: list[ActV2]
+    registry: ObjectRef
+@dataclass(frozen=True)
+class TextAdapterEntry:
+    schema_version: int
+    payload_tag: str
+    payload_schema: int
+    path: list[SourceField]
+    predicate: ConceptRef
+    role: str
+@dataclass(frozen=True)
+class TextAdapterTable:
+    schema_version: int
+    registry: ObjectRef
+    entries: list[TextAdapterEntry]
+@dataclass(frozen=True)
+class StageCoverage:
+    schema_version: int
+    target: str
+    accepted: ObjectRef | None
+    mu: float | None
+    unknown_reason: str | None
+@dataclass(frozen=True)
+class StageAdoption:
+    schema_version: int
+    event: RecordVersion
+    interpretation: RecordVersion
+    stage: InterpretationStage
+    outcome: StageOutcome
+    binding: ProposalBindingV2
+    producer_resource: ObjectRef | None
+    candidate: ObjectRef | None
+    actual_output: ObjectRef | None
+    context: ObjectRef
+    definitions: list[ObjectRef]
+    isolation: ObjectRef
+    governance: ObjectRef
+    coverage: list[StageCoverage]
+    appraisal: NatureVector | None
+    reason: str | None
+    registry_after: ObjectRef | None
+    revision: RecordRelation | None
+    relations: RelationQueryReceipt | None
+    transaction_id: str
+    replaced_targets: list[str]
+    registry_before: ObjectRef
+    staged_revisions: list[ObjectRef]
+@dataclass(frozen=True)
+class AttributeRule:
+    schema_version: int
+    source: AttributeSource
+    event_kind: EventKind
+    payload_type: str
+    exogenous: bool
+    self_narrative: bool
+    growth_access: EvidenceAccess
+@dataclass(frozen=True)
+class AttributeRuleTable:
+    schema_version: int
+    rules: list[AttributeRule]
+@dataclass(frozen=True)
+class ScopedVerification:
+    schema_version: int
+    scope: SourceLocation
+    value: VerificationValue
+    evidence: list[RecordVersion]
+    reason: str | None
+    experiencer: str | None
+@dataclass(frozen=True)
+class VerificationRequirement:
+    schema_version: int
+    scope: SourceLocation
+    expected: VerificationValue
+@dataclass(frozen=True)
+class TargetPremise:
+    schema_version: int
+    target: ConceptRef
+    occurrence_scopes: list[VerificationRequirement]
+    truth_scopes: list[VerificationRequirement]
+    subjective_scopes: list[VerificationRequirement]
+    comparison: ObjectRef | None
+    definition: ObjectRef
+@dataclass(frozen=True)
+class EventAttributesRecordV2:
+    schema_version: int
+    event_id: str
+    rule_table_version: str
+    exogenous: bool
+    self_narrative: bool
+    source_key: str
+    event: RecordVersion
+    rule_table: ObjectRef
+    applied: AttributeRule
+    source: SourceMetadataV2
+    governance: ObjectRef
+    occurred: list[ScopedVerification]
+    truth: list[ScopedVerification]
+    subjective: list[ScopedVerification]
+    c_unit: RecordVersion | None
+    targets: list[TargetPremise]
+    inputs: list[RecordVersion]
+    person_mapping: ObjectRef | None
+    directed_to_n: RecordVersion | None
+    cause: RecordVersion | None
+    episode_phase_fact: ObjectRef | None
+    duration_fact: ObjectRef | None
+@dataclass(frozen=True)
+class Utf8Range:
+    schema_version: int
+    start: int
+    end: int
+@dataclass(frozen=True)
+class RecordVersion:
+    schema_version: int
+    branch_id: str
+    record_id: str
+    content: ObjectRef
+@dataclass(frozen=True)
+class QuoteLayer:
+    schema_version: int
+    source: RecordVersion
+    visible: Utf8Range
+    principal_id: str
+    identity_evidence: ObjectRef
+@dataclass(frozen=True)
+class SpeakerAttribution:
+    schema_version: int
+    layers: list[QuoteLayer]
+    governance: ObjectRef
+@dataclass(frozen=True)
+class RecordRelation:
+    schema_version: int
+    kind: RelationFact
+    origin: RecordVersion
+    target: RecordVersion
+    purpose: str
+    effective_commit: str
+    governance: ObjectRef
+@dataclass(frozen=True)
+class RelationSet:
+    schema_version: int
+    endpoint: RecordVersion
+    purpose: str
+    frontier: str
+    relations: list[RecordRelation]
+@dataclass(frozen=True)
+class RelationQueryReceipt:
+    schema_version: int
+    result: RelationSet
+    manifest: ObjectRef
+    expected_count: int
+@dataclass(frozen=True)
+class RemoteCognitiveReceipt:
+    schema_version: int
+    binding: CognitionBinding
+    provider: str
+    requested_model: str
+    returned_model: str | None
+    provider_revision: str | None
+    model_sha256: bytes | None
+    tokenizer_sha256: bytes | None
+    mode: RemoteTextMode
+    parameters: ObjectRef
+    format: ObjectRef
+    mapping: ObjectRef
+    meter: ObjectRef
+    capacity: int | None
+    output_reserve: int | None
+    input_manifest: ObjectRef
+    sent_request: ObjectRef | None
+    request_sha256: bytes | None
+    raw_response: ObjectRef | None
+    returned_text: ObjectRef | None
+    finish_reason: str | None
+    usage: ObjectRef | None
+    status: RemoteAttemptStatus
+    reason: str | None
+    adoption: TextAdoption
+    accepted_range: Utf8Range | None
+    product: CognitiveMaterial | None
+    review: ObjectRef | None
+    local_pause_reason: str | None
+@dataclass(frozen=True)
+class InternalActivityRecordV2:
+    schema_version: int
+    record_id: str
+    previous: ObjectRef | None
+    started_at_ns: int
+    finished_at_ns: int
+    local: CognitiveResultAndReceipt | None
+    remote: RemoteCognitiveReceipt | None
+@dataclass(frozen=True)
+class InternalActivityCommitV2:
+    schema_version: int
+    binding: CognitionBinding
+    interpretations: list[ObjectRef]
+    activity: InternalActivityRecordV2
+@dataclass(frozen=True)
+class CoreTransactionV4:
+    schema_version: int
+    staged_h: ObjectRef
+    staged_x: ObjectRef
+    staged_r: ObjectRef
+    staged_theta: ObjectRef
+    staged_l: ObjectRef
+    staged_q: ObjectRef
+    staged_u: ObjectRef
+    processed_position: int
+    anchor_time_ns: int
+    staged_concepts: list[ObjectRef]
+    accepted_results: list[ObjectRef]
+    audit_refs: list[ObjectRef]
+    staged_ledger: list[LedgerEntry]
+    event_binding: ProposalBindingV2 | None
+    activity_commit: InternalActivityCommitV2 | None
+@dataclass(frozen=True)
+class SpeechDeliveryV2:
+    schema_version: int
+    action_id: str
+    output_id: str
+    status: DeliveryStatus
+    channel: PresentationChannel
+    presentation: RecordVersion
+    delivered: list[Utf8Range]
 @dataclass(frozen=True)
 class EventEnvelope:
     schema_version: int
@@ -1313,10 +2282,19 @@ class UserRetraction:
     note: str | None
 @dataclass(frozen=True)
 class TouchObservation:
+    # Superseded (successor TouchObservationV2): P6-17; ADR 0025 §4.3, frozen bytes retained
     schema_version: int
     region: str
     kind: TouchKind
     speed: float | None
+@dataclass(frozen=True)
+class TouchObservationV2:
+    schema_version: int
+    region: str
+    speed: float | None
+    kind: TouchKindV2
+    contact_id: str | None
+    elapsed_ms: float | None
 @dataclass(frozen=True)
 class DesktopObservation:
     schema_version: int
@@ -1779,3 +2757,75 @@ class IngressRejection:
     recorded_at_ns: int
     reason: IngressReason
     request_kind: IngressKind | None
+@dataclass(frozen=True)
+class ThetaEstimatorParameters:
+    schema_version: int
+    law_id: str
+    numerics_id: str
+    baseline_prior: NatureVector
+    gain_prior: NatureScale
+    sigma_prior: NatureScale
+    tau_prior_s: NatureScale
+    baseline_weight: float
+    variance_weight: float
+    duration_weight: float
+    change_prior: float
+    change_prior_weight: float
+    change_min: float
+    gain_min: float
+    gain_max: float
+    recovery_min: float
+    recovery_max: float
+    detector_shift_sigma: float
+    detector_threshold: float
+    jump_notice: float
+    drift_run: int
+    drift_margin: float
+@dataclass(frozen=True)
+class ThetaRunningTime:
+    schema_version: int
+    origin_ns: int
+    event_ns: int
+    stopped_ns: int
+    running_ns: int
+@dataclass(frozen=True)
+class ThetaLastEvent:
+    schema_version: int
+    ordinal: int
+    time_ns: int
+    event_id: str
+@dataclass(frozen=True)
+class ThetaEstimatorState:
+    schema_version: int
+    weight: float
+    reaction_sum: list[float]
+    square_sum: list[float]
+    sigma: NatureScale
+    variance: list[float]
+    duration_log_sum: list[float]
+    duration_mass: list[float]
+    duration_log_mean: list[float]
+    zero_duration_count: list[int]
+    tau_s: NatureScale
+    run_sign: list[int]
+    run_start_ns: list[int]
+    detector_segment_count: int
+    detector_changes: int
+    detector_mean: list[float]
+    detector_positive: list[float]
+    detector_negative: list[float]
+    event_count: int
+    h: float
+    last_event: ThetaLastEvent | None
+    last_running_time: ThetaRunningTime | None
+    drift_sign: list[int]
+    drift_count: list[int]
+@dataclass(frozen=True)
+class ThetaSnapshotV2:
+    schema_version: int
+    revision: str
+    law_version: ObjectRef
+    values: ThetaValues
+    parameters: ThetaEstimatorParameters
+    parameters_digest: bytes
+    estimator: ThetaEstimatorState

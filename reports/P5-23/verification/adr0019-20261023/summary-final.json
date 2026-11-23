@@ -1,0 +1,107 @@
+{
+  "ac2_01": {
+    "id": "AC2-01",
+    "status": "passed",
+    "predicate": "pi_after > pi_before for W > 0 and S = 1",
+    "pi_before": 0.8857822109669752,
+    "pi_after": 0.8858475837751462,
+    "support": 1.0,
+    "weight": 0.01
+  },
+  "source_manifest_unchanged": true,
+  "checks": [
+    {
+      "name": "fmt-final",
+      "exit_code": 0,
+      "started_utc": "2026-10-23T19:30:57.8738532Z",
+      "ended_utc": "2026-10-23T19:30:58.2800891Z"
+    },
+    {
+      "name": "clippy-01",
+      "exit_code": 0,
+      "started_utc": "2026-10-23T19:30:58.7876487Z",
+      "ended_utc": "2026-10-23T19:31:10.6228285Z"
+    },
+    {
+      "name": "ruff-final",
+      "exit_code": 0,
+      "started_utc": "2026-10-23T19:31:49.0721389Z",
+      "ended_utc": "2026-10-23T19:31:49.2542548Z"
+    },
+    {
+      "name": "mypy-final",
+      "exit_code": 0,
+      "started_utc": "2026-10-23T19:32:09.647032Z",
+      "ended_utc": "2026-10-23T19:32:10.2917829Z"
+    },
+    {
+      "name": "workspace-01",
+      "exit_code": 0,
+      "started_utc": "2026-10-23T19:31:38.605406Z",
+      "ended_utc": "2026-10-23T19:55:08.3163178Z"
+    },
+    {
+      "name": "ac2-01-final",
+      "exit_code": 0,
+      "started_utc": "2026-10-23T19:55:50.9181019Z",
+      "ended_utc": "2026-10-23T19:55:53.2462824Z"
+    },
+    {
+      "name": "law-6-final",
+      "exit_code": 1,
+      "started_utc": "2026-10-23T19:56:02.9475966Z",
+      "ended_utc": "2026-10-23T19:56:04.6550545Z"
+    }
+  ],
+  "origin_main": "0b5412e95caab447c70148c473e544dbab28c57c",
+  "law_6": {
+    "id": "LAW-6",
+    "status": "failed",
+    "sequences": 3000,
+    "violations": 3064
+  },
+  "scalar": {
+    "vectors": {
+      "scalar": 2539894,
+      "share": 261581,
+      "fault": 7
+    },
+    "sha256": "5923d259457770fdf0848de413b798ed1482e42841d5f4239a6f9ae898487aa1"
+  },
+  "test_results": [
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 83 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 405.73s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 985.08s",
+    "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s",
+    "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s",
+    "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+  ],
+  "created_utc": "2026-10-23T19:57:07.8040642Z",
+  "events": {
+    "unique_events": 13339,
+    "fault_events": 5,
+    "sha256": "594ebd603733afbbd2c047525c323f0a9b8d9ec94a57be3ab858e08fa8ecfcf6"
+  }
+}

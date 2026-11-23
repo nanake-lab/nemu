@@ -1,0 +1,15 @@
+
+running 2 tests
+test law::fault_contract::full_g_must_report_nonfinite_support_ratio ... FAULT_CONTRACT_OBSERVATION r_min=5e-324 mu=1e0 p=7.5e-1 S=1 W=3.75 share=1 q=0.9 A=3.75 V=3.75 pi=0.4838709677419355 N=1
+FAILED
+test law::fault_contract::full_g_positive_support_underflow_diagnostic ... FAULT_CONTRACT_OBSERVATION r_min=1e0 mu=5e-324 p=7.5e-1 S=0 W=5 share=0 q=1 A=0 V=0 pi=0 N=1
+POSITIVE_SUPPORT_UNDERFLOW_RETURNED_OK=true
+ok
+
+failures:
+
+failures:
+    law::fault_contract::full_g_must_report_nonfinite_support_ratio
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 12 filtered out; finished in 0.00s
+

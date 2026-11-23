@@ -1,0 +1,63 @@
+[
+  {
+    "end": "2026-10-30T04:04:55.2565809Z",
+    "name": "export",
+    "cwd": "D:\\Dev\\nemu-wt\\P5-36",
+    "exit": 0,
+    "start": "2026-10-30T04:04:51.5742400Z",
+    "command": [
+      "cargo",
+      "test",
+      "--manifest-path",
+      "D:\\Dev\\nemu-wt\\P5-36\\core\\Cargo.toml",
+      "-p",
+      "core-kernel",
+      "--locked",
+      "dynamics::storage::tests::actual_states_all_prefixes_roundtrip_and_continuation",
+      "--",
+      "--exact",
+      "--nocapture"
+    ]
+  },
+  {
+    "end": "2026-10-30T04:11:17.1944326Z",
+    "name": "store",
+    "cwd": "D:\\Dev\\nemu-wt\\P5-36",
+    "exit": 0,
+    "start": "2026-10-30T04:04:55.2746501Z",
+    "command": [
+      "cargo",
+      "test",
+      "--manifest-path",
+      "D:\\Dev\\nemu-wt\\P5-36\\core\\Cargo.toml",
+      "-p",
+      "core-store",
+      "--locked",
+      "tests::theta::actual_states_commit_close_reopen",
+      "--",
+      "--exact",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "end": "2026-10-30T04:11:23.2528661Z",
+    "name": "restore-continue",
+    "cwd": "D:\\Dev\\nemu-wt\\P5-36",
+    "exit": 0,
+    "start": "2026-10-30T04:11:17.1967299Z",
+    "command": [
+      "cargo",
+      "test",
+      "--manifest-path",
+      "D:\\Dev\\nemu-wt\\P5-36\\core\\Cargo.toml",
+      "-p",
+      "core-kernel",
+      "--locked",
+      "dynamics::storage::tests::actual_states_all_prefixes_roundtrip_and_continuation",
+      "--",
+      "--exact",
+      "--nocapture"
+    ]
+  }
+]

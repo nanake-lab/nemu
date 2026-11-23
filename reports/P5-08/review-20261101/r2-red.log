@@ -1,0 +1,26 @@
+   Compiling core-runtime v0.0.0 (D:\Dev\nemu-wt\P5-08\core\crates\core-runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.56s
+     Running tests\review_theta.rs (D:/Dev/cache/cargo-target\debug\deps\review_theta-1f5d19e494fbae26.exe)
+
+running 3 tests
+
+thread 'review_r2_baseline_theta_rejects_zero_recovery_sigma_and_tau' (39400) panicked at crates\core-runtime\tests\review_theta.rs:47:9:
+invalid baseline theta accepted: field=0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'review_r2_c_output_rejects_zero_recovery_sigma_and_tau_before_fout' (39664) panicked at crates\core-runtime\tests\review_theta.rs:61:9:
+invalid C output crossed STAGED: field=0
+test review_r2_valid_c_output_still_reaches_staged ... ok
+test review_r2_baseline_theta_rejects_zero_recovery_sigma_and_tau ... FAILED
+test review_r2_c_output_rejects_zero_recovery_sigma_and_tau_before_fout ... FAILED
+
+failures:
+
+failures:
+    review_r2_baseline_theta_rejects_zero_recovery_sigma_and_tau
+    review_r2_c_output_rejects_zero_recovery_sigma_and_tau_before_fout
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+error: test failed, to rerun pass `-p core-runtime --test review_theta`
+exit_code=101

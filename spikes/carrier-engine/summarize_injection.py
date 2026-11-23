@@ -26,13 +26,13 @@ def table(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(stream, delimiter="\t"))
 
 
-def compare(first: Path, second: Path) -> dict[str, Any]:
+def compare(first: Path, second: Path, vocabulary: int = 151936) -> dict[str, Any]:
     one = {int(p.name.split("-")[0]): p for p in first.glob("*-logits.f32")}
     two = {int(p.name.split("-")[0]): p for p in second.glob("*-logits.f32")}
     positions = []
     for index in sorted(one.keys() & two.keys()):
         a, b = floats(one[index]), floats(two[index])
-        if a.shape != (151936,) or b.shape != a.shape:
+        if a.shape != (vocabulary,) or b.shape != a.shape:
             raise ValueError("Unexpected saved logit dimensions")
         delta = np.abs(a.astype("float64") - b.astype("float64"))
         positions.append({"step": index, "byteEqual": one[index].read_bytes() == two[index].read_bytes(),

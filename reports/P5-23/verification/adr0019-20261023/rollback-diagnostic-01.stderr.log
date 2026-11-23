@@ -1,0 +1,8 @@
+   Compiling core-kernel v0.0.0 (D:\Dev\nemu-wt\P5-23\core\crates\core-kernel)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.41s
+     Running unittests src\lib.rs (D:\Dev\cache\P5-23\target\debug\deps\core_kernel-4df46f3327408afa.exe)
+
+thread 'law::tests::adr0019::late_insertion_fault_discards_candidates_revisions_and_earlier_additions' (38380) panicked at crates\core-kernel\src\law\tests\adr0019.rs:218:5:
+late insertion returned Err(NumericFault("PrecisionExhaustedLP1"))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p core-kernel --lib`

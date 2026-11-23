@@ -1,0 +1,202 @@
+{
+  "recorded_at": "2026-10-30T00:17:18.4717293+08:00",
+  "main_baseline": "02948dc11aa1b43dc0dfe67c9da2e61676427385",
+  "main_checked": "02948dc11aa1b43dc0dfe67c9da2e61676427385",
+  "workspace_test_commit": "2019efd750ea18d28b9f1a6c45888ac7c3bb8ead",
+  "runtime_fmt_clippy_commit": "ac5aa7d302c6b9429d113621900fef7fa4f3cb70",
+  "workspace_exit": 0,
+  "runtime_exit": 0,
+  "fmt_exit": 0,
+  "clippy_exit": 0,
+  "runtime_tests": 20,
+  "runtime_doc_tests": 2,
+  "workspace_existing_ignored": 1,
+  "target_directory": "D:/Dev/cache/cargo-target",
+  "temporary_directory": "D:/Dev/cache/P5-08/tmp",
+  "sources": [
+    {
+      "path": "core/crates/core-runtime/Cargo.toml",
+      "sha256": "ae5655eb366600615ed171d7d3b00aab2eb60c867528e4ae5179efde39d0c4a6"
+    },
+    {
+      "path": "core/crates/core-runtime/src/binding.rs",
+      "sha256": "e0055407066d833788706c652a8057b322437678b1635857d52564a397a5b5eb"
+    },
+    {
+      "path": "core/crates/core-runtime/src/clock.rs",
+      "sha256": "16815d2d5a40fbe2cd7fb3160d828633987de5699d58a7fdba2cf1e07772a919"
+    },
+    {
+      "path": "core/crates/core-runtime/src/lib.rs",
+      "sha256": "4b9df0352dbb4deafd43fedd073b82ea765eb0164d79adfdda9ef3db88594fe9"
+    },
+    {
+      "path": "core/crates/core-runtime/src/pipeline.rs",
+      "sha256": "4e7b861c0f64e882a5f84bf10c7be3b0bf0634ce656b33ea407e1d03405e713e"
+    },
+    {
+      "path": "core/crates/core-runtime/src/stages.rs",
+      "sha256": "81a130ac104f1303df22ee22d6d12d8bcdddb859d78ed717aa0a537c2089d6b8"
+    },
+    {
+      "path": "core/crates/core-runtime/src/status.rs",
+      "sha256": "e78ef8fa27295c47ad2334df74a5afaa20c2471d4d19c5d8e151e939f6ae778e"
+    },
+    {
+      "path": "core/crates/core-runtime/src/store.rs",
+      "sha256": "bc20902553a553f6cf80ee7eec00a1a57cbad777fd2631d75f95412af3f256e1"
+    },
+    {
+      "path": "core/crates/core-runtime/src/validation.rs",
+      "sha256": "3a08bbaad05b8fb257b164e4608cf4bf18c18e7919b942578531c40f244b11e8"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/clock.rs",
+      "sha256": "52629e2f251403bfeb2c229cbe3e9ce7219e9069caed4294b94239d3b43b5c75"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/failures.rs",
+      "sha256": "56169c0800b9bdd52e3075f54cfd8f7da44fee4a4173044e5339b552acbda1ce"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/pipeline.rs",
+      "sha256": "077ff9305c2a7ce79e627158de6808d214752772d4e00378834568b85194e608"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/store.rs",
+      "sha256": "1bb92a1d89a2b4f449f87679f9a22e2dd09c2725c8e0f446c777f6db0e1632cb"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/common/adapters.rs",
+      "sha256": "02c809192d52ac95fb36c3c6d61f5010dbe1682ea27ac401b7b0912f0a670feb"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/common/mod.rs",
+      "sha256": "de3ad8e97a39bc1c4a96cc019dac371625de110f829fedde7b31547ccc831bfa"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/CoreTransactionV2.hex",
+      "sha256": "4b94a66cdd51725f44811eb7123ceca75f2b7dd0f89d2b7344b0df3ecc17df32"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/EventAttributesRecord.hex",
+      "sha256": "715870972ae456b9a61093a0de7bf8ec7b2199e9b670b764171b9c45c3cdd3e6"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/EventEnvelope.hex",
+      "sha256": "e0a98d8271edaf4b4b794699ccdff25c03ae8ae7124e6b4baf3f4d539f81ec19"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/FactProjection.hex",
+      "sha256": "347b94018cc1e7563bcf260ced6ed8c19a05739efac370efd386b307bd73d63d"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/FastStateSnapshotV2.hex",
+      "sha256": "b76fce2b29792119fd302ebd1fcd7705522e309669023a98b605e3931080cb67"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/LawVersion.hex",
+      "sha256": "dc0480b89bb2a12aeb10838ad2700aeee3064b71d3ad84459edd5a3afb8cddb2"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/LedgerEntry.hex",
+      "sha256": "5fedf5e4e1fd8e76f7ad49884923000da49c7d00051e392a8ad8c9d331408244"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/LineageHeaderV2.hex",
+      "sha256": "f776a2a70724514ec1c72fe616e0103d541241fbbf584a0a49cc3b8ed057226b"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/ModulationEnvelopeV2.hex",
+      "sha256": "540a6853187d2e7b10fdb372854b18e2c27b8eb3de0518e0feb392899e48af34"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/NatureAppraisalRecord.hex",
+      "sha256": "0f42776e7c1d925784725462ada6cd1482d90bc32912eb5eaf02242ebb768a1a"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/ProposalBindingV2.hex",
+      "sha256": "07922a48d915c4c1167a50d25a8c40086db471866507eaaee7b9fb586b2147f9"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/README.md",
+      "sha256": "b9b872f312b7138aaf6b9c6ee642eb0867c5ea92b8188bb21c96a6cda4ed4d33"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/RSnapshotV3.hex",
+      "sha256": "82788ba67cef5f5655f6d990d27241f9efd77f9eb83d3822501ab61584651371"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/SemanticGraph.hex",
+      "sha256": "8140ee1d50ef7f47ec73d014a047e26c46a5ab1e177d965f3b706ce61c8dfee3"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/SituationMatchRecord.hex",
+      "sha256": "a6d50baee055b667791b2110a37af53eddff9401f37225e1f21a80f1108d70c6"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/TendencyV3.hex",
+      "sha256": "2b32de51eca27b0820a3fe15ac955d6c10ef0bb95a1a23687b194ed0088f00b6"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/ThetaSnapshot.hex",
+      "sha256": "ab825de117d93ec59838e205f35940ba035e0b3639553853c8e348a96af61bf6"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/UserText.hex",
+      "sha256": "f2ca6d49dc1eec3e554b91ac2c92e638c3155d35662bd747e5165a8b56e9fd3f"
+    },
+    {
+      "path": "core/crates/core-runtime/tests/fixtures/VersionedEnvironmentV2.hex",
+      "sha256": "c854f32e35bfba5aa50555608067a0a3e18a4439f92d14ced95fa770ef5bcd7f"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "reports/P5-08/validation/clippy-01.log",
+      "sha256": "6adbba5b49f948100a738c1d0a432fa93caf2e909c13ba745ab2bcf32fb77fe8"
+    },
+    {
+      "path": "reports/P5-08/validation/clippy-02.log",
+      "sha256": "91ef277dbde1b61c276d31c4f2a9ab0e94480dfaa8947c918498516b45d4aac7"
+    },
+    {
+      "path": "reports/P5-08/validation/clippy-final.log",
+      "sha256": "60c00860040bb5c7079db0fd75b88b510ae97f5764cceccb4dd854c4c6094712"
+    },
+    {
+      "path": "reports/P5-08/validation/fixture-provenance.json",
+      "sha256": "1b6ccfc493686165fe67395567eb037d15dbd8194afc14dc5bdeffbe56c8817d"
+    },
+    {
+      "path": "reports/P5-08/validation/fmt-02.log",
+      "sha256": "a9f58776a09b5dac438049683f24bf85764e0ff8e7455952456165c68c158627"
+    },
+    {
+      "path": "reports/P5-08/validation/fmt-final.log",
+      "sha256": "a9f58776a09b5dac438049683f24bf85764e0ff8e7455952456165c68c158627"
+    },
+    {
+      "path": "reports/P5-08/validation/runtime-02.log",
+      "sha256": "5697e1a02d06e81a6efad479b94e282b0e2b6b94c40e72b56d6a08c7be1295a6"
+    },
+    {
+      "path": "reports/P5-08/validation/runtime-03.log",
+      "sha256": "a10afa7f991c2a675f105b1fc3eed8b5b4a949acec1337ea04435beb803f234b"
+    },
+    {
+      "path": "reports/P5-08/validation/runtime-04.log",
+      "sha256": "5d294e8da4a95887d64a1b9e99bc79e7b2dbf541d66b8913d4f3fa789c46af3d"
+    },
+    {
+      "path": "reports/P5-08/validation/runtime-final.log",
+      "sha256": "e9c846de29c56d87ab1fc2dde4e345e433f93af0718934dc72f2623b3c3f883e"
+    },
+    {
+      "path": "reports/P5-08/validation/workspace-test-01.log",
+      "sha256": "774003eeccf94c0029b163bdd539dd4442633025d79c624572f9d23be92d0c22"
+    }
+  ],
+  "source_hash_domain": "Working-copy bytes; source Git blobs may use normalized line endings",
+  "evidence_hash_domain": "Raw file bytes preserved by reports/P5-08/.gitattributes"
+}

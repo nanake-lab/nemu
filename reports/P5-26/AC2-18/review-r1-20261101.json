@@ -1,0 +1,16 @@
+{
+  "task": "P5-26",
+  "check": "AC2-18",
+  "status": "incomplete",
+  "mechanism_status": "passed",
+  "source_head": "bcd035d91af73b6c7dd9ce5bb195bff5c082b042",
+  "evidence": "../verification/r1-20261101-test-final/stdout.log",
+  "regression_before_fix": "../verification/r1-20261101-red/stdout.log",
+  "boundary": "手动恢复不解除成长计算故障，暂停期间不能执行 Repair；正式 H/L 事务与 GROWTH_PAUSED 合同仍未接线。",
+  "law_scope": "conditional legacy only; ADR0032 successor laws and superseded AC2-25/COG-A12 claims excluded",
+  "test_name_search_keys": [
+    "r1_inconsistent_then_pause_resume_keeps_last_good_state",
+    "r1_math_fault_then_pause_resume_keeps_last_good_state",
+    "r1_repair_requires_current_fault_binding_and_resumed_growth"
+  ]
+}

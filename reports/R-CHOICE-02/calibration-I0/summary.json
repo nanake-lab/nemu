@@ -1,0 +1,401 @@
+{
+  "overall": {
+    "choice_valid": 0.9895833333333334,
+    "final_valid": 0.625,
+    "correct": 0.375,
+    "choice_mass_ok": 0.9618055555555556,
+    "final_mass_ok": 0.5833333333333334
+  },
+  "family_accuracy": {
+    "admission": 0.75,
+    "budget": 0.0,
+    "heating": 0.25,
+    "sorting": 0.5
+  },
+  "layout_accuracy": {
+    "0": 0.4583333333333333,
+    "1": 0.2916666666666667,
+    "2": 0.4583333333333333,
+    "3": 0.2916666666666667,
+    "4": 0.4583333333333333,
+    "5": 0.2916666666666667,
+    "6": 0.4583333333333333,
+    "7": 0.2916666666666667,
+    "8": 0.4583333333333333,
+    "9": 0.2916666666666667,
+    "10": 0.4583333333333333,
+    "11": 0.2916666666666667
+  },
+  "answer_mapping_accuracy": {
+    "False": 0.4583333333333333,
+    "True": 0.2916666666666667
+  },
+  "per_case": {
+    "cal-sorting-0": {
+      "family": "sorting",
+      "missing": false,
+      "p_mean": 0.6130277882834326,
+      "p_min": 4.006731651837631e-05,
+      "p_max": 0.9999999999518572,
+      "p_range": 0.9999599326353388,
+      "middle_layouts": 2,
+      "actions": {
+        "relevant": 8,
+        "submit": 3,
+        "irrelevant": 1
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-heating-0": {
+      "family": "heating",
+      "missing": false,
+      "p_mean": 0.49958972376300126,
+      "p_min": 3.338964701763411e-18,
+      "p_max": 0.9999999999973677,
+      "p_range": 0.9999999999973677,
+      "middle_layouts": 0,
+      "actions": {
+        "INVALID": 1,
+        "submit": 5,
+        "relevant": 6
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-admission-0": {
+      "family": "admission",
+      "missing": false,
+      "p_mean": 1.6814494628938771e-15,
+      "p_min": 4.5661423570213945e-19,
+      "p_max": 1.6349068476421526e-14,
+      "p_range": 1.6348611862185825e-14,
+      "middle_layouts": 0,
+      "actions": {
+        "submit": 12
+      },
+      "oracle_correct": 1.0
+    },
+    "cal-budget-0": {
+      "family": "budget",
+      "missing": false,
+      "p_mean": 0.6161745544571571,
+      "p_min": 8.395717162649369e-08,
+      "p_max": 0.9999999999999964,
+      "p_range": 0.9999999160428248,
+      "middle_layouts": 5,
+      "actions": {
+        "relevant": 8,
+        "submit": 4
+      },
+      "oracle_correct": 0.0
+    },
+    "cal-sorting-1": {
+      "family": "sorting",
+      "missing": false,
+      "p_mean": 0.7758255322191404,
+      "p_min": 1.130035877793969e-09,
+      "p_max": 0.999999999988002,
+      "p_range": 0.9999999988579662,
+      "middle_layouts": 3,
+      "actions": {
+        "relevant": 9,
+        "submit": 2,
+        "irrelevant": 1
+      },
+      "oracle_correct": 0.0
+    },
+    "cal-heating-1": {
+      "family": "heating",
+      "missing": false,
+      "p_mean": 0.38554755539381036,
+      "p_min": 6.506241168143297e-16,
+      "p_max": 0.9999994147931229,
+      "p_range": 0.9999994147931223,
+      "middle_layouts": 3,
+      "actions": {
+        "submit": 7,
+        "relevant": 5
+      },
+      "oracle_correct": 0.0
+    },
+    "cal-admission-1": {
+      "family": "admission",
+      "missing": false,
+      "p_mean": 0.9999998642225282,
+      "p_min": 0.9999984026841234,
+      "p_max": 0.9999999999999998,
+      "p_range": 1.5973158763449291e-06,
+      "middle_layouts": 0,
+      "actions": {
+        "relevant": 12
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-budget-1": {
+      "family": "budget",
+      "missing": false,
+      "p_mean": 0.8617218756328506,
+      "p_min": 0.00012230293694292935,
+      "p_max": 0.9999999999999718,
+      "p_range": 0.9998776970630289,
+      "middle_layouts": 1,
+      "actions": {
+        "relevant": 10,
+        "INVALID": 1,
+        "submit": 1
+      },
+      "oracle_correct": 0.0
+    },
+    "cal-sorting-2": {
+      "family": "sorting",
+      "missing": false,
+      "p_mean": 0.7519487578635119,
+      "p_min": 2.7017274301545937e-09,
+      "p_max": 0.9999999999991829,
+      "p_range": 0.9999999972974555,
+      "middle_layouts": 0,
+      "actions": {
+        "relevant": 9,
+        "submit": 2,
+        "irrelevant": 1
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-heating-2": {
+      "family": "heating",
+      "missing": false,
+      "p_mean": 0.3931467531757574,
+      "p_min": 2.194649366639962e-18,
+      "p_max": 0.9999999999330169,
+      "p_range": 0.9999999999330169,
+      "middle_layouts": 2,
+      "actions": {
+        "submit": 6,
+        "INVALID": 1,
+        "relevant": 5
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-admission-2": {
+      "family": "admission",
+      "missing": false,
+      "p_mean": 5.143229684392605e-12,
+      "p_min": 2.906303802536125e-18,
+      "p_max": 6.169800964554656e-11,
+      "p_range": 6.169800673924276e-11,
+      "middle_layouts": 0,
+      "actions": {
+        "submit": 12
+      },
+      "oracle_correct": 1.0
+    },
+    "cal-budget-2": {
+      "family": "budget",
+      "missing": false,
+      "p_mean": 0.6640279135914684,
+      "p_min": 8.344776306983326e-09,
+      "p_max": 0.9999999999999978,
+      "p_range": 0.9999999916552215,
+      "middle_layouts": 6,
+      "actions": {
+        "relevant": 8,
+        "submit": 4
+      },
+      "oracle_correct": 0.0
+    },
+    "cal-sorting-3": {
+      "family": "sorting",
+      "missing": false,
+      "p_mean": 0.866631728212133,
+      "p_min": 1.3029033943561083e-07,
+      "p_max": 0.9999999999999551,
+      "p_range": 0.9999998697096157,
+      "middle_layouts": 1,
+      "actions": {
+        "relevant": 10,
+        "irrelevant": 1,
+        "submit": 1
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-heating-3": {
+      "family": "heating",
+      "missing": false,
+      "p_mean": 0.21707610267497793,
+      "p_min": 6.381320555169871e-16,
+      "p_max": 0.9999990127460349,
+      "p_range": 0.9999990127460342,
+      "middle_layouts": 1,
+      "actions": {
+        "submit": 9,
+        "relevant": 3
+      },
+      "oracle_correct": 0.0
+    },
+    "cal-admission-3": {
+      "family": "admission",
+      "missing": false,
+      "p_mean": 0.5356244709319244,
+      "p_min": 6.200812685198724e-16,
+      "p_max": 0.9999999999854705,
+      "p_range": 0.9999999999854698,
+      "middle_layouts": 2,
+      "actions": {
+        "submit": 5,
+        "relevant": 7
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-budget-3": {
+      "family": "budget",
+      "missing": false,
+      "p_mean": 0.9104462057920935,
+      "p_min": 0.08548331166731472,
+      "p_max": 0.9999999999999958,
+      "p_range": 0.9145166883326811,
+      "middle_layouts": 2,
+      "actions": {
+        "relevant": 11,
+        "submit": 1
+      },
+      "oracle_correct": 0.0
+    },
+    "cal-sorting-4": {
+      "family": "sorting",
+      "missing": true,
+      "p_mean": 0.9887202561714303,
+      "p_min": 0.8674316867396914,
+      "p_max": 0.9999999999999951,
+      "p_range": 0.13256831326030372,
+      "middle_layouts": 1,
+      "actions": {
+        "relevant": 12
+      },
+      "oracle_correct": 1.0
+    },
+    "cal-heating-4": {
+      "family": "heating",
+      "missing": true,
+      "p_mean": 0.9229515395012697,
+      "p_min": 0.07542152603285682,
+      "p_max": 0.9999999999999998,
+      "p_range": 0.924578473967143,
+      "middle_layouts": 1,
+      "actions": {
+        "relevant": 11,
+        "submit": 1
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-admission-4": {
+      "family": "admission",
+      "missing": true,
+      "p_mean": 0.9183680433146727,
+      "p_min": 0.020460903337126257,
+      "p_max": 0.9999999999999993,
+      "p_range": 0.9795390966628731,
+      "middle_layouts": 0,
+      "actions": {
+        "relevant": 11,
+        "submit": 1
+      },
+      "oracle_correct": 1.0
+    },
+    "cal-budget-4": {
+      "family": "budget",
+      "missing": true,
+      "p_mean": 0.9999987158563027,
+      "p_min": 0.9999847283837847,
+      "p_max": 1.0,
+      "p_range": 1.527161621528439e-05,
+      "middle_layouts": 0,
+      "actions": {
+        "relevant": 12
+      },
+      "oracle_correct": 0.0
+    },
+    "cal-sorting-5": {
+      "family": "sorting",
+      "missing": true,
+      "p_mean": 0.9887202561714303,
+      "p_min": 0.8674316867396914,
+      "p_max": 0.9999999999999951,
+      "p_range": 0.13256831326030372,
+      "middle_layouts": 1,
+      "actions": {
+        "relevant": 12
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-heating-5": {
+      "family": "heating",
+      "missing": true,
+      "p_mean": 0.9165526026409496,
+      "p_min": 4.865552787654468e-07,
+      "p_max": 0.9999999999999998,
+      "p_range": 0.999999513444721,
+      "middle_layouts": 0,
+      "actions": {
+        "relevant": 11,
+        "submit": 1
+      },
+      "oracle_correct": 0.0
+    },
+    "cal-admission-5": {
+      "family": "admission",
+      "missing": true,
+      "p_mean": 0.9015194731504323,
+      "p_min": 1.1808544994821095e-05,
+      "p_max": 0.9999999999999845,
+      "p_range": 0.9999881914549896,
+      "middle_layouts": 1,
+      "actions": {
+        "relevant": 11,
+        "submit": 1
+      },
+      "oracle_correct": 0.5
+    },
+    "cal-budget-5": {
+      "family": "budget",
+      "missing": true,
+      "p_mean": 0.9999798517779681,
+      "p_min": 0.9997582275098452,
+      "p_max": 1.0,
+      "p_range": 0.00024177249015477909,
+      "middle_layouts": 0,
+      "actions": {
+        "relevant": 12
+      },
+      "oracle_correct": 0.0
+    }
+  },
+  "missing_groups": {
+    "relevant_label": {
+      "A": 0.8721123840654468,
+      "B": 0.9999852761827762,
+      "C": 0.991706366720948
+    },
+    "relevant_position": {
+      "0": 0.8722719527109745,
+      "1": 0.9999852761827762,
+      "2": 0.9915467980754202
+    }
+  },
+  "missing_with_middle": 4,
+  "middle_families": [
+    "admission",
+    "heating",
+    "sorting"
+  ],
+  "checks": {
+    "format": false,
+    "mass": false,
+    "overall_capability": false,
+    "family_capability": false,
+    "layout_capability": false,
+    "answer_mapping_capability": false,
+    "dynamic_range": true
+  },
+  "usable": false,
+  "n_scenarios": 24,
+  "n_rows": 288
+}

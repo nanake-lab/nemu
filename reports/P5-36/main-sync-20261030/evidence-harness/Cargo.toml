@@ -1,0 +1,12 @@
+[package]
+name = "p5-24-evidence-verifier"
+version = "0.0.0"
+edition = "2024"
+[workspace]
+[lib]
+path = "harness.rs"
+[dependencies]
+core-kernel = { path = "D:/Dev/nemu-wt/P5-36/core/crates/core-kernel" }
+core-types = { path = "D:/Dev/nemu-wt/P5-36/core/crates/core-types" }
+[dev-dependencies]
+serde_json = "=1.0.154"

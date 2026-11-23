@@ -142,25 +142,28 @@ impl<L: LineageKind> Store<L> {
     }
 }
 
-pub(crate) fn verify_audit(
+pub(crate) fn verify_audit_from(
     db: &rusqlite::Connection,
     limits: core_types::contract::Limits,
-) -> Result<()> {
+    start: u64,
+) -> Result<u64> {
     if crate::migration::format(db)? == 1 {
-        return Ok(());
+        return Ok(0);
     }
-    let mut stmt =
-        db.prepare("SELECT position,record FROM ingress_rejections ORDER BY position")?;
-    for (expected, row) in stmt
-        .query_map([], |r| Ok((r.get::<_, i64>(0)?, r.get::<_, Vec<u8>>(1)?)))?
-        .enumerate()
-    {
+    let mut stmt = db.prepare(
+        "SELECT position,record FROM ingress_rejections WHERE position >= ?1 ORDER BY position",
+    )?;
+    let mut expected = start;
+    for row in stmt.query_map([integer(start)?], |r| {
+        Ok((r.get::<_, i64>(0)?, r.get::<_, Vec<u8>>(1)?))
+    })? {
         let (position, bytes) = row?;
         let record = IngressRejection::from_canonical(&bytes, limits)?;
         require(
-            unsigned(position)? == expected as u64 && record.position.0 == expected as u64,
+            unsigned(position)? == expected && record.position.0 == expected,
             "rejection audit has a gap or wrong position",
         )?;
+        expected += 1;
     }
-    Ok(())
+    Ok(expected)
 }

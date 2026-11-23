@@ -14,6 +14,7 @@ mod objects;
 mod reader;
 mod retention_versions;
 mod terminal_ingress;
+mod theta;
 fn normal() -> DegradedStatus {
     DegradedStatus {
         schema_version: 1,
@@ -84,6 +85,11 @@ fn rehearsal(root: &TemporaryRoot, name: &str) -> Store<Rehearsal> {
     Store::<Rehearsal>::create_temporary(root, name, header::<Rehearsal>(), "test-branch", config())
         .unwrap()
 }
+fn format_two(root: &TemporaryRoot, name: &str) -> Store<Rehearsal> {
+    drop(rehearsal(root, name));
+    Store::<Rehearsal>::migrate_temporary(root, name, config(), 2).unwrap();
+    Store::<Rehearsal>::open_temporary(root, name, config()).unwrap()
+}
 fn unpersisted_event<L: LineageKind>(
     store: &mut Store<L>,
     n: u64,
@@ -144,7 +150,7 @@ fn proposal<L: LineageKind>(
         )
         .unwrap()
         .revision;
-        binding.theta_revision = ThetaSnapshot::from_canonical(
+        binding.theta_revision = ThetaSnapshotV2::from_canonical(
             &store.objects.read(&old.staged_theta).unwrap(),
             config().encoding,
         )
@@ -166,13 +172,13 @@ fn proposal<L: LineageKind>(
     binding.read_set.dedup();
     let ticket = store.bind(binding.clone()).unwrap();
     let mut pins = vec![leaf];
+    let mut theta: ThetaSnapshotV2 = fixture();
     let law: LawVersion = with_refs(pins[0].reference());
-    pins.push(store.prepare(&law, "1").unwrap());
+    pins.push(store.prepare(&law, &theta.parameters.law_id).unwrap());
     let mut r: RSnapshotV3 = with_refs(pins[0].reference());
     r.revision = format!("r-{n}");
     r.law_version = pins[1].reference().clone();
     pins.push(store.prepare_r(&r).unwrap());
-    let mut theta: ThetaSnapshot = with_refs(pins[0].reference());
     theta.revision = format!("theta-{n}");
     theta.law_version = pins[1].reference().clone();
     pins.push(store.prepare(&theta, "1").unwrap());
@@ -217,4 +223,14 @@ fn advance<L: LineageKind>(
     let (ticket, value, _pins) = proposal(store, &e);
     let staged = store.stage(ticket, value).unwrap();
     store.commit(cap, staged, normal()).unwrap()
+}
+
+mod consistency;
+
+mod format_three;
+
+fn seed_format_two(s: &mut Store<Rehearsal>) {
+    let e = event(s, 0);
+    let (_, old, _pins) = proposal(s, &e);
+    legacy_v2::publish(s, &e, &old, None);
 }

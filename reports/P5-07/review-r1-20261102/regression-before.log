@@ -1,0 +1,209 @@
+
+ RUN  v5.0.4 D:/Dev/nemu-wt/P5-07
+
+ ❯ executors/codex-bridge/src/base/replay.test.ts (27 tests | 10 failed) 261ms
+   ❯ P5-07 synthetic app-server replay (27)
+     × R1-P1 accepts user-message lifecycle observed in the real P0-08 success audit 19ms
+     × R1-P1 does not classify non-tool plan as a tool 5ms
+     × R1-P1 does not classify non-tool hookPrompt as a tool 3ms
+     × R1-P1 does not classify non-tool contextCompaction as a tool 4ms
+     × R1-P1 does not classify non-tool enteredReviewMode as a tool 6ms
+     × R1-P1 does not classify non-tool exitedReviewMode as a tool 2ms
+     × R1-P2 latches the first failure before later notifications in the same batch 7ms
+     × R1-P3 returns the original offending frame and association without logging it 4ms
+     × R1-P3 retains rejected inventory including unparsed fields: {"data":[{"name":"unexpected","tools":["synthetic_tool"]}],"nextCursor":null,"marker":"retain"} 2ms
+     × R1-P3 retains rejected inventory including unparsed fields: {} 4ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P1 accepts user-message lifecycle observed in the real P0-08 success audit
+Error: tool_surface_violation
+ ❯ listen executors/codex-bridge/src/base/bridge.ts:139:88
+    137|           const parsed = item.parse(event.params);
+    138|           checkIdentity(parsed.threadId, parsed.turnId);
+    139|           if (!['agentMessage', 'reasoning'].includes(String(parsed.it…
+       |                                                                                        ^
+    140|           if (event.method === 'item/completed' && parsed.item.type ==…
+    141|             (parsed.item.phase === 'final_answer' || parsed.item.phase…
+ ❯ RpcClient.accept executors/codex-bridge/src/base/rpc.ts:45:48
+ ❯ Replay.<anonymous> executors/codex-bridge/src/base/rpc.ts:27:57
+ ❯ Replay.emit executors/codex-bridge/src/base/replay.test.ts:30:37
+ ❯ executors/codex-bridge/src/base/replay.test.ts:41:49
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P1 does not classify non-tool plan as a tool
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P1 does not classify non-tool hookPrompt as a tool
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P1 does not classify non-tool contextCompaction as a tool
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P1 does not classify non-tool enteredReviewMode as a tool
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P1 does not classify non-tool exitedReviewMode as a tool
+AssertionError: promise rejected "Error: tool_surface_violation" instead of resolving
+ ❯ executors/codex-bridge/src/base/replay.test.ts:85:75
+     83|     const replay = new Replay();
+     84|     replay.frames.unshift({ method: 'item/started', params: { threadId…
+     85|     const { bridge } = await setup(replay); await expect(bridge.run(in…
+       |                                                                           ^
+     86|   });
+     87|   it('R1-P2 latches the first failure before later notifications in th…
+
+Caused by: Error: tool_surface_violation
+ ❯ listen executors/codex-bridge/src/base/bridge.ts:139:88
+ ❯ RpcClient.accept executors/codex-bridge/src/base/rpc.ts:45:48
+ ❯ Replay.<anonymous> executors/codex-bridge/src/base/rpc.ts:27:57
+ ❯ Replay.emit executors/codex-bridge/src/base/replay.test.ts:30:37
+ ❯ executors/codex-bridge/src/base/replay.test.ts:41:49
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P2 latches the first failure before later notifications in the same batch
+AssertionError: expected [ '{"ok":true}' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "{\"ok\":true}",
++ ]
+
+ ❯ executors/codex-bridge/src/base/replay.test.ts:93:20
+     91|     const { bridge } = await setup(replay); const deltas: string[] = […
+     92|     await expect(bridge.run({ ...input, onDelta: (text) => deltas.push…
+     93|     expect(deltas).toEqual([]); expect(replay.closed).toBe(true);
+       |                    ^
+     94|     expect(replay.sent.filter((r) => r.method === 'turn/start')).toHav…
+     95|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P3 returns the original offending frame and association without logging it
+AssertionError: expected Error: tool_surface_violation to match object { cause: { threadId: 'th1', …(2) } }
+
+- Expected
++ Received
+
+- {
+-   "cause": {
+-     "evidence": {
+-       "method": "rawResponseItem/completed",
+-       "params": {
+-         "item": {
+-           "arguments": "{\"synthetic\":true}",
+-           "call_id": "call1",
+-           "name": "blocked",
+-           "type": "function_call",
+-         },
+-         "threadId": "th1",
+-         "turnId": "tu1",
+-       },
+-     },
+-     "threadId": "th1",
+-     "turnId": "tu1",
+-   },
++ Error {
++   "message": "tool_surface_violation",
+  }
+
+ ❯ executors/codex-bridge/src/base/replay.test.ts:102:35
+    100|     replay.frames.unshift(frame);
+    101|     const { bridge } = await setup(replay);
+    102|     await expect(bridge.run(input)).rejects.toMatchObject({ cause: { t…
+       |                                   ^
+    103|     expect(JSON.stringify(bridge.usage())).not.toContain('synthetic');
+    104|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P3 retains rejected inventory including unparsed fields: {"data":[{"name":"unexpected","tools":["synthetic_tool"]}],"nextCursor":null,"marker":"retain"}
+AssertionError: expected Error: mcp_inventory_not_empty to match object { cause: { …(4) } }
+
+- Expected
++ Received
+
+- {
+-   "cause": {
+-     "evidence": {
+-       "data": [
+-         {
+-           "name": "unexpected",
+-           "tools": [
+-             "synthetic_tool",
+-           ],
+-         },
+-       ],
+-       "marker": "retain",
+-       "nextCursor": null,
+-     },
+-     "method": "mcpServerStatus/list",
+-     "threadId": "th1",
+-     "turnId": "tu1",
+-   },
++ Error {
++   "message": "mcp_inventory_not_empty",
+  }
+
+ ❯ executors/codex-bridge/src/base/replay.test.ts:108:35
+    106|     const replay = new Replay(); replay.afterInventory = inventory;
+    107|     const { bridge } = await setup(replay);
+    108|     await expect(bridge.run(input)).rejects.toMatchObject({ cause: {
+       |                                   ^
+    109|       method: 'mcpServerStatus/list', threadId: 'th1', turnId: 'tu1', …
+    110|     } });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  executors/codex-bridge/src/base/replay.test.ts > P5-07 synthetic app-server replay > R1-P3 retains rejected inventory including unparsed fields: {}
+AssertionError: expected ZodError: [
+  {
+    "expected": "array",
+… { …(2) } to match object { cause: { …(4) } }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+- {
+-   "cause": {
+-     "evidence": {},
+-     "method": "mcpServerStatus/list",
+-     "threadId": "th1",
+-     "turnId": "tu1",
+-   },
++ ZodError {
++   "message": "[
++   {
++     \"expected\": \"array\",
++     \"code\": \"invalid_type\",
++     \"path\": [
++       \"data\"
++     ],
++     \"message\": \"Invalid input: expected array, received undefined\"
++   },
++   {
++     \"expected\": \"string\",
++     \"code\": \"invalid_type\",
++     \"path\": [
++       \"nextCursor\"
++     ],
++     \"message\": \"Invalid input: expected string, received undefined\"
++   }
++ ]",
++   "name": "ZodError",
+  }
+
+ ❯ executors/codex-bridge/src/base/replay.test.ts:108:35
+    106|     const replay = new Replay(); replay.afterInventory = inventory;
+    107|     const { bridge } = await setup(replay);
+    108|     await expect(bridge.run(input)).rejects.toMatchObject({ cause: {
+       |                                   ^
+    109|       method: 'mcpServerStatus/list', threadId: 'th1', turnId: 'tu1', …
+    110|     } });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  10 failed | 17 passed (27)
+   Start at  11:30:41
+   Duration  1.93s (import 63%, tests 20%, transform 14%, worker 3%)
+

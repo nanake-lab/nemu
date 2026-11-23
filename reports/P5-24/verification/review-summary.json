@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "run": "review-final-test",
+      "exit_code": 0,
+      "baseline": "740c2289c2a86f400580b4e6d4aa07654c08ace6",
+      "final_source_hashes_match": true
+    },
+    {
+      "run": "review-final-clippy",
+      "exit_code": 0,
+      "baseline": "740c2289c2a86f400580b4e6d4aa07654c08ace6",
+      "final_source_hashes_match": true
+    },
+    {
+      "run": "review-final-format",
+      "exit_code": 0,
+      "baseline": "740c2289c2a86f400580b4e6d4aa07654c08ace6",
+      "final_source_hashes_match": true
+    }
+  ],
+  "red_original_implementation_matches_reviewed_head": [
+    "core/crates/core-kernel/src/evidence/assemble.rs",
+    "core/crates/core-kernel/src/evidence/candidates.rs",
+    "core/crates/core-kernel/src/evidence/eligibility.rs",
+    "core/crates/core-kernel/src/evidence/groups.rs",
+    "core/crates/core-kernel/src/evidence/mod.rs",
+    "core/crates/core-kernel/src/evidence/records.rs",
+    "core/crates/core-kernel/src/evidence/types.rs"
+  ],
+  "red_result": "30 passed, 2 failed",
+  "final_result": "40 passed, 0 failed, 0 ignored",
+  "baseline": "740c2289c2a86f400580b4e6d4aa07654c08ace6",
+  "merge_result": "Already up to date; no rebase or force push",
+  "workspace_tests": "previous workspace-test-01 retained; compiled workspace inputs unchanged; evidence independently recompiled",
+  "production_acceptance": "blocked; see BLOCKED.md",
+  "workspace_format": "review-workspace-format-01 passed; main/workspace source unchanged"
+}

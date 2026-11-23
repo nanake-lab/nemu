@@ -1,0 +1,58 @@
+[
+  {
+    "name": "cpu-environment",
+    "program": "D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe",
+    "arguments": [
+      "-c",
+      "import torch; assert torch.version.cuda is None; print(torch.__version__)"
+    ],
+    "startedUtc": "2026-11-01T16:01:38.2496364+00:00",
+    "endedUtc": "2026-11-01T16:01:49.8991092+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "convert-bf16",
+    "program": "D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe",
+    "arguments": [
+      "D:\\Dev\\cache\\P0-10\\source\\llama.cpp-b11669\\convert_hf_to_gguf.py",
+      "D:\\Dev\\cache\\P0-12\\models\\Qwen--Qwen3.5-4B\\851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "--outfile",
+      "D:\\Dev\\cache\\P0-12\\gguf\\carrier-BF16.gguf",
+      "--outtype",
+      "bf16",
+      "--no-mtp"
+    ],
+    "startedUtc": "2026-11-01T16:01:49.9115994+00:00",
+    "endedUtc": "2026-11-01T16:03:13.7613014+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "quantize-Q4_K_M",
+    "program": "D:\\Dev\\cache\\P0-10\\llama.cpp\\b11669-cpu-quantize\\llama-quantize.exe",
+    "arguments": [
+      "D:\\Dev\\cache\\P0-12\\gguf\\carrier-BF16.gguf",
+      "D:\\Dev\\cache\\P0-12\\gguf\\carrier-Q4_K_M.gguf",
+      "Q4_K_M",
+      "4"
+    ],
+    "startedUtc": "2026-11-01T16:03:13.7664078+00:00",
+    "endedUtc": "2026-11-01T16:04:27.7829816+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "convert-mmproj",
+    "program": "D:/Dev/cache/P0-10/convert-venv/Scripts/python.exe",
+    "arguments": [
+      "D:\\Dev\\cache\\P0-10\\source\\llama.cpp-b11669\\convert_hf_to_gguf.py",
+      "D:\\Dev\\cache\\P0-12\\models\\Qwen--Qwen3.5-4B\\851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "--mmproj",
+      "--outfile",
+      "D:\\Dev\\cache\\P0-12\\gguf\\mmproj-F16.gguf",
+      "--outtype",
+      "f16"
+    ],
+    "startedUtc": "2026-11-01T16:04:27.7860195+00:00",
+    "endedUtc": "2026-11-01T16:04:40.2737355+00:00",
+    "exitCode": 0
+  }
+]

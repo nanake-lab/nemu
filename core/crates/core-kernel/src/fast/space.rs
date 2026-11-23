@@ -130,12 +130,16 @@ pub(super) fn learned_rate(d: &[f64; 4], lambda: &[f64; 4]) -> Result<f64, FastE
 
 /// One coordinate of Φ_x: x + (−expm1(−λΔ)) · (rest − x), then clipped.
 /// For Δ = 0 the factor is exactly 0, so the result equals x bit for bit.
-fn relax(x: f64, rest: f64, rate: f64, delta_s: f64) -> Result<f64, FastError> {
+pub(super) fn time_pull(rate: f64, delta_s: f64) -> Result<f64, FastError> {
     let elapsed = rate * delta_s;
     if !elapsed.is_finite() {
         return Err(FastError::NonFinite("lambda_delta"));
     }
-    let pull = -libm::expm1(-elapsed);
+    Ok(-libm::expm1(-elapsed))
+}
+
+fn relax(x: f64, rest: f64, rate: f64, delta_s: f64) -> Result<f64, FastError> {
+    let pull = time_pull(rate, delta_s)?;
     let value = x + pull * (rest - x);
     if !value.is_finite() {
         return Err(FastError::NonFinite("projection"));

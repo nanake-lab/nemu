@@ -48,10 +48,35 @@ message UserRetraction {
 
 // @message echo.touch | CONTRACTS 4.2
 message TouchObservation {
+  // @superseded TouchObservationV2 | P6-17; ADR 0025 §4.3, frozen bytes retained
   optional uint32 schema_version = 1; // required
   optional string region = 2; // required,nonempty
   optional TouchKind kind = 3; // required
   optional double speed = 4; // optional,min=0
+}
+
+// P6-17 / ADR 0025 §4.3: old enum codes keep their meanings; dwell uses new codes.
+// A separate enum leaves the frozen TouchKind and its old decoder unchanged.
+enum TouchKindV2 { TOUCH_V2_UNSPECIFIED = 0; TOUCH_V2_CLICK = 1; TOUCH_V2_DOUBLE_CLICK = 2; TOUCH_V2_PAT = 3; TOUCH_V2_DRAG_START = 4; TOUCH_V2_DRAG_END = 5; TOUCH_V2_FLING = 6; DWELL_START = 7; DWELL_CONTINUE = 8; DWELL_END = 9; }
+
+// @message echo.touch-v2 | ADR 0025 §4.3; V2-72; v2.0 §4 EV2, §8; ADR 0033 §3
+message TouchObservationV2 {
+  // @supersedes TouchObservation
+  // The changed enum moves to field 5; never reinterpret old field 3.
+  // @rules {"common":["region","speed"],"cases":{"1":{},"2":{},"3":{},"4":{},"5":{},"6":{},"7":{"required":["contact_id","elapsed_ms"]},"8":{"required":["contact_id","elapsed_ms"]},"9":{"required":["contact_id","elapsed_ms"]}}}
+  // All three dwell reports share a contact_id for this contact (EV2 / V2-72).
+  // It is distinct from each report's stable_source_key. A new contact gets a new ID.
+  // elapsed_ms is cumulative since contact began, not time since the last report.
+  // Non-dwell kinds do not carry these fields; drag correlation remains undecided.
+  // ADR 0033 §3: dwell is touch, not an automatic avoidance command.
+  // Thresholds, reporting cadence and event conversion belong to P6-02.
+  reserved 3;
+  optional uint32 schema_version = 1; // required
+  optional string region = 2; // required,nonempty
+  optional double speed = 4; // optional,min=0
+  optional TouchKindV2 kind = 5; // required
+  optional string contact_id = 6; // optional,nonempty
+  optional double elapsed_ms = 7; // optional,min=0
 }
 
 // @message echo.desktop-observation | CONTRACTS 4.2

@@ -1,0 +1,11 @@
+   Compiling gateway v0.0.0 (D:\Dev\nemu-wt\P5-03\core\crates\gateway)
+error[E0560]: struct `core_types::generated::RSnapshotV2` has no field named `evidence_groups`
+  --> crates\gateway\src\tests\runtime_fixture.rs:88:9
+   |
+88 |         evidence_groups: vec![],
+   |         ^^^^^^^^^^^^^^^ `core_types::generated::RSnapshotV2` does not have this field
+   |
+   = note: all struct fields are already assigned
+
+For more information about this error, try `rustc --explain E0560`.
+error: could not compile `gateway` (lib test) due to 1 previous error

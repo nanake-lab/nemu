@@ -1,0 +1,14 @@
+[
+  {
+    "exit": 0,
+    "command": "cargo fmt --all -- --check"
+  },
+  {
+    "exit": 0,
+    "command": "cargo clippy --workspace --all-targets --locked -- -D warnings"
+  },
+  {
+    "exit": 0,
+    "command": "cargo test -p core-types --locked"
+  }
+]
