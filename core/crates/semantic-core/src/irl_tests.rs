@@ -362,3 +362,32 @@ fn registered_transcript_and_unsupported_touch_follow_different_stage_paths() {
         Err(Fault::UnsupportedSource)
     ));
 }
+
+#[test]
+fn a_provisional_ref_needs_an_id_already_in_the_pinned_registry() {
+    let mut w = World::new();
+    let mut existing = w.registry.entries[0].clone();
+    existing.concept_id = "existing-provisional".into();
+    existing.lifecycle = ConceptLifecycle::CONCEPT_LIFE_PROVISIONAL;
+    w.registry.entries.push(existing);
+    let registry_ref = reference(&w.registry);
+    w.graph.registry = registry_ref.clone();
+    w.binding.environment.registry = registry_ref.clone();
+    w.adapter.registry = registry_ref;
+    w.mapping = reference(&w.adapter);
+    w.binding.read_set = vec![w.mapping.clone(), w.context.clone()];
+    w.graph.references[0].source.resolution_state = ResolutionState::PROVISIONAL;
+    w.graph.references[0].referent = Some(ConceptRef {
+        schema_version: 1,
+        concept_id: "existing-provisional".into(),
+        registry_version: w.registry.version.clone(),
+    });
+    let stage = w.run(&w.candidate()).unwrap();
+    assert_eq!(stage.adoption.outcome, StageOutcome::STAGE_OUTCOME_VALID);
+    assert!(stage.adoption.registry_after.is_none());
+    w.graph.references[0].referent.as_mut().unwrap().concept_id = "invented".into();
+    assert_eq!(
+        w.run(&w.candidate()).unwrap().adoption.outcome,
+        StageOutcome::STAGE_OUTCOME_FAILED
+    );
+}

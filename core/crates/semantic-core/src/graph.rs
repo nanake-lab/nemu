@@ -1,5 +1,5 @@
-//! Structural subgraph extraction. The result is never an ACCEPTED IRL graph:
-//! opaque spans and predicate operands still need their missing formal schemas.
+//! Structural preflight for legacy SemanticGraph. New proposals enter through
+//! irl::stage_irl with the ADR 0048 graph and a scoped source reader.
 use crate::{Fault, Result, wire};
 use core_types::{WireMessage, contract::Limits, generated::*};
 use std::collections::{BTreeMap, BTreeSet};
@@ -125,7 +125,7 @@ pub fn preflight(
             match (&n.referent, n.metadata.resolution_state) {
                 (None, ResolutionState::UNRESOLVED) => Ok(()),
                 (Some(c), ResolutionState::EXISTING) => concept(snapshot, c),
-                // Provisional IDs cannot be authenticated without the staged registry contract.
+                // This legacy snapshot has no versioned concept revision to authenticate a provisional ID.
                 (_, ResolutionState::PROVISIONAL) => Err(Fault::MissingContract),
                 _ => Err(Fault::Concept),
             }

@@ -76,7 +76,6 @@ pub fn stage_irl(
         || dispatch.facts.history_prefix != b.base_commit
         || event.record_id != b.event_id
         || event.branch_id != b.branch_id
-        || dispatch.interpretation_id == event.record_id
         || proposed.registry != b.environment.registry
         || candidate.producer != dispatch.producer
         || candidate.producer_version != dispatch.producer_version

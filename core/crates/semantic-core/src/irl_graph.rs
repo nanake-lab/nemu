@@ -127,8 +127,14 @@ pub(super) fn govern(
             }
         }
         for n in &part.references {
-            if n.referent.is_some() != (n.source.resolution_state == ResolutionState::EXISTING) {
-                return Err(Fault::Concept);
+            match (&n.referent, n.source.resolution_state) {
+                (None, ResolutionState::UNRESOLVED) | (Some(_), ResolutionState::EXISTING) => {}
+                (Some(id), ResolutionState::PROVISIONAL)
+                    if registry.entries.iter().any(|r| {
+                        r.concept_id == id.concept_id
+                            && r.lifecycle == ConceptLifecycle::CONCEPT_LIFE_PROVISIONAL
+                    }) => {}
+                _ => return Err(Fault::Concept),
             }
         }
         for meta in part
@@ -156,10 +162,6 @@ pub(super) fn govern(
                 }
                 let facts = view.source_facts(root).map_err(|_| Fault::Source)?;
                 crate::graph::epistemic(meta.epistemic_type, meta.derivation, &facts)?;
-            }
-            if meta.resolution_state == ResolutionState::PROVISIONAL {
-                // Creation/atomic publication of new IDs is in the registry PR.
-                return Err(Fault::Concept);
             }
         }
         check_graph_sources(
