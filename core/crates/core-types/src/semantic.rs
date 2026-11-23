@@ -15,6 +15,8 @@ use crate::generated::{
 use std::cmp::Ordering;
 
 mod cognition;
+mod evidence;
+pub use evidence::*;
 mod permission;
 pub use permission::check_permission_message;
 mod speak_think;

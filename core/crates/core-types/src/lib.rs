@@ -171,6 +171,7 @@ mod codec_cache_tests {
         semantic::check_j_message(name, &value, limits)?;
         semantic::check_permission_message(name, &value, limits)?;
         semantic::check_speak_think_message(name, &value, limits)?;
+        semantic::check_semantic_evidence_message(name, &value, limits)?;
         Ok(
             json!({"ok":true,"value":value,"canonical":hex(&schema.encode_canonical(name,&value,limits)?),"protobuf":hex(&schema.encode_protobuf(name,&value,limits)?),"digest":schema.digest(name,&value,limits)?}),
         )
