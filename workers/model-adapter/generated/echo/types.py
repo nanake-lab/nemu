@@ -260,6 +260,44 @@ class PermissionDenial(IntEnum):
     VERSION_REVOKED = 7
     CONSENT_MISSING = 8
     UNRESOLVED_DISPATCH = 9
+class ConceptLifecycle(IntEnum):
+    CONCEPT_LIFE_PROVISIONAL = 1
+    CONCEPT_LIFE_STABLE = 2
+    CONCEPT_LIFE_DEPRECATED = 3
+class SemanticNodeKind(IntEnum):
+    SEM_NODE_REF = 1
+    SEM_NODE_CLAIM = 2
+    SEM_NODE_ACT = 3
+class ClaimTimeKind(IntEnum):
+    CLAIM_TIME_NOT_APPLICABLE = 1
+    CLAIM_TIME_UNKNOWN = 2
+    CLAIM_TIME_FACT = 3
+class ClaimModality(IntEnum):
+    CLAIM_MODE_REPORTED = 1
+class InterpretationStage(IntEnum):
+    INTERPRET_STAGE_IRL = 1
+    INTERPRET_STAGE_A = 2
+    INTERPRET_STAGE_M = 3
+class StageOutcome(IntEnum):
+    STAGE_OUTCOME_VALID = 1
+    STAGE_OUTCOME_PARTIAL = 2
+    STAGE_OUTCOME_FAILED = 3
+class VerificationValue(IntEnum):
+    VERIFY_VALUE_TRUE = 1
+    VERIFY_VALUE_FALSE = 2
+    VERIFY_VALUE_UNKNOWN = 3
+class AttributeSource(IntEnum):
+    ATTR_SOURCE_HUMAN_RESPONSE = 1
+    ATTR_SOURCE_DIRECTED_TOUCH = 2
+    ATTR_SOURCE_ABSENCE = 3
+    ATTR_SOURCE_DESKTOP = 4
+    ATTR_SOURCE_SELF_RESULT = 5
+    ATTR_SOURCE_INTERNAL = 6
+    ATTR_SOURCE_MAINTENANCE = 7
+class EvidenceAccess(IntEnum):
+    EVIDENCE_ACCESS_NONE = 1
+    EVIDENCE_ACCESS_TARGET_DEPENDENT = 2
+    EVIDENCE_ACCESS_COMPARISON_REQUIRED = 3
 class RemoteAttemptStatus(IntEnum):
     REMOTE_ATTEMPT_COMPLETED = 1
     REMOTE_ATTEMPT_TRUNCATED = 2
@@ -1646,6 +1684,214 @@ class EventAttributesRecord:
     self_narrative: bool
     verifiable: bool
     source_key: str
+@dataclass(frozen=True)
+class SourceField:
+    schema_version: int
+    field_number: int
+    element: int | None
+@dataclass(frozen=True)
+class SourceLocation:
+    schema_version: int
+    source: RecordVersion
+    path: list[SourceField]
+    text: Utf8Range | None
+@dataclass(frozen=True)
+class SourceTransform:
+    schema_version: int
+    inputs: list[RecordVersion]
+    output: RecordVersion
+    rule: ObjectRef
+@dataclass(frozen=True)
+class SourceMetadataV2:
+    schema_version: int
+    derivation: Derivation
+    epistemic_type: EpistemicType
+    resolution_state: ResolutionState
+    representation_version: str
+    locations: list[SourceLocation]
+    roots: list[RecordVersion]
+    transformations: list[SourceTransform]
+    producer: ObjectRef
+    validity: ObjectRef
+    speaker: SpeakerAttribution | None
+    conversation: str | None
+@dataclass(frozen=True)
+class ConceptRole:
+    schema_version: int
+    role: str
+    node_kind: SemanticNodeKind
+    domain: ConceptRef | None
+    mandatory: bool
+@dataclass(frozen=True)
+class ConceptRevision:
+    schema_version: int
+    concept_id: str
+    lifecycle: ConceptLifecycle
+    previous: ObjectRef | None
+    governance: ObjectRef
+    grounding: list[SourceLocation]
+    label: TrilingualText | None
+    definition: TrilingualText | None
+    positive_examples: list[TrilingualText]
+    negative_examples: list[TrilingualText]
+    roles: list[ConceptRole]
+    allows_reported_text: bool
+    constraints: list[ObjectRef]
+@dataclass(frozen=True)
+class ConceptLink:
+    schema_version: int
+    origin: ConceptRef
+    target: ConceptRef
+    kind: str
+    basis: ObjectRef
+@dataclass(frozen=True)
+class ConceptRegistry:
+    schema_version: int
+    version: str
+    previous: ObjectRef | None
+    entries: list[ConceptRevision]
+    links: list[ConceptLink]
+    relation_kinds: list[str]
+    interaction_kinds: list[str]
+    edge_kinds: list[str]
+    aliases: list[ConceptLink]
+@dataclass(frozen=True)
+class RefV2:
+    schema_version: int
+    id: str
+    referent: ConceptRef | None
+    source: SourceMetadataV2
+@dataclass(frozen=True)
+class ClaimV2:
+    schema_version: int
+    id: str
+    predicate: ConceptRef
+    roles: list[RoleBinding]
+    polarity: bool
+    source: SourceMetadataV2
+    reported_text: SourceLocation
+    mode: ClaimModality
+    time_kind: ClaimTimeKind
+    time_fact: ObjectRef | None
+@dataclass(frozen=True)
+class ActV2:
+    schema_version: int
+    id: str
+    interaction_kind: str
+    source: SourceMetadataV2
+@dataclass(frozen=True)
+class SemanticGraphV2:
+    schema_version: int
+    id: str
+    edges: list[Edge]
+    references: list[RefV2]
+    statements: list[ClaimV2]
+    actions: list[ActV2]
+    registry: ObjectRef
+@dataclass(frozen=True)
+class TextAdapterEntry:
+    schema_version: int
+    payload_tag: str
+    payload_schema: int
+    path: list[SourceField]
+    predicate: ConceptRef
+    role: str
+@dataclass(frozen=True)
+class TextAdapterTable:
+    schema_version: int
+    registry: ObjectRef
+    entries: list[TextAdapterEntry]
+@dataclass(frozen=True)
+class StageCoverage:
+    schema_version: int
+    target: str
+    accepted: ObjectRef | None
+    mu: float | None
+    unknown_reason: str | None
+@dataclass(frozen=True)
+class StageAdoption:
+    schema_version: int
+    event: RecordVersion
+    interpretation: RecordVersion
+    stage: InterpretationStage
+    outcome: StageOutcome
+    binding: ProposalBindingV2
+    producer_resource: ObjectRef | None
+    candidate: ObjectRef | None
+    actual_output: ObjectRef | None
+    context: ObjectRef
+    definitions: list[ObjectRef]
+    isolation: ObjectRef
+    governance: ObjectRef
+    coverage: list[StageCoverage]
+    appraisal: NatureVector | None
+    reason: str | None
+    registry_after: ObjectRef | None
+    revision: RecordRelation | None
+    relations: RelationQueryReceipt | None
+    transaction_id: str
+    replaced_targets: list[str]
+    registry_before: ObjectRef
+    staged_revisions: list[ObjectRef]
+@dataclass(frozen=True)
+class AttributeRule:
+    schema_version: int
+    source: AttributeSource
+    event_kind: EventKind
+    payload_type: str
+    exogenous: bool
+    self_narrative: bool
+    growth_access: EvidenceAccess
+@dataclass(frozen=True)
+class AttributeRuleTable:
+    schema_version: int
+    rules: list[AttributeRule]
+@dataclass(frozen=True)
+class ScopedVerification:
+    schema_version: int
+    scope: SourceLocation
+    value: VerificationValue
+    evidence: list[RecordVersion]
+    reason: str | None
+    experiencer: str | None
+@dataclass(frozen=True)
+class VerificationRequirement:
+    schema_version: int
+    scope: SourceLocation
+    expected: VerificationValue
+@dataclass(frozen=True)
+class TargetPremise:
+    schema_version: int
+    target: ConceptRef
+    occurrence_scopes: list[VerificationRequirement]
+    truth_scopes: list[VerificationRequirement]
+    subjective_scopes: list[VerificationRequirement]
+    comparison: ObjectRef | None
+    definition: ObjectRef
+@dataclass(frozen=True)
+class EventAttributesRecordV2:
+    schema_version: int
+    event_id: str
+    rule_table_version: str
+    exogenous: bool
+    self_narrative: bool
+    source_key: str
+    event: RecordVersion
+    rule_table: ObjectRef
+    applied: AttributeRule
+    source: SourceMetadataV2
+    governance: ObjectRef
+    occurred: list[ScopedVerification]
+    truth: list[ScopedVerification]
+    subjective: list[ScopedVerification]
+    c_unit: RecordVersion | None
+    targets: list[TargetPremise]
+    inputs: list[RecordVersion]
+    person_mapping: ObjectRef | None
+    directed_to_n: RecordVersion | None
+    cause: RecordVersion | None
+    episode_phase_fact: ObjectRef | None
+    duration_fact: ObjectRef | None
 @dataclass(frozen=True)
 class Utf8Range:
     schema_version: int
