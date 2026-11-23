@@ -4,20 +4,24 @@ use super::*;
 /// Require a real registered online row first, so two empty projections cannot
 /// pass. Python's standard sqlite3 is only an offline read-only test probe.
 #[test]
-#[ignore = "not_run: P5-14/#238; the later merging PR runs this against the combined index writer"]
 fn rebuilt_outbox_rows_equal_online_rows() {
     let mut f = Fixture::new(false, false);
     f.registered();
     let head = f.store.base_commit().unwrap();
+    let current = f.store.current().unwrap().unwrap();
+    let q: CognitionState = f.store.reader().unwrap().read(&current.staged_q).unwrap();
+    assert_eq!(q.inflight.len(), 1);
+    let expected = q.inflight[0].canonical_bytes(limits()).unwrap();
     let check = r#"import sqlite3, sys
 with sqlite3.connect('file:store.sqlite?mode=ro', uri=True) as db:
-    rows = db.execute('SELECT action_id FROM outbox WHERE commit_id=? ORDER BY action_id', (sys.argv[1],)).fetchall()
-    assert rows == [('a',)], rows
+    rows = db.execute('SELECT commit_id, action_id, reference FROM outbox ORDER BY commit_id, action_id').fetchall()
+    assert rows == [(sys.argv[1], 'a', bytes.fromhex(sys.argv[2]))], rows
 "#;
     let probe = std::process::Command::new("python")
         .args(["-I", "-c", check])
         .current_dir(f.store.path())
         .arg(head)
+        .arg(core_types::scalar::hex(&expected))
         .output()
         .unwrap();
     assert!(
