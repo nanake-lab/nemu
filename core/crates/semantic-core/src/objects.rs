@@ -13,22 +13,35 @@ pub fn check_object<T: WireMessage>(
     limits: Limits,
 ) -> Result<()> {
     wire(reference, limits)?;
-    let bytes = wire(value, limits)?;
+    if reference != &object_ref(value, &reference.resource_version, limits)? {
+        return Err(Fault::Object);
+    }
+    Ok(())
+}
+
+pub(crate) fn object_ref<T: WireMessage>(
+    value: &T,
+    version: &str,
+    limits: Limits,
+) -> Result<ObjectRef> {
+    if T::SUPERSEDED || !T::PERSISTABLE {
+        return Err(Fault::Object);
+    }
     let schema = Schema::builtin().map_err(|_| Fault::Schema)?;
     let descriptor = schema.message(T::NAME).map_err(|_| Fault::Schema)?;
     let json = serde_json::to_value(value).map_err(|_| Fault::Schema)?;
     let digest = schema
         .digest(T::NAME, &json, limits)
         .map_err(|_| Fault::Schema)?;
-    if T::SUPERSEDED
-        || !T::PERSISTABLE
-        || reference.object_type != descriptor.tag
-        || reference.byte_length.0 != bytes.len() as u64
-        || core_types::scalar::hex(&reference.digest.0) != digest
-    {
-        return Err(Fault::Object);
-    }
-    Ok(())
+    Ok(ObjectRef {
+        schema_version: 1,
+        object_type: descriptor.tag.clone(),
+        resource_version: version.into(),
+        byte_length: core_types::scalar::DecimalU64(wire(value, limits)?.len() as u64),
+        digest: core_types::scalar::HexBytes(
+            core_types::scalar::unhex(&digest).map_err(|_| Fault::Object)?,
+        ),
+    })
 }
 
 /// Expected binding comes from the core's immutable dispatch snapshot, not the
@@ -63,9 +76,10 @@ pub fn check_candidate(
 }
 
 /// A deterministic adapter can validate and preserve existing typed payloads.
-/// Producing graph predicates/spans needs a registered adapter mapping (blocked).
+/// These payload preflights do not register graph predicates or confer action authority.
 pub enum StructuredPayload<'a> {
     Touch(&'a TouchObservation),
+    TouchV2(&'a TouchObservationV2),
     Desktop(&'a DesktopObservation),
     Execution(&'a BodyActionResult),
     Delivery(&'a SpeechDelivery),
@@ -83,6 +97,7 @@ pub fn check_structured(
     }
     match payload {
         StructuredPayload::Touch(v) => check_object(&event.payload_ref, v, limits),
+        StructuredPayload::TouchV2(v) => check_object(&event.payload_ref, v, limits),
         StructuredPayload::Desktop(v) => check_object(&event.payload_ref, v, limits),
         StructuredPayload::Execution(v) => {
             if event.action_id.as_deref() != Some(v.action_id.as_str()) {

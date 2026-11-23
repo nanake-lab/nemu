@@ -44,38 +44,46 @@ fn metadata(m: &SourceMetadata, snapshot: &Snapshot<'_>) -> Result<()> {
     }
     for id in &m.source_refs {
         let actual = source(snapshot, id)?;
-        if actual.epistemic == EpistemicType::MODEL_INFERENCE
-            && !matches!(
-                m.epistemic_type,
-                EpistemicType::MODEL_INFERENCE | EpistemicType::EPISTEMIC_UNKNOWN
-            )
-        {
-            return Err(Fault::Epistemic);
-        }
-        // Inference and quotations can never be promoted to a user's assertion.
-        let downgrade = m.epistemic_type == EpistemicType::EPISTEMIC_UNKNOWN
-            || m.epistemic_type == EpistemicType::QUOTATION
-            || (m.epistemic_type == EpistemicType::MODEL_INFERENCE
-                && m.derivation == Derivation::INFERRED);
-        if m.epistemic_type != actual.epistemic && !downgrade {
-            return Err(Fault::Epistemic);
-        }
-        if m.derivation == Derivation::INFERRED
-            && m.epistemic_type != EpistemicType::MODEL_INFERENCE
-            && m.epistemic_type != EpistemicType::EPISTEMIC_UNKNOWN
-        {
-            return Err(Fault::Epistemic);
-        }
-        if actual.self_narrative
-            && matches!(
-                m.epistemic_type,
-                EpistemicType::USER_ASSERTION
-                    | EpistemicType::USER_SELF_REPORT
-                    | EpistemicType::TOOL_OUTPUT
-            )
-        {
-            return Err(Fault::Epistemic);
-        }
+        epistemic(m.epistemic_type, m.derivation, actual)?;
+    }
+    Ok(())
+}
+
+pub(crate) fn epistemic(
+    proposed: EpistemicType,
+    derivation: Derivation,
+    actual: &SourceFacts,
+) -> Result<()> {
+    if actual.epistemic == EpistemicType::MODEL_INFERENCE
+        && !matches!(
+            proposed,
+            EpistemicType::MODEL_INFERENCE | EpistemicType::EPISTEMIC_UNKNOWN
+        )
+    {
+        return Err(Fault::Epistemic);
+    }
+    // Inference and quotations can never be promoted to a user's assertion.
+    let downgrade = proposed == EpistemicType::EPISTEMIC_UNKNOWN
+        || proposed == EpistemicType::QUOTATION
+        || (proposed == EpistemicType::MODEL_INFERENCE && derivation == Derivation::INFERRED);
+    if proposed != actual.epistemic && !downgrade {
+        return Err(Fault::Epistemic);
+    }
+    if derivation == Derivation::INFERRED
+        && proposed != EpistemicType::MODEL_INFERENCE
+        && proposed != EpistemicType::EPISTEMIC_UNKNOWN
+    {
+        return Err(Fault::Epistemic);
+    }
+    if actual.self_narrative
+        && matches!(
+            proposed,
+            EpistemicType::USER_ASSERTION
+                | EpistemicType::USER_SELF_REPORT
+                | EpistemicType::TOOL_OUTPUT
+        )
+    {
+        return Err(Fault::Epistemic);
     }
     Ok(())
 }

@@ -1,12 +1,11 @@
 #![forbid(unsafe_code)]
-//! Pure, bounded semantic preflight. No model, clock, storage or commit capability.
-//!
-//! Success here is structural validity, NOT ACCEPTED IRL or evidence eligibility.
-//! Source spans, registry persistence and authenticated provenance need the formal
-//! contracts listed in reports/P5-06/BLOCKED.md. No API fabricates those objects.
+//! Deterministic IRL governance. Only the outer transaction publishes a stage.
+//! Legacy graph and record preflight remains available for the original DTOs.
 
 pub mod aliases;
 pub mod graph;
+pub mod irl;
+mod irl_graph;
 pub mod objects;
 pub mod records;
 pub mod source_rules;
@@ -27,6 +26,7 @@ pub enum Fault {
     AliasCycle,
     Numeric,
     MissingContract,
+    UnsupportedSource,
 }
 pub type Result<T> = std::result::Result<T, Fault>;
 
@@ -67,6 +67,8 @@ pub(crate) fn wire<T: WireMessage>(value: &T, limits: Limits) -> Result<Vec<u8>>
 
 #[cfg(test)]
 mod adapter_tests;
+#[cfg(test)]
+mod irl_tests;
 #[cfg(test)]
 mod record_tests;
 #[cfg(test)]

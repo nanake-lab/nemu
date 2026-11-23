@@ -52,7 +52,15 @@ fn typed_adapters_preserve_actual_structured_payloads_and_reject_substitution() 
             );
         }};
     }
-    check!(TouchObservation, Touch);
+    let retired: TouchObservation = fixture();
+    let mut legacy: EventEnvelope = fixture();
+    legacy.payload_ref = reference(&retired);
+    legacy.payload_digest = legacy.payload_ref.digest.clone();
+    assert_eq!(
+        check_structured(&legacy, StructuredPayload::Touch(&retired), limits()),
+        Err(Fault::Object)
+    );
+    check!(TouchObservationV2, TouchV2);
     check!(DesktopObservation, Desktop);
     check!(SpeechDelivery, Delivery);
     check!(CodexSessionObservation, Codex);
