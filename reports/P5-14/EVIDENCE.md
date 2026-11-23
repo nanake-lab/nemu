@@ -49,3 +49,9 @@ cargo test --release --workspace --locked --no-fail-fast
 | [merged-d6fd-workspace.log.gz](https://github.com/nanake-lab/nemu-evidence/blob/ade06c86ee2800535d3fe24de18eec9d13a98071/P5-14/merged-d6fd-workspace.log.gz) | `2d631ba8c1e44e5e7f44bce02983f2a93de5878e4604c6b11d84bbc6c49ae854` | 全工作区 release 测试，含 Windows SYS01 |
 | [merged-d6fd-status.txt.gz](https://github.com/nanake-lab/nemu-evidence/blob/ade06c86ee2800535d3fe24de18eec9d13a98071/P5-14/merged-d6fd-status.txt.gz) | `dbbcec330994eba5a5f418a81762b2c3c4db93667f05e9dc83370cbceafa9dc5` | 实际提交、工具链与退出码 |
 | [merged-d6fd-ubuntu-attempt1.json.gz](https://github.com/nanake-lab/nemu-evidence/blob/ade06c86ee2800535d3fe24de18eec9d13a98071/P5-14/merged-d6fd-ubuntu-attempt1.json.gz) | `cf639a6c1d4b9b6c79fbf82c79afa23cd22de5e1699a5cb9ee653bb8aba4bcdd` | Ubuntu 首次运行的分步结论与时间 |
+
+## #238 与 P5-14 组合提交
+
+Windows x86_64 MSVC，Rust/Cargo 1.99.0，代码 `89b417a0ec58ee63a2de227ecee1434273bde8bb`。归档包含修复前的两次失败、修复后的各项原始输出、命令、工具链、退出码和包内文件 SHA-256。全工作区首轮中断，补跑的包与全工作区文档测试各有独立日志。其余检查均返回 0。
+
+[私有证据 P5-14/outbox-89b417a0.zip](https://github.com/nanake-lab/nemu-evidence/blob/cc4fb8d1406f44737f97f034ff3fd3150c5bab92/P5-14/outbox-89b417a0.zip)，SHA-256 为 `0cd7b443417687146326345e1ede5518007e467030e4f084fead85ed7b7378cb`。
