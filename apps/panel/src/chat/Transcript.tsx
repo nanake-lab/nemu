@@ -1,6 +1,6 @@
 import type { AppBusPayloads } from '@nemu/contracts';
 
-export type ChatMessage = { id: string; speaker: 'You' | 'Nemu'; text: string };
+export type ChatMessage = { id: string; speaker: 'You' | 'Nemu'; text: string; failure?: string };
 
 export function appendChunk(
   rows: ChatMessage[],
@@ -21,6 +21,7 @@ export function Transcript({ messages }: { messages: ChatMessage[] }) {
         <li key={message.speaker + message.id}>
           <strong>{message.speaker}</strong>
           <div>{message.text}</div>
+          {message.failure && <div className="chat-message-status">没送到：{message.failure}</div>}
         </li>
       ))}
     </ol>

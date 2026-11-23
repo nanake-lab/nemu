@@ -1,6 +1,7 @@
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { EchoCore } from '@nemu/contracts';
 import { expect, test } from '@playwright/test';
 import { AppBus } from '../../../apps/desktop/src/bus/bus.js';
 import { bindTerminal } from '../../../apps/desktop/src/terminal/bridge.js';
@@ -17,16 +18,26 @@ declare global {
   }
 }
 
-test('chat uses the app bus, streams only received chunks, and keeps the visible prefix after Stop', async ({
+test('chat marks the rejected row, streams received chunks, and keeps the visible prefix after Stop', async ({
   page,
 }) => {
   const dir = await mkdtemp(join(tmpdir(), 'nemu-p6-renderer-'));
-  const core = await scriptedCore(dir);
+  const core = await scriptedCore(dir, {
+    rejectFirstEvent: EchoCore.schema.enums.IngressReason!.OBJECT_MISMATCH as NonNullable<
+      EchoCore.TerminalResponse['reason']
+    >,
+  });
   const bus = new AppBus();
   let status: ChatStatus = { canSend: true, reason: 'Connecting to synthetic core…' };
-  const report = (reason: string | null, disconnected = false) => {
-    status = { canSend: true, reason, disconnected };
-    void page.evaluate((value) => window.fakeCoreStatus?.(value), status).catch(() => {});
+  const report = (reason: string | null, disconnected = false, rejectedEventId?: string) => {
+    let next: ChatStatus;
+    if (reason !== null && rejectedEventId !== undefined) {
+      next = { ...status, rejection: { eventId: rejectedEventId, reason } };
+    } else {
+      status = { canSend: true, reason, disconnected };
+      next = status;
+    }
+    void page.evaluate((value) => window.fakeCoreStatus?.(value), next).catch(() => {});
   };
   const terminal = new TerminalClient(new ChatOutbox(join(dir, 'outbox')), report, core.identity);
   const bridge = bindTerminal(bus, terminal, report);
@@ -70,10 +81,20 @@ test('chat uses the app bus, streams only received chunks, and keeps the visible
     terminal.start();
     const region = page.getByRole('region', { name: 'Conversation' });
     const list = region.getByRole('list', { name: 'Messages' });
-    await region.getByLabel('Message').fill('Synthetic conversation input');
+    const composer = region.getByRole('textbox', { name: 'Message', exact: true });
+    await composer.fill('Synthetic rejected input');
+    await region.getByRole('button', { name: 'Send' }).click();
+    const rejectedRow = list.getByRole('listitem').filter({ hasText: 'Synthetic rejected input' });
+    const rejection = rejectedRow.getByText('没送到：Core rejected the request (OBJECT_MISMATCH)');
+    await expect(rejection).toBeVisible();
+    await expect(rejection).toHaveCSS('color', 'rgb(89, 99, 115)');
+
+    await composer.fill('Synthetic conversation input');
     await region.getByRole('button', { name: 'Send' }).click();
     await expect.poll(() => [...core.messages.values()]).toEqual(['Synthetic conversation input']);
-    await expect(list.getByRole('listitem')).toHaveCount(1);
+    await expect(list.getByRole('listitem')).toHaveCount(2);
+    await expect(list.getByRole('listitem').last()).not.toContainText('没送到');
+    await expect(rejection).toBeVisible();
 
     bridge.chunk(scriptedChunk('First ', 0n));
     await expect(list.getByRole('listitem').last()).toContainText('First');

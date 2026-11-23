@@ -12,10 +12,14 @@ export function startChat(bus: AppBus, panel: BrowserWindow, userData: string, i
   };
   let client: TerminalClient | undefined;
   let bridge: ReturnType<typeof bindTerminal> | undefined;
-  const sendStatus = () => {
-    if (!panel.isDestroyed()) panel.webContents.send(chatIpc.status, status);
+  const sendStatus = (next = status) => {
+    if (!panel.isDestroyed()) panel.webContents.send(chatIpc.status, next);
   };
-  const setStatus = (reason: string | null, disconnected = false) => {
+  const setStatus = (reason: string | null, disconnected = false, rejectedEventId?: string) => {
+    if (reason !== null && rejectedEventId !== undefined) {
+      sendStatus({ ...status, rejection: { eventId: rejectedEventId, reason } });
+      return;
+    }
     status = { reason, canSend: Boolean(client), disconnected };
     if (disconnected) bridge?.disconnected();
     sendStatus();

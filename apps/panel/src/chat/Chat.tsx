@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { appBusPayloads, type AppBusPayloads } from '@nemu/contracts';
 import { globalDebugBusClient } from '../debug/bus-client.js';
 import { Composer } from '../legacy/Composer.js';
-import type { ChatPanelChannel, ChatStatus } from './channel.js';
+import { chatStatusSchema, type ChatPanelChannel, type ChatStatus } from './channel.js';
 import './chat.css';
 
 import { appendChunk, Transcript, type ChatMessage } from './Transcript.js';
@@ -23,7 +23,21 @@ export function Chat({ channel = window.nemuChat }: { channel?: ChatPanelChannel
 
   useEffect(
     () =>
-      channel?.onStatus((next) => {
+      channel?.onStatus((input) => {
+        const parsed = chatStatusSchema.safeParse(input);
+        if (!parsed.success) return;
+        const next = parsed.data;
+        const failure = next.rejection;
+        if (failure) {
+          setMessages((rows) =>
+            rows.map((row) =>
+              row.speaker === 'You' && row.id === failure.eventId
+                ? { ...row, failure: failure.reason }
+                : row,
+            ),
+          );
+          return;
+        }
         setStatus(next);
         if (next.disconnected) {
           setCoreReason('');

@@ -29,7 +29,7 @@ function rejection(code: number | undefined): CoreRejection {
 
 export class TerminalClient {
   private readonly abort = new AbortController();
-  private readonly rejected = new Map<string, string>();
+  private readonly failedRemovals = new Set<string>();
   private connection: CoreConnection | undefined;
   private timer: NodeJS.Timeout | undefined;
   // A short first retry makes startup responsive. Cap retries to avoid a tight loop.
@@ -40,7 +40,11 @@ export class TerminalClient {
 
   constructor(
     private readonly outbox: ChatOutbox,
-    private readonly status: (reason: string | null, disconnected?: boolean) => void,
+    private readonly status: (
+      reason: string | null,
+      disconnected?: boolean,
+      rejectedEventId?: string,
+    ) => void,
     private readonly identity: (signal: AbortSignal) => Promise<TerminalIdentity> = (signal) =>
       windowsIdentity(undefined, signal),
   ) {}
@@ -103,7 +107,7 @@ export class TerminalClient {
       await connection.authenticate(identity);
       if (this.abort.signal.aborted || this.connection !== connection) return;
       this.ready = true;
-      this.status(this.rejected.values().next().value ?? null);
+      this.status(null);
       await this.flush();
     } catch (error) {
       const reason = connection
@@ -129,7 +133,7 @@ export class TerminalClient {
     this.busy = true;
     try {
       for (const input of this.outbox.pending()) {
-        if (this.rejected.has(input.id)) continue;
+        if (this.failedRemovals.has(input.id)) continue;
         try {
           const { event, payload, source } = textObservation(input);
           const budget = connection.budget;
@@ -179,14 +183,21 @@ export class TerminalClient {
           if (reply.receipt?.stage !== ReceiptStage!.RECEIVED_DURABLE) {
             throw rejection(reply.reason ?? reply.receipt?.reason_code);
           }
-          this.outbox.receivedDurable(input.id);
+          this.outbox.remove(input.id);
           this.backoff = 250;
-          if (!this.rejected.size) this.status(null);
+          this.status(null);
         } catch (error) {
           if (error instanceof CoreRejection && !error.retry) {
-            // Preserve unconfirmed records. A permanent rejection cannot block later messages.
-            this.rejected.set(input.id, error.message);
-            this.status(error.message);
+            // ADR 0024 §7 forbids replaying a permanently rejected request.
+            let reason = error.reason;
+            try {
+              this.outbox.remove(input.id);
+            } catch {
+              // A filesystem failure must not cause another send in this session.
+              this.failedRemovals.add(input.id);
+              reason += '. Could not remove the message from the terminal outbox.';
+            }
+            this.status(reason, false, input.id);
           } else {
             connection.close(
               error instanceof CoreRejection ? error.message : 'Core receipt unavailable',

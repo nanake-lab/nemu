@@ -15,7 +15,10 @@ const FixtureTime = 1_000_000_000n;
 
 export async function scriptedCore(
   directory: string,
-  options: { dropFirstReceipt?: boolean } = {},
+  options: {
+    dropFirstReceipt?: boolean;
+    rejectFirstEvent?: NonNullable<EchoCore.TerminalResponse['reason']>;
+  } = {},
 ) {
   const path =
     process.platform === 'win32'
@@ -127,6 +130,19 @@ export async function scriptedCore(
             const existing = messages.get(e.stable_source_key);
             if (existing !== undefined && existing !== payload.text) throw new Error('ID conflict');
             input.push(e);
+            if (options.rejectFirstEvent !== undefined && input.length === 1) {
+              socket.write(
+                encodeFrame('TerminalResponse', {
+                  ...reply,
+                  kind: enums.IngressResponseKind!
+                    .INGRESS_REJECTED as EchoCore.TerminalResponse['kind'],
+                  reason: options.rejectFirstEvent,
+                }),
+              );
+              objects.delete(key(e.payload_ref));
+              objects.delete(key(e.provenance));
+              continue;
+            }
             messages.set(e.stable_source_key, payload.text);
             if (options.dropFirstReceipt && input.length === 1) {
               timestamps.disconnected.push(performance.now());

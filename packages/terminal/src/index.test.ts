@@ -10,6 +10,9 @@ import { scriptedChunk, scriptedCore, scriptApproval } from '../test/scripted-co
 import { decodeFrame, encodeFrame, FrameReader, frameLimits } from './framing.js';
 import { ChatOutbox, TerminalClient, type ChatEvent } from './index.js';
 
+const { IngressReason } = EchoCore.schema.enums;
+type RejectionReason = NonNullable<EchoCore.TerminalResponse['reason']>;
+
 const paths: string[] = [];
 function temp() {
   const directory = mkdtempSync(join(tmpdir(), 'nemu-p6-chat-'));
@@ -61,9 +64,80 @@ test('outbox persists only unacknowledged chat events and deduplicates by event 
   const reopened = new ChatOutbox(path);
   expect([...reopened.pending()]).toEqual([event]);
   expect(() => reopened.add({ ...event, payload: { text: 'conflict' } })).toThrow();
-  reopened.receivedDurable(event.id);
+  reopened.remove(event.id);
   expect(readdirSync(path)).toEqual([]);
   expect([...new ChatOutbox(path).pending()]).toEqual([]);
+});
+
+test('a permanently rejected message is not resent after the terminal and outbox restart', async () => {
+  const path = temp();
+  const outboxPath = join(path, 'outbox');
+  const core = await scriptedCore(path, {
+    rejectFirstEvent: IngressReason!.OBJECT_MISMATCH as RejectionReason,
+  });
+  const status = vi.fn();
+  const terminal = new TerminalClient(new ChatOutbox(outboxPath), status, core.identity);
+  const bus = new AppBus();
+  const rejected = bus.createEvent('panel', 'chat.send', {
+    text: 'Synthetic rejected',
+  }) as ChatEvent;
+  const next = bus.createEvent('panel', 'chat.send', {
+    text: 'Synthetic after restart',
+  }) as ChatEvent;
+  let restarted: TerminalClient | undefined;
+  try {
+    terminal.enqueue(rejected);
+    terminal.start();
+    await vi.waitFor(() =>
+      expect(status).toHaveBeenCalledWith(
+        expect.stringContaining('OBJECT_MISMATCH'),
+        false,
+        rejected.id,
+      ),
+    );
+    terminal.stop();
+
+    const reopened = new ChatOutbox(outboxPath);
+    expect([...reopened.pending()]).toEqual([]);
+    restarted = new TerminalClient(reopened, status, core.identity);
+    restarted.enqueue(next);
+    restarted.start();
+    await vi.waitFor(() => expect(core.messages.get(next.id)).toBe(next.payload.text));
+    expect(core.input.map((event) => event.stable_source_key)).toEqual([rejected.id, next.id]);
+    expect(core.failures).toEqual([]);
+  } finally {
+    terminal.stop();
+    restarted?.stop();
+    await core.close();
+  }
+});
+
+test('retryable ingress backpressure reconnects and resends the same observation', async () => {
+  const path = temp();
+  const outboxPath = join(path, 'outbox');
+  const core = await scriptedCore(path, {
+    rejectFirstEvent: IngressReason!.PENDING_RECORDS_FULL as RejectionReason,
+  });
+  const status = vi.fn();
+  const terminal = new TerminalClient(new ChatOutbox(outboxPath), status, core.identity);
+  const event = new AppBus().createEvent('panel', 'chat.send', {
+    text: 'Synthetic retry',
+  }) as ChatEvent;
+  try {
+    terminal.enqueue(event);
+    terminal.start();
+    await vi.waitFor(() => expect(readdirSync(outboxPath)).toEqual([]), { timeout: 4000 });
+    expect(status).toHaveBeenCalledWith(expect.stringContaining('PENDING_RECORDS_FULL'), true);
+    expect(core.timestamps.authenticated).toHaveLength(2);
+    expect(core.input).toHaveLength(2);
+    expect(core.input[0]?.stable_source_key).toBe(event.id);
+    expect(core.input[0]).toEqual(core.input[1]);
+    expect(core.messages.get(event.id)).toBe(event.payload.text);
+    expect(core.failures).toEqual([]);
+  } finally {
+    terminal.stop();
+    await core.close();
+  }
 });
 
 test('live pipe reauthenticates and replays the original observation after a lost durable reply', async () => {

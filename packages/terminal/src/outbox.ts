@@ -49,7 +49,7 @@ export class ChatOutbox {
     return this.events.values();
   }
 
-  receivedDurable(id: string): void {
+  remove(id: string): void {
     rmSync(this.path(id), { force: true });
     this.events.delete(id);
   }
