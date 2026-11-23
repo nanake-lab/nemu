@@ -47,7 +47,8 @@ pub fn settings() -> (StoreConfig, GatewayConfig) {
         max_pending_requests: store.max_pending_records as usize,
         poll_interval: Duration::from_millis(5),
         upload_lifetime: Duration::from_secs(10),
-        session_lifetime: Duration::from_secs(30),
+        // Cover a full day of desktop use before requiring the terminal to reauthenticate.
+        session_lifetime: Duration::from_secs(12 * 60 * 60),
     };
     (store, gateway)
 }

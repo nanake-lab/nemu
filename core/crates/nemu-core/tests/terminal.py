@@ -251,10 +251,14 @@ def test_host(binary: str, root: Path):
         with connect(pipe_name, child.pid) as pipe:
             session = session_for(pipe, token)
             sessions.append(session["session_id"])
+            # Keep this authenticated pipe idle past the former 30-second session limit.
+            idle_start = time.monotonic()
+            time.sleep(31)
             retry = observation(pipe, session, 20)
             assert retry == unacknowledged
             receipt = durable(pipe, session, retry)
             assert receipt["raw_log_position"] == len(before_retry)
+            print(f"same connection: durable retry after {time.monotonic() - idle_start:.3f} s")
         start = time.monotonic()
         subprocess.run([sys.executable, "-I", "-B", __file__, "--stop", str(child.pid)],
                        creationflags=subprocess.CREATE_NO_WINDOW, check=True, timeout=STOP_SECONDS)
