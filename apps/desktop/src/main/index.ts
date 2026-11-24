@@ -14,6 +14,7 @@ import { TrayManager } from './tray.js';
 import { ShortcutManager } from './shortcuts.js';
 import { DesktopLogger } from './logger.js';
 import { startShellSense } from '../sense/runtime.js';
+import { startChat } from '../terminal/runtime.js';
 
 app.setName('Nemu');
 
@@ -52,6 +53,7 @@ if (!gotSingleInstanceLock) {
   let voice: VoiceProcess | null = null;
   let appBus: AppBus | null = null;
   let settingsStore: SettingsStore | null = null;
+  let stopChat: (() => void) | undefined;
   let stopSense: (() => void) | undefined;
 
   async function bootstrap(): Promise<void> {
@@ -80,6 +82,7 @@ if (!gotSingleInstanceLock) {
 
     const stageWin = stageWindowManager.create();
     const panelWin = panelWindowManager.create();
+    stopChat = startChat(appBus, panelWin, app.getPath('userData'), Boolean(scratch));
 
     displayManager.bindStageWindow(stageWin);
 
@@ -225,6 +228,7 @@ if (!gotSingleInstanceLock) {
         logger?.warn('Desktop sensing cleanup failed');
       }
       stopSense = undefined;
+      stopChat?.();
       shortcutManager?.unregisterAll();
       trayManager?.destroy();
       voice?.stop();
@@ -241,7 +245,7 @@ if (!gotSingleInstanceLock) {
   }
 
   app.on('before-quit', (event) => {
-    if (!isShuttingDown && (supervisor || stopSense)) {
+    if (!isShuttingDown && (supervisor || stopSense || stopChat)) {
       event.preventDefault();
       cleanShutdown().then(() => {
         app.quit();
