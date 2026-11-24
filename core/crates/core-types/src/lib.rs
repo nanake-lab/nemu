@@ -168,6 +168,7 @@ mod codec_cache_tests {
         semantic::check_theta_message(name, &value, limits)?;
         semantic::check_law_state_message(name, &value, limits)?;
         semantic::check_cognition_message(name, &value, limits)?;
+        semantic::check_initial_message(name, &value, limits)?;
         semantic::check_j_message(name, &value, limits)?;
         semantic::check_permission_message(name, &value, limits)?;
         semantic::check_speak_think_message(name, &value, limits)?;

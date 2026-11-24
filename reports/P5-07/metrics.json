@@ -15,5 +15,25 @@
     "schema_count": "200/200", "source_binding_count": "147/200",
     "source": "reports/P0-08/decision.md", "deployable_default": false
   },
+  "p5_50_source_binding_replay": {
+    "code_commit": "0a49dc420ba11ae90c7ec51e3bcf878888ebea95",
+    "scope": "synthetic_worker_boundary",
+    "payloads": ["UserText", "UserUtterance"],
+    "unique_location_cases_passed": {"zh": 2, "en": 2, "ja": 2},
+    "ambiguous_cases_reported": 6,
+    "no_match_cases_reported": 8,
+    "unsupported_payload_cases_rejected": 1,
+    "misbound_payload_cases_rejected": 5,
+    "pytest_passed": 54,
+    "observed_model_copy_rate": null,
+    "human_gold_evaluated": {"zh": 0, "en": 0, "ja": 0}
+  },
+  "p5_50_partial_source_replay": {
+    "code_commit": "9943444aa1f2835d13180d010dc2b777eca5a7e3",
+    "scope": "synthetic_worker_boundary",
+    "mixed_cases_passed": {"ambiguous": 6, "no_match": 8},
+    "fully_unresolved_batches_passed": 1,
+    "pytest_passed": 55
+  },
   "new_online_model_requests": 0
 }

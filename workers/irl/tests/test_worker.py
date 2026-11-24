@@ -12,9 +12,12 @@ from typing import cast
 
 import pytest
 from echo.bridge import from_json
-from echo.runtime import Limits, digest, encode_canonical, normalize
+from echo.runtime import SCHEMA, Limits, digest, encode_canonical, normalize
 from echo.typed_api import from_value, to_value
-from echo.types import EventEnvelope, FactProjection, ObjectRef, ProposalBindingV2, QueryStatus, UserText
+from echo.types import (
+    EventEnvelope, FactProjection, Lang, ObjectRef, ProposalBindingV2, QueryStatus, RecordVersion,
+    SourceField, SourceLocation, UserRetraction, UserText, UserUtterance, Utf8Range,
+)
 
 from nemu_irl.worker import IrlInput, Json, RecordedCandidate, interpret, wire_schema
 
@@ -24,14 +27,15 @@ GOLDEN = json.loads((ROOT / "core/contracts/golden/legal.json").read_text("utf-8
 LIMITS = Limits(1_048_576, 4096, 32)
 
 
-def view_for(text: str = "我刚完成练习。") -> IrlInput:
+def view_for(text: str = "我刚完成练习。", *, speech: Lang | None = None) -> IrlInput:
     def fixture(name: str) -> object:
         value = next(row["request"]["value"] for row in GOLDEN if row["request"]["name"] == name)
         return from_value(name, from_json(name, value), LIMITS)
-    payload = UserText(1, text)
+    payload = UserText(1, text) if speech is None else UserUtterance(1, text, speech, 0.5, 125, None)
+    name = type(payload).__name__
     value = to_value(payload)
-    ref = ObjectRef(1, bytes.fromhex(digest("UserText", value, LIMITS)), "UserText", "fixture-v1",
-                    len(encode_canonical("UserText", value, LIMITS)))
+    ref = ObjectRef(1, bytes.fromhex(digest(name, value, LIMITS)), SCHEMA["messages"][name]["tag"], "fixture-v1",
+                    len(encode_canonical(name, value, LIMITS)))
     event = replace(cast(EventEnvelope, fixture("EventEnvelope")), id="synthetic-event",
                     payload_ref=ref, payload_digest=ref.digest)
     facts = FactProjection(1, "prefix", "query-v1", QueryStatus.OK, [], "index-v1", False)
@@ -43,7 +47,7 @@ def view_for(text: str = "我刚完成练习。") -> IrlInput:
 
 def candidate(text: str) -> dict[str, Json]:
     return {"schemaVersion": "p0-08-candidate-v1", "sourceRef": "p0-08-0000", "nodes": [{
-        "id": "n1", "sourceRefs": ["p0-08-0000"], "sourceSpan": [0, len(text)],
+        "id": "n1", "sourceRefs": ["p0-08-0000#" + text], "sourceSpan": [0, 0],
         "derivation": "normalized", "epistemicType": "user_assertion",
         "resolutionState": "unresolved", "representationVersion": "p0-08-candidate-v1",
         "kind": "Act", "actType": "other", "content": text,
@@ -82,7 +86,9 @@ def test_three_language_record_preserves_actual_bytes_and_input_binding(text: st
     raw = json.dumps(candidate(text), ensure_ascii=False)
     replay = Replay(raw)
     result = run(view, replay)
-    assert result.reason is None and result.parsed == candidate(text)
+    expected = candidate(text)
+    cast(list[dict[str, Json]], expected["nodes"])[0].update(sourceRefs=["p0-08-0000"], sourceSpan=[0, len(text)])
+    assert result.reason is None and result.parsed == expected
     assert result.actual_output.payload == raw.encode("utf-8")
     assert result.binding == view.binding and result.output_complete
     assert replay.closed and len(replay.calls) == 1
@@ -104,6 +110,8 @@ def test_wire_ref_and_claim_remain_unresolved_candidates_without_invented_concep
          "polarity": "negative", "modality": "possible", "time": None},
     ]
     result = run(view, Replay(json.dumps(obj)))
+    for node in cast(list[dict[str, Json]], obj["nodes"]):
+        node.update(sourceRefs=["p0-08-0000"], sourceSpan=[0, len(view.payload.text)])
     assert result.reason is None and result.parsed == obj
     # No SemanticGraph or accepted identity is manufactured from free labels.
     assert not hasattr(result, "graph")
@@ -237,3 +245,101 @@ def test_backend_exception_is_not_copied_into_result_or_retried() -> None:
                          producer_version="v1", limits=LIMITS, max_output_bytes=4096))
     assert result.parsed is None and not result.output_complete
     assert result.actual_output.payload == b"partial" and "private" not in str(result)
+
+
+@pytest.mark.parametrize(("left", "quote", "right", "lang"), [
+    ("「", "完成🙂", "」", Lang.ZH),
+    ("🙂", '#e\u0301 "done"\r\n', "", Lang.EN),
+    ("", "猫🐈", "です", Lang.JA),
+])
+@pytest.mark.parametrize("utterance", [False, True])
+def test_g01_locates_exact_field_bytes(left: str, quote: str, right: str,
+                                       lang: Lang, utterance: bool) -> None:
+    view = view_for(left + quote + right, speech=lang if utterance else None)
+    raw = json.dumps(candidate(quote), ensure_ascii=False)
+    replay = Replay(raw)
+    result = run(view, replay)
+    start = len(left.encode())
+    end = start + len(quote.encode())
+    loc = result.sources["n1"]
+    assert loc == SourceLocation(1, RecordVersion(1, view.binding.branch_id, view.event.id,
+                                                  view.event.payload_ref),
+                                 [SourceField(1, 2, None)], Utf8Range(1, start, end))
+    assert isinstance(loc, SourceLocation)
+    assert encode_canonical("SourceLocation", to_value(loc), LIMITS)
+    assert result.reason is None and result.parsed is not None
+    assert view.payload.text.encode()[start:end].decode() == quote
+    assert cast(list[dict[str, Json]], result.parsed["nodes"])[0]["sourceSpan"] == [len(left), len(left + quote)]
+    assert result.actual_output.payload == raw.encode()
+    assert replay.calls[0][1] == wire_schema()
+
+
+@pytest.mark.parametrize(("text", "fragment", "failure"), [
+    ("人人人", "人人", "ambiguous"), ("人人人", "人 人", "no_match"),
+    ("aaaa", "aaa", "ambiguous"), ("cafe\u0301", "café", "no_match"),
+    ("猫です。猫です。", "猫です", "ambiguous"), ("猫です", "猫デス", "no_match"),
+    ("空", "", "no_match"),
+])
+@pytest.mark.parametrize("speech", [None, Lang.JA])
+def test_unresolved_excerpt_keeps_node_reason_and_bytes(text: str, fragment: str,
+                                                        failure: str, speech: Lang | None) -> None:
+    view = view_for("🙂" + text + "!", speech=speech)
+    obj = candidate(fragment)
+    nodes = cast(list[dict[str, Json]], obj["nodes"])
+    first: dict[str, Json] = {**nodes[0], "id": "first", "content": "🙂", "sourceRefs": ["p0-08-0000#🙂"]}
+    last: dict[str, Json] = {**nodes[0], "id": "last", "content": "!", "sourceRefs": ["p0-08-0000#!"]}
+    nodes[:] = [last, nodes[0], first]
+    raw = json.dumps(obj, ensure_ascii=False)
+    result = run(view, Replay(raw))
+    end = len(view.payload.text)
+    assert result.reason is None and result.parsed == {**obj, "nodes": [
+        {**last, "sourceRefs": ["p0-08-0000"], "sourceSpan": [end - 1, end]},
+        {**first, "sourceRefs": ["p0-08-0000"], "sourceSpan": [0, 1]},
+    ]}
+    byte_end = len(view.payload.text.encode())
+    source = RecordVersion(1, view.binding.branch_id, view.event.id, view.event.payload_ref)
+    field = [SourceField(1, 2, None)]
+    assert result.sources == {
+        "last": SourceLocation(1, source, field, Utf8Range(1, byte_end - 1, byte_end)),
+        "n1": failure,
+        "first": SourceLocation(1, source, field, Utf8Range(1, 0, len("🙂".encode()))),
+    }
+    assert result.actual_output.payload == raw.encode() and result.output_complete
+
+
+def test_all_unresolved_excerpts_preserve_reasons_and_original_output() -> None:
+    obj = candidate("好的")
+    nodes = cast(list[dict[str, Json]], obj["nodes"])
+    nodes.append({**nodes[0], "id": "missing", "sourceRefs": ["p0-08-0000#好吧"]})
+    raw = json.dumps(obj, ensure_ascii=False)
+    result = run(view_for("好的好的"), Replay(raw))
+    assert result.reason == "unresolved_source" and result.parsed is None
+    assert result.sources == {"n1": "ambiguous", "missing": "no_match"}
+    assert result.actual_output.payload == raw.encode() and result.output_complete
+
+
+def test_unsupported_payload_is_reported_before_model_call() -> None:
+    view = replace(view_for(), payload=cast(UserText, UserRetraction(1, ["old"], "note")))
+    replay = Replay("")
+    result = run(view, replay)
+    assert result.reason == "unsupported_source" and not replay.calls and not result.sources
+
+
+@pytest.mark.parametrize("fault", ["type", "length", "digest", "event_digest", "resource_version"])
+def test_rejects_misbound_payload_before_model_call(fault: str) -> None:
+    view = view_for(speech=Lang.ZH)
+    event = view.event
+    ref = event.payload_ref
+    if fault == "type":
+        ref = replace(ref, object_type="echo.user-text")
+    elif fault == "length":
+        ref = replace(ref, byte_length=ref.byte_length + 1)
+    elif fault == "digest":
+        ref = replace(ref, digest=b"x" * 32)
+    elif fault == "event_digest":
+        event = replace(event, payload_digest=b"x" * 32)
+    else:
+        ref = replace(ref, resource_version="")
+    replay = Replay("")
+    result = run(replace(view, event=replace(event, payload_ref=ref)), replay)
+    assert result.parsed is None and not result.sources and not replay.calls

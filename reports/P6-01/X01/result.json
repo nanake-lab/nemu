@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "scope": "固定事件、时间与事实，单独更换协议 p",
+  "command": "cargo test --workspace --locked --exclude core-store",
+  "test": "x01_sys06_protocol_and_task_facts_change_only_generation_inputs",
+  "environment": "W03 experiment stages with non-identity fixture operators",
+  "assertions": [
+    "generation inputs differ",
+    "canonical x/R/θ, ledger, binding and operator trace match"
+  ],
+  "head": "7f9e9a3eb1820be05132de810913d50ca95bf662",
+  "run": "https://github.com/nanake-lab/nemu/actions/runs/44888568455"
+}

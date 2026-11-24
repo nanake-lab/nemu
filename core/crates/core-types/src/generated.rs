@@ -569,6 +569,24 @@ impl EvidenceRelation {
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
+pub enum EmptyPrefixKind {
+    EMPTY_HISTORY = 1,
+    EMPTY_CHANGE_LEDGER = 2,
+    EMPTY_INGRESS_DECISIONS = 3,
+}
+impl TryFrom<u32> for EmptyPrefixKind { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::EMPTY_HISTORY),
+2 => Ok(Self::EMPTY_CHANGE_LEDGER),
+3 => Ok(Self::EMPTY_INGRESS_DECISIONS),
+_ => Err("unknown enum".into()), }}}
+impl From<EmptyPrefixKind> for u32 {fn from(v:EmptyPrefixKind)->Self{v as u32}}
+impl EmptyPrefixKind {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
 pub enum JResidualStage {
     J_BLOCK_RESIDUAL_OUTPUT = 1,
     J_MIXER_RESIDUAL_BEFORE_FFN_NORM = 2,
@@ -2622,6 +2640,66 @@ pub r#source_trace_revision: String,
 pub r#source_coupling_revision: String,
 }
 impl super::WireMessage for ThetaModuleSourceBinding {const NAME: &'static str = "ThetaModuleSourceBinding"; const SUPERSEDED: bool = true;}
+/// ADR 0049; v2.0 §§2.4–2.5,13; S §§7–8; frozen tag `echo.empty-prefix-root`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EmptyPrefixRoot {
+pub r#schema_version: u32,
+pub r#kind: EmptyPrefixKind,
+}
+impl super::WireMessage for EmptyPrefixRoot {const NAME: &'static str = "EmptyPrefixRoot";}
+/// ADR 0049; ADR 0010 §§2–5; S §21; frozen tag `echo.initial-runtime-root`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct InitialRuntimeRoot {
+pub r#schema_version: u32,
+pub r#environment: VersionedEnvironmentV2,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#irl: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#appraiser: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#matcher: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#fast: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#growth: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#dynamics: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#compiler: Option<ObjectRef>,
+}
+impl super::WireMessage for InitialRuntimeRoot {const NAME: &'static str = "InitialRuntimeRoot";}
+/// ADR 0049; v2.0 §§2.3,13; ADR 0047; frozen tag `echo.birth-name-record`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct BirthNameRecord {
+pub r#schema_version: u32,
+pub r#record_id: String,
+pub r#given_name: String,
+pub r#manifest: ObjectRef,
+pub r#caretaker: LocalUserBinding,
+pub r#signature_evidence: ObjectRef,
+}
+impl super::WireMessage for BirthNameRecord {const NAME: &'static str = "BirthNameRecord";}
+/// ADR 0049; v2.0 §§2,13–14; S §§7–8; frozen tag `echo.initial-publication`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct InitialPublication {
+pub r#schema_version: u32,
+pub r#store_id: String,
+pub r#branch_id: String,
+pub r#header: LineageHeaderV2,
+pub r#x: ObjectRef,
+pub r#r: ObjectRef,
+pub r#theta: ObjectRef,
+pub r#q: InitialRuntimeRoot,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#empty_history: Option<EmptyPrefixRoot>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#birth: Option<BirthNameRecord>,
+}
+impl super::WireMessage for InitialPublication {const NAME: &'static str = "InitialPublication";}
 /// O 13.1-13.2; ADR 0036; frozen tag `echo.j-hook-binding`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -5582,6 +5660,10 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "EffectiveCausalProjection" => super::verify_typed::<EffectiveCausalProjection>(value, limits),
 "ConsolidationBinding" => super::verify_typed::<ConsolidationBinding>(value, limits),
 "ThetaModuleSourceBinding" => super::verify_typed::<ThetaModuleSourceBinding>(value, limits),
+"EmptyPrefixRoot" => super::verify_typed::<EmptyPrefixRoot>(value, limits),
+"InitialRuntimeRoot" => super::verify_typed::<InitialRuntimeRoot>(value, limits),
+"BirthNameRecord" => super::verify_typed::<BirthNameRecord>(value, limits),
+"InitialPublication" => super::verify_typed::<InitialPublication>(value, limits),
 "JHookBinding" => super::verify_typed::<JHookBinding>(value, limits),
 "JDirectionVector" => super::verify_typed::<JDirectionVector>(value, limits),
 "JDirection" => super::verify_typed::<JDirection>(value, limits),

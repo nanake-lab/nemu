@@ -15,6 +15,10 @@ def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
     from fixture_evidence import evidence_sample
     if SCHEMA["messages"][name]["file"] == "semantic_evidence.proto":
         return evidence_sample(name, seed)
+    if SCHEMA["messages"][name]["file"] == "initial_publication.proto":
+        from fixture_initial_publication import initial_sample
+
+        return initial_sample(name, seed)
     from fixture_permission import permission_sample
     if SCHEMA["messages"][name]["file"] == "permission.proto":
         return permission_sample(name, seed)
@@ -140,6 +144,7 @@ def unit(c: float, e: float, q: float, a: float) -> dict[str, Any]:
 
 def targeted_legal() -> list[dict[str, Any]]:
     from fixture_evidence import evidence_legal
+    from fixture_initial_publication import initial_legal
     from fixture_cognition import legal_cognition
     from fixture_speak_think import legal_wire
     from fixture_permission import permission_legal
@@ -210,6 +215,7 @@ def targeted_legal() -> list[dict[str, Any]]:
         + legal_wire()
         + permission_legal()
         + evidence_legal()
+        + initial_legal()
     )
 
 
@@ -462,6 +468,7 @@ def targeted_legal_p5_22() -> list[dict[str, Any]]:
 
 
 def targeted_illegal() -> list[dict[str, Any]]:
+    from fixture_initial_publication import initial_illegal
     from fixture_j import illegal_j
     from fixture_cognition import illegal_cognition
     from fixture_speak_think import illegal_wire
@@ -577,5 +584,6 @@ def targeted_illegal() -> list[dict[str, Any]]:
         + illegal_cognition()
         + illegal_wire()
         + permission_illegal()
+        + initial_illegal()
         + illegal_j()
     )

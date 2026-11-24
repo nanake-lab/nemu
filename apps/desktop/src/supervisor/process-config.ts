@@ -32,9 +32,9 @@ export const REQUIRED_PROCESSES: ProcessTargetSpec[] = [
     name: 'nemu-core.exe',
     isWorker: false,
     command: resolve('core/target/release/nemu-core.exe'),
-    args: [],
+    args: ['--lineage', 'rehearsal', '--log-level', 'info'],
     entryCheckFile: resolve('core/target/release/nemu-core.exe'),
-    healthProbe: { type: 'none' },
+    healthProbe: { type: 'stdout-heartbeat', intervalMs: 3000, timeoutMs: 5000, maxConsecutiveFailures: 2 },
   },
   {
     name: 'irl-worker',
