@@ -8,6 +8,7 @@ use std::{sync::OnceLock, time::Duration};
 mod atomic;
 mod crash;
 mod crash_harness;
+mod initial;
 mod isolation;
 mod legacy_v2;
 mod objects;

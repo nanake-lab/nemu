@@ -1,7 +1,4 @@
-//! W02 integration over public APIs only. No SQL, alternate writer or invented
-//! persistence messages. The missing clock/publication contract prevents a full
-//! service: this module can inspect/prepare existing heads, but does not expose a
-//! production process-and-commit loop or synthesize an initial L/U/Q root.
+//! W02 integration over public APIs. ADR 0049 bootstrap and staged event computation.
 use crate::{
     Error, Result,
     binding::digest,
@@ -29,18 +26,53 @@ pub fn next<L: LineageKind>(store: &mut Store<L>) -> Result<Next> {
         .map(|event| Next::Event(Box::new(event)))
         .unwrap_or(Next::Idle))
 }
+/// Publish the supplied rehearsal starting state with no connected stages.
+pub fn bootstrap_rehearsal(
+    store: &mut Store<core_store::Rehearsal>,
+    capability: &core_store::CommitCapability<core_store::Rehearsal>,
+    environment: &VersionedEnvironmentV2,
+    initial: &Snapshot,
+) -> Result<ObjectRef> {
+    // Detect a damaged prior publication before a retry could recreate its objects.
+    store.verify()?;
+    let x = store.prepare(&initial.x, &initial.x.revision)?;
+    let r = store.prepare_r(&initial.r)?;
+    let theta = store.prepare(&initial.theta, &initial.theta.revision)?;
+    Ok(store.publish_rehearsal_initial(capability, environment, &x, &r, &theta)?)
+}
+
 pub fn read_state<L: LineageKind>(store: &Store<L>) -> Result<Snapshot> {
+    Ok(committed_state(store)?.0)
+}
+fn committed_state<L: LineageKind>(
+    store: &Store<L>,
+) -> Result<(Snapshot, Option<InitialRuntimeRoot>)> {
     let reader = store.verified_reader()?;
-    let current = reader.current_manifest()?.ok_or(Error::Rejected(
+    let reference = reader.current_snapshot()?.ok_or(Error::Rejected(
         "genesis/bootstrap publication contract required",
     ))?;
-    Ok(Snapshot {
-        x: reader.read(&current.staged_x)?,
-        r: reader.read(&current.staged_r)?,
-        // W02 validates the digest and complete V2 semantics. Legacy heads are
-        // read-only through Reader; this writable runtime never upgrades them.
-        theta: reader.read::<ThetaSnapshotV2>(&current.staged_theta)?,
-    })
+    let (x, r, theta, initial_q) = match reference.object_type.as_str() {
+        "echo.initial-publication" => {
+            let root = reader.read::<InitialPublication>(&reference)?;
+            (root.x, root.r, root.theta, Some(root.q))
+        }
+        "echo.transaction-v4" => {
+            let tx = reader.read::<CoreTransactionV4>(&reference)?;
+            (tx.staged_x, tx.staged_r, tx.staged_theta, None)
+        }
+        _ => {
+            let tx = reader.event_snapshot(&reference)?;
+            (tx.staged_x, tx.staged_r, tx.staged_theta, None)
+        }
+    };
+    Ok((
+        Snapshot {
+            x: reader.read(&x)?,
+            r: reader.read(&r)?,
+            theta: reader.read(&theta)?,
+        },
+        initial_q,
+    ))
 }
 
 /// Pins survive until the caller finishes W02's commit or abort. No early z,
@@ -168,13 +200,24 @@ impl<L: LineageKind> StageSet<L> {
             store.next_raw()?.is_none(),
             "ingress frontier advanced before generation",
         )?;
-        let state = read_state(store)?;
+        let (state, initial_q) = committed_state(store)?;
         check(
             generation_ns >= state.x.anchor_time_ns.0,
             "generation before committed anchor",
         )?;
         if L::KIND == Lineage::REHEARSAL || self.parts.j.is_none() || self.parts.f.is_none() {
             let mut status = Status::default();
+            if let Some(q) = initial_q {
+                for (stage, state) in [
+                    (q.irl, RunStatus::IRL_DEGRADED),
+                    (q.appraiser, RunStatus::A_DEGRADED),
+                    (q.matcher, RunStatus::M_DEGRADED),
+                ] {
+                    if stage.is_none() {
+                        status.add(state, FailureCode::DEPENDENCY_FAULT);
+                    }
+                }
+            }
             status.add(
                 RunStatus::CORE_UNMODULATED,
                 FailureCode::MODULATION_DISABLED,

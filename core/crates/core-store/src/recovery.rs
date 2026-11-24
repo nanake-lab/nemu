@@ -34,6 +34,7 @@ pub(crate) struct Prefix {
     pub commits: u64,
     pub attempts: u64,
     activities: i64,
+    has_initial: bool,
     record_ids: std::collections::BTreeSet<String>,
     request_ids: std::collections::BTreeSet<String>,
     step_ids: std::collections::BTreeSet<(String, String)>,
@@ -110,6 +111,28 @@ pub(crate) fn verify_tail(
             "commit chain is broken",
         )?;
         sequence += 1;
+        if decision == "initial" {
+            require(
+                sequence == 1 && parent.is_none() && crate::migration::format(db)? == 3,
+                "initial publication requires an empty format 3 prefix",
+            )?;
+            let reference = ObjectRef::from_canonical(
+                next_snapshot
+                    .as_deref()
+                    .ok_or(crate::Error::Rejected("missing initial snapshot"))?,
+                limits,
+            )?;
+            require(
+                hex(&reference.digest.0) == id
+                    && crate::initial::verify(objects, &reference, header, branch)? == next_anchor,
+                "initial publication frontier mismatch",
+            )?;
+            prefix.has_initial = true;
+            parent = Some(id);
+            anchor = next_anchor;
+            snapshot = next_snapshot;
+            continue;
+        }
         if decision == "activity" {
             require(
                 crate::migration::format(db)? == 3,
@@ -266,7 +289,10 @@ pub(crate) fn verify_tail(
     )?;
     for (table, expected) in [
         ("facts", accepted),
-        ("snapshots", accepted + activities),
+        (
+            "snapshots",
+            accepted + activities + i64::from(prefix.has_initial),
+        ),
         ("ledger_index", ledger_count),
         ("ingress_decisions", integer(position)?),
     ] {
@@ -351,8 +377,8 @@ pub(crate) fn check_new_witnesses(
                     )?
                 }
                 _ => {
-                    let (decision, bytes): (String, Vec<u8>) = db.query_row("SELECT c.decision,CASE WHEN c.decision IN ('accepted','activity') THEN c.snapshot ELSE d.event END FROM commits c LEFT JOIN ingress_decisions i ON i.commit_id=c.id LEFT JOIN raw_ingress d ON d.position=i.position WHERE c.position=?1", [pos], |r| Ok((r.get(0)?, r.get(1)?)))?;
-                    if matches!(decision.as_str(), "accepted" | "activity") {
+                    let (decision, bytes): (String, Vec<u8>) = db.query_row("SELECT c.decision,CASE WHEN c.decision IN ('initial','accepted','activity') THEN c.snapshot ELSE d.event END FROM commits c LEFT JOIN ingress_decisions i ON i.commit_id=c.id LEFT JOIN raw_ingress d ON d.position=i.position WHERE c.position=?1", [pos], |r| Ok((r.get(0)?, r.get(1)?)))?;
+                    if matches!(decision.as_str(), "initial" | "accepted" | "activity") {
                         ObjectRef::from_canonical(&bytes, limits)?
                     } else {
                         objects.reference(&EventEnvelope::from_canonical(&bytes, limits)?, "1")?
