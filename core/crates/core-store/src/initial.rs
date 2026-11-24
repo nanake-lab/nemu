@@ -1,10 +1,13 @@
 //! ADR 0049. A parentless publication has no input event, elapsed-time sample or parent.
 use crate::{
-    CommitCapability, Error, FaultPoint, PreparedObject, Rehearsal, Result, Store, error::require,
+    CommitCapability, FaultPoint, PreparedObject, Rehearsal, Result, Store, error::require,
     objects::Objects, publication, schema::integer,
 };
-use core_types::{WireMessage, generated::*, scalar::hex, semantic::check_initial_store_binding};
+use core_types::{
+    WireMessage, contract::Limits, generated::*, scalar::hex, semantic::check_initial_store_binding,
+};
 use rusqlite::{Connection, OptionalExtension, params};
+use sha2::{Digest, Sha256};
 use std::sync::Arc;
 
 pub(crate) const TAG: &str = "echo.initial-publication";
@@ -32,13 +35,14 @@ fn disconnected(environment: &VersionedEnvironmentV2) -> InitialRuntimeRoot {
     }
 }
 
-fn store_id(objects: &Objects) -> Result<&str> {
-    // W02 already binds this canonical location to the writer and its receipt namespace.
-    objects
-        .root
-        .parent()
-        .and_then(|p| p.to_str())
-        .ok_or(Error::Rejected("invalid store identity"))
+fn store_id(header: &LineageHeaderV2, branch: &str, limits: Limits) -> Result<String> {
+    // Logical lineage identity: independent creations with the same header and branch agree.
+    // CanonicalV1 frames every header field, so the remaining bytes identify the branch.
+    let mut hash = Sha256::new();
+    hash.update(b"NEMU-STORE-ID-V1\0");
+    hash.update(header.canonical_bytes(limits)?);
+    hash.update(branch.as_bytes());
+    Ok(hex(&hash.finalize()))
 }
 
 // Validate both at publication and when replaying the first commit. This runtime
@@ -99,7 +103,7 @@ pub(crate) fn verify(
     )?;
     check_initial_store_binding(
         &p,
-        store_id(objects)?,
+        &store_id(header, branch, objects.config.encoding)?,
         branch,
         header,
         &disconnected(&p.q.environment),
@@ -179,7 +183,7 @@ impl Store<Rehearsal> {
         let history = empty(EmptyPrefixKind::EMPTY_HISTORY);
         let p = InitialPublication {
             schema_version: 1,
-            store_id: store_id(&self.objects)?.to_owned(),
+            store_id: store_id(&self.header, &self.branch, self.objects.config.encoding)?,
             branch_id: self.branch.clone(),
             header: self.header.clone(),
             x: x.reference().clone(),

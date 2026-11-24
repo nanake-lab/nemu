@@ -85,6 +85,12 @@ fn bootstrap_exposes_one_complete_head_and_restarts_idempotently() {
     let p: InitialPublication = reader.read(&reference).unwrap();
     assert_eq!(p.header, header);
     assert_eq!(p.branch_id, "test");
+    // Pin the persisted ID for LineageHeaderV2.hex (REHEARSAL at 0 ns) and branch "test".
+    // A change to its encoding would prevent existing initial publications from reopening.
+    assert_eq!(
+        p.store_id,
+        "83a1391955d22b4763eba84332927191abf154c651c5416cb05d6d75bd7cb559"
+    );
     assert_eq!(
         p.empty_history.unwrap().kind,
         EmptyPrefixKind::EMPTY_HISTORY
