@@ -90,6 +90,7 @@ def _bind_sources(parsed: dict[str, Json], text: str, source: RecordVersion) -> 
     if not nodes or len({cast(str, node["id"]) for node in nodes}) != len(nodes):
         raise ValueError("empty_or_duplicate_nodes")
     sources: NodeSources = {}
+    located: list[Json] = []
     prefix = "p0-08-0000#"
     for node in nodes:
         refs = cast(list[str], node["sourceRefs"])
@@ -118,6 +119,8 @@ def _bind_sources(parsed: dict[str, Json], text: str, source: RecordVersion) -> 
             # Preserve the P0-08 parsed wire representation for existing consumers.
             node["sourceSpan"] = [start, start + len(quote)]
             node["sourceRefs"] = [parsed["sourceRef"]]
+            located.append(node)
+    parsed["nodes"] = located
     return sources
 
 
@@ -172,6 +175,7 @@ async def interpret(view: IrlInput, infer_local: LocalInference, *, producer: st
                 "sourceRef is p0-08-0000, an alias for this input only. For every node copy one "
                 "nonempty exact excerpt of text into its only sourceRefs entry, immediately after "
                 "the literal prefix p0-08-0000#. Preserve case, whitespace and punctuation. "
+                "Prefer an excerpt that occurs exactly once, such as a full sentence. "
                 "Put [0,0] in sourceSpan: the program computes positions. Do not invent sources "
                 "or upgrade user text to system/tool evidence."
             ),
@@ -213,7 +217,7 @@ async def interpret(view: IrlInput, infer_local: LocalInference, *, producer: st
         parsed = cast(dict[str, Json], obj)
         source = RecordVersion(1, view.binding.branch_id, view.event.id, view.event.payload_ref)
         sources = _bind_sources(parsed, view.payload.text, source)
-        if any(isinstance(loc, str) for loc in sources.values()):
+        if not parsed["nodes"]:
             reason = "unresolved_source"
     except TimeoutError:
         reason = "deadline_exceeded"

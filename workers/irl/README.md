@@ -21,8 +21,9 @@ The worker searches only field 2 of the bound UserText or UserUtterance.
 Exactly one occurrence yields a generated G01 SourceLocation with a RecordVersion
 and a half-open UTF-8 byte range. The parsed P0-08 node receives its plain alias
 and computed code-point range. The audit retains the original model bytes.
-An empty, absent or repeated excerpt leaves the candidate unresolved. The
-`sources` map retains each node's location, `no_match` or `ambiguous` result.
+Only uniquely located nodes remain in the parsed candidate, in their original order.
+The `sources` map retains every node's location or its `no_match` or `ambiguous`
+reason. If all excerpts are unresolved, `parsed` is absent and `reason` is `unresolved_source`.
 Facts, audio and speaker identity are outside this search.
 
 The injected async generator is the minimal offline test seam, not a backend registry

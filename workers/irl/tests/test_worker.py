@@ -283,14 +283,38 @@ def test_g01_locates_exact_field_bytes(left: str, quote: str, right: str,
 @pytest.mark.parametrize("speech", [None, Lang.JA])
 def test_unresolved_excerpt_keeps_node_reason_and_bytes(text: str, fragment: str,
                                                         failure: str, speech: Lang | None) -> None:
-    view = view_for("🙂" + text, speech=speech)
+    view = view_for("🙂" + text + "!", speech=speech)
     obj = candidate(fragment)
     nodes = cast(list[dict[str, Json]], obj["nodes"])
-    nodes.append({**nodes[0], "id": "other", "sourceRefs": ["p0-08-0000#🙂"]})
-    raw = json.dumps(obj)
+    first: dict[str, Json] = {**nodes[0], "id": "first", "content": "🙂", "sourceRefs": ["p0-08-0000#🙂"]}
+    last: dict[str, Json] = {**nodes[0], "id": "last", "content": "!", "sourceRefs": ["p0-08-0000#!"]}
+    nodes[:] = [last, nodes[0], first]
+    raw = json.dumps(obj, ensure_ascii=False)
     result = run(view, Replay(raw))
+    end = len(view.payload.text)
+    assert result.reason is None and result.parsed == {**obj, "nodes": [
+        {**last, "sourceRefs": ["p0-08-0000"], "sourceSpan": [end - 1, end]},
+        {**first, "sourceRefs": ["p0-08-0000"], "sourceSpan": [0, 1]},
+    ]}
+    byte_end = len(view.payload.text.encode())
+    source = RecordVersion(1, view.binding.branch_id, view.event.id, view.event.payload_ref)
+    field = [SourceField(1, 2, None)]
+    assert result.sources == {
+        "last": SourceLocation(1, source, field, Utf8Range(1, byte_end - 1, byte_end)),
+        "n1": failure,
+        "first": SourceLocation(1, source, field, Utf8Range(1, 0, len("🙂".encode()))),
+    }
+    assert result.actual_output.payload == raw.encode() and result.output_complete
+
+
+def test_all_unresolved_excerpts_preserve_reasons_and_original_output() -> None:
+    obj = candidate("好的")
+    nodes = cast(list[dict[str, Json]], obj["nodes"])
+    nodes.append({**nodes[0], "id": "missing", "sourceRefs": ["p0-08-0000#好吧"]})
+    raw = json.dumps(obj, ensure_ascii=False)
+    result = run(view_for("好的好的"), Replay(raw))
     assert result.reason == "unresolved_source" and result.parsed is None
-    assert result.sources["n1"] == failure and isinstance(result.sources["other"], SourceLocation)
+    assert result.sources == {"n1": "ambiguous", "missing": "no_match"}
     assert result.actual_output.payload == raw.encode() and result.output_complete
 
 
