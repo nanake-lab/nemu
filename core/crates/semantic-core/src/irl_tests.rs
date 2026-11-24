@@ -199,6 +199,17 @@ impl World {
             limits(),
         )
     }
+    fn publish(&mut self, stage: StageAdoption, product: &impl WireMessage) {
+        self.transaction = None;
+        self.initial = Some(RecordVersion {
+            schema_version: 1,
+            branch_id: self.turn.branch_id.clone(),
+            record_id: "adoption".into(),
+            content: reference(&stage),
+        });
+        self.stage_bytes = stage.canonical_bytes(limits()).unwrap();
+        self.committed = Some((stage, product.canonical_bytes(limits()).unwrap()));
+    }
 }
 
 #[test]
@@ -215,21 +226,17 @@ fn u6_reads_the_same_turn_graph_only_from_a_committed_prefix() {
     let IrlProduct::Graph(graph) = staged.product else {
         panic!("expected a governed graph")
     };
-    let bytes = graph.canonical_bytes(limits()).unwrap();
-    let stage_ref = RecordVersion {
-        schema_version: 1,
-        branch_id: w.turn.branch_id.clone(),
-        record_id: "adoption".into(),
-        content: reference(&staged.adoption),
-    };
-    w.initial = Some(stage_ref);
-    w.committed = Some((staged.adoption.clone(), bytes));
+    w.publish(staged.adoption, &graph);
+    let stage_bytes = std::mem::take(&mut w.stage_bytes);
     assert_eq!(
         committed_irl(&w, &w.turn, "tx", limits()),
         Err(Fault::Source)
     ); // graph alone
-    w.stage_bytes = staged.adoption.canonical_bytes(limits()).unwrap();
-    assert_eq!(committed_irl(&w, &w.turn, "tx", limits()), Ok(Some(graph)));
+    w.stage_bytes = stage_bytes;
+    assert_eq!(
+        committed_irl(&w, &w.turn, "tx", limits()),
+        Ok(Some(CommittedIrl::Graph(graph.clone())))
+    );
     assert_eq!(
         committed_irl(&w, &w.turn, "retry", limits()),
         Err(Fault::Binding)
@@ -245,13 +252,46 @@ fn u6_reads_the_same_turn_graph_only_from_a_committed_prefix() {
         committed_irl(&w, &w.turn, "tx", limits()),
         Err(Fault::Object)
     );
-    let stage = &mut w.committed.as_mut().unwrap().0;
+    // A failed adoption that still points to a real graph has the wrong product type.
+    let mut stage = w.committed.take().unwrap().0;
     stage.outcome = StageOutcome::STAGE_OUTCOME_FAILED;
     stage.reason = Some("failed".into());
     stage.coverage.clear();
-    w.initial.as_mut().unwrap().content = reference(stage);
-    w.stage_bytes = stage.canonical_bytes(limits()).unwrap();
-    assert!(committed_irl(&w, &w.turn, "tx", limits()).is_err());
+    w.publish(stage, &graph);
+    assert_eq!(
+        committed_irl(&w, &w.turn, "tx", limits()),
+        Err(Fault::Object)
+    );
+}
+
+#[test]
+fn u6_returns_the_recorded_failure_and_detects_missing_or_substituted_status() {
+    let mut w = World::new();
+    w.graph.references[0].source.epistemic_type = EpistemicType::USER_SELF_REPORT;
+    let mut staged = w.run(&w.candidate()).unwrap();
+    assert_eq!(staged.adoption.outcome, StageOutcome::STAGE_OUTCOME_FAILED);
+    let IrlProduct::Degraded(mut status) = staged.product else {
+        panic!("expected a degraded interpretation")
+    };
+    // A recorded detail cannot be reconstructed from the stage outcome or reason.
+    status.reasons[0].detail_ref = Some(w.context.clone());
+    staged.adoption.interpretation.content = reference(&status);
+    w.publish(staged.adoption, &status);
+    assert_eq!(
+        committed_irl(&w, &w.turn, "tx", limits()),
+        Ok(Some(CommittedIrl::Failed(status.clone())))
+    );
+    let (stage, _) = w.committed.take().unwrap();
+    assert_eq!(
+        committed_irl(&w, &w.turn, "tx", limits()),
+        Err(Fault::Source)
+    );
+    status.reasons[0].detail_ref.as_mut().unwrap().digest.0[0] ^= 1;
+    w.committed = Some((stage, status.canonical_bytes(limits()).unwrap()));
+    assert_eq!(
+        committed_irl(&w, &w.turn, "tx", limits()),
+        Err(Fault::Object)
+    );
 }
 #[test]
 fn partial_result_quarantines_broken_spans_and_dependent_claims() {
@@ -281,6 +321,11 @@ fn partial_result_quarantines_broken_spans_and_dependent_claims() {
             .filter(|t| t.unknown_reason.is_some())
             .count(),
         2
+    );
+    w.publish(stage.adoption, &graph);
+    assert_eq!(
+        committed_irl(&w, &w.turn, "tx", limits()),
+        Ok(Some(CommittedIrl::Graph(graph)))
     );
 }
 #[test]
@@ -327,7 +372,14 @@ fn depth_budget_counts_relations_between_flat_wire_nodes() {
     let stage = w.run(&w.candidate()).unwrap();
     assert_eq!(stage.adoption.outcome, StageOutcome::STAGE_OUTCOME_FAILED);
     assert_eq!(stage.adoption.reason.as_deref(), Some("Budget"));
-    assert!(matches!(stage.product, IrlProduct::Degraded(_)));
+    let IrlProduct::Degraded(status) = stage.product else {
+        panic!("expected a degraded interpretation")
+    };
+    w.publish(stage.adoption, &status);
+    assert_eq!(
+        committed_irl(&w, &w.turn, "tx", limits()),
+        Ok(Some(CommittedIrl::Failed(status)))
+    );
 }
 
 #[test]

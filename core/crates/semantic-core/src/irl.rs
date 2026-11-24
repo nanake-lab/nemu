@@ -236,13 +236,21 @@ fn adopted<T: WireMessage>(
     Ok(value)
 }
 
-/// Read the same-turn product from the prefix without repeating interpretation.
+/// The authenticated product of a committed first interpretation.
+#[derive(Debug, PartialEq)]
+pub enum CommittedIrl {
+    Graph(SemanticGraphV2),
+    Failed(DegradedStatus),
+}
+
+/// Read the same-turn product without repeating interpretation. Only an absent
+/// initial adoption yields None. An unreadable adoption or product is a fault.
 pub fn committed_irl(
     prefix: &impl CommittedIrlPrefix,
     turn: &RecordVersion,
     transaction_id: &str,
     limits: Limits,
-) -> Result<Option<SemanticGraphV2>> {
+) -> Result<Option<CommittedIrl>> {
     if prefix.transaction().is_some() || prefix.branch() != turn.branch_id {
         return Err(Fault::Binding);
     }
@@ -264,12 +272,17 @@ pub fn committed_irl(
     {
         return Err(Fault::Binding);
     }
-    if stage.outcome == StageOutcome::STAGE_OUTCOME_FAILED {
-        return Err(Fault::Source);
-    }
-    let graph: SemanticGraphV2 = adopted(prefix, &stage.interpretation, limits)?;
-    if graph.registry != stage.registry_before {
-        return Err(Fault::Object);
-    }
-    Ok(Some(graph))
+    let product = match stage.outcome {
+        StageOutcome::STAGE_OUTCOME_FAILED => {
+            CommittedIrl::Failed(adopted(prefix, &stage.interpretation, limits)?)
+        }
+        StageOutcome::STAGE_OUTCOME_VALID | StageOutcome::STAGE_OUTCOME_PARTIAL => {
+            let graph: SemanticGraphV2 = adopted(prefix, &stage.interpretation, limits)?;
+            if graph.registry != stage.registry_before {
+                return Err(Fault::Object);
+            }
+            CommittedIrl::Graph(graph)
+        }
+    };
+    Ok(Some(product))
 }
