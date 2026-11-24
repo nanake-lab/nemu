@@ -193,6 +193,7 @@ pub fn upload_type(tag: &str) -> Result<String> {
                         | "permission.proto"
                         | "semantic_evidence.proto"
                         | "initial_publication.proto"
+                        | "irl_pipe.proto"
                 )
         })
         .map(|(name, _)| name)

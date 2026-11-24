@@ -172,6 +172,24 @@ class EmptyPrefixKind(IntEnum):
     EMPTY_HISTORY = 1
     EMPTY_CHANGE_LEDGER = 2
     EMPTY_INGRESS_DECISIONS = 3
+class IrlPipeLink(IntEnum):
+    IRL_CORE_WORKER = 1
+    IRL_WORKER_BRIDGE = 2
+    IRL_WORKER_ADAPTER = 3
+class IrlPipeOperation(IntEnum):
+    IRL_DISPATCH = 1
+    IRL_DELEGATE = 2
+    IRL_FETCH = 3
+    IRL_MATERIAL = 4
+    IRL_CANCEL_REQUEST = 5
+    IRL_CANCEL_EFFECTIVE = 6
+    IRL_NOT_SENT = 7
+    IRL_SENT_UNKNOWN = 8
+    IRL_FAILURE = 9
+    IRL_STALE = 10
+    IRL_CANDIDATE = 11
+    IRL_OUTPUT = 12
+    IRL_TRUNCATED = 13
 class JResidualStage(IntEnum):
     J_BLOCK_RESIDUAL_OUTPUT = 1
     J_MIXER_RESIDUAL_BEFORE_FFN_NORM = 2
@@ -1043,6 +1061,69 @@ class InitialPublication:
     q: InitialRuntimeRoot
     empty_history: EmptyPrefixRoot | None
     birth: BirthNameRecord | None
+@dataclass(frozen=True, repr=False)
+class IrlPipeAuth:
+    schema_version: int
+    protocol_version: int
+    session_id: str
+    link: IrlPipeLink
+    launch_credential: bytes
+@dataclass(frozen=True)
+class IrlCall:
+    schema_version: int
+    protocol_version: int
+    session_id: str
+    request_id: str
+@dataclass(frozen=True)
+class IrlPipeBudget:
+    schema_version: int
+    version: str
+    frame_bytes: int
+    object_bytes: int
+    output_bytes: int
+@dataclass(frozen=True)
+class IrlBorrow:
+    schema_version: int
+    grant_id: str
+    object: ObjectRef
+@dataclass(frozen=True)
+class IrlMaterial:
+    schema_version: int
+    object: ObjectRef
+    data: bytes
+@dataclass(frozen=True)
+class IrlDispatch:
+    schema_version: int
+    target: RecordVersion
+    payload: IrlBorrow
+    facts: IrlBorrow
+    registry: IrlBorrow
+@dataclass(frozen=True)
+class IrlDelegation:
+    schema_version: int
+    link: IrlPipeLink
+    parent: IrlCall
+    inputs: list[IrlMaterial]
+    parameters: ObjectRef
+    provider: str | None
+    requested_model: str | None
+    disclosure: ObjectRef | None
+    local_model: ObjectRef | None
+    isolation: ObjectRef | None
+@dataclass(frozen=True)
+class IrlPipeFrame:
+    schema_version: int
+    call: IrlCall
+    operation: IrlPipeOperation
+    dispatch: IrlDispatch | None
+    delegation: IrlDelegation | None
+    borrow: IrlBorrow | None
+    material: IrlMaterial | None
+    reason: FailureReason | None
+    remote_status: RemoteAttemptStatus | None
+    sent_request: ObjectRef | None
+    graph: ObjectRef | None
+    output: IrlMaterial | None
 @dataclass(frozen=True)
 class JHookBinding:
     schema_version: int

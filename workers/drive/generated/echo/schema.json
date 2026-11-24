@@ -3726,6 +3726,548 @@
         }
       }
     },
+    "IrlPipeAuth": {
+      "tag": "echo.irl-pipe-auth",
+      "source": "ADR 0051 local-only ACL and mutual launch authentication",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "protocol_version",
+          "type": "uint32",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0,
+          "max": 1.0
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "link",
+          "type": "IrlPipeLink",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "launch_credential",
+          "type": "bytes",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "size": 32
+        }
+      ],
+      "file": "irl_pipe.proto",
+      "rules": {},
+      "transient": true
+    },
+    "IrlCall": {
+      "tag": "echo.irl-call",
+      "source": "ADR 0051 authenticated connection and request correlation",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "protocol_version",
+          "type": "uint32",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0,
+          "max": 1.0
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        }
+      ],
+      "file": "irl_pipe.proto",
+      "rules": {}
+    },
+    "IrlPipeBudget": {
+      "tag": "echo.irl-pipe-budget",
+      "source": "ADR 0051 host settings; no understanding deadline",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "frame_bytes",
+          "type": "uint32",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false,
+          "min": 1.0
+        },
+        {
+          "name": "object_bytes",
+          "type": "uint64",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "output_bytes",
+          "type": "uint64",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "irl_pipe.proto",
+      "rules": {}
+    },
+    "IrlBorrow": {
+      "tag": "echo.irl-borrow",
+      "source": "ADR 0051 scoped lookup, never a general object-store capability",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "grant_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "object",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "irl_pipe.proto",
+      "rules": {}
+    },
+    "IrlMaterial": {
+      "tag": "echo.irl-material",
+      "source": "ADR 0051 actual bytes of a versioned object",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "object",
+          "type": "ObjectRef",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "data",
+          "type": "bytes",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "irl_pipe.proto",
+      "rules": {}
+    },
+    "IrlDispatch": {
+      "tag": "echo.irl-dispatch",
+      "source": "ADR 0051 core to worker; full ProposalBindingV2 stays in core",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "target",
+          "type": "RecordVersion",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "payload",
+          "type": "IrlBorrow",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "facts",
+          "type": "IrlBorrow",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "registry",
+          "type": "IrlBorrow",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "irl_pipe.proto",
+      "rules": {}
+    },
+    "IrlDelegation": {
+      "tag": "echo.irl-delegation",
+      "source": "ADR 0051 worker to bridge or neutral local adapter",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "link",
+          "type": "IrlPipeLink",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parent",
+          "type": "IrlCall",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "inputs",
+          "type": "IrlMaterial",
+          "number": 4,
+          "repeated": true,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "parameters",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "provider",
+          "type": "string",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "requested_model",
+          "type": "string",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": true
+        },
+        {
+          "name": "disclosure",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "local_model",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "isolation",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "irl_pipe.proto",
+      "rules": {
+        "discriminator": "link",
+        "common": [
+          "parent",
+          "inputs",
+          "parameters"
+        ],
+        "cases": {
+          "2": {
+            "required": [
+              "provider",
+              "requested_model",
+              "disclosure"
+            ]
+          },
+          "3": {
+            "required": [
+              "local_model",
+              "isolation"
+            ]
+          }
+        }
+      }
+    },
+    "IrlPipeFrame": {
+      "tag": "echo.irl-pipe-frame",
+      "source": "ADR 0051 direction checked against the authenticated link",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "call",
+          "type": "IrlCall",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "operation",
+          "type": "IrlPipeOperation",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "dispatch",
+          "type": "IrlDispatch",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "delegation",
+          "type": "IrlDelegation",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "borrow",
+          "type": "IrlBorrow",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "material",
+          "type": "IrlMaterial",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "reason",
+          "type": "FailureReason",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "remote_status",
+          "type": "RemoteAttemptStatus",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "sent_request",
+          "type": "ObjectRef",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "graph",
+          "type": "ObjectRef",
+          "number": 11,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "output",
+          "type": "IrlMaterial",
+          "number": 12,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "irl_pipe.proto",
+      "rules": {
+        "discriminator": "operation",
+        "common": [
+          "call"
+        ],
+        "cases": {
+          "1": {
+            "required": [
+              "dispatch"
+            ]
+          },
+          "2": {
+            "required": [
+              "delegation"
+            ]
+          },
+          "3": {
+            "required": [
+              "borrow"
+            ]
+          },
+          "4": {
+            "required": [
+              "borrow",
+              "material"
+            ]
+          },
+          "5": {},
+          "6": {},
+          "7": {
+            "required": [
+              "reason",
+              "remote_status"
+            ],
+            "values": {
+              "remote_status": [
+                6
+              ]
+            }
+          },
+          "8": {
+            "required": [
+              "sent_request",
+              "reason"
+            ]
+          },
+          "9": {
+            "required": [
+              "reason"
+            ]
+          },
+          "10": {
+            "required": [
+              "reason"
+            ]
+          },
+          "11": {
+            "required": [
+              "graph",
+              "output"
+            ]
+          },
+          "12": {
+            "required": [
+              "output"
+            ]
+          },
+          "13": {
+            "optional": [
+              "output"
+            ]
+          }
+        }
+      }
+    },
     "JHookBinding": {
       "tag": "echo.j-hook-binding",
       "source": "O 13.1-13.2; ADR 0036",
@@ -18081,6 +18623,28 @@
       "EMPTY_HISTORY": 1,
       "EMPTY_CHANGE_LEDGER": 2,
       "EMPTY_INGRESS_DECISIONS": 3
+    },
+    "IrlPipeLink": {
+      "IRL_LINK_UNSPECIFIED": 0,
+      "IRL_CORE_WORKER": 1,
+      "IRL_WORKER_BRIDGE": 2,
+      "IRL_WORKER_ADAPTER": 3
+    },
+    "IrlPipeOperation": {
+      "IRL_OP_UNSPECIFIED": 0,
+      "IRL_DISPATCH": 1,
+      "IRL_DELEGATE": 2,
+      "IRL_FETCH": 3,
+      "IRL_MATERIAL": 4,
+      "IRL_CANCEL_REQUEST": 5,
+      "IRL_CANCEL_EFFECTIVE": 6,
+      "IRL_NOT_SENT": 7,
+      "IRL_SENT_UNKNOWN": 8,
+      "IRL_FAILURE": 9,
+      "IRL_STALE": 10,
+      "IRL_CANDIDATE": 11,
+      "IRL_OUTPUT": 12,
+      "IRL_TRUNCATED": 13
     },
     "JResidualStage": {
       "J_RESIDUAL_UNSPECIFIED": 0,

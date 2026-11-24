@@ -587,6 +587,62 @@ impl EmptyPrefixKind {
 #[allow(non_camel_case_types)]
 #[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(try_from = "u32", into = "u32")]
+pub enum IrlPipeLink {
+    IRL_CORE_WORKER = 1,
+    IRL_WORKER_BRIDGE = 2,
+    IRL_WORKER_ADAPTER = 3,
+}
+impl TryFrom<u32> for IrlPipeLink { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::IRL_CORE_WORKER),
+2 => Ok(Self::IRL_WORKER_BRIDGE),
+3 => Ok(Self::IRL_WORKER_ADAPTER),
+_ => Err("unknown enum".into()), }}}
+impl From<IrlPipeLink> for u32 {fn from(v:IrlPipeLink)->Self{v as u32}}
+impl IrlPipeLink {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
+pub enum IrlPipeOperation {
+    IRL_DISPATCH = 1,
+    IRL_DELEGATE = 2,
+    IRL_FETCH = 3,
+    IRL_MATERIAL = 4,
+    IRL_CANCEL_REQUEST = 5,
+    IRL_CANCEL_EFFECTIVE = 6,
+    IRL_NOT_SENT = 7,
+    IRL_SENT_UNKNOWN = 8,
+    IRL_FAILURE = 9,
+    IRL_STALE = 10,
+    IRL_CANDIDATE = 11,
+    IRL_OUTPUT = 12,
+    IRL_TRUNCATED = 13,
+}
+impl TryFrom<u32> for IrlPipeOperation { type Error = String; fn try_from(v:u32)->Result<Self,String>{match v {
+1 => Ok(Self::IRL_DISPATCH),
+2 => Ok(Self::IRL_DELEGATE),
+3 => Ok(Self::IRL_FETCH),
+4 => Ok(Self::IRL_MATERIAL),
+5 => Ok(Self::IRL_CANCEL_REQUEST),
+6 => Ok(Self::IRL_CANCEL_EFFECTIVE),
+7 => Ok(Self::IRL_NOT_SENT),
+8 => Ok(Self::IRL_SENT_UNKNOWN),
+9 => Ok(Self::IRL_FAILURE),
+10 => Ok(Self::IRL_STALE),
+11 => Ok(Self::IRL_CANDIDATE),
+12 => Ok(Self::IRL_OUTPUT),
+13 => Ok(Self::IRL_TRUNCATED),
+_ => Err("unknown enum".into()), }}}
+impl From<IrlPipeOperation> for u32 {fn from(v:IrlPipeOperation)->Self{v as u32}}
+impl IrlPipeOperation {
+    /// Superseded values stay decodable for old data and tests; producers must not emit them (P5-21).
+    pub const fn is_superseded(self) -> bool { false }
+}
+#[allow(non_camel_case_types)]
+#[derive(Clone, Copy, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(try_from = "u32", into = "u32")]
 pub enum JResidualStage {
     J_BLOCK_RESIDUAL_OUTPUT = 1,
     J_MIXER_RESIDUAL_BEFORE_FFN_NORM = 2,
@@ -2700,6 +2756,116 @@ pub r#empty_history: Option<EmptyPrefixRoot>,
 pub r#birth: Option<BirthNameRecord>,
 }
 impl super::WireMessage for InitialPublication {const NAME: &'static str = "InitialPublication";}
+/// ADR 0051 local-only ACL and mutual launch authentication; frozen tag `echo.irl-pipe-auth`.
+#[derive(Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlPipeAuth {
+pub r#schema_version: u32,
+pub r#protocol_version: u32,
+pub r#session_id: String,
+pub r#link: IrlPipeLink,
+pub r#launch_credential: HexBytes,
+}
+impl std::fmt::Debug for IrlPipeAuth {fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {f.write_str("IrlPipeAuth([REDACTED])")}}
+impl super::WireMessage for IrlPipeAuth {const NAME: &'static str = "IrlPipeAuth"; const PERSISTABLE: bool = false;}
+/// ADR 0051 authenticated connection and request correlation; frozen tag `echo.irl-call`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlCall {
+pub r#schema_version: u32,
+pub r#protocol_version: u32,
+pub r#session_id: String,
+pub r#request_id: String,
+}
+impl super::WireMessage for IrlCall {const NAME: &'static str = "IrlCall";}
+/// ADR 0051 host settings; no understanding deadline; frozen tag `echo.irl-pipe-budget`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlPipeBudget {
+pub r#schema_version: u32,
+pub r#version: String,
+pub r#frame_bytes: u32,
+pub r#object_bytes: DecimalU64,
+pub r#output_bytes: DecimalU64,
+}
+impl super::WireMessage for IrlPipeBudget {const NAME: &'static str = "IrlPipeBudget";}
+/// ADR 0051 scoped lookup, never a general object-store capability; frozen tag `echo.irl-borrow`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlBorrow {
+pub r#schema_version: u32,
+pub r#grant_id: String,
+pub r#object: ObjectRef,
+}
+impl super::WireMessage for IrlBorrow {const NAME: &'static str = "IrlBorrow";}
+/// ADR 0051 actual bytes of a versioned object; frozen tag `echo.irl-material`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlMaterial {
+pub r#schema_version: u32,
+pub r#object: ObjectRef,
+pub r#data: HexBytes,
+}
+impl super::WireMessage for IrlMaterial {const NAME: &'static str = "IrlMaterial";}
+/// ADR 0051 core to worker; full ProposalBindingV2 stays in core; frozen tag `echo.irl-dispatch`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlDispatch {
+pub r#schema_version: u32,
+pub r#target: RecordVersion,
+pub r#payload: IrlBorrow,
+pub r#facts: IrlBorrow,
+pub r#registry: IrlBorrow,
+}
+impl super::WireMessage for IrlDispatch {const NAME: &'static str = "IrlDispatch";}
+/// ADR 0051 worker to bridge or neutral local adapter; frozen tag `echo.irl-delegation`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlDelegation {
+pub r#schema_version: u32,
+pub r#link: IrlPipeLink,
+pub r#parent: IrlCall,
+pub r#inputs: Vec<IrlMaterial>,
+pub r#parameters: ObjectRef,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#provider: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#requested_model: Option<String>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#disclosure: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#local_model: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#isolation: Option<ObjectRef>,
+}
+impl super::WireMessage for IrlDelegation {const NAME: &'static str = "IrlDelegation";}
+/// ADR 0051 direction checked against the authenticated link; frozen tag `echo.irl-pipe-frame`.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct IrlPipeFrame {
+pub r#schema_version: u32,
+pub r#call: IrlCall,
+pub r#operation: IrlPipeOperation,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#dispatch: Option<IrlDispatch>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#delegation: Option<IrlDelegation>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#borrow: Option<IrlBorrow>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#material: Option<IrlMaterial>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#reason: Option<FailureReason>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#remote_status: Option<RemoteAttemptStatus>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#sent_request: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#graph: Option<ObjectRef>,
+#[serde(default, skip_serializing_if = "Option::is_none")]
+pub r#output: Option<IrlMaterial>,
+}
+impl super::WireMessage for IrlPipeFrame {const NAME: &'static str = "IrlPipeFrame";}
 /// O 13.1-13.2; ADR 0036; frozen tag `echo.j-hook-binding`.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -5664,6 +5830,14 @@ pub fn verify_typed(name: &str, value: &serde_json::Value, limits: super::contra
 "InitialRuntimeRoot" => super::verify_typed::<InitialRuntimeRoot>(value, limits),
 "BirthNameRecord" => super::verify_typed::<BirthNameRecord>(value, limits),
 "InitialPublication" => super::verify_typed::<InitialPublication>(value, limits),
+"IrlPipeAuth" => super::verify_typed::<IrlPipeAuth>(value, limits),
+"IrlCall" => super::verify_typed::<IrlCall>(value, limits),
+"IrlPipeBudget" => super::verify_typed::<IrlPipeBudget>(value, limits),
+"IrlBorrow" => super::verify_typed::<IrlBorrow>(value, limits),
+"IrlMaterial" => super::verify_typed::<IrlMaterial>(value, limits),
+"IrlDispatch" => super::verify_typed::<IrlDispatch>(value, limits),
+"IrlDelegation" => super::verify_typed::<IrlDelegation>(value, limits),
+"IrlPipeFrame" => super::verify_typed::<IrlPipeFrame>(value, limits),
 "JHookBinding" => super::verify_typed::<JHookBinding>(value, limits),
 "JDirectionVector" => super::verify_typed::<JDirectionVector>(value, limits),
 "JDirection" => super::verify_typed::<JDirection>(value, limits),
