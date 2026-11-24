@@ -74,8 +74,10 @@ fn borrow_requires_outstanding_request_visible_frontier_and_matching_bytes_and_c
         .is_err()
     );
     let loan = opening.dispatch.as_ref().unwrap().payload.clone();
+    let facts = opening.dispatch.as_ref().unwrap().facts.clone();
     let mut budget: IrlPipeBudget = fixture(|_| true);
     budget.object_bytes = loan.object.byte_length;
+    budget.object_bytes.0 += facts.object.byte_length.0;
     let mut call = PipeCall::new(
         opening.clone(),
         IrlPipeLink::IRL_CORE_WORKER,
@@ -111,7 +113,21 @@ fn borrow_requires_outstanding_request_visible_frontier_and_matching_bytes_and_c
         )
         .unwrap();
     assert_eq!(result, good);
+    let reply = IrlPipeFrame {
+        call: request.call.clone(),
+        borrow: Some(loan.clone()),
+        material: Some(result),
+        ..frame(IRL_MATERIAL)
+    };
+    let wire = reply.protobuf_bytes(LIMITS).unwrap();
+    frame_length(wire.len().try_into().unwrap(), &budget).unwrap();
+    assert_eq!(IrlPipeFrame::from_protobuf(&wire, LIMITS).unwrap(), reply);
     assert!(call.fetch(&loan, |_, _| unreachable!(), LIMITS).is_err());
+    // The first service left exactly the bytes for the dispatch's facts loan.
+    request.borrow = Some(facts.clone());
+    apply(&mut call, ToCaller, &request).unwrap();
+    call.fetch(&facts, |_, _| Ok(b"facts".to_vec()), LIMITS)
+        .unwrap();
     assert!(apply(&mut call, ToCaller, &request).is_err());
 }
 

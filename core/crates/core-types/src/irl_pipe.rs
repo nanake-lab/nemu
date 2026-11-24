@@ -165,23 +165,6 @@ impl<'a> PipeCall<'a> {
                 )?;
                 self.pending.push(loan.clone());
             }
-            (ToCallee, IRL_MATERIAL) if core && active => {
-                let loan = frame.borrow.as_ref().ok_or("missing IRL loan")?;
-                let material = frame.material.as_ref().ok_or("missing IRL material")?;
-                let idx = self
-                    .pending
-                    .iter()
-                    .position(|b| b == loan)
-                    .ok_or("unsolicited IRL material")?;
-                require(material.object == loan.object, "IRL material substitution")?;
-                let left = self
-                    .objects_left
-                    .checked_sub(material.object.byte_length.0)
-                    .ok_or("IRL object budget")?;
-                verify_material(material, limits)?;
-                self.pending.swap_remove(idx);
-                self.objects_left = left;
-            }
             (ToCallee, IRL_CANCEL_REQUEST) if active => self.phase = Phase::Cancelling,
             (ToCaller, IRL_CANCEL_EFFECTIVE | IRL_FAILURE | IRL_STALE) if running => {
                 self.phase = Phase::Closed
@@ -225,6 +208,8 @@ impl<'a> PipeCall<'a> {
     /// The host supplies a reader scoped to the *current* authorized frontier and
     /// this transaction's explicitly loaned staged objects. Successful service
     /// consumes the pending fetch and debits this peer before returning the bytes.
+    /// The host sends the returned material in IRL_MATERIAL directly, without
+    /// passing the outgoing frame through `receive`.
     pub fn fetch(
         &mut self,
         loan: &IrlBorrow,
