@@ -31,7 +31,7 @@ pub fn next<L: LineageKind>(store: &mut Store<L>) -> Result<Next> {
 }
 pub fn read_state<L: LineageKind>(store: &Store<L>) -> Result<Snapshot> {
     let reader = store.verified_reader()?;
-    let current = reader.current()?.ok_or(Error::Rejected(
+    let current = reader.current_manifest()?.ok_or(Error::Rejected(
         "genesis/bootstrap publication contract required",
     ))?;
     Ok(Snapshot {
@@ -66,7 +66,7 @@ pub fn prepare_existing_head<L: LineageKind>(
         staged.trace.last() == Some(&Step::Ledger),
         "computation incomplete",
     )?;
-    let old = store.current()?.ok_or(Error::Rejected(
+    let old = store.current_manifest()?.ok_or(Error::Rejected(
         "genesis/bootstrap publication contract required",
     ))?;
     // No invented representation for a changed aggregate L or runtime Q.
@@ -122,7 +122,7 @@ pub fn prepare_existing_head<L: LineageKind>(
         .0
         .checked_add(1)
         .ok_or(Error::Rejected("position overflow"))?;
-    let transaction = CoreTransactionV2 {
+    let transaction = CoreTransactionV4 {
         schema_version: 1,
         staged_h: h,
         staged_x: x,
@@ -136,11 +136,12 @@ pub fn prepare_existing_head<L: LineageKind>(
         staged_concepts: concepts,
         accepted_results: accepted,
         audit_refs: vec![audit],
-        binding: staged.binding,
+        event_binding: Some(staged.binding),
+        activity_commit: None,
         staged_ledger: vec![],
     };
     Ok(ExistingPreparation {
-        transaction: store.stage(ticket, transaction)?,
+        transaction: store.stage_event_v4(ticket, transaction)?,
         status,
         pins,
     })

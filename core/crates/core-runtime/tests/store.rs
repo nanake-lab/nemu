@@ -1,5 +1,5 @@
 //! W02 integration fixtures, not a production bootstrap or terminal smoke test.
-mod common;
+pub(crate) mod common;
 use common::*;
 use core_runtime::{binding::digest, stages::*, store as runtime};
 use core_store::{
@@ -20,7 +20,7 @@ fn config() -> StoreConfig {
         max_sql_pages: 8192,
     }
 }
-fn open(root: &TemporaryRoot) -> Store<Rehearsal> {
+pub(crate) fn open(root: &TemporaryRoot) -> Store<Rehearsal> {
     let mut h: LineageHeaderV2 = fixture();
     h.lineage = Lineage::REHEARSAL;
     h.genesis_manifest_digest = None;
@@ -53,7 +53,28 @@ fn seed(
     store: &mut Store<Rehearsal>,
     cap: &CommitCapability<Rehearsal>,
 ) -> PreparedObject<Rehearsal> {
-    let e = ingress(store, 0);
+    seed_with_q(store, cap, |_, leaf, _| leaf.clone())
+}
+fn seed_with_q(
+    store: &mut Store<Rehearsal>,
+    cap: &CommitCapability<Rehearsal>,
+    init_q: impl FnOnce(&Store<Rehearsal>, &ObjectRef, &EventEnvelope) -> ObjectRef,
+) -> PreparedObject<Rehearsal> {
+    seed_with_history(store, cap, init_q, |_, _, _, _| vec![])
+}
+pub(crate) fn seed_with_history(
+    store: &mut Store<Rehearsal>,
+    cap: &CommitCapability<Rehearsal>,
+    init_q: impl FnOnce(&Store<Rehearsal>, &ObjectRef, &EventEnvelope) -> ObjectRef,
+    interpretations: impl FnOnce(
+        &Store<Rehearsal>,
+        &ObjectRef,
+        &EventEnvelope,
+        &ProposalBindingV2,
+    ) -> Vec<ObjectRef>,
+) -> PreparedObject<Rehearsal> {
+    let (_, cursor, anchor) = store.head().unwrap();
+    let e = ingress(store, cursor);
     let leaf = store
         .prepare(
             &UserText {
@@ -68,9 +89,27 @@ fn seed(
     b.base_commit = store.base_commit().unwrap();
     b.event_id = e.id.clone();
     b.raw_log_position = e.raw_log_position;
-    b.anchor_time_ns = DecimalU64(0);
+    b.anchor_time_ns = DecimalU64(anchor);
     b.process_time_ns = DecimalU64(10);
     b.read_set = vec![leaf.reference().clone()];
+    if let Some(old) = store.current_manifest().unwrap() {
+        let state = runtime::read_state(store).unwrap();
+        b.x_revision = state.x.revision;
+        b.r_revision = state.r.revision;
+        b.theta_revision = state.theta.revision;
+        b.read_set.extend([
+            old.staged_h,
+            old.staged_x,
+            old.staged_r,
+            old.staged_theta,
+            old.staged_l,
+            old.staged_q,
+            old.staged_u,
+        ]);
+        b.read_set
+            .sort_by_key(|r| core_types::scalar::hex(&r.digest.0));
+        b.read_set.dedup();
+    }
     // ADR 0029: retain the complete real-C fixture, including nonempty state.
     let mut theta: ThetaSnapshotV2 = fixture();
     let law = store
@@ -97,13 +136,13 @@ fn seed(
         staged_r: r.reference().clone(),
         staged_theta: theta.reference().clone(),
         staged_l: leaf.reference().clone(),
-        staged_q: leaf.reference().clone(),
+        staged_q: init_q(store, leaf.reference(), &e),
         staged_u: leaf.reference().clone(),
         staged_concepts: vec![],
-        accepted_results: vec![],
+        accepted_results: interpretations(store, leaf.reference(), &e, &b),
         audit_refs: vec![],
         staged_ledger: vec![],
-        processed_position: DecimalU64(1),
+        processed_position: DecimalU64(cursor + 1),
         anchor_time_ns: DecimalU64(10),
     };
     let tx = store.stage(store.bind(b).unwrap(), tx).unwrap();
@@ -128,7 +167,7 @@ fn case(store: &Store<Rehearsal>, e: EventEnvelope, leaf: &ObjectRef) -> Case {
     c.binding.x_revision = c.base.x.revision.clone();
     c.binding.r_revision = c.base.r.revision.clone();
     c.binding.theta_revision = c.base.theta.revision.clone();
-    let old = store.current().unwrap().unwrap();
+    let old = store.current_manifest().unwrap().unwrap();
     c.binding.read_set = vec![
         leaf.clone(),
         old.staged_h,
@@ -380,3 +419,6 @@ fn same_revision_forged_base_and_old_ticket_are_rejected() {
     store.commit(&cap, first.transaction, first.status).unwrap();
     assert!(store.commit(&cap, stale.transaction, stale.status).is_err());
 }
+
+#[path = "../src/cognition/integration_tests.rs"]
+pub(crate) mod cognition_tests;

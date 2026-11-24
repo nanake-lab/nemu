@@ -12,6 +12,9 @@ LIMITS = dict(max_bytes=1048576, max_items=4096, max_depth=32)
 
 
 def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
+    from fixture_evidence import evidence_sample
+    if SCHEMA["messages"][name]["file"] == "semantic_evidence.proto":
+        return evidence_sample(name, seed)
     from fixture_permission import permission_sample
     if SCHEMA["messages"][name]["file"] == "permission.proto":
         return permission_sample(name, seed)
@@ -136,6 +139,7 @@ def unit(c: float, e: float, q: float, a: float) -> dict[str, Any]:
 
 
 def targeted_legal() -> list[dict[str, Any]]:
+    from fixture_evidence import evidence_legal
     from fixture_cognition import legal_cognition
     from fixture_speak_think import legal_wire
     from fixture_permission import permission_legal
@@ -205,6 +209,7 @@ def targeted_legal() -> list[dict[str, Any]]:
         + legal_cognition()
         + legal_wire()
         + permission_legal()
+        + evidence_legal()
     )
 
 
@@ -559,8 +564,11 @@ def targeted_illegal() -> list[dict[str, Any]]:
 
     from fixture_touch import illegal_touch
 
+    from fixture_evidence import evidence_illegal
+
     return (
-        targeted_illegal_existing()
+        evidence_illegal()
+        + targeted_illegal_existing()
         + out
         + illegal_retention()
         + illegal_theta()

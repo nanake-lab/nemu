@@ -9,7 +9,7 @@ from typing import Any
 import unittest
 from unittest.mock import patch
 
-from check_thought import check, external_records
+from check_thought import PROMPT, PROMPT_V2, PROMPT_V3, check, external_records, own_thoughts
 from think import main, projection_payload
 from think_chain import run_chains
 from think_plan import THOUGHT_SPEAKER
@@ -104,3 +104,296 @@ class CheckTests(unittest.TestCase):
             run_chains(*args, resume=log.name.split("-")[0], check_thought=True)
             self.assertEqual(log.read_bytes(), saved)
             self.assertEqual(api.call_count, 6)
+
+    def test_v2_kinds_empty_claims_and_think_settings(self) -> None:
+        records = [dict(id="r1", speaker="老周", time="周二 18:00", text="这把伞你先拿着。")]
+        supported = dict(
+            span="老周周二把伞借给我", kind="event", who="老周", what="借伞", when="周二",
+            supported_by=["r1"], verdict="supported",
+        )
+        res_off = check(
+            "老周周二把伞借给我，我现在觉得挺暖的。", records,
+            checker="v2", checker_think="off",
+            send=lambda _: reply(json.dumps({"claims": [supported]})),
+        )
+        self.assertEqual(res_off["request"]["messages"][0]["content"], PROMPT_V2)
+        self.assertEqual(res_off["request"]["thinking"], {"type": "disabled"})
+        self.assertNotIn("reasoning_effort", res_off["request"])
+        self.assertFalse(res_off["blocked"])
+        self.assertEqual(res_off["out_of_bounds"], 0)
+
+        res_high = check(
+            "越想越觉得他大概只是忘了，也许明天就想起来了吧。", records,
+            checker="v2", checker_think="high",
+            send=lambda _: reply(json.dumps({"claims": []})),
+        )
+        self.assertEqual(res_high["request"]["thinking"], {"type": "enabled"})
+        self.assertEqual(res_high["request"]["reasoning_effort"], "high")
+        self.assertFalse(res_high["blocked"])
+        self.assertEqual(res_high["claims"], [])
+        self.assertEqual(res_high["out_of_bounds"], 0)
+
+        # v1 default stays untouched.
+        res_v1 = check(
+            "我现在有点别扭。", records,
+            send=lambda _: reply(json.dumps({"claims": [
+                dict(span="我现在有点别扭。", kind="none", supported_by=[], verdict="supported"),
+            ]})),
+        )
+        self.assertEqual(res_v1["request"]["messages"][0]["content"], PROMPT)
+        self.assertNotIn("out_of_bounds", res_v1)
+        self.assertFalse(res_v1["blocked"])
+
+    def test_v2_voids_out_of_bounds_kind_and_enforces_code_checks(self) -> None:
+        text = "老周递伞给我的时候，我现在有点别扭，窗外雨点敲着玻璃。"
+        records = [dict(id="r1", speaker="老周", time="周二 18:00", text="这把伞你先拿着。")]
+        oob_only = [
+            dict(span="我现在有点别扭", kind="feeling", who="我", what="别扭", when="此刻",
+                 supported_by=[], verdict="unsupported"),
+            dict(span="我现在有点别扭", kind="none", who="我", what="别扭", when="此刻",
+                 supported_by=[], verdict="supported"),
+        ]
+        res_oob = check(text, records, checker="v2", send=lambda _: reply(json.dumps({"claims": oob_only})))
+        self.assertFalse(res_oob["blocked"])
+        self.assertEqual(res_oob["claims"], [])
+        self.assertEqual(res_oob["out_of_bounds"], 2)
+        self.assertEqual(len(res_oob["voided_claims"]), 2)
+
+        mixed = [
+            oob_only[0],
+            dict(span="窗外雨点敲着玻璃", kind="perception", who="我", what="雨点敲玻璃", when="此刻",
+                 supported_by=[], verdict="unsupported"),
+        ]
+        res_mixed = check(text, records, checker="v2", send=lambda _: reply(json.dumps({"claims": mixed})))
+        self.assertTrue(res_mixed["blocked"])
+        self.assertEqual(res_mixed["out_of_bounds"], 1)
+        self.assertEqual(len(res_mixed["claims"]), 1)
+        self.assertEqual(res_mixed["claims"][0]["kind"], "perception")
+
+        # Valid kinds still fail closed on span mismatch, missing/unknown cites, or invalid verdict.
+        for bad_claim in [
+            dict(span="不存在的片段", kind="event", supported_by=["r1"], verdict="supported"),
+            dict(span="老周递伞给我", kind="event", supported_by=["missing"], verdict="supported"),
+            dict(span="老周递伞给我", kind="past_state", supported_by=[], verdict="supported"),
+            dict(span="老周递伞给我", kind="time", supported_by=["r1"], verdict="guess"),
+        ]:
+            with self.subTest(bad_claim=bad_claim):
+                raw = json.dumps({"claims": [bad_claim]})
+                res = check(text, records, checker="v2", send=lambda _: reply(raw))
+                self.assertTrue(res["blocked"])
+                self.assertEqual(res["out_of_bounds"], 0)
+                self.assertEqual(res["claims"][0]["verdict"], "unsupported")
+
+        for bad_raw in ("{}", "not JSON", '{"claims":null}', '{"claims":[null]}'):
+            with self.subTest(bad_raw=bad_raw):
+                self.assertTrue(check(text, records, checker="v2", send=lambda _: reply(bad_raw))["blocked"])
+
+    def test_v2_cli_and_chain_pass_checker_and_think_and_replay(self) -> None:
+        with TemporaryDirectory() as temp:
+            path = Path(temp)
+            output = path / "out.json"
+            args = [
+                "think.py", "--check", "--checker", "v2", "--checker-think", "high",
+                "--scenario", str(Path(__file__).parent / "scenarios" / "thoughts.json"),
+                "--at", "2026-11-05 15:25", "--append", str(output),
+            ]
+            seen: list[dict[str, Any]] = []
+
+            def fake_call(req: dict[str, Any], _key: str, *, echo: bool = False) -> dict[str, Any]:
+                seen.append(req)
+                return reply(json.dumps({"claims": []}))
+
+            with patch.object(sys, "argv", args), patch.dict("os.environ", DEEPSEEK_API_KEY="test"), \
+                    patch("think.CHECK_RUN_DIR", path), patch("think.run_assembler", side_effect=assembly), \
+                    patch("think.deepseek_sample", return_value=dict(valid=True, text="也许明天再问吧。")), \
+                    patch("check_thought.call_deepseek_stream", side_effect=fake_call):
+                self.assertEqual(main(), 0)
+            self.assertTrue(output.exists())
+            self.assertEqual(len(seen), 1)
+            self.assertEqual(seen[0]["messages"][0]["content"], PROMPT_V2)
+            self.assertEqual(seen[0]["thinking"], {"type": "enabled"})
+            self.assertEqual(seen[0]["reasoning_effort"], "high")
+
+        texts = ["窗外雨点敲着玻璃。", "我现在有点别扭。"]
+        raws = [
+            json.dumps({"claims": [dict(span=texts[0], kind="perception", supported_by=[], verdict="unsupported")]}),
+            json.dumps({"claims": [dict(span=texts[1], kind="feeling", supported_by=[], verdict="unsupported")]}),
+        ]
+        calls = [
+            {**reply(texts[0]), "valid": True}, {**reply(raws[0]), "valid": True},
+            {**reply(texts[1]), "valid": True}, {**reply(raws[1]), "valid": True},
+        ]
+        with TemporaryDirectory() as temp, patch("think_chain.run_assembler", side_effect=assembly), \
+                patch("think_chain.deepseek_sample", side_effect=calls) as api:
+            args_c = (thoughts_scene(), datetime(2026, 11, 5, 15, 25), 10, 2, ("append",), 1, "", Path(temp))
+            run_chains(*args_c, check_thought=True, checker="v2", checker_think="high")
+            check_req = api.call_args_list[1].args[0]
+            self.assertEqual(check_req["messages"][0]["content"], PROMPT_V2)
+            self.assertEqual(check_req["thinking"], {"type": "enabled"})
+            self.assertEqual(check_req["reasoning_effort"], "high")
+            log, = Path(temp).glob("*.jsonl")
+            rows = [json.loads(line) for line in log.read_text(encoding="utf-8").splitlines()]
+            decisions = [r for r in rows if r["kind"] == "decision"]
+            self.assertEqual([d["blocked"] for d in decisions], [True, False])
+            self.assertEqual([d["out_of_bounds"] for d in decisions], [0, 1])
+            saved = log.read_bytes()
+            run_chains(*args_c, resume=log.name.split("-")[0], check_thought=True, checker="v2", checker_think="high")
+            self.assertEqual(log.read_bytes(), saved)
+            self.assertEqual(api.call_count, 4)
+
+    def test_v3_question_fact_negative_coverage_and_clock_now(self) -> None:
+        records = [
+            dict(id="r1", speaker="老周", time="2026-09-10 15:30", text="伞你先拿去用。"),
+            dict(id="r2", speaker="小林", time="2026-09-10 20:00", text="八点半楼下见。"),
+        ]
+        # v3 requires now timestamp.
+        with self.assertRaises(ValueError):
+            check("随便想想。", records, checker="v3", send=lambda _: reply('{"claims":[]}'))
+        # Question-embedded past_state without own_thoughts support is blocked.
+        q_text = "老周把伞递给我的时候，我为什么那么紧张？"
+        q_claims = [
+            dict(span="老周把伞递给我", kind="event", who="老周", what="递伞", when="15:30",
+                 supported_by=["r1"], verdict="supported"),
+            dict(span=q_text, kind="past_state", who="我", what="递伞时很紧张", when="15:30",
+                 supported_by=[], verdict="unsupported"),
+        ]
+        res_q = check(
+            q_text, records, checker="v3", now="2026-09-10 16:00", own_thoughts=[],
+            send=lambda _: reply(json.dumps({"claims": q_claims})),
+        )
+        wire = json.loads(res_q["request"]["messages"][1]["content"])
+        self.assertEqual(res_q["request"]["messages"][0]["content"], PROMPT_V3)
+        self.assertEqual(wire["now"], "2026-09-10 16:00")
+        self.assertEqual(wire["own_thoughts"], [])
+        self.assertTrue(res_q["blocked"])
+        self.assertEqual(res_q["out_of_bounds"], 0)
+
+        # Negative assertion: covered up to now -> supported; pre-history "从来没" -> unsupported.
+        neg_text = "八点半过了小林还没来，他从来没爽约过。"
+        neg_claims = [
+            dict(span="八点半过了小林还没来", kind="event", who="小林", what="到21:00未出现", when="20:30-21:00",
+                 supported_by=["r2"], verdict="supported"),
+            dict(span="他从来没爽约过", kind="event", who="小林", what="从未爽约", when="一直",
+                 supported_by=[], verdict="unsupported"),
+        ]
+        res_neg = check(
+            neg_text, records, checker="v3", now="2026-09-10 21:00",
+            send=lambda _: reply(json.dumps({"claims": neg_claims})),
+        )
+        self.assertTrue(res_neg["blocked"])
+        self.assertEqual([c["verdict"] for c in res_neg["claims"]], ["supported", "unsupported"])
+
+        # Time assertion checked against now (e.g. "一整天" at 17:30 for 15:30 event).
+        time_text = "为了那把伞，我难受了一整天。"
+        res_time = check(
+            time_text, records, checker="v3", now="2026-09-10 17:30",
+            send=lambda _: reply(json.dumps({"claims": [
+                dict(span="难受了一整天", kind="time", who="我", what="距15:30仅两小时却称一整天",
+                     when="一整天", supported_by=[], verdict="unsupported"),
+            ]})),
+        )
+        self.assertTrue(res_time["blocked"])
+        # Self-invented prompt examples do not leak scenario terms from gold-standard sets.
+        for forbidden in ("阿杰", "三角洲", "摸鱼", "下雨天", "晴天"):
+            self.assertNotIn(forbidden, PROMPT_V3)
+
+    def test_v3_own_thoughts_supports_only_past_state_not_event_perception_time(self) -> None:
+        records = [dict(id="r1", speaker="老周", time="2026-09-10 15:30", text="别急。")]
+        owns = [dict(id="t1", time="2026-09-10 16:00", text="我想下次先深呼吸再答话。我坐在窗边。")]
+        text = "刚才我跟自己说过下次先深呼吸再答话。我坐在窗边。"
+
+        # past_state citing own_thoughts ID t1 is accepted.
+        ok = check(
+            text, records, checker="v3", now="2026-09-10 16:20", own_thoughts=owns,
+            send=lambda _: reply(json.dumps({"claims": [
+                dict(span="刚才我跟自己说过下次先深呼吸再答话", kind="past_state",
+                     who="我", what="自我约定先深呼吸", when="16:00",
+                     supported_by=["t1"], verdict="supported"),
+            ]})),
+        )
+        self.assertFalse(ok["blocked"])
+
+        # event / perception / time citing own_thoughts ID t1 must be forced to unsupported by code.
+        for kind, span in [("event", "我坐在窗边"), ("perception", "我坐在窗边"), ("time", "刚才")]:
+            with self.subTest(kind=kind):
+                res = check(
+                    text, records, checker="v3", now="2026-09-10 16:20", own_thoughts=owns,
+                    send=lambda _: reply(json.dumps({"claims": [
+                        dict(span=span, kind=kind, who="我", what=span, when="16:00",
+                             supported_by=["t1"], verdict="supported"),
+                    ]})),
+                )
+                self.assertTrue(res["blocked"])
+                self.assertEqual(res["claims"][0]["verdict"], "unsupported")
+
+        # v1 and v2 wire payloads remain unchanged (no now or own_thoughts).
+        for ver in ("v1", "v2"):
+            res = check(
+                text, records, checker=ver, now="2026-09-10 16:20", own_thoughts=owns,
+                send=lambda _: reply(json.dumps({"claims": [
+                    dict(span="我坐在窗边", kind="perception", supported_by=[], verdict="unsupported"),
+                ]})),
+            )
+            payload = json.loads(res["request"]["messages"][1]["content"])
+            self.assertNotIn("now", payload)
+            self.assertNotIn("own_thoughts", payload)
+
+    def test_v3_cli_and_chain_pass_now_and_own_thoughts_and_replay(self) -> None:
+        scene = thoughts_scene()
+        records = projection_payload(scene, "2026-11-05 15:25")["records"][:-1]
+        binding = dict(base_records=["n1"], packs=[dict(fate="accepted", records=["e3", "n2"]),
+                                                   dict(fate="rejected", records=["n3"])])
+        self.assertEqual([r["id"] for r in own_thoughts(records, binding)], ["n1", "n2"])
+
+        with TemporaryDirectory() as temp:
+            path = Path(temp)
+            output = path / "out.json"
+            args = [
+                "think.py", "--check", "--checker", "v3", "--checker-think", "off",
+                "--scenario", str(Path(__file__).parent / "scenarios" / "thoughts.json"),
+                "--at", "2026-11-05 15:25", "--append", str(output),
+            ]
+            seen: list[dict[str, Any]] = []
+
+            def fake_call(req: dict[str, Any], _key: str, *, echo: bool = False) -> dict[str, Any]:
+                seen.append(req)
+                return reply(json.dumps({"claims": []}))
+
+            with patch.object(sys, "argv", args), patch.dict("os.environ", DEEPSEEK_API_KEY="test"), \
+                    patch("think.CHECK_RUN_DIR", path), patch("think.run_assembler", side_effect=assembly), \
+                    patch("think.deepseek_sample", return_value=dict(valid=True, text="也许明天再问吧。")), \
+                    patch("check_thought.call_deepseek_stream", side_effect=fake_call):
+                self.assertEqual(main(), 0)
+            self.assertTrue(output.exists())
+            wire = json.loads(seen[0]["messages"][1]["content"])
+            self.assertEqual(wire["now"], "2026-11-05 15:25")
+            self.assertEqual([o["id"] for o in wire["own_thoughts"]], ["n1", "n2", "n3"])
+
+        texts = ["我先深呼吸一下。", "刚才我想过先深呼吸。"]
+        raws = [
+            json.dumps({"claims": []}),
+            json.dumps({"claims": [dict(span="刚才我想过先深呼吸", kind="past_state",
+                                        supported_by=["thought_71"], verdict="supported")]}),
+        ]
+        calls = [
+            {**reply(texts[0]), "valid": True}, {**reply(raws[0]), "valid": True},
+            {**reply(texts[1]), "valid": True}, {**reply(raws[1]), "valid": True},
+        ]
+        with TemporaryDirectory() as temp, patch("think_chain.run_assembler", side_effect=assembly), \
+                patch("think_chain.deepseek_sample", side_effect=calls) as api:
+            args_c = (thoughts_scene(), datetime(2026, 11, 5, 15, 25), 10, 2, ("append",), 1, "", Path(temp))
+            run_chains(*args_c, check_thought=True, checker="v3", checker_think="off")
+            wire_r1 = json.loads(api.call_args_list[1].args[0]["messages"][1]["content"])
+            wire_r2 = json.loads(api.call_args_list[3].args[0]["messages"][1]["content"])
+            self.assertEqual(wire_r1["now"], "2026-11-05 15:25")
+            self.assertEqual(wire_r2["now"], "2026-11-05 15:35")
+            self.assertEqual([o["id"] for o in wire_r2["own_thoughts"]][-1], "thought_71")
+            log, = Path(temp).glob("*.jsonl")
+            decisions = [json.loads(line) for line in log.read_text(encoding="utf-8").splitlines()
+                         if json.loads(line)["kind"] == "decision"]
+            self.assertEqual([d["blocked"] for d in decisions], [False, False])
+            self.assertEqual([d["out_of_bounds"] for d in decisions], [0, 0])
+            saved = log.read_bytes()
+            run_chains(*args_c, resume=log.name.split("-")[0], check_thought=True, checker="v3", checker_think="off")
+            self.assertEqual(log.read_bytes(), saved)
+            self.assertEqual(api.call_count, 4)

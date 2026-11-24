@@ -196,7 +196,14 @@ pub(super) fn publish(
             }
         }
     } else {
-        crate::publication::index(&tx, &store.objects, &id, value, &refs).unwrap();
+        crate::publication::index(
+            &tx,
+            &store.objects,
+            &id,
+            &crate::manifest::from_event(value.clone()),
+            &refs,
+        )
+        .unwrap();
     }
     for entry in &value.staged_ledger {
         let r = store.objects.reference(entry, "1").unwrap();

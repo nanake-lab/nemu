@@ -8,6 +8,7 @@
     "node": ">=24 <25"
   },
   "scripts": {
+    "experiment:core": "python core/crates/experiment-world/run.py",
     "dev": "pnpm --filter @nemu/desktop dev",
     "dev:stage": "pnpm --filter @nemu/stage dev",
     "dev:panel": "pnpm --filter @nemu/panel dev",

@@ -10,3 +10,7 @@ libm = { version = "=0.2.16", default-features = false }
 
 [dev-dependencies]
 serde_json = "=1.0.154"
+
+[features]
+# P5-30: pure, explicit synthetic-history adapter; no publication capability.
+synthetic-recompute = []

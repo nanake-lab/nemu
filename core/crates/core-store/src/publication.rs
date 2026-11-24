@@ -5,17 +5,30 @@ use crate::{
 use core_types::{
     WireMessage,
     contract::Schema,
-    generated::{ActionLifecycle, CoreTransactionV2, EvidenceGroupV3, ObjectRef, RSnapshotV3},
+    generated::{
+        ActionLifecycle, ActionStatus, CognitionState, CoreTransactionV4, EventEnvelope, EventKind,
+        EvidenceGroupV3, ObjectRef, RSnapshotV3,
+    },
     scalar::hex,
 };
 use rusqlite::{Connection, params};
+pub(crate) fn visible(db: &Connection, objects: &Objects, refs: &[ObjectRef]) -> Result<()> {
+    crate::store::publish_refs(db, refs, objects.config)?;
+    for r in refs {
+        db.execute(
+            "INSERT OR IGNORE INTO visible_objects VALUES(?1)",
+            [crate::raw::storage_key(r)],
+        )?;
+    }
+    Ok(())
+}
 
 /// All derived indexes publish in the same SQLite transaction as branch_head.
 pub(crate) fn index(
     db: &Connection,
     objects: &Objects,
     commit: &str,
-    value: &CoreTransactionV2,
+    value: &CoreTransactionV4,
     refs: &[ObjectRef],
 ) -> Result<()> {
     let limits = objects.config.encoding;
@@ -128,6 +141,48 @@ pub(crate) fn index(
         }
     }
 
+    if let Some(c) = &value.activity_commit {
+        db.execute(
+            "INSERT INTO activity_keys VALUES(?1,?2,?3,?4,?5)",
+            params![
+                c.activity.record_id,
+                c.binding.request_id,
+                c.binding.activity_id,
+                c.binding.step_id,
+                commit
+            ],
+        )?;
+        let q = core_types::generated::CognitionState::from_canonical(
+            &objects.read(&value.staged_q)?,
+            limits,
+        )?;
+        for action in q
+            .inflight
+            .iter()
+            .filter(|a| a.origin_record == value.staged_h)
+        {
+            db.execute(
+                "INSERT INTO outbox VALUES(?1,?2,?3)",
+                params![commit, action.action_id, action.canonical_bytes(limits)?],
+            )?;
+        }
+    } else if value.staged_q.object_type == schema.message(CognitionState::NAME)?.tag {
+        let event = EventEnvelope::from_canonical(&objects.read(&value.staged_h)?, limits)?;
+        if event.kind == EventKind::ACTION_REQUEST {
+            let q = CognitionState::from_canonical(&objects.read(&value.staged_q)?, limits)?;
+            // Only the request registered by this H, not other inflight actions carried by Q.
+            if let Some(action) = q.inflight.iter().find(|a| {
+                Some(a.action_id.as_str()) == event.action_id.as_deref()
+                    && a.request == event.payload_ref
+                    && a.status == ActionStatus::REQUESTED
+            }) {
+                db.execute(
+                    "INSERT INTO outbox VALUES(?1,?2,?3)",
+                    params![commit, action.action_id, action.canonical_bytes(limits)?],
+                )?;
+            }
+        }
+    }
     if value.staged_q.object_type == schema.message(ActionLifecycle::NAME)?.tag {
         let action = ActionLifecycle::from_canonical(&objects.read(&value.staged_q)?, limits)?;
         db.execute(
@@ -140,6 +195,9 @@ pub(crate) fn index(
         )?;
     }
     for r in refs {
+        if r.object_type == crate::RAW_BYTES {
+            continue;
+        }
         let (name, _) = schema
             .messages
             .iter()
@@ -152,7 +210,11 @@ pub(crate) fn index(
         for dependency in dependencies {
             db.execute(
                 "INSERT OR IGNORE INTO dependency_index VALUES(?1,?2,?3)",
-                params![commit, hex(&r.digest.0), hex(&dependency.digest.0)],
+                params![
+                    commit,
+                    hex(&r.digest.0),
+                    crate::raw::storage_key(&dependency)
+                ],
             )?;
         }
     }
