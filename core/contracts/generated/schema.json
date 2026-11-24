@@ -3466,6 +3466,266 @@
         "reason": "P5-21; v2.0 §15: old R/G mechanism, kept only to read old data and for tests"
       }
     },
+    "EmptyPrefixRoot": {
+      "tag": "echo.empty-prefix-root",
+      "source": "ADR 0049; v2.0 §§2.4–2.5,13; S §§7–8",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "kind",
+          "type": "EmptyPrefixKind",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "initial_publication.proto",
+      "rules": {}
+    },
+    "InitialRuntimeRoot": {
+      "tag": "echo.initial-runtime-root",
+      "source": "ADR 0049; ADR 0010 §§2–5; S §21",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "environment",
+          "type": "VersionedEnvironmentV2",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "irl",
+          "type": "ObjectRef",
+          "number": 3,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "appraiser",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "matcher",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "fast",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "growth",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "dynamics",
+          "type": "ObjectRef",
+          "number": 8,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        },
+        {
+          "name": "compiler",
+          "type": "ObjectRef",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false
+        }
+      ],
+      "file": "initial_publication.proto",
+      "rules": {}
+    },
+    "BirthNameRecord": {
+      "tag": "echo.birth-name-record",
+      "source": "ADR 0049; v2.0 §§2.3,13; ADR 0047",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "given_name",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "manifest",
+          "type": "ObjectRef",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "caretaker",
+          "type": "LocalUserBinding",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "signature_evidence",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        }
+      ],
+      "file": "initial_publication.proto",
+      "rules": {}
+    },
+    "InitialPublication": {
+      "tag": "echo.initial-publication",
+      "source": "ADR 0049; v2.0 §§2,13–14; S §§7–8",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "uint32",
+          "number": 1,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "store_id",
+          "type": "string",
+          "number": 2,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "branch_id",
+          "type": "string",
+          "number": 3,
+          "repeated": false,
+          "required": true,
+          "nonempty": true
+        },
+        {
+          "name": "header",
+          "type": "LineageHeaderV2",
+          "number": 4,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "x",
+          "type": "ObjectRef",
+          "number": 5,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "r",
+          "type": "ObjectRef",
+          "number": 6,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "theta",
+          "type": "ObjectRef",
+          "number": 7,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "q",
+          "type": "InitialRuntimeRoot",
+          "number": 8,
+          "repeated": false,
+          "required": true,
+          "nonempty": false
+        },
+        {
+          "name": "empty_history",
+          "type": "EmptyPrefixRoot",
+          "number": 9,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "history"
+        },
+        {
+          "name": "birth",
+          "type": "BirthNameRecord",
+          "number": 10,
+          "repeated": false,
+          "required": false,
+          "nonempty": false,
+          "oneof": "history"
+        }
+      ],
+      "file": "initial_publication.proto",
+      "rules": {
+        "oneofs": {
+          "history": {
+            "fields": [
+              "empty_history",
+              "birth"
+            ],
+            "required": true
+          }
+        }
+      }
+    },
     "JHookBinding": {
       "tag": "echo.j-hook-binding",
       "source": "O 13.1-13.2; ADR 0036",
@@ -17815,6 +18075,12 @@
       "COUNTEREVIDENCE": 2,
       "RESOLVES_TRIAL": 3,
       "EVIDENCE_UNKNOWN": 4
+    },
+    "EmptyPrefixKind": {
+      "EMPTY_PREFIX_UNSPECIFIED": 0,
+      "EMPTY_HISTORY": 1,
+      "EMPTY_CHANGE_LEDGER": 2,
+      "EMPTY_INGRESS_DECISIONS": 3
     },
     "JResidualStage": {
       "J_RESIDUAL_UNSPECIFIED": 0,

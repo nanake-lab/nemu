@@ -192,6 +192,7 @@ pub fn upload_type(tag: &str) -> Result<String> {
                         | "speak_think.proto"
                         | "permission.proto"
                         | "semantic_evidence.proto"
+                        | "initial_publication.proto"
                 )
         })
         .map(|(name, _)| name)
