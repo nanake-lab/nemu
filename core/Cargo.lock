@@ -152,6 +152,7 @@ dependencies = [
 name = "core-runtime"
 version = "0.0.0"
 dependencies = [
+ "action-gate",
  "core-kernel",
  "core-policy",
  "core-store",
@@ -680,6 +681,20 @@ dependencies = [
  "portable-atomic",
  "portable-atomic-util",
  "rawpointer",
+]
+
+[[package]]
+name = "nemu-core"
+version = "0.0.0"
+dependencies = [
+ "core-store",
+ "core-types",
+ "gateway",
+ "rusqlite",
+ "sha2",
+ "tokio",
+ "tracing",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]

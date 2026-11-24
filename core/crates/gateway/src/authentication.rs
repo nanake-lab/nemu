@@ -46,18 +46,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             None
         };
         if let Some(reason) = reason {
-            let reason = self.audit(reason, None)?;
-            let result = TerminalAuthResult {
-                schema_version: 1,
-                request_id: r.request_id.clone(),
-                status: AuthStatus::AUTH_REJECTED,
-                session: None,
-                reason: Some(reason),
-            };
-            if check_auth_pair(r, &result, self.config.frames.encoding).is_ok() {
-                let _ = reply.send(result);
-            }
-            return Ok(());
+            return self.reject_authentication(r, reply, reason);
         }
         let session = TerminalSession {
             schema_version: 1,
@@ -80,6 +69,13 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             self.audit(IngressReason::INVALID_FRAME, None)?;
             return Ok(());
         }
+        if let Err(reason) = self
+            .handler
+            .authenticated(&mut self.store, &session)
+            .unwrap_or(Err(IngressReason::AUTH_FAILED))
+        {
+            return self.reject_authentication(r, reply, reason);
+        }
         self.connections.insert(
             id,
             Connection {
@@ -92,6 +88,26 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         );
         if reply.send(result).is_err() {
             self.close(id);
+        }
+        Ok(())
+    }
+
+    fn reject_authentication(
+        &mut self,
+        request: &TerminalAuthenticate,
+        reply: oneshot::Sender<TerminalAuthResult>,
+        reason: IngressReason,
+    ) -> Result<()> {
+        let reason = self.audit(reason, None)?;
+        let result = TerminalAuthResult {
+            schema_version: 1,
+            request_id: request.request_id.clone(),
+            status: AuthStatus::AUTH_REJECTED,
+            session: None,
+            reason: Some(reason),
+        };
+        if check_auth_pair(request, &result, self.config.frames.encoding).is_ok() {
+            let _ = reply.send(result);
         }
         Ok(())
     }
