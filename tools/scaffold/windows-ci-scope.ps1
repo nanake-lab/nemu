@@ -31,7 +31,7 @@ $metadataOnly = $files.Count -gt 0 -and ($files -notmatch $metadata).Count -eq 0
 $files = @($files | Where-Object { $_ -and $_ -notmatch '\.md$' })
 $workflow = '^\.github/workflows/windows\.yml$|^tools/scaffold/windows-ci-scope\.ps1$'
 $desktopPaths = @(
-    '^apps/', '^packages/', '^executors/codex-bridge/',
+    '^core/crates/nemu-core/', '^apps/', '^packages/', '^executors/codex-bridge/',
     '^workers/[^/]+/src/', '^services/[^/]+/src/',
     '^tools/(?!status/|cause-demo/|asset-pipeline/|texture-fix/|scaffold/ci-budget\.mjs$)',
     '^(package\.json|pnpm-lock\.yaml|pnpm-workspace\.yaml|\.nvmrc|\.npmrc|\.gitattributes)$',
@@ -41,7 +41,7 @@ $storagePaths = @(
     '^core/crates/core-store/', '^core/crates/core-types/', '^core/contracts/',
     '^core/(Cargo\.toml|Cargo\.lock|rust-toolchain\.toml)$', $workflow
 ) -join '|'
-$gatewayPaths = '^core/crates/gateway/|' + $storagePaths
+$gatewayPaths = '^core/crates/(gateway|nemu-core)/|' + $storagePaths
 $scope = @{
     desktop = $full -or (-not $metadataOnly -and ($files -match $desktopPaths).Count -gt 0)
     storage = $full -or ($files -match $storagePaths).Count -gt 0

@@ -2,14 +2,56 @@
 //! of the request. These checks have no side effects and never consume a credential.
 use crate::contract::{Limits, Result, require};
 use crate::generated::{
-    ActionRequestV2, ExecutionCredential, GrowthManagementRequest, IngressKind, LocalUserBinding,
-    ManagementEntry, TerminalRequestV2, TerminalSession,
+    ActionRequestV2, Derivation, EpistemicType, EventKind, ExecutionCredential,
+    GrowthManagementRequest, IngressKind, LocalUserBinding, ManagementEntry, ResolutionState,
+    SourceMetadata, TerminalEvent, TerminalRequestV2, TerminalSession, UserText,
 };
 use crate::{WireMessage, semantic::check_permission_message, terminal_ingress::check_session};
 
 fn check_fields<T: WireMessage>(value: &T, limits: Limits) -> Result<()> {
     let value = serde_json::to_value(value).map_err(|e| e.to_string())?;
     check_permission_message(T::NAME, &value, limits)
+}
+
+/// Authorize only a direct, unprocessed text observation. The binding is a
+/// trusted local lookup for this live session. The submitted source must match
+/// the host's classification; IRL may refine it only after durable ingress.
+pub fn check_user_text_source(
+    session: &TerminalSession,
+    binding: &LocalUserBinding,
+    event: &TerminalEvent,
+    source: &SourceMetadata,
+    limits: Limits,
+) -> Result<()> {
+    check_session(session, limits)?;
+    binding.canonical_bytes(limits)?;
+    require(
+        binding.session_id == session.session_id
+            && binding.installation_id == session.installation_id
+            && session.capabilities.contains(&IngressKind::INGRESS_EVENT),
+        "local user binding does not match the event session",
+    )?;
+    require(
+        event.kind == EventKind::OBSERVATION
+            && event.payload_ref.object_type
+                == crate::codec_schema(UserText::NAME)?
+                    .message(UserText::NAME)?
+                    .tag
+            && event.parents.is_empty()
+            && event.correction_of.is_empty()
+            && event.action_id.is_none()
+            && event.trial_id.is_none(),
+        "expected standalone local user text",
+    )?;
+    require(
+        source.epistemic_type == EpistemicType::USER_ASSERTION
+            && source.source_span == event.payload_ref
+            && source.source_refs.is_empty()
+            && source.derivation == Derivation::VERBATIM
+            && event.derivation == Derivation::VERBATIM
+            && source.resolution_state == ResolutionState::UNRESOLVED,
+        "expected verbatim unresolved local user assertion",
+    )
 }
 
 /// Match a proposed dispatch to the live issuer lookup and authenticated executor.

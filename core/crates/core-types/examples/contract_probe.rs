@@ -77,6 +77,7 @@ fn probe(schema: &Schema, request: &Value) -> Result<Value, String> {
     core_types::semantic::check_theta_message(name, &value, limits)?;
     core_types::semantic::check_law_state_message(name, &value, limits)?;
     core_types::semantic::check_cognition_message(name, &value, limits)?;
+    core_types::semantic::check_initial_message(name, &value, limits)?;
     core_types::semantic::check_permission_message(name, &value, limits)?;
     core_types::semantic::check_speak_think_message(name, &value, limits)?;
     core_types::semantic::check_semantic_evidence_message(name, &value, limits)?;

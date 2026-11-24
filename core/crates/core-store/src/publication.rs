@@ -5,7 +5,10 @@ use crate::{
 use core_types::{
     WireMessage,
     contract::Schema,
-    generated::{ActionLifecycle, CoreTransactionV4, EvidenceGroupV3, ObjectRef, RSnapshotV3},
+    generated::{
+        ActionLifecycle, ActionStatus, CognitionState, CoreTransactionV4, EventEnvelope, EventKind,
+        EvidenceGroupV3, ObjectRef, RSnapshotV3,
+    },
     scalar::hex,
 };
 use rusqlite::{Connection, params};
@@ -162,6 +165,22 @@ pub(crate) fn index(
                 "INSERT INTO outbox VALUES(?1,?2,?3)",
                 params![commit, action.action_id, action.canonical_bytes(limits)?],
             )?;
+        }
+    } else if value.staged_q.object_type == schema.message(CognitionState::NAME)?.tag {
+        let event = EventEnvelope::from_canonical(&objects.read(&value.staged_h)?, limits)?;
+        if event.kind == EventKind::ACTION_REQUEST {
+            let q = CognitionState::from_canonical(&objects.read(&value.staged_q)?, limits)?;
+            // Only the request registered by this H, not other inflight actions carried by Q.
+            if let Some(action) = q.inflight.iter().find(|a| {
+                Some(a.action_id.as_str()) == event.action_id.as_deref()
+                    && a.request == event.payload_ref
+                    && a.status == ActionStatus::REQUESTED
+            }) {
+                db.execute(
+                    "INSERT INTO outbox VALUES(?1,?2,?3)",
+                    params![commit, action.action_id, action.canonical_bytes(limits)?],
+                )?;
+            }
         }
     }
     if value.staged_q.object_type == schema.message(ActionLifecycle::NAME)?.tag {

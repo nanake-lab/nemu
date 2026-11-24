@@ -1,6 +1,7 @@
 //! Native auth/upload/dispatch/D/Gamma/commit integration with synthetic data.
 mod acceptance;
 mod adversarial;
+mod auth_hook;
 mod crash;
 mod idle;
 mod permissions;
