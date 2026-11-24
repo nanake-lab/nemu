@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { appBusPayloads, type AppBusPayloads } from '@nemu/contracts';
 import { globalDebugBusClient } from '../debug/bus-client.js';
 import { Composer } from '../legacy/Composer.js';
-import { chatStatusSchema, type ChatPanelChannel, type ChatStatus } from './channel.js';
+import type { ChatPanelChannel } from './channel.js';
+import { chatStatusSchema, type ChatStatus } from './status.js';
 import './chat.css';
 
 import { appendChunk, Transcript, type ChatMessage } from './Transcript.js';

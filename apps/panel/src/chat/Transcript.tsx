@@ -16,7 +16,7 @@ export function appendChunk(
 
 export function Transcript({ messages }: { messages: ChatMessage[] }) {
   return (
-    <ol className="chat-messages" aria-label="Messages" aria-live="polite">
+    <ol className="chat-messages" aria-label="Chat transcript" aria-live="polite">
       {messages.map((message) => (
         <li key={message.speaker + message.id}>
           <strong>{message.speaker}</strong>
