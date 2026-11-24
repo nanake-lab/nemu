@@ -1,0 +1,113 @@
+name: core-store Ubuntu timings
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate:
+        description: Full commit SHA to compare on the same runner (leave empty for baseline only)
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Measure core-store on stable Rust
+        shell: python
+        env:
+          BASELINE: 6734adc2bfe8b145e8062a2fc669dd2024dd2ba6
+          CANDIDATE: ${{ inputs.candidate }}
+          RUSTUP_TOOLCHAIN: 1.99.0
+        run: |
+          import json
+          import os
+          import re
+          import statistics
+          import subprocess
+          import time
+          from collections import Counter
+          from pathlib import Path
+
+          evidence = Path(os.environ["RUNNER_TEMP"]) / "perf-store"
+          evidence.mkdir()
+          revisions = {"baseline": os.environ["BASELINE"]}
+          if candidate := os.environ["CANDIDATE"]:
+              if not re.fullmatch(r"[0-9a-f]{40}", candidate):
+                  raise ValueError("candidate must be a full lowercase commit SHA")
+              revisions["candidate"] = candidate
+
+          cargo = ["cargo", "test", "-p", "core-store", "--locked"]
+
+          def listing(target):
+              output = subprocess.check_output([*cargo, *target, "--", "--list"], cwd="core", text=True)
+              return [line.removesuffix(": test") for line in output.splitlines() if line.endswith(": test")]
+
+          def measure(target, names, exact, log):
+              args = [*cargo, *target, "--", "--test-threads=1", "--format=pretty", "--color=never"]
+              if exact:
+                  args.extend(["--exact", exact])
+              start = time.perf_counter()
+              run = subprocess.run(args, cwd="core", capture_output=True, text=True)
+              process_s = time.perf_counter() - start
+              log.write_text(run.stderr + run.stdout)
+              run.check_returncode()
+              passed = re.findall(r"^test (.+) \.\.\. ok$", run.stdout, re.M)
+              summaries = re.findall(r"^test result: ok\. (\d+) passed; .*?finished in ([\d.]+)s$", run.stdout, re.M)
+              if (Counter(passed) != Counter(names) or sum(int(n) for n, _ in summaries) != len(names)
+                      or re.search(r"^\s*Compiling ", run.stderr, re.M)):
+                  raise RuntimeError(f"Unexpected tests, timing summary or rebuild: {log.name}")
+              return {"passed": len(passed), "process_s": process_s,
+                      "harness_s": sum(float(s) for _, s in summaries)}
+
+          for label, sha in revisions.items():
+              subprocess.run(["git", "switch", "--detach", sha], check=True)
+              out = evidence / label
+              out.mkdir()
+              metadata = {"revision": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+                          "image": os.environ.get("ImageVersion"), "arch": os.uname().machine}
+              for tool in ("cargo", "rustc"):
+                  metadata[tool] = subprocess.check_output([tool, "-Vv"], cwd="core", text=True).strip()
+              (out / "environment.json").write_text(json.dumps(metadata, indent=2))
+              # Build and discover outside all sample clocks (including rustdoc discovery).
+              subprocess.run([*cargo, "--no-run"], cwd="core", check=True)
+              all_names = listing([])
+              tests = {target: listing([target]) for target in ("--lib", "--doc")}
+              names = tests["--lib"] + tests["--doc"]
+              if not names or Counter(names) != Counter(all_names) or len(set(names)) != len(names):
+                  raise RuntimeError("Package inventory differs from library and doctest inventories")
+              (out / "tests.json").write_text(json.dumps(tests, indent=2))
+              samples = {name: [] for name in ["<package>", *names]}
+              with (out / "samples.jsonl").open("w") as raw:
+                  for repeat in range(1, 4):
+                      for index, name in enumerate(samples):
+                          target = [] if index == 0 else ["--lib" if name in tests["--lib"] else "--doc"]
+                          row = measure(target, names if index == 0 else [name], name if index else None,
+                                        out / f"run-{repeat}-{index}.log")
+                          samples[name].append(row)
+                          print(json.dumps({"run": repeat, "test": name, **row}), file=raw, flush=True)
+              medians = [{"test": name, **{key: statistics.median(row[key] for row in rows)
+                                           for key in ("harness_s", "process_s")}}
+                         for name, rows in samples.items()]
+              (out / "medians.json").write_text(json.dumps(medians, indent=2))
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+                  print(f"### {label} `{sha}` ({len(names)} tests, three runs)\n", file=summary)
+                  print("| Test | Harness median (s) | Process median (s) |\n|---|---:|---:|", file=summary)
+                  slowest = sorted(medians[1:], key=lambda row: row["harness_s"], reverse=True)[:15]
+                  for row in [medians[0], *slowest]:
+                      print(f"| `{row['test']}` | {row['harness_s']:.2f} | {row['process_s']:.3f} |", file=summary)
+
+      - name: Collect timings and test logs (including partial runs)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: perf-store-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/perf-store/
+          if-no-files-found: error

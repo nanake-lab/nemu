@@ -1,12 +1,10 @@
 # PERF-STORE-01 基线测量阻塞
 
-本卡要求在 Windows 和 Ubuntu 各自建立可重复的基线。2026-11-23，`wsl --list --quiet` 成功列出 Ubuntu，但 `wsl -d Ubuntu -- bash -lc …` 返回退出码 1 和 `Wsl/Service/CreateInstance/CreateVm/HCS/0x800705aa`。错误发生在虚拟机创建阶段，Ubuntu 内的检查命令尚未执行，工具链和 perf 均待核实。
+**WSL 启动阻塞已解除。** 2026-11-23 本机 Ubuntu 曾在创建虚拟机时失败，退出码 1，错误 `Wsl/Service/CreateInstance/CreateVm/HCS/0x800705aa`。经[审查决定](https://github.com/nanake-lab/nemu/pull/265#issuecomment-7106277996)，Ubuntu 在 GitHub 托管机计时，函数剖析在 Windows 进行。续做不需要修复 WSL。
 
-基线修订为 `6734adc2bfe8b145e8062a2fc669dd2024dd2ba6`，包含 #238 的合并提交 `d34709197f24814e3a9be04d567897bf53f69224`。Windows 可用 Rust/Cargo 1.99.0，工作卷为 NTFS。现有 Ubuntu core-store 作业执行整包测试及写锁测试，缺少逐项计时、函数剖析及自定义测量入口。见[该修订的 CI 定义](https://github.com/nanake-lab/nemu/blob/6734adc2bfe8b145e8062a2fc669dd2024dd2ba6/.github/workflows/ci.yml#L97-L125)。
+| 基线 | 本次实况 | 可继续的条件 |
+| --- | --- | --- |
+| Windows / NTFS | 2026-11-24 开工检查时，缓存父目录可枚举、GPU 窗口锁不存在，发现 1 个 `Runner.Worker`。测试、编译与剖析均为 `not_run`。 | 另次派发时重新核对窗口锁、runner 空闲及其他重负载，再测基线并剖析最慢五项。 |
+| Ubuntu / GitHub 托管机 | 默认分支为 `main`，核对的 `origin/main`（`4d5081e5`）尚无本工作流。手动调度与计时为 `not_run`。 | 由维护者安排工作流进入默认分支后再手动运行。首次可只测基线，有候选提交后在同一作业复测两版。见 [GitHub 手动运行条件](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)。 |
 
-两个平台的测试枚举、逐项计时、慢项剖析、整组与 W02 计时、#240 两项复测全部为 `not_run`。产品优化、计时探针及其验证尚未开始。历史 PR 的测试数和计时仅作背景。
-
-**解除方式**
-
-1. 恢复本机现有 Ubuntu WSL 后重新派发，沿用现有环境；续做时先检查 Rust 1.99.0 和 perf 是否可用。
-2. 指定并授权另一台具备 Rust 1.99.0 和可用 perf 的 Ubuntu 主机；须在该主机独立完成改前和改后整套测量。
+正式对照和剩余验收见[本卡报告](REPORT.md)。当前仅请求审查测量准备。
