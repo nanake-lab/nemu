@@ -97,7 +97,7 @@ jobs:
               all_names = listing([])
               tests = {target: listing([target]) for target in ("--lib", "--doc")}
               names = tests["--lib"] + tests["--doc"]
-              if not names or Counter(names) != Counter(all_names) or len(set(names)) != len(names):
+              if not all(tests.values()) or Counter(names) != Counter(all_names) or len(set(names)) != len(names):
                   raise RuntimeError("Package inventory differs from library and doctest inventories")
               (out / "tests.json").write_text(json.dumps(tests, indent=2))
               inventory = {target: sorted(items) for target, items in tests.items()}
@@ -108,13 +108,14 @@ jobs:
               # Rustdoc pretty output adds the mode after the listed name. Actual inventory names win.
               doc_aliases = {doc + " - compile fail": doc for doc in tests["--doc"]
                              if doc + " - compile fail" not in all_names}
-              samples = {name: [] for name in ["<package>", *names]}
+              cases = [("<package>", [], names, None),
+                       *((name, ["--lib"], [name], name) for name in tests["--lib"]),
+                       ("<doctests>", ["--doc"], tests["--doc"], None)]
+              samples = {name: [] for name, _, _, _ in cases}
               with (out / "samples.jsonl").open("w") as raw:
                   for repeat in range(1, 4):
-                      for index, name in enumerate(samples):
-                          target = [] if index == 0 else ["--lib" if name in tests["--lib"] else "--doc"]
-                          row = measure(target, names if index == 0 else [name], doc_aliases,
-                                        name if index else None, out / f"run-{repeat}-{index}.log")
+                      for index, (name, target, expected, exact) in enumerate(cases):
+                          row = measure(target, expected, doc_aliases, exact, out / f"run-{repeat}-{index}.log")
                           samples[name].append(row)
                           print(json.dumps({"run": repeat, "test": name, **row}), file=raw, flush=True)
               medians = [{"test": name, **{key: statistics.median(row[key] for row in rows)
@@ -124,8 +125,14 @@ jobs:
               with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
                   print(f"### {label} `{sha}` ({len(names)} tests, three runs)\n", file=summary)
                   print("| Test | Harness median (s) | Process median (s) |\n|---|---:|---:|", file=summary)
-                  slowest = sorted(medians[1:], key=lambda row: row["harness_s"], reverse=True)[:15]
-                  for row in [medians[0], *slowest]:
+                  for row in medians:
+                      if row["test"] in ("<package>", "<doctests>"):
+                          print(f"| `{row['test']}` | {row['harness_s']:.2f} | {row['process_s']:.3f} |", file=summary)
+                  print("\n#### Slowest library tests\n", file=summary)
+                  print("| Test | Harness median (s) | Process median (s) |\n|---|---:|---:|", file=summary)
+                  slowest = sorted((row for row in medians if row["test"] in tests["--lib"]),
+                                   key=lambda row: row["harness_s"], reverse=True)[:15]
+                  for row in slowest:
                       print(f"| `{row['test']}` | {row['harness_s']:.2f} | {row['process_s']:.3f} |", file=summary)
 
       - name: Collect timings and test logs (including partial runs)
@@ -176,17 +183,16 @@ jobs:
               subprocess.run(["git", "switch", "--detach", sha], check=True)
               tests = json.loads((timed / "tests.json").read_text())
               medians = json.loads((timed / "medians.json").read_text())
-              ranked = sorted((row for row in medians if row["test"] != "<package>"),
+              ranked = sorted((row for row in medians if row["test"] in tests["--lib"]),
                               key=lambda row: row["harness_s"], reverse=True)[:5]
               # Build outside perf to exclude compilation. Test-profile defaults retain symbols.
               cargo = ["cargo", "test", "-p", "core-store", "--locked"]
               subprocess.run([*cargo, "--no-run"], cwd="core", check=True)
               for rank, row in enumerate(ranked, 1):
                   name = row["test"]
-                  target = "--lib" if name in tests["--lib"] else "--doc"
                   out = profiles / timed.name / str(rank)
                   out.mkdir(parents=True)
-                  args = [*cargo, target, "--", "--exact", name, "--test-threads=1", "--color=never"]
+                  args = [*cargo, "--lib", "--", "--exact", name, "--test-threads=1", "--color=never"]
                   (out / "test.json").write_text(json.dumps({"revision": sha, "command": args, **row}, indent=2))
                   data = str(out / "perf.data")
                   with (out / "test.log").open("w") as log:
@@ -194,11 +200,7 @@ jobs:
                                       "--call-graph", "dwarf", "-o", data, "--", *args],
                                      cwd="core", stdout=log, stderr=subprocess.STDOUT, check=True)
                   results = re.findall(r"^test (.+) \.\.\. (.+)$", (out / "test.log").read_text(), re.M)
-                  decorated = name + " - compile fail"
-                  if results != [(name, "ok")] and not (
-                      name in tests["--doc"] and decorated not in tests["--lib"] + tests["--doc"]
-                      and results == [(decorated, "ok")]
-                  ):
+                  if results != [(name, "ok")]:
                       raise RuntimeError(f"Profiled test did not pass: {name}")
                   with (out / "functions.txt").open("w") as report:
                       subprocess.run([perf, "report", "--stdio", "--no-children", "--percent-limit", "0",
