@@ -302,7 +302,7 @@ fn validate_genesis(
     genesis: &GenesisManifestV2,
     config: StoreConfig,
 ) -> Result<()> {
-    let digest = core_types::contract::Schema::builtin()?.digest(
+    let digest = core_types::contract::Schema::shared_builtin()?.digest(
         GenesisManifestV2::NAME,
         &serde_json::to_value(genesis)?,
         config.encoding,
@@ -414,7 +414,7 @@ pub(crate) fn require_writable_head(db: &Connection, objects: &Objects) -> Resul
     if let Some(head) = current_manifest(db, objects)? {
         require(
             head.staged_r.object_type
-                != core_types::contract::Schema::builtin()?
+                != core_types::contract::Schema::shared_builtin()?
                     .message(core_types::generated::RSnapshotV2::NAME)?
                     .tag,
             "V2 R head is read-only; P5-26 G/H replay is required before writing",

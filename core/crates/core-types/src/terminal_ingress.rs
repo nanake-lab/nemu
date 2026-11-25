@@ -179,9 +179,9 @@ pub fn check_chunk(
 /// Only active, upload-enabled contracts are eligible. ADR 0046 types await
 /// their producing cards. Uploading a prepared object never publishes H.
 pub fn upload_type(tag: &str) -> Result<String> {
-    Schema::builtin()?
+    Schema::shared_builtin()?
         .messages
-        .into_iter()
+        .iter()
         .find(|(_, m)| {
             m.tag == tag
                 && !m.transient
@@ -194,7 +194,7 @@ pub fn upload_type(tag: &str) -> Result<String> {
                         | "semantic_evidence.proto"
                 )
         })
-        .map(|(name, _)| name)
+        .map(|(name, _)| name.clone())
         .ok_or("object type is not terminal-uploadable".into())
 }
 
@@ -245,7 +245,7 @@ pub fn check_uploaded_object(
         "object size mismatch",
     )?;
     let name = upload_type(&reference.object_type)?;
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let value = schema.decode_canonical(&name, bytes, limits, 0)?;
     require(
         schema.digest(&name, &value, limits)? == hex(&reference.digest.0),

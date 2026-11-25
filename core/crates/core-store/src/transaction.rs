@@ -325,10 +325,10 @@ impl<L: LineageKind> Store<L> {
             binding.event_id == event.id && prior_fingerprint(&self.db, &event)?.is_none(),
             "input identity or stable key conflict",
         )?;
-        let schema = Schema::builtin()?;
+        let schema = Schema::shared_builtin()?;
         let mut required = vec![binding.validation_snapshot.clone()];
         crate::objects::collect_refs(
-            &schema,
+            schema,
             core_types::generated::VersionedEnvironmentV2::NAME,
             &serde_json::to_value(&binding.environment)?,
             &mut required,
