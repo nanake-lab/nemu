@@ -159,8 +159,14 @@ jobs:
           sudo sysctl kernel.perf_event_paranoid=1
           sudo apt-get update -qq
           sudo apt-get install -y linux-tools-generic
-          # The generic perf binary supports software events on the hosted VM's kernel.
-          perf_bin=$(find /usr/lib/linux-tools -type f -name perf | sort -V | tail -n 1)
+          perf_bin=$(command -v perf || true)
+          if [[ -z "$perf_bin" && -d /usr/lib/linux-tools ]]; then
+            perf_bin=$(find /usr/lib/linux-tools \( -type f -o -type l \) -name perf -executable | sort -V | tail -n 1)
+          fi
+          if ! test -x "$perf_bin"; then
+            echo "No executable perf found on PATH or under /usr/lib/linux-tools" >&2
+            exit 1
+          fi
           "$perf_bin" --version
           echo "PERF_BIN=$perf_bin" >> "$GITHUB_ENV"
 
