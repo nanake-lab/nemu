@@ -60,10 +60,11 @@ fn provisional(w: &World, name: &str) -> ConceptRevision {
 }
 
 fn stage(w: &mut World, after: &ConceptRegistry, names: &[&str]) -> crate::Result<StagedRegistry> {
-    let staged = w.run(&w.candidate())?;
+    let staged = w.run(&w.candidate()).expect("synthetic first IRL stage");
     w.registry_approval = Some((
         staged.adoption.clone(),
-        object_ref(after, &after.version, limits())?,
+        // Malformed objects have no address. Still exercise the staging entry point.
+        object_ref(after, &after.version, limits()).unwrap_or_else(|_| w.context.clone()),
         names.iter().map(|n| n.to_string()).collect(),
     ));
     staged.stage_registry(w, &w.registry, after, limits())
@@ -197,6 +198,13 @@ fn new_ids_require_core_allocation_and_the_actual_transaction_and_adoption() {
     assert!(
         staged
             .stage_registry(&w, &w.registry, &substituted, limits())
+            .is_err()
+    );
+    w.graph.id.push_str("-other");
+    let other = w.run(&w.candidate()).unwrap();
+    assert!(
+        other
+            .stage_registry(&w, &w.registry, &next, limits())
             .is_err()
     );
     w.graph.references[0].source.epistemic_type = EpistemicType::USER_SELF_REPORT;
@@ -382,7 +390,7 @@ fn directed_aliases_resolve_in_the_pinned_version_and_reject_cycles_conflicts_an
 }
 
 #[test]
-fn alias_of_an_existing_concept_is_published_with_its_governed_revision() {
+fn alias_of_an_existing_concept_is_staged_with_its_governed_revision() {
     let mut w = World::new();
     let mut first = successor(&w, "r2");
     first.entries.push(provisional(&w, "old-name"));
