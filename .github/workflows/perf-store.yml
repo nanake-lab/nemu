@@ -59,7 +59,7 @@ jobs:
               output = subprocess.check_output([*cargo, *target, "--", "--list"], cwd="core", text=True)
               return [line.removesuffix(": test") for line in output.splitlines() if line.endswith(": test")]
 
-          def measure(target, names, exact, log):
+          def measure(target, names, doc_aliases, exact, log):
               args = [*cargo, *target, "--", "--test-threads=1", "--format=pretty", "--color=never"]
               if exact:
                   args.extend(["--exact", exact])
@@ -68,9 +68,13 @@ jobs:
               process_s = time.perf_counter() - start
               log.write_text(run.stderr + run.stdout)
               run.check_returncode()
-              passed = re.findall(r"^test (.+) \.\.\. ok$", run.stdout, re.M)
-              summaries = re.findall(r"^test result: ok\. (\d+) passed; .*?finished in ([\d.]+)s$", run.stdout, re.M)
-              if (Counter(passed) != Counter(names) or sum(int(n) for n, _ in summaries) != len(names)
+              results = re.findall(r"^test (.+) \.\.\. (.+)$", run.stdout, re.M)
+              passed = [doc_aliases.get(name, name) for name, status in results if status == "ok"]
+              summaries = re.findall(r"^test result: ok\. (\d+) passed; 0 failed; 0 ignored; 0 measured; "
+                                     r"\d+ filtered out; finished in (\d+(?:\.\d+)?)s$", run.stdout, re.M)
+              if (len(passed) != len(results) or Counter(passed) != Counter(names)
+                      or len(summaries) != len(re.findall(r"^test result:", run.stdout, re.M))
+                      or sum(int(n) for n, _ in summaries) != len(names)
                       or re.search(r"^\s*Compiling ", run.stderr, re.M)):
                   raise RuntimeError(f"Unexpected tests, timing summary or rebuild: {log.name}")
               return {"passed": len(passed), "process_s": process_s,
@@ -101,13 +105,16 @@ jobs:
                   baseline_tests = inventory
               elif inventory != baseline_tests:
                   raise RuntimeError("Candidate test inventory differs from baseline")
+              # Rustdoc pretty output adds the mode after the listed name. Actual inventory names win.
+              doc_aliases = {doc + " - compile fail": doc for doc in tests["--doc"]
+                             if doc + " - compile fail" not in all_names}
               samples = {name: [] for name in ["<package>", *names]}
               with (out / "samples.jsonl").open("w") as raw:
                   for repeat in range(1, 4):
                       for index, name in enumerate(samples):
                           target = [] if index == 0 else ["--lib" if name in tests["--lib"] else "--doc"]
-                          row = measure(target, names if index == 0 else [name], name if index else None,
-                                        out / f"run-{repeat}-{index}.log")
+                          row = measure(target, names if index == 0 else [name], doc_aliases,
+                                        name if index else None, out / f"run-{repeat}-{index}.log")
                           samples[name].append(row)
                           print(json.dumps({"run": repeat, "test": name, **row}), file=raw, flush=True)
               medians = [{"test": name, **{key: statistics.median(row[key] for row in rows)
@@ -156,6 +163,7 @@ jobs:
         run: |
           import json
           import os
+          import re
           import subprocess
           from pathlib import Path
 
@@ -185,7 +193,12 @@ jobs:
                       subprocess.run([perf, "record", "-e", "cpu-clock:u", "-F", "99",
                                       "--call-graph", "dwarf", "-o", data, "--", *args],
                                      cwd="core", stdout=log, stderr=subprocess.STDOUT, check=True)
-                  if f"test {name} ... ok" not in (out / "test.log").read_text():
+                  results = re.findall(r"^test (.+) \.\.\. (.+)$", (out / "test.log").read_text(), re.M)
+                  decorated = name + " - compile fail"
+                  if results != [(name, "ok")] and not (
+                      name in tests["--doc"] and decorated not in tests["--lib"] + tests["--doc"]
+                      and results == [(decorated, "ok")]
+                  ):
                       raise RuntimeError(f"Profiled test did not pass: {name}")
                   with (out / "functions.txt").open("w") as report:
                       subprocess.run([perf, "report", "--stdio", "--no-children", "--percent-limit", "0",
