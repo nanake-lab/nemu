@@ -117,7 +117,7 @@ impl<L: LineageKind> Reader<L> {
             refs.len() <= limit,
             "incomplete query: result exceeds budget",
         )?;
-        let schema = Schema::builtin()?;
+        let schema = Schema::shared_builtin()?;
         refs.into_iter()
             .map(|bytes| {
                 let reference = ObjectRef::from_canonical(&bytes, self.objects.config.encoding)?;

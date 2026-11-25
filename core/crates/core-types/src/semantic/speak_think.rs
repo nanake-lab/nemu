@@ -233,7 +233,7 @@ pub fn check_speak_think_message(name: &str, value: &Value, limits: Limits) -> R
     ) {
         return Ok(());
     }
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let v = schema.normalize(name, value, limits, 0)?;
-    check(&schema, name, &v, limits)
+    check(schema, name, &v, limits)
 }
