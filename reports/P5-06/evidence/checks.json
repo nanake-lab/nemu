@@ -1,0 +1,11 @@
+{
+  "baseline": "f24f1256259c998bc213a9dc93103fcfb9cfe89a",
+  "toolchain": "1.99.0",
+  "target_directory": "D:/Dev/cache/P5-06/target",
+  "unit_tests": {"status":"passed","passed":18,"failed":0,"ignored":0,"exit_code":0,"log":"test-01.log"},
+  "clippy": {"status":"passed","warnings_denied":true,"all_targets":true,"exit_code":0,"log":"clippy-01.log"},
+  "format": {"status":"passed","exit_code":0,"log":"fmt-02.log"},
+  "scope": "semantic-core only; full card acceptance remains not_run",
+  "post_validation_source_change": "Removed one test comment to keep tests.rs at 400 lines; no executable or test-logic change. source-final.sha256 records final files. Final format check passed.",
+  "resource_scheduling": "Waited for existing P5-36 cargo/store/fact-view workload; ran tests then clippy serially. No GPU, Electron, workspace rerun or user storage access."
+}
