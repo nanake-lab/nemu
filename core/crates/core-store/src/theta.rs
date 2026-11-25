@@ -15,7 +15,7 @@ pub(crate) enum Snapshot {
 }
 
 pub(crate) fn read(objects: &Objects, reference: &ObjectRef) -> Result<Snapshot> {
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let limits = objects.config.encoding;
     if reference.object_type == schema.message(ThetaSnapshotV2::NAME)?.tag {
         // Objects::read checks both the content digest and full V2 semantics.

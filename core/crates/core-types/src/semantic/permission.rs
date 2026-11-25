@@ -123,7 +123,7 @@ pub fn check_permission_message(name: &str, value: &Value, limits: Limits) -> Re
     ) {
         return Ok(());
     }
-    let v = Schema::builtin()?.normalize(name, value, limits, 0)?;
+    let v = Schema::shared_builtin()?.normalize(name, value, limits, 0)?;
     match name {
         "PermissionResult" => result(&v),
         "TerminalResponseV2" => {

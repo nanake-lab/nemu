@@ -12,7 +12,7 @@ pub fn theta_parameters_digest(
 ) -> Result<HexBytes> {
     let value = serde_json::to_value(parameters).map_err(|e| e.to_string())?;
     check_theta_message("ThetaEstimatorParameters", &value, limits)?;
-    Ok(HexBytes(unhex(&Schema::builtin()?.digest(
+    Ok(HexBytes(unhex(&Schema::shared_builtin()?.digest(
         "ThetaEstimatorParameters",
         &value,
         limits,
@@ -234,7 +234,7 @@ pub fn check_theta_message(name: &str, value: &Value, limits: Limits) -> Result<
     ) {
         return Ok(());
     }
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let v = schema.normalize(name, value, limits, 0)?;
     let successor = matches!(name, "ThetaSnapshotV3" | "ThetaEstimatorParametersV2");
     let numerics_id = if successor {

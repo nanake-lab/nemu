@@ -51,7 +51,7 @@ pub fn check_cognition_message(name: &str, value: &Value, limits: Limits) -> Res
     ) {
         return Ok(());
     }
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let v = schema.normalize(name, value, limits, 0)?;
     match name {
         "CognitiveReturnedResult" => {
