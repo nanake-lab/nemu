@@ -3,6 +3,10 @@ name: core-store hosted timings
 on:
   workflow_dispatch:
     inputs:
+      followup:
+        description: Run the fixed release pair and the candidate object example
+        type: boolean
+        default: false
       candidate:
         description: Full commit SHA to compare on the same runner (leave empty for baseline only)
         type: string
@@ -13,6 +17,7 @@ permissions:
 
 jobs:
   measure:
+    if: ${{ !inputs.followup }}
     strategy:
       fail-fast: false
       matrix:
@@ -230,3 +235,98 @@ jobs:
           name: perf-store-profiles-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/perf-store-profiles/
           if-no-files-found: warn
+
+  release-pair:
+    if: inputs.followup
+    runs-on: windows-latest
+    env:
+      RUSTUP_TOOLCHAIN: 1.99.0
+      SYS01_PROFILE: release
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Run both synthetic histories on this VM
+        shell: python
+        run: |
+          import json
+          import os
+          import re
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          temp = Path(os.environ["RUNNER_TEMP"])
+          results = temp / "release-results"
+          results.mkdir()
+          for label, sha in [
+              ("baseline", "6734adc2bfe8b145e8062a2fc669dd2024dd2ba6"),
+              ("candidate", "d7ff3fb6dafa4c53f4ee4d774ab537728834cd71"),
+          ]:
+              checkout = temp / label
+              subprocess.run(["git", "worktree", "add", "--detach", checkout, sha], check=True)
+              actual = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=checkout, text=True).strip()
+              if actual != sha:
+                  raise ValueError(f"unexpected revision: {actual}")
+              core = checkout / "core"
+              subprocess.run([sys.executable, "reports/PERF-STORE-01/prepare_release_probe.py", core], check=True)
+              cmd = ["cargo", "test", "-p", "gateway", "--release", "review_scale_probe", "--",
+                     "--ignored", "--nocapture", "--test-threads=1"]
+              record = {"revision": sha, "image": os.environ["ImageVersion"], "command": cmd}
+              for tool in ["rustc", "cargo"]:
+                  record[tool] = subprocess.check_output([tool, "-Vv"], cwd=core, text=True).strip()
+              (results / f"{label}.json").write_text(json.dumps(record, indent=2))
+              log = results / f"{label}.log"
+              with log.open("wb") as output:
+                  proc = subprocess.run(cmd, cwd=core, stdout=output, stderr=subprocess.STDOUT)
+              raw = log.read_text(encoding="utf-8", errors="replace")
+              if proc.returncode:
+                  print(raw[-8000:])
+                  proc.check_returncode()
+              if "test result: ok. 1 passed; 0 failed;" not in raw:
+                  raise ValueError("expected a passing gateway measurement test")
+              head, = re.findall(r"SYS01_SCALE profile=release commits=128 operation=new_head elapsed_ns=(\d+)", raw)
+              full, = re.findall(r"SYS01_FULL commits=128 total_ns=(\d+)", raw)
+              row = f"{label} `{sha}` | {int(head)/1e6:.6f} | {int(full)/1e6:.6f} | {int(full)/128e6:.6f}"
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+                  if label == "baseline":
+                      print("revision | new head (ms) | forced full (ms) | forced full (ms/commit)", file=summary)
+                      print("--- | ---: | ---: | ---:", file=summary)
+                  print(row, file=summary)
+              print(row)
+      - name: Preserve release evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-pair-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/release-results
+          if-no-files-found: error
+
+  object-hotspots:
+    if: inputs.followup
+    runs-on: ubuntu-latest
+    env:
+      RUSTUP_TOOLCHAIN: 1.99.0
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: d7ff3fb6dafa4c53f4ee4d774ab537728834cd71
+          persist-credentials: false
+      - name: Run the candidate example once
+        working-directory: core
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          rustc -Vv
+          cargo -V
+          echo "$ImageVersion"
+          cargo run --release --locked -p core-store --example object_hotspots | tee "$RUNNER_TEMP/object-hotspots.csv"
+      - name: Preserve the example output
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: object-hotspots-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/object-hotspots.csv
+          if-no-files-found: error
