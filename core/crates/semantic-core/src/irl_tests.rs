@@ -91,9 +91,12 @@ impl CommittedIrlPrefix for World {
 }
 impl World {
     fn new() -> Self {
+        Self::with_text("字🙂")
+    }
+    fn with_text(text: &str) -> Self {
         let payload = UserText {
             schema_version: 1,
-            text: "字🙂".into(),
+            text: text.into(),
         };
         let mut raw: EventEnvelope = fixture();
         raw.payload_ref = reference(&payload);
@@ -108,7 +111,7 @@ impl World {
             content: raw.payload_ref.clone(),
         };
         let path = json!([{"schema_version":1,"field_number":2}]);
-        let loc = json!({"schema_version":1,"source":turn,"path":path,"text":{"schema_version":1,"start":"0","end":"7"}});
+        let loc = json!({"schema_version":1,"source":turn,"path":path,"text":{"schema_version":1,"start":"0","end":text.len().to_string()}});
         let label = json!({"schema_version":1,"en":"reported","ja":"引用","zh":"引述"});
         let concept = ConceptRef {
             schema_version: 1,

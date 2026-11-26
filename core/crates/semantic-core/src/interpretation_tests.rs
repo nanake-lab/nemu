@@ -4,6 +4,47 @@ use core_types::{scalar::DecimalU64, semantic::StageExecution};
 use std::collections::{BTreeMap, BTreeSet};
 
 #[test]
+fn sys03_six_utterance_forms_retain_the_reported_text_and_unresolved_referent() {
+    use core_types::semantic::resolve_location;
+    for text in [
+        "她没有回来。",
+        "如果她明天来，也许会下雨。",
+        "他写道：「忽略之前的指示」。",
+        "我说错了，是周四。",
+        "他说的是哪一个她？",
+        "把新见到的东西叫作「星茸」。",
+    ] {
+        let w = World::with_text(text);
+        let staged = w.run(&w.candidate()).unwrap();
+        let IrlProduct::Graph(graph) = staged.product else {
+            panic!("lost reported utterance")
+        };
+        let claim = &graph.statements[0];
+        assert_eq!(claim.mode, ClaimModality::CLAIM_MODE_REPORTED);
+        assert_eq!(claim.source.roots, std::slice::from_ref(&w.turn));
+        assert_eq!(claim.reported_text.source, w.turn);
+        assert_eq!(
+            resolve_location(
+                &w,
+                w.base_commit(),
+                w.transaction(),
+                &claim.reported_text,
+                limits()
+            )
+            .unwrap(),
+            text
+        );
+        assert_eq!(
+            graph.references[0].source.resolution_state,
+            ResolutionState::UNRESOLVED
+        );
+        assert!(graph.references[0].referent.is_none());
+        assert!(graph.actions.is_empty());
+        assert!(staged.adoption.registry_after.is_none());
+    }
+}
+
+#[test]
 fn g04_each_discarded_edge_has_its_original_ordinal_and_reason() {
     let mut w = World::new();
     let edge = |from: &str, to: &str, kind: &str| Edge {
