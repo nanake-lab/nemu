@@ -2,7 +2,7 @@
 use crate::{
     Fault, Result,
     irl::adopted,
-    objects::check_object,
+    objects::{check_binding, check_object},
     records::{self, Context, Record},
 };
 use core_types::{
@@ -47,8 +47,8 @@ pub fn stage_judgment(
         INTERPRET_STAGE_M => &seen.binding.environment.situation_matcher,
         INTERPRET_STAGE_IRL => return Err(Fault::Binding),
     };
+    check_binding(context.binding, seen.binding, limits)?;
     if context.target_event != seen.event.record_id
-        || context.binding != seen.binding
         || !dispatch.assessed_without_positive_match.is_empty()
             && !matches!(result, Judgment::Match(_))
     {

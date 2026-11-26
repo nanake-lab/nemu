@@ -52,12 +52,24 @@ struct View {
     occurred: Vec<ScopedVerification>,
     truth: Vec<ScopedVerification>,
     subjective: Vec<ScopedVerification>,
+    targets: Vec<TargetPremise>,
     authorized: bool,
     epistemic: EpistemicType,
 }
 impl View {
     fn new(event: Input, origin: AttributeSource) -> Self {
-        let unit = Input::new("episode", OBSERVATION, fixture::<TouchObservationV2>());
+        let unit = if origin == ATTR_SOURCE_HUMAN_RESPONSE {
+            Input::new(
+                "correction",
+                OBSERVATION,
+                UserText {
+                    schema_version: 1,
+                    text: "Recorded counterexample".into(),
+                },
+            )
+        } else {
+            Input::new("episode", OBSERVATION, fixture::<TouchObservationV2>())
+        };
         let inputs = vec![event.at.clone(), unit.at.clone()];
         let (pinned, table) = initial_attribute_rules(limits()).unwrap();
         let aliases = Aliases::build(
@@ -159,6 +171,7 @@ impl View {
             occurred: vec![observed],
             truth: vec![unknown],
             subjective: vec![subjective],
+            targets: vec![],
             authorized: true,
             epistemic,
         }
@@ -240,7 +253,7 @@ impl AttributeView for View {
             occurred: &self.occurred,
             truth: &self.truth,
             subjective: &self.subjective,
-            targets: &[],
+            targets: &self.targets,
         })
     }
 }
@@ -396,6 +409,15 @@ fn g05_rule_selects_the_authenticated_source_kind_and_payload() {
 #[test]
 fn g05_preserves_independent_scopes_aliases_and_shared_episode_units() {
     let mut v = reply();
+    let mut target: TargetPremise = fixture();
+    target.truth_scopes = vec![VerificationRequirement {
+        schema_version: 1,
+        scope: v.truth[0].scope.clone(),
+        expected: VerificationValue::VERIFY_VALUE_TRUE,
+    }];
+    target.occurrence_scopes.clear();
+    target.subjective_scopes.clear();
+    v.targets.push(target);
     let a = v.run().unwrap();
     assert_eq!(a.occurred[0].value, VerificationValue::VERIFY_VALUE_TRUE);
     assert_ne!(a.occurred[0].scope, a.truth[0].scope);
@@ -404,6 +426,19 @@ fn g05_preserves_independent_scopes_aliases_and_shared_episode_units() {
     assert_eq!(a.subjective[0].experiencer.as_deref(), Some("alice"));
     v.account = "account-2".into();
     assert_eq!(a, v.run().unwrap());
+    v.truth[0].value = VerificationValue::VERIFY_VALUE_FALSE;
+    v.truth[0].evidence = vec![v.unit.at.clone()];
+    v.truth[0].reason = None;
+    let contradicted = v.run().unwrap();
+    assert_eq!(contradicted.targets, a.targets);
+    assert_eq!(
+        contradicted.truth[0].value,
+        VerificationValue::VERIFY_VALUE_FALSE
+    );
+    assert_eq!(contradicted.occurred, a.occurred);
+    assert_eq!(contradicted.subjective, a.subjective);
+    v.targets[0].truth_scopes[0].scope.source = v.unit.at.clone();
+    assert!(v.run().is_err());
     let touch = |id| {
         View::new(
             Input::new(id, OBSERVATION, fixture::<TouchObservationV2>()),
@@ -416,6 +451,52 @@ fn g05_preserves_independent_scopes_aliases_and_shared_episode_units() {
     assert_ne!(a.event, b.event);
     assert_eq!(a.c_unit, b.c_unit);
 }
+#[test]
+fn g05_each_epistemic_label_preserves_the_separate_truth_assessment() {
+    use EpistemicType::*;
+    for kind in [
+        USER_ASSERTION,
+        USER_SELF_REPORT,
+        QUOTATION,
+        TOOL_OUTPUT,
+        SYSTEM_RECORD,
+        MODEL_INFERENCE,
+        EPISTEMIC_UNKNOWN,
+    ] {
+        let mut v = match kind {
+            USER_ASSERTION | USER_SELF_REPORT | QUOTATION => reply(),
+            TOOL_OUTPUT => View::new(
+                Input::new("result", EXECUTION_RESULT, fixture::<BodyActionResult>()),
+                ATTR_SOURCE_SELF_RESULT,
+            ),
+            MODEL_INFERENCE => View::new(
+                Input::new(
+                    "thought",
+                    OBSERVATION,
+                    fixture::<InternalActivityRecordV2>(),
+                ),
+                ATTR_SOURCE_INTERNAL,
+            ),
+            SYSTEM_RECORD | EPISTEMIC_UNKNOWN => View::new(
+                Input::new("observation", OBSERVATION, fixture::<DesktopObservation>()),
+                ATTR_SOURCE_DESKTOP,
+            ),
+        };
+        v.epistemic = kind;
+        v.metadata.epistemic_type = kind;
+        if kind == MODEL_INFERENCE {
+            v.metadata.derivation = Derivation::INFERRED;
+        }
+        let output = v.run().unwrap();
+        assert_eq!(output.source.epistemic_type, kind);
+        assert_eq!(
+            output.truth[0].value,
+            VerificationValue::VERIFY_VALUE_UNKNOWN
+        );
+        assert_eq!(output.exogenous, v.origin == ATTR_SOURCE_HUMAN_RESPONSE);
+    }
+}
+
 #[test]
 fn g05_rejects_unbound_rules_invalid_scopes_and_revoked_or_promoted_sources() {
     for change in [
