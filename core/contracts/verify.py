@@ -21,6 +21,7 @@ from verify_theta_limits import verify as verify_theta_limits
 from verify_law_state import verify as verify_law_state
 from verify_cognition import verify as verify_cognition
 from verify_j import verify as verify_j
+from verify_irl import cases as irl_cases
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -274,6 +275,10 @@ def main() -> None:
                     object_type=definition["tag"], byte_length=str(size), digest=encoded["digest"]
                 )
                 bad(control | dict(reference=ref, hex=encoded["canonical"]))
+    for request, expectation in irl_cases():
+        if request['op'] == 'ingress':
+            queries.append(request)
+            expected.append(expectation)
     for language, command in commands.items():
         actual = probe(command, queries)
         for i, (got, want) in enumerate(zip(actual, expected, strict=True)):

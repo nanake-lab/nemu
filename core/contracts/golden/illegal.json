@@ -80647,5 +80647,992 @@
         "max_depth": 32
       }
     }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "IrlPipeAuth",
+      "op": "encode",
+      "value": {
+        "protocol_version": 1,
+        "link": 1,
+        "session_id": "pipe-0",
+        "launch_credential": "0101010101010101010101010101010101010101010101010101010101010101"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "IrlPipeAuth",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "protocol_version": 1,
+        "link": 1,
+        "session_id": "pipe-0",
+        "launch_credential": "0101010101010101010101010101010101010101010101010101010101010101"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "IrlPipeAuth",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "protocol_version": 1,
+        "link": 1,
+        "session_id": "pipe-0",
+        "launch_credential": "0101010101010101010101010101010101010101010101010101010101010101",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "IrlCall",
+      "op": "encode",
+      "value": {
+        "protocol_version": 1,
+        "session_id": "pipe-0",
+        "request_id": "request-0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "IrlCall",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "protocol_version": 1,
+        "session_id": "pipe-0",
+        "request_id": "request-0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "IrlCall",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "protocol_version": 1,
+        "session_id": "pipe-0",
+        "request_id": "request-0",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "IrlPipeBudget",
+      "op": "encode",
+      "value": {
+        "version": "limits-0",
+        "frame_bytes": 8192,
+        "object_bytes": "4096",
+        "output_bytes": "2048"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "IrlPipeBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "version": "limits-0",
+        "frame_bytes": 8192,
+        "object_bytes": "4096",
+        "output_bytes": "2048"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "IrlPipeBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "limits-0",
+        "frame_bytes": 8192,
+        "object_bytes": "4096",
+        "output_bytes": "2048",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "IrlBorrow",
+      "op": "encode",
+      "value": {
+        "grant_id": "grant-0",
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "byte_length": "20"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "IrlBorrow",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "grant_id": "grant-0",
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "byte_length": "20"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "IrlBorrow",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "grant_id": "grant-0",
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "byte_length": "20"
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "IrlMaterial",
+      "op": "encode",
+      "value": {
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "byte_length": "20"
+        },
+        "data": "e69cace69cbae59088e68890e8be93e585a52030"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "IrlMaterial",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "byte_length": "20"
+        },
+        "data": "e69cace69cbae59088e68890e8be93e585a52030"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "IrlMaterial",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "byte_length": "20"
+        },
+        "data": "e69cace69cbae59088e68890e8be93e585a52030",
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "IrlDispatch",
+      "op": "encode",
+      "value": {
+        "target": {
+          "schema_version": 1,
+          "branch_id": "fixture",
+          "record_id": "event",
+          "content": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          }
+        },
+        "payload": {
+          "schema_version": 1,
+          "grant_id": "grant-0",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          }
+        },
+        "facts": {
+          "schema_version": 1,
+          "grant_id": "facts",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+            "byte_length": "5"
+          }
+        },
+        "registry": {
+          "schema_version": 1,
+          "grant_id": "registry",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+            "byte_length": "8"
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "IrlDispatch",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "target": {
+          "schema_version": 1,
+          "branch_id": "fixture",
+          "record_id": "event",
+          "content": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          }
+        },
+        "payload": {
+          "schema_version": 1,
+          "grant_id": "grant-0",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          }
+        },
+        "facts": {
+          "schema_version": 1,
+          "grant_id": "facts",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+            "byte_length": "5"
+          }
+        },
+        "registry": {
+          "schema_version": 1,
+          "grant_id": "registry",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+            "byte_length": "8"
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "IrlDispatch",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "target": {
+          "schema_version": 1,
+          "branch_id": "fixture",
+          "record_id": "event",
+          "content": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          }
+        },
+        "payload": {
+          "schema_version": 1,
+          "grant_id": "grant-0",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          }
+        },
+        "facts": {
+          "schema_version": 1,
+          "grant_id": "facts",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+            "byte_length": "5"
+          }
+        },
+        "registry": {
+          "schema_version": 1,
+          "grant_id": "registry",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+            "byte_length": "8"
+          }
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "IrlDelegation",
+      "op": "encode",
+      "value": {
+        "link": 2,
+        "parent": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "parent",
+          "request_id": "request-0"
+        },
+        "inputs": [
+          {
+            "schema_version": 1,
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            },
+            "data": "e69cace69cbae59088e68890e8be93e585a52030"
+          }
+        ],
+        "parameters": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+          "byte_length": "6"
+        },
+        "provider": "fixture",
+        "requested_model": "example",
+        "disclosure": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1",
+          "byte_length": "10"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "IrlDelegation",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "link": 2,
+        "parent": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "parent",
+          "request_id": "request-0"
+        },
+        "inputs": [
+          {
+            "schema_version": 1,
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            },
+            "data": "e69cace69cbae59088e68890e8be93e585a52030"
+          }
+        ],
+        "parameters": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+          "byte_length": "6"
+        },
+        "provider": "fixture",
+        "requested_model": "example",
+        "disclosure": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1",
+          "byte_length": "10"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "IrlDelegation",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "link": 2,
+        "parent": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "parent",
+          "request_id": "request-0"
+        },
+        "inputs": [
+          {
+            "schema_version": 1,
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            },
+            "data": "e69cace69cbae59088e68890e8be93e585a52030"
+          }
+        ],
+        "parameters": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+          "byte_length": "6"
+        },
+        "provider": "fixture",
+        "requested_model": "example",
+        "disclosure": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1",
+          "byte_length": "10"
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "missing-version",
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-0",
+          "request_id": "request-0"
+        },
+        "operation": 1,
+        "dispatch": {
+          "schema_version": 1,
+          "target": {
+            "schema_version": 1,
+            "branch_id": "fixture",
+            "record_id": "event",
+            "content": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            }
+          },
+          "payload": {
+            "schema_version": 1,
+            "grant_id": "grant-0",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            }
+          },
+          "facts": {
+            "schema_version": 1,
+            "grant_id": "facts",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+              "byte_length": "5"
+            }
+          },
+          "registry": {
+            "schema_version": 1,
+            "grant_id": "registry",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+              "byte_length": "8"
+            }
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-version",
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 2,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-0",
+          "request_id": "request-0"
+        },
+        "operation": 1,
+        "dispatch": {
+          "schema_version": 1,
+          "target": {
+            "schema_version": 1,
+            "branch_id": "fixture",
+            "record_id": "event",
+            "content": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            }
+          },
+          "payload": {
+            "schema_version": 1,
+            "grant_id": "grant-0",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            }
+          },
+          "facts": {
+            "schema_version": 1,
+            "grant_id": "facts",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+              "byte_length": "5"
+            }
+          },
+          "registry": {
+            "schema_version": 1,
+            "grant_id": "registry",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+              "byte_length": "8"
+            }
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-field",
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-0",
+          "request_id": "request-0"
+        },
+        "operation": 1,
+        "dispatch": {
+          "schema_version": 1,
+          "target": {
+            "schema_version": 1,
+            "branch_id": "fixture",
+            "record_id": "event",
+            "content": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            }
+          },
+          "payload": {
+            "schema_version": 1,
+            "grant_id": "grant-0",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            }
+          },
+          "facts": {
+            "schema_version": 1,
+            "grant_id": "facts",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+              "byte_length": "5"
+            }
+          },
+          "registry": {
+            "schema_version": 1,
+            "grant_id": "registry",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+              "byte_length": "8"
+            }
+          }
+        },
+        "undeclared": 0
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "not-sent-with-receipt",
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-6",
+          "request_id": "request-6"
+        },
+        "operation": 7,
+        "reason": {
+          "schema_version": 1,
+          "code": 3
+        },
+        "remote_status": 6,
+        "sent_request": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "byte_length": "20"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "not-sent-with-completed-status",
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-6",
+          "request_id": "request-6"
+        },
+        "operation": 7,
+        "reason": {
+          "schema_version": 1,
+          "code": 3
+        },
+        "remote_status": 1
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "unknown-with-invented-output",
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-7",
+          "request_id": "request-7"
+        },
+        "operation": 8,
+        "reason": {
+          "schema_version": 1,
+          "code": 3
+        },
+        "sent_request": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "7afbb3347fb7252e533d58d99d72d9106fc6fdb3f30df23fa70b764c15ac42c5",
+          "byte_length": "4"
+        },
+        "output": {
+          "schema_version": 1,
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          },
+          "data": "e69cace69cbae59088e68890e8be93e585a52030"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
+  },
+  {
+    "label": "cancel-request-with-output",
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-4",
+          "request_id": "request-4"
+        },
+        "operation": 5,
+        "output": {
+          "schema_version": 1,
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          },
+          "data": "e69cace69cbae59088e68890e8be93e585a52030"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    }
   }
 ]

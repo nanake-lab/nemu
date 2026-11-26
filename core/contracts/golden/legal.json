@@ -105230,5 +105230,2005 @@
         "tau0_s": 1.0
       }
     }
+  },
+  {
+    "request": {
+      "name": "IrlPipeAuth",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "protocol_version": 1,
+        "link": 1,
+        "session_id": "pipe-0",
+        "launch_credential": "0101010101010101010101010101010101010101010101010101010101010101"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e69726c2d706970652d617574680100000006000000706970652d3001000000200000000101010101010101010101010101010101010101010101010101010101010101",
+      "digest": "4c766c539f3783b3bc125b6b618f776fd00d241a837eb5aaf31d8554e4c55e4d",
+      "ok": true,
+      "protobuf": "080110011a06706970652d3020012a200101010101010101010101010101010101010101010101010101010101010101",
+      "value": {
+        "launch_credential": "0101010101010101010101010101010101010101010101010101010101010101",
+        "link": 1,
+        "protocol_version": 1,
+        "schema_version": 1,
+        "session_id": "pipe-0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeAuth",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "protocol_version": 1,
+        "link": 2,
+        "session_id": "pipe-1",
+        "launch_credential": "0202020202020202020202020202020202020202020202020202020202020202"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e69726c2d706970652d617574680100000006000000706970652d3102000000200000000202020202020202020202020202020202020202020202020202020202020202",
+      "digest": "adc5183cac1eb5346f81a44ef43f73bf5a5e3ab12bf9bf93d9fbe88309baab62",
+      "ok": true,
+      "protobuf": "080110011a06706970652d3120022a200202020202020202020202020202020202020202020202020202020202020202",
+      "value": {
+        "launch_credential": "0202020202020202020202020202020202020202020202020202020202020202",
+        "link": 2,
+        "protocol_version": 1,
+        "schema_version": 1,
+        "session_id": "pipe-1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeAuth",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "protocol_version": 1,
+        "link": 3,
+        "session_id": "pipe-2",
+        "launch_credential": "0303030303030303030303030303030303030303030303030303030303030303"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000120000006563686f2e69726c2d706970652d617574680100000006000000706970652d3203000000200000000303030303030303030303030303030303030303030303030303030303030303",
+      "digest": "0112b9754c9f34b6a4bc5f14896c18e6e908eeb51c1a277de9f24e1e606e359c",
+      "ok": true,
+      "protobuf": "080110011a06706970652d3220032a200303030303030303030303030303030303030303030303030303030303030303",
+      "value": {
+        "launch_credential": "0303030303030303030303030303030303030303030303030303030303030303",
+        "link": 3,
+        "protocol_version": 1,
+        "schema_version": 1,
+        "session_id": "pipe-2"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlCall",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "protocol_version": 1,
+        "session_id": "pipe-0",
+        "request_id": "request-0"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3009000000726571756573742d30",
+      "digest": "2da904c9ac2cd7e48d66848de30f4775339ae1683441b0ebccfe3fbc5274e9d8",
+      "ok": true,
+      "protobuf": "080110011a06706970652d302209726571756573742d30",
+      "value": {
+        "protocol_version": 1,
+        "request_id": "request-0",
+        "schema_version": 1,
+        "session_id": "pipe-0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlCall",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "protocol_version": 1,
+        "session_id": "pipe-1",
+        "request_id": "request-1"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3109000000726571756573742d31",
+      "digest": "f36ae115fc9547c4a3c1f17541d6d259502391e056e470529956af6410ede61f",
+      "ok": true,
+      "protobuf": "080110011a06706970652d312209726571756573742d31",
+      "value": {
+        "protocol_version": 1,
+        "request_id": "request-1",
+        "schema_version": 1,
+        "session_id": "pipe-1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlCall",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "protocol_version": 1,
+        "session_id": "pipe-2",
+        "request_id": "request-2"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3209000000726571756573742d32",
+      "digest": "99b362771c699f36150efa1f04d0dc1f74228334edd549a46baf93771b0c5d64",
+      "ok": true,
+      "protobuf": "080110011a06706970652d322209726571756573742d32",
+      "value": {
+        "protocol_version": 1,
+        "request_id": "request-2",
+        "schema_version": 1,
+        "session_id": "pipe-2"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "limits-0",
+        "frame_bytes": 8192,
+        "object_bytes": "4096",
+        "output_bytes": "2048"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e69726c2d706970652d627564676574080000006c696d6974732d300020000000100000000000000008000000000000",
+      "digest": "1dce6306ed3f81147a1386a8890df8f8a6735ce4b63661a9be5fba4ceff61248",
+      "ok": true,
+      "protobuf": "080112086c696d6974732d30188040208020288010",
+      "value": {
+        "frame_bytes": 8192,
+        "object_bytes": "4096",
+        "output_bytes": "2048",
+        "schema_version": 1,
+        "version": "limits-0"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "limits-1",
+        "frame_bytes": 8192,
+        "object_bytes": "4096",
+        "output_bytes": "2048"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e69726c2d706970652d627564676574080000006c696d6974732d310020000000100000000000000008000000000000",
+      "digest": "466c1457c232a431ba1df2e85416a97e538ca5cdf8bb9b19c5676f3de2d820c0",
+      "ok": true,
+      "protobuf": "080112086c696d6974732d31188040208020288010",
+      "value": {
+        "frame_bytes": 8192,
+        "object_bytes": "4096",
+        "output_bytes": "2048",
+        "schema_version": 1,
+        "version": "limits-1"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeBudget",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "version": "limits-2",
+        "frame_bytes": 8192,
+        "object_bytes": "4096",
+        "output_bytes": "2048"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000140000006563686f2e69726c2d706970652d627564676574080000006c696d6974732d320020000000100000000000000008000000000000",
+      "digest": "ac6a4c55641b655daa2ca9e181b8e3604e3799e9938fef3da0e82eb5081c6883",
+      "ok": true,
+      "protobuf": "080112086c696d6974732d32188040208020288010",
+      "value": {
+        "frame_bytes": 8192,
+        "object_bytes": "4096",
+        "output_bytes": "2048",
+        "schema_version": 1,
+        "version": "limits-2"
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlBorrow",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "grant_id": "grant-0",
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "byte_length": "20"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e69726c2d626f72726f77070000006772616e742d30690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000",
+      "digest": "2acca220041f2992153a1c09f01c2cc3df5328040c5504231c48ccc8745ecad8",
+      "ok": true,
+      "protobuf": "080112076772616e742d301a440801122040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf5208521a196e656d752e73746f726167652e7261772d62797465732d76312201312814",
+      "value": {
+        "grant_id": "grant-0",
+        "object": {
+          "byte_length": "20",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlBorrow",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "grant_id": "grant-1",
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+          "byte_length": "20"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e69726c2d626f72726f77070000006772616e742d31690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000",
+      "digest": "0020adca05dc27e2c8f8c316613559c3ab75e2cd07c8e393e3da09789fd96a7a",
+      "ok": true,
+      "protobuf": "080112076772616e742d311a4408011220c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a11a196e656d752e73746f726167652e7261772d62797465732d76312201312814",
+      "value": {
+        "grant_id": "grant-1",
+        "object": {
+          "byte_length": "20",
+          "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlBorrow",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "grant_id": "grant-2",
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+          "byte_length": "20"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e435631010000000f0000006563686f2e69726c2d626f72726f77070000006772616e742d32690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000001a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000",
+      "digest": "1e8f3c7f4c5b9a3945167c9cadd412a7825c794fdbb12c9b5df5642ca8deea79",
+      "ok": true,
+      "protobuf": "080112076772616e742d321a44080112201a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d1a196e656d752e73746f726167652e7261772d62797465732d76312201312814",
+      "value": {
+        "grant_id": "grant-2",
+        "object": {
+          "byte_length": "20",
+          "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlMaterial",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "byte_length": "20"
+        },
+        "data": "e69cace69cbae59088e68890e8be93e585a52030"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852190000006e656d752e73746f726167652e7261772d62797465732d76310100000031140000000000000014000000e69cace69cbae59088e68890e8be93e585a52030",
+      "digest": "1e70514bb12bcb972da901ce2b71148f62f72e40b6c6fa25b905484795ce6996",
+      "ok": true,
+      "protobuf": "080112440801122040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf5208521a196e656d752e73746f726167652e7261772d62797465732d763122013128141a14e69cace69cbae59088e68890e8be93e585a52030",
+      "value": {
+        "data": "e69cace69cbae59088e68890e8be93e585a52030",
+        "object": {
+          "byte_length": "20",
+          "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlMaterial",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+          "byte_length": "20"
+        },
+        "data": "e69cace69cbae59088e68890e8be93e585a52031"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1190000006e656d752e73746f726167652e7261772d62797465732d76310100000031140000000000000014000000e69cace69cbae59088e68890e8be93e585a52031",
+      "digest": "15b08a954f524f8aaf1e0dc85a54de1afd2c716060be81fe7beee8e954fb1bdb",
+      "ok": true,
+      "protobuf": "0801124408011220c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a11a196e656d752e73746f726167652e7261772d62797465732d763122013128141a14e69cace69cbae59088e68890e8be93e585a52031",
+      "value": {
+        "data": "e69cace69cbae59088e68890e8be93e585a52031",
+        "object": {
+          "byte_length": "20",
+          "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlMaterial",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "object": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+          "byte_length": "20"
+        },
+        "data": "e69cace69cbae59088e68890e8be93e585a52032"
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000001a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d190000006e656d752e73746f726167652e7261772d62797465732d76310100000031140000000000000014000000e69cace69cbae59088e68890e8be93e585a52032",
+      "digest": "f87f0a595f0b3ca6b3c6d6af49d5eff593252012288fb8f63055607afd54b6b6",
+      "ok": true,
+      "protobuf": "08011244080112201a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d1a196e656d752e73746f726167652e7261772d62797465732d763122013128141a14e69cace69cbae59088e68890e8be93e585a52032",
+      "value": {
+        "data": "e69cace69cbae59088e68890e8be93e585a52032",
+        "object": {
+          "byte_length": "20",
+          "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlDispatch",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "target": {
+          "schema_version": 1,
+          "branch_id": "fixture",
+          "record_id": "event",
+          "content": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          }
+        },
+        "payload": {
+          "schema_version": 1,
+          "grant_id": "grant-0",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "byte_length": "20"
+          }
+        },
+        "facts": {
+          "schema_version": 1,
+          "grant_id": "facts",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+            "byte_length": "5"
+          }
+        },
+        "registry": {
+          "schema_version": 1,
+          "grant_id": "registry",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+            "byte_length": "8"
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000110000006563686f2e69726c2d6469737061746368a00000004e43563101000000130000006563686f2e7265636f72642d76657273696f6e0700000066697874757265050000006576656e74690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000930000004e435631010000000f0000006563686f2e69726c2d626f72726f77070000006772616e742d30690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000910000004e435631010000000f0000006563686f2e69726c2d626f72726f77050000006661637473690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502190000006e656d752e73746f726167652e7261772d62797465732d763101000000310500000000000000940000004e435631010000000f0000006563686f2e69726c2d626f72726f77080000007265676973747279690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822190000006e656d752e73746f726167652e7261772d62797465732d763101000000310800000000000000",
+      "digest": "6de05dff823da60754a27087b14c3234b5d9b58ad7a44fc15b6aec83b9ddff3c",
+      "ok": true,
+      "protobuf": "0801125808011207666978747572651a056576656e7422440801122040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf5208521a196e656d752e73746f726167652e7261772d62797465732d763122013128141a51080112076772616e742d301a440801122040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf5208521a196e656d752e73746f726167652e7261772d62797465732d76312201312814224f0801120566616374731a44080112200694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f50075021a196e656d752e73746f726167652e7261772d62797465732d763122013128052a520801120872656769737472791a4408011220872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc2388221a196e656d752e73746f726167652e7261772d62797465732d76312201312808",
+      "value": {
+        "facts": {
+          "grant_id": "facts",
+          "object": {
+            "byte_length": "5",
+            "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "payload": {
+          "grant_id": "grant-0",
+          "object": {
+            "byte_length": "20",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "registry": {
+          "grant_id": "registry",
+          "object": {
+            "byte_length": "8",
+            "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "target": {
+          "branch_id": "fixture",
+          "content": {
+            "byte_length": "20",
+            "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "record_id": "event",
+          "schema_version": 1
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlDispatch",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "target": {
+          "schema_version": 1,
+          "branch_id": "fixture",
+          "record_id": "event",
+          "content": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+            "byte_length": "20"
+          }
+        },
+        "payload": {
+          "schema_version": 1,
+          "grant_id": "grant-1",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+            "byte_length": "20"
+          }
+        },
+        "facts": {
+          "schema_version": 1,
+          "grant_id": "facts",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+            "byte_length": "5"
+          }
+        },
+        "registry": {
+          "schema_version": 1,
+          "grant_id": "registry",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+            "byte_length": "8"
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000110000006563686f2e69726c2d6469737061746368a00000004e43563101000000130000006563686f2e7265636f72642d76657273696f6e0700000066697874757265050000006576656e74690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000930000004e435631010000000f0000006563686f2e69726c2d626f72726f77070000006772616e742d31690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000910000004e435631010000000f0000006563686f2e69726c2d626f72726f77050000006661637473690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502190000006e656d752e73746f726167652e7261772d62797465732d763101000000310500000000000000940000004e435631010000000f0000006563686f2e69726c2d626f72726f77080000007265676973747279690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822190000006e656d752e73746f726167652e7261772d62797465732d763101000000310800000000000000",
+      "digest": "37fa7a096c89d5ad4eb8fcee75f8892ac09935b922a692303c32f6a03de88d4e",
+      "ok": true,
+      "protobuf": "0801125808011207666978747572651a056576656e74224408011220c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a11a196e656d752e73746f726167652e7261772d62797465732d763122013128141a51080112076772616e742d311a4408011220c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a11a196e656d752e73746f726167652e7261772d62797465732d76312201312814224f0801120566616374731a44080112200694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f50075021a196e656d752e73746f726167652e7261772d62797465732d763122013128052a520801120872656769737472791a4408011220872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc2388221a196e656d752e73746f726167652e7261772d62797465732d76312201312808",
+      "value": {
+        "facts": {
+          "grant_id": "facts",
+          "object": {
+            "byte_length": "5",
+            "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "payload": {
+          "grant_id": "grant-1",
+          "object": {
+            "byte_length": "20",
+            "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "registry": {
+          "grant_id": "registry",
+          "object": {
+            "byte_length": "8",
+            "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "target": {
+          "branch_id": "fixture",
+          "content": {
+            "byte_length": "20",
+            "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "record_id": "event",
+          "schema_version": 1
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlDispatch",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "target": {
+          "schema_version": 1,
+          "branch_id": "fixture",
+          "record_id": "event",
+          "content": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+            "byte_length": "20"
+          }
+        },
+        "payload": {
+          "schema_version": 1,
+          "grant_id": "grant-2",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+            "byte_length": "20"
+          }
+        },
+        "facts": {
+          "schema_version": 1,
+          "grant_id": "facts",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+            "byte_length": "5"
+          }
+        },
+        "registry": {
+          "schema_version": 1,
+          "grant_id": "registry",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+            "byte_length": "8"
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000110000006563686f2e69726c2d6469737061746368a00000004e43563101000000130000006563686f2e7265636f72642d76657273696f6e0700000066697874757265050000006576656e74690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000001a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000930000004e435631010000000f0000006563686f2e69726c2d626f72726f77070000006772616e742d32690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000001a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000910000004e435631010000000f0000006563686f2e69726c2d626f72726f77050000006661637473690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502190000006e656d752e73746f726167652e7261772d62797465732d763101000000310500000000000000940000004e435631010000000f0000006563686f2e69726c2d626f72726f77080000007265676973747279690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822190000006e656d752e73746f726167652e7261772d62797465732d763101000000310800000000000000",
+      "digest": "cab5627af848777c8697c884b104d2677b5e36deceffaa8a5ca5088bba0f5f18",
+      "ok": true,
+      "protobuf": "0801125808011207666978747572651a056576656e742244080112201a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d1a196e656d752e73746f726167652e7261772d62797465732d763122013128141a51080112076772616e742d321a44080112201a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d1a196e656d752e73746f726167652e7261772d62797465732d76312201312814224f0801120566616374731a44080112200694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f50075021a196e656d752e73746f726167652e7261772d62797465732d763122013128052a520801120872656769737472791a4408011220872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc2388221a196e656d752e73746f726167652e7261772d62797465732d76312201312808",
+      "value": {
+        "facts": {
+          "grant_id": "facts",
+          "object": {
+            "byte_length": "5",
+            "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "payload": {
+          "grant_id": "grant-2",
+          "object": {
+            "byte_length": "20",
+            "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "registry": {
+          "grant_id": "registry",
+          "object": {
+            "byte_length": "8",
+            "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "target": {
+          "branch_id": "fixture",
+          "content": {
+            "byte_length": "20",
+            "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "record_id": "event",
+          "schema_version": 1
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlDelegation",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "link": 2,
+        "parent": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "parent",
+          "request_id": "request-0"
+        },
+        "inputs": [
+          {
+            "schema_version": 1,
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            },
+            "data": "e69cace69cbae59088e68890e8be93e585a52030"
+          }
+        ],
+        "parameters": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+          "byte_length": "6"
+        },
+        "provider": "fixture",
+        "requested_model": "example",
+        "disclosure": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1",
+          "byte_length": "10"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d64656c65676174696f6e02000000340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706172656e7409000000726571756573742d3001000000a20000004e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852190000006e656d752e73746f726167652e7261772d62797465732d76310100000031140000000000000014000000e69cace69cbae59088e68890e8be93e585a52030690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854190000006e656d752e73746f726167652e7261772d62797465732d76310100000031060000000000000001070000006669787475726501070000006578616d706c6501690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1190000006e656d752e73746f726167652e7261772d62797465732d763101000000310a000000000000000000",
+      "digest": "269e044c0e6e4f64265d61aaf7bdaa805639e567f7b64730643eb740b663c771",
+      "ok": true,
+      "protobuf": "080110021a17080110011a06706172656e742209726571756573742d30225e080112440801122040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf5208521a196e656d752e73746f726167652e7261772d62797465732d763122013128141a14e69cace69cbae59088e68890e8be93e585a520302a4408011220713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f28541a196e656d752e73746f726167652e7261772d62797465732d763122013128063207666978747572653a076578616d706c65424408011220fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b11a196e656d752e73746f726167652e7261772d62797465732d7631220131280a",
+      "value": {
+        "disclosure": {
+          "byte_length": "10",
+          "digest": "fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "inputs": [
+          {
+            "data": "e69cace69cbae59088e68890e8be93e585a52030",
+            "object": {
+              "byte_length": "20",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "schema_version": 1
+            },
+            "schema_version": 1
+          }
+        ],
+        "link": 2,
+        "parameters": {
+          "byte_length": "6",
+          "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "parent": {
+          "protocol_version": 1,
+          "request_id": "request-0",
+          "schema_version": 1,
+          "session_id": "parent"
+        },
+        "provider": "fixture",
+        "requested_model": "example",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlDelegation",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "link": 3,
+        "parent": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "parent",
+          "request_id": "request-1"
+        },
+        "inputs": [
+          {
+            "schema_version": 1,
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+              "byte_length": "20"
+            },
+            "data": "e69cace69cbae59088e68890e8be93e585a52031"
+          }
+        ],
+        "parameters": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+          "byte_length": "6"
+        },
+        "local_model": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4",
+          "byte_length": "5"
+        },
+        "isolation": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "7e2372f4115c43bac7248772d891df3dbc830a85aa27eeed933688f61c44226c",
+          "byte_length": "7"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d64656c65676174696f6e03000000340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706172656e7409000000726571756573742d3101000000a20000004e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1190000006e656d752e73746f726167652e7261772d62797465732d76310100000031140000000000000014000000e69cace69cbae59088e68890e8be93e585a52031690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854190000006e656d752e73746f726167652e7261772d62797465732d76310100000031060000000000000000000001690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000009372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4190000006e656d752e73746f726167652e7261772d62797465732d76310100000031050000000000000001690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000007e2372f4115c43bac7248772d891df3dbc830a85aa27eeed933688f61c44226c190000006e656d752e73746f726167652e7261772d62797465732d763101000000310700000000000000",
+      "digest": "ab2ecf1c8003806f012d0e1a3691a91d34ec0f8a37bc097dfe195eae6bd6412d",
+      "ok": true,
+      "protobuf": "080110031a17080110011a06706172656e742209726571756573742d31225e0801124408011220c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a11a196e656d752e73746f726167652e7261772d62797465732d763122013128141a14e69cace69cbae59088e68890e8be93e585a520312a4408011220713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f28541a196e656d752e73746f726167652e7261772d62797465732d763122013128064a44080112209372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e41a196e656d752e73746f726167652e7261772d62797465732d763122013128055244080112207e2372f4115c43bac7248772d891df3dbc830a85aa27eeed933688f61c44226c1a196e656d752e73746f726167652e7261772d62797465732d76312201312807",
+      "value": {
+        "inputs": [
+          {
+            "data": "e69cace69cbae59088e68890e8be93e585a52031",
+            "object": {
+              "byte_length": "20",
+              "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "schema_version": 1
+            },
+            "schema_version": 1
+          }
+        ],
+        "isolation": {
+          "byte_length": "7",
+          "digest": "7e2372f4115c43bac7248772d891df3dbc830a85aa27eeed933688f61c44226c",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "link": 3,
+        "local_model": {
+          "byte_length": "5",
+          "digest": "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "parameters": {
+          "byte_length": "6",
+          "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "parent": {
+          "protocol_version": 1,
+          "request_id": "request-1",
+          "schema_version": 1,
+          "session_id": "parent"
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlDelegation",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "link": 2,
+        "parent": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "parent",
+          "request_id": "request-2"
+        },
+        "inputs": [
+          {
+            "schema_version": 1,
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+              "byte_length": "20"
+            },
+            "data": "e69cace69cbae59088e68890e8be93e585a52032"
+          }
+        ],
+        "parameters": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+          "byte_length": "6"
+        },
+        "provider": "fixture",
+        "requested_model": "example",
+        "disclosure": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1",
+          "byte_length": "10"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d64656c65676174696f6e02000000340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706172656e7409000000726571756573742d3201000000a20000004e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000001a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d190000006e656d752e73746f726167652e7261772d62797465732d76310100000031140000000000000014000000e69cace69cbae59088e68890e8be93e585a52032690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854190000006e656d752e73746f726167652e7261772d62797465732d76310100000031060000000000000001070000006669787475726501070000006578616d706c6501690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1190000006e656d752e73746f726167652e7261772d62797465732d763101000000310a000000000000000000",
+      "digest": "14c1b7c4f12de3f55fa2d23c44bd83e14cd7554d12cc244b3fd891f18ecebe17",
+      "ok": true,
+      "protobuf": "080110021a17080110011a06706172656e742209726571756573742d32225e08011244080112201a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d1a196e656d752e73746f726167652e7261772d62797465732d763122013128141a14e69cace69cbae59088e68890e8be93e585a520322a4408011220713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f28541a196e656d752e73746f726167652e7261772d62797465732d763122013128063207666978747572653a076578616d706c65424408011220fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b11a196e656d752e73746f726167652e7261772d62797465732d7631220131280a",
+      "value": {
+        "disclosure": {
+          "byte_length": "10",
+          "digest": "fdeb33892d1867626d6d2b06b5596653202e6a3ed9962cc4f542d86ba06837b1",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "inputs": [
+          {
+            "data": "e69cace69cbae59088e68890e8be93e585a52032",
+            "object": {
+              "byte_length": "20",
+              "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "schema_version": 1
+            },
+            "schema_version": 1
+          }
+        ],
+        "link": 2,
+        "parameters": {
+          "byte_length": "6",
+          "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "parent": {
+          "protocol_version": 1,
+          "request_id": "request-2",
+          "schema_version": 1,
+          "session_id": "parent"
+        },
+        "provider": "fixture",
+        "requested_model": "example",
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-0",
+          "request_id": "request-0"
+        },
+        "operation": 1,
+        "dispatch": {
+          "schema_version": 1,
+          "target": {
+            "schema_version": 1,
+            "branch_id": "fixture",
+            "record_id": "event",
+            "content": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            }
+          },
+          "payload": {
+            "schema_version": 1,
+            "grant_id": "grant-0",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "byte_length": "20"
+            }
+          },
+          "facts": {
+            "schema_version": 1,
+            "grant_id": "facts",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+              "byte_length": "5"
+            }
+          },
+          "registry": {
+            "schema_version": 1,
+            "grant_id": "registry",
+            "object": {
+              "schema_version": 1,
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+              "byte_length": "8"
+            }
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3009000000726571756573742d300100000001850200004e43563101000000110000006563686f2e69726c2d6469737061746368a00000004e43563101000000130000006563686f2e7265636f72642d76657273696f6e0700000066697874757265050000006576656e74690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000930000004e435631010000000f0000006563686f2e69726c2d626f72726f77070000006772616e742d30690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000910000004e435631010000000f0000006563686f2e69726c2d626f72726f77050000006661637473690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000000694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502190000006e656d752e73746f726167652e7261772d62797465732d763101000000310500000000000000940000004e435631010000000f0000006563686f2e69726c2d626f72726f77080000007265676973747279690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822190000006e656d752e73746f726167652e7261772d62797465732d7631010000003108000000000000000000000000000000",
+      "digest": "e11ded5a4edc0851f0cf03ec8842822e8d383ca0556cff7f07b34192b4a59ea6",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d302209726571756573742d30180122d4020801125808011207666978747572651a056576656e7422440801122040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf5208521a196e656d752e73746f726167652e7261772d62797465732d763122013128141a51080112076772616e742d301a440801122040b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf5208521a196e656d752e73746f726167652e7261772d62797465732d76312201312814224f0801120566616374731a44080112200694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f50075021a196e656d752e73746f726167652e7261772d62797465732d763122013128052a520801120872656769737472791a4408011220872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc2388221a196e656d752e73746f726167652e7261772d62797465732d76312201312808",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-0",
+          "schema_version": 1,
+          "session_id": "pipe-0"
+        },
+        "dispatch": {
+          "facts": {
+            "grant_id": "facts",
+            "object": {
+              "byte_length": "5",
+              "digest": "0694aacb66d62e742a92e8d5f1e82bd9d2a8ca1be88744201fbe63d0f5007502",
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "schema_version": 1
+            },
+            "schema_version": 1
+          },
+          "payload": {
+            "grant_id": "grant-0",
+            "object": {
+              "byte_length": "20",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "schema_version": 1
+            },
+            "schema_version": 1
+          },
+          "registry": {
+            "grant_id": "registry",
+            "object": {
+              "byte_length": "8",
+              "digest": "872491a30d60d598962de6e7b834ab76b2aa65fbab102c6ebaaae6acdc238822",
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "schema_version": 1
+            },
+            "schema_version": 1
+          },
+          "schema_version": 1,
+          "target": {
+            "branch_id": "fixture",
+            "content": {
+              "byte_length": "20",
+              "digest": "40b72bbfc789ffd86db092943fb112d08df2e17063aa10f56eed803dbf520852",
+              "object_type": "nemu.storage.raw-bytes-v1",
+              "resource_version": "1",
+              "schema_version": 1
+            },
+            "record_id": "event",
+            "schema_version": 1
+          }
+        },
+        "operation": 1,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-1",
+          "request_id": "request-1"
+        },
+        "operation": 2,
+        "delegation": {
+          "schema_version": 1,
+          "link": 3,
+          "parent": {
+            "schema_version": 1,
+            "protocol_version": 1,
+            "session_id": "parent",
+            "request_id": "request-1"
+          },
+          "inputs": [
+            {
+              "schema_version": 1,
+              "object": {
+                "schema_version": 1,
+                "object_type": "nemu.storage.raw-bytes-v1",
+                "resource_version": "1",
+                "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+                "byte_length": "20"
+              },
+              "data": "e69cace69cbae59088e68890e8be93e585a52031"
+            }
+          ],
+          "parameters": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+            "byte_length": "6"
+          },
+          "local_model": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4",
+            "byte_length": "5"
+          },
+          "isolation": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "7e2372f4115c43bac7248772d891df3dbc830a85aa27eeed933688f61c44226c",
+            "byte_length": "7"
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3109000000726571756573742d31020000000001510200004e43563101000000130000006563686f2e69726c2d64656c65676174696f6e03000000340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706172656e7409000000726571756573742d3101000000a20000004e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1190000006e656d752e73746f726167652e7261772d62797465732d76310100000031140000000000000014000000e69cace69cbae59088e68890e8be93e585a52031690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854190000006e656d752e73746f726167652e7261772d62797465732d76310100000031060000000000000000000001690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000009372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4190000006e656d752e73746f726167652e7261772d62797465732d76310100000031050000000000000001690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000007e2372f4115c43bac7248772d891df3dbc830a85aa27eeed933688f61c44226c190000006e656d752e73746f726167652e7261772d62797465732d76310100000031070000000000000000000000000000",
+      "digest": "f448cb0761c8ef0099129fd8c2aa6c9b5519b8a3cf58e5695714d19639f30230",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d312209726571756573742d3118022acf02080110031a17080110011a06706172656e742209726571756573742d31225e0801124408011220c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a11a196e656d752e73746f726167652e7261772d62797465732d763122013128141a14e69cace69cbae59088e68890e8be93e585a520312a4408011220713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f28541a196e656d752e73746f726167652e7261772d62797465732d763122013128064a44080112209372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e41a196e656d752e73746f726167652e7261772d62797465732d763122013128055244080112207e2372f4115c43bac7248772d891df3dbc830a85aa27eeed933688f61c44226c1a196e656d752e73746f726167652e7261772d62797465732d76312201312807",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-1",
+          "schema_version": 1,
+          "session_id": "pipe-1"
+        },
+        "delegation": {
+          "inputs": [
+            {
+              "data": "e69cace69cbae59088e68890e8be93e585a52031",
+              "object": {
+                "byte_length": "20",
+                "digest": "c95dc59fcf8a06f5fc3dee7454281b584ebd5ab6724402e2a11c0b7fce6fe5a1",
+                "object_type": "nemu.storage.raw-bytes-v1",
+                "resource_version": "1",
+                "schema_version": 1
+              },
+              "schema_version": 1
+            }
+          ],
+          "isolation": {
+            "byte_length": "7",
+            "digest": "7e2372f4115c43bac7248772d891df3dbc830a85aa27eeed933688f61c44226c",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "link": 3,
+          "local_model": {
+            "byte_length": "5",
+            "digest": "9372c470eeadd5ecd9c3c74c2b3cb633f8e2f2fad799250a0f70d652b6b825e4",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "parameters": {
+            "byte_length": "6",
+            "digest": "713a1417c769dc7584c090ac7ff485481f486a11bb803fbf9ec54289769f2854",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "parent": {
+            "protocol_version": 1,
+            "request_id": "request-1",
+            "schema_version": 1,
+            "session_id": "parent"
+          },
+          "schema_version": 1
+        },
+        "operation": 2,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-2",
+          "request_id": "request-2"
+        },
+        "operation": 3,
+        "borrow": {
+          "schema_version": 1,
+          "grant_id": "grant-2",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+            "byte_length": "20"
+          }
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3209000000726571756573742d3203000000000001930000004e435631010000000f0000006563686f2e69726c2d626f72726f77070000006772616e742d32690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000001a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d190000006e656d752e73746f726167652e7261772d62797465732d763101000000311400000000000000000000000000",
+      "digest": "23932515035feefd17c519a421e5b3bcf873297e8fb91caa338ab68329be8066",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d322209726571756573742d3218033251080112076772616e742d321a44080112201a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d1a196e656d752e73746f726167652e7261772d62797465732d76312201312814",
+      "value": {
+        "borrow": {
+          "grant_id": "grant-2",
+          "object": {
+            "byte_length": "20",
+            "digest": "1a5523434065aef6277c96d1a2a16eec1f64f0d08df333c3c172aed516df5f7d",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-2",
+          "schema_version": 1,
+          "session_id": "pipe-2"
+        },
+        "operation": 3,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-3",
+          "request_id": "request-3"
+        },
+        "operation": 4,
+        "borrow": {
+          "schema_version": 1,
+          "grant_id": "grant-3",
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "3fab34805eca780506b38c28000534746bbbacec18fa9c73b5a2bb50d12f50a4",
+            "byte_length": "20"
+          }
+        },
+        "material": {
+          "schema_version": 1,
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "3fab34805eca780506b38c28000534746bbbacec18fa9c73b5a2bb50d12f50a4",
+            "byte_length": "20"
+          },
+          "data": "e69cace69cbae59088e68890e8be93e585a52033"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3309000000726571756573742d3304000000000001930000004e435631010000000f0000006563686f2e69726c2d626f72726f77070000006772616e742d33690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000003fab34805eca780506b38c28000534746bbbacec18fa9c73b5a2bb50d12f50a4190000006e656d752e73746f726167652e7261772d62797465732d76310100000031140000000000000001a20000004e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000003fab34805eca780506b38c28000534746bbbacec18fa9c73b5a2bb50d12f50a4190000006e656d752e73746f726167652e7261772d62797465732d76310100000031140000000000000014000000e69cace69cbae59088e68890e8be93e585a520330000000000",
+      "digest": "0e7128535a2139841442c043be568f6b4c90f6996f9ee0b5b3d67a9408e9dfe4",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d332209726571756573742d3318043251080112076772616e742d331a44080112203fab34805eca780506b38c28000534746bbbacec18fa9c73b5a2bb50d12f50a41a196e656d752e73746f726167652e7261772d62797465732d763122013128143a5e08011244080112203fab34805eca780506b38c28000534746bbbacec18fa9c73b5a2bb50d12f50a41a196e656d752e73746f726167652e7261772d62797465732d763122013128141a14e69cace69cbae59088e68890e8be93e585a52033",
+      "value": {
+        "borrow": {
+          "grant_id": "grant-3",
+          "object": {
+            "byte_length": "20",
+            "digest": "3fab34805eca780506b38c28000534746bbbacec18fa9c73b5a2bb50d12f50a4",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-3",
+          "schema_version": 1,
+          "session_id": "pipe-3"
+        },
+        "material": {
+          "data": "e69cace69cbae59088e68890e8be93e585a52033",
+          "object": {
+            "byte_length": "20",
+            "digest": "3fab34805eca780506b38c28000534746bbbacec18fa9c73b5a2bb50d12f50a4",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "operation": 4,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-4",
+          "request_id": "request-4"
+        },
+        "operation": 5
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3409000000726571756573742d3405000000000000000000000000",
+      "digest": "4b05323c09cbcb853453a0176f21af475fbaac208841c2c2569a99aebde034b4",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d342209726571756573742d341805",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-4",
+          "schema_version": 1,
+          "session_id": "pipe-4"
+        },
+        "operation": 5,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-5",
+          "request_id": "request-5"
+        },
+        "operation": 6
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3509000000726571756573742d3506000000000000000000000000",
+      "digest": "eb18613d5188d184410421f41f1000391c85f9d36334bf25371894fc445cd8d8",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d352209726571756573742d351806",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-5",
+          "schema_version": 1,
+          "session_id": "pipe-5"
+        },
+        "operation": 6,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-6",
+          "request_id": "request-6"
+        },
+        "operation": 7,
+        "reason": {
+          "schema_version": 1,
+          "code": 3
+        },
+        "remote_status": 6
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3609000000726571756573742d36070000000000000001240000004e43563101000000130000006563686f2e6661696c7572652d726561736f6e03000000000106000000000000",
+      "digest": "064f68645241078c6d4191a678027338386cacf59e3be12cc30a1f7141e8da16",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d362209726571756573742d3618074204080110034806",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-6",
+          "schema_version": 1,
+          "session_id": "pipe-6"
+        },
+        "operation": 7,
+        "reason": {
+          "code": 3,
+          "schema_version": 1
+        },
+        "remote_status": 6,
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-7",
+          "request_id": "request-7"
+        },
+        "operation": 8,
+        "reason": {
+          "schema_version": 1,
+          "code": 3
+        },
+        "sent_request": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "7afbb3347fb7252e533d58d99d72d9106fc6fdb3f30df23fa70b764c15ac42c5",
+          "byte_length": "4"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3709000000726571756573742d37080000000000000001240000004e43563101000000130000006563686f2e6661696c7572652d726561736f6e03000000000001690000004e435631010000000f0000006563686f2e6f626a6563742d726566200000007afbb3347fb7252e533d58d99d72d9106fc6fdb3f30df23fa70b764c15ac42c5190000006e656d752e73746f726167652e7261772d62797465732d7631010000003104000000000000000000",
+      "digest": "ad02276a86b81d625d280a37cebd9f9e6259d00df0eda18ffc56557d4c844ccb",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d372209726571756573742d3718084204080110035244080112207afbb3347fb7252e533d58d99d72d9106fc6fdb3f30df23fa70b764c15ac42c51a196e656d752e73746f726167652e7261772d62797465732d76312201312804",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-7",
+          "schema_version": 1,
+          "session_id": "pipe-7"
+        },
+        "operation": 8,
+        "reason": {
+          "code": 3,
+          "schema_version": 1
+        },
+        "schema_version": 1,
+        "sent_request": {
+          "byte_length": "4",
+          "digest": "7afbb3347fb7252e533d58d99d72d9106fc6fdb3f30df23fa70b764c15ac42c5",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        }
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-8",
+          "request_id": "request-8"
+        },
+        "operation": 9,
+        "reason": {
+          "schema_version": 1,
+          "code": 3
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3809000000726571756573742d38090000000000000001240000004e43563101000000130000006563686f2e6661696c7572652d726561736f6e030000000000000000",
+      "digest": "38ebb39757bcc15b53d959b44a3c588ca49117971aed4694b744dc278fbd5a7c",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d382209726571756573742d381809420408011003",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-8",
+          "schema_version": 1,
+          "session_id": "pipe-8"
+        },
+        "operation": 9,
+        "reason": {
+          "code": 3,
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-9",
+          "request_id": "request-9"
+        },
+        "operation": 10,
+        "reason": {
+          "schema_version": 1,
+          "code": 3
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65340000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000006000000706970652d3909000000726571756573742d390a0000000000000001240000004e43563101000000130000006563686f2e6661696c7572652d726561736f6e030000000000000000",
+      "digest": "9c03e5b1d79e665c2ebcb8db0372101285843285e9faaa01b60c2895207aa127",
+      "ok": true,
+      "protobuf": "08011217080110011a06706970652d392209726571756573742d39180a420408011003",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-9",
+          "schema_version": 1,
+          "session_id": "pipe-9"
+        },
+        "operation": 10,
+        "reason": {
+          "code": 3,
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-10",
+          "request_id": "request-10"
+        },
+        "operation": 11,
+        "graph": {
+          "schema_version": 1,
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "digest": "eef93e1d14482804277fca0172464032d1a4fdbcc338524059fa1e861454ad4d",
+          "byte_length": "5"
+        },
+        "output": {
+          "schema_version": 1,
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "03315ee9ab9c95e4158dbe7cdc0b6fffb18b8e781ee2d6a654645ec2123edbff",
+            "byte_length": "21"
+          },
+          "data": "e69cace69cbae59088e68890e8be93e585a5203130"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65360000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000007000000706970652d31300a000000726571756573742d31300b0000000000000000000001690000004e435631010000000f0000006563686f2e6f626a6563742d72656620000000eef93e1d14482804277fca0172464032d1a4fdbcc338524059fa1e861454ad4d190000006e656d752e73746f726167652e7261772d62797465732d76310100000031050000000000000001a30000004e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000003315ee9ab9c95e4158dbe7cdc0b6fffb18b8e781ee2d6a654645ec2123edbff190000006e656d752e73746f726167652e7261772d62797465732d76310100000031150000000000000015000000e69cace69cbae59088e68890e8be93e585a5203130",
+      "digest": "d487ce0619956d63858f0e25a213b089dcb88525f532449162fced1d48998a40",
+      "ok": true,
+      "protobuf": "08011219080110011a07706970652d3130220a726571756573742d3130180b5a4408011220eef93e1d14482804277fca0172464032d1a4fdbcc338524059fa1e861454ad4d1a196e656d752e73746f726167652e7261772d62797465732d76312201312805625f080112440801122003315ee9ab9c95e4158dbe7cdc0b6fffb18b8e781ee2d6a654645ec2123edbff1a196e656d752e73746f726167652e7261772d62797465732d763122013128151a15e69cace69cbae59088e68890e8be93e585a5203130",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-10",
+          "schema_version": 1,
+          "session_id": "pipe-10"
+        },
+        "graph": {
+          "byte_length": "5",
+          "digest": "eef93e1d14482804277fca0172464032d1a4fdbcc338524059fa1e861454ad4d",
+          "object_type": "nemu.storage.raw-bytes-v1",
+          "resource_version": "1",
+          "schema_version": 1
+        },
+        "operation": 11,
+        "output": {
+          "data": "e69cace69cbae59088e68890e8be93e585a5203130",
+          "object": {
+            "byte_length": "21",
+            "digest": "03315ee9ab9c95e4158dbe7cdc0b6fffb18b8e781ee2d6a654645ec2123edbff",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-11",
+          "request_id": "request-11"
+        },
+        "operation": 12,
+        "output": {
+          "schema_version": 1,
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "33e6251e5e39705bcf5de3eb4b228af9404dff1cc99c034fee31ae17aad75e9c",
+            "byte_length": "21"
+          },
+          "data": "e69cace69cbae59088e68890e8be93e585a5203131"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65360000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000007000000706970652d31310a000000726571756573742d31310c000000000000000000000001a30000004e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000033e6251e5e39705bcf5de3eb4b228af9404dff1cc99c034fee31ae17aad75e9c190000006e656d752e73746f726167652e7261772d62797465732d76310100000031150000000000000015000000e69cace69cbae59088e68890e8be93e585a5203131",
+      "digest": "5a5ae26c576481e8afe1ceb39e7db1c62f62d9f88a71fe73287593917503ecd2",
+      "ok": true,
+      "protobuf": "08011219080110011a07706970652d3131220a726571756573742d3131180c625f080112440801122033e6251e5e39705bcf5de3eb4b228af9404dff1cc99c034fee31ae17aad75e9c1a196e656d752e73746f726167652e7261772d62797465732d763122013128151a15e69cace69cbae59088e68890e8be93e585a5203131",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-11",
+          "schema_version": 1,
+          "session_id": "pipe-11"
+        },
+        "operation": 12,
+        "output": {
+          "data": "e69cace69cbae59088e68890e8be93e585a5203131",
+          "object": {
+            "byte_length": "21",
+            "digest": "33e6251e5e39705bcf5de3eb4b228af9404dff1cc99c034fee31ae17aad75e9c",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
+  },
+  {
+    "request": {
+      "name": "IrlPipeFrame",
+      "op": "encode",
+      "value": {
+        "schema_version": 1,
+        "call": {
+          "schema_version": 1,
+          "protocol_version": 1,
+          "session_id": "pipe-12",
+          "request_id": "request-12"
+        },
+        "operation": 13,
+        "output": {
+          "schema_version": 1,
+          "object": {
+            "schema_version": 1,
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "digest": "57dec447d98e92b52afb2228000348c41ee16d6b26a68fe057c0180f2840c7f3",
+            "byte_length": "21"
+          },
+          "data": "e69cace69cbae59088e68890e8be93e585a5203132"
+        }
+      },
+      "limits": {
+        "max_bytes": 1048576,
+        "max_items": 4096,
+        "max_depth": 32
+      }
+    },
+    "expected": {
+      "canonical": "4e43563101000000130000006563686f2e69726c2d706970652d6672616d65360000004e435631010000000d0000006563686f2e69726c2d63616c6c0100000007000000706970652d31320a000000726571756573742d31320d000000000000000000000001a30000004e43563101000000110000006563686f2e69726c2d6d6174657269616c690000004e435631010000000f0000006563686f2e6f626a6563742d7265662000000057dec447d98e92b52afb2228000348c41ee16d6b26a68fe057c0180f2840c7f3190000006e656d752e73746f726167652e7261772d62797465732d76310100000031150000000000000015000000e69cace69cbae59088e68890e8be93e585a5203132",
+      "digest": "56f72185370e35a5b616b006683d5fabb509bf63f5703e4a08ae37d2c3166b6f",
+      "ok": true,
+      "protobuf": "08011219080110011a07706970652d3132220a726571756573742d3132180d625f080112440801122057dec447d98e92b52afb2228000348c41ee16d6b26a68fe057c0180f2840c7f31a196e656d752e73746f726167652e7261772d62797465732d763122013128151a15e69cace69cbae59088e68890e8be93e585a5203132",
+      "value": {
+        "call": {
+          "protocol_version": 1,
+          "request_id": "request-12",
+          "schema_version": 1,
+          "session_id": "pipe-12"
+        },
+        "operation": 13,
+        "output": {
+          "data": "e69cace69cbae59088e68890e8be93e585a5203132",
+          "object": {
+            "byte_length": "21",
+            "digest": "57dec447d98e92b52afb2228000348c41ee16d6b26a68fe057c0180f2840c7f3",
+            "object_type": "nemu.storage.raw-bytes-v1",
+            "resource_version": "1",
+            "schema_version": 1
+          },
+          "schema_version": 1
+        },
+        "schema_version": 1
+      }
+    }
   }
 ]
