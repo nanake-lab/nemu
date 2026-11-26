@@ -2,7 +2,7 @@
 
 # PERF-STORE-01 对象核验与计时
 
-共享只读 schema 后，core-store 串行整包测试的进程中位数在 Ubuntu 从 1127.15 秒降至 170.67 秒，在 Windows 从 1623.98 秒降至 328.86 秒。两个平台各在同一作业依次测量基线和候选，每个修订跑三轮。四组最慢的库测试都是 `x03_receipt_publish_and_repair_can_crash_again`。随后一次成功运行补齐了 Ubuntu 最慢五项的用户态 CPU 剖析；Ready 后 Windows W02 用时 343.1324 秒。对象示例的 22 个操作样本已取得，#240 操作级配对计时已调度。[配对运行](https://github.com/nanake-lab/nemu/actions/runs/45543148644) · [审查要求](https://github.com/nanake-lab/nemu/pull/265#issuecomment-7157983165)
+共享只读 schema 后，core-store 串行整包测试的进程中位数在 Ubuntu 从 1127.15 秒降至 170.67 秒，在 Windows 从 1623.98 秒降至 328.86 秒。两个平台各在同一作业依次测量基线和候选，每个修订跑三轮。四组最慢的库测试都是 `x03_receipt_publish_and_repair_can_crash_again`。随后一次成功运行补齐了 Ubuntu 最慢五项的用户态 CPU 剖析；Ready 后 Windows W02 用时 343.1324 秒。128 笔 release 同机配对中，新 head 由 133.579 ms 降至 52.334 ms，强制全验由 120.356 ms/笔降至 41.666 ms/笔。候选对象示例的 22 条计时列于下文。[配对运行](https://github.com/nanake-lab/nemu/actions/runs/45543148644) · [审查要求](https://github.com/nanake-lab/nemu/pull/265#issuecomment-7157983165)
 
 ## 同机配对结果
 
@@ -196,7 +196,12 @@
 - 强制全验从创建 `full_publication_check()` 前到返回的闭包执行成功为止，取唯一一条 `SYS01_FULL commits=128` 的 `total_ns / 1e6`（ms），再除以 128 得到 ms/笔。Cargo 编译和整条测试时长均在这两个计时区间之外。#240 的 149.324 ms/新 head 与 138.20 ms/笔仅为历史结果。
 - 同次调度另开 GitHub 托管 Ubuntu 作业，在候选修订运行一次 `cargo run --release --locked -p core-store --example object_hotspots`，输出叶对象及索引对象各一次首次写入、各十次复用的纳秒数。基线没有该示例，此项仅报告候选。
 
-两项 release 操作计时待托管作业返回。仅凭注入成功不能确认编译、测试或计时结果。[Windows 配对作业](https://github.com/nanake-lab/nemu/actions/runs/45731209735/job/139613374170)
+托管 Windows 镜像 `20261116.315.1`，两个修订各通过 1 个探针测试。两份原始日志均含预定的四个测点，下表仅取 128 笔。每侧只有一条历史，表中差异只描述这次配对。[Windows 配对作业](https://github.com/nanake-lab/nemu/actions/runs/45731209735/job/139613374170)
+
+| 修订 | 新 head（ms/新 head） | 强制全验总耗时（ms） | 强制全验（ms/笔） |
+| --- | ---: | ---: | ---: |
+| 基线 `6734adc2` | 133.5789 | 15,405.6184 | 120.356394 |
+| 候选 `d7ff3fb6` | 52.3337 | 5,333.3043 | 41.666440 |
 
 ### 候选 object_hotspots 单次输出
 
@@ -237,5 +242,8 @@
 | 45208141416 · 历史 W02 作业日志（gh run view --log） | `e788c4781d3f1e8439cbbf95bca697c5b13f71a4a729bd9e687f2b522d8a833e` |
 | 45674066558 · Ready W02 作业日志（gh run view --log） | `4f96963112a799b7cb88e416ee2118746d8533e19690320d69109e4acd65a032` |
 | 45731209735 · Ubuntu 对象示例 ZIP | `ac200c0a6038b149c74e14e468e6aa6d10b6ac5ef6147f7e21994b4f4bcfa0d1` |
+| 45731209735 · Windows release 配对 ZIP | `561f353104a4f6a890c3620a6004ec557b653bc14b7318e2fc46e42b7185c250` |
 
 已从 45590384397 的逐项三轮样本独立重算前五名，并核对采样测试名、通过记录、采样数与剖析文件。三个原始 ZIP 及对象示例 ZIP 的 SHA-256 均与 Actions 公布值一致；剖析 ZIP 无损分为三片，按序重组的摘要一致。工作流通过 actionlint 1.7.12 和内嵌 Python 语法检查，报告相对链接及 `git diff --check` 通过。
+
+私有证据索引提交 `053411af0b7bdfba79027d8e4a72fd501588fde1`，按上表运行号检索。
