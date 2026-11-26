@@ -3,6 +3,7 @@
 
 mod canonical;
 pub mod contract;
+pub mod irl_pipe;
 pub mod numeric;
 pub mod permission;
 mod protobuf;
