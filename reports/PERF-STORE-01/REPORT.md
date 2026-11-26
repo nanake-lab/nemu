@@ -2,7 +2,7 @@
 
 # PERF-STORE-01 对象核验与计时
 
-共享只读 schema 后，core-store 串行整包测试的进程中位数在 Ubuntu 从 1127.15 秒降至 170.67 秒，在 Windows 从 1623.98 秒降至 328.86 秒。两个平台各在同一作业依次测量基线和候选，每个修订跑三轮。四组最慢的库测试都是 `x03_receipt_publish_and_repair_can_crash_again`。Ubuntu 的计时已完成，随后在启动 perf 前失败，函数占比和火焰图待一尺线跟进。[配对运行](https://github.com/nanake-lab/nemu/actions/runs/45543148644) · [审查要求](https://github.com/nanake-lab/nemu/pull/265#issuecomment-7157983165)
+共享只读 schema 后，core-store 串行整包测试的进程中位数在 Ubuntu 从 1127.15 秒降至 170.67 秒，在 Windows 从 1623.98 秒降至 328.86 秒。两个平台各在同一作业依次测量基线和候选，每个修订跑三轮。四组最慢的库测试都是 `x03_receipt_publish_and_repair_can_crash_again`。随后一次成功运行补齐了 Ubuntu 最慢五项的用户态 CPU 剖析；Ready 后 Windows W02 用时 343.1324 秒。对象示例的 22 个操作样本已取得，#240 操作级配对计时已调度。[配对运行](https://github.com/nanake-lab/nemu/actions/runs/45543148644) · [审查要求](https://github.com/nanake-lab/nemu/pull/265#issuecomment-7157983165)
 
 ## 同机配对结果
 
@@ -159,10 +159,62 @@
 ## 验证与未完成项
 
 - 原始计时复核覆盖 1,296 条样本。每个修订每轮包括整包、所有逐项库测试和一组文档测试，Ubuntu 每修订共 219 条，Windows 共 213 条。逐份核对了实际 SHA、测试名、通过计数、框架汇总和重编译记录。从 `samples.jsonl` 独立重算的两种中位数均与 `medians.json` 一致。
-- 两次 Ubuntu 运行均在上传计时后，因 `perf_bin` 为空而以 127 退出，最慢五项的剖析均未执行。工作流现先查 PATH，再查 `/usr/lib/linux-tools` 下可执行的普通文件和符号链接，调用前用 `test -x` 校验。`actionlint` 1.7.12、YAML 完整解析、`bash -n` 和离线查找用例均通过，覆盖 PATH 优先、普通文件、符号链接、目录不存在和空目录。两个修订的函数占比及火焰图仍待新配对运行验证。[原基线作业](https://github.com/nanake-lab/nemu/actions/runs/45543135745) · [原配对作业](https://github.com/nanake-lab/nemu/actions/runs/45543148644/job/138966266388)
-- Windows W02 独立步骤耗时、#240 的两项 128 笔 release 复测（新 head 核验、完整核验每笔耗时）以及对象探针实际执行，两版均为 `not_run`。#240 曾测得 149.324 ms/新 head 和 138.20 ms/笔，仅作历史背景。[#240 测量口径](../FIX-SYS01-01/REPORT.md)
+- 此前两次 Ubuntu 运行均在上传计时后，因 `perf_bin` 为空而以 127 退出，最慢五项的剖析均未执行。工作流现先查 PATH，再查 `/usr/lib/linux-tools` 下可执行的普通文件和符号链接，调用前用 `test -x` 校验。`actionlint` 1.7.12、YAML 完整解析、`bash -n` 和离线查找用例均通过，覆盖 PATH 优先、普通文件、符号链接、目录不存在和空目录。后续成功运行已生成两个修订的函数占比及火焰图，候选结果见下文。[原基线作业](https://github.com/nanake-lab/nemu/actions/runs/45543135745) · [原配对作业](https://github.com/nanake-lab/nemu/actions/runs/45543148644/job/138966266388)
+- 1/2 的两次运行未包含 W02、128 笔 release 复测及对象示例。2/2 的实际测量范围见下文。[#240 测量口径](../FIX-SYS01-01/REPORT.md)
 - 此前的四次调度也保留了失败记录。第一组因 Rustdoc 的 compile-fail 显示名拒绝整包样本，第二组在精确筛选单个文档测试时空跑。本次正式结果来自随后的整组文档测试计时。[首组基线](https://github.com/nanake-lab/nemu/actions/runs/45485885498) · [首组配对](https://github.com/nanake-lab/nemu/actions/runs/45486419758) · [第二组基线](https://github.com/nanake-lab/nemu/actions/runs/45524016105) · [第二组配对](https://github.com/nanake-lab/nemu/actions/runs/45524027980)
-- 工作流修订 `d04af52e` 的 Ubuntu 常规 CI 通过。其独立 Windows 工作流的汇总步骤失败，W02 作业跳过。本报告的计时与测试通过数来自手动托管运行。PR 保持草稿。[Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/45543104247) · [Windows 汇总](https://github.com/nanake-lab/nemu/actions/runs/45543104221)
+- 工作流修订 `d04af52e` 的 Ubuntu 常规 CI 通过。其独立 Windows 工作流的汇总步骤失败，W02 作业跳过。本报告的计时与测试通过数来自手动托管运行。1/2 已合并。[Ubuntu CI](https://github.com/nanake-lab/nemu/actions/runs/45543104247) · [Windows 汇总](https://github.com/nanake-lab/nemu/actions/runs/45543104221)
+
+## 2/2 · Ubuntu 候选最慢五项
+
+成功配对运行在 `d7ff3fb6` 上先逐项串行计时三轮，再按框架中位数选前五，每项单独用 perf 运行一次，五次均通过。前三列来自该次运行的 `test.json` 和 `test.log`。函数自占比取 `perf report --no-children` 第一行，保留其线程维度。五项的首位函数均为测试线程上的 `<str as core::cmp::Ord>::cmp`。[托管运行](https://github.com/nanake-lab/nemu/actions/runs/45590384397) · [剖析产物](https://github.com/nanake-lab/nemu/actions/runs/45590384397/artifacts/15020983381)
+
+| 测试（去掉 `tests::` 前缀） | 框架中位数（秒） | perf 样本数 | 字符串比较自占比 | JSON | canonical | SHA | SQLite |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `crash::x03_receipt_publish_and_repair_can_crash_again` | 77.55 | 7,039 | 6.19% | 3.27% | 0.17% | 0.64% | 0.81% |
+| `crash::x03_targeted_r_segments_manifest_and_reused_objects` | 27.71 | 2,114 | 5.87% | 3.22% | 0.05% | 0.57% | 0.99% |
+| `crash::x03_ingress_and_transaction_publication_boundaries` | 20.51 | 1,929 | 6.95% | 3.11% | 0.05% | 0.47% | 0.73% |
+| `crash::initialization_and_gc_crash_boundaries_have_separate_expectations` | 6.64 | 626 | 4.63% | 4.63% | 0.16% | 1.44% | 4.15% |
+| `terminal_ingress::process_crashes_recover_allocation_audit_and_both_migration_directions` | 4.07 | 339 | 5.60% | 11.80% | 0.29% | 1.47% | 7.08% |
+
+后四列表示可辨认栈所占的用户态采样权重。逐行读取 `stacks.folded`，对不区分大小写命中 `serde_json::`、`canonical`、`sha2::|sha2_asm::|sha256`、`sqlite3|rusqlite::` 的栈分别累加行末权重，除以该文件全部权重。同一条栈可以命中多列，栈帧不全、内联或缺失符号都会影响归类。采样覆盖 Cargo 启动的进程及其子进程。五项的 fsync、磁盘等待和 SQLite 等待时间均**未测**；`cpu-clock:u` 以 99 Hz 记录用户态 CPU，无法分解墙钟时间。字符串比较的自占比最高为 6.95%，现有证据没有定位到占大头且改动便宜的函数。优化建议到此为止。
+
+## Ready 后的 Windows W02
+
+| 托管作业 | 实测合并提交 | Cargo 缓存 | W02 步骤（秒） | 69 个库测试（秒） | 3 个 doctest（秒） |
+| --- | --- | --- | ---: | ---: | ---: |
+| [#249 历史作业](https://github.com/nanake-lab/nemu/actions/runs/45208141416/job/137809648690) | `74cfe2a` | 未命中 | 1,726.2140 | 1,650.31 | 0.22 |
+| [#265 Ready](https://github.com/nanake-lab/nemu/actions/runs/45674066558/job/139417098493) | `4241654`（PR head `8003df39`） | 命中 | **343.1324** | **286.15** | **0.22** |
+
+步骤按日志中 W02 命令组开始至下一上传步骤开始计时。Ready 作业的 UTC 时间为 18:21:19.2868075 至 18:27:02.4192196，包含工具链检查、Clippy、编译及串行测试。两行合并提交和缓存条件不同，W02 步骤的配对降幅未测。
+
+## #240 release 配对与对象示例
+
+在同一台 GitHub 托管 Windows VM 上按基线 `6734adc2bfe8b145e8062a2fc669dd2024dd2ba6`、候选 `d7ff3fb6dafa4c53f4ee4d774ab537728834cd71` 的顺序各运行一条独立的 128 笔合成历史，各测一次。工具链固定为 1.99.0。已与 #240 成功运行的命令、测量代码和日志核对。托管步骤将同一份合成探针注入两个临时 checkout，两个修订各 12 个文本替换锚点均通过唯一性检查。[探针](prepare_release_probe.py) · [托管执行](https://github.com/nanake-lab/nemu/actions/runs/45731209735)
+
+- 原命令为 `cargo test -p gateway --release review_scale_probe -- --ignored --nocapture --test-threads=1`。保留在 2、8、32、128 笔的检查，报告取 128 笔。
+- 新 head 先在 127 笔处核验前缀，提交第 128 笔后计时 `receipt_reader`。每个修订取唯一一条 `commits=128 operation=new_head` 的 `elapsed_ns / 1e6`（ms/新 head）。
+- 强制全验从创建 `full_publication_check()` 前到返回的闭包执行成功为止，取唯一一条 `SYS01_FULL commits=128` 的 `total_ns / 1e6`（ms），再除以 128 得到 ms/笔。Cargo 编译和整条测试时长均在这两个计时区间之外。#240 的 149.324 ms/新 head 与 138.20 ms/笔仅为历史结果。
+- 同次调度另开 GitHub 托管 Ubuntu 作业，在候选修订运行一次 `cargo run --release --locked -p core-store --example object_hotspots`，输出叶对象及索引对象各一次首次写入、各十次复用的纳秒数。基线没有该示例，此项仅报告候选。
+
+两项 release 操作计时待托管作业返回。仅凭注入成功不能确认编译、测试或计时结果。[Windows 配对作业](https://github.com/nanake-lab/nemu/actions/runs/45731209735/job/139613374170)
+
+### 候选 object_hotspots 单次输出
+
+以下为探针内部的纳秒计时，按同一采样序号并排列出。每次复用均通过对象引用相等断言。[托管 Ubuntu 作业](https://github.com/nanake-lab/nemu/actions/runs/45731209735/job/139613373840)
+
+| 操作 | 样本 | 叶对象（ns） | 索引对象（ns） |
+| --- | ---: | ---: | ---: |
+| 首次写入 | 1 | 1,859,567 | 852,864 |
+| 复用 | 1 | 299,147 | 280,178 |
+| 复用 | 2 | 150,766 | 309,041 |
+| 复用 | 3 | 293,929 | 276,483 |
+| 复用 | 4 | 148,302 | 301,270 |
+| 复用 | 5 | 291,094 | 269,863 |
+| 复用 | 6 | 332,927 | 273,509 |
+| 复用 | 7 | 261,410 | 269,192 |
+| 复用 | 8 | 147,200 | 271,245 |
+| 复用 | 9 | 284,084 | 267,840 |
+| 复用 | 10 | 152,248 | 268,771 |
 
 ## 原始证据
 
@@ -174,3 +226,16 @@
 | [perf-store-Linux-45543148644-1.zip](https://github.com/nanake-lab/nemu-evidence/blob/17e29f75289a8910bddc155b2b6115a2f3276a9e/PERF-STORE-01/perf-store-Linux-45543148644-1.zip) | `2866e9c7c606fbff85f8bcef7a83a03b04a65bd4b4c7500ba7428256167235f6` |
 | [perf-store-Windows-45543135745-1.zip](https://github.com/nanake-lab/nemu-evidence/blob/17e29f75289a8910bddc155b2b6115a2f3276a9e/PERF-STORE-01/perf-store-Windows-45543135745-1.zip) | `293d755b1edb99d833225a9470c5ad93063ff1dea3106d77f235dcaf7cd348fa` |
 | [perf-store-Windows-45543148644-1.zip](https://github.com/nanake-lab/nemu-evidence/blob/17e29f75289a8910bddc155b2b6115a2f3276a9e/PERF-STORE-01/perf-store-Windows-45543148644-1.zip) | `50b3f34b3f89c086a27e7903f4fff74df006e63cbff6993af4d69b0d2cd249e6` |
+
+### 2/2 证据核对
+
+| 来源 | 原始归档或日志的 SHA-256 |
+| --- | --- |
+| 45590384397 · Ubuntu 计时 ZIP | `37dbc5a4c8d457b8abbba47bd9923af18dc0abfd12bc2095fe46a959dd023408` |
+| 45590384397 · Windows 计时 ZIP | `40265af84278dc46c9679e82e6199dc56cca567bf05369137833478ce1a560ab` |
+| 45590384397 · perf 剖析 ZIP | `621e8cc929f712c95c77c2de8dade0c89295409ff8f28edc2f45707c6b80f6c0` |
+| 45208141416 · 历史 W02 作业日志（gh run view --log） | `e788c4781d3f1e8439cbbf95bca697c5b13f71a4a729bd9e687f2b522d8a833e` |
+| 45674066558 · Ready W02 作业日志（gh run view --log） | `4f96963112a799b7cb88e416ee2118746d8533e19690320d69109e4acd65a032` |
+| 45731209735 · Ubuntu 对象示例 ZIP | `ac200c0a6038b149c74e14e468e6aa6d10b6ac5ef6147f7e21994b4f4bcfa0d1` |
+
+已从 45590384397 的逐项三轮样本独立重算前五名，并核对采样测试名、通过记录、采样数与剖析文件。三个原始 ZIP 及对象示例 ZIP 的 SHA-256 均与 Actions 公布值一致；剖析 ZIP 无损分为三片，按序重组的摘要一致。工作流通过 actionlint 1.7.12 和内嵌 Python 语法检查，报告相对链接及 `git diff --check` 通过。
