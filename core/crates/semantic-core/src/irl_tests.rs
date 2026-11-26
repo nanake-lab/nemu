@@ -1,7 +1,7 @@
 use super::{
     Fault,
     graph::SourceFacts,
-    irl::*,
+    irl::{IrlDispatch, *},
     tests::{fixture, limits, reference},
 };
 use core_types::{
@@ -176,26 +176,29 @@ impl World {
             actual_output: self.raw.provenance.clone(),
         }
     }
+    fn dispatch<'a>(&'a self, candidate: &'a ObjectRef) -> IrlDispatch<'a> {
+        IrlDispatch {
+            binding: &self.binding,
+            event: &self.turn,
+            transaction: "tx",
+            interpretation_id: "first-irl",
+            producer: "irl",
+            producer_version: "v1",
+            representation_version: "synthetic-v1",
+            candidate,
+            actual_output: &self.raw.provenance,
+            context: &self.context,
+            facts: &self.facts,
+            adapter: &self.adapter,
+            adapter_ref: &self.mapping,
+            isolation: &self.binding.validation_snapshot,
+            governance: &self.binding.environment.config,
+            time_facts: &[],
+        }
+    }
     fn run(&self, c: &SemanticCandidateV2) -> super::Result<StagedIrl> {
         stage_irl(
-            &IrlDispatch {
-                binding: &self.binding,
-                event: &self.turn,
-                transaction: "tx",
-                interpretation_id: "first-irl",
-                producer: "irl",
-                producer_version: "v1",
-                representation_version: "synthetic-v1",
-                candidate: &reference(c),
-                actual_output: &self.raw.provenance,
-                context: &self.context,
-                facts: &self.facts,
-                adapter: &self.adapter,
-                adapter_ref: &self.mapping,
-                isolation: &self.binding.validation_snapshot,
-                governance: &self.binding.environment.config,
-                time_facts: &[],
-            },
+            &self.dispatch(&reference(c)),
             self,
             c,
             &self.graph,

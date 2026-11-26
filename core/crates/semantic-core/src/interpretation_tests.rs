@@ -85,6 +85,7 @@ fn g04_judgments_record_only_observed_values_for_the_target_event() {
         context: &w.context,
         definitions: &[],
         governance: &w.mapping,
+        assessed_without_positive_match: &[],
     };
     let a_ref = endpoint.content.clone();
     let a_dispatch = dispatch(INTERPRET_STAGE_A, &endpoint, Some(&a_ref));
@@ -115,7 +116,6 @@ fn g04_judgments_record_only_observed_values_for_the_target_event() {
         content: m_ref.clone(),
         ..endpoint.clone()
     };
-    let m_dispatch = dispatch(INTERPRET_STAGE_M, &m_id, Some(&m_ref));
     let extra = vec![
         StageCoverage {
             schema_version: 1,
@@ -134,12 +134,12 @@ fn g04_judgments_record_only_observed_values_for_the_target_event() {
     ];
     let run = |coverage| {
         stage_judgment(
-            &m_dispatch,
-            &c,
-            Judgment::Match {
-                record: &m,
+            &JudgmentDispatch {
                 assessed_without_positive_match: coverage,
+                ..dispatch(INTERPRET_STAGE_M, &m_id, Some(&m_ref))
             },
+            &c,
+            Judgment::Match(&m),
         )
     };
     let partial = run(&extra).unwrap();
@@ -171,6 +171,7 @@ fn g04_judgments_record_only_observed_values_for_the_target_event() {
         context: &w.context,
         definitions: &[],
         governance: &w.mapping,
+        assessed_without_positive_match: &[],
     };
     let failed = stage_judgment(&no_output, &c, Judgment::Failed(&status, "unavailable")).unwrap();
     assert!(failed.coverage.is_empty());
@@ -261,6 +262,36 @@ fn g04_revision_resolves_prior_adoption_and_independently_scoped_manifest() {
         manifest: reference(&set),
     };
     let empty = receipt(set.clone());
+    let mut later = World::new();
+    later.binding.event_id = "later-trigger".into();
+    later.binding.raw_log_position.0 += 1;
+    later.binding.base_commit = h.base_commit().into();
+    later
+        .facts
+        .history_prefix
+        .clone_from(&later.binding.base_commit);
+    later.context = reference(&later.facts);
+    later.binding.c_core_digest = later.context.digest.clone();
+    later.binding.read_set = vec![later.context.clone(), later.mapping.clone()];
+    let candidate = later.candidate();
+    assert!(matches!(later.run(&candidate), Err(Fault::Binding)));
+    let candidate_ref = reference(&candidate);
+    let dispatch = IrlDispatch {
+        interpretation_id: "second",
+        ..later.dispatch(&candidate_ref)
+    };
+    let governed = stage_irl_revision(
+        &dispatch,
+        &later,
+        &candidate,
+        &later.graph,
+        &later.registry,
+        (&h, empty.clone()),
+        limits(),
+    )
+    .unwrap();
+    assert_eq!(governed.adoption.event, later.turn);
+    assert_eq!(governed.adoption.revision.as_ref(), Some(&h.edge));
     let revised = stage_revision(new.clone(), &h, empty.clone(), limits()).unwrap();
     assert_eq!(revised.replaced_targets, ["said"]);
     assert_eq!(revised.relations, Some(empty.clone()));

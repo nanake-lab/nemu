@@ -19,6 +19,9 @@ pub struct JudgmentDispatch<'a> {
     pub context: &'a ObjectRef,
     pub definitions: &'a [ObjectRef],
     pub governance: &'a ObjectRef,
+    /// M coverage captured by the core with the actual output. The legacy
+    /// sparse candidate itself cannot attest zero or unknown for a target.
+    pub assessed_without_positive_match: &'a [StageCoverage],
 }
 
 /// M's original sparse record stores positive values only. Explicit zeroes and
@@ -26,10 +29,7 @@ pub struct JudgmentDispatch<'a> {
 /// Never turn an omitted target into an observation (ADR 0048 §4).
 pub enum Judgment<'a> {
     Appraisal(&'a NatureAppraisalRecord),
-    Match {
-        record: &'a SituationMatchRecord,
-        assessed_without_positive_match: &'a [StageCoverage],
-    },
+    Match(&'a SituationMatchRecord),
     Failed(&'a DegradedStatus, &'a str),
 }
 
@@ -47,7 +47,11 @@ pub fn stage_judgment(
         INTERPRET_STAGE_M => &seen.binding.environment.situation_matcher,
         INTERPRET_STAGE_IRL => return Err(Fault::Binding),
     };
-    if context.target_event != seen.event.record_id || context.binding != seen.binding {
+    if context.target_event != seen.event.record_id
+        || context.binding != seen.binding
+        || !dispatch.assessed_without_positive_match.is_empty()
+            && !matches!(result, Judgment::Match(_))
+    {
         return Err(Fault::Binding);
     }
     let mut coverage = Vec::new();
@@ -64,17 +68,14 @@ pub fn stage_judgment(
             check_object(&seen.interpretation.content, r, limits)?;
             appraisal = Some(r.appraisal.clone());
         }
-        Judgment::Match {
-            record,
-            assessed_without_positive_match,
-        } if seen.stage == INTERPRET_STAGE_M => {
+        Judgment::Match(record) if seen.stage == INTERPRET_STAGE_M => {
             records::preflight(Record::Match(record), context)?;
             if record.record_id != seen.interpretation.record_id {
                 return Err(Fault::Binding);
             }
             check_object(seen.candidate.ok_or(Fault::Binding)?, record, limits)?;
             check_object(&seen.interpretation.content, record, limits)?;
-            for c in assessed_without_positive_match {
+            for c in dispatch.assessed_without_positive_match {
                 if !context.known_tendencies.contains(&c.target) || c.mu.is_some_and(|v| v != 0.0) {
                     return Err(Fault::Reference);
                 }

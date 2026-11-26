@@ -1,10 +1,99 @@
 //! Deterministic event attributes (ADR 0048 G05, V2-71/72/77, EV2/3/9).
-use crate::{Fault, Result, aliases::Aliases, graph::epistemic, irl::IrlReadView};
+use crate::{
+    Fault, Result, aliases::Aliases, graph::epistemic, irl::IrlReadView, objects::object_ref,
+};
 use core_types::{
+    WireMessage,
     contract::{self, Limits},
     generated::*,
     semantic::{VisibleContent, check_applied_rule, resolve_location},
 };
+
+/// Initial resource for ADR 0048 §5. The ingress kind and schema tag must
+/// agree with the governed origin. Absence waits for its formal episode facts.
+pub fn initial_attribute_rules(limits: Limits) -> Result<(ObjectRef, AttributeRuleTable)> {
+    use AttributeSource::*;
+    use EventKind::*;
+    use EvidenceAccess::*;
+    let schema = core_types::contract::Schema::builtin().map_err(|_| Fault::Schema)?;
+    let mut rules = Vec::new();
+    for (message, event_kind, source) in [
+        (UserText::NAME, OBSERVATION, ATTR_SOURCE_HUMAN_RESPONSE),
+        (UserUtterance::NAME, OBSERVATION, ATTR_SOURCE_HUMAN_RESPONSE),
+        (
+            TouchObservationV2::NAME,
+            OBSERVATION,
+            ATTR_SOURCE_DIRECTED_TOUCH,
+        ),
+        (DesktopObservation::NAME, OBSERVATION, ATTR_SOURCE_DESKTOP),
+        (
+            BodyActionResult::NAME,
+            EXECUTION_RESULT,
+            ATTR_SOURCE_SELF_RESULT,
+        ),
+        (
+            SpeechDelivery::NAME,
+            EXECUTION_RESULT,
+            ATTR_SOURCE_SELF_RESULT,
+        ),
+        (
+            SpeechDeliveryV2::NAME,
+            EXECUTION_RESULT,
+            ATTR_SOURCE_SELF_RESULT,
+        ),
+        (
+            InternalActivityRecord::NAME,
+            OBSERVATION,
+            ATTR_SOURCE_INTERNAL,
+        ),
+        (
+            InternalActivityRecordV2::NAME,
+            OBSERVATION,
+            ATTR_SOURCE_INTERNAL,
+        ),
+        (
+            SystemMaintenanceRecord::NAME,
+            MAINTENANCE,
+            ATTR_SOURCE_MAINTENANCE,
+        ),
+        (
+            TerminalMaintenance::NAME,
+            MAINTENANCE,
+            ATTR_SOURCE_MAINTENANCE,
+        ),
+    ] {
+        let (exogenous, self_narrative, growth_access) = match source {
+            ATTR_SOURCE_HUMAN_RESPONSE | ATTR_SOURCE_DIRECTED_TOUCH | ATTR_SOURCE_ABSENCE => {
+                (true, false, EVIDENCE_ACCESS_TARGET_DEPENDENT)
+            }
+            ATTR_SOURCE_DESKTOP => (false, false, EVIDENCE_ACCESS_TARGET_DEPENDENT),
+            ATTR_SOURCE_SELF_RESULT => (false, false, EVIDENCE_ACCESS_COMPARISON_REQUIRED),
+            ATTR_SOURCE_INTERNAL => (false, true, EVIDENCE_ACCESS_NONE),
+            ATTR_SOURCE_MAINTENANCE => (false, false, EVIDENCE_ACCESS_NONE),
+        };
+        rules.push(AttributeRule {
+            schema_version: 1,
+            source,
+            event_kind,
+            payload_type: schema
+                .message(message)
+                .map_err(|_| Fault::Schema)?
+                .tag
+                .clone(),
+            exogenous,
+            self_narrative,
+            growth_access,
+        });
+    }
+    let table = AttributeRuleTable {
+        schema_version: 1,
+        rules,
+    };
+    Ok((
+        object_ref(&table, "p5-06-attribute-rules-v1", limits)?,
+        table,
+    ))
+}
 
 /// The core authenticates the account and supplies the aliases from the named
 /// mapping resource. Non-person sources have their own governed key.
@@ -65,6 +154,14 @@ pub fn stage_attributes(
                 && r.payload_type == event.content.object_type
         })
         .ok_or(Fault::UnsupportedSource)?;
+    if rule.exogenous
+        && view
+            .source_facts(event)
+            .map_err(|_| Fault::Source)?
+            .self_narrative
+    {
+        return Err(Fault::Source);
+    }
     view.authorize_provenance(facts.metadata)
         .map_err(|_| Fault::Source)?;
     for root in &facts.metadata.roots {
@@ -90,6 +187,25 @@ pub fn stage_attributes(
     }
     for loc in &facts.metadata.locations {
         resolve(loc)?;
+    }
+    if let Some(speaker) = &facts.metadata.speaker {
+        // Each quoted span belongs to one identifiable UTF-8 field (G01).
+        for layer in &speaker.layers {
+            let mut fields = facts.metadata.locations.iter().filter(|loc| {
+                loc.source == layer.source
+                    && loc.text.as_ref().is_some_and(|r| {
+                        r.start.0 <= layer.visible.start.0 && layer.visible.end.0 <= r.end.0
+                    })
+            });
+            let first = fields.next().ok_or(Fault::Source)?;
+            if fields.any(|loc| loc.path != first.path) {
+                return Err(Fault::Source);
+            }
+            resolve(&SourceLocation {
+                text: Some(layer.visible.clone()),
+                ..first.clone()
+            })?;
+        }
     }
     for observation in facts
         .occurred

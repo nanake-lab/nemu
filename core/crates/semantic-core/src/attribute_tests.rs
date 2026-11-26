@@ -39,24 +39,6 @@ impl Input {
 use AttributeSource::*;
 use EventKind::*;
 use EvidenceAccess::*;
-fn rule(
-    source: AttributeSource,
-    event_kind: EventKind,
-    payload_type: &str,
-    exogenous: bool,
-    self_narrative: bool,
-    growth_access: EvidenceAccess,
-) -> AttributeRule {
-    AttributeRule {
-        schema_version: 1,
-        source,
-        event_kind,
-        payload_type: payload_type.into(),
-        exogenous,
-        self_narrative,
-        growth_access,
-    }
-}
 struct View {
     event: Input,
     unit: Input,
@@ -77,59 +59,7 @@ impl View {
     fn new(event: Input, origin: AttributeSource) -> Self {
         let unit = Input::new("episode", OBSERVATION, fixture::<TouchObservationV2>());
         let inputs = vec![event.at.clone(), unit.at.clone()];
-        let table = AttributeRuleTable {
-            schema_version: 1,
-            rules: vec![
-                rule(
-                    ATTR_SOURCE_HUMAN_RESPONSE,
-                    OBSERVATION,
-                    "echo.user-text",
-                    true,
-                    false,
-                    EVIDENCE_ACCESS_TARGET_DEPENDENT,
-                ),
-                rule(
-                    ATTR_SOURCE_DIRECTED_TOUCH,
-                    OBSERVATION,
-                    "echo.touch-v2",
-                    true,
-                    false,
-                    EVIDENCE_ACCESS_TARGET_DEPENDENT,
-                ),
-                rule(
-                    ATTR_SOURCE_DESKTOP,
-                    OBSERVATION,
-                    "echo.desktop-observation",
-                    false,
-                    false,
-                    EVIDENCE_ACCESS_TARGET_DEPENDENT,
-                ),
-                rule(
-                    ATTR_SOURCE_SELF_RESULT,
-                    EXECUTION_RESULT,
-                    "echo.body-action-result",
-                    false,
-                    false,
-                    EVIDENCE_ACCESS_COMPARISON_REQUIRED,
-                ),
-                rule(
-                    ATTR_SOURCE_INTERNAL,
-                    OBSERVATION,
-                    "echo.internal-activity-record-v2",
-                    false,
-                    true,
-                    EVIDENCE_ACCESS_NONE,
-                ),
-                rule(
-                    ATTR_SOURCE_MAINTENANCE,
-                    MAINTENANCE,
-                    "echo.terminal-maintenance",
-                    false,
-                    false,
-                    EVIDENCE_ACCESS_NONE,
-                ),
-            ],
-        };
+        let (pinned, table) = initial_attribute_rules(limits()).unwrap();
         let aliases = Aliases::build(
             &["alice".into(), "account-1".into(), "account-2".into()],
             &[
@@ -217,7 +147,7 @@ impl View {
             unknown.clone()
         };
         Self {
-            pinned: reference(&table),
+            pinned,
             event,
             unit,
             inputs,
@@ -302,7 +232,7 @@ impl AttributeView for View {
                 ATTR_SOURCE_DIRECTED_TOUCH => Some(&self.unit.at),
                 _ => None,
             },
-            directed_to_n: person.then_some(event),
+            directed_to_n: person.then_some(&self.event.at),
             cause: (self.origin == ATTR_SOURCE_SELF_RESULT).then_some(&self.unit.at),
             episode_phase: (self.origin == ATTR_SOURCE_DIRECTED_TOUCH)
                 .then_some(&self.metadata.validity),
@@ -338,6 +268,20 @@ fn g05_rule_selects_the_authenticated_source_kind_and_payload() {
             EVIDENCE_ACCESS_TARGET_DEPENDENT,
         ),
         (
+            Input::new(
+                "voice",
+                OBSERVATION,
+                UserUtterance {
+                    text: "hello".into(),
+                    ..fixture()
+                },
+            ),
+            ATTR_SOURCE_HUMAN_RESPONSE,
+            true,
+            false,
+            EVIDENCE_ACCESS_TARGET_DEPENDENT,
+        ),
+        (
             Input::new("report", OBSERVATION, fixture::<TouchObservationV2>()),
             ATTR_SOURCE_DIRECTED_TOUCH,
             true,
@@ -359,6 +303,35 @@ fn g05_rule_selects_the_authenticated_source_kind_and_payload() {
             EVIDENCE_ACCESS_COMPARISON_REQUIRED,
         ),
         (
+            Input::new("delivery", EXECUTION_RESULT, fixture::<SpeechDelivery>()),
+            ATTR_SOURCE_SELF_RESULT,
+            false,
+            false,
+            EVIDENCE_ACCESS_COMPARISON_REQUIRED,
+        ),
+        (
+            Input::new(
+                "delivery-v2",
+                EXECUTION_RESULT,
+                fixture::<SpeechDeliveryV2>(),
+            ),
+            ATTR_SOURCE_SELF_RESULT,
+            false,
+            false,
+            EVIDENCE_ACCESS_COMPARISON_REQUIRED,
+        ),
+        (
+            Input::new(
+                "historical-thought",
+                OBSERVATION,
+                fixture::<InternalActivityRecord>(),
+            ),
+            ATTR_SOURCE_INTERNAL,
+            false,
+            true,
+            EVIDENCE_ACCESS_NONE,
+        ),
+        (
             Input::new(
                 "thought",
                 OBSERVATION,
@@ -371,6 +344,17 @@ fn g05_rule_selects_the_authenticated_source_kind_and_payload() {
         ),
         (
             Input::new("maintenance", MAINTENANCE, fixture::<TerminalMaintenance>()),
+            ATTR_SOURCE_MAINTENANCE,
+            false,
+            false,
+            EVIDENCE_ACCESS_NONE,
+        ),
+        (
+            Input::new(
+                "maintenance-record",
+                MAINTENANCE,
+                fixture::<SystemMaintenanceRecord>(),
+            ),
             ATTR_SOURCE_MAINTENANCE,
             false,
             false,
