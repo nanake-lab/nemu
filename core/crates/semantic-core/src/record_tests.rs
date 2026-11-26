@@ -217,3 +217,106 @@ fn event_attribute_forgery_cannot_make_own_story_external() {
         );
     }
 }
+
+#[test]
+fn g04_auxiliary_records_require_the_actual_typed_object_and_reserved_identity() {
+    use records::{Record, stage_auxiliary_record};
+    let mut sources = sources();
+    sources.insert(
+        "fact".into(),
+        graph::SourceFacts {
+            epistemic: EpistemicType::SYSTEM_RECORD,
+            self_narrative: false,
+            speaker: None,
+            verifiable: true,
+        },
+    );
+    sources.insert(
+        "delivered".into(),
+        graph::SourceFacts {
+            epistemic: EpistemicType::SYSTEM_RECORD,
+            self_narrative: false,
+            speaker: None,
+            verifiable: true,
+        },
+    );
+    let mut binding: ProposalBindingV2 = fixture();
+    let delivered = RecordVersion {
+        record_id: "delivered".into(),
+        branch_id: binding.branch_id.clone(),
+        ..fixture::<SpeechDeliveryV2>().presentation
+    };
+    binding.read_set = vec![delivered.content.clone()];
+    let c = records::Context {
+        snapshot: graph::Snapshot {
+            sources: &sources,
+            concepts: &[],
+            representation_version: "v1",
+        },
+        binding: &binding,
+        producer: "worker",
+        producer_version: "v1",
+        target_event: "human",
+        known_tendencies: &BTreeSet::from(["t".into()]),
+        known_persons: &BTreeSet::from(["person".into()]),
+        prior_record_ids: &BTreeSet::new(),
+        limits: limits(),
+    };
+    macro_rules! verify {
+        ($r:ident, $variant:ident) => {{
+            $r.binding = binding.clone();
+            $r.producer = c.producer.into();
+            $r.producer_version = c.producer_version.into();
+            $r.record_id = "annotation".into();
+            $r.event_id = "human".into();
+            let at = RecordVersion {
+                schema_version: 1,
+                record_id: $r.record_id.clone(),
+                branch_id: binding.branch_id.clone(),
+                content: reference(&$r),
+            };
+            let r = Record::$variant(&$r);
+            let confirmation = matches!(r, Record::Lie(_)).then_some(&delivered);
+            assert_eq!(
+                stage_auxiliary_record(r, &at, &c, confirmation),
+                Ok(at.clone())
+            );
+            if confirmation.is_some() {
+                assert_eq!(stage_auxiliary_record(r, &at, &c, None), Err(Fault::Source));
+            }
+            let mut wrong = at.clone();
+            wrong.content.digest.0[0] ^= 1;
+            assert_eq!(
+                stage_auxiliary_record(r, &wrong, &c, confirmation),
+                Err(Fault::Object)
+            );
+            wrong = at;
+            wrong.record_id.push('x');
+            assert_eq!(
+                stage_auxiliary_record(r, &wrong, &c, confirmation),
+                Err(Fault::Binding)
+            );
+        }};
+    }
+    let mut same: SameMatterAnnotation = fixture();
+    same.same_as = vec!["fact".into()];
+    verify!(same, SameMatter);
+    let mut teaching: TeachingAnnotation = fixture();
+    teaching.speaker = "person".into();
+    teaching.tendency_id = "t".into();
+    verify!(teaching, Teaching);
+    let mut lie: LieAnnotation = fixture();
+    lie.statement = "delivered".into();
+    lie.contradicts = "fact".into();
+    verify!(lie, Lie);
+    let mut candidate: TendencyCandidateRecord = fixture();
+    candidate.relation = None;
+    candidate.direction = NatureVector {
+        schema_version: 1,
+        connection: 1.0,
+        empathy: 0.0,
+        curiosity: 0.0,
+        achievement: 0.0,
+    };
+    verify!(candidate, Candidate);
+}
