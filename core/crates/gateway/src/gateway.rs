@@ -300,7 +300,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
                             drop(stream);
                         } else {
                             sequence = sequence.checked_add(1).ok_or(Error::Rejected("connection sequence exhausted"))?;
-                            tasks.spawn(crate::network::connection(stream.into_inner(), self.config.frames, sequence, tx.clone()));
+                            tasks.spawn(crate::network::connection(stream.into_inner(), self.config.frames, sequence, self.config.max_pending_requests, tx.clone()));
                         }
                         Ok(())
                     }

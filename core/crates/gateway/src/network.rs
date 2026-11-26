@@ -14,17 +14,19 @@ pub(crate) async fn connection<S>(
     stream: S,
     frames: FrameConfig,
     id: u64,
+    output_capacity: usize,
     actor: mpsc::Sender<Input>,
 ) where
     S: AsyncRead + AsyncWrite + Unpin,
 {
-    let _ = run(stream, frames, id, &actor).await;
+    let _ = run(stream, frames, id, output_capacity, &actor).await;
     let _ = actor.send(Input::Closed { connection: id }).await;
 }
 async fn run<S: AsyncRead + AsyncWrite + Unpin>(
     stream: S,
     frames: FrameConfig,
     id: u64,
+    output_capacity: usize,
     actor: &mpsc::Sender<Input>,
 ) -> Result<()> {
     let mut framed = Framed::new(stream, frames)?;
@@ -36,7 +38,9 @@ async fn run<S: AsyncRead + AsyncWrite + Unpin>(
             return Ok(());
         }
     };
-    let (output, mut responses) = mpsc::channel(2);
+    // Preserve room for a durable/settled pair and admit mixed push bursts
+    // within the existing deployment bound. A slow peer cannot block the actor.
+    let (output, mut responses) = mpsc::channel(output_capacity.max(2));
     let (reply, auth_reply) = oneshot::channel();
     actor
         .send(Input::Authenticate {

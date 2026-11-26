@@ -44,6 +44,14 @@ try {
     owner.bus.getHistory().some((e) => e.type === 'output.chunk' && e.payload.outputId === output),
   );
   const firstChunkMs = performance.now() - started;
+  await until(() =>
+    owner.bus
+      .getHistory()
+      .some(
+        (e) =>
+          e.type === 'output.chunk' && e.payload.outputId === output && e.payload.chunkIndex === 3,
+      ),
+  );
   const cancel = { schema_version: 1, output_id: output };
   assert.equal(
     await other.client.sendControl({
@@ -64,7 +72,7 @@ try {
   const seen = owner.bus.getHistory();
   assert.deepEqual(
     seen.flatMap((e) => (e.type === 'output.chunk' ? e.payload.text : [])),
-    ['prefix'],
+    ['one', 'two', 'three', 'four'],
   );
   assert.ok(
     seen.some(
@@ -105,7 +113,7 @@ try {
             .filter((e) => e.type === 'output.chunk' || e.type === 'output.state').length,
           approvalReceived: 'test-approval',
           foreignCancel: 'CAPABILITY_DENIED',
-          finalPrefixChunks: 1,
+          finalPrefixChunks: seen.filter((e) => e.type === 'output.chunk').length,
         },
         null,
         2,

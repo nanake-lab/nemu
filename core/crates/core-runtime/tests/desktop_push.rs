@@ -166,16 +166,20 @@ async fn authenticated_gateway_delivers_to_the_desktop_bridge() {
                     output_id: output_id.clone(),
                     action_id: "test-action".into(),
                     chunk_index: DecimalU64(0),
-                    text: "prefix".into(),
+                    text: String::new(),
                     lang: Lang::EN,
                     snapshot_id: hex(&head.digest.0),
                     speech_mode: SpeechMode::B_REMOTE_PROJECTED,
                     strict: false,
                 };
-                send(TerminalOutput::Chunk(chunk.clone())).await.unwrap();
+                for (index, text) in ["one", "two", "three", "four"].into_iter().enumerate() {
+                    chunk.chunk_index = DecimalU64(index as u64);
+                    chunk.text = text.into();
+                    send(TerminalOutput::Chunk(chunk.clone())).await.unwrap();
+                }
                 cancelled.take().unwrap().await.unwrap();
                 // A chunk already in flight after cancel cannot extend the visible prefix.
-                chunk.chunk_index = DecimalU64(1);
+                chunk.chunk_index = DecimalU64(4);
                 chunk.text = "late".into();
                 send(TerminalOutput::Chunk(chunk)).await.unwrap();
                 send(TerminalOutput::End(OutputEnd {
