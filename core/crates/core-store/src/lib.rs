@@ -9,6 +9,7 @@ mod config;
 mod error;
 mod fault;
 mod ingress;
+mod initial;
 mod lineage;
 mod manifest;
 mod migration;

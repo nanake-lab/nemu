@@ -1,2 +1,2 @@
-/** P0-01 scaffold; domain implementation belongs to the owning task. */
-export {};
+export { TerminalClient } from './client.js';
+export { ChatOutbox, type ChatEvent } from './outbox.js';

@@ -302,7 +302,7 @@ fn validate_genesis(
     genesis: &GenesisManifestV2,
     config: StoreConfig,
 ) -> Result<()> {
-    let digest = core_types::contract::Schema::builtin()?.digest(
+    let digest = core_types::contract::Schema::shared_builtin()?.digest(
         GenesisManifestV2::NAME,
         &serde_json::to_value(genesis)?,
         config.encoding,
@@ -411,10 +411,18 @@ pub(crate) fn publish_refs(db: &Connection, refs: &[ObjectRef], config: StoreCon
 }
 
 pub(crate) fn require_writable_head(db: &Connection, objects: &Objects) -> Result<()> {
+    // InitialPublication is independently checked by recovery on every open.
+    let initial: bool = db.query_row(
+        "SELECT EXISTS(SELECT 1 FROM branch_head h JOIN commits c ON c.id=h.commit_id WHERE h.singleton=1 AND c.decision='initial')",
+        [], |row| row.get(0),
+    )?;
+    if initial {
+        return Ok(());
+    }
     if let Some(head) = current_manifest(db, objects)? {
         require(
             head.staged_r.object_type
-                != core_types::contract::Schema::builtin()?
+                != core_types::contract::Schema::shared_builtin()?
                     .message(core_types::generated::RSnapshotV2::NAME)?
                     .tag,
             "V2 R head is read-only; P5-26 G/H replay is required before writing",

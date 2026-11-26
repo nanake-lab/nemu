@@ -76,6 +76,14 @@ impl Schema {
         serde_json::from_str(include_str!("../../../contracts/generated/schema.json"))
             .map_err(|e| e.to_string())
     }
+    /// The immutable built-in descriptor for callers that inspect untyped objects.
+    pub fn shared_builtin() -> Result<&'static Self> {
+        static SCHEMA: std::sync::OnceLock<Result<Schema>> = std::sync::OnceLock::new();
+        SCHEMA
+            .get_or_init(Self::builtin)
+            .as_ref()
+            .map_err(Clone::clone)
+    }
     pub fn message(&self, name: &str) -> Result<&Message> {
         self.messages.get(name).ok_or("unknown message".into())
     }

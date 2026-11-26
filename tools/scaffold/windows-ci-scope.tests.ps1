@@ -41,6 +41,7 @@ try {
     Assert-Scope 'manifest and desktop source' @('apps/stage/manifest.json', 'apps/stage/src/index.ts') $desktop
     Assert-Scope 'licence and primary storage' @('packages/body/LICENCE.txt', 'core/crates/core-store/src/store.rs') $all
     Assert-Scope 'core-store change selects hosted W02 and self-hosted W18' @('core/crates/core-store/src/store.rs') $native
+    Assert-Scope 'nemu-core selects host and desktop heartbeat' @('core/crates/nemu-core/src/deployment.rs') 'desktop=true,gateway=true,self_hosted=true,storage=false'
     Assert-Scope 'gateway only' @('core/crates/gateway/src/gateway.rs') 'desktop=false,gateway=true,self_hosted=true,storage=false'
     Assert-Scope 'workflow dispatch uses full branch diff' @('apps/stage/manifest.json', 'apps/stage/src/index.ts') $desktop -Event workflow_dispatch -Comparison 'refs/remotes/origin/main...HEAD'
     Assert-Scope 'explicit full overrides paths' @() $all -Event workflow_dispatch -Full true -Comparison 'unexpected comparison'

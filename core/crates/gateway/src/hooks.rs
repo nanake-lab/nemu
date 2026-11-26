@@ -6,6 +6,14 @@ use core_types::generated::*;
 
 pub type Decision<T> = std::result::Result<T, IngressReason>;
 pub trait CoreHandler<L: LineageKind> {
+    /// Register the server-issued session after pairing, before it becomes live.
+    fn authenticated(
+        &mut self,
+        _store: &mut Store<L>,
+        _session: &TerminalSession,
+    ) -> Result<Decision<()>> {
+        Ok(Ok(()))
+    }
     /// Current source/action/reference authority and per-event T1 grants. The
     /// implementation must resolve causal/correction and execution-result claims
     /// against trusted state, not against uploaded peer assertions alone.

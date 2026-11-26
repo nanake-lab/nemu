@@ -30,7 +30,7 @@ fn add_bound(a: f64, b: f64) -> Result<f64> {
     Ok(sum)
 }
 pub fn check_j_envelope(envelope: &Value, receipt: &Value, limits: Limits) -> Result<()> {
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let e = schema.normalize("ModulationEnvelopeV2", envelope, limits, 0)?;
     let r = schema.normalize("JEffectReceipt", receipt, limits, 0)?;
     check_j_message("JEffectReceipt", &r, limits)?;
@@ -109,7 +109,7 @@ pub fn check_j_message(name: &str, value: &Value, limits: Limits) -> Result<()> 
     ) {
         return Ok(());
     }
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let v = schema.normalize(name, value, limits, 0)?;
     match name {
         "JDirectionVector" => require(!list(&v, "values").is_empty(), "empty vector")?,
@@ -227,7 +227,7 @@ pub fn check_j_resources(
     formal: bool,
     limits: Limits,
 ) -> Result<()> {
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let pairs = [
         ("JDirectionSet", input.direction_set),
         ("JDirectionValidation", input.validation),

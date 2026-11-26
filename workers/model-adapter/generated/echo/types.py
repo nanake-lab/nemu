@@ -168,6 +168,10 @@ class EvidenceRelation(IntEnum):
     COUNTEREVIDENCE = 2
     RESOLVES_TRIAL = 3
     EVIDENCE_UNKNOWN = 4
+class EmptyPrefixKind(IntEnum):
+    EMPTY_HISTORY = 1
+    EMPTY_CHANGE_LEDGER = 2
+    EMPTY_INGRESS_DECISIONS = 3
 class JResidualStage(IntEnum):
     J_BLOCK_RESIDUAL_OUTPUT = 1
     J_MIXER_RESIDUAL_BEFORE_FFN_NORM = 2
@@ -1004,6 +1008,41 @@ class ThetaModuleSourceBinding:
     source_slice_id: str
     source_trace_revision: str
     source_coupling_revision: str
+@dataclass(frozen=True)
+class EmptyPrefixRoot:
+    schema_version: int
+    kind: EmptyPrefixKind
+@dataclass(frozen=True)
+class InitialRuntimeRoot:
+    schema_version: int
+    environment: VersionedEnvironmentV2
+    irl: ObjectRef | None
+    appraiser: ObjectRef | None
+    matcher: ObjectRef | None
+    fast: ObjectRef | None
+    growth: ObjectRef | None
+    dynamics: ObjectRef | None
+    compiler: ObjectRef | None
+@dataclass(frozen=True)
+class BirthNameRecord:
+    schema_version: int
+    record_id: str
+    given_name: str
+    manifest: ObjectRef
+    caretaker: LocalUserBinding
+    signature_evidence: ObjectRef
+@dataclass(frozen=True)
+class InitialPublication:
+    schema_version: int
+    store_id: str
+    branch_id: str
+    header: LineageHeaderV2
+    x: ObjectRef
+    r: ObjectRef
+    theta: ObjectRef
+    q: InitialRuntimeRoot
+    empty_history: EmptyPrefixRoot | None
+    birth: BirthNameRecord | None
 @dataclass(frozen=True)
 class JHookBinding:
     schema_version: int

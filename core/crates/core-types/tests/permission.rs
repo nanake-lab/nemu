@@ -25,6 +25,76 @@ const LIMITS: Limits = Limits {
 };
 
 #[test]
+fn only_bound_plain_local_text_is_a_user_assertion() {
+    use core_types::generated::*;
+    use core_types::permission::check_user_text_source;
+    let mut session: TerminalSession = fixture("TerminalSession");
+    session.capabilities = vec![IngressKind::INGRESS_EVENT];
+    session.budget.max_frame_bytes = 8192;
+    session.budget.max_chunk_bytes = 1024;
+    session.budget.max_object_bytes = 2048;
+    session.budget.max_upload_bytes = 4096;
+    let mut user: LocalUserBinding = fixture("LocalUserBinding");
+    user.installation_id.clone_from(&session.installation_id);
+    user.session_id.clone_from(&session.session_id);
+    let mut event: TerminalEvent = fixture("TerminalEvent");
+    event.kind = EventKind::OBSERVATION;
+    event.payload_ref.object_type = "echo.user-text".into();
+    let mut source: SourceMetadata = fixture("SourceMetadata");
+    source.source_span = event.payload_ref.clone();
+    let check = |s: &TerminalSession,
+                 b: &LocalUserBinding,
+                 e: &TerminalEvent,
+                 p: &SourceMetadata| check_user_text_source(s, b, e, p, LIMITS);
+    check(&session, &user, &event, &source).unwrap();
+    for other in [
+        LocalUserBinding {
+            installation_id: "another".into(),
+            ..user.clone()
+        },
+        LocalUserBinding {
+            session_id: "expired".into(),
+            ..user.clone()
+        },
+    ] {
+        assert!(check(&session, &other, &event, &source).is_err());
+    }
+    for other in [
+        TerminalEvent {
+            parents: vec!["p".into()],
+            ..event.clone()
+        },
+        TerminalEvent {
+            correction_of: vec!["c".into()],
+            ..event.clone()
+        },
+        TerminalEvent {
+            action_id: Some("a".into()),
+            ..event.clone()
+        },
+        TerminalEvent {
+            trial_id: Some("t".into()),
+            ..event.clone()
+        },
+        TerminalEvent {
+            kind: EventKind::EXECUTION_RESULT,
+            ..event.clone()
+        },
+        TerminalEvent {
+            payload_ref: ObjectRef {
+                object_type: "echo.user-utterance".into(),
+                ..event.payload_ref.clone()
+            },
+            ..event.clone()
+        },
+    ] {
+        assert!(check(&session, &user, &other, &source).is_err());
+    }
+    source.epistemic_type = EpistemicType::USER_SELF_REPORT;
+    assert!(check(&session, &user, &event, &source).is_err());
+}
+
+#[test]
 fn dispatch_matches_issuance_holder_and_half_open_validity() {
     let request: ActionRequestV2 = fixture("ActionRequestV2");
     let issued = &request.grant;

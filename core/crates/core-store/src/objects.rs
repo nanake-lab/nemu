@@ -58,7 +58,7 @@ impl Objects {
         }
     }
     pub fn reference<T: WireMessage>(&self, value: &T, version: &str) -> Result<ObjectRef> {
-        let schema = Schema::builtin()?;
+        let schema = Schema::shared_builtin()?;
         let v = serde_json::to_value(value)?;
         Ok(ObjectRef {
             schema_version: 1,
@@ -241,7 +241,7 @@ impl Objects {
             return Ok(disk);
         }
         let bytes = if disk.starts_with(b"NSI1") {
-            let schema = Schema::builtin()?;
+            let schema = Schema::shared_builtin()?;
             require(
                 r.object_type == schema.message(RSnapshotV2::NAME)?.tag
                     || r.object_type == schema.message(RSnapshotV3::NAME)?.tag,
@@ -266,7 +266,7 @@ impl Objects {
             bytes.len() as u64 == r.byte_length.0,
             "object length mismatch",
         )?;
-        let schema = Schema::builtin()?;
+        let schema = Schema::shared_builtin()?;
         let (name, _) = schema
             .messages
             .iter()
@@ -281,7 +281,7 @@ impl Objects {
         Ok(bytes)
     }
     pub fn closure(&self, root: &ObjectRef) -> Result<Vec<ObjectRef>> {
-        let schema = Schema::builtin()?;
+        let schema = Schema::shared_builtin()?;
         let mut pending = vec![root.clone()];
         let mut found = BTreeMap::new();
         while let Some(r) = pending.pop() {
@@ -305,7 +305,7 @@ impl Objects {
                 .find(|(_, m)| m.tag == r.object_type)
                 .ok_or(Error::Rejected("unknown object type"))?;
             let value = schema.decode_canonical(name, &bytes, self.config.encoding, 0)?;
-            collect_refs(&schema, name, &value, &mut pending)?;
+            collect_refs(schema, name, &value, &mut pending)?;
             let disk = fs::read(self.path(&r)?)?;
             if disk.starts_with(b"NSI1") {
                 let mut input = ByteReader::new(&disk[4..], self.config.encoding)?;

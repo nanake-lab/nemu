@@ -142,6 +142,9 @@ fn crash_worker() {
     let mut store = Store::<Rehearsal>::open(path, config(), true).unwrap();
     let cap = store.take_commit_capability().unwrap();
     match operation {
+        "initial" => {
+            super::initial::publish(&mut store, &cap, fault).unwrap();
+        }
         "terminal" => {
             let (event, _pin) = unpersisted_event(&mut store, 0);
             store.set_fault(fault);
