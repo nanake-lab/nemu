@@ -8,6 +8,7 @@ pub mod irl;
 mod irl_graph;
 pub mod objects;
 pub mod records;
+pub mod registry;
 pub mod source_rules;
 
 use core_types::{WireMessage, contract::Limits};
