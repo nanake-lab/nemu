@@ -69,7 +69,7 @@ pub(crate) fn index(
             params![commit, reference.canonical_bytes(limits)?],
         )?;
     }
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     // Index only groups accepted in this transaction, never unaccepted candidates.
     for reference in &value.accepted_results {
         let (group_id, tendencies) =
@@ -183,7 +183,7 @@ pub(crate) fn index_tendencies(
     r: &ObjectRef,
 ) -> Result<()> {
     let limits = objects.config.encoding;
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let tendencies: Vec<(String, ObjectRef)> =
         if r.object_type == schema.message(RSnapshotV3::NAME)?.tag {
             RSnapshotV3::from_canonical(&objects.read(r)?, limits)?
@@ -213,7 +213,7 @@ pub(crate) fn index_dependencies(
     commit: &str,
     refs: &[ObjectRef],
 ) -> Result<()> {
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let limits = objects.config.encoding;
     for r in refs {
         if r.object_type == crate::RAW_BYTES {
@@ -227,7 +227,7 @@ pub(crate) fn index_dependencies(
         let bytes = objects.read(r)?;
         let value = schema.decode_canonical(name, &bytes, limits, 0)?;
         let mut dependencies = Vec::new();
-        collect_refs(&schema, name, &value, &mut dependencies)?;
+        collect_refs(schema, name, &value, &mut dependencies)?;
         for dependency in dependencies {
             db.execute(
                 "INSERT OR IGNORE INTO dependency_index VALUES(?1,?2,?3)",

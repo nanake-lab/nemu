@@ -239,6 +239,9 @@ importers:
       '@nemu/desktop-sense':
         specifier: workspace:*
         version: link:../../packages/desktop-sense
+      '@nemu/terminal':
+        specifier: workspace:*
+        version: link:../../packages/terminal
       '@nemu/voice':
         specifier: workspace:*
         version: link:../../packages/voice
@@ -336,7 +339,11 @@ importers:
 
   packages/log: {}
 
-  packages/terminal: {}
+  packages/terminal:
+    dependencies:
+      '@nemu/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/voice:
     dependencies:

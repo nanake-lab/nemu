@@ -115,7 +115,7 @@ pub fn check_initial_message(name: &str, value: &Value, limits: Limits) -> Resul
     ) {
         return Ok(());
     }
-    let v = Schema::builtin()?.normalize(name, value, limits, 0)?;
+    let v = Schema::shared_builtin()?.normalize(name, value, limits, 0)?;
     let err = |e: serde_json::Error| e.to_string();
     match name {
         "EmptyPrefixRoot" => Ok(()),
@@ -171,7 +171,7 @@ pub fn verify_birth_material(
         Sha256::digest(signature).as_slice() == record.signature_evidence.digest.0,
         "birth signature digest",
     )?;
-    let schema = Schema::builtin()?;
+    let schema = Schema::shared_builtin()?;
     let is_v2 = record.manifest.object_type == "echo.genesis-v2";
     let name = if is_v2 {
         GenesisManifestV2::NAME

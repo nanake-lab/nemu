@@ -214,7 +214,7 @@ fn old_input(objects: &Objects, q: &ObjectRef) -> Result<CognitiveInput> {
 /// The existing EV6 interpretation types identify their subject separately
 /// from their computation binding. Check both before publish and on replay.
 fn check_interpretations(objects: &Objects, commit: &InternalActivityCommitV2) -> Result<()> {
-    let schema = core_types::contract::Schema::builtin()?;
+    let schema = core_types::contract::Schema::shared_builtin()?;
     let kinds = [
         NatureAppraisalRecord::NAME,
         SituationMatchRecord::NAME,

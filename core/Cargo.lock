@@ -1083,6 +1083,7 @@ version = "0.0.0"
 dependencies = [
  "core-policy",
  "core-types",
+ "serde_json",
 ]
 
 [[package]]
@@ -1226,9 +1227,15 @@ dependencies = [
 name = "task-layer"
 version = "0.0.0"
 dependencies = [
+ "core-runtime",
+ "core-store",
  "core-types",
+ "fact-view",
  "serde",
  "serde_json",
+ "sha2",
+ "tempfile",
+ "time",
 ]
 
 [[package]]

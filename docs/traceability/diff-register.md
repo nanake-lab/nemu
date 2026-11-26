@@ -808,3 +808,26 @@ V2-184 编号核对：2026-11-18 main `9a35cad2` 与全部 18 个开放 PR 的 d
 | 编号 | 依据 | 提议与状态 |
 | --- | --- | --- |
 | V2-193 | ADR 0031 §4、0042 U6、0046 §2.1、0047、0048 G01/G04，用户指定过渡期 DeepSeek | [ADR 0051](../adr/0051-irl-pipe-contract.md) 允许在授权范围内记录远端 IRL 候选的实际生产者，区分本机连接方、原始返回、暂存和核心提交。本轮等待按 U6。待用户确认（阻塞）；设计及后续验收见[规格对照](P5-49.md)。 |
+
+## 2026-10-28 追加：P5-06 语义边界缺口与预检分区
+
+基线 `f24f1256259c998bc213a9dc93103fcfb9cfe89a`。使用卡内 G 编号避免占用其他开放 PR 的 V2 预留号。本节不批准新协议、不修改原文。
+
+| ID | 规格 / 契约位置 | 发现与当前处理 | 状态 |
+| --- | --- | --- | --- |
+| P5-06-G01 | F §3.2–3.3；state.proto SourceMetadata/EventEnvelope | source_span/provenance 只有 ObjectRef，缺正式对象与可信读取边界。预检检查来源集合，不签发跨度或来源真实性验收 | 阻塞：待契约补齐 |
+| P5-06-G02 | F §3.4；D I §4.4 | ConceptRef/ConceptProposalV2 不等于完整 registry。只校验已提供的精确引用与有向 alias 终点；不分配 provisional、不重写历史 | 阻塞：待契约补齐 |
+| P5-06-G03 | F §3.2–3.3；Claim | value/modality/time、适配器 predicate/role/span 映射缺正式资源。仅核对既有结构化 payload | 阻塞：待契约补齐 |
+| P5-06-G04 | D I §4.1、§3.7；records.proto | 预检不等于完整阶段接口、重解释关系认证或原子发布；实际输出及同类同目标引用读取仍未连接 | 阻塞：待契约补齐 |
+| P5-06-G05 | v2 EV2/EV3/EV9；V2-71；ADR 0025 | `p5-06-source-partition-preflight-v1` 仅冻结下表预检分区；缺可信 provenance、EV9 完整生产规则及新事件类型，不生成可提交属性 | 阻塞：待完整规则与输入契约；本条新增登记待用户确认 |
+
+预检分区（核心调用方选择来源类别，绝不读取模型自由文本来选择）：
+
+| 类别 | exogenous | self_narrative |
+| --- | --- | --- |
+| 面向她的用户交互、别人对她的回应 | true | false |
+| 关于用户自己的桌面观察 | false | false |
+| 她的行动、她触发的程序结果、系统维护 | false | false |
+| 她自己的叙述、导入排练日记 | false | true |
+
+`verifiable` 未作默认填值或资格判定；账号归人只支持输入的显式 alias，不做相似度/字符串猜测。停留、缺席事实和系统记录后继仍需各自正式类型。本分区只是已批准原则的局部预检，不能用来宣称完整事件属性治理通过。详见 `tasks/requests/P5-06-formal-semantic-boundaries.md` 与 `reports/P5-06/BLOCKED.md`。
