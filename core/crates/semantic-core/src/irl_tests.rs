@@ -24,6 +24,8 @@ struct World {
     graph: SemanticGraphV2,
     transaction: Option<&'static str>,
     initial: Option<RecordVersion>,
+    published_registries: Vec<(ObjectRef, Vec<u8>)>,
+    registry_approval: Option<(StageAdoption, ObjectRef, Vec<String>)>,
     stage_bytes: Vec<u8>,
     committed: Option<(StageAdoption, Vec<u8>)>,
 }
@@ -158,6 +160,8 @@ impl World {
             graph,
             transaction: Some("tx"),
             initial: None,
+            published_registries: Vec::new(),
+            registry_approval: None,
             stage_bytes: vec![],
             committed: None,
         }
@@ -443,3 +447,6 @@ fn a_provisional_ref_needs_an_id_already_in_the_pinned_registry() {
         StageOutcome::STAGE_OUTCOME_FAILED
     );
 }
+
+#[path = "registry_tests.rs"]
+mod registry_tests;

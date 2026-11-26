@@ -92,7 +92,9 @@ impl<L: LineageKind> Store<L> {
             require(
                 attempts == 0
                     && !crate::store::references(&ro, config)?.iter().any(|r| {
-                        r.object_type == crate::RAW_BYTES || r.object_type == "echo.transaction-v4"
+                        r.object_type == crate::RAW_BYTES
+                            || r.object_type == "echo.transaction-v4"
+                            || r.object_type == crate::initial::TAG
                     }),
                 "rollback would discard format 3 history; restore compatible checkpoint",
             )?;

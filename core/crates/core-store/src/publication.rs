@@ -46,28 +46,7 @@ pub(crate) fn index(
             params![commit, role, r.canonical_bytes(limits)?],
         )?;
     }
-    let schema = Schema::shared_builtin()?;
-    let tendencies: Vec<(String, ObjectRef)> = if value.staged_r.object_type
-        == schema.message(RSnapshotV3::NAME)?.tag
-    {
-        RSnapshotV3::from_canonical(&objects.read(&value.staged_r)?, limits)?
-            .tendencies
-            .iter()
-            .map(|t| Ok((t.tendency_id.clone(), objects.reference(t, "1")?)))
-            .collect::<Result<_>>()?
-    } else {
-        core_types::generated::RSnapshotV2::from_canonical(&objects.read(&value.staged_r)?, limits)?
-            .tendencies
-            .iter()
-            .map(|t| Ok((t.tendency_id.clone(), objects.reference(t, "1")?)))
-            .collect::<Result<_>>()?
-    };
-    for (id, reference) in tendencies {
-        db.execute(
-            "INSERT INTO snapshot_objects VALUES(?1,'tendency',?2,?3)",
-            params![commit, id, reference.canonical_bytes(limits)?],
-        )?;
-    }
+    index_tendencies(db, objects, commit, &value.staged_r)?;
     for reference in &value.accepted_results {
         db.execute(
             "INSERT INTO accepted_results VALUES(?1,?2)",
@@ -194,6 +173,48 @@ pub(crate) fn index(
             ],
         )?;
     }
+    index_dependencies(db, objects, commit, refs)
+}
+
+pub(crate) fn index_tendencies(
+    db: &Connection,
+    objects: &Objects,
+    commit: &str,
+    r: &ObjectRef,
+) -> Result<()> {
+    let limits = objects.config.encoding;
+    let schema = Schema::shared_builtin()?;
+    let tendencies: Vec<(String, ObjectRef)> =
+        if r.object_type == schema.message(RSnapshotV3::NAME)?.tag {
+            RSnapshotV3::from_canonical(&objects.read(r)?, limits)?
+                .tendencies
+                .iter()
+                .map(|t| Ok((t.tendency_id.clone(), objects.reference(t, "1")?)))
+                .collect::<Result<_>>()?
+        } else {
+            core_types::generated::RSnapshotV2::from_canonical(&objects.read(r)?, limits)?
+                .tendencies
+                .iter()
+                .map(|t| Ok((t.tendency_id.clone(), objects.reference(t, "1")?)))
+                .collect::<Result<_>>()?
+        };
+    for (id, reference) in tendencies {
+        db.execute(
+            "INSERT INTO snapshot_objects VALUES(?1,'tendency',?2,?3)",
+            params![commit, id, reference.canonical_bytes(limits)?],
+        )?;
+    }
+    Ok(())
+}
+
+pub(crate) fn index_dependencies(
+    db: &Connection,
+    objects: &Objects,
+    commit: &str,
+    refs: &[ObjectRef],
+) -> Result<()> {
+    let schema = Schema::shared_builtin()?;
+    let limits = objects.config.encoding;
     for r in refs {
         if r.object_type == crate::RAW_BYTES {
             continue;
