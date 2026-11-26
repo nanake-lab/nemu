@@ -105,3 +105,52 @@ message IrlPipeFrame {
   optional ObjectRef graph = 11; // optional
   optional IrlMaterial output = 12; // optional
 }
+
+// @message echo.irl-service-response | ADR 0046 service metadata accompanies received bytes only
+message IrlServiceResponse {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef raw = 2; // required
+  optional string returned_model = 3; // optional,nonempty
+  optional string provider_revision = 4; // optional,nonempty
+  optional string finish_reason = 5; // optional,nonempty
+  optional ObjectRef usage = 6; // optional
+}
+
+// @message echo.irl-remote-attempt | ADR 0051 and ADR 0046 actual application bytes, without credentials
+message IrlRemoteAttempt {
+  // @rules {"discriminator":"status","common":["format"],"cases":{"1":{"required":["sent_request","response"]},"2":{"required":["sent_request"],"optional":["response"]},"3":{"required":["sent_request"],"optional":["response"]},"4":{"required":["sent_request"],"optional":["response"]},"5":{"required":["sent_request"],"optional":["response"]},"6":{}}}
+  optional uint32 schema_version = 1; // required
+  optional RemoteAttemptStatus status = 2; // required
+  optional ObjectRef format = 3; // required
+  optional ObjectRef sent_request = 4; // optional
+  optional IrlServiceResponse response = 5; // optional
+}
+
+// @message echo.irl-producer | ADR 0051 authenticated producer observation for a completed output
+message IrlProducer {
+  // @rules {"discriminator":"link","common":["call","delegation","output","neutral_input","isolation"],"cases":{"2":{"required":["remote"]},"3":{"required":["executed_model"]}}}
+  optional uint32 schema_version = 1; // required
+  optional IrlPipeLink link = 2; // required
+  optional IrlCall call = 3; // required
+  optional IrlDelegation delegation = 4; // required
+  optional ObjectRef output = 5; // required
+  optional ObjectRef neutral_input = 6; // optional
+  optional ObjectRef isolation = 7; // optional
+  optional ObjectRef executed_model = 8; // optional
+  optional IrlRemoteAttempt remote = 9; // optional
+}
+
+// @message echo.irl-candidate-return | ADR 0051 worker returns the candidate frame and its producer observation
+message IrlCandidateReturn {
+  optional uint32 schema_version = 1; // required
+  optional IrlPipeFrame frame = 2; // required
+  optional IrlProducer producer = 3; // required
+}
+
+// @message echo.irl-adoption-link | ADR 0051 core transaction binds the return to the candidate and stage
+message IrlAdoptionLink {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef candidate_return = 2; // required
+  optional ObjectRef candidate = 3; // required
+  optional ObjectRef stage = 4; // required
+}

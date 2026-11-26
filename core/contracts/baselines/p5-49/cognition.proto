@@ -1,0 +1,176 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "state.proto";
+import "terminal.proto";
+import "ledger.proto";
+
+// ADR 0030 / ADR 0026 current reading: no kappa, psychological deadline,
+// F basis identity, stage-consumption key or D11 occurrence/observation clock.
+enum CognitiveCompletion { COG_COMPLETION_UNSPECIFIED = 0; COG_COMPLETED = 1; COG_TRUNCATED = 2; COG_CANCELLED = 3; COG_FAILED = 4; }
+enum CognitiveMode { COG_MODE_UNSPECIFIED = 0; COG_RUNNING = 1; COG_PAUSED = 2; COG_FAULT = 3; }
+enum CognitiveActivityStatus { COG_ACTIVITY_UNSPECIFIED = 0; COG_ACTIVITY_RUNNING = 1; COG_ACTIVITY_WAITING = 2; COG_ACTIVITY_COMPLETED = 3; COG_ACTIVITY_SUSPENDED = 4; }
+enum CognitiveReturnStatus { COG_RETURN_UNSPECIFIED = 0; COG_RETURN_WAITING = 1; COG_RETURN_OK = 2; COG_RETURN_NO_MATCH = 3; COG_RETURN_DENIED = 4; COG_RETURN_INDEX_LAGGING = 5; COG_RETURN_MISSING = 6; COG_RETURN_BUDGET = 7; COG_RETURN_FAILED = 8; COG_RETURN_UNKNOWN = 9; }
+enum CognitiveMaintenanceKind { COG_MAINTENANCE_UNSPECIFIED = 0; COG_MAINTENANCE_PAUSE = 1; COG_MAINTENANCE_RESUME = 2; COG_MAINTENANCE_REVIEW = 3; COG_MAINTENANCE_ALARM = 4; COG_MAINTENANCE_BACKUP_RESTORE = 5; }
+
+// @message echo.cognition-binding | ADR 0026 §§4-6; ADR 0030 field table
+message CognitionBinding {
+  optional uint32 schema_version = 1; // required
+  optional string activity_id = 2; // required,nonempty
+  optional string step_id = 3; // required,nonempty
+  optional string request_id = 4; // required,nonempty
+  optional uint64 round_index = 5; // required
+  optional string branch_id = 6; // required,nonempty
+  optional string base_commit = 7; // required,nonempty
+  optional string q_revision = 8; // required,nonempty
+  repeated string input_frontier = 9; // required,set=self
+  optional string snapshot_id = 10; // required,nonempty
+  optional VersionedEnvironmentV2 environment = 11; // required
+  optional ObjectRef protocol = 12; // required
+  optional ObjectRef permission_snapshot = 13; // required
+  optional string source_validity_version = 14; // required,nonempty
+  repeated ObjectRef read_set = 15; // required,set=digest
+}
+
+// @message echo.cognitive-material | ADR 0026 §5.1; V2-88/102; ADR 0030
+message CognitiveMaterial {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef content = 2; // required
+  optional SourceMetadata metadata = 3; // required
+  optional bool past_reaction = 4; // required
+}
+
+// @message echo.cognitive-returned-result | ADR 0026 §§3,5.2,6.9; ADR 0030
+message CognitiveReturnedResult {
+  optional uint32 schema_version = 1; // required
+  optional string request_id = 2; // required,nonempty
+  optional CognitiveReturnStatus status = 3; // required
+  optional ObjectRef result = 4; // optional
+  optional string action_id = 5; // optional,nonempty
+}
+
+// @message echo.cognitive-input | ADR 0026 §§4.1-4.2,5.1-5.2; ADR 0030
+message CognitiveInput {
+  optional uint32 schema_version = 1; // required
+  optional CognitionBinding binding = 2; // required
+  repeated CognitiveMaterial materials = 3; // required
+  optional ObjectRef focus = 4; // optional
+  repeated ObjectRef new_inputs = 5; // required
+  repeated CognitiveReturnedResult results = 6; // required
+  repeated FactProjection retrievals = 7; // required
+  optional ObjectRef budget = 8; // required
+}
+
+// @message echo.cognitive-result-receipt | ADR 0026 §§4.4-4.5,5,6.7,7; ADR 0030
+message CognitiveResultAndReceipt {
+  optional uint32 schema_version = 1; // required
+  optional CognitionBinding binding = 2; // required
+  optional ObjectRef input = 3; // required
+  repeated CognitiveMaterial products = 4; // required
+  optional ObjectRef next_focus = 5; // optional
+  repeated ObjectRef queries = 6; // required
+  optional ActionPlan action_plan = 7; // optional
+  optional CognitiveCompletion completion = 8; // required
+  optional string reason = 9; // optional,nonempty
+  optional bytes model_hash = 10; // required,size=32
+  optional bytes tokenizer_hash = 11; // required,size=32
+  optional ObjectRef modulation = 12; // required
+  optional ObjectRef carrier_receipt = 13; // optional
+  optional ObjectRef usage = 14; // required
+}
+
+// @message echo.internal-activity-record | ADR 0026 §§5,6.7; ADR 0030
+message InternalActivityRecord {
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional ObjectRef previous = 3; // optional
+  optional CognitiveResultAndReceipt result = 4; // required
+  optional uint64 started_at_ns = 5; // required
+  optional uint64 finished_at_ns = 6; // required
+}
+
+// @message echo.activity-state | ADR 0026 §§3,5; ADR 0030
+message ActivityState {
+  optional uint32 schema_version = 1; // required
+  optional string activity_id = 2; // required,nonempty
+  optional string revision = 3; // required,nonempty
+  repeated ObjectRef materials = 4; // required
+  optional ObjectRef focus = 5; // optional
+  optional ObjectRef latest_step = 6; // optional
+  repeated string waiting = 7; // required,set=self
+  optional ObjectRef successor = 8; // optional
+  optional CognitiveActivityStatus status = 9; // required
+}
+
+// @message echo.cognitive-inflight-action | ADR 0026 §6.9; retained outbox origin §6.3; ADR 0030
+message CognitiveInflightAction {
+  optional uint32 schema_version = 1; // required
+  optional string action_id = 2; // required,nonempty
+  optional ObjectRef origin_record = 3; // required
+  optional string origin_step_id = 4; // required,nonempty
+  optional uint64 round_index = 5; // required
+  optional uint64 registered_at_ns = 6; // required
+  optional ActionPlan plan = 7; // required
+  optional ActionStatus status = 8; // required
+  optional ObjectRef request = 9; // required
+  optional ObjectRef actual_result = 10; // optional
+  optional ObjectRef credential = 11; // optional
+}
+
+// @message echo.cognition-state | ADR 0026 §§3,5-6; ADR 0030
+message CognitionState {
+  optional uint32 schema_version = 1; // required
+  optional string revision = 2; // required,nonempty
+  optional CognitiveMode mode = 3; // required
+  optional string reason = 4; // optional,nonempty
+  repeated ActivityState activities = 5; // required,set=activity_id
+  repeated CognitiveInflightAction inflight = 6; // required,set=action_id
+  optional ObjectRef active_request = 7; // optional
+  optional ObjectRef runnable_successor = 8; // optional
+  optional ObjectRef transition = 9; // required
+}
+
+// @message echo.internal-activity-commit | ADR 0026 §§5,6.1-6.2,6.10; ADR 0030
+message InternalActivityCommit {
+  optional uint32 schema_version = 1; // required
+  optional CognitionBinding binding = 2; // required
+  optional InternalActivityRecord record = 3; // required
+  repeated ObjectRef interpretations = 4; // required
+}
+
+// @message echo.transaction-v3 | ADR 0026 §§5,6; ADR 0030
+message CoreTransactionV3 {
+  // @retains CoreTransactionV2
+  // ADR 0030: store/runtime still produce V2 until P5-38; do not disable writes.
+  reserved 2, 15;
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef staged_h = 3; // required
+  optional ObjectRef staged_x = 4; // required
+  optional ObjectRef staged_r = 5; // required
+  optional ObjectRef staged_theta = 6; // required
+  optional ObjectRef staged_l = 7; // required
+  optional ObjectRef staged_q = 8; // required
+  optional ObjectRef staged_u = 9; // required
+  optional uint64 processed_position = 10; // required
+  optional uint64 anchor_time_ns = 11; // required
+  repeated ObjectRef staged_concepts = 12; // required
+  repeated ObjectRef accepted_results = 13; // required
+  repeated ObjectRef audit_refs = 14; // required
+  repeated LedgerEntry staged_ledger = 16; // required
+  oneof origin { // required
+    ProposalBindingV2 event_binding = 17; // optional
+    InternalActivityCommit internal_commit = 18; // optional
+  }
+}
+
+// @message echo.system-maintenance-record | V2-87/102; ADR 0030
+message SystemMaintenanceRecord {
+  optional uint32 schema_version = 1; // required
+  optional string record_id = 2; // required,nonempty
+  optional CognitiveMaintenanceKind kind = 3; // required
+  optional string reason = 4; // required,nonempty
+  optional ObjectRef details = 5; // required
+  repeated ObjectRef ledger_refs = 6; // required
+  optional string related_commit = 7; // required,nonempty
+  optional uint64 recorded_at_ns = 8; // required
+}

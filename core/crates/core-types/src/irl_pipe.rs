@@ -1,5 +1,10 @@
 //! ADR 0051. These checks consume an already authenticated local pipe. Only the
 //! host knows its peer, launch instance and the core's transaction snapshot.
+mod provenance;
+pub use provenance::{
+    IrlAdoptionEvidence, IrlExcerpt, IrlProducerObservation, ReceivedCandidate, locate_excerpt,
+};
+
 use crate::contract::{Limits, Result, require};
 use crate::generated::*;
 use crate::scalar::HexBytes;
@@ -12,6 +17,18 @@ pub fn frame_length(bytes: u32, budget: &IrlPipeBudget) -> Result<usize> {
     Ok(bytes as usize)
 }
 
+fn verify_raw(reference: &ObjectRef, bytes: &[u8], limits: Limits) -> Result<()> {
+    require(
+        reference.schema_version == 1
+            && reference.object_type == "nemu.storage.raw-bytes-v1"
+            && reference.resource_version == "1"
+            && reference.byte_length.0 == bytes.len() as u64
+            && bytes.len() <= limits.max_bytes
+            && Sha256::digest(bytes).as_slice() == reference.digest.0,
+        "IRL raw resource",
+    )
+}
+
 pub fn verify_material(value: &IrlMaterial, limits: Limits) -> Result<()> {
     let r = &value.object;
     let bytes = &value.data.0;
@@ -21,10 +38,7 @@ pub fn verify_material(value: &IrlMaterial, limits: Limits) -> Result<()> {
     )?;
     // ADR 0046 exact application bytes use the store's raw SHA-256 domain.
     if r.object_type == "nemu.storage.raw-bytes-v1" {
-        return require(
-            r.resource_version == "1" && Sha256::digest(bytes).as_slice() == r.digest.0,
-            "IRL raw resource",
-        );
+        return verify_raw(r, bytes, limits);
     }
     let schema = codec_schema(IrlMaterial::NAME)?;
     let (name, _) = schema
