@@ -450,3 +450,6 @@ fn a_provisional_ref_needs_an_id_already_in_the_pinned_registry() {
 
 #[path = "registry_tests.rs"]
 mod registry_tests;
+
+#[path = "interpretation_tests.rs"]
+mod interpretation_tests;

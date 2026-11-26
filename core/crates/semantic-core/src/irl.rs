@@ -68,13 +68,45 @@ pub fn stage_irl(
     registry: &ConceptRegistry,
     limits: Limits,
 ) -> Result<StagedIrl> {
+    prepare_irl(dispatch, view, candidate, proposed, registry, limits, false)
+}
+
+/// EV5 allows a later trigger to reinterpret a historical target. Only return
+/// the new graph bundled with its authorized revision of a committed stage.
+pub fn stage_irl_revision(
+    dispatch: &IrlDispatch<'_>,
+    view: &impl IrlReadView,
+    candidate: &SemanticCandidateV2,
+    proposed: &SemanticGraphV2,
+    registry: &ConceptRegistry,
+    revision: (
+        &impl crate::interpretation::RevisionPrefix,
+        RelationQueryReceipt,
+    ),
+    limits: Limits,
+) -> Result<StagedIrl> {
+    let mut staged = prepare_irl(dispatch, view, candidate, proposed, registry, limits, true)?;
+    staged.adoption =
+        crate::interpretation::stage_revision(staged.adoption, revision.0, revision.1, limits)?;
+    Ok(staged)
+}
+
+fn prepare_irl(
+    dispatch: &IrlDispatch<'_>,
+    view: &impl IrlReadView,
+    candidate: &SemanticCandidateV2,
+    proposed: &SemanticGraphV2,
+    registry: &ConceptRegistry,
+    limits: Limits,
+    reinterpretation: bool,
+) -> Result<StagedIrl> {
     let b = dispatch.binding;
     let event = dispatch.event;
     if view.transaction() != Some(dispatch.transaction)
         || view.branch() != b.branch_id
         || view.base_commit() != b.base_commit
         || dispatch.facts.history_prefix != b.base_commit
-        || event.record_id != b.event_id
+        || !reinterpretation && event.record_id != b.event_id
         || event.branch_id != b.branch_id
         || proposed.registry != b.environment.registry
         || candidate.producer != dispatch.producer
@@ -84,7 +116,9 @@ pub fn stage_irl(
         return Err(Fault::Binding);
     }
     let raw = view.content(event).map_err(|_| Fault::Source)?;
-    if !matches!(raw, VisibleContent::Event(e, _) if e.raw_log_position == b.raw_log_position) {
+    if !matches!(raw, VisibleContent::Event(e, _) if e.id == event.record_id &&
+        (reinterpretation && event.record_id != b.event_id || e.raw_log_position == b.raw_log_position))
+    {
         return Err(Fault::Source);
     }
     check_object(dispatch.context, dispatch.facts, limits)?;
@@ -112,7 +146,11 @@ pub fn stage_irl(
     );
     let mut coverage = Vec::new();
     let (product, content, outcome, reason) = match governed {
-        Ok((graph, rejected)) => {
+        Ok(super::irl_graph::Governed {
+            graph,
+            rejected,
+            edge_reasons,
+        }) => {
             let content = object_ref(&graph, dispatch.representation_version, limits)?;
             for id in super::irl_graph::ids(&graph) {
                 coverage.push(StageCoverage {
@@ -123,7 +161,7 @@ pub fn stage_irl(
                     unknown_reason: None,
                 });
             }
-            let partial = !rejected.is_empty() || graph.edges.len() != proposed.edges.len();
+            let partial = !rejected.is_empty() || !edge_reasons.is_empty();
             for (id, fault) in rejected {
                 coverage.push(StageCoverage {
                     schema_version: 1,
@@ -136,7 +174,11 @@ pub fn stage_irl(
             let (outcome, reason) = if partial {
                 (
                     StageOutcome::STAGE_OUTCOME_PARTIAL,
-                    Some("candidate contains quarantined nodes or edges".into()),
+                    Some(if edge_reasons.is_empty() {
+                        "candidate contains quarantined nodes".into()
+                    } else {
+                        edge_reasons.join("; ")
+                    }),
                 )
             } else {
                 (StageOutcome::STAGE_OUTCOME_VALID, None)
@@ -216,8 +258,8 @@ pub trait CommittedIrlPrefix: SemanticReadView {
 
 /// Authenticate the canonical bytes at the selected record version. An index
 /// hit without its adopted object is insufficient, including for the stage itself.
-fn adopted<T: WireMessage>(
-    prefix: &impl CommittedIrlPrefix,
+pub(crate) fn adopted<T: WireMessage>(
+    prefix: &impl SemanticReadView,
     at: &RecordVersion,
     limits: Limits,
 ) -> Result<T> {
