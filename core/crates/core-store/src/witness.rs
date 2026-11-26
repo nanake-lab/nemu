@@ -104,7 +104,7 @@ pub(crate) fn expected(
     } else if kind == "d" {
         "SELECT position,event FROM raw_ingress ORDER BY position"
     } else {
-        "SELECT c.position,CASE WHEN c.decision IN ('accepted','activity') THEN c.snapshot ELSE d.event END,c.decision,c.id FROM commits c LEFT JOIN ingress_decisions i ON i.commit_id=c.id LEFT JOIN raw_ingress d ON d.position=i.position ORDER BY c.position"
+        "SELECT c.position,CASE WHEN c.decision IN ('initial','accepted','activity') THEN c.snapshot ELSE d.event END,c.decision,c.id FROM commits c LEFT JOIN ingress_decisions i ON i.commit_id=c.id LEFT JOIN raw_ingress d ON d.position=i.position ORDER BY c.position"
     };
     let mut stmt = db.prepare(sql)?;
     let mut rows = stmt.query([])?;
@@ -112,7 +112,10 @@ pub(crate) fn expected(
         let position = unsigned(row.get(0)?)?;
         let bytes: Vec<u8> = row.get(1)?;
         let is_snapshot = kind == "commits"
-            && matches!(row.get::<_, String>(2)?.as_str(), "accepted" | "activity");
+            && matches!(
+                row.get::<_, String>(2)?.as_str(),
+                "initial" | "accepted" | "activity"
+            );
         let reference = if kind == "attempts" {
             ObjectRef::from_canonical(&bytes, objects.config.encoding)?
         } else if kind == "reject" {

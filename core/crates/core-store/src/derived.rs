@@ -60,11 +60,16 @@ pub(crate) fn extend(
         crate::store::publish_refs(projected, &objects.closure(&root)?, objects.config)?;
     }
     let mut stmt =
-        db.prepare("SELECT id,snapshot FROM commits WHERE decision IN ('accepted','activity') AND position>=?1 ORDER BY position")?;
+        db.prepare("SELECT id,snapshot,decision FROM commits WHERE decision IN ('initial','accepted','activity') AND position>=?1 ORDER BY position")?;
     let mut rows = stmt.query([crate::schema::integer(commits)?])?;
     while let Some(row) = rows.next()? {
         let id: String = row.get(0)?;
         let root = ObjectRef::from_canonical(&row.get::<_, Vec<u8>>(1)?, limits)?;
+        if row.get::<_, String>(2)? == "initial" {
+            let p = crate::initial::decode(objects, &root)?;
+            crate::initial::project(projected, objects, &root, &p)?;
+            continue;
+        }
         let value = crate::manifest::decode(objects, &root)?;
         let mut refs = objects.closure(&root)?;
         for entry in &value.staged_ledger {
@@ -122,7 +127,7 @@ pub(crate) fn extend(
         let anchor: i64 = row.get(2)?;
         let snapshot: Option<Vec<u8>> = row.get(3)?;
         let decision: String = row.get(4)?;
-        if decision != "activity" {
+        if !matches!(decision.as_str(), "activity" | "initial") {
             let bytes: Vec<u8> = db.query_row(
                 "SELECT event FROM raw_ingress WHERE position=?1",
                 [processed],
