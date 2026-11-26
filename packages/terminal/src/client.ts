@@ -1,5 +1,5 @@
 import { EchoCore } from '@nemu/contracts';
-import { CoreConnection, type Control } from './connection.js';
+import { CoreConnection, type Control, type Downlink } from './connection.js';
 import { textObservation } from './observation.js';
 import { ChatOutbox, type ChatEvent } from './outbox.js';
 import { windowsIdentity, type TerminalIdentity } from './windows.js';
@@ -36,6 +36,7 @@ export class TerminalClient {
   private backoff = 250;
   private busy = false;
   private ready = false;
+  private downlink: Downlink | undefined;
   private started = false;
 
   constructor(
@@ -49,9 +50,10 @@ export class TerminalClient {
       windowsIdentity(undefined, signal),
   ) {}
 
-  start(): void {
+  start(downlink?: Downlink): void {
     if (this.started || this.abort.signal.aborted) return;
     this.started = true;
+    this.downlink = downlink;
     this.status('Connecting to Echo Core…');
     void this.connect();
   }
@@ -98,11 +100,20 @@ export class TerminalClient {
         identity.token.fill(0);
         return;
       }
-      connection = new CoreConnection(identity, (reason) => {
-        this.connection = undefined;
-        this.ready = false;
-        this.retry(reason);
-      });
+      connection = new CoreConnection(
+        identity,
+        (reason) => {
+          this.connection = undefined;
+          this.ready = false;
+          this.retry(reason);
+        },
+        this.downlink,
+        (receipt) => {
+          if (receipt.stage === ReceiptStage!.REJECTED && receipt.event_id !== undefined) {
+            this.status(rejection(receipt.reason_code).message, false, receipt.event_id);
+          }
+        },
+      );
       this.connection = connection;
       await connection.authenticate(identity);
       if (this.abort.signal.aborted || this.connection !== connection) return;

@@ -24,6 +24,7 @@ on:
       - 'services/*/src/**'
       - 'core/crates/core-store/**'
       - 'core/crates/gateway/**'
+      - 'core/crates/core-runtime/**'
       - 'core/crates/nemu-core/**'
       - 'core/crates/core-types/**'
       - 'core/contracts/**'
@@ -56,6 +57,7 @@ on:
       - 'services/*/src/**'
       - 'core/crates/core-store/**'
       - 'core/crates/gateway/**'
+      - 'core/crates/core-runtime/**'
       - 'core/crates/nemu-core/**'
       - 'core/crates/core-types/**'
       - 'core/contracts/**'
@@ -277,6 +279,19 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Pop-Location
           pnpm exec tsx core/crates/nemu-core/tests/desktop-smoke.mts (Join-Path $env:CARGO_TARGET_DIR 'release/nemu-core.exe') 2>&1 | Protect-WindowsEvidenceText
+      - name: Committed rehearsal to authenticated desktop (synthetic output)
+        if: needs.scope.outputs.desktop == 'true'
+        working-directory: core
+        env:
+          CARGO_HOME: D:\Dev\cache\cargo
+          CARGO_TARGET_DIR: D:\Dev\cache\cargo-target\ci-gateway
+          TEMP: D:\Dev\cache\tmp\gateway-ci
+          TMP: D:\Dev\cache\tmp\gateway-ci
+        run: |
+          New-Item -ItemType Directory -Force -Path $env:TEMP | Out-Null
+          . ../tools/scaffold/windows-evidence-text.ps1
+          cargo test -p core-runtime --test desktop_push --locked -- --nocapture 2>&1 | Protect-WindowsEvidenceText
+          exit $LASTEXITCODE
       - name: Detect installed .NET SDK
         id: dotnet
         if: needs.scope.outputs.desktop == 'true'
@@ -336,6 +351,8 @@ jobs:
           cargo clippy -p gateway --all-targets --locked -- -D warnings 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'clippy.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cargo test -p gateway --locked -- --test-threads=1 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'tests.log')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo test -p core-runtime --test handler --locked -- --test-threads=1 --nocapture 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'p5-53-handler.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cargo clippy -p nemu-core --all-targets --locked -- -D warnings 2>&1 | Protect-WindowsEvidenceText | Tee-Object (Join-Path $evidence 'nemu-core-clippy.log')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

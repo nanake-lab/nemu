@@ -30,7 +30,10 @@ $metadataOnly = $files.Count -gt 0 -and ($files -notmatch $metadata).Count -eq 0
 # For mixed changes, keep the existing path routing.
 $files = @($files | Where-Object { $_ -and $_ -notmatch '\.md$' })
 $workflow = '^\.github/workflows/windows\.yml$|^tools/scaffold/windows-ci-scope\.ps1$'
+# The Windows-only authenticated runtime and desktop probes share this boundary.
+$runtimeTerminal = '^core/crates/core-runtime/(?:Cargo\.toml$|src/(?:handler|store|status)\.rs$|tests/(?:handler\.rs$|handler/|desktop_push\.rs$))'
 $desktopPaths = @(
+    $runtimeTerminal,
     '^core/crates/nemu-core/', '^apps/', '^packages/', '^executors/codex-bridge/',
     '^workers/[^/]+/src/', '^services/[^/]+/src/',
     '^tools/(?!status/|cause-demo/|asset-pipeline/|texture-fix/|scaffold/ci-budget\.mjs$)',
@@ -42,6 +45,7 @@ $storagePaths = @(
     '^core/(Cargo\.toml|Cargo\.lock|rust-toolchain\.toml)$', $workflow
 ) -join '|'
 $gatewayPaths = '^core/crates/(gateway|nemu-core)/|' + $storagePaths
+$gatewayPaths += '|' + $runtimeTerminal
 $scope = @{
     desktop = $full -or (-not $metadataOnly -and ($files -match $desktopPaths).Count -gt 0)
     storage = $full -or ($files -match $storagePaths).Count -gt 0

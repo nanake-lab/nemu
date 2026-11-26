@@ -17,6 +17,8 @@ export async function scriptedCore(
   directory: string,
   options: {
     dropFirstReceipt?: boolean;
+    framesBeforeSettlement?: Buffer[];
+    settle?: (reply: EchoCore.TerminalResponse) => EchoCore.TerminalResponse[];
     rejectFirstEvent?: NonNullable<EchoCore.TerminalResponse['reason']>;
   } = {},
 ) {
@@ -154,6 +156,11 @@ export async function scriptedCore(
               stable_source_key: e.stable_source_key,
               event_id: e.id,
             };
+            const settlement: EchoCore.TerminalResponse = {
+              ...reply,
+              kind: 1,
+              receipt: { ...receipt, stage: existing === undefined ? 2 : 3 },
+            };
             timestamps.durable.push(performance.now());
             // Coalesce durable and settlement frames to exercise the stream reader.
             socket.write(
@@ -168,11 +175,10 @@ export async function scriptedCore(
                     ingest_time_ns: FixtureTime,
                   },
                 }),
-                encodeFrame('TerminalResponse', {
-                  ...reply,
-                  kind: 1,
-                  receipt: { ...receipt, stage: existing === undefined ? 2 : 3 },
-                }),
+                ...(options.framesBeforeSettlement ?? []),
+                ...(options.settle?.(settlement) ?? [settlement]).map((r) =>
+                  encodeFrame('TerminalResponse', r),
+                ),
               ]),
             );
             objects.delete(key(e.payload_ref));
@@ -197,6 +203,9 @@ export async function scriptedCore(
     failures,
     timestamps,
     identity: async () => ({ pipe: path, installationId: installation, token: token() }),
+    push: (...frames: Buffer[]) => {
+      for (const s of sockets) s.write(Buffer.concat(frames));
+    },
     disconnect: () => {
       for (const s of sockets) s.destroy();
     },

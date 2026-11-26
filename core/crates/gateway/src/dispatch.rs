@@ -76,7 +76,14 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
             self.close(id);
             return Ok(());
         }
-        if c.output.try_send(reply).is_err() {
+        if c.output
+            .try_send(
+                reply
+                    .protobuf_bytes(self.config.frames.encoding)
+                    .map_err(|_| Error::Contract)?,
+            )
+            .is_err()
+        {
             self.close(id);
             return Ok(());
         }

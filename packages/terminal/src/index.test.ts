@@ -183,33 +183,92 @@ test('live pipe reauthenticates and replays the original observation after a los
   }
 });
 
-test('bridge publishes only received chunks, stops at the prefix, and pairs approvals by digest', async () => {
+test('a delayed rejection belongs to the original durable event after a different event settles', async () => {
   const path = temp();
-  const core = await scriptedCore(path);
+  let held: EchoCore.TerminalResponse | undefined;
+  const core = await scriptedCore(path, {
+    settle: (current) => {
+      if (held) return [current, held];
+      held = {
+        ...current,
+        receipt: {
+          ...current.receipt!,
+          stage: 4,
+          reason_code: IngressReason!.SOURCE_KEY_CONFLICT as RejectionReason,
+        },
+      };
+      return [];
+    },
+  });
+  const status = vi.fn();
+  const outbox = new ChatOutbox(join(path, 'outbox'));
+  const terminal = new TerminalClient(outbox, status, core.identity);
+  const bus = new AppBus();
+  try {
+    terminal.start();
+    const first = bus.createEvent('panel', 'chat.send', { text: 'First' }) as ChatEvent;
+    const second = bus.createEvent('panel', 'chat.send', { text: 'Second' }) as ChatEvent;
+    terminal.enqueue(first);
+    await vi.waitFor(() => expect([...outbox.pending()]).toEqual([]));
+    expect(status).not.toHaveBeenCalledWith(expect.any(String), false, first.id);
+    terminal.enqueue(second);
+    await vi.waitFor(() =>
+      expect(status).toHaveBeenCalledWith(
+        expect.stringContaining('SOURCE_KEY_CONFLICT'),
+        false,
+        first.id,
+      ),
+    );
+    expect(status).not.toHaveBeenCalledWith(expect.any(String), false, second.id);
+    expect([...outbox.pending()]).toEqual([]);
+    expect(core.timestamps.authenticated).toHaveLength(1);
+    expect(core.failures).toEqual([]);
+  } finally {
+    terminal.stop();
+    await core.close();
+  }
+});
+
+test('authenticated mixed frames reach the bridge between the durable and settlement receipts', async () => {
+  const path = temp();
+  const core = await scriptedCore(path, {
+    framesBeforeSettlement: [
+      encodeFrame('OutputChunk', scriptedChunk('First ', 0n)),
+      encodeFrame('OutputChunk', scriptedChunk('second.', 1n)),
+      encodeFrame('OutputChunk', scriptedChunk('duplicate', 1n)),
+    ],
+  });
   const bus = new AppBus();
   const status = vi.fn<(reason: string | null) => void>();
   const terminal = new TerminalClient(new ChatOutbox(join(path, 'outbox')), status, core.identity);
   const bridge = bindTerminal(bus, terminal, status);
   try {
-    terminal.start();
-    await vi.waitFor(() => expect(status).toHaveBeenCalledWith(null));
-    bridge.chunk(scriptedChunk('First ', 0n));
-    bridge.chunk(scriptedChunk('second.', 1n));
-    bridge.chunk(scriptedChunk('duplicate', 1n));
+    terminal.start(bridge);
+    const event = bus.createEvent('panel', 'chat.send', { text: 'Synthetic turn' });
+    bus.publish(event);
+    await vi.waitFor(() =>
+      expect(bus.getHistory().filter((e) => e.type === 'output.chunk')).toHaveLength(2),
+    );
+    expect(readdirSync(join(path, 'outbox'))).toEqual([]);
     await bridge.cancel({ schema_version: 1, output_id: 'scripted-output' });
-    bridge.chunk(scriptedChunk('late tail', 2n));
-    bridge.end({ schema_version: 1, output_id: 'scripted-output', reason: 2 });
-    bridge.end({ schema_version: 1, output_id: 'failed-turn', reason: 3 });
-    bridge.runState({
-      schema_version: 1,
-      states: [6],
-      speech_mode: 2,
-      strict: false,
-      autonomy: 2,
-      reasons: ['IRL_FAILED'],
-      lineage: 1,
-    });
-    bridge.approval(scriptApproval);
+    core.push(
+      encodeFrame('OutputChunk', scriptedChunk('late tail', 2n)),
+      encodeFrame('OutputEnd', { schema_version: 1, output_id: 'scripted-output', reason: 2 }),
+      encodeFrame('OutputEnd', { schema_version: 1, output_id: 'failed-turn', reason: 3 }),
+      encodeFrame('RunStateV2', {
+        schema_version: 1,
+        states: [6],
+        speech_mode: 2,
+        strict: false,
+        autonomy: 2,
+        reasons: ['IRL_FAILED'],
+        lineage: 1,
+      }),
+      encodeFrame('ApprovalRequestV2', scriptApproval),
+    );
+    await vi.waitFor(() =>
+      expect(bus.getHistory().some((e) => e.type === 'approval.request.v2')).toBe(true),
+    );
     bus.publish(
       bus.createEvent('panel', 'approval.decision.v2', {
         approvalId: scriptApproval.approval_id,
@@ -238,7 +297,7 @@ test('bridge publishes only received chunks, stops at the prefix, and pairs appr
     expect(events.find((e) => e.type === 'core.runState')?.payload).toMatchObject({
       reasons: ['IRL_FAILED'],
     });
-    expect(status).toHaveBeenCalledWith('Echo Core reported an output failure.');
+    expect(status).toHaveBeenCalledWith('Echo Core reported an output failure (failed-turn).');
     expect(core.failures).toEqual([]);
   } finally {
     bridge.close();

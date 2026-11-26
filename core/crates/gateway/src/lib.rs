@@ -8,6 +8,8 @@ mod authentication;
 mod connection;
 #[cfg(windows)]
 mod dispatch;
+#[cfg(windows)]
+mod downlink;
 pub mod framing;
 #[cfg(windows)]
 pub mod gateway;

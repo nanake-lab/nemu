@@ -67,7 +67,7 @@ async fn run<S: AsyncRead + AsyncWrite + Unpin>(
             tokio::select! {
                 value = &mut read => break value,
                 output = responses.recv() => match output {
-                    Some(value) => writer.write(&value).await?,
+                    Some(value) => writer.write_bytes(&value).await?,
                     None => return Ok(()),
                 }
             }

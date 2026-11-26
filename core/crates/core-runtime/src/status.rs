@@ -1,6 +1,6 @@
 use core_types::generated::{
-    Autonomy, DegradedStatus, FailureCode, FailureReason, Lineage, RunStateV2, RunStatus,
-    SpeechMode, TerminalLineage,
+    Autonomy, DegradedStatus, FailureCode, FailureReason, InitialRuntimeRoot, Lineage, RunStateV2,
+    RunStatus, SpeechMode, TerminalLineage,
 };
 
 /// Capability intersection. No worker recovery clears another fault.
@@ -22,6 +22,29 @@ impl Default for Status {
     }
 }
 impl Status {
+    pub(crate) fn unmodulated(lineage: Lineage, q: Option<&InitialRuntimeRoot>) -> Self {
+        let mut status = Self::default();
+        if let Some(q) = q {
+            for (stage, state) in [
+                (&q.irl, RunStatus::IRL_DEGRADED),
+                (&q.appraiser, RunStatus::A_DEGRADED),
+                (&q.matcher, RunStatus::M_DEGRADED),
+            ] {
+                if stage.is_none() {
+                    status.add(state, FailureCode::DEPENDENCY_FAULT);
+                }
+            }
+        }
+        status.add(
+            RunStatus::CORE_UNMODULATED,
+            FailureCode::MODULATION_DISABLED,
+        );
+        if lineage == Lineage::REHEARSAL {
+            status.add(RunStatus::NO_GROWTH, FailureCode::GROWTH_OFF_REHEARSAL);
+        }
+        status
+    }
+
     pub fn add_state(&mut self, state: RunStatus) {
         if !self.value.states.contains(&state) {
             self.value.states.push(state);

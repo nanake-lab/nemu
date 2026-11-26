@@ -6,6 +6,14 @@ use core_types::generated::*;
 
 pub type Decision<T> = std::result::Result<T, IngressReason>;
 pub trait CoreHandler<L: LineageKind> {
+    /// Derive the terminal view from the head accepted by the gateway verifier.
+    fn committed_run_state(
+        &self,
+        _reader: &core_store::Reader<L>,
+        _head: &ObjectRef,
+    ) -> Result<Option<RunStateV2>> {
+        Ok(None)
+    }
     /// Register the server-issued session after pairing, before it becomes live.
     fn authenticated(
         &mut self,

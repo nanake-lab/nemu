@@ -14,7 +14,7 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
         id: u64,
         request: Authentication,
         reply: oneshot::Sender<TerminalAuthResult>,
-        output: mpsc::Sender<TerminalResponse>,
+        output: mpsc::Sender<Vec<u8>>,
     ) -> Result<()> {
         let r = &request.0;
         let mut nonce = [0; 32];
@@ -82,12 +82,15 @@ impl<L: LineageKind, H: CoreHandler<L>> Gateway<L, H> {
                 session,
                 auth: auth?,
                 output,
+                last_state: None,
                 uploads: Default::default(),
                 created: std::time::Instant::now(),
             },
         );
         if reply.send(result).is_err() {
             self.close(id);
+        } else if self.store.has_verified_publication()? {
+            self.send_state(id)?;
         }
         Ok(())
     }

@@ -18,7 +18,7 @@ pub(crate) enum Input {
         connection: u64,
         request: Authentication,
         reply: oneshot::Sender<TerminalAuthResult>,
-        output: mpsc::Sender<TerminalResponse>,
+        output: mpsc::Sender<Vec<u8>>,
     },
     Request {
         connection: u64,
@@ -34,7 +34,8 @@ pub(crate) enum Input {
 pub(crate) struct Connection<L: LineageKind> {
     pub session: TerminalSession,
     pub auth: crate::AuthenticatedSession,
-    pub output: mpsc::Sender<TerminalResponse>,
+    pub output: mpsc::Sender<Vec<u8>>,
+    pub last_state: Option<RunStateV2>,
     pub uploads: crate::uploads::Uploads<L>,
     pub created: Instant,
 }

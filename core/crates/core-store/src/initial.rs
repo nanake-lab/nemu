@@ -114,6 +114,18 @@ pub(crate) fn verify(
 
 // Every derived row can be rebuilt from the exact manifest and the three
 // canonical empty prefixes. No cursor or pending D record is consumed.
+fn initial_roots(objects: &Objects, p: &InitialPublication) -> Result<PublishedRoots> {
+    Ok(PublishedRoots {
+        h: objects.reference(&empty(EmptyPrefixKind::EMPTY_HISTORY), "1")?,
+        x: p.x.clone(),
+        r: p.r.clone(),
+        theta: p.theta.clone(),
+        l: objects.reference(&empty(EmptyPrefixKind::EMPTY_CHANGE_LEDGER), "1")?,
+        q: objects.reference(&p.q, "1")?,
+        u: objects.reference(&empty(EmptyPrefixKind::EMPTY_INGRESS_DECISIONS), "1")?,
+    })
+}
+
 pub(crate) fn project(
     db: &Connection,
     objects: &Objects,
@@ -122,23 +134,15 @@ pub(crate) fn project(
 ) -> Result<()> {
     let id = hex(&reference.digest.0);
     let limits = objects.config.encoding;
+    let roots = initial_roots(objects, p)?;
     let roles = [
-        (
-            "H",
-            objects.reference(&empty(EmptyPrefixKind::EMPTY_HISTORY), "1")?,
-        ),
-        ("x", p.x.clone()),
-        ("R", p.r.clone()),
-        ("theta", p.theta.clone()),
-        (
-            "L",
-            objects.reference(&empty(EmptyPrefixKind::EMPTY_CHANGE_LEDGER), "1")?,
-        ),
-        ("Q", objects.reference(&p.q, "1")?),
-        (
-            "U",
-            objects.reference(&empty(EmptyPrefixKind::EMPTY_INGRESS_DECISIONS), "1")?,
-        ),
+        ("H", roots.h),
+        ("x", roots.x),
+        ("R", roots.r),
+        ("theta", roots.theta),
+        ("L", roots.l),
+        ("Q", roots.q),
+        ("U", roots.u),
     ];
     let mut refs = objects.closure(reference)?;
     for (role, r) in &roles {
@@ -158,6 +162,45 @@ pub(crate) fn project(
         params![id, reference.canonical_bytes(limits)?],
     )?;
     Ok(())
+}
+
+/// H, x, R, theta, L, Q and U of the committed head, including the parentless
+/// ADR 0049 publication. Never turn that first publication into a fake event.
+pub struct PublishedRoots {
+    pub h: ObjectRef,
+    pub x: ObjectRef,
+    pub r: ObjectRef,
+    pub theta: ObjectRef,
+    pub l: ObjectRef,
+    pub q: ObjectRef,
+    pub u: ObjectRef,
+}
+
+impl<L: crate::LineageKind> Store<L> {
+    pub fn published_roots(&self) -> Result<Option<PublishedRoots>> {
+        let bytes: Option<Vec<u8>> = self.db.query_row(
+            "SELECT snapshot FROM branch_head WHERE singleton=1",
+            [],
+            |row| row.get(0),
+        )?;
+        let Some(bytes) = bytes else { return Ok(None) };
+        let reference = ObjectRef::from_canonical(&bytes, self.objects.config.encoding)?;
+        if reference.object_type == TAG {
+            let p = decode(&self.objects, &reference)?;
+            Ok(Some(initial_roots(&self.objects, &p)?))
+        } else {
+            let tx = crate::manifest::decode(&self.objects, &reference)?;
+            Ok(Some(PublishedRoots {
+                h: tx.staged_h,
+                x: tx.staged_x,
+                r: tx.staged_r,
+                theta: tx.staged_theta,
+                l: tx.staged_l,
+                q: tx.staged_q,
+                u: tx.staged_u,
+            }))
+        }
+    }
 }
 
 impl Store<Rehearsal> {

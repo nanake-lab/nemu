@@ -9,7 +9,14 @@ import {
 import { decodeFrame, encodeFrame, FrameReader, frameLimits } from './framing.js';
 import type { TerminalIdentity } from './windows.js';
 
-const { AuthStatus, IngressKind, IngressResponseKind, ReceiptStage } = EchoCore.schema.enums;
+export interface Downlink {
+  chunk(message: EchoCore.OutputChunk): void;
+  end(message: EchoCore.OutputEnd): void;
+  runState(message: EchoCore.RunStateV2): void;
+  approval(message: EchoCore.ApprovalRequestV2): void;
+}
+
+const { AuthStatus, ReceiptStage } = EchoCore.schema.enums;
 const eventRequestPrefix = 'event:';
 // Bound a stalled request, while leaving a healthy idle pipe open for push/replies.
 const requestDeadlineMs = 2500;
@@ -28,11 +35,17 @@ interface Pending {
 export class CoreConnection {
   private readonly socket: Socket;
   private readonly pending = new Map<string, Pending>();
+  private readonly awaitingSettlement = new Map<string, EchoCore.TerminalRequest>();
   private auth: Pending | undefined;
   private session: EchoCore.TerminalSession | undefined;
   private failure = 'Core pipe disconnected';
 
-  constructor(identity: TerminalIdentity, onClose: (reason: string) => void) {
+  constructor(
+    identity: TerminalIdentity,
+    onClose: (reason: string) => void,
+    private readonly downlink?: Downlink,
+    private readonly settled?: (receipt: EchoCore.ReceiptV2) => void,
+  ) {
     this.socket = createConnection(identity.pipe);
     this.socket.on('error', () => this.close('Cannot reach the core pipe'));
     this.socket.once('close', () => {
@@ -123,6 +136,8 @@ export class CoreConnection {
         (bytes) => {
           const response = decodeFrame('TerminalResponse', bytes);
           checkResponse(request, response, session, frameLimits);
+          if (request.event && response.receipt?.stage === ReceiptStage!.RECEIVED_DURABLE)
+            this.awaitingSettlement.set(request.request_id, request);
           return response;
         },
       );
@@ -143,24 +158,47 @@ export class CoreConnection {
       this.auth.accept(body);
       return;
     }
-    const response = decodeFrame('TerminalResponse', body);
+    if (body.length > this.session.budget.max_frame_bytes)
+      throw new Error('Session frame budget exceeded');
+    // The five allowed protobuf descriptors have distinct required wire shapes.
+    // Use the generated strict decoders. Unknown or ambiguous bodies fail closed.
+    const receivers: (() => void)[] = [];
+    const match = <K extends keyof EchoCore.MessageMap>(
+      type: K,
+      receive: (message: EchoCore.MessageMap[K]) => void,
+    ) => {
+      let message: EchoCore.MessageMap[K];
+      try {
+        message = decodeFrame(type, body);
+      } catch {
+        return;
+      }
+      receivers.push(() => receive(message));
+    };
+    match('TerminalResponse', (reply) => this.receiveReply(body, reply));
+    const sink = this.downlink;
+    match('OutputChunk', (chunk) => sink?.chunk(chunk));
+    match('OutputEnd', (end) => sink?.end(end));
+    match('ApprovalRequestV2', (approval) => sink?.approval(approval));
+    match('RunStateV2', (state) => sink?.runState(state));
+    if (receivers.length !== 1) throw new Error('Unrecognized core frame');
+    receivers[0]!();
+  }
+
+  private receiveReply(body: Buffer, response: EchoCore.TerminalResponse): void {
     const waiter = this.pending.get(response.request_id);
-    const receipt = response.receipt;
-    // The second gateway receipt may arrive with the first in the same read.
-    // It is settlement, never acknowledgement of a pending outbox record.
+    const request = this.awaitingSettlement.get(response.request_id);
     if (
       !waiter &&
-      receipt &&
-      response.kind === IngressResponseKind!.EVENT_RECEIPT &&
-      response.reply_to === IngressKind!.INGRESS_EVENT &&
-      receipt?.stage !== ReceiptStage!.RECEIVED_DURABLE &&
-      receipt?.event_id === receipt?.stable_source_key &&
-      response.request_id === eventRequestPrefix + receipt?.event_id &&
-      response.session_id === this.session.session_id &&
-      response.protocol_version === this.session.protocol_version &&
-      body.length <= this.session.budget.max_frame_bytes
-    )
+      request &&
+      response.receipt &&
+      response.receipt.stage !== ReceiptStage!.RECEIVED_DURABLE
+    ) {
+      checkResponse(request, response, this.session!, frameLimits);
+      this.awaitingSettlement.delete(response.request_id);
+      this.settled?.(response.receipt);
       return;
+    }
 
     if (!waiter) throw new Error('Unexpected response');
     this.pending.delete(response.request_id);
