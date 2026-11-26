@@ -77,6 +77,12 @@ fn check_depth(links: &BTreeMap<&str, Vec<&str>>, limits: Limits) -> Result<()> 
     Ok(())
 }
 
+pub(super) struct Governed {
+    pub graph: SemanticGraphV2,
+    pub rejected: BTreeMap<String, Fault>,
+    pub edge_reasons: Vec<String>,
+}
+
 pub(super) fn govern(
     d: &IrlDispatch<'_>,
     view: &impl IrlReadView,
@@ -84,7 +90,7 @@ pub(super) fn govern(
     registry: &ConceptRegistry,
     adapter: (&TextAdapterEntry, &SourceLocation),
     limits: Limits,
-) -> Result<(SemanticGraphV2, BTreeMap<String, Fault>)> {
+) -> Result<Governed> {
     let count = ids(g).count();
     if count.saturating_add(g.edges.len()) > limits.max_items {
         return Err(Fault::Budget);
@@ -176,6 +182,7 @@ pub(super) fn govern(
         Ok(())
     };
     let mut rejected = BTreeMap::new();
+    let mut edge_reasons = Vec::new();
     let output = if validate(g).is_ok() {
         g.clone()
     } else {
@@ -205,16 +212,25 @@ pub(super) fn govern(
                 .unwrap_or(Fault::Reference));
         }
         let mut legal = select(g, &kept);
-        legal.edges = g
-            .edges
-            .iter()
-            .filter(|e| {
-                kept.contains(e.from_node.as_str())
-                    && kept.contains(e.to_node.as_str())
-                    && registry.edge_kinds.contains(&e.relation)
-            })
-            .cloned()
-            .collect();
+        // Edges are ordered in the bound candidate. Ordinals identify even
+        // identical edges, without putting worker-controlled strings in the reason.
+        for (index, edge) in g.edges.iter().enumerate() {
+            let mut causes = Vec::new();
+            if !kept.contains(edge.from_node.as_str()) {
+                causes.push("unavailable origin");
+            }
+            if !kept.contains(edge.to_node.as_str()) {
+                causes.push("unavailable target");
+            }
+            if !registry.edge_kinds.contains(&edge.relation) {
+                causes.push("unregistered relation");
+            }
+            if causes.is_empty() {
+                legal.edges.push(edge.clone());
+            } else {
+                edge_reasons.push(format!("edge[{index}] {}", causes.join(", ")));
+            }
+        }
         validate(&legal)?;
         legal
     };
@@ -230,5 +246,9 @@ pub(super) fn govern(
     }
     let canonical = SemanticGraphV2::from_canonical(&wire(&output, limits)?, limits)
         .map_err(|_| Fault::Schema)?;
-    Ok((canonical, rejected))
+    Ok(Governed {
+        graph: canonical,
+        rejected,
+        edge_reasons,
+    })
 }

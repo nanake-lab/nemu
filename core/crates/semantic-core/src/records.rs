@@ -1,13 +1,14 @@
-//! Record preflight never changes a model value, guesses a speaker or infers facts.
+//! Record governance never changes a model value, guesses a speaker or infers facts.
 use crate::{
     Fault, Result,
     graph::{Snapshot, source},
-    objects::check_binding,
+    objects::{check_binding, check_object},
     wire,
 };
 use core_types::{contract::Limits, generated::*, semantic};
 use std::collections::BTreeSet;
 
+#[derive(Clone, Copy)]
 pub enum Record<'a> {
     Appraisal(&'a NatureAppraisalRecord),
     Match(&'a SituationMatchRecord),
@@ -72,7 +73,7 @@ pub fn preflight(record: Record<'_>, context: &Context<'_>) -> Result<()> {
             {
                 return Err(Fault::Reference);
             }
-            // No concept ID is allocated here; registration remains blocked.
+            // ID reservation and registry staging belong to the outer IRL transaction.
             (
                 &r.record_id,
                 &r.event_id,
@@ -170,4 +171,50 @@ pub fn preflight(record: Record<'_>, context: &Context<'_>) -> Result<()> {
         return Err(Fault::Duplicate);
     }
     Ok(())
+}
+
+/// Prepare an auxiliary interpretation for the outer transaction. `assigned`
+/// is the core-reserved endpoint for the actual returned record. A candidate
+/// tendency stays a hypothesis and an annotation cannot grant evidence access.
+/// A/M and revisions have their own stage and receipt checks.
+/// For a lie annotation the core also resolves her confirmed statement from
+/// the authorized read set. A worker-supplied speaker or matching text is insufficient.
+pub fn stage_auxiliary_record(
+    record: Record<'_>,
+    assigned: &RecordVersion,
+    context: &Context<'_>,
+    confirmed_own_statement: Option<&RecordVersion>,
+) -> Result<RecordVersion> {
+    let actual_id = match record {
+        Record::Candidate(r) => {
+            check_object(&assigned.content, r, context.limits)?;
+            &r.record_id
+        }
+        Record::Teaching(r) => {
+            check_object(&assigned.content, r, context.limits)?;
+            &r.record_id
+        }
+        Record::Lie(r) => {
+            let statement = confirmed_own_statement.ok_or(Fault::Source)?;
+            if statement.record_id != r.statement
+                || statement.branch_id != assigned.branch_id
+                || !context.binding.read_set.contains(&statement.content)
+            {
+                return Err(Fault::Source);
+            }
+            check_object(&assigned.content, r, context.limits)?;
+            &r.record_id
+        }
+        Record::SameMatter(r) => {
+            check_object(&assigned.content, r, context.limits)?;
+            &r.record_id
+        }
+        _ => return Err(Fault::Binding),
+    };
+    wire(assigned, context.limits)?;
+    if assigned.branch_id != context.binding.branch_id || actual_id != &assigned.record_id {
+        return Err(Fault::Binding);
+    }
+    preflight(record, context)?;
+    Ok(assigned.clone())
 }
