@@ -3,7 +3,9 @@
 //! Legacy graph and record preflight remains available for the original DTOs.
 
 pub mod aliases;
+pub mod attributes;
 pub mod graph;
+pub mod interpretation;
 pub mod irl;
 mod irl_graph;
 pub mod objects;
@@ -68,6 +70,8 @@ pub(crate) fn wire<T: WireMessage>(value: &T, limits: Limits) -> Result<Vec<u8>>
 
 #[cfg(test)]
 mod adapter_tests;
+#[cfg(test)]
+mod attribute_tests;
 #[cfg(test)]
 mod irl_tests;
 #[cfg(test)]
