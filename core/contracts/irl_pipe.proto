@@ -1,0 +1,107 @@
+syntax = "proto3";
+package nemu.echo.v1;
+import "base.proto";
+import "speak_think.proto";
+
+// Each link has exactly two roles, in caller-to-callee order. A host authenticates
+// both OS peers and checks the per-launch credential before accepting a call.
+enum IrlPipeLink { IRL_LINK_UNSPECIFIED = 0; IRL_CORE_WORKER = 1; IRL_WORKER_BRIDGE = 2; IRL_WORKER_ADAPTER = 3; }
+
+// @message echo.irl-pipe-auth | ADR 0051 local-only ACL and mutual launch authentication
+message IrlPipeAuth {
+  // @transient
+  optional uint32 schema_version = 1; // required
+  optional uint32 protocol_version = 2; // required,min=1,max=1
+  optional string session_id = 3; // required,nonempty
+  optional IrlPipeLink link = 4; // required
+  optional bytes launch_credential = 5; // required,size=32
+}
+
+// @message echo.irl-call | ADR 0051 authenticated connection and request correlation
+message IrlCall {
+  optional uint32 schema_version = 1; // required
+  optional uint32 protocol_version = 2; // required,min=1,max=1
+  optional string session_id = 3; // required,nonempty
+  optional string request_id = 4; // required,nonempty
+}
+
+// @message echo.irl-pipe-budget | ADR 0051 host settings; no understanding deadline
+message IrlPipeBudget {
+  optional uint32 schema_version = 1; // required
+  optional string version = 2; // required,nonempty
+  optional uint32 frame_bytes = 3; // required,min=1
+  optional uint64 object_bytes = 4; // required
+  optional uint64 output_bytes = 5; // required
+}
+
+// @message echo.irl-borrow | ADR 0051 scoped lookup, never a general object-store capability
+message IrlBorrow {
+  optional uint32 schema_version = 1; // required
+  optional string grant_id = 2; // required,nonempty
+  optional ObjectRef object = 3; // required
+}
+
+// @message echo.irl-material | ADR 0051 actual bytes of a versioned object
+message IrlMaterial {
+  optional uint32 schema_version = 1; // required
+  optional ObjectRef object = 2; // required
+  optional bytes data = 3; // required
+}
+
+// @message echo.irl-dispatch | ADR 0051 core to worker; full ProposalBindingV2 stays in core
+message IrlDispatch {
+  optional uint32 schema_version = 1; // required
+  optional RecordVersion target = 2; // required
+  optional IrlBorrow payload = 3; // required
+  optional IrlBorrow facts = 4; // required
+  optional IrlBorrow registry = 5; // required
+}
+
+// @message echo.irl-delegation | ADR 0051 worker to bridge or neutral local adapter
+message IrlDelegation {
+  // @rules {"discriminator":"link","common":["parent","inputs","parameters"],"cases":{"2":{"required":["provider","requested_model","disclosure"]},"3":{"required":["local_model","isolation"]}}}
+  optional uint32 schema_version = 1; // required
+  optional IrlPipeLink link = 2; // required
+  optional IrlCall parent = 3; // required
+  repeated IrlMaterial inputs = 4; // required
+  optional ObjectRef parameters = 5; // required
+  optional string provider = 6; // optional,nonempty
+  optional string requested_model = 7; // optional,nonempty
+  optional ObjectRef disclosure = 8; // optional
+  optional ObjectRef local_model = 9; // optional
+  optional ObjectRef isolation = 10; // optional
+}
+
+enum IrlPipeOperation {
+  IRL_OP_UNSPECIFIED = 0;
+  IRL_DISPATCH = 1;
+  IRL_DELEGATE = 2;
+  IRL_FETCH = 3;
+  IRL_MATERIAL = 4;
+  IRL_CANCEL_REQUEST = 5;
+  IRL_CANCEL_EFFECTIVE = 6;
+  IRL_NOT_SENT = 7;
+  IRL_SENT_UNKNOWN = 8;
+  IRL_FAILURE = 9;
+  IRL_STALE = 10;
+  IRL_CANDIDATE = 11;
+  IRL_OUTPUT = 12;
+  IRL_TRUNCATED = 13;
+}
+
+// @message echo.irl-pipe-frame | ADR 0051 direction checked against the authenticated link
+message IrlPipeFrame {
+  // @rules {"discriminator":"operation","common":["call"],"cases":{"1":{"required":["dispatch"]},"2":{"required":["delegation"]},"3":{"required":["borrow"]},"4":{"required":["borrow","material"]},"5":{},"6":{},"7":{"required":["reason","remote_status"],"values":{"remote_status":[6]}},"8":{"required":["sent_request","reason"]},"9":{"required":["reason"]},"10":{"required":["reason"]},"11":{"required":["graph","output"]},"12":{"required":["output"]},"13":{"optional":["output"]}}}
+  optional uint32 schema_version = 1; // required
+  optional IrlCall call = 2; // required
+  optional IrlPipeOperation operation = 3; // required
+  optional IrlDispatch dispatch = 4; // optional
+  optional IrlDelegation delegation = 5; // optional
+  optional IrlBorrow borrow = 6; // optional
+  optional IrlMaterial material = 7; // optional
+  optional FailureReason reason = 8; // optional
+  optional RemoteAttemptStatus remote_status = 9; // optional
+  optional ObjectRef sent_request = 10; // optional
+  optional ObjectRef graph = 11; // optional
+  optional IrlMaterial output = 12; // optional
+}

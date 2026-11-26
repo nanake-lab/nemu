@@ -12,6 +12,10 @@ LIMITS = dict(max_bytes=1048576, max_items=4096, max_depth=32)
 
 
 def sample(name: str, seed: int, depth: int = 0) -> dict[str, Any]:
+    if SCHEMA["messages"][name]["file"] == "irl_pipe.proto":
+        from fixture_irl import sample_irl
+
+        return sample_irl(name, seed)
     from fixture_evidence import evidence_sample
     if SCHEMA["messages"][name]["file"] == "semantic_evidence.proto":
         return evidence_sample(name, seed)
@@ -126,7 +130,7 @@ def requests() -> list[dict[str, Any]]:
         for n in SCHEMA["messages"]
         for s in range(3)
     ]
-    for name in ("Anchor", "GazeTarget", "BodyAction", "LedgerEntry"):
+    for name in ("Anchor", "GazeTarget", "BodyAction", "LedgerEntry", "IrlPipeFrame"):
         base.extend(
             dict(name=name, op="encode", value=sample(name, seed), limits=LIMITS)
             for seed in range(3, len(SCHEMA["messages"][name]["rules"]["cases"]))
@@ -571,10 +575,12 @@ def targeted_illegal() -> list[dict[str, Any]]:
 
     from fixture_touch import illegal_touch
 
+    from fixture_irl import illegal_irl
     from fixture_evidence import evidence_illegal
 
     return (
-        evidence_illegal()
+        illegal_irl()
+        + evidence_illegal()
         + targeted_illegal_existing()
         + out
         + illegal_retention()
