@@ -189,7 +189,7 @@
 
 ## #240 release 配对与对象示例
 
-在同一台 GitHub 托管 Windows VM 上按基线 `6734adc2bfe8b145e8062a2fc669dd2024dd2ba6`、候选 `d7ff3fb6dafa4c53f4ee4d774ab537728834cd71` 的顺序各运行一条独立的 128 笔合成历史，各测一次。工具链固定为 1.99.0。已与 #240 成功运行的命令、测量代码和日志核对。托管步骤将同一份合成探针注入两个临时 checkout，两个修订各 12 个文本替换锚点均通过唯一性检查。[探针](prepare_release_probe.py) · [托管执行](https://github.com/nanake-lab/nemu/actions/runs/45731209735)
+在同一台 GitHub 托管 Windows VM 上按基线 `6734adc2bfe8b145e8062a2fc669dd2024dd2ba6`、候选 `d7ff3fb6dafa4c53f4ee4d774ab537728834cd71` 的顺序各运行一条独立的 128 笔合成历史，各测一次。工具链固定为 1.99.0。已与 #240 成功运行的命令、测量代码和日志核对。托管步骤将同一份合成探针注入两个临时 checkout，两个修订各 12 个文本替换锚点均通过唯一性检查。[运行时的探针](https://github.com/nanake-lab/nemu-evidence/blob/d11084fa5b8da217d71306fbefc71d4cebcc34d6/PERF-STORE-01/45731209735-1/source/reports/PERF-STORE-01/prepare_release_probe.py) · [托管执行](https://github.com/nanake-lab/nemu/actions/runs/45731209735)
 
 - 原命令为 `cargo test -p gateway --release review_scale_probe -- --ignored --nocapture --test-threads=1`。保留在 2、8、32、128 笔的检查，报告取 128 笔。
 - 新 head 先在 127 笔处核验前缀，提交第 128 笔后计时 `receipt_reader`。每个修订取唯一一条 `commits=128 operation=new_head` 的 `elapsed_ns / 1e6`（ms/新 head）。
@@ -247,3 +247,10 @@
 已从 45590384397 的逐项三轮样本独立重算前五名，并核对采样测试名、通过记录、采样数与剖析文件。三个原始 ZIP 及对象示例 ZIP 的 SHA-256 均与 Actions 公布值一致；剖析 ZIP 无损分为三片，按序重组的摘要一致。工作流通过 actionlint 1.7.12 和内嵌 Python 语法检查，报告相对链接及 `git diff --check` 通过。
 
 私有证据索引提交 `053411af0b7bdfba79027d8e4a72fd501588fde1`，按上表运行号检索。
+
+[运行 45731209735](https://github.com/nanake-lab/nemu/actions/runs/45731209735) 使用提交 `c37b61573a13c5edac9143a8a133ba2eff031936`。以下两份源文件已从该提交按原始字节归档，并从私有证据提交 `d11084fa5b8da217d71306fbefc71d4cebcc34d6` 回读核对。
+
+| 运行时的源文件 | 字节数 | SHA-256 |
+| --- | ---: | --- |
+| [perf-store.yml](https://github.com/nanake-lab/nemu-evidence/blob/d11084fa5b8da217d71306fbefc71d4cebcc34d6/PERF-STORE-01/45731209735-1/source/.github/workflows/perf-store.yml) | 17258 | `6c5dbce4781762e5e421ef900a0389088b4987a1d7a63d4129614d16d04c5352` |
+| [prepare_release_probe.py](https://github.com/nanake-lab/nemu-evidence/blob/d11084fa5b8da217d71306fbefc71d4cebcc34d6/PERF-STORE-01/45731209735-1/source/reports/PERF-STORE-01/prepare_release_probe.py) | 12907 | `dca4b59d8303f78051bdedf9ca871486e36f291bf659984c4b33a6093e755354` |
