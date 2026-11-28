@@ -11,6 +11,57 @@ mod authority;
 #[path = "../../../nemu-core/src/deployment.rs"]
 mod deployment;
 
+// Exercise the production SID issuer and its durable authentication rows without
+// changing the host executable. The disconnected first session is looked up
+// again on restart, before the client can submit the next input.
+struct TestAuthority {
+    issuer: authority::LocalAuthority,
+    issued: rusqlite::Connection,
+}
+impl CoreHandler<Rehearsal> for TestAuthority {
+    fn authenticated(
+        &mut self,
+        store: &mut Store<Rehearsal>,
+        session: &TerminalSession,
+    ) -> gateway::Result<Decision<()>> {
+        self.issuer.authenticated(store, session)
+    }
+
+    fn authorize_event(
+        &mut self,
+        store: &Store<Rehearsal>,
+        session: &TerminalSession,
+        event: &TerminalEvent,
+        provenance: &SourceMetadata,
+    ) -> Decision<Grants> {
+        self.issuer
+            .authorize_event(store, session, event, provenance)
+    }
+
+    fn local_text_author(
+        &self,
+        event: &EventEnvelope,
+    ) -> gateway::Result<Option<LocalUserBinding>> {
+        self.issued
+            .query_row(
+                "SELECT record_id, principal_id, installation_id, session_id FROM local_auth_v1
+             WHERE session_id=?1 AND installation_id=?2",
+                [&event.session, &event.device],
+                |row| {
+                    Ok(LocalUserBinding {
+                        schema_version: 1,
+                        authentication_record_id: row.get(0)?,
+                        principal_id: row.get(1)?,
+                        installation_id: row.get(2)?,
+                        session_id: row.get(3)?,
+                    })
+                },
+            )
+            .map(Some)
+            .map_err(|_| gateway::Error::Rejected("missing local issuer record"))
+    }
+}
+
 #[tokio::test]
 async fn authenticated_pipe_settlement_and_restart_match_the_committed_q() {
     let root = TemporaryRoot::new().unwrap();
@@ -30,9 +81,15 @@ async fn authenticated_pipe_settlement_and_restart_match_the_committed_q() {
             let cap = writer.take_commit_capability().unwrap();
             (writer, cap)
         });
-        let local =
-            authority::LocalAuthority::open(&root.path().join("auth.sqlite"), sid, limits())
-                .unwrap();
+        let path = root.path().join("auth.sqlite");
+        let local = TestAuthority {
+            issuer: authority::LocalAuthority::open(&path, sid, limits()).unwrap(),
+            issued: rusqlite::Connection::open_with_flags(
+                &path,
+                rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY,
+            )
+            .unwrap(),
+        };
         let handler =
             RehearsalHandler::new(cap, local, inputs, limits(), SpeechMode::B_REMOTE_PROJECTED);
         let token = TerminalToken::load_protected(&token_path).unwrap();
@@ -93,6 +150,37 @@ async fn authenticated_pipe_settlement_and_restart_match_the_committed_q() {
             assert!(store.next_raw().unwrap().is_none());
             let tx = reader.event_snapshot(&head).unwrap();
             assert_eq!(tx.binding.event_id, "host-1");
+            let prefix = store.base_commit().unwrap();
+            let view = fact_view::FactView::rebuild(&reader, &prefix, 8, None).unwrap();
+            let access = fact_view::Access {
+                allowed: true,
+                ..Default::default()
+            };
+            let prior = view.mode_b_text("host-0", &access).unwrap();
+            let latest = view.mode_b_text("host-1", &access).unwrap();
+            let query = fact_view::FactQuery::new(
+                &prefix,
+                fact_view::Purpose::Task,
+                &latest.text,
+                &fact_view::Budgets::default(),
+            );
+            let material = view
+                .mode_b_input(&latest.version, &query, &access, None)
+                .unwrap();
+            assert_eq!(material.task_facts.projection.history_prefix, prefix);
+            assert_eq!(latest.speaker.governance, head);
+            let user = |record: &fact_view::ModeBText| {
+                reader
+                    .read::<LocalUserBinding>(&record.speaker.layers[0].identity_evidence)
+                    .unwrap()
+            };
+            assert_ne!(user(&prior).session_id, user(&latest).session_id);
+            assert_eq!(user(&prior).principal_id, user(&latest).principal_id);
+            assert_eq!(prior.h_position, 1);
+            assert_eq!(latest.h_position, 3); // One filtered redelivery between accepted events.
+            eprintln!(
+                "authenticated pipe: recovered author on first event, second session shares principal; H positions 1 and 3, frontier={prefix}"
+            );
             reader.read::<InitialRuntimeRoot>(&tx.staged_q).unwrap()
         };
         if let Some(target) = std::env::var_os("NEMU_P5_53_EVIDENCE_DIR") {

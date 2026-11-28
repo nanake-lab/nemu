@@ -13,6 +13,9 @@ core-types.workspace = true
 action-gate.workspace = true
 task-layer.workspace = true
 
+[dev-dependencies]
+fact-view.workspace = true
+
 [target.'cfg(windows)'.dev-dependencies]
 rusqlite = { version = "=0.40.2", default-features = false, features = ["bundled"] }
 sha2 = "=0.11.1"

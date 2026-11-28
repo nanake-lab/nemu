@@ -122,6 +122,7 @@ where
         let q: InitialRuntimeRoot = store.verified_reader()?.read(&roots.q)?;
         disconnected(&q)?;
         let input = (self.inputs)(store, &event).map_err(runtime_error)?;
+        let author = self.authority.local_text_author(&event)?;
         let ticket = store.bind(input.binding.clone())?;
         let base = store::read_state(store).map_err(runtime_error)?;
         let mut stages = StageSet::rehearsal(Components::default(), q.environment, self.limits)
@@ -137,8 +138,9 @@ where
                 growth_paused: false,
             })
             .map_err(runtime_error)?;
-        let prepared = store::prepare_existing_head(store, ticket, staged, self.limits)
-            .map_err(runtime_error)?;
+        let prepared =
+            store::prepare_with_author(store, ticket, staged, author.as_ref(), self.limits)
+                .map_err(runtime_error)?;
         Ok(vec![store.commit(
             &self.capability,
             prepared.transaction,

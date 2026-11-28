@@ -32,6 +32,12 @@ pub trait CoreHandler<L: LineageKind> {
         event: &TerminalEvent,
         provenance: &SourceMetadata,
     ) -> Decision<Grants>;
+    /// The trusted local issuer may recover the historical binding for this
+    /// durable event's server-assigned session and installation (ADR 0047).
+    /// A terminal claim, current login or a missing lookup cannot attest authorship.
+    fn local_text_author(&self, _event: &EventEnvelope) -> Result<Option<LocalUserBinding>> {
+        Ok(None)
+    }
     fn query(
         &mut self,
         _store: &mut Store<L>,

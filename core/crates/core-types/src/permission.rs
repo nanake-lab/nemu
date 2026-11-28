@@ -31,6 +31,13 @@ pub fn check_user_text_source(
             && session.capabilities.contains(&IngressKind::INGRESS_EVENT),
         "local user binding does not match the event session",
     )?;
+    check_direct_user_text(event, source)
+}
+
+/// Classify the recorded observation under ADR 0047. Callers must establish
+/// local identity separately, either at admission or from the trusted issuer
+/// for W02's durable session and installation on recovery.
+pub fn check_direct_user_text(event: &TerminalEvent, source: &SourceMetadata) -> Result<()> {
     require(
         event.kind == EventKind::OBSERVATION
             && event.payload_ref.object_type

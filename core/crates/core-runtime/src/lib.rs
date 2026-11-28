@@ -10,6 +10,7 @@ pub mod binding;
 pub mod clock;
 pub mod cognition;
 pub mod handler;
+mod local_text;
 pub mod pipeline;
 pub mod stages;
 pub mod status;

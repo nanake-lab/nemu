@@ -2,9 +2,9 @@ use crate::{Error, LineageKind, Reader, Result, error::require};
 use core_types::{
     WireMessage,
     contract::Schema,
-    generated::{EvidenceGroupV2, EvidenceGroupV3, LedgerEntry, ObjectRef},
+    generated::{CoreTransactionV2, EvidenceGroupV2, EvidenceGroupV3, LedgerEntry, ObjectRef},
 };
-use rusqlite::params;
+use rusqlite::{OptionalExtension, params};
 
 /// Decoded historical message, retaining its original version. V2 has no q;
 /// reading history never invents it or converts the stored bytes to V3.
@@ -79,6 +79,31 @@ impl<L: LineageKind> Reader<L> {
         snapshot.rollback()?;
         Ok(result)
     }
+    /// Resolve the original event manifest and its H commit position at one
+    /// verified current frontier. A D position need not be an H position.
+    pub fn published_event_at(
+        &self,
+        frontier: &str,
+        event_id: &str,
+    ) -> Result<(u64, ObjectRef, CoreTransactionV2)> {
+        let read = self.db.unchecked_transaction()?;
+        let (position, bytes): (i64, Vec<u8>) = read
+            .query_row(
+                "SELECT c.position, c.snapshot FROM facts f JOIN commits c ON c.id=f.commit_id
+             WHERE f.event_id=?1 AND c.decision='accepted'
+               AND EXISTS (SELECT 1 FROM branch_head WHERE singleton=1 AND commit_id=?2)",
+                [event_id, frontier],
+                |r| Ok((r.get(0)?, r.get(1)?)),
+            )
+            .optional()?
+            .ok_or(Error::Rejected("event absent at current frontier"))?;
+        let snapshot = ObjectRef::from_canonical(&bytes, self.objects.config.encoding)?;
+        let (tx, event) = self.read_published_transaction(&snapshot)?;
+        require(event.id == event_id, "event publication mismatch")?;
+        read.rollback()?;
+        Ok((crate::schema::unsigned(position)?, snapshot, tx))
+    }
+
     /// Complete ledger prefix or an explicit budget error; never an empty/truncated
     /// result masquerading as evidence that no prior cost was recorded.
     pub fn ledger_at(&self, commit: &str, limit: usize) -> Result<Vec<LedgerEntry>> {
